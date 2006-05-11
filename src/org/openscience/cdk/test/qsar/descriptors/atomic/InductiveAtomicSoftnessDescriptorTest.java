@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import javax.vecmath.Point3d;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 public class InductiveAtomicSoftnessDescriptorTest extends CDKTestCase {
 	

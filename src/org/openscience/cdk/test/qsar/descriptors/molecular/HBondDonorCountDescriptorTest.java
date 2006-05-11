@@ -34,7 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 public class HBondDonorCountDescriptorTest extends CDKTestCase {
 

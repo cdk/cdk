@@ -34,7 +34,7 @@ import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 
 public class QSARDescriptorTests {

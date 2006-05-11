@@ -15,7 +15,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author Rajarshi Guha
  * @cdk.require r-project
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
  
 public class ModelLoadSaveTest extends CDKTestCase {

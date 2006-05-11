@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 
 public class BondsToAtomDescriptorTest extends CDKTestCase {

@@ -14,7 +14,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  * @author      chhoppe from EUROSCREEN
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 
 public class LargestChainDescriptorTest extends CDKTestCase{

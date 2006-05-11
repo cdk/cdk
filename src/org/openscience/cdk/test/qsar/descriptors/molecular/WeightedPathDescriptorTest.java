@@ -45,7 +45,7 @@ import java.io.InputStream;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
 
 public class WeightedPathDescriptorTest extends CDKTestCase {

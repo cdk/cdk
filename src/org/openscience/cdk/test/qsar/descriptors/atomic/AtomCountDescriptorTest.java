@@ -36,7 +36,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs a test for the AtomCountDescriptor.
  *
- * @cdk.module test-extra
+ * @cdk.module test-qsar
  */
  
 public class AtomCountDescriptorTest extends CDKTestCase {

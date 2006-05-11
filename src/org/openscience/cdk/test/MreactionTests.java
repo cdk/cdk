@@ -57,20 +57,6 @@ public class MreactionTests {
 
         // make sure to check it agains src/test-reaction.files
         // before each release!
-        suite.addTest(ReactionBalancerTest.suite());
-        suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
-        suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
-        suite.addTest(ElectronImpactNBEReactionTest.suite());
-        suite.addTest(ElectronImpactPDBReactionTest.suite());
-        suite.addTest(RearrangementAnion1ReactionTest.suite());
-        suite.addTest(RearrangementAnion2ReactionTest.suite());
-        suite.addTest(RearrangementAnion3ReactionTest.suite());
-        suite.addTest(RearrangementCation1ReactionTest.suite());
-        suite.addTest(RearrangementCation2ReactionTest.suite());
-        suite.addTest(RearrangementCation3ReactionTest.suite());
-        suite.addTest(RearrangementRadical1ReactionTest.suite());
-        suite.addTest(RearrangementRadical2ReactionTest.suite());
-        suite.addTest(RearrangementRadical3ReactionTest.suite());
         suite.addTest(ReactionTypeTest.suite());
         
         return suite;

@@ -622,6 +622,7 @@
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all" 
@@ -853,6 +854,7 @@
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall> 
             <antcall target="test-module"><param name="module" value="smiles"/></antcall> 
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
