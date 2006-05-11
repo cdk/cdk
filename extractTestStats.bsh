@@ -20,6 +20,7 @@ Pattern failed = Pattern.compile(".*FAILED.*");
 int testsRun = 0;
 int testsFailed = 0;
 int testsErrors = 0;
+double testsTime = 0.0;
 
 while (line != null) {
   Matcher junitLine = junit.matcher(line);
@@ -37,15 +38,19 @@ while (line != null) {
       int run = Integer.parseInt(statsLine.group(1));
       int failed = Integer.parseInt(statsLine.group(2));
       int error = Integer.parseInt(statsLine.group(3));
+      double time = Double.parseDouble(statsLine.group(4));
       System.out.println(moduleName + ": run=" + run +
-        " failed=" + failed + " error=" + error);
+        " failed=" + failed + " error=" + error +
+        " time=" + time + " secs");
       testsRun += run;
       testsFailed += failed;
       testsErrors += error;
+      testsTime += time;
     }
   }
   line = reader.readLine();
 }
 
 System.out.println("\ntotal: run=" + testsRun +
-  " failed=" + testsFailed + " error=" + testsErrors);
+  " failed=" + testsFailed + " error=" + testsErrors +
+  " time=" + testsTime + " secs");
