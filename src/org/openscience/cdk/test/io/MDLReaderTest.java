@@ -248,6 +248,21 @@ public class MDLReaderTest extends CDKTestCase {
         }
     }
 
+    public void testGhemicalOutput() {
+        String filename = "data/mdl/butanoic_acid.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getAtomCount() > 0);
+            assertTrue(ChemFileManipulator.getAllInOneContainer(chemFile).getBondCount() > 0);
+        } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
     public void testUsesGivenMolecule() {
         String filename = "data/mdl/superspiro.mol"; // just a random file
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
