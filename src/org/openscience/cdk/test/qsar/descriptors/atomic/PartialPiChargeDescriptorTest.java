@@ -81,7 +81,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			else if(testResult[i] < 0)
 				factor = -1;
 			
-			assertEquals(factor,result);
+			assertEquals(factor,result, 0.00001);
 		}
 	}
 	/**
@@ -112,7 +112,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			else if(testResult[i] < 0)
 				factor = -1;
 			
-			assertEquals(factor,result);
+			assertEquals(factor,result, 0.00001);
 		}
 	}
 	/**
@@ -143,7 +143,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			else if(testResult[i] < 0)
 				factor = -1;
 			
-			assertEquals(factor,result);
+			assertEquals(factor,result, 0.00001);
 		}
 	}
 	/**
@@ -173,7 +173,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 				factor = 1;
 			else if(testResult[i] < 0)
 				factor = -1;
-			assertEquals(factor,result);
+			assertEquals(factor,result, 0.00001);
 		}
 	}
 }
