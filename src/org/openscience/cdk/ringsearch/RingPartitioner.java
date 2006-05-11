@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -124,13 +126,14 @@ public class RingPartitioner {
      */
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
-        Vector tempRings = rs.getConnectedRings(ring);
+        List tempRings = rs.getConnectedRings(ring);
         if (debug) {
             System.out.println("walkRingSystem -> tempRings.size(): " + tempRings.size());
         }
         rs.removeAtomContainer(ring);
-        for (int f = 0; f < tempRings.size(); f++) {
-            tempRing = (IRing) tempRings.elementAt(f);
+        Iterator iter = tempRings.iterator();
+        while (iter.hasNext()) {
+            tempRing = (IRing)iter.next();
             if (!newRs.contains(tempRing)) {
                 newRs.addAtomContainer(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));

@@ -25,7 +25,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -171,7 +171,7 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 		return super.getConnectedAtoms(atom);
 	}
 
-	public Vector getConnectedAtomsVector(IAtom atom) {
+	public List getConnectedAtomsVector(IAtom atom) {
 		logger.debug("Getting connecting atoms vector for atom: ", atom);
 		return super.getConnectedAtomsVector(atom);
 	}
@@ -181,7 +181,7 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 		return super.getConnectedBonds(atom);
 	}
 
-	public Vector getConnectedBondsVector(IAtom atom) {
+	public List getConnectedBondsVector(IAtom atom) {
 		logger.debug("Getting connected bonds vector for atom: ", atom);
 		return super.getConnectedBondsVector(atom);
 	}

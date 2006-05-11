@@ -87,14 +87,14 @@ public class RingSetManipulator {
 	 */
 	public static IRing getHeaviestRing(IRingSet ringSet, IBond bond)
 	{
-		Vector rings = ringSet.getRings(bond);
+		List rings = ringSet.getRings(bond);
 		IRing ring = null;
 		int maxOrderSum = 0;
 		for (int i = 0; i < rings.size(); i++)
 		{
-			if (maxOrderSum < ((IRing)rings.elementAt(i)).getOrderSum()) 
+			if (maxOrderSum < ((IRing)rings.get(i)).getOrderSum()) 
 			{
-				ring = (IRing)rings.elementAt(i);
+				ring = (IRing)rings.get(i);
 				maxOrderSum = ring.getOrderSum();
 			} 
 		}

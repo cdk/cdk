@@ -23,8 +23,10 @@
  */
 package org.openscience.cdk;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -533,12 +535,13 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public IAtom[] getConnectedAtoms(IAtom atom)
-	{
-		Vector atomsVec = getConnectedAtomsVector(atom);
-		IAtom[] conAtoms = new IAtom[atomsVec.size()];
-		atomsVec.copyInto(conAtoms);
-		return conAtoms;
+	public IAtom[] getConnectedAtoms(IAtom atom) {
+		List atomList = getConnectedAtomsVector(atom);
+		IAtom[] atoms = new IAtom[atomList.size()];
+		for (int i=0; i<atomList.size(); i++) {
+			atoms[i] = (IAtom)atomList.get(i);
+		}
+		return atoms;
 	}
 
 
@@ -548,16 +551,16 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The vector with the size of connected atoms
 	 */
-	public Vector getConnectedAtomsVector(IAtom atom)
+	public List getConnectedAtomsVector(IAtom atom)
 	{
-		Vector atomsVec = new Vector();
-		ElectronContainer electronContainer;
+		List atomsVec = new ArrayList();
+		IElectronContainer electronContainer;
 		for (int i = 0; i < electronContainerCount; i++)
 		{
-			electronContainer = (ElectronContainer)electronContainers[i];
-			if (electronContainer instanceof IBond && ((Bond) electronContainer).contains(atom))
+			electronContainer = (IElectronContainer)electronContainers[i];
+			if (electronContainer instanceof IBond && ((IBond) electronContainer).contains(atom))
 			{
-				atomsVec.addElement(((Bond) electronContainer).getConnectedAtom(atom));
+				atomsVec.add(((IBond) electronContainer).getConnectedAtom(atom));
 			}
 		}
 		return atomsVec;
@@ -572,10 +575,12 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 */
 	public IBond[] getConnectedBonds(IAtom atom)
 	{
-		Vector bondsVec=getConnectedBondsVector(atom);
-		IBond[] conBonds = new IBond[bondsVec.size()];
-		bondsVec.copyInto(conBonds);
-		return conBonds;
+		List bondList = getConnectedBondsVector(atom);
+		IBond[] bonds = new IBond[bondList.size()];
+		for (int i=0; i<bondList.size(); i++) {
+			bonds[i] = (IBond)bondList.get(i);
+		}
+		return bonds;
 	}
   
 	/**
@@ -584,15 +589,15 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The vector with the size of connected atoms
 	 */
-  public Vector getConnectedBondsVector(IAtom atom)
+  public List getConnectedBondsVector(IAtom atom)
 	{
-		Vector bondsVec = new Vector();
+		List bondsVec = new ArrayList();
 		for (int i = 0; i < electronContainerCount; i++)
 		{
 			if (electronContainers[i] instanceof IBond &&
 					((IBond) electronContainers[i]).contains(atom))
 			{
-				bondsVec.addElement(electronContainers[i]);
+				bondsVec.add(electronContainers[i]);
 			}
 		}
     return(bondsVec);

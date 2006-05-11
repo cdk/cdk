@@ -24,7 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -133,7 +133,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
 		ringSet = arf.findAllRings(ac);
-		Vector ringsWithThisBond = null;
+		List ringsWithThisBond = null;
 		for (int f = 0; f < bonds.length; f++) {
 			ringsWithThisBond = ringSet.getRings(bonds[f]);
 			if (ringsWithThisBond.size() > 0) {

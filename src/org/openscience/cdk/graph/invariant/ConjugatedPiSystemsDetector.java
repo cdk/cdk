@@ -24,8 +24,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -97,8 +97,8 @@ public class ConjugatedPiSystemsDetector {
             while (!stack.empty()) {
                 boolean addAtom = false;
                 Atom currentAtom = (Atom) stack.pop();
-                Vector atoms = ac.getConnectedAtomsVector(currentAtom);
-                Vector bonds = ac.getConnectedBondsVector(currentAtom);
+                List atoms = ac.getConnectedAtomsVector(currentAtom);
+                List bonds = ac.getConnectedBondsVector(currentAtom);
 
                 for (int j = 0; j < atoms.size(); j++) {
                     Atom atom = (Atom) atoms.get(j);
@@ -142,8 +142,8 @@ public class ConjugatedPiSystemsDetector {
      */
     private static int checkAtom(IAtomContainer ac, IAtom currentAtom) {
         int check = -1;
-        Vector atoms = ac.getConnectedAtomsVector(currentAtom);
-        Vector bonds = ac.getConnectedBondsVector(currentAtom);
+        List atoms = ac.getConnectedAtomsVector(currentAtom);
+        List bonds = ac.getConnectedBondsVector(currentAtom);
         if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == 1 /*&& currentAtom.getSymbol().equals("C")*/) {

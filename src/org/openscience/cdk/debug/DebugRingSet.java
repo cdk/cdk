@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -51,7 +51,7 @@ public class DebugRingSet extends org.openscience.cdk.RingSet
 		return super.ringAlreadyInSet(newRing);
 	}
 
-	public Vector getRings(IBond bond) {
+	public List getRings(IBond bond) {
 		logger.debug("Getting rings for bond: ", bond);
 		return super.getRings(bond);
 	}
@@ -61,7 +61,7 @@ public class DebugRingSet extends org.openscience.cdk.RingSet
 		return super.getRings(atom);
 	}
 
-	public Vector getConnectedRings(IRing ring) {
+	public List getConnectedRings(IRing ring) {
 		logger.debug("Getting connected rings for ring: ", ring);
 		return super.getConnectedRings(ring);
 	}

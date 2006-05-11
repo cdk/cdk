@@ -27,7 +27,7 @@
  *  */
 package org.openscience.cdk.geometry;
 
-import java.util.Vector;
+import java.util.List;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -189,14 +189,14 @@ public class AtomTools {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
-	    Vector connectedAtoms = atomContainer.getConnectedAtomsVector(refAtom);
+	    List connectedAtoms = atomContainer.getConnectedAtomsVector(refAtom);
         if (connectedAtoms == null) {
             return newPoints;
         }
         int nligands = connectedAtoms.size();
         AtomContainer ligandsWithCoords    = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < nligands; i++) {
-            Atom ligand = (Atom) connectedAtoms.elementAt(i);
+            Atom ligand = (Atom) connectedAtoms.get(i);
             if (ligand.getPoint3d() != null) {
                 ligandsWithCoords.addAtom(ligand);
             }
@@ -215,7 +215,7 @@ public class AtomTools {
 // does B have a ligand (other than A)            
             Atom jAtom = null;
             for (int i = 0; i < connectedAtoms.size(); i++) {
-                Atom connectedAtom = (Atom) connectedAtoms.elementAt(i);
+                Atom connectedAtom = (Atom) connectedAtoms.get(i);
                 if (!connectedAtom.equals(refAtom)) {
                     jAtom = connectedAtom;
                     break;

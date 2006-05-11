@@ -33,20 +33,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -54,6 +45,16 @@ import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -627,9 +628,9 @@ public class SmilesGenerator
 	 *@param  container  the AtomContainer that is being parsed.
 	 *@return            Vector of atoms in canonical oreder.
 	 */
-	private Vector getCanNeigh(final org.openscience.cdk.interfaces.IAtom a, final IAtomContainer container)
+	private List getCanNeigh(final org.openscience.cdk.interfaces.IAtom a, final IAtomContainer container)
 	{
-		Vector v = container.getConnectedAtomsVector(a);
+		List v = container.getConnectedAtomsVector(a);
 		if (v.size() > 1)
 		{
 			Collections.sort(v,
@@ -754,18 +755,18 @@ public class SmilesGenerator
 	private void createDFSTree(org.openscience.cdk.interfaces.IAtom a, Vector tree, org.openscience.cdk.interfaces.IAtom parent, IAtomContainer container)
 	{
 		tree.add(a);
-		Vector neighbours = getCanNeigh(a, container);
+		List neighbours = getCanNeigh(a, container);
 		neighbours.remove(parent);
 		IAtom next;
 		a.setFlag(CDKConstants.VISITED, true);
 		//System.out.println("Starting with DFSTree and AtomContainer of size " + container.getAtomCount());
 		//System.out.println("Current Atom has " + neighbours.size() + " neighbours");
-		for (int x = 0; x < neighbours.size(); x++)
-		{
-			next = (IAtom) neighbours.elementAt(x);
+		Iterator iter = neighbours.iterator();
+		while (iter.hasNext()) {
+			next = (IAtom)iter.next();
 			if (!next.getFlag(CDKConstants.VISITED))
 			{
-				if (x == neighbours.size() - 1)
+				if (!iter.hasNext())
 				{
 					//Last neighbour therefore in this chain
 					createDFSTree(next, tree, a, container);
@@ -838,7 +839,7 @@ public class SmilesGenerator
 				{
 					//System.out.println("in parseChain in isChiral");
 					IAtom[] sorted = null;
-					Vector chiralNeighbours = container.getConnectedAtomsVector(atom);
+					List chiralNeighbours = container.getConnectedAtomsVector(atom);
 					if (BondTools.isTetrahedral(container, atom,false) > 0)
 					{
 						sorted = new IAtom[3];

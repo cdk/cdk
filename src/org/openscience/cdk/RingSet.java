@@ -24,6 +24,8 @@
 
 package org.openscience.cdk;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -106,16 +108,16 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public Vector getRings(org.openscience.cdk.interfaces.IBond bond)
+	public List getRings(org.openscience.cdk.interfaces.IBond bond)
 	{
-		Vector rings = new Vector();
+		List rings = new ArrayList();
 		Ring ring;
 		for (int i = 0; i < getAtomContainerCount(); i++)
 		{
 			ring = (Ring)getAtomContainer(i);
 			if (ring.contains(bond))
 			{
-				rings.addElement(ring);
+				rings.add(ring);
 			}
 		}
 		return rings;
@@ -151,9 +153,9 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 
-	public Vector getConnectedRings(IRing ring)
+	public List getConnectedRings(IRing ring)
 	{
-		Vector connectedRings = new Vector();
+		List connectedRings = new Vector();
 		IRing tempRing;
 		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)
@@ -164,7 +166,7 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 				tempRing = (IRing)getAtomContainer(j);
 				if (tempRing != ring && tempRing.contains(atom))
 				{
-					connectedRings.addElement(tempRing);
+					connectedRings.add(tempRing);
 				}
 			}
 		}

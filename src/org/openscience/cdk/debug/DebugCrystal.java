@@ -25,7 +25,7 @@ package org.openscience.cdk.debug;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import javax.vecmath.Vector3d;
 
@@ -183,7 +183,7 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		return super.getConnectedAtoms(atom);
 	}
 
-	public Vector getConnectedAtomsVector(IAtom atom) {
+	public List getConnectedAtomsVector(IAtom atom) {
 		logger.debug("Getting connecting atoms vector for atom: ", atom);
 		return super.getConnectedAtomsVector(atom);
 	}
@@ -193,7 +193,7 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		return super.getConnectedBonds(atom);
 	}
 
-	public Vector getConnectedBondsVector(IAtom atom) {
+	public List getConnectedBondsVector(IAtom atom) {
 		logger.debug("Getting connected bonds vector for atom: ", atom);
 		return super.getConnectedBondsVector(atom);
 	}

@@ -521,7 +521,7 @@ public class PathTools {
         if (path.contains(start))
             return;
         path.add(start);
-        Vector nbrs = atomContainer.getConnectedAtomsVector(start);
+        List nbrs = atomContainer.getConnectedAtomsVector(start);
         for (Iterator i = nbrs.iterator(); i.hasNext();)
             findPathBetween(atomContainer, (IAtom) i.next(), end, path);
         path.remove(path.size() - 1);

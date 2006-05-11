@@ -24,7 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.List;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -281,7 +281,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The vector with the size of connected atoms
 	 */
-	public Vector getConnectedAtomsVector(IAtom atom);
+	public List getConnectedAtomsVector(IAtom atom);
 
 
 	/**
@@ -298,7 +298,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The vector with the size of connected atoms
 	 */
-  public Vector getConnectedBondsVector(IAtom atom);
+  public List getConnectedBondsVector(IAtom atom);
 
 
 	/**

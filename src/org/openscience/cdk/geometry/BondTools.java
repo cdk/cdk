@@ -30,6 +30,7 @@
  */
 package org.openscience.cdk.geometry;
 
+import java.util.List;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -543,7 +544,7 @@ public class BondTools {
 	 */
 	public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
-		Vector atoms = container.getConnectedAtomsVector(a);
+		List atoms = container.getConnectedAtomsVector(a);
 		TreeMap hm = new TreeMap();
 		for (int i = 1; i < atoms.size(); i++)
 		{

@@ -28,19 +28,21 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.geometry.GeometryTools;
 
 /**
  * Class providing methods for generating coordinates for ring atoms.
@@ -622,7 +624,7 @@ public class RingPlacer
 	 */
 	void placeConnectedRings(IRingSet rs, IRing ring, int handleType, double bondLength)
 	{
-		Vector connectedRings = rs.getConnectedRings(ring);
+		List connectedRings = rs.getConnectedRings(ring);
 		IRing connectedRing;
 		IAtomContainer sharedAtoms;
 		int sac;
@@ -630,10 +632,10 @@ public class RingPlacer
 		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
 		Bond bond;
 
-//		logger.debug(rs.reportRingList(molecule)); 
-		for (int i = 0; i < connectedRings.size(); i++)
-		{
-			connectedRing = (IRing)connectedRings.elementAt(i);
+//		logger.debug(rs.reportRingList(molecule));
+		Iterator iter = connectedRings.iterator();
+		while (iter.hasNext()) {
+			connectedRing = (IRing)iter.next();
 			if (!connectedRing.getFlag(CDKConstants.ISPLACED))
 			{
 //				logger.debug(ring.toString(molecule));

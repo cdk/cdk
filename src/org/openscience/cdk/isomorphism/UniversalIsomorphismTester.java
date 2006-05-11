@@ -614,7 +614,7 @@ public class UniversalIsomorphismTester {
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
-                  Vector bondsToTest = g2.getConnectedBondsVector(atom2[n]);
+                  List bondsToTest = g2.getConnectedBondsVector(atom2[n]);
                   if (bondsToTest.contains(testBond2)) {
                     RMap map;
                     if (j == n) {

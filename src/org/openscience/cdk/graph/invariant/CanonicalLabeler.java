@@ -30,6 +30,7 @@ package org.openscience.cdk.graph.invariant;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -170,7 +171,7 @@ public class CanonicalLabeler {
     long summ;
     while (it.hasNext()) {
       inv = (InvPair) it.next();
-      Vector neighbour = atomContainer.getConnectedAtomsVector(inv.getAtom());
+      List neighbour = atomContainer.getConnectedAtomsVector(inv.getAtom());
       n = neighbour.iterator();
       summ = 1;
       while (n.hasNext()) {

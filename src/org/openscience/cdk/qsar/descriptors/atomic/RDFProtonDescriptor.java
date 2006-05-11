@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -203,9 +203,9 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 			}
-			Vector rsAtom = null;
+			List rsAtom = null;
 			Ring ring = null;
-			Vector ringsWithThisBond = null;
+			List ringsWithThisBond = null;
 			// SET ISINRING FLAGS FOR BONDS
 			org.openscience.cdk.interfaces.IBond[] bondsInContainer = ac.getBonds();		
 			for (int z = 0; z < bondsInContainer.length; z++) {
