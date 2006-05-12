@@ -585,7 +585,7 @@ public class MDLReader extends DefaultChemObjectReader {
     private void initIOSettings() {
         forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
           "Should coordinates always be read as 3D?", 
-          "no");
+          "false");
     }
     
     public void customizeJob() {

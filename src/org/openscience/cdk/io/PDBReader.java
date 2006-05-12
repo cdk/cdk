@@ -637,10 +637,10 @@ public class PDBReader extends DefaultChemObjectReader {
     private void initIOSettings() {
         deduceBonding = new BooleanIOSetting("DeduceBonding", IOSetting.LOW,
           "Should the PDBReader deduce bonding patterns?", 
-          "yes");
+          "true");
         useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
           "Should the RebondTool be used (or a heuristic approach otherwise)?",
-          "no");
+          "false");
     }
     
     public void customizeJob() {
