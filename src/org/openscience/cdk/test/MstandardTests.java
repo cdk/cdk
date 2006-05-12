@@ -34,6 +34,7 @@ import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
 import org.openscience.cdk.test.graph.ConnectivityCheckerTest;
 import org.openscience.cdk.test.graph.PathToolsTest;
+import org.openscience.cdk.test.graph.rebond.RebondToolTest;
 import org.openscience.cdk.test.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.test.isomorphism.UniversalIsomorphismTesterTest;
 import org.openscience.cdk.test.math.MathToolsTest;
@@ -89,6 +90,7 @@ public class MstandardTests {
         suite.addTest(RingSetManipulatorTest.suite());
         suite.addTest(SetOfAtomContainersManipulatorTest.suite());
         suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(RebondToolTest.suite());
         
         return suite;
     }

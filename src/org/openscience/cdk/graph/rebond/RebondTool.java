@@ -40,12 +40,13 @@ import org.openscience.cdk.exception.CDKException;
  * atom types are configured such that the covalent bond radii
  * for all atoms are set. The AtomTypeFactory can be used for this.
  *
- * @cdk.keyword    rebonding
- * @cdk.keyword    bond, recalculation
- * @cdk.dictref    blue-obelisk:rebondFrom3DCoordinates
+ * @cdk.keyword rebonding
+ * @cdk.keyword bond, recalculation
+ * @cdk.dictref blue-obelisk:rebondFrom3DCoordinates
  * 
- * @author  Miguel Howard
+ * @author      Miguel Howard
  * @cdk.created 2003-05-23
+ * @cdk.module  standard
  *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */

@@ -35,9 +35,17 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
+import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the PDBReader class.
@@ -74,36 +82,26 @@ public class PDBReaderTest extends TestCase {
             IChemObjectReader oReader = new PDBReader(ins);
             assertNotNull(oReader);
 
-            ChemFile oChemFile = (ChemFile)oReader.read(new ChemFile());
+            IChemFile oChemFile = (IChemFile)oReader.read(new NNChemFile());
             assertNotNull(oChemFile);
             assertEquals(oChemFile.getChemSequenceCount(), 1);
 
-            oChemFile.setProperty(new String("test.chemfile"), new String("test.chemfile")); 
-            assertEquals(new String("test.chemfile"), oChemFile.getProperty("test.chemfile"));
-
-            org.openscience.cdk.interfaces.IChemSequence oSeq = oChemFile.getChemSequence(0);
+            IChemSequence oSeq = oChemFile.getChemSequence(0);
             assertNotNull(oSeq);			
             assertEquals(oSeq.getChemModelCount(), 1);
 
-            oSeq.setProperty(new String("test.chemsequence"), new String("test.chemsequence")); 
-            assertEquals(new String("test.chemsequence"), oSeq.getProperty("test.chemsequence"));
-
-            org.openscience.cdk.interfaces.IChemModel oModel = oSeq.getChemModel(0);
+            IChemModel oModel = oSeq.getChemModel(0);
             assertNotNull(oModel);
             assertEquals(1, oModel.getSetOfMolecules().getMoleculeCount());
 
-            oModel.setProperty(new String("test.chemmodel"), new String("test.chemmodel")); 
-            assertEquals(new String("test.chemmodel"), oModel.getProperty("test.chemmodel"));
-
-            BioPolymer oMol = (BioPolymer)oModel.getSetOfMolecules().getMolecule(0);
+            IAtomContainer container = oModel.getSetOfMolecules().getMolecule(0);
+            assertTrue(container instanceof IBioPolymer);
+            IBioPolymer oMol = (IBioPolymer)container;
             assertNotNull(oMol);
             assertEquals(oMol.getAtomCount(), 14);
             assertNotNull(oMol.getMonomer("MOLA1", "A"));
 
-            oMol.setProperty(new String("test.molecule"), new String("test.molecule")); 
-            assertEquals(new String("test.molecule"), oMol.getProperty("test.molecule"));
-
-            org.openscience.cdk.interfaces.IAtom nAtom = oMol.getFirstAtom();
+            IAtom nAtom = oMol.getFirstAtom();
             assertNotNull(nAtom);
             assertTrue(nAtom instanceof PDBAtom);
             PDBAtom oAtom = (PDBAtom)nAtom;
@@ -154,7 +152,7 @@ public class PDBReaderTest extends TestCase {
       IChemObjectReader reader = new PDBReader(ins);
       assertNotNull(reader);
 
-      ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+      ChemFile chemFile = (ChemFile) reader.read(new NNChemFile());
       assertNotNull(chemFile);
       assertEquals(1, chemFile.getChemSequenceCount());
 
@@ -162,11 +160,13 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(seq);
       assertEquals(1, seq.getChemModelCount());
       
-      org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+      IChemModel model = seq.getChemModel(0);
       assertNotNull(model);
       assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
 
-      BioPolymer mol = (BioPolymer) model.getSetOfMolecules().getMolecule(0);
+      IAtomContainer container = model.getSetOfMolecules().getMolecule(0);
+      assertTrue(container instanceof IBioPolymer);
+      IBioPolymer mol = (IBioPolymer)container;
       assertNotNull(mol);
       assertEquals(327, mol.getAtomCount());
       assertEquals(46, mol.getMonomerCount());
@@ -175,7 +175,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(mol.getMonomer("ILEA7", "A"));
       assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
       
-      org.openscience.cdk.interfaces.IAtom nAtom = mol.getAtomAt(94);
+      IAtom nAtom = mol.getAtomAt(94);
       assertNotNull(nAtom);
       assertTrue(nAtom instanceof PDBAtom);
       PDBAtom atom = (PDBAtom)nAtom;
@@ -199,4 +199,39 @@ public class PDBReaderTest extends TestCase {
       fail(ex.toString());
     }
   }
+  
+  public void test114D() {
+	    String filename = "data/pdb/114D.pdb";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+	    try {
+	      IChemObjectReader reader = new PDBReader(ins);
+	      assertNotNull(reader);
+
+	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	      assertNotNull(chemFile);
+	      assertEquals(1, chemFile.getChemSequenceCount());
+
+	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	      assertNotNull(seq);
+	      assertEquals(1, seq.getChemModelCount());
+	      
+	      IChemModel model = seq.getChemModel(0);
+	      assertNotNull(model);
+	      assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+	      IAtomContainer container = model.getSetOfMolecules().getMolecule(0);
+	      assertTrue(container instanceof IBioPolymer);
+	      IBioPolymer polymer = (IBioPolymer)container;
+	      
+	      // chemical validation
+	      assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
+	      assertEquals(2, polymer.getStrandCount());
+	      assertEquals(24, polymer.getMonomerCount());
+	      
+	    } catch (Exception ex) {
+	      fail(ex.toString());
+	    }
+	  }
+  
 }
