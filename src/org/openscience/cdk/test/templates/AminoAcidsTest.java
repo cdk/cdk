@@ -41,6 +41,11 @@ public class AminoAcidsTest extends CDKTestCase {
         return new TestSuite(AminoAcidsTest.class);
     }
 
+    public void testCreateBondMatrix() {
+    	int[][] bonds = AminoAcids.aaBondInfo();
+    	assertNotNull(bonds);
+    }
+    
     public void testCreateAAs() {
         AminoAcid[] aas = AminoAcids.createAAs();
         assertNotNull(aas);
