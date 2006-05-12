@@ -119,9 +119,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule || object instanceof IAtomContainer) {
+        if (object instanceof IMolecule) {
             try {
-                writeMolecule((IAtomContainer)object);
+                writeMolecule((IMolecule)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing XYZ file: " + ex.getMessage(), ex);
             }
@@ -134,7 +134,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * writes a single frame in XYZ format to the Writer.
     * @param mol the Molecule to write
     */
-    public void writeMolecule(IAtomContainer mol) throws IOException {
+    public void writeMolecule(IMolecule mol) throws IOException {
         
         String st = "";
         boolean writecharge = true;

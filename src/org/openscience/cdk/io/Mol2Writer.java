@@ -111,9 +111,9 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule || object instanceof IAtomContainer) {
+        if (object instanceof IMolecule) {
             try {
-                writeMolecule((IAtomContainer)object);
+                writeMolecule((IMolecule)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing Mol2 file: " + ex.getMessage(), ex);
             }
@@ -127,7 +127,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      *
      * @param mol the Molecule to write
      */
-    public void writeMolecule(IAtomContainer mol) throws IOException {
+    public void writeMolecule(IMolecule mol) throws IOException {
 
         try {
 
@@ -198,7 +198,7 @@ NO_CHARGES
                 } else {
                     writer.write("0.000 0.000 0.000 ");
                 }
-                writer.write(atoms[i].getSymbol()); // FIXME: should use perceived Mol2 Atom Types!
+                writer.write(atoms[i].getSymbol()+ "\n"); // FIXME: should use perceived Mol2 Atom Types!
             }
 
 /*

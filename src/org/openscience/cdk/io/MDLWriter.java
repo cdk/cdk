@@ -202,13 +202,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
 			writeSetOfMolecules((ISetOfMolecules)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
-		} else if (object instanceof IMolecule || object instanceof IAtomContainer) {
+		} else if (object instanceof IMolecule) {
 			try{
-				boolean[] isVisible=new boolean[((IAtomContainer)object).getAtomCount()];
+				boolean[] isVisible=new boolean[((IMolecule)object).getAtomCount()];
 				for(int i=0;i<isVisible.length;i++){
 					isVisible[i]=true;
 				}
-				writeMolecule((IAtomContainer)object,isVisible);
+				writeMolecule((IMolecule)object,isVisible);
 			}
 			catch (Exception ex) {
 				logger.error(ex.getMessage());
@@ -278,7 +278,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 * @param   molecule  Molecule that is written to an OutputStream
    * @param   isVisible Should a certain atom be written to mdl?
 	 */
-    public void writeMolecule(IAtomContainer container, boolean[] isVisible) throws Exception {
+    public void writeMolecule(IMolecule container, boolean[] isVisible) throws Exception {
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule

@@ -121,10 +121,10 @@ public class HINWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule  || object instanceof IAtomContainer) {
+        if (object instanceof IMolecule) {
             try {
                 ISetOfMolecules som = object.getBuilder().newSetOfMolecules();
-                som.addAtomContainer((IAtomContainer)object);
+                som.addMolecule((IMolecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
