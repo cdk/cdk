@@ -108,7 +108,7 @@ public class RebondTool {
                                     atomNear, atomNear.getCovalentRadius(),
                                     e.foundDistance2());
         if (isBonded) {
-          IBond bond = new org.openscience.cdk.Bond(atom, atomNear, 1.0);
+          IBond bond = atom.getBuilder().newBond(atom, atomNear, 1.0);
           container.addBond(bond);
         }
       }
