@@ -78,7 +78,7 @@ public class AminoAcids {
         	}
         }
         
-        if (counter>152) {
+        if (counter>153) {
         	logger.error("Error while creating AA info! Bond count is too large: ", counter);
         	return null;
         }
