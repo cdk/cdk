@@ -35,6 +35,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -118,9 +119,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IMolecule || object instanceof IAtomContainer) {
             try {
-                writeMolecule((IMolecule)object);
+                writeMolecule((IAtomContainer)object);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing XYZ file: " + ex.getMessage(), ex);
             }
@@ -133,7 +134,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * writes a single frame in XYZ format to the Writer.
     * @param mol the Molecule to write
     */
-    public void writeMolecule(IMolecule mol) throws IOException {
+    public void writeMolecule(IAtomContainer mol) throws IOException {
         
         String st = "";
         boolean writecharge = true;

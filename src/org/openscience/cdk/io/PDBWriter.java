@@ -112,8 +112,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule){
-            writeMolecule((IMolecule)object);
+        if (object instanceof IMolecule || object instanceof IAtomContainer){
+            writeMolecule((IAtomContainer)object);
         } else if (object instanceof ICrystal){
             writeCrystal((ICrystal)object);
         } else if (object instanceof IChemFile){
@@ -142,7 +142,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     *
     * @param molecule the Molecule to write
     */
-   public void writeMolecule(IMolecule molecule) throws CDKException {
+   public void writeMolecule(IAtomContainer molecule) throws CDKException {
        
        try {
            int atomNumber = 1;
