@@ -35,6 +35,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -120,10 +121,10 @@ public class HINWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
+        if (object instanceof IMolecule  || object instanceof IAtomContainer) {
             try {
                 ISetOfMolecules som = object.getBuilder().newSetOfMolecules();
-                som.addMolecule((IMolecule)object);
+                som.addAtomContainer((IAtomContainer)object);
                 writeMolecule(som);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
