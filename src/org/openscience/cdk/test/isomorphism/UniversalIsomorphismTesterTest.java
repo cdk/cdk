@@ -296,5 +296,16 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 			exc.printStackTrace();
 		}
 	}
+
+    
+    public void testAnyAtomAnyBondCase() throws Exception {
+	SmilesParser sp = new SmilesParser();
+	AtomContainer target = sp.parseSmiles("O1C=CC=C1");
+	AtomContainer queryac = sp.parseSmiles("C1CCCC1");
+	QueryAtomContainer query = createAnyAtomAnyBondContainer(queryac, false);
+
+	assertTrue(UniversalIsomorphismTester.isSubgraph(target, query));
+	assertTrue(UniversalIsomorphismTester.isIsomorph(target, query));
+    }
 }
 
