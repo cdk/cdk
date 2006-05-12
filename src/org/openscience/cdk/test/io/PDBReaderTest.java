@@ -226,6 +226,7 @@ public class PDBReaderTest extends TestCase {
 	      
 	      // chemical validation
 	      assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
+	      assertTrue(ChemFileManipulator.getBondCount(chemFile) > 0);
 	      assertEquals(2, polymer.getStrandCount());
 	      assertEquals(24, polymer.getMonomerCount());
 	      
