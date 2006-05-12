@@ -34,7 +34,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 
 
 /**
@@ -51,6 +54,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         return new TestSuite(AtomHybridizationVSEPRDescriptorTest.class);
     }
 
+    /**
+	 *  A unit test for JUnit with O-C
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_1() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -83,6 +89,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
     }
 
+    /**
+	 *  A unit test for JUnit with [O+]=C-C
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_2() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -115,6 +124,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
     }
 
+    /**
+	 *  A unit test for JUnit
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_3() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -149,6 +161,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
     }
 
+    /**
+	 *  A unit test for JUnit
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_4() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -176,6 +191,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
     }
 
+    /**
+	 *  A unit test for JUnit
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_5() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -207,6 +225,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 
     }
 
+    /**
+	 *  A unit test for JUnit with F-[I-]-F
+	 */
     public void testAtomHybridizationVSEPRDescriptorTest_6() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
         IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
@@ -229,5 +250,54 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params1);
         assertEquals(CDKConstants.HYBRIDIZATION_SP3D1, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
 
+    }
+    /**
+	 *  A unit test for JUnit with F-C=C
+	 */
+    public void testAtomHybridizationVSEPRDescriptorTest_7() throws ClassNotFoundException, CDKException, java.lang.Exception
+    {
+    	int[] testResult = {CDKConstants.HYBRIDIZATION_SP3,CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP2};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+        
+        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+        
+        SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("F-C=C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for(int i = 0 ; i < 3; i++){
+			Object[] params1 = {new Integer(i)};
+	        descriptor.setParameters(params1);
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		}
+    }
+    /**
+	 *  A unit test for JUnit with [F+]=C-[C-]
+	 */
+    public void testAtomHybridizationVSEPRDescriptorTest_8() throws ClassNotFoundException, CDKException, java.lang.Exception
+    {
+    	int[] testResult = {CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP3};
+    	
+        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+        
+        SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[F+]=C-[C-]");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addImplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for(int i = 0 ; i < 3; i++){
+			Object[] params1 = {new Integer(i)};
+	        descriptor.setParameters(params1);
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+
+		}
     }
 }
