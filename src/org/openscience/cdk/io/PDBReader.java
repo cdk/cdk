@@ -41,7 +41,11 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.RebondTool;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -54,6 +58,8 @@ import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -61,6 +67,7 @@ import org.openscience.cdk.protein.data.PDBStrand;
 import org.openscience.cdk.protein.data.PDBStructure;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Reads the contents of a PDBFile.
@@ -81,6 +88,8 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	private LoggingTool logger;
 	private BufferedReader _oInput; // The internal used BufferedReader
+	private BooleanIOSetting deduceBonding;
+	private BooleanIOSetting useRebondTool;
 	
 	/**
 	 *
@@ -105,6 +114,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	public PDBReader(Reader oIn) {
 		logger = new LoggingTool(this.getClass());
 		_oInput = new BufferedReader(oIn);
+		initIOSettings();
 	}
 	
 	public PDBReader() {
@@ -260,20 +270,31 @@ public class PDBReader extends DefaultChemObjectReader {
 						logger.debug("Added new STRAND");
 					} else if (cCol.equals("END   ")) {
 						// create bonds and finish the molecule
-						if (oBP.getAtomCount() != 0) {
-							// Create bonds. If bonds could not be created, all bonds are deleted.
-							try {
-								if(!createBonds(oBP))	{
-									// Get rid of all potentially created bonds.
-									logger.info("Bonds could not be created when PDB file was read.");								
-									oBP.removeAllBonds();								
+						if (deduceBonding.isSet()) {
+							// OK, try to deduce the bonding patterns
+							if (oBP.getAtomCount() != 0) {
+								// Create bonds. If bonds could not be created, all bonds are deleted.
+								try {
+									if (useRebondTool.isSet()) {
+										if(!createBondsWithRebondTool(oBP))	{
+											// Get rid of all potentially created bonds.
+											logger.info("Bonds could not be created using the RebondTool when PDB file was read.");								
+											oBP.removeAllBonds();								
+										}
+									} else {
+										if(!createBonds(oBP))	{
+											// Get rid of all potentially created bonds.
+											logger.info("Bonds could not be created when PDB file was read.");								
+											oBP.removeAllBonds();								
+										}
+									}
+								} catch (Exception exception) {
+									logger.info("Bonds could not be created when PDB file was read.");
+									logger.debug(exception);
 								}
-							} catch (Exception exception) {
-								logger.info("Bonds could not be created when PDB file was read.");
-								logger.debug(exception);
 							}
-							oSet.addMolecule(oBP);
 						}
+						oSet.addMolecule(oBP);
 						//						oBP = new BioPolymer();					
 						//				} else if (cCol.equals("USER  ")) {
 						//						System.out.println(cLine);
@@ -491,6 +512,35 @@ public class PDBReader extends DefaultChemObjectReader {
 		return true;
 	}
 	
+	private boolean createBondsWithRebondTool(IBioPolymer pol){
+		RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
+		try {
+//			 configure atoms
+		      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+		    	  pol.getBuilder());
+		      IAtom[] atoms = pol.getAtoms();
+		      for (int i=0; i<atoms.length; i++) {
+		        try {
+		        	IAtomType[] types = factory.getAtomTypes(atoms[i].getSymbol());
+		        	if (types.length > 0) {
+		        		// just pick the first one
+		        		AtomTypeManipulator.configure(atoms[i], types[0]);
+		        	} else {
+		        		logger.error("Could not configure atom with symbol: ", atoms[i].getSymbol());
+		        	}
+				} catch (Exception e) {
+					logger.error("Could not configure atom (but don't care): " + e.getMessage());
+					logger.debug(e);
+				}
+		      }
+			tool.rebond(pol);
+		} catch (Exception e) {
+			logger.error("Could not rebond the polymer: " + e.getMessage());
+			logger.debug(e);
+		}
+		return true;
+	}
+
 	/**
 	 * Creates an <code>Atom</code> and sets properties to their values from
 	 * the ATOM record. If the line is shorter than 80 characters, the information
@@ -583,4 +633,26 @@ public class PDBReader extends DefaultChemObjectReader {
 	public void close() throws IOException {
 		_oInput.close();
 	}
+
+    private void initIOSettings() {
+        deduceBonding = new BooleanIOSetting("DeduceBonding", IOSetting.LOW,
+          "Should the PDBReader deduce bonding patterns?", 
+          "yes");
+        useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
+          "Should the RebondTool be used (or a heuristic approach otherwise)?",
+          "no");
+    }
+    
+    public void customizeJob() {
+        fireIOSettingQuestion(deduceBonding);
+        fireIOSettingQuestion(useRebondTool);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[2];
+        settings[0] = deduceBonding;
+        settings[1] = useRebondTool;
+        return settings;
+    }
+
 }
