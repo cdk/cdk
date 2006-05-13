@@ -59,7 +59,6 @@ import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
-import org.openscience.cdk.test.templates.AminoAcidsTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -118,8 +117,6 @@ public class MextraTests {
         suite.addTest(TanimotoTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
-        // from cdk.test.templates
-        suite.addTest(AminoAcidsTest.suite());
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).

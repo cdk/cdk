@@ -1,0 +1,8 @@
+cdk-interfaces.jar
+cdk-core.jar
+cdk-data.jar
+cdk-io.jar
+cdk-standard.jar
+cdk-pdb.jar
+cdk-nonotify.jar
+cdk-test-core.jar
