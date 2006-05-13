@@ -31,13 +31,6 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,6 +41,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
+
+import java.util.*;
 
 /**
  *  This class implements a multipurpose structure comparison tool.
@@ -122,16 +117,13 @@ public class UniversalIsomorphismTester {
           IAtom atom2 = g2.getAtomAt(0);
 		  if (atom instanceof IQueryAtom) {
 			  IQueryAtom qAtom = (IQueryAtom)atom;
-              if(qAtom.matches(g2.getAtomAt(0))) return true;
-              else return false;
+              return qAtom.matches(g2.getAtomAt(0));
 		  } else if (atom2 instanceof IQueryAtom) {
               IQueryAtom qAtom = (IQueryAtom)atom2;
-              if(qAtom.matches(g1.getAtomAt(0))) return true;
-              else return false;
+              return qAtom.matches(g1.getAtomAt(0));
           } else {
 			  String atomSymbol = atom.getSymbol();
-              if(g1.getAtomAt(0).getSymbol().equals(atomSymbol)) return true;
-              else return false;
+              return g1.getAtomAt(0).getSymbol().equals(atomSymbol);
 		  }
       }
 	  return (getIsomorphMap(g1, g2) != null);
@@ -245,7 +237,7 @@ public class UniversalIsomorphismTester {
           return list;
       }
   }
-  
+
   /**
    *  Returns the first subgraph 'atom mapping' found for g2 in g1.
    *
@@ -276,8 +268,7 @@ public class UniversalIsomorphismTester {
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
       // test for single atom case
       if (g2.getAtomCount() == 1) {
-          List arrayList = new ArrayList();
-		  IAtom atom = g2.getAtomAt(0);
+          IAtom atom = g2.getAtomAt(0);
 		  for (int i=0; i<g1.getAtomCount(); i++) {
 		      IAtom atom2 = g1.getAtomAt(i);
 		      if (atom instanceof IQueryAtom) {
@@ -292,7 +283,7 @@ public class UniversalIsomorphismTester {
 		  }
           return false;
       }
-      if (!testSubgraphHeuristics(g1, g2)) return false; 
+      if (!testSubgraphHeuristics(g1, g2)) return false;
 	  return (getSubgraphMap(g1, g2) != null);
   }
 
@@ -311,15 +302,14 @@ public class UniversalIsomorphismTester {
   public static List getOverlaps(IAtomContainer g1, IAtomContainer g2) throws CDKException{
       start=System.currentTimeMillis();
       List rMapsList = search(g1, g2, new BitSet(), new BitSet(), true, false);
-      
+
       // projection on G1
       ArrayList graphList = projectList(rMapsList, g1, ID1);
-      
+
       // reduction of set of solution (isomorphism and substructure
       // with different 'mappings'
-      ArrayList reducedGraphList = getMaximum(graphList);
-      
-      return reducedGraphList;
+
+      return getMaximum(graphList);
   }
 
 
@@ -331,12 +321,12 @@ public class UniversalIsomorphismTester {
    * @return     The bitSet
    */
   public static BitSet getBitSet(IAtomContainer ac) {
-    BitSet bs = null;
+    BitSet bs;
     int n = ac.getBondCount();
 
     if (n != 0) {
       bs = new BitSet(n);
-      for (int i = 0; i < n; i++) { bs.set(i); };
+      for (int i = 0; i < n; i++) { bs.set(i); }
     } else {
       bs = new BitSet();
     }
@@ -384,25 +374,25 @@ public class UniversalIsomorphismTester {
    */
   public static List search(IAtomContainer g1, IAtomContainer g2, BitSet c1,
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
-	  
+
 	  // reset result
 	  ArrayList rMapsList = new ArrayList();
-	  
+
 	  // build the RGraph corresponding to this problem
 	  RGraph rGraph = buildRGraph(g1, g2);
 	  // parse the RGraph with the given constrains and options
 	  rGraph.parse(c1, c2, findAllStructure, findAllMap);
 	  List solutionList = rGraph.getSolutions();
-	  
+
 	  // convertions of RGraph's internal solutions to G1/G2 mappings
 	  for (Iterator i = solutionList.iterator(); i.hasNext(); ) {
 		  BitSet set = (BitSet) i.next();
 		  rMapsList.add(rGraph.bitSetToRMap(set));
 	  }
-	  
+
 	  return rMapsList;
   }
-  
+
   //////////////////////////////////////
   //    Manipulation tools
 
@@ -420,10 +410,10 @@ public class UniversalIsomorphismTester {
     IBond[] bondList = g.getBonds();
 
     Hashtable table = new Hashtable();
-    IAtom a1 = null;
-    IAtom a2 = null;
-    IAtom a = null;
-    IBond bond = null;
+    IAtom a1;
+    IAtom a2;
+    IAtom a;
+    IBond bond;
 
     for (Iterator i = rMapList.iterator(); i.hasNext(); ) {
       RMap rMap = (RMap) i.next();
@@ -438,9 +428,8 @@ public class UniversalIsomorphismTester {
 
       if (a1 == null) {
         try {
-			a1 = (IAtom)((IAtom)a).clone();
+			a1 = (IAtom)a.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         ac.addAtom(a1);
@@ -452,9 +441,8 @@ public class UniversalIsomorphismTester {
 
       if (a2 == null) {
         try {
-			a2 = (IAtom)((IAtom)a).clone();
+			a2 = (IAtom)a.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         ac.addAtom(a2);
@@ -525,7 +513,7 @@ public class UniversalIsomorphismTester {
    * @return     List of List of RMap objects for the Atoms (not Bonds!), null if no single atom case
   */
   public static ArrayList checkSingleAtomCases(IAtomContainer g1, IAtomContainer g2) {
-      
+
 	  if (g2.getAtomCount() == 1) {
 		  ArrayList arrayList = new ArrayList();
 		  IAtom atom = g2.getAtomAt(0);
@@ -562,7 +550,7 @@ public class UniversalIsomorphismTester {
           return null;
       }
   }
-  
+
   /**
    *  This makes maps of matching atoms out of a maps of matching bonds as produced by the get(Subgraph|Ismorphism)Maps methods.
    *
@@ -578,13 +566,11 @@ public class UniversalIsomorphismTester {
 	   Vector result = new Vector();
 	   for (int i = 0; i < l.size(); i++) {
 		   ArrayList l2 = (ArrayList)l.get(i);
-		   if (l!=null) {
-			   result.add((Vector)makeAtomsMapOfBondsMap(l2, g1, g2));
-		   }
-	   }
+           result.add((Vector)makeAtomsMapOfBondsMap(l2, g1, g2));
+       }
 	   return result;
    }
-  
+
   /**
    *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
    *
@@ -610,7 +596,7 @@ public class UniversalIsomorphismTester {
           if (bondsConnectedToAtom1j[k] != bond1) {
         	  IBond testBond = bondsConnectedToAtom1j[k];
             for (int m = 0; m < l.size(); m++) {
-            	IBond testBond2 = null;
+            	IBond testBond2;
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
@@ -659,9 +645,8 @@ public class UniversalIsomorphismTester {
     gr.clear();
     IBond[] bondsA1 = ac1.getBonds();
     IBond[] bondsA2 = ac2.getBonds();
-    int k = 0;
 
-    // compares each bond of G1 to each bond of G2
+      // compares each bond of G1 to each bond of G2
     for (int i = 0; i < bondsA1.length; i++) {
       for (int j = 0; j < bondsA2.length; j++) {
           if(timeout>-1 && (System.currentTimeMillis()-start)>timeout)
@@ -697,8 +682,8 @@ public class UniversalIsomorphismTester {
                   )
                 )
                 &&
-                ( // atome type conditions 
-                  ( // a1 = a2 && b1 = b2 
+                ( // atome type conditions
+                  ( // a1 = a2 && b1 = b2
                     bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol()) &&
                     bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
                   )
@@ -734,10 +719,10 @@ public class UniversalIsomorphismTester {
       x.getForbidden().set(i);
     }
 
-    IBond a1 = null;
-    IBond a2 = null;
-    IBond b1 = null;
-    IBond b2 = null;
+    IBond a1;
+    IBond a2;
+    IBond b1;
+    IBond b2;
 
     IBond[] bondsA1 = ac1.getBonds();
     IBond[] bondsA2 = ac2.getBonds();
@@ -784,7 +769,7 @@ public class UniversalIsomorphismTester {
     }
   }
 
-  
+
     /**
    *  Determines if 2 bond have 1 atom in common
    *
@@ -794,13 +779,13 @@ public class UniversalIsomorphismTester {
    *            the 2 bonds have no common atom
    */
   private static boolean hasCommonAtom(IBond a, IBond b) {
-      
+
     if (a.contains(b.getAtomAt(0))) {
       return true;
     } else if (a.contains(b.getAtomAt(1))) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -814,61 +799,57 @@ public class UniversalIsomorphismTester {
    */
   private static String getCommonSymbol(IBond a, IBond b) {
     String symbol = "";
-    
+
     if (a.contains(b.getAtomAt(0))) {
       symbol = b.getAtomAt(0).getSymbol();
     } else if (a.contains(b.getAtomAt(1))) {
       symbol = b.getAtomAt(1).getSymbol();
     }
-    
+
     return symbol;
   }
 
     /**
    *  Determines if 2 bond have 1 atom in common if second is a query AtomContainer
    *
-   * @param  a  first bond
-   * @param  b  second bond
+   * @param  a1  first bond
+   * @param  b1  second bond
    * @return    the symbol of the common atom or "" if
    *            the 2 bonds have no common atom
    */
   private static boolean queryAdjacency(IBond a1, IBond b1, IBond a2, IBond b2) {
-      
+
 	  IAtom atom1 = null;
 	  IAtom atom2 = null;
-      
+
       if (a1.contains(b1.getAtomAt(0))) {
           atom1 = b1.getAtomAt(0);
       } else if (a1.contains(b1.getAtomAt(1))) {
           atom1 = b1.getAtomAt(1);
       }
-      
+
       if (a2.contains(b2.getAtomAt(0))) {
           atom2 = b2.getAtomAt(0);
       } else if (a2.contains(b2.getAtomAt(1))) {
           atom2 = b2.getAtomAt(1);
       }
-      
+
       if (atom1 != null && atom2 != null){
           return ((IQueryAtom)atom2).matches(atom1);
-      } else if (atom1 == null && atom2 == null) {
-	      return true;
-      } else {
-	      return false;
-      }
-      
+      } else return atom1 == null && atom2 == null;
+
   }
-  
+
   /**
-   *  Checks some simple heuristics for whether the subgraph query can 
-   *  realistically be a subgraph of the supergraph. If, for example, the 
+   *  Checks some simple heuristics for whether the subgraph query can
+   *  realistically be a subgraph of the supergraph. If, for example, the
    *  number of nitrogen atoms in the query is larger than that of the supergraph
    *  it cannot be part of it.
    *
    * @param  ac1  the supergraph to be checked
    * @param  ac2  the subgraph to be tested for
    * @return    true if the subgraph ac2 has a chance to be a subgraph of ac1
-   *            
+   *
    */
 
   private static boolean testSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
@@ -889,7 +870,7 @@ public class UniversalIsomorphismTester {
 	  int ac1BrCount = 0;
 	  int ac1ICount = 0;
 	  int ac1CCount = 0;
-	  
+
 	  int ac2SCount = 0;
 	  int ac2OCount = 0;
 	  int ac2NCount = 0;
@@ -898,16 +879,16 @@ public class UniversalIsomorphismTester {
 	  int ac2BrCount = 0;
 	  int ac2ICount = 0;
 	  int ac2CCount = 0;
-	  
-	  IBond bond = null;
-	  IAtom atom = null;
+
+	  IBond bond;
+	  IAtom atom;
 	  for (int i = 0; i < ac1.getBondCount(); i++)
 	  {
 		  bond = ac1.getBondAt(i);
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac1AromaticBondCount ++;
 		  else if (bond.getOrder() == 1) ac1SingleBondCount ++;
 		  else if (bond.getOrder() == 2) ac1DoubleBondCount ++;
-		  else if (bond.getOrder() == 3) ac1TripleBondCount ++;	  
+		  else if (bond.getOrder() == 3) ac1TripleBondCount ++;
 	  }
 	  for (int i = 0; i < ac2.getBondCount(); i++)
 	  {
@@ -916,14 +897,14 @@ public class UniversalIsomorphismTester {
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac2AromaticBondCount ++;
 		  else if (bond.getOrder() == 1) ac2SingleBondCount ++;
 		  else if (bond.getOrder() == 2) ac2DoubleBondCount ++;
-		  else if (bond.getOrder() == 3) ac2TripleBondCount ++;	  
+		  else if (bond.getOrder() == 3) ac2TripleBondCount ++;
 	  }
-	  
+
 	  if (ac2SingleBondCount > ac1SingleBondCount) return false;
 	  if (ac2AromaticBondCount > ac1AromaticBondCount) return false;
 	  if (ac2DoubleBondCount > ac1DoubleBondCount) return false;
 	  if (ac2TripleBondCount > ac1TripleBondCount) return false;
-	  
+
 	  for (int i = 0; i < ac1.getAtomCount(); i++)
 	  {
 		  atom = ac1.getAtomAt(i);
@@ -949,7 +930,7 @@ public class UniversalIsomorphismTester {
 		  else if (atom.getSymbol().equals("I")) ac2ICount ++;
 		  else if (atom.getSymbol().equals("C")) ac2CCount ++;
 	  }
-	  
+
 	  if (ac1SCount < ac2SCount) return false;
 	  if (ac1NCount < ac2NCount) return false;
 	  if (ac1OCount < ac2OCount) return false;
@@ -958,8 +939,8 @@ public class UniversalIsomorphismTester {
 	  if (ac1BrCount < ac2BrCount) return false;
 	  if (ac1ICount < ac2ICount) return false;
 	  if (ac1CCount < ac2CCount) return false;
-	  
-	  
+
+
 	  return true;
   }
   
