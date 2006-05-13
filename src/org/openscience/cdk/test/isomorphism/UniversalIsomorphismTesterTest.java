@@ -302,7 +302,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	SmilesParser sp = new SmilesParser();
 	AtomContainer target = sp.parseSmiles("O1C=CC=C1");
 	AtomContainer queryac = sp.parseSmiles("C1CCCC1");
-	QueryAtomContainer query = createAnyAtomAnyBondContainer(queryac, false);
+	QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
 
 	assertTrue(UniversalIsomorphismTester.isSubgraph(target, query));
 	assertTrue(UniversalIsomorphismTester.isIsomorph(target, query));
