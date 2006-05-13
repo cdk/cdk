@@ -28,16 +28,11 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -49,6 +44,9 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -290,8 +288,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         AtomContainer queryac = sp.parseSmiles("C1CCCC1");
         QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
         
-        assertTrue(UniversalIsomorphismTester.isSubgraph(target, query));
-        assertTrue(UniversalIsomorphismTester.isIsomorph(target, query));
+        assertTrue("C1CCCC1 should be a subgraph of O1C=CC=C1", UniversalIsomorphismTester.isSubgraph(target, query));
+        assertTrue("C1CCCC1 should be a isomorph of O1C=CC=C1", UniversalIsomorphismTester.isIsomorph(target, query));
     }
     
 	public static void main(String[] args)
