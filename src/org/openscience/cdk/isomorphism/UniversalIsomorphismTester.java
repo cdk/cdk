@@ -912,6 +912,7 @@ public class UniversalIsomorphismTester {
 	  for (int i = 0; i < ac2.getBondCount(); i++)
 	  {
 		  bond = ac2.getBondAt(i);
+          if (bond instanceof IQueryBond) continue;
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac2AromaticBondCount ++;
 		  else if (bond.getOrder() == 1) ac2SingleBondCount ++;
 		  else if (bond.getOrder() == 2) ac2DoubleBondCount ++;
@@ -938,6 +939,7 @@ public class UniversalIsomorphismTester {
 	  for (int i = 0; i < ac2.getAtomCount(); i++)
 	  {
 		  atom = ac2.getAtomAt(i);
+          if (atom instanceof IQueryAtom) continue;
 		  if (atom.getSymbol().equals("S")) ac2SCount ++;
 		  else if (atom.getSymbol().equals("N")) ac2NCount ++;
 		  else if (atom.getSymbol().equals("O")) ac2OCount ++;

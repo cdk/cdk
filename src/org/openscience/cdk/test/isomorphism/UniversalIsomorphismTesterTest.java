@@ -284,28 +284,29 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertTrue(UniversalIsomorphismTester.isSubgraph(ac1, ac2));
     }
     
+    public void testAnyAtomAnyBondCase() throws Exception {
+        SmilesParser sp = new SmilesParser();
+        AtomContainer target = sp.parseSmiles("O1C=CC=C1");
+        AtomContainer queryac = sp.parseSmiles("C1CCCC1");
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
+        
+        assertTrue(UniversalIsomorphismTester.isSubgraph(target, query));
+        assertTrue(UniversalIsomorphismTester.isIsomorph(target, query));
+    }
+    
 	public static void main(String[] args)
 	{
 		try{
 			UniversalIsomorphismTesterTest uitt = new UniversalIsomorphismTesterTest("UniversalIsomorphismTesterTest");
 			uitt.standAlone = true;
 			uitt.testItself();
+            //uitt.testAnyAtomAnyBondCase();
 		}
 		catch(Exception exc)
 		{
 			exc.printStackTrace();
 		}
 	}
-
     
-    public void testAnyAtomAnyBondCase() throws Exception {
-	SmilesParser sp = new SmilesParser();
-	AtomContainer target = sp.parseSmiles("O1C=CC=C1");
-	AtomContainer queryac = sp.parseSmiles("C1CCCC1");
-	QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
-
-	assertTrue(UniversalIsomorphismTester.isSubgraph(target, query));
-	assertTrue(UniversalIsomorphismTester.isIsomorph(target, query));
-    }
 }
 
