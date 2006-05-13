@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 
 /**
  *@cdk.module    extra
@@ -137,6 +137,16 @@ public class QueryAtomContainerCreator {
         return queryContainer;
     }
 
+    /**
+     * Creates a QueryAtomContainer with wildcard atoms and wildcard bonds.
+     * <p/>
+     * This method thus allows the user to search based only on connectivity.
+     *
+     * @param container   The AtomContainer that stands as the model
+     * @param aromaticity If True, aromaticity flags are checked to create AromaticAtoms
+     *                    and AromaticQueryBonds
+     * @return The new QueryAtomContainer
+     */
     public static QueryAtomContainer createAnyAtomAnyBondContainer(IAtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
         IAtom[] atoms = container.getAtoms();
@@ -154,8 +164,8 @@ public class QueryAtomContainerCreator {
             int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
             int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
             queryContainer.addBond(new AnyOrderQueryBond((IQueryAtom) queryContainer.getAtomAt(index1),
-                        (IQueryAtom) queryContainer.getAtomAt(index2),
-                        bonds[i].getOrder()));
+                    (IQueryAtom) queryContainer.getAtomAt(index2),
+                    bonds[i].getOrder()));
         }
         return queryContainer;
     }
