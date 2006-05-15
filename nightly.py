@@ -29,6 +29,7 @@
 #                     Added some more checks
 # Update 05/08/2006 - Added checks for JVM segfaults
 # Update 05/13/2006 - Added the output of ant info
+# Update 05/15/2006 - Added a link to the CDK SVN commits page
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile
@@ -374,11 +375,11 @@ def writeTemporaryPage():
     </html>""")
     f.close()
     
-def copyLogFile(fileName, srcDir, destDir, page, extra=None):
+def copyLogFile(fileName, srcDir, destDir, page, extra=""):
     if os.path.exists( os.path.join(srcDir, fileName) ):
         shutil.copyfile(os.path.join(srcDir, fileName),
                         os.path.join(destDir, fileName))            
-        page = page + "<td valign=\"top\"><a href=\"%s\">%s</a></td></tr>" % (fileName, fileName)
+        page = page + "<td valign=\"top\"><a href=\"%s\">%s</a>%s</td></tr>" % (fileName, fileName, extra)
     else:
         page = page + "</tr>"
     return page
@@ -647,12 +648,16 @@ if __name__ == '__main__':
         shutil.copyfile(distSrc, distDest)
         page = page + """
         <tr>
-        <td>
-        Combined CDK jar files:</td><td> <a href=\"cdk-svn-%s.jar\">cdk-svn-%s.jar</a></td>
+        <td valign=\"top\">
+        Combined CDK jar files:</td>
+        <td valign=\"top\"> <a href=\"cdk-svn-%s.jar\">cdk-svn-%s.jar</a></td>
         """ % (todayStr, todayStr)
         
         # check whether we can copy the run output
-        page = copyLogFile('build.log', nightly_dir, nightly_web, page)
+        page = copyLogFile('build.log', nightly_dir, nightly_web, page,
+                           """
+                           <br><a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a><br>"""
+                           )
     else:
         pass
 
