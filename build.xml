@@ -709,7 +709,10 @@
 
         <target id="sourcedist" name="sourcedist" depends="init, runDoclet"
                 description="Builds the source packages.">
-                <property name="package" value="cdk-source-${version}"/>
+            <tstamp>
+                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
+            </tstamp>
+                <property name="package" value="cdk-source-${TODAY_SVN}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <copy todir="${sourcedist.dir}/${src}">
                         <fileset dir="${src}" includes="*.javafiles" />
@@ -788,7 +791,7 @@
                     <fileset dir="doc/javadoc" includes="MakeCDKSetFilesDoclet.class" />
                 </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
-                <gzip zipfile="${package}.tar.gz" src="cdk-source-${version}.tar" />
+                <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
                 <delete file="${package}.tar" />
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
         </target>
