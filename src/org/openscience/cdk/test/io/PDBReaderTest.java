@@ -45,6 +45,7 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -200,7 +201,26 @@ public class PDBReaderTest extends TestCase {
     }
   }
   
-  public void test114D() {
+  public void testCreateBondsIOOption() {
+	    String filename = "data/pdb/114D.pdb";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+	    try {
+	      IChemObjectReader reader = new PDBReader(ins);
+	      assertNotNull(reader);
+
+	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	      assertNotNull(chemFile);
+	      
+	      // chemical validation
+	      assertTrue(ChemFileManipulator.getBondCount(chemFile) > 0);
+	      
+	    } catch (Exception ex) {
+	      fail(ex.toString());
+	    }
+  }
+
+    public void test114D() {
 	    String filename = "data/pdb/114D.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
@@ -226,13 +246,58 @@ public class PDBReaderTest extends TestCase {
 	      
 	      // chemical validation
 	      assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
-	      assertTrue(ChemFileManipulator.getBondCount(chemFile) > 0);
 	      assertEquals(2, polymer.getStrandCount());
 	      assertEquals(24, polymer.getMonomerCount());
+	      
+	      assertTrue(polymer instanceof PDBPolymer);
+	      PDBPolymer pdb = (PDBPolymer)polymer;
+	      
+	      // PDB validation
+	      assertEquals(0, pdb.getStructures().size());
 	      
 	    } catch (Exception ex) {
 	      fail(ex.toString());
 	    }
-	  }
+    }
   
+    public void test1SPX() {
+	    String filename = "data/pdb/1SPX.pdb";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+	    try {
+	      IChemObjectReader reader = new PDBReader(ins);
+	      assertNotNull(reader);
+
+	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	      assertNotNull(chemFile);
+	      assertEquals(1, chemFile.getChemSequenceCount());
+
+	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	      assertNotNull(seq);
+	      assertEquals(1, seq.getChemModelCount());
+	      
+	      IChemModel model = seq.getChemModel(0);
+	      assertNotNull(model);
+	      assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+	      IAtomContainer container = model.getSetOfMolecules().getMolecule(0);
+	      assertTrue(container instanceof IBioPolymer);
+	      IBioPolymer polymer = (IBioPolymer)container;
+	      
+	      // chemical validation
+	      assertEquals(1904, ChemFileManipulator.getAtomCount(chemFile));
+	      assertEquals(1, polymer.getStrandCount());
+	      assertEquals(237, polymer.getMonomerCount());
+
+	      assertTrue(polymer instanceof PDBPolymer);
+	      PDBPolymer pdb = (PDBPolymer)polymer;
+	      
+	      // PDB validation
+	      assertEquals(19, pdb.getStructures().size());
+	      
+	    } catch (Exception ex) {
+	      fail(ex.toString());
+	    }
+    }
+
 }
