@@ -30,6 +30,7 @@
 # Update 05/08/2006 - Added checks for JVM segfaults
 # Update 05/13/2006 - Added the output of ant info
 # Update 05/15/2006 - Added a link to the CDK SVN commits page
+# Update 05/16/2006 - Added code to generate and provide the source distribution
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile
@@ -526,6 +527,7 @@ if __name__ == '__main__':
     nightly_web  = %s
     """ % (nightly_repo, nightly_dir, nightly_web)
     
+    successSrc = True
     successDist = True
     successTest = True
     successJavadoc = True
@@ -545,6 +547,11 @@ if __name__ == '__main__':
         
         # clean up log files in the run dir
         logfiles = glob.glob(os.path.join(nightly_dir, '*.log'))
+        for logfile in logfiles:
+            os.unlink(logfile)
+
+        # clean up source distribution files            
+        logfiles = glob.glob(os.path.join(nightly_dir, 'cdk-source*'))
         for logfile in logfiles:
             os.unlink(logfile)
 
@@ -572,6 +579,7 @@ if __name__ == '__main__':
         # compile the distro
         successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
+            successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
             successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
             successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
             successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
@@ -661,6 +669,24 @@ if __name__ == '__main__':
     else:
         pass
 
+    if successSrc:
+        srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.tar.gz' % (todayStr))
+        srcDest = os.path.join(nightly_web, 'cdk-source-%s.tar.gz' % (todayStr))
+        shutil.copyfile(srcSrc, srcDest)
+        srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.zip' % (todayStr))
+        srcDest = os.path.join(nightly_web, 'cdk-source-%s.zip' % (todayStr))
+        shutil.copyfile(srcSrc, srcDest)
+        page = page + """
+        <tr>
+        <td valign=\"top\">
+        CDK Source files:</td>
+        <td valign=\"top\">
+        <a href=\"cdk-source-%s.tar.gz\">Compressed tar file</a><br>
+        <a href=\"cdk-source-%s.zip\">ZIP file</a><br>
+        """ % (todayStr, todayStr)
+        # check whether we can copy the run output
+        page = copyLogFile('srcdist.log', nightly_dir, nightly_web, page,)
+        
     # Lets tar up the java docs and put them away
     if successJavadoc:
         destFile = os.path.join(nightly_web, 'javadoc-%s.tgz' % (todayStr))
