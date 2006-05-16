@@ -339,4 +339,44 @@ public class PDBReaderTest extends TestCase {
 	      fail(ex.toString());
 	    }
     }
+
+    public void test1A00() {
+	    String filename = "data/pdb/1A00.pdb";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+	    try {
+	      IChemObjectReader reader = new PDBReader(ins);
+	      assertNotNull(reader);
+
+	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	      assertNotNull(chemFile);
+	      assertEquals(1, chemFile.getChemSequenceCount());
+
+	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	      assertNotNull(seq);
+	      assertEquals(1, seq.getChemModelCount());
+	      
+	      IChemModel model = seq.getChemModel(0);
+	      assertNotNull(model);
+	      assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+
+	      IAtomContainer container = model.getSetOfMolecules().getMolecule(0);
+	      assertTrue(container instanceof IBioPolymer);
+	      IBioPolymer polymer = (IBioPolymer)container;
+	      
+	      // chemical validation
+	      assertEquals(4770, ChemFileManipulator.getAtomCount(chemFile));
+	      assertEquals(4, polymer.getStrandCount());
+	      assertEquals(574, polymer.getMonomerCount());
+
+	      assertTrue(polymer instanceof PDBPolymer);
+	      PDBPolymer pdb = (PDBPolymer)polymer;
+	      
+	      // PDB validation
+	      assertEquals(35, pdb.getStructures().size());
+	      
+	    } catch (Exception ex) {
+	      fail(ex.toString());
+	    }
+    }
 }
