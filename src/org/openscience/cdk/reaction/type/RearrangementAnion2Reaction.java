@@ -122,7 +122,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		
 		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
 		IMolecule reactant = reactants.getMolecule(0);
-		
+
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
@@ -131,9 +131,9 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		 * if the atoms[i] is the only atom with charge*/
 		int negCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)reactant);
 		int posCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)reactant);
-		if(posCharge+Math.abs(negCharge) > 1)
+		if(posCharge > 1 || Math.abs(negCharge) > 1)
 			return setOfReactions;
-		
+
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& atoms[i].getFormalCharge() == -1 ){
@@ -147,14 +147,13 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0){
+							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() == 0){
 								/* positions atoms and bonds */
 								int atom0P = reactant.getAtomNumber(atoms[i]);
 								int bond1P = reactant.getBondNumber(bonds[j]);
 								int bond2P = reactant.getBondNumber(bondsI[k]);
 								int atom1P = reactant.getAtomNumber(atom);
 								int atom2P = reactant.getAtomNumber(bondsI[k].getConnectedAtom(atom));
-								
 								/* action */
 								IAtomContainer acCloned;
 								try {
@@ -224,7 +223,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getOrder() == 2.0){
+							if(bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() == 0){
 								atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								bondsI[k].getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);

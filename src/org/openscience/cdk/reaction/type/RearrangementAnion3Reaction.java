@@ -133,7 +133,7 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 		 * if the atoms[i] is the only atom with charge*/
 		int negCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)reactant);
 		int posCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)reactant);
-		if(posCharge+Math.abs(negCharge) > 1)
+		if(posCharge > 1 || Math.abs(negCharge) > 1)
 			return setOfReactions;
 		
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
