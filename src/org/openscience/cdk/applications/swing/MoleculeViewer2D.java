@@ -273,9 +273,9 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
         super.paint(graphics);
         if (atomContainer != null) {
             setBackground(r2dm.getBackColor());
-            GeometryTools.translateAllPositive(atomContainer);
-            GeometryTools.scaleMolecule(atomContainer, r2dm.getBackgroundDimension(), 0.8);
-            GeometryTools.center(atomContainer, r2dm.getBackgroundDimension());
+            GeometryTools.translateAllPositive(atomContainer,r2dm.getRenderingCoordinates());
+            GeometryTools.scaleMolecule(atomContainer, r2dm.getBackgroundDimension(), 0.8,r2dm.getRenderingCoordinates());
+            GeometryTools.center(atomContainer, r2dm.getBackgroundDimension(),r2dm.getRenderingCoordinates());
             renderer.paintMolecule(atomContainer, (Graphics2D)graphics,false,true);
         }
     }
