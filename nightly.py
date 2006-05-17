@@ -31,9 +31,12 @@
 # Update 05/13/2006 - Added the output of ant info
 # Update 05/15/2006 - Added a link to the CDK SVN commits page
 # Update 05/16/2006 - Added code to generate and provide the source distribution
+# Update 05/17/2006 - Updated the code to use a seperate class for HTML tables
+#                     and cells. This allows easier generation of table contents
+#                     and not have to worry about <tr> and <td> tags and so on
 
 import string, sys, os, os.path, time, re, glob, shutil
-import tarfile
+import tarfile, StringIO
 from email.MIMEText import MIMEText
 import email.Utils
 import smtplib
@@ -105,6 +108,132 @@ try:
 except ImportError:
     haveXSLT = False
     print 'Will not tranlate PMD XML output'
+
+class TableCell:
+
+    _valign = 'top'
+    _align = 'left'
+    _bgcolor = None
+    _text = None
+    _klass = None
+
+    def __init__(self, text, valign = 'top', align = 'left', klass=None):
+        self._text = text
+        self._valign = valign
+        self._align = align
+        self._klass = klass
+
+    def setVAlign(self, pos):
+        self._valign = pos
+
+    def setAlign(self, pos):
+        self._align = pos
+
+    def appendText(self, text):
+        self._text = self._text + text
+
+    def getText(self):
+        return self._text
+
+    def __repr__(self):
+        if self._klass:
+            return """
+            <td class=\"%s\" align=\"%s\" valign=\"%s\">
+            %s
+            </td>
+            """ % (self._klass, self._align, self._valign, self._text)
+        else: return """
+        <td align=\"%s\" valign=\"%s\">
+        %s
+        </td>
+        """ %  (self._align, self._valign, self._text)
+
+class HTMLTable:
+
+    rows = []
+    currentRow = None
+
+    headerCells = []
+
+    _border = 0
+    _cellspacing = 5
+    
+    def __init__(self, border = 0, cellspacing = 5):
+        self._border = border
+        self._cellspacing = cellspacing
+
+    def getCellCount(self):
+        return len(rows[curretRow])
+
+    def addRow(self):
+        self.rows.append( [] )
+        if self.currentRow == None: self.currentRow = 0
+        else: self.currentRow = self.currentRow+1
+
+    def addRule(self):
+        self.addRow()
+        self.addCell("HTMLTABLE_HRULE")
+
+    def addHeaderCell(self, text, valign='top', align='left', klass = None):
+        self.headerCells.append(TableCell(text, valign, align, klass))
+        
+    def addCell(self, text, whichRow = None, valign='top', align='left', klass = None):
+        """
+        Adds a cell to the current row if whichRow == None
+        """
+        if not text: return
+        if whichRow == None:
+            cellList = self.rows[self.currentRow]
+            cellList.append(TableCell(text, valign, align, klass))
+            self.rows[self.currentRow] = cellList
+        elif whichRow > self.currentRow: raise IndexError("Invalid row index was specified")
+        else:
+            cellList = self.rows[whichRow]
+            cellList.append(TableCell(text, valign, align, klass))
+            self.rows[whichRow] = cellList            
+            
+
+    def  appendToCell(self, text, newline = True):
+        """
+        Appends text to the current cell in the current row
+        """
+        if not text: return
+        cellList = self.rows[self.currentRow]
+        if newline: cellList[ len(cellList)-1 ].appendText("<br>"+text)
+        else: cellList[ len(cellList)-1 ].appendText(text)
+        self.rows[self.currentRow] = cellList
+        
+
+    def __repr__(self):
+        # we want to pad the shorter rows with empty cells
+        maxRowLen = max(map(len, self.rows))
+        
+        table = StringIO.StringIO()
+        table.write("<table border=%d cellspacing=%d>\n" % (self._border, self._cellspacing))
+
+        # write out the header row
+        table.write("<thead>\n<tr>\n")
+        for headerCell in self.headerCells: table.write(headerCell)
+        table.write("</tr></thead>\n")
+
+        # now  write the rest of the rows
+        for row in self.rows:
+            table.write("<tr>\n")
+
+            if len(row) == 1 and row[0].getText() == 'HTMLTABLE_HRULE':
+                table.write('<td colspan=%d><hr></td>\n</tr>\n' % (maxRowLen))
+                continue
+            
+            for cell in row:
+                table.write(cell)
+                
+            if len(row) != maxRowLen:
+                for i in range(maxRowLen-len(row)):
+                    table.write(TableCell(""))
+                    
+            table.write("\n</tr>\n")
+        table.write("\n</table>\n")
+        return table.getvalue()
 
 def sendMail(message):
     if fromName == "" or fromName == None \
@@ -288,7 +417,7 @@ def runAntJob(cmdLine, logFileName, jobName):
         os.chdir(olddir)
         return True
 
-def generateCDKDepGraph(page):
+def generateCDKDepGraph():
     olddir = os.getcwd()
     os.chdir(nightly_repo)
 
@@ -309,47 +438,14 @@ def generateCDKDepGraph(page):
     os.system('dot -Tpng /tmp/cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
     os.system('dot -Tps /tmp/cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
     os.unlink('/tmp/cdkdep.dot')
-    page = page + """
-    <tr>
-    <td valign=\"top\">Dependency Graph:</td>
-    <td>
-    <a href=\"cdkdep.png\">PNG</a>
-    <a href=\"cdkdep.ps\">PS</a>
-    </td>
-    </tr>
-    """
-    os.chdir(olddir)
-    return page
 
-def writeNightlyPage(contents):
-    olddir = os.getcwd()
-    os.chdir(nightly_repo)
-    os.system('ant info > %s' % (os.path.join(nightly_web, 'antinfo.txt')))
+    celltext = []
+    celltext.append("Dependency Graph:")
+    celltext.append("<a href=\"cdkdep.png\">PNG</a> <a href=\"cdkdep.ps\">PS</a>")
+
     os.chdir(olddir)
-    
-    contents = contents + """
-    <tr><td colspan=3><hr></td></tr>
-    <tr>
-    <td valign=\"top\"><i>Build details</i></td>
-    <td><i>Fedora Core 5<br>
-    Sun JDK 1.5.0<br>
-    Ant 1.6.2<br>
-    <a href=\"antinfo.txt\">ant info</a>
-    </i></td>
-    </tr>
-    </table>
-    <br><br><br>Generated by <a href=\"nightly.py\">nightly.py</a>
-    <p>
-<a href=\"http://sourceforge.net/projects/cdk/\"><img alt=\"SourceForge.net Logo\" 
-border=\"0\" height=\"31\" width=\"88\" 
-src=\"http://sourceforge.net/sflogo.php?group_id=20024&type=5&type=1\"></a>
-    </center>
-    </body>
-    </html>
-    """
-    f = open(os.path.join(nightly_web, 'index.html'), 'w')
-    f.write(contents)
-    f.close()
+    return celltext
+
 
 def writeTemporaryPage():
     f = open(os.path.join(nightly_web, 'index.html'), 'w')
@@ -376,14 +472,12 @@ def writeTemporaryPage():
     </html>""")
     f.close()
     
-def copyLogFile(fileName, srcDir, destDir, page, extra=""):
+def copyLogFile(fileName, srcDir, destDir):
     if os.path.exists( os.path.join(srcDir, fileName) ):
         shutil.copyfile(os.path.join(srcDir, fileName),
                         os.path.join(destDir, fileName))            
-        page = page + "<td valign=\"top\"><a href=\"%s\">%s</a>%s</td></tr>" % (fileName, fileName, extra)
-    else:
-        page = page + "</tr>"
-    return page
+        return "<a href=\"%s\">%s</a>" % (fileName, fileName)
+    else: return None
 
 def executableExists(executable):
     found = False
@@ -397,7 +491,7 @@ def executableExists(executable):
             break
     return found
 
-def generateJAPI(page):
+def generateJAPI():
     olddir = os.getcwd()
     os.chdir(nightly_dir)
     
@@ -463,13 +557,11 @@ def generateJAPI(page):
     shutil.copyfile(srcFile, destFile)
 
     # make an entry on the page
-    page = page + """
-        <tr>
-        <td><a href=\"http://www.kaffe.org/~stuart/japi/\">JAPI Comparison</td>
-        <td><a href=\"apicomp.html\">Summary</a></td>
-        <td><a href=\"japi.log\">japicompat.log</a></td>
-        </tr>
-    """
+    celltexts = []
+    celltexts.append("<a href=\"http://www.kaffe.org/~stuart/japi/\">JAPI Comparison")
+    celltexts.append("<a href=\"apicomp.html\">Summary</a>")
+    celltexts.append("<a href=\"japi.log\">japicompat.log</a>")
+
     print 'japi ok'
 
     # cleanup
@@ -479,7 +571,7 @@ def generateJAPI(page):
     
     os.chdir(olddir)
     
-    return page
+    return celltexts
 
 if __name__ == '__main__':
     if 'help' in sys.argv:
@@ -633,62 +725,59 @@ if __name__ == '__main__':
       <style>
       <!--
         tr:hover { background-color: #efefef; }
+        .tdfail { background-color: #ea3f3f; }
       //-->
       </style>
     <head>
     <body>
     <center>
     <h2>CDK Nightly Build - %s</h2>
-    <table border=0 cellspacing=5>
-    <thead>
-    <tr>
-    <th></th>
-    <th></th>
-    <th>Extra Info</th>
-    </tr>
-    </thead>
     """ % (todayNice, todayNice)
+
+    resultTable = HTMLTable()
+    resultTable.addHeaderCell("")
+    resultTable.addHeaderCell("")
+    resultTable.addHeaderCell("<b>Extra Info</b>", align='center')
 
     # lets now make the web site for nightly builds
     if successDist:
+        print 'Generating distro section'
         distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))
         distDest = os.path.join(nightly_web, 'cdk-svn-%s.jar' % (todayStr))
         shutil.copyfile(distSrc, distDest)
-        page = page + """
-        <tr>
-        <td valign=\"top\">
-        Combined CDK jar files:</td>
-        <td valign=\"top\"> <a href=\"cdk-svn-%s.jar\">cdk-svn-%s.jar</a></td>
-        """ % (todayStr, todayStr)
-        
-        # check whether we can copy the run output
-        page = copyLogFile('build.log', nightly_dir, nightly_web, page,
-                           """
-                           <br><a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a><br>"""
-                           )
-    else:
-        pass
+
+        resultTable.addRow()
+        resultTable.addCell("Combined CDK jar files:")
+        resultTable.addCell("<a href=\"cdk-svn-%s.jar\">cdk-svn-%s.jar</a>" % (todayStr, todayStr))
+
+        logEntryText = copyLogFile('build.log', nightly_dir, nightly_web)
+        if logEntryText:
+            resultTable.addCell(logEntryText)
+            resultTable.appendToCell("<a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a>")
+        else:
+            resultTable.addCell("<br><a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a>")
+
 
     if successSrc:
+        print 'Generating source distro section'
         srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.tar.gz' % (todayStr))
         srcDest = os.path.join(nightly_web, 'cdk-source-%s.tar.gz' % (todayStr))
         shutil.copyfile(srcSrc, srcDest)
         srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.zip' % (todayStr))
         srcDest = os.path.join(nightly_web, 'cdk-source-%s.zip' % (todayStr))
         shutil.copyfile(srcSrc, srcDest)
-        page = page + """
-        <tr>
-        <td valign=\"top\">
-        CDK Source files:</td>
-        <td valign=\"top\">
-        <a href=\"cdk-source-%s.tar.gz\">Compressed tar file</a><br>
-        <a href=\"cdk-source-%s.zip\">ZIP file</a><br>
-        """ % (todayStr, todayStr)
+
+        resultTable.addRow()
+        resultTable.addCell("CDK Source files:")
+        resultTable.addCell("<a href=\"cdk-source-%s.tar.gz\">Compressed tar file</a>" % (todayStr))
+        resultTable.appendToCell("<a href=\"cdk-source-%s.zip\">ZIP file</a>" % (todayStr))
+
         # check whether we can copy the run output
-        page = copyLogFile('srcdist.log', nightly_dir, nightly_web, page,)
+        resultTable.addCell(copyLogFile('srcdist.log', nightly_dir, nightly_web))
         
     # Lets tar up the java docs and put them away
     if successJavadoc:
+        print 'Generating javadoc section'
         destFile = os.path.join(nightly_web, 'javadoc-%s.tgz' % (todayStr))
 
         # tar up the javadocs
@@ -700,33 +789,34 @@ if __name__ == '__main__':
         os.chdir(olddir)
         
         shutil.copytree('%s/doc/api' % (nightly_repo),
-                        '%s/api' % (nightly_web))                
-        page = page + """
-        <tr>
-        <td valign=\"top\">Javadocs:</td>
-        <td><a href=\"javadoc-%s.tgz\">Tarball</a><br>
-        <a href=\"api\">Browse online</a></td>
-        """ % (todayStr)
+                        '%s/api' % (nightly_web))
+
+        resultTable.addRow()
+        resultTable.addCell("Javadocs:")
+        resultTable.addCell("<a href=\"javadoc-%s.tgz\">Tarball</a>" % (todayStr))
+        resultTable.appendToCell("<a href=\"api\">Browse online</a>")
 
         # check whether we can copy the run output
-        page = copyLogFile('javadoc.log', nightly_dir, nightly_web, page)
-        page = page + "<tr><td colspan=3><hr></td></tr>"
+        resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
+        resultTable.addRule()
     else:
-        page = page + """
-        <tr>
-        <td valign=\"top\">Javadocs:</td>
-        <td bgcolor=\"#ea3f3f\"><b>FAILED</b></td>
-        """
-        page = copyLogFile('javadoc.log', nightly_dir, nightly_web, page)                
-        page = page + "<tr><td colspan=3><hr></td></tr>"
-
+        resultTable.addRow()
+        resultTable.addCell("Javadocs:")
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
+        resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
+        resultTable.addRule()
         
     # generate the dependency graph entry
-    page = generateCDKDepGraph(page)
+    print 'Generating dependency graph'
+    celltexts = generateCDKDepGraph()
+    resultTable.addRow()
+    for celltext in celltexts: resultTable.addCell(celltext)
 
     # get the JUnit test results
+    resultTable.addRow()
+    resultTable.addCell("<a href=\"http://www.junit.org/index.htm\">JUnit</a> results:")
     if successTest:
-
+        print 'Generating JUnit section'
         # make the directory for reports
         testDir = os.path.join(nightly_web, 'test')
         os.mkdir(testDir)
@@ -737,21 +827,18 @@ if __name__ == '__main__':
             dest = os.path.join(testDir, os.path.basename(report))
             shutil.copyfile(report, dest)
 
-        page = page + """
-        <tr>
-        <td valign=\"top\"><a href=\"http://www.junit.org/index.htm\">JUnit</a> results:</td><td> """
         repFiles = glob.glob(os.path.join(nightly_repo,'reports/result-*.txt'))
         repFiles.sort()
         count = 1
+        s = ""
         for repFile in repFiles:
             title = string.split(os.path.basename(repFile),'.')[0]
             title = string.split(title, '-')[1]
-            page = page+"""
-        <a href=\"test/%s\">%s</a>""" % (os.path.basename(repFile), title)
+            s = s+"<a href=\"test/%s\">%s</a>\n" % (os.path.basename(repFile), title)
             if count % per_line == 0:
-                page = page+ "<br>"
+                s += "<br>"
             count += 1    
-        page = page + "</td>"
+        resultTable.addCell(s)
 
         # summarize JUnit test results - it will go into nightly_web
         parseJunitOutput('junitsummary.html')
@@ -759,73 +846,45 @@ if __name__ == '__main__':
         # check whether we can copy the run output and link to the summary
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
-                            os.path.join(nightly_web, 'test.log'))            
-            page = page + """
-            <td valign=\"top\">
-            <a href=\"test.log\">test.log</a><br>
-            <a href=\"junitsummary.html\">Summary</a>
-            </td></tr>
-            """
-        else: page = page + "</tr>"
+                            os.path.join(nightly_web, 'test.log'))
+            resultTable.addCell("<a href=\"test.log\">test.log</a>")
+            resultTable.appendToCell("<a href=\"junitsummary.html\">Summary</a>")
     else:
-        page = page + """
-        <tr>
-        <td valign=\"top\"><a href=\"http://www.junit.org/index.htm\">JUnit</a> results:</td>
-        <td bgcolor='#ea3f3f'><b>FAILED</b></td>
-        """
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
-                            os.path.join(nightly_web, 'test.log'))            
-            page = page + """
-            <td valign=\"top\">
-            <a href=\"test.log\">test.log</a>
-            </td></tr>
-            """
-        else: page = page + "</tr>"        
+                            os.path.join(nightly_web, 'test.log'))
+            resultTable.addCell("<a href=\"test.log\">test.log</a>")
 
     # get the results of doccheck
+    resultTable.addRow()
+    resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
     if successDoccheck:
+        print 'Generating DocCheck section'
         shutil.copytree('%s/reports/javadoc' % (nightly_repo),
-                        '%s/javadoc' % (nightly_web))        
-        page = page + """
-        <tr>
-        <td valign=\"top\">
-        <a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a>
-        results:</td><td> """
+                        '%s/javadoc' % (nightly_web))
         subdirs = os.listdir('%s/reports/javadoc' % (nightly_repo))
         subdirs.sort()
         count = 1
+        s = ''
         for dir in subdirs:
-            page = page+"""
-            <a href=\"javadoc/%s\">%s</a> """ % (dir, dir)
-            if count % per_line == 0: page = page + "<br>"
+            s = s+"<a href=\"javadoc/%s\">%s</a>\n" % (dir, dir)
+            if count % per_line == 0: s += "<br>"
             count += 1
-        page = page + "</td></tr>"
+        resultTable.addCell(s)
     else:
-        page = page + """
-        <tr>
-        <td valign=\"top\">
-        <a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> results:</td>
-        <td bgcolor=\"#ea3f3f\"><b>FAILED</b></td> """
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'doccheck.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'doccheck.log'),
-                            os.path.join(nightly_web, 'doccheck.log'))            
-            page = page + """
-            <td valign=\"top\">
-            <a href=\"doccheck.log\">doccheck.log</a>
-            </td></tr>
-            """
-        else: page = page + "</tr>"
-
-
+                            os.path.join(nightly_web, 'doccheck.log'))
+            resultTable.addCell("<a href=\"doccheck.log\">doccheck.log</a>")
         
 
     # get the results of the PMD analysis
+    resultTable.addRow()
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:")
     if successPMD:
-        page = page + """
-        <tr>
-        <td valign=\"top\"><a href=\"http://pmd.sourceforge.net/\">PMD</a> results:</td><td> """
-        
+        print 'Generating PMD section'
         # make the PMD dir in the web dir
         os.mkdir(os.path.join(nightly_web,'pmd'))
 
@@ -833,38 +892,57 @@ if __name__ == '__main__':
         xmlFiles = glob.glob(os.path.join(nightly_repo,'reports/pmd/*.xml'))
         xmlFiles.sort()
         count = 1
+        s = ''
         for xmlFile in xmlFiles:
             prefix = os.path.basename(xmlFile).split('.')[0]
             htmlFile = os.path.join(nightly_web, 'pmd', prefix)+'.html'
             transformXML2HTML(xmlFile, htmlFile)
-            page = page+"""<a href=\"pmd/%s\">%s</a> """ % (os.path.basename(htmlFile), prefix)
-            if count % per_line == 0: page = page + "<br>"
+            s = s+"<a href=\"pmd/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            if count % per_line == 0: s += "<br>"
             count += 1
-        page = page + "</td></tr>"
+        resultTable.addCell(s)
     else: # PMD stage failed for some reason
-        page = page + """
-        <tr>
-        <td valign=\"top\"><a href=\"http://pmd.sourceforge.net/\">PMD</a> results:</td>
-        <td bgcolor=\"ea3f3f\"><b>FAILED</b></td>
-        """
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'pmd.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'pmd.log'),
-                            os.path.join(nightly_web, 'pmd.log'))            
-            page = page + """
-            <td valign=\"top\">
-            <a href=\"pmd.log\">pmd.log</a>
-            </td></tr>
-            """
-        else: page = page + "</tr>"        
+                            os.path.join(nightly_web, 'pmd.log'))
+            resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
     # try and run japitools
-    page = generateJAPI(page)
+    celltexts = generateJAPI()
+    resultTable.addRow()
+    for celltext in celltexts: resultTable.addCell(celltext)
         
     # copy this script to the nightly we dir. The script should be in nightly_dir
     shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)
 
     # close up the HTML and write out the web page
-    writeNightlyPage(page)
+    olddir = os.getcwd()
+    os.chdir(nightly_repo)
+    os.system('ant info > %s' % (os.path.join(nightly_web, 'antinfo.txt')))
+
+    resultTable.addRule()
+    resultTable.addRow()
+    resultTable.addCell("<i>Build details</i>")
+    resultTable.addCell("<i>Fedora Core 5</i>")
+    resultTable.appendToCell("<i>Sun JDK 1.5.0</i>")
+    resultTable.appendToCell("<i>Ant 1.6.2</i>")
+    resultTable.appendToCell("<a href=\"antinfo.txt\">ant info</a>")
+
+    page = page + str(resultTable)
+    page = page + """
+        <br><br><br>Generated by <a href=\"nightly.py\">nightly.py</a>
+        <p>
+        <a href=\"http://sourceforge.net/projects/cdk/\"><img alt=\"SourceForge.net Logo\" 
+        border=\"0\" height=\"31\" width=\"88\" 
+        src=\"http://sourceforge.net/sflogo.php?group_id=20024&type=5&type=1\"></a>
+        </center>
+        </body>
+        </html>"""
+    f = open(os.path.join(nightly_web, 'index.html'), 'w')
+    f.write(page)
+    f.close()
+    
              
     # go back to where we started
     os.chdir(start_dir)
