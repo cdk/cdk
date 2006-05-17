@@ -38,6 +38,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -326,6 +327,19 @@ public class MDLReaderTest extends CDKTestCase {
         } catch (Throwable problem) {
             problem.printStackTrace();
             fail();
+        }
+    }
+    
+    public void testRGroup() {
+        String filename = "data/mdl/SARGROUPTEST.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            Molecule mol = (Molecule)reader.read(new Molecule());
+            assertEquals("R2",((PseudoAtom)mol.getAtomAt(19)).getLabel());
+             } catch (Exception e) {
+            fail(e.toString());
         }
     }
     
