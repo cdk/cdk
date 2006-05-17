@@ -23,26 +23,19 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.SetOfAtomContainers;
-import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.tools.StructureResonanceGenerator;
 
 /**
  * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
  * {@cdk.cite GM80}. This class only implements the original method which only
  * applies to &sigma;-bond systems.</p> 
- * <p>For &pi;-bond systems, there is temporary method until we get 
- * to give the solution for pi-charge. To date the method 
- * assigns only 0,-1,+1. In the case of atomContainer wich contains +M group(donor) 
- * positive value will be the probability of finding the pi charge at this specific position.
- * For -M groups(receptor), the negative value will be the probability of finding
- * the pi charge at a certain position.</p>
+ * 
  *
  * @author      chhoppe
+ * 
  * @cdk.module  charges
  * @cdk.created 2004-11-03
  * @cdk.keyword partial atomic charges
@@ -57,6 +50,7 @@ public class GasteigerMarsiliPartialCharges {
 	private double MX_ITERATIONS = 20;
 	private int STEP_SIZE = 5;
 	private AtomTypeCharges atomTypeCharges = new AtomTypeCharges();
+	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
 
 	
 	/**
@@ -172,50 +166,6 @@ public class GasteigerMarsiliPartialCharges {
 		return ac;
 	}
 	/**
-	 *  Main method which assigns Gasteiger Marisili partial pi charges. 
-	 *  To date the method assigns only 0,-1,+1. In the case of atomContainer wich
-	 *  contains +M group(donor) positive value will be the probability of finding
-	 *   the pi charge at this specific position.
-	 *   For -M groups(receptor), the negative value will be the probability of finding
-	 *   the pi charge at a certain position.
-	 *   This method is temporary method until we get the solution for pi-charge.
-	 *
-	 *@param  ac             AtomContainer
-	 *@param  setCharge      boolean flag to set charge on atoms
-	 *@return                AtomContainer with partial charges
-	 *@exception  Exception  Possible Exceptions
-	 */
-	public IAtomContainer assignGasteigerMarsiliPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-
-		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
-		
-		if(set.getAtomContainerCount() == 0 ){
-			for(int i = 0; i < ac.getAtomCount() ; i++)
-				ac.getAtomAt(i).setCharge(0.0);
-		}else{
-			StructureResonanceGenerator gR = new StructureResonanceGenerator();
-			ISetOfAtomContainers iSet = gR.getAllStructures(ac);
-			/* control if the atoms keep their formal charge*/
-			double[] sumCharges = new double[ac.getAtomCount()];
-			for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
-				IAtomContainer isSetAcdInt = iSet.getAtomContainer(i);
-				for(int j = 0 ; j < ac.getAtomCount(); j++){
-					sumCharges[j] += isSetAcdInt.getAtomAt(j).getFormalCharge();
-				}
-			}
-			for (int i = 0; i < ac.getAtomCount(); i++) {
-				double factor = 0.0;
-				if(sumCharges[i] > 0)
-					factor = +1;
-				else if(sumCharges[i] < 0)
-					factor = -1;
-				ac.getAtomAt(i).setCharge(factor);
-			}
-		}
-		return ac;
-		
-	}
-	/**
 	 *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
 	 *  object
 	 *
@@ -326,59 +276,6 @@ public class GasteigerMarsiliPartialCharges {
 				gasteigerFactors[STEP_SIZE * i + i + 3] = factors[0] + factors[1] + factors[2];
 			}
 		}
-		return gasteigerFactors;
-	}
-
-	/**
-	 *  Method which stores and assigns the factors a,b,c and CHI+
-	 *
-	 *@param  ac  AtomContainer
-	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
-	 */
-	public double[] assignGasteigerPiMarsiliFactors(IAtomContainer ac) {
-		
-//		a,b,c,denom,chi,q
-		double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];
-		String AtomSymbol = "";
-		double[] factors = new double[]{0.0, 0.0, 0.0};
-		for (int i = 0; i < ac.getAtomCount(); i++) {
-			factors[0] = 0.0;
-			factors[1] = 0.0;
-			factors[2] = 0.0;
-			AtomSymbol = ac.getAtomAt(i).getSymbol();
-			if (AtomSymbol.equals("H")) {
-				factors[0] = 0.0;
-				factors[1] = 0.0;
-				factors[2] = 0.0;
-			} else if (AtomSymbol.equals("C")) {
-				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
-					factors[0] = 5.60;
-					factors[1] = 8.93;
-					factors[2] = 2.94;
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
-//					factors[0] = ;
-//					factors[1] = ;
-//					factors[2] = ;
-				}
-			} else if (AtomSymbol.equals("F")) {
-				factors[0] = 7.34;
-				factors[1] = 13.86;
-				factors[2] = 9.68;
-			}
-			
-			gasteigerFactors[STEP_SIZE * i + i] = factors[0];
-			gasteigerFactors[STEP_SIZE * i + i + 1] = factors[1];
-			gasteigerFactors[STEP_SIZE * i + i + 2] = factors[2];
-			gasteigerFactors[STEP_SIZE * i + i + 5] = ac.getAtomAt(i).getCharge();
-			
-			if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
-				gasteigerFactors[STEP_SIZE * i + i + 3] = 1;
-			} else {
-				gasteigerFactors[STEP_SIZE * i + i + 3] = factors[0] + factors[1] + factors[2];
-			}
-		}
-		
-
 		return gasteigerFactors;
 	}
 }

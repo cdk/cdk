@@ -58,7 +58,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with Ethyl Fluoride
 	 */
-	public void testPartialSigmaChargeDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testPartialPiChargeDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[2];
@@ -72,25 +72,23 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
-			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			double factor = 0.0;
-			if(testResult[i] > 0)
-				factor = 1;
-			else if(testResult[i] < 0)
-				factor = -1;
 			
-			assertEquals(factor,result, 0.00001);
+			/* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.0001);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Fluoroethylene
 	 */
-	public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testPartialPiChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0299,0.0,-0.0299,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
-		Integer[] params = new Integer[2];
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("F-C=C");
@@ -103,25 +101,23 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
-			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-	        double factor = 0.0;
-			if(testResult[i] > 0)
-				factor = 1;
-			else if(testResult[i] < 0)
-				factor = -1;
-			
-			assertEquals(factor,result, 0.00001);
+	        
+	        /* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.01);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Formic Acid
 	 */
-	public void testPartialSigmaChargeDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testPartialPiChargeDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0221,-0.1193,0.0972,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
-		Integer[] params = new Integer[2];
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C(=O)O");
@@ -134,23 +130,20 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
-			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			double factor = 0.0;
-			if(testResult[i] > 0)
-				factor = 1;
-			else if(testResult[i] < 0)
-				factor = -1;
-			
-			assertEquals(factor,result, 0.00001);
+			/* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.01);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Fluorobenzene
 	 */
-	public void testPartialSigmaChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.0262,0.0,-0.0101,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-0.006,0.0,-0.0101,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+	public void testPartialPiChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={0.0262,0.0,-0.0101,0.0,-0.006,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[2];
         
@@ -168,13 +161,82 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			double factor = 0.0;
-			if(testResult[i] > 0)
-				factor = 1;
-			else if(testResult[i] < 0)
-				factor = -1;
-			assertEquals(factor,result, 0.00001);
+			/* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.01);
 		}
 	}
+	/**
+	 *  A unit test for JUnit with Methoxyethylene
+	 */
+	public void testPartialPiChargeDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={-0.044,0.0,0.044,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
+		Integer[] params = new Integer[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=C-O-C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for (int i = 0 ; i < 1/*mol.getAtomCount() */; i++){
+			params[0] = new Integer(i);
+			params[1] = new Integer(6);
+	        descriptor.setParameters(params);
+	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        /* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.01);
+		}
+	}
+	/**
+	 *  A unit test for JUnit with 1-Methoxybutadiene
+	 */
+	public void testPartialPiChargeDescriptor_1_Methoxybutadiene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={-0.0333,0.0,-0.0399,0.0,0.0733,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
+		Integer[] params = new Integer[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=C-C=C-O-C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for (int i = 0 ; i < mol.getAtomCount(); i++){
+			params[0] = new Integer(i);
+			params[1] = new Integer(6);
+	        descriptor.setParameters(params);
+	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        /* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+	        
+			/* test value*/
+			assertEquals(testResult[i],result, 0.01);
+		}
+	}
+	/**
+	 * get the sign of a value
+	 */
+	private double getSign(double d) {
+		double sign = 0.0;
+		if(d > 0)
+			sign = 1;
+		else if(d < 0)
+			sign = -1;
+		return sign;
+	}
+
 }
 

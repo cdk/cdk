@@ -26,9 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -36,7 +34,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 
 /**
- *  The calculation of pi partial charges in pi-bonded systems (PEPE) of an heavy atom is based on Gasteiger Marsili
+ *  <p>The calculation of pi partial charges in pi-bonded systems (PEPE) of an heavy 
+ *  atom is based on Gasteiger H.Saller.</p>
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -57,12 +56,12 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialCharge
- * @see GasteigerMarsiliPartialCharges
+ * @see GasteigerPEPEPartialCharges
  */
 public class PartialPiChargeDescriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
-    private GasteigerMarsiliPartialCharges pepe = null;
+    private GasteigerPEPEPartialCharges pepe = null;
 	private int maxIterations;
 
 
@@ -70,7 +69,7 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *  Constructor for the PartialPiChargeDescriptor object
      */
     public PartialPiChargeDescriptor() { 
-    	pepe = new GasteigerMarsiliPartialCharges();
+    	pepe = new GasteigerPEPEPartialCharges();
     }
 
 
@@ -139,15 +138,12 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        IMolecule mol = new Molecule(ac);
         try {
-        	if(maxIterations != 0)
-        		pepe.setMaxGasteigerIters(maxIterations);
-        	pepe.assignGasteigerMarsiliPiPartialCharges(mol, true);
+        	pepe.assignGasteigerMarsiliPiPartialCharges(ac, true);
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
         }
-        IAtom target = mol.getAtomAt(atomPosition);
+        IAtom target = ac.getAtomAt(atomPosition);
         DoubleResult piPartialCharge = new DoubleResult(target.getCharge());
         
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), piPartialCharge);
