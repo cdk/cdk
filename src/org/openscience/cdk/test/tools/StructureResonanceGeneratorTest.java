@@ -32,7 +32,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	private StructureResonanceGenerator gR;
 
 	/**
-	 *  Constructor for the GenerateResonancesTest object
+	 *  Constructor for the StructureResonanceGeneratorTest object
 	 *
 	 *@param  name  Description of the Parameter
 	 */
@@ -299,6 +299,57 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         lpcheck.newSaturate(molecule3);
         
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule3);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
+	}
+
+	/**
+	 * A unit test suite for JUnit: Resonance Formic acid  F-C=C <=> [F+]=C-[C-]
+	 *
+	 * @return    The test suite
+	 */
+	public void testResonanceFluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Molecule molecule = (new SmilesParser()).parseSmiles("F-C=C");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.newSaturate(molecule);
+        
+        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        
+		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
+
+        Molecule molecule1 = (new SmilesParser()).parseSmiles("[F+]=C-[C-]");
+        adder.addImplicitHydrogensToSatisfyValency(molecule1);
+        lpcheck.newSaturate(molecule1);
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+	 *
+	 * @return    The test suite
+	 */
+	public void testResonanceFluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Molecule molecule = (new SmilesParser()).parseSmiles("Fc1ccccc1");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.newSaturate(molecule);
+        
+        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        
+		Assert.assertEquals(3,setOfMolecules.getAtomContainerCount());
+
+        Molecule molecule1 = (new SmilesParser()).parseSmiles("[F+]=C1C=CC=C[C-]1");
+        adder.addImplicitHydrogensToSatisfyValency(molecule1);
+        lpcheck.newSaturate(molecule1);
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
+        
+        Molecule molecule2 = (new SmilesParser()).parseSmiles("[F+]=C1-C=C-[C-]-C=C1");
+        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        lpcheck.newSaturate(molecule2);
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
 	}
 }
