@@ -33,7 +33,8 @@
 # Update 05/16/2006 - Added code to generate and provide the source distribution
 # Update 05/17/2006 - Updated the code to use a seperate class for HTML tables
 #                     and cells. This allows easier generation of table contents
-#                     and not have to worry about <tr> and <td> tags and so on
+#                     and not have to worry about <tr> and <td> tags and so on.
+#                     Also added a link to the keyword list
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -256,9 +257,9 @@ def sendMail(message):
     except Exception, e:
         print e
     
-def transformXML2HTML(src, dest):
+def transformXML2HTML(src, dest, xsltFile, pmd=True):
     if haveXSLT: # if we have the proper libs do the xform
-        xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
+        print '    Transforming %s' % (src)
         styleDoc = libxml2.parseFile(xsltFile)
         style = libxslt.parseStylesheetDoc(styleDoc)
         doc = libxml2.parseFile(src)
@@ -269,8 +270,11 @@ def transformXML2HTML(src, dest):
         result.freeDoc()
 
         # we need to add a bit to the HTML output to indicate what file was processed
-        prefix = os.path.basename(dest).split('.')[0]
-        htmlString = re.sub('Report</div>', 'Report [<i>module - %s</i>]</div>' % (prefix), htmlString)
+        # if we are doing the transform for PMD
+        if pmd:
+            prefix = os.path.basename(dest).split('.')[0]
+            htmlString = re.sub('Report</div>', 'Report [<i>module - %s</i>]</div>' % (prefix), htmlString)
+            
         f = open(dest, 'w')
         f.write(htmlString)
         f.close()
@@ -562,8 +566,6 @@ def generateJAPI():
     celltexts.append("<a href=\"apicomp.html\">Summary</a>")
     celltexts.append("<a href=\"japi.log\">japicompat.log</a>")
 
-    print 'japi ok'
-
     # cleanup
     os.unlink(newJapize)
     os.unlink(oldJapize)
@@ -623,6 +625,7 @@ if __name__ == '__main__':
     successDist = True
     successTest = True
     successJavadoc = True
+    successKeyword = True
     successDoccheck = True
     successPMD = True
     successSVN = True
@@ -674,6 +677,7 @@ if __name__ == '__main__':
             successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
             successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
             successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
+            successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml', 'keyword.log', 'keywords')
             successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
             successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
         else: # if the distro could not be built, there's not much use doing the other stuff
@@ -741,7 +745,7 @@ if __name__ == '__main__':
 
     # lets now make the web site for nightly builds
     if successDist:
-        print 'Generating distro section'
+        print '  Generating distro section'
         distSrc = os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-%s.jar' % (todayStr))
         distDest = os.path.join(nightly_web, 'cdk-svn-%s.jar' % (todayStr))
         shutil.copyfile(distSrc, distDest)
@@ -759,7 +763,7 @@ if __name__ == '__main__':
 
 
     if successSrc:
-        print 'Generating source distro section'
+        print '  Generating source distro section'
         srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.tar.gz' % (todayStr))
         srcDest = os.path.join(nightly_web, 'cdk-source-%s.tar.gz' % (todayStr))
         shutil.copyfile(srcSrc, srcDest)
@@ -776,8 +780,10 @@ if __name__ == '__main__':
         resultTable.addCell(copyLogFile('srcdist.log', nightly_dir, nightly_web))
         
     # Lets tar up the java docs and put them away
+    resultTable.addRow()
+    resultTable.addCell("Javadocs:")
     if successJavadoc:
-        print 'Generating javadoc section'
+        print '  Generating javadoc section'
         destFile = os.path.join(nightly_web, 'javadoc-%s.tgz' % (todayStr))
 
         # tar up the javadocs
@@ -791,23 +797,29 @@ if __name__ == '__main__':
         shutil.copytree('%s/doc/api' % (nightly_repo),
                         '%s/api' % (nightly_web))
 
-        resultTable.addRow()
-        resultTable.addCell("Javadocs:")
+
         resultTable.addCell("<a href=\"javadoc-%s.tgz\">Tarball</a>" % (todayStr))
         resultTable.appendToCell("<a href=\"api\">Browse online</a>")
 
         # check whether we can copy the run output
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
-        resultTable.addRule()
+
+        # if the key word run did OK, add the link to the xformed keyword list
+        if successKeyword:
+            srcFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keyword.index.xml')
+            destFile = os.path.join(nightly_web, 'keywords.html')
+            xsltFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keywordIndex2HTML.xsl')
+            transformXML2HTML(srcFile, destFile, xsltFile, False)
+            resultTable.appendToCell("<a href=\"keywords.html\">Keywords</a>")
     else:
         resultTable.addRow()
         resultTable.addCell("Javadocs:")
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
-        resultTable.addRule()
-        
+    resultTable.addRule()
+    
     # generate the dependency graph entry
-    print 'Generating dependency graph'
+    print '  Generating dependency graph'
     celltexts = generateCDKDepGraph()
     resultTable.addRow()
     for celltext in celltexts: resultTable.addCell(celltext)
@@ -816,7 +828,7 @@ if __name__ == '__main__':
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://www.junit.org/index.htm\">JUnit</a> results:")
     if successTest:
-        print 'Generating JUnit section'
+        print '  Generating JUnit section'
         # make the directory for reports
         testDir = os.path.join(nightly_web, 'test')
         os.mkdir(testDir)
@@ -860,7 +872,7 @@ if __name__ == '__main__':
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
     if successDoccheck:
-        print 'Generating DocCheck section'
+        print '  Generating DocCheck section'
         shutil.copytree('%s/reports/javadoc' % (nightly_repo),
                         '%s/javadoc' % (nightly_web))
         subdirs = os.listdir('%s/reports/javadoc' % (nightly_repo))
@@ -884,7 +896,7 @@ if __name__ == '__main__':
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:")
     if successPMD:
-        print 'Generating PMD section'
+        print '  Generating PMD section'
         # make the PMD dir in the web dir
         os.mkdir(os.path.join(nightly_web,'pmd'))
 
@@ -896,7 +908,8 @@ if __name__ == '__main__':
         for xmlFile in xmlFiles:
             prefix = os.path.basename(xmlFile).split('.')[0]
             htmlFile = os.path.join(nightly_web, 'pmd', prefix)+'.html'
-            transformXML2HTML(xmlFile, htmlFile)
+            xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
+            transformXML2HTML(xmlFile, htmlFile, xsltFile)
             s = s+"<a href=\"pmd/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
             if count % per_line == 0: s += "<br>"
             count += 1
@@ -909,9 +922,11 @@ if __name__ == '__main__':
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
     # try and run japitools
+    print '  Generating JAPI comparison'
     celltexts = generateJAPI()
-    resultTable.addRow()
-    for celltext in celltexts: resultTable.addCell(celltext)
+    if celltexts:
+        resultTable.addRow()
+        for celltext in celltexts: resultTable.addCell(celltext)
         
     # copy this script to the nightly we dir. The script should be in nightly_dir
     shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)
