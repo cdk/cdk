@@ -541,6 +541,10 @@ def generateJAPI():
     os.system('%s as %s apis %s %s +org.openscience.cdk 2>> japize.log'
               % (japize, newJapize, newJar, rtjar))
 
+    # in case there was an error
+    if (os.path.getsize(oldJapize) == 0 or os.path.getsize(newJapize) == 0):
+        return None
+    
     # do the comparison
     os.system('%s -vh -o apicomp.html %s %s 2> japi.log'
               % (japicompat, oldJapize, newJapize))
