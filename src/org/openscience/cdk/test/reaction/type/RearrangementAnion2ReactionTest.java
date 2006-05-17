@@ -21,6 +21,7 @@ import org.openscience.cdk.reaction.type.RearrangementAnion2Reaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -179,6 +180,43 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(2));
         assertEquals(mappedProductA1, product.getAtomAt(2));
         
+	}
+	/**
+	 * A unit test suite for JUnit. Reaction: [F+]=C1-[C-]-C=C-C=C1 => [F+]=C1-[C=]-C-[C-]-C=C1
+	 * Automatic sarch of the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void testAutomaticSearchCentreActiveExample3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		
+		/* [F+]=C1-[C-]-C=C-C=C1*/
+		Molecule molecule = (new SmilesParser()).parseSmiles("[F+]=C1C=CC=C[C-]1");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.newSaturate(molecule);
+		
+		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		setOfReactants.addMolecule(molecule);
+		
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        
+        /*[F+]=C1-[C=]-C-[C-]-C=C1*/
+        Molecule molecule2 = (new SmilesParser()).parseSmiles("[F+]=C1-C=C-[C-]-C=C1");
+        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        lpcheck.newSaturate(molecule2);
+        
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
+        
+        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
 	}
 	/**
 	 * get the molecule 1: [C-]-C=C-C
