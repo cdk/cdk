@@ -77,6 +77,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   molecule.getProperty(CDKConstants.TITLE);
  * </pre>
  *
+ * RGroups which are saved in the mdl file as R#, are renamed according to their appearance,
+ * e.g. the first R# is named R1. With PseudAtom.getLabel() "R1" is returned (instead of R#).
+ * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.  
+ *
  * @cdk.module io
  *
  * @author     steinbeck
@@ -297,6 +301,9 @@ public class MDLReader extends DefaultChemObjectReader {
         int atom2 = 0;
         int order = 0;
         int stereo = 0;
+        int RGroupCounter=1;
+        int Rnumber=0;
+        String [] rGroup=null;
         double x = 0.0;
         double y = 0.0;
         double z = 0.0;
@@ -354,6 +361,18 @@ public class MDLReader extends DefaultChemObjectReader {
                     atom = IsotopeFactory.getInstance(molecule.getBuilder()).configure(molecule.getBuilder().newAtom(element));
                 } else {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                    //check if the element is R
+                    rGroup=element.split("^R");
+                    if (rGroup.length >1){
+                    	try{
+                    		Rnumber=new Integer(rGroup[(rGroup.length-1)]).intValue();
+                    		RGroupCounter=Rnumber;
+                    	}catch(Exception ex){
+                    		Rnumber=RGroupCounter;
+                    		RGroupCounter++;
+                    	}
+                    	element="R"+Rnumber;
+                    }
                     atom = molecule.getBuilder().newPseudoAtom(element);
                 }
 
