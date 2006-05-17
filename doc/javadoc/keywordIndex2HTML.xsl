@@ -31,7 +31,7 @@
         <xsl:apply-templates select="./primaryie"/>
         <ul>
         <xsl:for-each select="./secondaryie">
-          <xsl:apply-templates select="."/>
+          <li><xsl:apply-templates select="."/></li>
         </xsl:for-each>
         </ul>
       </xsl:when>
@@ -44,11 +44,13 @@
   <xsl:template match="primaryie">
     <b><xsl:value-of select="./keyword"/></b>
     <xsl:text> </xsl:text>
+    <xsl:if test="./ulink">
     <ul>
     <xsl:for-each select="./ulink">
-      <xsl:apply-templates select="."/><br/>
+      <li><xsl:apply-templates select="."/></li>
     </xsl:for-each>
     </ul>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="secondaryie">
@@ -56,7 +58,7 @@
     <xsl:text> </xsl:text>
     <ul>
     <xsl:for-each select="./ulink">
-      <xsl:apply-templates select="."/><br/>
+      <li><xsl:apply-templates select="."/></li>
     </xsl:for-each>
     </ul>
   </xsl:template>
