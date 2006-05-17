@@ -33,6 +33,7 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest
 import org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.AtomValenceDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest;
@@ -137,6 +138,7 @@ public class MqsarTests {
         suite.addTest(RuleOfFiveDescriptorTest.suite());
         suite.addTest(RDFProtonDescriptorTest.suite());
         suite.addTest(MomentOfInertiaDescriptorTest.suite());
+        suite.addTest(CovalentRadiusDescriptorTest.suite());
         suite.addTest(VdWRadiusDescriptorTest.suite());
         suite.addTest(BondsToAtomDescriptorTest.suite());
         suite.addTest(DistanceToAtomDescriptorTest.suite());
