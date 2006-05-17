@@ -26,17 +26,17 @@ package org.openscience.cdk.charges;
 import java.io.IOException;
 
 import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.BondCountDescriptor;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+//import org.openscience.cdk.qsar.IMolecularDescriptor;
+//import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptor;
+//import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -62,6 +62,7 @@ public class GasteigerPEPEPartialCharges {
 	/** max iterations */
 	private double MX_ITERATIONS = 12;
 	private int STEP_SIZE = 5;
+	private AtomTypeFactory factory;
 	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
 	private static int ISCHANGEDFC = 0;
 
@@ -71,7 +72,7 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	public GasteigerPEPEPartialCharges() { }
 	/**
-	 *  Sets the maxGasteigerIters attribute of the GasteigerMarsiliPartialCharges
+	 *  Sets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
 	 *  object
 	 *
 	 *@param  iters  The new maxGasteigerIters value
@@ -225,19 +226,31 @@ public class GasteigerPEPEPartialCharges {
 	 * @return     The sum of electrostatic potential of the neighbours
 	 */
 	private double getElectrostaticPotentialN(IAtomContainer ac, int atom1) {
-		IMolecularDescriptor descriptor;
+//		IMolecularDescriptor descriptor;
 		double CoulombForceConstant = 1/(4*Math.PI*0.885/*Math.pow(10, -12)*/);
 		double sum = 0.0;
 		try {
-			descriptor = new CovalentRadiusDescriptor();
+			if (factory == null) 
+                factory = AtomTypeFactory.getInstance(
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                    ac.getBuilder()
+                );
+        
+            
+		
+//			descriptor = new CovalentRadiusDescriptor();
 			IAtom[] atoms = ac.getConnectedAtoms(ac.getAtomAt(atom1));
 			for(int i = 0 ; i < atoms.length ; i++){
-				Object[] params1 = {new Integer(ac.getAtomNumber(atoms[i]))};
-				descriptor.setParameters(params1);
-				double retval = ((DoubleResult)descriptor.calculate(ac).getValue()).doubleValue();
+				double covalentradius = 0;
+	            String symbol = atoms[i].getSymbol();
+	            IAtomType type = factory.getAtomType(symbol);
+	            covalentradius = type.getCovalentRadius();
+//				Object[] params1 = {new Integer(ac.getAtomNumber(atoms[i]))};
+//				descriptor.setParameters(params1);
+//				double retval = ((DoubleResult)descriptor.calculate(ac).getValue()).doubleValue();
 				double charge = atoms[i].getCharge();
-				double sumI = CoulombForceConstant*charge/retval;
-//				System.out.println("sum("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+retval);
+				double sumI = CoulombForceConstant*charge/covalentradius;
+//				System.out.println("sum("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
 				sum += sumI;
 			}
 		} catch (IOException e) {
@@ -276,18 +289,19 @@ public class GasteigerPEPEPartialCharges {
 		}
 		/*factor, if the number of covalents bonds is decreased*/
 		double fB = 1.0;
-		IMolecularDescriptor descriptor  = new BondCountDescriptor();
-        Object[] params = {new Double(2.0)};
-        try {
-			descriptor.setParameters(params);
-			int numBond1 = ((IntegerResult)descriptor.calculate(atomContainer).getValue()).intValue();
-			int numBond2 = ((IntegerResult)descriptor.calculate(ac).getValue()).intValue();
-			if(numBond1 != numBond2)
-				fB = 0.8;
-		} catch (CDKException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		int numBond1 = 0;
+		int numBond2 = 0;
+        IBond[] bonds = atomContainer.getBonds();
+        for (int i = 0; i < bonds.length; i++) {
+            if (atomContainer.getBondAt(i).getOrder() == 2.0) 
+            	numBond1 += 1;
+            if (ac.getBondAt(i).getOrder() == 2.0) 
+            	numBond2 += 1;
+        }
+        if(numBond1 != numBond2)
+			fB = 0.8;
+		
 //		System.out.println("return= sp:"+fQ+", dc:"+fB);
 		
 		return fQ*fB;
