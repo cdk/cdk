@@ -42,7 +42,7 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystem
 import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTotalChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PiContactDetectionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
@@ -156,7 +156,7 @@ public class MqsarTests {
         suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
         suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
-        suite.addTest(PartialTotalChargeDescriptorTest.suite());
+        suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
 
         // from cdk.test.qsar.model
         suite.addTest(QSARRModelTests.suite());

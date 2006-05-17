@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialTotalChargeDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -40,26 +40,26 @@ import org.openscience.cdk.tools.HydrogenAdder;
  *
  * @cdk.module test-qsar
  */
-public class PartialTotalChargeDescriptorTest extends CDKTestCase {
+public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	/**
-	 *  Constructor for the PartialTotalChargeDescriptorTest object
+	 *  Constructor for the PartialTChargeMMFF94DescriptorTest object
 	 *
 	 */
-	public  PartialTotalChargeDescriptorTest() {}
+	public  PartialTChargeMMFF94DescriptorTest() {}
 	/**
 	 *  A unit test suite for JUnit
 	 *
 	 *@return    The test suite
 	 */
 	public static Test suite() {
-		return new TestSuite(PartialTotalChargeDescriptorTest.class);
+		return new TestSuite(PartialTChargeMMFF94DescriptorTest.class);
 	}
 	/**
 	 *  A unit test for JUnit with Methanol
 	 */
 	public void testPartialTotalChargeDescriptor_Methanol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -80,7 +80,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methylamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -101,7 +101,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.28,-0.56,0.28,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -122,7 +122,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methanethiol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.23,-0.41,0.0,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -143,7 +143,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Chloromethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.29,-0.29,0.0};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -164,7 +164,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Benzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -185,7 +185,7 @@ public class PartialTotalChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Water() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.86,0.43,0.43};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTotalChargeDescriptor();
+		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();

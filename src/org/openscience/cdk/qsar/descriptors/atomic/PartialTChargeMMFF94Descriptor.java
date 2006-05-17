@@ -35,7 +35,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- *  The calculation of partial charges of an heavy atom is based on MMFF94.
+ *  The calculation of total partial charges of an heavy atom is based on MMFF94.
  *  
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -60,22 +60,22 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @x.dictref qsar-descriptors:PartialCharge
  * @see MMFF94PartialCharges
  */
-public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
+public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
 	private MMFF94PartialCharges mmff;
 
 
     /**
-     *  Constructor for the PartialTotalChargeDescriptor object
+     *  Constructor for the PartialTChargeMMFF94Descriptor object
      */
-    public PartialTotalChargeDescriptor() { 
+    public PartialTChargeMMFF94Descriptor() { 
     	mmff = new MMFF94PartialCharges();
     }
 
 
     /**
-     *  Gets the specification attribute of the PartialTotalChargeDescriptor  object
+     *  Gets the specification attribute of the PartialTChargeMMFF94Descriptor  object
      *
      *@return    The specification value
      */
@@ -83,13 +83,13 @@ public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialCharge",
             this.getClass().getName(),
-            "$Id: PartialTotalChargeDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
+            "$Id: PartialTChargeMMFF94Descriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");
     }
 
 
     /**
-     *  Sets the parameters attribute of the PartialTotalChargeDescriptor
+     *  Sets the parameters attribute of the PartialTChargeMMFF94Descriptor
      *  object
      *
      *@param  params            The new parameters value
@@ -97,7 +97,7 @@ public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
      */
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
-            throw new CDKException("PartialTotalChargeDescriptor only expects one parameter");
+            throw new CDKException("PartialTChargeMMFF94Descriptor only expects one parameter");
         }
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter must be of type Integer");
@@ -107,7 +107,7 @@ public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameters attribute of the PartialTotalChargeDescriptor
+     *  Gets the parameters attribute of the PartialTChargeMMFF94Descriptor
      *  object
      *
      *@return    The parameters value
@@ -143,7 +143,7 @@ public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameterNames attribute of the PartialTotalChargeDescriptor
+     *  Gets the parameterNames attribute of the PartialTChargeMMFF94Descriptor
      *  object
      *
      *@return    The parameterNames value
@@ -156,7 +156,7 @@ public class PartialTotalChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the PartialTotalChargeDescriptor
+     *  Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor
      *  object
      *
      *@param  name  Description of the Parameter
