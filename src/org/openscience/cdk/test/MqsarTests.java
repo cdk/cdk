@@ -43,6 +43,7 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInConjugatedPiSy
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PiContactDetectionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
@@ -157,6 +158,7 @@ public class MqsarTests {
         suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
+        suite.addTest(PartialTChargePEOEDescriptorTest.suite());
 
         // from cdk.test.qsar.model
         suite.addTest(QSARRModelTests.suite());
