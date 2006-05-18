@@ -1,4 +1,4 @@
-<atomTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
+﻿<atomTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
 
@@ -129,14 +129,21 @@
   </atomType>
   <atomType id="Nplus">
     <atom elementType="N" formalCharge="1">
-      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
     </atom>
   </atomType>
+  <atomType id="Nminus">
+    <atom elementType="N" formalCharge="-1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+    </atom>
+  </atomType>
   <atomType id="Nplus.sp3">
     <atom elementType="N" formalCharge="1">
-      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
     </atom>
