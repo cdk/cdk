@@ -63,6 +63,7 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
     private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
 	private int maxIterations;
+    private IAtomContainer acOld = null;
 
 
     /**
@@ -139,12 +140,15 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
-        try {
-        	if(maxIterations != 0)
-        		peoe.setMaxGasteigerIters(maxIterations);
-            peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-        } catch (Exception ex1) {
-            throw new CDKException("Problems with assignGasteigerMarsiliSigmaPartialCharges due to " + ex1.toString(), ex1);
+        if(acOld!=ac){
+            acOld=ac;
+	        try {
+	        	if(maxIterations != 0)
+	        		peoe.setMaxGasteigerIters(maxIterations);
+	            peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+	        } catch (Exception ex1) {
+	            throw new CDKException("Problems with assignGasteigerMarsiliSigmaPartialCharges due to " + ex1.toString(), ex1);
+	        }
         }
         IAtom target = mol.getAtomAt(atomPosition);
         DoubleResult sigmaPartialCharge = new DoubleResult(target.getCharge());

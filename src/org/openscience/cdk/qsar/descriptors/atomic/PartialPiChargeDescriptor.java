@@ -62,6 +62,7 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
     private GasteigerPEPEPartialCharges pepe = null;
+    private IAtomContainer acOld = null;
 	private int maxIterations;
 
 
@@ -138,14 +139,17 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        try {
-        	pepe.assignGasteigerMarsiliPiPartialCharges(ac, true);
-        } catch (Exception ex1) {
-            throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
-        }
-        IAtom target = ac.getAtomAt(atomPosition);
+    	if(acOld != ac){
+	    	try {
+	    		acOld = ac;
+	        	pepe.assignGasteigerMarsiliPiPartialCharges(acOld, true);
+	            
+	        } catch (Exception ex1) {
+	            throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
+	        }
+    	}
+        IAtom target = acOld.getAtomAt(atomPosition);
         DoubleResult piPartialCharge = new DoubleResult(target.getCharge());
-        
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), piPartialCharge);
     }
 

@@ -62,7 +62,7 @@ public class SigmaElectronegativityDescriptor implements IMolecularDescriptor {
     private int atomPosition = 0;
     private int maxIterations = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
-    private IAtomContainer oldac=null;
+    private IAtomContainer oldac = null;
     private double[] gasteigerFactors = null;
 
 

@@ -64,6 +64,7 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
 
     private int atomPosition = 0;
 	private MMFF94PartialCharges mmff;
+    private IAtomContainer acOld = null;
 
 
     /**
@@ -130,11 +131,14 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
     	Molecule mol = new Molecule(ac);
-        try {
-        	mmff.assignMMFF94PartialCharges(mol);
-        } catch (Exception ex1) {
-            throw new CDKException("Problems with assignMMFF94PartialCharges due to " + ex1.toString(), ex1);
-        }
+    	if(acOld!=ac){
+            acOld=ac;
+	        try {
+	        	mmff.assignMMFF94PartialCharges(mol);
+	        } catch (Exception ex1) {
+	            throw new CDKException("Problems with assignMMFF94PartialCharges due to " + ex1.toString(), ex1);
+	        }
+    	}
         IAtom target = mol.getAtomAt(atomPosition);
         DoubleResult aphaPartialCharge = new DoubleResult(((Double)target.getProperty("MMFF94charge")).doubleValue());
         
