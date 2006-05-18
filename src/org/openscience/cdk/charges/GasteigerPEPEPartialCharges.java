@@ -345,13 +345,10 @@ public class GasteigerPEPEPartialCharges {
 				factors[1] = 0.0;
 				factors[2] = 0.0;
 			} else if (AtomSymbol.equals("C")) {
-//				if (ac.getAtomAt(i).getFlag(ISCHANGEDFC)) {
 					factors[0] = 5.60;
 					factors[1] = 8.93;
 					factors[2] = 2.94;
-//				}
 			} else if (AtomSymbol.equals("O")) {
-//				if (ac.getAtomAt(i).getFlag(ISCHANGEDFC)) {
 					if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
 						
 						factors[0] = 10.0;
@@ -362,11 +359,44 @@ public class GasteigerPEPEPartialCharges {
 						factors[1] = 14.76;
 						factors[2] = 6.85;
 					}
-//				}
+			} else if (AtomSymbol.equals("N")) {
+				if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
+					
+					factors[0] = 7.95;
+					factors[1] = 9.73;
+					factors[2] = 2.67;
+				}else {
+					factors[0] = 4.54;
+					factors[1] = 11.86;
+					factors[2] = 7.32;
+				}
+			} else if (AtomSymbol.equals("S")) {
+				if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
+					
+					factors[0] = 7.73;
+					factors[1] = 8.16;
+					factors[2] = 1.81;
+				}else {
+					factors[0] = 6.60;
+					factors[1] = 10.32;
+					factors[2] = 3.72;
+				}
 			} else if (AtomSymbol.equals("F")) {
 				factors[0] = 7.34;
 				factors[1] = 13.86;
 				factors[2] = 9.68;
+			} else if (AtomSymbol.equals("Cl")) {
+				factors[0] = 6.50;
+				factors[1] = 11.02;
+				factors[2] = 4.52;
+			} else if (AtomSymbol.equals("Br")) {
+				factors[0] = 5.20;
+				factors[1] = 9.68;
+				factors[2] = 4.48;
+			} else if (AtomSymbol.equals("I")) {
+				factors[0] = 4.95;
+				factors[1] = 8.81;
+				factors[2] = 3.86;
 			}
 		
 			gasteigerFactors[k][STEP_SIZE * i + i] = factors[0];
