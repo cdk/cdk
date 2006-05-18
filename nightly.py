@@ -351,7 +351,7 @@ def parseJunitOutput(summaryFile):
     f.write(summary)
     f.close()
 
-def checkIfSEGV(dir):
+def segvOccured(dir):
     """
     Look in dir to see if there are any hs_* files
     which indicate a SEGV in the JVM. If found
@@ -403,17 +403,17 @@ def runAntJob(cmdLine, logFileName, jobName):
     os.system('%s > %s' % (cmdLine, getLogFilePath(logFileName)))
 
     # if a JVM segfault occured we've failed
-    if checkIfSEGV(nightly_repo):
-        print '%s failed. JVM segfault' % (jobName)
+    if segvOccured(nightly_repo):
+        print '%s failed (JVM segfault)' % (jobName)
         return False
     
     # if for some reason a log file was not written we've failed
     if not os.path.exists(getLogFilePath(logFileName)):
-        print '%s failed' % (jobName)
+        print '%s failed (no run log)' % (jobName)
         return False
         
     if checkIfAntJobFailed( getLogFilePath(logFileName) ):
-        print '%s failed' % (jobName)
+        print '%s failed (compile error)' % (jobName)
         os.chdir(olddir)
         return False
     else:
@@ -816,8 +816,6 @@ if __name__ == '__main__':
             transformXML2HTML(srcFile, destFile, xsltFile, False)
             resultTable.appendToCell("<a href=\"keywords.html\">Keywords</a>")
     else:
-        resultTable.addRow()
-        resultTable.addCell("Javadocs:")
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
     resultTable.addRule()
