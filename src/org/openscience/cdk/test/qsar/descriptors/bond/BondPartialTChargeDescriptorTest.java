@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -40,15 +40,15 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * @cdk.module test-qsar
  */
  
-public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
+public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	
 	private IMolecularDescriptor descriptor;
 	/**
-	 *  Constructor for the BondPartialPiChargeDescriptorTest object
+	 *  Constructor for the BondPartialTChargeDescriptorTest object
 	 *
 	 */
-	public  BondPartialPiChargeDescriptorTest() {
-		descriptor  = new BondPartialPiChargeDescriptor() ;
+	public  BondPartialTChargeDescriptorTest() {
+		descriptor  = new BondPartialTChargeDescriptor() ;
 	}
 	/**
 	 *  A unit test suite for JUnit
@@ -56,15 +56,15 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 	 *@return    The test suite
 	 */
 	public static Test suite() {
-		return new TestSuite(BondPartialPiChargeDescriptorTest.class);
+		return new TestSuite(BondPartialTChargeDescriptorTest.class);
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
 	public void testBondPiElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={0.3323,0.0218	};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
-		Integer[] params = new Integer[2];
+		Integer[] params = new Integer[1];
         
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CF"); 
@@ -83,7 +83,7 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with Allyl bromide
 	 */
 	public void testBondPiElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.0022,0.0011,0.0011,0.0011,0.0011,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={0.0243,0.1279,0.1872,0.1553,0.1553,0.1358,0.0013,0.0013}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		Integer[] params = new Integer[2];
         
@@ -95,7 +95,6 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 8 ; i++){
 			params[0] = new Integer(i);
-			params[1] = new Integer(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
@@ -105,7 +104,7 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
 	public void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double testResult = 0.0	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double testResult = 0.0165	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		Object[] params = {new Integer(0)};
         descriptor.setParameters(params);
@@ -114,16 +113,14 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
 			assertEquals(testResult,result,0.001);
-		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
 	public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.0006,0.0003,0.0003,0.0003,0.0003,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={0.0197,0.0924,0.1835,0.1566,0.1566,0.1412,0.0323,0.0323,0.2761}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();

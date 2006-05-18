@@ -54,6 +54,7 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.WeightDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondCountDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.APolDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
@@ -110,6 +111,7 @@ public class MqsarTests {
         suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
         suite.addTest(BondPartialPiChargeDescriptorTest.suite());
         suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(BondPartialTChargeDescriptorTest.suite());
         suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
         suite.addTest(AromaticBondsCountDescriptorTest.suite());

@@ -37,7 +37,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 /**
  *  The calculation of bond-sigma Partial charge is calculated 
  *  determining the difference the Partial Sigma Charge on atoms 
- *  A and B of a bond.
+ *  A and B of a bond. Based in Gasteiger Charge.
  *  <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>

@@ -32,11 +32,12 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- *  The calculation of bond-pi Partial charge is calculated 
- *  determining the difference the Partial Pi Charge on atoms 
+ *  The calculation of bond total Partial charge is calculated 
+ *  determining the difference the Partial Total Charge on atoms 
  *  A and B of a bond. Based in Gasteiger Charge.
  *  <p>This descriptor uses these parameters:
  * <table border="1">
@@ -59,23 +60,24 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialCharge
  * @see PartialPiChargeDescriptor
+ * @see PartialSigmaChargeDescriptor
  */
-public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
+public class BondPartialTChargeDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
 	private IMolecularDescriptor  descriptor;
 
 
     /**
-     *  Constructor for the BondPartialPiChargeDescriptor object
+     *  Constructor for the BondPartialTChargeDescriptor object
      */
-    public BondPartialPiChargeDescriptor() {  
-    	descriptor  = new PartialPiChargeDescriptor() ;
+    public BondPartialTChargeDescriptor() {  
+    	descriptor  = new PartialTChargePEOEDescriptor() ;
     }
 
 
     /**
-     *  Gets the specification attribute of the BondPartialPiChargeDescriptor
+     *  Gets the specification attribute of the BondPartialTChargeDescriptor
      *  object
      *
      *@return    The specification value
@@ -84,20 +86,20 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialCharge",
             this.getClass().getName(),
-            "$Id: BondPartialPiChargeDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
+            "$Id: BondPartialTChargeDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");
     }
 
 
     /**
-     *  Sets the parameters attribute of the BondPartialPiChargeDescriptor object
+     *  Sets the parameters attribute of the BondPartialTChargeDescriptor object
      *
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
     	if (params.length > 2) {
-            throw new CDKException("BondPartialPiChargeDescriptor only expects two parameter");
+            throw new CDKException("BondPartialTChargeDescriptor only expects two parameter");
         }
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter 1 must be of type Integer");
@@ -107,7 +109,7 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameters attribute of the BondPartialPiChargeDescriptor object
+     *  Gets the parameters attribute of the BondPartialTChargeDescriptor object
      *
      *@return    The parameters value
      */
@@ -120,7 +122,7 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  The method calculates the bond-pi Partial charge of a given bond
+     *  The method calculates the bond total Partial charge of a given bond
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  ac                AtomContainer
@@ -146,7 +148,7 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameterNames attribute of the BondPartialPiChargeDescriptor
+     *  Gets the parameterNames attribute of the BondPartialTChargeDescriptor
      *  object
      *
      *@return    The parameterNames value
@@ -159,7 +161,7 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameterType attribute of the BondPartialPiChargeDescriptor
+     *  Gets the parameterType attribute of the BondPartialTChargeDescriptor
      *  object
      *
      *@param  name  Description of the Parameter
