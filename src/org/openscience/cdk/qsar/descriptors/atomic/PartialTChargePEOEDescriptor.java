@@ -53,7 +53,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-04-11
- * @cdk.module  builder3d
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialCharge
