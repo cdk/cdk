@@ -6,8 +6,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,7 +50,6 @@ public class ElectrostaticInteractions {
 	double[] iQ = null;
 	double electrostatic14interactionsScale = 0.75;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
-	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;
 	
 	/**
@@ -138,7 +137,7 @@ public class ElectrostaticInteractions {
 
 		for (int l = 0; l < electrostaticInteractionNumber; l++) {
 
-			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, electrostaticInteractionAtomPosition[l][0], electrostaticInteractionAtomPosition[l][1]);
+			r[l] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, electrostaticInteractionAtomPosition[l][0], electrostaticInteractionAtomPosition[l][1]);
 			//logger.debug("r[" + l + "]= " + r[l]);
 		}
 	}

@@ -42,12 +42,12 @@ public class NewtonRaphsonMethod {
 		//As.print(As.getRowDimension(), As.getColumnDimension());
 		double[] realEigenvalues = As.eig().getRealEigenvalues();
 		double[] imagEigenvalues = As.eig().getImagEigenvalues();
-		//logger.debug(" ");
-		//logger.debug("Hs EigenValues :");
-		/*for (int i=0; i < As.getColumnDimension(); i++) {
-			 logger.debug("Eigen value " + i + ": real part = " + realEigenvalues[i]);
-			 logger.debug(", imaginary part = " + imagEigenvalues[i]);
-		 }*/
+		System.out.println(" ");
+		System.out.println("Hs EigenValues :");
+		for (int i=0; i < As.getColumnDimension(); i++) {
+			System.out.println("Eigen value " + i + ": real part = " + realEigenvalues[i]);
+			System.out.println(", imaginary part = " + imagEigenvalues[i]);
+		 }
 
 	}
 

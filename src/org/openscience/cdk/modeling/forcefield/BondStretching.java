@@ -24,8 +24,7 @@ public class BondStretching {
 
 	String functionShape = " Bond Stretching ";
 	
-	ForceFieldTools ffTools = new ForceFieldTools();
-	
+		
 	double mmff94SumEB = 0;
 	GVector gradientMMFF94SumEB = null;
 	GMatrix hessianMMFF94SumEB = null;
@@ -48,14 +47,14 @@ public class BondStretching {
 	double[][] dDeltar = null;
 	double[][][] ddDeltar = null;
 
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the BondStretching object
 	 */
 	public BondStretching() {        
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 
@@ -123,7 +122,7 @@ public class BondStretching {
 
 		//logger.debug("deltar.length = " + deltar.length);
 		for (int i = 0; i < bondsNumber; i++) {
-			r[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
+			r[i] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
 			//if (deltar[i] > 0) {
 			//	deltar[i] = (-1) * deltar[i];
@@ -289,7 +288,7 @@ public class BondStretching {
 		//logger.debug("bondAtomPosition.length = " + bondAtomPosition.length);
 		double[] rTemp = new double[bondAtomPosition.length];
 		for (int i = 0; i < bondAtomPosition.length; i++) {
-			rTemp[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
+			rTemp[i] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 		}
 		
 		for (int i=0; i<coord3d.getSize(); i++) {

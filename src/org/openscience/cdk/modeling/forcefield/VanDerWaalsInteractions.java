@@ -7,8 +7,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,7 +50,7 @@ public class VanDerWaalsInteractions {
 	GVector dIvdw = null;
 	
 	//int[][] distances = null;	//Better check common atom connected
-	IMolecularDescriptor shortestPathBetweenToAtoms=new BondsToAtomDescriptor();
+	IMolecularDescriptor shortestPathBetweenToAtoms = new BondsToAtomDescriptor();
 	Object[] params = {new Integer(0), new Integer(0)};
 	
 	int vdwInteractionNumber;
@@ -78,7 +78,6 @@ public class VanDerWaalsInteractions {
 	double[] ivdw = null;
 	double vdwScale14 = 1;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
-	ForceFieldTools ffTools = new ForceFieldTools();
 	private LoggingTool logger;
 	
 	/**
@@ -231,7 +230,7 @@ public class VanDerWaalsInteractions {
 
 		for (int l = 0; l < vdwInteractionNumber; l++) {
 
-			r[l] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
+			r[l] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, vdWiAtomPosition[l][0], vdWiAtomPosition[l][1]);
 			//logger.debug("r[" + l + "]= " + r[l]);
 		}
 	}

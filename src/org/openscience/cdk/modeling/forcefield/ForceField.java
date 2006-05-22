@@ -8,33 +8,33 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
- * calculate the distance between two atoms.
+ *  To work with the coordinates of the molecule, like get the 3d coordinates of the atoms or 
+ *  calculate the distance between two atoms.
+ *@author     vlabarta
+ *@cdk.module     forcefield
  *
- * @author     vlabarta
- * @cdk.module forcefield
  */
 public class ForceField extends GeometricMinimizer{
 	
 	private String potentialFunction="mmff94";
-	ForceFieldTools ffTools = new ForceFieldTools();
+	
 	boolean sdm_flag=true;
         boolean cgm_flag=true;
         boolean nrm_flag=true;
 	
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 
 	/**
 	 *  Constructor for the ForceField object
 	 */
 	public ForceField() {        
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 	
-	public ForceField(Molecule molecule) {
+	public ForceField(Molecule molecule) throws Exception {
 		setMolecule(molecule, false);
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 
@@ -56,14 +56,15 @@ public class ForceField extends GeometricMinimizer{
 		GVector moleculeCoords = new GVector(3);
 		MMFF94EnergyFunction mmff94PF=null;
 		if (potentialFunction=="mmff94"){
-		    //logger.debug("SET POTENTIAL FUNCTION TO MMFF94");
+		    //System.out.println("SET POTENTIAL FUNCTION TO MMFF94");
 		    setMMFF94Tables(molecule);
 		    mmff94PF=new MMFF94EnergyFunction((AtomContainer)molecule,getPotentialParameterSet());
+			//System.out.println("PotentialFunction set:"+potentialFunction+", Hashtable:"+getPotentialParameterSet().size());
 		}
 		moleculeCoords.setSize(molecule.getAtomCount() * 3);
-		moleculeCoords.set(ffTools.getCoordinates3xNVector((AtomContainer)molecule));
+		moleculeCoords.set(ForceFieldTools.getCoordinates3xNVector((AtomContainer)molecule));
 		
-		//logger.debug("PotentialFunction set:"+potentialFunction+"MoleculeCoords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
+		//System.out.println("PotentialFunction set:"+potentialFunction+" Molecule Coords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
 		//logger.debug(moleculeCoords.toString());
 		start = System.currentTimeMillis();
 		//System.out.println("Starting minmization at " + start);
@@ -73,14 +74,14 @@ public class ForceField extends GeometricMinimizer{
 		//conjugateGradientMinimization(moleculeCoords, tpf);
 		stop = System.currentTimeMillis();
 		//System.out.println("Finished minmization at " + stop);
-		if ((stop - start)/1000 < 60) {
+		//if ((stop - start)/1000 < 60) {
 			//System.out.println("Time for minimization: " + (stop - start)/1000 + " sec");
-		} else {
-			//System.out.println("Time for minimization: " + (stop - start)/60000 + " min");
+		//}
+		//	System.out.println("Time for minimization: " + (stop - start)/60000 + " min");
 
-		}
-		//logger.debug("Minimization READY");
-		//ffTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
+		//}
+		//System.out.println("Minimization READY");
+		//ForceFieldTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
 	}
 			
 

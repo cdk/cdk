@@ -1,14 +1,10 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Vector;
-
-import javax.vecmath.GVector;
-import javax.vecmath.Point3d;
-import javax.vecmath.Tuple3d;
-import javax.vecmath.Vector3d;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+import javax.vecmath.*;
+import org.openscience.cdk.*;
 
 /**
  *  To work with the coordinates of the molecule, like get the 3d coordinates of
@@ -16,19 +12,22 @@ import org.openscience.cdk.AtomContainer;
  *
  * @author      vlabarta
  * @cdk.created 2005-03-03
- * @cdk.module  forcefield
  */
-public class ForceFieldTools {
+public abstract class ForceFieldTools {
 
-	Point3d atomiCoordinates = new Point3d();
-	Point3d atomjCoordinates = new Point3d();
-	Point3d atomkCoordinates = new Point3d();
-	Point3d atomlCoordinates = new Point3d();
+	static Vector3d xji = null;
+	static Vector3d xjk = null;
+	static Vector3d xlk = null;
+	static Vector3d v1 = null;
+	static Vector3d v2 = null;
 	
-	/**
-	 *  Constructor for the ForceFieldTools object
-	 */
-	public ForceFieldTools() { }
+	static Point3d atomiCoordinates = new Point3d();
+	static Point3d atomjCoordinates = new Point3d();
+	static Point3d atomkCoordinates = new Point3d();
+	static Point3d atomlCoordinates = new Point3d();
+	static Point3d atom1Coordinates = new Point3d();
+	static Point3d atom2Coordinates = new Point3d();
+	
 
 
 	/**
@@ -38,7 +37,7 @@ public class ForceFieldTools {
 	 *@param  molecule  molecule store in an AtomContainer
 	 *@return           GVector with 3xN coordinates (N: atom numbers)
 	 */
-	public GVector getCoordinates3xNVector(AtomContainer molecule) {
+	public static  GVector getCoordinates3xNVector(AtomContainer molecule) {
 
 		//System.out.println("molecule: " + molecule.toString());
 		//System.out.println("Atoms number = " + molecule.getAtomCount());
@@ -70,7 +69,7 @@ public class ForceFieldTools {
 	 *@param  molecule  molecule store in an AtomContainer
 	 *@return           Vector with the N coordinates 3d of a molecule of N atoms
 	 */
-	public Vector getPoint3dCoordinates(AtomContainer molecule) {
+	public static  Vector getPoint3dCoordinates(AtomContainer molecule) {
 
 		//System.out.println("molecule: " + molecule.toString());
 		//System.out.println("Atoms number = " + molecule.getAtomCount());
@@ -98,13 +97,14 @@ public class ForceFieldTools {
 	 *@param  atom2  Second atom.
 	 *@return        Distance between the two atoms.
 	 */
-	public double distanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
+	public static  double distanceBetweenTwoAtoms(Atom atom1, Atom atom2) {
 
-		Point3d atom1Coordinates = new Point3d(atom1.getPoint3d());
-		Point3d atom2Coordinates = new Point3d(atom2.getPoint3d());
-		double atomsDistance = 0;
-		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
-		//System.out.println("atomsDistance = " + atomsDistance);
+		atom1Coordinates = atom1.getPoint3d();
+		atom2Coordinates = atom2.getPoint3d();
+		
+		double atomsDistance = atom1Coordinates.distance(atom2Coordinates);
+		
+		System.out.println("distanceBetweenTwoAtoms, atomsDistance = " + atomsDistance);
 
 		return atomsDistance;
 	}
@@ -119,13 +119,17 @@ public class ForceFieldTools {
 	 *@param  atom2Position               Atom position in the molecule (from 0 to N-1) for the second atom.
 	 *@return                         Distance between the two atoms.
 	 */
-	public double distanceBetweenTwoAtomsFrom3xNCoordinates(GVector coords3d, int atom1Position, int atom2Position) {
+	public static double distanceBetweenTwoAtomsFrom3xNCoordinates(GVector coords3d, int atom1Position, int atom2Position) {
 
-		Point3d atom1Coordinates = new Point3d(coords3d.getElement(3 * atom1Position), coords3d.getElement(3 * atom1Position + 1), coords3d.getElement(3 * atom1Position + 2));
-		Point3d atom2Coordinates = new Point3d(coords3d.getElement(3 * atom2Position), coords3d.getElement(3 * atom2Position + 1), coords3d.getElement(3 * atom2Position + 2));
+		atom1Coordinates.x = coords3d.getElement(3 * atom1Position);
+		atom1Coordinates.y = coords3d.getElement(3 * atom1Position + 1);
+		atom1Coordinates.z = coords3d.getElement(3 * atom1Position + 2);
+		atom2Coordinates.x = coords3d.getElement(3 * atom2Position);
+		atom2Coordinates.y = coords3d.getElement(3 * atom2Position + 1);
+		atom2Coordinates.z = coords3d.getElement(3 * atom2Position + 2);
+		
 		double atomsDistance = 0;
 		atomsDistance = atom1Coordinates.distance(atom2Coordinates);
-		//System.out.println("atomsDistance = " + atomsDistance);
 
 		return atomsDistance;
 	}
@@ -142,7 +146,7 @@ public class ForceFieldTools {
 	 *      0 to N-1) for the second atom.
 	 *@return                     Distance between the two atoms in the molecule.
 	 */
-	public double distanceBetweenTwoAtomsFromNCoordinates3d(Vector atoms3dCoordinates, int atomNum1, int atomNum2) {
+	public static  double distanceBetweenTwoAtomsFromNCoordinates3d(Vector atoms3dCoordinates, int atomNum1, int atomNum2) {
 
 		Point3d atom13dCoord = (Point3d) atoms3dCoordinates.get(atomNum1);
 		Point3d atom23dCoord = (Point3d) atoms3dCoordinates.get(atomNum2);
@@ -162,7 +166,7 @@ public class ForceFieldTools {
 	 *@param  molecule        AtomContainer
 	 *@return                 the molecule as AtomContainer
 	 */
-	public AtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, AtomContainer molecule) {
+	public static  AtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, AtomContainer molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			molecule.getAtomAt(i).setX3d(moleculeCoords.getElement(i * 3));
 			molecule.getAtomAt(i).setY3d(moleculeCoords.getElement(i * 3 + 1));
@@ -182,7 +186,7 @@ public class ForceFieldTools {
 	 *@param  atomNumM2                Atom position in the second molecule.
 	 *@return                          Distance between the two atoms.
 	 */
-	public double distanceBetweenTwoAtomFromTwo3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
+	public static  double distanceBetweenTwoAtomFromTwo3xNCoordinates(GVector atomsCoordinatesVector1, GVector atomsCoordinatesVector2, int atomNumM1, int atomNumM2) {
 
 		double atomsDistance = 0;
 		double difference = 0;
@@ -205,7 +209,7 @@ public class ForceFieldTools {
 	 *@param  atomk  Atom k.
 	 *@return        Angle value.
 	 */
-	public double angleBetweenTwoBonds(Atom atomi, Atom atomj, Atom atomk) {
+	public static  double angleBetweenTwoBonds(Atom atomi, Atom atomj, Atom atomk) {
 
 		Vector3d bondij = new Vector3d();
 		bondij.sub((Tuple3d)atomi.getPoint3d(), (Tuple3d)atomj.getPoint3d());
@@ -226,14 +230,14 @@ public class ForceFieldTools {
 	 *@param  atomkPosition  Atom k position.
 	 *@return        Angle value.
 	 */
-	public double angleBetweenTwoBondsFrom3xNCoordinates(GVector coords3d,int atomiPosition,int atomjPosition,int atomkPosition) {
+	public static  double angleBetweenTwoBondsFrom3xNCoordinates(GVector coords3d,int atomiPosition,int atomjPosition,int atomkPosition) {
 
-		this.atomiCoordinates.set(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
-		this.atomjCoordinates.set(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
-		this.atomkCoordinates.set(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
+		atomiCoordinates.set(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
+		atomjCoordinates.set(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
+		atomkCoordinates.set(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
 		
 		Vector3d bondij = new Vector3d();
-		bondij.sub((Tuple3d)this.atomiCoordinates, (Tuple3d)atomjCoordinates);
+		bondij.sub((Tuple3d)atomiCoordinates, (Tuple3d)atomjCoordinates);
 
 		Vector3d bondjk = new Vector3d();
 		bondjk.sub((Tuple3d)atomkCoordinates, (Tuple3d)atomjCoordinates);
@@ -254,21 +258,21 @@ public class ForceFieldTools {
 	 *@param  atoml  Atom l.
 	 *@return        Torsion angle value.
 	 */
-	public double torsionAngle(Atom atomi, Atom atomj, Atom atomk, Atom atoml) {
+	public static  double torsionAngle(Atom atomi, Atom atomj, Atom atomk, Atom atoml) {
 
-		Vector3d xji = new Vector3d((Tuple3d) atomi.getPoint3d());
+		xji = new Vector3d((Tuple3d) atomi.getPoint3d());
 		xji.sub(atomj.getPoint3d());
-		Vector3d xjk = new Vector3d((Tuple3d) atomk.getPoint3d());
+		xjk = new Vector3d((Tuple3d) atomk.getPoint3d());
 		xjk.sub(atomj.getPoint3d());
-		Vector3d xlk = new Vector3d((Tuple3d) atomk.getPoint3d());
+		xlk = new Vector3d((Tuple3d) atomk.getPoint3d());
 		xlk.sub(atoml.getPoint3d());
 
-		Vector3d v1 = new Vector3d();
+		v1 = new Vector3d();
 		// v1 = xji x xjk / |xji x xjk|
 		v1.cross(xji, xjk);
 		v1.normalize();
 
-		Vector3d v2 = new Vector3d();
+		v2 = new Vector3d();
 		// v2 = xjk x xlk / |xjk x xlk|
 		v2.cross(xjk, xlk);
 		v2.normalize();
@@ -291,25 +295,25 @@ public class ForceFieldTools {
 	 *@param  atomlPosition  Atom l position.
 	 *@return        Torsion angle value.
 	 */
-	public double torsionAngleFrom3xNCoordinates(GVector coords3d, int atomiPosition, int atomjPosition, int atomkPosition, int atomlPosition) {
+	public static  double torsionAngleFrom3xNCoordinates(GVector coords3d, int atomiPosition, int atomjPosition, int atomkPosition, int atomlPosition) {
 
-		this.atomiCoordinates.set(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
-		this.atomjCoordinates.set(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
-		this.atomkCoordinates.set(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
-		this.atomlCoordinates.set(coords3d.getElement(3 * atomlPosition), coords3d.getElement(3 * atomlPosition + 1), coords3d.getElement(3 * atomlPosition + 2));
+		atomiCoordinates.set(coords3d.getElement(3 * atomiPosition), coords3d.getElement(3 * atomiPosition + 1), coords3d.getElement(3 * atomiPosition + 2));
+		atomjCoordinates.set(coords3d.getElement(3 * atomjPosition), coords3d.getElement(3 * atomjPosition + 1), coords3d.getElement(3 * atomjPosition + 2));
+		atomkCoordinates.set(coords3d.getElement(3 * atomkPosition), coords3d.getElement(3 * atomkPosition + 1), coords3d.getElement(3 * atomkPosition + 2));
+		atomlCoordinates.set(coords3d.getElement(3 * atomlPosition), coords3d.getElement(3 * atomlPosition + 1), coords3d.getElement(3 * atomlPosition + 2));
 		
-		Vector3d xji = new Vector3d((Tuple3d)this.atomiCoordinates);
-		xji.sub(this.atomjCoordinates);
-		Vector3d xjk = new Vector3d((Tuple3d)this.atomkCoordinates);
-		xjk.sub(this.atomjCoordinates);
-		Vector3d xlk = new Vector3d((Tuple3d)this.atomkCoordinates);
-		xlk.sub(this.atomlCoordinates);
+		xji = new Vector3d((Tuple3d)atomiCoordinates);
+		xji.sub(atomjCoordinates);
+		xjk = new Vector3d((Tuple3d)atomkCoordinates);
+		xjk.sub(atomjCoordinates);
+		xlk = new Vector3d((Tuple3d)atomkCoordinates);
+		xlk.sub(atomlCoordinates);
 		
-		Vector3d v1 = new Vector3d();	// v1 = xji x xjk / |xji x xjk|
+		v1 = new Vector3d();	// v1 = xji x xjk / |xji x xjk|
 		v1.cross(xji, xjk);
 		v1.normalize();
 		
-		Vector3d v2 = new Vector3d();	// v2 = xjk x xlk / |xjk x xlk|
+		v2 = new Vector3d();	// v2 = xjk x xlk / |xjk x xlk|
 		v2.cross(xjk, xlk);
 		v2.normalize();
 		
@@ -332,7 +336,7 @@ public class ForceFieldTools {
 		return torsion;
 	}
 	
-	public double toDegrees(double angleRad){
+	public static  double toDegrees(double angleRad){
 		return angleRad*180/Math.PI;
 	}
 
