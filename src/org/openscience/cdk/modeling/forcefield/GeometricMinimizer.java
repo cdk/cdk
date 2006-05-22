@@ -3,7 +3,6 @@ package org.openscience.cdk.modeling.forcefield;
 import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.*;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -49,8 +48,9 @@ public class GeometricMinimizer {
 	double RMSD = 0;
 	double RMS = 0;
 	double d = 0;
+	boolean gradientSmallEnoughFlag = false;
+	double infiniteNorm;
 	
-	ForceFieldTools ffTools = new ForceFieldTools();
 	NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 	private LoggingTool logger;
 
@@ -65,15 +65,10 @@ public class GeometricMinimizer {
 	}
 
 
-	public void setMolecule(Molecule mol, boolean clone) {
+	public void setMolecule(Molecule mol, boolean clone) throws Exception {
 
 		if (clone) {
-			try {
-				this.molecule = (Molecule) mol.clone();
-			} catch (CloneNotSupportedException e) {
-				logger.error("Should clone, but exception occured: ", e.getMessage());
-				logger.debug(e);
-			}
+			this.molecule = (Molecule) mol.clone();
 		} else {
 			this.molecule = mol;
 		}
@@ -137,34 +132,84 @@ public class GeometricMinimizer {
 
 
 	/**
+	 *  Calculate the Root Mean Square gradient (RMS)
+	 *
+	 * @param  gradient  Gradient of the energy function in the new calculated point xk+1. 
+	 */
+	public double rootMeanSquareGradient(GVector gradient) {
+	
+		RMS = 0;
+		RMS = gradient.dot(gradient);
+		RMS = RMS / gradient.getSize();
+		RMS = Math.sqrt(RMS);
+		//System.out.println("RMS = " + RMS);
+		
+		return RMS;
+	}
+
+	
+	/**
+	 *  Analyse if the gradient is small enough, using the criteria || gradient || < 10-5 (1 + |function|)
+	 *
+	 * @param  function  energy function value. 
+	 * @param  gradient  Gradient of the energy function. 
+	 */
+	public void gradientSmallEnough(double function, GVector gradient) {
+		
+		//System.out.println("Analyse if the gradient is small enough");
+
+		infiniteNorm = 0;
+		
+		for (int i=0; i < gradient.getSize(); i++) {
+		infiniteNorm = Math.max(infiniteNorm, Math.abs(gradient.getElement(i)));
+		}
+		
+		//System.out.println("infiniteNorm = " + infiniteNorm);
+		//System.out.println("0.00005  * (1 + Math.abs(function)) = " + (0.00005  * (1 + Math.abs(function))));
+		
+		if (infiniteNorm < 0.00005  * (1 + Math.abs(function))) {gradientSmallEnoughFlag = true;}
+		
+	}
+
+	
+	/**
 	 *  To check convergence
 	 */
 	public void checkConvergence(double convergenceCriterion) {
 		
 		//System.out.println("Checking convergence : ");
-		RMS = 0;
-		RMS = gradientkplus1.dot(gradientkplus1);
-		RMS = RMS / kCoordinates.getSize();
-		RMS = Math.sqrt(RMS);
-		//logger.debug("RMS = " + RMS);
-
+		
+		RMS = rootMeanSquareGradient(gradientkplus1);
+		//System.out.println("RMS = " + RMS);
+		
 		if (RMS < convergenceCriterion) {
 			convergence = true;
 			//System.out.println("RMS convergence");
+			//System.out.println("RMS = " + RMS);
 		}
-
-		RMSD = 0;
-		for (int i = 0; i < atomNumbers; i++) {
-			d = ffTools.distanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
-			RMSD = RMSD + Math.pow(d, 2);
-		}
-		RMSD = RMSD / kCoordinates.getSize();
-		RMSD = Math.sqrt(RMSD);
-		//logger.debug("RMSD = " + RMSD);
-
-		if (RMSD < convergenceCriterion) {
+		
+		gradientSmallEnough(fxkplus1, gradientkplus1);
+		
+		if (gradientSmallEnoughFlag == true) {
 			convergence = true;
-			//System.out.println("RMSD convergence");
+			//System.out.println("Gradient Small Enough");
+		}
+		
+
+		if (Math.abs(this.fxk - this.fxkplus1) < 0.0001) {
+			RMSD = 0;
+			for (int i = 0; i < atomNumbers; i++) {
+				d = ForceFieldTools.distanceBetweenTwoAtomFromTwo3xNCoordinates(kplus1Coordinates, kCoordinates, i, i);
+				RMSD = RMSD + Math.pow(d, 2);
+			}
+			RMSD = RMSD / kCoordinates.getSize();
+			RMSD = Math.sqrt(RMSD);
+			//System.out.println("RMSD = " + RMSD);
+
+			if (RMSD < 0.000001) {
+				convergence = true;
+				//System.out.println("RMSD convergence");
+			}
 		}
 	}
 
@@ -223,7 +268,7 @@ public class GeometricMinimizer {
 		//logger.debug("FORCEFIELDTESTS steepestDescentTest");
 		
 		SteepestDescentsMethod sdm = new SteepestDescentsMethod(kCoordinates);
-		LineSearchForTheWolfeConditions ls = new LineSearchForTheWolfeConditions(forceField);
+		LineSearchForTheWolfeConditions ls = new LineSearchForTheWolfeConditions(forceField, "sdm");
 				
 		while ((iterationNumberkplus1 < SDMaximumIteration) & (convergence == false)) {
 			
@@ -307,7 +352,7 @@ public class GeometricMinimizer {
 		
 		if (molecule != null){
 		    //logger.debug("STEEPESTDM: kplus1Coordinates:"+kplus1Coordinates);
-		    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
+		    ForceFieldTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
 		}
 
 		return;
@@ -350,12 +395,12 @@ public class GeometricMinimizer {
 		//System.out.println("f(x0) = " + fxk);
 		
 		forceField.setEnergyGradient(kCoordinates);
-		gradientk.set(forceField.getEnergyGradient());
+		gradientk = forceField.getEnergyGradient();
 		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		double linearFunctionDerivativek =1;
 		
-		double alphaInitialStep = 0.5;
+		double alphaInitialStep = 0.001;
 
 		if (gradientk.equals(g0)) {
 			convergence = true;
@@ -363,7 +408,15 @@ public class GeometricMinimizer {
 		}		
 		
 		ConjugateGradientMethod cgm = new ConjugateGradientMethod();
-		LineSearchForTheWolfeConditions ls = new LineSearchForTheWolfeConditions(forceField);
+		cgm.initialize(gradientk);
+		LineSearchForTheWolfeConditions ls = new LineSearchForTheWolfeConditions(forceField, "cgm");
+		
+		gradientSmallEnough(fxk, gradientk);
+		if (gradientSmallEnoughFlag == true) {
+			convergence = true;
+			//System.out.println("Gradient Small Enough");
+		}
+		
 		       
 		while ((iterationNumberkplus1 < CGMaximumIteration) & (convergence == false)) {
 			
@@ -377,22 +430,29 @@ public class GeometricMinimizer {
 			//}
 			
 			if (iterationNumberkplus1 != 1) {
+				//System.out.println("ls.alphaOptimum = " + ls.alphaOptimum);
+				//System.out.println("linearFunctionDerivativek = " + linearFunctionDerivativek);
 				alphaInitialStep = ls.alphaOptimum * linearFunctionDerivativek;							 
 				kCoordinates.set(kplus1Coordinates);
 				fxk = fxkplus1;
+				cgm.setDirection(gradientkplus1, gradientk);
 				gradientk.set(gradientkplus1);
-				//System.out.println("gradientk = " + gradientk);
-			}
-			//logger.debug("Search direction: ");
-			cgm.setvk(gradientk, iterationNumberkplus1, ls.derivativeSmallEnough);
-			linearFunctionDerivativek = gradientk.dot(cgm.vk);
-			if (iterationNumberkplus1 != 1) {
-				alphaInitialStep = alphaInitialStep / linearFunctionDerivativek;
 			}
 
-			ls.initialize(kCoordinates, fxk, gradientk, cgm.vk, linearFunctionDerivativek, alphaInitialStep);
-			ls.lineSearchAlgorithm (5);
-			setkplus1Coordinates(cgm.vk, ls.alphaOptimum);			
+			//logger.debug("Search direction: ");
+			linearFunctionDerivativek = gradientk.dot(cgm.conjugatedGradientDirection);
+			if (iterationNumberkplus1 != 1) {
+				alphaInitialStep = alphaInitialStep / linearFunctionDerivativek;
+				//alphaInitialStep = Math.min(1.01 * alphaInitialStep,1);
+			}
+
+			//System.out.println("linearFunctionDerivativek = " + linearFunctionDerivativek);
+			//System.out.println("alphaInitialStep = " + alphaInitialStep);
+			ls.initialize(kCoordinates, fxk, gradientk, cgm.conjugatedGradientDirection, linearFunctionDerivativek, alphaInitialStep);
+			ls.lineSearchAlgorithm(5);
+			//if (ls.alphaOptimum == 0) {convergence = true;}
+			//System.out.println("ls.alphaOptimum = " + ls.alphaOptimum);
+			setkplus1Coordinates(cgm.conjugatedGradientDirection, ls.alphaOptimum);			
 			fxkplus1 = ls.linearFunctionInAlphaOptimum; 			
 			//logger.debug("x" + iterationNumberkplus1 + " = " + kplus1Coordinates + "	");
 			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
@@ -400,21 +460,29 @@ public class GeometricMinimizer {
 			gradientkplus1.set(ls.dfOptimum);
 			//System.out.println("gradientkplus1 = " + gradientkplus1);
 			
+			
 			checkConvergence(CGconvergenceCriterion);
+			/*if (convergence == true) {
+				forceField.setEnergyHessian(kplus1Coordinates);
+				NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
+				//nrm.determinat(gradientkplus1,forceField.getEnergyHessian());
+				nrm.hessianEigenValues(forceField.getForEnergyHessian(),kplus1Coordinates.getSize());
+			}*/
+			
 			//logger.debug(" ");
 			//logger.debug("convergence = " + convergence);
 			
-			/*if (fxkplus1 <= fxk + 0.0001 * ls.alphaOptimum * linearFunctionDerivativek) {}
+			if (fxkplus1 <= fxk + 0.0001 * ls.alphaOptimum * linearFunctionDerivativek) {}
 			else {
-				System.out.println("Sufficient Decrease Condition not satisfied");
+				//System.out.println("SUFFICIENT DECREASE CONDITION NOT SATISFIED");
 				break;
 			}
-			if (Math.abs(gradientkplus1.dot(cgm.vk)) <= -0.1 * linearFunctionDerivativek) {}
+			if (Math.abs(gradientkplus1.dot(cgm.conjugatedGradientDirection)) <= -0.09 * linearFunctionDerivativek) {}
 			else {
-				System.out.println("Curvature Condition not satisfied");
-				//System.out.println("linearFunctionDerivativekplus1 = " + gradientkplus1.dot(cgm.vk));
+				//System.out.println("CURVATURE CONDITION NOT SATISFIED");
+				//System.out.println("linearFunctionDerivativekplus1 = " + gradientkplus1.dot(cgm.conjugatedGradientDirection));
 				//System.out.println("linearFunctionDerivativek = " + linearFunctionDerivativek);
-			}*/
+			}
 					
 			//if (iterationNumberkplus1 % 50 == 0 | iterationNumberkplus1 == 1) {
 				//System.out.println("");
@@ -438,11 +506,12 @@ public class GeometricMinimizer {
 		 //logger.debug("The CG minimum energy is at: " + conjugateGradientMinimum);
 		 //System.out.println("f(x" + iterationNumberk + ") = " + fxk);
 		 //System.out.println("f(minimum) = " + fxkplus1);
-		 //System.out.println("CG Iteration number: " + iterationNumberkplus1);
+		 //System.out.println("CG converge at iteration " + iterationNumberkplus1);
+		 //System.out.println("Energy function evaluation number : " + forceField.functionEvaluationNumber);
 		 
 		if (molecule !=null){
 		    //logger.debug("CGM: kplus1Coordinates:"+kplus1Coordinates);
-		    ffTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
+		    ForceFieldTools.assignCoordinatesToMolecule(kplus1Coordinates, molecule);
 		}
 
 		return;
@@ -492,13 +561,13 @@ public class GeometricMinimizer {
 		initializeMinimizationParameters(initialCoordinates);
 
 		forceField.setEnergyGradient(kCoordinates);
-		gradientk.set(forceField.getEnergyGradient());
+		gradientk = forceField.getEnergyGradient();
 		//logger.debug("gradient at iteration 1 : g1 = " + gradientk);
 
 		newtonRaphsonMinimum = new GVector(kCoordinates);
 
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS NewtonRaphsonTest");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS NewtonRaphsonTest");
 		
 		GMatrix hessian = new GMatrix(initialCoordinates.getSize(),initialCoordinates.getSize());
 		
@@ -506,8 +575,8 @@ public class GeometricMinimizer {
 			
 			iterationNumberkplus1 += 1;
 			iterationNumberk += 1;
-			//logger.debug("");
-			//logger.debug("NR Iteration number: " + iterationNumberkplus1);
+			//System.out.println("");
+			//System.out.println("NR Iteration number: " + iterationNumberkplus1);
 
 			if (iterationNumberkplus1 != 1) {
 				kCoordinates.set(kplus1Coordinates);
@@ -527,15 +596,15 @@ public class GeometricMinimizer {
 			gradientkplus1.set(forceField.getEnergyGradient());
 
 			checkConvergence(NRconvergenceCriterion);
-			//logger.debug("convergence: " + convergence);
+			//System.out.println("convergence: " + convergence);
 
 			//logger.debug("");
 			//logger.debug("f(x" + iterationNumberk + ") = " + fxk);
-			//logger.debug("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
+			//System.out.println("f(x" + iterationNumberkplus1 + ") = " + fxkplus1);
 			//logger.debug("gradientkplus1 = " + gradientkplus1);
 		}
 		   newtonRaphsonMinimum.set(kplus1Coordinates);
-		   //logger.debug("The NR minimum energy is at: " + newtonRaphsonMinimum);
+		   //System.out.println("The NR minimum energy is at: " + newtonRaphsonMinimum);
 		 
 		return;
 	}
