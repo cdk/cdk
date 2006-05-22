@@ -56,9 +56,8 @@ public class AngleBending {
 	
 	GVector moleculeCurrentCoordinates = null;
 	boolean[] changeAtomCoordinates = null;
+	int changedCoordinates;
 
-	ForceFieldTools ffTools = new ForceFieldTools();
-	//private LoggingTool logger;
 
 
 	/**
@@ -158,11 +157,17 @@ public class AngleBending {
 	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void setDeltav(GVector coord3d) {
+		changedCoordinates = 0;
+		//System.out.println("Setting Deltav");
+		for (int i=0; i < changeAtomCoordinates.length; i++) {
+			this.changeAtomCoordinates[i] = false;
+		}
 		this.moleculeCurrentCoordinates.sub(coord3d);
 		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
 			//System.out.println("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
-			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 1E-2) {
+			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 0) {
 				changeAtomCoordinates[i/3] = true;
+				changedCoordinates = changedCoordinates + 1;
 				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
 				i = i + (2 - i % 3);
 			}
@@ -174,7 +179,7 @@ public class AngleBending {
 				(changeAtomCoordinates[angleAtomPosition[i][1]] == true) | 
 				(changeAtomCoordinates[angleAtomPosition[i][2]] == true))		{
 				
-				v[i] = ffTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
+				v[i] = ForceFieldTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
 				//System.out.println("currentCoordinates_v[" + i + "] = " + currentCoordinates_v[i]);
 				//logger.debug("v0[" + i + "] = " + v0[i]);
 				deltav[i] = v[i] - v0[i];
@@ -187,15 +192,17 @@ public class AngleBending {
 				 logger.debug("currentCoordinates_deltav[" + i + "]= " + currentCoordinates_deltav[i]);
 				 }*/
 			}
-			else {
-				//System.out.println("v[" + i + "] remain the same");
-			}
+			//else {System.out.println("v[" + i + "] remain the same");}
+		/*if 	(changedCoordinates == changeAtomCoordinates.length) {
+		 		for (int m = 0; m < torsionNumber; m++) {
+			 		System.out.println("phi[" + m + "] = " + Math.toDegrees(phi[m]));
+			 	}
+		}
+		*/
 		}
 		moleculeCurrentCoordinates.set(coord3d);
-		/*for (int i=0; i<moleculeCurrentCoordinates.getSize(); i++) {
-		System.out.println("moleculeCurrentCoordinates.getElement(" + i + " ) = " + this.moleculeCurrentCoordinates.getElement(i));
-		}*/
 	}
+
 
 
 	/**

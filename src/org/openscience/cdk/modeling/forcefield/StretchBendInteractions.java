@@ -45,10 +45,13 @@ public class StretchBendInteractions {
 	double[] deltarij = null;
 	double[] deltarkj = null;
 
-	ForceFieldTools ffTools = new ForceFieldTools();
 	BondStretching bs = new BondStretching();
 	AngleBending ab = new AngleBending();
 	private LoggingTool logger;
+
+	GVector moleculeCurrentCoordinates = null;
+	boolean[] changeAtomCoordinates = null;
+	int changedCoordinates;
 
 
 	/**
@@ -133,6 +136,13 @@ public class StretchBendInteractions {
 			dDeltarkj[i] = new double[ab.angleNumber];
 			dDeltav[i] = new double[ab.angleNumber];
 		}
+		
+		this.moleculeCurrentCoordinates = new GVector(3 * molecule.getAtomCount());
+		for (int i=0; i<moleculeCurrentCoordinates.getSize(); i++) {
+			this.moleculeCurrentCoordinates.setElement(i,1E10);
+		} 
+
+		this.changeAtomCoordinates = new boolean[molecule.getAtomCount()];
 
 	}
 
@@ -145,18 +155,52 @@ public class StretchBendInteractions {
 	 */
 	public void setDeltarijAndDeltarkj(GVector coords3d) {
 
-		for (int i = 0; i < ab.angleNumber; i++) {
-			rij[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][0]);
-			deltarij[i] = rij[i] - r0IJ[i];
-			//logger.debug("deltarij[" + i + "] = " + deltarij[i]);
-
-			rkj[i] = ffTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][2]);
-			deltarkj[i] = rkj[i] - r0KJ[i];
-			//logger.debug("deltarkj[" + i + "] = " + deltarkj[i]);
+		changedCoordinates = 0;
+		//System.out.println("Setting Deltarij and Deltarkj");
+		for (int i=0; i < changeAtomCoordinates.length; i++) {
+			this.changeAtomCoordinates[i] = false;
 		}
+		this.moleculeCurrentCoordinates.sub(coords3d);
+		
+		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
+			//System.out.println("moleculeCurrentCoordinates " + i + " = " + this.moleculeCurrentCoordinates.getElement(i));
+			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 0) {
+				changeAtomCoordinates[i/3] = true;
+				changedCoordinates = changedCoordinates + 1;
+				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
+				i = i + (2 - i % 3);
+			}
+		}
+
+		for (int i = 0; i < ab.angleNumber; i++) {
+			if ((changeAtomCoordinates[ab.angleAtomPosition[i][0]] == true) | 
+					(changeAtomCoordinates[ab.angleAtomPosition[i][1]] == true))		{
+			
+				rij[i] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][0]);
+				deltarij[i] = rij[i] - r0IJ[i];
+				//logger.debug("deltarij[" + i + "] = " + deltarij[i]);
+			}
+			//else {System.out.println("deltarij[" + i + "] was no recalculated");}
+			if ((changeAtomCoordinates[ab.angleAtomPosition[i][1]] == true) | 
+					(changeAtomCoordinates[ab.angleAtomPosition[i][2]] == true))		{
+			
+				rkj[i] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coords3d, ab.angleAtomPosition[i][1], ab.angleAtomPosition[i][2]);
+				deltarkj[i] = rkj[i] - r0KJ[i];
+				//logger.debug("deltarkj[" + i + "] = " + deltarkj[i]);
+			}
+			//else {System.out.println("deltarkj[" + i + "] was no recalculated");}
+		}
+		/*if 	(changedCoordinates == changeAtomCoordinates.length) {
+			for (int m = 0; m < ab.angleNumber; m++) {
+				System.out.println("phi[" + m + "] = " + Math.toDegrees(phi[m]));
+			}
+		}
+		*/
+		moleculeCurrentCoordinates.set(coords3d);
 	}
 
 
+	
 	/**
 	 *  Set the MMFF94 stretch-bend interaction term given the atoms cartesian
 	 *  coordinates.

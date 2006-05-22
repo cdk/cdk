@@ -26,15 +26,19 @@ public class Torsions {
 
 	double mmff94SumET = 0;
 	GVector gradientMMFF94SumET = new GVector(3);
+	GVector dPhi = new GVector(3);
+	
 	GVector order2ndErrorApproximateGradientMMFF94SumET = new GVector(3);
 	GVector order5thErrorApproximateGradientMMFF94SumET = new GVector(3);
+	GVector xplusSigma = null;
+	GVector xminusSigma = null;
+	double sigma = Math.pow(0.000000000000001,0.33);
+	
 	GMatrix hessianMMFF94SumET = null;
 	double[] forHessian = null;
 	GMatrix order2ndErrorApproximateHessianMMFF94SumET = null;
 	double[] forOrder2ndErrorApproximateHessian = null;
 
-	GVector dPhi = new GVector(3);
-	
 	int torsionNumber = 0;
 	int[][] torsionAtomPosition = null;
 
@@ -48,11 +52,12 @@ public class Torsions {
 	IBond[] bondConnectedBefore = null;
 	IBond[] bondConnectedAfter = null;
 
-	ForceFieldTools ffTools = new ForceFieldTools();
+
 	private LoggingTool logger;
 
 	GVector moleculeCurrentCoordinates = null;
 	boolean[] changeAtomCoordinates = null;
+	int changedCoordinates;
 
 
 	/**
@@ -87,10 +92,10 @@ public class Torsions {
 								if (bondConnectedAfter[ba].compare(bond[b])) {}
 								else {
 									torsionNumber += 1;
-									//logger.debug("atomi : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
-									//logger.debug("atomj : " + atomInBond[0].getAtomTypeName());
-									//logger.debug("atomk : " + atomInBond[1].getAtomTypeName());
-									//logger.debug("atoml : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
+									//System.out.println("atomi(" + torsionNumber + ") : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
+									//System.out.println("atomj(" + torsionNumber + ") : " + atomInBond[0].getAtomTypeName());
+									//System.out.println("atomk(" + torsionNumber + ") : " + atomInBond[1].getAtomTypeName());
+									//System.out.println("atoml(" + torsionNumber + ") : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
 								}
 							}
 						}
@@ -130,6 +135,11 @@ public class Torsions {
 									torsionAtomPosition[m][2] = molecule.getAtomNumber(atomInBond[1]);
 									torsionAtomPosition[m][3] = molecule.getAtomNumber(bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]));
 									
+									/*System.out.println(bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName() + "(" + torsionAtomPosition[m][0] + "), " + 
+											atomInBond[0].getAtomTypeName() + "(" + torsionAtomPosition[m][1] + "), " + atomInBond[1].getAtomTypeName() + "(" + torsionAtomPosition[m][2] + "), " + 
+											bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName() + "(" + torsionAtomPosition[m][3] + ")");
+									*/		
+									
 									//logger.debug("torsionAtomPosition[" + m + "]: " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getSymbol() 
 											//+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
 											//+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
@@ -166,9 +176,6 @@ public class Torsions {
 		} 
 
 		this.changeAtomCoordinates = new boolean[molecule.getAtomCount()];
-		for (int i=0; i < molecule.getAtomCount(); i++) {
-			this.changeAtomCoordinates[i] = false;
-		}
 
 	}
 
@@ -179,11 +186,17 @@ public class Torsions {
 	 *@param  coords3d  Current molecule coordinates.
 	 */
 	public void setPhi(GVector coords3d) {
+		changedCoordinates = 0;
+		//System.out.println("Setting Phi");
+		for (int i=0; i < changeAtomCoordinates.length; i++) {
+			this.changeAtomCoordinates[i] = false;
+		}
 		this.moleculeCurrentCoordinates.sub(coords3d);
 		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
-			//System.out.println("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
-			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 1E-2) {
+			//System.out.println("moleculeCurrentCoordinates " + i + " = " + this.moleculeCurrentCoordinates.getElement(i));
+			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 0) {
 				changeAtomCoordinates[i/3] = true;
+				changedCoordinates = changedCoordinates + 1;
 				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
 				i = i + (2 - i % 3);
 			}
@@ -195,11 +208,19 @@ public class Torsions {
 					(changeAtomCoordinates[torsionAtomPosition[m][2]] == true) |
 					(changeAtomCoordinates[torsionAtomPosition[m][3]] == true))		{
 			
-				phi[m] = ffTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
+				phi[m] = ForceFieldTools.torsionAngleFrom3xNCoordinates(coords3d, torsionAtomPosition[m][0], torsionAtomPosition[m][1], 
 							torsionAtomPosition[m][2], torsionAtomPosition[m][3]);
-				//logger.debug("phi[" + m + "] : " + phi[m]);
+			} 
+			//else {System.out.println("phi was no recalculated");}
+		}
+		/*if 	(changedCoordinates == changeAtomCoordinates.length) {
+			for (int m = 0; m < torsionNumber; m++) {
+				System.out.println("phi[" + m + "] = " + Math.toDegrees(phi[m]));
 			}
 		}
+		*/
+		moleculeCurrentCoordinates.set(coords3d);
+		
 	}
 
 
@@ -210,6 +231,7 @@ public class Torsions {
 	 *@return        MMFF94 torsions term value.
 	 */
 	public double functionMMFF94SumET(GVector coords3d) {
+		//System.out.println("SetPhi for torsion energy evaluation");
 		setPhi(coords3d);
 		mmff94SumET = 0;
 		double torsionEnergy=0;
@@ -237,6 +259,7 @@ public class Torsions {
 	public void setGradientMMFF94SumET(GVector coords3d) {
 
 		gradientMMFF94SumET.setSize(coords3d.getSize());
+		//System.out.println("Set phi for torsion energy gradient calculation");
 		setPhi(coords3d);
 		dPhi.setSize(coords3d.getSize());
 
@@ -276,14 +299,16 @@ public class Torsions {
 	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void set2ndOrderErrorApproximateGradientMMFF94SumET(GVector coord3d) {
+		//System.out.println("Set the approximative gradient of the torsion energy");
 		order2ndErrorApproximateGradientMMFF94SumET.setSize(coord3d.getSize());
-		double sigma = Math.pow(0.000000000000001,0.33);
-		GVector xplusSigma = new GVector(coord3d.getSize());
-		GVector xminusSigma = new GVector(coord3d.getSize());
+		xplusSigma = new GVector(coord3d.getSize());
+		xminusSigma = new GVector(coord3d.getSize());
 		
-		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumET.getSize(); m++) {
+		for (int m = 0; m < order2ndErrorApproximateGradientMMFF94SumET.getSize(); m++) { 
+			//System.out.println("m = " + m);
 			xplusSigma.set(coord3d);
 			xplusSigma.setElement(m,coord3d.getElement(m) + sigma);
+			
 			xminusSigma.set(coord3d);
 			xminusSigma.setElement(m,coord3d.getElement(m) - sigma);
 			order2ndErrorApproximateGradientMMFF94SumET.setElement(m,(functionMMFF94SumET(xplusSigma) - functionMMFF94SumET(xminusSigma)) / (2 * sigma));
