@@ -18,6 +18,7 @@ public interface IPotentialFunction {
 	GVector energyGradient = null;		//Gradient of the energy function in a 3xN point.
 	GMatrix energyHessian = null;
 	double[] forHessian = null;
+	int functionEvaluationNumber = 0;
 
 
 	/**

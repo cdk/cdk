@@ -22,6 +22,7 @@ public class TestPotentialFunction implements IPotentialFunction {
 	double[] forHessian = null;
 	GMatrix order2ndErrorApproximateHessian = null;
 	double[] forOrder2ndErrorApproximateHessian = null;
+	int functionEvaluationNumber = 0;
 
 
 	/**
