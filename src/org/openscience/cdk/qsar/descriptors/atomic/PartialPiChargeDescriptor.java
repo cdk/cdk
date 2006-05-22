@@ -142,7 +142,7 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
     	if(acOld != ac){
 	    	try {
 	    		acOld = ac;
-	        	pepe.assignGasteigerMarsiliPiPartialCharges(acOld, true);
+	        	pepe.assignGasteigerPiPartialCharges(acOld, true);
 	            
 	        } catch (Exception ex1) {
 	            throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
