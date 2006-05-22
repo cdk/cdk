@@ -1257,6 +1257,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getPoint2d()));
 		centerAtom(newAtom1,chemModel);
 		centerAtom(newAtom2,chemModel);
+		this.updateMoleculeCoordinates();
 	}
 
 	private void decreaseCharge() {
