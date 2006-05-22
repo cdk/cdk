@@ -13,61 +13,64 @@ import javax.vecmath.GVector;
 public class LineSearchForTheWolfeConditions {
 	
 	//initial values
-	GVector x = null;
-	double linearFunctionInAlpha0;
-	GVector dfx = null;
-	GVector direction = null;
-	double linearFunctionDerivativeInAlpha0;
-	IPotentialFunction pf = null;
-	double alphaInitialStep;
+	private GVector x = null;
+	private double linearFunctionInAlpha0;
+	private GVector dfx = null;
+	private GVector direction = null;
+	private double linearFunctionDerivativeInAlpha0;
+	private IPotentialFunction pf = null;
+	private double alphaInitialStep;
 
 	
 	//line search algorithm
-	double[] alpha = new double[3];
-	double[] linearFunctionInAlpha = new double[3];
-	double[] linearFunctionDerivativeInAlpha = new double[3];
+	private double[] alpha = new double[3];
+	private double[] linearFunctionInAlpha = new double[3];
+	private double[] linearFunctionDerivativeInAlpha = new double[3];
 
-	GVector[] dfInAlpha = new GVector[3];
-	double[] brentStep = new double[3];
+	private GVector[] dfInAlpha = new GVector[3];
+	private double[] brentStep = new double[3];
 
-	double c1 = 0.0001;
-	double c2 = 0.1;		//Important to implement: 0.1 for conjugate gradient method and 0.9 for Newton-Raphson method
+	private final double c1 = 0.0001;
+	private double c2;
+	
+	private double linearFunctionGoldenAlpha;
+	private double linearFunctionAlphaInterpolation;
+	
+	public boolean derivativeSmallEnough = true;
 
-	double linearFunctionGoldenAlpha;
-	double linearFunctionAlphaInterpolation;
-	boolean derivativeSmallEnough = true;
-
-	double alphaOptimum;
-	double linearFunctionInAlphaOptimum;
-	GVector dfOptimum = null;
+	public double alphaOptimum;
+	public double linearFunctionInAlphaOptimum;
+	public GVector dfOptimum = null;
 	
 	//zoom
-	double alphaj;
-	double linearFunctionInAlphaj;
-	double linearFunctionDerivativeInAlphaj;
-	GVector dfInAlphaj;
-	int functionEvaluationNumber;
+	private double alphaj;
+	private double linearFunctionInAlphaj;
+	private double linearFunctionDerivativeInAlphaj;
+	private GVector dfInAlphaj;
+	private int functionEvaluationNumber;
 	
 	//energy function evaluation
-	GVector xAlpha = null;
+	private GVector xAlpha = null;
 
 	//interpolation
-	double a;
-	double b;
+	private double a;
+	private double b;
 	
 	//cubic interpolation
-	double alphaTemporal;
-	double linearFunctionInAlphaTemporal;
-	double linearFunctionDerivativeInAlphaTemporal;
-	double d1;
-	double d2;
-	double alphaiplus1;
+	private double alphaTemporal;
+	private double linearFunctionInAlphaTemporal;
+	private double linearFunctionDerivativeInAlphaTemporal;
+	private double d1;
+	private double d2;
+	private double alphaiplus1;
 	
 	//private LoggingTool logger;
 
 	
-	public LineSearchForTheWolfeConditions(IPotentialFunction pfUser) {
+	public LineSearchForTheWolfeConditions(IPotentialFunction pfUser, String method) {
 		this.pf = pfUser;
+		if ((method == "sdm") | (method == "cgm")) {c2 = 0.07;}
+		else {c2 = 0.9;} 
 	}
 	
 	public void initialize(GVector xUser, double fxUser, GVector dfxUser, GVector directionUser, double linearFunctionDerivativeUser, double alphaInitialStepUser) {
@@ -83,7 +86,6 @@ public class LineSearchForTheWolfeConditions {
 		dfOptimum = this.dfx;
 		this.alphaInitialStep = alphaInitialStepUser;
 		this.derivativeSmallEnough = false;
-		
 		this.xAlpha = new GVector(x.getSize());
 	}
 	
@@ -107,22 +109,27 @@ public class LineSearchForTheWolfeConditions {
 		
 		alpha[1] = this.alphaInitialStep;
 		
-		//System.out.println("alpha[1] = " + alpha[1]);
-		
-		if (alpha[1] > alphaMax) {
-			alpha[1] = alphaMax/2;
-		}
+		//System.out.println("alpha[1] = this.alphaInitialStep = " + alpha[1]);
 		
 		brentStep[0] = alpha[0];
 		brentStep[1] = alpha[1];
 		
 		int i=1;
+		
+		this.functionEvaluationNumber = 0;
+
+		if (alpha[1] > alphaMax) {
+			alpha[1] = alphaMax;
+			//System.out.println("line search algorithm error: alphaInitialStep > alphaMax");
+		}
+		//	alpha[1] = alphaMax/2;
+		//}
 
 		try {
 		do {
 
 			if (alpha[1] == 0) {
-				//System.out.println("alpha[1] == 0");
+				System.out.println("alpha[1] == 0");
 				break;
 			}
 			
@@ -132,7 +139,7 @@ public class LineSearchForTheWolfeConditions {
 			
 			if ((linearFunctionInAlpha[i] > linearFunctionInAlpha[0] + c1 * alpha[i] * linearFunctionDerivativeInAlpha[0]) | 
 					((linearFunctionInAlpha[i] >= linearFunctionInAlpha[i-1]) & (i>1))) {			//The interval alpha[i-1] and alpha[i] brackets the desired step lengths.
-				//System.out.println("zoom");
+				//System.out.println("zoom(" + alpha[i-1] + ", " + linearFunctionInAlpha[i-1] + ", " + linearFunctionDerivativeInAlpha[i-1] + ", " + dfInAlpha[i-1] + ", " + alpha[i] + ", " + linearFunctionInAlpha[i] + ")");
 				//dfInAlpha[i] = evaluateEnergyFunctionDerivative(alpha[i]);
 				//linearFunctionDerivativeInAlpha[i] = dfInAlpha[i].dot(direction);
 				//zoom(alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i-1], dfInAlpha[i-1], alpha[i], linearFunctionInAlpha[i], linearFunctionDerivativeInAlpha[i], dfInAlpha[i]);
@@ -159,7 +166,9 @@ public class LineSearchForTheWolfeConditions {
 			}
 			
 			if (linearFunctionDerivativeInAlpha[i] >= 0) {		//The interval alpha[i-1] and alpha[i] brackets the desired step lengths.
-				//System.out.println("zoom");
+				/*System.out.println("zoom(" + alpha[i-1] + ", " + linearFunctionInAlpha[i-1] + ", " + linearFunctionDerivativeInAlpha[i-1] + ", " + dfInAlpha[i-1] + ", " + 
+						alpha[i] + ", " + linearFunctionInAlpha[i] + ")");
+				*/
 				/*zoom(alpha[i], linearFunctionInAlpha[i], linearFunctionDerivativeInAlpha[i], dfInAlpha[i], 
 						alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i], dfInAlpha[i]);*/
 				zoom(alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i-1], dfInAlpha[i-1], 
@@ -168,6 +177,7 @@ public class LineSearchForTheWolfeConditions {
 			}
 		
 			if (alpha[i] == alphaMax) {	
+				//System.out.println("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE alpha[i] == alphaMax");
 				alphaOptimum = alpha[i];
 				linearFunctionInAlphaOptimum = linearFunctionInAlpha[i];
 				dfOptimum = dfInAlpha[i];
@@ -175,8 +185,20 @@ public class LineSearchForTheWolfeConditions {
 				//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
 				//System.out.println("dfOptimum = " + dfOptimum);
 				break;
-		}
-		
+			}
+			
+			functionEvaluationNumber = functionEvaluationNumber + 1;
+			if (functionEvaluationNumber == 10) {
+				//System.out.println("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE functionEvaluationNumber == 10");
+				alphaOptimum = alpha[i];
+				linearFunctionInAlphaOptimum = linearFunctionInAlpha[i];
+				dfOptimum = dfInAlpha[i];
+				//System.out.println("alphaOptimun = " + alphaOptimum);
+				//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
+				//System.out.println("dfOptimum = " + dfOptimum);
+				break;
+			}
+			
 			if (i>1) {
 				brentStep[0] = brentStep[1];
 				brentStep[1] = brentStep[2];
@@ -188,6 +210,7 @@ public class LineSearchForTheWolfeConditions {
 			} 
 			
 			brentStep[2] = brentStep[1] + 1.618 * (brentStep[1]-brentStep[0]);
+			//System.out.println("brentStep[2] = " + brentStep[2]);
 
 			if (brentStep[2] > alphaMax) {brentStep[2] = alphaMax;}
 			/*linearFunctionInBrentStep = this.evaluateEnergyFunction(brentStep[2]);
@@ -200,9 +223,7 @@ public class LineSearchForTheWolfeConditions {
 
 			i=2;
 			
-			//functionEvaluationNumber = functionEvaluationNumber + 1;
-			
-		} while ((alpha[2] <= alphaMax) & (alpha[1] < alpha[2]) /*& (functionEvaluationNumber < 10)*/);
+		} while ((alpha[2] <= alphaMax) & (alpha[1] < alpha[2]) & (functionEvaluationNumber < 10));
 		
 		} catch (Exception exception) {
         	System.out.println("Line search for the strong wolfe conditions: " + exception.getMessage());
@@ -228,8 +249,10 @@ public class LineSearchForTheWolfeConditions {
    	 *@param  alphaHigh              				AlphaHigh is chosen so that linearFunctionDerivativeInAlphaj * (alphaHigh-alphaLow) < 0
    	 *@param  linearFunctionInAlphaHigh             Function value at alphaHigh.
 	 */
-	public void zoom (double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, GVector dfInAlphaLow, 
+	private void zoom (double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, GVector dfInAlphaLow, 
 			double alphaHigh, double linearFunctionInAlphaHigh) {
+		
+		//System.out.println("zoom");
 		
 		functionEvaluationNumber = 0;
 		
@@ -290,23 +313,25 @@ public class LineSearchForTheWolfeConditions {
 			functionEvaluationNumber = functionEvaluationNumber + 1;
 			//System.out.println("functionEvaluationNumber = " + functionEvaluationNumber);
 
-			if ((functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.0000001)) {
+			if ((functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.000000000001)) {
+				//System.out.println("ZOOM WAS TERMINATE EARLIER");
 				this.alphaOptimum = alphaLow;
 				this.linearFunctionInAlphaOptimum = linearFunctionInAlphaLow;
 				this.dfOptimum = dfInAlphaLow;
 				
 				/*System.out.println("(functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) 
 										| (Math.abs(alphaLow - alphaHigh) <= 0.0000001)");*/
-				//System.out.println("this.alphaOptimum = " + this.alphaOptimum); 
-				//System.out.println("this.linearFunctionInAlphaOptimum = " + this.linearFunctionInAlphaOptimum); 
+				//System.out.println("zoom end -> this.alphaOptimum = " + this.alphaOptimum); 
+				//System.out.println("zoom end -> this.linearFunctionInAlphaOptimum = " + this.linearFunctionInAlphaOptimum); 
 				break;
 			}
 
 		
 		} while ((Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) > 0.000001) 
 					& (functionEvaluationNumber < 10) 
-					& (Math.abs(alphaLow - alphaHigh) > 0.0000001));
+					& (Math.abs(alphaLow - alphaHigh) > 0.000000000001));
 		
+		//System.out.println("zoom end");
 		return;
 	}
 
@@ -389,7 +414,7 @@ public class LineSearchForTheWolfeConditions {
 	 * @param linearFunctionInAlphaHigh				Energy function value at alphaHigh.
 	 * @return										Value of alpha that satisfies the sufficient decrease condition, without being too small.
 	 */
-	public double interpolation(double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, 
+	private double interpolation(double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, 
 								double alphaHigh, double linearFunctionInAlphaHigh) {
 		
 		double minAlpha = Math.min(alphaLow, alphaHigh);
@@ -479,7 +504,7 @@ public class LineSearchForTheWolfeConditions {
 	 * @param alpha	
 	 * @return			Energy function value.
 	 */
-	public double evaluateEnergyFunction(double alpha) {
+	private double evaluateEnergyFunction(double alpha) {
 		//logger.debug("alpha= " + alpha);
 		this.xAlpha.set(this.x);
 		//logger.debug("xAlpha = " + xAlpha);
@@ -499,7 +524,7 @@ public class LineSearchForTheWolfeConditions {
 	 * @param alpha		Alpha value for the one-dimensional problem generate from the current coordinates and the current direction.
 	 * @return				Gradient of the energy function at alpha. 
 	 */
-	public GVector evaluateEnergyFunctionDerivative(double alpha) {
+	private GVector evaluateEnergyFunctionDerivative(double alpha) {
 		//logger.debug("alpha= " + alpha);
 		this.xAlpha.set(this.x);
 		//logger.debug("xAlpha = " + xAlpha);
@@ -524,7 +549,7 @@ public class LineSearchForTheWolfeConditions {
 	 * @param flambdaMax		Energy function at b.
 	 * @return					An intermediate point x
 	 */
-	public double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
+	private double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
 
 		//System.out.println("Golden Section Search");
 		double goldenLambda;
