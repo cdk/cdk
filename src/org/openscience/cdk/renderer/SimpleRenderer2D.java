@@ -102,6 +102,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	 */
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics, boolean split, boolean redossr) {
         logger.debug("inside paintMolecule()");
+        updateRenderingCoordinates(atomCon,r2dm);
 		customizeRendering(graphics);
 		setupIsotopeFactory(atomCon);
 		IRingSet ringSet = atomCon.getBuilder().newRingSet();

@@ -1481,5 +1481,12 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void mouseDragged(MouseEvent e)
 	{
 	}
+	
+	public void updateRenderingCoordinates(IAtomContainer atomCon, Renderer2DModel r2dm){
+		for(int i=0;i<atomCon.getAtomCount();i++){
+			if(r2dm.getRenderingCoordinate(atomCon.getAtomAt(i))==null)
+				r2dm.setRenderingCoordinate(atomCon.getAtomAt(i),atomCon.getAtomAt(i).getPoint2d());
+		}
+	}
 }
 
