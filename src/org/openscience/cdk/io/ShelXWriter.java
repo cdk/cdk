@@ -37,6 +37,7 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -144,7 +145,13 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     // Private procedures
 
     private void write(ICrystal crystal) {
-        write("TITLE Produced with CDK (http://cdk.sf.net/)\n");
+        
+        Object title = crystal.getProperty(CDKConstants.TITLE);
+        if (title != null && title.toString().trim().length() > 0) {
+            write("TITLE " + title.toString().trim() + "\n");
+        } else {
+            write("TITLE Produced with CDK (http://cdk.sf.net/)\n");
+        }
         Vector3d a = crystal.getA();
         Vector3d b = crystal.getB();
         Vector3d c = crystal.getC();
