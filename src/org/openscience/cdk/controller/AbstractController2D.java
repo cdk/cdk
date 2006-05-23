@@ -1013,6 +1013,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	}
 
 	private void drawBond(int mouseX, int mouseY) {
+		this.updateMoleculeCoordinates();
 		logger.debug("mouseReleased->drawbond");
 		IAtom atomInRange;
 		IAtom newAtom1 = null;
