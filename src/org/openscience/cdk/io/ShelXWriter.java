@@ -148,9 +148,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         
         Object title = crystal.getProperty(CDKConstants.TITLE);
         if (title != null && title.toString().trim().length() > 0) {
-            write("TITLE " + title.toString().trim() + "\n");
+            write("TITL " + title.toString().trim() + "\n");
         } else {
-            write("TITLE Produced with CDK (http://cdk.sf.net/)\n");
+            write("TITL Produced with CDK (http://cdk.sf.net/)\n");
         }
         Vector3d a = crystal.getA();
         Vector3d b = crystal.getB();
@@ -158,9 +158,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         double alength = a.length();
         double blength = b.length();
         double clength = c.length();
-        double alpha = b.angle(c);
-        double beta  = a.angle(c);
-        double gamma = a.angle(b);
+        double alpha = Math.toDegrees(b.angle(c));
+        double beta  = Math.toDegrees(a.angle(c));
+        double gamma = Math.toDegrees(a.angle(b));
         FormatStringBuffer format = new FormatStringBuffer("%7.5lf");
         write("CELL " + format.reset("%7.5f").format(1.54184).toString() + "   ");
         write(format.reset("%8.5f").format(alength) + "  ");
