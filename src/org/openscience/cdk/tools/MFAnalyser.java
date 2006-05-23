@@ -742,7 +742,7 @@ public class MFAnalyser {
 
 
 	/**
-	 * Returns a Vector with asorted element names.
+	 * Returns a Vector (of Strings) with asorted element names.
 	 * The order is determined by ElementComparator.
 	 *
 	 * @return    The elements value
