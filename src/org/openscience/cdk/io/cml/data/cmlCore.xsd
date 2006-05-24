@@ -2928,7 +2928,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
      </xsd:documentation>
    </xsd:annotation>
    <xsd:restriction base="xsd:string">
-      <xsd:pattern value="\s*([-]|[+])?\d*\.?\d*(\s+|[,])([-]|[+])?\d*\.?\d*\s*"/>
+      <xsd:pattern value="\s*([\-]|[+])?\d*\.?\d*(\s+|[,])([\-]|[+])?\d*\.?\d*\s*"/>
    </xsd:restriction>
 </xsd:simpleType>
 
@@ -2958,7 +2958,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         </xsd:documentation>
       </xsd:annotation>
       <xsd:restriction base="xsd:string">
-         <xsd:pattern value="\s*([-]|[+])?\d*\.?\d*(\s+|[,])([-]|[+])?\d*\.?\d*(\s+|[,])([-]|[+])?\d*\.?\d*\s*"/>
+         <xsd:pattern value="\s*([\-]|[+])?\d*\.?\d*(\s+|[,])([\-]|[+])?\d*\.?\d*(\s+|[,])([\-]|[+])?\d*\.?\d*\s*"/>
 <!--         <xsd:pattern value="\s*([-]|[+])?\d*\.?\d*  (\s*[,|\s+]\s*([-]|[+])?\d*\.?\d*){2}\s*"/>-->
       </xsd:restriction>
    </xsd:simpleType>
