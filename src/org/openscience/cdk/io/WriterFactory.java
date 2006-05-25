@@ -78,7 +78,7 @@ public class WriterFactory {
     		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
     	}
     	
-    	return (IChemFormat[])matches.toArray();
+    	return (IChemFormat[])matches.toArray(new IChemFormat[0]);
     }
     
     private void loadFormats() {
