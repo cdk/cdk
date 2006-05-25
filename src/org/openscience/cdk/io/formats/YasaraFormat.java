@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.yasara.org/"></a>
  * 
@@ -54,5 +56,9 @@ public class YasaraFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

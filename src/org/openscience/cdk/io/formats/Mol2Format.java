@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.tripos.com/data/support/mol2.pdf"></a>
  * 
@@ -63,5 +65,9 @@ public class Mol2Format implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

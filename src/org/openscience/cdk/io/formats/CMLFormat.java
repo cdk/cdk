@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage"></a>
  * @cdk.module io
@@ -66,5 +68,9 @@ public class CMLFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return true;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

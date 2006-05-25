@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * @cdk.module io
  * @cdk.set    io-formats
@@ -50,5 +52,9 @@ public class CMLRSSFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return true;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

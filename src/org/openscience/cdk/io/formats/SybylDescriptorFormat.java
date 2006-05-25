@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://dx.doi.org/10.1021/ci034207y"></a>
  * 
@@ -56,5 +58,9 @@ public class SybylDescriptorFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

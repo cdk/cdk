@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 
 /**
  * See <a href="http://www.emsl.pnl.gov/docs/nwchem/"></a>
@@ -60,5 +62,9 @@ public class NWChemFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

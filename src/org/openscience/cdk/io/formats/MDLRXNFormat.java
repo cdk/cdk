@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp"></a>
  * 
@@ -61,5 +63,9 @@ public class MDLRXNFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

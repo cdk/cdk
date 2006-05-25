@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$
- * $Date$  
- * $Revision$
+ * $Author: egonw $
+ * $Date: 2006-05-09 21:32:32 +0200 (Tue, 09 May 2006) $  
+ * $Revision: 6204 $
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -24,40 +24,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
-package org.openscience.cdk.io.formats;
+package org.openscience.cdk.tools;
 
 /**
- * This class is the interface that all ChemFormat's should implement.
- *
- * @cdk.module io
- *
- * @author      Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created 2004-10-25
+ * Class with constants for possible data features defined in the
+ * a Data Feature Ontology. Actual integers are random
+ * and should <b>not</b> be used directly.
+ * 
+ * @author Egon Willighagen <ewilligh@uni-koeln.de>
+ * @cdk.module core
  **/
-public interface IChemFormat extends IResourceFormat {
+public class DataFeatures {
 
-    /**
-     * Returns the class name of the CDK Reader for this format.
-     *
-     * @return null if no CDK Reader is available.
-     */
-    public String getReaderClassName();
-
-    /**
-     * Returns the class name of the CDK Writer for this format.
-     *
-     * @return null if no CDK Writer is available.
-     */
-    public String getWriterClassName();
+    public final static int NONE = 0;
     
-    /**
-     * Returns an integer indicating the data features that this 
-     * format supports. The integer is composed as explained in 
-     * DataFeatures. May be set to DataFeatures.NONE as default.
-     * 
-     * @see org.openscience.cdk.tools.DataFeatures
-     */
-    public int getSupportedDataFeatures();
+    // COORDINATE SYSTEMS
+    public final static int HAS_2D_COORDINATES = 1;
+    public final static int HAS_3D_COORDINATES = 2;
+    
+    // GRAPH FEATURES
+    public final static int HAS_GRAPH_REPRESENTATION = 4;
+    public final static int HAS_DIETZ_REPRESENTATION = 8;
+    
+    // MODEL FEATURES
+    public final static int HAS_CRYSTALS = 16;
+    public final static int HAS_REACTIONS = 32;
+	
 }
 

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://shelx.uni-ac.gwdg.de/SHELX/"></a>
  * 
@@ -64,5 +66,9 @@ public class ShelXFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

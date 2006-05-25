@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html"></a>
  * 
@@ -55,5 +57,9 @@ public class ZindoFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html"></a>
  * 
@@ -54,5 +56,9 @@ public class SMARTSFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

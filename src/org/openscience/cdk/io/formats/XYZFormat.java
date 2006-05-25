@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * @cdk.module io
  * @cdk.set    io-formats
@@ -54,5 +56,9 @@ public class XYZFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.HAS_3D_COORDINATES;
 	}
 }

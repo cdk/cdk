@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * XML version of the PDB format.
  * See <a href="http://pdbml.rcsb.org/"></a>.
@@ -57,5 +59,9 @@ public class PDBMLFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return true;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

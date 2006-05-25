@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a http://www.iupac.org/inchi/"></a>
  * 
@@ -61,5 +63,9 @@ public class INChIFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return true;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }

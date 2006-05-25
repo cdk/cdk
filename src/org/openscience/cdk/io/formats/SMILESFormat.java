@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.tools.DataFeatures;
+
 /**
  * See <a href="http://www.daylight.com/smiles/f_smiles.html"></a>
  * 
@@ -56,5 +58,9 @@ public class SMILESFormat implements IChemFormat {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
 }

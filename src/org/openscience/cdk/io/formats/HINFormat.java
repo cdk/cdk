@@ -26,6 +26,7 @@ package org.openscience.cdk.io.formats;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.math.MathTools;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.hyper.com/"></a>
@@ -73,5 +74,9 @@ public class HINFormat implements IChemFormatMatcher {
 
 	public boolean isXMLBased() {
 		return false;
+	}
+
+	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
 	}
 }
