@@ -44,6 +44,7 @@ import org.openscience.cdk.test.io.ReaderFactoryTest;
 import org.openscience.cdk.test.io.SDFReaderTest;
 import org.openscience.cdk.test.io.ShelXReaderTest;
 import org.openscience.cdk.test.io.ShelXWriterTest;
+import org.openscience.cdk.test.io.WriterFactoryTest;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
 
@@ -79,6 +80,7 @@ public class MioTests {
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         
         suite.addTest(ReaderFactoryTest.suite());
+        suite.addTest(WriterFactoryTest.suite());
         suite.addTest(ChemObjectIOInstantionTests.suite());
         
         // cdk.io.iterator package
