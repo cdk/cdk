@@ -41,6 +41,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  *  Writer that is used to store molecules in JDBC databases.
@@ -71,6 +72,7 @@ public class DBWriter {
 			public String[] getNameExtensions() { return new String[0]; }
 			public String getMIMEType() { return null; }
 			public boolean isXMLBased() { return false; }
+			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
         };
     }
     

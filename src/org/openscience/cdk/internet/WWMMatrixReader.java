@@ -51,6 +51,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * Reader for the World Wide Molecular Matrix, a project that can be found at
@@ -99,6 +100,7 @@ public class WWMMatrixReader {
             public String getReaderClassName() { return null; };
             public String getWriterClassName() { return null; }
 			public boolean isXMLBased() { return false; };
+			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
         };
     }
     public void setReader(Reader input) throws CDKException {

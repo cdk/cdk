@@ -49,6 +49,7 @@ import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.dadml.DATABASE;
 import org.openscience.dadml.DBDEF;
@@ -103,6 +104,7 @@ public class DADMLReader {
             public String getReaderClassName() { return null; };
             public String getWriterClassName() { return null; }
 			public boolean isXMLBased() { return true; };
+			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
         };
     }
     

@@ -42,6 +42,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * Reader that can read from a relational database that can be
@@ -71,7 +72,8 @@ public class DBReader {
             public String[] getNameExtensions() { return new String[0]; };
             public String getReaderClassName() { return null; };
             public String getWriterClassName() { return null; }
-			public boolean isXMLBased() { return false; };
+			public boolean isXMLBased() { return false; }
+			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
         };
     }
     

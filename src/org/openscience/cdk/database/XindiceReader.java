@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -90,6 +91,7 @@ public class XindiceReader {
             public String getReaderClassName() { return null; };
             public String getWriterClassName() { return null; }
 			public boolean isXMLBased() { return true; };
+			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
         };
     }
     
