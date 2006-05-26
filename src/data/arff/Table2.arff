@@ -1,0 +1,7 @@
+@relation 'table1' 
+@attribute 'EffectivePolarizabilityDescriptor' real 
+@attribute 'SigmaElectronegativityDescriptor' real 
+@attribute 'ProtonTotalPartialChargeDescriptor' real  
+@attribute 'ProtonTotalPa' real
+@data 
+0.39 ,   9.06 ,  -0.11,0.0
