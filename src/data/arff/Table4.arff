@@ -1,0 +1,7 @@
+@relation 'table4' 
+@attribute 'x1' numeric
+@attribute 'x2' numeric
+@attribute 'x3' numeric
+@attribute class {"A_","B_","C_"}
+@data 11,-11,-11,A_,
+ -10,-10,-10,A_,
