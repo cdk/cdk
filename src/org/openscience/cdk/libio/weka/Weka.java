@@ -167,7 +167,6 @@ public class Weka {
         Instances test = new Instances(new BufferedReader(insr));
     	double[] result = new double[test.numInstances()];
     	for(int i = 0 ; i < test.numInstances(); i++){
-    		System.out.println(test.instance(i));
     		result[i] = classifier.classifyInstance(test.instance(i));
     	}
 		return result;
@@ -186,7 +185,6 @@ public class Weka {
     	String string ="@relation table1 \n";
     	for(int i = 0; i < attrib.length ; i++){
     		string += ("@attribute "+attrib[i]);
-    		System.out.println(string);
     		if(typAttrib[i] == NUMERIC)
     			string += " numeric \n";
     		else if(typAttrib[i] == NOMINAL)
@@ -219,7 +217,6 @@ public class Weka {
     	    	string += y[j]+", \n";
     		}
     	}
-    	System.out.println(string);
     	Reader reader = new StringReader(string);
     	return reader;
     }
