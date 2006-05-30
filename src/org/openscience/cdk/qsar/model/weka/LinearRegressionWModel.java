@@ -14,14 +14,46 @@ import weka.classifiers.functions.LinearRegression;
  *     lrm.build();
  *     lrm.setParameters(newX);
  *     lrm.predict();
- * 		
- * 		double[] predictedvalues = lrm.getPredictPredicted();
+ *     double[] predictedvalues = lrm.getPredictPredicted();
  * 
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
  * }
  * </pre>
- *
+ * Other option is set the data from a file format arff.
+ * <pre>
+ * LinearRegressionWModel lrm = new LinearRegressionWModel("/some/where/dataTraining.arff");
+ * </pre>
+ * Note that when making predictions, the new X matrix must be set by calls
+ * to setParameters(). The following table lists the parameters that can be set and their 
+ * expected types. 
+ * <center>
+ * <table border=1 cellpadding=5>
+ * <THEAD>
+ * <tr>
+ * <th>Name</th><th>Java Type</th><th>Notes</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>x</td><td>Double[][]</td><td></td>
+ * </tr>
+ * <tr>
+ * <td>y</td><td>Double[]</td><td>Length should be equal to the rows of x</td>
+ * </tr>
+ * <tr>
+ * <td>newX</td><td>Double[][]</td><td>Number of columns should be the same as in x</td>
+ * </tr>
+ * <tr>
+ * </tbody>
+ * </table>
+ * </center>
+ * <p>Valid options are (according weka library):</p>
+ * <p>-D: Produce debugging output.</p>
+ * <p>-S num: </br> Set the attriute selection method to use. 1=None, 2=Greedy(default 0=M5' method)
+ * <p>-C: Do no try to eleminate colinear attributes</p>
+ * <p>-R num: The ridge parameter(default 1.0e-8)</p>
+ * 
  * @author Miguel Rojas
  * @cdk.require weka.jar
  * @cdk.module qsar
@@ -64,9 +96,14 @@ public class LinearRegressionWModel extends IWekaModel{
 	}
 
 	/**
-     * Parses a given list of options. The parameters are determited from weka. And are specific for each
-     * algorithm.
-     *
+     * Parses a given list of options. The parameters are determited from weka. 
+     * 
+     * <p>Valid options are (according weka library):</p>
+     * <p>-D: Produce debugging output.</p>
+     * <p>-S num: </br> Set the attriute selection method to use. 1=None, 2=Greedy(default 0=M5' method)
+     * <p>-C: Do no try to eleminate colinear attributes</p>
+     * <p>-R num: The ridge parameter(default 1.0e-8)</p>
+     * 
      * @param options An Array of strings containing the options 
      * @throws QSARModelException if the options are of the wrong type for the given modeling function
      * 

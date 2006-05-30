@@ -15,13 +15,56 @@ import weka.classifiers.trees.J48;
  *     j48.build();
  *     j48.setParameters(newX);
  *     j48.predict();
- * 		
- * 		double[] predictedvalues = j48.getPredictPredicted();
- * 
+ * 	   double[] predictedvalues = j48.getPredictPredicted();
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
  * }
  * </pre>
+ * Other option is set the data from a file format arff.
+ * <pre>
+ * J48WModel j48 = new J48WModel("/some/where/dataTraining.arff");
+ * </pre>
+ * Note that when making predictions, the new X matrix must be set by calls
+ * to setParameters(). The following table lists the parameters that can be set and their 
+ * expected types. 
+ * <center>
+ * <table border=1 cellpadding=5>
+ * <THEAD>
+ * <tr>
+ * <th>Name</th><th>Java Type</th><th>Notes</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>x</td><td>Double[][]</td><td></td>
+ * </tr>
+ * <tr>
+ * <td>y</td><td>Double[]</td><td>Length should be equal to the rows of x</td>
+ * </tr>
+ * <tr>
+ * <td>newX</td><td>Double[][]</td><td>Number of columns should be the same as in x</td>
+ * </tr>
+ * <tr>
+ * <td>typAttrib</td><td>String[]</td><td>Length should be equal to the rows of x</td>
+ * </tr>
+ * <tr>
+ * <td>classAttrib</td><td>String[]</td><td>Length should be equal to number of different classes</td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * </center>
+ * <p>Valid options are (according weka library):</p>
+ * <p>-U: Use unpruned tree.</p>
+ * <p>-C confidence: Set confidence threshold for pruning. (Defalult:0.25)</p>
+ * <p>-M number: Set minimum number of instances per leaf.(Default 2)</p>
+ * <p>-R: Use reduced error pruning. No subte raising is performed.</p>
+ * <p>-N number: Set number of folds for reduced error pruning. One fold is used
+ *  as the pruning set.(Deafult:3)</p>
+ * <p>-B: Use binary splits for nominal attributes</p>
+ * <p>-S: Don't perform subtree raising</p>
+ * <p>-L: Do not clean up alfter the tree has been built</p>
+ * <p>-A: If set, Laplace smoothing is used for predicted probabilities</p>
+ * <p>-Q:The seed for reduced-error pruning</p>
  *
  * @author Miguel Rojas
  * @cdk.require weka.jar
@@ -74,8 +117,20 @@ public class J48WModel extends IWekaModel{
 	}
 
 	/**
-     * Parses a given list of options. The parameters are determited from weka. And are specific for each
-     * algorithm.
+     * Parses a given list of options. The parameters are determited from weka. 
+     * 
+     * <p>Valid options are (according weka library):</p>
+     * <p>-U: Use unpruned tree.</p>
+     * <p>-C confidence: Set confidence threshold for pruning. (Defalult:0.25)</p>
+     * <p>-M number: Set minimum number of instances per leaf.(Default 2)</p>
+     * <p>-R: Use reduced error pruning. No subte raising is performed.</p>
+     * <p>-N number: Set number of folds for reduced error pruning. One fold is used
+     *  as the pruning set.(Deafult:3)</p>
+     * <p>-B: Use binary splits for nominal attributes</p>
+     * <p>-S: Don't perform subtree raising</p>
+     * <p>-L: Do not clean up alfter the tree has been built</p>
+     * <p>-A: If set, Laplace smoothing is used for predicted probabilities</p>
+     * <p>-Q:The seed for reduced-error pruning</p>
      *
      * @param options An Array of strings containing the options 
      * @throws QSARModelException if the options are of the wrong type for the given modeling function

@@ -56,7 +56,7 @@ public abstract class IWekaModel implements IModel {
     
     
     /**
-     * Specifies the parameters to predict. In this case will be the dependent varibles.
+     * Specifies the parameters to predict. In this case will be the independent varibles.
      * 
      * @param  path  A String specifying the path of the file, format arff, which contians 
      * 				 the dependent values with whose to predict.
@@ -67,12 +67,12 @@ public abstract class IWekaModel implements IModel {
     
 
     /**
-     * Specifies the parameters to predict. In this case will be the dependent varibles.
+     * Specifies the parameters to predict. In this case will be the independent varibles.
      * 
-     * @param  y  A Array Object containing the dependent variable.
+     * @param  x  A Array Object containing the independent variable.
      * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
      */
-    abstract public void setParameters(Object[][] y) throws QSARModelException;
+    abstract public void setParameters(Object[][] x) throws QSARModelException;
 
 
     /**
