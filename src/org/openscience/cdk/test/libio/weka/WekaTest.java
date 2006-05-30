@@ -45,13 +45,11 @@ import weka.classifiers.trees.J48;
  */
 public class WekaTest extends CDKTestCase {
 
-    private Weka weka;
 	/**
 	 *  Constructor for the WekaTest object
 	 *
 	 */
 	public  WekaTest() {
-		weka = new Weka();
 	}
 	/**
 	 *  A unit test suite for JUnit
@@ -62,7 +60,7 @@ public class WekaTest extends CDKTestCase {
 		return new TestSuite(WekaTest.class);
 	}
 	/**
-	 *  A unit test for JUnit. Test usign file arff format, algorithm = Lineal Regression
+	 *  A unit test for JUnit. Test and prediction using file arff format, algorithm = Lineal Regression
 	 */
 	public void test1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		LinearRegression lr = new LinearRegression();
@@ -72,12 +70,14 @@ public class WekaTest extends CDKTestCase {
 		options[2] = "-R";                                   
 		options[3] = "0.00000008"; 
 		lr.setOptions(options);
+		Weka weka = new Weka();
 		weka.setDataset("data/arff/Table1.arff", lr);
 		double[] result = weka.getPrediction("data/arff/Table2.arff");
 		assertNotNull(result);
     }
 	/**
-	 *  A unit test for JUnit. Test using  Array, algorithm = Lineal Regression
+	 *  A unit test for JUnit. Test using file arrf and prdiction using Array, 
+	 *  algorithm = Lineal Regression
 	 */
 	public void test2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		LinearRegression lr = new LinearRegression(); 
@@ -87,37 +87,42 @@ public class WekaTest extends CDKTestCase {
 		options[2] = "-R";                                   
 		options[3] = "0.00000008"; 
 		lr.setOptions(options);
+		Weka weka = new Weka();
 		weka.setDataset("data/arff/Table1.arff", lr);
-		double[] testX = {0.39,9.06,-0.11};
-		double result = weka.getPrediction(testX);
-//		assertNotNull(result);
+		Object[][] testX = {{new Double(2),new Double(2)},
+			{new Double(5),new Double(5)}
+		};
+		double[] result = weka.getPrediction(testX);
+		assertNotNull(result);
     }
 	/**
-	 *  A unit test for JUnit. Test using Array, algorithm = Lineal Regression
+	 *  A unit test for JUnit. Test and prediction using Array, algorithm = Lineal Regression
 	 */
 	public void test3() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		LinearRegression lr = new LinearRegression();
-		String[] attrib = {"aX","bX","cX", "PY" };
-		int[] typAttrib = {Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC};
-		double[][] x = {{0.39,9.62 ,-0.15 },{1.64 ,   9.77 ,  -0.13},{1.06 ,  12.56 ,  -0.16},
-			{1.26 ,  10.51 ,  -0.05},{1.45 ,  10.15 ,  -0.09},{2.27 ,   9.8  ,  -0.13},
-			{1.89 ,  10.54 ,  -0.05},{1.06 ,  10.15 ,   0.01},{2.59 ,   9.81 ,  -0.13},
-			{2.74 ,   9.81 ,  -0.13},{2.79 ,   9.85 ,  -0.12},{0.39 ,   9.14 ,  -0.11},
-			{1.64 ,   9.28 ,  -0.1}, {1.06 ,  10.34 ,   0.03},{1.06 ,  10.15 ,   0.01},
-			{2.27 ,   9.31 ,  -0.09},{2.59 ,   9.31 ,  -0.09},{2.74 ,   9.31 ,  -0.09},
-			{2.79 ,   9.35 ,  -0.09},{0.39 ,   9.06 ,  -0.11},{1.64 ,   9.2  ,  -0.09}};   
-		double[] y = { 12.74,11.3 ,13.0 ,12.6 ,11.9 ,11.01,12.5 ,12.9 ,10.88,10.84,11.21,11.67,
-				10.53,12.0 ,11.83,10.28,10.28,10.15,10.43,10.38,9.5 };
-		Double[] yD = new Double[y.length];
+		String[] attrib = {"X2","X1", "Y" };
+		int[] typAttrib = {Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC};
+		double[][] x = {{ 1,1},{3,3},{4,4},{6,6} };
+		Double[][] xD = new Double[x.length][x[0].length];
+		for(int i = 0 ; i< xD.length; i++)
+			for(int j = 0 ; j < xD[i].length ; j++)
+				xD[i][j] = new Double(x[i][j]);
+		
+		double[] y = { 0,2,3,5};
+        Double[] yD = new Double[y.length];
 		for(int i = 0 ; i< yD.length; i++)
 			yD[i] = new Double(y[i]);
-		weka.setDataset(attrib, typAttrib, yD, x, lr);
-		double[] testX = {0.39,9.06,-0.11};
-		double resultY = weka.getPrediction(testX);
-//		assertNotNull(resultY);
+
+		Weka weka = new Weka();
+		weka.setDataset(attrib, typAttrib, yD, xD, lr);
+		Double[][] testX = {{new Double(2),new Double(2)},
+				{new Double(5),new Double(5)}
+			};
+		double[] result = weka.getPrediction(testX);
+		assertNotNull(result);
     }
 	/**
-	 *  A unit test for JUnit. Test using Array, algorithm = J48
+	 *  A unit test for JUnit. Test prediction using Array, algorithm = J48
 	 */
 	public void test4() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		String[] options = new String[1];
@@ -128,12 +133,18 @@ public class WekaTest extends CDKTestCase {
 		String[] attrib = {"aX","bX","cX"};
 		int[] typAttrib = {Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC};
 		String[] classAttrib = {"A_","B_","C_"};
-		double[][] x = {{10,10 ,10 },{10 ,   10 ,  -10},{-10 ,  -10 ,  -10},
-				{11,11 ,11 },{11 ,   11 ,  -11},{-11 ,  -11 ,  -11}};
+		double[][] x = {{10,10 ,10 },{10 ,   -10 ,  -10},{-10 ,  -10 ,  -10},
+				{11,11 ,11 },{11 ,   -11 ,  -11},{-11 ,  -11 ,  -11}};
+		Double[][] xD = new Double[x.length][x[0].length];
+		for(int i = 0 ; i< xD.length; i++)
+			for(int j = 0 ; j < xD[i].length ; j++)
+				xD[i][j] = new Double(x[i][j]);
 		String[] y = { "A_","B_" ,"C_","A_","B_" ,"C_"};
-		weka.setDataset(attrib, typAttrib, classAttrib, y, x, j48);
-		double[] testX = {10,10,-11};
-		double resultY = weka.getPrediction(testX);
-//		assertNotNull(resultY);
+		Weka weka = new Weka();
+		weka.setDataset(attrib, typAttrib, classAttrib, y, xD, j48);
+		Double[][] testX = {{new Double(11),new Double(-11),new Double(-11)},
+				{new Double(-10),new Double(-10),new Double(-10)}};
+		double[] resultY = weka.getPrediction(testX);
+		assertNotNull(resultY);
     }
 }

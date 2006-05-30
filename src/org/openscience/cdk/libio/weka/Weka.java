@@ -46,15 +46,10 @@ import weka.core.Instances;
  *  You have also the possibility to introduce directly values, done like:
  *  <pre>
  *  Classifier lr = new LinearRegression();
- *   String[] attrib = {"aX","bX","cX","PY" };
+ *   String[] attrib = {"X1","X2","X3","Y" };
  *   int[] typAttrib = {Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC,Weka.NUMERIC, };
- *   double[][] x = {{0.39,9.62 ,-0.15 },
- *                   {1.64,9.77 ,-0.13},
- *                   {1.06,12.56,-0.16},
- *   double[] y = {12.74,11.3 ,13.0};
  *  weka.setDataset(attrib, typAttrib, y, x, lr);
- *  double[] testX = {0.39,9.06,-0.11};
- *  double resultY = weka.getPrediction(testX);
+ *  double[] resultY = weka.getPrediction(testX);
  *  </pre>
  * @author      Miguel Rojas
  * @cdk.created 2006-05-23
@@ -66,11 +61,14 @@ public class Weka {
 	
 	public static final int NUMERIC = 0;
 	public static final int NOMINAL = 1;
+	public static final int REGULAR = 2;
+	public static final int DATA = 3;
+	public static final int STRING = 4;
 
 	/** type of classifier*/
-	private Classifier classifier;
+	private Classifier classifier = null;
 	
-	private Instances labeled;
+	private Instances instances;
 	/**
      * Constructor of the Weka
      */
@@ -88,17 +86,10 @@ public class Weka {
     	this.classifier = classifier;
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
     	Reader insr = new InputStreamReader(ins);
-        Instances instances = new Instances(new BufferedReader(insr));
+        instances = new Instances(new BufferedReader(insr));
 		instances.setClassIndex(instances.numAttributes() - 1);
-		
-		labeled = new Instances(instances);
-		classifier.buildClassifier(labeled);
-
-		for (int i = 0; i < instances.numInstances(); i++) {
-		  double clsLabel = classifier.classifyInstance(instances.instance(i));
-		  labeled.instance(i).setClassValue(clsLabel);
-		}
-		return labeled;
+		classifier.buildClassifier(instances);
+		return instances;
     }
     /**
      * 
@@ -107,14 +98,14 @@ public class Weka {
      *  
      * @param attrib      String with the attribut names
      * @param typAttrib   Attribute type: NUMERICAL or NOMINAL. 
+     * @param y           An array containing the dependent variable. It is possible numeric or string.
      * @param x           An array of independent variables. The observations should be in the rows
      *                    and the variables should be in the columns
-     * @param y           An array containing the dependent variable. It is possible numeric or string.
      * @param classifier  Type of Classifier
      * @return            The Instances value
      * @throws Exception
      */
-    public Instances setDataset(String[] attrib, int[] typAttrib, Object[]y, double[][] x, Classifier classifier) throws Exception{
+    public Instances setDataset(String[] attrib, int[] typAttrib, Object[]y, Object[][] x, Classifier classifier) throws Exception{
     	return setDataset(attrib, typAttrib ,null,y,x,classifier);
     }
     /**
@@ -125,26 +116,20 @@ public class Weka {
      * @param attrib      String with the attribut names.
      * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
      * @param classAttrib String with the attribut class.
+     * @param y           An array containing the dependent variable. It is possible numeric or string.
      * @param x           An array of independent variables. The observations should be in the rows
      *                    and the variables should be in the columns
-     * @param y           An array containing the dependent variable. It is possible numeric or string.
      * @param classifier  Type of classifier
      * @return            The Instances value
      * @throws Exception
      */
-    public Instances setDataset(String[] attrib, int[] typAttrib, String[] classAttrib, Object[]y, double[][] x, Classifier classifier) throws Exception{
+    public Instances setDataset(String[] attrib, int[] typAttrib, String[] classAttrib, Object[]y, Object[][] x, Classifier classifier) throws Exception{
     	this.classifier = classifier;
     	Reader reader = createAttributes(attrib,typAttrib,classAttrib,y,x);
-    	Instances instances = new Instances(reader);
+    	instances = new Instances(reader);
     	instances.setClassIndex(instances.numAttributes() - 1);
-		labeled = new Instances(instances);
-		classifier.buildClassifier(labeled);
-
-		for (int i = 0; i < instances.numInstances(); i++) {
-		  double clsLabel = classifier.classifyInstance(instances.instance(i));
-		  labeled.instance(i).setClassValue(clsLabel);
-		}
-    		return labeled;
+		classifier.buildClassifier(instances);
+		return instances;
     }
     /**
      * Return of the predicted value
@@ -153,13 +138,21 @@ public class Weka {
      * @return	      Result of the prediction
      * @throws Exception 
      */
-    public double getPrediction(double[] value) throws Exception{
-    	Instance instance = new Instance(labeled.numAttributes());
-    	instance.setDataset(labeled);
-    	for(int i = 0 ; i < value.length ; i++)
-        	instance.setValue(i, value[i]);
-//    	instance.setValue(value.length, 0.0);
-		return classifier.classifyInstance(instance);
+    public double[] getPrediction(Object[][] value) throws Exception{
+    	double[] results = new double[value.length];
+    	for(int j = 0 ; j < value.length ; j++){
+    		Instance instance = new Instance(instances.numAttributes());
+        	instance.setDataset(instances);
+	    	for(int i = 0 ; i < value[0].length ; i++){
+	    		if(instance.attribute(i).isNumeric())
+	    			instance.setValue(i, ((Double)value[j][i]).doubleValue());
+	    		else if(instance.attribute(i).isString())
+	    			instance.setValue(i, ""+value[j][i]);
+	    	}
+	    	instance.setValue(value[0].length, 0.0);
+	    	results[j] = classifier.classifyInstance(instance);
+    	}
+    	return results;
     }
     /**
      * Return of the predicted value
@@ -173,9 +166,8 @@ public class Weka {
     	Reader insr = new InputStreamReader(ins);
         Instances test = new Instances(new BufferedReader(insr));
     	double[] result = new double[test.numInstances()];
-    	for(int i = 0 ; i < test.numInstances(); i++){
+    	for(int i = 0 ; i < test.numInstances(); i++)
     		result[i] = classifier.classifyInstance(test.instance(i));
-    	}
 		return result;
     }
     /**
@@ -188,7 +180,7 @@ public class Weka {
      * @return            The Reader containing the attributes
      * @throws IOException
      */
-    private Reader createAttributes(String[] attrib, int[] typAttrib, String[] classAttrib, Object[]y, double[][] x) throws IOException{
+    private Reader createAttributes(String[] attrib, int[] typAttrib, String[] classAttrib, Object[]y, Object[][] x) throws IOException{
     	String string ="@relation table1 \n";
     	for(int i = 0; i < attrib.length ; i++){
     		string += ("@attribute "+attrib[i]);
@@ -196,8 +188,14 @@ public class Weka {
     			string += " numeric \n";
     		else if(typAttrib[i] == NOMINAL)
     			string += " string \n";
+    		else if(typAttrib[i] == DATA)
+    			string += " data \n";
+    		else if(typAttrib[i] == REGULAR)
+    			string += " regular \n";
+    		else if(typAttrib[i] == STRING)
+    			string += " string \n";
     	}
-    	
+
     	if(classAttrib != null){
 	    	string += "@attribute class ";
 	    	string += "{";
@@ -215,12 +213,11 @@ public class Weka {
     	    	for(int i = 0 ; i < x[0].length ; i++){
     	    		string += x[j][i]+",";
     	    	}
-   	    		string += y[j]+", \n";
+    	    	string += y[j]+", \n";
     		}
     	}
-    	
-    	
     	Reader reader = new StringReader(string);
     	return reader;
     }
+	
 }
