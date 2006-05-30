@@ -70,7 +70,7 @@ public class MreactionTests {
         suite.addTest(RearrangementRadical1ReactionTest.suite());
         suite.addTest(RearrangementRadical2ReactionTest.suite());
         suite.addTest(RearrangementRadical3ReactionTest.suite());
-        suite.addTest(ReactionBalancerTest.suite());
+//        suite.addTest(ReactionBalancerTest.suite());
         
         return suite;
     }

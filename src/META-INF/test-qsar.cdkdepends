@@ -15,4 +15,5 @@ cdk-test-core.jar
 cdk-applications.jar
 cdk-builder3d.jar
 cdk-forcefield.jar
+cdk-libio-weka.jar
 

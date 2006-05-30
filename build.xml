@@ -672,13 +672,13 @@
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-libio-weka.jar"/>
                     <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
                     <include name="cdk-qsar-pdb.jar"/>
-                    <include name="cdk-libio-weka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
