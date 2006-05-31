@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.applications.undoredo;
 
+import java.util.HashMap;
+
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -38,11 +40,14 @@ public class MoveAtomEdit extends AbstractUndoableEdit {
 	private int deltaX;
 	
 	private int deltaY;
+	
+	private HashMap renderingCoordinates;
 
-	public MoveAtomEdit(IAtomContainer undoRedoContainer, int deltaX, int deltaY) {
+	public MoveAtomEdit(IAtomContainer undoRedoContainer, int deltaX, int deltaY, HashMap renderingCoordinates) {
 		this.undoRedoContainer = undoRedoContainer;
 		this.deltaX=deltaX;
 		this.deltaY=deltaY;
+		this.renderingCoordinates=renderingCoordinates;
 	}
 
 	/*
@@ -53,8 +58,8 @@ public class MoveAtomEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
 			IAtom atom=undoRedoContainer.getAtomAt(i);
-			Point2d newPoint = new Point2d(atom.getX2d() + deltaX, atom.getY2d() + deltaY);
-			atom.setPoint2d(newPoint);
+			((Point2d)renderingCoordinates.get(atom)).x+=deltaX;
+			((Point2d)renderingCoordinates.get(atom)).y+=deltaY;
 		}
 	}
 
@@ -66,8 +71,8 @@ public class MoveAtomEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
 			IAtom atom=undoRedoContainer.getAtomAt(i);
-			Point2d newPoint = new Point2d(atom.getX2d() - deltaX, atom.getY2d() - deltaY);
-			atom.setPoint2d(newPoint);
+			((Point2d)renderingCoordinates.get(atom)).x-=deltaX;
+			((Point2d)renderingCoordinates.get(atom)).y-=deltaY;
 		}
 	}
 

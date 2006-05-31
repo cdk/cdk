@@ -429,9 +429,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
 				if(r2dm.getSelectedPart().getAtomCount()>0)
 					c2dm.setDrawMode(Controller2DModel.MOVE);
-				((JButton)lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
-				lastAction.set(0,moveButton);
-				moveButton.setBackground(Color.GRAY);
+				if(lastAction!=null){
+					((JButton)lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
+					lastAction.set(0,moveButton);
+					moveButton.setBackground(Color.GRAY);
+				}
 				dragMode = DRAG_MOVING_SELECTED;
 			}else{
 				dragMode = DRAG_MAKING_LASSO_SELECTION;
@@ -607,7 +609,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtomAt(0))).x-moveoldX;
 			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtomAt(0))).y-moveoldY;	
 		}
-		UndoableEdit edit = new MoveAtomEdit(undoredoContainer, (int)deltaX, (int)deltaY);
+		UndoableEdit edit = new MoveAtomEdit(undoredoContainer, (int)deltaX, (int)deltaY, r2dm.getRenderingCoordinates());
 		undoRedoHandler.postEdit(edit);
 	}
 
