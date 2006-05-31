@@ -150,9 +150,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
 			while(st.hasMoreTokens()){
-				StringTokenizer st2=new StringTokenizer(st.nextToken(),"\\");
-				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtomAt(Integer.parseInt(st2.nextToken())-1);
-				theModel.getRendererModel().getToolTipTextMap().put(atom,st2.nextToken());
+				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtomAt(Integer.parseInt(st.nextToken())-1);
+				theModel.getRendererModel().getToolTipTextMap().put(atom,st.nextToken());
 			}
 			theModel.getRendererModel().setShowTooltip(true);
 		}
