@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Vector;
 
 import weka.classifiers.Classifier;
 import weka.core.Instance;
@@ -67,8 +68,10 @@ public class Weka {
 
 	/** type of classifier*/
 	private Classifier classifier = null;
-	
+	/** Class for handling an ordered set of weighted instances*/
 	private Instances instances;
+	/**String with the attribut class*/
+	private String[] classAttrib = null;
 	/**
      * Constructor of the Weka
      */
@@ -85,13 +88,72 @@ public class Weka {
     public Instances setDataset(String pathTable, Classifier classifier) throws Exception{
     	this.classifier = classifier;
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
-    	Reader insr = new InputStreamReader(ins);
-        instances = new Instances(new BufferedReader(insr));
+    	BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+    	this.classAttrib = extractClass(insr);
+    	
+    	ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
+    	insr = new BufferedReader(new InputStreamReader(ins));
+        instances = new Instances(insr);
 		instances.setClassIndex(instances.numAttributes() - 1);
 		classifier.buildClassifier(instances);
 		return instances;
     }
-    /**
+    /** 
+     * Extract the class name attribute manually from the file
+     * 
+     * @param insr  The BufferedReader
+     * @return      Array with the class attributes
+     */
+    private String[] extractClass(BufferedReader input) {
+		Vector attribV = new Vector();
+    	String[] classAttrib = null;
+    	String line = "";
+        try {
+			while ((line = input.readLine()) != null) {
+				if(line.startsWith("@attribute class {")){
+					int strlen = line.length();
+					String line_ = null; 
+					out:
+					for (int i = 0; i < strlen; i++){
+						switch(line.charAt(i)){
+						case '{':
+							line_ = line.substring(i);
+							break out;
+						}
+					}
+					StringBuffer edited = new StringBuffer();
+					strlen = line_.length();
+					edited = new StringBuffer();
+					for (int i = 0; i < strlen; i++){
+						switch(line_.charAt(i)){
+						case '"':
+							break;
+						case ',':
+							attribV.add(edited.toString());
+							edited = new StringBuffer();
+							break;
+						case '{':
+							break;
+						case '}':
+							attribV.add(edited.toString());
+							break;
+						default:
+							edited.append(line_.charAt(i));
+						}
+					}
+					
+				}
+			}
+			if(attribV.size() > 0){
+				classAttrib = new String[attribV.size()];
+				attribV.copyInto(classAttrib);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return classAttrib;
+	}
+	/**
      * 
      * Set the array which contains the dataset and the type of classifier. This method
      * will be used for classifier which work with numerical values.
@@ -125,6 +187,7 @@ public class Weka {
      */
     public Instances setDataset(String[] attrib, int[] typAttrib, String[] classAttrib, Object[]y, Object[][] x, Classifier classifier) throws Exception{
     	this.classifier = classifier;
+    	this.classAttrib = classAttrib;
     	Reader reader = createAttributes(attrib,typAttrib,classAttrib,y,x);
     	instances = new Instances(reader);
     	instances.setClassIndex(instances.numAttributes() - 1);
@@ -138,8 +201,8 @@ public class Weka {
      * @return	      Result of the prediction
      * @throws Exception 
      */
-    public double[] getPrediction(Object[][] value) throws Exception{
-    	double[] results = new double[value.length];
+    public Object[] getPrediction(Object[][] value) throws Exception{
+    	Object[] object = new Object[value.length];
     	for(int j = 0 ; j < value.length ; j++){
     		Instance instance = new Instance(instances.numAttributes());
         	instance.setDataset(instances);
@@ -150,9 +213,14 @@ public class Weka {
 	    			instance.setValue(i, ""+value[j][i]);
 	    	}
 	    	instance.setValue(value[0].length, 0.0);
-	    	results[j] = classifier.classifyInstance(instance);
+	    	double result = classifier.classifyInstance(instance);
+	    	if(classAttrib != null){
+	    		object[j] = classAttrib[(new Double(result)).intValue()];
+	    	}
+    		else
+    			object[j] = new Double(result);
     	}
-    	return results;
+    	return object;
     }
     /**
      * Return of the predicted value
@@ -161,15 +229,19 @@ public class Weka {
      * @return	        Result of the prediction.
      * @throws Exception 
      */
-    public double[] getPrediction(String pathARFF) throws Exception{
+    public Object[] getPrediction(String pathARFF) throws Exception{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathARFF);
     	Reader insr = new InputStreamReader(ins);
         Instances test = new Instances(new BufferedReader(insr));
-    	double[] result = new double[test.numInstances()];
+    	Object[] object = new Object[test.numInstances()];
     	for(int i = 0 ; i < test.numInstances(); i++){
-    		result[i] = classifier.classifyInstance(test.instance(i));
+    		double result = classifier.classifyInstance(test.instance(i));
+    		if(classAttrib != null)
+    			object[i] = classAttrib[(new Double(result)).intValue()];
+    		else
+    			object[i] = new Double(result);
     	}
-		return result;
+		return object;
     }
     /**
      * create a Reader with necessary attributes to iniziate a Instances for weka.
@@ -220,5 +292,16 @@ public class Weka {
     	Reader reader = new StringReader(string);
     	return reader;
     }
-	
+
+	/**
+	 * get the value which belongs this position in the classification
+	 * @param result Position in the classification
+	 * @return       Real value
+	 */
+	private double[] getValue(double[] result) {
+		Instance instance = instances.instance(0);
+		instance.numClasses();
+		return null;
+	}
+
 }

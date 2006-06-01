@@ -72,7 +72,7 @@ public class WekaTest extends CDKTestCase {
 		lr.setOptions(options);
 		Weka weka = new Weka();
 		weka.setDataset("data/arff/Table1.arff", lr);
-		double[] result = weka.getPrediction("data/arff/Table2.arff");
+		Object[] result = weka.getPrediction("data/arff/Table2.arff");
 		assertNotNull(result);
     }
 	/**
@@ -92,7 +92,7 @@ public class WekaTest extends CDKTestCase {
 		Object[][] testX = {{new Double(2),new Double(2)},
 			{new Double(5),new Double(5)}
 		};
-		double[] result = weka.getPrediction(testX);
+		Object[] result = weka.getPrediction(testX);
 		assertNotNull(result);
     }
 	/**
@@ -118,7 +118,7 @@ public class WekaTest extends CDKTestCase {
 		Double[][] testX = {{new Double(2),new Double(2)},
 				{new Double(5),new Double(5)}
 			};
-		double[] result = weka.getPrediction(testX);
+		Object[] result = weka.getPrediction(testX);
 		assertNotNull(result);
     }
 	/**
@@ -144,7 +144,7 @@ public class WekaTest extends CDKTestCase {
 		weka.setDataset(attrib, typAttrib, classAttrib, y, xD, j48);
 		Double[][] testX = {{new Double(11),new Double(-11),new Double(-11)},
 				{new Double(-10),new Double(-10),new Double(-10)}};
-		double[] resultY = weka.getPrediction(testX);
+		Object[] resultY = weka.getPrediction(testX);
 		assertNotNull(resultY);
     }
 }

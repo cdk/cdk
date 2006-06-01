@@ -15,7 +15,7 @@ import weka.classifiers.trees.J48;
  *     j48.build();
  *     j48.setParameters(newX);
  *     j48.predict();
- * 	   double[] predictedvalues = j48.getPredictPredicted();
+ * 	   String[] predictedvalues = j48.getPredictPredicted();
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
  * }
@@ -83,7 +83,7 @@ public class J48WModel extends IWekaModel{
 	 * which contians the variables and attributes with whose to test.*/
 	private String pathTest = null;
 	/** results of the prediction*/
-	private double[] results;
+	private String[] results = null;
 	/**A Array Object containing the independent variable*/
 	private Object[][] newX = null;
 	/**A String specifying the path of the file, format arff,
@@ -109,7 +109,7 @@ public class J48WModel extends IWekaModel{
 		this.x = x;
 	}
 	/**
-	 * Constructor of the J48WModel object from varibles
+	 * Constructor of the J48WModel object from file
 	 * @param pathTest Path of the dataset file format arff to train
 	 */
 	public J48WModel(String pathTest){
@@ -205,10 +205,20 @@ public class J48WModel extends IWekaModel{
      */
 	public void predict() throws QSARModelException {
 		try{
-			if(pathNewX != null)
-				results = weka.getPrediction(pathNewX);
-			else if(newX != null)
-				results = weka.getPrediction(newX);
+			if(pathNewX != null){
+				Object[] object = weka.getPrediction(pathNewX);
+				results = new String[object.length];
+				for(int i = 0 ; i < object.length; i++){
+					results[i] = (String)object[i];
+				}
+			}
+			else if(newX != null){
+				Object[] object = weka.getPrediction(newX);
+				results = new String[object.length];
+				for(int i = 0 ; i < results.length; i++){
+					results[i] = (String)object[i];
+				}
+			}
 			
 		} catch ( Exception e){
 			e.printStackTrace();
@@ -220,11 +230,10 @@ public class J48WModel extends IWekaModel{
      * This function only returns meaningful results if the <code>predict</code>
      * method of this class has been called.
      *
-     * @return A double[] containing the predicted values
+     * @return A String[] containing the predicted values
      */
-	public double[] getPredictPredicted() {
+	public String[] getPredictPredicted() {
 		return results;
 	}
-
 
 }

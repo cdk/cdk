@@ -84,9 +84,9 @@ public class J48WModelTest extends CDKTestCase {
         j48.setParameters(testX);
         j48.predict();
         
-        double[] preds = j48.getPredictPredicted();
-        assertEquals(preds[0], 1.0, 0.001);
-        assertEquals(preds[1], 2.0, 0.001);
+        String[] preds = j48.getPredictPredicted();
+        assertEquals(preds[0], "B_");
+        assertEquals(preds[1], "C_");
 	}
 	/**
 	 * 
@@ -104,10 +104,9 @@ public class J48WModelTest extends CDKTestCase {
 				{new Double(-10),new Double(-10),new Double(-10)}};
         j48.setParameters(testX);
         j48.predict();
-		double[] result = j48.getPredictPredicted();
-        assertNotNull(result);
-        assertEquals(result[0], 1.0, 0.001);
-        assertEquals(result[1], 2.0, 0.001);
+        String[] preds = j48.getPredictPredicted();
+        assertEquals(preds[0], "B_");
+        assertEquals(preds[1], "C_");
 	}
 }
 

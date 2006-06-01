@@ -90,7 +90,7 @@ public class LinearRegressionWModelTest extends CDKTestCase {
         lrm.setParameters(newx);
         lrm.predict();
         
-        double[] preds = lrm.getPredictPredicted();
+        Double[] preds = lrm.getPredictPredicted();
         assertEquals(preds[0], 1.0, 0.001);
         assertEquals(preds[1], 4.0, 0.001);
 	}
@@ -111,7 +111,7 @@ public class LinearRegressionWModelTest extends CDKTestCase {
 		lrm.build();
 		lrm.setParameters("data/arff/Table2.arff");
 		lrm.predict();
-		double[] result = lrm.getPredictPredicted();
+		Double[] result = lrm.getPredictPredicted();
         assertNotNull(result);
         assertEquals(result[0], 1.0, 0.001);
         assertEquals(result[1], 4.0, 0.001);

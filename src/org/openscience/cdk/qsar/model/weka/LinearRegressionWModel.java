@@ -14,7 +14,7 @@ import weka.classifiers.functions.LinearRegression;
  *     lrm.build();
  *     lrm.setParameters(newX);
  *     lrm.predict();
- *     double[] predictedvalues = lrm.getPredictPredicted();
+ *     Double[] predictedvalues = lrm.getPredictPredicted();
  * 
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
@@ -71,7 +71,7 @@ public class LinearRegressionWModel extends IWekaModel{
 	 * which contians the variables and attributes with whose to test.*/
 	private String pathTest = null;
 	/** results of the prediction*/
-	private double[] results;
+	private Double[] results;
 	/**A Array Object containing the independent variable*/
 	private Object[][] newX = null;
 	/**A String specifying the path of the file, format arff,
@@ -88,7 +88,7 @@ public class LinearRegressionWModel extends IWekaModel{
 		this.x = x;
 	}
 	/**
-	 * Constructor of the LinearRegressionWModel object from varibles
+	 * Constructor of the LinearRegressionWModel object from file
 	 * @param pathTest Path of the dataset file format arff to train
 	 */
 	public LinearRegressionWModel(String pathTest){
@@ -181,10 +181,20 @@ public class LinearRegressionWModel extends IWekaModel{
      */
 	public void predict() throws QSARModelException {
 		try{
-			if(pathNewX != null)
-				results = weka.getPrediction(pathNewX);
-			else if(newX != null)
-				results = weka.getPrediction(newX);
+			if(pathNewX != null){
+				Object[] object = weka.getPrediction(pathNewX);
+				results = new Double[object.length];
+				for(int i = 0 ; i < object.length; i++){
+					results[i] = (Double)object[i];
+				}
+			}
+			else if(newX != null){
+				Object[] object = weka.getPrediction(newX);
+				results = new Double[object.length];
+				for(int i = 0 ; i < object.length; i++){
+					results[i] = (Double)object[i];
+				}
+			}
 			
 		} catch ( Exception e){
 			e.printStackTrace();
@@ -196,9 +206,9 @@ public class LinearRegressionWModel extends IWekaModel{
      * This function only returns meaningful results if the <code>predict</code>
      * method of this class has been called.
      *
-     * @return A double[] containing the predicted values
+     * @return A Double[] containing the predicted values
      */
-	public double[] getPredictPredicted() {
+	public Double[] getPredictPredicted() {
 		return results;
 	}
 

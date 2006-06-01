@@ -81,9 +81,9 @@ public abstract class IWekaModel implements IModel {
      * This function only returns meaningful results if the <code>predict</code>
      * method of this class has been called.
      *
-     * @return A double[] containing the predicted values
+     * @return A Object[] containing the predicted values
      */
-    abstract public double[] getPredictPredicted();
+    abstract public Object[] getPredictPredicted();
 
     
 }
