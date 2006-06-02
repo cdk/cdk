@@ -38,7 +38,10 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  This class returns the ionization potential of an atom. It is
- *  based in learning machine from experimental values.
+ *  based in learning machine (in this case J48 see J48WModel) 
+ *  from experimental values. Up to now is
+ *  only possible predict for Cl,Br,I,N,P,O,S Atoms and they are not belong to
+ *  conjugated system.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -54,11 +57,12 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *   </tr>
  * </table>
  *
- *@author         Miguel Rojas
- *@cdk.created    2006-05-26
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
+ * @author         Miguel Rojas
+ * @cdk.created    2006-05-26
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:ionizationPotential
+ * @see J48WModel
  */
 public class IPDescriptor implements IMolecularDescriptor {
 	/** Position of the atom in the AtomContainer*/
@@ -68,24 +72,25 @@ public class IPDescriptor implements IMolecularDescriptor {
 	private HashMap hash = null;
 	
 	private String[] classAttrib = {
-			"07_2","07_2","07_4","07_6","07_8",
-			"08_0","08_2","08_4","08_6","08_8",
-			"09_0","09_2","09_4","09_6","09_8",
-			"10_0","10_2","10_4","10_6","10_8",
-			"11_0","11_2","11_4","11_6","11_8",
-			"12_0","12_2","12_4","12_6","12_8",
-			"13_0","13_2","13_4","13_6","13_8",
-			"14_0","14_2","14_4","14_6","14_8",};
-
+			"05_0","05_1","05_2","05_3","05_4","05_5","05_6","05_7","05_8","05_9",
+			"06_0","06_1","06_2","06_3","06_4","06_5","06_6","06_7","06_8","06_9",
+			"07_0","07_1","07_2","07_3","07_4","07_5","07_6","07_7","07_8","07_9",
+			"08_0","08_1","08_2","08_3","08_4","08_5","08_6","08_7","08_8","08_9",
+			"09_0","09_1","09_2","09_3","09_4","09_5","09_6","09_7","09_8","09_9",
+			"10_0","10_1","10_2","10_3","10_4","10_5","10_6","10_7","10_8","10_9",
+			"11_0","11_1","11_2","11_3","11_4","11_5","11_6","11_7","11_8","11_9",
+			"12_0","12_1","12_2","12_3","12_4","12_5","12_6","12_7","12_8","12_9",
+			"13_0","13_1","13_2","13_3","13_4","13_5","13_6","13_7","13_8","13_9",
+			"14_0","14_1","14_2","14_3","14_4","14_5","14_6","14_7","14_8","14_9",};
 	/**
 	 *  Constructor for the IPDescriptor object
 	 */
 	public IPDescriptor() {
 		this.hash = new HashMap();
-		double value = 7.1;
-		for(int i = 0 ; i < 40 ; i++){
+		double value = 5.05;
+		for(int i = 0 ; i < classAttrib.length ; i++){
 			this.hash.put(classAttrib[i],new Double(value));
-			value += 0.2;
+			value += 0.1;
 		}
 	}
 	/**
@@ -146,8 +151,11 @@ public class IPDescriptor implements IMolecularDescriptor {
 				atom.getSymbol().equals("P")){
 			Double[][] resultsH = calculateHalogenDescriptor(container);
 			J48WModel j48 = new J48WModel("data/arff/HeteroAtom1.arff");
-    		String[] options = new String[1];
-    		options[0] = "-U";
+    		String[] options = new String[4];
+    		options[0] = "-C";
+    		options[1] = "0.25";
+    		options[2] = "-M";
+    		options[3] = "2";
     		j48.setOptions(options);
     		j48.build();
     		j48.setParameters(resultsH);
