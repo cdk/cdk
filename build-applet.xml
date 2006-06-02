@@ -83,15 +83,12 @@
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_omegahat.jar" includepattern="org/omegahat/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_w3c.jar" includepattern="org/w3c/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_xmlcml.jar" includepattern="org/xmlcml/**"/>
-		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org_xml.jar" includepattern="org/xml/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-org.jar" includepattern="org/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-com_ozten.jar" includepattern="com/ozten/**"/>
-		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-gnu_xml.jar" includepattern="gnu/xml/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-Jama.jar" includepattern="Jama/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-jas.jar" includepattern="jas/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_media.jar" includepattern="javax/media/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_vecmath.jar" includepattern="javax/vecmath/**"/>
-		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-javax_xml.jar" includepattern="javax/xml/**"/>
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-nu.jar" includepattern="nu/**"/>
 		<!-- the following jar contains all other classes and resources -->
 		<jar-from-pattern destfile="${dist}/jar/jchempaint-applet-others.jar" includepattern="**/*"/>
