@@ -124,8 +124,8 @@ public class ArrowRenderer2D {
 		ac.addAtom(start);
 		ac.addAtom(end);
 		center = GeometryTools.get2DCenter(ac);
-		Point2d p1 = new Point2d(start.getPoint2d());
-		Point2d p2 = new Point2d(end.getPoint2d());
+		Point2d p1 = new Point2d((Point2d)r2dm.getRenderingCoordinate(start));
+		Point2d p2 = new Point2d((Point2d)r2dm.getRenderingCoordinate(end));
 		Vector2d v1 = new Vector2d(p1);
 		Vector2d v2 = new Vector2d(p2);
 		v2.sub(v1);
