@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.IPDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -42,26 +42,26 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.module test-qsar
  */
 
-public class IPDescriptorTest extends CDKTestCase {
+public class IPAtomicDescriptorTest extends CDKTestCase {
 	/**
-	 *  Constructor for the IPDescriptorTest object
+	 *  Constructor for the IPAtomicDescriptorTest object
 	 *
 	 */
-    public  IPDescriptorTest() {}
+    public  IPAtomicDescriptorTest() {}
     /**
 	 *  A unit test suite for JUnit
 	 *
 	 *@return    The test suite
 	 */
     public static Test suite() {
-        return new TestSuite(IPDescriptorTest.class);
+        return new TestSuite(IPAtomicDescriptorTest.class);
     }
 
     /**
 	 *  A unit test for JUnit with C-Cl
 	 */
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -83,7 +83,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-C-Br
 	 */
     public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -105,7 +105,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-C-C-I
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -127,7 +127,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-C-O
 	 */
     public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -148,7 +148,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-O-C
 	 */
     public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -170,7 +170,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-N-C
 	 */
     public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -192,7 +192,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-C-N
 	 */
     public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
@@ -214,7 +214,7 @@ public class IPDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with C-C-P-C-C
 	 */
     public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception{
-    	IMolecularDescriptor descriptor = new IPDescriptor();
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();

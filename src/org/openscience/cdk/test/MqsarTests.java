@@ -36,7 +36,7 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTes
 import org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.IPDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest;
@@ -167,7 +167,7 @@ public class MqsarTests {
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
         suite.addTest(PartialTChargePEOEDescriptorTest.suite());
-        suite.addTest(IPDescriptorTest.suite());
+        suite.addTest(IPAtomicDescriptorTest.suite());
 
         // from cdk.test.qsar.model
         suite.addTest(QSARRModelTests.suite());

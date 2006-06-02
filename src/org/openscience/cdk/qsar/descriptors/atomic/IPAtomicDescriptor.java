@@ -41,7 +41,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  based in learning machine (in this case J48 see J48WModel) 
  *  from experimental values. Up to now is
  *  only possible predict for Cl,Br,I,N,P,O,S Atoms and they are not belong to
- *  conjugated system.
+ *  conjugated system or not adjacent to an double bond.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -64,7 +64,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:ionizationPotential
  * @see J48WModel
  */
-public class IPDescriptor implements IMolecularDescriptor {
+public class IPAtomicDescriptor implements IMolecularDescriptor {
 	/** Position of the atom in the AtomContainer*/
 	private int targetPosition = 0;
 
@@ -83,9 +83,9 @@ public class IPDescriptor implements IMolecularDescriptor {
 			"13_0","13_1","13_2","13_3","13_4","13_5","13_6","13_7","13_8","13_9",
 			"14_0","14_1","14_2","14_3","14_4","14_5","14_6","14_7","14_8","14_9",};
 	/**
-	 *  Constructor for the IPDescriptor object
+	 *  Constructor for the IPAtomicDescriptor object
 	 */
-	public IPDescriptor() {
+	public IPAtomicDescriptor() {
 		this.hash = new HashMap();
 		double value = 5.05;
 		for(int i = 0 ; i < classAttrib.length ; i++){
@@ -94,7 +94,7 @@ public class IPDescriptor implements IMolecularDescriptor {
 		}
 	}
 	/**
-	 *  Gets the specification attribute of the IPDescriptor object
+	 *  Gets the specification attribute of the IPAtomicDescriptor object
 	 *
 	 *@return    The specification value
 	 */
@@ -102,18 +102,18 @@ public class IPDescriptor implements IMolecularDescriptor {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
 				this.getClass().getName(),
-				"$Id: IPDescriptor.java 6171 2006-5-22 19:29:58Z egonw $",
+				"$Id: IPAtomicDescriptor.java 6171 2006-5-22 19:29:58Z egonw $",
 				"The Chemistry Development Kit");
 	}
 	/**
-	 *  Sets the parameters attribute of the IPDescriptor object
+	 *  Sets the parameters attribute of the IPAtomicDescriptor object
 	 *
 	 *@param  params            The parameter is the atom position
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
-			throw new CDKException("IPDescriptor only expects one parameter");
+			throw new CDKException("IPAtomicDescriptor only expects one parameter");
 		}
 		if (!(params[0] instanceof Integer)) {
 			throw new CDKException("The parameter must be of type Integer");
@@ -121,7 +121,7 @@ public class IPDescriptor implements IMolecularDescriptor {
 		targetPosition = ((Integer) params[0]).intValue();
 	}
 	/**
-	 *  Gets the parameters attribute of the IPDescriptor object
+	 *  Gets the parameters attribute of the IPAtomicDescriptor object
 	 *
 	 *@return    The parameters value
 	 */
@@ -190,7 +190,7 @@ public class IPDescriptor implements IMolecularDescriptor {
 		return results;
 	}
 	/**
-	 *  Gets the parameterNames attribute of the IPDescriptor object
+	 *  Gets the parameterNames attribute of the IPAtomicDescriptor object
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -200,7 +200,7 @@ public class IPDescriptor implements IMolecularDescriptor {
 		return params;
 	}
 	/**
-	 *  Gets the parameterType attribute of the IPDescriptor object
+	 *  Gets the parameterType attribute of the IPAtomicDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
