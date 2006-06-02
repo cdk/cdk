@@ -14,7 +14,7 @@ import weka.classifiers.functions.LinearRegression;
  *     lrm.build();
  *     lrm.setParameters(newX);
  *     lrm.predict();
- *     Double[] predictedvalues = lrm.getPredictPredicted();
+ *     Double[] predictedvalues = (Double[])lrm.getPredictPredicted();
  * 
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
@@ -59,7 +59,7 @@ import weka.classifiers.functions.LinearRegression;
  * @cdk.module qsar
  * @see Weka
  */
-public class LinearRegressionWModel extends IWekaModel{
+public class LinearRegressionWModel implements IWekaModel{
 	/**Dependent variable */
 	private Object[] y;
 	/**Independent variable */
@@ -208,7 +208,7 @@ public class LinearRegressionWModel extends IWekaModel{
      *
      * @return A Double[] containing the predicted values
      */
-	public Double[] getPredictPredicted() {
+	public Object[] getPredictPredicted() {
 		return results;
 	}
 

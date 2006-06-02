@@ -15,7 +15,7 @@ import weka.classifiers.trees.J48;
  *     j48.build();
  *     j48.setParameters(newX);
  *     j48.predict();
- * 	   String[] predictedvalues = j48.getPredictPredicted();
+ * 	   String[] predictedvalues = (String[])j48.getPredictPredicted();
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
  * }
@@ -71,7 +71,7 @@ import weka.classifiers.trees.J48;
  * @cdk.module qsar
  * @see Weka
  */
-public class J48WModel extends IWekaModel{
+public class J48WModel implements IWekaModel{
 	/**Dependent variable */
 	private Object[] y;
 	/**Independent variable */
@@ -232,7 +232,7 @@ public class J48WModel extends IWekaModel{
      *
      * @return A String[] containing the predicted values
      */
-	public String[] getPredictPredicted() {
+	public Object[] getPredictPredicted() {
 		return results;
 	}
 

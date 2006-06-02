@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @author Miguel Rojas
  * @cdk.module qsar
  */
-public abstract class IWekaModel implements IModel {
+public interface IWekaModel extends IModel {
 
 	/**
      * Parses a given list of options. The parameters are determited from weka. And are specific for each
