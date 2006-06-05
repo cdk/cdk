@@ -37,7 +37,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
@@ -56,7 +55,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -673,10 +671,10 @@ public class PDBReader extends DefaultChemObjectReader {
     private void initIOSettings() {
         deduceBonding = new BooleanIOSetting("DeduceBonding", IOSetting.LOW,
           "Should the PDBReader deduce bonding patterns?", 
-          "false");
+          "true");
         useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
           "Should the RebondTool be used (or a heuristic approach otherwise)?",
-          "false");
+          "true");
     }
     
     public void customizeJob() {
