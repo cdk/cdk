@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="custom">
+
+  <description>
+    This ruleset checks for unused code in the CDK sources.
+  </description>
+
+  <!-- In the below paths, rulesets/ refers to the classpath, and the
+       pmd/ refers to this directory, and needs to be excluded because
+       the are called from ../pmd.xml -->
+
+  <!-- The rule sets that come with PMD -->
+
+  <rule ref="rulesets/unusedcode.xml"/>
+
+</ruleset>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project name="CDK" default="pmd" basedir=".">
+
+    <property name="lib" value="develjar" />
+    <property name="build" value="build" />
+    <property name="src" value="src" />
+    <property name="reports.tests" value="reports" />
+
+    <path id="pmd.classpath">
+        <pathelement location="${build}"/>
+        <fileset dir="${lib}">
+          <include name="jakarta-oro-2.0.8.jar"/>
+          <include name="pmd-3.6.jar"/>
+          <include name="jaxen-1.1-beta-7.jar"/>
+        </fileset>
+    </path>
+
+    <target name="compileRenderer" id="compileRenderer">
+        <javac srcdir="pmd" destdir="${build}"
+               includes="net/sourceforge/pmd/renderers/SummaryVBHTMLRenderer.java">
+            <classpath refid="pmd.classpath" />
+        </javac>
+    </target>
+
+    <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
+
+    <target name="pmd" id="pmd">
+      <!-- the data classes modules -->
+      <antcall target="test-module"><param name="module" value="data"/></antcall>
+      <antcall target="test-module"><param name="module" value="datadebug"/></antcall>
+      <antcall target="test-module"><param name="module" value="nonotify"/></antcall>
+      <!-- the other modules -->
+      <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
+      <antcall target="test-module"><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="module" value="standard"/></antcall>
+      <antcall target="test-module"><param name="module" value="io"/></antcall>
+      <antcall target="test-module"><param name="module" value="io-jmol"/></antcall>
+      <antcall target="test-module"><param name="module" value="extra"/></antcall>
+      <antcall target="test-module"><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-joelib"/></antcall>
+      <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
+      <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
+      <antcall target="test-module"><param name="module" value="smiles"/></antcall>
+      <antcall target="test-module"><param name="module" value="forcefield"/></antcall>
+      <antcall target="test-module"><param name="module" value="qsar"/></antcall>
+      <antcall target="test-module"><param name="module" value="experimental"/></antcall>
+      <antcall target="test-module"><param name="module" value="svg"/></antcall>
+      <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
+      <!-- the test modules -->
+      <antcall target="test-module"><param name="module" value="test-core"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-data"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-datadebug"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-nonotify"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-extra"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-experimental"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-forcefield"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-io"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-reaction"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-smiles"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-standard"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-valencycheck"/></antcall>
+    </target>
+
+    <target id="test-module" name="test-module"
+            description="Checks for unused code in the given CDK module.">
+
+      <echo message="Checking for unused code in CDK's ${module} module." />
+
+      <mkdir dir="${reports.tests}/pmd-unused"/>
+      <pmd shortFilenames="true" rulesetfiles="pmd/unused.xml">
+        <formatter type="xml" toFile="${reports.tests}/pmd-unused/${module}.xml"/>
+        <fileset dir="${src}">
+          <includesfile name="${src}/${module}.javafiles"/>
+        </fileset>
+      </pmd>
+    </target>
+
+</project>
