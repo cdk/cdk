@@ -337,24 +337,17 @@ public class PDBReader extends DefaultChemObjectReader {
 					else if(cCol.equals("CONECT"))	{
 						String pdbLine = cLine.toString();
 						pdbLine = pdbLine.trim();
-						String bondAtom = pdbLine.substring(7, 11);
-						bondAtom = bondAtom.trim();
-						int bondAtomNo = Integer.parseInt(bondAtom);
-						String bondedAtom = pdbLine.substring(12, 16);
-						bondedAtom = bondedAtom.trim();
-						int bondedAtomNo = -1;
+						if (pdbLine.length() < 16) {
+							logger.debug("Skipping unexpected empty CONECT line! : " +pdbLine);
+						} else {
 						
-						try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
-						catch(Exception e)	{bondedAtomNo = -1;}
-						
-						if(bondedAtomNo != -1)	{
-							addBond(oBP, bondAtomNo, bondedAtomNo);
-							logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
-						}
-						
-						if(pdbLine.length() > 17)	{
-							bondedAtom = pdbLine.substring(17, 21);
+							String bondAtom = pdbLine.substring(7, 11);
+							bondAtom = bondAtom.trim();
+							int bondAtomNo = Integer.parseInt(bondAtom);
+							String bondedAtom = pdbLine.substring(12, 16);
 							bondedAtom = bondedAtom.trim();
+							int bondedAtomNo = -1;
+							
 							try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
 							catch(Exception e)	{bondedAtomNo = -1;}
 							
@@ -362,29 +355,41 @@ public class PDBReader extends DefaultChemObjectReader {
 								addBond(oBP, bondAtomNo, bondedAtomNo);
 								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 							}
-						}
-						
-						if(pdbLine.length() > 22)	{
-							bondedAtom = pdbLine.substring(22, 26);
-							bondedAtom = bondedAtom.trim();
-							try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
-							catch(Exception e)	{bondedAtomNo = -1;}
 							
-							if(bondedAtomNo != -1)	{
-								addBond(oBP, bondAtomNo, bondedAtomNo);
-								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
+							if(pdbLine.length() > 17)	{
+								bondedAtom = pdbLine.substring(17, 21);
+								bondedAtom = bondedAtom.trim();
+								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
+								catch(Exception e)	{bondedAtomNo = -1;}
+								
+								if(bondedAtomNo != -1)	{
+									addBond(oBP, bondAtomNo, bondedAtomNo);
+									logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
+								}
 							}
-						}
-						
-						if(pdbLine.length() > 27)	{
-							bondedAtom = pdbLine.substring(27, 31);
-							bondedAtom = bondedAtom.trim();
-							try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
-							catch(Exception e)	{bondedAtomNo = -1;}
 							
-							if(bondedAtomNo != -1)	{
-								addBond(oBP, bondAtomNo, bondedAtomNo);
-								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
+							if(pdbLine.length() > 22)	{
+								bondedAtom = pdbLine.substring(22, 26);
+								bondedAtom = bondedAtom.trim();
+								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
+								catch(Exception e)	{bondedAtomNo = -1;}
+								
+								if(bondedAtomNo != -1)	{
+									addBond(oBP, bondAtomNo, bondedAtomNo);
+									logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
+								}
+							}
+							
+							if(pdbLine.length() > 27)	{
+								bondedAtom = pdbLine.substring(27, 31);
+								bondedAtom = bondedAtom.trim();
+								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
+								catch(Exception e)	{bondedAtomNo = -1;}
+								
+								if(bondedAtomNo != -1)	{
+									addBond(oBP, bondAtomNo, bondedAtomNo);
+									logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
+								}
 							}
 						}
 					}
