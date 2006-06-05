@@ -36,6 +36,7 @@ import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.Point3d;
@@ -90,6 +91,8 @@ public class PDBReader extends DefaultChemObjectReader {
 	private BufferedReader _oInput; // The internal used BufferedReader
 	private BooleanIOSetting deduceBonding;
 	private BooleanIOSetting useRebondTool;
+	
+	private Map atomNumberMap;
 	
 	/**
 	 *
@@ -195,6 +198,8 @@ public class PDBReader extends DefaultChemObjectReader {
 		char chain = 'A';	// To ensure stringent name giving of monomers
 		IStrand oStrand;
 		
+		atomNumberMap = new Hashtable();
+		
 		// do the reading of the Input		
 		try {
 			do {
@@ -253,6 +258,9 @@ public class PDBReader extends DefaultChemObjectReader {
 						
 						// add the atom
 						oBP.addAtom(oAtom, oMonomer, oStrand);
+						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+							logger.warn("Duplicate serial ID found for atom: ", oAtom);
+						}
 						logger.debug("Added ATOM: ", oAtom);
 						
 						/** As HETATMs cannot be considered to either belong to a certain monomer or strand,
@@ -261,6 +269,9 @@ public class PDBReader extends DefaultChemObjectReader {
 						// read an atom record
 						oAtom = readAtom(cLine.toString());
 						oBP.addAtom(oAtom);
+						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+							logger.warn("Duplicate serial ID found for atom: ", oAtom);
+						}
 						logger.debug("Added HETATM: ", oAtom);
 					} else if (cCol.equals("TER   ")) {
 						// start new strand						
@@ -337,7 +348,8 @@ public class PDBReader extends DefaultChemObjectReader {
 						catch(Exception e)	{bondedAtomNo = -1;}
 						
 						if(bondedAtomNo != -1)	{
-							oBP.addBond(bondAtomNo - 1, bondedAtomNo - 1, 1);
+							addBond(oBP, bondAtomNo, bondedAtomNo);
+							logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 						}
 						
 						if(pdbLine.length() > 17)	{
@@ -347,7 +359,8 @@ public class PDBReader extends DefaultChemObjectReader {
 							catch(Exception e)	{bondedAtomNo = -1;}
 							
 							if(bondedAtomNo != -1)	{
-								oBP.addBond(bondAtomNo - 1, bondedAtomNo - 1, 1);
+								addBond(oBP, bondAtomNo, bondedAtomNo);
+								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 							}
 						}
 						
@@ -358,7 +371,8 @@ public class PDBReader extends DefaultChemObjectReader {
 							catch(Exception e)	{bondedAtomNo = -1;}
 							
 							if(bondedAtomNo != -1)	{
-								oBP.addBond(bondAtomNo - 1, bondedAtomNo - 1, 1);
+								addBond(oBP, bondAtomNo, bondedAtomNo);
+								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 							}
 						}
 						
@@ -369,7 +383,8 @@ public class PDBReader extends DefaultChemObjectReader {
 							catch(Exception e)	{bondedAtomNo = -1;}
 							
 							if(bondedAtomNo != -1)	{
-								oBP.addBond(bondAtomNo - 1, bondedAtomNo - 1, 1);
+								addBond(oBP, bondAtomNo, bondedAtomNo);
+								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 							}
 						}
 					}
@@ -438,6 +453,18 @@ public class PDBReader extends DefaultChemObjectReader {
 		return oFile;
 	}
 	
+	private void addBond(PDBPolymer obp, int bondAtomNo, int bondedAtomNo) {
+		IAtom firstAtom = (PDBAtom)atomNumberMap.get(new Integer(bondAtomNo));
+		IAtom secondAtom = (PDBAtom)atomNumberMap.get(new Integer(bondedAtomNo));
+		if (firstAtom == null) {
+			logger.error("Could not find bond start atom in map with serial id: ", bondAtomNo);
+		}
+		if (secondAtom == null) {
+			logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
+		}
+		obp.addBond(firstAtom.getBuilder().newBond(firstAtom, secondAtom, 1));
+	}
+
 	/**
 	 * Create bonds when reading a protein PDB file. NB ONLY works for protein
 	 * PDB files! If you want to read small molecules I recommend using molecule
@@ -552,6 +579,10 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * @throws RuntimeException if the line is too short (less than 59 characters).
 	 */
 	private PDBAtom readAtom(String cLine) {
+		// a line looks like:
+		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
+		// ATOM      1  O5*   C A   1      20.662  36.632  23.475  1.00 10.00      114D  45
+		
 		if (cLine.length() < 59) {
 			throw new RuntimeException("PDBReader error during readAtom(): line too short");
 		}
@@ -637,7 +668,7 @@ public class PDBReader extends DefaultChemObjectReader {
     private void initIOSettings() {
         deduceBonding = new BooleanIOSetting("DeduceBonding", IOSetting.LOW,
           "Should the PDBReader deduce bonding patterns?", 
-          "true");
+          "false");
         useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
           "Should the RebondTool be used (or a heuristic approach otherwise)?",
           "false");
