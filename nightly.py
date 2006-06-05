@@ -35,6 +35,8 @@
 #                     and cells. This allows easier generation of table contents
 #                     and not have to worry about <tr> and <td> tags and so on.
 #                     Also added a link to the keyword list
+# Update 06/04/2006 - Some bugfixes to the output as well as some more checks for
+#                     robustness
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -400,6 +402,12 @@ def updateSVN():
 def runAntJob(cmdLine, logFileName, jobName):
     olddir = os.getcwd()
     os.chdir(nightly_repo)
+
+    # clean out any hs_err* files from the repo directory
+    hsfiles = glob.glob(os.path.join(nightly_repo, 'hs_*'))
+    for hsfile in hsfiles:
+        os.unlink(hsfile)
+    
     os.system('%s > %s' % (cmdLine, getLogFilePath(logFileName)))
 
     # if a JVM segfault occured we've failed
@@ -427,16 +435,16 @@ def generateCDKDepGraph():
 
     if classpath == "" or classpath == None:
         print 'classpath not specified. Skipping dependency graph'
-        return page
+        return None
     
     if string.find(classpath, 'bsh.jar') == -1 or \
            string.find(classpath, 'jgrapht') == -1:
         print 'Did not find bsh.jar or the jgrapht jar in \'classpath\''
-        return page
+        return None
 
     if not executableExists('dot'):
         print 'dot not found. Skipping dependency graph'
-        return page
+        return None
     
     os.system('java -cp %s bsh.Interpreter deptodot.bsh > /tmp/cdkdep.dot' % (classpath))
     os.system('dot -Tpng /tmp/cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
@@ -692,19 +700,20 @@ if __name__ == '__main__':
             f = open(os.path.join(nightly_web, 'index.html'), 'r')
             lines = string.join(f.readlines())
             f.close()
-            newlines = re.sub("<h2>CDK Nightly Build",
-                          """<center><b><h3>Could not compile the sources -
-                          <a href=\"build.log.fail\">build.log</a>
-                          </h3></b></center>
-                          <hr>
-                          <p>
-                          <h2>CDK Nightly Build""", lines)
-            f = open(os.path.join(nightly_web, 'index.html'), 'w')
-            f.write(newlines)
-            f.close()
+            if lines.find("Could not compile the sources") == -1:
+                newlines = re.sub("<h2>CDK Nightly Build",
+                                  """<center><b><h3>Could not compile the sources -
+                                  <a href=\"build.log.fail\">build.log</a>
+                                  </h3></b></center>
+                                  <hr>
+                                  <p>
+                                  <h2>CDK Nightly Build""", lines)
+                f = open(os.path.join(nightly_web, 'index.html'), 'w')
+                f.write(newlines)
+                f.close()
 
             # before finishing send of an email with the last 20 lines of build.log
-            f = open('build.log', 'r')
+            f = open(os.path.join(nightly_dir, 'build.log'), 'r')
             lines = f.readlines()
             f.close()
             if not noMail: sendMail(string.join(lines[-20:]))
@@ -809,7 +818,7 @@ if __name__ == '__main__':
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
 
         # if the key word run did OK, add the link to the xformed keyword list
-        if successKeyword:
+        if successKeyword and os.path.exists(os.path.join(nightly_repo, 'doc', 'javadoc', 'keyword.index.xml')):
             srcFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keyword.index.xml')
             destFile = os.path.join(nightly_web, 'keywords.html')
             xsltFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keywordIndex2HTML.xsl')
@@ -823,8 +832,9 @@ if __name__ == '__main__':
     # generate the dependency graph entry
     print '  Generating dependency graph'
     celltexts = generateCDKDepGraph()
-    resultTable.addRow()
-    for celltext in celltexts: resultTable.addCell(celltext)
+    if celltexts:
+        resultTable.addRow()
+        for celltext in celltexts: resultTable.addCell(celltext)
 
     # get the JUnit test results
     resultTable.addRow()
