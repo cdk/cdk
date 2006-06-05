@@ -37,6 +37,7 @@
 #                     Also added a link to the keyword list
 # Update 06/04/2006 - Some bugfixes to the output as well as some more checks for
 #                     robustness
+# Update 06/05/2006 - Fixed the keyword task
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -689,7 +690,7 @@ if __name__ == '__main__':
             successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
             successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
             successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
-            successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml', 'keyword.log', 'keywords')
+            successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
             successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
             successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
         else: # if the distro could not be built, there's not much use doing the other stuff
@@ -818,8 +819,8 @@ if __name__ == '__main__':
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
 
         # if the key word run did OK, add the link to the xformed keyword list
-        if successKeyword and os.path.exists(os.path.join(nightly_repo, 'doc', 'javadoc', 'keyword.index.xml')):
-            srcFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keyword.index.xml')
+        if successKeyword and os.path.exists(os.path.join(nightly_repo, 'keyword.index.xml')):
+            srcFile = os.path.join(nightly_repo, 'keyword.index.xml')
             destFile = os.path.join(nightly_web, 'keywords.html')
             xsltFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keywordIndex2HTML.xsl')
             transformXML2HTML(srcFile, destFile, xsltFile, False)
