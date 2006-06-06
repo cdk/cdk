@@ -62,7 +62,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+		Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-Cl");
@@ -74,6 +74,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(1);
+		params[1] = new String(IPAtomicDescriptor.AtomicTarget);
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
@@ -84,7 +85,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-C-Br");
@@ -96,6 +97,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(2);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29; 
@@ -106,7 +108,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-C-C-I");
@@ -118,6 +120,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(3);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
@@ -128,7 +131,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-C-O");
@@ -140,6 +143,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(2);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.48;
@@ -149,7 +153,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-O-C");
@@ -161,6 +165,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(1);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.025;
@@ -171,7 +176,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-N-C");
@@ -183,6 +188,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(1);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.24; 
@@ -193,7 +199,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-C-N");
@@ -205,6 +211,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(2);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9; 
@@ -215,7 +222,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
-		Integer[] params = new Integer[1];
+    	Object[] params = new Object[2];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C-C-P-C-C");
@@ -227,10 +234,56 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		params[0] = new Integer(2);
+		params[1] = IPAtomicDescriptor.AtomicTarget;
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.5; 
         assertEquals(result, resultAccordingNIST, 0.4);
+    }
+
+    /**
+	 *  A unit test for JUnit with CCCCC(=O)CC
+	 */
+    public void testIPDescriptor_9() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
+    	Object[] params = new Object[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCCCC(=O)CC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		params[0] = new Integer(4);
+		params[1] = IPAtomicDescriptor.BondTarget;
+        descriptor.setParameters(params);
+        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+        double resultAccordingNIST = 9.15; 
+        assertEquals(result, resultAccordingNIST, 1);
+    }
+    /**
+	 *  A unit test for JUnit with O=C1CCCC1
+	 */
+    public void testIPDescriptor_10() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
+    	Object[] params = new Object[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("O=C1CCCC1");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		params[0] = new Integer(0);
+		params[1] = IPAtomicDescriptor.BondTarget;
+        descriptor.setParameters(params);
+        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+        double resultAccordingNIST = 9.26; 
+        assertEquals(result, resultAccordingNIST, 15);
     }
 
 

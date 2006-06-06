@@ -30,9 +30,11 @@ import java.util.Vector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
@@ -65,9 +67,15 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @see J48WModel
  */
 public class IPAtomicDescriptor implements IMolecularDescriptor {
-	/** Position of the atom in the AtomContainer*/
+	/** Position of the target in the AtomContainer*/
 	private int targetPosition = 0;
-
+	/** Type of the target in the AtomContainer*/
+	private String targetType = "";
+	/** Target which edintify with type IAtom target*/
+	public static String AtomicTarget = "AtomicTarget";
+	/** Target which edintify with type IBond target*/
+	public static String BondTarget = "BondTarget";
+	
 	/** Hash map which contains the classAttribu = value of IP */
 	private HashMap hash = null;
 	
@@ -82,6 +90,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			"12_0","12_1","12_2","12_3","12_4","12_5","12_6","12_7","12_8","12_9",
 			"13_0","13_1","13_2","13_3","13_4","13_5","13_6","13_7","13_8","13_9",
 			"14_0","14_1","14_2","14_3","14_4","14_5","14_6","14_7","14_8","14_9",};
+
 	/**
 	 *  Constructor for the IPAtomicDescriptor object
 	 */
@@ -108,17 +117,22 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	/**
 	 *  Sets the parameters attribute of the IPAtomicDescriptor object
 	 *
-	 *@param  params            The parameter is the atom position
+	 *@param  params            The parameter is the position and type the target (IAtom or IBond)
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("IPAtomicDescriptor only expects one parameter");
+		if (params.length != 2) {
+			throw new CDKException("IPAtomicDescriptor expects two parameter. 1: the position and 2: type");
 		}
 		if (!(params[0] instanceof Integer)) {
 			throw new CDKException("The parameter must be of type Integer");
 		}
+		if (!(params[1] instanceof String) /* && ( 
+				params[1].equals(AtomicTarget) ||params[1].equals(BondTarget))*/) {
+			throw new CDKException("The parameter must be of type String: BondTarget or AtomicTarget");
+		}
 		targetPosition = ((Integer) params[0]).intValue();
+		targetType = (String) params[1];
 	}
 	/**
 	 *  Gets the parameters attribute of the IPAtomicDescriptor object
@@ -126,31 +140,51 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	 *@return    The parameters value
 	 */
 	public Object[] getParameters() {
-		Object[] params = new Object[1];
+		Object[] params = new Object[2];
 		params[0] = new Integer(targetPosition);
+		params[1] = new String(targetType);
 		return params;
 	}
 	/**
 	 *  This method calculates the ionization potential of an atom.
 	 *
-	 *@param  container         Parameter is the atom container.
+	 *@param  container         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public DescriptorValue calculate(IAtomContainer container) throws CDKException
 	{
 		double resultD = -1.0;
-		IAtom atom = container.getAtomAt(targetPosition);
-		if(atom.getSymbol().equals("F")||
-				atom.getSymbol().equals("Cl")||
-				atom.getSymbol().equals("Br")||
-				atom.getSymbol().equals("I")||
-				atom.getSymbol().equals("N")||
-				atom.getSymbol().equals("S")||
-				atom.getSymbol().equals("O")||
-				atom.getSymbol().equals("P")){
-			Double[][] resultsH = calculateHalogenDescriptor(container);
-			J48WModel j48 = new J48WModel("data/arff/HeteroAtom1.arff");
+		boolean isTarget = false;
+		Double[][] resultsH = null;
+		String path = "";
+		if(targetType.equals(AtomicTarget)){
+			IAtom atom = container.getAtomAt(targetPosition);
+			if(atom.getSymbol().equals("F")||
+					atom.getSymbol().equals("Cl")||
+					atom.getSymbol().equals("Br")||
+					atom.getSymbol().equals("I")||
+					atom.getSymbol().equals("N")||
+					atom.getSymbol().equals("S")||
+					atom.getSymbol().equals("O")||
+					atom.getSymbol().equals("P")){
+				resultsH = calculateHeteroAtomDescriptor(container);
+				path = "data/arff/HeteroAtom1.arff";
+				isTarget = true;
+			}
+		}else if(targetType.equals(BondTarget)){
+			IBond bond = container.getBondAt(targetPosition);
+			IAtom[] atoms = bond.getAtoms();
+			if((bond.getOrder() == 2) && 
+					(((atoms[0].getSymbol().equals("C")) &&( !atoms[1].getSymbol().equals("C")))||
+							((atoms[1].getSymbol().equals("C")) && (!atoms[0].getSymbol().equals("C"))))) {
+				resultsH = calculateCarbonylDescriptor(container);
+				path = "data/arff/Carbonyl1.arff";
+				isTarget = true;
+			}
+		}
+		if(isTarget){
+			J48WModel j48 = new J48WModel(path);
     		String[] options = new String[4];
     		options[0] = "-C";
     		options[1] = "0.25";
@@ -166,11 +200,11 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD));
 	}
 	/**
-	 * Calculate the necessary descriptors for Halogens atoms
+	 * Calculate the necessary descriptors for Heteratom atoms
 	 * @param atomContaine The IAtomContainer
 	 * @return     Array with the values of the descriptors.
 	 */
-	private Double[][] calculateHalogenDescriptor(IAtomContainer atomContainer) {
+	private Double[][] calculateHeteroAtomDescriptor(IAtomContainer atomContainer) {
 		Double[][] results = new Double[1][3];
 		Integer[] params = new Integer[1];
 		Vector vector = new Vector();
@@ -189,6 +223,56 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		}
 		return results;
 	}
+	/**
+	 * Calculate the necessary descriptors for Carbonyl group
+	 * @param atomContaine The IAtomContainer
+	 * @return     Array with the values of the descriptors.
+	 */
+	private Double[][] calculateCarbonylDescriptor(IAtomContainer atomContainer) {
+		Double[][] results = new Double[1][5];
+		Integer[] params = new Integer[1];
+		IBond bond = atomContainer.getBondAt(targetPosition);
+		IAtom[] atoms = bond.getAtoms();
+		int positionC = 0;
+		int positionX = 0;
+		if((atoms[0].getSymbol().equals("C") && !atoms[1].getSymbol().equals("C"))){
+			positionC = atomContainer.getAtomNumber(atoms[0]);
+			positionX = atomContainer.getAtomNumber(atoms[1]);
+		}else if((atoms[1].getSymbol().equals("C") && !atoms[0].getSymbol().equals("C"))){
+			positionC = atomContainer.getAtomNumber(atoms[1]);
+			positionX = atomContainer.getAtomNumber(atoms[0]);
+		}
+		try {
+        	/*0*/
+        	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
+        	params[0] = new Integer(positionC);
+            descriptor.setParameters(params);
+    		results[0][0]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+        	/*1*/
+    		descriptor = new PartialSigmaChargeDescriptor();
+            descriptor.setParameters(params);
+    		results[0][1]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		/*2*/
+    		descriptor = new BondPartialSigmaChargeDescriptor();
+    		params[0] = new Integer(targetPosition);
+            descriptor.setParameters(params);
+    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		/*3*/
+        	descriptor = new SigmaElectronegativityDescriptor();
+        	params[0] = new Integer(positionX);
+            descriptor.setParameters(params);
+    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+        	/*4*/
+    		descriptor = new PartialSigmaChargeDescriptor();
+            descriptor.setParameters(params);
+    		results[0][4]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
 	/**
 	 *  Gets the parameterNames attribute of the IPAtomicDescriptor object
 	 *
