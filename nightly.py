@@ -38,7 +38,6 @@
 # Update 06/04/2006 - Some bugfixes to the output as well as some more checks for
 #                     robustness
 # Update 06/05/2006 - Fixed the keyword task
-# Update 06/06/2006 - Added PMD (unused code) task
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -642,7 +641,7 @@ if __name__ == '__main__':
     successKeyword = True
     successDoccheck = True
     successPMD = True
-    successPMDU = True
+    successPMDUnused = True
     successSVN = True
     
     start_dir = os.getcwd()
@@ -695,7 +694,7 @@ if __name__ == '__main__':
             successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
             successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
             successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
-            successPMDU = runAntJob('nice -n 19 ant -f pmd-unused.xml pmd', 'pmd-unused.log', 'pmd-unused')
+            successPMDUnused = runAntJob('nice -n 19 ant -f pmd-unused.xml', 'pmdu.log', 'pmdu')            
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             srcFile = os.path.join(nightly_dir, 'build.log')
@@ -936,11 +935,13 @@ if __name__ == '__main__':
             shutil.copyfile(os.path.join(nightly_dir, 'pmd.log'),
                             os.path.join(nightly_web, 'pmd.log'))
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
-    # and the checks for unused code:
-    if successPMDU:
-        print '  Generating PMD (unused code) section'
+
+    resultTable.addRow()
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br>Unused tests")
+    if successPMDUnused:
+        print '  Generating PMD-Unused section'
         # make the PMD dir in the web dir
-        os.mkdir(os.path.join(nightly_web,'pmd-unused'))
+        os.mkdir(os.path.join(nightly_web,'pmdu'))
 
         # transform the PMD XML output to nice HTML
         xmlFiles = glob.glob(os.path.join(nightly_repo,'reports/pmd-unused/*.xml'))
@@ -949,19 +950,19 @@ if __name__ == '__main__':
         s = ''
         for xmlFile in xmlFiles:
             prefix = os.path.basename(xmlFile).split('.')[0]
-            htmlFile = os.path.join(nightly_web, 'pmd-unused', prefix)+'.html'
-            xsltFile = os.path.join(nightly_repo,'pmd-unused','wz-pmd-report.xslt')
+            htmlFile = os.path.join(nightly_web, 'pmdu', prefix)+'.html'
+            xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
             transformXML2HTML(xmlFile, htmlFile, xsltFile)
-            s = s+"<a href=\"pmd-unused/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            s = s+"<a href=\"pmdu/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
     else: # PMD stage failed for some reason
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
-        if os.path.exists( os.path.join(nightly_dir, 'pmd-unused.log') ):
-            shutil.copyfile(os.path.join(nightly_dir, 'pmd-unused.log'),
-                            os.path.join(nightly_web, 'pmd-unused.log'))
-            resultTable.addCell("<a href=\"pmd-unused.log\">pmd-unused.log</a>")
+        if os.path.exists( os.path.join(nightly_dir, 'pmdu.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'pmdu.log'),
+                            os.path.join(nightly_web, 'pmdu.log'))
+            resultTable.addCell("<a href=\"pmdu.log\">pmdu.log</a>")            
 
     # try and run japitools
     print '  Generating JAPI comparison'
