@@ -99,9 +99,9 @@ public class JCPAction extends AbstractAction
 	{
 		super();
 		//System.out.println("JCPAction->type: " + type);
-		if (this.logger == null)
+		if (JCPAction.logger == null)
 		{
-			this.logger = new LoggingTool(this);
+			JCPAction.logger = new LoggingTool(this);
 		}
 		if (this.actions == null)
 		{

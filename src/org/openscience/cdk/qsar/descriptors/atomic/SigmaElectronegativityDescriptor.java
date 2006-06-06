@@ -141,7 +141,7 @@ public class SigmaElectronegativityDescriptor implements IMolecularDescriptor {
         double sigmaElectronegativity = 0;
         Molecule mol = new Molecule(ac);
         try {
-	      long starttime=System.currentTimeMillis();
+	      //long starttime=System.currentTimeMillis();
 	      if(oldac!=ac){
 	    	  if(maxIterations != 0)
 	    		  peoe.setMaxGasteigerIters(maxIterations);

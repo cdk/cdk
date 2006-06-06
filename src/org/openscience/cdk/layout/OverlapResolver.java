@@ -266,7 +266,7 @@ public class OverlapResolver
 	{
 		double x1 = 0, x2 = 0, x3 = 0, x4 = 0;
 		double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
-		Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
+		//Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
 		
 		x1 = bond1.getAtomAt(0).getX2d();
 		x2 = bond1.getAtomAt(1).getX2d();

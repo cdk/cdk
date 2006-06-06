@@ -25,7 +25,6 @@ package org.openscience.cdk.io.iterator;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;

@@ -56,7 +56,9 @@ public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
-		assertEquals(0.05783, retval.get(2), 0.00001);
+		for (int i = 0; i < testResult.length; ++i) {
+			assertEquals(testResult[i], retval.get(i), 0.00001);
+		}
 	}
 }
 

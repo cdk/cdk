@@ -44,6 +44,8 @@ import javax.swing.JFrame;
 public class CloseAction extends JCPAction
 {
 
+	private static final long serialVersionUID = 5877928616913182728L;
+
 	/**
 	 *  Closes the current frame
 	 *

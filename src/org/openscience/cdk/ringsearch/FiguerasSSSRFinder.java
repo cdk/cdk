@@ -214,7 +214,7 @@ public class FiguerasSSSRFinder {
 		/** queue for Breadth First Search of this graph */
 		Queue queue = new Queue();
 		/* Initialize a path Vector for each node */
-		Vector pfad1,pfad2;
+		//Vector pfad1,pfad2;
 		Vector path[] = new Vector[OKatoms];
 		Vector intersection = new Vector();
 		Vector ring = new Vector();
@@ -259,10 +259,10 @@ public class FiguerasSSSRFinder {
 					{   
 						// if path[mNumber] is null
 					    // update the path[mNumber]							
-						pfad2 = (Vector)node.getProperty(PATH);
+						//pfad2 = (Vector)node.getProperty(PATH);
 						mAtom.setProperty(PATH, (Vector)((Vector)node.getProperty(PATH)).clone());
 						((Vector)mAtom.getProperty(PATH)).addElement(mAtom);
-						pfad1 = (Vector)mAtom.getProperty(PATH);
+						//pfad1 = (Vector)mAtom.getProperty(PATH);
 						// now push the node m onto the queue
 						queue.push(mAtom);	
 					}

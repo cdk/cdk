@@ -51,6 +51,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
 public class ChemAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -399343341314165265L;
 	private PTDialog dialog = null;
 
 

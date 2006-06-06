@@ -254,7 +254,7 @@ public class IMatrix
     if (result.size!=rows)
       result.reshape(rows);
 
-    int i,j,k;
+    int i,j;
     double realsum, imagsum;
     for(i=0; i<rows; i++)
     {

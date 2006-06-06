@@ -92,7 +92,6 @@ public class PartialFilledStructureMerger
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
-		int next;
 		double order;
 		double max, cmax1, cmax2;
 		int iteration = 0;

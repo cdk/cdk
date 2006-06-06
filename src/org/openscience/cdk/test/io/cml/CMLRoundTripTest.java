@@ -28,8 +28,6 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringReader;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 

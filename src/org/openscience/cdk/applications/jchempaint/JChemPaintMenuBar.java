@@ -51,6 +51,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JChemPaintMenuBar extends JMenuBar {
 
+	private static final long serialVersionUID = -8358165408129203644L;
+
 	private LoggingTool logger;
 
     private String guiString = "stable";

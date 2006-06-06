@@ -140,7 +140,6 @@ public class ClosedShellJob
   private double[][][][] calculateI(IBasis basis)
   {
     int i,j,k,l;
-    int p = 0;
     int size = basis.getSize();
 
     double[][][][] result = new double[size][][][];
@@ -197,7 +196,6 @@ public class ClosedShellJob
   { 
     int i,j,k,l;
     int size = basis.getSize();
-    double value;
     Matrix J = new Matrix(size,size);
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)
@@ -230,7 +228,6 @@ public class ClosedShellJob
   { 
     int i,j,k,l;
     int size = basis.getSize();
-    double value;
     Matrix K = new Matrix(size,size);
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)

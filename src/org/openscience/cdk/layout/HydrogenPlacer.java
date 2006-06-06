@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Vector;
-
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -80,11 +78,11 @@ public class HydrogenPlacer {
 	{
 		LoggingTool logger = new LoggingTool(this);
 		
-		double startAngle = 0.0;
-		double addAngle = 0.0; 
+		//double startAngle = 0.0;
+		//double addAngle = 0.0; 
 		AtomPlacer atomPlacer = new AtomPlacer();
 		atomPlacer.setMolecule(atomContainer);
-		Vector atomVector = new Vector();
+		//Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
 		IAtom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
 		IAtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();

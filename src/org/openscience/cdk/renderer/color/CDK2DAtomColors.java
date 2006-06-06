@@ -53,26 +53,26 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
         int atomnumber = a.getAtomicNumber();
         if (atomnumber != 0) {
             switch (atomnumber) {
-                case 1:    c = this.HYDROGEN; break;
-                case 6:    c = this.CARBON; break;
-                case 7:    c = this.NITROGEN; break;
-                case 8:    c = this.OXYGEN; break;
-                case 15:   c = this.PHOSPHORUS; break;
-                case 16:   c = this.SULPHUR; break;
+                case 1:    c = CDK2DAtomColors.HYDROGEN; break;
+                case 6:    c = CDK2DAtomColors.CARBON; break;
+                case 7:    c = CDK2DAtomColors.NITROGEN; break;
+                case 8:    c = CDK2DAtomColors.OXYGEN; break;
+                case 15:   c = CDK2DAtomColors.PHOSPHORUS; break;
+                case 16:   c = CDK2DAtomColors.SULPHUR; break;
             }
         } else {
             String symbol = a.getSymbol();
             if (symbol.equals("N")) {
-                c = this.NITROGEN;
+                c = CDK2DAtomColors.NITROGEN;
             }
             if (symbol.equals("O")) {
-                c = this.OXYGEN;
+                c = CDK2DAtomColors.OXYGEN;
             }
             if (symbol.equals("P")) {
-                c = this.PHOSPHORUS;
+                c = CDK2DAtomColors.PHOSPHORUS;
             }
             if (symbol.equals("S")) {
-                c = this.SULPHUR;
+                c = CDK2DAtomColors.SULPHUR;
             }
         }
         return c;

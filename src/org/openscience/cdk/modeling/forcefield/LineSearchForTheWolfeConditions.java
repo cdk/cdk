@@ -33,7 +33,7 @@ public class LineSearchForTheWolfeConditions {
 	private final double c1 = 0.0001;
 	private double c2;
 	
-	private double linearFunctionGoldenAlpha;
+	//private double linearFunctionGoldenAlpha;
 	private double linearFunctionAlphaInterpolation;
 	
 	public boolean derivativeSmallEnough = true;
@@ -549,7 +549,7 @@ public class LineSearchForTheWolfeConditions {
 	 * @param flambdaMax		Energy function at b.
 	 * @return					An intermediate point x
 	 */
-	private double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
+	/*private double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
 
 		//System.out.println("Golden Section Search");
 		double goldenLambda;
@@ -579,7 +579,7 @@ public class LineSearchForTheWolfeConditions {
 		}
 
 		return goldenLambda;
-	}
+	}*/
 
 
 }

@@ -713,7 +713,6 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 		int nearestBond = 0;
 		double[] values = new double[4];
 		double distance = 0;
-		double distance_tmp = 0;
 		IAtom[] atomsInBond = bond.getAtoms();
 		org.openscience.cdk.interfaces.IBond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
 		int partial = 0;

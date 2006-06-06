@@ -165,7 +165,7 @@ public class PolymerTest extends TestCase {
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
 		Hashtable monomers = new Hashtable();
-		IMonomer oMon = builder.newMonomer();
+		//IMonomer oMon = builder.newMonomer();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 

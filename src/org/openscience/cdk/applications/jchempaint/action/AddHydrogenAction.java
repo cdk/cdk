@@ -58,6 +58,7 @@ import org.openscience.cdk.tools.manipulator.SetOfReactionsManipulator;
 public class AddHydrogenAction extends JCPAction
 {
 
+	private static final long serialVersionUID = 7696756423842199080L;
 	private HydrogenAdder hydrogenAdder = null;
     private IAtomContainer changedAtomsAndBonds = null;
     private HashMap hydrogenAtomMap = null;

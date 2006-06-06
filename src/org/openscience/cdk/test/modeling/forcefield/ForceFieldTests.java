@@ -92,9 +92,9 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		try {
 
-			input = "src/data/mdl/Ethane-TestFF";
-			FileReader fileReader = new FileReader(input + ".mol");
-			MDLReader mdlReader = new MDLReader(fileReader);
+			input = "data/mdl/Ethane-TestFF";
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(input + ".mol");
+			MDLReader mdlReader = new MDLReader(is);
         	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
         	mdlReader.close();
         	//System.out.println("molecule: " +  molecule);
@@ -1213,12 +1213,12 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		//System.out.println("");
 		//System.out.println("FORCEFIELDTEST with Heptane molecule minimization");
-		input = "src/data/mdl/heptane-modelbuilder";
+		input = "data/mdl/heptane-modelbuilder";
 		//input = "src/data/mdl/Heptane-TestFF";
 		try {
 
-			FileReader fileReader = new FileReader(input + ".mol");
-			MDLReader mdlReader = new MDLReader(fileReader);
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream(input + ".mol");
+			MDLReader mdlReader = new MDLReader(is);
         	molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
         	mdlReader.close();
  
@@ -1250,8 +1250,9 @@ public class ForceFieldTests extends CDKTestCase {
         //logger.debug("Molecule: ", molecule);
 
         try {
-        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
-        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
+        	// Please don't write a file in the test cases.
+        	StringWriter sw = new StringWriter();
+        	MDLWriter mdlWriter = new MDLWriter(sw);
     		mdlWriter.write(molecule);
             mdlWriter.close();
             

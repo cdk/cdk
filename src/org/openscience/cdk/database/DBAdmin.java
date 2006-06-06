@@ -368,7 +368,7 @@ public class DBAdmin {
         Vector tableNames = new Vector();
         try
         {
-            Statement st = db.createStatement();
+            db.createStatement();
         }
         catch(Exception exc)
         {

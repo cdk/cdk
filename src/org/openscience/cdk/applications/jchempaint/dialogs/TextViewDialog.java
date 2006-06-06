@@ -50,7 +50,7 @@ import javax.swing.JTextArea;
 public class TextViewDialog extends JDialog {
 
     private JTextArea textArea;
-    private Dimension dimension;
+    //private Dimension dimension;
     private JLabel textCaption;
     
     /**

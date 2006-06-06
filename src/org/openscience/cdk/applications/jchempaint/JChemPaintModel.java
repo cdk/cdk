@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener {
 
+	private static final long serialVersionUID = -6072472241802965261L;
 	/**  Description of the Field */
 	protected transient EventListenerList changeListeners = new EventListenerList();
 	private String title;

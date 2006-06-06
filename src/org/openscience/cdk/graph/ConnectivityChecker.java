@@ -66,7 +66,6 @@ public class ConnectivityChecker
 	{
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
-		IBond bond = null;
 		IMolecule molecule = atomContainer.getBuilder().newMolecule();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
@@ -78,7 +77,6 @@ public class ConnectivityChecker
 		IBond[] bonds = atomContainer.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
-			bond = bonds[f];
 			bonds[f].setFlag(CDKConstants.VISITED, false);
 			ac.addBond(bonds[f]);
 		}

@@ -32,7 +32,6 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
@@ -87,7 +86,7 @@ public class LicenseDialog extends JFrame {
  "along with this program; if not, write to the Free Software\n" +
  "Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.\n";
 
-        JLabel label1 = new JLabel();
+        //JLabel label1 = new JLabel();
         getContentPane().setLayout(new BorderLayout());
         setBackground(Color.white);
         try {

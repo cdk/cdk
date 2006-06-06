@@ -127,7 +127,7 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 		double val0 = 0;
 		double val1 = 0;
 		ArrayList chiAtom = new ArrayList(2);
-		double chi1v = 0;
+		//double chi1v = 0;
 		double chi1vC = 0;
 		IAtom[] atoms = null;
 		IAtom[] neighatoms = null;

@@ -68,7 +68,7 @@ public class FormatStringBuffer {
     private static final int ZEROPAD = 1;
 
     /** Unsigned/signed long. */
-    private static final int SIGN = 2;
+    //private static final int SIGN = 2;
 
     /** Show plus sign. */
     private static final int PLUS = 4;

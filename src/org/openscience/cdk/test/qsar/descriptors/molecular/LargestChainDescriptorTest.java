@@ -85,7 +85,7 @@ public class LargestChainDescriptorTest extends CDKTestCase{
 		SmilesParser sp = new SmilesParser();
 		IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O"); 
 		//System.out.println("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
-		//assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 
 }

@@ -47,8 +47,6 @@ import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
-import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
-import org.openscience.cdk.test.smiles.SmilesParserTest;
 
 /**
  * This TestSuite is aimed to make a nice test suite for testing

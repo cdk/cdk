@@ -142,12 +142,10 @@ public class OneElectronJob
   {
     long time = System.currentTimeMillis();
 
-    Matrix C,S,T,V,HAO,H,D,J,K,F,U;
-    double[][][][] I;
-    double energy;
+    Matrix C,S,T,V,HAO,H,U;
     IBasis basis = orbitals.getBasis();
 
-    int count_electrons = orbitals.getCountElectrons();
+    //int count_electrons = orbitals.getCountElectrons();
 
     C = orbitals.getCoefficients().duplicate();
 

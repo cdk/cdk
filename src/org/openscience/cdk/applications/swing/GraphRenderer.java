@@ -85,7 +85,7 @@ public class GraphRenderer extends JComponent
     Dimension size = getSize(); 
     
     double factorX = size.width/(xmax-xmin);
-    double factorY = size.height/(ymax-ymin);
+    //double factorY = size.height/(ymax-ymin);
     
     return (int)((x*factorX)-(xmin*factorX));
   }
@@ -97,7 +97,7 @@ public class GraphRenderer extends JComponent
   { 
     Dimension size = getSize();
     
-    double factorX = size.width/(xmax-xmin);
+    //double factorX = size.width/(xmax-xmin);
     double factorY = size.height/(ymax-ymin);
     
     return (int)((size.height+(ymin*factorY))-(y*factorY));
@@ -114,7 +114,7 @@ public class GraphRenderer extends JComponent
 
     double of,nf;
     int nx,ny,ox,oy;
-    int num = 0;
+    //int num = 0;
 
     int graphx = width-2*xpad;
     int graphy = height-2*ypad;

@@ -28,8 +28,6 @@
 package org.openscience.cdk.test.io.iterator;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -89,7 +87,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         try {
             IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
-            int molCount = 0;
+            //int molCount = 0;
             assertTrue(reader.hasNext());
             Object object = reader.next();
             assertNotNull(object);
@@ -108,7 +106,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         try {
             IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
-            int molCount = 0;
+            //int molCount = 0;
             assertTrue(reader.hasNext());
             Object object = reader.next();
             assertNotNull(object);
@@ -174,7 +172,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         try {
             IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
             
-            int molCount = 0;
+            //int molCount = 0;
             assertFalse(reader.hasNext());
             // the expected CDKException is catched by the Iterator 
         } catch (Exception exception) {

@@ -307,9 +307,9 @@ public class Fingerprinter implements IFingerprinter {
 		 *  }
 		 *  catch(Exception exc){}
 		 */
-		Atom tempAtom = null;
+		//Atom tempAtom = null;
 		Vector newPath = null;
-		String symbol = null;
+		//String symbol = null;
 		String bondSymbol = null;
 		currentDepth++;
 		//logger.info("New incremented searchDepth " + currentDepth);

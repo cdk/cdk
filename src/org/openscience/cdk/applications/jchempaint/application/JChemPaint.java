@@ -165,7 +165,7 @@ public class JChemPaint implements SwingConstants
 				model.setID(file.getName());
 			}
 
-			JChemPaint jcp = JChemPaint.getInstance();
+			JChemPaint.getInstance();
 
 		} catch (Throwable t)
 		{

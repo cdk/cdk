@@ -38,7 +38,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -374,11 +373,9 @@ public class ForceFieldConfigurator {
 		Vector atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
-		Boolean b_tmp = null;
 		Double d_tmp = null;
 		Pattern p = null;
 		String ID = "";
-		IAtom configAtom = null;
 		boolean atomTypeFlag = false;
 		
 		if (atom instanceof IPseudoAtom) {

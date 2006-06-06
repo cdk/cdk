@@ -38,7 +38,6 @@ import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.formats.CMLFormat;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.tools.LoggingTool;

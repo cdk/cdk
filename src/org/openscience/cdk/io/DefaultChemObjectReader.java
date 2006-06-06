@@ -25,7 +25,6 @@ package org.openscience.cdk.io;
 
 import java.util.Vector;
 
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;

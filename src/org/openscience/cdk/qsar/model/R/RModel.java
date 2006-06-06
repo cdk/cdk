@@ -236,9 +236,9 @@ public abstract class RModel implements IModel {
         if (filename.equals("") || filename == null) {
             filename = modelname+".rda";
         }
-        Boolean result = null;
+        //Boolean result = null;
         try {
-        result = (Boolean)revaluator.call("saveModel",
+        revaluator.call("saveModel",
                 new Object[] { (Object)modelname, (Object)filename });
         } catch (Exception e) {
             System.out.println("Caught the exception");

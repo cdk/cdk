@@ -25,9 +25,8 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -46,8 +45,8 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
     }
 
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
-
+        //IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
+        fail();
         // napthalene .667 .802
         // nbutane .5 .536
         /*

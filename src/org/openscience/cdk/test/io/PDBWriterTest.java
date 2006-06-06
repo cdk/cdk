@@ -43,7 +43,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.io.PDBWriter;
 

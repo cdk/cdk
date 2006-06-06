@@ -308,8 +308,8 @@ public class MDLReader extends DefaultChemObjectReader {
         double y = 0.0;
         double z = 0.0;
         double totalZ = 0.0;
-        int[][] conMat = new int[0][0];
-        String help;
+        //int[][] conMat = new int[0][0];
+        //String help;
         IBond bond;
         IAtom atom;
         String line = "";
@@ -560,7 +560,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     try {
                         String atomNumberString = line.substring(3,6).trim();
                         int atomNumber = Integer.parseInt(atomNumberString);
-                        String whatIsThisString = line.substring(6,9).trim();
+                        //String whatIsThisString = line.substring(6,9).trim();
                     
                         String atomName = input.readLine();
                         
@@ -587,6 +587,8 @@ public class MDLReader extends DefaultChemObjectReader {
             }
 		} catch (CDKException exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
+            logger.error(error);
+            logger.debug(exception);
             throw exception;
 		} catch (Exception exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();

@@ -57,8 +57,8 @@ public class Gaussian98ReaderTest extends CDKTestCase {
     public void testNMRReading()
 	{
 		IAtomContainer atomContainer = null;
-		boolean foundOneShieldingEntry = false;
-		Double shielding = null;
+		//boolean foundOneShieldingEntry = false;
+		//Double shielding = null;
 		Object object = null;
 		int shieldingCounter = 0;
 		try{
@@ -80,7 +80,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 					object = atomContainer.getAtomAt(g).getProperty(CDKConstants.ISOTROPIC_SHIELDING);
 					if (object != null)
 					{
-						shielding = (Double)object;
+						//shielding = (Double)object;
 						shieldingCounter ++;
 					}
 				}

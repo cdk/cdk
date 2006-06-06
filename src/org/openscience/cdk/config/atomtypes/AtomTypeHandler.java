@@ -67,11 +67,11 @@ public class AtomTypeHandler extends DefaultHandler {
      * Constructs a new AtomTypeHandler and will create IAtomType
      * implementations using the given IChemObjectBuilder.
      * 
-     * @param builder The IChemObjectBuilder used to create the IAtomType's.
+     * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
-    public AtomTypeHandler(IChemObjectBuilder builder) {
+    public AtomTypeHandler(IChemObjectBuilder build) {
         logger = new LoggingTool(this);
-        this.builder = builder;
+        builder = build;
     }
 
     /**

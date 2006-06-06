@@ -326,7 +326,7 @@ public class StructureResonanceGenerator {
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ac = set.getAtomContainer(i);
 			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(ac);
-			QueryAtomContainer qAC2 = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
+			//QueryAtomContainer qAC2 = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
 //					System.out.println("exist");

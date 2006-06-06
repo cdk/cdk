@@ -1282,8 +1282,8 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 	 */
 	private boolean getPresenceOfSulfat(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
 		org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atom);
-		org.openscience.cdk.interfaces.IAtom[] second = null;
-		IBond bond = null;
+		//org.openscience.cdk.interfaces.IAtom[] second = null;
+		//IBond bond = null;
 		//int counter = 0;
 		for (int i = 0; i < neighbours.length; i++) {
 			if (neighbours[i].getSymbol().equals("S") && getOxygenCount(ac,neighbours[i])>=2 && ac.getBondCount(neighbours[i])==4){
@@ -1334,7 +1334,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 		org.openscience.cdk.interfaces.IAtom[] first = ac.getConnectedAtoms(atom);
 		org.openscience.cdk.interfaces.IAtom[] second = null;
 		org.openscience.cdk.interfaces.IAtom[] third = null;
-		org.openscience.cdk.interfaces.IAtom[] fourth = null;
+		//org.openscience.cdk.interfaces.IAtom[] fourth = null;
 		if (first.length > 0) {
 			for (int i = 0; i < first.length; i++) {
 				if (first[i].getSymbol().equals("C") || first[i].getSymbol().equals("H")) {

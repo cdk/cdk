@@ -60,6 +60,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class CleanupAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -1048878006430754582L;
 	private StructureDiagramGenerator diagramGenerator;
     
 

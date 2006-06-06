@@ -25,8 +25,6 @@
 package org.openscience.cdk.test.layout;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;

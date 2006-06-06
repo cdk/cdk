@@ -120,7 +120,7 @@ public class MMFF94BasedParameterSetReader {
 			double apol = new Double(sapol).doubleValue();
 			double Neff = new Double(sNeff).doubleValue();
 			double fcadj = new Double(sfcadj).doubleValue();
-			double pbci = new Double(spbci).doubleValue();
+			//double pbci = new Double(spbci).doubleValue();
 			double a = new Double(sA).doubleValue();
 			double g = new Double(sG).doubleValue();
 			
@@ -170,7 +170,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setAtomTypes() throws Exception {
 		String name = "";
 		String rootType = "";
-		int an = 0;
+		//int an = 0;
 		int rl = 255;
 		int gl = 20;
 		int bl = 147;
@@ -217,7 +217,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setBond() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		String scode = st.nextToken();
+		st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String slen = st.nextToken();
@@ -254,7 +254,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setAngle() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		String scode = st.nextToken();
+		st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -298,7 +298,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setStrBnd() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		String scode = st.nextToken();
+		st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -327,7 +327,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setTorsion() throws Exception {
 		Vector data = null;
 		st.nextToken();
-		String scode = st.nextToken();
+		st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();

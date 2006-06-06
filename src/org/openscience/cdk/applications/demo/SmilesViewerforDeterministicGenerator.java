@@ -54,6 +54,9 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.require swing
  */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{
+	
+	static final long serialVersionUID = 3968754411807170822L;
+	
 	String s = "";
 	TextField textField = null;
 	String smilesString = "";

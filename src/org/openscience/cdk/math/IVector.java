@@ -80,7 +80,7 @@ public class IVector
     if (result.size!=size)
       result.reshape(size);
 
-    int i, j;
+    int i;
     for(i=0; i<size; i++)
     {
       result.realvector[i] = realvector[i]+b.realvector[i];
@@ -110,7 +110,7 @@ public class IVector
     if (result.size!=size)
       result.reshape(size);
 
-    int i, j;
+    int i;
     for(i=0; i<size; i++)
     {
       result.realvector[i] = realvector[i]-b.realvector[i];
@@ -154,7 +154,7 @@ public class IVector
       return new Complex(Double.NaN,Double.NaN);
 
     Complex result = new Complex(0d,0d);
-    int i,j;
+    int i;
     for(i=0; i<size; i++)
     {
       result.real += realvector[i]*b.realvector[i]-imagvector[i]*b.imagvector[i];
@@ -194,7 +194,7 @@ public class IVector
    */
   public String toString()
   {
-    int i,j;
+    int i;
     StringBuffer str = new StringBuffer();
     str.append("[ ");
     for(i=0; i<(size-1); i++)

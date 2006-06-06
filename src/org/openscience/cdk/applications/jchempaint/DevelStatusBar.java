@@ -37,6 +37,8 @@ package org.openscience.cdk.applications.jchempaint;
 public class DevelStatusBar extends StatusBar
 {
 
+	private static final long serialVersionUID = 1579942003116264019L;
+
 	/**
 	 *  Constructor for the DevelStatusBar object
 	 */

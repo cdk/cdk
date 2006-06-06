@@ -29,8 +29,6 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -245,11 +243,10 @@ double[] result = {
 	public void testFailure1()
 	{	
 		boolean correct = false;
-		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		try
 		{
-			prediction = bp.predict("dumb code");
+			bp.predict("dumb code");
 		}
 		catch(Exception exc)
 		{
@@ -264,11 +261,10 @@ double[] result = {
 	public void testFailure2()
 	{	
 		boolean correct = false;
-		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		try
 		{
-			prediction = bp.getConfidenceLimit("dumb code");
+			bp.getConfidenceLimit("dumb code");
 		}
 		catch(Exception exc)
 		{
@@ -283,12 +279,11 @@ double[] result = {
 	public void testFailure3()
 	{	
 		boolean correct = false;
-		double prediction;
 		String test = null;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		try
 		{
-			prediction = bp.predict(test);
+			bp.predict(test);
 		}
 		catch(Exception exc)
 		{

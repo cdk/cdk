@@ -40,18 +40,13 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.math.FortranFormat;
@@ -197,8 +192,8 @@ public class ShelXReader extends DefaultChemObjectReader {
                  * CELL   1.54184   7.11174  21.71704  30.95857  90.000  90.000  90.000
                  */
                 StringTokenizer st = new StringTokenizer(line);
-                String command_again = st.nextToken();
-                String wavelength = st.nextToken();
+                st.nextToken(); // String command_again
+                st.nextToken(); // String wavelength
                 String sa = st.nextToken();
                 String sb = st.nextToken();
                 String sc = st.nextToken();
@@ -312,7 +307,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("SPGR")) {
                 // Line added by PLATON stating the spacegroup
                 StringTokenizer st = new StringTokenizer(line);
-                String command_again = st.nextToken();
+                st.nextToken(); // String command_again
                 String spacegroup = st.nextToken();
                 crystal.setSpaceGroup(spacegroup);
            } else if (command.equalsIgnoreCase("    ")) {
@@ -325,7 +320,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                    a ShelX command is an atom (that sucks!) */
                 StringTokenizer st = new StringTokenizer(line);
                 String atype = st.nextToken();
-                String scatt_factor = st.nextToken();
+                st.nextToken(); // String scatt_factor
                 String sa = st.nextToken();
                 String sb = st.nextToken();
                 String sc = st.nextToken();

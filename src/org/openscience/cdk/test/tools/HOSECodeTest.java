@@ -29,8 +29,6 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -162,7 +160,7 @@ public class HOSECodeTest extends CDKTestCase
 			
 
 			//MoleculeViewer2D.display(molecule, true);
-			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
@@ -295,7 +293,7 @@ public class HOSECodeTest extends CDKTestCase
 		try
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
-			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
@@ -337,7 +335,7 @@ public class HOSECodeTest extends CDKTestCase
 		{
 			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
 			//display(molecule);
-			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
@@ -371,7 +369,7 @@ public class HOSECodeTest extends CDKTestCase
 		try
 		{
 			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
-			boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)

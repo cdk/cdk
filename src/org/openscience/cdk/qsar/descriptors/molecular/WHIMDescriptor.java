@@ -440,7 +440,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
 
                     double sum = 0.;
                     for (int k = 0; k < nrow; k++) {
-                        double dd =  wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
+                        //double dd =  wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
                         //System.out.println("("+i+","+j+") "+wts[k] + " * " + d[k][i] + "-" + meanx + " * " + d[k][j] + "-" + meany + "==" + dd);
                         sum += wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
                     }

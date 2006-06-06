@@ -29,13 +29,11 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
@@ -303,8 +301,8 @@ public class StructureDiagramGenerator
 		 *  given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
 		 */
 		int nrOfEdges = molecule.getBondCount();
-		Vector2d ringSystemVector = null;
-		Vector2d newRingSystemVector = null;
+		//Vector2d ringSystemVector = null;
+		//Vector2d newRingSystemVector = null;
 		this.firstBondVector = firstBondVector;
 		boolean templateMapped = false;
 		double angle;
@@ -454,9 +452,7 @@ public class StructureDiagramGenerator
 	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs)
 	{
 		IAtomContainer sharedAtoms;
-		IBond bond;
 		Vector2d ringCenterVector;
-		Point2d ringCenter;
 		int thisRing;
 		IRing ring = RingSetManipulator.getMostComplexRing(rs);
 		/*
@@ -607,7 +603,7 @@ public class StructureDiagramGenerator
 		IRingSet nextRingSystem = null;
 		IAtomContainer ringSystem = null;
 		org.openscience.cdk.interfaces.IBond nextRingAttachmentBond = null;
-		double angle;
+		//double angle;
 		double angle1;
 		double angle2;
 
@@ -833,8 +829,6 @@ public class StructureDiagramGenerator
 	private void fixRest()
 	{
 		org.openscience.cdk.interfaces.IAtom atom = null;
-		IAtom[] neighbors = null;
-		Point2d point = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			atom = molecule.getAtomAt(f);

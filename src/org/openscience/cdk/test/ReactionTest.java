@@ -324,8 +324,11 @@ public class ReactionTest extends CDKTestCase {
         reaction.addMapping(mapping);
         IReaction clonedReaction = (IReaction)reaction.clone();
         IMapping[] mappings = reaction.getMappings();
+        IMapping[] clonedMappings = clonedReaction.getMappings();
         assertNotNull(mappings);
         assertEquals(1, mappings.length);
+        assertNotNull(clonedMappings);
+        assertEquals(1, clonedMappings.length);
     }
     
     public void testAddMapping_IMapping() {

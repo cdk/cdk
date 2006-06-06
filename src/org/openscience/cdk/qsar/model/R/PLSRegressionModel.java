@@ -211,7 +211,7 @@ public class PLSRegressionModel extends RModel {
         
         Double[][] x = new Double[nrow][this.nvar];
         Double[][] y = new Double[nrow][ncoly];
-        Double[] wts = new Double[nrow];
+        //Double[] wts = new Double[nrow];
 
         for (int i = 0; i < nrow; i++) {
             for (int j = 0; j < ncoly; j++) {

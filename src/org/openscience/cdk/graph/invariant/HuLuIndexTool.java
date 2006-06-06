@@ -133,7 +133,7 @@ public class HuLuIndexTool
 		org.openscience.cdk.interfaces.IBond bond;
 		int headAtomPosition,endAtomPosition;
 
-		int k = 0;
+		//int k = 0;
 		double[] weightArray = new double[atomContainer.getAtomCount()];
 		double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		

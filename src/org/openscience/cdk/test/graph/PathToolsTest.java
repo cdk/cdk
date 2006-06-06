@@ -144,6 +144,7 @@ public class PathToolsTest extends CDKTestCase {
             Assert.assertEquals(atomContainer.getAtomAt(4), path2.get(2));
             Assert.assertEquals(atomContainer.getAtomAt(3), path2.get(3));
             Assert.assertEquals(end, path2.get(4));
+            Assert.assertNotNull(path3);
 
 
         } catch (InvalidSmilesException e) {

@@ -51,7 +51,7 @@ public class RuleOfFiveDescriptorTest extends CDKTestCase {
 
     public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IMolecularDescriptor descriptor = new RuleOfFiveDescriptor();
-        Object[] params = {new Boolean(true)};
+        Object[] params = { Boolean.TRUE };
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 

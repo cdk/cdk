@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.aromaticity;
 
 import java.io.InputStream;
-import java.util.Iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -95,7 +94,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	 */
 	public void testSetRingFlags()
 	{
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		try
 		{
 			SmilesParser sp = new SmilesParser();
@@ -125,7 +124,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	
 	public void testPyridine()
 	{
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		try
 		{
 			SmilesParser sp = new SmilesParser();
@@ -216,10 +215,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				true,
 				true
 				};
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
@@ -241,11 +240,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testThiazole()
 	{
 		Molecule molecule = MoleculeFactory.makeThiazole();
-		boolean isAromatic = false;
 		boolean[] testResults = {true, true, true, true, true};
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
@@ -269,7 +267,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testTetraDehydroDecaline()
 	{
 		boolean isAromatic = false;
-		boolean testResults[] = {true, false, false};
+		//boolean testResults[] = {true, false, false};
 		try
 		{
 			SmilesParser sp = new SmilesParser();
@@ -423,7 +421,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testBug698152()
 	{
 		Molecule molecule = null;
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		boolean[] testResults = {true,
 				true,
 				true,
@@ -449,7 +447,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
@@ -468,7 +466,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testBug716259()
 	{
 		Molecule molecule = null;
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		boolean[] testResults = {
 			true,
 			true,
@@ -496,8 +494,8 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(ins);
 			molecule = (Molecule) reader.read((ChemObject) new Molecule());
-
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
@@ -517,11 +515,11 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testQuinone()
 	{
 		Molecule molecule = MoleculeFactory.makeQuinone();
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		boolean[] testResults = {false, false, false, false, false, false, false, false};
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
@@ -559,11 +557,11 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	public void testBenzene()
 	{
 		Molecule molecule = MoleculeFactory.makeBenzene();
-		boolean isAromatic = false;
+		//boolean isAromatic = false;
 		boolean[] testResults = {true,true,true,true,true,true};
 		try
 		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);

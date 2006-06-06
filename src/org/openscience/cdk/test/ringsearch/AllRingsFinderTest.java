@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.ringsearch;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

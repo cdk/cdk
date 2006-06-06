@@ -15,7 +15,7 @@ import org.openscience.cdk.test.libio.weka.WekaTest;
 public class MlibiowekaTests {
     
     public static Test suite() {
-        TestSuite suite= new TestSuite("CDK standard Tests");
+        TestSuite suite= new TestSuite("CDK weka Tests");
 
         // Individual Tests
         

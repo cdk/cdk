@@ -32,8 +32,6 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.geometry.GeometryTools;

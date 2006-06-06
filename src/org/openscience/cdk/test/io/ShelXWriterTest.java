@@ -27,7 +27,6 @@
  */
 package org.openscience.cdk.test.io;
 
-import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -36,7 +35,6 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;

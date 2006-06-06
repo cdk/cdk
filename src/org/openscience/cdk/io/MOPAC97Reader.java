@@ -34,7 +34,6 @@ import org.jmol.api.JmolAdapter;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MOPAC97Format;
 import org.openscience.cdk.io.setting.IOSetting;

@@ -20,7 +20,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -29,7 +28,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
@@ -187,12 +185,12 @@ public class CPSADescriptor implements IMolecularDescriptor {
      */
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        IsotopeFactory factory = null;
-        try {
-            factory = IsotopeFactory.getInstance(container.getBuilder());
-        } catch (Exception e) {
-            logger.debug(e);
-        }
+//        IsotopeFactory factory = null;
+//        try {
+//            factory = IsotopeFactory.getInstance(container.getBuilder());
+//        } catch (Exception e) {
+//            logger.debug(e);
+//        }
 
         GasteigerMarsiliPartialCharges peoe = null;
         try {
@@ -201,12 +199,12 @@ public class CPSADescriptor implements IMolecularDescriptor {
         } catch (Exception e) {
             throw new CDKException("Problem assigning Gasteiger - Marsili partial charges", e);
         }
-        MFAnalyser mfa = new MFAnalyser(container);
+        //MFAnalyser mfa = new MFAnalyser(container);
         NumericalSurface surface = new NumericalSurface(container);
         surface.calculateSurface();
 
         DoubleArrayResult retval = new DoubleArrayResult(7);
-        double molecularWeight = mfa.getMass();
+        //double molecularWeight = mfa.getMass();
         double[] atomSurfaces = surface.getAllSurfaceAreas();
         double totalSA = surface.getTotalSurfaceArea();
 

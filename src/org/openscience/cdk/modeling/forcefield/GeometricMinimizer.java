@@ -88,7 +88,7 @@ public class GeometricMinimizer {
 		
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
-		RingSet rs = (RingSet) ffc.assignAtomTyps((Molecule) molecule);
+		ffc.assignAtomTyps((Molecule) molecule); // returns non-used RingSet
 		PotentialParameterSet = ffc.getParameterSet();
 	}
 	

@@ -90,6 +90,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		 implements ChangeListener, ICDKChangeListener
 {
 
+	private static final long serialVersionUID = -5369372292013788887L;
 	static String JCP_MODEL_CHANGED = "1";
 	static String JCP_CLOSING = "2";
 	

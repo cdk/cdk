@@ -95,7 +95,7 @@ public class ConjugatedPiSystemsDetector {
             firstAtom.setFlag(CDKConstants.VISITED, true);
             // Start DFS from firstAtom
             while (!stack.empty()) {
-                boolean addAtom = false;
+                //boolean addAtom = false;
                 Atom currentAtom = (Atom) stack.pop();
                 List atoms = ac.getConnectedAtomsVector(currentAtom);
                 List bonds = ac.getConnectedBondsVector(currentAtom);

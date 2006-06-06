@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.exception.CDKException;
 
 /**

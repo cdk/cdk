@@ -138,7 +138,6 @@ public class BondsToAtomDescriptor implements IMolecularDescriptor {
         org.openscience.cdk.interfaces.IAtom focus = container.getAtomAt(focusPosition);
         startVertex = target;
         endVertex = focus;
-        org._3pq.jgrapht.Edge edg = null;
         mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
         bondsToAtom = mylist.size();
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(bondsToAtom));

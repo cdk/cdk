@@ -50,6 +50,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class AdjustBondOrdersAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -2930750443449102916L;
+
 	/**
 	 *  Description of the Method
 	 *

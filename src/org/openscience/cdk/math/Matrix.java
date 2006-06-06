@@ -192,7 +192,7 @@ public class Matrix
       return null;
 
     Vector result = new Vector(rows);
-    int i,j,k;
+    int i,j;
     double sum;
     for(i=0; i<rows; i++)
     {
@@ -537,9 +537,7 @@ public class Matrix
   public Matrix orthonormalize(Matrix S)
   {
     int p,q,k,i,j;
-    double sum;
     double innersum;
-    double c;
     double length;
     //Matrix scr = S.mul(this);
     Matrix result = duplicate();

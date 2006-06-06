@@ -88,6 +88,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		//System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
 		display(structures);
 	}
+	
 	private static void configureAtoms(Molecule mol)
 	{
 		try

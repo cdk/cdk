@@ -472,7 +472,6 @@ public class GeometryTools {
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
 	public static void center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) {
-	    org.openscience.cdk.interfaces.IAtom[] atoms = atomCon.getAtoms();
 		Dimension molDim = get2DDimension(atomCon, renderingCoordinates);
 		int transX = (int) ((areaDim.width - molDim.width) / 2);
 		int transY = (int) ((areaDim.height - molDim.height) / 2);

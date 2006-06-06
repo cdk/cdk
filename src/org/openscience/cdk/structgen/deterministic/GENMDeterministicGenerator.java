@@ -130,7 +130,7 @@ public class GENMDeterministicGenerator
 	 */
 	 public void getBasicUnit(Vector basicUnits)
 	 {
-		 int i,j;
+		 int i;
 		 for(i=0;i<basicUnits.size();i++)
 		 {
 			 String s=(String)basicUnits.get(i);
@@ -227,7 +227,6 @@ public class GENMDeterministicGenerator
 	 */
 	 public void analyseMolecularFormula(MFAnalyser mfa) throws java.lang.Exception
 	 {
-		 int i,j,k;
 	 	 molecularFormula[1]=mfa.getAtomCount("C");
 		 molecularFormula[2]=mfa.getAtomCount("H");
 		 molecularFormula[3]=mfa.getAtomCount("O");
@@ -264,7 +263,7 @@ public class GENMDeterministicGenerator
 		 int[] maxNumberOfBasicUnit=new int[23];
 		 int i,j,k;
 		 int iter1,iter2,iter3,iter4;
-		 int numberSi,numberSiH,numberP,numberPH,numberS,numberSH,numberN,numberNH;
+		 int numberSi,numberP,numberS,numberN,numberNH; // numberSiH,numberSH,numberPH
 		 int numberO,numberOH,numberCH,numberH;
 		 int basicUnit;
 		 
@@ -300,11 +299,11 @@ public class GENMDeterministicGenerator
 		 /* initialization */
 		 for(i=1;i<=22;i++)numberOfBasicUnit[i]=0;
 		 numberSi=0;
-		 numberSiH=0;
+		 //numberSiH=0;
 		 numberP=0;
-		 numberPH=0;
+		 //numberPH=0;
 		 numberS=0;
-		 numberSH=0;
+		 //numberSH=0;
 		 numberN=0;
 		 numberNH=0;
 		 numberO=0;
@@ -327,15 +326,15 @@ public class GENMDeterministicGenerator
 				 {
 					 case 9:
 					 	numberSi=numberOfBasicUnit[7]+numberOfBasicUnit[8]+numberOfBasicUnit[9];
-						numberSiH=numberSi+2*numberOfBasicUnit[7]+numberOfBasicUnit[8];
+						//numberSiH=numberSi+2*numberOfBasicUnit[7]+numberOfBasicUnit[8];
 						break;
 					case 11:
 						numberP=numberOfBasicUnit[10]+numberOfBasicUnit[11];
-						numberPH=numberSiH+numberP+numberOfBasicUnit[10];
+						//numberPH=numberSiH+numberP+numberOfBasicUnit[10];
 						break;
 					case 12:
 						numberS=numberOfBasicUnit[12];
-						numberSH=numberPH+numberS;
+						//numberSH=numberPH+numberS;
 						break;
 					case 14:
 						numberN=numberOfBasicUnit[13]+numberOfBasicUnit[14];
@@ -525,8 +524,8 @@ public class GENMDeterministicGenerator
 	 */
 	 public void generateBasicFragments() throws java.lang.Exception
 	 {
-		 int i,j,k;
-		 int iter1,iter2;
+		 int i,k;
+		 int iter1;
 		 boolean flag;
 		 int[] maxNumberOfBasicFragment=new int[34];
 		 /*initialization for the variables*/
@@ -577,7 +576,7 @@ public class GENMDeterministicGenerator
 		 numberOfBasicFragment[33]=numberOfBasicUnit[22];
 		 
 		 iter1=17;
-		 iter2=0;
+		 //iter2=0;
 		 while(iter1>0)
 		 {
 			 iter1+=1;
@@ -708,13 +707,13 @@ public class GENMDeterministicGenerator
 	 */
 	 public boolean testBasicFragment()
 	 {
-		 int i,j,k;
+		 int i,j;
 		 int numberOfFragment,numberOfOneFreeValence,numberOfTwoFreeValence;
 		 int numberOfThreeFreeValence,numberOfFourFreeValence;
 		 int numberOfSideDoubleBond,numberOfMiddleDoubleBond;
 		 int totalFreeValence,totalDoubleBond,totalTripleBond;
 		 int numberOfSideTripleBond,numberOfMiddleTripleBond;
-		 boolean flag=true;
+		 //boolean flag=true;
 		 
 		 /* initialization the variable*/
 		 numberOfFragment=0;
@@ -783,8 +782,8 @@ public class GENMDeterministicGenerator
 	 */
 	 public void generateIsomers()
 	 {
-		 int i,j,iter,rows;
-		 int step,firstUnfilledRow,equivalentClass;
+		 int i,j,rows;
+		 int step,firstUnfilledRow;//equivalentClass;
 		 int[] totalNumberOfTheSet=new int[1];
 		 int totalNumberOfAtomAndBond=0;
 		 totalNumberOfTheSet[0]=0;
@@ -794,7 +793,7 @@ public class GENMDeterministicGenerator
 		 int[][] previousMatrix;
 		 int[] rowMatrix;
 		 int[] setOfStability;
-		 int[] category;
+		 //int[] category;
 		 int[] bondAttribute;
 		 int[] parentID;
 		 int[] storedSymbolOfStructure=new int[4000000];
@@ -900,10 +899,9 @@ public class GENMDeterministicGenerator
 		 //2. initialize the matrix
 		initializeMatrix(setOfBasicFragment,bondAttribute,adjacencyMatrix,previousMatrix);
 		// Initial equivalent
-		equivalentClass=getEquivalentClass(setOfBasicFragment,setOfStability);
+		//equivalentClass=getEquivalentClass(setOfBasicFragment,setOfStability);
 		 //3. begin, see the flowchart 
 		step=0;
-		iter=0;
 		
 		 //Maximum WCF(M)
 		isPossibleFilling=getMaximumWCF(setOfBasicFragment,0,rowMatrix,adjacencyMatrix,previousMatrix,parentID);
@@ -1089,7 +1087,7 @@ public class GENMDeterministicGenerator
 	 */
 	 public boolean getMaximumWCF(Vector setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[][] previousMatrix,int[] parentID)
 	 {
-		 int i,j,iter,bondOrder,size;
+		 int i,iter,bondOrder,size;
 		 int totalBond,existBond,leftBond;
 		 int[] setOfStability;
 		 setOfStability=new int[rowMatrix.length];
@@ -1173,9 +1171,9 @@ public class GENMDeterministicGenerator
 	 public  void getSetOfStability(Vector setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[] setOfStability,int[] parentID)
 	 {
 		 int i,j,count,line;
-		 int temp,size,number;
+		 int temp,size;
 		 size=rowMatrix.length;
-		 boolean[] isAdded=new boolean[size];
+		 //boolean[] isAdded=new boolean[size];
 		 int[] category=new int[size+1];
 		 int[] equivalentClass=new int[size];
 		 
@@ -1426,8 +1424,8 @@ public class GENMDeterministicGenerator
 	  */
 	 public boolean checkConstraint(int step,Vector setOfBasicFragment,int[][] adjacencyMatrix,AtomContainer ac)
 	 {
-		 int i,j,partialSum,totalSum,numberOfBond,decomposedNumber;
-		 boolean isConnectivity;
+		 int i,j,partialSum,totalSum,decomposedNumber;
+		 //boolean isConnectivity;
 		 boolean[] isVisited=new boolean[adjacencyMatrix.length];
 		 int[] isDecomposed=new int[adjacencyMatrix.length];
 		 int[] parentID=new int[adjacencyMatrix.length];
@@ -1541,7 +1539,7 @@ public class GENMDeterministicGenerator
 	  */
 	 public boolean getNextWCF(Vector setOfBasicFragment,int step,int[] rowMatrix,int[][] adjacencyMatrix,int[][] previousMatrix,int[] parentID)
 	 {
-		 int i,j,iter,existBond,leftBond,totalBond,changedCategory,sum,changedFilledValue,nextNonZeroElement;
+		 int i,j,iter,existBond,leftBond,totalBond,changedCategory,sum; // changedFilledValue,nextNonZeroElement
 		 int bondOrder;
 		 int[] setOfStability;
 		 int[] previousLine;
@@ -1748,14 +1746,13 @@ public class GENMDeterministicGenerator
 	  */
 	 public int getEquivalentClass(Vector setOfBasicFragment,int[] setOfStability)
 	 {
-		 int i,j,count,line;
+		 int i,j,count;
 		 int temp,size;
 		 
 		 size=setOfBasicFragment.size();
 		 int[] category=new int[size+1];
 		 int[] equivalentClass=new int[size];
 		 
-		 line=0;
 		 for(i=0;i<size;i++)setOfStability[i]=0;
 		 for(i=0;i<size;i++)
 			setOfStability[i]=((BasicFragment)(setOfBasicFragment.get(i))).getID();
@@ -1849,14 +1846,14 @@ public class GENMDeterministicGenerator
 	   */
 	  public Vector getOrderOfBasicFragmentSet(Vector setOfBasicFragment,int[] parentID)
 	  {
-		  int i,j,sum;
+		  int i,j;
 		  int size=setOfBasicFragment.size();
-		  int classID1,classID2;
+		  //int classID1,classID2;
 		  int[] originalNumbering=new int[size];
 		  int[] revisedNumbering=new int[size];
 		  
 		  Vector orderSet=new Vector();
-		  int number=1;
+		  //int number=1;
 		  
 		  for(i=0;i<size;i++)
 		  {
@@ -2440,10 +2437,10 @@ public class GENMDeterministicGenerator
 	  */
 	 public int getSymmetryFromAllPath(int size,int[][] connectivity,int[] classID)
 	 {
-		 int i,j,k,no,k1,k2,kk,number,count;
+		 int i,j,k,no,k1,k2,kk,count;
 		 int[] ipath;
 		 int[] con;
-		 double a,b,c,t;
+		 double a,b,t;
 		 double[] w=new double[size+1];
 		 double[] s=new double[size+1];
 		 double[] pw=new double[size+1];
@@ -2562,7 +2559,7 @@ public class GENMDeterministicGenerator
 	 public int getSymmetryFromNeighbour(int size,int number,int[][] connectivity,int[] classID)
 	 {
 		 int i,j,k,kk,numberOfClass,count;
-		 int[] denovoClass;
+		 //int[] denovoClass;
 		 int[] neighbour=new int[4];
 		 double temp1,temp2,temp3,temp4,temp5,t;
 		

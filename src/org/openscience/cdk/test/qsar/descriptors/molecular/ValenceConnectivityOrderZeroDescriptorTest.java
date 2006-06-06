@@ -54,7 +54,7 @@ public class ValenceConnectivityOrderZeroDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("O=C(O)CC");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
-        assertEquals(testResult[0], retval.doubleValue(), 0.0001);
+        assertEquals(testResult[0], retval.doubleValue(), 0.00001);
     }
 
     public void testSFBug1298108() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -62,6 +62,7 @@ public class ValenceConnectivityOrderZeroDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("[Cu]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
+        assertEquals(0.1, retval.doubleValue(), 0.00001);
     }
 
 }

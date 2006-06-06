@@ -516,9 +516,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  separate nodes from different branches
 		 */
 		IAtom branch = ((TreeNode) (((TreeNode) sphereNodes.elementAt(0)).source)).atom;
-		IAtom nextBranch;
 		StringBuffer tempCode = null;
-		nextBranch = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
 			treeNode = (TreeNode) sphereNodes.elementAt(i);

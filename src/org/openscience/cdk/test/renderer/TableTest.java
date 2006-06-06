@@ -26,7 +26,6 @@ package org.openscience.cdk.test.renderer;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;

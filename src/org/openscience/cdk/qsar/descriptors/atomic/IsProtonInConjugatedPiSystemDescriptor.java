@@ -138,7 +138,6 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
             boolean isProtonInPiSystem = false;
-            int counter = 0;
             Molecule mol = new Molecule(ac);
             if (checkAromaticity) {
                 HueckelAromaticityDetector.detectAromaticity(mol);

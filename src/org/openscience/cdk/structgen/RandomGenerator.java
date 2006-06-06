@@ -29,12 +29,9 @@
 
 package org.openscience.cdk.structgen;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 
 /**
@@ -50,9 +47,9 @@ public class RandomGenerator
 	private Molecule proposedStructure = null;
 	private Molecule molecule = null;
 	private Molecule trial = null;
-	private Vector bonds = null;
+	//private Vector bonds = null;
 	public boolean debug = false;
-	private int[] correctBondOrderSums;
+	//private int[] correctBondOrderSums;
 
 	/**
 	 * The empty contructor

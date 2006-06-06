@@ -48,6 +48,8 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  */
 public class DrawingPanel extends JPanel
 {
+
+	private static final long serialVersionUID = -7896336271183337200L;
 	private JChemPaintModel jchemPaintModel;
 	private Renderer2D r2d;
 	private Dimension oldPreferredSize=null;

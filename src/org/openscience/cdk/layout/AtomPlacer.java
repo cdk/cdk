@@ -137,8 +137,8 @@ public class AtomPlacer
 			IAtomContainer unplacedNeighbours, double bondLength)
 	{
 		double occupiedAngle = 0;
-		double smallestDistance = Double.MAX_VALUE;
-		IAtom[] nearestAtoms = new IAtom[2];
+		//double smallestDistance = Double.MAX_VALUE;
+		//IAtom[] nearestAtoms = new IAtom[2];
 		IAtom[] sortedAtoms = null;
 		double startAngle = 0.0;
 		double addAngle = 0.0;
@@ -443,7 +443,7 @@ public class AtomPlacer
 		double y;
 		logger.debug("populatePolygonCorners->startAngle: ", Math.toDegrees(angle));
 		Vector points = new Vector();
-		IAtom atom = null;
+		//IAtom atom = null;
 
         logger.debug("  centerX:", rotationCenter.x);
         logger.debug("  centerY:", rotationCenter.y);
@@ -534,7 +534,7 @@ public class AtomPlacer
 		int bestEndAtom = -1;
 		IAtom atom = null;
 		IAtom startAtom = null;
-		IAtom endAtom = null;
+		//IAtom endAtom = null;
 		for (int f = 0; f < apsp.length; f++)
 		{
 			atom = molecule.getAtomAt(f);
@@ -554,7 +554,7 @@ public class AtomPlacer
 		logger.debug("Longest chaing in molecule is of length " + maxPathLength + " between atoms " + (bestStartAtom+1) +  " and " + (bestEndAtom+1) );
 		
 		startAtom = molecule.getAtomAt(bestStartAtom);
-		endAtom = molecule.getAtomAt(bestEndAtom);
+		//endAtom = molecule.getAtomAt(bestEndAtom);
 		IAtomContainer path = new org.openscience.cdk.AtomContainer();
 		path.addAtom(startAtom);
 		path = getLongestUnplacedChain(molecule, startAtom);
@@ -633,7 +633,7 @@ public class AtomPlacer
 		IAtom nextAtom = null;
 		int atomNr;
 		int nextAtomNr;
-		IAtomContainer path = null;
+		//IAtomContainer path = null;
 		Vector newSphere = new Vector();
 		logger.debug("Start of breadthFirstSearch");
 

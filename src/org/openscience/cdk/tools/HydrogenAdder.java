@@ -39,7 +39,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 
 /**
@@ -260,7 +259,7 @@ public class HydrogenAdder {
     public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom, int count, IAtomContainer totalContainer) 
         throws IOException, ClassNotFoundException
     {
-        boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
+        //boolean create2DCoordinates = GeometryTools.has2DCoordinates(container);
         
         IIsotope isotope = IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
         atom.setHydrogenCount(0);

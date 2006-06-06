@@ -93,7 +93,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 	
     public void testMakeDiffHashtable() {
         ReactionBalancer rb = new ReactionBalancer();
-		boolean balanced = rb.isBalanced(reaction1);
+		rb.isBalanced(reaction1);
 		Hashtable hash = rb.getDiffHashtable();
 		
 		assertFalse(hash.containsKey("O"));
@@ -105,7 +105,7 @@ public class ReactionBalancerTest extends CDKTestCase {
         Molecule mol = new Molecule();
 		mol.addAtom(new Atom("H"));
 		ReactionBalancer rb = new ReactionBalancer();
-        boolean balanced = rb.isBalanced(reaction4);
+        rb.isBalanced(reaction4);
 		int notFound = rb.getMoleculePosition(reaction4.getProducts(), mol);
 		assertEquals(-1, notFound);
 		

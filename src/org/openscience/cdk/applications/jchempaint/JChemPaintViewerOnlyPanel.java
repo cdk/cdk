@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 
+	private static final long serialVersionUID = -7964104199305244137L;
 	private LoggingTool logger;
 //	JPopupMenu popupMenu;
 	

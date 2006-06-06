@@ -35,7 +35,6 @@ import java.io.Reader;
 import java.util.NoSuchElementException;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;

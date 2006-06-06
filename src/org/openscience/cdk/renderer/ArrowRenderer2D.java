@@ -34,7 +34,6 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -67,7 +66,7 @@ public class ArrowRenderer2D {
 
 	//private Vector points = new Vector(16, 4);
 
-	private int precision = 10;
+	//private int precision = 10;
 	
 
 	/**
@@ -93,12 +92,9 @@ public class ArrowRenderer2D {
 	 */
 	public void paintArrows(Arrow[] arrows, Graphics2D graphics) 
 	{
-		Arrow arrow;
-		ArrayList points;
+		
 		for (int f = 0; f < arrows.length; f++)
 		{
-			arrow = arrows[f];
-			//points = arrow.getPoints(); 
 			paintArrow(arrows[f], graphics);
 		}
 	}
@@ -157,7 +153,7 @@ public class ArrowRenderer2D {
 		v2.scale(10);
 		v3.normalize();
 		v3.scale(10);
-		Dimension ss = r2dm.getBackgroundDimension();
+		//Dimension ss = r2dm.getBackgroundDimension();
 		p2.add(v2);
 		p3.add(v3);
 		polygon.addPoint((int)arc.getStartPoint().getX(), (int)arc.getStartPoint().getY());

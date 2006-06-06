@@ -48,6 +48,8 @@ import org.openscience.cdk.controller.Controller2DModel;
 public class ChangeAtomSymbolAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -8502905723573311893L;
+
 	/**
 	 *  Description of the Method
 	 *

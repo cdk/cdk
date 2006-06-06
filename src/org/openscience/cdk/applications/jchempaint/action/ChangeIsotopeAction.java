@@ -49,6 +49,8 @@ import org.openscience.cdk.config.IsotopeFactory;
 public class ChangeIsotopeAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -4692219842740123315L;
+
 	/**
 	 *  Description of the Method
 	 *

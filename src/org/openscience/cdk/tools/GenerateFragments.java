@@ -39,7 +39,6 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -74,7 +73,7 @@ public class GenerateFragments {
 	private IRingSet ringSetsMolecule=null;
 	private boolean sidechainHetatoms=true;
 	private boolean exocyclicDoubleBonds=true;
-	private IChemObjectBuilder builder;
+	//private IChemObjectBuilder builder;
 	
 	public GenerateFragments() {
     }

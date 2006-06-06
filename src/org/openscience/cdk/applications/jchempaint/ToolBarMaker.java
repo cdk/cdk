@@ -128,6 +128,11 @@ public class ToolBarMaker
 			b =
 				new JButton(image)
 				{
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1478990892406874403L;
+
 					public float getAlignmentY()
 					{
 						return 0.5f;

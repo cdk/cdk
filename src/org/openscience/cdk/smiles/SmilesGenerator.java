@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class SmilesGenerator
 {
-	private final static boolean debug = false;
+	//private final static boolean debug = false;
 
 	/**
 	 *  The number of rings that have been opened
@@ -112,14 +112,14 @@ public class SmilesGenerator
 	private final String UP = "up";
 	private final String DOWN = "down";
 
-	private IChemObjectBuilder builder;
+	//private IChemObjectBuilder builder;
 
 	/**
 	 *  Default constructor
 	 */
 	public SmilesGenerator(IChemObjectBuilder builder)
 	{
-		this.builder = builder;
+		//this.builder = builder;
 		try
 		{
 			isotopeFactory = IsotopeFactory.getInstance(builder);

@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class JChemPaintPopupMenu extends CDKPopupMenu
 {
 
+	private static final long serialVersionUID = -1172105004348414589L;
 	private LoggingTool logger;
 
 

@@ -14,8 +14,8 @@ import java.util.Vector;
 public class MMFF94ParametersCall {
 	
 	private Hashtable pSet = null;
-	private final static double DEFAULT_BOND_LENGTH = 1.5;
-	private final static double DEFAULT_ANGLE = 90;			// Only to test
+	//private final static double DEFAULT_BOND_LENGTH = 1.5;
+	//private final static double DEFAULT_ANGLE = 90;			// Only to test
 
 
 	public MMFF94ParametersCall(){}

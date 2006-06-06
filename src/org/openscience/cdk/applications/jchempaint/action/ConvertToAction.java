@@ -50,6 +50,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class ConvertToAction extends JCPAction
 {
 
+	private static final long serialVersionUID = 4239327873015560552L;
+
 	/**
 	 *  Description of the Method
 	 *

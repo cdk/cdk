@@ -136,9 +136,8 @@ public class DatabaseTest {
   }
 	
     public static void main(String[] args) {
-      int i = 0, j;
+      int i = 0;
       String arg;
-      char flag;
       boolean readmode = false;
       boolean writemode = false;
 	    DatabaseTest drt = new DatabaseTest();

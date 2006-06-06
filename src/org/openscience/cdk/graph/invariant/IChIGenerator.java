@@ -30,7 +30,6 @@ package org.openscience.cdk.graph.invariant;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,7 +76,6 @@ public class IChIGenerator {
         //Save the molecule into mol file
         logger.debug("Creating IChI in cdk");
         IChemObjectWriter cow;
-        FileOutputStream fos;
         // FIX: Use some TMPDIR instead of user home dir
         File curdir = new File(System.getProperty("user.dir"));
         String molFileName = curdir.getAbsolutePath() + System.getProperty("file.separator") + getHumanreableString(30) + ".mol";
@@ -91,8 +89,8 @@ public class IChIGenerator {
             }
             String cmd = ichiProgram + " " + molFileName + " " + molFileName + ".ichi";
             createIChI(cmd);
-            logger.debug("Waiting for 2 seconds to refresh the direcotry system!");
-            Thread.currentThread().sleep(2000);
+            logger.debug("Waiting for 2 seconds to refresh the directory system!");
+            Thread.sleep(2000);
             FileReader fr = new FileReader(molFileName + ".ichi");
             BufferedReader br = new BufferedReader(fr);
             String record = "";
@@ -158,7 +156,6 @@ public class IChIGenerator {
         try {
             File curdir = new File(System.getProperty("user.dir"));
             cmd = curdir.getAbsolutePath() + System.getProperty("file.separator") + cmd;
-            String command = null;
             logger.debug("Command = " + cmd);
             Runtime.getRuntime().exec(cmd);
             logger.debug("Excuting command successfully!");

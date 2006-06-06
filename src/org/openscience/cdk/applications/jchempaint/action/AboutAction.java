@@ -41,6 +41,8 @@ import org.openscience.cdk.applications.jchempaint.dialogs.AboutDialog;
 public class AboutAction extends JCPAction
 {
 
+	private static final long serialVersionUID = 1420132959122535398L;
+
 	/**
 	 *  Description of the Method
 	 *

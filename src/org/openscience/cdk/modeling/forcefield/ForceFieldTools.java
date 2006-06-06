@@ -1,10 +1,14 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-import javax.vecmath.*;
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import javax.vecmath.GVector;
+import javax.vecmath.Point3d;
+import javax.vecmath.Tuple3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 
 /**
  *  To work with the coordinates of the molecule, like get the 3d coordinates of

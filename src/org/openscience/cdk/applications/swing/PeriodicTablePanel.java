@@ -69,7 +69,7 @@ public class PeriodicTablePanel extends JPanel
 	PeriodicTableElement selectedElement = null;
 	
 	private JPanel panel;
-	private JLabel label;
+	//private JLabel label;
 	private JLayeredPane layeredPane;
 	
 	private ElementPTFactory factory;

@@ -55,9 +55,9 @@ public class JCPPropertyHandler
 
 	private LoggingTool logger;
 	private Properties currentProperties;
-	private File defaultPropsFile;
+	//private File defaultPropsFile;
 	private File userPropsFile;
-	private File userAtypeFile;
+	//private File userAtypeFile;
 	private File uhome;
 	private File ujcpdir;
 	private ResourceBundle guiDefinition;
@@ -72,9 +72,9 @@ public class JCPPropertyHandler
 	{
 		logger = new LoggingTool(this);
 		currentProperties = null;
-		defaultPropsFile = null;
+		//defaultPropsFile = null;
 		userPropsFile = null;
-		userAtypeFile = null;
+		//userAtypeFile = null;
 		uhome = null;
 		ujcpdir = null;
 		guiDefinition = null;

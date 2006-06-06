@@ -47,13 +47,13 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  
 public class VicinitySampler
 {
-	private Molecule proposedStructure = null;
+	//private Molecule proposedStructure = null;
 	private Molecule molecule = null;
-	private Molecule trial = null;
-	private ConnectivityChecker cc = null; 
-	private Vector bonds = null;
+	//private Molecule trial = null;
+	//private ConnectivityChecker cc = null; 
+	//private Vector bonds = null;
 	public boolean debug = false;
-	private int[] correctBondOrderSums;
+	//private int[] correctBondOrderSums;
 	int molCounter = 0;
 
 	/**
@@ -61,8 +61,8 @@ public class VicinitySampler
 	 */
 	public VicinitySampler()
 	{
-		cc = new ConnectivityChecker();
-		trial = new Molecule();
+		//cc = new ConnectivityChecker();
+		//trial = new Molecule();
 	}
 
 
@@ -99,7 +99,7 @@ public class VicinitySampler
 
 		org.openscience.cdk.interfaces.IAtom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
 		org.openscience.cdk.interfaces.IBond b1 = null, b2 = null, b3 = null, b4 = null;
-		int[] choices = new int[3];
+		//int[] choices = new int[3];
 		/* We need at least two non-zero bonds in order to be successful */
 		int nonZeroBondsCounter = 0;
 		for (int x1 = 0; x1 < nrOfAtoms; x1++)

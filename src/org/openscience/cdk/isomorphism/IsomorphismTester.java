@@ -51,6 +51,7 @@ import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 public class IsomorphismTester implements java.io.Serializable
 {
 
+	private static final long serialVersionUID = 2499779110996693974L;
 	int[] baseTable;
 	int[] sortedBaseTable;
 	int[] compareTable;

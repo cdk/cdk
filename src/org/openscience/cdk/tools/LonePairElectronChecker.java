@@ -2,8 +2,6 @@ package org.openscience.cdk.tools;
 
 import java.io.IOException;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;

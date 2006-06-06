@@ -39,20 +39,14 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.ZMatrixTools;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ZMatrixFormat;
 
@@ -165,7 +159,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         double[] d = new double[number_of_atoms]; int[] d_atom = new int[number_of_atoms]; // Distances
         double[] a = new double[number_of_atoms]; int[] a_atom = new int[number_of_atoms]; // Angles
         double[] da = new double[number_of_atoms]; int[] da_atom = new int[number_of_atoms]; // Diederangles
-        Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
+        //Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
                 
         int i = 0;
         while(i < number_of_atoms)

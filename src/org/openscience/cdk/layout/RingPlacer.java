@@ -315,10 +315,10 @@ public class RingPlacer
 
 		IAtom startAtom = sharedAtoms.getAtomAt(0);
 
-		double centerX = ringCenter.x;
-		double centerY = ringCenter.y;
+		//double centerX = ringCenter.x;
+		//double centerY = ringCenter.y;
 		
-		int direction = 1;
+		//int direction = 1;
 
 		org.openscience.cdk.interfaces.IAtom currentAtom = startAtom;
 		double startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
@@ -628,9 +628,8 @@ public class RingPlacer
 		IRing connectedRing;
 		IAtomContainer sharedAtoms;
 		int sac;
-		Point2d oldRingCenter, newRingCenter, sharedAtomsCenter, tempPoint;
+		Point2d oldRingCenter, sharedAtomsCenter, tempPoint;
 		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
-		Bond bond;
 
 //		logger.debug(rs.reportRingList(molecule));
 		Iterator iter = connectedRings.iterator();

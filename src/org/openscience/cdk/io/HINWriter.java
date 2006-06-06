@@ -35,18 +35,10 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.ISetOfReactions;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -148,11 +140,11 @@ public class HINWriter extends DefaultChemObjectWriter {
      */
     private void writeMolecule(ISetOfMolecules som) throws IOException {
 
-        int na = 0;
-        String info = "";
+        //int na = 0;
+        //String info = "";
         String sym = "";
         double chrg = 0.0;
-        boolean writecharge = true;
+        //boolean writecharge = true;
 
         for (int molnum = 0; molnum < som.getMoleculeCount(); molnum++) {
 

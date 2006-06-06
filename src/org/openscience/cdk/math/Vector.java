@@ -96,7 +96,7 @@ public class Vector
          (size!=b.size))
       return null;
       
-    int i, j;
+    int i;
     Vector result = new Vector(size);
     for(i=0; i<size; i++)
       result.vector[i] = vector[i]+b.vector[i];
@@ -112,7 +112,7 @@ public class Vector
         (size!=b.size))
       return null;
       
-    int i, j;
+    int i;
     Vector result = new Vector(size);
     for(i=0; i<size; i++)
       result.vector[i] = vector[i]-b.vector[i];
@@ -141,7 +141,7 @@ public class Vector
       return Double.NaN;
 
     double result = 0;
-    int i,j;
+    int i;
     for(i=0; i<size; i++)
       result += vector[i]*b.vector[i];
     return result;
@@ -214,7 +214,7 @@ public class Vector
    */
   public String toString()
   {
-    int i,j;
+    int i;
     StringBuffer str = new StringBuffer();
     str.append("[ ");
     for(i=0; i<(size-1); i++)
