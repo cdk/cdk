@@ -38,6 +38,8 @@
 # Update 06/04/2006 - Some bugfixes to the output as well as some more checks for
 #                     robustness
 # Update 06/05/2006 - Fixed the keyword task
+# Update 06/07/2006 - Added code to parse the output of pmd-unused reports and add
+#                     a summary page to the corresponding section
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -289,7 +291,7 @@ def writeJunitSummaryHTML(stats):
     summary = """
     <html>
     <head>
-    <title>CDK JUnit Test Summary - %s</title>
+    <title>CDK JUnit Test Summary (%s)</title>
     </head>
     <body>
     <center>
@@ -306,7 +308,7 @@ def writeJunitSummaryHTML(stats):
     """ % (todayNice, todayNice)
     for entry in stats:
         summary = summary + "<tr>"
-        summary = summary + "<td align=\"left\">%s</td>" % (entry[0])
+        summary = summary + "<td align=\"left\"><a href=\"test/result-%s.txt\">%s</a></td>" % (entry[0], entry[0])
         for i in entry[1:]:
             summary = summary + "<td align=\"center\">%s</td>" % (i)
         summary = summary + "</tr>"
@@ -354,6 +356,57 @@ def parseJunitOutput(summaryFile):
     f.write(summary)
     f.close()
 
+def parsePMDUnused():
+
+    reportDir = os.path.join(nightly_repo, 'reports/pmd-unused')
+    if not os.path.exists(reportDir):
+        print 'pmd-unused.xml was not run'
+        return None
+    print '    Parsing pmd-unused'    
+    xmlFiles = glob.glob(os.path.join(reportDir, '*.xml'))
+    xmlFiles.sort()
+    o = StringIO.StringIO()
+    o.write("""
+    <html>
+    <head>
+    <title>CDK PMD Unused code Summary (%s) </title>
+    </head>
+    <body>
+    <center>
+    <h2>CDK PMD Unused code Summary (%s) </h2>
+    <table border=0 cellspacing=5>
+    <thead>
+    <tr>
+    <td><b>Module</b></td><td><b>Number of Violations</b></td>
+    </tr>
+    </thead>
+    <tr>
+    <td colspan=2><hr></td>
+    </tr>
+    """ % (todayNice, todayNice))
+    for xmlFile in xmlFiles:
+        moduleName = os.path.basename(xmlFile).split('.')[0]
+        f = open(xmlFile, 'r')
+        vcount = 0
+        for line in f:
+            if line.find('<violation') != -1: vcount = vcount + 1
+        o.write("""
+        <tr>
+        <td><a href=\"pmdu/%s.html\">%s</a></td>
+        <td align='center'>%d</td>
+        <tr>
+        """ % (moduleName, moduleName, vcount))
+    o.write("""
+    <tr>
+    <td colspan=2><hr></td>
+    </tr>   
+    </table>
+    </center>
+    </body>
+    </html>""")
+    return o.getvalue()
+
+                
 def segvOccured(dir):
     """
     Look in dir to see if there are any hs_* files
@@ -937,7 +990,7 @@ if __name__ == '__main__':
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
     resultTable.addRow()
-    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br>Unused tests")
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>Unused tests</b></i>")
     if successPMDUnused:
         print '  Generating PMD-Unused section'
         # make the PMD dir in the web dir
@@ -957,6 +1010,14 @@ if __name__ == '__main__':
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
+
+        unusedSummary = parsePMDUnused()
+        if not unusedSummary == None:
+            o = open(os.path.join(nightly_web, 'pmdusummary.html'), 'w')
+            o.write(unusedSummary)
+            o.close()
+            resultTable.addCell('<a href="pmdusummary.html">Summary</html>')
+            
     else: # PMD stage failed for some reason
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'pmdu.log') ):
