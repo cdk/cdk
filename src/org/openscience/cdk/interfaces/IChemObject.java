@@ -205,7 +205,7 @@ public interface IChemObject extends Cloneable {
      * Returns a deep clone of this IChemObject.
      *
      * @return Object the clone of this IChemObject.
-     * @throws CloneNotSupportedException TODO
+     * @throws CloneNotSupportedException if the IChemObject cannot be cloned
      */
     public Object clone() throws CloneNotSupportedException;
     
