@@ -46,14 +46,16 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public class CDKPopupMenu extends JPopupMenu {
    
-   private IChemObject source;
+    private static final long serialVersionUID = -235498895062628065L;
+    
+    private IChemObject source;
    
-   public void setSource(IChemObject object) {
-       this.source = object;
-   }
+    public void setSource(IChemObject object) {
+        this.source = object;
+    }
    
-   public IChemObject getSource() {
-       return this.source;
-   }
+    public IChemObject getSource() {
+        return this.source;
+    }
    
 }

@@ -35,6 +35,8 @@ package org.openscience.cdk.exception;
  */
 public class IncorrectUseOfCDKCoreClassError extends Error {
 
+    private static final long serialVersionUID = 5307727155023470782L;
+
     public IncorrectUseOfCDKCoreClassError(String message) {
         super( message );
     }

@@ -36,6 +36,8 @@ package org.openscience.cdk.exception;
  */
 public class NoSuchAtomException extends CDKException {
 
+    private static final long serialVersionUID = -6367051798808824272L;
+
     /**
      * Constructs a new NoSuchAtomException with the given message.
      *

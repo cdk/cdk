@@ -27,7 +27,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
@@ -120,10 +120,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CPSADescriptor implements IMolecularDescriptor {
     
-    private LoggingTool logger;
+    //private LoggingTool logger;
     
     public CPSADescriptor() {
-        logger = new LoggingTool(this);
+        //logger = new LoggingTool(this);
     }
 
 	public DescriptorSpecification getSpecification() {

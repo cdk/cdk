@@ -42,6 +42,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class ChangeCoordsEdit extends AbstractUndoableEdit {
 
+    private static final long serialVersionUID = -8964120764568614909L;
+    
     private HashMap atomCoordsMap;
 
     /**

@@ -35,6 +35,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class AtomContainerEditor extends ChemObjectEditor {
     
+    private static final long serialVersionUID = -5106331683641108940L;
+    
     JTextField titleField;
     
 	public AtomContainerEditor() {

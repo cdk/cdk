@@ -52,6 +52,8 @@ import org.openscience.cdk.AtomContainer;
  */
 public class Renderer3D extends JPanel implements Runnable {
 
+    private static final long serialVersionUID = -4982178409776648741L;
+
     private org.openscience.cdk.tools.LoggingTool logger;
 
     private static Matrix4d rotation_matrix = new Matrix4d();

@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugChemFile extends org.openscience.cdk.ChemFile
     implements IChemFile {
 
-	LoggingTool logger = new LoggingTool(DebugChemFile.class);
+    private static final long serialVersionUID = -5575043161897814279L;
+    
+    LoggingTool logger = new LoggingTool(DebugChemFile.class);
 
 	public DebugChemFile() {
 		super();

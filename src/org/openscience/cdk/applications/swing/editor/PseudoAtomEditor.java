@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  */
 public class PseudoAtomEditor extends ChemObjectEditor {
     
+    private static final long serialVersionUID = 7785262423262705152L;
+    
     JTextField labelField;
     
 	public PseudoAtomEditor() {

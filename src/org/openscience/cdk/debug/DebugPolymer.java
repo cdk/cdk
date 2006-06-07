@@ -51,7 +51,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugPolymer extends org.openscience.cdk.Polymer
     implements IPolymer {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = -1459933635059023539L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

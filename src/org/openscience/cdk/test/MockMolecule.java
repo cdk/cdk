@@ -42,7 +42,10 @@ import org.openscience.cdk.Molecule;
  * @cdk.created 2001-08-09
  */
 class MockMolecule extends Molecule {
-	public MockMolecule () {
+
+    private static final long serialVersionUID = -3475592461591784619L;
+
+    public MockMolecule () {
 		super();
 		
 		addAtom(new Atom("C", new Point3d(1,1,-1)));

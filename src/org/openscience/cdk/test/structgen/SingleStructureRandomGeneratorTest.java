@@ -129,7 +129,9 @@ public class SingleStructureRandomGeneratorTest
      */
 	public class TestViewer extends MoleculeListViewer
 	{
-		JButton more;
+        private static final long serialVersionUID = 3834424739189272930L;
+        
+        JButton more;
 		public TestViewer()
 		{
 			super();
@@ -143,7 +145,10 @@ public class SingleStructureRandomGeneratorTest
 	
 	class MoreAction extends AbstractAction
 	{
-		public void actionPerformed(ActionEvent e)
+	    
+        private static final long serialVersionUID = -7405706755621468840L;
+
+        public void actionPerformed(ActionEvent e)
 		{
       try{
         AtomContainer ac = ssrg.generate();

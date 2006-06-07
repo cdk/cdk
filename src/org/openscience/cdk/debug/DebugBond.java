@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugBond extends org.openscience.cdk.Bond
     implements IBond {
 
-	LoggingTool logger = new LoggingTool(DebugBond.class);
+    private static final long serialVersionUID = -2330398179697796261L;
+    
+    LoggingTool logger = new LoggingTool(DebugBond.class);
 	
 	public DebugBond() {
 		super();

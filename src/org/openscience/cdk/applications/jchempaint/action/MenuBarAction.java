@@ -39,7 +39,10 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class MenuBarAction extends JCPAction {
 
-   /**
+
+    private static final long serialVersionUID = 8427001652906942684L;
+
+    /**
      *  Opens an empty JChemPaint frame.
      *
      *@param  e  Description of the Parameter

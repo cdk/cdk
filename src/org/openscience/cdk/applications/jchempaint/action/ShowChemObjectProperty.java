@@ -48,7 +48,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 public class ShowChemObjectProperty extends JCPAction
 {
 
-	TextViewDialog dialog = null;
+    private static final long serialVersionUID = 9216483518987743618L;
+    
+    TextViewDialog dialog = null;
 
 
 	/**

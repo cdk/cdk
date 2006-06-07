@@ -48,7 +48,9 @@ import org.openscience.cdk.applications.swing.editor.ChemObjectEditor;
   */
 public class ChemObjectPropertyDialog extends JFrame {
 
-    private ChemObjectEditor editor;
+	private static final long serialVersionUID = 1850053536210317644L;
+	
+	private ChemObjectEditor editor;
     private JChemPaintModel jcpmodel;
     
 	/**

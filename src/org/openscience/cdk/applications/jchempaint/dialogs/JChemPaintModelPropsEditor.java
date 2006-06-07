@@ -49,7 +49,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
  */
 public class JChemPaintModelPropsEditor extends JFrame {
     
-    Properties props;
+	private static final long serialVersionUID = 818621828426672757L;
+	
+	Properties props;
     JChemPaintPanel jcp;
     JChemPaintModel jcpm;
 
@@ -104,7 +106,10 @@ public class JChemPaintModelPropsEditor extends JFrame {
     }
 
     class UpdateAction extends AbstractAction {
-        UpdateAction() {
+    	
+		private static final long serialVersionUID = 2424472797774946799L;
+
+		UpdateAction() {
             super("Update");
         }
 				
@@ -117,7 +122,10 @@ public class JChemPaintModelPropsEditor extends JFrame {
     }
 
     class CancelAction extends AbstractAction {
-        CancelAction() {
+    	
+		private static final long serialVersionUID = -4883761591834192897L;
+
+		CancelAction() {
             super("Cancel");
         }
 				
@@ -127,7 +135,10 @@ public class JChemPaintModelPropsEditor extends JFrame {
     }
 
     class EditAction extends AbstractAction {
-        private String prop = "";
+
+		private static final long serialVersionUID = -2609335434793347483L;
+		
+		private String prop = "";
    
         EditAction(String prop) {
             super("Edit");

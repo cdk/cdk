@@ -38,6 +38,8 @@ package org.openscience.cdk.dict;
  */
 public class DictRef implements java.io.Serializable, Cloneable  {
 
+    private static final long serialVersionUID = -3691244168587563625L;
+    
     String type;
     String dictRef;
     

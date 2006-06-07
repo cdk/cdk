@@ -50,6 +50,8 @@ import org.openscience.cdk.applications.swing.editor.ReactionEditor;
  */
 public class EditChemObjectPropsAction extends JCPAction {
 
+	private static final long serialVersionUID = 7123137508085454087L;
+
 	/**
 	 *  Description of the Method
 	 *

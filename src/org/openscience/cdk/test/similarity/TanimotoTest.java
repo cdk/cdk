@@ -42,7 +42,7 @@ import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-extra
@@ -51,7 +51,7 @@ public class TanimotoTest extends CDKTestCase
 {
 	
 	boolean standAlone = false;
-	private static LoggingTool logger = new LoggingTool(TanimotoTest.class);
+	//private static LoggingTool logger = new LoggingTool(TanimotoTest.class);
 	
 	public TanimotoTest(String name)
 	{

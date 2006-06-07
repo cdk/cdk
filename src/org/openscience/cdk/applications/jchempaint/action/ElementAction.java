@@ -17,6 +17,9 @@ import org.openscience.cdk.controller.Controller2DModel;
  * @author     shk3
  */
 public class ElementAction extends JCPAction {
+
+	private static final long serialVersionUID = -5121082734491378450L;
+	
 	private String symbol;
 	
 	public ElementAction(String symbol, JChemPaintPanel jcpp){

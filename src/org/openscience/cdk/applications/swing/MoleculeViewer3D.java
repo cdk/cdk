@@ -43,6 +43,9 @@ import org.openscience.cdk.renderer.Renderer3DModel;
  * @cdk.require swing
  */
 public class MoleculeViewer3D extends JPanel implements ICDKChangeListener {
+
+    private static final long serialVersionUID = 1722870857030709347L;
+
     private org.openscience.cdk.tools.LoggingTool logger;
 
 	public AtomContainer atomContainer;

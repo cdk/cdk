@@ -65,7 +65,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class PeriodicTablePanel extends JPanel
 {
-	Vector listeners = null;
+
+    private static final long serialVersionUID = -2539418347261469740L;
+    
+    Vector listeners = null;
 	PeriodicTableElement selectedElement = null;
 	
 	private JPanel panel;
@@ -497,7 +500,10 @@ public class PeriodicTablePanel extends JPanel
 	 */
 	public class ElementButtonAction extends AbstractAction
 	{
-		/**
+	    
+        private static final long serialVersionUID = 6176240749900870566L;
+
+        /**
 		 *  Description of the Method
 		 *
 		 *@param  e  Description of the Parameter
@@ -521,7 +527,10 @@ public class PeriodicTablePanel extends JPanel
 	 */
 	 class BackAction extends AbstractAction 
 	 {
-		 /**
+
+        private static final long serialVersionUID = -8708581865777449553L;
+
+        /**
 		 *  Description of the Method
 		 *
 		 * @param  e  Description of the Parameter
@@ -545,7 +554,9 @@ public class PeriodicTablePanel extends JPanel
 	 class ElementButton extends JButton
 	 {
 
-		private PeriodicTableElement element;
+        private static final long serialVersionUID = 1504183423628680664L;
+        
+        private PeriodicTableElement element;
 
 
 		/**

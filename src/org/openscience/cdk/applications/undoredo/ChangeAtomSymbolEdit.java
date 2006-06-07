@@ -42,7 +42,9 @@ import org.openscience.cdk.config.IsotopeFactory;
  */
 public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 
-	private IAtom atom;
+    private static final long serialVersionUID = 779682083223003185L;
+
+    private IAtom atom;
 
 	private String formerSymbol;
 

@@ -50,7 +50,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class CreateIUPACNameAction extends JCPAction {
 
-    public void actionPerformed(ActionEvent e) {
+	private static final long serialVersionUID = -6369815894943464691L;
+
+	public void actionPerformed(ActionEvent e) {
         logger.debug("Trying to create IUPAC name: ", type);
         Locale locale = new Locale("en", "US");
         IUPACNameGenerator generator = new IUPACNameGenerator(locale);

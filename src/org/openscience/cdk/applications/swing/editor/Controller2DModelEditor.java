@@ -32,6 +32,8 @@ import org.openscience.cdk.controller.Controller2DModel;
  */
 public class Controller2DModelEditor extends FieldTablePanel {
     
+    private static final long serialVersionUID = 7978080354056029617L;
+    
     private Controller2DModel model;
     
 	public Controller2DModelEditor() {

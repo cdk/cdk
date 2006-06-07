@@ -42,6 +42,8 @@ import org.openscience.cdk.applications.jchempaint.dialogs.HelpDialog;
 public class HelpAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -9213900779679488824L;
+
 	/**
 	 *  Description of the Method
 	 *

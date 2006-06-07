@@ -4,7 +4,7 @@ import java.util.*;
 import javax.vecmath.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.modeling.builder3d.*;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -52,7 +52,7 @@ public class GeometricMinimizer {
 	double infiniteNorm;
 	
 	NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 	Molecule molecule;
 
@@ -61,7 +61,7 @@ public class GeometricMinimizer {
 	 *  Constructor for the GeometricMinimizer object
 	 */
 	public GeometricMinimizer() {
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 

@@ -43,7 +43,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class NewAction extends JCPAction {
 
-   /**
+    private static final long serialVersionUID = -6710948755122145479L;
+
+    /**
      *  Opens an empty JChemPaint frame.
      *
      *@param  e  Description of the Parameter

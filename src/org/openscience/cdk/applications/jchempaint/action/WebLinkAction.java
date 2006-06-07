@@ -49,7 +49,9 @@ import org.openscience.cdk.io.MACiEReader;
 public class WebLinkAction extends JCPAction
 {
 
-	/**
+    private static final long serialVersionUID = -5055722920851824045L;
+
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  event  Description of the Parameter

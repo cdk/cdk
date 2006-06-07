@@ -68,6 +68,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class CreateCoordinatesForFileDialog extends JInternalFrame
 {
 
+	private static final long serialVersionUID = 6717348756533287248L;
+	
 	private IChemModel chemModel;
 	private JRadioButton generate2DButton;
 	private JRadioButton from3DButton;
@@ -152,6 +154,10 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	 */
 	class CancelAction extends AbstractAction
 	{
+
+		private static final long serialVersionUID = -2305492502437164455L;
+
+
 		/**
 		 *  Constructor for the CancelAction object
 		 */
@@ -181,6 +187,8 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	class CreateAction extends AbstractAction
 	{
 
+		private static final long serialVersionUID = 7041050310635125218L;
+		
 		StructureDiagramGenerator diagramGenerator;
 
 

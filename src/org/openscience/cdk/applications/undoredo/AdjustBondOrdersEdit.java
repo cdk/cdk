@@ -41,7 +41,9 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 
-	private HashMap changedBondOrders;
+    private static final long serialVersionUID = 1513012471000333600L;
+    
+    private HashMap changedBondOrders;
 
 	/**
 	 * @param changedBonds

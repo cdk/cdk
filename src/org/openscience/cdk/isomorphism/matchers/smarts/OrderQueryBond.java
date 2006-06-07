@@ -31,6 +31,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  */
 public class OrderQueryBond extends SMARTSBond {
 
+    private static final long serialVersionUID = -5139538872961160661L;
+
     public OrderQueryBond() {
     }
 

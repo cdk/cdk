@@ -45,6 +45,9 @@ import javax.swing.border.Border;
  */
 public class LicenseDialog extends JFrame {
 
+	private static final long serialVersionUID = 456097659412955696L;
+
+
 	/**
 	 * Displays the License Dialog for JChemPaint. 
 	 */

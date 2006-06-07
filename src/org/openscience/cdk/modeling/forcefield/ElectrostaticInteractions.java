@@ -9,7 +9,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**			
@@ -50,13 +50,13 @@ public class ElectrostaticInteractions {
 	double[] iQ = null;
 	double electrostatic14interactionsScale = 0.75;	// Scale factor for 1-4 interactions. To take in the future from mmff94.prm files.
 	
-	private LoggingTool logger;
+	//private LoggingTool logger;
 	
 	/**
 	 *  Constructor for the ElectrostaticInteractions object
 	 */
 	public ElectrostaticInteractions() {        
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 

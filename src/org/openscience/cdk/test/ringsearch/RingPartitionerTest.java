@@ -33,7 +33,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class tests the RingPartitioner class.
@@ -47,7 +47,7 @@ public class RingPartitionerTest extends CDKTestCase
 {
 
 	static boolean standAlone = false;
-	private LoggingTool logger = null;
+	//private LoggingTool logger = null;
 
 
 	/**
@@ -66,7 +66,7 @@ public class RingPartitionerTest extends CDKTestCase
 	 */
 	public void setUp() throws Exception {
         super.setUp();
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 

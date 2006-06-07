@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class FormalChargeAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = 1203658471548492071L;
+    
     private int charge;
     
     public FormalChargeAtom(int charge) {

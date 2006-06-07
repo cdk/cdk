@@ -62,6 +62,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class InsertFromSmiles extends JFrame
 {
 
+	private static final long serialVersionUID = -8994882010068386135L;
+	
 	JChemPaintPanel jcpPanel;
 	JTextField valueText;
 
@@ -115,6 +117,10 @@ public class InsertFromSmiles extends JFrame
 	 */
 	class OpenAction extends AbstractAction
 	{
+		
+		private static final long serialVersionUID = -2209475955846561193L;
+
+
 		/**
 		 *  Constructor for the OpenAction object
 		 */
@@ -207,6 +213,10 @@ public class InsertFromSmiles extends JFrame
 	 */
 	class CancelAction extends AbstractAction
 	{
+		
+		private static final long serialVersionUID = -6894716638070084023L;
+
+
 		/**
 		 *  Constructor for the CancelAction object
 		 */

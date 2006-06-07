@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugSetOfReactions extends org.openscience.cdk.SetOfReactions
     implements ISetOfReactions {
 
-	LoggingTool logger = new LoggingTool(DebugSetOfReactions.class);
+    private static final long serialVersionUID = 1620489912540131959L;
+    
+    LoggingTool logger = new LoggingTool(DebugSetOfReactions.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

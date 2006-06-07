@@ -37,6 +37,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class CPKAtomColors implements IAtomColorer, java.io.Serializable
 {
+    private static final long serialVersionUID = -3205785984391537452L;
+    
     ////////////
     // CONSTANTS
     ////////////

@@ -298,10 +298,10 @@ public class Weka {
 	 * @param result Position in the classification
 	 * @return       Real value
 	 */
-	private double[] getValue(double[] result) {
+	/*private double[] getValue(double[] result) {
 		Instance instance = instances.instance(0);
 		instance.numClasses();
 		return null;
-	}
+	}*/
 
 }

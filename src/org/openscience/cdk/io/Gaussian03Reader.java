@@ -31,7 +31,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
-import java.util.StringTokenizer;
+//import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
@@ -138,7 +138,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         
         try {
             String line = input.readLine();
-            String levelOfTheory = null;
+            //String levelOfTheory = null;
             
             // Find first set of coordinates
             while (input.ready() && (line != null)) {
@@ -187,7 +187,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         }
                     } else if (line.indexOf("GINC") >= 0) {
                         // Found calculation level of theory
-                        levelOfTheory = parseLevelOfTheory(line);
+                        //levelOfTheory = parseLevelOfTheory(line);
                         // FIXME: is doing anything with it?
                     }
                     line = input.readLine();
@@ -426,7 +426,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     /**
      * Select the theory and basis set from the first archive line.
      */
-    private String parseLevelOfTheory(String line) {
+    /*private String parseLevelOfTheory(String line) {
         
         StringTokenizer st1 = new StringTokenizer(line, "\\");
         
@@ -440,6 +440,6 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             st1.nextToken();
         }
         return st1.nextToken() + "/" + st1.nextToken();
-    }
+    }*/
     
 }

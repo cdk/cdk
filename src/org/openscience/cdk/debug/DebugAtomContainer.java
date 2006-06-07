@@ -48,7 +48,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
     implements IAtomContainer {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = 7584711255625778345L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public DebugAtomContainer() {
 		super();

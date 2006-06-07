@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugMapping extends org.openscience.cdk.Mapping
     implements IMapping {
 
-	LoggingTool logger;
+    private static final long serialVersionUID = -3785399530153469835L;
+    
+    LoggingTool logger;
     
 	public DebugMapping(IChemObject objectOne, IChemObject objectTwo) {
 		super(objectOne, objectTwo);

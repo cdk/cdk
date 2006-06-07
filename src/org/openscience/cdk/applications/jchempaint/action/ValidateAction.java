@@ -51,7 +51,9 @@ import org.openscience.cdk.validate.ProblemMarker;
 public class ValidateAction extends JCPAction
 {
 
-	ValidateFrame frame = null;
+    private static final long serialVersionUID = -3776589605934024224L;
+    
+    ValidateFrame frame = null;
 
 
 	/**

@@ -46,7 +46,9 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public class ChemObjectTreeNode extends DefaultMutableTreeNode {
 
-    public ChemObjectTreeNode(IChemObject object) {
+	private static final long serialVersionUID = 2548158004943623104L;
+
+	public ChemObjectTreeNode(IChemObject object) {
         super();
         this.setUserObject(object);
     }

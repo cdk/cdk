@@ -33,6 +33,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class ConnectionCountAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = 8787570498467055257L;
+    
     private int count;
     
     public ConnectionCountAtom(int count) {

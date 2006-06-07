@@ -51,7 +51,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugStrand extends org.openscience.cdk.Strand
     implements IStrand {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = 1794588804926192427L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

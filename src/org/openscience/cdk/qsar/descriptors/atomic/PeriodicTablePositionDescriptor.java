@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -60,15 +60,15 @@ import org.openscience.cdk.tools.LoggingTool;
 public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
 
 	private int targetPosition = 0;
-	private LoggingTool logger;
+	//private LoggingTool logger;
 	public Hashtable periodicTable;
 	
 	/**
 	 *  Constructor for the PeriodicTablePositionDescriptor object
 	 */
 	public PeriodicTablePositionDescriptor() {
-		logger = new LoggingTool(this);
-				if (periodicTable == null) { 
+		//logger = new LoggingTool(this);
+	    if (periodicTable == null) { 
 		periodicTable = new Hashtable();
 		periodicTable.put("H", new Integer(1));
 		periodicTable.put("Li", new Integer(2));

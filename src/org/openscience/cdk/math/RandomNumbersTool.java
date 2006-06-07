@@ -36,6 +36,9 @@ import java.util.Random;
  */
 public class RandomNumbersTool extends Random
 {
+    
+    private static final long serialVersionUID = -8238833473383641882L;
+    
     private static java.util.Random random;
     private static long randomSeed;
 

@@ -35,6 +35,8 @@ import org.openscience.cdk.interfaces.IReaction;
  */
 public class ReactionEditor extends ChemObjectEditor {
     
+    private static final long serialVersionUID = 2386363253522364974L;
+    
     private final static String SOLVENT = "org.openscience.cdk.Reaction.Solvent";
     private final static String TEMPERATURE = "org.openscience.cdk.Reaction.Temperature";
     

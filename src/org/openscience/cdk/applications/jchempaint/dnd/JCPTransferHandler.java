@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class JCPTransferHandler extends TransferHandler {
     
-    private DataFlavor localFlavor = DataFlavor.plainTextFlavor;
+	private static final long serialVersionUID = -2702180989701731589L;
+
+	private DataFlavor localFlavor = DataFlavor.plainTextFlavor;
 
 	private LoggingTool logger;
     private String handlerFor;

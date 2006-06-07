@@ -41,7 +41,9 @@ import org.openscience.cdk.ChemObject;
  */
 public class ChemObjectPropertyEditorTableModel extends AbstractTableModel {
     
-    private String[] columnNames;
+	private static final long serialVersionUID = -9026379867364393754L;
+	
+	private String[] columnNames;
     private Vector names = new Vector();
     private Vector values = new Vector();
     

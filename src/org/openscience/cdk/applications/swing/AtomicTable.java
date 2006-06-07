@@ -40,7 +40,10 @@ import org.openscience.cdk.event.ICDKChangeListener;
  * @cdk.require swing
  */
 public class AtomicTable extends JPanel implements ICDKChangeListener {
-  private JTable table;
+
+	private static final long serialVersionUID = -7017202227040620173L;
+	
+	private JTable table;
 	private String title = "Molecule Viewer";
   
 	public AtomicTable(org.openscience.cdk.interfaces.IAtomContainer atomContainer) {
@@ -71,7 +74,9 @@ public class AtomicTable extends JPanel implements ICDKChangeListener {
 	
   class AtomContainerModel extends AbstractTableModel {
 
-    private org.openscience.cdk.interfaces.IAtomContainer atomContainer;
+	private static final long serialVersionUID = -3331835007097257315L;
+
+	private org.openscience.cdk.interfaces.IAtomContainer atomContainer;
     
     final String[] columnNames = {"atom", "x2", "y2", "x3", 
                                   "y3", "z3", "charge"};

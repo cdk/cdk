@@ -41,6 +41,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.InsertFromSmiles;
  */
 public class InsertSmilesAction extends JCPAction
 {
+
+	private static final long serialVersionUID = -7583781404068411100L;
+
 	/**
 	 *  Description of the Method
 	 *

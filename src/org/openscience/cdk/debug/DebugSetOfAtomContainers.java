@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugSetOfAtomContainers extends org.openscience.cdk.SetOfAtomContainers
     implements ISetOfAtomContainers {
 
-	LoggingTool logger = new LoggingTool(DebugSetOfAtomContainers.class);
+    private static final long serialVersionUID = -8358480615782437454L;
+    
+    LoggingTool logger = new LoggingTool(DebugSetOfAtomContainers.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

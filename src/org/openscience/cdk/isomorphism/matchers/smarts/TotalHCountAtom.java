@@ -33,6 +33,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class TotalHCountAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = -3532280322660394553L;
+    
     private int hCount;
     
     public TotalHCountAtom(int hCount) {

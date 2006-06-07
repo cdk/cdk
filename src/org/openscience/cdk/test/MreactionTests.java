@@ -31,7 +31,7 @@ import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReac
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
-import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
+//import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;

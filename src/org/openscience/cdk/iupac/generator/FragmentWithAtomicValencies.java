@@ -44,6 +44,8 @@ import org.openscience.cdk.Fragment;
  */
 public class FragmentWithAtomicValencies extends Fragment {
 
+    private static final long serialVersionUID = -1762677470500460605L;
+    
     private int[] valenciesAt;
 
     /**

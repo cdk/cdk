@@ -38,8 +38,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 public class BondChangeEdit extends AbstractUndoableEdit {
 
+    private static final long serialVersionUID = -2723716036619377584L;
 
-	private IBond newBond;
+    private IBond newBond;
 
 	private IBond formerBond;
 

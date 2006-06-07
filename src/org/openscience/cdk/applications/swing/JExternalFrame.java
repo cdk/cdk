@@ -41,6 +41,8 @@ import javax.swing.JPanel;
 
 public class JExternalFrame extends JFrame {
 
+	private static final long serialVersionUID = -6607817663610291396L;
+	
 	private Component theComponent = null;
 	private Container theParent = null;
 	private JPanel dummyPanel = null;

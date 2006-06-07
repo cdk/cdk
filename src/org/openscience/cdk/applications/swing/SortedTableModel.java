@@ -50,7 +50,10 @@ import javax.swing.table.TableModel;
  */
 public class SortedTableModel extends ListeningTableModel {
 
-  Integer[] indexes;
+
+    private static final long serialVersionUID = -8517584055155609668L;
+    
+    Integer[] indexes;
   List sortingColumns = new ArrayList();
   boolean ascending = true;
 

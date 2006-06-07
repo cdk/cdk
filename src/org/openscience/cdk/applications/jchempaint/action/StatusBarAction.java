@@ -40,7 +40,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class StatusBarAction extends JCPAction {
 
-   /**
+    private static final long serialVersionUID = -4572129654033268037L;
+
+    /**
      *  Opens an empty JChemPaint frame.
      *
      *@param  e  Description of the Parameter

@@ -39,7 +39,10 @@ import java.awt.event.ActionEvent;
  */
 public class RedoAction extends JCPAction
 {
-	/**
+
+    private static final long serialVersionUID = 9219564857373463615L;
+
+    /**
 	 *  redoes the last action.
 	 *
 	 *@param  e  Description of the Parameter

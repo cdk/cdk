@@ -36,6 +36,8 @@ import java.util.EventObject;
  */
 public class ReaderEvent extends EventObject {
 
+    private static final long serialVersionUID = 660541244342274716L;
+
     /**
      * Creates a reader event.
      *

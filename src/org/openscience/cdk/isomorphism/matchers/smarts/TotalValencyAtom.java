@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module extra
  */
 public class TotalValencyAtom extends SMARTSAtom {
+
+    private static final long serialVersionUID = -8067867220731999668L;
     
     private int valency;
     

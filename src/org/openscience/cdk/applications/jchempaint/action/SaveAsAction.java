@@ -68,12 +68,11 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class SaveAsAction extends JCPAction
 {
 
-	/**
-	 *  Description of the Field
-	 */
-	protected IChemObjectWriter cow;
-  protected static String type = null;
-	private FileFilter currentFilter = null;
+    private static final long serialVersionUID = -5138502232232716970L;
+    
+    protected IChemObjectWriter cow;
+    protected static String type = null;
+    private FileFilter currentFilter = null;
 
 
 	/**

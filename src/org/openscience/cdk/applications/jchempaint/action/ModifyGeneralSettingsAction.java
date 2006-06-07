@@ -40,6 +40,8 @@ import org.openscience.cdk.applications.jchempaint.dialogs.ModifyGeneralSettings
  */
 public class ModifyGeneralSettingsAction extends JCPAction {
 
+    private static final long serialVersionUID = 4720847467453109793L;
+
     public void actionPerformed(ActionEvent e) {
         logger.debug("Modify general JCP settings");
         ModifyGeneralSettingsDialog frame =

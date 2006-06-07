@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class DictRefEditorTableModel extends AbstractTableModel {
     
-    private LoggingTool logger;
+	private static final long serialVersionUID = 2315717194318312800L;
+
+	private LoggingTool logger;
     
     private String[] columnNames;
     private Vector fields = new Vector();

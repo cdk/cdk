@@ -48,7 +48,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class ConvertToRadicalAction extends JCPAction {
 
-    public void actionPerformed(ActionEvent event) {
+	private static final long serialVersionUID = 1898335761308427006L;
+	
+	public void actionPerformed(ActionEvent event) {
         logger.debug("Converting to radical: ", type);
         IChemObject object = getSource(event);
         JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();

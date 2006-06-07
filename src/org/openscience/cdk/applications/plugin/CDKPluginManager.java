@@ -307,7 +307,9 @@ public class CDKPluginManager {
      */
     class PluginDialogAction extends AbstractAction {
         
-        private ICDKPlugin plugin;
+		private static final long serialVersionUID = -2699051675412699258L;
+		
+		private ICDKPlugin plugin;
         
         public PluginDialogAction(ICDKPlugin plugin) {
             super("PluginDialog");

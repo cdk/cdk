@@ -41,7 +41,9 @@ import javax.swing.table.TableModel;
 public class ListeningTableModel extends AbstractTableModel
     implements TableModelListener {
 
-  /**
+	private static final long serialVersionUID = 5913883776580719650L;
+
+/**
    *  Creates a listening table model for the given table model. This table
    *  model will listen for table change events from the given table model.
    */

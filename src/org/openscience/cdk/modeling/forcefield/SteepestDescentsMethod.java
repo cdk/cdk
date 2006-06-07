@@ -2,7 +2,7 @@ package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -14,11 +14,11 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class SteepestDescentsMethod {
 	GVector sk = null;
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 
 	public SteepestDescentsMethod() {        
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 

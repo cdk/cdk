@@ -53,7 +53,9 @@ import org.openscience.cdk.applications.swing.DictRefEditorTableModel;
  */
 public class EditDictRefs extends JFrame  {
     
-    DictRefEditorTableModel tableModel;
+	private static final long serialVersionUID = 1835058218886715502L;
+	
+	DictRefEditorTableModel tableModel;
     
     public EditDictRefs() {
         super("Edit Dictionary References");
@@ -100,7 +102,9 @@ public class EditDictRefs extends JFrame  {
     
     class ApplyAction extends AbstractAction {
         
-        ApplyAction() {
+		private static final long serialVersionUID = -5199060935605242223L;
+
+		ApplyAction() {
             super("Apply");
         }
         
@@ -110,7 +114,10 @@ public class EditDictRefs extends JFrame  {
     }
     
     class CancelAction extends AbstractAction {
-        CancelAction() {
+    	
+		private static final long serialVersionUID = -3203480495994212236L;
+
+		CancelAction() {
             super("Cancel");
         }
         

@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  A property manager for JChemPaint.
@@ -44,7 +44,7 @@ public class JCPLocalizationHandler
 
 	private static JCPLocalizationHandler instance;
 
-	private LoggingTool logger;
+	//private LoggingTool logger;
 	private ResourceBundle translations;
 
 
@@ -55,7 +55,7 @@ public class JCPLocalizationHandler
 	 */
 	private JCPLocalizationHandler(Locale locale)
 	{
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 		translations = ResourceBundle.getBundle("org/openscience/cdk/applications/jchempaint/resources/text/JCPBundle", locale);
 	}
 

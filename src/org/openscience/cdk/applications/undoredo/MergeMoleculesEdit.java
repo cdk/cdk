@@ -14,8 +14,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 	
-
-	private IChemModel chemModel;
+    private static final long serialVersionUID = -4093867960954400453L;
+    
+    private IChemModel chemModel;
 	private String type;
 	private ArrayList undoredoContainer;
 

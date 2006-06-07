@@ -51,7 +51,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class AppletCanvas extends Canvas
 {
 
-	private Renderer2D renderer;
+    private static final long serialVersionUID = 5776370310193515006L;
+    
+    private Renderer2D renderer;
 	private JChemPaintModel model;
 
 

@@ -54,6 +54,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class AboutDialog extends JFrame {
 
+	private static final long serialVersionUID = 8890609574363086221L;
+	
 	/**  Description of the Field */
 	protected static LoggingTool logger = null;
 

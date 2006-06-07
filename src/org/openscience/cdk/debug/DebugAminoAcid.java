@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAminoAcid extends org.openscience.cdk.AminoAcid
     implements IAminoAcid {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = 4092864536013855890L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

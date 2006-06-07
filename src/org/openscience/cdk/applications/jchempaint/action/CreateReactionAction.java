@@ -52,6 +52,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class CreateReactionAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -7625810885316702776L;
+
+
 	/**
 	 *  Description of the Method
 	 *
@@ -185,7 +188,7 @@ public class CreateReactionAction extends JCPAction
 			}
 		}
 		model.setSetOfReactions(reactionSet);
-		int atomcount=0;
+		
 		for(int i=0;i<reactionSet.getReactionCount();i++){
 			for(int k=0;k<reactionSet.getReaction(i).getProductCount();k++){
 				for(int l=0;l<reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomCount();l++){

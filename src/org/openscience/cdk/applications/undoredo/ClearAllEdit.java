@@ -9,7 +9,10 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 
 public class ClearAllEdit extends AbstractUndoableEdit {
-	private IChemModel chemModel;
+
+    private static final long serialVersionUID = -9022673628051651034L;
+    
+    private IChemModel chemModel;
 	private ISetOfMolecules som;
 	private ISetOfReactions sor;
 

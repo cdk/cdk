@@ -45,7 +45,10 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class SetColorSchemeAction extends JCPAction
 {
 
-	/**
+    private static final long serialVersionUID = 8812815445839360119L;
+
+
+    /**
 	 *  Constructor for the SetColorSchemeAction object
 	 */
 	public SetColorSchemeAction()

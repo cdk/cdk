@@ -36,7 +36,9 @@ import org.openscience.cdk.AtomContainer;
  */
 public class Graph extends Vector
 {
-	private Hashtable classes = null;
+    private static final long serialVersionUID = 1087357022768386719L;
+    
+    private Hashtable classes = null;
 	
 	public Graph()
 	{

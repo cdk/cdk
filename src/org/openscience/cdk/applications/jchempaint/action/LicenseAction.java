@@ -40,8 +40,10 @@ import org.openscience.cdk.applications.jchempaint.dialogs.LicenseDialog;
  */
 public class LicenseAction extends JCPAction
 {
+    
+    private static final long serialVersionUID = -1800997374859623178L;
 
-	/**
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  e  Description of the Parameter

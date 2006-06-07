@@ -42,7 +42,9 @@ import javax.swing.JPanel;
  */
 public class ModifyGeneralSettingsDialog extends JFrame {
 
-    private GeneralSettingsEditor editor;
+	private static final long serialVersionUID = 6301409462492656565L;
+	
+	private GeneralSettingsEditor editor;
     
 	/**
 	 * Displays the Info Dialog for JChemPaint.

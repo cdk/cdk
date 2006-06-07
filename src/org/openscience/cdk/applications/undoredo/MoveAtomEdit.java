@@ -35,7 +35,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 public class MoveAtomEdit extends AbstractUndoableEdit {
 
-	private IAtomContainer undoRedoContainer;
+    private static final long serialVersionUID = -2277790465507859547L;
+
+    private IAtomContainer undoRedoContainer;
 
 	private int deltaX;
 	

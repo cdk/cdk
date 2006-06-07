@@ -44,7 +44,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class ModifyDisplaySettingsAction extends JCPAction
 {
 
-	/**
+    private static final long serialVersionUID = 374787381482528088L;
+
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  e  Description of the Parameter

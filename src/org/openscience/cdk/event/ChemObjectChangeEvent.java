@@ -35,7 +35,10 @@ package org.openscience.cdk.event;
  */
 public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.IChemObjectChangeEvent
 {
-	/**
+
+    private static final long serialVersionUID = 5418604788783986725L;
+
+    /**
 	 * Constructs a ChemObjectChangeEvent with a reference 
 	 * to the object where it originated.
 	 *

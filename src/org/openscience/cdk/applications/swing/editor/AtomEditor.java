@@ -36,6 +36,8 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public class AtomEditor extends ChemObjectEditor {
     
+    private static final long serialVersionUID = -6693485657147158966L;
+    
     JTextField symbolField;
     JSpinner   hCountField;
     JSpinner   formalChargeField;

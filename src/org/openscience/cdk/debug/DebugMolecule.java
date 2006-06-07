@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugMolecule extends org.openscience.cdk.Molecule
     implements IMolecule {
 
-	LoggingTool logger = new LoggingTool(DebugMolecule.class);
+    private static final long serialVersionUID = -7263404200270132412L;
+    
+    LoggingTool logger = new LoggingTool(DebugMolecule.class);
 
 	public DebugMolecule() {
 		super();

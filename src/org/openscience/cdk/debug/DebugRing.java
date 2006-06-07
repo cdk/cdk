@@ -50,7 +50,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugRing extends org.openscience.cdk.Ring
     implements IRing {
 
-	LoggingTool logger = new LoggingTool(DebugRing.class);
+    private static final long serialVersionUID = -6420813246421544803L;
+    
+    LoggingTool logger = new LoggingTool(DebugRing.class);
 
 	public DebugRing() {
 		super();

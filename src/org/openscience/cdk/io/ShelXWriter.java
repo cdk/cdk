@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.MFAnalyser;
 public class ShelXWriter extends DefaultChemObjectWriter {
 
 	static BufferedWriter writer;
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
     /**
      * Constructs a new ShelXWriter class. Output will be stored in the Writer
@@ -71,7 +71,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public ShelXWriter(Writer out) {
-    	logger = new LoggingTool(this);
+    	//logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

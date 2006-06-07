@@ -33,6 +33,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  */
 public class AromaticQueryBond extends SMARTSBond {
 
+    private static final long serialVersionUID = 6941220923564432716L;
+
     public AromaticQueryBond() {
     }
 

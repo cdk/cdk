@@ -31,7 +31,7 @@ package org.openscience.cdk.applications.jchempaint;
 import java.awt.Dimension;
 import java.util.MissingResourceException;
 
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 
 	private static final long serialVersionUID = -7964104199305244137L;
-	private LoggingTool logger;
+	//private LoggingTool logger;
 //	JPopupMenu popupMenu;
 	
 
@@ -66,7 +66,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		super.setJChemPaintModel(new JChemPaintModel());
 		setViewerOnly();
 //		buildFilePopUpMenu();
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 		if (panelDimension != null) {
 			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));

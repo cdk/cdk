@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class AnyAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = -2061241755106011847L;
+
     public AnyAtom() {
     }
     

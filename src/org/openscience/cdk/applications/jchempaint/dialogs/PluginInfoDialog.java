@@ -45,7 +45,9 @@ import javax.swing.border.Border;
  */
 public class PluginInfoDialog extends JFrame {
 
-    private JEditorPane infoPane;
+	private static final long serialVersionUID = 6636619283453734094L;
+	
+	private JEditorPane infoPane;
     
 	/**
 	 * Displays the Plugin Info Dialog for JChemPaint. 

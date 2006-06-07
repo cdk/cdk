@@ -42,7 +42,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 
-	private IChemModel chemModel;
+    private static final long serialVersionUID = -7667903450980188402L;
+
+    private IChemModel chemModel;
 
 	private IAtomContainer undoRedoContainer;
 

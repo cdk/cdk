@@ -836,7 +836,8 @@ public class SimpleCycleBasis {
 	
 	private class AuxiliaryGraph extends SimpleGraph {
 		
-		// graph to aux. graph
+        private static final long serialVersionUID = 857337988734567429L;
+        // graph to aux. graph
 		HashMap vertexMap0 = new HashMap();
 		HashMap vertexMap1 = new HashMap();
 		
@@ -920,7 +921,9 @@ public class SimpleCycleBasis {
 	
 	private class AuxiliaryGraph2 extends SimpleGraph {
 		
-		// graph to aux. graph
+        private static final long serialVersionUID = 5930876716644738726L;
+        
+        // graph to aux. graph
 		private HashMap vertexMap00 = new HashMap();
 		private HashMap vertexMap01 = new HashMap();
 		private HashMap vertexMap10 = new HashMap();

@@ -33,6 +33,8 @@ package org.openscience.cdk.exception;
  */
 public class InvalidSmilesException extends CDKException {
 
+    private static final long serialVersionUID = 1932255464874201495L;
+
     public InvalidSmilesException(String message) {
         super( message );
     }

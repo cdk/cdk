@@ -39,7 +39,9 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  */
 public class ConvertToRadicalEdit extends AbstractUndoableEdit {
 
-	private IAtomContainer container;
+    private static final long serialVersionUID = 2348438340238651134L;
+
+    private IAtomContainer container;
 
 	private IElectronContainer electronContainer;
 

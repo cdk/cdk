@@ -47,7 +47,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  */
 public class MoleculeListViewer extends JFrame
 {
-	protected MoleculeListPanel panel;
+    private static final long serialVersionUID = -5796220866514673946L;
+    
+    protected MoleculeListPanel panel;
 	public static boolean standAlone = false;
 
 	/**

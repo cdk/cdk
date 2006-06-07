@@ -40,7 +40,9 @@ import javax.swing.JScrollPane;
  */
 public class FieldTablePanel extends JPanel {
         
-    protected int rows;
+	private static final long serialVersionUID = -697566299504877020L;
+	
+	protected int rows;
     
     public FieldTablePanel() {
         setLayout(new GridBagLayout());

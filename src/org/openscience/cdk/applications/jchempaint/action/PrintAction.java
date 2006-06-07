@@ -46,7 +46,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class PrintAction extends JCPAction implements Printable {
 
-	/**
+    private static final long serialVersionUID = 3944389510342678007L;
+
+    /**
 	 *  Opens a dialog frame and manages the printing of a file.
 	 *
 	 * @param  event  Description of the Parameter

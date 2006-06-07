@@ -139,8 +139,8 @@ public abstract class JChemPaintPanel
 	 */
 	public Vector lastAction=new Vector();
     Dimension viewerDimension;
-    private UndoManager undoManager;
-    private UndoableEditSupport undoSupport;
+    //private UndoManager undoManager;
+    //private UndoableEditSupport undoSupport;
     String guiString = "stable";
     //we remember the moveButton since this is special
     protected JButton moveButton=null;

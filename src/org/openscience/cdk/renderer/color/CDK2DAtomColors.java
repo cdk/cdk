@@ -35,6 +35,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
+    private static final long serialVersionUID = 6712994043820219426L;
+    
     private final static Color HYDROGEN       = Color.black;
     private final static Color CARBON         = Color.black;
     private final static Color NITROGEN       = Color.blue;

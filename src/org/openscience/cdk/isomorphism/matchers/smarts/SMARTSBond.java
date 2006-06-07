@@ -34,6 +34,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  */
 public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
     
+    private static final long serialVersionUID = 6164978147730140061L;
+
     public SMARTSBond() {}
     
     public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, double order) {

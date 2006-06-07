@@ -34,6 +34,8 @@ import org.openscience.cdk.CDKConstants;
  */
 public class AliphaticAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = 5145049891214205622L;
+
     public AliphaticAtom() {
     }
     

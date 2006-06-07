@@ -66,7 +66,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class ChemObjectTree extends JPanel {
 
-    private LoggingTool logger;
+	private static final long serialVersionUID = -3219029673378945019L;
+
+	private LoggingTool logger;
 
     private JTree tree;
     private TreeSelectionListener treeListener;

@@ -47,7 +47,10 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * @cdk.module test-extra
  */
 public class ArrowRenderer2DTest extends JPanel {
-	MDLReader mr;
+
+    private static final long serialVersionUID = 5867092170859159975L;
+
+    MDLReader mr;
 
 	CMLReader cr;
 

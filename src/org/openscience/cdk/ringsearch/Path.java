@@ -46,7 +46,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class Path extends Vector
 {
 
-	/**
+    private static final long serialVersionUID = -1086494171897189629L;
+
+    /**
 	 *  Constructs an empty path
 	 */
 	public Path()

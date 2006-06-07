@@ -43,7 +43,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
     implements ISetOfMolecules {
 
-	LoggingTool logger = new LoggingTool(DebugSetOfMolecules.class);
+    private static final long serialVersionUID = -2925577323304207688L;
+    
+    LoggingTool logger = new LoggingTool(DebugSetOfMolecules.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

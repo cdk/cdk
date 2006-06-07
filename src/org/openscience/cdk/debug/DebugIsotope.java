@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugIsotope extends org.openscience.cdk.Isotope
     implements IIsotope {
 
-	LoggingTool logger = new LoggingTool(DebugIsotope.class);
+    private static final long serialVersionUID = -2659188100080921299L;
+    
+    LoggingTool logger = new LoggingTool(DebugIsotope.class);
 
 	public DebugIsotope(String elementSymbol) {
 		super(elementSymbol);

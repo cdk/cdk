@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class DictionaryAction extends JCPAction {
 
-    public void actionPerformed(ActionEvent event) {
+	private static final long serialVersionUID = -4542062694817405630L;
+
+	public void actionPerformed(ActionEvent event) {
         logger.debug("Dictionary Action triggered");
         JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
         org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();

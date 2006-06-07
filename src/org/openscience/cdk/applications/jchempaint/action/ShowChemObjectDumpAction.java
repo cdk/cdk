@@ -55,7 +55,9 @@ import org.xmlcml.cml.element.CMLCml;
 public class ShowChemObjectDumpAction extends JCPAction
 {
 
-	TextViewDialog dialog = null;
+    private static final long serialVersionUID = 3112715648384115740L;
+    
+    TextViewDialog dialog = null;
 
 
 	/**

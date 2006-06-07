@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {
 
-	private IAtom atom;
+    private static final long serialVersionUID = -239970694181627693L;
+
+    private IAtom atom;
 
 	private PseudoAtom pseudoAtom;
 

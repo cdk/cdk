@@ -36,6 +36,8 @@ import org.openscience.cdk.applications.undoredo.UndoAdapter;
 public class Controller2DModel implements java.io.Serializable, Cloneable
 {
 	
+    private static final long serialVersionUID = 9007159812273128989L;
+    
     public final static int DRAWBOND = 0;
     public final static int MOVE = 1;
     public final static int SELECT = 2;

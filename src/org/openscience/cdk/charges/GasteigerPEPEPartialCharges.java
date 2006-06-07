@@ -66,8 +66,8 @@ public class GasteigerPEPEPartialCharges {
 	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
 	private static int ISCHANGEDFC = 0;
 	
-	private double DEOC_HYDROGEN = 20.02;
-	private double MX_DAMP = 0.5;
+	//private double DEOC_HYDROGEN = 20.02;
+	//private double MX_DAMP = 0.5;
 
 	
 	/**

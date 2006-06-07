@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Rather stupid file format used for storing crystal information.
@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
 	static BufferedWriter writer;
-    private LoggingTool logger;
+    //private LoggingTool logger;
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -62,7 +62,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CrystClustWriter(Writer out) {
-    	logger = new LoggingTool(this);
+    	//logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;

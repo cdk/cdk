@@ -41,8 +41,10 @@ import org.openscience.cdk.applications.jchempaint.dialogs.DictionaryDialog;
  */
 public class ShowDictionariesAction extends JCPAction
 {
+    
+    private static final long serialVersionUID = -1489647089629582389L;
 
-	/**
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  e  Description of the Parameter

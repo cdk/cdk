@@ -32,6 +32,8 @@ import org.openscience.cdk.CDKConstants;
  */
 public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBond {
 
+    private static final long serialVersionUID = 2292654937621883661L;
+
     public OrderQueryBond() {
     }
 

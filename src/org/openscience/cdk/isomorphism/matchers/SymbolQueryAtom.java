@@ -30,6 +30,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
     
+    private static final long serialVersionUID = -5774610415273279451L;
+
     public SymbolQueryAtom() {}
     
     public SymbolQueryAtom(IAtom atom) {

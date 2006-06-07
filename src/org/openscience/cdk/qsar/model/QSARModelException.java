@@ -30,6 +30,8 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class QSARModelException extends CDKException {
 
+    private static final long serialVersionUID = 4931287199065879144L;
+
     /**
      * Constructs a new QSARModelException with the given message.
      *

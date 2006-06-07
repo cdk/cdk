@@ -10,7 +10,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -53,7 +53,7 @@ public class Torsions {
 	IBond[] bondConnectedAfter = null;
 
 
-	private LoggingTool logger;
+	//private LoggingTool logger;
 
 	GVector moleculeCurrentCoordinates = null;
 	boolean[] changeAtomCoordinates = null;
@@ -64,7 +64,7 @@ public class Torsions {
 	 *  Constructor for the Torsions object
 	 */
 	public Torsions() {        
-		logger = new LoggingTool(this);
+		//logger = new LoggingTool(this);
 	}
 
 

@@ -34,6 +34,8 @@ import org.openscience.cdk.CDKConstants;
  */
 public class AromaticAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = -3345204886992669829L;
+
     public AromaticAtom() {
     }
     

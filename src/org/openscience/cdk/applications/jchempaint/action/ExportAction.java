@@ -53,7 +53,9 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
  */
 public class ExportAction extends SaveAsAction {
 
-    private FileFilter currentFilter = null;
+	private static final long serialVersionUID = -3287152749914283054L;
+	
+	private FileFilter currentFilter = null;
     
     /**
     * Opens a dialog frame and manages the saving of a file.

@@ -49,7 +49,9 @@ import javax.swing.JTextArea;
  */
 public class TextViewDialog extends JDialog {
 
-    private JTextArea textArea;
+	private static final long serialVersionUID = -1900643115385413976L;
+	
+	private JTextArea textArea;
     //private Dimension dimension;
     private JLabel textCaption;
     

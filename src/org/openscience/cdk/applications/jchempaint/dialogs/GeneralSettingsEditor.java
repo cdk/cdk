@@ -40,7 +40,9 @@ import org.openscience.cdk.applications.swing.FieldTablePanel;
  */
 public class GeneralSettingsEditor extends FieldTablePanel implements ActionListener {
     
-    private JCheckBox askForIOSettings;
+	private static final long serialVersionUID = -6796422949531937872L;
+
+	private JCheckBox askForIOSettings;
     
     private JFrame frame;
     

@@ -46,6 +46,8 @@ import org.openscience.cdk.controller.SimpleController2D;
  */
 public class EditAtomContainerPropsAction extends JCPAction {
 
+	private static final long serialVersionUID = 8489495722307245626L;
+
 	/**
 	 *  Description of the Method
 	 *

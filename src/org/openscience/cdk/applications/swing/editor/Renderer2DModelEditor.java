@@ -44,6 +44,8 @@ import com.ozten.font.JFontChooser;
  */
 public class Renderer2DModelEditor extends FieldTablePanel implements ActionListener {
     
+    private static final long serialVersionUID = 8694652992068950179L;
+    
     private JCheckBox drawNumbers;
     private JCheckBox showAtomAtomMapping;
     private JCheckBox useKekuleStructure;

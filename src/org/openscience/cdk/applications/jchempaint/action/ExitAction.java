@@ -42,6 +42,8 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 public class ExitAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -7805547937237070627L;
+
 	/**
 	 *  Opens an empty JChemPaint frame.
 	 *

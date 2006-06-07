@@ -41,6 +41,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
 
+    private static final long serialVersionUID = 7539577277779603551L;
+    
     private HashSet symbols = new HashSet();
 
     /**

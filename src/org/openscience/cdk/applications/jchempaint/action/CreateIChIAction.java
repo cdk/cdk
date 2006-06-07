@@ -54,7 +54,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  */
 public class CreateIChIAction extends JCPAction {
-    JFrame frame;
+	
+	private static final long serialVersionUID = 128287423627104971L;
+	
+	JFrame frame;
 
     public void actionPerformed(ActionEvent e) {
         logger.debug("Trying to create IChI: ", type);
@@ -80,7 +83,10 @@ public class CreateIChIAction extends JCPAction {
     }
 
     private class TextFrame extends JFrame {
-        public TextFrame(String ichi) {
+        
+		private static final long serialVersionUID = 8998255443644195659L;
+
+		public TextFrame(String ichi) {
             super("IChI");
 
             //Create a text area.

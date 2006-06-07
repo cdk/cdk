@@ -166,7 +166,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             if (command.startsWith("COUNTS")) {
                 StringTokenizer tokenizer = new StringTokenizer(command);
                 try {
-                    String dummy = tokenizer.nextToken();
+                    tokenizer.nextToken();
                     reactantCount = Integer.valueOf(tokenizer.nextToken()).intValue();
                     logger.info("Expecting " + reactantCount + " reactants in file");
                     productCount = Integer.valueOf(tokenizer.nextToken()).intValue();

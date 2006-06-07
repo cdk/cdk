@@ -60,7 +60,9 @@ import javax.swing.text.Document;
  */
 public class WebDialog extends JDialog implements HyperlinkListener {
 
-    JEditorPane html;
+	private static final long serialVersionUID = -6928369087569980743L;
+	
+	JEditorPane html;
     
     public WebDialog(JFrame fr, URL url) {
         
@@ -82,7 +84,9 @@ public class WebDialog extends JDialog implements HyperlinkListener {
         }
         JScrollPane scroller = new JScrollPane() {
 
-            public Dimension getPreferredSize() {
+			private static final long serialVersionUID = -1946954399372989440L;
+
+			public Dimension getPreferredSize() {
                 return new Dimension(800, 500);
             }
             

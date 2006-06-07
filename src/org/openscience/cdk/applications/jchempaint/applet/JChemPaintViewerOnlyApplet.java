@@ -46,6 +46,8 @@ import org.openscience.cdk.controller.Controller2D;
  */
 public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet implements MouseMotionListener{
 
+    private static final long serialVersionUID = -3840571150179448187L;
+    
     private Applet spectrumApplet;
     private Object lastHighlighted=null;
     private Controller2D controller;

@@ -48,7 +48,9 @@ import org.openscience.cdk.dict.DictionaryDatabase;
   */
 public class DictionaryDialog extends JFrame {
 
-    private JEditorPane infoPane;
+	private static final long serialVersionUID = -8933920987749316390L;
+	
+	private JEditorPane infoPane;
     
 	/**
 	 * Displays the Info Dialog for JChemPaint. 

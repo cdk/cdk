@@ -41,6 +41,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
 
+    private static final long serialVersionUID = -6570190504347822438L;
+    
     private HashSet symbols = new HashSet();
 
 

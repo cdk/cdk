@@ -56,6 +56,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     // private LoggingTool logger = new LoggingTool("org.openscience.cdk.render.Renderer2DModel");
     
+    private static final long serialVersionUID = -4420308906715213445L;
+
     private double scaleFactor = 60.0;
     
     /** Determines how much the image is zoomed into on. */

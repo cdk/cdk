@@ -41,7 +41,10 @@ import org.openscience.cdk.event.ICDKChangeListener;
  * @cdk.require swing
  */
 public class MoleculesTable extends JPanel implements ICDKChangeListener {
-  private JTable table;
+
+    private static final long serialVersionUID = 1833180730497812300L;
+    
+    private JTable table;
 	private String title = "Molecule Viewer";
   
 	public MoleculesTable(org.openscience.cdk.interfaces.ISetOfMolecules set) {
@@ -71,6 +74,8 @@ public class MoleculesTable extends JPanel implements ICDKChangeListener {
   }
 	
   class MoleculeContainerModel extends AbstractTableModel {
+
+    private static final long serialVersionUID = -7822373381094927714L;
 
     private org.openscience.cdk.interfaces.ISetOfMolecules set;
     

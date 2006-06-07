@@ -58,6 +58,9 @@ import javax.swing.text.Document;
  */
 public class HelpDialog extends JDialog implements HyperlinkListener
 {
+
+	private static final long serialVersionUID = 510350451152687814L;
+	
 	JEditorPane html;
 
 
@@ -104,6 +107,10 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 		JScrollPane scroller =
 			new JScrollPane()
 			{
+			
+				private static final long serialVersionUID = -9024998081172061175L;
+
+
 				public Dimension getPreferredSize()
 				{
 					return new Dimension(500, 400);

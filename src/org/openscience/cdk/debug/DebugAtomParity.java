@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAtomParity extends org.openscience.cdk.AtomParity
     implements IAtomParity {
 
-	public DebugAtomParity(IAtom centralAtom, IAtom first, IAtom second, IAtom third, IAtom fourth, int parity) {
+    private static final long serialVersionUID = 6305428844566539948L;
+
+    public DebugAtomParity(IAtom centralAtom, IAtom first, IAtom second, IAtom third, IAtom fourth, int parity) {
 		super(centralAtom, first, second, third, fourth, parity);
 	}
 

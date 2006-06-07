@@ -40,7 +40,10 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class JChemPaintEditorApplet extends JChemPaintAbstractApplet
 {
-	JChemPaintEditorPanel jcpep = null;
+
+    private static final long serialVersionUID = 6015686576993175260L;
+    
+    JChemPaintEditorPanel jcpep = null;
   
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#init()

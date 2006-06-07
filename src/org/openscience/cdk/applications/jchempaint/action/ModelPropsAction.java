@@ -42,7 +42,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.JChemPaintModelPropsE
 public class ModelPropsAction extends JCPAction
 {
 
-	JChemPaintModelPropsEditor editor = null;
+    private static final long serialVersionUID = 6709914915964559917L;
+    
+    JChemPaintModelPropsEditor editor = null;
 
 
 	/**

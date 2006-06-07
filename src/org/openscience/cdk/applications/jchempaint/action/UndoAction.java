@@ -40,7 +40,10 @@ import java.awt.event.ActionEvent;
  */
 public class UndoAction extends JCPAction
 {
-	/**
+    
+    private static final long serialVersionUID = 8552968393233060836L;
+
+    /**
 	 *  Undoes the last action.
 	 *
 	 *@param  e  Description of the Parameter

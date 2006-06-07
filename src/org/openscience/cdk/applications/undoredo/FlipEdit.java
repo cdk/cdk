@@ -33,7 +33,9 @@ import java.util.HashMap;
  */
 public class FlipEdit extends ChangeCoordsEdit {
 
-	/**
+    private static final long serialVersionUID = -8590216354736212213L;
+
+    /**
 	 * @param atomCoordsMap
 	 *            A HashMap containing the changed atoms as key and an Array
 	 *            with the former and the changed coordinates as Point2ds

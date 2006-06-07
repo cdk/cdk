@@ -55,6 +55,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
 {
+
+    private static final long serialVersionUID = -3688088406857192238L;
+    
     public IAtomContainer atomContainer;
     public Renderer2DModel r2dm;
     public Renderer2D renderer;

@@ -792,7 +792,7 @@ public class GENMDeterministicGenerator
 		 int[][] adjacencyMatrix;
 		 int[][] previousMatrix;
 		 int[] rowMatrix;
-		 int[] setOfStability;
+		 //int[] setOfStability;
 		 //int[] category;
 		 int[] bondAttribute;
 		 int[] parentID;
@@ -876,7 +876,7 @@ public class GENMDeterministicGenerator
 		adjacencyMatrix=new int[rows][rows];
 		previousMatrix=new int[rows][rows];
 		rowMatrix=new int[rows];
-		setOfStability=new int[rows];
+		//setOfStability=new int[rows];
 		bondAttribute=new int[rows];
 		
 		for(i=0;i<rows;i++)

@@ -52,7 +52,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
     implements IBioPolymer {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = 5349870327516864575L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

@@ -52,6 +52,8 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 public class CreateSmilesAction extends JCPAction
 {
 
+	private static final long serialVersionUID = -4886982931009753342L;
+	
 	TextViewDialog dialog = null;
 	JFrame frame = null;
 

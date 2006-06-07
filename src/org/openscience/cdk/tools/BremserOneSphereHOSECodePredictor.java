@@ -37,7 +37,10 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 {
-	Hashtable ht;
+
+    private static final long serialVersionUID = 4382025930031432321L;
+    
+    Hashtable ht;
 	
 	public BremserOneSphereHOSECodePredictor()
 	{
@@ -75,7 +78,10 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 
 	class HOSECodeShiftRange implements java.io.Serializable
 	{
-		String code;
+
+        private static final long serialVersionUID = 1649047314594679297L;
+        
+        String code;
 		double shift;
 		double confidenceLimit;
 		String multiplicity;

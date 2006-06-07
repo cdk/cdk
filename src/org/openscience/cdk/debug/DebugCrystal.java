@@ -51,7 +51,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugCrystal extends org.openscience.cdk.Crystal
     implements ICrystal {
 
-	LoggingTool logger;
+    private static final long serialVersionUID = -1749989529794094087L;
+    
+    LoggingTool logger;
 
 	public DebugCrystal() {
 		super();

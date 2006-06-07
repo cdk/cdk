@@ -38,7 +38,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {
 
-	private String type;
+    private static final long serialVersionUID = -143712173063846054L;
+
+    private String type;
 
 	private IAtomContainer undoRedoContainer;
 

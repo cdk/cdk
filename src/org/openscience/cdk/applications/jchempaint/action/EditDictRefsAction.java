@@ -41,7 +41,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.EditDictRefs;
  */
 public class EditDictRefsAction extends JCPAction {
 
-    EditDictRefs frame = null;
+	private static final long serialVersionUID = 9059416458538175609L;
+	
+	EditDictRefs frame = null;
 
     public void actionPerformed(ActionEvent event) {
         if (jcpPanel.getJChemPaintModel() != null) {

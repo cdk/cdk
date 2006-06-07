@@ -37,7 +37,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
+//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class tests the SSSRFinder class.
@@ -51,7 +51,7 @@ public class RingSearchTest extends CDKTestCase
 {
 
 	static boolean standAlone = false;
-	private LoggingTool logger = null;
+	//private LoggingTool logger = null;
   
 
 
@@ -71,7 +71,7 @@ public class RingSearchTest extends CDKTestCase
 	 */
     public void setUp() throws Exception {
         super.setUp();
-        logger = new LoggingTool(this);
+        //logger = new LoggingTool(this);
     }
 
 

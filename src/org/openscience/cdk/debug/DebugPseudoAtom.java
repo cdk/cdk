@@ -44,7 +44,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom 
     implements IPseudoAtom {
 
-	LoggingTool logger = new LoggingTool(DebugPseudoAtom.class);
+    private static final long serialVersionUID = -5935090219383862070L;
+    
+    LoggingTool logger = new LoggingTool(DebugPseudoAtom.class);
 	
 	public DebugPseudoAtom() {
 		super();

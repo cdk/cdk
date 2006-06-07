@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugAtomType extends org.openscience.cdk.AtomType
     implements IAtomType {
 
-	LoggingTool logger = new LoggingTool(DebugAtomType.class);
+    private static final long serialVersionUID = 1427549696666679540L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomType.class);
 
 	public DebugAtomType(String elementSymbol) {
 		super(elementSymbol);

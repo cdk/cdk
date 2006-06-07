@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugChemObject extends org.openscience.cdk.ChemObject
     implements IChemObject {
 
-	LoggingTool logger = new LoggingTool(DebugChemObject.class);
+    private static final long serialVersionUID = -8547443535884526365L;
+    
+    LoggingTool logger = new LoggingTool(DebugChemObject.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

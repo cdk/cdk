@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugSingleElectron extends org.openscience.cdk.SingleElectron
     implements ISingleElectron{
 
-	LoggingTool logger = new LoggingTool(DebugSingleElectron.class);
+    private static final long serialVersionUID = -2895377834940311825L;
+    
+    LoggingTool logger = new LoggingTool(DebugSingleElectron.class);
 	
     public DebugSingleElectron() {
     	super();

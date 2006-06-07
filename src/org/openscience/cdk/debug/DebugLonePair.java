@@ -41,7 +41,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugLonePair extends org.openscience.cdk.LonePair
     implements ILonePair {
 
-	LoggingTool logger = new LoggingTool(DebugLonePair.class);
+    private static final long serialVersionUID = 5683399496728893341L;
+    
+    LoggingTool logger = new LoggingTool(DebugLonePair.class);
 
     public DebugLonePair() {
     	super();

@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class AddHydrogenEdit extends AbstractUndoableEdit {
 
-	private IAtomContainer changedAtomsAndBonds = null;
+    private static final long serialVersionUID = -6007429589296415034L;
+
+    private IAtomContainer changedAtomsAndBonds = null;
 
 	private IChemModel model;
 

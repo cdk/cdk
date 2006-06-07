@@ -57,7 +57,9 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  */
 public class SimpleCycle extends UndirectedSubgraph {
 
-	/**
+    private static final long serialVersionUID = -3330742084804445688L;
+
+    /**
 	 * Constructs a cycle in a graph consisting of the specified edges.
 	 *
 	 * @param   g the graph in which the cycle is contained

@@ -63,6 +63,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  */
 public class EditAction extends JCPAction {
 
+	private static final long serialVersionUID = -1051272879400028225L;
+
 	/**
 	 *  Description of the Method
 	 *

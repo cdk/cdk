@@ -393,7 +393,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         try {
                             if (key.equals("ATOMS")) {
                                 StringTokenizer atomsTokenizer = new StringTokenizer(value);
-                                int atomCount = Integer.parseInt(atomsTokenizer.nextToken()); // should be 1
+                                Integer.parseInt(atomsTokenizer.nextToken()); // should be 1, int atomCount = 
                                 atomID = Integer.parseInt(atomsTokenizer.nextToken());
                             } else if (key.equals("LABEL")) {
                                 label = value;

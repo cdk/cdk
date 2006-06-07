@@ -43,6 +43,8 @@ import org.openscience.cdk.applications.jchempaint.dialogs.PluginInfoDialog;
 public class InfoAction extends JCPAction
 {
 
+	private static final long serialVersionUID = 1165247956467847596L;
+
 	/**
 	 *  Description of the Method
 	 *

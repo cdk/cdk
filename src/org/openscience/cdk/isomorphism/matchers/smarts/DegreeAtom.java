@@ -33,6 +33,8 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class DegreeAtom extends SMARTSAtom {
     
+    private static final long serialVersionUID = 2623272739045200480L;
+    
     private int degree;
     
     public DegreeAtom(int degree) {

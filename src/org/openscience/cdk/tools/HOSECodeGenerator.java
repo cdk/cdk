@@ -56,7 +56,10 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  */
 public class HOSECodeGenerator implements java.io.Serializable
 {
-	/**
+
+    private static final long serialVersionUID = -4353471818831864513L;
+    
+    /**
 	 *  Container for the nodes in a sphere.
 	 */
 	protected Vector sphereNodes = null;

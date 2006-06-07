@@ -49,7 +49,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
  */
 public class GeneralFieldEditor extends JFrame {
     
-    Properties props;
+	private static final long serialVersionUID = -5332727131588533929L;
+	
+	Properties props;
     JChemPaintModel jcpm;
 
     String[] defaults;
@@ -104,7 +106,10 @@ public class GeneralFieldEditor extends JFrame {
     }
 
     class UpdateAction extends AbstractAction {
-        UpdateAction() {
+    	
+		private static final long serialVersionUID = 7477381340397319284L;
+
+		UpdateAction() {
             super("Update");
         }
         
@@ -119,7 +124,10 @@ public class GeneralFieldEditor extends JFrame {
     }
 
     class CancelAction extends AbstractAction {
-        CancelAction() {
+    	
+		private static final long serialVersionUID = 509508358451482801L;
+
+		CancelAction() {
             super("Cancel");
         }
         
@@ -130,7 +138,10 @@ public class GeneralFieldEditor extends JFrame {
     }
 
     class EditAction extends AbstractAction {
-        EditAction(String prop) {
+    	
+		private static final long serialVersionUID = 2240224589987930306L;
+
+		EditAction(String prop) {
             super("Edit");
         }
 

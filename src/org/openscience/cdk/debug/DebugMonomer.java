@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugMonomer extends org.openscience.cdk.Monomer
     implements IMonomer {
 
-	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
+    private static final long serialVersionUID = -7312839949399572435L;
+    
+    LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
 	public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);

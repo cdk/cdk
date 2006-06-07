@@ -39,7 +39,9 @@ package org.openscience.cdk.tools;
  */
 public class FixedSizeStack extends java.util.Vector implements java.io.Serializable {
 
-	private int size;
+    private static final long serialVersionUID = 7820949609007415936L;
+    
+    private int size;
 
 	/**
 	 *  Creates a fixed size stack

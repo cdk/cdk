@@ -47,7 +47,9 @@ import javax.swing.JScrollPane;
  */
 public class MoleculeListPanel extends JPanel {
 	
-	protected StrucContainer panel;
+    private static final long serialVersionUID = 1122862074639164299L;
+    
+    protected StrucContainer panel;
 	protected JScrollPane scrollPane;
 	protected int noOfStructures = 0;
 
@@ -124,7 +126,11 @@ public class MoleculeListPanel extends JPanel {
 	 */
 	class StrucContainer extends JPanel
 	{
-		/**
+        
+        private static final long serialVersionUID = -760803030806078346L;
+
+
+        /**
 		 *  Constructor for the StrucContainer object
 		 */
 		public StrucContainer()

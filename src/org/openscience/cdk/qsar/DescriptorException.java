@@ -31,6 +31,8 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class DescriptorException extends CDKException {
 
+    private static final long serialVersionUID = 2564845219649348102L;
+
     /**
      * Constructs a new DescriptorException with the given message.
      *

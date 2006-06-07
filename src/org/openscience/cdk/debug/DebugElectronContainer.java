@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugElectronContainer extends org.openscience.cdk.ElectronContainer 
     implements IElectronContainer{
 
-	LoggingTool logger = new LoggingTool(DebugElectronContainer.class);
+    private static final long serialVersionUID = 5309193617982266230L;
+    
+    LoggingTool logger = new LoggingTool(DebugElectronContainer.class);
 	
 	public int getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());

@@ -34,7 +34,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.PropertyResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.swing.JApplet;
@@ -67,8 +66,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 public abstract class JChemPaintAbstractApplet extends JApplet {
 	private JChemPaintPanel theJcpp = null;
 	private JChemPaintModel theModel = null;
-	private String localeString = null;
-	private PropertyResourceBundle appletProperties = null;
+	//private String localeString = null;
+	//private PropertyResourceBundle appletProperties = null;
 	JExternalFrame jexf = null;
 
 	private static String appletInfo = "JChemPaint Applet. See http://cdk.sourceforge.net "

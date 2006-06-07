@@ -229,7 +229,7 @@ public class MDLReader extends DefaultChemObjectReader {
 			String fieldName = null;
 			if (str.startsWith("> ")) {
 			    // ok, should extract the field name
-			    String content = str.substring(2);
+			    str.substring(2); // String content = 
 			    int index = str.indexOf("<");
 			    if (index != -1) {
 				int index2 = str.substring(index).indexOf(">");

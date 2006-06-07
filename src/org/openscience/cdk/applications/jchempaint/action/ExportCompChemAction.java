@@ -49,7 +49,9 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class ExportCompChemAction extends SaveAction {
 
-    /**
+	private static final long serialVersionUID = -407195104869621963L;
+
+	/**
     * Opens a dialog frame and manages the saving of a file.
     */
     public void actionPerformed(ActionEvent e) {

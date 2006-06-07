@@ -44,7 +44,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class ZoomAction extends JCPAction
 {
 
-	/**
+    private static final long serialVersionUID = -2459332630141921895L;
+
+    /**
 	 *  Description of the Method
 	 *
 	 *@param  e  Description of the Parameter

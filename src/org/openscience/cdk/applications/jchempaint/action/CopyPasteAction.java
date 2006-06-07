@@ -70,6 +70,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CopyPasteAction extends JCPAction{
 
+	private static final long serialVersionUID = -3343207264261279526L;
+	
 	private DataFlavor molFlavor = new DataFlavor(
 		"chemical/x-mdl-molfile", "mdl mol file format");
 	private DataFlavor svgFlavor = new DataFlavor(

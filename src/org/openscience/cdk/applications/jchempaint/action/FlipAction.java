@@ -47,7 +47,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  */
 public class FlipAction extends JCPAction {
 
-    public void actionPerformed(ActionEvent e) {
+	private static final long serialVersionUID = 2360209016030592684L;
+
+	public void actionPerformed(ActionEvent e) {
         logger.info("  type  ", type);
         logger.debug("  source ", e.getSource());
         HashMap atomCoordsMap = new HashMap();

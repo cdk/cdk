@@ -48,7 +48,9 @@ import org.openscience.cdk.renderer.Renderer2DModel;
   */
 public class ModifyRenderOptionsDialog extends JFrame {
 
-    private Renderer2DModelEditor editor;
+	private static final long serialVersionUID = -7228371698429720333L;
+	
+	private Renderer2DModelEditor editor;
     private Renderer2DModel model;
     private JChemPaintModel jcpmodel;
     

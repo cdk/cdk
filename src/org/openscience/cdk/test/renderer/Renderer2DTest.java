@@ -48,7 +48,8 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  */
 public class Renderer2DTest extends JPanel
 {
-	MDLReader mr;
+    private static final long serialVersionUID = -8921461176181084638L;
+    MDLReader mr;
         CMLReader cr;
 	ChemFile chemFile;
 	org.openscience.cdk.interfaces.IChemSequence chemSequence;

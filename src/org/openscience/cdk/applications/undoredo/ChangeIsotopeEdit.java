@@ -38,7 +38,9 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class ChangeIsotopeEdit extends AbstractUndoableEdit {
 
-	private IAtom atom;
+    private static final long serialVersionUID = -8177452346351978213L;
+
+    private IAtom atom;
 
 	private int formerIsotopeNumber;
 

@@ -35,6 +35,8 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public class BondEditor extends ChemObjectEditor {
     
+    private static final long serialVersionUID = -5262566515479485581L;
+    
     JTextField orderField;
     
     public BondEditor() {

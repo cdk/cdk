@@ -51,6 +51,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class JCPAction extends AbstractAction
 {
 
+	private static final long serialVersionUID = -4056416630614934238L;
+	
 	/**
 	 *  Description of the Field
 	 */

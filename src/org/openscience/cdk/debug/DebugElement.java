@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugElement extends org.openscience.cdk.Element
     implements IElement {
 
-	LoggingTool logger = new LoggingTool(DebugElement.class);
+    private static final long serialVersionUID = -8520499563841667066L;
+    
+    LoggingTool logger = new LoggingTool(DebugElement.class);
 
 	public DebugElement() {
 		super();

@@ -47,7 +47,9 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  */
 public class InfoDialog extends JFrame {
 
-    private JEditorPane infoPane;
+	private static final long serialVersionUID = 8815234087125352307L;
+	
+	private JEditorPane infoPane;
     
 	/**
 	 * Displays the Info Dialog for JChemPaint. 

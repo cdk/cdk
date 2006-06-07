@@ -38,7 +38,9 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class ChangeChargeEdit extends AbstractUndoableEdit {
 
-	private IAtom atom;
+    private static final long serialVersionUID = 1237756549190508501L;
+
+    private IAtom atom;
 
 	private int formerCharge;
 

@@ -53,6 +53,9 @@ import org.openscience.cdk.renderer.GraphRendererModel;
  */
 public class GraphRenderer extends JComponent
 {
+
+    private static final long serialVersionUID = 5626635157860851879L;
+	
   private int xpad = 70;
   private int ypad = 50;
   private int numgrid  = 10;

@@ -33,7 +33,9 @@ import java.util.HashMap;
  */
 public class CleanUpEdit extends ChangeCoordsEdit {
 
-	/**
+    private static final long serialVersionUID = 8640399009338470686L;
+
+    /**
 	 * @param atomCoordsMap
 	 *            A HashMap containing the changed atoms as key and an Array
 	 *            with the former and the changed coordinates as Point2ds

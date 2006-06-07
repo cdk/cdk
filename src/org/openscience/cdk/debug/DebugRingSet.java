@@ -40,7 +40,9 @@ import org.openscience.cdk.tools.LoggingTool;
 public class DebugRingSet extends org.openscience.cdk.RingSet
     implements IRingSet {
 
-	LoggingTool logger = new LoggingTool(DebugRingSet.class);
+    private static final long serialVersionUID = -4144201128508373352L;
+    
+    LoggingTool logger = new LoggingTool(DebugRingSet.class);
 
 	public DebugRingSet() {
 		super();

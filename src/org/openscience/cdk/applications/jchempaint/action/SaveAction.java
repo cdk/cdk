@@ -46,7 +46,10 @@ import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
 public class SaveAction extends SaveAsAction
 {
 
-  public SaveAction(){
+    private static final long serialVersionUID = -6748046051686998776L;
+
+
+public SaveAction(){
           super();
   }
         

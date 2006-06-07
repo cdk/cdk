@@ -67,7 +67,9 @@ import org.openscience.cdk.validate.ValidationTest;
  */
 public class ValidateFrame extends JFrame  {
     
-    private Renderer2DModel rendererModel;
+	private static final long serialVersionUID = -8073655554072154298L;
+	
+	private Renderer2DModel rendererModel;
     private JPanel errorTreePanel;
     private JPanel warningTreePanel;
     private JPanel cdkErrorTreePanel;
@@ -215,7 +217,10 @@ public class ValidateFrame extends JFrame  {
     }
     
     class OKAction extends AbstractAction {
-        OKAction() {
+    	
+		private static final long serialVersionUID = 8801638051737287899L;
+
+		OKAction() {
             super("OK");
         }
         
