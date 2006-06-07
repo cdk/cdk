@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
  * @cdk.created 2006-04-15
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:PartialCharge
+ * @cdk.dictref qsar-descriptors:partialPiCharge
  * @see GasteigerPEPEPartialCharges
  */
 public class PartialPiChargeDescriptor implements IMolecularDescriptor {
@@ -82,7 +82,7 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialCharge",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge",
             this.getClass().getName(),
             "$Id: PartialPiChargeDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");

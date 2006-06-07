@@ -56,7 +56,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.created 2006-05-08
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:sigmaElectronegativity
+ * @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
  * @see SigmaElectronegativityDescriptor
  */
 public class BondSigmaElectronegativityDescriptor implements IMolecularDescriptor {
@@ -81,7 +81,7 @@ public class BondSigmaElectronegativityDescriptor implements IMolecularDescripto
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity",
             this.getClass().getName(),
             "$Id: BondSigmaElectronegativityDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");

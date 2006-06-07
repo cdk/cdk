@@ -61,6 +61,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.created 2006-1-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:largestPiSystem
  */
 
 
@@ -91,7 +92,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#LargestPiSystem",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");

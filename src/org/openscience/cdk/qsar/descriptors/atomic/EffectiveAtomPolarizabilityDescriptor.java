@@ -54,7 +54,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.created 2006-05-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:sigmaElectronegativity
+ * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
 public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescriptor {
@@ -79,7 +79,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
             this.getClass().getName(),
             "$Id: EffectiveAtomPolarizabilityDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");

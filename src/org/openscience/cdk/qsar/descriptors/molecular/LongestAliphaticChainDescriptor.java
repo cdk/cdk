@@ -62,6 +62,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.created 2006-1-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
 
 public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {

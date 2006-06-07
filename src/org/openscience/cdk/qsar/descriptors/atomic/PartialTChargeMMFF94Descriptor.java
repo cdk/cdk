@@ -57,7 +57,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.module  builder3d
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:PartialCharge
+ * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
  * @see MMFF94PartialCharges
  */
 public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
@@ -82,7 +82,7 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialCharge",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
             this.getClass().getName(),
             "$Id: PartialTChargeMMFF94Descriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
             "The Chemistry Development Kit");

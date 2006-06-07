@@ -38,8 +38,8 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  *  This class returns the hybridization of an atom.
  *
- *  <p>This class try to find a SIMPLE WAY the molecular geometry for wollowing from
- *    Valence Shell ElectronPair Reupulsion or VSEPR model and at the same time its
+ *  <p>This class try to find a SIMPLE WAY the molecular geometry for following from
+ *    Valence Shell Electron Pair Repulsion or VSEPR model and at the same time its
  *    hybridization of atoms in a molecule.
  *
  *  <p>The basic premise of the model is that the electrons are paired in a molecule 
@@ -84,7 +84,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.created    2005-03-24
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:atomHybridization
+ * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
 public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 
@@ -108,7 +108,7 @@ public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 	 */
 	public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization",
+				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
 				this.getClass().getName(),
 				"$Id$",
 				"The Chemistry Development Kit");
