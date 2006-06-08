@@ -46,6 +46,10 @@ public class RJavaEnvironmentTest extends CDKTestCase {
         public void predict() throws QSARModelException {
         }
 
+        protected void finalize() {
+
+        }
+
         public void loadModel(String fileName) throws QSARModelException {
         }
 
