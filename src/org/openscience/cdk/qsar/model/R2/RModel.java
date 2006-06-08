@@ -238,8 +238,8 @@ public abstract class RModel implements IModel {
         return rengine;
     }
 
-    private String getUniqueVariableName(String prefix) {
-        if (prefix == null || prefix == "") prefix = "var";
+    public String getUniqueVariableName(String prefix) {
+        if (prefix == null || prefix.equals("")) prefix = "var";
         Random rnd = new Random();
         long uid = ((System.currentTimeMillis() >>> 16) << 16) + rnd.nextLong();
         return prefix + uid;
