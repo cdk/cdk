@@ -29,16 +29,16 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all Model tests.
  *
- * @author     Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.module test-qsar
  */
 public class QSARRModelTests {
-    
+
     public static Test suite() {
         TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
         try {
 
-            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.RJavaEnvironmentTest");
+            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest");
             suite.addTest(new TestSuite(testClass));
 
             /*testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.SJavaEnvironmentTest");
