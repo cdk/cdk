@@ -369,11 +369,11 @@ def parsePMDUnused():
     o.write("""
     <html>
     <head>
-    <title>CDK PMD Unused code Summary (%s) </title>
+    <title>CDK PMD Unused Code Summary (%s) </title>
     </head>
     <body>
     <center>
-    <h2>CDK PMD Unused code Summary (%s) </h2>
+    <h2>CDK PMD Unused Code Summary (%s) </h2>
     <table border=0 cellspacing=5>
     <thead>
     <tr>
@@ -990,7 +990,7 @@ if __name__ == '__main__':
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
     resultTable.addRow()
-    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>Unused tests</b></i>")
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:")
     if successPMDUnused:
         print '  Generating PMD-Unused section'
         # make the PMD dir in the web dir
@@ -1009,14 +1009,14 @@ if __name__ == '__main__':
             s = s+"<a href=\"pmdu/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
             if count % per_line == 0: s += "<br>"
             count += 1
-        resultTable.addCell(s)
+        #resultTable.addCell(s)
 
         unusedSummary = parsePMDUnused()
         if not unusedSummary == None:
             o = open(os.path.join(nightly_web, 'pmdusummary.html'), 'w')
             o.write(unusedSummary)
             o.close()
-            resultTable.addCell('<a href="pmdusummary.html">Summary</html>')
+            resultTable.addCell('<a href="pmdusummary.html">Summary of <i>pmd-unused</i></html>')
             
     else: # PMD stage failed for some reason
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
