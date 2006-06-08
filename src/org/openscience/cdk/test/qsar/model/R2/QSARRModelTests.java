@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 public class QSARRModelTests {
 
     public static Test suite() {
-        TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
+        TestSuite suite = new TestSuite("All QSAR rJava Based Modeling Tests");
         try {
 
             Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest");
