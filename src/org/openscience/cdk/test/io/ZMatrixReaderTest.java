@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.test.io;
 
-import java.io.File;
 import java.io.FileReader;
 
 import junit.framework.Test;
@@ -40,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- * @cdk.module test-java3d
+ * @cdk.module test-io
  */
 public class ZMatrixReaderTest extends CDKTestCase {
     
@@ -80,38 +79,10 @@ public class ZMatrixReaderTest extends CDKTestCase {
 			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
 			rebonder.rebond(atomContainer);
             
-			/*if (standAlone) {
-                JFrame frame = new JFrame("ZMatrixReaderTest");
-                frame.getContentPane().setLayout(new BorderLayout());
-                
-                AcceleratedRenderer3D renderer = new AcceleratedRenderer3D(
-                new AcceleratedRenderer3DModel(atomContainer));
-                
-                frame.getContentPane().add(renderer, BorderLayout.CENTER);
-                
-                //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                frame.setSize(500,500);
-                frame.setVisible(true);
-            }*/
 		} catch(Exception exc) {
             exc.printStackTrace();
         }
 	}
     
-	public static void main(String[] args) {
-        if (args.length == 1) {
-            String filename = args[0];
-            if (new File(filename).canRead()) {
-                ZMatrixReaderTest test = new ZMatrixReaderTest("Test");
-                test.setInFile(filename);
-                test.xtestFile();
-            } else {
-                System.out.println("File " + filename + " does not exist!");
-            }
-        } else {
-            System.out.println("Syntax: ZMatrixReaderTest <inputfile>");
-        }
-    }
 }
 
