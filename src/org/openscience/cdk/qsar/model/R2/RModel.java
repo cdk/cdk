@@ -71,6 +71,37 @@ public abstract class RModel implements IModel {
         }
     }
 
+    private void loadRFunctionsAsStrings(Rengine evaluator) {
+        String[] scripts = {
+                "helper.R",
+        };
+        String scriptPrefix = "org/openscience/cdk/qsar/model/data/";
+        for (int i = 0; i < scripts.length; i++) {
+
+            String scriptLocator = scriptPrefix + scripts[i];
+            try {
+                InputStreamReader reader = new InputStreamReader(
+                        this.getClass().getClassLoader().getResourceAsStream(scriptLocator));
+                BufferedReader inFile = new BufferedReader(reader);
+
+                StringWriter sw = new StringWriter();
+                String inputLine;
+                while ((inputLine = inFile.readLine()) != null) {
+                    sw.write(inputLine);
+                    sw.write("\n");
+                }
+                sw.close();
+
+                evaluator.eval("eval(parse(text=\"" + sw.toString() + "\"))");
+
+            } catch (Exception exception) {
+                logger.error("Could not load CDK-rJava R scripts: ", scriptLocator);
+                logger.debug(exception);
+            }
+
+        }
+    }
+
     /**
      * Initializes SJava with the <i>--vanilla, --quiet, --slave</i> flags.
      * <p/>
@@ -98,7 +129,7 @@ public abstract class RModel implements IModel {
                 loadRFunctions(rengine);
                 logger.info("Initializing from disk");
             } else {
-//                loadRFunctionsAsStrings(rengine);
+                loadRFunctionsAsStrings(rengine);
                 logger.info("Initializing from strings");
             }
             logger.info("rJava initialized");
