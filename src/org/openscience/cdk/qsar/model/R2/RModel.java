@@ -107,8 +107,6 @@ public abstract class RModel implements IModel {
             fileName = modelName + ".rda";
         }
 
-        //Boolean result = null;  nul    y
-
         rengine.assign("tmpModelName", modelName);
         rengine.assign("tmpFileName", fileName);
         REXP result = rengine.eval("saveModel(tmpModelName, tmpFileName)");
