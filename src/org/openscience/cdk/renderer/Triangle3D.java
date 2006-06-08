@@ -35,7 +35,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
 /**
- * @cdk.module java3d
+ * @cdk.module experimental
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-06-09

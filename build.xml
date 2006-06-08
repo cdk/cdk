@@ -11,8 +11,7 @@
 
         <!-- patches to apply -->
 
-        <!-- where to find Java3D -->
-        <property name="pathtojava3d" value="" />
+        <!-- where to find some libraries -->
         <property name="pathtojoelib" value="../../JoeLib/joelib/" />
 
 
@@ -78,7 +77,6 @@
             <echo message=" --- optional libraries ---" />
             <echo message="     Jmol found: ${jmol.present}" />
             <echo message="   JOELib found: ${joelib.present}" />
-            <echo message="   Java3D found: ${java3D.present}" />
             <echo message="  R/SJava found: ${rispresent}"/>
             <echo message="" />
             <echo message="Compiling:" />
@@ -159,8 +157,6 @@
                 <available file="${lib}/jai_core.jar"/>
               </and>
             </condition>
-            <available property="java3D.present"
-                       classname="javax.media.j3d.Canvas3D"/>
             <available property="javahelp.present"
                        file="${lib}/jh.jar"/>
             <available property="joelib.present"
