@@ -179,9 +179,9 @@
                   <available file="/usr/local/bin/R"/>
                 </or>
                 <or>
-                  <available file="/usr/lib/R/library/SJava/" />
-                  <available file="/usr/local/lib/R/library/SJava/" />
-                  <available file="/usr/local/lib/R/site-library/SJava/" />
+                  <available file="/usr/lib/R/library/rJava/" />
+                  <available file="/usr/local/lib/R/library/rJava/" />
+                  <available file="/usr/local/lib/R/site-library/rJava/" />
                 </or>
               </and>
             </condition>
