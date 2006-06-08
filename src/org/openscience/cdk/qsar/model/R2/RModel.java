@@ -9,6 +9,10 @@ import org.rosuda.JRI.Rengine;
 
 import java.awt.*;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
@@ -25,6 +29,8 @@ import java.io.*;
  */
 public abstract class RModel implements IModel {
     private String modelName = null;
+
+    protected HashMap params = null;
 
 
     /**
@@ -134,6 +140,15 @@ public abstract class RModel implements IModel {
      * is specified on the command line
      */
     public RModel() throws QSARModelException {
+
+        // check that the JRI jar and .so match
+        if (!Rengine.versionCheck()) {
+            logger.debug("API version of the JRI library does not match that of the native binary");
+            throw new QSARModelException("API version of the JRI library does not match that of the native binary");
+        }
+
+
+        params = new HashMap();
         String[] args = {"--vanilla", "--quiet", "--slave"};
         logger = new LoggingTool(this);
 
@@ -223,6 +238,106 @@ public abstract class RModel implements IModel {
         return rengine;
     }
 
+    private String getUniqueVariableName(String prefix) {
+        if (prefix == null || prefix == "") prefix = "var";
+        Random rnd = new Random();
+        long uid = ((System.currentTimeMillis() >>> 16) << 16) + rnd.nextLong();
+        return prefix + uid;
+    }
+
+    /**
+     * Loads the parameters for a model into a <code>list</code> object in the R session.
+     * <p/>
+     * The method assigns the list to a (relatively) unique variable name and returns
+     * the variable name to the caller so that the list can be accessed later on.
+     *
+     * @return
+     * @throws QSARModelException if there are any problems within the R session.
+     */
+    protected String loadParametersIntoRSession() throws QSARModelException {
+        REXP result;
+        Set keys = params.keySet();
+        String paramVariableName = getUniqueVariableName("param");
+
+        for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+            String name = (String) iterator.next();
+            Object value = params.get(name);
+
+            if (value instanceof Integer) {
+                Integer tmp1 = (Integer) value;
+                int[] tmp2 = new int[]{tmp1.intValue()};
+                rengine.assign(name, tmp2);
+            } else if (value instanceof String) {
+                rengine.assign(name, (String) value);
+            } else if (value instanceof Boolean) {
+                Boolean tmp1 = (Boolean) value;
+                if (tmp1.booleanValue()) result = rengine.eval(name + "<- TRUE");
+                else result = rengine.eval(name + "<- FALSE");
+                if (result == null) throw new QSARModelException("Error assigning a boolean");
+            } else if (value instanceof Double) {
+                Double tmp1 = (Double) value;
+                double[] tmp2 = new double[]{tmp1.doubleValue()};
+                rengine.assign(name, tmp2);
+            } else if (value instanceof Integer[]) {
+                Integer[] tmp1 = (Integer[]) value;
+                int[] tmp2 = new int[tmp1.length];
+                for (int i = 0; i < tmp1.length; i++) tmp2[i] = tmp1[i].intValue();
+                rengine.assign(name, tmp2);
+            } else if (value instanceof Double[]) {
+                Double[] tmp1 = (Double[]) value;
+                double[] tmp2 = new double[tmp1.length];
+                for (int i = 0; i < tmp1.length; i++) tmp2[i] = tmp1[i].intValue();
+                rengine.assign(name, tmp2);
+            } else if (value instanceof Integer[][]) {
+                Integer[][] tmp1 = (Integer[][]) value;
+                int nrow = tmp1.length;
+                int ncol = tmp1[0].length;
+                int[] tmp2 = new int[nrow * ncol];
+                for (int i = 0; i < ncol; i++) {
+                    for (int j = 0; j < nrow; j++) {
+                        tmp2[i * ncol + j] = (tmp1[j][i]).intValue();
+                    }
+                }
+                rengine.assign(name, tmp2);
+                result = rengine.eval(name + "<- matrix(" + name + ", nrow=" + nrow + ")");
+                if (result == null) throw new QSARModelException("Error assigning a int[][]");
+            } else if (value instanceof Double[][]) {
+                Double[][] tmp1 = (Double[][]) value;
+                int nrow = tmp1.length;
+                int ncol = tmp1[0].length;
+                double[] tmp2 = new double[nrow * ncol];
+                for (int i = 0; i < ncol; i++) {
+                    for (int j = 0; j < nrow; j++) {
+                        tmp2[i * ncol + j] = (tmp1[j][i]).doubleValue();
+                    }
+                }
+                rengine.assign(name, tmp2);
+                result = rengine.eval(name + "<- matrix(" + name + ", nrow=" + nrow + ")");
+                if (result == null) throw new QSARModelException("Error assigning a double[][]");
+            }
+        }
+
+        // make the list command
+        String cmd = paramVariableName + " <- list(";
+        for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+            String name = (String) iterator.next();
+            cmd = cmd + name + " = " + name + ", ";
+        }
+        cmd = cmd + ")";
+
+        // now eval the command
+        result = rengine.eval(cmd);
+        if (result == null) throw new QSARModelException("Error making the parameter list");
+
+        // now lets remove all the variables we had assigned
+        for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+            String name = (String) iterator.next();
+            rengine.eval("rm(" + name + ")");
+        }
+
+        return paramVariableName;
+    }
+
     /**
      * Abstract method to handle loading R models.
      * <p/>
@@ -262,6 +377,15 @@ public abstract class RModel implements IModel {
      */
     abstract public void loadModel(String serializedModel, String modelName) throws QSARModelException;
 
+    /**
+     * Specifies the parameters value.
+     *
+     * @param key A String representing the name of the parameter (corresponding to the
+     *            name described in the R manpages)
+     * @param obj The value of the parameter
+     * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
+     */
+    abstract public void setParameters(String key, Object obj) throws QSARModelException;
 
     abstract public void build() throws QSARModelException;
 
