@@ -58,7 +58,9 @@ import weka.classifiers.functions.LinearRegression;
  * @cdk.require weka.jar
  * @cdk.module qsar
  * @see Weka
- */
+ * 
+ * @cdk.keyword regression, linear
+*/
 public class LinearRegressionWModel implements IWekaModel{
 	/**Dependent variable */
 	private Object[] y;

@@ -70,6 +70,9 @@ import weka.classifiers.trees.J48;
  * @cdk.require weka.jar
  * @cdk.module qsar
  * @see Weka
+ * 
+ * @cdk.keyword decision and regression trees
+ * @cdk.keyword J48
  */
 public class J48WModel implements IWekaModel{
 	/**Dependent variable */

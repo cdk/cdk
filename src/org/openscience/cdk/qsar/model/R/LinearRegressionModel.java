@@ -94,8 +94,9 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * 
+ * @cdk.keyword regression, linear
  */
-
 public class LinearRegressionModel extends RModel {
 
     private static int globalID = 0;

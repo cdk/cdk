@@ -104,11 +104,14 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * in R
  * <p>
  * See {@link RModel} for details regarding the R and SJava environment.
+ * 
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * 
+ * @cdk.keyword neural network
+ * @cdk.keyword regression
  */
-
 public class CNNRegressionModel extends RModel {
     
     public static int globalID = 0;

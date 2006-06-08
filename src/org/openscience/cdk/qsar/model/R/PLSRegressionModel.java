@@ -94,8 +94,11 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * 
+ * @cdk.keyword partial least squares
+ * @cdk.keyword PLS
+ * @cdk.keyword regression
  */
-
 public class PLSRegressionModel extends RModel {
 
     private static int globalID = 0;
