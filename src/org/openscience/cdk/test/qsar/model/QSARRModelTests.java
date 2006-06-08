@@ -37,11 +37,7 @@ public class QSARRModelTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
         try {
-
-            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest");
-            suite.addTest(new TestSuite(testClass));
-
-            /*testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.SJavaEnvironmentTest");
+            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.SJavaEnvironmentTest");
             suite.addTest(new TestSuite(testClass));
             testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.LinearRegressionModelTest");
             suite.addTest(new TestSuite(testClass));
@@ -50,10 +46,10 @@ public class QSARRModelTests {
             testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.ModelLoadSaveTest");
             suite.addTest(new TestSuite(testClass));
             testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.CNNClassificationModelTest");
-            suite.addTest(new TestSuite(testClass));*/
-            System.out.println("Found RJava, running R tests...");
+            suite.addTest(new TestSuite(testClass));
+            System.out.println("Found SJava, running R tests...");
         } catch (ClassNotFoundException exception) {
-            System.out.println("RJava is not found, skipping R tests...");
+            System.out.println("SJava is not found, skipping R tests...");
         } catch (Exception exception) {
             System.out.println("Could not load an R model test: " + exception.getMessage());
             exception.printStackTrace();
