@@ -90,9 +90,6 @@ public abstract class RModel implements IModel {
         }
     }
 
-    abstract public void build() throws QSARModelException;
-
-    abstract public void predict() throws QSARModelException;
 
     /**
      * Saves a R model to disk.
@@ -198,5 +195,12 @@ public abstract class RModel implements IModel {
      * @see #saveModel
      */
     abstract public void loadModel(String serializedModel, String modelName) throws QSARModelException;
+
+
+    abstract public void build() throws QSARModelException;
+
+    abstract public void predict() throws QSARModelException;
+
+    abstract protected void finalize();
 
 }
