@@ -29,7 +29,7 @@ public class RJavaEnvironmentTest extends CDKTestCase {
             assertNotNull(noneModel);
 
             // stop the R process
-            RModel.getRengine().end();
+            noneModel.getRengine().end();
 
         } catch (QSARModelException e) {
             e.printStackTrace();
@@ -57,6 +57,10 @@ public class RJavaEnvironmentTest extends CDKTestCase {
         }
 
         public void loadModel(String serializedModel, String modelName) throws QSARModelException {
+        }
+
+        public void setParameters(String key, Object obj) throws QSARModelException {
+
         }
     }
 
