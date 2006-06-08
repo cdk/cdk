@@ -38,8 +38,32 @@ public abstract class RModel implements IModel {
     private static boolean doneInit = false;
     private static LoggingTool logger;
 
-    public static Rengine getRengine() {
-        return rengine;
+    private void initRengine() throws QSARModelException {
+        String[] args = {"--vanilla", "--quiet", "--slave"};
+        boolean useDisk = false;
+        initRengine(args, useDisk);
+    }
+
+    private void initRengine(String[] args, boolean useDisk) throws QSARModelException {
+        if (!doneInit) {
+            rengine = new Rengine(args, false, new TextConsole());
+            if (!rengine.waitForR()) {
+                throw new QSARModelException("Could not load rJava");
+            } else {
+                logger.debug("Started R");
+            }
+            doneInit = true;
+            if (useDisk) {
+                loadRFunctions(rengine);
+                logger.info("Initializing from disk");
+            } else {
+                loadRFunctionsAsStrings(rengine);
+                logger.info("Initializing from strings");
+            }
+            logger.info("rJava initialized");
+        } else {
+            logger.info("rjava already intialized");
+        }
     }
 
     private void loadRFunctions(Rengine engine) {
@@ -116,26 +140,7 @@ public abstract class RModel implements IModel {
         if (initRFromString != null && initRFromString.equals("true")) {
             useDisk = false;
         }
-
-        if (!doneInit) {
-            rengine = new Rengine(args, false, new TextConsole());
-            if (!rengine.waitForR()) {
-                throw new QSARModelException("Could not load rJava");
-            } else {
-                logger.debug("Started R");
-            }
-            doneInit = true;
-            if (useDisk) {
-                loadRFunctions(rengine);
-                logger.info("Initializing from disk");
-            } else {
-                loadRFunctionsAsStrings(rengine);
-                logger.info("Initializing from strings");
-            }
-            logger.info("rJava initialized");
-        } else {
-            logger.info("rjava already intialized");
-        }
+        initRengine(args, useDisk);
     }
 
 
@@ -201,6 +206,11 @@ public abstract class RModel implements IModel {
             rengine.eval("if ('" + oldName + "' %in% ls()) {" + newName + "<-" + oldName + ";rm(" + oldName + ")}");
         }
         this.modelName = newName;
+    }
+
+    public Rengine getRengine() throws QSARModelException {
+        if (rengine == null) initRengine();
+        return rengine;
     }
 
     /**
