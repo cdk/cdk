@@ -79,6 +79,9 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.require ant1.6
  * @cdk.module  experimental
+ *
+ * @cdk.keyword SMARTS
+ * @cdk.keyword substructure search
  */
 public class SMARTSParser {
     
