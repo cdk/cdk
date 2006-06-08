@@ -20,7 +20,7 @@
 
   <xsl:template match="/">
 <xsl:for-each select="//indexentry">
-  <xsl:sort select="."/>
+  <xsl:sort select='translate(.,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")'/>
   <xsl:apply-templates select="."/>
 </xsl:for-each>
   </xsl:template>
