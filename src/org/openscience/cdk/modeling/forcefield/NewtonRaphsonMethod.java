@@ -8,11 +8,13 @@ import org.openscience.cdk.tools.LoggingTool;
 import Jama.Matrix;
 
 /**
- *  Methods of Newton-Raphson approach.
+ * Methods of Newton-Raphson approach.
  *
- *@author        vlabarta
- *@cdk.created       June 1, 2005
- *@cdk.module    forcefield
+ * @author        vlabarta
+ * @cdk.created   2005-06-01
+ * @cdk.module    forcefield
+ * 
+ * @cdk.keyword   Newton-Raphson
  */
 public class NewtonRaphsonMethod {
 	GVector gradientPerInverseHessianVector = null;

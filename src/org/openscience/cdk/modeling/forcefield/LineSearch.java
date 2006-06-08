@@ -6,12 +6,13 @@ import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
- *  The LineSearch class include the first and second step of the line search approach: 
- *  Bracket the minimum and interpolation. The interpolation is quadratic.
+ * The LineSearch class include the first and second step of the line search approach: 
+ * Bracket the minimum and interpolation. The interpolation is quadratic.
  *  
- *@author     vlabarta
- *@cdk.module     forcefield
+ * @author      vlabarta
+ * @cdk.module  forcefield
  *
+ * @cdk.keyword line search
  */
 public class LineSearch {
 

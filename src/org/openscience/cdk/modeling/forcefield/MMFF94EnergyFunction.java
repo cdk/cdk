@@ -10,12 +10,14 @@ import org.openscience.cdk.AtomContainer;
 
 
 /**
- *  MMFF94 energy function.
+ * MMFF94 energy function.
  *
- *@author     vlabarta
- *@cdk.created    March 14, 2005
- *@cdk.module     forcefield
+ * @author     vlabarta
+ * @cdk.created    March 14, 2005
+ * @cdk.module     forcefield
  *
+ * @cdk.keyword MMFF94
+ * @cdk.keyword force field
  */
 public class MMFF94EnergyFunction implements IPotentialFunction {
 	String energyFunctionShape = " MMFF94 energy ";
