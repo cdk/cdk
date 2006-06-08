@@ -105,8 +105,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
         updateRenderingCoordinates(atomCon,r2dm);
 		customizeRendering(graphics);
 		setupIsotopeFactory(atomCon);
-		IRingSet ringSet = atomCon.getBuilder().newRingSet();
-
+		
 		// draw the molecule name
 		if (r2dm.getShowMoleculeTitle() && 
 		    atomCon.getProperty(CDKConstants.TITLE) != null) {
@@ -120,8 +119,6 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 			);
 		}
 		
-		if(redossr)
-			ringSet = new SSSRFinder(atomCon).findSSSR();
 		IAtomContainer[] molecules = null;
 		if(split){
 			try
