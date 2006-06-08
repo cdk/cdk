@@ -28,6 +28,10 @@ public class RJavaEnvironmentTest extends CDKTestCase {
         try {
             NoneModel noneModel = new NoneModel();
             assertNotNull(noneModel);
+
+            // stop the R process
+            RModel.getRengine().end();
+
         } catch (QSARModelException e) {
             e.printStackTrace();
         }

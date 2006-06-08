@@ -4,11 +4,20 @@ import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
 import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
 
+import java.awt.*;
 import java.io.*;
 
 /**
+ * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
+ * and that rJava is also installed. Other requirements are
+ * <ul>
+ * <li>LD_LIBRARY_PATH should include the directory that contains libjri.so
+ * <li>R_HOME should be set to the appropriate location
+ * </ul>
+ *
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
@@ -16,16 +25,21 @@ import java.io.*;
 public abstract class RModel implements IModel {
     private String modelName = null;
 
+
     /**
      * The object that performs the calls to the R engine.
      */
-    public static Rengine rengine = null;
+    protected static Rengine rengine = null;
 
     /**
      * A boolean that indicates whether the R/Java subsystem has been initialized or not.
      */
     private static boolean doneInit = false;
     private static LoggingTool logger;
+
+    public static Rengine getRengine() {
+        return rengine;
+    }
 
     private void loadRFunctions(Rengine engine) {
         String scriptLocator = "org/openscience/cdk/qsar/model/data/helper.R";
@@ -57,12 +71,12 @@ public abstract class RModel implements IModel {
     }
 
     /**
-     * Initializes SJava with the <i>--vanilla, -q, --slave</i> flags.
+     * Initializes SJava with the <i>--vanilla, --quiet, --slave</i> flags.
      * <p/>
      * This constructor will initialize the R session via a temporary file
      */
     public RModel() throws QSARModelException {
-        String[] args = {"--vanilla", "-q", "--slave"};
+        String[] args = {"--vanilla", "--quiet", "--slave"};
         logger = new LoggingTool(this);
 
         String initRFromString = System.getProperty("initRFromString");
@@ -72,9 +86,11 @@ public abstract class RModel implements IModel {
         }
 
         if (!doneInit) {
-            rengine = new Rengine(args, false, null);
+            rengine = new Rengine(args, false, new TextConsole());
             if (!rengine.waitForR()) {
                 throw new QSARModelException("Could not load rJava");
+            } else {
+                logger.debug("Started R");
             }
             doneInit = true;
             if (useDisk) {
@@ -200,5 +216,51 @@ public abstract class RModel implements IModel {
     abstract public void predict() throws QSARModelException;
 
     abstract protected void finalize();
+
+
+    class TextConsole implements RMainLoopCallbacks {
+        public void rWriteConsole(Rengine re, String text) {
+            System.out.print(text);
+        }
+
+        public void rBusy(Rengine re, int which) {
+            System.out.println("rBusy(" + which + ")");
+        }
+
+        public String rReadConsole(Rengine re, String prompt, int addToHistory) {
+            System.out.print(prompt);
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String s = br.readLine();
+                return (s == null || s.length() == 0) ? s : s + "\n";
+            } catch (Exception e) {
+                System.out.println("jriReadConsole exception: " + e.getMessage());
+            }
+            return null;
+        }
+
+        public void rShowMessage(Rengine re, String message) {
+            System.out.println("rShowMessage \"" + message + "\"");
+        }
+
+        public String rChooseFile(Rengine re, int newFile) {
+            FileDialog fd = new FileDialog(new Frame(), (newFile == 0) ? "Select a file" : "Select a new file", (newFile == 0) ? FileDialog.LOAD : FileDialog.SAVE);
+            fd.pack();
+            fd.setVisible(true);
+            String res = null;
+            if (fd.getDirectory() != null) res = fd.getDirectory();
+            if (fd.getFile() != null) res = (res == null) ? fd.getFile() : (res + fd.getFile());
+            return res;
+        }
+
+        public void rFlushConsole(Rengine re) {
+        }
+
+        public void rLoadHistory(Rengine re, String filename) {
+        }
+
+        public void rSaveHistory(Rengine re, String filename) {
+        }
+    }
 
 }

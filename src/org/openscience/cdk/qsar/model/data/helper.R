@@ -24,7 +24,6 @@ library(MASS)
 library(nnet)
 
 # some helper functions
-xxx
 saveModel <- function(modelname, filename) {
     resp <- try( do.call('save',list(modelname,file=filename)), silent=TRUE )
 }
