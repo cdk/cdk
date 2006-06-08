@@ -238,6 +238,16 @@ public abstract class RModel implements IModel {
         return rengine;
     }
 
+    /**
+     * Get a unique String value.
+     * <p/>
+     * This method can be used to get unique variable names for use in an R session. The
+     * String is generated from a combination of the prefix, the system time and a random
+     * portion.
+     *
+     * @param prefix Any value. If empty or null, <code>"var"</code> is used.
+     * @return A unique String value
+     */
     public String getUniqueVariableName(String prefix) {
         if (prefix == null || prefix.equals("")) prefix = "var";
         Random rnd = new Random();
