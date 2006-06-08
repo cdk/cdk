@@ -14,7 +14,6 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.require r-project
  * @cdk.module test-qsar
  */
-
 public class RJavaEnvironmentTest extends CDKTestCase {
 
     public RJavaEnvironmentTest() {
