@@ -32,6 +32,7 @@ import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactio
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
 //import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
+import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;
@@ -57,6 +58,7 @@ public class MreactionTests {
         // Individual Tests
         
         // from cdk.test.reaction
+        suite.addTest(BreakingBondReactionTest.suite());
         suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
         suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
