@@ -129,7 +129,9 @@ public abstract class RModel implements IModel {
     /**
      * Initializes SJava with the <i>--vanilla, --quiet, --slave</i> flags.
      * <p/>
-     * This constructor will initialize the R session via a temporary file
+     * This constructor will initialize the R session via a temporary file  or
+     * from a String depending on whether the symbol <code>initRFromString</code>
+     * is specified on the command line
      */
     public RModel() throws QSARModelException {
         String[] args = {"--vanilla", "--quiet", "--slave"};
@@ -156,10 +158,9 @@ public abstract class RModel implements IModel {
      * @see #loadModel
      */
     public static void saveModel(String modelName, String fileName) throws QSARModelException {
-        if (fileName.equals("") || fileName == null) {
+        if (fileName == null || fileName.equals("")) {
             fileName = modelName + ".rda";
         }
-
         rengine.assign("tmpModelName", modelName);
         rengine.assign("tmpFileName", fileName);
         REXP result = rengine.eval("saveModel(tmpModelName, tmpFileName)");
@@ -208,6 +209,15 @@ public abstract class RModel implements IModel {
         this.modelName = newName;
     }
 
+    /**
+     * Get the instance of the <code>Rengine</code>.
+     * <p/>
+     * In case the R engine has not been initialized, it is initialized before
+     * returning the object.
+     *
+     * @return The Rengine object
+     * @throws QSARModelException if initialization fails.
+     */
     public Rengine getRengine() throws QSARModelException {
         if (rengine == null) initRengine();
         return rengine;
