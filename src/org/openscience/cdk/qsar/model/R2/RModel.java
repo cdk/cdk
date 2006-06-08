@@ -14,7 +14,8 @@ import java.io.*;
  * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
  * and that rJava is also installed. Other requirements are
  * <ul>
- * <li>LD_LIBRARY_PATH should include the directory that contains libjri.so
+ * <li>LD_LIBRARY_PATH should include the directory that contains libjri.so  as well
+ * as the dierctory that contains libR.so
  * <li>R_HOME should be set to the appropriate location
  * </ul>
  *
