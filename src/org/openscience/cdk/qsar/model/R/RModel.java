@@ -20,18 +20,13 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-
 import org.omegahat.R.Java.REvaluator;
 import org.omegahat.R.Java.ROmegahatInterpreter;
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
 
 /** Base class for modeling classes that use R as the backend.
  *
