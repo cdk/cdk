@@ -86,7 +86,7 @@ japitools_path = '/home/rajarshi/src/java/japitools'
 # if not required set to "" or None
 last_stable = '/home/rajarshi/src/java/cdk-20050826.jar'
 
-per_line = 4
+per_line = 8
 
 # Optional
 # variables required for sending mail, if desired.
@@ -663,11 +663,17 @@ if __name__ == '__main__':
     if False in executableList:
         print 'Could not find one or more required executables: '+executableList
         sys.exit(-1)
+    else:
+        print """
+    Found required executables"""
+        
 
     # check for certain environment variables
     try:
         tmp = os.environ['JAVA_HOME']
         tmp = os.environ['ANT_HOME']
+        print """
+    Found required environment variables"""
     except KeyError, ke:
         print 'JAVA_HOME & ANT_HOME must be set in the environment'
         sys.exit(-1)
@@ -684,11 +690,11 @@ if __name__ == '__main__':
     print """
     Variable settings
     
-    nightly_repo = %s
-    nightly_dir  = %s
-    nightly_web  = %s
+      nightly_repo = %s
+      nightly_dir  = %s
+      nightly_web  = %s
     """ % (nightly_repo, nightly_dir, nightly_web)
-    
+
     successSrc = True
     successDist = True
     successTest = True
@@ -964,7 +970,7 @@ if __name__ == '__main__':
 
     # get the results of the PMD analysis
     resultTable.addRow()
-    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:")
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>All</b></i>")
     if successPMD:
         print '  Generating PMD section'
         # make the PMD dir in the web dir
@@ -973,17 +979,24 @@ if __name__ == '__main__':
         # transform the PMD XML output to nice HTML
         xmlFiles = glob.glob(os.path.join(nightly_repo,'reports/pmd/*.xml'))
         xmlFiles.sort()
+        count = 1
+        s = ''
         for xmlFile in xmlFiles:
             prefix = os.path.basename(xmlFile).split('.')[0]
             htmlFile = os.path.join(nightly_web, 'pmd', prefix)+'.html'
             xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
             transformXML2HTML(xmlFile, htmlFile, xsltFile)
+            s = s+"<a href=\"pmd/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            if count % per_line == 0: s += "<br>"
+            count += 1
+        resultTable.addCell(s)
+        
         pmdSummary = parsePMDOutput('pmd', 'CDK PMD Summary')
         if not pmdSummary == None:
             o = open(os.path.join(nightly_web, 'pmdsummary.html'), 'w')
             o.write(pmdSummary)
             o.close()
-            resultTable.addCell('<a href="pmdsummary.html">Summary of all PMD analyses</a>')
+            resultTable.addCell('<a href="pmdsummary.html">Summary</a>')
         
     else: # PMD stage failed for some reason
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
@@ -992,6 +1005,9 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'pmd.log'))
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
+            
+    resultTable.addRow()
+    resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>Unused Code</b></i>")
     if successPMDUnused:
         print '  Generating PMD-Unused section'
         # make the PMD dir in the web dir
@@ -1007,13 +1023,17 @@ if __name__ == '__main__':
             htmlFile = os.path.join(nightly_web, 'pmd-unused', prefix)+'.html'
             xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
             transformXML2HTML(xmlFile, htmlFile, xsltFile)
+            s = s+"<a href=\"pmdu/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            if count % per_line == 0: s += "<br>"
+            count += 1
+        resultTable.addCell(s)
 
         pmdSummary = parsePMDOutput('pmd-unused', 'CDK PMD Unused Code Summary')
         if not pmdSummary == None:
             o = open(os.path.join(nightly_web, 'pmdusummary.html'), 'w')
             o.write(pmdSummary)
             o.close()
-            resultTable.appendToCell('<a href="pmdusummary.html">Summary of <i>pmd-unused</i></a>')
+            resultTable.addCell('<a href="pmdusummary.html">Summary</a>')
             
     else: # PMD stage failed for some reason
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
