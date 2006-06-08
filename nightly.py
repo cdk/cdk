@@ -41,7 +41,8 @@
 # Update 06/07/2006 - Added code to parse the output of pmd-unused reports and add
 #                     a summary page to the corresponding section
 # Update 06/08/2006 - Reorganized to summarize PMD reports in terms of total number
-#                     of violations and linked to actual PMD report pages
+#                     of violations and linked to actual PMD report pages. Updated
+#                     keywords section to point to the local API docs
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -888,6 +889,14 @@ if __name__ == '__main__':
             xsltFile = os.path.join(nightly_repo, 'doc', 'javadoc', 'keywordIndex2HTML.xsl')
             transformXML2HTML(srcFile, destFile, xsltFile, False)
             resultTable.appendToCell("<a href=\"keywords.html\">Keywords</a>")
+
+            # replace the cdk.sf.net with local reference
+            f = open(os.path.join(nightly_web, 'keywords.html'), 'r')
+            lines = string.join(f.readlines())
+            f.close()
+            f = open(os.path.join(nightly_web, 'keywords.html'), 'w')
+            f.write(re.sub('http://cdk.sf.net/','', lines))
+            f.close()
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
