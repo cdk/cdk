@@ -121,7 +121,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		}
 		
 		if(redossr)
-			ringSet = atomCon.getBuilder().newRingSet();
+			ringSet = new SSSRFinder(atomCon).findSSSR();
 		IAtomContainer[] molecules = null;
 		if(split){
 			try
