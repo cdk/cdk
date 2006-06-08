@@ -88,6 +88,9 @@ import Jama.Matrix;
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
+ * 
+ * @cdk.keyword WHIM
+ * @cdk.keyword descriptor
  */
 public class WHIMDescriptor implements IMolecularDescriptor {
 

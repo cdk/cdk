@@ -61,6 +61,9 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:gravitationalIndex
+ * 
+ * @cdk.keyword gravitational index
+ * @cdk.keyword descriptor
  */
 public class GravitationalIndexDescriptor implements IMolecularDescriptor {
     

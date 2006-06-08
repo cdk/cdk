@@ -65,6 +65,10 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:tpsa
+ * 
+ * @cdk.keyword TPSA
+ * @cdk.keyword total polar surface area
+ * @cdk.keyword descriptor
  */
 public class TPSADescriptor implements IMolecularDescriptor {
 	private boolean checkAromaticity = false;

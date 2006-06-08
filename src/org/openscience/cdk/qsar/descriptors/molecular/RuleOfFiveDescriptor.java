@@ -56,6 +56,10 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lipinskifailures
+ * 
+ * @cdk.keyword Lipinski
+ * @cdk.keyword rule-of-five
+ * @cdk.keyword descriptor
  */
 public class RuleOfFiveDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;

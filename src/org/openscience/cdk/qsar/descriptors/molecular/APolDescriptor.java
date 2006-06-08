@@ -47,6 +47,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:apol
+ *
+ * @cdk.keyword polarizability, atomic
  */
 public class APolDescriptor implements IMolecularDescriptor {
 

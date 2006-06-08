@@ -60,6 +60,9 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rotatableBondsCount
+ * 
+ * @cdk.keyword bond count, rotatable
+ * @cdk.keyword descriptor
  */
 public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	private boolean includeTerminals = false;

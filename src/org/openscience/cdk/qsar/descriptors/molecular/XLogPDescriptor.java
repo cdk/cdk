@@ -116,6 +116,9 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:xlogP
+ * 
+ * @cdk.keyword XLogP
+ * @cdk.keyword descriptor
  */
 public class XLogPDescriptor implements IMolecularDescriptor {
     

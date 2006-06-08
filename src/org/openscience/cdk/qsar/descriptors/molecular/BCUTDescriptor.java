@@ -91,6 +91,9 @@ import Jama.Matrix;
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
+ * 
+ * @cdk.keyword BCUT
+ * @cdk.keyword descriptor
  */
 public class BCUTDescriptor implements IMolecularDescriptor {
 

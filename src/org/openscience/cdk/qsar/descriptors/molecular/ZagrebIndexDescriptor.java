@@ -39,6 +39,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:zagrebIndex
+ * 
+ * @cdk.keyword Zagreb index
+ * @cdk.keyword descriptor
  */
 public class ZagrebIndexDescriptor implements IMolecularDescriptor {
 

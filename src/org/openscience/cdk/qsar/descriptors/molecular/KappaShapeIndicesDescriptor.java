@@ -47,6 +47,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierValues
+ * 
+ * @cdk.keyword Kappe shape index
+ * @cdk.keyword descriptor
  */
 public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
 
