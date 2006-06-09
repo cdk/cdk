@@ -56,7 +56,7 @@ genMethodName <- function(name) {
 
 genReturnType <- function(obj) {
   varMode <- mode(obj)
-  varClass <- class(obj)
+  varClass <- class(obj)  
   varType <- typeof(obj)
   if (varMode == 'numeric') {
     if (varClass == 'matrix') {
@@ -64,7 +64,8 @@ genReturnType <- function(obj) {
     }
     if (varType == 'integer' && length(obj) == 1) {
       return(c('int', 'asInt()'))
-    } else {
+    }
+    if (varType == 'integer' && length(obj) > 1) {
       return(c('int[]', 'asIntArray()'))
     }
     if (varType == 'double' && length(obj) == 1) {
