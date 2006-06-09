@@ -30,43 +30,17 @@ saveModel <- function(modelname, filename) {
 
 loadModel <- function(filename) {
     modelname <- load(filename, .GlobalEnv)
-    get(modelname)
+    list(model=get(modelname) , name=modelname)
 }
-loadModel.getName <- function(filename) {
-   modelname <- load(filename)
-   modelname
-}
+
 unserializeModel <- function(modelstr, modelname) {
     zzz <- paste(paste(modelstr, sep='', collapse='\n'), '\n', sep='', collapse='')
     assign(modelname, unserialize(zzz), pos=1)
-    get(modelname)
+    list(model=get(modelname) , name=modelname)
 }
 
-summaryModel <- function(modelname) {
-    summary(get(modelname))
-}
-
-hashmap.to.list <- function(params) {
-    keys <- unlist(params$keySet()$toArray())
-    paramlist <- list()
-    cnt <- 1
-    for (key in keys) {
-        paramlist[[cnt]] <- params$get(key)
-        cnt <- cnt+1
-    }
-    names(paramlist) <- keys
-    paramlist
-}
-
-                          
-buildLM <- function(modelname, params) {
-    # params is a java.util.HashMap containing the parameters
-    # we need to extract them and add them to this environment
-    paramlist <- hashmap.to.list(params)
+buildLM <- function(modelname, paramlist) {
     attach(paramlist)
-
-    # x will come in as a double[][]
-    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
 
     # assumes y ~ all columns of x
     d <- data.frame(y=y,x)
@@ -75,20 +49,15 @@ buildLM <- function(modelname, params) {
     get(modelname)
 }
 
-predictLM <- function( modelname, params) {
-    # params is a java.util.HashMap containing the parameters
-    # we need to extract them and add them to this environment
-    paramlist <- hashmap.to.list(params)
+predictLM <- function( modelname, paramlist) {
     attach(paramlist)
 
-    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    newx <- data.frame( newdata )
     names(newx) <- names(get(modelname)$coef)[-1]
     if (interval == '' || !(interval %in% c('confidence','prediction')) ) { 
         interval = 'confidence'
     } 
     preds <- predict( get(modelname), newx, se.fit = TRUE, interval=interval);
-    class(preds) <- 'lmregprediction'
-
     detach(paramlist)
     preds
 }
