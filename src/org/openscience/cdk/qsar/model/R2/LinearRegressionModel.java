@@ -1,7 +1,11 @@
 package org.openscience.cdk.qsar.model.R2;
 
 import org.openscience.cdk.qsar.model.QSARModelException;
+import org.openscience.cdk.tools.LoggingTool;
+import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RList;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -79,9 +83,11 @@ import java.util.HashMap;
 public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RModel {
 
     private static int globalID = 0;
-
-    private HashMap params = null;
     private int nvar = 0;
+
+    private RList modelPredict = null;
+
+    private static LoggingTool logger;
 
     /**
      * Constructs a LinearRegressionModel object.
@@ -96,9 +102,8 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
      */
     public LinearRegressionModel() throws QSARModelException {
         super();
-
-        this.params = new HashMap();
-
+        logger = new LoggingTool(this);
+        params = new HashMap();
         int currentID = LinearRegressionModel.globalID;
         org.openscience.cdk.qsar.model.R2.LinearRegressionModel.globalID++;
         this.setModelName("cdkLMModel" + currentID);
@@ -126,8 +131,7 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
     public LinearRegressionModel(double[][] xx, double[] yy) throws QSARModelException {
         super();
 
-        this.params = new HashMap();
-
+        params = new HashMap();
         int currentID = LinearRegressionModel.globalID;
         LinearRegressionModel.globalID++;
         this.setModelName("cdkLMModel" + currentID);
@@ -185,7 +189,7 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
     public LinearRegressionModel(double[][] xx, double[] yy, double[] weights) throws QSARModelException {
         super();
 
-        this.params = new HashMap();
+        params = new HashMap();
 
         int currentID = LinearRegressionModel.globalID;
         org.openscience.cdk.qsar.model.R2.LinearRegressionModel.globalID++;
@@ -219,7 +223,7 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
     }
 
     protected void finalize() {
-        rengine.eval("rm(" + this.getModelName() + ",pos=1)");
+        rengine.eval("rm(\"" + getModelName() + "\",pos=1)");
     }
 
 
@@ -251,12 +255,19 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
         }
 
         // lets build the model
-/*        try {
-            this.modelfit = (LinearRegressionModelFit)revaluator.call("buildLM",
-                    new Object[]{ getModelName(), this.params });
-        } catch (Exception re) {
-            throw new QSARModelException(re.toString());
-        }*/
+        String paramVarName = loadParametersIntoRSession();
+        String cmd = "buildLM(\"" + getModelName() + "\", " + paramVarName + ")";
+        REXP ret = rengine.eval(cmd);
+        if (ret == null) {
+            logger.debug("Error in buildLM");
+            throw new QSARModelException("Error in buildLM");
+        }
+
+        // remove the parameter list
+        rengine.eval("rm(" + paramVarName + ")");
+
+        // save the model object on the Java side
+        modelObject = ret.asList();
     }
 
 
@@ -329,47 +340,56 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
      *          is not the same as specified during model building
      */
     public void predict() throws QSARModelException {
-        /*   if (this.modelfit == null)
+
+        if (modelObject == null)
             throw new QSARModelException("Before calling predict() you must fit the model using build()");
 
-        Double[][] newx = (Double[][])this.params.get(new String("newdata"));
-        if (newx[0].length != this.nvar) {
+        Double[][] newx = (Double[][]) params.get("newdata");
+        if (newx[0].length != nvar) {
             throw new QSARModelException("Number of independent variables used for prediction must match those used for fitting");
         }
 
-        try {
-            this.modelpredict = (LinearRegressionModelPredict)revaluator.call("predictLM",
-                    new Object[]{ getModelName(), this.params });
-        } catch (Exception re) {
-            throw new QSARModelException(re.toString());
-        }*/
+        String pn = loadParametersIntoRSession();
+        REXP ret = rengine.eval("predictLM(\"" + getModelName() + "\", " + pn + ")");
+        if (ret == null) throw new QSARModelException("Error occured in prediction");
+
+        // remove the parameter list
+        rengine.eval("rm(" + pn + ")");
+
+        modelPredict = ret.asList();
     }
 
     /**
-     * Returns an object summarizing the linear regression model.
+     * Get the R object obtained from <code>predict.lm()</code>.
+     *
+     * @return The result of the prediction. Contains a number of fields corresponding to
+     *         predicted values, SE and other items depending on the parameters that we set.
+     */
+    public RList getModelPredict() {
+        return modelPredict;
+    }
+
+    /**
+     * Returns an <code>RList</code> object summarizing the linear regression model.
      * <p/>
-     * The return object simply wraps the fields from the summary.lm
-     * return value. Various details can be extracted from the return object,
-     * See {@link org.openscience.cdk.qsar.model.R.LinearRegressionModelSummary} for more details.
+     * The return object can be queried via the <code>RList</code> methods to extract the
+     * required components.
      *
      * @return A summary for the linear regression model
      * @throws org.openscience.cdk.qsar.model.QSARModelException
      *          if the model has not been built prior to a call
      *          to this method
      */
-    public String summary() throws QSARModelException {
-        /*   if (this.modelfit == null)
+    public RList summary() throws QSARModelException {
+        if (modelObject == null)
             throw new QSARModelException("Before calling summary() you must fit the model using build()");
 
-        LinearRegressionModelSummary s = null;
-        try {
-            s = (LinearRegressionModelSummary)revaluator.call("summaryModel",
-                    new Object[]{ getModelName() });
-        } catch (Exception re) {
-            throw new QSARModelException(re.toString());
+        REXP ret = rengine.eval("summary(" + getModelName() + ")");
+        if (ret == null) {
+            logger.debug("Error in summary()");
+            throw new QSARModelException("Error in summary()");
         }
-        return(s);*/
-        return null;
+        return ret.asList();
     }
 
 
@@ -379,19 +399,22 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
      * @param fileName The disk file containing the model
      * @throws org.openscience.cdk.qsar.model.QSARModelException
      *          if the model being loaded is not a linear regression model
-     *          object
+     *          object  or the file does not exist
      */
     public void loadModel(String fileName) throws QSARModelException {
-        /*  // should probably check that the fileName does exist
-Object model = (Object)revaluator.call("loadModel", new Object[]{ (Object)fileName });
-String modelName = (String)revaluator.call("loadModel.getName", new Object[] { (Object)fileName });
+        File f = new File(fileName);
+        if (!f.exists()) throw new QSARModelException(fileName + " does not exist");
 
-if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
-  this.modelfit =(LinearRegressionModelFit)model;
-  this.setModelName(modelName);
-  Double tmp = (Double)revaluator.eval("length("+modelName+"$coefficients)-1");
-  nvar = (int)tmp.doubleValue();
-} else throw new QSARModelException("The loaded model was not a LinearRegressionModel");*/
+        rengine.assign("tmpFileName", fileName);
+        REXP ret = rengine.eval("loadModel(tmpFileName)");
+        if (ret == null) throw new QSARModelException("Model could not be loaded");
+
+        String name = ret.asList().at("name").asString();
+        if (!RModel.isOfClass(name, "lm", true)) throw new QSARModelException("Loaded object was not of class \'lm\'");
+
+        modelObject = ret.asList().at("model").asList();
+        setModelName(name);
+        nvar = getCoefficients().length;
     }
 
     /**
@@ -404,124 +427,113 @@ if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRe
      *          object
      */
     public void loadModel(String serializedModel, String modelName) throws QSARModelException {
-        /*  // should prxbably check that the fileName does exist
-Object model = (Object)revaluator.call("unserializeModel", new Object[]{ (Object)serializedModel, (Object)modelName });
-String modelname = modelName;
+        rengine.assign("tmpSerializedModel", serializedModel);
+        rengine.assign("tmpModelName", modelName);
+        REXP ret = rengine.eval("unserializeModel(tmpSerializedModel, tmpModelName)");
 
-if (model.getClass().getName().equals("org.openscience.cdk.qsar.model.R.LinearRegressionModelFit")) {
-  this.modelfit =(LinearRegressionModelFit)model;
-  this.setModelName(modelname);
-  Double tmp = (Double)revaluator.eval("length("+modelName+"$coefficients)-1");
-  nvar = (int)tmp.doubleValue();
-} else throw new QSARModelException("The loaded model was not a LinearRegressionModel");*/
+        if (ret == null) throw new QSARModelException("Model could not be unserialized");
+
+        String name = ret.asList().at("name").asString();
+        if (!RModel.isOfClass(name, "lm", true)) throw new QSARModelException("Loaded object was not of class \'lm\'");
+
+        modelObject = ret.asList().at("model").asList();
+        setModelName(name);
+        nvar = getCoefficients().length;
     }
 
-    /* interface to fit object */
+// Autogenerated code: assumes that 'modelObject' is
+// a RList object
+
 
     /**
-     * Gets the rank of the fitted linear model.
+     * Gets the <code>assign</code> field of an <code>'lm'</code> object.
      *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     *
-     * @return An integer indicating the rank
+     * @return The value of the assign field
      */
-//    public int getFitRank() { return(this.modelfit.getRank()); }
+    public int[] getAssign() {
+        return modelObject.at("assign").asIntArray();
+    }
 
     /**
-     * Returns the residuals.
+     * Gets the <code>coefficients</code> field of an <code>'lm'</code> object.
      *
-     * The residuals are the response minus the fitted values.
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] contaning the residuals for each observation
+     * @return The value of the coefficients field
      */
-//    public double[] getFitResiduals() { return(this.modelfit.getResiduals()); }
+    public double[] getCoefficients() {
+        return modelObject.at("coefficients").asDoubleArray();
+    }
 
     /**
-     * Returns the estimated coefficients.
+     * Gets the <code>df.residual</code> field of an <code>'lm'</code> object.
      *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] containing the coefficients
+     * @return The value of the df.residual field
      */
-//    public double[] getFitCoefficients() { return(this.modelfit.getCoefficients()); }
+    public int getDfResidual() {
+        return modelObject.at("df.residual").asInt();
+    }
 
     /**
-     * Returns the residual degrees of freedom.
+     * Gets the <code>effects</code> field of an <code>'lm'</code> object.
      *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return An integr indicating the residual degrees of freedom
+     * @return The value of the effects field
      */
-//    public int getFitDFResidual() { return(this.modelfit.getdfResidual()); }
+    public double[] getEffects() {
+        return modelObject.at("effects").asDoubleArray();
+    }
 
     /**
-     * Returns the fitted mean values.
+     * Gets the <code>fitted.values</code> field of an <code>'lm'</code> object.
      *
-     * This method only returns meaningful results if the <code>build</code>
-     * method of this class has been previously called.
-     * @return A double[] containing the fitted  values
+     * @return The value of the fitted.values field
      */
-//    public double[] getFitFitted() { return(this.modelfit.getFitted()); }
-
-    /* interface to predict object */
+    public double[] getFittedValues() {
+        return modelObject.at("fitted.values").asDoubleArray();
+    }
 
     /**
-     * Returns the degrees of freedom for residual.
+     * Gets the <code>model</code> field of an <code>'lm'</code> object.
      *
-     * @return An integer indicating degrees of freedom
+     * @return The value of the model field
      */
-//    public int getPredictDF() { return(this.modelpredict.getDF()); }
+    public RList getModel() {
+        return modelObject.at("model").asList();
+    }
 
     /**
-     * Returns the residual standard deviations.
+     * Gets the <code>qr</code> field of an <code>'lm'</code> object.
      *
-     * @return A double indicating residual standard deviations
+     * @return The value of the qr field
      */
-//    public double getPredictResidualScale() { return(this.modelpredict.getResidualScale()); }
+    public RList getQr() {
+        return modelObject.at("qr").asList();
+    }
 
     /**
-     * Returns the predicted values for the prediction set.
+     * Gets the <code>rank</code> field of an <code>'lm'</code> object.
      *
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the predicted values
+     * @return The value of the rank field
      */
-//    public double[] getPredictPredicted() { return(this.modelpredict.getPredicted()); }
+    public int getRank() {
+        return modelObject.at("rank").asInt();
+    }
 
     /**
-     * Returns the lower prediction bounds.
+     * Gets the <code>residuals</code> field of an <code>'lm'</code> object.
      *
-     * By default the bounds (both lower and upper) are confidence bounds. However
-     * the call to <code>predict</code> can specify prediction bounds.
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the lower bounds for the predictions
+     * @return The value of the residuals field
      */
-//    public double[] getPredictLowerBound() { return(this.modelpredict.getLower()); }
+    public double[] getResiduals() {
+        return modelObject.at("residuals").asDoubleArray();
+    }
 
     /**
-     * Returns the upper prediction bounds.
+     * Gets the <code>xlevels</code> field of an <code>'lm'</code> object.
      *
-     * By default the bounds (both lower and upper) are confidence bounds. However
-     * the call to <code>predict</code> can specify prediction bounds.
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the upper bounds for the predictions
+     * @return The value of the xlevels field
      */
-//    public double[] getPredictUpperBound() { return(this.modelpredict.getUpper()); }
+    public RList getXlevels() {
+        return modelObject.at("xlevels").asList();
+    }
 
-    /**
-     * Returns the standard error of predictions.
-     *
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A double[] containing the standard error of predictions.
-     */
-//    public double[] getPredictSEPredictions() { return(this.modelpredict.getSEFit()); }
+
 }
