@@ -32,6 +32,7 @@ public abstract class RModel implements IModel {
     private String modelName = null;
     protected RList modelObject = null;
     protected HashMap params = null;
+    protected String paramVarName = null;
 
 
     /**
