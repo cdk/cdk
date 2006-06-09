@@ -364,6 +364,7 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
      *
      * @return The result of the prediction. Contains a number of fields corresponding to
      *         predicted values, SE and other items depending on the parameters that we set.
+     *         Note that the call to <code>predict.lm()</code> is performde with <code>se.fit = TRUE</code>
      */
     public RList getModelPredict() {
         return modelPredict;
