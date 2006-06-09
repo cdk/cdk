@@ -283,51 +283,59 @@ public abstract class RModel implements IModel {
             Object value = params.get(name);
 
             if (value instanceof Integer) {
+                logger.debug("Assigning a Integer");
                 Integer tmp1 = (Integer) value;
                 int[] tmp2 = new int[]{tmp1.intValue()};
                 rengine.assign(name, tmp2);
             } else if (value instanceof String) {
+                logger.debug("Assigning a String");
                 rengine.assign(name, (String) value);
             } else if (value instanceof Boolean) {
+                logger.debug("Assigning a Boolean");
                 Boolean tmp1 = (Boolean) value;
                 if (tmp1.booleanValue()) result = rengine.eval(name + "<- TRUE");
                 else result = rengine.eval(name + "<- FALSE");
                 if (result == null) throw new QSARModelException("Error assigning a boolean");
             } else if (value instanceof Double) {
+                logger.debug("Assigning a Double");
                 Double tmp1 = (Double) value;
                 double[] tmp2 = new double[]{tmp1.doubleValue()};
                 rengine.assign(name, tmp2);
             } else if (value instanceof Integer[]) {
+                logger.debug("Assigning a Integer[]");
                 Integer[] tmp1 = (Integer[]) value;
                 int[] tmp2 = new int[tmp1.length];
                 for (int i = 0; i < tmp1.length; i++) tmp2[i] = tmp1[i].intValue();
                 rengine.assign(name, tmp2);
             } else if (value instanceof Double[]) {
+                logger.debug("Assigning a Double[]");
                 Double[] tmp1 = (Double[]) value;
                 double[] tmp2 = new double[tmp1.length];
-                for (int i = 0; i < tmp1.length; i++) tmp2[i] = tmp1[i].intValue();
+                for (int i = 0; i < tmp1.length; i++) tmp2[i] = tmp1[i].doubleValue();
                 rengine.assign(name, tmp2);
             } else if (value instanceof Integer[][]) {
+                logger.debug("Assigning a Integer[][]");
                 Integer[][] tmp1 = (Integer[][]) value;
                 int nrow = tmp1.length;
                 int ncol = tmp1[0].length;
                 int[] tmp2 = new int[nrow * ncol];
                 for (int i = 0; i < ncol; i++) {
                     for (int j = 0; j < nrow; j++) {
-                        tmp2[i * ncol + j] = (tmp1[j][i]).intValue();
+                        tmp2[i * nrow + j] = (tmp1[j][i]).intValue();
                     }
                 }
                 rengine.assign(name, tmp2);
                 result = rengine.eval(name + "<- matrix(" + name + ", nrow=" + nrow + ")");
                 if (result == null) throw new QSARModelException("Error assigning a int[][]");
             } else if (value instanceof Double[][]) {
+                logger.debug("Assigning a Double[][]");
                 Double[][] tmp1 = (Double[][]) value;
                 int nrow = tmp1.length;
                 int ncol = tmp1[0].length;
                 double[] tmp2 = new double[nrow * ncol];
                 for (int i = 0; i < ncol; i++) {
                     for (int j = 0; j < nrow; j++) {
-                        tmp2[i * ncol + j] = (tmp1[j][i]).doubleValue();
+                        tmp2[i * nrow + j] = (tmp1[j][i]).doubleValue();
                     }
                 }
                 rengine.assign(name, tmp2);
