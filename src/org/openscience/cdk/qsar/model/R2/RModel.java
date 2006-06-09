@@ -367,6 +367,30 @@ public abstract class RModel implements IModel {
 
     /**
      * Checks whether the class of a named object is of the specified class.
+     * <p/>
+     *
+     * @param objectName   The name of the R variable holding the object to check
+     * @param objectClass  The class to check for
+     * @param removeObject if true then the object is removed from the R session ifor the case where the class
+     *                     does not match the specified class
+     * @return true if the object is of the specified class, false if the object is not
+     *         of the specified class or the R command to obtain the class failed
+     */
+    public static boolean isOfClass(String objectName, String objectClass, boolean removeObject) {
+        REXP klass = rengine.eval("class(" + objectName + ")");
+        if (klass == null) {
+            if (removeObject) rengine.eval("rm(\"" + objectName + "\")");
+            return false;
+        }
+        if (klass.asString().equals(objectClass)) return true;
+
+        if (removeObject) rengine.eval("rm(\"" + objectName + "\")");
+        return false;
+    }
+
+    /**
+     * Checks whether the class of a named object is of the specified class.
+     * <p/>
      *
      * @param objectName  The name of the R variable holding the object to check
      * @param objectClass The class to check for
@@ -374,12 +398,7 @@ public abstract class RModel implements IModel {
      *         of the specified class or the R command to obtain the class failed
      */
     public static boolean isOfClass(String objectName, String objectClass) {
-        REXP klass = rengine.eval("class(" + objectName + ")");
-        if (klass == null) {
-            rengine.eval("rm(\"" + objectName + "\")");
-            return false;
-        }
-        return (klass.asString().equals(objectClass));
+        isOfClass(objectName, objectClass, false);
     }
 
     /**
