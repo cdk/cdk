@@ -366,6 +366,23 @@ public abstract class RModel implements IModel {
     }
 
     /**
+     * Checks whether the class of a named object is of the specified class.
+     *
+     * @param objectName  The name of the R variable holding the object to check
+     * @param objectClass The class to check for
+     * @return true if the object is of the specified class, false if the object is not
+     *         of the specified class or the R command to obtain the class failed
+     */
+    public static boolean isOfClass(String objectName, String objectClass) {
+        REXP klass = rengine.eval("class(" + objectName + ")");
+        if (klass == null) {
+            rengine.eval("rm(\"" + objectName + "\")");
+            return false;
+        }
+        return (klass.asString().equals(objectClass));
+    }
+
+    /**
      * Abstract method to handle loading R models.
      * <p/>
      * This method can be used to load a previously saved R model object. Since
