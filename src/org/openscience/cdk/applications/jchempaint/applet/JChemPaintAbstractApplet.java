@@ -128,8 +128,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	public void initPanelAndModel(JChemPaintPanel jcpp) {
 		getContentPane().removeAll();
 		getContentPane().setLayout(new BorderLayout());
-		theModel.setTitle("JCP Applet" /* getNewFrameName() */);
-    	try{
+		try{
+	    	theModel.setTitle("JCP Applet" /* getNewFrameName() */);
     		theModel.setAuthor(JCPPropertyHandler.getInstance().getJCPProperties().getProperty("General.UserName"));
     	}catch(NullPointerException ex){
     		//It seems we get an npe here sometimes. the line is not necessary
