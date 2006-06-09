@@ -32,8 +32,6 @@ public abstract class RModel implements IModel {
     private String modelName = null;
     protected RList modelObject = null;
     protected HashMap params = null;
-    protected String paramVarName = null;
-
 
     /**
      * The object that performs the calls to the R engine.
@@ -263,7 +261,7 @@ public abstract class RModel implements IModel {
         if (prefix == null || prefix.equals("")) prefix = "var";
         Random rnd = new Random();
         long uid = ((System.currentTimeMillis() >>> 16) << 16) + rnd.nextLong();
-        return prefix + uid;
+        return prefix + String.valueOf(Math.abs(uid)).trim();
     }
 
     /**
