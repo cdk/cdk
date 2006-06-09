@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.qsar.model.R2.LinearRegressionModel;
+import org.openscience.cdk.qsar.model.R2.RModel;
 import org.openscience.cdk.test.CDKTestCase;
 import org.rosuda.JRI.RList;
 
@@ -27,8 +28,101 @@ public class LinearRegressionModelTest extends CDKTestCase {
 
     public void testLinearRegressionModel() throws CDKException, Exception, QSARModelException {
 
+        double[][] x = getXData();
+        double[] y = getYData();
 
-        double[][] x = {{5.33029143313, 8.13257437501, 2.66720308462},
+        LinearRegressionModel lrm = new LinearRegressionModel(x, y);
+        assertTrue(lrm.getRengine() != null);
+
+        lrm.build();
+        assertTrue(lrm.summary() != null);
+
+        double[] coeff = lrm.getCoefficients();
+        assertTrue(coeff != null);
+        assertEquals(coeff[0], 0.5079196, .000001);
+        assertEquals(coeff[1], 0.0017640, .000001);
+        assertEquals(coeff[2], 0.0038752, .000001);
+        assertEquals(coeff[3], -0.00228948, .000001);
+
+        /* Test predictions */
+        Double[][] newx = {
+                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
+                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
+                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
+                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
+                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
+        };
+
+        lrm.setParameters("newdata", newx);
+        lrm.setParameters("interval", "confidence");
+        lrm.predict();
+        RList predList = lrm.getModelPredict();
+        double[] preds = predList.at("fit").asDoubleArray();
+
+        assertTrue(preds != null);
+        assertEquals(preds[0], 0.5235362, 0.0000001);
+        assertEquals(preds[1], 0.5030381, 0.0000001);
+        assertEquals(preds[2], 0.5184706, 0.0000001);
+        assertEquals(preds[3], 0.5232108, 0.0000001);
+        assertEquals(preds[4], 0.5436967, 0.0000001);
+
+        assertEquals(predList.at("df").asInt(), 96, 0.1);
+    }
+
+
+    public void testModelLoadSave() throws QSARModelException {
+        double[][] x = getXData();
+        double[] y = getYData();
+
+        LinearRegressionModel lrm = new LinearRegressionModel(x, y);
+        lrm.build();
+        RModel.saveModel(lrm.getModelName(), "lmtest.Rda");
+
+        LinearRegressionModel loadedModel = new LinearRegressionModel();
+        loadedModel.loadModel("lmtest.Rda", "aLoadedModel");
+
+        assertEquals(loadedModel.getModelName(), "aLoadedModel");
+        assertNotNull(loadedModel.getModel());
+
+        double[] coeff = loadedModel.getCoefficients();
+        assertTrue(coeff != null);
+        assertEquals(coeff[0], 0.5079196, .000001);
+        assertEquals(coeff[1], 0.0017640, .000001);
+        assertEquals(coeff[2], 0.0038752, .000001);
+        assertEquals(coeff[3], -0.00228948, .000001);
+
+        /* Test predictions */
+        Double[][] newx = {
+                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
+                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
+                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
+                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
+                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
+        };
+
+        loadedModel.setParameters("newdata", newx);
+        loadedModel.setParameters("interval", "confidence");
+        loadedModel.predict();
+        RList predList = loadedModel.getModelPredict();
+
+
+        double[] preds = predList.at("fit").asDoubleArray();
+        assertTrue(preds != null);
+        assertEquals(preds[0], 0.5235362, 0.0000001);
+        assertEquals(preds[1], 0.5030381, 0.0000001);
+        assertEquals(preds[2], 0.5184706, 0.0000001);
+        assertEquals(preds[3], 0.5232108, 0.0000001);
+        assertEquals(preds[4], 0.5436967, 0.0000001);
+        assertEquals(predList.at("df").asInt(), 96, 0.1);
+    }
+
+    private double[] getYData() {
+        return new double[]{0.548279405588, 0.749557798438, 0.704786225556, 0.064272559019, 0.959196778261, 0.443650457811, 0.139588310157, 0.697614953528, 0.894633307417, 0.288986449536, 0.968020911596, 0.00941763156173, 0.803870693657, 0.457124742168, 0.728543899161, 0.88083354383, 0.624089352674, 0.470379461181, 0.86877991158, 0.622721685808, 0.0250057478044, 0.2376603194, 0.112920370051, 0.608780223601, 0.62741359624, 0.39753977229, 0.396823887458, 0.0259021311271, 0.433022176171, 0.94665816668, 0.788805032857, 0.831096752197, 0.981239642073, 0.72411413954, 0.585272152663, 0.694317542691, 0.890624533901, 0.244048473797, 0.422902339036, 0.597269134374, 0.911340032927, 0.00186723050398, 0.439586593554, 0.714613974993, 0.815341829936, 0.726336948414, 0.742772100572, 0.597295528478, 0.305955366581, 0.155579392014, 0.000873693540479, 0.339225424495, 0.433434106377, 0.109738110471, 0.0193980726758, 0.258795872246, 0.322462583569, 0.326807898424, 0.079866937163, 0.741776416238, 0.597174006951, 0.289816194377, 0.691182117374, 0.113315930392, 0.302120795811, 0.616653275971, 0.833480904688, 0.881803762099, 0.734675438389, 0.269429129873, 0.977225860294, 0.327410536298, 0.319292292397, 0.876227987007, 0.832930007711, 0.941552570764, 0.0433177729231, 0.333665283905, 0.889264621262, 0.367930824862, 0.143633644589, 0.0106269520474, 0.623817520313, 0.237853599409, 0.301794094647, 0.912166461213, 0.663976930266, 0.918081800984, 0.909573924607, 0.976541368479, 0.340915467396, 0.617160565805, 0.0315242385532, 0.869413665191, 0.695610662213, 0.144537534715, 0.619567870639, 0.159550199731, 0.536333432502, 0.837898880743};
+    }
+
+    private double[][] getXData() {
+
+        return new double[][]{{5.33029143313, 8.13257437501, 2.66720308462},
                 {3.29906147519, 5.06835102093, 6.47319431067},
                 {5.69553153292, 5.88043843898, 9.73312992111},
                 {5.29194559083, 6.78243188133, 3.2602449344},
@@ -128,47 +222,6 @@ public class LinearRegressionModelTest extends CDKTestCase {
                 {4.19942346415, 5.92478285192, 8.33053966924},
                 {3.11127058351, 3.25340097022, 7.07258377268},
                 {7.61105416732, 8.46642439572, 5.61730141222}};
-
-        double[] y = {0.548279405588, 0.749557798438, 0.704786225556, 0.064272559019, 0.959196778261, 0.443650457811, 0.139588310157, 0.697614953528, 0.894633307417, 0.288986449536, 0.968020911596, 0.00941763156173, 0.803870693657, 0.457124742168, 0.728543899161, 0.88083354383, 0.624089352674, 0.470379461181, 0.86877991158, 0.622721685808, 0.0250057478044, 0.2376603194, 0.112920370051, 0.608780223601, 0.62741359624, 0.39753977229, 0.396823887458, 0.0259021311271, 0.433022176171, 0.94665816668, 0.788805032857, 0.831096752197, 0.981239642073, 0.72411413954, 0.585272152663, 0.694317542691, 0.890624533901, 0.244048473797, 0.422902339036, 0.597269134374, 0.911340032927, 0.00186723050398, 0.439586593554, 0.714613974993, 0.815341829936, 0.726336948414, 0.742772100572, 0.597295528478, 0.305955366581, 0.155579392014, 0.000873693540479, 0.339225424495, 0.433434106377, 0.109738110471, 0.0193980726758, 0.258795872246, 0.322462583569, 0.326807898424, 0.079866937163, 0.741776416238, 0.597174006951, 0.289816194377, 0.691182117374, 0.113315930392, 0.302120795811, 0.616653275971, 0.833480904688, 0.881803762099, 0.734675438389, 0.269429129873, 0.977225860294, 0.327410536298, 0.319292292397, 0.876227987007, 0.832930007711, 0.941552570764, 0.0433177729231, 0.333665283905, 0.889264621262, 0.367930824862, 0.143633644589, 0.0106269520474, 0.623817520313, 0.237853599409, 0.301794094647, 0.912166461213, 0.663976930266, 0.918081800984, 0.909573924607, 0.976541368479, 0.340915467396, 0.617160565805, 0.0315242385532, 0.869413665191, 0.695610662213, 0.144537534715, 0.619567870639, 0.159550199731, 0.536333432502, 0.837898880743};
-        LinearRegressionModel lrm = new LinearRegressionModel(x, y);
-        assertTrue(lrm.getRengine() != null);
-
-        //lrm.saveModel(lrm.getModelName(), "lmodel.rda");
-
-        lrm.build();
-        assertTrue(lrm.summary() != null);
-
-        double[] coeff = lrm.getCoefficients();
-        assertTrue(coeff != null);
-        assertEquals(coeff[0], 0.5079196, .000001);
-        assertEquals(coeff[1], 0.0017640, .000001);
-        assertEquals(coeff[2], 0.0038752, .000001);
-        assertEquals(coeff[3], -0.00228948, .000001);
-
-        /* Test predictions */
-        Double[][] newx = {
-                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
-                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
-                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
-                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
-                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
-        };
-
-        lrm.setParameters("newdata", newx);
-        lrm.setParameters("interval", "confidence");
-        lrm.predict();
-        RList predList = lrm.getModelPredict();
-        double[] preds = predList.at("fit").asDoubleArray();
-
-        assertTrue(preds != null);
-        assertEquals(preds[0], 0.5235362, 0.0000001);
-        assertEquals(preds[1], 0.5030381, 0.0000001);
-        assertEquals(preds[2], 0.5184706, 0.0000001);
-        assertEquals(preds[3], 0.5232108, 0.0000001);
-        assertEquals(preds[4], 0.5436967, 0.0000001);
-
-        assertEquals(predList.at("df").asInt(), 96, 0.1);
-
     }
 
 }
