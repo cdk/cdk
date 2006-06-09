@@ -65,7 +65,7 @@ genReturnType <- function(obj) {
     if (varType == 'integer' && length(obj) == 1) {
       return(c('int', 'asInt()'))
     } else {
-      return(c('int[]', 'asIntegerArray()'))
+      return(c('int[]', 'asIntArray()'))
     }
     if (varType == 'double' && length(obj) == 1) {
       return(c('double', 'asDouble()'))
