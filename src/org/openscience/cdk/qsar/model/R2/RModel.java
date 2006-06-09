@@ -4,6 +4,7 @@ import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
 import org.rosuda.JRI.REXP;
+import org.rosuda.JRI.RList;
 import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
 
@@ -29,7 +30,7 @@ import java.util.Set;
  */
 public abstract class RModel implements IModel {
     private String modelName = null;
-
+    protected RList modelObject = null;
     protected HashMap params = null;
 
 
@@ -236,6 +237,15 @@ public abstract class RModel implements IModel {
     public Rengine getRengine() throws QSARModelException {
         if (rengine == null) initRengine();
         return rengine;
+    }
+
+    /**
+     * Get the actual model object.
+     *
+     * @return An <code>RList</code> object representation of the model.
+     */
+    public RList getModelObject() {
+        return modelObject;
     }
 
     /**
