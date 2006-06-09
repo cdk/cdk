@@ -398,7 +398,7 @@ public abstract class RModel implements IModel {
      *         of the specified class or the R command to obtain the class failed
      */
     public static boolean isOfClass(String objectName, String objectClass) {
-        isOfClass(objectName, objectClass, false);
+        return isOfClass(objectName, objectClass, false);
     }
 
     /**
