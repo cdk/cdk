@@ -179,7 +179,7 @@ public abstract class RModel implements IModel {
     }
 
     /**
-     * Initializes SJava with the <i>--vanilla, --quiet, --slave</i> flags.
+     * Initializes R with the <i>--vanilla, --quiet, --slave</i> flags.
      * <p/>
      * This constructor will initialize the R session via a temporary file  or
      * from a String depending on whether the symbol <code>initRFromString</code>
