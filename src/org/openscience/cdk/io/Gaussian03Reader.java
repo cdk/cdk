@@ -24,78 +24,62 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StreamTokenizer;
-import java.io.StringReader;
-//import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.Gaussian03Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.io.*;
 
 /**
  * A reader for Gaussian03 output.
  * Gaussian 03 is a quantum chemistry program
  * by Gaussian, Inc. (http://www.gaussian.com/).
- *
+ * <p/>
  * <p>Molecular coordinates, energies, and normal coordinates of
  * vibrations are read. Each set of coordinates is added to the
  * ChemFile in the order they are found. Energies and vibrations
  * are associated with the previously read set of coordinates.
- *
+ * <p/>
  * <p>This reader was developed from a small set of
  * example output files, and therefore, is not guaranteed to
  * properly read all Gaussian03 output. If you have problems,
  * please contact the author of this code, not the developers
  * of Gaussian03.
- *
+ * <p/>
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
- *
- * @cdk.module io
  *
  * @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen
+ * @cdk.module io
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {
 
     private BufferedReader input;
     private LoggingTool logger;
-    
+
     public Gaussian03Reader(Reader reader) {
         input = new BufferedReader(reader);
         logger = new LoggingTool(this);
     }
-    
+
     public Gaussian03Reader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public Gaussian03Reader() {
         this(new StringReader(""));
     }
-    
+
     public IResourceFormat getFormat() {
         return new Gaussian03Format();
     }
-    
+
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
@@ -104,46 +88,46 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IChemSequence.class.equals(interfaces[i])) return true;
-		}
-		return false;
-	}
+    public boolean accepts(Class classObject) {
+        Class[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+            if (IChemSequence.class.equals(interfaces[i])) return true;
+        }
+        return false;
+    }
 
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemSequence) {
-            return readChemSequence((IChemSequence)object);
+            return readChemSequence((IChemSequence) object);
         } else if (object instanceof IChemFile) {
-            return readChemFile((IChemFile)object);
+            return readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Object " + object.getClass().getName() + " is not supported");
         }
     }
-    
+
     public void close() throws IOException {
         input.close();
     }
-    
+
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         IChemSequence sequence = readChemSequence(chemFile.getBuilder().newChemSequence());
         chemFile.addChemSequence(sequence);
         return chemFile;
     }
-    
+
     private IChemSequence readChemSequence(IChemSequence sequence) throws CDKException {
         IChemModel model = null;
-        
+
         try {
             String line = input.readLine();
             //String levelOfTheory = null;
-            
+
             // Find first set of coordinates
             while (input.ready() && (line != null)) {
                 if (line.indexOf("Standard orientation:") >= 0) {
-                    
+
                     // Found a set of coordinates
                     model = sequence.getBuilder().newChemModel();
                     try {
@@ -192,7 +176,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                     }
                     line = input.readLine();
                 }
-                
+
                 // Add current frame to file
                 sequence.addChemModel(model);
                 fireFrameRead();
@@ -202,12 +186,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
         return sequence;
     }
-    
+
     /**
      * Reads a set of coordinates into ChemModel.
      *
-     * @param     model        the destination ChemModel
-     * @exception IOException  if an I/O error occurs
+     * @param model the destination ChemModel
+     * @throws IOException if an I/O error occurs
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
         IAtomContainer container = model.getBuilder().newAtomContainer();
@@ -224,12 +208,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             StringReader sr = new StringReader(line);
             StreamTokenizer token = new StreamTokenizer(sr);
             token.nextToken();
-            
+
             // ignore first token
             if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
                 atomicNumber = (int) token.nval;
                 if (atomicNumber == 0) {
-                    
+
                     // Skip dummy atoms. Dummy atoms must be skipped
                     // if frequencies are to be read because Gaussian
                     // does not report dummy atoms in frequencies, and
@@ -240,7 +224,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 throw new IOException("Error reading coordinates");
             }
             token.nextToken();
-            
+
             // ignore third token
             double x = 0.0;
             double y = 0.0;
@@ -296,16 +280,16 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 int atomCounter = (int) tokenizer.nval;
 
                 tokenizer.nextToken(); // ignore the symbol
-                
+
                 double charge = 0.0;
                 if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
-                    charge = (double)tokenizer.nval;
-                    logger.debug("Found charge for atom " + atomCounter + 
-                                 ": " + charge);
+                    charge = (double) tokenizer.nval;
+                    logger.debug("Found charge for atom " + atomCounter +
+                            ": " + charge);
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");
                 }
-                IAtom atom = molecule.getAtomAt(atomCounter-1);
+                IAtom atom = molecule.getAtomAt(atomCounter - 1);
                 atom.setCharge(charge);
             }
         }
@@ -314,8 +298,8 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     /**
      * Reads a set of vibrations into ChemModel.
      *
-     * @param frame  the destination ChemModel
-     * @exception IOException  if an I/O error occurs
+     * @param model the destination ChemModel
+     * @throws IOException if an I/O error occurs
      */
     private void readFrequencies(IChemModel model) throws IOException {
         /* This is yet to be ported. Vibrations don't exist yet in CDK.
@@ -422,7 +406,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             ++atomIndex;
         } */
     }
-    
+
     /**
      * Select the theory and basis set from the first archive line.
      */
@@ -441,5 +425,5 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         }
         return st1.nextToken() + "/" + st1.nextToken();
     }*/
-    
+
 }

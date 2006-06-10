@@ -23,12 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
 import org.openscience.cdk.exception.CDKException;
@@ -39,32 +33,34 @@ import org.openscience.cdk.io.formats.MOPAC97Format;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
 
+import java.io.*;
+
 /**
  * Reader for MOPAC 93, 97 and 2002 files. Only tested for MOPAC 93 files.
  * It uses Jmol IO classes.
  *
- * @cdk.module       io-jmol
- * @cdk.keyword      file format, MOPAC
+ * @cdk.module io-jmol
+ * @cdk.keyword file format, MOPAC
  * @cdk.builddepends jmolIO.jar
  * @cdk.builddepends jmolApis.jar
- * @cdk.depends      jmolIO.jar
- * @cdk.depends      jmolApis.jar
+ * @cdk.depends jmolIO.jar
+ * @cdk.depends jmolApis.jar
  */
 public class MOPAC97Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    
-	public MOPAC97Reader(InputStream in) {
-		this(new BufferedReader(new InputStreamReader(in)));
-	}
 
-	public MOPAC97Reader(Reader in) {
+    public MOPAC97Reader(InputStream in) {
+        this(new BufferedReader(new InputStreamReader(in)));
+    }
+
+    public MOPAC97Reader(Reader input) {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
-	}
+    }
 
     public IResourceFormat getFormat() {
         return new MOPAC97Format();
@@ -72,7 +68,7 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
 
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -82,36 +78,35 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
-		}
-		return false;
-	}
+    public boolean accepts(Class classObject) {
+        Class[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IMolecule.class.equals(interfaces[i])) return true;
+        }
+        return false;
+    }
 
-	public IChemObject read(IChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
-			return readMolecule((IMolecule)object);
-		} else {
-			throw new CDKException("Only supported are Molecule.");
-		}
-	}
+            return readMolecule((IMolecule) object);
+        } else {
+            throw new CDKException("Only supported are Molecule.");
+        }
+    }
 
-	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
+    private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
         molecule.add(new Convertor(molecule.getBuilder()).convert(model));
-		return molecule;
-	}
-    
+        return molecule;
+    }
+
     public void close() throws IOException {
         input.close();
     }
-    
+
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[0];
-        return settings;
+        return new IOSetting[0];
     }
 }
