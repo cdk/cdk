@@ -62,12 +62,8 @@ predictLM <- function( modelname, paramlist) {
     preds
 }
 
-buildCNN <-  function(modelname, params) {
-    paramlist <- hashmap.to.list(params)
+buildCNN <-  function(modelname, paramlist) {
     attach(paramlist)
-
-    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
-    y <- matrix(unlist(y), nrow=length(y), byrow=TRUE)
     if (nrow(x) != nrow(y)) { 
         stop('The number of observations in x & y dont match') 
     }
@@ -93,11 +89,9 @@ buildCNN <-  function(modelname, params) {
 }
 
 
-buildCNNClass <- function(modelname, params) {
-    paramlist <- hashmap.to.list(params)
-    attach(paramlist)
+buildCNNClass <- function(modelname, paramlist) {
 
-    x <- matrix(unlist(x), nrow=length(x), byrow=TRUE)
+    attach(paramlist)
     y <- factor(unlist(y)) # y will come in as a single vector
     if (nrow(x) != length(y)) { stop('The number of observations in x & y dont match') }
 
@@ -123,39 +117,25 @@ buildCNNClass <- function(modelname, params) {
     get(modelname)
 }
 
-predictCNN <- function(modelname, params) {
-    # Since buildCNN should have been called before this
-    # we dont bother loading the nnet library
-    paramlist <- hashmap.to.list(params)
+predictCNN <- function(modelname, paramlist) {
     attach(paramlist)
-
-    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    newx <- data.frame( newdata )
     names(newx) <- get(modelname)$coefnames
     if (type == '' || !(type %in% c('raw','class')) ) { 
         type = 'raw'
-    } 
-
-
+    }
     preds <- predict( get(modelname), newdata=newx, type=type);
-    class(preds) <- 'cnnregprediction'
-
     detach(paramlist)
     preds
 }
-predictCNNClass <- function(modelname, params) {
-    # Since buildCNNClass should have been called before this
-    # we dont bother loading the nnet library
-    paramlist <- hashmap.to.list(params)
+predictCNNClass <- function(modelname, paramlist) {
     attach(paramlist)
-
-    newx <- data.frame( matrix(unlist(newdata), nrow=length(newdata), byrow=TRUE) )
+    newx <- data.frame( newdata )
     names(newx) <- get(modelname)$coefnames
     if (type == '' || !(type %in% c('raw','class')) ) { 
         type = 'raw'
-    } 
-
+    }
     preds <- predict( get(modelname), newdata=newx, type=type);
-    class(preds) <- 'cnnclsprediction'
     detach(paramlist)
     preds
 }
