@@ -28,17 +28,11 @@
  */
 
 package org.openscience.cdk.ringsearch.cyclebasis;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
+
+import java.util.*;
 
 /**
  * A cycle in a graph.
@@ -76,10 +70,10 @@ public class SimpleCycle extends UndirectedSubgraph {
 	 * @param   edges the edges of the cycle
 	 */
 	public SimpleCycle (UndirectedGraph g, Set edges) {
-		super(g, inducedVertices(g, edges), edges);
+		super(g, inducedVertices(edges), edges);
 	}
 	
-	static private Set inducedVertices(Graph g, Set edges) {
+	static private Set inducedVertices(Set edges) {
 		Set inducedVertices = new HashSet();
 		for (Iterator i = edges.iterator(); i.hasNext();) {
 			Edge edge = (Edge) i.next();

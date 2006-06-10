@@ -28,19 +28,6 @@
  */
 
 package org.openscience.cdk.ringsearch.cyclebasis;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -51,6 +38,8 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MinimalPathIterator;
+
+import java.util.*;
 
 /**
  * Auxiliary class for <code>CycleBasis</code>.
@@ -299,7 +288,7 @@ public class SimpleCycleBasis {
 			boolean[] u = constructKernelVector(edgeList.size(), a, i);
 			
 			// Construct auxiliary graph gu
-			AuxiliaryGraph gu = new AuxiliaryGraph(graph, edgeList, u);
+			AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 			
 			SimpleCycle shortestCycle = (SimpleCycle) cycles.get(i);
 			
@@ -503,7 +492,7 @@ public class SimpleCycleBasis {
 			}
 			
 			// Construct kernel vector u from a column of the inverse of a
-			AuxiliaryGraph gu = new AuxiliaryGraph(graph, edgeList, u);
+			AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 			
 			boolean isEssential = true;
 			
@@ -589,7 +578,7 @@ public class SimpleCycleBasis {
 			}
 			
 			// Construct auxiliary graph gu
-			AuxiliaryGraph gu = new AuxiliaryGraph(graph, edgeList, u);
+			AuxiliaryGraph gu = new AuxiliaryGraph(graph, u);
 			
 			Iterator vertexIterator = graph.vertexSet().iterator();
 			while (vertexIterator.hasNext()) {
@@ -849,7 +838,7 @@ public class SimpleCycleBasis {
 		Graph g;
 		boolean[] u;
 		
-		AuxiliaryGraph(Graph graph, List edgeList, boolean[] u) {
+		AuxiliaryGraph(Graph graph, boolean[] u) {
 			g = graph;
 			this.u = u;
 		}
