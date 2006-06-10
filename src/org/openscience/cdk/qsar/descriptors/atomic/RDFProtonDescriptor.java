@@ -24,12 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
@@ -47,6 +41,11 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.
@@ -136,7 +135,7 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[2];
 		params[0] = new Integer(atomPosition);
-		params[1] = new Boolean(checkAromaticity);
+		params[1] = Boolean.valueOf(checkAromaticity);
 		return params;
 	}
 
@@ -203,9 +202,9 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 			if (checkAromaticity) {
 				HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 			}
-			List rsAtom = null;
-			Ring ring = null;
-			List ringsWithThisBond = null;
+			List rsAtom;
+			Ring ring;
+			List ringsWithThisBond;
 			// SET ISINRING FLAGS FOR BONDS
 			org.openscience.cdk.interfaces.IBond[] bondsInContainer = ac.getBonds();		
 			for (int z = 0; z < bondsInContainer.length; z++) {
@@ -675,8 +674,7 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 		secondLine.sub(c, d);
 		Vector3d firstVec = new Vector3d(firstLine);
 		Vector3d secondVec = new Vector3d(secondLine);
-		double ang = firstVec.angle(secondVec);
-		return ang;
+        return firstVec.angle(secondVec);
 	}
 	
 	// this method store atoms and bonds in proper lists:
@@ -685,7 +683,7 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 			if(sphere < 6) atomVec.add(new Integer(a1));
 		}
 		if(!cycloexVec.contains(new Integer(bondToStore))) {
-			if(isBondInCycloex == true) {
+			if(isBondInCycloex) {
 				cycloexVec.add(new Integer(bondToStore));
 			}
 		}
@@ -699,7 +697,7 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	
 	// generic method for calculation of distance btw 2 atoms
 	private double calculateDistanceBetweenTwoAtoms(Molecule mol, IAtom atom1, IAtom atom2) {
-		double distance = 0;
+		double distance;
 		Point3d firstPoint = atom1.getPoint3d();
 		Point3d secondPoint = atom2.getPoint3d();
 		distance = firstPoint.distance(secondPoint);
@@ -775,6 +773,6 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	 */
 	public Object getParameterType(String name) {
                 if (name.equals("atomPosition")) return new Integer(0);
-                return new Boolean(true);
+                return Boolean.TRUE;
 	}
 }

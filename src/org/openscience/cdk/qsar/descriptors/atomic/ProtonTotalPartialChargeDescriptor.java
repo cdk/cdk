@@ -124,7 +124,6 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        int counter = 1;
         Molecule mol = new Molecule(ac);
         try {
         	
@@ -142,7 +141,7 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
         protonPartialCharge.add( target.getCharge() );
         for (int i = 0; i < neighboors.length; i++) {
             if (neighboors[i].getSymbol().equals("H")) {
-                protonPartialCharge.add( neighboors[i].getCharge() );				counter++;
+                protonPartialCharge.add( neighboors[i].getCharge() );
             }
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), protonPartialCharge);
