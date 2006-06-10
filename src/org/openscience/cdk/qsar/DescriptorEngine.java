@@ -62,9 +62,8 @@ import java.util.jar.JarFile;
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
  * @cdk.created 2004-12-02
- * @cdk.module  qsar
+ * @cdk.module qsar
  * @cdk.depends xom-1.0.jar
- * 
  * @see DescriptorSpecification
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
@@ -81,7 +80,7 @@ public class DescriptorEngine {
     private List speclist = null;
     private LoggingTool logger;
 
-   /**
+    /**
      * Constructor that generates a list of descriptors to calculate.
      * <p/>
      * All available descriptors are included in the list of descriptors to
@@ -89,10 +88,10 @@ public class DescriptorEngine {
      * to find valid jar files.
      *
      * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
-     * are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
+     *             are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
      */
     public DescriptorEngine(int type) {
-	this(type, null);
+        this(type, null);
     }
 
     /**
@@ -101,13 +100,13 @@ public class DescriptorEngine {
      * All available descriptors are included in the list of descriptors to
      * calculate
      *
-     * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
-     * are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
-     * @pararm jarFileNames A String[] containing the fully qualified names of the jar files
-     * to examine for descriptor classes. In general, this can be set to NULL, in which case
-     * the system classpath is examined for available jar files. This parameter can be set for
-     * situations where the system classpath is not available or is modified such as in an application
-     * container.
+     * @param type         Indicates whether molecular or atomic descriptors should be calculated. Possible values
+     *                     are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
+     * @param jarFileNames A String[] containing the fully qualified names of the jar files
+     *                     to examine for descriptor classes. In general, this can be set to NULL, in which case
+     *                     the system classpath is examined for available jar files. This parameter can be set for
+     *                     situations where the system classpath is not available or is modified such as in an application
+     *                     container.
      */
     public DescriptorEngine(int type, String[] jarFileNames) {
         logger = new LoggingTool(this);
@@ -127,17 +126,6 @@ public class DescriptorEngine {
         dict = dictDB.getDictionary("descriptor-algorithms");
     }
 
-
- 
-    /**
-     * Constructor that generates a list of descriptors to calculate.
-     *
-     * @param descriptorClasses A String array containing one or more of the above elements
-     * @deprecated
-     */
-    public DescriptorEngine(String[] descriptorClasses) {
-        this(DescriptorEngine.MOLECULAR, null);
-    }
 
     /**
      * Calculates all available (or only those specified) descriptors for a molecule.
@@ -192,8 +180,8 @@ public class DescriptorEngine {
         Entry[] dictEntries = dict.getEntries();
         String specRef = getSpecRef(identifier);
 
-        logger.debug("Got identifier: "+identifier);
-        logger.debug("Final spec ref: "+specRef);
+        logger.debug("Got identifier: " + identifier);
+        logger.debug("Final spec ref: " + specRef);
 
         for (int j = 0; j < dictEntries.length; j++) {
             if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
@@ -208,8 +196,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element e = classifications.get(i);
                     Attribute attr = e.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) || 
-                        (attr.getValue().indexOf("atomicDescriptor") != -1)) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) ||
+                            (attr.getValue().indexOf("atomicDescriptor") != -1)) {
                         String[] tmp = attr.getValue().split("#");
                         return tmp[1];
                     }
@@ -267,8 +255,8 @@ public class DescriptorEngine {
 
         String specRef = getSpecRef(identifier);
         if (specRef == null) {
-        	logger.error("Cannot determine specification for id: ", identifier);
-        	return new String[0];
+            logger.error("Cannot determine specification for id: ", identifier);
+            return new String[0];
         }
         List dictClasses = new ArrayList();
 
@@ -280,8 +268,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element e = classifications.get(i);
                     Attribute attr = e.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0) || 
-                        (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0) ||
+                            (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
                         continue;
                     }
                     String[] tmp = attr.getValue().split("#");
@@ -413,32 +401,32 @@ public class DescriptorEngine {
      * is automatcally set to "org.openscience.cdk.qsar.descriptors" and as a result will return
      * classes corresponding to both atomic and molecular descriptors.
      *
-     * @param packageName The name of the package containing the required descriptor
+     * @param packageName  The name of the package containing the required descriptor
      * @param jarFileNames A String[] containing the fully qualified names of the jar files
-     * to examine for descriptor classes. In general this can be set to NULL, in which case
-     * the system classpath is examined for available jar files. This parameter can be set for
-     * situations where the system classpath is not available or is modified such as in an application
-     * container.
+     *                     to examine for descriptor classes. In general this can be set to NULL, in which case
+     *                     the system classpath is examined for available jar files. This parameter can be set for
+     *                     situations where the system classpath is not available or is modified such as in an application
+     *                     container.
      * @return A list containing the classes in the specified package
      */
-    public List    getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
+    public List getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
         }
 
-	String[] jars = null;
-	if (jarFileNames == null) {
-	    String classPath = System.getProperty("java.class.path");
-	    jars = classPath.split(File.pathSeparator);
-	} else {
-	    jars = jarFileNames;
-	}
+        String[] jars = null;
+        if (jarFileNames == null) {
+            String classPath = System.getProperty("java.class.path");
+            jars = classPath.split(File.pathSeparator);
+        } else {
+            jars = jarFileNames;
+        }
 
         ArrayList classlist = new ArrayList();
 
         for (int i = 0; i < jars.length; i++) {
-            logger.debug("Looking in "+jars[i]);
+            logger.debug("Looking in " + jars[i]);
             JarFile j;
             try {
                 j = new JarFile(jars[i]);
@@ -498,9 +486,9 @@ public class DescriptorEngine {
                 DescriptorSpecification descSpecification = descriptor.getSpecification();
                 String[] tmp = descSpecification.getSpecificationReference().split("#");
                 if (tmp.length != 2) {
-                	logger.debug("Something fishy with the spec ref: ", descSpecification.getSpecificationReference());
+                    logger.debug("Something fishy with the spec ref: ", descSpecification.getSpecificationReference());
                 } else {
-                	specRef = tmp[1];
+                    specRef = tmp[1];
                 }
             }
         }
@@ -508,9 +496,9 @@ public class DescriptorEngine {
         if (specRef == null) {
             String[] tmp = identifier.split("#");
             if (tmp.length != 2) {
-            	logger.debug("Something fishy with the identifier: ", identifier);
+                logger.debug("Something fishy with the identifier: ", identifier);
             } else {
-            	specRef = tmp[1];
+                specRef = tmp[1];
             }
         }
         return specRef;
