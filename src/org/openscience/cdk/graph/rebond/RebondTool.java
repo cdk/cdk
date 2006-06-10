@@ -28,10 +28,10 @@
  */
 package org.openscience.cdk.graph.rebond;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * Provides tools to rebond a molecule from 3D coordinates only.
@@ -104,9 +104,7 @@ public class RebondTool {
     for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements(); ) {
       IAtom atomNear = ((TupleAtom)e.nextElement()).getAtom();
       if (atomNear != atom && container.getBond(atom, atomNear) == null) {
-        boolean isBonded = isBonded(atom, myCovalentRadius,
-                                    atomNear, atomNear.getCovalentRadius(),
-                                    e.foundDistance2());
+        boolean isBonded = isBonded(myCovalentRadius,  atomNear.getCovalentRadius(), e.foundDistance2());
         if (isBonded) {
           IBond bond = atom.getBuilder().newBond(atom, atomNear, 1.0);
           container.addBond(bond);
@@ -119,8 +117,8 @@ public class RebondTool {
    * Returns the bond order for the bond. At this moment, it only returns
    * 0 or 1, but not 2 or 3, or aromatic bond order.
    */
-  private boolean isBonded(IAtom atomA, double covalentRadiusA,
-                           IAtom atomB, double covalentRadiusB,
+  private boolean isBonded(double covalentRadiusA,
+                           double covalentRadiusB,
                            double distance2) {
     double maxAcceptable =
       covalentRadiusA + covalentRadiusB + bondTolerance;
@@ -128,9 +126,7 @@ public class RebondTool {
     double minBondDistance2 = this.minBondDistance*this.minBondDistance;
     if (distance2 < minBondDistance2)
       return false;
-    if (distance2 <= maxAcceptable2)
-      return true;
-    return false;
+      return distance2 <= maxAcceptable2;
   }
     
   class TupleAtom implements Bspt.Tuple {
