@@ -30,7 +30,7 @@ import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.*;
 import org.openscience.cdk.test.qsar.descriptors.bond.*;
 import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.QSARWekaModelTests;
+import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -111,7 +111,6 @@ public class MqsarTests {
         suite.addTest(IPAtomicDescriptorTest.suite());
 
         // from cdk.test.qsar.model
-        suite.addTest(org.openscience.cdk.test.qsar.model.QSARRModelTests.suite());
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
         suite.addTest(QSARWekaModelTests.suite());
 
