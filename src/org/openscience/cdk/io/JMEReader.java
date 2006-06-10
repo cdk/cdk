@@ -28,13 +28,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter;
 import org.openscience.cdk.exception.CDKException;
@@ -45,47 +38,48 @@ import org.openscience.cdk.io.formats.JMEFormat;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.libio.jmol.Convertor;
 
+import java.io.*;
+
 /**
  * Reads a molecule from an JME file using Jmol's JME reader.
  *
- * @cdk.module       io-jmol
- *
- * @author           Egon Willighagen
- * @author           Miguel Howard
- * @cdk.created      2004-05-18
- * @cdk.keyword      file format, JME
+ * @author Egon Willighagen
+ * @author Miguel Howard
+ * @cdk.module io-jmol
+ * @cdk.created 2004-05-18
+ * @cdk.keyword file format, JME
  * @cdk.builddepends jmolIO.jar
  * @cdk.builddepends jmolApis.jar
- * @cdk.depends      jmolIO.jar
- * @cdk.depends      jmolApis.jar
+ * @cdk.depends jmolIO.jar
+ * @cdk.depends jmolApis.jar
  */
 public class JMEReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
-    
+
     public JMEReader() {
         this(new StringReader(""));
     }
-    
-	public JMEReader(InputStream in) {
-		this(new InputStreamReader(in));
-	}
 
-	public JMEReader(Reader in) {
+    public JMEReader(InputStream in) {
+        this(new InputStreamReader(in));
+    }
+
+    public JMEReader(Reader input) {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
-	}
+    }
 
     public IResourceFormat getFormat() {
         return new JMEFormat();
     }
-    
+
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -95,44 +89,43 @@ public class JMEReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IMolecule.class.equals(interfaces[i])) return true;
-		}
-		return false;
-	}
+    public boolean accepts(Class classObject) {
+        Class[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IMolecule.class.equals(interfaces[i])) return true;
+        }
+        return false;
+    }
 
-	public IChemObject read(IChemObject object) throws CDKException {
+    public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
-			return readMolecule((IMolecule)object);
-		} else {
-			throw new CDKException("Only supported are Molecule.");
-		}
-	}
+            return readMolecule((IMolecule) object);
+        } else {
+            throw new CDKException("Only supported are Molecule.");
+        }
+    }
 
-	/**
-	 *  Read a Molecule from a JME file.
-	 *
-	 *@return    The Molecule that was read from the MDL file.
-	 */
-	private IMolecule readMolecule(IMolecule molecule) throws CDKException {
+    /**
+     * Read a Molecule from a JME file.
+     *
+     * @return The Molecule that was read from the MDL file.
+     */
+    private IMolecule readMolecule(IMolecule molecule) throws CDKException {
         JmolAdapter adapter = new SmarterJmolAdapter(null);
         // note that it actually let's the adapter detect the format!
         Object model = adapter.openBufferedReader("", input);
-        molecule.add( new Convertor(molecule.getBuilder()).convert(model));
-		return molecule; 
-	}
-    
+        molecule.add(new Convertor(molecule.getBuilder()).convert(model));
+        return molecule;
+    }
+
     public void close() throws IOException {
         input.close();
     }
-    
+
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[0];
-        return settings;
+        return new IOSetting[0];
     }
 
-	
+
 }
 
