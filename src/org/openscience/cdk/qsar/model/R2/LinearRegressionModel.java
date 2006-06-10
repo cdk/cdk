@@ -80,6 +80,8 @@ import java.util.HashMap;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @cdk.keyword linear regression
+ * @cdk.keyword R
  */
 
 public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RModel {
