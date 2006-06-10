@@ -24,6 +24,8 @@ import java.util.HashMap;
  * The use of
  * this class is shown in the following code snippet
  * <pre>
+ * double[][] x;
+ * double[] y;
  * try {
  *     LinearRegressionModel lrm = new LinearRegressionModel(x,y);
  *     lrm.build();
@@ -33,8 +35,8 @@ import java.util.HashMap;
  * } catch (QSARModelException qme) {
  *     System.out.println(qme.toString());
  * }
- * double[] fitted = lrm.getFitFitted();
- * double[] predictedvalues = lrm.getPredictPredicted();
+ * double[] fitted = lrm.getFittedValues()
+ * double[] predicted = lrm.getModelPredict().asList.at("fit").asDoubleArray();
  * </pre>
  * Note that when making predictions, the new X matrix and interval type can be set by calls
  * to setParameters(). In general, the arguments for lm() and predict.lm() can be set via

@@ -16,17 +16,63 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed
- * and that rJava is also installed. Other requirements are
+ * Base class for the R-CDK interface.
+ * <p/>
+ * This class provides the basis for all classes that wish to interface with
+ * R functions from a CDK program.
+ * <p/>
+ * Since the R engine is multi-threaded only one instance of the R session can exist
+ * for a given Java process. This implies that initialization must be perfored exactly once
+ * within a Java process. This class ensure that this occurs.
+ * <p/>
+ * In addition, this class loads some helper functions into the R session. The loading
+ * can be via a temporary file (the default) or via a String, which may be useful in
+ * webservice scenarios.
+ * <p/>
+ * <b>Requirement</b> The class (and implementing subclasses) is dependent on the
+ * <a href="http://rosuda.org/JRI/">JRI</a> library. This provides an interface to R
+ * for Java code. Though the <a href="http://rosuda.org/rJava/">rJava</a> for R
+ * includes JRI, the code here is only dependent on JRI and does not attempt to
+ * go from R to Java. Hence rJava is not a requirement. To compile this code, the CDK
+ * includes the JRI jar file. However to run the code, the JRI native library (libjri.so
+ * on Linux) must be located in the users LD_LIBRARY_PATH. Also the versions of the JRI Java
+ * API and native library should match and this is checked for.
+ * <p/>
+ * Currently the CDK uses JRI 0.3 (available from <a href="  http://rosuda.org/R/nightly/other/JRI_0.3-0.tar.gz">here</a>)
+ * <p/>
+ * <p/>
+ * <b>Implementation Notes</b>
  * <ul>
- * <li>LD_LIBRARY_PATH should include the directory that contains libjri.so  as well
- * as the dierctory that contains libR.so
+ * <li>If the user requires other initializations the only way to do so at
+ * this point is to edit <code>helper.R</code> or perform the initialization by hand
+ * <li>An implementing class must call <code>super()</code>
+ * <li>Though this class provides a field to store the R model object as a
+ * <code>RList</code> the actual R variable will remain in the R session. This is useful
+ * for saving the model as a .Rda file at one point. Also by storing the model on the R
+ * side we do not not need to make repeated queries on the model via <code>eval()</code>.
+ * <li>Subclasses of this class are generally Java front-ends to a specific R model type
+ * (such as linear regression, CNN etc.). Thus each subclass should provide getter methods
+ * for the various components of such an object. Since this is tedious to do by hand,
+ * you can use the <code>stubs.R</code> script that comes with the CDK distribution to
+ * generate source code for the getter methods for the individual components of an R model
+ * object. Note, that the script currently ignores objects of classes <code>'call'</code>
+ * and <code>'formula'</code>.
+ * </ul>
+ * <p/>
+ * <b>NOTE</b>: For the R backend to work, ensure that R is correctly installed.
+ * Other requirements are
+ * <ul>
+ * <li>LD_LIBRARY_PATH should include the directory that contains <code>libjri.so</code>  as well
+ * as the dierctory that contains <code>libR.so</code>
  * <li>R_HOME should be set to the appropriate location
  * </ul>
  *
  * @author Rajarshi Guha
  * @cdk.require r-project
+ * @cdk.require JRI.jar
  * @cdk.module qsar
+ * @cdk.keyword R
+ * @cdk.keyword JRI
  */
 public abstract class RModel implements IModel {
     private String modelName = null;
