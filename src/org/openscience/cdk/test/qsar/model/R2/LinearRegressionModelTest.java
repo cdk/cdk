@@ -5,7 +5,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.qsar.model.R2.LinearRegressionModel;
-import org.openscience.cdk.qsar.model.R2.RModel;
 import org.openscience.cdk.test.CDKTestCase;
 import org.rosuda.JRI.RList;
 
@@ -76,7 +75,7 @@ public class LinearRegressionModelTest extends CDKTestCase {
 
         LinearRegressionModel lrm = new LinearRegressionModel(x, y);
         lrm.build();
-        RModel.saveModel(lrm.getModelName(), "lmtest.Rda");
+        lrm.saveModel(lrm.getModelName(), "lmtest.Rda");
 
         LinearRegressionModel loadedModel = new LinearRegressionModel();
         loadedModel.loadModel("lmtest.Rda", "aLoadedModel");

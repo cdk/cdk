@@ -411,7 +411,10 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
         if (ret == null) throw new QSARModelException("Model could not be loaded");
 
         String name = ret.asList().at("name").asString();
-        if (!RModel.isOfClass(name, "lm", true)) throw new QSARModelException("Loaded object was not of class \'lm\'");
+        if (!isOfClass(name, "lm")) {
+            removeObject(name);
+            throw new QSARModelException("Loaded object was not of class \'lm\'");
+        }
 
         modelObject = ret.asList().at("model").asList();
         setModelName(name);
@@ -435,7 +438,10 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
         if (ret == null) throw new QSARModelException("Model could not be unserialized");
 
         String name = ret.asList().at("name").asString();
-        if (!RModel.isOfClass(name, "lm", true)) throw new QSARModelException("Loaded object was not of class \'lm\'");
+        if (!isOfClass(name, "lm")) {
+            removeObject(name);
+            throw new QSARModelException("Loaded object was not of class \'lm\'");
+        }
 
         modelObject = ret.asList().at("model").asList();
         setModelName(name);
