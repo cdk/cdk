@@ -36,8 +36,10 @@
         <property name="arg2" value="" />
         <property name="arg3" value="" />
         <property name="arg4" value="" />
-        
-        <target id="info" name="info" depends="check"> 
+
+         <property environment="env" />
+
+    <target id="info" name="info" depends="check">
             <!-- Gives information about the building process. -->
             <echo message="Platform:" />
             <echo message="             OS: ${os.name}" />
@@ -84,7 +86,7 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
-            <echo message="     skipDoclet: ${doSkipDoclet}" />
+            <echo message="     skipDoclet: ${doSkipDoclet}" />            
         </target>
 
         <target id="checkPlatforms" name="checkPlatforms">
@@ -173,11 +175,6 @@
                 <or>
                   <available file="/usr/bin/R" />
                   <available file="/usr/local/bin/R"/>
-                </or>
-                <or>
-                  <available file="/usr/lib/R/library/rJava/" />
-                  <available file="/usr/local/lib/R/library/rJava/" />
-                  <available file="/usr/local/lib/R/site-library/rJava/" />
                 </or>
               </and>
             </condition>
