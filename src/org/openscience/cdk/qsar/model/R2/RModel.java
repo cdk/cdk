@@ -492,7 +492,11 @@ public abstract class RModel implements IModel {
 
     abstract public void predict() throws QSARModelException;
 
-    abstract protected void finalize();
+    protected void finalize() {
+        rengine.eval("rm(\"" + getModelName() + "\",pos=1)");
+    }
+
+    ;
 
 
     class TextConsole implements RMainLoopCallbacks {

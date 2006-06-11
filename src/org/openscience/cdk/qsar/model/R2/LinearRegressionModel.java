@@ -226,11 +226,6 @@ public class LinearRegressionModel extends org.openscience.cdk.qsar.model.R2.RMo
         params.put("weights", wts);
     }
 
-    protected void finalize() {
-        rengine.eval("rm(\"" + getModelName() + "\",pos=1)");
-    }
-
-
     /**
      * Fits a linear regression model.
      * <p/>

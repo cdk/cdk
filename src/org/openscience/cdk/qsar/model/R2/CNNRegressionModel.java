@@ -272,10 +272,6 @@ public class CNNRegressionModel extends RModel {
     }
 
 
-    protected void finalize() {
-        rengine.eval("rm(\"" + getModelName() + "\",pos=1)");
-    }
-
     /**
      * Sets parameters required for building a CNN model or using one for prediction.
      * <p/>
