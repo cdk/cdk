@@ -97,7 +97,6 @@ import java.util.HashMap;
 
 public class CNNRegressionModel extends RModel {
     public static int globalID = 0;
-    private int currentID;
     private int noutput = 0;
     private int nvar = 0;
 
@@ -150,9 +149,9 @@ public class CNNRegressionModel extends RModel {
         logger = new LoggingTool(this);
 
         params = new HashMap();
-        currentID = CNNRegressionModel.globalID;
+        int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;
-        setModelName("cdkCNNModel" + this.currentID);
+        setModelName("cdkCNNModel" + currentID);
         setDefaults();
 
 
@@ -184,7 +183,7 @@ public class CNNRegressionModel extends RModel {
         logger = new LoggingTool(this);
 
         params = new HashMap();
-        currentID = CNNRegressionModel.globalID;
+        int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;
         setModelName("cdkCNNModel" + currentID);
 
@@ -238,7 +237,7 @@ public class CNNRegressionModel extends RModel {
         logger = new LoggingTool(this);
 
         params = new HashMap();
-        currentID = CNNRegressionModel.globalID;
+        int currentID = CNNRegressionModel.globalID;
         CNNRegressionModel.globalID++;
         setModelName("cdkCNNModel" + currentID);
 
