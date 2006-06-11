@@ -26,8 +26,128 @@ public class CNNRegressionModelTest extends CDKTestCase {
 
     public void testCNNRegressionModel() throws CDKException, Exception, QSARModelException {
 
+        double[][] x = getXData();
+        double[] y = getYData();
 
-        double[][] x = {{5.33029143313, 8.13257437501, 2.66720308462},
+        CNNRegressionModel cnnrm = new CNNRegressionModel(x, y, 3);
+        assertNotNull(cnnrm.getRengine());
+
+        Double[] Wts = getWeights();
+        cnnrm.setParameters("Wts", Wts);
+        cnnrm.build();
+        double value = cnnrm.getValue();
+        assertEquals(value, 8.076735, .000001);
+
+        double[] wts = cnnrm.getWts();
+        assertTrue(wts != null);
+        assertEquals(-1.635880, wts[0], .000001);
+        assertEquals(-6.227619, wts[1], .000001);
+        assertEquals(-4.639471, wts[2], .000001);
+        assertEquals(-4.060546, wts[3], .000001);
+
+        double[][] fitted = cnnrm.getFittedValues();
+        assertTrue(fitted != null);
+        assertEquals(0.527783, fitted[0][0], .000001);
+        assertEquals(0.527783, fitted[1][0], .000001);
+        assertEquals(0.527783, fitted[2][0], .000001);
+        assertEquals(0.203857, fitted[6][0], .000001);
+
+        /* Test predictions */
+        Double[][] newx = {
+                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
+                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
+                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
+                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
+                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
+        };
+
+        cnnrm.setParameters("newdata", newx);
+        cnnrm.setParameters("type", "raw"); // this is set by default so no real need
+        cnnrm.predict();
+
+        double[][] preds = cnnrm.getPredictions();
+        assertTrue(preds != null);
+        assertEquals(0.527783, preds[0][0], 0.000001);
+        assertEquals(0.401678, preds[1][0], 0.000001);
+        assertEquals(0.390702, preds[2][0], 0.000001);
+        assertEquals(0.527783, preds[3][0], 0.000001);
+        assertEquals(0.527783, preds[4][0], 0.000001);
+
+        assertTrue(cnnrm.summary() != null);
+    }
+
+    public void testModelLoadSave() throws QSARModelException {
+        double[][] x = getXData();
+        double[] y = getYData();
+
+        CNNRegressionModel cnnrm = new CNNRegressionModel(x, y, 3);
+        assertNotNull(cnnrm.getRengine());
+
+        Double[] Wts = getWeights();
+        cnnrm.setParameters("Wts", Wts);
+        cnnrm.build();
+        cnnrm.saveModel(cnnrm.getModelName(), "cnntest.Rda");
+
+        CNNRegressionModel loadedModel = new CNNRegressionModel();
+        loadedModel.loadModel("cnntest.Rda");
+
+        assertEquals(loadedModel.getModelName(), "cdkCNNModel1");
+        assertNotNull(loadedModel.getModelObject());
+
+        double[] wts = cnnrm.getWts();
+        assertTrue(wts != null);
+        assertEquals(-1.635880, wts[0], .000001);
+        assertEquals(-6.227619, wts[1], .000001);
+        assertEquals(-4.639471, wts[2], .000001);
+        assertEquals(-4.060546, wts[3], .000001);
+
+        double[][] fitted = cnnrm.getFittedValues();
+        assertTrue(fitted != null);
+        assertEquals(0.527783, fitted[0][0], .000001);
+        assertEquals(0.527783, fitted[1][0], .000001);
+        assertEquals(0.527783, fitted[2][0], .000001);
+        assertEquals(0.203857, fitted[6][0], .000001);
+
+        /* Test predictions */
+        Double[][] newx = {
+                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
+                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
+                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
+                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
+                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
+        };
+
+        loadedModel.setParameters("newdata", newx);
+        loadedModel.setParameters("type", "raw"); // this is set by default so no real need
+        loadedModel.predict();
+
+        double[][] preds = loadedModel.getPredictions();
+        assertTrue(preds != null);
+        assertEquals(0.527783, preds[0][0], 0.000001);
+        assertEquals(0.401678, preds[1][0], 0.000001);
+        assertEquals(0.390702, preds[2][0], 0.000001);
+        assertEquals(0.527783, preds[3][0], 0.000001);
+        assertEquals(0.527783, preds[4][0], 0.000001);
+
+
+    }
+
+
+    private Double[] getWeights() {
+        return new Double[]{
+                new Double(0.51404345), new Double(0.50840113), new Double(0.74685975), new Double(0.13561035),
+                new Double(0.29352420), new Double(0.82764496), new Double(0.48282801), new Double(0.36164355),
+                new Double(0.33401877), new Double(0.58141624), new Double(0.08336752), new Double(0.72385802),
+                new Double(0.94860029), new Double(0.32215781), new Double(0.32806066), new Double(0.66709418)
+        };
+    }
+
+    private double[] getYData() {
+        return new double[]{0.548279405588, 0.749557798438, 0.704786225556, 0.064272559019, 0.959196778261, 0.443650457811, 0.139588310157, 0.697614953528, 0.894633307417, 0.288986449536, 0.968020911596, 0.00941763156173, 0.803870693657, 0.457124742168, 0.728543899161, 0.88083354383, 0.624089352674, 0.470379461181, 0.86877991158, 0.622721685808, 0.0250057478044, 0.2376603194, 0.112920370051, 0.608780223601, 0.62741359624, 0.39753977229, 0.396823887458, 0.0259021311271, 0.433022176171, 0.94665816668, 0.788805032857, 0.831096752197, 0.981239642073, 0.72411413954, 0.585272152663, 0.694317542691, 0.890624533901, 0.244048473797, 0.422902339036, 0.597269134374, 0.911340032927, 0.00186723050398, 0.439586593554, 0.714613974993, 0.815341829936, 0.726336948414, 0.742772100572, 0.597295528478, 0.305955366581, 0.155579392014, 0.000873693540479, 0.339225424495, 0.433434106377, 0.109738110471, 0.0193980726758, 0.258795872246, 0.322462583569, 0.326807898424, 0.079866937163, 0.741776416238, 0.597174006951, 0.289816194377, 0.691182117374, 0.113315930392, 0.302120795811, 0.616653275971, 0.833480904688, 0.881803762099, 0.734675438389, 0.269429129873, 0.977225860294, 0.327410536298, 0.319292292397, 0.876227987007, 0.832930007711, 0.941552570764, 0.0433177729231, 0.333665283905, 0.889264621262, 0.367930824862, 0.143633644589, 0.0106269520474, 0.623817520313, 0.237853599409, 0.301794094647, 0.912166461213, 0.663976930266, 0.918081800984, 0.909573924607, 0.976541368479, 0.340915467396, 0.617160565805, 0.0315242385532, 0.869413665191, 0.695610662213, 0.144537534715, 0.619567870639, 0.159550199731, 0.536333432502, 0.837898880743};
+    }
+
+    private double[][] getXData() {
+        return new double[][]{{5.33029143313, 8.13257437501, 2.66720308462},
                 {3.29906147519, 5.06835102093, 6.47319431067},
                 {5.69553153292, 5.88043843898, 9.73312992111},
                 {5.29194559083, 6.78243188133, 3.2602449344},
@@ -127,59 +247,6 @@ public class CNNRegressionModelTest extends CDKTestCase {
                 {4.19942346415, 5.92478285192, 8.33053966924},
                 {3.11127058351, 3.25340097022, 7.07258377268},
                 {7.61105416732, 8.46642439572, 5.61730141222}};
-
-        double[] y = {0.548279405588, 0.749557798438, 0.704786225556, 0.064272559019, 0.959196778261, 0.443650457811, 0.139588310157, 0.697614953528, 0.894633307417, 0.288986449536, 0.968020911596, 0.00941763156173, 0.803870693657, 0.457124742168, 0.728543899161, 0.88083354383, 0.624089352674, 0.470379461181, 0.86877991158, 0.622721685808, 0.0250057478044, 0.2376603194, 0.112920370051, 0.608780223601, 0.62741359624, 0.39753977229, 0.396823887458, 0.0259021311271, 0.433022176171, 0.94665816668, 0.788805032857, 0.831096752197, 0.981239642073, 0.72411413954, 0.585272152663, 0.694317542691, 0.890624533901, 0.244048473797, 0.422902339036, 0.597269134374, 0.911340032927, 0.00186723050398, 0.439586593554, 0.714613974993, 0.815341829936, 0.726336948414, 0.742772100572, 0.597295528478, 0.305955366581, 0.155579392014, 0.000873693540479, 0.339225424495, 0.433434106377, 0.109738110471, 0.0193980726758, 0.258795872246, 0.322462583569, 0.326807898424, 0.079866937163, 0.741776416238, 0.597174006951, 0.289816194377, 0.691182117374, 0.113315930392, 0.302120795811, 0.616653275971, 0.833480904688, 0.881803762099, 0.734675438389, 0.269429129873, 0.977225860294, 0.327410536298, 0.319292292397, 0.876227987007, 0.832930007711, 0.941552570764, 0.0433177729231, 0.333665283905, 0.889264621262, 0.367930824862, 0.143633644589, 0.0106269520474, 0.623817520313, 0.237853599409, 0.301794094647, 0.912166461213, 0.663976930266, 0.918081800984, 0.909573924607, 0.976541368479, 0.340915467396, 0.617160565805, 0.0315242385532, 0.869413665191, 0.695610662213, 0.144537534715, 0.619567870639, 0.159550199731, 0.536333432502, 0.837898880743};
-
-        CNNRegressionModel cnnrm = new CNNRegressionModel(x, y, 3);
-        assertNotNull(cnnrm.getRengine());
-
-        Double[] Wts = {
-                new Double(0.51404345), new Double(0.50840113), new Double(0.74685975), new Double(0.13561035),
-                new Double(0.29352420), new Double(0.82764496), new Double(0.48282801), new Double(0.36164355),
-                new Double(0.33401877), new Double(0.58141624), new Double(0.08336752), new Double(0.72385802),
-                new Double(0.94860029), new Double(0.32215781), new Double(0.32806066), new Double(0.66709418)
-        };
-        cnnrm.setParameters("Wts", Wts);
-        cnnrm.build();
-        double value = cnnrm.getValue();
-        assertEquals(value, 8.076735, .000001);
-
-        double[] wts = cnnrm.getWts();
-        assertTrue(wts != null);
-        assertEquals(-1.635880, wts[0], .000001);
-        assertEquals(-6.227619, wts[1], .000001);
-        assertEquals(-4.639471, wts[2], .000001);
-        assertEquals(-4.060546, wts[3], .000001);
-
-        double[][] fitted = cnnrm.getFittedValues();
-        assertTrue(fitted != null);
-        assertEquals(0.527783, fitted[0][0], .000001);
-        assertEquals(0.527783, fitted[1][0], .000001);
-        assertEquals(0.527783, fitted[2][0], .000001);
-        assertEquals(0.203857, fitted[6][0], .000001);
-
-        /* Test predictions */
-        Double[][] newx = {
-                {new Double(9.81536768251), new Double(3.82849269659), new Double(7.22212024421)},
-                {new Double(0.197449829806), new Double(0.324130354642), new Double(2.8329420321)},
-                {new Double(0.548460836141), new Double(7.28037586863), new Double(8.13728493983)},
-                {new Double(1.76049278788), new Double(6.41731766803), new Double(5.53986167864)},
-                {new Double(3.4541825491), new Double(9.78038580407), new Double(3.58954097059)}
-        };
-
-        cnnrm.setParameters("newdata", newx);
-        cnnrm.setParameters("type", "raw"); // this is set by default so no real need
-        cnnrm.predict();
-
-        double[][] preds = cnnrm.getPredictions();
-        assertTrue(preds != null);
-        assertEquals(0.527783, preds[0][0], 0.000001);
-        assertEquals(0.401678, preds[1][0], 0.000001);
-        assertEquals(0.390702, preds[2][0], 0.000001);
-        assertEquals(0.527783, preds[3][0], 0.000001);
-        assertEquals(0.527783, preds[4][0], 0.000001);
-
-        assertTrue(cnnrm.summary() != null);
     }
 
 }

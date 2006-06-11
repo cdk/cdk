@@ -81,7 +81,7 @@ public class LinearRegressionModelTest extends CDKTestCase {
         loadedModel.loadModel("lmtest.Rda");
 
         assertEquals(loadedModel.getModelName(), "cdkLMModel1");
-        assertNotNull(loadedModel.getModel());
+        assertNotNull(loadedModel.getModelObject());
 
         double[] coeff = loadedModel.getCoefficients();
         assertTrue(coeff != null);
