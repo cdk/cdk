@@ -10,8 +10,11 @@ genstubs <- function(obj, fileName='stubs.java', verbose=FALSE) {
   writeLines("// a RList object\n\n", fcon)
   attach(obj)
   for (nm in nms) {
-    value <- get(nm)
-    retType <- genReturnType(value)
+    object <- get(nm)
+
+    #print(nm)
+    
+    retType <- genReturnType(object)
     if (retType[1] == '') next
 
     rexpMethod = retType[2]
@@ -58,6 +61,9 @@ genReturnType <- function(obj) {
   varMode <- mode(obj)
   varClass <- class(obj)  
   varType <- typeof(obj)
+
+  #cat(varMode, ' ', varClass, ' ', varType, '\n')
+  
   if (varMode == 'numeric') {
     if (varClass == 'matrix') {
       return(c('double[][]', 'asDoubleMatrix()'))
@@ -73,9 +79,10 @@ genReturnType <- function(obj) {
     } else {
       return(c('double[]', 'asDoubleArray()'))
     }
-  } else if (varMode == 'factor') return(c('RFactor', 'asFactor()'))
-  else if (varMode == 'list') return(c('RList', 'asList()'))
-  else if (varMode == 'logical') return(c('RBool', 'asBool()'))
-  else return(c('', ''))
+  }
+  if (varMode == 'factor') return(c('RFactor', 'asFactor()'))
+  if (varMode == 'list') return(c('RList', 'asList()'))
+  if (varMode == 'logical') return(c('RBool', 'asBool()'))
+  return(c('', ''))
 }
 
