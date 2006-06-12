@@ -277,10 +277,8 @@ public abstract class RModel implements IModel {
      * returning the object.
      *
      * @return The Rengine object
-     * @throws QSARModelException if initialization fails.
      */
-    public Rengine getRengine() throws QSARModelException {
-        if (rengine == null) initRengine();
+    public static Rengine getRengine() {
         return rengine;
     }
 
