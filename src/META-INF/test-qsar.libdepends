@@ -2,6 +2,6 @@ vecmath1.2-1.14.jar
 log4j.jar
 Jama-1.0.1.jar
 jgrapht-0.6.0.jar
-sjava-0.68.jar
 xom-1.1.jar
 JRI.jar
+weka.jar
