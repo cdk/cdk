@@ -280,7 +280,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with Methoxyethylene
 	 */
-	public void testPartialPiChargeDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testPiElectronegativityDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.916,5.7345,3.971,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[2];
