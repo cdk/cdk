@@ -43,7 +43,9 @@ public class QSARRModelTests {
                 // what variables does windows need set? And what are they set to?
             }
 
-            Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest");
+            Class testClass;
+
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest");
             suite.addTest(new TestSuite(testClass));
             testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest");
             suite.addTest(new TestSuite(testClass));
