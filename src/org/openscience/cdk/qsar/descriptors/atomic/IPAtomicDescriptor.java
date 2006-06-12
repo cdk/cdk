@@ -24,9 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.HashMap;
-import java.util.Vector;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +34,9 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  *  This class returns the ionization potential of an atom. It is
@@ -64,6 +64,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.module     qsar
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:ionizationPotential
+ * @cdk.depends weka.jar
+ * @cdk.builddepends weka.jar
  * @see J48WModel
  */
 public class IPAtomicDescriptor implements IMolecularDescriptor {
@@ -201,7 +203,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	}
 	/**
 	 * Calculate the necessary descriptors for Heteratom atoms
-	 * @param atomContaine The IAtomContainer
+	 * @param atomContainer The IAtomContainer
 	 * @return     Array with the values of the descriptors.
 	 */
 	private Double[][] calculateHeteroAtomDescriptor(IAtomContainer atomContainer) {
@@ -225,7 +227,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	}
 	/**
 	 * Calculate the necessary descriptors for Carbonyl group
-	 * @param atomContaine The IAtomContainer
+	 * @param atomContainer The IAtomContainer
 	 * @return     Array with the values of the descriptors.
 	 */
 	private Double[][] calculateCarbonylDescriptor(IAtomContainer atomContainer) {
