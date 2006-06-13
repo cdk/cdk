@@ -1003,6 +1003,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			}
 		} else if (bond.getOrder() == 2.0)
 		{
+			
 			paintSingleBond(bond, bondColor, graphics);
 			paintInnerBond(bond, ring, bondColor, graphics);
 		} else if (bond.getOrder() == 3.0)
@@ -1143,7 +1144,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintInnerBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryTools.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring, r2dm.getRenderingCoordinates());
 
 		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));

@@ -598,6 +598,32 @@ public class GeometryTools {
 		return point;
 	}
 	
+	
+	/**
+	 *  Returns the geometric center of all the atoms in the atomContainer.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  container  Description of the Parameter
+	 **@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 *@return            the geometric center of the atoms in this atomContainer
+	 */
+	public static Point2d get2DCenter(IAtomContainer container, HashMap renderingCoordinates) {
+		double centerX = 0;
+		double centerY = 0;
+		double counter = 0;
+		IAtom[] atoms = container.getAtoms();
+		for (int i = 0; i < atoms.length; i++) {
+			if (atoms[i].getPoint2d() != null) {
+				centerX += ((Point2d)renderingCoordinates.get(atoms[i])).x;
+				centerY += ((Point2d)renderingCoordinates.get(atoms[i])).y;
+				counter++;
+			}
+		}
+		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
+		return point;
+	}
+	
+	
 	/**
 	 *  Translates the geometric 2DCenter of the given 
 	 *  AtomContainer container to the specified Point2d p.
