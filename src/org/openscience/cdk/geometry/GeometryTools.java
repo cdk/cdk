@@ -29,26 +29,15 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.awt.Dimension;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
-
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.tools.LoggingTool;
+import java.awt.*;
+import java.util.*;
 
 /**
  *  A set of static utility classes for geometric calculations and operations.
@@ -122,8 +111,8 @@ public class GeometryTools {
 		logger.debug("Translating: minx=" + minX + ", minY=" + minY);
 		translate2D(atomCon, minX * -1, minY * -1);
 	}
-	
-	
+
+
 	/**
 	 *  Translates the given molecule by the given Vector.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -135,8 +124,8 @@ public class GeometryTools {
 	public static void translate2D(IAtomContainer atomCon, double transX, double transY) {
 		translate2D(atomCon, new Vector2d(transX, transY));
 	}
-	
-	
+
+
 	/**
 	 *  Scales a molecule such that it fills a given percentage of a given
 	 *  dimension
@@ -153,8 +142,8 @@ public class GeometryTools {
 		double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
 		scaleMolecule(atomCon, scaleFactor);
 	}
-	
-	
+
+
 	/**
 	 *  Multiplies all the coordinates of the atoms of the given molecule with the
 	 *  scalefactor.
@@ -171,8 +160,8 @@ public class GeometryTools {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *  Centers the molecule in the given area
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -187,8 +176,8 @@ public class GeometryTools {
 		translateAllPositive(atomCon);
 		translate2D(atomCon, new Vector2d(transX, transY));
 	}
-	
-	
+
+
 	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -206,8 +195,8 @@ public class GeometryTools {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 *  Translates the given molecule by the given Vector, using an external set of coordinates.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -263,8 +252,72 @@ public class GeometryTools {
 		}
 	}
 
+    /**
+     * Rotates a 3D point about a specified line segment by a specified angle.
+     *
+     * The code is based on code available <a href="http://astronomy.swin.edu.au/~pbourke/geometry/rotate/source.c">here</a>.
+     * Positive angles are anticlockwise looking down the axis towards the origin.
+     * Assume right hand coordinate system.
+     *
+     * @param atom The atom to rotate
+     * @param p1  The  first point of the line segment
+     * @param p2  The second point of the line segment
+     * @param angle  The angle to rotate by (in degrees)
+     */
+    public static void rotate(IAtom atom, Point3d p1, Point3d p2, double angle) {
+        double costheta, sintheta;
 
-	/**
+        Point3d r = new Point3d();
+
+        r.x = p2.x - p1.x;
+        r.y = p2.y - p1.y;
+        r.z = p2.z - p1.z;
+        normalize(r);
+
+
+        angle = angle * Math.PI / 180.0;
+        costheta = Math.cos(angle);
+        sintheta = Math.sin(angle);
+
+        Point3d p = atom.getPoint3d();
+        p.x -= p1.x;
+        p.y -= p1.y;
+        p.z -= p1.z;
+
+        Point3d q = new Point3d(0, 0, 0);
+        q.x += (costheta + (1 - costheta) * r.x * r.x) * p.x;
+        q.x += ((1 - costheta) * r.x * r.y - r.z * sintheta) * p.y;
+        q.x += ((1 - costheta) * r.x * r.z + r.y * sintheta) * p.z;
+
+        q.y += ((1 - costheta) * r.x * r.y + r.z * sintheta) * p.x;
+        q.y += (costheta + (1 - costheta) * r.y * r.y) * p.y;
+        q.y += ((1 - costheta) * r.y * r.z - r.x * sintheta) * p.z;
+
+        q.z += ((1 - costheta) * r.x * r.z - r.y * sintheta) * p.x;
+        q.z += ((1 - costheta) * r.y * r.z + r.x * sintheta) * p.y;
+        q.z += (costheta + (1 - costheta) * r.z * r.z) * p.z;
+
+        q.x += p1.x;
+        q.y += p1.y;
+        q.z += p1.z;
+
+        atom.setPoint3d(q);
+    }
+
+    /**
+     * Normalizes a point.
+     *
+     * @param point The point to normalize
+     */
+    public static void normalize(Point3d point) {
+        double sum = Math.sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
+        point.x = point.x / sum;
+        point.y = point.y / sum;
+        point.z = point.z / sum;
+    }
+
+
+    /**
 	 *  Scales a molecule such that it fills a given percentage of a given
 	 *  dimension, using an external set of coordinates
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -416,7 +469,7 @@ public class GeometryTools {
 		return minmax;
 	}
 
-	
+
 	/**
 	 *  Translates a molecule from the origin to a new point denoted by a vector, using an external set of coordinates.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -465,7 +518,7 @@ public class GeometryTools {
 	 *  this. The difference is as follows: The methods without the HashMap change the coordinates in the Atoms of the AtomContainer. The methods with the HashMaps
 	 *  expect in this HashMaps pairs of atoms and Point2ds. They work on the Point2ds associated with a particular atom and leave the atom itself
 	 *  unchanged. If there is no entry in the HashMap for an atom, they put the coordinates from the Atom in this HashMap and then work on the HashMap.
-	 *  
+	 *
 	 *
 	 *@param  atomCon  molecule to be centered
 	 *@param  areaDim  dimension in which the molecule is to be centered
@@ -503,8 +556,8 @@ public class GeometryTools {
 		}
 		return new Point2d(x / (double) atoms.length, y / (double) atoms.length);
 	}
-	
-	
+
+
 	/**
 	 *  Calculates the center of the given atoms and returns it as a Point2d
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -597,7 +650,7 @@ public class GeometryTools {
 		Point2d point = new Point2d(centerX / (counter), centerY / (counter));
 		return point;
 	}
-	
+
 	
 	/**
 	 *  Returns the geometric center of all the atoms in the atomContainer.
@@ -625,7 +678,7 @@ public class GeometryTools {
 	
 	
 	/**
-	 *  Translates the geometric 2DCenter of the given 
+	 *  Translates the geometric 2DCenter of the given
 	 *  AtomContainer container to the specified Point2d p.
 	 *
 	 *@param  container  AtomContainer which should be translated.
@@ -774,7 +827,7 @@ public class GeometryTools {
 		}
 		if (renderingCoordinates.get(bond.getAtomAt(1)) == null && bond.getAtomAt(1).getPoint2d()!=null) {
 			renderingCoordinates.put(bond.getAtomAt(1),new Point2d(bond.getAtomAt(1).getPoint2d().x,bond.getAtomAt(1).getPoint2d().y));
-		}		
+		}
 		if (bond.getAtomAt(0).getPoint2d() == null || bond.getAtomAt(1).getPoint2d() == null) {
 			logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
 			return new int[0];
@@ -786,8 +839,8 @@ public class GeometryTools {
 		int[] coords = {beginX, beginY, endX, endY};
 		return coords;
 	}
-	
-	
+
+
 	/**
 	 *  Writes the coordinates of the atoms participating the given bond into an
 	 *  array.
@@ -809,7 +862,7 @@ public class GeometryTools {
 		int[] coords = {beginX, beginY, endX, endY};
 		return coords;
 	}
-	
+
 
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
@@ -851,8 +904,8 @@ public class GeometryTools {
 		}
 		return closestAtom;
 	}
-	
-	
+
+
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.
@@ -912,8 +965,8 @@ public class GeometryTools {
 		}
 		return closestBond;
 	}
-	
-	
+
+
 	/**
 	 *  Returns the bond of the given molecule that is closest to the given
 	 *  coordinates.
@@ -1022,8 +1075,8 @@ public class GeometryTools {
       return 1;
 		return bondLength / currentAverageBondLength;
 	}
-	
-	
+
+
 	/**
 	 *  An average of all 2D bond length values is produced, using an external set of coordinates. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
@@ -1050,8 +1103,8 @@ public class GeometryTools {
 		}
 		return bondLengthSum / bondCounter;
 	}
-	
-	
+
+
 	/**
 	 *  An average of all 2D bond length values is produced. Bonds which have
 	 *  Atom's with no coordinates are disregarded.
@@ -1099,7 +1152,7 @@ public class GeometryTools {
 		}
 		return p1.distance(p2);
 	}
-	
+
 	/**
 	 *  Returns the geometric length of this bond in 2D space.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -1131,8 +1184,8 @@ public class GeometryTools {
 	public static boolean has2DCoordinates(IAtomContainer m) {
 		return has2DCoordinatesNew(m)>0;
 	}
-	
-	
+
+
 	/**
 	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
