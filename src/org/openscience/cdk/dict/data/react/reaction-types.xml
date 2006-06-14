@@ -110,6 +110,76 @@
       <imagedata dictRef="reactions-metadata:CML" content="examples/ElectronImpactPBD.cml"/>
     </exemplesReaction>
   </entry>
+    
+  <entry id="breakingBond" term="Breaking a Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being broken to generate charges.
+    </definition>
+    <description>
+      	<p>This reaction have two directions for breaking a bond in a polar manner, each bond 
+      	is investigated twice:</p>
+      	<p>A=B => [A+]-[B-].</p> 
+      	<p>A=B => [A-]-[B+].</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/BreakingBond.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="displacementChargeFromAcceptor" term="Displacement of Charge from an Acceptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being displaced to generate charges. 
+        IReactionProcess which participate in resonance.
+    </definition>
+    <description>
+      	<p>This reaction could be represented as X=A => [X-]-[A+]. X represents an acceptor atomType.</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/displacementChargeFromAcceptor.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="displacementChargeDonorAcceptor" term="Displacement of Charge from a Donor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being displaced to generate charges. 
+        IReactionProcess which participate in resonance.
+    </definition>
+    <description>
+      	<p>This reaction could be represented as X-A=B => [X+]=A-[B-]. X represents 
+      	a donor atomType which contains lone pair electrons</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/displacementChargeFromAcceptor.cml"/>
+    </exemplesReaction>
+  </entry>
+  
   
   <entry id="RearrangementAnion1Reaction" term="Rearrangement of negative charge from Zwitterion structure">
     <annotation>

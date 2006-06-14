@@ -52,6 +52,20 @@
     <relatedEntry type="reaction-types-metadata:instanceOf" href="reactionType"/>
   </entry>
   
+  <entry id="displacement" term="Displacement">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      This reaction type is a representation of displacement of the electron which are in a 
+      orbital pi.
+    </definition>
+    <relatedEntry type="reaction-types-metadata:instanceOf" href="reactionType"/>
+  </entry>
+  
   <entry id="rearrangementCharge" term="Rearrangement of Charge">
     <annotation>
       <documentation>
