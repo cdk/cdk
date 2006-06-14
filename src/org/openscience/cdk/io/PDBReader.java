@@ -216,10 +216,10 @@ public class PDBReader extends DefaultChemObjectReader {
 						cRead = cRead + "      ";
 					}
 					// check the first column to decide what to do
-					cCol = cRead.substring(0,6).toUpperCase();
-					if (cCol.equals("ATOM  ")) {
+					cCol = cRead.substring(0,6);
+					if ("ATOM  ".equalsIgnoreCase(cCol)) {
 						// read an atom record
-						oAtom = readAtom(cRead);
+						oAtom = readAtom(cRead, lineLength);
 						
 						// construct a string describing the residue
 						cResidue = new StringBuffer(8);
@@ -260,25 +260,26 @@ public class PDBReader extends DefaultChemObjectReader {
 						if (readConnect.isSet() && atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
 							logger.warn("Duplicate serial ID found for atom: ", oAtom);
 						}
-						logger.debug("Added ATOM: ", oAtom);
+//						logger.debug("Added ATOM: ", oAtom);
 						
 						/** As HETATMs cannot be considered to either belong to a certain monomer or strand,
 						 * they are dealt with seperately.*/
-					} else if(cCol.equals("HETATM"))	{
+					} else if("HETATM".equalsIgnoreCase(cCol))	{
 						// read an atom record
-						oAtom = readAtom(cRead);
+						oAtom = readAtom(cRead, lineLength);
+						oAtom.setHetAtom(true);
 						oBP.addAtom(oAtom);
 						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
 							logger.warn("Duplicate serial ID found for atom: ", oAtom);
 						}
 						logger.debug("Added HETATM: ", oAtom);
-					} else if (cCol.equals("TER   ")) {
+					} else if ("TER   ".equalsIgnoreCase(cCol)) {
 						// start new strand						
 						chain++;
 						oStrand = new PDBStrand();
 						oStrand.setStrandName(String.valueOf(chain));
 						logger.debug("Added new STRAND");
-					} else if (cCol.equals("END   ")) {
+					} else if ("END   ".equalsIgnoreCase(cCol)) {
 						atomNumberMap.clear();
 						// create bonds and finish the molecule
 						if (deduceBonding.isSet()) {
@@ -313,7 +314,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						//					System.out.println(cLine);
 						//				} else if (cCol.equals("ENDMDL")) {
 						//					System.out.println(cLine);
-					} else if (cCol.equals("REMARK")) {						
+					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
 						Object comment = oFile.getProperty(CDKConstants.COMMENT);
                         if (comment == null) {
                         	comment = "";
@@ -324,7 +325,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         } else {
                         	logger.warn("REMARK line found without any comment!");
                         }
-					} else if (cCol.equals("COMPND")) {						
+					} else if ("COMPND".equalsIgnoreCase(cCol)) {						
                         String title = cRead.substring(10).trim();
                         oFile.setProperty(CDKConstants.TITLE, title);
 					} 
@@ -334,17 +335,15 @@ public class PDBReader extends DefaultChemObjectReader {
 					 * Only covalent bonds are dealt with. Perhaps salt bridges
 					 * should be dealt with in the same way..?
 					 */
-					else if (readConnect.isSet() && cCol.equals("CONECT"))	{
+					else if (readConnect.isSet() && "CONECT".equalsIgnoreCase(cCol))	{
 						cRead.trim();
 						if (cRead.length() < 16) {
 							logger.debug("Skipping unexpected empty CONECT line! : ", cRead);
 						} else {
 						
-							String bondAtom = cRead.substring(7, 11);
-							bondAtom = bondAtom.trim();
+							String bondAtom = cRead.substring(7, 11).trim();
 							int bondAtomNo = Integer.parseInt(bondAtom);
-							String bondedAtom = cRead.substring(12, 16);
-							bondedAtom = bondedAtom.trim();
+							String bondedAtom = cRead.substring(12, 16).trim();
 							int bondedAtomNo = -1;
 							
 							try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
@@ -394,7 +393,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					}
 					/*************************************************************/
 					
-					else if (cCol.equals("HELIX ")) {
+					else if ("HELIX ".equalsIgnoreCase(cCol)) {
 //						HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
 //						          1         2         3         4         5         6         7
 //						01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -407,7 +406,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(33, 37).trim()));
 					    structure.setEndInsertionCode(cRead.charAt(37));
 					    oBP.addStructure(structure);
-					} else if (cCol.equals("SHEET ")) {
+					} else if ("SHEET ".equalsIgnoreCase(cCol)) {
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.SHEET);
 					    structure.setStartChainID(cRead.charAt(21));
@@ -417,7 +416,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(33, 37).trim()));
 					    structure.setEndInsertionCode(cRead.charAt(37));
 					    oBP.addStructure(structure);
-					} else if (cCol.equals("TURN  ")) {
+					} else if ("TURN  ".equalsIgnoreCase(cCol)) {
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.TURN);
 					    structure.setStartChainID(cRead.charAt(19));
@@ -427,7 +426,7 @@ public class PDBReader extends DefaultChemObjectReader {
 					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(31, 35).trim()));
 					    structure.setEndInsertionCode(cRead.charAt(35));
 					    oBP.addStructure(structure);
-					}
+					} // ignore all other commands
 				}
 			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
@@ -579,12 +578,12 @@ public class PDBReader extends DefaultChemObjectReader {
 	 * @return the <code>Atom</code> created from the record.
 	 * @throws RuntimeException if the line is too short (less than 59 characters).
 	 */
-	private PDBAtom readAtom(String cLine) {
+	private PDBAtom readAtom(String cLine, int lineLength) {
 		// a line looks like:
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		// ATOM      1  O5*   C A   1      20.662  36.632  23.475  1.00 10.00      114D  45
 		
-		if (cLine.length() < 59) {
+		if (lineLength < 59) {
 			throw new RuntimeException("PDBReader error during readAtom(): line too short");
 		}
 		String elementSymbol = cLine.substring(12, 14).trim();
@@ -610,25 +609,25 @@ public class PDBReader extends DefaultChemObjectReader {
         oAtom.setResSeq(cLine.substring(22, 26).trim());
         oAtom.setICode(cLine.substring(26, 27).trim());
         oAtom.setAtomTypeName(oAtom.getResName()+"."+rawAtomName);
-		if (cLine.length() >= 59) {
+		if (lineLength >= 59) {
             String frag = cLine.substring(54, 60).trim();
             if (frag.length() > 0) {
                 oAtom.setOccupancy(Double.parseDouble(frag));
             }
 		}
-		if (cLine.length() >= 65) {
+		if (lineLength >= 65) {
             String frag = cLine.substring(60, 66).trim();
             if (frag.length() > 0) {
                 oAtom.setTempFactor(Double.parseDouble(frag));
             }
 		}
-		if (cLine.length() >= 75) {
+		if (lineLength >= 75) {
             oAtom.setSegID(cLine.substring(72, 76).trim());
 		}
-//		if (cLine.length() >= 78) {
+//		if (lineLength >= 78) {
 //            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
 //		}
-		if (cLine.length() >= 79) {
+		if (lineLength >= 79) {
             String frag = cLine.substring(78, 80).trim();
             if (frag.length() > 0) {
                 oAtom.setCharge(Double.parseDouble(frag));
@@ -647,15 +646,6 @@ public class PDBReader extends DefaultChemObjectReader {
 		}
 		else	{
 			oAtom.setOxt(false);
-		}
-		/*************************************************************************************
-		 * Set hetatm property flag. 
-		 */
-		if(cLine.substring(0,6).toUpperCase().equals("HETATM"))	{
-			oAtom.setHetAtom(true);
-		}
-		else	{
-			oAtom.setHetAtom(false);
 		}
 		/*************************************************************************************/
 		
