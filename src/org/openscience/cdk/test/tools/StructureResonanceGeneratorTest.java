@@ -225,7 +225,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	 * @return    The test suite
 	 */
 	public void testFlagActiveCenter1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Molecule molecule = (new SmilesParser()).parseSmiles("CC=C[C+]-C-C=C-C");
+		Molecule molecule = (new SmilesParser()).parseSmiles("CC=C[C+]-C-C=C-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         
@@ -240,7 +240,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("C-[C+]-C=C-C-C=C-C");
+        Molecule molecule2 = (new SmilesParser()).parseSmiles("C-[C+]-C=C-C-C=C-C=C");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);

@@ -30,7 +30,7 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * <p>It is based on rearrengements of electrons and charge</p>
  * 
  * <pre>
- * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,false);
+ * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
  * SetOfMolecules setOf = gf.getResonances(new Molecule());
  * </pre>
  * 
@@ -68,7 +68,7 @@ public class StructureResonanceGenerator {
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
-	 * Default: all possible search (Aromatic,Cation,Anion,Bond), not specified the active center
+	 * Default: all possible search (Radical,Cation,Anion,Bond), not specified the active center
 	 */
 	public StructureResonanceGenerator(){
 		this(true,true,true,true,false);
@@ -97,7 +97,7 @@ public class StructureResonanceGenerator {
 	}
 	/**
 	 * <p>Get the resonance structures from an atomContainer. </p>
-	 * <p>This generator of resonances is limited only whose have the same order sume of bonds or higher.
+	 * <p>This generator of resonances is limited only strutcures whose have the same order sum of bonds or higher.
 	 * 
 	 * @param atomContainer The atomContainer to analize
 	 * @return The different resonance structures
@@ -123,11 +123,10 @@ public class StructureResonanceGenerator {
 	 * <p>Get all resonance structures from an atomContainer. </p>
 	 * 
 	 * @param atomContainer The atomContainer to analize
-	 * @param ac            Part of the atomContainer for analazing
 	 * @return The different resonance structures
 	 */
 	public ISetOfAtomContainers getAllStructures(IAtomContainer atomContainer){
-		ISetOfAtomContainers setOfAtomContainer = DefaultChemObjectBuilder.getInstance().newSetOfAtomContainers();
+		ISetOfAtomContainers setOfAtomContainer = atomContainer.getBuilder().newSetOfAtomContainers();
 		setOfAtomContainer.addAtomContainer(atomContainer);
 		Object[] params = new Object[1];
 		if(hasActiveCenter)
@@ -137,7 +136,7 @@ public class StructureResonanceGenerator {
 
 		try {
 			for(int i = 0 ; i < setOfAtomContainer.getAtomContainerCount() ; i++){
-				ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+				ISetOfMolecules setOfReactants = atomContainer.getBuilder().newSetOfMolecules();
 				setOfReactants.addAtomContainer(setOfAtomContainer.getAtomContainer(i));
 				if(cationR){
 					/* RearrangementCation1Reaction */
