@@ -89,6 +89,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	private BufferedReader _oInput; // The internal used BufferedReader
 	private BooleanIOSetting deduceBonding;
 	private BooleanIOSetting useRebondTool;
+	private BooleanIOSetting readConnect;
 	
 	private Map atomNumberMap;
 	
@@ -185,16 +186,16 @@ public class PDBReader extends DefaultChemObjectReader {
 		ISetOfMolecules oSet = oFile.getBuilder().newSetOfMolecules();
 		
 		// some variables needed
-		StringBuffer cLine = new StringBuffer();
 		String cCol;
 		PDBAtom oAtom;
 		PDBPolymer oBP = new PDBPolymer();
 		StringBuffer cResidue;
 		String oObj;
 		IMonomer oMonomer;
-		String cRead;
+		String cRead = "";
 		char chain = 'A';	// To ensure stringent name giving of monomers
 		IStrand oStrand;
+		int lineLength = 0;
 		
 		atomNumberMap = new Hashtable();
 		
@@ -204,21 +205,21 @@ public class PDBReader extends DefaultChemObjectReader {
 				cRead = _oInput.readLine();
 				logger.debug("Read line: ", cRead);
 				if (cRead != null) {	
+					lineLength = cRead.length();
 					
-					if (cRead.length() < 80) {
+					if (lineLength < 80) {
 						logger.warn("Line is not of the expected length 80!");
 					}
 					
-					cLine = new StringBuffer(cRead);
 					// make sure the record name is 6 characters long
-					while (cLine.length() < 6) {
-						cLine.append(" ");
+					if (lineLength < 6) {
+						cRead = cRead + "      ";
 					}
 					// check the first column to decide what to do
-					cCol = cLine.substring(0,6).toUpperCase();
+					cCol = cRead.substring(0,6).toUpperCase();
 					if (cCol.equals("ATOM  ")) {
 						// read an atom record
-						oAtom = readAtom(cLine.toString());
+						oAtom = readAtom(cRead);
 						
 						// construct a string describing the residue
 						cResidue = new StringBuffer(8);
@@ -256,7 +257,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						
 						// add the atom
 						oBP.addAtom(oAtom, oMonomer, oStrand);
-						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+						if (readConnect.isSet() && atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
 							logger.warn("Duplicate serial ID found for atom: ", oAtom);
 						}
 						logger.debug("Added ATOM: ", oAtom);
@@ -265,7 +266,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						 * they are dealt with seperately.*/
 					} else if(cCol.equals("HETATM"))	{
 						// read an atom record
-						oAtom = readAtom(cLine.toString());
+						oAtom = readAtom(cRead);
 						oBP.addAtom(oAtom);
 						if (atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
 							logger.warn("Duplicate serial ID found for atom: ", oAtom);
@@ -278,6 +279,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						oStrand.setStrandName(String.valueOf(chain));
 						logger.debug("Added new STRAND");
 					} else if (cCol.equals("END   ")) {
+						atomNumberMap.clear();
 						// create bonds and finish the molecule
 						if (deduceBonding.isSet()) {
 							// OK, try to deduce the bonding patterns
@@ -316,14 +318,14 @@ public class PDBReader extends DefaultChemObjectReader {
                         if (comment == null) {
                         	comment = "";
                         }
-                        if (cLine.length()>12) {
-                        	comment = comment.toString() + cLine.substring(11).trim() + "\n";
+                        if (lineLength >12) {
+                        	comment = comment.toString() + cRead.substring(11).trim() + "\n";
                         	oFile.setProperty(CDKConstants.COMMENT, comment);
                         } else {
                         	logger.warn("REMARK line found without any comment!");
                         }
 					} else if (cCol.equals("COMPND")) {						
-                        String title = cLine.substring(10).trim();
+                        String title = cRead.substring(10).trim();
                         oFile.setProperty(CDKConstants.TITLE, title);
 					} 
 					
@@ -332,17 +334,16 @@ public class PDBReader extends DefaultChemObjectReader {
 					 * Only covalent bonds are dealt with. Perhaps salt bridges
 					 * should be dealt with in the same way..?
 					 */
-					else if(cCol.equals("CONECT"))	{
-						String pdbLine = cLine.toString();
-						pdbLine = pdbLine.trim();
-						if (pdbLine.length() < 16) {
-							logger.debug("Skipping unexpected empty CONECT line! : " +pdbLine);
+					else if (readConnect.isSet() && cCol.equals("CONECT"))	{
+						cRead.trim();
+						if (cRead.length() < 16) {
+							logger.debug("Skipping unexpected empty CONECT line! : ", cRead);
 						} else {
 						
-							String bondAtom = pdbLine.substring(7, 11);
+							String bondAtom = cRead.substring(7, 11);
 							bondAtom = bondAtom.trim();
 							int bondAtomNo = Integer.parseInt(bondAtom);
-							String bondedAtom = pdbLine.substring(12, 16);
+							String bondedAtom = cRead.substring(12, 16);
 							bondedAtom = bondedAtom.trim();
 							int bondedAtomNo = -1;
 							
@@ -354,8 +355,8 @@ public class PDBReader extends DefaultChemObjectReader {
 								logger.warn("Bonded " + bondAtomNo + " with " + bondedAtomNo);
 							}
 							
-							if(pdbLine.length() > 17)	{
-								bondedAtom = pdbLine.substring(17, 21);
+							if(cRead.length() > 17)	{
+								bondedAtom = cRead.substring(17, 21);
 								bondedAtom = bondedAtom.trim();
 								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
 								catch(Exception e)	{bondedAtomNo = -1;}
@@ -366,8 +367,8 @@ public class PDBReader extends DefaultChemObjectReader {
 								}
 							}
 							
-							if(pdbLine.length() > 22)	{
-								bondedAtom = pdbLine.substring(22, 26);
+							if(cRead.length() > 22)	{
+								bondedAtom = cRead.substring(22, 26);
 								bondedAtom = bondedAtom.trim();
 								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
 								catch(Exception e)	{bondedAtomNo = -1;}
@@ -378,8 +379,8 @@ public class PDBReader extends DefaultChemObjectReader {
 								}
 							}
 							
-							if(pdbLine.length() > 27)	{
-								bondedAtom = pdbLine.substring(27, 31);
+							if(cRead.length() > 27)	{
+								bondedAtom = cRead.substring(27, 31);
 								bondedAtom = bondedAtom.trim();
 								try	{bondedAtomNo = Integer.parseInt(bondedAtom);}
 								catch(Exception e)	{bondedAtomNo = -1;}
@@ -397,44 +398,41 @@ public class PDBReader extends DefaultChemObjectReader {
 //						HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
 //						          1         2         3         4         5         6         7
 //						01234567890123456789012345678901234567890123456789012345678901234567890123456789
-						String pdbLine = cLine.toString();
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.HELIX);
-					    structure.setStartChainID(pdbLine.charAt(19));
-					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(21, 25).trim()));
-					    structure.setStartInsertionCode(pdbLine.charAt(25));
-					    structure.setEndChainID(pdbLine.charAt(31));
-					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(33, 37).trim()));
-					    structure.setEndInsertionCode(pdbLine.charAt(37));
+					    structure.setStartChainID(cRead.charAt(19));
+					    structure.setStartSequenceNumber(Integer.parseInt(cRead.substring(21, 25).trim()));
+					    structure.setStartInsertionCode(cRead.charAt(25));
+					    structure.setEndChainID(cRead.charAt(31));
+					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(33, 37).trim()));
+					    structure.setEndInsertionCode(cRead.charAt(37));
 					    oBP.addStructure(structure);
 					} else if (cCol.equals("SHEET ")) {
-						String pdbLine = cLine.toString();
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.SHEET);
-					    structure.setStartChainID(pdbLine.charAt(21));
-					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(22, 26).trim()));
-					    structure.setStartInsertionCode(pdbLine.charAt(26));
-					    structure.setEndChainID(pdbLine.charAt(32));
-					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(33, 37).trim()));
-					    structure.setEndInsertionCode(pdbLine.charAt(37));
+					    structure.setStartChainID(cRead.charAt(21));
+					    structure.setStartSequenceNumber(Integer.parseInt(cRead.substring(22, 26).trim()));
+					    structure.setStartInsertionCode(cRead.charAt(26));
+					    structure.setEndChainID(cRead.charAt(32));
+					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(33, 37).trim()));
+					    structure.setEndInsertionCode(cRead.charAt(37));
 					    oBP.addStructure(structure);
 					} else if (cCol.equals("TURN  ")) {
-						String pdbLine = cLine.toString();
 						PDBStructure structure = new PDBStructure();
 						structure.setStructureType(PDBStructure.TURN);
-					    structure.setStartChainID(pdbLine.charAt(19));
-					    structure.setStartSequenceNumber(Integer.parseInt(pdbLine.substring(20, 24).trim()));
-					    structure.setStartInsertionCode(pdbLine.charAt(24));
-					    structure.setEndChainID(pdbLine.charAt(30));
-					    structure.setEndSequenceNumber(Integer.parseInt(pdbLine.substring(31, 35).trim()));
-					    structure.setEndInsertionCode(pdbLine.charAt(35));
+					    structure.setStartChainID(cRead.charAt(19));
+					    structure.setStartSequenceNumber(Integer.parseInt(cRead.substring(20, 24).trim()));
+					    structure.setStartInsertionCode(cRead.charAt(24));
+					    structure.setEndChainID(cRead.charAt(30));
+					    structure.setEndSequenceNumber(Integer.parseInt(cRead.substring(31, 35).trim()));
+					    structure.setEndInsertionCode(cRead.charAt(35));
 					    oBP.addStructure(structure);
 					}
 				}
 			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
 			System.out.println("Found a problem at line:\n");
-			System.out.println(cLine.toString());
+			System.out.println(cRead);
 			System.out.println("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
 			System.out.println("          1         2         3         4         5         6         7         ");
 			System.out.println("  error: " + e.getMessage());
@@ -606,11 +604,11 @@ public class PDBReader extends DefaultChemObjectReader {
         oAtom.setRecord(cLine);
         oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
         oAtom.setName(rawAtomName.trim());
-        oAtom.setAltLoc((new String(cLine.substring(16, 17))).trim());
-        oAtom.setResName((new String(cLine.substring(17, 20))).trim());
-        oAtom.setChainID((new String(cLine.substring(21, 22))).trim());
-        oAtom.setResSeq((new String(cLine.substring(22, 26))).trim());
-        oAtom.setICode((new String(cLine.substring(26, 27))).trim());
+        oAtom.setAltLoc(cLine.substring(16, 17).trim());
+        oAtom.setResName(cLine.substring(17, 20).trim());
+        oAtom.setChainID(cLine.substring(21, 22).trim());
+        oAtom.setResSeq(cLine.substring(22, 26).trim());
+        oAtom.setICode(cLine.substring(26, 27).trim());
         oAtom.setAtomTypeName(oAtom.getResName()+"."+rawAtomName);
 		if (cLine.length() >= 59) {
             String frag = cLine.substring(54, 60).trim();
@@ -625,7 +623,7 @@ public class PDBReader extends DefaultChemObjectReader {
             }
 		}
 		if (cLine.length() >= 75) {
-            oAtom.setSegID((new String(cLine.substring(72, 76))).trim());
+            oAtom.setSegID(cLine.substring(72, 76).trim());
 		}
 //		if (cLine.length() >= 78) {
 //            oAtom.setSymbol((new String(cLine.substring(76, 78))).trim());
@@ -675,17 +673,22 @@ public class PDBReader extends DefaultChemObjectReader {
         useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
           "Should the RebondTool be used (or a heuristic approach otherwise)?",
           "true");
+        readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.LOW,
+          "Should the CONECT be read?",
+          "true");
     }
     
     public void customizeJob() {
         fireIOSettingQuestion(deduceBonding);
         fireIOSettingQuestion(useRebondTool);
+        fireIOSettingQuestion(readConnect);
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[2];
+        IOSetting[] settings = new IOSetting[3];
         settings[0] = deduceBonding;
         settings[1] = useRebondTool;
+        settings[2] = readConnect;
         return settings;
     }
 
