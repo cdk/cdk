@@ -72,7 +72,8 @@ public class ArrowRenderer2DTest extends JPanel {
 
 	
 	public ArrowRenderer2DTest(String inFile) {
-		int an1 = 2, an2 = 5;
+		// The two atom numbers of the atoms to be connected by an arrow
+		int an1 = 2, an2 = 7;
 		Renderer2DModel r2dm;
 		System.out.println("Test");
 		Hashtable ht = null;
