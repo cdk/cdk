@@ -1032,7 +1032,7 @@ if __name__ == '__main__':
             htmlFile = os.path.join(nightly_web, 'pmd-unused', prefix)+'.html'
             xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
             transformXML2HTML(xmlFile, htmlFile, xsltFile)
-            s = s+"<a href=\"pmdu/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            s = s+"<a href=\"pmd-unused/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
