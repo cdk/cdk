@@ -1,5 +1,12 @@
 package org.openscience.cdk.qsar.model.R2;
 
+import java.awt.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -7,13 +14,6 @@ import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
 import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
-
-import java.awt.*;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
 
 /**
  * Base class for the R-CDK interface.
@@ -119,7 +119,10 @@ public abstract class RModel implements IModel {
     }
 
     private void loadRFunctions(Rengine engine) {
-        String scriptLocator = "org/openscience/cdk/qsar/model/data/helper.R";
+        // File.separator is used to be system independent 
+        String scriptLocator = "org" + File.separator + "openscience" +
+        File.separator + "cdk" + File.separator + "qsar" + File.separator +
+        "model" + File.separator + "data" + File.separator + "helper.R";
         try {
             File scriptFile = File.createTempFile("XXXXX", ".R");
             scriptFile.deleteOnExit();
@@ -138,8 +141,10 @@ public abstract class RModel implements IModel {
             outBuffer.close();
             inFile.close();
             outFile.close();
-
-            engine.eval("source(\"" + scriptFile.getAbsolutePath() + "\")");
+            // Necessary for windows user, R needs a '/' in the path of a file even on windows
+            String path = scriptFile.getAbsolutePath();
+            path = path.replaceAll("\\\\", "/");
+            engine.eval("source(\"" + path + "\")");
 
         } catch (Exception exception) {
             logger.error("Could not load helper R script for JRI: ", scriptLocator);
