@@ -421,6 +421,25 @@ public class GeometryTools {
 				minY = minmax[1];
 		return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
 	}
+	
+	/**
+	 *  Returns the java.awt.Dimension of a SetOfMolecules
+	 *  See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  atomCon  of which the dimension should be returned
+	 *@return          The java.awt.Dimension of this SetOfMolecules
+	 */
+	public static Dimension get2DDimension(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
+		double[] minmax = getMinMax(setOfMolecules, renderingCoordinates);
+		double maxX = minmax[2];
+		double
+				maxY = minmax[3];
+		double
+				minX = minmax[0];
+		double
+				minY = minmax[1];
+		return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
+	}
 
 
 	/**
@@ -458,6 +477,55 @@ public class GeometryTools {
 				}
 				if (((Point2d)renderingCoordinates.get(atom)).y < minY) {
 					minY = ((Point2d)renderingCoordinates.get(atom)).y;
+				}
+			}
+		}
+		double[] minmax = new double[4];
+		minmax[0] = minX;
+		minmax[1] = minY;
+		minmax[2] = maxX;
+		minmax[3] = maxY;
+		return minmax;
+	}
+	
+	/**
+	 *  Returns the minimum and maximum X and Y coordinates of the molecules in the
+	 *  SetOfMolecules. The output is returned as: <pre>
+	 *   minmax[0] = minX;
+	 *   minmax[1] = minY;
+	 *   minmax[2] = maxX;
+	 *   minmax[3] = maxY;
+	 * </pre>
+	 * See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  container  Description of the Parameter
+	 *@return            An four int array as defined above.
+	 */
+	public static double[] getMinMax(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
+		double maxX = Double.MIN_VALUE;
+		double
+				maxY = Double.MIN_VALUE;
+		double
+				minX = Double.MAX_VALUE;
+		double
+				minY = Double.MAX_VALUE;
+		for(int j = 0; j < setOfMolecules.getAtomContainerCount() ; j++){
+			IAtomContainer container = setOfMolecules.getAtomContainer(j);
+			for (int i = 0; i < container.getAtomCount(); i++) {
+				IAtom atom = container.getAtomAt(i);
+				if (renderingCoordinates.get(atom) != null) {
+					if (((Point2d)renderingCoordinates.get(atom)).x > maxX) {
+						maxX = ((Point2d)renderingCoordinates.get(atom)).x;
+					}
+					if (((Point2d)renderingCoordinates.get(atom)).x < minX) {
+						minX = ((Point2d)renderingCoordinates.get(atom)).x;
+					}
+					if (((Point2d)renderingCoordinates.get(atom)).y > maxY) {
+						maxY = ((Point2d)renderingCoordinates.get(atom)).y;
+					}
+					if (((Point2d)renderingCoordinates.get(atom)).y < minY) {
+						minY = ((Point2d)renderingCoordinates.get(atom)).y;
+					}
 				}
 			}
 		}
