@@ -275,8 +275,8 @@ public class SaveAsAction extends JCPAction
             fileName += ".cml";
         }
         FileWriter sw = new FileWriter(outFile);
-        Class cmlWriterClass = this.getClass().getClassLoader().
-        	loadClass("org.opscience.cdk.io.CMLWriter");
+        Class cmlWriterClass = this.getClass().getClassLoader().loadClass("org.openscience.cdk.io.CMLWriter");
+
         if (cmlWriterClass != null) {
         	cow = (IChemObjectWriter)cmlWriterClass.newInstance();
         	Constructor constructor = cow.getClass().getConstructor(new Class[]{Writer.class});
