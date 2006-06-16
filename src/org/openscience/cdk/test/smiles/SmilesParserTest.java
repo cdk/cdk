@@ -31,11 +31,13 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -758,12 +760,46 @@ public class SmilesParserTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug 956929 
 	 */
+	public void testPyrole()
+	{
+		try
+		{
+			String smiles = "c1cccn1";
+			Molecule mol = sp.parseSmiles(smiles);
+			
+			StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol);
+		    sdg.generateCoordinates();
+		    
+		    /*MoleculeViewer2D v2d=new MoleculeViewer2D(mol);
+		    v2d.display();
+		    
+		    Thread.sleep(100000);*/
+		    
+		    for(int i=0;i<mol.getAtomCount();i++){
+		    	if(mol.getAtomAt(i).getSymbol().equals("N")){
+		    		assertEquals(1,mol.getConnectedBonds(mol.getAtomAt(i))[0].getOrder(),.1);
+		    		assertEquals(1,mol.getConnectedBonds(mol.getAtomAt(i))[1].getOrder(),.1);
+		    	}
+		    }
+		} catch (Exception e)
+		{
+			fail(e.toString());
+		}
+	}
+	/**
+	 * A bug found with JCP.
+	 * 
+	 * @cdk.bug 956929 
+	 */
 	public void testSFBug956929()
 	{
 		try
 		{
 			String smiles = "Cn1cccc1";
 			Molecule mol = sp.parseSmiles(smiles);
+			
+			StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol);
+		    sdg.generateCoordinates();
 			assertEquals(6, mol.getAtomCount());
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
