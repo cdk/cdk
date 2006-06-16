@@ -32,6 +32,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 
@@ -243,6 +245,7 @@ public class SaveAsAction extends JCPAction
         String fileName = outFile.toString();
         if (!fileName.endsWith(".mol")) {
             fileName += ".mol";
+            outFile = new File(fileName);
         }
         outFile=new File(fileName);
         cow = new MDLWriter(new FileWriter(outFile));
@@ -273,6 +276,7 @@ public class SaveAsAction extends JCPAction
         String fileName = outFile.toString();
         if (!fileName.endsWith(".cml")) {
             fileName += ".cml";
+            outFile = new File(fileName);
         }
         FileWriter sw = new FileWriter(outFile);
         Class cmlWriterClass = this.getClass().getClassLoader().loadClass("org.openscience.cdk.io.CMLWriter");
@@ -291,6 +295,7 @@ public class SaveAsAction extends JCPAction
 		}
 		cow.write(object);
 		cow.close();
+		sw.close();
 	}
 
 
@@ -332,6 +337,7 @@ public class SaveAsAction extends JCPAction
         String fileName = outFile.toString();
         if (!fileName.endsWith(".cdk")) {
             fileName += ".cdk";
+            outFile = new File(fileName);
         }
 		cow = new CDKSourceCodeWriter(new FileWriter(outFile));
 		if (cow != null && askIOSettings())
