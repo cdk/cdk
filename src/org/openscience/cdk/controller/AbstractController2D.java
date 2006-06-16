@@ -774,7 +774,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		} else if (sharedAtoms.getAtomCount() == 1)
 		{
 			spiroAtom = sharedAtoms.getAtomAt(0);
-			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
 			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
@@ -811,7 +811,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			undoRedoContainer.add(newRing);
 		} else if (sharedAtoms.getAtomCount() == 2)
 		{
-			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 
 			// calculate two points that are perpendicular to the highlighted bond
 			// and have a certain distance from the bondcenter
@@ -844,16 +844,20 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			}
 			ringCenterVector = new Vector2d(sharedAtomsCenter);
 			// no ring is attached if the two ditances are equal
-			if (distance1 == distance2)
+			//shk3: I removed this condition since it leads to npe and I cannot see why it is necessary.
+			//the npe is if you draw a single bond and want to attach a ring to it. Now the ring is in an arbitrary direction, but this is ok
+			/*if (distance1 == distance2)
 			{
 				logger.warn("don't know where to draw the new Ring");
-			} else
+			} else*/
 			{
 				if (distance1 < distance2)
 				{
 					ringCenterVector.sub(newPoint1);
 				} else if (distance2 < distance1)
 				{
+					ringCenterVector.sub(newPoint2);
+				} else{
 					ringCenterVector.sub(newPoint2);
 				}
 
@@ -1254,7 +1258,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 		r2dm.fireChange();
 		fireChange();
-		if(r2dm.getRenderingCoordinate(newAtom1)==null)
+		if(newAtom1!=null && r2dm.getRenderingCoordinate(newAtom1)==null)
 			r2dm.setRenderingCoordinate(newAtom1,new Point2d(newAtom1.getPoint2d()));
 		if(newAtom2!=null)
 			r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getPoint2d()));
@@ -1810,7 +1814,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				conAtoms.addAtom(conAtomsArray[j]);
 			}
 		}
-		return GeometryTools.get2DCenter(conAtoms);
+		return GeometryTools.get2DCenter(conAtoms,r2dm.getRenderingCoordinates());
 	}
 
 
