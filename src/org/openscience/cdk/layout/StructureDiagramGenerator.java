@@ -543,9 +543,8 @@ public class StructureDiagramGenerator
 				{
 					logger.debug("Start at atom no. " + (molecule.getAtomNumber(atom) + 1));
 					logger.debug(atomPlacer.listNumbers(molecule, longestUnplacedChain));
-				} catch (Exception exc)
-				{
-					exc.printStackTrace();
+				} catch (Exception exc) {
+					logger.debug(exc);
 				}
 				logger.debug("---end of longest unplaced chain---");
 
@@ -815,8 +814,8 @@ public class StructureDiagramGenerator
 			sharedAtoms.addBond(bond);
 			sharedAtoms.addAtom(bond.getAtomAt(0));
 			sharedAtoms.addAtom(bond.getAtomAt(1));
-		} catch (Exception exc)
-		{
+		} catch (Exception exc) {
+			logger.debug(exc);
 		}
 		return sharedAtoms;
 	}

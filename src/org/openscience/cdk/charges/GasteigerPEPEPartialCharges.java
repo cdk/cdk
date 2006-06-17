@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 //import org.openscience.cdk.qsar.IMolecularDescriptor;
 //import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptor;
 //import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -68,6 +69,8 @@ public class GasteigerPEPEPartialCharges {
 	
 	//private double DEOC_HYDROGEN = 20.02;
 	//private double MX_DAMP = 0.5;
+	
+	private LoggingTool logger = new LoggingTool(GasteigerPEPEPartialCharges.class);
 
 	
 	/**
@@ -215,9 +218,9 @@ public class GasteigerPEPEPartialCharges {
 			}
 			
 		}
-		for (int i = 0; i < ac.getAtomCount(); i++) {
+//		for (int i = 0; i < ac.getAtomCount(); i++) {
 //			System.out.println(ac.getAtomAt(i).getSymbol()+" - charget: "+ac.getAtomAt(i).getCharge());
-		}
+//		}
 		return ac;
 		
 	}
@@ -257,11 +260,11 @@ public class GasteigerPEPEPartialCharges {
 				sum += sumI;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.debug(e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e);
 		} catch (CDKException e) {
-			e.printStackTrace();
+			logger.debug(e);
 		}
 		
 		return sum;

@@ -246,10 +246,8 @@ public class AtomPlacer
 				logger.debug("distributePartners->sortedAtoms[1]: ", (molecule.getAtomNumber(sortedAtoms[1]) + 1));
 				logger.debug("distributePartners->angle1: ", Math.toDegrees(angle1));
 				logger.debug("distributePartners->angle2: ", Math.toDegrees(angle2));
-			} catch (Exception exc)
-			{
+			} catch (Exception exc) {
 				logger.debug(exc);
-				exc.printStackTrace();
 			}
 		}
 		IAtom startAtom = null;
@@ -289,7 +287,6 @@ public class AtomPlacer
 			} catch (Exception exc)
 			{
 				logger.debug(exc);
-				exc.printStackTrace();
 			}
 
 		}

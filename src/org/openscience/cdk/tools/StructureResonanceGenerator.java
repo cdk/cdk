@@ -64,6 +64,9 @@ public class StructureResonanceGenerator {
 	private boolean radicalR;
 	private boolean bondR;
 	private boolean hasActiveCenter;
+	
+	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
+	
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
@@ -308,8 +311,9 @@ public class StructureResonanceGenerator {
 				
 			}
 		} catch (CDKException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while getting all resonance structures: ");
+			logger.error(e.getMessage());
+			logger.debug(e);
 		}
 		return setOfAtomContainer;
 	}
@@ -331,7 +335,8 @@ public class StructureResonanceGenerator {
 					return true;
 				}
 			} catch (CDKException e1) {
-				e1.printStackTrace();
+				logger.error(e1.getMessage());
+				logger.debug(e1);
 			}
 		}
 		return false;

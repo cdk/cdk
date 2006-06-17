@@ -389,13 +389,6 @@ public class AllRingsFinder
 				minDegree = degree;
 			}
 		}
-		try
-		{
-			//if (debug) System.out.println("Selected atom no " + originalAc.getAtomNumber(minAtom) + " for removal.");
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
 
 		return minAtom;
 	}

@@ -311,7 +311,7 @@ public class FiguerasSSSRFinder {
 		}
 		catch (Exception exc)
 		{
-			exc.printStackTrace();
+			logger.debug(exc);
 		}
 		logger.debug("found Ring  ", ring);
 		return ring;

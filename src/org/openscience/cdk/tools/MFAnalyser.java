@@ -73,6 +73,8 @@ public class MFAnalyser {
 	private int HCount = 0;
 	HashMap massMap=new HashMap();
 	private boolean useboth=false;
+	
+	private LoggingTool logger = new LoggingTool(MFAnalyser.class);
 
 	/**
 	 * Construct an instance of MFAnalyser, initialized with a molecular
@@ -495,8 +497,8 @@ public class MFAnalyser {
 				try {
 					a = (IAtom) atom.clone();
 				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("Could not clone: ", atom);
+					logger.debug(e);
 				}
 				a.setHydrogenCount(0);
 				mol.addAtom(a);
@@ -534,8 +536,8 @@ public class MFAnalyser {
 				try {
 					clone = (IBond) ac.getBondAt(i).clone();
 				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("Could not clone: ", ac.getBondAt(i));
+					logger.debug(e);
 				}
 				clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
 				mol.addBond(clone);

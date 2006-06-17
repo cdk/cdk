@@ -388,11 +388,11 @@ public class Convertor {
                     }
                 }
             } catch (OptionalDataException e) {
-                e.printStackTrace();
+                logger.debug(e);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.debug(e);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                logger.debug(e);
             }
         }
         if (cdkAtom.getCharge() != 0.0) {

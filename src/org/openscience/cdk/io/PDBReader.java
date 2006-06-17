@@ -430,19 +430,19 @@ public class PDBReader extends DefaultChemObjectReader {
 				}
 			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
-			System.out.println("Found a problem at line:\n");
-			System.out.println(cRead);
-			System.out.println("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
-			System.out.println("          1         2         3         4         5         6         7         ");
-			System.out.println("  error: " + e.getMessage());
-			e.printStackTrace();
+			logger.error("Found a problem at line:\n");
+			logger.error(cRead);
+			logger.error("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
+			logger.error("          1         2         3         4         5         6         7         ");
+			logger.error("  error: " + e.getMessage());
+			logger.debug(e);
 		}
 		
 		// try to close the Input
 		try {
 			_oInput.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.debug(e);
 		}
 		
 		// Set all the dependencies
