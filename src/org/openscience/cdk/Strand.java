@@ -137,8 +137,13 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 */
 	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
 		
-		if(!contains(oAtom))	{
-			super.addAtom(oAtom);
+		int atomCount = super.getAtomCount();
+		
+		// Add atom to AtomContainer
+		super.addAtom(oAtom);
+
+		if(atomCount != super.getAtomCount()) { // ok, super did not yet contain the atom
+			
 			if (oMonomer == null) {
 				oMonomer = getMonomer("");
 			}

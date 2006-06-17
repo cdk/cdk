@@ -97,8 +97,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 */
 	public void addAtom(IAtom oAtom, IStrand oStrand) {
 		
-		if(!contains(oAtom))	{
-			super.addAtom(oAtom);
+		int atomCount = super.getAtomCount();
+		
+		// Add atom to AtomContainer
+		super.addAtom(oAtom);
+
+		if(atomCount != super.getAtomCount()) { // ok, super did not yet contain the atom
 			
 			if(oStrand != null)	{	// Maybe better to throw nullpointer exception here, so user realises that
 									// Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
@@ -121,10 +125,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 */
 	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand)	{
 		
-		if(!contains(oAtom))	{
-			// Add atom to AtomContainer
-			super.addAtom(oAtom);
-			
+		int atomCount = super.getAtomCount();
+		
+		// Add atom to AtomContainer
+		super.addAtom(oAtom);
+
+		if(atomCount != super.getAtomCount()) { // ok, super did not yet contain the atom
 			// Add atom to Strand (also adds the atom to the monomer).
 			if(oStrand != null)	{
 				oStrand.addAtom(oAtom, oMonomer);	// Same problem as above: better to throw nullpointer exception?
