@@ -594,9 +594,9 @@ public class PDBReader extends DefaultChemObjectReader {
 		}
 		String rawAtomName = cLine.substring(12, 16).trim();
 		PDBAtom oAtom = new PDBAtom(elementSymbol, 
-			new Point3d(new Double(cLine.substring(30, 38)).doubleValue(),
-				new Double(cLine.substring(38, 46)).doubleValue(),
-				new Double(cLine.substring(46, 54)).doubleValue()
+			new Point3d(Double.parseDouble(cLine.substring(30, 38)),
+			            Double.parseDouble(cLine.substring(38, 46)),
+			            Double.parseDouble(cLine.substring(46, 54))
 			)
 		);
 		
