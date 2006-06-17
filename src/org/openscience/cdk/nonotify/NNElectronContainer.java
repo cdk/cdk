@@ -27,6 +27,7 @@ package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module nonotify
@@ -42,6 +43,10 @@ public class NNElectronContainer extends ElectronContainer {
 
 	public IChemObjectBuilder getBuilder() {
 		return NoNotificationChemObjectBuilder.getInstance();
+	}
+	
+	public void addListener(IChemObjectListener col) {
+		// Ignore this: we do not listen anyway
 	}
 }
 
