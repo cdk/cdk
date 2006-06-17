@@ -363,6 +363,14 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
 		return this.electronValency;
 	}
 	
+	/**
+	 *  Clones this AtomType object.
+	 *
+	 * @return    The cloned object
+	 */
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 	
     public String toString() {
         StringBuffer resultString = new StringBuffer();
