@@ -78,24 +78,14 @@ public class Molecule extends AtomContainer implements java.io.Serializable, org
 		super(container);
 	}
 
-       /**
-         * Clones this molecule object.
-         *
-         * @return  The cloned molecule object
-         */
-        public Object clone() throws CloneNotSupportedException
-        {
-                Object clone = null;
-                try
-                {
-                        clone = super.clone();
-                }
-                catch (Exception e)
-                {
-                        e.printStackTrace(System.err);
-                }
-                return clone;
-        }
+	/**
+	 * Clones this molecule object.
+	 *
+	 * @return  The cloned molecule object
+	 */
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 
     /**
      * Returns a one line string representation of this Atom.

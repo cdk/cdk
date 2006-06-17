@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
  * A Single Electron is an orbital which is occupied by only one electron.
  * A radical in CDK is represented by an AtomContainer that contains an Atom
@@ -141,15 +143,10 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
 	 * @return    The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SingleElectron clone = null;
-		try {
-			clone = (SingleElectron) super.clone();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		SingleElectron clone = (SingleElectron) super.clone();
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (Atom)((Atom)atom).clone(); 
+		    clone.atom = (IAtom)((IAtom)atom).clone(); 
         }
 		return clone;
 	}

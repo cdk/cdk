@@ -153,13 +153,7 @@ public class Element extends ChemObject implements java.io.Serializable, org.ope
          * @return  The cloned object   
          */
     public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
-        try {
-            clone = super.clone();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-        return clone;
+        return super.clone();
     }
     
     public String toString() {

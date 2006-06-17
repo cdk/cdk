@@ -88,13 +88,7 @@ public class ElectronContainer extends ChemObject implements java.io.Serializabl
      * @return  The cloned object   
      */
     public Object clone() throws CloneNotSupportedException {
-        Object clone = null;
-        try {
-            clone = super.clone();
-        } catch (Exception exception) {
-            exception.printStackTrace(System.err);
-        }
-        return clone;
+        return super.clone();
     }
 }
 

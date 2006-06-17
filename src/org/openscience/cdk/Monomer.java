@@ -123,13 +123,7 @@ public class Monomer extends AtomContainer implements java.io.Serializable, org.
      * @return    The cloned object
      */
     public Object clone() throws CloneNotSupportedException {
-        Monomer clone = null;
-        try {
-            clone = (Monomer) super.clone();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
-        return clone;
+        return super.clone();
     }
 
 }

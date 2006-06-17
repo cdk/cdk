@@ -34,6 +34,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -283,43 +284,31 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 */
 	public Object clone() throws CloneNotSupportedException
 	{
-		Object clone = null;
-		try
-		{
-			clone = super.clone();
-		} catch (CloneNotSupportedException e)
-		{
-			e.printStackTrace(System.err);
-		}
+		ChemObject clone = (ChemObject)super.clone();
 		// clone the flags
-		((ChemObject) clone).flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-		for (int f = 0; f < flags.length; f++)
-		{
-			((ChemObject) clone).flags[f] = flags[f];
+		clone.flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
+		for (int f = 0; f < flags.length; f++) {
+			clone.flags[f] = flags[f];
 		}
 		// clone the properties
-		if (properties != null)
-		{
+		if (properties != null) {
 			Hashtable clonedHashtable = new Hashtable();
 			Enumeration keys = properties.keys();
-			while (keys.hasMoreElements())
-			{
+			while (keys.hasMoreElements()) {
 				Object key = keys.nextElement();
-				if (key instanceof org.openscience.cdk.interfaces.IChemObject)
-				{
-					key = ((ChemObject) key).clone();
+				if (key instanceof IChemObject) {
+					key = ((IChemObject) key).clone();
 				}
 				Object value = properties.get(key);
-				if (value instanceof org.openscience.cdk.interfaces.IChemObject)
-				{
-					value = ((ChemObject) value).clone();
+				if (value instanceof IChemObject) {
+					value = ((IChemObject) value).clone();
 				}
 				clonedHashtable.put(key, value);
 			}
-			((ChemObject) clone).properties = clonedHashtable;
+			clone.properties = clonedHashtable;
 		}
 		// delete all listeners
-		((ChemObject) clone).chemObjectListeners = null;
+		clone.chemObjectListeners = null;
 		return clone;
 	}
 
@@ -444,11 +433,9 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	public Object shallowCopy()
 	{
 		Object copy = null;
-		try
-		{
+		try {
 			copy = super.clone();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
 		return copy;

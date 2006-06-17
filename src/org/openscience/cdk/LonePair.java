@@ -121,12 +121,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
 	 * @return    The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		LonePair clone = null;
-		try {
-			clone = (LonePair) super.clone();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		LonePair clone = (LonePair) super.clone();
         // clone the Atom
         if (atom != null) {
 		    clone.atom = (IAtom)((IAtom)atom).clone(); 
