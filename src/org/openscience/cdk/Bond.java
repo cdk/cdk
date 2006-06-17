@@ -387,18 +387,13 @@ public class Bond extends ElectronContainer implements java.io.Serializable, IBo
 	 * @return    The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		Bond clone = null;
-		try {
-			clone = (Bond) super.clone();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		Bond clone = (Bond)super.clone();
         // clone all the Atoms
         if (atoms != null) {
-		    ((Bond)clone).atoms = new Atom[atoms.length];
+		    clone.atoms = new IAtom[atoms.length];
             for (int f = 0; f < atoms.length; f++) {
                 if (atoms[f] != null) {
-                    ((Bond)clone).atoms[f] = (Atom)((Atom)atoms[f]).clone();
+                    clone.atoms[f] = (IAtom)((IAtom)atoms[f]).clone();
                 }
             }
         }

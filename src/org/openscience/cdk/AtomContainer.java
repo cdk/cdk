@@ -1325,16 +1325,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 * @see       #shallowCopy
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		IAtomContainer clone = null;
 		IElectronContainer electronContainer = null;
 		IElectronContainer newEC = null;
 		IAtom[] natoms;
 		IAtom[] newAtoms;
-		try {
-			clone = (AtomContainer) super.clone();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		IAtomContainer clone = (IAtomContainer) super.clone();
         // start from scratch
 		clone.removeAllElements();
         // clone all atoms
@@ -1351,11 +1346,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 				natoms = bond.getAtoms();
 				newAtoms = new IAtom[natoms.length];
 				for (int g = 0; g < natoms.length; g++) {
-					try {
-						newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
-					} catch (Exception exc) {
-						exc.printStackTrace();
-					}
+					newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
 				}
 				((IBond) newEC).setAtoms(newAtoms);
 			} else if (electronContainer instanceof ILonePair) {

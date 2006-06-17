@@ -612,12 +612,7 @@ public class Atom extends AtomType implements java.io.Serializable, IAtom  {
          * @return  The cloned object   
          */
         public Object clone() throws CloneNotSupportedException {
-            Object clone = null;
-            try {
-                clone = super.clone();
-            } catch (Exception exception) {
-                exception.printStackTrace(System.err);
-            }
+            Object clone = super.clone();
             if (point2d != null) {
                 ((Atom)clone).setPoint2d(new Point2d(point2d.x, point2d.y));
             }
