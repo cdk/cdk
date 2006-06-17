@@ -141,12 +141,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
      * @return    The cloned object
      */
     public Object clone() throws CloneNotSupportedException {
-        AminoAcid clone = null;
-        try {
-            clone = (AminoAcid) super.clone();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-        }
+        AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
         if (getNTerminus() != null)
         	clone.setNTerminus(clone.getAtomAt(getAtomNumber(getNTerminus())));
