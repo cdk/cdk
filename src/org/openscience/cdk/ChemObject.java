@@ -187,7 +187,7 @@ public class ChemObject implements java.io.Serializable, org.openscience.cdk.int
 	 *		the change happend
 	 */
 	public void notifyChanged(IChemObjectChangeEvent evt) {
-        if (getListenerCount() > 0) {
+        if (getNotification() && getListenerCount() > 0) {
         	List listeners = lazyChemObjectListeners();
             for (int f = 0; f < listeners.size(); f++) {
                 ((IChemObjectListener) listeners.get(f)).stateChanged(evt);
