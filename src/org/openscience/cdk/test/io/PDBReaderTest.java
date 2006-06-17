@@ -474,7 +474,7 @@ public class PDBReaderTest extends TestCase {
 
 	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
+	      assertEquals(14, seq.getChemModelCount());
 	      
 	      IChemModel model = seq.getChemModel(0);
 	      assertNotNull(model);
@@ -486,8 +486,8 @@ public class PDBReaderTest extends TestCase {
 	      
 	      // chemical validation
 	      assertEquals(2219, ChemFileManipulator.getAtomCount(chemFile));
+	      assertEquals(1, polymer.getStrandCount());
 	      // TODO: get the next tests going
-//	      assertEquals(1, polymer.getStrandCount());
 //	      assertEquals(141, polymer.getMonomerCount());
 //
 //	      assertTrue(polymer instanceof PDBPolymer);
