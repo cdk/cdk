@@ -157,34 +157,37 @@ public class CDKConstants {
     /** Flag that is set when the chemobject is part of a ring.
      */
     public final static int ISINRING = 1;
+    /** Flag that is set when the chemobject is part of a ring.
+     */
+    public final static int ISNOTINRING = 2;
     /** Flag that is set if a chemobject is part of an alipahtic chain.
      */
-    public final static int ISALIPHATIC = 2;
+    public final static int ISALIPHATIC = 3;
     /** Flag is set if chemobject has been visited.
      */
-    public final static int VISITED = 3; // Use in tree searches
+    public final static int VISITED = 4; // Use in tree searches
     /** Flag is set if chemobject is part of an aromatic system. */
-    public final static int ISAROMATIC = 4;
+    public final static int ISAROMATIC = 5;
     /** Flag is set if chemobject is part of a conjugated system. */
-    public final static int ISCONJUGATED = 5;
+    public final static int ISCONJUGATED = 6;
     /** Flag is set if a chemobject is mapped to another chemobject.
      *  It is used for example in subgraph isomorphism search.
      */
-    public final static int MAPPED = 6;
+    public final static int MAPPED = 7;
 
     /** Set to true if the atom is an hydrogen bond donor. */
-    public final static int IS_HYDROGENBOND_DONOR = 7;
+    public final static int IS_HYDROGENBOND_DONOR = 8;
     /** Set to true if the atom is an hydrogen bond acceptor. */
-    public final static int IS_HYDROGENBOND_ACCEPTOR = 8;
+    public final static int IS_HYDROGENBOND_ACCEPTOR = 9;
         
     /** Flag is set if a chemobject has reactive center.
      *  It is used for example in reaction.
      */
-    public static final int REACTIVE_CENTER = 9;
+    public static final int REACTIVE_CENTER = 10;
     /**
      * Maximum flags array index.
      */
-    public final static int MAX_FLAG_INDEX = 9;
+    public final static int MAX_FLAG_INDEX = 10;
     /**
      * Flag used for JUnit testing the pointer functionality.
      */

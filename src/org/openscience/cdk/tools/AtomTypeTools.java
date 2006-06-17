@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.atomtype.CDKChemicalRingConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -37,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 
 /**
-* AtomTypeTools is a helper class for assigning atom types to an atom
+* AtomTypeTools is a helper class for assigning atom types to an atom.
 *
 * @author         cho
 * @cdk.created    2005-18-07
@@ -61,11 +60,13 @@ public class AtomTypeTools {
 	/**
 	 *  Method assigns certain properties to an atom. Necessary for the atom type matching 
 	 *  Properties:
-	 *  	- aromaticity)
-	 *		- ChemicalGroup (CDKChemicalRingGroupConstant)
-	 *			- sssr
-	 *			- Ring/Group, ringSize, aromaticity
-	 *			- SphericalMatcher (HoSe Code)
+	 *  <ul>
+	 *   <li>aromaticity)
+	 *   <li>ChemicalGroup (CDKChemicalRingGroupConstant)
+	 *	 <li>SSSR
+	 *	 <li>Ring/Group, ringSize, aromaticity
+	 *	 <li>SphericalMatcher (HoSe Code)
+	 *  </ul>
 	 *
 	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
@@ -104,7 +105,7 @@ public class AtomTypeTools {
 				atom2.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
 				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, 
-					new Integer(CDKChemicalRingConstants.ISNOT_IN_RING)
+					new Integer(CDKConstants.ISNOTINRING)
 				);
 				atom2.setFlag(CDKConstants.ISINRING, false);
 				atom2.setFlag(CDKConstants.ISALIPHATIC,true);

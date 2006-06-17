@@ -28,7 +28,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
-import org.openscience.cdk.test.atomtype.CDKChemicalRingConstantsTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
@@ -85,7 +84,6 @@ public class MosjvmtsTests {
         	suite.addTest(HybridizationStateATMatcherTest.suite());
         	suite.addTest(HybridizationMatcherTest.suite());
         	suite.addTest(MMFF94AtomTypeMatcherTest.suite());
-        	suite.addTest(CDKChemicalRingConstantsTest.suite());
         	suite.addTest(MM2AtomTypeMatcherTest.suite());
         	// from cdk.test.dict
         	suite.addTest(DictRefTest.suite());

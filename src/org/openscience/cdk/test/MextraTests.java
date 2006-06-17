@@ -39,7 +39,6 @@ import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTes
 import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
 import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
 import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
-import org.openscience.cdk.test.atomtype.CDKChemicalRingConstantsTest;
 import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
@@ -84,7 +83,6 @@ public class MextraTests {
         // from cdk.test.aromaticity
         // from cdk.test.atomtype
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
-        suite.addTest(CDKChemicalRingConstantsTest.suite());
         suite.addTest(MM2AtomTypeMatcherTest.suite());
         // from cdk.test.dict
         suite.addTest(DictDBTest.suite());
