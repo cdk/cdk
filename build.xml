@@ -885,7 +885,7 @@
                 </junit>
         </target>
 
-        <target id="run-test" name="run-test" depends="dist-all" 
+        <target id="run-test" name="run-test" depends="dist-all,test-dist-all" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
                 <java classname="org.openscience.cdk.test.${testclass}" fork="yes" maxmemory="512m">
@@ -907,7 +907,7 @@
                 </java>
         </target>
 
-        <target id="junit-test" name="junit-test" depends="dist-all, noJunit" 
+        <target id="junit-test" name="junit-test" depends="dist-all,test-dist-all,noJunit" 
                 description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
