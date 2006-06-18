@@ -10,16 +10,16 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.rosuda.JRI.RList;
 
 /**
- * TestSuite that runs a test for the LinearRegressionModel
+ * TestSuite that runs a test for the LinearRegressionModel.
  *
- * @author Rajarshi Guha
+ * @author      Rajarshi Guha
  * @cdk.require r-project
- * @cdk.module test-qsar
+ * @cdk.module  test-qsar
  */
-
 public class LinearRegressionModelTest extends CDKTestCase {
 
-    public LinearRegressionModelTest() {
+    public LinearRegressionModelTest(String name) {
+    	super(name);
     }
 
     public static Test suite() {
