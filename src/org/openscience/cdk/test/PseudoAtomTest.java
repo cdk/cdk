@@ -161,6 +161,15 @@ public class PseudoAtomTest extends CDKTestCase {
     }
 
     /**
+     * Method to test the clone() method
+     */
+    public void testClone() throws Exception {
+        IAtom atom = builder.newPseudoAtom("C");
+        Object clone = atom.clone();
+        assertTrue(clone instanceof IPseudoAtom);
+    }
+    
+    /**
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
