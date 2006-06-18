@@ -67,13 +67,13 @@ public class MFAnalyserTest extends CDKTestCase {
 		assertEquals("C10H16", mf);
 	}
 	
-	public void testGetDBE() throws Exception{
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("C[Zn]C");
-        MFAnalyser mfa=new MFAnalyser(mol);
-        float dbes=mfa.getDBE();
-		System.err.println(dbes+"");
-	}
+//	public void testGetDBE() throws Exception{
+//        SmilesParser parser = new SmilesParser();
+//        Molecule mol = parser.parseSmiles("C[Zn]C");
+//        MFAnalyser mfa=new MFAnalyser(mol);
+//        float dbes=mfa.getDBE();
+//		System.err.println(dbes+"");
+//	}
 	
     public void testGetAtomContainer() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
