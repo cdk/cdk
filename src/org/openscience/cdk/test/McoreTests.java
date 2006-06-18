@@ -40,6 +40,7 @@ import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
 import org.openscience.cdk.test.exception.CDKExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
+import org.openscience.cdk.test.tools.DataFeaturesTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -58,6 +59,8 @@ public class McoreTests {
         // make sure to check it agains src/test-core.javafiles
         // before each release!
         suite.addTest(CDKConstantsTest.suite());
+        suite.addTest(DataFeaturesTest.suite());
+
         suite.addTest(HybridizationStateATMatcherTest.suite());
         suite.addTest(HybridizationMatcherTest.suite());
         suite.addTest(IsotopeFactoryTest.suite());
