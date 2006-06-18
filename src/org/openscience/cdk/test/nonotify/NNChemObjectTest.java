@@ -91,6 +91,51 @@ public class NNChemObjectTest extends ChemObjectTest {
         assertFalse(listener.changed);
     }
 
+    public void testClone_ChemObjectListeners() throws Exception {
+        IChemObject chemObject1 = builder.newChemObject();
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject1.addListener(listener);
+        IChemObject chemObject2 = (IChemObject)chemObject1.clone();
+
+        // test lack of cloning of listeners
+        assertEquals(0, chemObject1.getListenerCount());
+        assertEquals(0, chemObject2.getListenerCount());
+    }
+    
+    public void testAddListener_IChemObjectListener() {
+        IChemObject chemObject1 = builder.newChemObject();
+        assertEquals(0, chemObject1.getListenerCount());
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject1.addListener(listener);
+        assertEquals(0, chemObject1.getListenerCount());
+    }
+    
+    public void testGetListenerCount() {
+        IChemObject chemObject1 = builder.newChemObject();
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject1.addListener(listener);
+        assertEquals(0, chemObject1.getListenerCount());
+    }
+
+    public void testRemoveListener_IChemObjectListener() {
+        IChemObject chemObject1 = builder.newChemObject();
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        chemObject1.addListener(listener);
+        assertEquals(0, chemObject1.getListenerCount());
+        chemObject1.removeListener(listener);
+        assertEquals(0, chemObject1.getListenerCount());
+    }
+    
+    public void testSetNotification_true() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IChemObject chemObject = builder.newChemObject();
+        chemObject.addListener(listener);
+        chemObject.setNotification(true);
+        
+        chemObject.setID("Changed");
+        assertFalse(listener.changed);
+    }
+    
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         private IChemObjectChangeEvent event;
