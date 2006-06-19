@@ -55,7 +55,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	    	try {
 	        	MDLReader reader = new MDLReader(ins);
 	        	Molecule mol = (Molecule)reader.read(new Molecule());
-	        	gf.generateMurckoFragments(mol,true,true);
+	        	gf.generateMurckoFragments(mol,true,true,4);
 	        	//System.out.println("Murcko Fragments generated");
 	        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
 	        	for (int i =0;i<smiles.length;i++){
@@ -76,7 +76,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -97,7 +97,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	boolean found=false;
@@ -122,7 +122,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	boolean found=false;
@@ -160,7 +160,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -180,7 +180,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	boolean found=false;
@@ -206,7 +206,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	GenerateFragments gf=new GenerateFragments();
     	try {
         	
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -229,7 +229,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	GenerateFragments gf=new GenerateFragments();
     	try {
         	
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -251,7 +251,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	GenerateFragments gf=new GenerateFragments();
     	try {
         	
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -297,7 +297,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	boolean found=false;
@@ -323,7 +323,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	boolean found=false;
@@ -354,7 +354,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		GenerateFragments gf=new GenerateFragments();
 		try {
     	
-			gf.generateMurckoFragments(mol,false,false);
+			gf.generateMurckoFragments(mol,false,false,4);
 			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
 			boolean found=false;
 			for (int i =0;i<smiles.length;i++){
@@ -385,7 +385,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		GenerateFragments gf=new GenerateFragments();
 		try {
     	
-			gf.generateMurckoFragments(mol,false,false);
+			gf.generateMurckoFragments(mol,false,false,4);
 			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
 			boolean found=false;
 			for (int i =0;i<smiles.length;i++){
@@ -410,7 +410,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -432,7 +432,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	try {
         	MDLReader reader = new MDLReader(new InputStreamReader(ins));
         	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true);
+        	gf.generateMurckoFragments(mol,true,true,4);
         	//System.out.println("Murcko Fragments generated");
         	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
         	for (int i =0;i<smiles.length;i++){
@@ -445,6 +445,26 @@ public class GenerateFragmentsTest extends CDKTestCase{
         	e.printStackTrace();
         }
 	}
-	
+	public void testGenerateMurckoFragments17() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	String filename = "data/mdl/murckoTest11.mol";
+    	//System.out.println("\nMurckoTesting: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	GenerateFragments gf=new GenerateFragments();
+    	try {
+        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+        	Molecule mol = (Molecule)reader.read(new Molecule());
+        	gf.generateMurckoFragments(mol,true,true,4);
+        	//System.out.println("Murcko Fragments generated");
+        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+        	for (int i =0;i<smiles.length;i++){
+        		//System.out.println("MF"+i+" :"+smiles[i]);
+        	}
+        	assertEquals("C1CCc2ccccc2(C1)",smiles[0]);
+        	assertEquals(1,smiles.length);
+        }catch (Exception e){
+        	System.out.println("Error in testGenerateMurckoFragments5:");
+        	e.printStackTrace();
+        }
+	}
 }
 	            
