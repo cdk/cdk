@@ -34,6 +34,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -546,6 +547,39 @@ public class CML2Test extends CDKTestCase {
             assertEquals(18, mol.getBondCount());
             assertFalse(GeometryTools.has3DCoordinates(mol));
             assertTrue(GeometryTools.has2DCoordinates(mol));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
+    /**
+     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLReaction() {
+        String filename = "data/cml/reaction.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getSetOfReactions().getReactionCount(), 1);
+
+            // test the reaction
+            IReaction reaction = model.getSetOfReactions().getReaction(0);
+            assertNotNull(reaction);
+            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
             
         } catch (Exception e) {
             e.printStackTrace();

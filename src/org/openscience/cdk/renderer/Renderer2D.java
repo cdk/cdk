@@ -286,8 +286,8 @@ public class Renderer2D extends SimpleRenderer2D
 		}
 
 		// calculate some boundaries
-		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
-		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
+		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer,r2dm.getRenderingCoordinates());
+		double[] minmaxProducts = GeometryTools.getMinMax(productContainer,r2dm.getRenderingCoordinates());
 		
 		// paint box around total
 		int width = 13;

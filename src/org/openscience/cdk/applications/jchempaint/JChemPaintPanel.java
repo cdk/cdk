@@ -79,6 +79,7 @@ import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -425,7 +426,10 @@ public abstract class JChemPaintPanel
 		lastUsedJCPP = this;
 		if (model != null && jchemPaintModel != null && model.getChemModel().getSetOfMolecules() != null) {
 			model.getRendererModel().setBackgroundDimension(jchemPaintModel.getRendererModel().getBackgroundDimension());
-			Dimension molDim = GeometryTools.get2DDimension(model.getChemModel().getSetOfMolecules().getAtomContainer(0));
+			IAtomContainer acc = ChemModelManipulator.getAllInOneContainer(model.getChemModel());
+			Dimension molDim = GeometryTools.get2DDimension(acc,model.getRendererModel().getRenderingCoordinates());
+//			Dimension molDim = GeometryTools.get2DDimension(model.getChemModel().getSetOfMolecules().getAtomContainer(0));
+			
 			if (isViewerOnly) {
 				Dimension viewerDim = null;
 				//for some reason an EditorPanel opened by a ViewerPanel gets thet isViewerOnly flag set to true -- to be solved!!
@@ -738,10 +742,12 @@ public abstract class JChemPaintPanel
 				setJChemPaintModel(jcpm);
 				repaint();
 			}
-		} else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null || getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0) {
+		}else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null ||
+				getJChemPaintModel().getChemModel().getSetOfReactions() == null /*|| 
+				getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0*/) {
 			registerModel(jcpm);
-			setJChemPaintModel(jcpm);
-			repaint();
+				setJChemPaintModel(jcpm);
+				repaint();
 		} else {
 			JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
 			jcpf.show();
