@@ -45,10 +45,10 @@
 			</sequential>
 		</macrodef>
 
-                <echo message="Compiling applet logging tool org/openscience/cdk/tools/LoggingTool.java to ${appjars.dir}"/>
-                <delete file="${appjars.dir}/org/openscience/cdk/tools/LoggingTool.class"/>
-                <javac srcdir="applet" destdir="${appjars.dir}" optimize="${optimization}" debug="${debug}" deprecation="${deprecation}" target="1.3" source="1.3">
-                </javac>
+                <!--<echo message="Compiling applet logging tool org/openscience/cdk/tools/LoggingTool.java to ${appjars.dir}"/>
+                	<delete file="${appjars.dir}/org/openscience/cdk/tools/LoggingTool.class"/>
+	                <javac srcdir="applet" destdir="${appjars.dir}" optimize="${optimization}" debug="${debug}" deprecation="${deprecation}" target="1.3" source="1.3">
+                </javac>-->
 
 		<jar-from-list destfile="${dist}/jar/jchempaint-applet-viewer-opts.jar" includesfile="${metainf}/applet-viewer-opts.files"/>
 		<jar-from-list destfile="${dist}/jar/jchempaint-applet-editor.jar" includesfile="${metainf}/applet-editor.files"/>

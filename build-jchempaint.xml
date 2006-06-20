@@ -130,6 +130,8 @@
                 <include name="cdk-jchempaint.application.jar"/>
                 <include name="cdk-jchempaint.applet.jar"/>
                 <include name="cdk-nonotify.jar"/>
+		<include name="cdk-valencycheck.jar"/>
+		<include name="cdk-smiles.jar"/>
             </fileset>
         </unjar>
     </target>
