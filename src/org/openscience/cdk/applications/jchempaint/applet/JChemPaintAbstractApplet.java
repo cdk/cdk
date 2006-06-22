@@ -53,6 +53,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
@@ -75,9 +79,11 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 
 	private static String[][] paramInfo = {
 			{ "background", "color", 	"Background color as integer" },
-      { "atomNumbersVisible", "true or false", "should atom numbers be shown"},
+			{ "atomNumbersVisible", "true or false", "should atom numbers be shown"},
 			{ "load", "url", "URL of the chemical data" },
-			{ "detachable", "true or false", "should applet be detachable by double click"},};
+			{ "compact", "true or false", "compact means elements shown as dots, no figures etc. (default false)"},
+			{ "tooltops", "string like 'atomumber|test|atomnumber|text", "the texts will be used as tooltips for the respective atoms (leave out if none required"},
+			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},};
 
 	public String getAppletInfo() {
 		return appletInfo;
@@ -145,6 +151,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			jcpp.addFilePopUpMenu();		
 		if(getParameter("compact")!=null && getParameter("compact").equals("true")){
 			theModel.getRendererModel().setIsCompact(true);
+		}
+		if(getParameter("impliciths")!=null && getParameter("impliciths").equals("true")){
+			 theModel.getControllerModel().setAutoUpdateImplicitHydrogens(true);
 		}
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
@@ -227,14 +236,14 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				IChemObjectReader reader = new ReaderFactory().createReader(isReader);
 				ChemModel chemModel = (ChemModel) reader.read(new ChemModel());
         
-        int count=0;
-        for(int i=0;i<chemModel.getSetOfMolecules().getMolecules().length;i++){
-          for(int k=0;k<chemModel.getSetOfMolecules().getMolecules()[i].getAtomCount();k++){
-            chemModel.getSetOfMolecules().getMolecules()[i].getAtomAt(k).setProperty("OriginalNumber", new Integer(count));
-            count++;
-          }
-        }
-        theModel = new JChemPaintModel(chemModel);
+				int count=0;
+				for(int i=0;i<chemModel.getSetOfMolecules().getMolecules().length;i++){
+					for(int k=0;k<chemModel.getSetOfMolecules().getMolecules()[i].getAtomCount();k++){
+						chemModel.getSetOfMolecules().getMolecules()[i].getAtomAt(k).setProperty("OriginalNumber", new Integer(count));
+						count++;
+					}
+				}
+				theModel = new JChemPaintModel(chemModel);
 			} catch (Exception exception) {
 				System.out.println("Cannot parse model: " + exception.toString());
 				exception.printStackTrace();
@@ -290,7 +299,34 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     mdlwriter.write(all);
     return(sw.toString());
   }
+  
+  
+  public String getSmiles(){
+		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
+        SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
+		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
+		Molecule molecule = new Molecule(container);
+		return generator.createSMILES(molecule);
+  }
 
+  
+  public String getSmilesChiral() throws Exception{
+		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
+        SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
+		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
+		Molecule moleculewithh=new Molecule(container);
+		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+		double bondLength = GeometryTools.getBondLengthAverage(container);
+	    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
+		boolean[] bool=new boolean[moleculewithh.getBondCount()];
+	    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
+		for(int i=0;i<bool.length;i++){
+	      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBondAt(i)))
+			bool[i]=true;
+		}
+		return generator.createChiralSMILES(moleculewithh,bool);
+
+  }
   /**
    * This method replaces all \n characters with the system line separator. This can be used when setting a mol file in an applet
    * without knowing which platform the applet is running on.
