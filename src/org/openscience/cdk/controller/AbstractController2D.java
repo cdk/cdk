@@ -1108,6 +1108,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			 */
 			UndoableEdit  edit = new AdjustBondOrdersEdit(changedBonds);
 			undoRedoHandler.postEdit(edit);
+			updateAtoms(container, atoms);
 		} else
 		{
 			IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
