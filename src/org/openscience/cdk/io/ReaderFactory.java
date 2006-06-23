@@ -256,27 +256,18 @@ public class ReaderFactory {
     }
     
     /**
-     * Detects the format of the Reader input, and if known, it will return
-     * a CDK Reader to read the format. This method is not able to detect the 
-     * format of gziped files. Use createReader(InputStream) instead for such 
-     * files.
+     * Creates a new IChemObjectReader based on the given IChemFormat.
      *
      * @see #createReader(InputStream)
      */
-    public IChemObjectReader createReader(Reader input) throws IOException {
-        if (!(input instanceof BufferedReader)) {
-            input = new BufferedReader(input);
-        }
-        IChemFormat chemFormat = guessFormat((BufferedReader)input);
-        if (chemFormat != null) {
-            String readerClassName = chemFormat.getReaderClassName();
+    public IChemObjectReader createReader(IChemFormat format) {
+        if (format != null) {
+            String readerClassName = format.getReaderClassName();
             if (readerClassName != null) {
                 try {
                     // make a new instance of this class
-                    IChemObjectReader coReader = (IChemObjectReader)this.getClass().getClassLoader().
+                	return (IChemObjectReader)this.getClass().getClassLoader().
                         loadClass(readerClassName).newInstance();
-                    coReader.setReader(input);
-                    return coReader;
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectReader: ", readerClassName);
                     logger.debug(exception);
@@ -289,8 +280,31 @@ public class ReaderFactory {
             }
         } else {
             logger.warn("ChemFormat is not recognized.");
-        }
+        } 
         return null;
+    }
+    
+    /**
+     * Detects the format of the Reader input, and if known, it will return
+     * a CDK Reader to read the format. This method is not able to detect the 
+     * format of gziped files. Use createReader(InputStream) instead for such 
+     * files.
+     *
+     * @see #createReader(InputStream)
+     */
+    public IChemObjectReader createReader(Reader input) throws IOException {
+        if (!(input instanceof BufferedReader)) {
+            input = new BufferedReader(input);
+        }
+        IChemFormat chemFormat = guessFormat((BufferedReader)input);
+        IChemObjectReader coReader = createReader(chemFormat);
+        try {        	
+        	coReader.setReader(input);
+        } catch (Exception exception) {
+        	logger.error("Could not set the Reader source: ", exception.getMessage());
+        	logger.debug(exception);
+        }
+        return coReader;
     }
 
 }

@@ -29,6 +29,7 @@
 package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -117,5 +118,33 @@ public class WriterFactory {
         }
     }
     
+    /**
+     * Creates a new IChemObjectWriter based on the given IChemFormat.
+     *
+     * @see #createWriter(InputStream)
+     */
+    public IChemObjectWriter createWriter(IChemFormat format) {
+        if (format != null) {
+            String writerClassName = format.getWriterClassName();
+            if (writerClassName != null) {
+                try {
+                    // make a new instance of this class
+                	return (IChemObjectWriter)this.getClass().getClassLoader().
+                        loadClass(writerClassName).newInstance();
+                } catch (ClassNotFoundException exception) {
+                    logger.error("Could not find this ChemObjectWriter: ", writerClassName);
+                    logger.debug(exception);
+                } catch (Exception exception) {
+                    logger.error("Could not create this ChemObjectWriter: ", writerClassName);
+                    logger.debug(exception);
+                }
+            } else {
+                logger.warn("ChemFormat is recognized, but no writer is available.");
+            }
+        } else {
+            logger.warn("ChemFormat is not recognized.");
+        } 
+        return null;
+    }
 }
 

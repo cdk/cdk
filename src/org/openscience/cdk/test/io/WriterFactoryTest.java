@@ -30,8 +30,11 @@ package org.openscience.cdk.test.io;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.WriterFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.DataFeatures;
 
@@ -59,5 +62,12 @@ public class WriterFactoryTest extends CDKTestCase {
         IChemFormat[] formats = factory.findChemFormats(DataFeatures.HAS_3D_COORDINATES);
         assertNotNull(formats);
         assertTrue(formats.length > 0);
+    }
+
+    public void testCreateWriter_IChemFormat() {
+    	IChemFormat format = new XYZFormat();
+        IChemObjectWriter writer = factory.createWriter(format);
+        assertNotNull(writer);
+        assertEquals(format.getFormatName(), writer.getFormat().getFormatName());
     }
 }

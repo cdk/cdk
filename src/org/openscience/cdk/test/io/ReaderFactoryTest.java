@@ -84,6 +84,12 @@ public class ReaderFactoryTest extends CDKTestCase {
         return new TestSuite(ReaderFactoryTest.class);
     }
 
+    public void testCreateReader_IChemFormat() {
+    	IChemFormat format = new XYZFormat();
+        IChemObjectReader reader = factory.createReader(format);
+        assertNotNull(reader);
+        assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
+    }
     public void testGaussian94() {
         expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
                      new Gaussian94Format());
