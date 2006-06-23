@@ -56,6 +56,7 @@ public class MqsarTests {
         suite.addTest(BondPartialPiChargeDescriptorTest.suite());
         suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
         suite.addTest(BondPartialTChargeDescriptorTest.suite());
+        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
         suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(PiElectronegativityDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
