@@ -27,7 +27,6 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -48,7 +47,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 
@@ -175,7 +173,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         
         /*search resonance for each product obtained*/
-		SmilesGenerator sg = new SmilesGenerator(ac.getBuilder());
         for(int i = 0 ; i < setOfReactions.getReactionCount(); i++){
         	IAtomContainer product = setOfReactions.getReaction(i).getProducts().getAtomContainer(0);
         	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,false,false,false,false);
@@ -196,7 +193,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     				IAtomContainer prod = setOfMolecules.getAtomContainer(j);
     				HydrogenAdder hAdder = new HydrogenAdder();
     				hAdder.addImplicitHydrogensToSatisfyValency((IMolecule) prod);
-    				String smiles = sg.createSMILES((IMolecule) prod);
     				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
     				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
     					 /*search positive charge*/
