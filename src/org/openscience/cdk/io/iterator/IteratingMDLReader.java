@@ -44,10 +44,20 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
- * in the SDF file, without reading them into memory first. Suitable
- * for very large SDF files.
- *
- * <p>For parsing the molecules it still uses the normal <code>MDLReader</code>.
+ * in the SD file, without reading them into memory first. Suitable
+ * for (very) large SDF files. For parsing the molecules in the
+ * SD file, it uses the <code>MDLReader</code>.
+ * 
+ * <p>Example use:
+ * <pre>
+ * File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
+ * IteratingMDLReader reader = new IteratingMDLReader(
+ *   new FileInputStream(sdfFile), DefaultChemObjectBuilder.getInstance()
+ * );
+ * while (reader.hasNext()) {
+ *   IMolecule molecule = (IMolecule)reader.next();
+ * }
+ * </pre>
  *
  * @cdk.module io
  *
@@ -97,6 +107,9 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         return new MDLFormat();
     }
 
+    /**
+     * Returns true if another IMolecule can be read.
+     */
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -183,6 +196,9 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         }
     }
     
+    /**
+     * Returns the next IMolecule.
+     */
     public Object next() {
         if (!nextAvailableIsKnown) {
             hasNext();
