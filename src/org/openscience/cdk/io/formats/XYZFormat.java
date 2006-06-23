@@ -59,6 +59,7 @@ public class XYZFormat implements IChemFormat {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.HAS_3D_COORDINATES;
+		return DataFeatures.HAS_3D_COORDINATES |
+		       DataFeatures.HAS_ATOM_PARTIAL_CHARGES;
 	}
 }
