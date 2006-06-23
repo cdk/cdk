@@ -33,6 +33,13 @@ package org.openscience.cdk.tools;
  * a Data Feature Ontology. Actual integers are random
  * and should <b>not</b> be used directly.
  * 
+ * <p>To test wether a IChemFormat supports a certain feature, the
+ * following code can be used:
+ * <pre>
+ * int features = new XYZFormat().getSupportedDataFeatures();
+ * boolean has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
+ * </pre>
+ * 
  * @author Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module core
  **/
@@ -40,17 +47,30 @@ public class DataFeatures {
 
     public final static int NONE = 0;
     
+    // The int allows for up to 750 different properties. Should
+    // be enough for now.
+    
     // COORDINATE SYSTEMS
-    public final static int HAS_2D_COORDINATES = 1;
-    public final static int HAS_3D_COORDINATES = 2;
+    public final static int HAS_2D_COORDINATES = 1<<0;
+    public final static int HAS_3D_COORDINATES = 1<<1;
+    public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1<<2;
+    
+    // ATOMIC FEATURES
+    //                      HAS_ATOMS ??
+    //                      HAS_ATOM_ELEMENT_SYMBOLS ??
+    public final static int HAS_ATOM_PARTIAL_CHARGES = 1<<3;
+    public final static int HAS_ATOM_FORMAL_CHARGES = 1<<4;
+    public final static int HAS_ATOM_HYBRIDIZATIONS = 1<<5;
+    public final static int HAS_ATOM_MASS_NUMBERS = 1<<6;
+    public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<7;
     
     // GRAPH FEATURES
-    public final static int HAS_GRAPH_REPRESENTATION = 4;
-    public final static int HAS_DIETZ_REPRESENTATION = 8;
+    public final static int HAS_GRAPH_REPRESENTATION = 1<<8;
+    public final static int HAS_DIETZ_REPRESENTATION = 1<<9;
     
     // MODEL FEATURES
-    public final static int HAS_CRYSTALS = 16;
-    public final static int HAS_REACTIONS = 32;
+    public final static int HAS_UNITCELL_PARAMETERS = 1<<10;
+    public final static int HAS_REACTIONS = 1<<11;
 	
 }
 
