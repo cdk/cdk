@@ -77,6 +77,6 @@ public class HINFormat implements IChemFormatMatcher {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_3D_COORDINATES;
 	}
 }
