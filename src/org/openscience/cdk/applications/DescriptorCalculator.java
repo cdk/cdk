@@ -23,24 +23,48 @@
  */
 package org.openscience.cdk.applications;
 
-import org.apache.commons.cli.*;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.SMILESReader;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.io.listener.PropertiesListener;
-import org.openscience.cdk.qsar.DescriptorEngine;
-import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
+import nu.xom.Document;
+import nu.xom.Serializer;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.io.SMILESReader;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.listener.PropertiesListener;
+import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.qsar.DescriptorEngine;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.LoggingTool;
+import org.xmlcml.cml.element.CMLMolecule;
 
 
 /**
@@ -110,7 +134,7 @@ public class DescriptorCalculator {
     private void printCMLHeader(Writer writer) throws IOException {
         writer.write("<?xml version=\"1.0\"?>\n");
         writer.write("<list\n");
-        writer.write("  xmlns=\"http://www.xml-cml.org/schema/cml2/core\"\n");
+        writer.write("  xmlns=\"http://www.xml-cml.org/schema\"\n");
         writer.write("  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
         writer.write("  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core cmlAll4.4.xsd\">\n");
         writer.flush();
@@ -118,12 +142,22 @@ public class DescriptorCalculator {
 
     private void printCMLMolecule(Writer writer, org.openscience.cdk.interfaces.IMolecule molecule) throws Exception {
         logger.info("Writing output in CML format");
-        StringWriter stringWriter = new StringWriter();
-        CMLWriter cmlWriter = new CMLWriter(stringWriter);
-        cmlWriter.addChemObjectIOListener(propsListener);
-        cmlWriter.write(molecule);
-        cmlWriter.close();
-        writer.write(stringWriter.toString());
+        Convertor convertor = new Convertor(true, null);
+        ByteArrayOutputStream stringWriter = new ByteArrayOutputStream();
+        CMLMolecule cmlMol = convertor.cdkMoleculeToCMLMolecule(molecule);
+        Serializer serializer = new Serializer(stringWriter, "ISO-8859-1");
+        serializer.setIndent(2);
+        serializer.write(new Document(cmlMol));
+        String cmlContent = stringWriter.toString();
+        BufferedReader reader = new BufferedReader(new StringReader(cmlContent));
+        String line = reader.readLine();
+        while (line != null) {
+        	if (!line.startsWith("<?xml")) {
+        		writer.write(line);
+        		writer.write("\n");
+        	}
+        	line = reader.readLine();
+        }
         writer.flush();
     }
     private void printTXTMolecule(Writer writer, org.openscience.cdk.interfaces.IMolecule molecule) throws Exception {
