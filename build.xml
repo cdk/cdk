@@ -631,6 +631,7 @@
                 <fileset dir="${lib}">
                     <includesfile name="${metainf}/applications.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
+                    <includesfile name="${metainf}/charges.libdepends"/>
                     <includesfile name="${metainf}/core.libdepends"/>
                     <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
@@ -656,6 +657,7 @@
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
                     <include name="cdk-builder3d.jar"/>
+                    <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
