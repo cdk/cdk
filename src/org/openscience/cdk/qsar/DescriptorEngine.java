@@ -27,14 +27,20 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import org.openscience.cdk.applications.APIVersionTester;
+import org.openscience.cdk.applications.plugin.ICDKPlugin;
+import org.openscience.cdk.applications.plugin.PluginClassLoader;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -112,13 +118,12 @@ public class DescriptorEngine {
         logger = new LoggingTool(this);
         switch (type) {
             case ATOMIC:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
+            	descriptors = getDescriptorClassesNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
                 break;
             case MOLECULAR:
-                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
+            	descriptors = getDescriptorClassesNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
                 break;
         }
-        instantiateDescriptors(classNames);
         initializeSpecifications(descriptors);
 
         // get the dictionary for the descriptors
@@ -395,9 +400,9 @@ public class DescriptorEngine {
     }
 
     /**
-     * Returns a list containing the classes found in the specified descriptor package.
-     * <p/>
-     * The package name specified can be null or an empty string. In this case the package name
+     * Returns a list containing instances found in the specified descriptor package.
+     * 
+     * <p>The package name specified can be null or an empty string. In this case the package name
      * is automatcally set to "org.openscience.cdk.qsar.descriptors" and as a result will return
      * classes corresponding to both atomic and molecular descriptors.
      *
@@ -407,9 +412,9 @@ public class DescriptorEngine {
      *                     the system classpath is examined for available jar files. This parameter can be set for
      *                     situations where the system classpath is not available or is modified such as in an application
      *                     container.
-     * @return A list containing the classes in the specified package
+     * @return A list containing the IDescriptor instances in the specified package
      */
-    public List getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
+    public List getDescriptorClassesNameByPackage(String packageName, String[] jarFileNames) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
@@ -437,7 +442,21 @@ public class DescriptorEngine {
                         String tmp = je.toString().replace('/', '.').replaceAll(".class", "");
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf("$") != -1) continue;
-                        classlist.add(tmp);
+                        URL u = new URL("jar", "", new File(jars[i]).toURL() + "!/");
+                        ClassLoader loader = new PluginClassLoader(u);
+                        logger.debug("Potential descriptor: ", tmp);
+                        try {
+                        	IDescriptor descriptor = loadDescriptor(loader, tmp);
+                        	if (descriptor != null) {
+                        		classlist.add(descriptor);
+                        		logger.info("  loaded.");
+                        	} else {
+                        		logger.debug("Null found for: ", tmp);
+                        	}
+                        } catch (Throwable exception) {
+                            logger.error("  could not load IDescriptor.class (continuing search): ", exception.getMessage());
+                            logger.debug(exception);
+                        }
                     }
                 }
             } catch (IOException e) {
@@ -448,24 +467,31 @@ public class DescriptorEngine {
         return classlist;
     }
 
-    private void instantiateDescriptors(List descriptorClassNames) {
-        if (descriptors != null) return;
-
-        descriptors = new ArrayList();
-        for (Iterator iter = descriptorClassNames.iterator(); iter.hasNext();) {
-            String descriptorName = (String) iter.next();
-            try {
-                IDescriptor descriptor = (IDescriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
-                descriptors.add(descriptor);
-                logger.info("Loaded descriptor: ", descriptorName);
-            } catch (ClassNotFoundException exception) {
-                logger.error("Could not find this Descriptor: ", descriptorName);
-                logger.debug(exception);
-            } catch (Exception exception) {
-                logger.error("Could not load this Descriptor: ", descriptorName);
-                logger.debug(exception);
+    public IDescriptor loadDescriptor(ClassLoader classLoader, String className) {
+        try {
+            Class c = classLoader.loadClass(className);
+            Class[] interfaces = c.getClasses();
+            logger.debug("found #interfaces: ", interfaces.length);
+    		for (int i=0; i<interfaces.length; i++) {
+    			logger.debug("iface is idescriptor? where iface=", interfaces[i].getName());
+    			if (IDescriptor.class.equals(interfaces[i])) {
+    	            Object plugin = c.newInstance();
+    				logger.info("Found a descriptor: ", c.getName());
+    				return (IDescriptor)plugin;
+    			}
             }
+            logger.info("Class is not type IDescriptor: ", c.getName());
+        } catch (ClassNotFoundException exception) {
+            logger.error("Could not find class");
+            logger.debug(exception);
+        } catch (IllegalAccessException exception) {
+            logger.error("Don't have access to class");
+            logger.debug(exception);
+        } catch (InstantiationException exception) {
+            logger.error("Could not instantiate object");
+            logger.debug(exception);
         }
+        return null;
     }
 
     private void initializeSpecifications(List descriptors) {
