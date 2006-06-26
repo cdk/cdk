@@ -40,7 +40,10 @@ package org.openscience.cdk.tools;
  * boolean has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
  * </pre>
  * 
- * @author Egon Willighagen <ewilligh@uni-koeln.de>
+ * <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
+ * >Blue Obelisk Data Features Ontology</a>.
+ * 
+ * @author     Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module core
  **/
 public class DataFeatures {
@@ -51,26 +54,42 @@ public class DataFeatures {
     // be enough for now.
     
     // COORDINATE SYSTEMS
+
+    /** @cdk.dictref bodf:coordinates2D */
     public final static int HAS_2D_COORDINATES = 1<<0;
+    /** @cdk.dictref bodf:coordinates3D */
     public final static int HAS_3D_COORDINATES = 1<<1;
+    /** @cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates */
     public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1<<2;
     
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
     //                      HAS_ATOM_ELEMENT_SYMBOLS ??
+    
+    /** @cdk.dictref bodf:partialAtomicCharges */
     public final static int HAS_ATOM_PARTIAL_CHARGES = 1<<3;
+    /** @cdk.dictref bodf:formalAtomicCharges */
     public final static int HAS_ATOM_FORMAL_CHARGES = 1<<4;
+    /** FIXME: NOT YET IN BODF !!! **/
     public final static int HAS_ATOM_HYBRIDIZATIONS = 1<<5;
+    /** @cdk.dictref bodf:massNumbers */
     public final static int HAS_ATOM_MASS_NUMBERS = 1<<6;
+    /** @cdk.dictref bodf:isotopeNumbers */
     public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<7;
     
     // GRAPH FEATURES
+    
+    /** @cdk.dictref bodf:graphRepresentation */
     public final static int HAS_GRAPH_REPRESENTATION = 1<<8;
+    /** @cdk.dictref bodf:dietzRepresentation */
     public final static int HAS_DIETZ_REPRESENTATION = 1<<9;
     
     // MODEL FEATURES
+    
+    /** FIXME: NOT YET IN BODF !!! **/
     public final static int HAS_UNITCELL_PARAMETERS = 1<<10;
-    public final static int HAS_REACTIONS = 1<<11;
+    /** FIXME: NOT YET IN BODF !!! **/
+        public final static int HAS_REACTIONS = 1<<11;
 	
 }
 
