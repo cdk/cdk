@@ -43,6 +43,7 @@
 # Update 06/08/2006 - Reorganized to summarize PMD reports in terms of total number
 #                     of violations and linked to actual PMD report pages. Updated
 #                     keywords section to point to the local API docs
+# Update 06/26/2006 - Added column totals to the JUnit summary page
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -309,26 +310,46 @@ def writeJunitSummaryHTML(stats):
     <td colspan=4><hr></td>
     </tr>
     """ % (todayNice, todayNice)
+
+    totalTest = 0
+    totalFail = 0
+    totalError = 0
+    
     for entry in stats:
+        totalTest = totalTest + int(entry[1])
+        totalFail = totalFail + int(entry[2])
+        totalError = totalError + int(entry[3])
+        
         summary = summary + "<tr>"
         summary = summary + "<td align=\"left\"><a href=\"test/result-%s.txt\">%s</a></td>" % (entry[0], entry[0])
         for i in entry[1:]:
             summary = summary + "<td align=\"center\">%s</td>" % (i)
         summary = summary + "</tr>"
+
     summary = summary + """
+    <tr>
+    <td colspan=4><hr></td>
+    </tr>
+    <tr>
+    <td><b>Totals</b></td>
+    <td align=\"center\">%d</td>
+    <td align=\"center\">%d</td>
+    <td align=\"center\">%d</td>
+    </tr>
     <tr>
     <td colspan=4><hr></td>
     </tr>
     </table>
     </center>
     </body>
-    </html>"""
+    </html>""" % (totalTest, totalFail, totalError)
     return summary
 
 def parseJunitOutput(summaryFile):
     f = open(os.path.join(nightly_dir,'test.log'), 'r')
     stats = []
     foundModuleEntry = False
+    
     while True:
         line = f.readline()
         if not line: break
