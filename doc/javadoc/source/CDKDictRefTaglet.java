@@ -37,6 +37,7 @@ import java.util.Hashtable;
  * <p>The known dictionaries are:
  * <ul>
  *  <li>blue-obelisk: <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml">Blue Obelisk Chemoinformatics Dictionary</a>
+ *  <li>bodf: <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml">Blue Obelisk Data Features Dictionary</a>
  *  <li>qsar-descriptors: <a href="http://qsar.sourceforge.net/dicts/qsar-descriptors/index.xhtml">QSAR.sf.net Descriptors Dictionary</a>
  * </ul>
  */
@@ -51,6 +52,9 @@ public class CDKDictRefTaglet implements Taglet {
         dictURLs = new Hashtable(5);
         dictNames = new Hashtable(5);
         
+        dictURLs.put("bodf", "http://qsar.sourceforge.net/ontologies/data-features/index.xhtml");
+        dictNames.put("bodf", "Blue Obelisk Data Features Dictionary");
+
         dictURLs.put("blue-obelisk", "http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml");
         dictNames.put("blue-obelisk", "Blue Obelisk Chemoinformatics Dictionary");
         
