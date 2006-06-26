@@ -5,6 +5,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -169,8 +170,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					
 					
 					reaction.addProduct(reactantCloned);
+					setOfReactions.addReaction(reaction);
 				}
-				setOfReactions.addReaction(reaction);
 			}
 		}
 		return setOfReactions;	
@@ -186,8 +187,13 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IBond[] bonds = reactant.getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
-			if(bonds[i].getOrder() == 2){
+			IAtom[] atoms = bonds[i].getAtoms();
+			if(bonds[i].getOrder() == 2&&
+					atoms[0].getSymbol().equals("C")&&
+					atoms[1].getSymbol().equals("C")){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 	}

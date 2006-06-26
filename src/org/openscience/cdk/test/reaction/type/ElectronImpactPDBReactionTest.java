@@ -48,6 +48,8 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 					atoms[0].getSymbol().equals("C")&&
 					atoms[1].getSymbol().equals("C")){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		
@@ -59,7 +61,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         type.setParameters(params);
         ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(2, setOfReactions.getReactionCount());
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtomAt(1).getFormalCharge());
@@ -91,7 +93,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 //        type.setParameters(params);
 		ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         
-		Assert.assertEquals(1, setOfReactions.getReactionCount());
+		Assert.assertEquals(2, setOfReactions.getReactionCount());
 
         
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
@@ -101,6 +103,38 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
+		
+	}
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@return    Description of the Return Value
+	 */
+	public void test2_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		/* ionize >C=C< , set the reactive center*/
+		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
+		
+			
+		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		setOfReactants.addMolecule(reactant);
+		
+		IReactionProcess type  = new ElectronImpactPDBReaction();
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(2, setOfReactions.getReactionCount());
+
+        IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        Assert.assertEquals(1, molecule.getAtomAt(1).getFormalCharge());
+        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(0)));
+
+        molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
+        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
+        
+
+        Assert.assertEquals(6,setOfReactions.getReaction(0).getMappings().length);
 		
 	}
 }
