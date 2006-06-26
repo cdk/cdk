@@ -55,6 +55,30 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 
 
 	/**
+	 *  Evaluate the MMFF94 energy function for a given molecule
+	 *
+	 *@param  molecule  Current molecule.
+	 *@return        MMFF94 energy function value.
+	 */
+	public double energyFunctionOfAMolecule(AtomContainer molecule) {
+		
+		GVector coords3d = ForceFieldTools.getCoordinates3xNVector(molecule);
+
+		vdwi.setFunctionMMFF94SumEvdW(coords3d);
+		sbi.setFunctionMMFF94SumEBA(coords3d);
+		
+		energy = bs.functionMMFF94SumEB(coords3d)
+			+ ab.functionMMFF94SumEA(coords3d)
+			+ sbi.getFunctionMMFF94SumEBA()
+			+ t.functionMMFF94SumET(coords3d)
+			+ vdwi.getFunctionMMFF94SumEvdW()
+			+ ei.functionMMFF94SumEQ(coords3d);
+		
+		return energy;
+	}
+
+
+	/**
 	 *  Evaluate the MMFF94 energy function for a given 3xN point
 	 *
 	 *@param  coords3d  Current molecule 3xN coordinates.
@@ -70,22 +94,7 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 			+ sbi.getFunctionMMFF94SumEBA()
 			+ t.functionMMFF94SumET(coords3d)
 			+ vdwi.getFunctionMMFF94SumEvdW()
-			+ ei.functionMMFF94SumEQ(coords3d)
-			;
-		
-		functionEvaluationNumber += 1;
-//		if (functionEvaluationNumber == 1 | functionEvaluationNumber % 50 == 0) {
-//			System.out.println("functionEvaluationNumber = " + functionEvaluationNumber);
-//			System.out.println("bs.functionMMFF94SumEB(coords3d) = " + bs.functionMMFF94SumEB(coords3d));
-//			System.out.println("ab.functionMMFF94SumEA(coords3d) = " + ab.functionMMFF94SumEA(coords3d));
-//			System.out.println("sbi.functionMMFF94SumEBA(coords3d)) = " + sbi.getFunctionMMFF94SumEBA());
-//			System.out.println("t.functionMMFF94SumET(coords3d) = " + t.functionMMFF94SumET(coords3d));
-//			System.out.println("vdwi.functionMMFF94SumEvdW(coords3d) = " + vdwi.getFunctionMMFF94SumEvdW());
-//			System.out.println("ei.functionMMFF94SumEQ(coords3d) = " + ei.functionMMFF94SumEQ(coords3d));
-			//System.out.println("energy(" + functionEvaluationNumber + ") = " + energy);
-//		}
-		
-//		moleculeCurrentCoordinates.set(coord3d);
+			+ ei.functionMMFF94SumEQ(coords3d);
 		
 		return energy;
 	}

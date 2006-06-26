@@ -35,8 +35,11 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.AtomTools;
+import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
+import org.openscience.cdk.modeling.forcefield.MMFF94EnergyFunction;
 import org.openscience.cdk.modeling.forcefield.AngleBending;
 import org.openscience.cdk.modeling.forcefield.BondStretching;
 import org.openscience.cdk.modeling.forcefield.ElectrostaticInteractions;
@@ -72,6 +75,7 @@ public class ForceFieldTests extends CDKTestCase {
 	GVector moleculeCoordinates = null;
 	GeometricMinimizer gm = new GeometricMinimizer();
 	Hashtable mmff94Tables = null;
+	MMFF94EnergyFunction mmff94Energy = null;
 
 	double[] molecule3Coord = {9, 9, 0};
 	GVector molecule3Coordinates = new GVector(molecule3Coord);
@@ -122,6 +126,49 @@ public class ForceFieldTests extends CDKTestCase {
 	}
 
 
+	/**
+	 *  Get MMFF94 energy of a molecule (ethane).
+	 */
+	public void testGetMMFF94EnergyOfAMolecule() {
+		
+		double testResult_mmff94Energy = 34.02087874256057; //(ethane)
+		
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS Get MMFF94 energy of a molecule (ethane)");
+
+		double energy = 0;
+		
+		try {
+
+			input = "src/data/mdl/Ethane-TestFF-output";
+			FileReader fileReader = new FileReader(input + ".mol");
+			MDLReader mdlReader = new MDLReader(fileReader);
+			molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
+			mdlReader.close();
+			//System.out.println("molecule: " +  molecule);
+
+			ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+			ffc.setForceFieldConfigurator("mmff94");
+			RingSet rs = (RingSet) ffc.assignAtomTyps((Molecule) molecule);
+			mmff94Tables = ffc.getParameterSet();
+
+			mmff94Energy = new MMFF94EnergyFunction(molecule, mmff94Tables);
+
+		} catch (Exception exception) {
+            System.out.println("Could not read Molecule from file due to: " + exception.getMessage());
+            System.out.println(exception);
+        }
+       
+		energy = mmff94Energy.energyFunctionOfAMolecule(molecule);
+		
+		//System.out.println("molecule energy = " + energy);
+		
+		assertEquals(testResult_mmff94Energy, energy, 0.00001);
+
+	}
+
+	
+	
 	/**
 	 *  A unit test for JUnit (Steepest Descents Method minimization)
 	 */
@@ -1251,8 +1298,8 @@ public class ForceFieldTests extends CDKTestCase {
 
         try {
         	// Please don't write a file in the test cases.
-        	StringWriter sw = new StringWriter();
-        	MDLWriter mdlWriter = new MDLWriter(sw);
+        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
+        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
             mdlWriter.close();
             

@@ -22,7 +22,7 @@ public interface IPotentialFunction {
 
 
 	/**
-	 *  Evaluate the potential energy function for a given point
+	 *  Evaluate the potential energy function given the cartesian coordinates.
 	 *
 	 *@param  coords3d  Current molecule 3xN coordinates.
 	 * @return    Energy function value in the wished 3xN point.
