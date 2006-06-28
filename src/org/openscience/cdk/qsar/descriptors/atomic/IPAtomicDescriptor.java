@@ -281,7 +281,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			descriptor.setParameters(params);
 			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
 			double datT = (dar.get(0)+dar.get(1))/2;
-			results[0][5] = datT;
+			results[0][5] = new Double(datT);
 			
 		} catch (CDKException e) {
 			e.printStackTrace();
@@ -327,8 +327,8 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			params[0] = new Integer(targetPosition);
 			descriptor.setParameters(params);
 			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
-			results[0][4] = dar.get(0);
-			results[0][5] = dar.get(1);
+			results[0][4] = new Double(dar.get(0));
+			results[0][5] = new Double(dar.get(1));
     		
     		
 		} catch (CDKException e) {

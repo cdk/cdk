@@ -331,6 +331,28 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         double resultAccordingNIST = 8.95; 
         assertEquals(result, resultAccordingNIST, 0.11);
     }
+    /**
+	 *  A unit test for JUnit with C=CCC(=O)CC
+	 */
+    public void testIPDescriptor_13() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
+    	Object[] params = new Object[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=CCC(=O)CC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		params[0] = new Integer(0);
+		params[1] = IPAtomicDescriptor.BondTarget;
+        descriptor.setParameters(params);
+        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+        double resultAccordingNIST = -1; 
+    }
 
 
 }
