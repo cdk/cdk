@@ -101,7 +101,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29; 
-        assertEquals(result, resultAccordingNIST, 1.3);
+        assertEquals(result, resultAccordingNIST, 1.2);
     }
     /**
 	 *  A unit test for JUnit with C-C-C-I
@@ -124,7 +124,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
-        assertEquals(result, resultAccordingNIST, 0.4);
+        assertEquals(result, resultAccordingNIST, 0.03);
     }
     /**
 	 *  A unit test for JUnit with C-C-O
@@ -169,7 +169,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.025;
-        assertEquals(result, resultAccordingNIST, 0.05);
+        assertEquals(result, resultAccordingNIST, 0.03);
     }
     /**
 	 *  A unit test for JUnit with C-N-C
@@ -215,7 +215,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9; 
-        assertEquals(result, resultAccordingNIST, 3.1);
+        assertEquals(result, resultAccordingNIST, 0.5);
     }
     /**
 	 *  A unit test for JUnit with C-C-P-C-C
@@ -283,7 +283,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.26; 
-        assertEquals(result, resultAccordingNIST, 15);
+        assertEquals(result, resultAccordingNIST, 1.2);
     }
 
 

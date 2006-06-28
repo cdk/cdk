@@ -32,7 +32,9 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
 import org.openscience.cdk.qsar.model.weka.J48WModel;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 import java.util.HashMap;
@@ -170,6 +172,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 					atom.getSymbol().equals("S")||
 					atom.getSymbol().equals("O")||
 					atom.getSymbol().equals("P")){
+				
 				resultsH = calculateHeteroAtomDescriptor(container);
 				path = "data/arff/HeteroAtom1.arff";
 				isTarget = true;
@@ -177,12 +180,16 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		}else if(targetType.equals(BondTarget)){
 			IBond bond = container.getBondAt(targetPosition);
 			IAtom[] atoms = bond.getAtoms();
-			if((bond.getOrder() == 2) && 
-					(((atoms[0].getSymbol().equals("C")) &&( !atoms[1].getSymbol().equals("C")))||
-							((atoms[1].getSymbol().equals("C")) && (!atoms[0].getSymbol().equals("C"))))) {
-				resultsH = calculateCarbonylDescriptor(container);
-				path = "data/arff/Carbonyl1.arff";
-				isTarget = true;
+			if((bond.getOrder() == 2)){
+				if((atoms[0].getSymbol().equals("C")) && ( atoms[1].getSymbol().equals("C"))) {
+//					resultsH = calculatePiSystWithoutHeteroDescriptor(container);
+//					path = "data/arff/PiSystWithoutHetero.arff";
+//					isTarget = true;
+				}else {
+					resultsH = calculateCarbonylDescriptor(container);
+					path = "data/arff/Carbonyl1.arff";
+					isTarget = true;
+				}
 			}
 		}
 		if(isTarget){
@@ -231,7 +238,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	 * @return     Array with the values of the descriptors.
 	 */
 	private Double[][] calculateCarbonylDescriptor(IAtomContainer atomContainer) {
-		Double[][] results = new Double[1][5];
+		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBondAt(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
@@ -244,6 +251,56 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			positionC = atomContainer.getAtomNumber(atoms[1]);
 			positionX = atomContainer.getAtomNumber(atoms[0]);
 		}
+		try {
+        	/*0*/
+        	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
+        	params[0] = new Integer(positionC);
+            descriptor.setParameters(params);
+    		results[0][0]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+        	/*1*/
+    		descriptor = new PartialSigmaChargeDescriptor();
+            descriptor.setParameters(params);
+    		results[0][1]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		/*2*/
+    		descriptor = new BondPartialSigmaChargeDescriptor();
+    		params[0] = new Integer(targetPosition);
+            descriptor.setParameters(params);
+    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		/*3*/
+        	descriptor = new SigmaElectronegativityDescriptor();
+        	params[0] = new Integer(positionX);
+            descriptor.setParameters(params);
+    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+        	/*4*/
+    		descriptor = new PartialSigmaChargeDescriptor();
+            descriptor.setParameters(params);
+    		results[0][4]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		/*5*/
+			descriptor = new ResonancePositiveChargeDescriptor();
+			params[0] = new Integer(targetPosition);
+			descriptor.setParameters(params);
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
+			double datT = (dar.get(0)+dar.get(1))/2;
+			results[0][5] = datT;
+			
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+	/**
+	 * Calculate the necessary descriptors for pi systems without heteroatom
+	 * 
+	 * @param atomContainer The IAtomContainer
+	 * @return     Array with the values of the descriptors.
+	 */
+	private Double[][] calculatePiSystWithoutHeteroDescriptor(IAtomContainer atomContainer) {
+		Double[][] results = new Double[1][5];
+		Integer[] params = new Integer[1];
+		IBond bond = atomContainer.getBondAt(targetPosition);
+		IAtom[] atoms = bond.getAtoms();
+		int positionC = atomContainer.getAtomNumber(atoms[0]);
+		int positionX = atomContainer.getAtomNumber(atoms[1]);
 		try {
         	/*0*/
         	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
