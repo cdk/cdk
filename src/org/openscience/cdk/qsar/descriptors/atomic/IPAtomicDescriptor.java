@@ -182,9 +182,9 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			IAtom[] atoms = bond.getAtoms();
 			if((bond.getOrder() == 2)){
 				if((atoms[0].getSymbol().equals("C")) && ( atoms[1].getSymbol().equals("C"))) {
-//					resultsH = calculatePiSystWithoutHeteroDescriptor(container);
-//					path = "data/arff/PiSystWithoutHetero.arff";
-//					isTarget = true;
+					resultsH = calculatePiSystWithoutHeteroDescriptor(container);
+					path = "data/arff/PySystWithoutHetero.arff";
+					isTarget = true;
 				}else {
 					resultsH = calculateCarbonylDescriptor(container);
 					path = "data/arff/Carbonyl1.arff";
@@ -295,36 +295,41 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	 * @return     Array with the values of the descriptors.
 	 */
 	private Double[][] calculatePiSystWithoutHeteroDescriptor(IAtomContainer atomContainer) {
-		Double[][] results = new Double[1][5];
+		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBondAt(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
 		int positionC = atomContainer.getAtomNumber(atoms[0]);
 		int positionX = atomContainer.getAtomNumber(atoms[1]);
 		try {
-        	/*0*/
+        	/*0_1*/
         	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
         	params[0] = new Integer(positionC);
             descriptor.setParameters(params);
     		results[0][0]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
-        	/*1*/
+        	/*1_1*/
     		descriptor = new PartialSigmaChargeDescriptor();
             descriptor.setParameters(params);
     		results[0][1]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
-    		/*2*/
-    		descriptor = new BondPartialSigmaChargeDescriptor();
-    		params[0] = new Integer(targetPosition);
-            descriptor.setParameters(params);
-    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
-    		/*3*/
+    		
+    		/*0_2*/
         	descriptor = new SigmaElectronegativityDescriptor();
         	params[0] = new Integer(positionX);
             descriptor.setParameters(params);
-    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
-        	/*4*/
+    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+        	/*1_2*/
     		descriptor = new PartialSigmaChargeDescriptor();
             descriptor.setParameters(params);
-    		results[0][4]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		
+    		/*  */
+			descriptor = new ResonancePositiveChargeDescriptor();
+			params[0] = new Integer(targetPosition);
+			descriptor.setParameters(params);
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
+			results[0][4] = dar.get(0);
+			results[0][5] = dar.get(1);
+    		
     		
 		} catch (CDKException e) {
 			e.printStackTrace();

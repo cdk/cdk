@@ -285,6 +285,52 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         double resultAccordingNIST = 9.26; 
         assertEquals(result, resultAccordingNIST, 1.2);
     }
+    /**
+	 *  A unit test for JUnit with CCCC=CCCCC
+	 */
+    public void testIPDescriptor_11() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
+    	Object[] params = new Object[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCCC=CCCCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		params[0] = new Integer(3);
+		params[1] = IPAtomicDescriptor.BondTarget;
+        descriptor.setParameters(params);
+        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.80; 
+        assertEquals(result, resultAccordingNIST, 0.05);
+    }
+    /**
+	 *  A unit test for JUnit with CC1CCC=C1
+	 */
+    public void testIPDescriptor_12() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecularDescriptor descriptor = new IPAtomicDescriptor();
+    	Object[] params = new Object[2];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CC1CCC=C1");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		params[0] = new Integer(4);
+		params[1] = IPAtomicDescriptor.BondTarget;
+        descriptor.setParameters(params);
+        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.95; 
+        assertEquals(result, resultAccordingNIST, 0.11);
+    }
 
 
 }
