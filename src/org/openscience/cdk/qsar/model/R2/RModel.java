@@ -120,9 +120,14 @@ public abstract class RModel implements IModel {
 
     private void loadRFunctions(Rengine engine) {
         // File.separator is used to be system independent 
-        String scriptLocator = "org" + File.separator + "openscience" +
-        File.separator + "cdk" + File.separator + "qsar" + File.separator +
-        "model" + File.separator + "data" + File.separator + "helper.R";
+        // Fix me: After creating a jar file it don't work on a windwos OS
+        // but within eclipse it won't work on while working with '/' on windows OS
+        // No idea how to solve this
+         
+		// String scriptLocator = "org" + File.separator + "openscience" +
+		// File.separator + "cdk" + File.separator + "qsar" + File.separator +
+		// "model" + File.separator + "data" + File.separator + "helper.R";
+        String scriptLocator = "org/openscience/cdk/qsar/model/data/helper.R";
         try {
             File scriptFile = File.createTempFile("XXXXX", ".R");
             scriptFile.deleteOnExit();
@@ -191,18 +196,16 @@ public abstract class RModel implements IModel {
      * is specified on the command line
      */
     public RModel() throws QSARModelException {
-
         // check that the JRI jar and .so match
         if (!Rengine.versionCheck()) {
             logger.debug("API version of the JRI library does not match that of the native binary");
             throw new QSARModelException("API version of the JRI library does not match that of the native binary");
         }
 
-
         params = new HashMap();
         String[] args = {"--vanilla", "--quiet", "--slave"};
         logger = new LoggingTool(this);
-
+        
         String initRFromString = System.getProperty("initRFromString");
         boolean useDisk = true;
         if (initRFromString != null && initRFromString.equals("true")) {
