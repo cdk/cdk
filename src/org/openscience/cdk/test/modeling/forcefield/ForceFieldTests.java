@@ -140,8 +140,8 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		try {
 
-			input = "src/data/mdl/Ethane-TestFF-output";
-			FileReader fileReader = new FileReader(input + ".mol");
+			String localInput = "src/data/mdl/Ethane-TestFF-output";
+			FileReader fileReader = new FileReader(localInput + ".mol");
 			MDLReader mdlReader = new MDLReader(fileReader);
 			molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
 			mdlReader.close();
@@ -167,7 +167,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	}
 
-	
 	
 	/**
 	 *  A unit test for JUnit (Steepest Descents Method minimization)
@@ -214,64 +213,6 @@ public class ForceFieldTests extends CDKTestCase {
 		for (int i = 0; i < molecule3Coordinates.getSize(); i++) {
 			assertEquals(testResult3C[i], gm.getNewtonRaphsonMinimum().getElement(i), 0.00001);
 		}
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
-	 */
-	public void createTestMoleculeAndSetMMFF94Parameters() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		HydrogenAdder hAdder = new HydrogenAdder();
-		SmilesParser sp = new SmilesParser();
-		ac = sp.parseSmiles("CC");
-		hAdder.addExplicitHydrogensToSatisfyValency((Molecule) ac);
-		IAtom a = new Atom();
-		a = ac.getAtomAt(0);
-		Point3d atomCoordinate0 = new Point3d(1, 0, 0);
-		a.setPoint3d(atomCoordinate0);
-		ac.setAtomAt(0, a);
-		a = ac.getAtomAt(1);
-		Point3d atomCoordinate1 = new Point3d(2, 0, 0);
-		a.setPoint3d(atomCoordinate1);
-		ac.setAtomAt(1, a);
-		AtomTools.add3DCoordinates1(ac);
-
-		moleculeCoordinates = ForceFieldTools.getCoordinates3xNVector(ac);
-		double[] m = new double[ac.getAtomCount() * 3];
-		m[0] = 0.0070;
-		m[1] = -0.0040;
-		m[2] = 0.0030;
-		m[3] = 0.5120;
-		m[4] = -0.7200;
-		m[5] = -1.2490;
-		m[6] = -0.2850;
-		m[7] = -0.7200;
-		m[8] = 0.7260;
-		m[9] = 0.5440;
-		m[10] = -0.1890;
-		m[11] = 0.8660;
-		m[12] = -0.8240;
-		m[13] = 0.6030;
-		m[14] = -0.2490;
-		m[15] = 0.1880;
-		m[16] = -2.5140;
-		m[17] = -1.0130;
-		m[18] = -0.4010;
-		m[19] = -1.3690;
-		m[20] = -1.8600;
-		m[21] = 1.5180;
-		m[22] = -0.4450;
-		m[23] = -1.4320;
-		moleculeCoordinates.set(m);
-		//logger.debug("moleculeCoordinates : " + moleculeCoordinates);
-
-		gm.setMMFF94Tables(ac);
-		mmff94Tables = gm.getPotentialParameterSet();
-
 	}
 
 
@@ -1167,7 +1108,8 @@ public class ForceFieldTests extends CDKTestCase {
         //logger.debug("Molecule: ", molecule);
 
         try {
-        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
+        	FileWriter fileWriter = new FileWriter("src/" + input + "-output.mol");
+        	//stringWriter.write(input + "-output.mol");
         	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
             mdlWriter.close();
@@ -1235,8 +1177,9 @@ public class ForceFieldTests extends CDKTestCase {
         //logger.debug("Molecule: ", molecule);
 
         try {
-        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
-        	MDLWriter mdlWriter = new MDLWriter(fileWriter);
+        	StringWriter stringWriter = new StringWriter();
+        	stringWriter.write(input + "-output.mol");
+        	MDLWriter mdlWriter = new MDLWriter(stringWriter);
     		mdlWriter.write(molecule);
             mdlWriter.close();
             
@@ -1298,7 +1241,8 @@ public class ForceFieldTests extends CDKTestCase {
 
         try {
         	// Please don't write a file in the test cases.
-        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
+        	FileWriter fileWriter = new FileWriter("src/" + input + "-output.mol");
+        	//stringWriter.write(input + "-output.mol");
         	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
             mdlWriter.close();
