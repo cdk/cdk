@@ -36,6 +36,7 @@ import org.xmlcml.cml.element.CMLScalar;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
@@ -148,5 +149,9 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
+
+	public void customize(IBond bond, Object nodeToAdd) throws Exception {
+		// nothing to do at this moment
+	}
 }
 

@@ -30,6 +30,7 @@ package org.openscience.cdk.libio.cml;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * Interface for classes that allow the Convertor to be customized for certain
@@ -51,6 +52,15 @@ public interface ICMLCustomizer {
 	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
 	 */
     public void customize(IAtom atom, Object nodeToAdd) throws Exception;
+    
+	/**
+	 * Customized the nodeToAdd for the given IBond.
+	 * 
+	 * @param atom       Bond to base the customization on 
+	 * @param nodeToAdd  XOM Element to customize
+	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+	 */
+    public void customize(IBond bond, Object nodeToAdd) throws Exception;
     
     /**
      * Customized the nodeToAdd for the given Molecule.

@@ -36,6 +36,7 @@ import nu.xom.Element;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -189,5 +190,8 @@ public class QSARCustomizer implements ICMLCustomizer {
         return scalar;
      }
     
+	public void customize(IBond bond, Object nodeToAdd) throws Exception {
+		// nothing to do at this moment
+	}
 }
 
