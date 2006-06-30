@@ -37,6 +37,7 @@ import nu.xom.Element;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -68,85 +69,16 @@ public class QSARCustomizer implements ICMLCustomizer {
     private final static String QSAR_NAMESPACE = "qsar";
     private final static String QSAR_URI = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
+	public void customize(IBond bond, Object nodeToAdd) throws Exception {
+    	customizeIChemObject(bond, nodeToAdd);
+	}
+	
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
-        // nothing to do at this moment
+    	customizeIChemObject(atom, nodeToAdd);
     }
     
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
-    	if (!(nodeToAdd instanceof Element))
-    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
-    	
-    	Element element = (Element)nodeToAdd;
-        Hashtable props = molecule.getProperties();
-        Enumeration keys = props.keys();
-        Element propList = null;
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            if (key instanceof DescriptorSpecification) {
-                DescriptorSpecification specs = (DescriptorSpecification)key;
-                DescriptorValue value = (DescriptorValue)props.get(key);
-                IDescriptorResult result = value.getValue();
-                if (propList == null) {
-                    propList = new CMLPropertyList();
-                }
-                Element property = new CMLProperty();
-                // setup up the metadata list
-                Element metadataList = new CMLMetadataList();
-                metadataList.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
-                String specsRef = specs.getSpecificationReference();
-                if (specsRef.startsWith(QSAR_URI)) {
-                    specsRef = QSAR_NAMESPACE + ":" + specsRef.substring(QSAR_URI.length()+1);
-                    property.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
-                }
-                CMLMetadata metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "specificationReference"));
-                metaData.addAttribute(new Attribute("content", specsRef));
-                metadataList.appendChild(metaData);
-                metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationTitle"));
-                metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
-                metadataList.appendChild(metaData);
-                metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationIdentifier"));
-                metaData.addAttribute(new Attribute("content", specs.getImplementationIdentifier()));
-                metadataList.appendChild(metaData);
-                metaData = new CMLMetadata();
-                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationVendor"));
-                metaData.addAttribute(new Attribute("content", specs.getImplementationVendor()));
-                metadataList.appendChild(metaData);
-                // add parameter setting to the metadata list
-                Object[] params = value.getParameters();
-                if (params != null && params.length > 0) {
-                    String[] paramNames = value.getParameterNames();
-                    Element paramSettings = new CMLMetadataList();
-                    paramSettings.addAttribute(new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
-                    for (int i=0; i<params.length; i++) {
-                        Element paramSetting = new CMLMetadata();
-                        String paramName = paramNames[i];
-                        Object paramVal = params[i];
-                        if (paramName == null) {
-                            // logger.error("Parameter name was null! Cannot output to CML.");
-                        } else if (paramVal == null) {
-                            // logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
-                        } else {
-                            paramSetting.addAttribute(new Attribute("title", paramNames[i]));
-                            paramSetting.addAttribute(new Attribute("content", params[i].toString()));
-                            paramSettings.appendChild(paramSetting);
-                        }
-                    }
-                    metadataList.appendChild(paramSettings);
-                }
-                property.appendChild(metadataList);
-                Element scalar = this.createScalar(result);
-                scalar.addAttribute(new Attribute("dictRef", specsRef));
-                // add the actual descriptor value
-                property.appendChild(scalar);
-                propList.appendChild(property);
-            } // else: disregard all other properties
-        }
-        if (propList != null) {
-            element.appendChild(propList);
-        }
+    	customizeIChemObject(molecule, nodeToAdd);
     }
 
     private Element createScalar(IDescriptorResult value) {
@@ -190,8 +122,84 @@ public class QSARCustomizer implements ICMLCustomizer {
         return scalar;
      }
     
-	public void customize(IBond bond, Object nodeToAdd) throws Exception {
-		// nothing to do at this moment
-	}
+    private void customizeIChemObject(IChemObject object, Object nodeToAdd) throws Exception {
+    	if (!(nodeToAdd instanceof Element))
+    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+    	
+    	Element element = (Element)nodeToAdd;
+        Hashtable props = object.getProperties();
+        Enumeration keys = props.keys();
+        Element propList = null;
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            if (key instanceof DescriptorSpecification) {
+                DescriptorSpecification specs = (DescriptorSpecification)key;
+                DescriptorValue value = (DescriptorValue)props.get(key);
+                IDescriptorResult result = value.getValue();
+                if (propList == null) {
+                    propList = new CMLPropertyList();
+                }
+                Element property = new CMLProperty();
+                // setup up the metadata list
+                Element metadataList = new CMLMetadataList();
+                metadataList.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
+                String specsRef = specs.getSpecificationReference();
+                if (specsRef.startsWith(QSAR_URI)) {
+                    specsRef = QSAR_NAMESPACE + ":" + specsRef.substring(QSAR_URI.length()+1);
+                    property.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
+                }
+                CMLMetadata metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "specificationReference"));
+                metaData.addAttribute(new Attribute("content", specsRef));
+                metadataList.appendChild(metaData);
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationTitle"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationTitle()));
+                metadataList.appendChild(metaData);
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationIdentifier"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationIdentifier()));
+                metadataList.appendChild(metaData);
+                metaData = new CMLMetadata();
+                metaData.addAttribute(new Attribute("dictRef", QSAR_NAMESPACE + ":" + "implementationVendor"));
+                metaData.addAttribute(new Attribute("content", specs.getImplementationVendor()));
+                metadataList.appendChild(metaData);
+                // add parameter setting to the metadata list
+                Object[] params = value.getParameters();
+                System.out.println("Value: " + value.getSpecification().getImplementationIdentifier());
+                if (params != null && params.length > 0) {
+                    String[] paramNames = value.getParameterNames();
+                    Element paramSettings = new CMLMetadataList();
+                    paramSettings.addAttribute(new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
+                    for (int i=0; i<params.length; i++) {
+                        Element paramSetting = new CMLMetadata();
+                        String paramName = paramNames[i];
+                        Object paramVal = params[i];
+                        if (paramName == null) {
+                            // logger.error("Parameter name was null! Cannot output to CML.");
+                        } else if (paramVal == null) {
+                            // logger.error("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
+                        } else {
+                            paramSetting.addAttribute(new Attribute("title", paramNames[i]));
+                            paramSetting.addAttribute(new Attribute("content", params[i].toString()));
+                            paramSettings.appendChild(paramSetting);
+                        }
+                    }
+                    metadataList.appendChild(paramSettings);
+                }
+                property.appendChild(metadataList);
+                Element scalar = this.createScalar(result);
+                scalar.addAttribute(new Attribute("dictRef", specsRef));
+                // add the actual descriptor value
+                property.appendChild(scalar);
+                propList.appendChild(property);
+            } // else: disregard all other properties
+        }
+        if (propList != null) {
+            element.appendChild(propList);
+        }
+    }
+    
+	
 }
 
