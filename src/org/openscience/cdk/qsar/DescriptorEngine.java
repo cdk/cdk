@@ -27,10 +27,14 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.File;
@@ -42,22 +46,23 @@ import java.util.jar.JarFile;
 
 /**
  * A class that provides access to automatic descriptor calculation and more.
- * <p/>
- * The aim of this class is to provide an easy to use interface to automatically evaluate
+ * 
+ * <p>The aim of this class is to provide an easy to use interface to automatically evaluate
  * all the CDK descriptors for a given molecule. Note that at a given time this class
  * will evaluate all <i>atomic</i> or <i>molecular</i> descriptors but not both.
- * <p/>
- * The available descriptors are determined by scanning all the jar files in the users CLASSPATH
+ * 
+ * <p>The available descriptors are determined by scanning all the jar files in the users CLASSPATH
  * and selecting classes that belong to the CDK QSAR atomic or molecular descriptors package.
- * <p/>
- * An example of its usage would be
+ * 
+ * <p>An example of its usage would be
  * <pre>
  * Molecule someMolecule;
  * ...
  * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
  * descriptorEngine.process(someMolecule);
  * </pre>
- * The class allows the user to obtain a List of all the available descriptors in terms of their
+ * 
+ * <p>The class allows the user to obtain a List of all the available descriptors in terms of their
  * Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
@@ -71,10 +76,11 @@ import java.util.jar.JarFile;
 public class DescriptorEngine {
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    public static final int ATOMIC = 1;
-    public static final int MOLECULAR = 2;
+    public static final int ATOMIC    = 1;
+    public static final int BOND      = 2;
+    public static final int MOLECULAR = 3;
 
-    private org.openscience.cdk.dict.Dictionary dict = null;
+    private Dictionary dict = null;
     private List classNames = null;
     private List descriptors = null;
     private List speclist = null;
@@ -114,12 +120,16 @@ public class DescriptorEngine {
             case ATOMIC:
                 classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic", jarFileNames);
                 break;
+            case BOND:
+                classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.bond", jarFileNames);
+                break;
             case MOLECULAR:
                 classNames = getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.molecular", jarFileNames);
                 break;
         }
         instantiateDescriptors(classNames);
         initializeSpecifications(descriptors);
+        logger.debug("Found #descriptors: ", classNames.size());
 
         // get the dictionary for the descriptors
         DictionaryDatabase dictDB = new DictionaryDatabase();
@@ -139,12 +149,31 @@ public class DescriptorEngine {
      * @throws CDKException if an error occured during descriptor calculation
      */
     public void process(IAtomContainer molecule) throws CDKException {
+		IAtom[] atoms = molecule.getAtoms();
+		IBond[] bonds = molecule.getBonds();
 
-        for (int i = 0; i < descriptors.size(); i++) {
-            IMolecularDescriptor descriptor = (IMolecularDescriptor) descriptors.get(i);
+		for (int i = 0; i < descriptors.size(); i++) {
+        	IDescriptor descriptor = (IDescriptor)descriptors.get(i);
             try {
-                DescriptorValue value = descriptor.calculate(molecule);
-                molecule.setProperty(speclist.get(i), value);
+            	if (descriptor instanceof IMolecularDescriptor) {
+            		DescriptorValue value = ((IMolecularDescriptor)descriptor).calculate(molecule);
+            		molecule.setProperty(speclist.get(i), value);
+            		logger.debug("Calculated molecular descriptors...");
+            	} else if (descriptor instanceof IAtomicDescriptor) {
+            		for (int j=0; j<atoms.length; j++) {
+                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[i]);
+                		atoms[i].setProperty(speclist.get(i), value);
+            		}            		
+            		logger.debug("Calculated atomic descriptors...");
+            	} else if (descriptor instanceof IBondDescriptor) {
+            		for (int j=0; j<bonds.length; j++) {
+                		DescriptorValue value = ((IBondDescriptor)descriptor).calculate(bonds[i]);
+                		bonds[i].setProperty(speclist.get(i), value);
+            		}            		
+            		logger.debug("Calculated bond descriptors...");
+            	} else {
+            		logger.debug("Unknown descriptor type for: ", descriptor.getClass().getName());
+            	}
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                 logger.debug(exception);

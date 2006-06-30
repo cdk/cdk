@@ -36,7 +36,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import nu.xom.Document;
 import nu.xom.Serializer;
@@ -52,7 +51,6 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -87,8 +85,7 @@ public class DescriptorCalculator {
     private boolean inputIsSMILES;
     private String outputFormat = null;
     private String suffix = null;
-    private String[] descTypes = null;
-    private PropertiesListener propsListener;
+    private String descType = null;
     private DescriptorEngine engine;
 
     public DescriptorCalculator() {
@@ -101,21 +98,22 @@ public class DescriptorCalculator {
         suffix = ".cml";
         firstTime = true;
         molcount = 1;
-
-        Properties props = new Properties();
-        props.setProperty("CMLIDs", "false");
-        props.setProperty("NamespacedOutput", "false");
-        props.setProperty("XMLDeclaration", "false");
-        propsListener = new PropertiesListener(props);
     }
 
     private void initEngine() {
-        if (descTypes != null) {
-//            engine = new DescriptorEngine(descTypes);
-            System.out.println("Specification of descriptor class is currently disabled");
-            System.exit(0);
-        } else
+    	if ("atomic".equalsIgnoreCase(descType)) {
+            engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
+    	} else if ("bond".equalsIgnoreCase(descType)) {
+            engine = new DescriptorEngine(DescriptorEngine.BOND);
+    	} else if ("molecular".equalsIgnoreCase(descType)) {
             engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+    	} else if (descType == null) {
+    		engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        } else {
+            System.out.println("Not a valid descriptor type: " + descType);
+            System.out.println("  Should be either: molecular, atomic, or bond.");
+            System.exit(0);
+        }
     }
 
     public static void main(String[] args) {
@@ -298,7 +296,7 @@ public class DescriptorCalculator {
         options.addOption("s","smiles", false, "input one SMILES string");
         options.addOption("t","type",true,
                 "specify which type of descriptor to calculate. "+
-                "Possible values are: molecular, atomic");
+                "Possible values are: molecular, atomic, bond");
         options.addOption("o","output",true,
                 "Format in which to output descriptors. Options are 'cml' or'txt' to"+
                 "indicate CML output or comma seperated text");
@@ -316,7 +314,7 @@ public class DescriptorCalculator {
         } 
         if (line.hasOption("t") || line.hasOption("type")) {
             String optvalue = line.getOptionValue("t");
-            descTypes = optvalue.split(",");
+            descType = optvalue;
         }
         if (line.hasOption("o") || line.hasOption("output")) {
             String optvalue = line.getOptionValue("o");
