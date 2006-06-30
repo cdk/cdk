@@ -144,9 +144,8 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	 *@return    The parameters value
 	 */
 	public Object[] getParameters() {
-		Object[] params = new Object[2];
+		Object[] params = new Object[1];
 		params[0] = new Integer(targetPosition);
-		params[1] = new String(targetType);
 		return params;
 	}
 	/**
