@@ -48,11 +48,12 @@ import org.openscience.cdk.tools.LoggingTool;
  * </ul>
  * where the valence is the number of s and p valence electrons of atom.
  *
- * @author mfe4
+ * @author      mfe4
  * @cdk.created 2004-11-03
- * @cdk.module qsar
- * @cdk.set qsar-descriptors
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:chi0v
+ * @cdk.bug     1298108
  */
 public class ValenceConnectivityOrderZeroDescriptor implements IMolecularDescriptor {
 

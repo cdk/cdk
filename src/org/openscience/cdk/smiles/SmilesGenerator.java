@@ -60,23 +60,25 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- *  Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
- *  isotope and formal charge information of the atoms. In addition to this it
- *  takes stereochemistry in account for both Bond's and Atom's. IMPORTANT: The
- *  aromaticity detection for this SmilesGenerator relies on AllRingsFinder,
- *  which is known to take very long for some molecules with many cycles or
- *  special cyclic topologies. Thus, the AllRingsFinder has a built-in timeout
- *  of 5 seconds after which it aborts and throws an Exception. If you want your
- *  SMILES generated at any expense, you need to create your own AllRingsFinder,
- *  set the timeout to a higher value, and assign it to this SmilesGenerator. In
- *  the vast majority of cases, however, the defaults will be fine.
+ * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
+ * isotope and formal charge information of the atoms. In addition to this it
+ * takes stereochemistry in account for both Bond's and Atom's. IMPORTANT: The
+ * aromaticity detection for this SmilesGenerator relies on AllRingsFinder,
+ * which is known to take very long for some molecules with many cycles or
+ * special cyclic topologies. Thus, the AllRingsFinder has a built-in timeout
+ * of 5 seconds after which it aborts and throws an Exception. If you want your
+ * SMILES generated at any expense, you need to create your own AllRingsFinder,
+ * set the timeout to a higher value, and assign it to this SmilesGenerator. In
+ * the vast majority of cases, however, the defaults will be fine.
  *
- *@author         Oliver Horlacher,
- *@author         Stefan Kuhn (chiral smiles)
- *@cdk.created    2002-02-26
- *@cdk.keyword    SMILES, generator
- *
- * @cdk.module    smiles
+ * @author         Oliver Horlacher,
+ * @author         Stefan Kuhn (chiral smiles)
+ * @cdk.created    2002-02-26
+ * @cdk.keyword    SMILES, generator
+ * @cdk.module     smiles
+ * @cdk.bug        1014344
+ * @cdk.bug        1257438
+ * @cdk.bug        1494527
  */
 public class SmilesGenerator
 {

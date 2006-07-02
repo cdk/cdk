@@ -50,9 +50,10 @@ import java.util.zip.GZIPInputStream;
  * Helper class for ModelBuilder3D. Handles templates. This is
  * our layout solution for 3D ring systems
  *
- * @author cho,steinbeck
+ * @author      cho,steinbeck
  * @cdk.created 2004-09-21
- * @cdk.module builder3d
+ * @cdk.module  builder3d
+ * @cdk.bug     1300920
  */
 public class TemplateHandler3D {
     Molecule molecule;

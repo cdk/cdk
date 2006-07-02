@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module jchempaint
  * @author     Egon Willighagen <e.willighagen@science.ru.nl>
+ * @cdk.bug    1288449
  */
 public class CopyPasteAction extends JCPAction{
 

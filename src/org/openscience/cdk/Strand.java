@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.module  data
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @cdk.bug     1117765
  */
 public class Strand extends AtomContainer implements java.io.Serializable, IStrand
 {

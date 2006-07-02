@@ -79,13 +79,16 @@ import org.openscience.cdk.validate.ProblemMarker;
  *  which results can be found at <a href="http://www.angelfire.com/sc3/iupacstructures/">
  *  http://www.angelfire.com/sc3/iupacstructures/</a> .
  *
- *@author         steinbeck
- *@author         egonw
- *@cdk.module     render
- *@cdk.created    2002-10-03
- *@cdk.keyword    viewer, 2D-viewer
- *@cdk.bug        834515
- *@see            org.openscience.cdk.renderer.Renderer2DModel
+ * @author         steinbeck
+ * @author         egonw
+ * @cdk.module     render
+ * @cdk.created    2002-10-03
+ * @cdk.keyword    viewer, 2D-viewer
+ * @cdk.bug        834515
+ * @cdk.bug        1323624
+ * @cdk.bug        1471595
+ * 
+ * @see            org.openscience.cdk.renderer.Renderer2DModel
  */
 abstract class AbstractRenderer2D implements MouseMotionListener
 {

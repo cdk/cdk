@@ -53,10 +53,9 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author       Egon Willighagen
  * @cdk.created  2004-06-12
- *
  * @cdk.keyword  atom, valency
- * 
- * @cdk.module     valencycheck
+ * @cdk.module   valencycheck
+ * @cdk.bug      1174781
  */
 public class ValencyHybridChecker implements IValencyChecker {
 

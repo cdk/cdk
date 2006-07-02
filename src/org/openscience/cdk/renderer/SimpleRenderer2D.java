@@ -63,7 +63,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  *@cdk.module     render
  *@cdk.created    2002-10-03
  *@cdk.keyword    viewer, 2D-viewer
- *@cdk.bug        834515
+ *
  *@see            org.openscience.cdk.renderer.Renderer2DModel
  */
 public class SimpleRenderer2D extends AbstractRenderer2D

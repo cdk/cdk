@@ -74,6 +74,9 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module  builder3d
  * @cdk.keyword 3D coordinates
  * @cdk.keyword coordinate generation, 3D
+ * @cdk.bug     1241421
+ * @cdk.bug     1315823
+ * @cdk.bug     1458647
  */
 public class ModelBuilder3D {
 

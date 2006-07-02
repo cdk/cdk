@@ -46,11 +46,12 @@ import java.io.OptionalDataException;
 import java.util.*;
 
 /**
- * @cdk.module libio-cml
- * @cdk.keyword CML
- * @cdk.keyword class convertor
+ * @cdk.module       libio-cml
+ * @cdk.keyword      CML
+ * @cdk.keyword      class convertor
  * @cdk.builddepends jumbo52.jar
- * @cdk.require java1.5
+ * @cdk.require      java1.5
+ * @cdk.bug          1085912
  */
 public class Convertor {
 

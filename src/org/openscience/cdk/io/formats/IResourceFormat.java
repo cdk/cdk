@@ -34,7 +34,8 @@ package org.openscience.cdk.io.formats;
  *
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006-03-04
- **/
+ * @cdk.bug     1485289
+ */
 public interface IResourceFormat {
 
     /**

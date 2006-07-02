@@ -73,6 +73,7 @@ import java.util.List;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
+ * @cdk.bug     1183625
  */
 public class RDFProtonDescriptor implements IMolecularDescriptor {
 

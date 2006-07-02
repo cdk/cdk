@@ -288,9 +288,9 @@ public class SaturationChecker implements IValencyChecker {
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
 	 *
-	 * @cdk.keyword            bond order, calculation
-     *
+	 * @cdk.keyword bond order, calculation
      * @cdk.created 2003-10-03
+     * @cdk.bug     1167386
 	 */
     public void newSaturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting bond orders...");

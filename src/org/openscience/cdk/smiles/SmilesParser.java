@@ -48,31 +48,37 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
- *  Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
- *  SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
- *  at a time are supported. An example: <pre>
+ * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
+ * SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
+ * at a time are supported. An example:
+ * <pre>
  * try {
  *   SmilesParser sp = new SmilesParser();
  *   Molecule m = sp.parseSmiles("c1ccccc1");
  * } catch (InvalidSmilesException ise) {
  * }
- * </pre> <p>
+ * </pre>
  *
- *  This parser does not parse stereochemical information, but the following
- *  features are supported: reaction smiles, partitioned structures, charged
- *  atoms, implicit hydrogen count, '*' and isotope information. <p>
+ * <p>This parser does not parse stereochemical information, but the following
+ * features are supported: reaction smiles, partitioned structures, charged
+ * atoms, implicit hydrogen count, '*' and isotope information.
  *
- *  See {@cdk.cite WEI88}.
+ * <p>See {@cdk.cite WEI88} for further information.
  *
- *@author         Christoph Steinbeck
- *@author         Egon Willighagen
- *@cdk.module     smiles
- *@cdk.created    2002-04-29
- *@cdk.keyword    SMILES, parser
- *@cdk.bug        1095696
+ * @author         Christoph Steinbeck
+ * @author         Egon Willighagen
+ * @cdk.module     smiles
+ * @cdk.created    2002-04-29
+ * @cdk.keyword    SMILES, parser
+ * @cdk.bug        1095696
+ * @cdk.bug        1235852
+ * @cdk.bug        1274464
+ * @cdk.bug        1296113
+ * @cdk.bug        1363882
+ * @cdk.bug        1365547
+ * @cdk.bug        1503541
  */
-public class SmilesParser
-{
+public class SmilesParser {
 
 	private LoggingTool logger;
 	private HydrogenAdder hAdder;

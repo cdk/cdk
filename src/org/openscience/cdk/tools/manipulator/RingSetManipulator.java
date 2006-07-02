@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
- * @cdk.bug    1117775
  */
 public class RingSetManipulator {
     

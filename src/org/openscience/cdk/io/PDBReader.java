@@ -80,8 +80,9 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author      Bradley Smith <bradley@baysmith.com>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.created 2001-08-06
- *
  * @cdk.keyword file format, PDB
+ * @cdk.bug     1487368
+ * @cdk.bug     1508835
  */
 public class PDBReader extends DefaultChemObjectReader {
 	

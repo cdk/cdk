@@ -41,7 +41,6 @@ package org.openscience.cdk;
  * @author      Egon Willighagen <elw38@cam.ac.uk>
  * @cdk.created 2003-02-13
  * @cdk.keyword reaction
- * @cdk.bug     1095690
  */
 public class Reaction extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IReaction {
 

@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2004-03-26
  * @cdk.keyword    mouse events
  * @cdk.keyword    popup menus
+ * @cdk.bug        1291100
  */
 public class PopupController2D extends Controller2D {
 
