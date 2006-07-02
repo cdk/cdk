@@ -119,7 +119,7 @@ print RESULTS "<ul>\n";
 my $count = 0;
 print RESULTS "<h3>Open bugs not marked in source</h3>\n";
 print RESULTS "<ul>\n";
-foreach my $openbug (keys %openSFBugs) {
+foreach my $openbug (sort keys %openSFBugs) {
     if ($markedBugs{$openbug}) {
         # all is fine
     } else {
@@ -134,13 +134,15 @@ print "Open bugs that are not marked with \@cdk.bug: $count\n";
 $count = 0;
 print RESULTS "<h3>Marked bugs that are now fixed</h3>\n";
 print RESULTS "<ul>\n";
-foreach my $markedbug (keys %markedBugs) {
+foreach my $markedbug (sort keys %markedBugs) {
     if ($openSFBugs{$markedbug}) {
         # all is fine
-    } else {
+    } elsif ($allSFBugs{$markedbug}) {
         # print "Marked bug is fixed!\n";
         print RESULTS "<li>Marked bug <a href=\"http://sourceforge.net/tracker/index.php?func=detail&aid=$markedbug&group_id=20024&atid=120024\">#$markedbug</a> in " .$markedBugs{$markedbug} . " is fixed!</li>\n";
         $count = $count + 1;
+    } else {
+        print RESULTS "<li>Marked bug #$markedbug is not reported within the CDK project.</li>\n";
     }
 }
 print "Marked bugs that are now fixed: $count\n";
@@ -158,7 +160,7 @@ print RESULTS "<ul>\n";
 $count = 0;
 print RESULTS "<h3>Reported bugs without JUnit tests</h3>\n";
 print RESULTS "<ul>\n";
-foreach my $bug (keys %allSFBugs) {
+foreach my $bug (sort keys %allSFBugs) {
     if ($testedBugs{$bug}) {
         # all is fine
     } else {
