@@ -19,7 +19,10 @@ def getBugPage(pageNum, which = 'sf'):
     data = urllib.urlopen(url)
     return data.read()
 
-
+def sortAsNumber(alist):
+    alist = [int(x) for x in alist]
+    alist.sort()
+    return [str(x) for x in alist]
 
 def analyzeBugs(outputFile, cdkSrcDir):
 
@@ -30,6 +33,9 @@ def analyzeBugs(outputFile, cdkSrcDir):
     while True:
         pageCount += 1
         data = getBugPage(pageCount, 'sf')
+        if not data:
+            raise IOError, "No data was recived from SF"
+        
         bugre = re.compile('func=detail&amp;aid=(?P<aid>[0-9]*)&amp;group_id=(?P<gid>[0-9]*)&amp;atid=(?P<tid>[0-9]*)')
         bugs = re.findall(bugre, data)
 
@@ -42,7 +48,10 @@ def analyzeBugs(outputFile, cdkSrcDir):
     while True:
         pageCount += 1
         data = getBugPage(pageCount, 'all')
-        bugre = re.compile('func=detail&amp;aid=(?P<aid>[0-9]*)&amp;group_id=(?P<gid>[0-9]*)&amp;atid=(?P<tid>[0-9]*)')
+        if not data:
+            raise IOError, "No data was recived from SF"
+        
+        bugre = re.compile('func=detail&amp;aid=(?P<aid>[0-9]*)&amp;group_id=(?P<gid>[0-9]*)&amp;atid=(?P<tid>[0-9]*)')        
         bugs = re.findall(bugre, data)
 
         for bug in bugs:
@@ -65,6 +74,9 @@ def analyzeBugs(outputFile, cdkSrcDir):
                 javaFiles.append( os.path.join(root, filename) )
 
 
+    if len(javaFiles) == 0:
+        raise RuntimeError, "No Java source files found under %s" % (dirname)
+    
     for filename in javaFiles:
         data = open(filename, 'r').readlines()
         data = ''.join(data)
@@ -101,8 +113,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
     <ul>
     """
 
-    keys = openBugs.keys()
-    keys.sort()
+    keys = sortAsNumber(openBugs.keys())
     count  = 0
     for key in keys:
         if key in markedBugs.keys():
@@ -117,8 +128,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
     print 'Open bugs that are not marked with @cdk.bug =  %d' % (count)
 
     page += "<h3>Marked bugs that are now fixed</h3>\n<ul>\n"
-    keys = markedBugs.keys()
-    keys.sort()
+    keys = sortAsNumber(markedBugs.keys())
     count  = 0
     for key in keys:
         if key in openBugs.keys():
@@ -142,8 +152,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
     <ul>
     """
 
-    keys = allBugs.keys()
-    keys.sort()
+    keys = sortAsNumber(allBugs.keys())
     count = 0
     for key in keys:
         if key in testedBugs.keys():
