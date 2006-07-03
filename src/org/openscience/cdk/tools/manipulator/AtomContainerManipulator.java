@@ -68,7 +68,7 @@ public class AtomContainerManipulator {
 	 */
 	public static IAtom getAtomById(IAtomContainer ac, String id) throws CDKException{
 		for(int i=0;i<ac.getAtomCount();i++){
-			if(ac.getAtomAt(i).getID().equals(id))
+			if(ac.getAtomAt(i).getID()!=null && ac.getAtomAt(i).getID().equals(id))
 				return ac.getAtomAt(i);
 		}
 		throw new CDKException("no suc atom");
