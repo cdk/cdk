@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -56,6 +57,22 @@ import org.openscience.cdk.interfaces.IMolecule;
  * @cdk.created 2003-08-07
  */
 public class AtomContainerManipulator {
+	
+	/**
+	 * Returna an atom in an atomcontainer identified by id
+	 * 
+	 * @param ac The AtomContainer to search in
+	 * @param id The id to search for
+	 * @return An atom having id id
+	 * @throws CDKException There is no such atom
+	 */
+	public static IAtom getAtomById(IAtomContainer ac, String id) throws CDKException{
+		for(int i=0;i<ac.getAtomCount();i++){
+			if(ac.getAtomAt(i).getID().equals(id))
+				return ac.getAtomAt(i);
+		}
+		throw new CDKException("no suc atom");
+	}
 
     public static boolean replaceAtomByAtom(IAtomContainer container, IAtom atom, IAtom newAtom) {
         if (!container.contains(atom)) {
