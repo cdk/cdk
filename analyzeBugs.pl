@@ -2,7 +2,7 @@
 use diagnostics;
 use strict;
 
-my $offline = 1;
+my $offline = 0;
 
 ############################# DOWNLOADING SOURCEFORGE BUGS ################################
 
