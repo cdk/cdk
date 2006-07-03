@@ -44,6 +44,7 @@
 #                     of violations and linked to actual PMD report pages. Updated
 #                     keywords section to point to the local API docs
 # Update 06/26/2006 - Added column totals to the JUnit summary page
+# Update 07/03/2006 - Added the bug analysis section
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -524,7 +525,7 @@ def generateCDKDepGraph():
         print 'dot not found. Skipping dependency graph'
         return None
     
-    os.system('java -cp %s bsh.Interpreter deptodot.bsh > /tmp/cdkdep.dot' % (classpath))
+    os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > /tmp/cdkdep.dot' % (classpath))
     os.system('dot -Tpng /tmp/cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
     os.system('dot -Tps /tmp/cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
     os.unlink('/tmp/cdkdep.dot')
@@ -1079,8 +1080,17 @@ if __name__ == '__main__':
         resultTable.addRow()
         for celltext in celltexts: resultTable.addCell(celltext)
         
+    # run the bug analysis code
+    print '  Performing bug analysis'
+    sys.path.append( os.path.join(nightly_repo, 'tools') )
+    import analyzeBugs
+    analyzeBugs.analyzeBugs( os.path.join(nightly_web, 'bugs.html'), os.path.join(nightly_repo, 'src') )
+    resultTable.addRow()
+    resultTable.addCell("Bug Analysis")
+    resultTable.addCell("<a href=\"bugs.html\">Results</a>")
+    
     # copy this script to the nightly we dir. The script should be in nightly_dir
-    shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)
+    shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)    
 
     # close up the HTML and write out the web page
     olddir = os.getcwd()
