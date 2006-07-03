@@ -1,9 +1,12 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.*;
-import javax.vecmath.*;
-import org.openscience.cdk.*;
-import org.openscience.cdk.modeling.builder3d.*;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
+
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+import java.util.Hashtable;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -233,8 +236,7 @@ public class GeometricMinimizer {
     public void setConvergenceParametersForSDM(int changeSDMaximumIteration, double changeSDConvergenceCriterion){
 		SDMaximumIteration = changeSDMaximumIteration;
 		SDconvergenceCriterion = changeSDConvergenceCriterion;
-		return;
-	}
+    }
 
 
 	/**
