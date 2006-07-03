@@ -49,7 +49,7 @@ public class DataFeaturesTool {
 	 * 
 	 * @return integer representation of the present features 
 	 */
-	public int getSupportedDataFeatures(IMolecule molecule) {
+	public static int getSupportedDataFeatures(IMolecule molecule) {
 		int features = DataFeatures.NONE;
 		if (GeometryTools.has2DCoordinates(molecule))
 			features = features | DataFeatures.HAS_2D_COORDINATES;
