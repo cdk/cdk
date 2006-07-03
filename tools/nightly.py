@@ -44,7 +44,8 @@
 #                     of violations and linked to actual PMD report pages. Updated
 #                     keywords section to point to the local API docs
 # Update 06/26/2006 - Added column totals to the JUnit summary page
-# Update 07/03/2006 - Added the bug analysis section
+# Update 07/03/2006 - Added the bug analysis section. Also trapped exceptions from the
+#                     bug analysis code
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -1084,10 +1085,15 @@ if __name__ == '__main__':
     print '  Performing bug analysis'
     sys.path.append( os.path.join(nightly_repo, 'tools') )
     import analyzeBugs
-    analyzeBugs.analyzeBugs( os.path.join(nightly_web, 'bugs.html'), os.path.join(nightly_repo, 'src') )
-    resultTable.addRow()
-    resultTable.addCell("Bug Analysis")
-    resultTable.addCell("<a href=\"bugs.html\">Results</a>")
+    try:
+        analyzeBugs.analyzeBugs( os.path.join(nightly_web, 'bugs.html'), os.path.join(nightly_repo, 'src') )
+        resultTable.addRow()
+        resultTable.addCell("Bug Analysis")
+        resultTable.addCell("<a href=\"bugs.html\">Results</a>")
+    except IOError, ioe:
+        print ioe
+    except RuntimeError, rte:
+        print rte
     
     # copy this script to the nightly we dir. The script should be in nightly_dir
     shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)    
