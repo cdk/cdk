@@ -56,7 +56,8 @@ public class CMLFormat implements IChemFormatMatcher {
     }
 
     public boolean matches(int lineNumber, String line) {
-        if ((line.indexOf("<atom") != -1) ||
+        if ((line.indexOf("http://www.xml-cml.org/schema") != -1) ||
+            (line.indexOf("<atom") != -1) ||
             (line.indexOf("<molecule") != -1) ||
             (line.indexOf("<reaction") != -1) ||
             (line.indexOf("<cml") != -1) ||
