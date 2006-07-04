@@ -27,12 +27,12 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
-//import org.openscience.cdk.test.reaction.type.ReactionBalancerTest;
-import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
+import org.openscience.cdk.test.reaction.type.HyperconjugationReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;
@@ -59,6 +59,7 @@ public class MreactionTests {
         
         // from cdk.test.reaction
         suite.addTest(BreakingBondReactionTest.suite());
+        suite.addTest(HyperconjugationReactionTest.suite());
         suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
         suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
