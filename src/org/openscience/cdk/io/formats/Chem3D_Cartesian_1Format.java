@@ -60,4 +60,8 @@ public class Chem3D_Cartesian_1Format implements IChemFormat {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

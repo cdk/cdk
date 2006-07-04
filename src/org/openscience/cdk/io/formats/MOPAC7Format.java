@@ -65,4 +65,8 @@ public class MOPAC7Format implements IChemFormatMatcher {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

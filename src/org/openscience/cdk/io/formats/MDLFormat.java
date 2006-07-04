@@ -99,4 +99,8 @@ public class MDLFormat implements IChemFormatMatcher {
 		       DataFeatures.HAS_3D_COORDINATES |
 		       DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

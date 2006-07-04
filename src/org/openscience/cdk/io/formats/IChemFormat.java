@@ -60,5 +60,14 @@ public interface IChemFormat extends IResourceFormat {
      * @see org.openscience.cdk.tools.DataFeatures
      */
     public int getSupportedDataFeatures();
+
+    /**
+     * Returns an integer indicating the data features that this 
+     * format requires. For example, the XYZ format requires 3D
+     * coordinates.
+     * 
+     * @see org.openscience.cdk.tools.DataFeatures
+     */
+    public int getRequiredDataFeatures();
 }
 

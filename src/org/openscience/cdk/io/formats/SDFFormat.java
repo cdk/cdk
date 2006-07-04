@@ -97,4 +97,8 @@ public class SDFFormat implements IChemFormatMatcher {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

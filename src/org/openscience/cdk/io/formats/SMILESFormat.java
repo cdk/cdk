@@ -63,4 +63,8 @@ public class SMILESFormat implements IChemFormat {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

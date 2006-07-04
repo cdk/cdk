@@ -70,4 +70,8 @@ public class Mol2Format implements IChemFormatMatcher {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }

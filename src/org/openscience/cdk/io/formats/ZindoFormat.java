@@ -43,7 +43,7 @@ public class ZindoFormat implements IChemFormat {
     }
 
     public String getMIMEType() {
-    	return "chemical/x-daylight-smiles";
+    	return null;
     }
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
@@ -60,6 +60,10 @@ public class ZindoFormat implements IChemFormat {
 	}
 
 	public int getSupportedDataFeatures() {
+		return DataFeatures.NONE;
+	}
+	
+	public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;
 	}
 }

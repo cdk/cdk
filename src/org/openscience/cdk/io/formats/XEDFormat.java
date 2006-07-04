@@ -62,4 +62,8 @@ public class XEDFormat implements IChemFormat {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.NONE;
+	}
 }
