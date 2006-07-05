@@ -73,6 +73,7 @@ public class DBWriter {
 			public String getMIMEType() { return null; }
 			public boolean isXMLBased() { return false; }
 			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
+			public int getRequiredDataFeatures() { return DataFeatures.NONE; };
         };
     }
     

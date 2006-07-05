@@ -92,7 +92,8 @@ public class XindiceReader {
             public String getWriterClassName() { return null; }
 			public boolean isXMLBased() { return true; };
 			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
-        };
+			public int getRequiredDataFeatures() { return DataFeatures.NONE; };
+       };
     }
     
     public void setReader(Reader input) throws CDKException {

@@ -101,6 +101,7 @@ public class WWMMatrixReader {
             public String getWriterClassName() { return null; }
 			public boolean isXMLBased() { return false; };
 			public int getSupportedDataFeatures() { return DataFeatures.NONE; };
+			public int getRequiredDataFeatures() { return DataFeatures.NONE; };
         };
     }
     public void setReader(Reader input) throws CDKException {
