@@ -75,29 +75,30 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
     double covalentRadius;
     
     /**
-     *  The formal charge of the atom. Implements RFC #6.
+     *  The formal charge of the atom with 0 as default. Implements RFC #6.
      */
     protected int formalCharge;
 
     /**
-     *  The hybridization state of this atom.
+     * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
+     * as default.
      */
     protected int hybridization;
 
     /**
-     *  The Electron Valency of this atom.
+     *  The electron Valency of this atom with CDKConstants.UNSET as default.
      */
     protected int electronValency;
 
     /**
-     * The formal number of neighbours this atom type can have.
-     * This includes explicitely and implicitely connected atoms. The latter
-     * includes implicit hydrogens.
+     * The formal number of neighbours this atom type can have with CDKConstants_UNSET
+     * as default. This includes explicitely and implicitely connected atoms, including
+     * implicit hydrogens.
      */
     protected int formalNeighbourCount;
 
     /**
-     * String representing the identifier for this atom type.
+     * String representing the identifier for this atom type with null as default.
      */
     private String identifier;
     
@@ -106,9 +107,13 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
      *
      * @param elementSymbol  Symbol of the atom
 	 */
-	public AtomType(String elementSymbol)
-	{
+	public AtomType(String elementSymbol) {
 		super(elementSymbol);
+		this.identifier = null;
+		this.formalNeighbourCount = CDKConstants.UNSET;
+		this.electronValency = CDKConstants.UNSET;
+		this.hybridization = CDKConstants.HYBRIDIZATION_UNSET;
+		this.formalCharge = 0;
 	}
 
 
