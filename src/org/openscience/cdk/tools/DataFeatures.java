@@ -64,7 +64,7 @@ public class DataFeatures {
     
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
-    //                      HAS_ATOM_ELEMENT_SYMBOLS ??
+
     /** @cdk.dictref bodf:hasAtomElementSymbol */
     public final static int HAS_ATOM_ELEMENT_SYMBOL = 1<<3;
     /** @cdk.dictref bodf:partialAtomicCharges */
