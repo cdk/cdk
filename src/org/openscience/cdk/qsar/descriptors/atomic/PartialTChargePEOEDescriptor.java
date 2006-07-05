@@ -64,6 +64,8 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
     private int atomPosition = 0;
 	private IMolecularDescriptor sigmaCharge;
 	private IMolecularDescriptor piCharge;
+	private IAtomContainer acCloned;
+	private IAtomContainer acOLD;
 
 
     /**
@@ -133,19 +135,21 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
     	Integer[] params = new Integer[1];
     	params[0] = new Integer(atomPosition);
     	
-    	
-    	IAtomContainer acCloned;
-		try {
-			acCloned = (IAtomContainer)ac.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
-    	piCharge.setParameters(params);
+    	if(ac != acOLD){
+    		acOLD = ac;
+    		try {
+				acCloned = (IAtomContainer)acOLD.clone();
+			} catch (CloneNotSupportedException e) {
+				throw new CDKException("Could not clone IMolecule!", e);
+			}
+    	}
+		piCharge.setParameters(params);
     	double piRC= ((DoubleResult)piCharge.calculate(acCloned).getValue()).doubleValue();
         
 		sigmaCharge.setParameters(params);
-		double sigmaRC= ((DoubleResult)sigmaCharge.calculate(ac).getValue()).doubleValue();
-        
+		double sigmaRC= ((DoubleResult)sigmaCharge.calculate(acOLD).getValue()).doubleValue();
+		
+		
 		double sum = sigmaRC + piRC;
 		DoubleResult result = new DoubleResult(sum);
         

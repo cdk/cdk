@@ -105,7 +105,7 @@ public class GasteigerPEPEPartialCharges {
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 
 		ISetOfAtomContainers setHI = null;
-		
+
 		/* detect conjugated Pi systems*/
 		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
 		if(set.getAtomContainerCount() == 0 ){
@@ -248,8 +248,12 @@ public class GasteigerPEPEPartialCharges {
 	 * 
 	 * @param ac IAtomContainer
 	 * @return ISetOfAtomContainers
+	 * @throws CDKException 
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
-	private ISetOfAtomContainers getHyperconjugationInteractions(IAtomContainer ac) {
+	private ISetOfAtomContainers getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
+		HydrogenAdder hAdder = new HydrogenAdder();
 		ISetOfAtomContainers set = ac.getBuilder().newSetOfAtomContainers();
         try {
             IReactionProcess type = new BreakingBondReaction();
@@ -265,7 +269,7 @@ public class GasteigerPEPEPartialCharges {
     		
     		ISetOfMolecules setOfReactants = ac.getBuilder().newSetOfMolecules();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
-    			if(ac.getBondAt(i).getOrder() == 2){
+    			if(ac.getBondAt(i).getOrder() > 1){
     				ac.getBondAt(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
     				ac.getBondAt(i).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
     				ac.getBondAt(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -297,32 +301,20 @@ public class GasteigerPEPEPartialCharges {
 				type.setParameters(params2);
 				ISetOfReactions setOfReactions2 = type.initiate(setOfM2, null);
 				if(setOfReactions2.getReactionCount() > 0){
-					HydrogenAdder hAdder = new HydrogenAdder();
 					
-					IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
-					IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
-					
-
-					try {
-						hAdder.addExplicitHydrogensToSatisfyValency(acc);
-						hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) ac);
+				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
+				IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
+				
+				hAdder.addExplicitHydrogensToSatisfyValency(acc);
 						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-						
-					set.addAtomContainer(react);
+				set.addAtomContainer(react);
 				}
 	        }
 	        
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-		
+			hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) ac);
 		return set;
 	}
 	/**
@@ -441,7 +433,7 @@ public class GasteigerPEPEPartialCharges {
 		double[] factors = new double[]{0.0, 0.0, 0.0};
 		for( int k = 1 ; k < setAc.getAtomContainerCount(); k ++){
 			IAtomContainer ac = setAc.getAtomContainer(k);
-			
+			System.out.println("i: "+k);
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			factors[0] = 0.0;
 			factors[1] = 0.0;
@@ -469,18 +461,16 @@ public class GasteigerPEPEPartialCharges {
 					}
 			} else if (AtomSymbol.equals("N")) {
 				if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
-					
-					factors[0] = 7.95;
-					factors[1] = 9.73;
-					factors[2] = 2.67;
+					factors[0] = 7.95;/*7.95*/
+					factors[1] = 9.73;/*9.73*/
+					factors[2] = 2.67;/*2.67*/
 				}else {
-					factors[0] = 4.54;
-					factors[1] = 11.86;
-					factors[2] = 7.32;
+					factors[0] = 5.5;/*4.54*/
+					factors[1] = 10.86;/*11.86*/
+					factors[2] = 7.99;/*7.32*/
 				}
 			} else if (AtomSymbol.equals("S")) {
 				if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
-					
 					factors[0] = 7.73;
 					factors[1] = 8.16;
 					factors[2] = 1.81;
@@ -571,9 +561,9 @@ public class GasteigerPEPEPartialCharges {
 			} else if (AtomSymbol.equals("N")) {
 				if(ac.getMaximumBondOrder(ac.getAtomAt(i))  > 1){
 					
-					factors[0] = 7.95;
-					factors[1] = 9.73;
-					factors[2] = 2.67;
+					factors[0] = 8.95;/*7.95*/
+					factors[1] = 9.73;/*9.73*/
+					factors[2] = 2.67;/*2.67*/
 				}else {
 					factors[0] = 4.54;
 					factors[1] = 11.86;

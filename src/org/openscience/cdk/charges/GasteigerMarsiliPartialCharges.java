@@ -206,8 +206,8 @@ public class GasteigerMarsiliPartialCharges {
 					factors[1] = 9.34;/*9.32*/
 					factors[2] = 1.52;/*1.51*/
 				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
-					factors[0] = 10.39;
-					factors[1] = 9.45;
+					factors[0] = 10.39;/*10.39*/
+					factors[1] = 9.45;/*9.45*/
 					factors[2] = 0.73;
 				}
 			} else if (AtomSymbol.equals("N")) {
@@ -220,9 +220,9 @@ public class GasteigerMarsiliPartialCharges {
 					factors[1] = 11.15;
 					factors[2] = 0.85;
 				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
-					factors[0] = 15.68;
-					factors[1] = 11.70;
-					factors[2] = -0.27;
+					factors[0] = 17.68;/*15.68*/
+					factors[1] = 12.70;/*11.70*/
+					factors[2] = -0.27;/*-0.27*/
 				}
 			} else if (AtomSymbol.equals("O")) {
 				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
