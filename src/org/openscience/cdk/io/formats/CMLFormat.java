@@ -78,7 +78,8 @@ public class CMLFormat implements IChemFormatMatcher {
                DataFeatures.HAS_ATOM_FORMAL_CHARGES |
                DataFeatures.HAS_ATOM_MASS_NUMBERS |
                DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS |
-               DataFeatures.HAS_GRAPH_REPRESENTATION;
+               DataFeatures.HAS_GRAPH_REPRESENTATION |
+               DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
 	public int getRequiredDataFeatures() {

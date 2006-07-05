@@ -65,31 +65,32 @@ public class DataFeatures {
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
     //                      HAS_ATOM_ELEMENT_SYMBOLS ??
-    
+    /** @cdk.dictref bodf:hasAtomElementSymbol */
+    public final static int HAS_ATOM_ELEMENT_SYMBOL = 1<<3;
     /** @cdk.dictref bodf:partialAtomicCharges */
-    public final static int HAS_ATOM_PARTIAL_CHARGES = 1<<3;
+    public final static int HAS_ATOM_PARTIAL_CHARGES = 1<<4;
     /** @cdk.dictref bodf:formalAtomicCharges */
-    public final static int HAS_ATOM_FORMAL_CHARGES = 1<<4;
+    public final static int HAS_ATOM_FORMAL_CHARGES = 1<<5;
     /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_ATOM_HYBRIDIZATIONS = 1<<5;
+    public final static int HAS_ATOM_HYBRIDIZATIONS = 1<<6;
     /** @cdk.dictref bodf:massNumbers */
-    public final static int HAS_ATOM_MASS_NUMBERS = 1<<6;
+    public final static int HAS_ATOM_MASS_NUMBERS = 1<<7;
     /** @cdk.dictref bodf:isotopeNumbers */
-    public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<7;
+    public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<8;
     
     // GRAPH FEATURES
     
     /** @cdk.dictref bodf:graphRepresentation */
-    public final static int HAS_GRAPH_REPRESENTATION = 1<<8;
+    public final static int HAS_GRAPH_REPRESENTATION = 1<<9;
     /** @cdk.dictref bodf:dietzRepresentation */
-    public final static int HAS_DIETZ_REPRESENTATION = 1<<9;
+    public final static int HAS_DIETZ_REPRESENTATION = 1<<10;
     
     // MODEL FEATURES
     
     /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_UNITCELL_PARAMETERS = 1<<10;
+    public final static int HAS_UNITCELL_PARAMETERS = 1<<11;
     /** FIXME: NOT YET IN BODF !!! **/
-        public final static int HAS_REACTIONS = 1<<11;
+        public final static int HAS_REACTIONS = 1<<12;
 	
 }
 

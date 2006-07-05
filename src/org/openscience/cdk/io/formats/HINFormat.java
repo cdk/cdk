@@ -77,10 +77,13 @@ public class HINFormat implements IChemFormatMatcher {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.HAS_3D_COORDINATES;
+		return getRequiredDataFeatures() |
+		DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
 
 	public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_3D_COORDINATES |
+		DataFeatures.HAS_ATOM_PARTIAL_CHARGES |
+		DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 }
