@@ -161,7 +161,7 @@ public class DescriptorEngine {
             		logger.debug("Calculated molecular descriptors...");
             	} else if (descriptor instanceof IAtomicDescriptor) {
             		for (int j=0; j<atoms.length; j++) {
-                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[i]);
+                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[i], molecule);
                 		atoms[i].setProperty(speclist.get(i), value);
             		}            		
             		logger.debug("Calculated atomic descriptors...");

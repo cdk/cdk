@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Classes that implement this interface are QSAR descriptor calculators.
@@ -38,12 +39,13 @@ public interface IAtomicDescriptor extends IDescriptor {
      *
      * @param  atom         An {@link IAtom} for which this descriptor should be
      *                      calculated
+     * @param container TODO
      * @return              An object of {@link DescriptorValue} that contain the 
      *                      calculated value as well as specification details
      * @throws CDKException if an error occurs during calculation. See 
      *                      documentation for individual descriptors
      */
-    public DescriptorValue calculate(IAtom atom) throws CDKException;
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException;
     
 }
 
