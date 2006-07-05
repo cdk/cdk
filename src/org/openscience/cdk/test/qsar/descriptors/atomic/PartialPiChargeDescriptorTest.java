@@ -237,6 +237,34 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			sign = -1;
 		return sign;
 	}
+	/**
+	 *  A unit test for JUnit with Propene
+	 */
+	public void test_Propene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={-0.0009,0.0009,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new PartialPiChargeDescriptor();
+		Integer[] params = new Integer[1];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=CC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			params[0] = new Integer(i);
+	        descriptor.setParameters(params);
+	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        /* test sign*/
+			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+
+			/* test value*/
+			assertEquals(testResult[i],result, 0.005);
+		}
+	}
 
 }
 

@@ -160,8 +160,8 @@ public class HyperconjugationReaction implements IReactionProcess{
 				int charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
 				reactantCloned.getAtomAt(atom1).setFormalCharge(charge-1);
 				
-				int numbH = reactantCloned.getAtomAt(atom1).getHydrogenCount();
-				reactantCloned.getAtomAt(atom1).setHybridization(numbH-1);
+				int numbH = reactantCloned.getAtomAt(atom2).getHydrogenCount();
+				reactantCloned.getAtomAt(atom2).setHydrogenCount(numbH-1);
 				
 				
 				/* mapping */
