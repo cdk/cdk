@@ -161,14 +161,14 @@ public class DescriptorEngine {
             		logger.debug("Calculated molecular descriptors...");
             	} else if (descriptor instanceof IAtomicDescriptor) {
             		for (int j=0; j<atoms.length; j++) {
-                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[i], molecule);
-                		atoms[i].setProperty(speclist.get(i), value);
+                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[j], molecule);
+                		atoms[j].setProperty(speclist.get(i), value);
             		}            		
             		logger.debug("Calculated atomic descriptors...");
             	} else if (descriptor instanceof IBondDescriptor) {
             		for (int j=0; j<bonds.length; j++) {
-                		DescriptorValue value = ((IBondDescriptor)descriptor).calculate(bonds[i]);
-                		bonds[i].setProperty(speclist.get(i), value);
+                		DescriptorValue value = ((IBondDescriptor)descriptor).calculate(bonds[j], molecule);
+                		bonds[j].setProperty(speclist.get(i), value);
             		}            		
             		logger.debug("Calculated bond descriptors...");
             	} else {

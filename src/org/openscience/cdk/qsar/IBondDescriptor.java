@@ -24,6 +24,7 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
@@ -43,7 +44,7 @@ public interface IBondDescriptor extends IDescriptor {
      * @throws CDKException if an error occurs during calculation. See 
      *                      documentation for individual descriptors
      */
-    public DescriptorValue calculate(IBond bond) throws CDKException;
+    public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException;
     
 }
 
