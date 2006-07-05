@@ -58,6 +58,15 @@ public class MoleculeFeaturesTool {
 		return false;
 	}
 
+	public static boolean hasElementSymbols(IMolecule molecule) {
+		IAtom[] atoms = molecule.getAtoms();
+		for (int i=0; i<atoms.length; i++) {
+			if (atoms[i].getSymbol() != null &&
+				atoms[i].getSymbol().length() > 0) return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Checks wether all bonds have exactly two atoms.
 	 * 

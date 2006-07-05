@@ -51,6 +51,8 @@ public class DataFeaturesTool {
 	 */
 	public static int getSupportedDataFeatures(IMolecule molecule) {
 		int features = DataFeatures.NONE;
+		if (MoleculeFeaturesTool.hasElementSymbols(molecule))
+			features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 		if (GeometryTools.has2DCoordinates(molecule))
 			features = features | DataFeatures.HAS_2D_COORDINATES;
 		if (GeometryTools.has3DCoordinates(molecule))
