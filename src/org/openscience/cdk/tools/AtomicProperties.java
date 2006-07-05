@@ -1,0 +1,205 @@
+/* $RCSfile: $
+ * $Author: egonw $
+ * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
+ * $Revision: 6171 $
+ *
+ * Copyright (C) 2006  Todd Martin (Environmental Protection Agency)
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+package org.openscience.cdk.tools;
+
+import java.util.Hashtable;
+import java.io.*;
+
+import org.openscience.cdk.config.IsotopeFactory;
+
+import java.util.LinkedList;
+
+
+public class AtomicProperties {
+
+	private static AtomicProperties ap=null;
+	
+	private Hashtable htMass=new Hashtable();
+	private Hashtable htVdWVolume=new Hashtable();
+	private Hashtable htElectronegativity=new Hashtable();
+	private Hashtable htPolarizability=new Hashtable();
+	
+	
+	private AtomicProperties() throws IOException {
+		
+		File DataFile=new File("ToxPredictor/system/whim weights.txt");
+		
+		BufferedReader br=new BufferedReader(new FileReader(DataFile));
+		
+		String Header=br.readLine(); // header
+		
+		String Line="";
+		while (true) {
+			Line=br.readLine();
+			if (!(Line instanceof String)) {
+				break;
+			}
+			
+			LinkedList l = Parse(Line,"\t");
+			
+			String symbol=(String)l.get(0);
+			htMass.put(symbol,l.get(1));
+			htVdWVolume.put(symbol,l.get(2));
+			htElectronegativity.put(symbol,l.get(3));
+			htPolarizability.put(symbol,l.get(4));
+			
+		}
+						
+		br.close();
+	}
+
+	public static LinkedList Parse(String Line, String Delimiter) {
+		// parses a delimited string into a list
+		
+		LinkedList myList = new LinkedList();
+		
+		int tabpos = 1;
+		
+		while (tabpos > -1) {
+			tabpos = Line.indexOf(Delimiter);
+			
+			if (tabpos > 0) {
+				myList.add(Line.substring(0, tabpos));
+				Line = Line.substring(tabpos + 1, Line.length());
+			} else if (tabpos == 0) {
+				myList.add("");
+				Line = Line.substring(tabpos + 1, Line.length());
+			} else {
+				myList.add(Line.trim());
+			}
+		}
+		
+		return myList;
+		
+	}
+
+	public double GetVdWVolume(String symbol) {
+		double VdWVolume=-99;
+		
+		String strVdWVolume=(String)htVdWVolume.get(symbol);
+		
+		try {
+			VdWVolume=Double.parseDouble(strVdWVolume);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		return VdWVolume;
+		
+	}
+	
+	public double GetNormalizedVdWVolume(String symbol) {
+		double VdWVolume=-99;
+		
+		VdWVolume=this.GetVdWVolume(symbol)/this.GetVdWVolume("C");
+				
+		return VdWVolume;
+		
+	}
+	
+	public double GetElectronegativity(String symbol) {
+		double Electronegativity=-99;
+		
+		String strElectronegativity=(String)htElectronegativity.get(symbol);
+		
+		try {
+		Electronegativity=Double.parseDouble(strElectronegativity);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		return Electronegativity;
+		
+	}
+	
+	public double GetNormalizedElectronegativity(String symbol) {
+		double Electronegativity=-99;
+		
+		Electronegativity=this.GetElectronegativity(symbol)/this.GetElectronegativity("C");
+				
+		return Electronegativity;
+		
+	}
+	public double GetPolarizability(String symbol) {
+		double Polarizability=-99;
+		
+		String strPolarizability=(String)htPolarizability.get(symbol);
+		
+		try {
+		Polarizability=Double.parseDouble(strPolarizability);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		return Polarizability;
+		
+	}
+	
+	public double GetNormalizedPolarizability(String symbol) {
+		double Polarizability=-99;
+		
+		Polarizability=this.GetPolarizability(symbol)/this.GetPolarizability("C");
+				
+		return Polarizability;
+		
+	}
+	public double GetMass(String symbol) {
+		double mass=-99;
+		
+		String strMass=(String)htMass.get(symbol);
+		
+		try {
+		mass=Double.parseDouble(strMass);
+		
+		} catch (Exception e) {
+			System.out.println("AtomicProperties--GetMass:"+symbol);
+		}
+		
+		
+		return mass;
+		
+	}
+	
+	public double GetNormalizedMass(String symbol) {
+		double mass=-99;
+		
+		mass=this.GetMass(symbol)/this.GetMass("C");
+				
+		return mass;
+		
+	}
+	
+	
+	
+	public static AtomicProperties getInstance() throws IOException
+	{
+		if (ap == null) {
+			ap = new AtomicProperties();
+		}
+		return ap;
+	}
+}
