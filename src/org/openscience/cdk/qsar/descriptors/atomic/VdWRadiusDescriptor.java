@@ -28,11 +28,12 @@ import java.io.IOException;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -59,12 +60,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:vdwradius
  */
-public class VdWRadiusDescriptor implements IMolecularDescriptor {
+public class VdWRadiusDescriptor implements IAtomicDescriptor {
 
-    private int atomPosition = 0;
     private AtomTypeFactory factory = null;
     private LoggingTool logger;
-
 
     /**
      *  Constructor for the VdWRadiusDescriptor object.
@@ -102,23 +101,9 @@ public class VdWRadiusDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Sets the parameters attribute of the VdWRadiusDescriptor object.
-     *
-     *  This class takes a single parameter of type Integer indicating 
-     *  which atom the radius is to be calculated for
-     *
-     *@param  params            The parameter is the atom position
-     *@throws  CDKException if more than on parameter or a non-Integer parameters is specified
-     *@see #getParameters
+     * This descriptor does have any parameter.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("VdWRadiusDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
     }
 
 
@@ -129,9 +114,7 @@ public class VdWRadiusDescriptor implements IMolecularDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        Object[] params = new Object[1];
-        params[0] = new Integer(atomPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -143,7 +126,7 @@ public class VdWRadiusDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  if an error occurs during atom typing
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         if (factory == null) 
             try {
                 factory = AtomTypeFactory.getInstance(
@@ -156,7 +139,7 @@ public class VdWRadiusDescriptor implements IMolecularDescriptor {
 
         double vdwradius = 0;
         try {
-            String symbol = container.getAtomAt(atomPosition).getSymbol();
+            String symbol = atom.getSymbol();
             IAtomType type = factory.getAtomType(symbol);
             vdwradius = type.getVanderwaalsRadius();
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
@@ -173,20 +156,17 @@ public class VdWRadiusDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "atomPosition";
-        return params;
+        return new String[0];
     }
 
-
     /**
-     *  Gets the parameterType attribute of the VdWRadiusDescriptor object.
+     * Gets the parameterType attribute of the VdWRadiusDescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       An Object of class equal to that of the parameter being requested
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return null;
     }
 }
 

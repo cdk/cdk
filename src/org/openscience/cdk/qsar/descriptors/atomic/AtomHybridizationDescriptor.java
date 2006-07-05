@@ -26,11 +26,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -57,12 +58,11 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridization
  */
-public class AtomHybridizationDescriptor implements IMolecularDescriptor {
+public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 
-	private int targetPosition = 0;
 	AtomTypeManipulator atman = null;
 	HybridizationStateATMatcher atm = null;
-	org.openscience.cdk.interfaces.IAtom atom = null;
+	IAtom atom = null;
 	IAtomType matched = null;
 	
 	/**
@@ -85,34 +85,22 @@ public class AtomHybridizationDescriptor implements IMolecularDescriptor {
 	}
 
 
-	/**
-	 *  Sets the parameters attribute of the AtomHybridizationDescriptor object
-	 *
-	 *@param  params            The parameter is the atom position
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("AtomHybridizationDescriptor only expects one parameter");
-		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The parameter must be of type Integer");
-		}
-		targetPosition = ((Integer) params[0]).intValue();
-	}
+    /**
+     * This descriptor does have any parameter.
+     */
+    public void setParameters(Object[] params) throws CDKException {
+    }
 
 
-	/**
-	 *  Gets the parameters attribute of the AtomHybridizationDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Integer(targetPosition);
-		return params;
-	}
-
+    /**
+     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
+     *
+     *@return    The parameters value
+     * @see #setParameters
+     */
+    public Object[] getParameters() {
+        return new Object[0];
+    }
 
 	/**
 	 *  This method calculates the hybridization of an atom.
@@ -122,41 +110,35 @@ public class AtomHybridizationDescriptor implements IMolecularDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-		atom = container.getAtomAt(targetPosition);
-		
+	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
 		atm = new HybridizationStateATMatcher();
 		matched = atm.findMatchingAtomType(container, atom);
-                if (matched == null) {
-                    throw new CDKException("The matched atom type was null");
-                }
+		if (matched == null) {
+			throw new CDKException("The matched atom type was null");
+		}
 		AtomTypeManipulator.configure(atom, matched);
 
 		int atomHybridization = atom.getHybridization();
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomHybridization));
 	}
 
+    /**
+     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        return new String[0];
+    }
 
-	/**
-	 *  Gets the parameterNames attribute of the AtomHybridizationDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
-	}
-
-
-	/**
-	 *  Gets the parameterType attribute of the AtomHybridizationDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Integer(1);
-	}
+    /**
+     * Gets the parameterType attribute of the VdWRadiusDescriptor object.
+     *
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
+     */
+    public Object getParameterType(String name) {
+        return null;
+    }
 }
 

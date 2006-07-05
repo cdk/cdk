@@ -24,12 +24,16 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
@@ -56,17 +60,16 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomValence
  */
-public class AtomValenceDescriptor implements IMolecularDescriptor {
+public class AtomValenceDescriptor implements IAtomicDescriptor {
 
-    private int targetPosition = 0;
-    public Hashtable valencesTable;
+    public Map valencesTable;
 
     /**
      * Constructor for the AtomValenceDescriptor object
      */
     public AtomValenceDescriptor() {
         if (valencesTable == null) {
-            valencesTable = new Hashtable();
+            valencesTable = new HashMap();
             valencesTable.put("H", new Integer(1));
             valencesTable.put("Li", new Integer(1));
             valencesTable.put("Be", new Integer(2));
@@ -123,35 +126,22 @@ public class AtomValenceDescriptor implements IMolecularDescriptor {
                 "The Chemistry Development Kit");
     }
 
-
     /**
-     * Sets the parameters attribute of the AtomValenceDescriptor object
-     *
-     * @param params The parameter is the atom position
-     * @throws CDKException Description of the Exception
+     * This descriptor does have any parameter.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("AtomValenceDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        targetPosition = ((Integer) params[0]).intValue();
     }
 
 
     /**
-     * Gets the parameters attribute of the AtomValenceDescriptor object
+     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
-     * @return The parameters value
+     *@return    The parameters value
+     * @see #setParameters
      */
     public Object[] getParameters() {
-        Object[] params = new Object[1];
-        params[0] = new Integer(targetPosition);
-        return params;
+        return new Object[0];
     }
-
 
     /**
      * This method calculates the valence of an atom.
@@ -161,34 +151,31 @@ public class AtomValenceDescriptor implements IMolecularDescriptor {
      * @throws CDKException Description of the Exception
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomValence = 0;
-        String symbol = container.getAtomAt(targetPosition).getSymbol();
+        String symbol = atom.getSymbol();
         atomValence = ((Integer) valencesTable.get(symbol)).intValue();
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomValence));
     }
 
 
     /**
-     * Gets the parameterNames attribute of the AtomValenceDescriptor object
+     *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
-     * @return The parameterNames value
+     *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "targetPosition";
-        return params;
+        return new String[0];
     }
 
-
     /**
-     * Gets the parameterType attribute of the AtomValenceDescriptor object
+     * Gets the parameterType attribute of the VdWRadiusDescriptor object.
      *
-     * @param name Description of the Parameter
-     * @return The parameterType value
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return null;
     }
 }
 
