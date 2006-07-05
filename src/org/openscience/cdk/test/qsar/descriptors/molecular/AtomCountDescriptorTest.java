@@ -21,14 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.qsar.descriptors.atomic;
+package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.AtomCountDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
