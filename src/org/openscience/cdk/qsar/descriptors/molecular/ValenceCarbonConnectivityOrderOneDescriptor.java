@@ -24,7 +24,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
-    private static Hashtable valences;
+    private static Map valences;
     private AtomValenceDescriptor avd = null;
 	/**
 	 *  Constructor for the ValenceCarbonConnectivityOrderOneDescriptor object
