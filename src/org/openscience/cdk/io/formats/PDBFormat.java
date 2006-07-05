@@ -70,10 +70,12 @@ public class PDBFormat implements IChemFormatMatcher {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES |
+        	   getRequiredDataFeatures();
 	}
 
 	public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_3D_COORDINATES |
+	           DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 }
