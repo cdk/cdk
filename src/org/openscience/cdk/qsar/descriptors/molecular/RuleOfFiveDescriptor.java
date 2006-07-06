@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
@@ -139,7 +138,7 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
      *@return    The number of failures of the Lipinski rule
      *@throws  CDKException  if the following descriptors throw an exception:
          * {@link org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor},  {@link HBondAcceptorCountDescriptor}, {@link HBondDonorCountDescriptor},
-         * {@link org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor}, {@link org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptor},
+         * {@link org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor}, {@link org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptor},
      */
     public DescriptorValue calculate(IAtomContainer mol) throws CDKException {
 
