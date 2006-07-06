@@ -25,14 +25,19 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.applications.jchempaint.action.SetColorSchemeAction;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  *  The calculation of sigma partial charges in sigma-bonded systems (PEOE) of an heavy atom is based on Gasteiger Marsili
@@ -58,13 +63,10 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:partialSigmaCharge
  * @see GasteigerMarsiliPartialCharges
  */
-public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
+public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
-    private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
 	private int maxIterations;
-    private IAtomContainer acOld = null;
-
 
     /**
      *  Constructor for the PartialSigmaChargeDescriptor object
@@ -97,20 +99,11 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
-            throw new CDKException("PartialSigmaChargeDescriptor only expects two parameter");
+        if (params.length > 1) {
+            throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
         }
         if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter 1 must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
-        
-
-        if((params.length > 1)&& params[1] != null ){
-            if (!(params[1] instanceof Integer) ){
-                throw new CDKException("The parameter 2 must be of type Integer");
-            }
-            maxIterations = ((Integer) params[1]).intValue();
+            maxIterations = ((Integer) params[0]).intValue();
         }
     }
 
@@ -122,9 +115,8 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[2];
-        params[0] = new Integer(atomPosition);
-        params[1] = new Integer(maxIterations);
+        Object[] params = new Object[1];
+        params[0] = new Integer(maxIterations);
         return params;
     }
 
@@ -138,22 +130,26 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      *@return                   Value of the alpha partial charge
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        Molecule mol = new Molecule(ac);
-        if(acOld!=ac){
-            acOld=ac;
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    	if (!isCachedAtomContainer(ac)) {
+    		IMolecule mol = new NNMolecule(ac);
+        	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
 	        try {
-	        	if(maxIterations != 0)
-	        		peoe.setMaxGasteigerIters(maxIterations);
-	            peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-	        } catch (Exception ex1) {
-	            throw new CDKException("Problems with assignGasteigerMarsiliSigmaPartialCharges due to " + ex1.toString(), ex1);
-	        }
+				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+	        
+				IAtom[] atoms = mol.getAtoms();
+				for (int i=0; i<atoms.length; i++) {
+					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
+					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(mol.getAtomAt(i).getCharge()));
+				}
+			} catch (Exception e) {
+				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);
+			}
         }
-        IAtom target = mol.getAtomAt(atomPosition);
-        DoubleResult sigmaPartialCharge = new DoubleResult(target.getCharge());
         
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), sigmaPartialCharge);
+        return getCachedDescriptorValue(atom) != null 
+            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom)) 
+            : null;
     }
 
 
@@ -164,9 +160,8 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[2];
-        params[0] = "atomPosition";
-        params[1] = "maxIterations";
+        String[] params = new String[1];
+        params[0] = "maxIterations";
         return params;
     }
 
@@ -179,7 +174,7 @@ public class PartialSigmaChargeDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0), new Integer(0)};
+    	Integer[] object = {new Integer(0)};
         return object;
     }
 }
