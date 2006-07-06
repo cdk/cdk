@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
@@ -433,7 +432,6 @@ public class GasteigerPEPEPartialCharges {
 		double[] factors = new double[]{0.0, 0.0, 0.0};
 		for( int k = 1 ; k < setAc.getAtomContainerCount(); k ++){
 			IAtomContainer ac = setAc.getAtomContainer(k);
-			System.out.println("i: "+k);
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			factors[0] = 0.0;
 			factors[1] = 0.0;

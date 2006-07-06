@@ -244,7 +244,7 @@ public class GasteigerMarsiliPartialCharges {
 				factors[0] = 8.90;
 				factors[1] = 8.32;
 				factors[2] = 1.58;
-			} else if (AtomSymbol.equals("S") && ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
+			} else if (AtomSymbol.equals("S") /*&& ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1*/) {
 				factors[0] = 10.14;/*10.14*/
 				factors[1] = 9.13;/*9.13*/
 				factors[2] = 1.38;/*1.38*/
