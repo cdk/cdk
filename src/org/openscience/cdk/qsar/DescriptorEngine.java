@@ -27,7 +27,6 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
-
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
@@ -39,6 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -46,14 +46,14 @@ import java.util.jar.JarFile;
 
 /**
  * A class that provides access to automatic descriptor calculation and more.
- * 
+ * <p/>
  * <p>The aim of this class is to provide an easy to use interface to automatically evaluate
  * all the CDK descriptors for a given molecule. Note that at a given time this class
  * will evaluate all <i>atomic</i> or <i>molecular</i> descriptors but not both.
- * 
+ * <p/>
  * <p>The available descriptors are determined by scanning all the jar files in the users CLASSPATH
  * and selecting classes that belong to the CDK QSAR atomic or molecular descriptors package.
- * 
+ * <p/>
  * <p>An example of its usage would be
  * <pre>
  * Molecule someMolecule;
@@ -61,7 +61,7 @@ import java.util.jar.JarFile;
  * DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
  * descriptorEngine.process(someMolecule);
  * </pre>
- * 
+ * <p/>
  * <p>The class allows the user to obtain a List of all the available descriptors in terms of their
  * Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
@@ -76,8 +76,8 @@ import java.util.jar.JarFile;
 public class DescriptorEngine {
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    public static final int ATOMIC    = 1;
-    public static final int BOND      = 2;
+    public static final int ATOMIC = 1;
+    public static final int BOND = 2;
     public static final int MOLECULAR = 3;
 
     private Dictionary dict = null;
@@ -149,31 +149,31 @@ public class DescriptorEngine {
      * @throws CDKException if an error occured during descriptor calculation
      */
     public void process(IAtomContainer molecule) throws CDKException {
-		IAtom[] atoms = molecule.getAtoms();
-		IBond[] bonds = molecule.getBonds();
+        IAtom[] atoms = molecule.getAtoms();
+        IBond[] bonds = molecule.getBonds();
 
-		for (int i = 0; i < descriptors.size(); i++) {
-        	IDescriptor descriptor = (IDescriptor)descriptors.get(i);
+        for (int i = 0; i < descriptors.size(); i++) {
+            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
             try {
-            	if (descriptor instanceof IMolecularDescriptor) {
-            		DescriptorValue value = ((IMolecularDescriptor)descriptor).calculate(molecule);
-            		molecule.setProperty(speclist.get(i), value);
-            		logger.debug("Calculated molecular descriptors...");
-            	} else if (descriptor instanceof IAtomicDescriptor) {
-            		for (int j=0; j<atoms.length; j++) {
-                		DescriptorValue value = ((IAtomicDescriptor)descriptor).calculate(atoms[j], molecule);
-                		atoms[j].setProperty(speclist.get(i), value);
-            		}            		
-            		logger.debug("Calculated atomic descriptors...");
-            	} else if (descriptor instanceof IBondDescriptor) {
-            		for (int j=0; j<bonds.length; j++) {
-                		DescriptorValue value = ((IBondDescriptor)descriptor).calculate(bonds[j], molecule);
-                		bonds[j].setProperty(speclist.get(i), value);
-            		}            		
-            		logger.debug("Calculated bond descriptors...");
-            	} else {
-            		logger.debug("Unknown descriptor type for: ", descriptor.getClass().getName());
-            	}
+                if (descriptor instanceof IMolecularDescriptor) {
+                    DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
+                    molecule.setProperty(speclist.get(i), value);
+                    logger.debug("Calculated molecular descriptors...");
+                } else if (descriptor instanceof IAtomicDescriptor) {
+                    for (int j = 0; j < atoms.length; j++) {
+                        DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atoms[j], molecule);
+                        atoms[j].setProperty(speclist.get(i), value);
+                    }
+                    logger.debug("Calculated atomic descriptors...");
+                } else if (descriptor instanceof IBondDescriptor) {
+                    for (int j = 0; j < bonds.length; j++) {
+                        DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bonds[j], molecule);
+                        bonds[j].setProperty(speclist.get(i), value);
+                    }
+                    logger.debug("Calculated bond descriptors...");
+                } else {
+                    logger.debug("Unknown descriptor type for: ", descriptor.getClass().getName());
+                }
             } catch (CDKException exception) {
                 logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                 logger.debug(exception);
@@ -424,6 +424,89 @@ public class DescriptorEngine {
     }
 
     /**
+     * Returns a list containing the classes that implement a specific interface.
+     * <p/>
+     * The interface name specified can be null or an empty string. In this case the interface name
+     * is automatcally set to <i>IMolecularDescriptor</i>.  Specifying <i>IDescriptor</i> will
+     * return all available descriptor classes. Valid interface names are
+     * <ul>
+     * <li>IMolecularDescriptor
+     * <li>IAtomicDescripto
+     * <li>IBondDescriptor
+     * <li>IDescriptor
+     * </ul>
+     *
+     * @param interfaceName The name of the interface that classes should implement
+     * @param jarFileNames  A String[] containing the fully qualified names of the jar files
+     *                      to examine for descriptor classes. In general this can be set to NULL, in which case
+     *                      the system classpath is examined for available jar files. This parameter can be set for
+     *                      situations where the system classpath is not available or is modified such as in an application
+     *                      container.
+     * @return A list containing the classes implementing the specified interface, null if an invalid interface
+     *         is specified
+     */
+
+    public List getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
+        if (interfaceName == null || interfaceName.equals(""))
+            interfaceName = "IMolecularDescriptor";
+
+        if (
+                !interfaceName.equals("IDescriptor") &&
+                        !interfaceName.equals("IMolecularDescriptor") &&
+                        !interfaceName.equals("IAtomicDescriptor") &&
+                        !interfaceName.equals("IBondDescriptor")) return null;
+
+        String[] jars;
+        if (jarFileNames == null) {
+            String classPath = System.getProperty("java.class.path");
+            jars = classPath.split(File.pathSeparator);
+        } else {
+            jars = jarFileNames;
+        }
+
+        ArrayList classlist = new ArrayList();
+
+        for (int i = 0; i < jars.length; i++) {
+            logger.debug("Looking in " + jars[i]);
+            JarFile j;
+            try {
+                j = new JarFile(jars[i]);
+                Enumeration e = j.entries();
+                while (e.hasMoreElements()) {
+                    JarEntry je = (JarEntry) e.nextElement();
+                    if (je.toString().indexOf(".class") != -1) {
+                        String className = je.toString().replace('/', '.').replaceAll(".class", "");
+                        if (className.indexOf("$") != -1) continue;
+
+                        Class klass = Class.forName(className);
+
+                        // check that its not abstract or an interface
+                        int modifer = klass.getModifiers();
+                        if (Modifier.isAbstract(modifer) ||
+                                Modifier.isInterface(modifer)) continue;
+
+                        // get the interfaces implemented and see if one matches the one we're looking for
+                        Class[] interfaces = klass.getInterfaces();
+                        for (int k = 0; k < interfaces.length; k++) {
+                            if (interfaces[k].getName().equals(interfaceName)) {
+                                classlist.add(className);
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                logger.error("Error opening the jar file: " + jars[i]);
+                logger.debug(e);
+            } catch (ClassNotFoundException e) {
+                logger.error("Could not find a class");
+                logger.debug(e);
+            }
+        }
+        return classlist;
+    }
+
+    /**
      * Returns a list containing the classes found in the specified descriptor package.
      * <p/>
      * The package name specified can be null or an empty string. In this case the package name
@@ -444,7 +527,7 @@ public class DescriptorEngine {
             packageName = "org.openscience.cdk.qsar.descriptors";
         }
 
-        String[] jars = null;
+        String[] jars;
         if (jarFileNames == null) {
             String classPath = System.getProperty("java.class.path");
             jars = classPath.split(File.pathSeparator);
