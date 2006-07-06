@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * Abstract atomic descriptor class with helper functions for descriptors
@@ -44,14 +45,25 @@ public abstract class AbstractAtomicDescriptor implements IAtomicDescriptor {
 	private Map cachedDescriptorValues = null;
 	
 	/**
+	 * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
+	 * 
+	 * @param container
+	 * @return false, if the cache is for a different IAtomContainer
+	 */
+	public boolean isCachedAtomContainer(IAtomContainer container) {
+		if (cachedDescriptorValues == null) return false;
+		return (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) == container);
+	}
+	
+	/**
 	 * Returns the cached DescriptorValue for the given IAtom.
 	 * 
 	 * @param atom the IAtom for which the DescriptorValue is requested
 	 * @return     null, if no DescriptorValue was cached for the given IAtom
 	 */
-	public DescriptorValue getCachedDescriptorValue(IAtom atom) {
+	public IDescriptorResult getCachedDescriptorValue(IAtom atom) {
 		if (cachedDescriptorValues == null) return null;
-		return (DescriptorValue)cachedDescriptorValues.get(atom);
+		return (IDescriptorResult)cachedDescriptorValues.get(atom);
 	}
 	
 	/**
@@ -61,7 +73,7 @@ public abstract class AbstractAtomicDescriptor implements IAtomicDescriptor {
 	 * @param atom  IAtom to cache the value for
 	 * @param value DescriptorValue for the given IAtom
 	 */
-	public void cacheDescriptorValue(IAtom atom, IAtomContainer container, DescriptorValue value) {
+	public void cacheDescriptorValue(IAtom atom, IAtomContainer container, IDescriptorResult value) {
 		if (cachedDescriptorValues == null) {
 			cachedDescriptorValues = new HashMap();
 			cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
