@@ -25,9 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -47,15 +48,13 @@ public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
 	
 	public void testProtonTotalPartialChargeDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,0.05783,0.05783,0.05783};
-		IMolecularDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
+		IAtomicDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
 		
-		Object[] params = {new Integer(0)};
-		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CF"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
+		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue();
 		for (int i = 0; i < testResult.length; ++i) {
 			assertEquals(testResult[i], retval.get(i), 0.00001);
 		}

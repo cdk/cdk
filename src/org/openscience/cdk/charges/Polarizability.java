@@ -31,6 +31,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
@@ -93,12 +94,12 @@ public class Polarizability {
 	/**
 	 *  calculate effective atom polarizability
 	 *
-	 *@param  ac                     AtomContainer
+	 *@param  ac                     IAtomContainer
 	 *@param  atom                   atom for which effective atom polarizability should be calculated
 	 *@param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
 	 *@return                        polarizabilitiy
 	 */
-	public double calculateGHEffectiveAtomPolarizability(AtomContainer ac, org.openscience.cdk.interfaces.IAtom atom, int influenceSphereCutOff) {
+	public double calculateGHEffectiveAtomPolarizability(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom, int influenceSphereCutOff) {
 		double polarizabilitiy = 0;
 		Molecule acH = new Molecule(ac);
 		Vector startAtom = new Vector(1);

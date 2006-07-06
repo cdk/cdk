@@ -122,6 +122,43 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 			assertEquals(testResult[4],dar.get(0), 10.0);
 			assertEquals(testResult[5],dar.get(1), 0.00001);
 	}
+	/**
+	 *  A unit test for JUnit with C=CCC
+	 */
+	public void testResonancePositiveCharge_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={0.0,3.9032,0.0,4.0288,5.181,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new ResonancePositiveChargeDescriptor();
+		Integer[] params = new Integer[1];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=CCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+//			params[0] = new Integer(0);
+//	        descriptor.setParameters(params);
+//	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+//			assertEquals(testResult[0],dar.get(0), 8.0);
+//			assertEquals(testResult[1],dar.get(1), 0.01);
+//			
+//			params[0] = new Integer(1);
+//			descriptor = new ResonancePositiveChargeDescriptor();
+//	        descriptor.setParameters(params);
+//	        dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+//			assertEquals(testResult[2],dar.get(0), 0.0001);
+//			assertEquals(testResult[3],dar.get(1), 0.0001);
+//	        
+//	        params[0] = new Integer(2);
+//	        descriptor = new ResonancePositiveChargeDescriptor();
+//	        descriptor.setParameters(params);
+//	        dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+//			assertEquals(testResult[4],dar.get(0), 10.0);
+//			assertEquals(testResult[5],dar.get(1), 0.00001);
+	}
 
 }
 

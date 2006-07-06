@@ -27,7 +27,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -48,11 +47,11 @@ public class BondsToAtomDescriptorTest extends CDKTestCase {
     }
 
     public void testBondsToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor   = new BondsToAtomDescriptor();
-        Object[] params = {new Integer(0), new Integer(5)};
+    	BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
+        Object[] params = {new Integer(5)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCCCCC"); //
-        assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        assertEquals(5, ((IntegerResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).intValue());
     }
 }

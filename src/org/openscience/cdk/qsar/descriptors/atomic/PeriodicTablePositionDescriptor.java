@@ -27,12 +27,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import java.util.Hashtable;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -55,12 +55,10 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@cdk.created    2004-11-13
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:period
+ *@cdk.dictref qsar-descriptors:period
  */
-public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
+public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
-	private int targetPosition = 0;
-	//private LoggingTool logger;
 	public Hashtable periodicTable;
 	
 	/**
@@ -127,45 +125,36 @@ public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the PeriodicTablePositionDescriptor object
-	 *
-	 *@param  params            The parameter is the atom position
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("PeriodicTablePositionDescriptor only expects one parameter");
-		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The parameter must be of type Integer");
-		}
-		targetPosition = ((Integer) params[0]).intValue();
-	}
+     * This descriptor does not have any parameter to be set.
+     */
+    public void setParameters(Object[] params) throws CDKException {
+    	// no parameters
+    }
 
 
 	/**
 	 *  Gets the parameters attribute of the PeriodicTablePositionDescriptor object
 	 *
 	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Integer(targetPosition);
-		return params;
-	}
+     *@see #setParameters
+     */
+    public Object[] getParameters() {
+        return new Object[0];
+    }
 
 
 	/**
 	 *  This method calculates the period of an atom.
 	 *
-	 *@param  container         Parameter is the atom container.
-	 *@return                   The period
-	 *@exception  CDKException  Description of the Exception
+	 * @param  atom              The IAtom for which the DescriptorValue is requested
+     * @param  container         Parameter is the atom container.
+	 * @return                   The period
+	 *@exception  CDKException   Description of the Exception
 	 */
 
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
 		int period = 0;
-		String symbol = container.getAtomAt(targetPosition).getSymbol();
+		String symbol = atom.getSymbol();
 		period = ((Integer)periodicTable.get(symbol)).intValue();
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period));
 	}
@@ -177,9 +166,7 @@ public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
+        return new String[0];
 	}
 
 
@@ -190,7 +177,7 @@ public class PeriodicTablePositionDescriptor implements IMolecularDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		return new Integer(0);
+        return null;
 	}
 }
 

@@ -65,7 +65,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 public class BondPartialTChargeDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
-	private IMolecularDescriptor  descriptor;
+	private PartialTChargePEOEDescriptor  descriptor;
 
 
     /**
@@ -98,8 +98,8 @@ public class BondPartialTChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-    	if (params.length > 2) {
-            throw new CDKException("BondPartialTChargeDescriptor only expects two parameter");
+    	if(params.length > 1) {
+            throw new CDKException("BondPartialTChargeDescriptor only expects one parameter");
         }
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter 1 must be of type Integer");
@@ -130,18 +130,16 @@ public class BondPartialTChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        Molecule mol = new Molecule(ac);
-        IAtom[] atoms = mol.getBondAt(bondPosition).getAtoms();
+        IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
         double[] results = new double[2];
-        
-    	Integer[] params = new Integer[1];
+
+        Integer[] params = new Integer[1];
     	for(int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(mol.getAtomNumber(atoms[i]));
+    		params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+    		results[i] = ((DoubleResult)descriptor.calculate(atoms[i], ac).getValue()).doubleValue();
     	}
-    	
-        double result = Math.abs(results[0] - results[1]);
+    	double result = Math.abs(results[0]-results[1]);
         
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result));
     }

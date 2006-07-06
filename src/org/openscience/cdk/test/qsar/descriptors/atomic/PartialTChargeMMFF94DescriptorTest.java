@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -59,8 +59,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methanol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CO");
@@ -69,9 +68,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.011);
 		}
 	}
@@ -80,8 +77,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methylamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CN");
@@ -90,9 +86,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 6 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.02);
 		}
 	}
@@ -101,8 +95,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.28,-0.56,0.28,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("COC");
@@ -111,9 +104,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.021);
 		}
 	}
@@ -122,8 +113,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Methanethiol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.23,-0.41,0.0,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CS");
@@ -132,9 +122,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.04);
 		}
 	}
@@ -143,8 +131,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Chloromethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.29,-0.29,0.0};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("CCl");
@@ -153,9 +140,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -164,8 +149,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Benzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("c1ccccc1");
@@ -174,9 +158,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 9 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -185,8 +167,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	 */
 	public void testPartialTotalChargeDescriptor_Water() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.86,0.43,0.43};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
-		IMolecularDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("o");
@@ -195,9 +176,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.06);
 		}
 	}

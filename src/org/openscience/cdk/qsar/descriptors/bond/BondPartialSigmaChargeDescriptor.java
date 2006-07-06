@@ -63,7 +63,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 public class BondPartialSigmaChargeDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
-	private IMolecularDescriptor  descriptor;
+	private PartialSigmaChargeDescriptor  descriptor;
 
 
     /**
@@ -132,12 +132,11 @@ public class BondPartialSigmaChargeDescriptor implements IMolecularDescriptor {
         IAtom[] atoms = mol.getBondAt(bondPosition).getAtoms();
         double[] results = new double[2];
         
-    	Integer[] params = new Integer[2];
+    	Integer[] params = new Integer[1];
     	for(int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(mol.getAtomNumber(atoms[i]));
-    		params[1] = new Integer(6);
+    		params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],mol).getValue()).doubleValue();
     	}
     	
         double result = Math.abs(results[0] - results[1]);

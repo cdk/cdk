@@ -24,13 +24,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
@@ -57,9 +57,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
-public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescriptor {
+public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor {
 
-	private int atomPosition = 0;
 	private Polarizability pol;
 
 
@@ -87,20 +86,9 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
 
 
     /**
-     *  Sets the parameters attribute of the EffectiveAtomPolarizabilityDescriptor
-     *  object
-     *
-     *@param  params            Atom position
-     *@exception  CDKException  Description of the Exception
+     * This descriptor does have any parameter.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("EffectiveAtomPolarizabilityDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
     }
 
 
@@ -108,13 +96,11 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
      *  Gets the parameters attribute of the EffectiveAtomPolarizabilityDescriptor
      *  object
      *
-     *@return    The parameters value
+     * @return    The parameters value
+     * @see #setParameters
      */
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = new Integer(atomPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -122,15 +108,15 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
      *  The method calculates the Effective Atom Polarizability of a given atom
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   return the efective polarizability
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double polarizability = 0;
-        Molecule mol = new Molecule(ac);
         try {
-            polarizability = pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtomAt(atomPosition),100);
+            polarizability = pol.calculateGHEffectiveAtomPolarizability(ac,atom,100);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(polarizability));
         } catch (Exception ex1) {
         	ex1.printStackTrace();
@@ -146,9 +132,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "atomPosition";
-        return params;
+        return new String[0];
     }
 
 
@@ -160,7 +144,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IMolecularDescript
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return null;
     }
 }
 

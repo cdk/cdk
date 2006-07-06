@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
-
-import javax.vecmath.Point3d;
 
 /**
  * @cdk.module test-qsar
@@ -82,11 +83,9 @@ public class InductiveAtomicHardnessDescriptorTest extends CDKTestCase {
 		mol.addBond(0, 3, 1); // 1
 		mol.addBond(0, 4, 1); // 1
 		
-		IMolecularDescriptor descriptor  = new InductiveAtomicHardnessDescriptor();
-		Object[] params = {new Integer(0)};
-		descriptor.setParameters(params);
+		IAtomicDescriptor descriptor  = new InductiveAtomicHardnessDescriptor();
 		
-		double retval = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).doubleValue();
 		assertEquals(testResult[0], retval, 0.1);
 	}
 }

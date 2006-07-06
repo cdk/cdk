@@ -24,6 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
@@ -38,14 +44,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.
@@ -75,13 +76,12 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1183625
  */
-public class RDFProtonDescriptor implements IMolecularDescriptor {
+public class RDFProtonDescriptor implements IAtomicDescriptor {
 
-	private int atomPosition = 0;
 	private boolean checkAromaticity = false;
-  private IAtomContainer acold=null;
-  private IRingSet rs = null;
-  private SetOfAtomContainers acSet=null;
+	private IAtomContainer acold=null;
+	private IRingSet rs = null;
+	private SetOfAtomContainers acSet=null;
   
 	/**
 	 *  Constructor for the RDFProtonDescriptor object
@@ -112,17 +112,13 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 2) {
-			throw new CDKException("RDFProtonDescriptor only expects two parameters");
+		if (params.length > 1) {
+			throw new CDKException("RDFProtonDescriptor only expects one parameters");
 		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The first parameter must be of type Integer");
-		}
-		if (!(params[1] instanceof Boolean)) {
+		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The second parameter must be of type Boolean");
 		}
-		atomPosition = ((Integer) params[0]).intValue();
-		checkAromaticity = ((Boolean) params[1]).booleanValue();
+		checkAromaticity = ((Boolean) params[0]).booleanValue();
 	}
 
 
@@ -134,9 +130,8 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[2];
-		params[0] = new Integer(atomPosition);
-		params[1] = Boolean.valueOf(checkAromaticity);
+		Object[] params = new Object[1];
+		params[0] = Boolean.valueOf(checkAromaticity);
 		return params;
 	}
 
@@ -151,12 +146,13 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	 *  with (ArrayList)target.getProperty("gasteigerGHRtopol") it is possible to use values stored by the gasteigerGHRtopol
 	 *  property.
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atom              The IAtom for which the DescriptorValue is requested
+     *@param  ac                AtomContainer
 	 *@return                   an arrayList with 5 position (GHR, GHRtopol, GDR, GSR, G3R)
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-    return(calculate(ac,null));
+	public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    return(calculate(atom, ac, null));
   }
   
   
@@ -170,14 +166,15 @@ public class RDFProtonDescriptor implements IMolecularDescriptor {
 	 *  with (ArrayList)target.getProperty("gasteigerGHRtopol") it is possible to use values stored by the gasteigerGHRtopol
 	 *  property.
 	 *
-	 *@param  ac                AtomContainer
-   *@param  precalculatedringset You can give an already generated set of all rings for speeding up things.
+	 *@param  atom              The IAtom for which the DescriptorValue is requested
+     *@param  ac                AtomContainer
+     *@param  precalculatedringset You can give an already generated set of all rings for speeding up things.
 	 *@return                   an arrayList with 5 position (GHR, GHRtopol, GDR, GSR, G3R)
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
-		IAtom target = ac.getAtomAt(atomPosition);
-		
+	public DescriptorValue calculate(IAtom atom, IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
+		IAtom target = atom;
+		int atomPosition = ac.getAtomNumber(atom);
 		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
 		if(target.getSymbol().equals("H")) {
 			

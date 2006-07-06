@@ -24,14 +24,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
@@ -60,11 +59,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
  * @see MMFF94PartialCharges
  */
-public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
+public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
-    private int atomPosition = 0;
 	private MMFF94PartialCharges mmff;
-    private IAtomContainer acOld = null;
 
 
     /**
@@ -90,20 +87,10 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Sets the parameters attribute of the PartialTChargeMMFF94Descriptor
-     *  object
-     *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
+     * This descriptor does not have any parameter to be set.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("PartialTChargeMMFF94Descriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
+    	// no parameters
     }
 
 
@@ -112,12 +99,10 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      *  object
      *
      *@return    The parameters value
+     *@see #setParameters
      */
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = new Integer(atomPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -125,24 +110,21 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      *  The method returns partial charges assigned to an heavy atom through MMFF94 method.
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
+     *@param  atom             The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-    	Molecule mol = new Molecule(ac);
-    	if(acOld!=ac){
-            acOld=ac;
-	        try {
-	        	mmff.assignMMFF94PartialCharges(mol);
-	        } catch (Exception ex1) {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    	DoubleResult aphaPartialCharge;
+    	try {
+	       	mmff.assignMMFF94PartialCharges(ac);
+	       	IAtom target = atom;
+	        aphaPartialCharge = new DoubleResult(((Double)target.getProperty("MMFF94charge")).doubleValue());
+    	} catch (Exception ex1) {
 	            throw new CDKException("Problems with assignMMFF94PartialCharges due to " + ex1.toString(), ex1);
-	        }
     	}
-        IAtom target = mol.getAtomAt(atomPosition);
-        DoubleResult aphaPartialCharge = new DoubleResult(((Double)target.getProperty("MMFF94charge")).doubleValue());
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge);
+    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge);
     }
 
 
@@ -150,12 +132,10 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      *  Gets the parameterNames attribute of the PartialTChargeMMFF94Descriptor
      *  object
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "atomPosition";
-        return params;
+        return new String[0];
     }
 
 
@@ -167,7 +147,7 @@ public class PartialTChargeMMFF94Descriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+    	 return null;
     }
 }
 

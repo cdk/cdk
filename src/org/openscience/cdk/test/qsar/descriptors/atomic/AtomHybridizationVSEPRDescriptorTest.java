@@ -31,7 +31,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -59,7 +58,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_1() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //O=CC
         Molecule molecule = new Molecule();
@@ -76,17 +75,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
-        Object[] params2 = {new Integer(1)};
-        descriptor.setParameters(params2);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
 
-        Object[] params3 = {new Integer(2)};
-        descriptor.setParameters(params3);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -94,7 +87,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_2() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //[O+]#CC
         Molecule molecule = new Molecule();
@@ -111,17 +104,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
-        Object[] params2 = {new Integer(1)};
-        descriptor.setParameters(params2);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
 
-        Object[] params3 = {new Integer(2)};
-        descriptor.setParameters(params3);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -129,7 +116,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_3() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //[C+]CC
         Molecule molecule = new Molecule();
@@ -148,17 +135,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
-        Object[] params2 = {new Integer(1)};
-        descriptor.setParameters(params2);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
 
-        Object[] params3 = {new Integer(2)};
-        descriptor.setParameters(params3);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -166,7 +147,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_4() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //SO3
         Molecule molecule = new Molecule();
@@ -185,9 +166,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b2);
         molecule.addBond(b3);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
     }
 
@@ -196,7 +175,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_5() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //XeF4
         Molecule molecule = new Molecule();
@@ -219,9 +198,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b3);
         molecule.addBond(b4);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3D2, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3D2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
     }
 
@@ -230,7 +207,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 	 */
     public void testAtomHybridizationVSEPRDescriptorTest_6() throws ClassNotFoundException, CDKException, java.lang.Exception
     {
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
 
         //IF2-
         Molecule molecule = new Molecule();
@@ -246,9 +223,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        Object[] params1 = {new Integer(0)};
-        descriptor.setParameters(params1);
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3D1, ((IntegerResult)descriptor.calculate(molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3D1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
 
     }
     /**
@@ -258,7 +233,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
     {
     	int[] testResult = {CDKConstants.HYBRIDIZATION_SP3,CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP2};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
         SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("F-C=C");
@@ -270,9 +245,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-			Object[] params1 = {new Integer(i)};
-	        descriptor.setParameters(params1);
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).intValue());
 		}
     }
     /**
@@ -282,7 +255,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
     {
     	int[] testResult = {CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP2,CDKConstants.HYBRIDIZATION_SP3};
     	
-        IMolecularDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
+    	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
         SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("[F+]=C-[C-]");
@@ -294,9 +267,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-			Object[] params1 = {new Integer(i)};
-	        descriptor.setParameters(params1);
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).intValue());
 
 		}
     }

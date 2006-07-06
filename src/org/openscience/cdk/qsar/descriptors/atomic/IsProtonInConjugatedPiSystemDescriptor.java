@@ -29,10 +29,11 @@ import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
 
 /**
@@ -63,12 +64,11 @@ import org.openscience.cdk.qsar.result.BooleanResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
-public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescriptor {
+public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescriptor {
 
-    private int atomPosition = 0;
     private boolean checkAromaticity = false;
-  private IAtomContainer acold=null;
-  private SetOfAtomContainers acSet=null;
+    private IAtomContainer acold=null;
+    private SetOfAtomContainers acSet=null;
 
 
     /**
@@ -100,17 +100,13 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
-            throw new CDKException("IsProtonInConjugatedPiSystemDescriptor only expects two parameters");
+        if (params.length > 1) {
+            throw new CDKException("IsProtonInConjugatedPiSystemDescriptor only expects one parameters");
         }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The first parameter must be of type Integer");
+        if (!(params[0] instanceof Boolean)) {
+            throw new CDKException("The parameter must be of type Boolean");
         }
-        if (!(params[1] instanceof Boolean)) {
-            throw new CDKException("The second parameter must be of type Boolean");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
-        checkAromaticity = ((Boolean) params[1]).booleanValue();
+        checkAromaticity = ((Boolean) params[0]).booleanValue();
     }
 
 
@@ -122,9 +118,8 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[2];
-        params[0] = new Integer(atomPosition);
-        params[1] = new Boolean(checkAromaticity);
+        Object[] params = new Object[1];
+        params[0] = new Boolean(checkAromaticity);
         return params;
     }
 
@@ -132,29 +127,30 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
     /**
      *  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   true if the proton is bonded to a conjugated system
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
             boolean isProtonInPiSystem = false;
             Molecule mol = new Molecule(ac);
             if (checkAromaticity) {
-                HueckelAromaticityDetector.detectAromaticity(mol);
-        }
-            org.openscience.cdk.interfaces.IAtom target = ac.getAtomAt(atomPosition);
+            	HueckelAromaticityDetector.detectAromaticity(mol);
+            }
+            IAtom target = atom;
             if(target.getSymbol().equals("H")) {
-        if(acold!=ac){
-          acold=ac;
-          acSet = ConjugatedPiSystemsDetector.detect(mol);
-        }
-                org.openscience.cdk.interfaces.IAtomContainer[] detected = acSet.getAtomContainers();
-                org.openscience.cdk.interfaces.IAtom[] neighboors = mol.getConnectedAtoms(target);
+            	if(acold!=ac){
+            		acold=ac;
+            		acSet = ConjugatedPiSystemsDetector.detect(mol);
+            	}
+                IAtomContainer[] detected = acSet.getAtomContainers();
+                IAtom[] neighboors = mol.getConnectedAtoms(target);
                 for (int i = 0; i < neighboors.length; i++) {
                     for(int d = 0; d < detected.length; d++) {
                         if ((detected[d]!= null) && (detected[d].contains(neighboors[i]))) {
                             isProtonInPiSystem=true;
-              break;
+                            break;
                         }
                     }
                 }
@@ -170,9 +166,8 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[2];
-        params[0] = "atomPosition";
-        params[1] = "checkAromaticity";
+        String[] params = new String[1];
+        params[0] = "checkAromaticity";
         return params;
     }
 
@@ -185,7 +180,6 @@ public class IsProtonInConjugatedPiSystemDescriptor implements IMolecularDescrip
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        if (name.equals("atomPosition")) return new Integer(0);
         return new Boolean(true);
     }
 }

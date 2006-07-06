@@ -25,9 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -61,8 +62,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.9608,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("FC");
@@ -72,10 +73,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.03);
 		}
@@ -85,8 +85,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methyl_Chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.7054,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("ClC");
@@ -96,10 +96,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.01);
 		}
@@ -109,8 +108,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methyl_Iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.1951,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("IC");
@@ -120,10 +119,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.01);
 		}
@@ -133,8 +131,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methyl_Bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.8922,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("BrC");
@@ -144,10 +142,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.02);
 		}
@@ -157,8 +154,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methyl_Alcohol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.1138,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("OC");
@@ -168,10 +165,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 4; i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.01);
 		}
@@ -181,8 +177,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Formaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={6.3012,8.0791,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=O");
@@ -192,10 +188,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.55);
 		}
@@ -206,8 +201,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	public void testPiElectronegativityDescriptor_Ethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		
 		double [] testResult={5.1519,5.1519,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=C");
@@ -218,9 +212,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 
 //	        System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.01);
@@ -232,8 +224,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.7796,5.9414,5.0507,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("F-C=C");
@@ -245,9 +236,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //	        System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.7);
 		}
@@ -257,8 +246,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={6.8954,7.301,4.8022,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[1];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C(=O)O");
@@ -270,9 +258,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 1.2);
 		}
@@ -282,8 +268,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	 */
 	public void testPiElectronegativityDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.916,5.7345,3.971,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		IMolecularDescriptor descriptor = new PiElectronegativityDescriptor();
-		Integer[] params = new Integer[2];
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=C-O-C");
@@ -295,10 +281,9 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(i);
-			params[1] = new Integer(10);
+			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
 //	        System.out.println("result: "+result);
 			assertEquals(testResult[i],result, 0.5);
 		}

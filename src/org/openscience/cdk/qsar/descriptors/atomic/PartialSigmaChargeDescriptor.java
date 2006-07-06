@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.jchempaint.action.SetColorSchemeAction;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,9 +33,7 @@ import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  *  The calculation of sigma partial charges in sigma-bonded systems (PEOE) of an heavy atom is based on Gasteiger Marsili
@@ -95,7 +91,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *  Sets the parameters attribute of the PartialSigmaChargeDescriptor
      *  object
      *
-     *@param  params            1: Atom position and 2: max iterations
+     *@param  params            Number of maximum iterations
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
@@ -103,8 +99,9 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
             throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
         }
         if (!(params[0] instanceof Integer)) {
-            maxIterations = ((Integer) params[0]).intValue();
+            throw new CDKException("The parameter 2 must be of type Integer");
         }
+        maxIterations = ((Integer) params[0]).intValue();
     }
 
 
@@ -126,6 +123,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *  For this method will be only possible if the heavy atom has single bond.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
      *@exception  CDKException  Possible Exceptions

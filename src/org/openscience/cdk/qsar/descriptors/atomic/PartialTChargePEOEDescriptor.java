@@ -24,11 +24,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
@@ -59,13 +62,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @see GasteigerMarsiliPartialCharges
  * @see GasteigerPEPEPartialCharges
  */
-public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
+public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
-    private int atomPosition = 0;
-	private IMolecularDescriptor sigmaCharge;
-	private IMolecularDescriptor piCharge;
+	private AbstractAtomicDescriptor sigmaCharge;
+	private AbstractAtomicDescriptor piCharge;
 	private IAtomContainer acCloned;
-	private IAtomContainer acOLD;
 
 
     /**
@@ -92,20 +93,10 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Sets the parameters attribute of the PartialTChargePEOEDescriptor
-     *  object
-     *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
+     * This descriptor does not have any parameter to be set.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("PartialTChargePEOEDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
+    	// no parameters
     }
 
 
@@ -114,12 +105,10 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
      *  object
      *
      *@return    The parameters value
+     *@see #setParameters
      */
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = new Integer(atomPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -127,33 +116,27 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
      *  The method returns partial total charges assigned to an heavy atom through PEOE method.
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  ac                AtomContainer
-     *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
-     *@exception  CDKException  Possible Exceptions
+     * @param  atom              The IAtom for which the DescriptorValue is requested
+     * @param  ac                AtomContainer
+     * @return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
+     * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-    	Integer[] params = new Integer[1];
-    	params[0] = new Integer(atomPosition);
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
     	
-    	if(ac != acOLD){
-    		acOLD = ac;
-    		try {
-				acCloned = (IAtomContainer)acOLD.clone();
-			} catch (CloneNotSupportedException e) {
-				throw new CDKException("Could not clone IMolecule!", e);
-			}
-    	}
-		piCharge.setParameters(params);
-    	double piRC= ((DoubleResult)piCharge.calculate(acCloned).getValue()).doubleValue();
-        
-		sigmaCharge.setParameters(params);
-		double sigmaRC= ((DoubleResult)sigmaCharge.calculate(acOLD).getValue()).doubleValue();
-		
-		
-		double sum = sigmaRC + piRC;
-		DoubleResult result = new DoubleResult(sum);
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result);
+		try {
+			acCloned = (IAtomContainer)ac.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new CDKException("Could not clone IMolecule!", e);
+		}
+	
+		double piRC= ((DoubleResult)piCharge.calculate(atom, ac).getValue()).doubleValue();
+    	double sigmaRC= ((DoubleResult)sigmaCharge.calculate(atom, ac).getValue()).doubleValue();
+	
+	
+    	double sum = sigmaRC + piRC;
+    	DoubleResult result = new DoubleResult(sum);
+    
+    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result);
     }
 
 
@@ -161,12 +144,10 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
      *  Gets the parameterNames attribute of the PartialTChargePEOEDescriptor
      *  object
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "atomPosition";
-        return params;
+        return new String[0];
     }
 
 
@@ -174,11 +155,11 @@ public class PartialTChargePEOEDescriptor implements IMolecularDescriptor {
      *  Gets the parameterType attribute of the PartialTChargePEOEDescriptor
      *  object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return null;
     }
 }
 

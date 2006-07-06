@@ -26,11 +26,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
@@ -57,13 +58,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:piElectronegativity
  */
-public class PiElectronegativityDescriptor implements IMolecularDescriptor {
+public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 
-    private int atomPosition = 0;
-    private int maxIterations = 0;
+    private int maxIterations = -1;
     private GasteigerPEPEPartialCharges pepe = null;
-    private double[][] gasteigerFactors = null;
-	private IMolecularDescriptor  descriptor;
+	private IAtomicDescriptor  descriptor;
 
 
     /**
@@ -94,24 +93,17 @@ public class PiElectronegativityDescriptor implements IMolecularDescriptor {
      *  Sets the parameters attribute of the PiElectronegativityDescriptor
      *  object
      *
-     *@param  params            1: Atom position and 2: max iterations
+     *@param  params            The number of maximum iterations
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
-            throw new CDKException("PiElectronegativityDescriptor only expects two parameter");
+        if (params.length > 1) {
+            throw new CDKException("PiElectronegativityDescriptor only expects one parameter");
         }
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter 1 must be of type Integer");
         }
-        atomPosition = ((Integer) params[0]).intValue();
-        
-        if((params.length > 1)&& params[1] != null ){
-            if (!(params[1] instanceof Integer) ){
-                throw new CDKException("The parameter 2 must be of type Integer");
-            }
-            maxIterations = ((Integer) params[1]).intValue();
-        }
+        maxIterations = ((Integer) params[0]).intValue();
     }
 
 
@@ -123,9 +115,8 @@ public class PiElectronegativityDescriptor implements IMolecularDescriptor {
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[2];
-        params[0] = new Integer(atomPosition);
-        params[1] = new Integer(maxIterations);
+        Object[] params = new Object[1];
+        params[0] = new Integer(maxIterations);
         return params;
     }
 
@@ -134,25 +125,29 @@ public class PiElectronegativityDescriptor implements IMolecularDescriptor {
      *  The method calculates the pi electronegativity of a given atom
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   return the pi electronegativity
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double piElectronegativity = 0.0;
         try {
         	double q = 0.0;
-        	Integer[] params = new Integer[2];
-        	params[0] = new Integer(atomPosition);
-        	params[1] = new Integer(maxIterations);
-        	descriptor.setParameters(params);
-			q = ((DoubleResult)descriptor.calculate(ac).getValue()).doubleValue();
+        	if(maxIterations != -1){
+        		Integer[] params = new Integer[1];
+        		params[0] = new Integer(maxIterations);
+        		descriptor.setParameters(params);
+        	}
+        	q = ((DoubleResult)descriptor.calculate(atom,ac).getValue()).doubleValue();
 			
-	    	  ISetOfAtomContainers iSet = ac.getBuilder().newSetOfAtomContainers();
-	    	  iSet.addAtomContainer(ac);/*2 times*/
-	    	  iSet.addAtomContainer(ac);
-	    	  gasteigerFactors = pepe.assignGasteigerPiMarsiliFactors2(iSet);
-	      int stepSize = pepe.getStepSize();
+    	  ISetOfAtomContainers iSet = ac.getBuilder().newSetOfAtomContainers();
+    	  iSet.addAtomContainer(ac);/*2 times*/
+    	  iSet.addAtomContainer(ac);
+    	  double[][] gasteigerFactors = pepe.assignGasteigerPiMarsiliFactors2(iSet);
+      
+    	  int stepSize = pepe.getStepSize();
+	      int atomPosition = ac.getAtomNumber(atom);
 	      int start = (stepSize * (atomPosition) + atomPosition);
 	      if(ac.getLonePairCount(ac.getAtomAt(atomPosition)) > 0 ||
 					ac.getMaximumBondOrder(ac.getAtomAt(atomPosition)) >1 )
@@ -173,9 +168,8 @@ public class PiElectronegativityDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[2];
-        params[0] = "atomPosition";
-        params[1] = "maxIterations";
+        String[] params = new String[1];
+        params[0] = "maxIterations";
         return params;
     }
 
@@ -188,7 +182,6 @@ public class PiElectronegativityDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        // since both params are of Integer type, we don't need to check
         return new Integer(0); 
     }
 }

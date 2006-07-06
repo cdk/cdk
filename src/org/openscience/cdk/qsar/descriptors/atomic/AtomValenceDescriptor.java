@@ -25,7 +25,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -34,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
@@ -146,7 +144,8 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
     /**
      * This method calculates the valence of an atom.
      *
-     * @param container Parameter is the atom container.
+     * @param atom          The IAtom for which the DescriptorValue is requested
+     * @param container      Parameter is the atom container.
      * @return The valence of an atom
      * @throws CDKException Description of the Exception
      */

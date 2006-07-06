@@ -72,7 +72,8 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
     /**
      * This method calculates the number of not-H substituents of an atom.
      *
-     * @param  container     The {@link IAtomContainer} for which this descriptor is to be calculated for
+     * @param  atom              The IAtom for which the DescriptorValue is requested
+     * @param  container         The {@link IAtomContainer} for which this descriptor is to be calculated for
      * @return   The number of bonds on the shortest path between two atoms
      * @throws  CDKException  NOT CLEAR
      */

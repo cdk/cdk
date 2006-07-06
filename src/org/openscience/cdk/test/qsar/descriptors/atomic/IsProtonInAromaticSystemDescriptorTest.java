@@ -25,9 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -49,14 +50,14 @@ public class IsProtonInAromaticSystemDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMolecularDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
-		Object[] params = {new Integer(13), new Boolean(true)};
+		IAtomicDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
+		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertEquals(1, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtomAt(13),mol).getValue()).intValue());
 	}
 }
 

@@ -111,7 +111,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
     /**
      *  Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameters value
+     * @return    The parameters value
      * @see #setParameters
      */
     public Object[] getParameters() {
@@ -122,6 +122,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
     /**
      *  This method calculate the Covalent radius of an atom.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return                   The Covalent radius of the atom
      *@exception  CDKException  if an error occurs during atom typing
@@ -154,7 +155,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
     /**
      *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     public String[] getParameterNames() {
         return new String[0];

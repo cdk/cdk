@@ -62,7 +62,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 public class BondSigmaElectronegativityDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
-	private IMolecularDescriptor  descriptor;
+	private SigmaElectronegativityDescriptor  descriptor;
 
 
     /**
@@ -95,7 +95,7 @@ public class BondSigmaElectronegativityDescriptor implements IMolecularDescripto
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-    	if (params.length > 2) {
+    	if (params.length > 1) {
             throw new CDKException("BondSigmaElectronegativityDescriptor only expects two parameter");
         }
         if (!(params[0] instanceof Integer)) {
@@ -127,16 +127,15 @@ public class BondSigmaElectronegativityDescriptor implements IMolecularDescripto
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        Molecule mol = new Molecule(ac);
-        IAtom[] atoms = mol.getBondAt(bondPosition).getAtoms();
+    	
+        IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
         double[] results = new double[2];
         
-    	Integer[] params = new Integer[2];
+    	Integer[] params = new Integer[1];
     	for(int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(mol.getAtomNumber(atoms[i]));
-    		params[1] = new Integer(6);
-	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+    		params[0] = new Integer(6);
+    		descriptor.setParameters(params);
+	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],ac).getValue()).doubleValue();
     	}
     	
         double result = Math.abs(results[0] - results[1]);

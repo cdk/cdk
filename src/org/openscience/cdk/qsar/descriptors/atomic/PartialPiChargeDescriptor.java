@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  <p>The calculation of pi partial charges in pi-bonded systems (PEPE) of an heavy 
@@ -58,12 +58,10 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
  * @cdk.dictref qsar-descriptors:partialPiCharge
  * @see GasteigerPEPEPartialCharges
  */
-public class PartialPiChargeDescriptor implements IMolecularDescriptor {
+public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
-    private int atomPosition = 0;
     private GasteigerPEPEPartialCharges pepe = null;
-    private IAtomContainer acOld = null;
-	private int maxIterations;
+	private int maxIterations = -1;
 
 
     /**
@@ -93,25 +91,17 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *  Sets the parameters attribute of the PartialPiChargeDescriptor
      *  object
      *
-     *@param  params            1: Atom position and 2: max iterations
+     *@param  params            Number of maximum iterations
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
+        if (params.length > 1) {
             throw new CDKException("PartialPiChargeDescriptor only expects two parameter");
         }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter 1 must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
-        
-
-        if((params.length > 1)&& params[1] != null ){
-            if (!(params[1] instanceof Integer) ){
+        if (!(params[0] instanceof Integer) ){
                 throw new CDKException("The parameter 2 must be of type Integer");
             }
-            maxIterations = ((Integer) params[1]).intValue();
-        }
+        maxIterations = ((Integer) params[0]).intValue();
     }
 
 
@@ -122,9 +112,8 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      */
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[2];
-        params[0] = new Integer(atomPosition);
-        params[1] = new Integer(maxIterations);
+        Object[] params = new Object[1];
+        params[0] = new Integer(maxIterations);
         return params;
     }
 
@@ -134,23 +123,29 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *  For this method will be only possible if the heavy atom has single bond.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-    	if(acOld != ac){
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    	if (!isCachedAtomContainer(ac)) {
+    		if(maxIterations != -1)
+    			pepe.setMaxGasteigerIters(maxIterations);
 	    	try {
-	    		acOld = ac;
-	        	pepe.assignGasteigerPiPartialCharges(acOld, true);
-	            
+	        	pepe.assignGasteigerPiPartialCharges(ac, true);
+	        	IAtom[] atoms = ac.getAtoms();
+				for (int i=0; i<atoms.length; i++) {
+					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
+					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(ac.getAtomAt(i).getCharge()));
+				}
 	        } catch (Exception ex1) {
 	            throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
 	        }
     	}
-        IAtom target = acOld.getAtomAt(atomPosition);
-        DoubleResult piPartialCharge = new DoubleResult(target.getCharge());
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), piPartialCharge);
+    	return getCachedDescriptorValue(atom) != null 
+        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom)) 
+            : null;
     }
 
 
@@ -161,9 +156,8 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[2];
-        params[0] = "atomPosition";
-        params[1] = "maxIterations";
+    	String[] params = new String[1];
+        params[0] = "maxIterations";
         return params;
     }
 
@@ -176,7 +170,7 @@ public class PartialPiChargeDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0), new Integer(0)};
+    	Integer[] object = {new Integer(0)};
         return object;
     }
 }

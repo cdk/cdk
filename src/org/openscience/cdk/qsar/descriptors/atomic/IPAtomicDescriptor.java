@@ -211,24 +211,19 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	 * Calculate the necessary descriptors for Heteratom atoms
 	 * @param atomContainer The IAtomContainer
 	 * @return     Array with the values of the descriptors.
+	 * @throws CDKException 
 	 */
-	private Double[][] calculateHeteroAtomDescriptor(IAtomContainer atomContainer) {
+	private Double[][] calculateHeteroAtomDescriptor(IAtomContainer atomContainer) throws CDKException {
 		Double[][] results = new Double[1][3];
 		Integer[] params = new Integer[1];
-		Vector vector = new Vector();
-		vector.add(new SigmaElectronegativityDescriptor());
-		vector.add(new PartialSigmaChargeDescriptor());
-		vector.add(new EffectiveAtomPolarizabilityDescriptor());
-		params[0] = new Integer(targetPosition);
-        try {
-        	for(int i = 0; i < vector.size() ; i++){
-        		IMolecularDescriptor descriptor = (IMolecularDescriptor)vector.get(i); 
-        		descriptor.setParameters(params);
-        		results[0][i]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
-        	}
-		} catch (CDKException e) {
-			e.printStackTrace();
-		}
+		SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
+		PartialSigmaChargeDescriptor descriptor2 = new PartialSigmaChargeDescriptor();
+		EffectiveAtomPolarizabilityDescriptor descriptor3 = new EffectiveAtomPolarizabilityDescriptor();
+		IAtom atom = atomContainer.getAtomAt(targetPosition);
+		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue());
+    	
 		return results;
 	}
 	/**
@@ -241,44 +236,38 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBondAt(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
-		int positionC = 0;
-		int positionX = 0;
+		IAtom positionC = null;
+		IAtom positionX = null;
 		if((atoms[0].getSymbol().equals("C") && !atoms[1].getSymbol().equals("C"))){
-			positionC = atomContainer.getAtomNumber(atoms[0]);
-			positionX = atomContainer.getAtomNumber(atoms[1]);
+			positionC = atoms[0];
+			positionX = atoms[1];
 		}else if((atoms[1].getSymbol().equals("C") && !atoms[0].getSymbol().equals("C"))){
-			positionC = atomContainer.getAtomNumber(atoms[1]);
-			positionX = atomContainer.getAtomNumber(atoms[0]);
+			positionC = atoms[1];
+			positionX = atoms[0];
 		}
 		try {
         	/*0*/
-        	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
-        	params[0] = new Integer(positionC);
-            descriptor.setParameters(params);
-    		results[0][0]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+			SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
+    		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(positionC, atomContainer).getValue()).doubleValue());
         	/*1*/
-    		descriptor = new PartialSigmaChargeDescriptor();
-            descriptor.setParameters(params);
-    		results[0][1]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		PartialSigmaChargeDescriptor descriptor2 = new PartialSigmaChargeDescriptor();
+    		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(positionC,atomContainer).getValue()).doubleValue());
     		/*2*/
-    		descriptor = new BondPartialSigmaChargeDescriptor();
+    		BondPartialSigmaChargeDescriptor descriptor3 = new BondPartialSigmaChargeDescriptor();
     		params[0] = new Integer(targetPosition);
-            descriptor.setParameters(params);
-    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		descriptor3.setParameters(params);
+    		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(atomContainer).getValue()).doubleValue());
     		/*3*/
-        	descriptor = new SigmaElectronegativityDescriptor();
-        	params[0] = new Integer(positionX);
-            descriptor.setParameters(params);
-    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		SigmaElectronegativityDescriptor descriptor4 = new SigmaElectronegativityDescriptor();
+    		results[0][3]= new Double(((DoubleResult)descriptor4.calculate(positionX, atomContainer).getValue()).doubleValue());
         	/*4*/
-    		descriptor = new PartialSigmaChargeDescriptor();
-            descriptor.setParameters(params);
-    		results[0][4]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		PartialSigmaChargeDescriptor descriptor5 = new PartialSigmaChargeDescriptor();
+    		results[0][4]= new Double(((DoubleResult)descriptor5.calculate(positionX, atomContainer).getValue()).doubleValue());
     		/*5*/
-			descriptor = new ResonancePositiveChargeDescriptor();
+    		ResonancePositiveChargeDescriptor descriptor6 = new ResonancePositiveChargeDescriptor();
 			params[0] = new Integer(targetPosition);
-			descriptor.setParameters(params);
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
+			descriptor6.setParameters(params);
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(atomContainer).getValue());
 			double datT = (dar.get(0)+dar.get(1))/2;
 			results[0][5] = new Double(datT);
 			
@@ -298,34 +287,28 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBondAt(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
-		int positionC = atomContainer.getAtomNumber(atoms[0]);
-		int positionX = atomContainer.getAtomNumber(atoms[1]);
+		IAtom positionC = atoms[0];
+		IAtom positionX = atoms[1];
 		try {
         	/*0_1*/
-        	IMolecularDescriptor descriptor = new SigmaElectronegativityDescriptor();
-        	params[0] = new Integer(positionC);
-            descriptor.setParameters(params);
-    		results[0][0]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+			SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
+    		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(positionC, atomContainer).getValue()).doubleValue());
         	/*1_1*/
-    		descriptor = new PartialSigmaChargeDescriptor();
-            descriptor.setParameters(params);
-    		results[0][1]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		PartialSigmaChargeDescriptor descriptor2 = new PartialSigmaChargeDescriptor();
+    		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(positionC, atomContainer).getValue()).doubleValue());
     		
     		/*0_2*/
-        	descriptor = new SigmaElectronegativityDescriptor();
-        	params[0] = new Integer(positionX);
-            descriptor.setParameters(params);
-    		results[0][2]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		SigmaElectronegativityDescriptor descriptor3 = new SigmaElectronegativityDescriptor();
+    		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(positionX, atomContainer).getValue()).doubleValue());
         	/*1_2*/
-    		descriptor = new PartialSigmaChargeDescriptor();
-            descriptor.setParameters(params);
-    		results[0][3]= new Double(((DoubleResult)descriptor.calculate(atomContainer).getValue()).doubleValue());
+    		PartialSigmaChargeDescriptor descriptor4 = new PartialSigmaChargeDescriptor();
+    		results[0][3]= new Double(((DoubleResult)descriptor4.calculate(positionX, atomContainer).getValue()).doubleValue());
     		
     		/*  */
-			descriptor = new ResonancePositiveChargeDescriptor();
+    		ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
 			params[0] = new Integer(targetPosition);
-			descriptor.setParameters(params);
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(atomContainer).getValue());
+			descriptor5.setParameters(params);
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(atomContainer).getValue());
 			results[0][4] = new Double(dar.get(0));
 			results[0][5] = new Double(dar.get(1));
     		

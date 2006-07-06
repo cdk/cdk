@@ -23,18 +23,21 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.atomic;
 
+import java.util.ArrayList;
+
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
-
-import javax.vecmath.Point3d;
-import java.util.ArrayList;
 
 
 /**
@@ -52,8 +55,8 @@ public class RDFProtonDescriptorTest extends CDKTestCase {
 	}
 	
 	public void testRDFProtonDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMolecularDescriptor descriptor  = new RDFProtonDescriptor();
-		Object[] params = {new Integer(16), new Boolean(true)};
+		IAtomicDescriptor descriptor  = new RDFProtonDescriptor();
+		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		
 		Molecule mol = new Molecule();
@@ -94,9 +97,9 @@ public class RDFProtonDescriptorTest extends CDKTestCase {
 		mol.addBond(6, 15, 1); // 17
 		mol.addBond(6, 16, 1); // 18
 		
-		org.openscience.cdk.interfaces.IAtom target = mol.getAtomAt(16);
+		IAtom target = mol.getAtomAt(16);
 		
-		IntegerArrayResult retval = (IntegerArrayResult)descriptor.calculate(mol).getValue();
+		IntegerArrayResult retval = (IntegerArrayResult)descriptor.calculate(target,mol).getValue();
 		assertEquals(5, retval.size());
 		
 		Double thisValue = (Double)((ArrayList)target.getProperty("gasteigerGHR")).get(13);

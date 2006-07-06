@@ -27,10 +27,11 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
@@ -56,9 +57,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
-public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor {
+public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
-    private int atomPosition = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
 
 
@@ -84,20 +84,10 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
 
 
     /**
-     *  Sets the parameters attribute of the ProtonTotalPartialChargeDescriptor
-     *  object
-     *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
+     * This descriptor does not have any parameter to be set.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("ProtonTotalPartialChargeDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        atomPosition = ((Integer) params[0]).intValue();
+    	// no parameters
     }
 
 
@@ -106,12 +96,10 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
      *  object
      *
      *@return    The parameters value
+     *@see #setParameters
      */
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = new Integer(atomPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -119,11 +107,12 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
      *  The method returns partial charges assigned to an heavy atom and its protons through Gasteiger Marsili
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
+     *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
         try {
         	
@@ -135,8 +124,8 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
-        org.openscience.cdk.interfaces.IAtom target = mol.getAtomAt(atomPosition);
-        org.openscience.cdk.interfaces.IAtom[] neighboors = mol.getConnectedAtoms(target);
+        IAtom target = atom;
+        IAtom[] neighboors = mol.getConnectedAtoms(target);
         DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.length + 1);
         protonPartialCharge.add( target.getCharge() );
         for (int i = 0; i < neighboors.length; i++) {
@@ -152,12 +141,10 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
      *  Gets the parameterNames attribute of the ProtonTotalPartialChargeDescriptor
      *  object
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "atomPosition";
-        return params;
+        return new String[0];
     }
 
 
@@ -165,11 +152,11 @@ public class ProtonTotalPartialChargeDescriptor implements IMolecularDescriptor 
      *  Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor
      *  object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return null;
     }
 }
 

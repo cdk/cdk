@@ -199,20 +199,19 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     					 for(int k = 0; k < prod.getAtomCount(); k++){
     						 IAtom atomsP = prod.getAtomAt(k);
     						 if(atomsP.getFormalCharge() > 0){
-    						    Integer[] params = new Integer[2];
-    	    					params[0] = new Integer(prod.getAtomNumber(atomsP));
-    	    					params[1] = new Integer(6);
+    						    Integer[] params = new Integer[1];
+    	    					params[0] = new Integer(6);
     	    			    	pielectronegativity = new PiElectronegativityDescriptor();
     	    					pielectronegativity.setParameters(params);
-    	    					pielectronegativity.calculate(prod).getValue();
+    	    					pielectronegativity.calculate(atomsP,prod).getValue();
     	    					IAtom target = prod.getAtomAt(prod.getAtomNumber(atomsP));
     	    			        result.add(new DoubleResult(atomsP.getCharge()));
     	    			        
-    	    			        IMolecularDescriptor descriptor   = new BondsToAtomDescriptor();
-    	    			        Object[] paramsD = {new Integer(positionAC), new Integer(prod.getAtomNumber(atomsP))};
+    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
+    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
     	    			        descriptor.setParameters(paramsD);
     	    			        
-    	    			        distance.add(((IntegerResult)descriptor.calculate(prod).getValue()));
+    	    			        distance.add(((IntegerResult)descriptor.calculate(prod.getAtomAt(positionAC),prod).getValue()));
     	    			        
     	    					break;
     						 }

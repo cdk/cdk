@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
-
-import javax.vecmath.Point3d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -50,8 +51,8 @@ public class DistanceToAtomDescriptorTest extends CDKTestCase {
 	}
     
 	public void testDistanceToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMolecularDescriptor descriptor  = new DistanceToAtomDescriptor();
-		Object[] params = {new Integer(0), new Integer(2)};
+		IAtomicDescriptor descriptor  = new DistanceToAtomDescriptor();
+		Object[] params = {new Integer(2)};
 		descriptor.setParameters(params);
 		
 		Molecule mol = new Molecule();
@@ -62,6 +63,6 @@ public class DistanceToAtomDescriptorTest extends CDKTestCase {
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
 		
-		assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
+		assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).doubleValue(), 0.1);
 	}
 }

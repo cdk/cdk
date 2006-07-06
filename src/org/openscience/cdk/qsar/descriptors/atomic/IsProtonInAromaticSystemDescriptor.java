@@ -25,14 +25,16 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
@@ -66,9 +68,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
  */
-public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor {
+public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 
-	private int atomPosition = 0;
 	private boolean checkAromaticity = false;
 
 
@@ -101,17 +102,13 @@ public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor 
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 2) {
+		if (params.length > 1) {
 			throw new CDKException("IsProtonInAromaticSystemDescriptor only expects two parameters");
 		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The first parameter must be of type Integer");
-		}
-		if (!(params[1] instanceof Boolean)) {
+		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The second parameter must be of type Boolean");
 		}
-		atomPosition = ((Integer) params[0]).intValue();
-		checkAromaticity = ((Boolean) params[1]).booleanValue();
+		checkAromaticity = ((Boolean) params[0]).booleanValue();
 	}
 
 
@@ -123,9 +120,8 @@ public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor 
 	 */
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[2];
-		params[0] = new Integer(atomPosition);
-		params[1] = new Boolean(checkAromaticity);
+		Object[] params = new Object[1];
+		params[0] = new Boolean(checkAromaticity);
 		return params;
 	}
 
@@ -134,19 +130,20 @@ public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor 
 	 *  The method is a proton descriptor that evaluate if a proton is bonded to an aromatic system or if there is distance of 2 bonds.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
-	 *@param  ac                AtomContainer
+	 *@param  atom              The IAtom for which the DescriptorValue is requested
+     *@param  ac                AtomContainer
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
 		int isProtonInAromaticSystem = 0;
-		Molecule mol = new Molecule(ac);
+		IMolecule mol = new NNMolecule(ac);
 		if (checkAromaticity) {
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		org.openscience.cdk.interfaces.IAtom[] neighboor = mol.getConnectedAtoms(mol.getAtomAt(atomPosition));
-		org.openscience.cdk.interfaces.IAtom target = ac.getAtomAt(atomPosition);
+		IAtom[] neighboor = mol.getConnectedAtoms(atom);
+		IAtom target = atom;
 		if(target.getSymbol().equals("H")) {
 			//System.out.println("aromatic proton");
 			if(neighboor[0].getFlag(CDKConstants.ISAROMATIC)) {
@@ -178,9 +175,8 @@ public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor 
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		String[] params = new String[2];
-		params[0] = "atomPosition";
-		params[1] = "checkAromaticity";
+		String[] params = new String[1];
+		params[0] = "checkAromaticity";
 		return params;
 	}
 
@@ -193,8 +189,7 @@ public class IsProtonInAromaticSystemDescriptor implements IMolecularDescriptor 
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-                if (name.equals("atomPosition")) return new Integer(0);
-                return new Boolean(true);
+		return new Boolean(true);
 	}
 }
 

@@ -27,11 +27,12 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -86,12 +87,11 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
-public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
+public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 
-	private int targetPosition = 0;
 	org.openscience.cdk.interfaces.IAtom atom = null;
 	private LoggingTool logger;
-  private static AtomTypeFactory atomATF=null;
+	private static AtomTypeFactory atomATF = null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationVSEPRDescriptor object
@@ -116,46 +116,34 @@ public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 
 
 	/**
-	 *  Sets the parameters attribute of the AtomHybridizationVSEPRDescriptor object
-	 *
-	 *@param  params            The parameter is the atom position
-	 *@exception  CDKException  Description of the Exception
-	 */
+     * This descriptor does have any parameter.
+     */
 	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("AtomHybridizationVSEPRDescriptor only expects one parameter");
-		}
-		if (!(params[0] instanceof Integer)) {
-			throw new CDKException("The parameter must be of type Integer");
-		}
-		targetPosition = ((Integer) params[0]).intValue();
 	}
 
 
 	/**
 	 *  Gets the parameters attribute of the AtomHybridizationVSEPRDescriptor object
 	 *
-	 *@return    The parameters value
+	 * @return    The parameters value
+     * @see       #setParameters
 	 */
 	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Integer(targetPosition);
-		return params;
+		return new Object[0];
 	}
 
 
 	/**
 	 *  This method calculates the hybridization of an atom.
 	 *
-	 *@param  container         Parameter is the atom container.
+	 *@param  atom              The IAtom for which the DescriptorValue is requested
+     *@param  container         Parameter is the atom container.
 	 *@return                   The hybridization
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException
-	{
-		atom = container.getAtomAt(targetPosition);
-		
+	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
+	{		
 		IAtomType atomType = findMatchingAtomType(container, atom);
 		
 		double bondOrderSum = container.getBondOrderSum(atom);
@@ -200,8 +188,8 @@ public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 	private IAtomType findMatchingAtomType(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom) throws CDKException 
 	{
 		try {
-      if(atomATF==null)
-        atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml", 
+			if(atomATF==null)
+				atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml", 
             container.getBuilder());
 
 			// take atomtype for the given element...
@@ -224,9 +212,7 @@ public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 	 *@return    The parameterNames value
 	 */
 	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
+        return new String[0];
 	}
 
 
@@ -234,10 +220,12 @@ public class AtomHybridizationVSEPRDescriptor implements IMolecularDescriptor {
 	 *  Gets the parameterType attribute of the AtomHybridizationVSEPRDescriptor object
 	 *
 	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
+     * @return       An Object of class equal to that of the parameter being requested
 	 */
 	public Object getParameterType(String name) {
-		return new Integer(0);
+		String[] params = new String[1];
+		params[0] = "targetPosition";
+		return params;
 	}
 }
 

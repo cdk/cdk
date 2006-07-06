@@ -7,8 +7,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 //import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,8 +50,8 @@ public class VanDerWaalsInteractions {
 	GVector dIvdw = null;
 	
 	//int[][] distances = null;	//Better check common atom connected
-	IMolecularDescriptor shortestPathBetweenToAtoms = new BondsToAtomDescriptor();
-	Object[] params = {new Integer(0), new Integer(0)};
+	IAtomicDescriptor shortestPathBetweenToAtoms = new BondsToAtomDescriptor();
+	Object[] params = {new Integer(0)};
 	
 	int vdwInteractionNumber;
 	int[][] vdWiAtomPosition = null;
@@ -103,11 +103,10 @@ public class VanDerWaalsInteractions {
 		vdwInteractionNumber = 0;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(i);
-				params[1] = new Integer(j);
+				params[0] = new Integer(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
 					vdwInteractionNumber += 1;
 				}
 			}
@@ -146,11 +145,10 @@ public class VanDerWaalsInteractions {
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(i);
-				params[1] = new Integer(j);
+				params[0] = new Integer(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
 					l += 1;
 					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtomAt(i).getAtomTypeName());
 					//logger.debug("vdwInteractionData " + l + " : " + vdwInteractionData);
@@ -194,10 +192,9 @@ public class VanDerWaalsInteractions {
 					
 					t[l] = 1;
 					
-					params[0] = new Integer(i);
-					params[1] = new Integer(j);
+					params[0] = new Integer(j);
 					shortestPathBetweenToAtoms.setParameters(params);
-					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule).getValue()).intValue()==3){
+					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()==3){
 					//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))] == 3) {
 						ivdw[l] = vdwScale14;
 					}else {

@@ -24,10 +24,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -63,7 +64,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
-	private IMolecularDescriptor  descriptor;
+	private PartialPiChargeDescriptor  descriptor;
 
 
     /**
@@ -128,15 +129,14 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        Molecule mol = new Molecule(ac);
-        IAtom[] atoms = mol.getBondAt(bondPosition).getAtoms();
+        IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
         double[] results = new double[2];
         
-    	Integer[] params = new Integer[1];
+        Integer[] params = new Integer[1];
     	for(int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(mol.getAtomNumber(atoms[i]));
+    		params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],ac).getValue()).doubleValue();
     	}
     	
         double result = Math.abs(results[0] - results[1]);

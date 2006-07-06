@@ -6,8 +6,8 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 //import org.openscience.cdk.tools.LoggingTool;
 
@@ -33,8 +33,8 @@ public class ElectrostaticInteractions {
 	double[][] dR = null;	// internuclear separation first order derivative respect to atoms coordinates
 	double[][][] ddR = null;	// internuclear separation second order derivative respect to atoms coordinates
 
-	IMolecularDescriptor shortestPathBetweenTwoAtoms = new BondsToAtomDescriptor();
-	Object[] params = {new Integer(0), new Integer(0)};
+	IAtomicDescriptor shortestPathBetweenTwoAtoms = new BondsToAtomDescriptor();
+	Object[] params = {new Integer(0)};
 	
 	int electrostaticInteractionNumber;
 	int[][] electrostaticInteractionAtomPosition = null;
@@ -82,11 +82,10 @@ public class ElectrostaticInteractions {
 		electrostaticInteractionNumber = 0;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(i);
-				params[1] = new Integer(j);
+				params[0] = new Integer(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
 					electrostaticInteractionNumber += 1;
 				}
 			}
@@ -103,16 +102,15 @@ public class ElectrostaticInteractions {
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(i);
-				params[1] = new Integer(j);
+				params[0] = new Integer(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
 					l += 1;
 					qi[l]= molecule.getAtomAt(i).getCharge();
 					qj[l]= molecule.getAtomAt(j).getCharge();
 					//logger.debug("qi[" + l + "] = " + qi[l] + ", qj[" + l + "] = " + qj[l]);
-					if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule).getValue()).intValue()==3){
+					if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()==3){
 						iQ[l] = electrostatic14interactionsScale;
 					} else {
 						iQ[l] = 1;

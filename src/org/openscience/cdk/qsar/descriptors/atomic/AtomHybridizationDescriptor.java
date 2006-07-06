@@ -105,7 +105,8 @@ public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 	/**
 	 *  This method calculates the hybridization of an atom.
 	 *
-	 *@param  container         Parameter is the atom container.
+	 *@param  atom              The IAtom for which the DescriptorValue is requested
+     *@param  container         Parameter is the atom container.
 	 *@return                   The hybridization
 	 *@exception  CDKException  Description of the Exception
 	 */
