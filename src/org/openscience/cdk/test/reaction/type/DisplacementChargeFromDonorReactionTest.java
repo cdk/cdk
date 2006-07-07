@@ -154,4 +154,34 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
         assertEquals(mappedProductA2, product.getAtomAt(1));
 	}
+	/**
+	 * A unit test suite for JUnit. Reaction: C=N-C=C => {(no possible) C=[N+]=C-[C-]}
+	 * Reaction: C=N-C=C => 
+	 * Test of mapped between the reactant and product. Only is mapped the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		/*O-C=C*/
+		Molecule molecule = (new SmilesParser()).parseSmiles("C=N-C=C");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(molecule);
+		setOfReactants.addMolecule(molecule);
+		
+		/*automatic search of the centre active*/
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        
+        /* iniciate */
+        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        
+        
+        Assert.assertEquals(0, setOfReactions.getReactionCount());
+
+        
+        
+	}
 }

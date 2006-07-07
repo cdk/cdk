@@ -152,5 +152,43 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
         IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
         assertEquals(mappedProductA2, product.getAtomAt(1));
 	}
+	/**
+	 * A unit test suite for JUnit. Reaction: N=CC => [N-]-[C+]C
+	 * Test of mapped between the reactant and product. Only is mapped the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		/*C=O*/
+		Molecule molecule = (new SmilesParser()).parseSmiles("N=CC");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(molecule);
+		setOfReactants.addMolecule(molecule);
+		
+		/*automatic search of the centre active*/
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        
+        /* iniciate */
+        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+
+        /*[N-]-[C+]C*/
+		Molecule molecule2 = (new SmilesParser()).parseSmiles("[N-]-[C+]C");
+	    adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        lpcheck.newSaturate(molecule2);
+		setOfReactants.addMolecule(molecule2);
+		
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
+	}
 
 }

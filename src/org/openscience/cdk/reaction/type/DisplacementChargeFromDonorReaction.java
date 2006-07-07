@@ -208,8 +208,14 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
+		out:
 		for(int i = 0 ; i < atoms.length ; i++)
 			if(reactant.getLonePairCount(atoms[i]) > 0 ){
+				// not possible is the atom-X has already double bond
+				IBond[] bondsSe = reactant.getConnectedBonds(atoms[i]);
+				for(int j = 0 ; j < bondsSe.length ; j++)
+					if(bondsSe[j].getOrder() == 2)
+						continue out;
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 1.0){
