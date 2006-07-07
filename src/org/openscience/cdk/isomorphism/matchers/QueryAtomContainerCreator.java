@@ -99,6 +99,28 @@ public class QueryAtomContainerCreator {
         return queryContainer;
     }    
     
+    public static QueryAtomContainer createSymbolChargeIDQueryContainer(IAtomContainer container) {
+        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        IAtom[] atoms = container.getAtoms();
+        for (int i = 0; i < atoms.length; i++) {
+            queryContainer.addAtom(new SymbolChargeIDQueryAtom(atoms[i]));
+        }
+        IBond[] bonds = container.getBonds();
+        for (int i = 0; i < bonds.length; i++) {
+            int index1 = container.getAtomNumber(bonds[i].getAtomAt(0));
+            int index2 = container.getAtomNumber(bonds[i].getAtomAt(1));
+            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+                queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtomAt(index1),
+                                      (IQueryAtom) queryContainer.getAtomAt(index2),
+                                      1.5));
+            } else {
+                queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtomAt(index1),
+                                      (IQueryAtom) queryContainer.getAtomAt(index2),
+                                      bonds[i].getOrder()));
+            }
+        }
+        return queryContainer;
+    }    
 
     /**
      *  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
