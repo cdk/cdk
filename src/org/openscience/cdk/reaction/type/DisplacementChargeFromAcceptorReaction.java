@@ -16,6 +16,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -203,6 +204,8 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IBond[] bonds = reactant.getBonds();
+		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 || AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0)
+			return;
 		for(int i = 0 ; i < bonds.length ; i++)
 			if(bonds[i].getOrder() == 2.0){
 				IAtom atom1 = bonds[i].getAtoms()[0];
