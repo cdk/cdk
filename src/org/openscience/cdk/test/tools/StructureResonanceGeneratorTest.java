@@ -338,7 +338,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         
         ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
         
-		Assert.assertEquals(3,setOfMolecules.getAtomContainerCount());
+		Assert.assertEquals(4,setOfMolecules.getAtomContainerCount());
 
         Molecule molecule1 = (new SmilesParser()).parseSmiles("[F+]=C1C=CC=C[C-]1");
         adder.addImplicitHydrogensToSatisfyValency(molecule1);
@@ -351,5 +351,21 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         lpcheck.newSaturate(molecule2);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
+	 *
+	 * @return    The test suite
+	 */
+	public void test_n1ccccc1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Molecule molecule = (new SmilesParser()).parseSmiles("n1ccccc1");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.newSaturate(molecule);
+        
+        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        
+		Assert.assertEquals(12,setOfMolecules.getAtomContainerCount());
 	}
 }

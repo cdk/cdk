@@ -1,7 +1,10 @@
 package org.openscience.cdk.tools;
 
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -203,7 +206,7 @@ public class StructureResonanceGenerator {
 						}
 		
 					/* RearrangementAnion2Reaction*/
-					type  = new RearrangementAnion2Reaction();
+			        type  = new RearrangementAnion2Reaction();
 			        type.setParameters(params);
 					
 			        setOfReactions = type.initiate(setOfReactants, null);
@@ -282,7 +285,8 @@ public class StructureResonanceGenerator {
 					/* DisplacementChargeFromAcceptorReaction*/
 					IReactionProcess type  = new DisplacementChargeFromAcceptorReaction();
 			        type.setParameters(params);
-					
+
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -297,13 +301,14 @@ public class StructureResonanceGenerator {
 					type  = new DisplacementChargeFromDonorReaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
 							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							System.out.println("DisplacementChargeReaction");
+//							System.out.println("DisplacementChargeFromDonorReaction");
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
@@ -325,21 +330,48 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(ISetOfAtomContainers set, IAtomContainer atomContainer) {
+		atomContainer = setID(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
-			IAtomContainer ac = set.getAtomContainer(i);
-			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(ac);
+			IAtomContainer ac = setID(set.getAtomContainer(i));
+			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(ac);
 			//QueryAtomContainer qAC2 = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
-//					System.out.println("exist");
 					return true;
 				}
 			} catch (CDKException e1) {
+				System.err.println(e1);
 				logger.error(e1.getMessage());
 				logger.debug(e1);
 			}
 		}
 		return false;
+	}
+	/**
+	 * remove the possible flags about CDKConstants.REACTIVE_CENTER
+	 * 
+	 * @param atomContainer
+	 * @return
+	 */
+	private IAtomContainer removeFlags(IAtomContainer atomContainer){
+		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
+			atomContainer.getAtomAt(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
+
+		for(int i = 0 ; i < atomContainer.getBondCount(); i++)
+			atomContainer.getBondAt(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
+		return atomContainer;
+	}
+	/**
+	 * Set the ID as position
+	 * 
+	 * @param atomContainer
+	 * @return
+	 */
+	private IAtomContainer setID(IAtomContainer atomContainer){
+		for(int i = 0 ; i < atomContainer.getAtomCount(); i++){
+			atomContainer.getAtomAt(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtomAt(i)));
+		}
+		return atomContainer;
 	}
 
 }
