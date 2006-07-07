@@ -29,15 +29,28 @@
  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
+import java.awt.Dimension;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.util.*;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  A set of static utility classes for geometric calculations and operations.
@@ -950,23 +963,19 @@ public class GeometryTools {
 		double mouseDistance;
 		double atomX;
 		double atomY;
-		if(model.getSetOfMolecules()!=null){
-			for(int k=0;k<model.getSetOfMolecules().getAtomContainerCount();k++){
-				IAtomContainer atomCon=model.getSetOfMolecules().getAtomContainer(k);
-				for (int i = 0; i < atomCon.getAtomCount(); i++) {
-					currentAtom = atomCon.getAtomAt(i);
-					if (renderingCoordinates.get(currentAtom) == null && currentAtom.getPoint2d()!=null) {
-						renderingCoordinates.put(currentAtom,new Point2d(currentAtom.getPoint2d().x,currentAtom.getPoint2d().y));
-					}
-					if(currentAtom!=ignore && renderingCoordinates.get(currentAtom)!=null){
-						atomX =((Point2d) renderingCoordinates.get(currentAtom)).x;
-						atomY = ((Point2d)renderingCoordinates.get(currentAtom)).y;
-						mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
-						if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
-							smallestMouseDistance = mouseDistance;
-							closestAtom = currentAtom;
-						}
-					}
+		IAtomContainer all=ChemModelManipulator.getAllInOneContainer(model);
+		for (int i = 0; i < all.getAtomCount(); i++) {
+			currentAtom = all.getAtomAt(i);
+			if (renderingCoordinates.get(currentAtom) == null && currentAtom.getPoint2d()!=null) {
+				renderingCoordinates.put(currentAtom,new Point2d(currentAtom.getPoint2d().x,currentAtom.getPoint2d().y));
+			}
+			if(currentAtom!=ignore && renderingCoordinates.get(currentAtom)!=null){
+				atomX =((Point2d) renderingCoordinates.get(currentAtom)).x;
+				atomY = ((Point2d)renderingCoordinates.get(currentAtom)).y;
+				mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
+				if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
+					smallestMouseDistance = mouseDistance;
+					closestAtom = currentAtom;
 				}
 			}
 		}
