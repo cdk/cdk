@@ -23,11 +23,11 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Hashtable;
-import java.io.*;
-
-import org.openscience.cdk.config.IsotopeFactory;
-
 import java.util.LinkedList;
 
 
@@ -43,11 +43,12 @@ public class AtomicProperties {
 	
 	private AtomicProperties() throws IOException {
 		
-		File DataFile=new File("ToxPredictor/system/whim weights.txt");
+	    String configFile = "src/org/openscience/cdk/config/data/whim_weights.txt";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		
-		BufferedReader br=new BufferedReader(new FileReader(DataFile));
+		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 		
-		String Header=br.readLine(); // header
+		String Header= br.readLine(); // header
 		
 		String Line="";
 		while (true) {
