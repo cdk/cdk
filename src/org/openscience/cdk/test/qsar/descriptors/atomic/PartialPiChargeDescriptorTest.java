@@ -134,7 +134,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	 *  A unit test for JUnit with Fluorobenzene
 	 */
 	public void testPartialPiChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.0262,0.0,-0.0101,0.0,-0.006,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={0.0262,0.0,-0.0101,0.0,-0.006,0.0,-0.0101,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[1];
         

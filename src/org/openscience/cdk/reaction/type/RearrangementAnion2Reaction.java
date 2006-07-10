@@ -221,6 +221,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 1.0){
 						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
+						if(atom.getFormalCharge() != 0)
+							continue;
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
 							if(bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() == 0){

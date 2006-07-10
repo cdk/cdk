@@ -131,6 +131,7 @@ public class StructureResonanceGenerator {
 	 * @return The different resonance structures
 	 */
 	public ISetOfAtomContainers getAllStructures(IAtomContainer atomContainer){
+//		boolean overLoaded = false;
 		ISetOfAtomContainers setOfAtomContainer = atomContainer.getBuilder().newSetOfAtomContainers();
 		setOfAtomContainer.addAtomContainer(atomContainer);
 		Object[] params = new Object[1];
@@ -148,6 +149,7 @@ public class StructureResonanceGenerator {
 					IReactionProcess type  = new RearrangementCation1Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -163,6 +165,7 @@ public class StructureResonanceGenerator {
 					type  = new RearrangementCation2Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 					if(setOfReactions.getReactionCount() != 0)
@@ -178,6 +181,7 @@ public class StructureResonanceGenerator {
 					type  = new RearrangementCation3Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -194,6 +198,7 @@ public class StructureResonanceGenerator {
 					IReactionProcess type  = new RearrangementAnion1Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -209,6 +214,7 @@ public class StructureResonanceGenerator {
 			        type  = new RearrangementAnion2Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -224,6 +230,7 @@ public class StructureResonanceGenerator {
 					type  = new RearrangementAnion3Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -240,6 +247,7 @@ public class StructureResonanceGenerator {
 					IReactionProcess type  = new RearrangementRadical1Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -255,6 +263,7 @@ public class StructureResonanceGenerator {
 					type  = new RearrangementRadical2Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -270,6 +279,7 @@ public class StructureResonanceGenerator {
 					type  = new RearrangementRadical3Reaction();
 			        type.setParameters(params);
 					
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
 			        setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
@@ -313,7 +323,13 @@ public class StructureResonanceGenerator {
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
 				}
-				
+				/* this makes a limition of the search */
+//				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
+//					overLoaded = true;
+//				if(setOfAtomContainer.getAtomContainerCount() > 40 && overLoaded)
+//					return setOfAtomContainer;
+				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
+					return setOfAtomContainer;
 			}
 		} catch (CDKException e) {
 			logger.error("Error while getting all resonance structures: ");
@@ -337,6 +353,7 @@ public class StructureResonanceGenerator {
 			//QueryAtomContainer qAC2 = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
+//					System.out.println("exist");
 					return true;
 				}
 			} catch (CDKException e1) {

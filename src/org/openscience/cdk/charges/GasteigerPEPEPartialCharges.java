@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
@@ -127,9 +128,7 @@ public class GasteigerPEPEPartialCharges {
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR = new StructureResonanceGenerator();
 		ISetOfAtomContainers iSet = gR.getAllStructures(ac);
-		if(setHI != null){
-				iSet.add(setHI);
-		}
+		
 		
 		/*2: search whose atoms which don't keep their formal charge and set flags*/
 		double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount( )];

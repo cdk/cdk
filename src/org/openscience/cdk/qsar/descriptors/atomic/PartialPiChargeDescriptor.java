@@ -140,7 +140,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(ac.getAtomAt(i).getCharge()));
 				}
 	        } catch (Exception ex1) {
-	            throw new CDKException("Problems with assignGasteigerMarsiliPiPartialCharges due to " + ex1.toString(), ex1);
+	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
 	        }
     	}
     	return getCachedDescriptorValue(atom) != null 

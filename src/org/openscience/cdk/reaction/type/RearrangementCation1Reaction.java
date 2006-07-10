@@ -11,10 +11,12 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -213,6 +215,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
+		AllRingsFinder ssrF = new AllRingsFinder();
+		IRingSet rings = ssrF.findAllRings(reactant);
 		for(int i = 0 ; i < atoms.length ; i++)
 			if(atoms[i].getFormalCharge() == 1 ){
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
@@ -221,6 +225,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 						IAtom atom = bonds[j].getConnectedAtom(atoms[i]);
 						ILonePair[] lp = reactant.getLonePairs(atom);
 						if(lp.length > 0 ){
+							if(rings.contains(atom))
+								continue;
 							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
