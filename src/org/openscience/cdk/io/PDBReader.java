@@ -43,6 +43,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -94,6 +95,8 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	private Map atomNumberMap;
 	
+	private static AtomTypeFactory pdbFactory;
+	
 	/**
 	 *
 	 * Contructs a new PDBReader that can read Molecules from a given
@@ -118,6 +121,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		logger = new LoggingTool(this.getClass());
 		_oInput = new BufferedReader(oIn);
 		initIOSettings();
+		pdbFactory = null;
 	}
 	
 	public PDBReader() {
@@ -162,7 +166,16 @@ public class PDBReader extends DefaultChemObjectReader {
 	 */
 	public IChemObject read(IChemObject oObj) throws CDKException {
 		if (oObj instanceof IChemFile) {
-			return (IChemObject)readChemFile((IChemFile)oObj);
+			if (pdbFactory == null) {
+				try {
+					pdbFactory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml", 
+				    	  ((IChemFile)oObj).getBuilder());
+				} catch (Exception exception) {
+					logger.debug(exception);
+					throw new CDKException("Could not setup list of PDB atom types! " + exception.getMessage());
+				}
+			}
+			return readChemFile((IChemFile)oObj);
 		} else {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}
@@ -318,6 +331,7 @@ public class PDBReader extends DefaultChemObjectReader {
 						// OK, start a new model and save the current one first *if* it contains atoms
 						if (oBP.getAtomCount() > 0) {
 							// save the model
+							oSet.addAtomContainer(oBP);
 							oModel.setSetOfMolecules(oSet);
 							oSeq.addChemModel(oModel);
 							// setup a new one
@@ -564,10 +578,10 @@ public class PDBReader extends DefaultChemObjectReader {
 		        		// just pick the first one
 		        		AtomTypeManipulator.configure(atoms[i], types[0]);
 		        	} else {
-		        		logger.error("Could not configure atom with symbol: ", atoms[i].getSymbol());
+		        		System.out.println("Could not configure atom with symbol: "+ atoms[i].getSymbol());
 		        	}
 				} catch (Exception e) {
-					logger.error("Could not configure atom (but don't care): " + e.getMessage());
+					System.out.println("Could not configure atom (but don't care): " + e.getMessage());
 					logger.debug(e);
 				}
 		      }
@@ -593,7 +607,8 @@ public class PDBReader extends DefaultChemObjectReader {
 		// a line looks like:
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		// ATOM      1  O5*   C A   1      20.662  36.632  23.475  1.00 10.00      114D  45
-		
+  		// ATOM   1186 1H   ALA     1      10.105   5.945  -6.630  1.00  0.00      1ALE1288
+
 		if (lineLength < 59) {
 			throw new RuntimeException("PDBReader error during readAtom(): line too short");
 		}
@@ -604,6 +619,13 @@ public class PDBReader extends DefaultChemObjectReader {
 			elementSymbol = elementSymbol.charAt(0) + elementSymbol.substring(1).toLowerCase();
 		}
 		String rawAtomName = cLine.substring(12, 16).trim();
+		String resName = cLine.substring(17, 20).trim();
+		try {
+			IAtomType type = pdbFactory.getAtomType(resName+"."+rawAtomName);
+			elementSymbol = type.getSymbol();
+		} catch (NoSuchAtomTypeException e) {
+			System.out.println("Did not recognize PDB atom type: " + resName+"."+rawAtomName);
+		}
 		PDBAtom oAtom = new PDBAtom(elementSymbol, 
 			new Point3d(Double.parseDouble(cLine.substring(30, 38)),
 			            Double.parseDouble(cLine.substring(38, 46)),
@@ -615,7 +637,7 @@ public class PDBReader extends DefaultChemObjectReader {
         oAtom.setSerial(Integer.parseInt(cLine.substring(6, 11).trim()));
         oAtom.setName(rawAtomName.trim());
         oAtom.setAltLoc(cLine.substring(16, 17).trim());
-        oAtom.setResName(cLine.substring(17, 20).trim());
+        oAtom.setResName(resName);
         oAtom.setChainID(cLine.substring(21, 22).trim());
         oAtom.setResSeq(cLine.substring(22, 26).trim());
         oAtom.setICode(cLine.substring(26, 27).trim());
