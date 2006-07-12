@@ -311,7 +311,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                 String spacegroup = st.nextToken();
                 crystal.setSpaceGroup(spacegroup);
            } else if (command.equalsIgnoreCase("    ")) {
-                System.out.println("Disrgarding line assumed to be added by PLATON: " + line);
+                logger.debug("Disrgarding line assumed to be added by PLATON: " + line);
 
             /* All other is atom */
             } else {

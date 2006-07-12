@@ -245,7 +245,6 @@ public class ModelBuilder3D {
 				ap3d.zmatrixChainToCartesian(molecule, false);
 				searchAndPlaceBranches(ac);
 			} catch (Exception ex1) {
-				System.out.println("AliphaticChainError: Problem with finding longest chain due to>" + ex1.toString());
 				throw new IOException("AliphaticChainError: Problem with finding longest chain");
 			}
 		}
@@ -446,7 +445,6 @@ public class ModelBuilder3D {
 				}
 			}
 		} catch (Exception ex2) {
-			System.out.println("SetBranchAtomERROR: Not enough branch Points due to:" + ex2.toString() + " #branchpoints:" + branchPoints.length);
 			throw new IOException("SetBranchAtomERROR: Not enough branch Points");
 		}
 

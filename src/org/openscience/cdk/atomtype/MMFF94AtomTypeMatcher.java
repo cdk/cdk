@@ -317,7 +317,6 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 				}
 				
 				atomTypeFlag = true;
-				// System.out.println(" MATCH AtomTypeID:"+j+ " " + ID);
 				logger.debug(" MATCH AtomTypeID:"+j+ " " + ID);
 				break;
 			}//IF
@@ -326,7 +325,6 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 			atomTypeFlag = false;
 			return factory.getAtomType(ID);
 		} else {
-			//System.out.println("NoSuchAtomTypeException: Atom is unkown with Symbol:" + atom.getSymbol() + " does not MATCH AtomType. HoseCode:" + atom.getSphericalMatcher());
 			return factory.getAtomType("DU");
 		}
 	}

@@ -164,7 +164,6 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 		int reactantCount = reaction.getReactantCount();
         int productCount = reaction.getProductCount();
         if (reactantCount <= 0 || productCount <= 0) {
-            System.out.println("HUHU1");
             throw new CDKException("Either no reactants or no products present.");
         }
         
@@ -193,7 +192,6 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         } catch (IOException ex) {
             logger.error(ex.getMessage());
             logger.debug(ex);
-            System.out.println("HUHU2");
             throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
         }
 	}

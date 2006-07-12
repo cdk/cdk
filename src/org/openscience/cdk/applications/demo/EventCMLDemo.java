@@ -90,7 +90,8 @@ public class EventCMLDemo {
                 return false;
             }
         } catch (FileNotFoundException exception) {
-            System.out.println("File " + ifilename + " does not exist!");
+            logger.error("File " + ifilename + " does not exist!");
+            logger.debug(exception);
         } catch (Exception exception) {
             logger.debug(exception);
         }

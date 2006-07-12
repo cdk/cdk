@@ -230,7 +230,7 @@ public class AtomTetrahedralLigandPlacer3D {
 			try {
 				newPoints = get3DCoordinatesForSP2Ligands(refAtom, noCoords, withCoords, atomC, length, angle);
 			} catch (Exception ex1) {
-				System.out.println("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.toString());
+//				System.out.println("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.toString());
 				throw new IOException("Cannot place sp2 substituents");
 			}
 
@@ -239,7 +239,7 @@ public class AtomTetrahedralLigandPlacer3D {
 			try {
 				newPoints = get3DCoordinatesForSP3Ligands(refAtom, noCoords, withCoords, atomC, nwanted, length, angle);
 			} catch (Exception ex1) {
-				System.out.println("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.toString());
+//				System.out.println("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.toString());
 				throw new IOException("Cannot place sp3 substituents");
 			}
 		}
@@ -719,7 +719,7 @@ public class AtomTetrahedralLigandPlacer3D {
 		} else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
 			dkey = "bond" + id2 + ";" + id1;
 		} else {
-			System.out.println("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
+//			System.out.println("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
 			return DEFAULT_BOND_LENGTH_H;
 		}
 		return ((Double) (((Vector) pSet.get(dkey)).get(0))).doubleValue();

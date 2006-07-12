@@ -129,7 +129,6 @@ public class ConnectivityChecker
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addMolecule(molecule);
 			ac.remove(molecule);
-            // System.out.println("Found molecule: " + molecule);
 		}
 		return molecules;
 	}

@@ -489,7 +489,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 }
                 double shielding = Double.valueOf(st1.nextToken()).doubleValue();
                 logger.info("Type of shielding: " + label);
-                //System.out.println("Shielding: " + shielding);
                 ac.getAtomAt(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
                 ++atomIndex;
             } catch (Exception exc) {

@@ -141,7 +141,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         line = input.readLine();
       /*while (input.ready() && line != null) 
       {*/
-        System.out.println("lauf");
+//        System.out.println("lauf");
         // parse frame by frame
         tokenizer = new StringTokenizer(line, "\t ,;");
                 
@@ -165,7 +165,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         while(i < number_of_atoms)
         {
           line = input.readLine();
-          System.out.println("line:\""+line+"\"");
+//          System.out.println("line:\""+line+"\"");
           if (line == null) break;
           if (line.startsWith("#")) 
           {
@@ -225,7 +225,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
               m.addAtom(file.getBuilder().newAtom(types[i], cartCoords[i]));
         }
 
-        System.out.println("molecule:\n"+m);
+//        System.out.println("molecule:\n"+m);
 
         setOfMolecules.addMolecule(m);
         chemModel.setSetOfMolecules(setOfMolecules);

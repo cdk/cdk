@@ -147,7 +147,7 @@ public class MMFF94BasedParameterSetReader {
 			data.add(new Double(radius));
 
 		}catch (NumberFormatException nfe2) {
-			System.out.println("vdwError: Malformed Number due to:"+nfe2);
+//			System.out.println("vdwError: Malformed Number due to:"+nfe2);
 		  }
 		parameterSet.put(key, data);
 

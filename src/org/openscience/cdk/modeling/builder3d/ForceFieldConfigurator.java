@@ -110,7 +110,7 @@ public class ForceFieldConfigurator {
 			} 
 		}
 		if (!check) {
-			System.out.println("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
+//			System.out.println("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
 			return false;
 		}
 		return true;
@@ -253,7 +253,7 @@ public class ForceFieldConfigurator {
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
-			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+//			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -283,7 +283,7 @@ public class ForceFieldConfigurator {
 			try {
 				configureAtom(atom, hoseCode, isInHeteroRing);
 			} catch (CDKException ex2) {
-				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
+//				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
 				throw new Exception("Could not final configure atom due to problems with force field");
 			}
 		}
