@@ -311,10 +311,20 @@ public class PDBReader extends DefaultChemObjectReader {
 						//						oBP = new BioPolymer();					
 						//				} else if (cCol.equals("USER  ")) {
 						//						System.out.println(cLine);
-						//				} else if (cCol.equals("MODEL ")) {
 						//					System.out.println(cLine);
 						//				} else if (cCol.equals("ENDMDL")) {
 						//					System.out.println(cLine);
+					} else if (cCol.equals("MODEL ")) {
+						// OK, start a new model and save the current one first *if* it contains atoms
+						if (oBP.getAtomCount() > 0) {
+							// save the model
+							oModel.setSetOfMolecules(oSet);
+							oSeq.addChemModel(oModel);
+							// setup a new one
+							oBP = new PDBPolymer();
+							oModel = oFile.getBuilder().newChemModel();
+							oSet = oFile.getBuilder().newSetOfMolecules();						
+						}
 					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
 						Object comment = oFile.getProperty(CDKConstants.COMMENT);
                         if (comment == null) {
