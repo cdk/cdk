@@ -1345,7 +1345,7 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 				newEC = (IElectronContainer)bond.clone();
 				natoms = bond.getAtoms();
 				newAtoms = new IAtom[natoms.length];
-				for (int g = 0; g < natoms.length; g++) {
+				for (int g = 0; g < bond.getAtomCount(); g++) {
 					newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
 				}
 				((IBond) newEC).setAtoms(newAtoms);
