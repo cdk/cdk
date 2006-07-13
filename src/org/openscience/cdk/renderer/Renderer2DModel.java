@@ -957,7 +957,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   }
 	
 	/**
-	 * @return Returns the merge.
+	 * This is the central facility for handling "merges" of atoms. A merge occures if during moving atoms an atom is in Range of another atom.
+	 * These atoms are then put into the merge map as a key-value pair. During the move, the atoms are then marked by a circle and on releasing the mouse
+	 * they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been marged with.
+	 * 
+	 * @return Returns the merge.map
 	 */
 	public HashMap getMerge() {
 		return merge;
