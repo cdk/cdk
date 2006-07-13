@@ -33,6 +33,7 @@ import java.awt.Dimension;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -41,7 +42,9 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
+import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,6 +52,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -1450,6 +1455,351 @@ public class GeometryTools {
 			i++;
 		}
 		return (returnValue);
+	}
+	/**
+	 *  Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
+	 *  AtomContainer) atomcontainer. It is recommend to sort the atomContainer due to their number of atoms before
+	 *  calling this function.
+	 *  
+	 *  The molecules needs to be aligned before! (coordinates are needed)
+	 *
+	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@param  searchRadius               		the radius of space search from each atom
+	 *@return                   				a Map of the mapped atoms
+	 *@exception  CDKException  Description of the Exception
+	 */
+	public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, double searchRadius, Map mappedAtoms)throws CDKException {
+		//to return the mapping setProperty("MappedAtom",AtomNumber)
+		//System.out.println("**** MAP ATOMS ****");
+		getLargestAtomContainer(firstAtomContainer,secondAtomContainer);
+		double[][] distanceMatrix=new double[firstAtomContainer.getAtomCount()][secondAtomContainer.getAtomCount()];
+		for (int i=0;i<firstAtomContainer.getAtomCount();i++){
+			Point3d firstAtomPoint=firstAtomContainer.getAtomAt(i).getPoint3d();
+			//System.out.println("Closest atoms of "+firstAtomContainer.getAtoms()[i].getSymbol()+" :");
+			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
+				distanceMatrix[i][j]=firstAtomPoint.distance(secondAtomContainer.getAtomAt(j).getPoint3d());
+				//System.out.println("Distance "+i+" "+j+":"+distanceMatrix[i][j]);
+			}
+			//System.out.println(" Atoms from the secondAtomContainer");
+		}
+		
+		//System.out.println();
+		//System.out.print("\t");
+		//for (int j=0;j<secondAtomContainer.getAtomCount();j++){
+			//System.out.print(j+" "+secondAtomContainer.getAtomAt(j).getSymbol()+"\t");
+		//}
+		double tmp=0;
+		for(int i=0;i<firstAtomContainer.getAtomCount();i++){
+			//System.out.print(i+" "+firstAtomContainer.getAtomAt(i).getSymbol()+"\t");
+			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
+				tmp=Math.floor(distanceMatrix[i][j]*10);
+				//System.out.println(tmp/10+"\t");
+			}			
+		}
+		
+		double minimumDistance=searchRadius;
+		int countMappedAtoms=0;
+		for(int i=0;i<firstAtomContainer.getAtomCount();i++){
+			minimumDistance=searchRadius;
+			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
+				if(distanceMatrix[i][j]< searchRadius && distanceMatrix[i][j]< minimumDistance){
+					//System.out.println("Distance OK "+i+" "+j+":"+distanceMatrix[i][j]+" AtomCheck:"+checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j));
+					//check atom properties
+					if (checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j)){
+						minimumDistance=distanceMatrix[i][j];
+						mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(firstAtomContainer.getAtomAt(i))),new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtomAt(j))));
+						//firstAtomContainer.getAtomAt(i).setProperty("MappedAtom",new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtomAt(j))));
+						countMappedAtoms++;
+						//System.out.println("#:"+countMappedAtoms+" Atom:"+i+" is mapped to Atom"+j);
+						//System.out.println(firstAtomContainer.getConnectedAtoms(firstAtomContainer.getAtomAt(i)).length);
+					}
+				}
+			}
+		}
+		return mappedAtoms;
+	}
+	
+	/**
+	 *  Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
+	 *  AtomContainer) atomContainer. 
+	 *  
+	 *  Only for similar and aligned molecules with coordinates!
+	 *
+	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@return                   				a Map of the mapped atoms
+	 *@exception  CDKException  Description of the Exception
+	 */
+	public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms)throws CDKException {
+		//System.out.println("**** GT MAP ATOMS ****");
+		//Map atoms onto each other
+		if (firstAtomContainer.getAtomCount()<1 & secondAtomContainer.getAtomCount()<1){
+			return mappedAtoms;
+		}
+		RMap map;
+		org.openscience.cdk.interfaces.IAtom atom1;
+	    org.openscience.cdk.interfaces.IAtom atom2;
+	    int countMappedAtoms=0;
+		List list;
+		try {
+			list = UniversalIsomorphismTester.getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
+			//System.out.println("ListSize:"+list.size());
+			for (int i = 0; i < list.size(); i++) {
+                map = (RMap) list.get(i);
+                atom1 = firstAtomContainer.getAtomAt(map.getId1());
+                atom2 = secondAtomContainer.getAtomAt(map.getId2());
+                if (checkAtomMapping(firstAtomContainer,secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2))){
+                	mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)),new Integer(secondAtomContainer.getAtomNumber(atom2)));
+                	countMappedAtoms++;
+                	//System.out.println("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
+                }else{
+                	System.out.println("Error: Atoms are not similar !!");
+                }
+			}
+		} catch (CDKException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error in UniversalIsomorphismTester due to:");
+			e.printStackTrace();
+		}
+        return mappedAtoms;
+	}
+	
+	
+	private static void getLargestAtomContainer(IAtomContainer firstAC, IAtomContainer secondAC)throws CDKException {
+		if (firstAC.getAtomCount() < secondAC.getAtomCount()){
+			IAtomContainer tmp;
+			try {
+				tmp = (IAtomContainer) firstAC.clone();
+				firstAC=(IAtomContainer)secondAC.clone();
+				secondAC=(IAtomContainer)tmp.clone();
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static boolean checkAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom){
+		IAtom firstAtom=firstAC.getAtomAt(posFirstAtom);
+		IAtom secondAtom=secondAC.getAtomAt(posSecondAtom);
+		if (firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtoms(firstAtom).length == secondAC.getConnectedAtoms(secondAtom).length &&
+				firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum() &&
+				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder() 
+		        ){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	private static IAtomContainer setVisitedFlagsToFalse(IAtomContainer atomContainer)throws CDKException {
+		for (int i=0;i<atomContainer.getAtomCount();i++){
+			atomContainer.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+		}
+		return atomContainer;
+	}
+	
+	/**
+	 *  Return the RMSD of bonds length between the 2 aligned molecules.
+	 *  @author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
+	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
+	 *@return                   				double: all the RMSD of bonds length
+	 *@exception  CDK
+	 *
+	 **/
+	public static double getBondLengthRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,Map mappedAtoms, boolean Coords3d)throws CDKException {	
+		//System.out.println("**** GT getBondLengthRMSD ****");
+		Iterator firstAtoms=mappedAtoms.keySet().iterator();
+		IAtom centerAtomFirstMolecule=null;
+		IAtom centerAtomSecondMolecule=null;
+		IAtom[] connectedAtoms=null;
+		double sum=0;
+		double n=0;
+		double distance1=0;
+		double distance2=0;
+		setVisitedFlagsToFalse(firstAtomContainer);
+		setVisitedFlagsToFalse(secondAtomContainer);
+		while(firstAtoms.hasNext()){
+			centerAtomFirstMolecule=firstAtomContainer.getAtomAt(((Integer)firstAtoms.next()).intValue());
+			centerAtomFirstMolecule.setFlag(CDKConstants.VISITED, true);
+			centerAtomSecondMolecule=secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(centerAtomFirstMolecule)))).intValue());
+			connectedAtoms=firstAtomContainer.getConnectedAtoms(centerAtomFirstMolecule);
+			for (int i=0;i<connectedAtoms.length;i++){
+				//this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
+				if(!connectedAtoms[i].getFlag(CDKConstants.VISITED)){	
+					if (Coords3d){
+						distance1=((Point3d)centerAtomFirstMolecule.getPoint3d()).distance(connectedAtoms[i].getPoint3d());
+						distance2=((Point3d)centerAtomSecondMolecule.getPoint3d()).distance(secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(connectedAtoms[i])))).intValue()).getPoint3d());
+						sum=sum+Math.pow((distance1-distance2),2);
+						n++;
+					}else{
+						distance1=((Point2d)centerAtomFirstMolecule.getPoint2d()).distance(connectedAtoms[i].getPoint2d());
+						distance2=((Point2d)centerAtomSecondMolecule.getPoint2d()).distance(secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(connectedAtoms[i])))).intValue()).getPoint2d());
+						sum=sum+Math.pow((distance1-distance2),2);
+						n++;
+					}
+				}
+			}
+		}
+		setVisitedFlagsToFalse(firstAtomContainer);
+		setVisitedFlagsToFalse(secondAtomContainer);
+		return Math.sqrt(sum/n);
+	}
+	/**
+	 *  Return the variation of each angle value between the 2 aligned molecules.
+	 *
+	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
+	 *@return                   				double: the value of the RMSD 
+	 *@exception  CDK
+	 *
+	 **/
+	public static double getAngleRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms)throws CDKException {
+		//System.out.println("**** GT getAngleRMSD ****");
+		Iterator firstAtoms=mappedAtoms.keySet().iterator();
+		//System.out.println("mappedAtoms:"+mappedAtoms.toString());
+		IAtom firstAtomfirstAC=null;
+		IAtom centerAtomfirstAC=null;
+		IAtom firstAtomsecondAC=null;
+		IAtom secondAtomsecondAC=null;
+		IAtom centerAtomsecondAC=null;
+		double angleFirstMolecule=0;
+		double angleSecondMolecule=0;
+		double sum=0;
+		double n=0;
+		while(firstAtoms.hasNext()){
+			int firstAtomNumber=((Integer)firstAtoms.next()).intValue();
+			centerAtomfirstAC=firstAtomContainer.getAtomAt(firstAtomNumber);
+			IAtom[] connectedAtoms=firstAtomContainer.getConnectedAtoms(centerAtomfirstAC);
+			if (connectedAtoms.length >1){
+				//System.out.println("If "+centerAtomfirstAC.getSymbol()+" is the center atom :");
+				for (int i=0; i < connectedAtoms.length-1;i++){
+					firstAtomfirstAC=connectedAtoms[i];
+					for (int j=i+1; j < connectedAtoms.length;j++){
+						angleFirstMolecule=getAngle(centerAtomfirstAC,firstAtomfirstAC,connectedAtoms[j]);
+						centerAtomsecondAC=secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(centerAtomfirstAC)))).intValue());
+						firstAtomsecondAC=secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(firstAtomfirstAC)))).intValue());
+						secondAtomsecondAC=secondAtomContainer.getAtomAt(((Integer)mappedAtoms.get(new Integer(firstAtomContainer.getAtomNumber(connectedAtoms[j])))).intValue());
+						angleSecondMolecule=getAngle(centerAtomsecondAC,firstAtomsecondAC,secondAtomsecondAC);
+						sum=sum+Math.pow(angleFirstMolecule-angleSecondMolecule,2);
+						n++;
+						//System.out.println("Error for the "+firstAtomfirstAC.getSymbol().toLowerCase()+"-"+centerAtomfirstAC.getSymbol()+"-"+connectedAtoms[j].getSymbol().toLowerCase()+" Angle :"+deltaAngle+" degrees");
+					}
+				}
+			}//if
+		}
+		return Math.sqrt(sum/n);
+	}
+	
+	private static double getAngle(IAtom atom1, IAtom atom2, IAtom atom3){
+		
+		Vector3d centerAtom = new Vector3d();
+		centerAtom.x=atom1.getX3d();
+		centerAtom.y=atom1.getY3d();
+		centerAtom.z=atom1.getZ3d();
+		Vector3d firstAtom = new Vector3d();
+		Vector3d secondAtom = new Vector3d();
+			
+		firstAtom.x=atom2.getX3d();
+		firstAtom.y=atom2.getY3d();
+		firstAtom.z=atom2.getZ3d();
+				
+		secondAtom.x=atom3.getX3d();
+		secondAtom.y=atom3.getY3d();
+		secondAtom.z=atom3.getZ3d();
+				
+		firstAtom.sub(centerAtom);
+		secondAtom.sub(centerAtom);
+				
+		return firstAtom.angle(secondAtom);
+	}
+	
+	/**
+	 *  Return the RMSD between the 2 aligned molecules.
+	 *
+	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
+	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
+	 *@return                   				double: the value of the RMSD 
+	 *@exception  CDK
+	 *
+	 **/
+	public static double getAllAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean Coords3d)throws CDKException {
+		//System.out.println("**** GT getAllAtomRMSD ****");
+		double sum=0;
+		double RMSD=0;
+		Iterator firstAtoms=mappedAtoms.keySet().iterator();
+		int firstAtomNumber=0;
+		int secondAtomNumber=0;
+		int n=0;
+		while(firstAtoms.hasNext()){
+			firstAtomNumber=((Integer)firstAtoms.next()).intValue();
+			try{
+				secondAtomNumber=((Integer)mappedAtoms.get(new Integer(firstAtomNumber))).intValue();
+				IAtom firstAtom=firstAtomContainer.getAtomAt(firstAtomNumber);
+				if (Coords3d){
+					sum=sum+Math.pow(((Point3d)firstAtom.getPoint3d()).distance(secondAtomContainer.getAtomAt(secondAtomNumber).getPoint3d()),2);
+					n++;
+				}else{
+					sum=sum+Math.pow(((Point2d)firstAtom.getPoint2d()).distance(secondAtomContainer.getAtomAt(secondAtomNumber).getPoint2d()),2);
+					n++;
+				}
+			}catch (Exception ex){
+			}
+		}
+		RMSD=Math.sqrt(sum/n);
+		return RMSD;
+	}
+	/**
+	 *  Return the RMSD of the heavy atoms between the 2 aligned molecules.
+	 *
+	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
+	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
+	 *@param  secondAtomContainer               the second aligned AtomContainer
+	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
+	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
+	 *@return                   				double: the value of the RMSD 
+	 *@exception  CDK
+	 *
+	 **/
+	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean Coords3d)throws CDKException {
+		//System.out.println("**** GT getAllAtomRMSD ****");
+		double sum=0;
+		double RMSD=0;
+		Iterator firstAtoms=mappedAtoms.keySet().iterator();
+		int firstAtomNumber=0;
+		int secondAtomNumber=0;
+		int n=0;
+		while(firstAtoms.hasNext()){
+			firstAtomNumber=((Integer)firstAtoms.next()).intValue();
+			try{
+				secondAtomNumber=((Integer)mappedAtoms.get(new Integer(firstAtomNumber))).intValue();
+				IAtom firstAtom=firstAtomContainer.getAtomAt(firstAtomNumber);
+				if (!firstAtom.getSymbol().equals("H")){
+					if (Coords3d){
+						sum=sum+Math.pow(((Point3d)firstAtom.getPoint3d()).distance(secondAtomContainer.getAtomAt(secondAtomNumber).getPoint3d()),2);
+						n++;
+					}else{
+						sum=sum+Math.pow(((Point2d)firstAtom.getPoint2d()).distance(secondAtomContainer.getAtomAt(secondAtomNumber).getPoint2d()),2);
+						n++;
+					}
+				}
+			}catch (Exception ex){
+			}
+		}
+		RMSD=Math.sqrt(sum/n);
+		return RMSD;
 	}
 }
 
