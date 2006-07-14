@@ -311,7 +311,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertNotNull(smiles1);
 		assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
 		mol1.getBondAt(6).setStereo(CDKConstants.STEREO_BOND_UP);
-		String smiles3 = smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
+		String smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotSame(smiles1, smiles3);
 	}
 
@@ -610,7 +610,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		assertFalse(smiles1.equals(smiles2));
+		assertNotSame(smiles1, smiles2);
 	}
 
 
@@ -633,7 +633,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
 		String smiles2 = sg.createChiralSMILES(mol2, new boolean[20]);
-		assertFalse(smiles1.equals(smiles2));
+		assertNotSame(smiles1, smiles2);
 	}
 
 	/**
