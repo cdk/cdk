@@ -1212,5 +1212,22 @@ public class SmilesParserTest extends CDKTestCase {
 		}
 	}
 	
+	/**
+	 * @cdk.bug 1519183
+	 */
+	public void testBug1519183(){
+		SmilesParser p = new SmilesParser();
+		try {
+			//                            0    12345  6
+			Molecule mol = p.parseSmiles("c%101ccccc1.O%10"); // phenol
+			assertNotNull(mol);
+			assertEquals(7, mol.getAtomCount());
+			assertEquals(7, mol.getBondCount());
+			// test only option for delocalized bond system
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
 }
 
