@@ -1,6 +1,6 @@
 ===== ChangeLog 20060714 Release =====
 
-Release 20060714 matches the source code from SVN revision 6673.
+Release 20060714 matches the source code from SVN revision 6678.
 
 General changes:
 
