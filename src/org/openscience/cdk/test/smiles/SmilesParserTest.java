@@ -1223,11 +1223,35 @@ public class SmilesParserTest extends CDKTestCase {
 			assertNotNull(mol);
 			assertEquals(7, mol.getAtomCount());
 			assertEquals(7, mol.getBondCount());
-			// test only option for delocalized bond system
 		} catch (CDKException exception) {
 			logger.debug(exception);
 			fail(exception.getMessage());
 		}
 	}
+	
+	/**
+	 * @cdk.bug 1503541
+	 */
+	public void testBug1503541(){
+		SmilesParser p = new SmilesParser();
+		try {
+			//                            0  1 23 45
+			Molecule mol = p.parseSmiles("C=1C=CC=CC=1"); // phenol
+			assertNotNull(mol);
+			assertEquals(6, mol.getAtomCount());
+			assertEquals(6, mol.getBondCount());
+			// test only option for delocalized bond system
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(0)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(1)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(2)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(3)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(4)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(5)), 0.001);			
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+	
 }
 
