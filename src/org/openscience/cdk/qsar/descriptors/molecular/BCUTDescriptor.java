@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -37,9 +39,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -115,7 +114,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the BCUTDescriptor object.
@@ -160,7 +159,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         Object params[] = new Object[3];
         params[0] = new Integer(this.nhigh);
         params[1] = new Integer(this.nlow);
-        params[2] = new Boolean(this.checkAromaticity);
+        params[2] = Boolean.valueOf(this.checkAromaticity);
         return(params);
     }
     /**
@@ -244,7 +243,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * of heavy atoms)
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        int j = 0;
+        int j;
         Molecule ac = new Molecule(container);
 
         // add H's in case they're not present
@@ -263,8 +262,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         // find number of heavy atoms
         int nheavy = 0;
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (ac.getAtomAt(i).getSymbol().equals("H")) continue;
-            else nheavy++;
+            if (!ac.getAtomAt(i).getSymbol().equals("H")) nheavy++;
         }
 
         if (this.nhigh > nheavy || this.nlow > nheavy) {
@@ -292,7 +290,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
 
         // get charge weighted BCUT
-        GasteigerMarsiliPartialCharges peoe = null;
+        GasteigerMarsiliPartialCharges peoe;
         try {
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
