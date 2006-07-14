@@ -987,8 +987,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	/**
 	 * Gets the color used for drawing the part which was selected externally
-	 * 
-	 * @param externalHighlightColor The color
 	 */
 	public Color getExternalHighlightColor() {
 		return externalHighlightColor;
@@ -1005,8 +1003,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	/**
 	 * Gets the color used for drawing the part we are hovering over.
-	 * 
-	 * @param hoverOverColor The color
 	 */
 	public Color getHoverOverColor() {
 		return hoverOverColor;
@@ -1023,8 +1019,6 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	/**
 	 * Gets the color used for drawing the internally selected part.
-	 * 
-	 * @param selectedPartColor The color
 	 */
 	public Color getSelectedPartColor() {
 		return selectedPartColor;

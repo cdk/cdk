@@ -39,8 +39,8 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * convert CDK classes to <a href="http://www.biojava.org/">BioJava</a>
  * classes and visa versa.
  *
- * @cdk.module   libio-biojava
- * @cdk.requires biojava-1.4.jar
+ * @cdk.module       libio-biojava
+ * @cdk.builddepends biojava-1.4.jar
  *
  * @cdk.keyword  BioJava
  * @cdk.keyword  class convertor

@@ -141,7 +141,6 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
-     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
@@ -163,7 +162,6 @@ public class HydrogenAdder {
      * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
      *
      * @param  molecule  Molecule to saturate
-     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
@@ -199,7 +197,6 @@ public class HydrogenAdder {
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
-     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
@@ -227,7 +224,6 @@ public class HydrogenAdder {
      * @param  atom      Atom to saturate
      * @param  container AtomContainer containing the atom
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
-     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
@@ -252,7 +248,6 @@ public class HydrogenAdder {
      * @param  container AtomContainer containing the atom
      * @param  count     Number of hydrogens to add
      * @param  totalContainer In case you have a container containing multiple structures, this is the total container, whereas container is a partial structure
-     * @return 
      *
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
@@ -278,10 +273,9 @@ public class HydrogenAdder {
     }
     
     /**
-     *  Method that saturates a molecule by adding implicit hydrogens.
+     * Method that saturates a molecule by adding implicit hydrogens.
      *
      *@param  container  Molecule to saturate
-     * @return 
      *@cdk.keyword          hydrogen, adding
      *@cdk.keyword          implicit hydrogen
      */
@@ -305,7 +299,6 @@ public class HydrogenAdder {
      *
      * @param  container  Molecule to saturate
      * @param  atom      Atom to satureate.
-     * @return 
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          implicit hydrogen
      */

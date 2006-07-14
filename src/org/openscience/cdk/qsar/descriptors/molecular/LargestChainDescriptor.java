@@ -143,15 +143,17 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Calculate the count of atoms of the largest chain in the supplied {@link AtomContainer}.
+     * Calculate the count of atoms of the largest chain in the supplied {@link IAtomContainer}.
      * 
-     *  The method require two parameters:
-     *  if checkAromaticity is true, the method check the aromaticity,
-     *  if false, means that the aromaticity has already been checked
+     * <p>The method require two parameters:
+     * <ol>
+     *  <li>if checkAromaticity is true, the method check the aromaticity,
+     *  <li>if false, means that the aromaticity has already been checked
+     * </ol>
      *	
-     *	Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
+     * <p>Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
      *
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   the number of atoms in the largest chain of this AtomContainer
      *@throws CDKException if there is a problem in aromaticity detection
      *@see #setParameters

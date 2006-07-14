@@ -138,12 +138,13 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
     /**
      * Calculate the count of atoms of the largest pi system in the supplied {@link AtomContainer}.
      * 
-     *  The method require one parameter:
-     *  if checkAromaticity is true, the method check the aromaticity,
-     *  if false, means that the aromaticity has already been checked
+     * <p>The method require one parameter:
+     * <ol>
+     *  <li>if checkAromaticity is true, the method check the aromaticity,
+     *  <li>if false, means that the aromaticity has already been checked
+     * </ol>
      *
-     *
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  container  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the number of atoms in the largest pi system of this AtomContainer
      *@throws CDKException if there is a problem in atomaticity detection
      *@see #setParameters

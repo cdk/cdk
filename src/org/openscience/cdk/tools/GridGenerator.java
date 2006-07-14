@@ -31,11 +31,10 @@ import java.io.IOException;
 import javax.vecmath.Point3d;
 
 /**
- * Generates a grid within given boundaries
+ * Generates a grid of points in 3D space within given boundaries.
  * 
  * @author cho
  * @cdk.created 2005-09-30
- * 
  */
 public class GridGenerator {
 
@@ -54,19 +53,13 @@ public class GridGenerator {
 	public GridGenerator() {
 	}
 
-	/**
-	 * @param double	min
-	 * @param double	max
-	 */
 	public GridGenerator(double min, double max) {
 		setDimension(min, max);
 		generateGrid();
 	}
 
 	/**
-	 * @param double	min
-	 * @param double	max
-	 * @param double	initialValue for the grid points
+	 * @param initialValue used as initial value for the grid points
 	 */
 	public GridGenerator(double min, double max, double initialValue) {
 		setDimension(min, max);
@@ -74,12 +67,6 @@ public class GridGenerator {
 		initializeGrid(initialValue);
 	}
 
-	// minx,maxx,miny,maxy,minz,maxz or flag
-	/**
-	 * @param double[]	minMax values
-	 * @param double	initialValue
-	 * @param boolean	cubicGridFlag
-	 */
 	public GridGenerator(double[] minMax, double initialValue,
 			boolean cubicGridFlag) {
 		setDimension(minMax, cubicGridFlag);
@@ -88,11 +75,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method sets the maximal 3d dimensions to given min and max values
-	 * 
-	 * @param double	min
-	 * @param double	max
-	 * @return void
+	 * Method sets the maximal 3d dimensions to given min and max values.
 	 */
 	public void setDimension(double min, double max) {
 		this.minx = min;
@@ -104,11 +87,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method sets the maximal 3d dimensions to given min and max values
-	 * 
-	 * @param doublem	min
-	 * @param double	max
-	 * @return void
+	 * Method sets the maximal 3d dimensions to given min and max values.
 	 */
 	public void setDimension(double[] minMax, boolean cubicGridFlag) {
 		if (cubicGridFlag) {
@@ -133,11 +112,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method sets the maximal 3d dimensions to given min and max values
-	 * 
-	 * @param double	min
-	 * @param double	max
-	 * @return void
+	 * Method sets the maximal 3d dimensions to given min and max values.
 	 */
 	public void setDimension(double minx, double maxx, double miny,
 			double maxy, double minz, double maxz) {
@@ -151,9 +126,8 @@ public class GridGenerator {
 
 	/**
 	 * Main method creates a grid between given boundaries (dimensions).
-	 * The grid my be extended over the given boundaries with the variable extendGrid
-	 *
-	 * @return void
+	 * The grid my be extended over the given boundaries with the 
+	 * variable extendGrid.
 	 */
 	public void generateGrid() {
 		minx = minx - extendGrid;
@@ -171,10 +145,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method initialise the given grid points with a value
-	 *
-	 * @param double	value
-	 * @return void
+	 * Method initialise the given grid points with a value.
 	 */
 	public void initializeGrid(double value) {
 		for (int i = 0; i < grid.length; i++) {
@@ -187,12 +158,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method initialise the given grid points with a value
-	 *
-	 * @param double[][][]	grid
-	 * @param double	value
-	 * @return
-	 * @return double[][][]
+	 * Method initialise the given grid points with a value.
 	 */
 	public double[][][] initializeGrid(double grid[][][], double value) {
 		for (int i = 0; i < grid.length; i++) {
@@ -206,11 +172,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method transforms the grid to an array
-	 *
-	 * @param double[][][]	grid
-	 * @return
-	 * @return double[] 
+	 * Method transforms the grid to an array.
 	 */
 	public double[] gridToGridArray(double[][][] grid) {
 		if (grid == null) {
@@ -230,10 +192,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method calculates coordiantes from a given grid point
-	 *
-	 * @param Point3d	gridPoint
-	 * @return Point3d	coordinates
+	 * Method calculates coordiantes from a given grid point.
 	 */
 	public Point3d getCoordinatesFromGridPoint(Point3d gridPoint) {
 		double dx = minx + latticeConstant * gridPoint.x;
@@ -243,11 +202,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method calculates coordiantes from a given grid array position
-	 *
-	 * @param int	gridPoint
-	 * @return
-	 * @return Point3d	coordinates
+	 * Method calculates coordiantes from a given grid array position.
 	 */
 	public Point3d getCoordinatesFromGridPoint(int gridPoint) {
 		int dimCounter = 0;
@@ -269,11 +224,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method calculates the nearest grid point from given coordinates
-	 *
-	 * @param Point3d	coord
-	 * @throws Exception
-	 * @return Point3d	grid point
+	 * Method calculates the nearest grid point from given coordinates.
 	 */
 	public Point3d getGridPointFrom3dCoordinates(Point3d coord)
 			throws Exception {
@@ -305,11 +256,7 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method transforms the grid into pmesh format
-	 *
-	 * @param String	outPutFileName
-	 * @throws IOException
-	 * @return void
+	 * Method transforms the grid into pmesh format.
 	 */
 	public void writeGridInPmeshFormat(String outPutFileName)
 			throws IOException {
@@ -332,15 +279,12 @@ public class GridGenerator {
 	}
 
 	/**
-	 * Method transforms the grid into pmesh format.Only grid points with specific value
-	 * defined with cutoff are considered.
+	 * Method transforms the grid into pmesh format. Only grid points
+	 * with specific value defined with cutoff are considered.
+	 * <pre>
 	 * cutoff <0, the values considered must be <=cutoff
 	 * cutoff >0, the values considered must be >=cutoff
-	 *
-	 * @param String	outPutFileName
-	 * @param double	cutoff
-	 * @throws IOException
-	 * @return void
+	 * </pre>
 	 */
 	public void writeGridInPmeshFormat(String outPutFileName, double cutOff)
 			throws IOException {
@@ -400,7 +344,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return int[] Returns the dim.
+	 * @return Returns the dim.
 	 */
 	public int[] getDim() {
 		return dim;
@@ -408,7 +352,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @param int[] dim The dim to set.
+	 * @param dim The dim to set.
 	 */
 	public void setDim(int[] dim) {
 		this.dim = dim;
@@ -416,7 +360,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the extendGrid.
+	 * @return Returns the extendGrid.
 	 */
 	public double getExtendGrid() {
 		return extendGrid;
@@ -424,7 +368,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @param double extendGrid The extendGrid to set.
+	 * @param extendGrid The extendGrid to set.
 	 */
 	public void setExtendGrid(double extendGrid) {
 		this.extendGrid = extendGrid;
@@ -432,7 +376,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double[][][] Returns the grid.
+	 * @return Returns the grid.
 	 */
 	public double[][][] getGrid() {
 		return grid;
@@ -440,7 +384,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @param double[][][] grid The grid to set.
+	 * @param grid The grid to set.
 	 */
 	public void setGrid(double[][][] grid) {
 		this.grid = grid;
@@ -448,7 +392,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the latticeConstant.
+	 * @return Returns the latticeConstant.
 	 */
 	public double getLatticeConstant() {
 		return latticeConstant;
@@ -456,7 +400,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @param double latticeConstant The latticeConstant to set.
+	 * @param latticeConstant The latticeConstant to set.
 	 */
 	public void setLatticeConstant(double latticeConstant) {
 		this.latticeConstant = latticeConstant;
@@ -464,7 +408,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double[] Returns the gridArray.
+	 * @return Returns the gridArray.
 	 */
 	public double[] getGridArray() {
 		return gridArray;
@@ -472,7 +416,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the maxx.
+	 * @return Returns the maxx.
 	 */
 	public double getMaxx() {
 		return maxx;
@@ -480,7 +424,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the maxy.
+	 * @return Returns the maxy.
 	 */
 	public double getMaxy() {
 		return maxy;
@@ -488,7 +432,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the maxz.
+	 * @return Returns the maxz.
 	 */
 	public double getMaxz() {
 		return maxz;
@@ -496,7 +440,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the minx.
+	 * @return Returns the minx.
 	 */
 	public double getMinx() {
 		return minx;
@@ -504,7 +448,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the miny.
+	 * @return Returns the miny.
 	 */
 	public double getMiny() {
 		return miny;
@@ -512,7 +456,7 @@ public class GridGenerator {
 
 	
 	/**
-	 * @return double Returns the minz.
+	 * @return Returns the minz.
 	 */
 	public double getMinz() {
 		return minz;

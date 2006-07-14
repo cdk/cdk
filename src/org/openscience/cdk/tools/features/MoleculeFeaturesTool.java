@@ -69,9 +69,6 @@ public class MoleculeFeaturesTool {
 
 	/**
 	 * Checks wether all bonds have exactly two atoms.
-	 * 
-	 * @param molecule
-	 * @return
 	 */
 	public static boolean hasGraphRepresentation(IMolecule molecule) {
 		IBond[] bonds = molecule.getBonds();

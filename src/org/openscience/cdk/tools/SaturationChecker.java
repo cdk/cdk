@@ -61,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.keyword    atom, valency
  * 
  * @cdk.module     valencycheck
+ * @cdk.bug        1167386
  */
 public class SaturationChecker implements IValencyChecker {
 
@@ -290,7 +291,6 @@ public class SaturationChecker implements IValencyChecker {
 	 *
 	 * @cdk.keyword bond order, calculation
      * @cdk.created 2003-10-03
-     * @cdk.bug     1167386
 	 */
     public void newSaturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting bond orders...");

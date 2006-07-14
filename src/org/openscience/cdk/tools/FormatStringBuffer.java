@@ -145,8 +145,6 @@ public class FormatStringBuffer {
      * Reset this <tt>FormatStringBuffer</tt> with the format string
      * given in the constructor or last call to <tt>reset(String)</tt>.
      * This is automatically called after <tt>toString()</tt>.
-     *
-     * @param format the format string.
      */
     public FormatStringBuffer reset() {
     	this.buffer = new StringBuffer();

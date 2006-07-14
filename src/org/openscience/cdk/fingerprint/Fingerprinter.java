@@ -121,7 +121,6 @@ public class Fingerprinter implements IFingerprinter {
 	 * @param  size        The desired size of the fingerprint
 	 * @param  searchDepth The desired depth of search
 	 * @param  ringFinder  The AllRingsFinder to be used by the aromaticity detection
-	 * @return             The Fingerprint (A one-dimensional bit array)
 	 */
     public Fingerprinter(int size, int searchDepth, AllRingsFinder ringFinder) {
 		this.size = size;

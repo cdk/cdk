@@ -44,10 +44,10 @@ public abstract class AbstractBondDescriptor implements IBondDescriptor {
 	private Map cachedDescriptorValues = null;
 	
 	/**
-	 * Returns the cached DescriptorValue for the given IAtom.
+	 * Returns the cached DescriptorValue for the given IBond.
 	 * 
-	 * @param atom the IAtom for which the DescriptorValue is requested
-	 * @return     null, if no DescriptorValue was cached for the given IAtom
+	 * @param bond the IAtom for which the DescriptorValue is requested
+	 * @return     null, if no DescriptorValue was cached for the given IBond
 	 */
 	public DescriptorValue getCachedDescriptorValue(IBond bond) {
 		if (cachedDescriptorValues == null) return null;
@@ -55,11 +55,11 @@ public abstract class AbstractBondDescriptor implements IBondDescriptor {
 	}
 	
 	/**
-	 * Caches a DescriptorValue for a given IAtom. This method may only
+	 * Caches a DescriptorValue for a given IBond. This method may only
 	 * be called after setNewContainer() is called.
 	 * 
-	 * @param atom  IAtom to cache the value for
-	 * @param value DescriptorValue for the given IAtom
+	 * @param bond  IBond to cache the value for
+	 * @param value DescriptorValue for the given IBond
 	 */
 	public void cacheDescriptorValue(IBond bond, IAtomContainer container, DescriptorValue value) {
 		if (cachedDescriptorValues == null) {

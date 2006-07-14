@@ -241,7 +241,7 @@ public class ReactionManipulator {
      * get the IAtom which is mapped
      * 
      * @param reaction   The IReaction which contains the mapping 
-     * @param atom       The IChemObject which will be searched its mapped IChemObject
+     * @param chemObject The IChemObject which will be searched its mapped IChemObject
      * @return           The mapped IChemObject
      */
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){

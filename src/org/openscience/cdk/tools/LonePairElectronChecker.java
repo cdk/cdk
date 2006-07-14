@@ -69,21 +69,13 @@ public class LonePairElectronChecker {
     }
     /**
      * Determines of all atoms on the AtomContainer have specified the right number the lone pair electrons.
-     * 
-     * @param container
-     * @return
-     * 
-     * @throws CDKException
      */
 	public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
+
 	/**
      * Determines of all atoms on the AtomContainer have specified the right number the lone pair electrons.
-     * 
-	 * @param ac
-	 * @return
-	 * @throws CDKException
 	 */
 	public boolean allSaturated(IAtomContainer ac) throws CDKException
 	{
@@ -99,12 +91,7 @@ public class LonePairElectronChecker {
 	/**
 	 * Checks wether an Atom is saturated their lone pair electrons by comparing it with known AtomTypes.
      
-	 * @param atom   The atom
-	 * @param ac     The atomcontainer
-	 * 
 	 * @return       True, if it's right satured
-	 * 
-	 * @throws CDKException
 	 */
 	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
 
@@ -135,9 +122,6 @@ public class LonePairElectronChecker {
     }
 	/**
 	 * Saturates a molecule by setting appropriate number lone pair electrons.
-	 * 
-	 * @param atomContainer
-	 * @throws CDKException
 	 */
 	public void newSaturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting lone pair electrons...");
@@ -151,9 +135,6 @@ public class LonePairElectronChecker {
     }
 	/**
 	 * Saturates a atom by setting appropriate number lone pair electrons.
-	 * 
-	 * @param atomContainer
-	 * @throws CDKException
 	 */
 	public void newSaturate(IAtom atom, IAtomContainer ac) throws CDKException {
         logger.info("Saturating atom by adjusting lone pair electrons...");

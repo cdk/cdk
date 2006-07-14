@@ -137,10 +137,10 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     /**
      * Calculate the count of atoms of the longest aliphatic chain in the supplied {@link AtomContainer}.
      * 
-     *  The method require two parameters:
+     *  The method require one parameter:
      *  if checkRingSyste is true the CDKConstant.ISINRING will be set
      *
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   the number of atoms in the longest aliphatic chain of this AtomContainer
      *@throws CDKException if there is a problem in aromaticity detection
      *@see #setParameters
