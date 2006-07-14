@@ -48,22 +48,26 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Generate fragments
- * - ring fragments (largest ringsystems)
- * - Murcko fragments described by Murcko et al. {@cdk.cite MURCKO96}.
+ * Generate ring and Murcko fragments.
+ * <ul>
+ *   <li>ring fragments (largest ringsystems)</li>
+ *   <li>Murcko fragments described by Murcko et al. {@cdk.cite MURCKO96}</li>
+ * </ul>
  *
- * Due to some problems with SaturationChecker the SMILES generation might be a problem.
+ * <p>Due to some problems with SaturationChecker the SMILES generation might be a problem.
  * When you want to use the get..SmileArray methods please do (that seems to work, refer test 13+14):
- * 
+ * <pre>
  * HydrogenAdder ha= new HydrogenAdder();
  * ha.addExplicitHydrogensToSatisfyValency(molecule);
  * GenerateFragments gf=new GenerateFragments();
  * gf.generateMurckoFragments(molecule,booelan,booelan);
  * String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+ * </pre>
  *
  * @author      chhoppe from EUROSCREEN
- * @cdk.created     2006-3-23
- * @cdk.module experimental
+ * @cdk.created 2006-3-23
+ * @cdk.module  experimental
+ * @cdk.keyword Murcko fragments
  * 
  **/
 public class GenerateFragments {
