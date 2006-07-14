@@ -420,6 +420,23 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertEquals("N1(C)CCC1", smiles);
 	}
 
+	/**
+	 * @cdk.bug 590236
+	 */
+	public void testBug590236()
+	{
+		String smiles = "";
+		Molecule molecule = new Molecule();
+        SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
+		molecule.addAtom(new Atom("C"));
+		Atom carbon2 = new Atom("C");
+		carbon2.setMassNumber(13);
+		molecule.addAtom(carbon2);
+		molecule.addBond(0, 1, 1.0);
+		fixCarbonHCount(molecule);
+		smiles = sg.createSMILES(molecule);
+		assertEquals("C[13C]", smiles);
+	}
 
 	/**
 	 * A bug reported for JChemPaint.
