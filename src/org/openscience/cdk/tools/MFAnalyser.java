@@ -297,9 +297,11 @@ public class MFAnalyser {
 
 
 	/**
-	 * returns the number of double bond equivalents in this molecule
+	 * Returns the number of double bond equivalents in this molecule.
 	 *
-	 * @return    The number of DBEs
+	 * @return      The number of DBEs
+	 * @cdk.keyword DBE
+	 * @cdk.keyword double bond equivalent
 	 */
 	public float getDBE() throws IOException, ClassNotFoundException, CDKException{
 		int valencies[]=new int[5];
