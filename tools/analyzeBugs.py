@@ -146,16 +146,36 @@ def analyzeBugs(outputFile, cdkSrcDir):
 
     print "Marked bugs that are now fixed = %d" % (count)
 
+    page += "<center><h2>JUnit testing of Reported Bugs</h2></center>\n";
+
     page += """
-    <h3>JUnit tests for reported bugs</h3>
-    Every reported bug should be tested by a JUnit test. Reported bugs with JUnit tests:
-    <ul>
+    Every reported bug should be tested by a JUnit test.
     """
 
+    page += "<h3>Open bugs without JUnit tests</h3>\n<ul>\n"
     keys = sortAsNumber(allBugs.keys())
     count = 0
     for key in keys:
         if key in testedBugs.keys():
+            pass
+        elif key in openBugs.keys():
+            page += """
+            <li>Bug <a href=\"http://sourceforge.net/tracker/index.php?func=detail&aid=%s&group_id=20024&atid=120024\">#%s</a> is not JUnit tested!</li>
+            """ % (key,key)
+            count += 1
+    page += """
+    </ul>
+    """
+
+    print "Open bugs that are not JUnit tested = %d\n" % (count)
+    
+    page += "<h3>Closed bugs without JUnit tests</h3>\n<ul>\n"
+    keys = sortAsNumber(allBugs.keys())
+    count = 0
+    for key in keys:
+        if key in testedBugs.keys():
+            pass
+        elif key in openBugs.keys():
             pass
         else:
             page += """
@@ -166,7 +186,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
     </ul>
     """
 
-    print "Bugs that are not JUnit tested = %d\n" % (count)
+    print "Closed bugs that are not JUnit tested = %d\n" % (count)
             
     
 
