@@ -1,0 +1,157 @@
+===== ChangeLog 20060714 Release =====
+
+Release 20060714 matches the source code from SVN revision 6673.
+
+General changes:
+
+  * new build system that compiles modules one by one to have clear dependencies
+  * more use of @cdk.keyword for the topic index
+  * data files moved from cdk/data to cdk/src/data
+  * updated the FSF address
+  * code clean ups and JavaDoc improvement
+  * many bug fixes and new JUnit tests
+  * removed printf.jar which had a suspicious licence
+  * upgraded log4j version to 1.2.13
+  * upgraded jgrapht version to 0.6.0
+  * dependency on gnujaxp has been removed
+
+Below is an overview of major changes sorted per module.
+
+==== interfaces ====
+
+  * the interfaces are now located in org.openscience.cdk.interfaces
+  * many methods now make use of interfaces instead of implementations: generally a replace if ChemObject by IChemObject
+  * the data classes return interfaces now
+  * the interface cdk.ChemObjectListener is now known as cdk.IChemObjectListener
+  * added an IChemObjectBuilder interface with implementations
+  * IRingSet now extends ISetOfAtomContainers
+  * IChemObject.clone() now declares a 'throws CloneNotSupported' (as is normal in Java)
+  * the API now use the List interface instead of the Vector implementation
+
+==== data (+ data-debug + nonotify) ====
+
+  * Added a DefaultChemObjectBuilder for the data classes
+  * Added new set of data classes that debug calls to the classes (data-debug module)
+  * Added new set of data classes that do not trigger ChangedNotification calls (nonotify module)
+  * Added missing serialVersionUID fields to data classes
+  * Mapping now properly implements clone()
+
+==== core ====
+
+  * now only depends on interfaces, no longer on the data class implementations
+  * added a constructor CDKException(String message, Throwable cause)
+  * added a number of missing atom types from our lists
+
+==== standard ====
+
+  * added DeAromatizationTool which can convert 'aromatic' systems to Kekule systems
+  * removed the deprecated RTools
+  * added a method to calculate double bond equivalents (DBEs)
+  * added some methods to get all paths between 2 atoms and all paths starting from an atom of a given length
+  * added a method to get the actual shortest path between two atoms
+  * added a general IImplementationSpecification which DescriptorSpecification and ReactionSpecification now extend
+  * added getAtomCount() and getBondCount() to manipulators
+  * deprecated the manipulators' getAllInOneAtomContainer() convenience method as they pose a serious performance hit
+  * added a method in GeometryTools to rotate the coordinates of an atom in 3d around a line segment by a specified angle
+  * added an EState atom type matcher
+
+==== render ====
+
+  * added option to turn of rendering of reaction boxes
+  * added option to draw CDKConstants.TITLE
+  * added rendering of curly arrows
+  * extended highlighting posibilities: there are now three types of selection: 
+
+    - highlightAtom/Bond with highligh color, for hovering over
+    - selectedPart/selectedPartColor for internally selected part
+    - externalSelectdPart/externalHighlightColor for external selections
+
+  * added 'compact' mode in which atoms are drawn like squares (like on PubChem)
+  * the renderer now uses cached screen coordinates instead of modifying the atomic coordinates all the time
+  * removed the unmaintained Java3D based 3D renderer
+
+==== io ====
+
+  * removed ChemObjectWriter.highestSupportedChemObject()
+  * no longer depends on a specific interfaces implementation
+  * the MDLWriter can now write IChemFile
+  * added a basic Mol2 writer
+  * the MDLReader is now more flexible with corrupt output from other programs
+  * ChemObjectIO.accepts(Object) is deprecated in favor of .accepts(Class)
+  * many chemical file formats were added defined in OpenBabel
+  * the MDLRXNReader now reads atom-atom mappings
+  * IChemFormat now extends IResourceFormat
+  * added the new methods IResourceFormat.getMIMEType(), getFileExtensions() and isXMLBased()
+  * added IChemFormat.getSupportedDataFeatures()
+  * added ReaderFactory.createReader(IChemFormat) and WriterFactory.createWriter(IChemFormat)
+
+==== valencycheck ====
+
+==== extra ====
+
+  * Stereo center detection was refactored out of the SmilesGenerator into BondTools
+  * getAllChemObjects() were added to cdk.tools.manipulators classes
+  * namespace declarations in dictionaries and atom type lists were fixed
+  * added a GridGenerator
+  * added the Tanimoto similarity measure
+  * dictionaries can now be in OWL too, in addition to STMML (part of CML)
+  * the StructureDiagramGenerator no longer deletes E/Z stereochemistry
+  * the AbstractController now allows merging of Atoms
+  * added tool to determine the number of lone pair electrons for an atomtype
+
+==== pdb ====
+
+  * REMARK and COMPND are now read from PDB files
+  * mutliple MODEL in PDB files are now read into a ChemSequence
+  * PDBAtom was moved into the cdk.protein.data package
+  * added method PDBStrand.getMonomerNamesInSequentialOrder()
+  * the PDBReader performance was improved by some 30%
+
+==== qsar ====
+
+  * descriptors are moved to cdk.qsar.descriptors.molecular and descriptor.atomic
+  * added the Petitjean shape indices descriptor
+  * added Randic's weighted path descriptor
+  * added descriptors for the number of atoms in the longest aliphatic chain, longest chain and largest pi system
+  * added new interfaces IAtomicDescriptor, IBondDescriptor and IMolecularDescriptor
+  * added a few bond descriptors
+  * added Weka to build linear regression models
+  * R-CDK bridge now uses rJava/JRI instead of previous library
+
+==== forcefield ====
+
+  * added a line search algorithm for the Wolfe conditions and a cubic interpolation
+  * added MMFF94EnergyFunction.MMFF94EnergyFunction(IAtomContainer) to calculate for force field energy
+
+==== libio_cml (+ qsar_cml + pdb_cml) ====
+
+  * Uses Jumbo 5.2 now, with a XOM 1.1 based CMLDOM
+
+==== libio_biojava ====
+
+  * added tool to convert a BioJava SymbolList to a CDK IBioPolymer
+  * added customizing of Bond in the ICMLCustomizer API
+
+==== charges ====
+
+  * implemented Garsteiger pi charges
+
+==== reaction ====
+
+  * added cdk.reaction.IReactionProcess for describing reaction processes
+  * added a set of reaction types found in mass spectroscopy
+  * added a method in ReactionManipulator that returns the mapped ChemObject for a given ChemObject
+  * added a StructureResonanceGenerator that uses known reaction types from cdk.reaction.type
+
+==== smiles ====
+
+  * added four missing one char symbol elements in parser: K, U, V and Y
+  * added a DeduceBondSystemTool that is supposed to resolve double bond placement in delocalized systems
+
+==== builder3d ====
+
+==== experimental ====
+
+  * added a ProteinPocket finder algorithm
+  * added a SubstructureFingerprinter (which still lacks a good optimized list of descriptive substructures. Anyone?)
+  * added generator for Murcko fragments
