@@ -1344,7 +1344,7 @@
     </Descriptor>
 
 
-    <Descriptor rdf:ID="largestPiChain">
+    <Descriptor rdf:ID="largestPiSystem">
         <rdfs:label>Largest Pi Chain</rdfs:label>
         <annotation>
             <documentation>
