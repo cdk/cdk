@@ -648,7 +648,7 @@ public abstract class JChemPaintPanel
 	/**
 	 *  Scales and centers the structure in the dimensions of the DrawingPanel.
 	 *
-	 *@param  chemModel  The cheModel of the structure to be scaled and centered.
+	 *@param  ac  The IAtomContainer of the structure to be scaled and centered.
 	 */
 	public void scaleAndCenterMolecule(IAtomContainer ac, Dimension dim){
 		((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));

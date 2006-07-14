@@ -58,7 +58,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.created    2000-10-02
  * @cdk.keyword    atom
  *
- * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(ChemObjectBuilder)
+ * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(IChemObjectBuilder)
  */
 public class Atom extends AtomType implements java.io.Serializable, IAtom  {
     

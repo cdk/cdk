@@ -39,7 +39,6 @@ public class CleanUpEdit extends ChangeCoordsEdit {
 	 * @param atomCoordsMap
 	 *            A HashMap containing the changed atoms as key and an Array
 	 *            with the former and the changed coordinates as Point2ds
-	 * @param jcpPanel 
 	 */
 	public CleanUpEdit(HashMap atomCoordsMap) {
 		super(atomCoordsMap);

@@ -39,9 +39,8 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
-     * /serialization/spec/version.doc.html>details</a>.
+     * of this class is incompatible with the old version. See Sun docs
+     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -521290297592768395L;
 
@@ -133,7 +132,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @param  container   The AtomContainer for which the multiplier is set
 	 * @param  multiplier  The new multiplier for the AtomContatiner
 	 * @return             true if multiplier has been set
-	 * @see                #getMultiplier(AtomContainer)
+	 * @see                #getMultiplier(IAtomContainer)
 	 */
 	public boolean setMultiplier(org.openscience.cdk.interfaces.IAtomContainer container, double multiplier) {
 		for (int i = 0; i < atomContainers.length; i++) {
@@ -263,7 +262,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 *
 	 * @param  container  The AtomContainer for which the multiplier is given
 	 * @return            -1, if the given molecule is not a container in this set
-	 * @see               #setMultiplier(AtomContainer, double)
+	 * @see               #setMultiplier(IAtomContainer, double)
 	 */
 	public double getMultiplier(org.openscience.cdk.interfaces.IAtomContainer container) {
 		for (int i = 0; i < atomContainerCount; i++) {

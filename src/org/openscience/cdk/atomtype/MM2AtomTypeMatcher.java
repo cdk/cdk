@@ -87,7 +87,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 	 * </pre>
 	 * 
 	 * @param  atomContainer   AtomContainer
-	 * @param  atom            the target atom
+	 * @param  atomInterface   the target atom
 	 * @exception CDKException Description of the Exception
      * @return                 the matching AtomType (AtomType class)
 	 */

@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.module  data
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author      Martin Eklund
  * @cdk.created 2001-08-06 
  *
  * @cdk.keyword polymer
@@ -91,8 +92,8 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
 	 * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
 	 *
-	 * @param oAtom  The atom to add
-	 * @param oMonomer  The strand the atom belongs to
+	 * @param oAtom   The atom to add
+	 * @param oStrand The strand the atom belongs to
 	 *
 	 */
 	public void addAtom(IAtom oAtom, IStrand oStrand) {
@@ -170,7 +171,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 * monomers with the same name in different strands. There is at least one such case: every
 	 * strand contains a monomer called "".]
 	 *
-	 * @param cName  The name of the monomer to look for
+	 * @param monName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for
 	 *
 	 */
@@ -254,10 +255,9 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	}
 	
 	/**
-	 * @author mek
-	 * 
 	 * Removes a particular strand, specified by its name.
-	 * @param name
+	 * 
+	 * @param name name of the strand to remove
 	 */
 	public void removeStrand(String name)	{
 		if (strands.containsKey(name))	{
@@ -268,8 +268,6 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	}
 	
 	/**
-	 * @author mek
-	 * 
 	 * @return hashtable containing the monomers in the strand.
 	 */
 	public Hashtable getStrands()	{

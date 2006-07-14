@@ -70,7 +70,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
      *
      * @return The Atom that is the N-terminus
      *
-     * @see    #addNTerminus(Atom)
+     * @see    #addNTerminus(IAtom)
      */
     public IAtom getNTerminus() {
         return nTerminus;
@@ -105,7 +105,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
      *
      * @return The Atom that is the C-terminus
      *
-     * @see    #addCTerminus(Atom)
+     * @see    #addCTerminus(IAtom)
      */
     public IAtom getCTerminus() {
         return cTerminus;

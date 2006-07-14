@@ -448,7 +448,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *  Creates a new JFrame that owns a new JChemPaintModel and returns it which contains
 	 *  a model.
 	 *
-	 *@param  model  The JChemPaintModel
+	 *@param  mod    The JChemPaintModel
 	 *@return        The new JFrame containing the JChemPaintEditorPanel
 	 */
 	public static JFrame getFrameWithModel(IChemModel mod)

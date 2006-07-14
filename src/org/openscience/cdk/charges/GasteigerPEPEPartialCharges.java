@@ -418,10 +418,9 @@ public class GasteigerPEPEPartialCharges {
 	
 
 	/**
-	 *  Method which stores and assigns the factors a,b,c and CHI+
+	 * Method which stores and assigns the factors a,b,c and CHI+
 	 *
-	 *@param  ac  AtomContainer
-	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
+	 * @return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
 	public double[][] assignGasteigerPiMarsiliFactors(ISetOfAtomContainers setAc) {
 		//a,b,c,denom,chi,q
@@ -520,7 +519,6 @@ public class GasteigerPEPEPartialCharges {
 	/**
 	 *  Method which stores and assigns the factors a,b,c and CHI+
 	 *
-	 *@param  ac  AtomContainer
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
 	public double[][] assignGasteigerPiMarsiliFactors2(ISetOfAtomContainers setAc) {

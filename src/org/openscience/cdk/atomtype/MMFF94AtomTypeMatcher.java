@@ -86,9 +86,8 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 	 * Before this method can be called the following has to be done:
 	 * atomContainer=(AtomContainer)atomTypeTools.assignAtomTypePropertiesToAtom(new Molecule(atomContainer));
 	 *
-	 * 
 	 * @param  atomContainer   AtomContainer
-	 * @param  atom            the target atom
+	 * @param  atomInterface   the target atom
 	 * @exception CDKException Description of the Exception
      * @return                 the matching AtomType (AtomType class)
 	 */
