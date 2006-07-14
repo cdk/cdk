@@ -69,17 +69,15 @@
             <echo message="  Vecmath found: ${vecmath.present}" />
             <echo message="    Log4j found: ${log4j.present}" />
             <echo message="  JGraphT found: ${jgrapht.present}" />
-            <echo message=" --- distributed libraries ---" />
+            <echo message=" --- distributed (but optional) libraries ---" />
             <echo message="    Batik found: ${batik.present}" />
             <echo message="   CMLDOM found: ${cmllibs.present}" />
             <echo message="    DADML found: ${dadml.present}" />
             <echo message="      JAI found: ${jai.present}" />
-            <echo message=" JavaHelp found: ${javahelp.present}" />
             <echo message="  XIndice found: ${xindice.present}"/>
             <echo message=" --- optional libraries ---" />
             <echo message="     Jmol found: ${jmol.present}" />
             <echo message="   JOELib found: ${joelib.present}" />
-            <echo message="  R/SJava found: ${rispresent}"/>
             <echo message="" />
             <echo message="Compiling:" />
             <echo message="            for: ${build.compiler}" />
@@ -159,8 +157,6 @@
                 <available file="${lib}/jai_core.jar"/>
               </and>
             </condition>
-            <available property="javahelp.present"
-                       file="${lib}/jh.jar"/>
             <available property="joelib.present"
                        classname="joelib.molecule.JOEAtom" 
                        classpath="${lib}/libio/joelib.jar"/>
@@ -170,14 +166,6 @@
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>
-            <condition property="rispresent">
-              <and>
-                <or>
-                  <available file="/usr/bin/R" />
-                  <available file="/usr/local/bin/R"/>
-                </or>
-              </and>
-            </condition>
             <condition property="xindice.present">
               <and>
                 <available file="${lib}/xindice.jar"/>
@@ -445,11 +433,9 @@
                     <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
                     <excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                    <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
-                	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
-                	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
-                	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
-                	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
+                    <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
+                    <excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
+                    <excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
 
                     <includesfile name="${src}/${module}.javafiles"/>
                 </fileset>
@@ -477,10 +463,8 @@
                 <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
             	<excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
-                <excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
             	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
-            	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
             	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
             
                 <includesfile name="${src}/${module}.javafiles"/>
@@ -494,10 +478,8 @@
                     <!-- excludesfile name="${src}/java1.4.classes" unless="isJava14"/ -->
                 	<excludesfile name="${src}/java1.5.classes" unless="isJava15"/>
                     <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
-                	<excludesfile name="${src}/r-project.javafiles" unless="rispresent"/>
 	                <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
-                	<excludesfile name="${src}/javahelp.javafiles" unless="javahelp.present"/>
                 	<excludesfile name="${src}/xindice.javafiles" unless="xindice.present"/>
                </fileset>
                <fileset dir="${src}">
