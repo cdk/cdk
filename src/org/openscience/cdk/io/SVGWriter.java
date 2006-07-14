@@ -79,7 +79,8 @@ public class SVGWriter extends DefaultChemObjectWriter {
 
     /**
      * Constructor.
-     * @param output the stream to write the SVG file to.
+     * 
+     * @param out the stream to write the SVG file to.
      */
     public SVGWriter(Writer out) {
     	logger = new LoggingTool(this);

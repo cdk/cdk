@@ -331,7 +331,7 @@ public class StretchBendInteractions {
 	 *  Evaluate a 5th order error approximation of the gradient, of the stretch-bend interaction term, for a given atoms
 	 *  coordinates
 	 *
-	 *@param  coords3d  Current molecule coordinates.
+	 *@param  coord3d  Current molecule coordinates.
 	 */
 	public void set5thOrderErrorApproximateGradientMMFF94SumEBA(GVector coord3d) {
 		order5thErrorApproximateGradientMMFF94SumEBA = new GVector(coord3d.getSize());

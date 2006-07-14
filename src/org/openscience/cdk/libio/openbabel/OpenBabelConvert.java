@@ -93,7 +93,7 @@ import org.openscience.cdk.io.CMLReader;
  * </table>
  *
  * @author Miguel Rojas <miguelrojasch@uni-koeln.de>
- * @cdk module libio-openbabel
+ * @cdk.module libio-openbabel
  */
 public class OpenBabelConvert {
 
@@ -252,12 +252,11 @@ public class OpenBabelConvert {
     }
 
     /**
-     * convert the molecule
+     * Convert the molecule.
      *
      * @param file       File of the molecule
      * @param type       String type of the output
      * @param addOptions Additional options for the conversion
-     * @see
      */
     public void convertTo(File file, String type, String addOptions) {
         convertorFileToString(file);
@@ -269,7 +268,7 @@ public class OpenBabelConvert {
     }
 
     /**
-     * read the created cml and read to chemFile
+     * Read the created CML and read to chemFile.
      */
     private void readCML() {
         String filename = "data/mdl/molecule_IN_MEMORY.cml";

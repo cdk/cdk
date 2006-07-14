@@ -127,7 +127,7 @@ public class AtomTypeFactory {
      * Method to create a default AtomTypeFactory, using the given InputStream.
      * An AtomType of this kind is not cached.
      *
-     * @see #getInstance(String)
+     * @see #getInstance(String, IChemObjectBuilder)
      * @param  ins                    InputStream containing the data
      * @param  format                 String representing the possible formats ('xml' and 'txt')
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
@@ -142,7 +142,7 @@ public class AtomTypeFactory {
     /**
      * Method to create a default AtomTypeFactory, using the structgen atom type list.
      *
-     * @see #getInstance(String)
+     * @see #getInstance(String, IChemObjectBuilder)
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      * @throws IOException            when the file cannot be read

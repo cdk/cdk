@@ -80,7 +80,7 @@ public class Weka {
     /**
      * Set the file format arff to analize which contains the dataset and the type of classifier
      *  
-     * @param setDataset  Path of the dataset file format arff to train
+     * @param pathTable   Path of the dataset file format arff to train
      * @param classifier  Type of Classifier
      * @return            The Instances value
      * @throws Exception 
@@ -225,7 +225,7 @@ public class Weka {
     /**
      * Return of the predicted value
      *  
-     * @param pathARRF  path of the file format arff which contians the values with whose to test.
+     * @param pathARFF  path of the file format arff which contians the values with whose to test.
      * @return	        Result of the prediction.
      * @throws Exception 
      */

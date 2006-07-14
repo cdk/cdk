@@ -45,12 +45,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * Generates and IChI for a Molecule. Requires the ichi.exe program
  * to be installed.
  *
- * @cdk.module experimental
- *
- * @author  Yong Zhang <yz237@cam.ac.uk>
- * @cdk.created  2003-06-13
- *
- * @see org.openscience.cdk.io.IChIReader
+ * @author      Yong Zhang <yz237@cam.ac.uk>
+ * @cdk.module  experimental
+ * @cdk.created 2003-06-13
+ * @deprecated  IChI no longer exists; it is InChI now.
  */
 public class IChIGenerator {
 

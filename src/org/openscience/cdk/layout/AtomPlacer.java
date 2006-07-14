@@ -375,7 +375,7 @@ public class AtomPlacer
 	 *@param  previousAtom     The preceding atom for angle calculation
 	 *@param  distanceMeasure  A point from which the next atom is to be farmost
 	 *      away
-	 *@param   trabs           if true E (trans) configurations are built, false makes Z (cis) configurations
+	 *@param   trans           if true E (trans) configurations are built, false makes Z (cis) configurations
 	 *@return                  A vector pointing to the location of the next atom
 	 *      to draw
 	 */

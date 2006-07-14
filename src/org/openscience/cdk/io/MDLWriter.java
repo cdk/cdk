@@ -71,11 +71,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(IMolecule) this one} or
  * {@link #writeMolecule(IMolecule, boolean[]) that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
- * </ul><BR>
- * Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
+ * </ul>
+ * <p>Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
  * a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules} or you can repeatedly call one of the two
- * writeMolecule methods.<BR><BR>
- * For writing a MDL molfile you can this code:
+ * writeMolecule methods.
+ * <p>For writing a MDL molfile you can this code:
  * <pre>
  * MDLWriter writer = new MDLWriter(new FileWriter(new File("output.mol")));
  * writer.write((Molecule)molecule);
@@ -84,10 +84,9 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * See {@cdk.cite DAL92}.
  *
- * @cdk.module io
- * 
- *
+ * @cdk.module  io
  * @cdk.keyword file format, MDL molfile
+ * @cdk.bug     1522430
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 
@@ -122,7 +121,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * Contructs a new MDLWriter that can write an array of
      * Molecules to a given OutputStream.
      *
-     * @param   out  The OutputStream to write to
+     * @param   output  The OutputStream to write to
      */
     public MDLWriter(OutputStream output) throws Exception {
         this(new OutputStreamWriter(output));
@@ -274,8 +273,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	/**
 	 * Writes a Molecule to an OutputStream in MDL sdf format.
 	 *
-	 * @param   molecule  Molecule that is written to an OutputStream
-   * @param   isVisible Should a certain atom be written to mdl?
+	 * @param   container  Molecule that is written to an OutputStream
+     * @param   isVisible Should a certain atom be written to mdl?
 	 */
     public void writeMolecule(IMolecule container, boolean[] isVisible) throws Exception {
         String line = "";

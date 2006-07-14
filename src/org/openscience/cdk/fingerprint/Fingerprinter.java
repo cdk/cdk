@@ -118,12 +118,10 @@ public class Fingerprinter implements IFingerprinter {
 	 * depth, and which uses the given AllRingsFinder to reuse previous
 	 * results.
 	 *
-	 * @param  ac	       The AtomContainer for which a Fingerprint is generated
 	 * @param  size        The desired size of the fingerprint
 	 * @param  searchDepth The desired depth of search
 	 * @param  ringFinder  The AllRingsFinder to be used by the aromaticity detection
 	 * @return             The Fingerprint (A one-dimensional bit array)
-	 * @exception          Exception thrown if something goes wrong
 	 */
     public Fingerprinter(int size, int searchDepth, AllRingsFinder ringFinder) {
 		this.size = size;

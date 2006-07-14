@@ -46,8 +46,8 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * A set of static utility classes for geometric calculations on Bonds.
  *
- * @author     shk3
- * @created    August 4, 2005
+ * @author      shk3
+ * @cdk.created 2005-08-04
  */
 public class BondTools {
   /**

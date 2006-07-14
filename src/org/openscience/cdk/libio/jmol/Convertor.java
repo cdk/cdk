@@ -95,10 +95,12 @@ public class Convertor {
     };
 
     /**
-     * Empty tub to convert a CDK object into a Jmol object.
+     * Empty stub to convert a CDK object into a Jmol object.
      * 
      * @param container
-     * @return
+     * @return null
+     * 
+     * @deprecated Use a Jmol ModelAdapter instead.
      */
     public Object convert(IAtomContainer container) {
         // I need something like the CdkModelAdapter from Jmol here

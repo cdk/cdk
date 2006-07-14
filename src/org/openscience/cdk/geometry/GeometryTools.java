@@ -58,11 +58,16 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- *  A set of static utility classes for geometric calculations and operations.
- *  This class is extensively used, for example, by JChemPaint to edit molecule.
+ * A set of static utility classes for geometric calculations and operations.
+ * This class is extensively used, for example, by JChemPaint to edit molecule.
  *
- *@author        seb
- *@cdk.module    standard
+ * @author        seb
+ * @author        Stefan Kuhn
+ * @author        Egon Willighagen
+ * @author        Ludovic Petain
+ * @author        Christian Hoppe
+ * 
+ * @cdk.module    standard
  */
 public class GeometryTools {
 
@@ -444,8 +449,8 @@ public class GeometryTools {
 	 *  Returns the java.awt.Dimension of a SetOfMolecules
 	 *  See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
-	 *@param  atomCon  of which the dimension should be returned
-	 *@return          The java.awt.Dimension of this SetOfMolecules
+	 *@param  setOfMolecules Of which the dimension should be returned
+	 *@return The java.awt.Dimension of this SetOfMolecules
 	 */
 	public static Dimension get2DDimension(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
 		double[] minmax = getMinMax(setOfMolecules, renderingCoordinates);
@@ -516,7 +521,6 @@ public class GeometryTools {
 	 * </pre>
 	 * See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
-	 *@param  container  Description of the Parameter
 	 *@return            An four int array as defined above.
 	 */
 	public static double[] getMinMax(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
@@ -903,8 +907,7 @@ public class GeometryTools {
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  bond  The given bond
-	 *@param  renderingCoordindates The rendering coordinates, this is the hashmap getRenderingCoordinates from the Renderer2dModel
-	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 *@param  renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return       The array with the coordinates
 	 */
 	public static int[] getBondCoordinates(IBond bond, HashMap renderingCoordinates) {
@@ -957,7 +960,6 @@ public class GeometryTools {
 	 *
 	 *@param  xPosition  The x coordinate
 	 *@param  yPosition  The y coordinate
-	 *@param  atomCon    The molecule that is searched for the closest atom
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return            The atom that is closest to the given coordinates
 	 */
@@ -1463,7 +1465,6 @@ public class GeometryTools {
 	 *  
 	 *  The molecules needs to be aligned before! (coordinates are needed)
 	 *
-	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  searchRadius               		the radius of space search from each atom
@@ -1527,7 +1528,6 @@ public class GeometryTools {
 	 *  
 	 *  Only for similar and aligned molecules with coordinates!
 	 *
-	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@return                   				a Map of the mapped atoms
@@ -1604,7 +1604,6 @@ public class GeometryTools {
 	
 	/**
 	 *  Return the RMSD of bonds length between the 2 aligned molecules.
-	 *  @author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
@@ -1655,7 +1654,6 @@ public class GeometryTools {
 	/**
 	 *  Return the variation of each angle value between the 2 aligned molecules.
 	 *
-	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
@@ -1726,7 +1724,6 @@ public class GeometryTools {
 	/**
 	 *  Return the RMSD between the 2 aligned molecules.
 	 *
-	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
@@ -1764,7 +1761,6 @@ public class GeometryTools {
 	/**
 	 *  Return the RMSD of the heavy atoms between the 2 aligned molecules.
 	 *
-	 *@author Ludovic Petain, Christian Hoppe from Euroscreen
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms

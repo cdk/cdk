@@ -68,8 +68,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
 	
     /**
      * Creates a PDB writer.
-    * @param output the stream to write the XYZ file to.
-    */
+     * 
+     * @param out the stream to write the PDB file to.
+     */
     public PDBWriter(Writer out) {
     	try {
     		if (out instanceof BufferedWriter) {

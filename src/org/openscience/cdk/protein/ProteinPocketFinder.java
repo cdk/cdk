@@ -73,32 +73,17 @@ public class ProteinPocketFinder {
 	Hashtable visited = new Hashtable();
 	Vector pockets = new Vector();
 
-	
-	/**
-	 * 
-	 */
-	public ProteinPocketFinder() {
-	}
-
 	/**
 	 * @param biopolymerFile The file name containing the protein
-	 * @param cubicGrid	if true generate the grid
+	 * @param cubicGrid	     if true generate the grid
 	 */
 	public ProteinPocketFinder(String biopolymerFile, boolean cubicGrid) {
 		readBioPolymer(biopolymerFile);
 		if (cubicGrid) {
 			createCubicGrid();
-		} else {
-			
 		}
 	}
 
-	/**
-	 * 
-	 * @param String	biopolymerFile
-	 * @param double	latticeConstant
-	 * @param boolean	cubicGrid
-	 */
 	public ProteinPocketFinder(String biopolymerFile, double latticeConstant,
 			boolean cubicGrid) {
 		readBioPolymer(biopolymerFile);
@@ -111,20 +96,12 @@ public class ProteinPocketFinder {
 		}
 	}
 
-	/**
-	 * @param String	biopolymerFile
-	 * @param double[][][]	grid
-	 */
 	public ProteinPocketFinder(String biopolymerFile, double[][][] grid) {
 		this.grid = grid;
 		gridGenerator.setGrid(grid);
 		readBioPolymer(biopolymerFile);
 	}
 
-	/**
-	 * @param IBioPolymer	protein
-	 * @param double[][][]	grid
-	 */
 	public ProteinPocketFinder(IBioPolymer protein, double[][][] grid) {
 		this.protein = protein;
 		this.grid = grid;
@@ -132,10 +109,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Creates from a pdb File a BioPolymer
-	 * 
-	 * @param String	biopolymerFile
-	 * @return void
+	 * Creates from a PDB File a BioPolymer.
 	 */
 	private void readBioPolymer(String biopolymerFile) {
 		try {
@@ -159,7 +133,7 @@ public class ProteinPocketFinder {
 	
 	/**
 	 * Method determines the minimum and maximum values of a coordinate space 
-	 * up to 3D space
+	 * up to 3D space.
 	 * 
 	 * @return double[] stores min,max,min,max,min,max
 	 */
@@ -192,8 +166,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * Method creates a cubic grid with the grid generator class
-	 *
+	 * Method creates a cubic grid with the grid generator class.
 	 */
 	public void createCubicGrid() {
 //		System.out.println("	CREATE CUBIC GRID");
@@ -207,8 +180,7 @@ public class ProteinPocketFinder {
 	 * the corresponding grid point is identified and set to the value
 	 * of the proteinInterior variable.
 	 * The atom radius and solvent radius is accounted for with the variables:
-	 *   double rAtom 
-	 *   dpuble rSolvent
+	 * double rAtom, and dpuble rSolvent.
 	 *
 	 * @throws Exception
 	 */
@@ -316,10 +288,8 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Main method which calls the methods:
-	 * 	assignProteinToGrid
-	 * 	GridScan
-	 *  FindPockets
+	 * Main method which calls the methods: assignProteinToGrid,
+	 * GridScan, and FindPockets.
 	 *
 	 */
 	public void sitefinder() {
@@ -353,7 +323,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method sorts the pockets due to its size. the biggest pocket is the first
+	 * Method sorts the pockets due to its size. The biggest pocket is the first.
 	 *
 	 */
 	private void sortPockets() {
@@ -393,11 +363,7 @@ public class ProteinPocketFinder {
 	/**
 	 * Method which finds the pocket, with a simple nearest neighbour clustering. The points
 	 * which should be clustered or form a pocket can be determined with:
-	 * 	minPSPocket
-	 * 	minPSCluster
-	 *  linkageRadius
-	 *  pocketSize
-	 *
+	 * 	minPSPocket, minPSCluster, linkageRadius, and pocketSize.
 	 */
 	private void findPockets() {
 		int[] dim = gridGenerator.getDim();
@@ -448,12 +414,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs the clustering, is called by findPockets()
-	 *
-	 * @param Point3d	root
-	 * @param Vector	sub_Pocket
-	 * @param int[]		dim
-	 * @return Vector
+	 * Method performs the clustering, is called by findPockets().
 	 */
 	public Vector clusterPSPPocket(Point3d root, Vector sub_Pocket, int[] dim) {
 		// System.out.println(" ****** New Root ******:"+root.x+" "+root.y+"
@@ -493,11 +454,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method checks boundaries
+	 * Method checks boundaries.
 	 *
-	 * @param int[]	with minMax values
-	 * @param int[]	dimension
-	 * @return int[]	new minMax values between 0 and dim	
+	 * @param minMax with minMax values
+	 * @param dim    dimension
+	 * @return new minMax values between 0 and dim	
 	 */
 	private int[] checkBoundaries(int[] minMax, int[] dim) {
 		if (minMax[0] < 0) {
@@ -522,9 +483,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method which assigns upon a PSP event +1 to these grid points
-	 *
-	 * @param Vector	line
+	 * Method which assigns upon a PSP event +1 to these grid points.
 	 */
 	private void firePSPEvent(Vector line) {
 		for (int i = 0; i < line.size(); i++) {
@@ -537,12 +496,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension 
-	 * @param int	dimL -> second dimension 
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension 
+	 * @param dimL second dimension 
+	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanXZY(int dimK, int dimL, int dimM) {
 		// x min ->x max;left upper corner z+y max->min//1
@@ -587,12 +545,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension 
-	 * @param int	dimL -> second dimension 
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension 
+	 * @param dimL second dimension 
+	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanYZX(int dimK, int dimL, int dimM) {
 		// y min -> y max; right lower corner zmax->zmin, xmax ->min//4
@@ -637,12 +594,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension 
-	 * @param int	dimL -> second dimension 
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension 
+	 * @param dimL second dimension 
+	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanYXZ(int dimK, int dimL, int dimM) {
 		// y min -> y max; left lower corner z max->min, x min->max//2
@@ -689,12 +645,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension
-	 * @param int	dimL -> second dimension
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension
+	 * @param dimL second dimension
+	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanXYZ(int dimK, int dimL, int dimM) {
 		// x min -> xmax;left lower corner z max->min, y min->max//3
@@ -741,12 +696,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension
-	 * @param int	dimL -> second dimension
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension
+	 * @param dimL second dimension
+	 * @param dimM third dimension
 	 */
 	public void axisScanX(int dimK, int dimL, int dimM) {
 		// z,y,x
@@ -784,12 +738,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension
-	 * @param int	dimL -> second dimension
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension
+	 * @param dimL second dimension
+	 * @param dimM third dimension
 	 */
 	public void axisScanY(int dimK, int dimL, int dimM) {
 		// z,x,y
@@ -825,12 +778,11 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method performs a scan
-	 * works only for cubic grids!
+	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param int	dimK -> first dimension
-	 * @param int	dimL -> second dimension
-	 * @param int	dimM -> third dimension
+	 * @param dimK first dimension
+	 * @param dimL second dimension
+	 * @param dimM third dimension
 	 */
 	public void axisScanZ(int dimK, int dimL, int dimM) {
 		// x,y,z
@@ -867,8 +819,7 @@ public class ProteinPocketFinder {
 	/**
 	 * Method which assigns van der Waals radii to the biopolymer
 	 * default org/openscience/cdk/config/data/pdb_atomtypes.xml
-	 * stored in the variable String vanDerWaalsFile
-	 *
+	 * stored in the variable String vanDerWaalsFile.
 	 */
 	public void assignVdWRadiiToProtein() {
 		AtomTypeFactory atf = null;
@@ -893,9 +844,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method writes the grid to pmesh format
-	 *
-	 * @param String	outPutFileName
+	 * Method writes the grid to pmesh format.
 	 */
 	public void gridToPmesh(String outPutFileName) {
 		try {
@@ -907,9 +856,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method writes the PSP points (>=minPSPocket) to pmesh format
-	 *
-	 * @param String	outPutFileName
+	 * Method writes the PSP points (>=minPSPocket) to pmesh format.
 	 */
 	public void pspGridToPmesh(String outPutFileName) {
 		try {
@@ -921,9 +868,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method writes the protein grid points to pmesh format
-	 *
-	 * @param String	outPutFileName
+	 * Method writes the protein grid points to pmesh format.
 	 */
 	public void proteinGridToPmesh(String outPutFileName) {
 		try {
@@ -935,9 +880,7 @@ public class ProteinPocketFinder {
 	}
 
 	/**
-	 * Method writes the pockets to pmesh format
-	 *
-	 * @param outPutFileName
+	 * Method writes the pockets to pmesh format.
 	 */
 	public void writePocketsToPMesh(String outPutFileName) {
 
@@ -983,7 +926,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return double	Returns the latticeConstant.
+	 * @return Returns the latticeConstant.
 	 */
 	public double getLatticeConstant() {
 		return latticeConstant;
@@ -999,7 +942,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return double	Returns the linkageRadius.
+	 * @return Returns the linkageRadius.
 	 */
 	public double getLinkageRadius() {
 		return linkageRadius;
@@ -1015,7 +958,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return int	Returns the minPSCluster.
+	 * @return Returns the minPSCluster.
 	 */
 	public int getMinPSCluster() {
 		return minPSCluster;
@@ -1031,7 +974,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return int	Returns the minPSPocket.
+	 * @return Returns the minPSPocket.
 	 */
 	public int getMinPSPocket() {
 		return minPSPocket;
@@ -1047,7 +990,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return int	Returns the pocketSize.
+	 * @return Returns the pocketSize.
 	 */
 	public int getPocketSize() {
 		return pocketSize;
@@ -1063,7 +1006,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return BioPolymer	Returns the protein.
+	 * @return Returns the protein.
 	 */
 	public IBioPolymer getProtein() {
 		return protein;
@@ -1079,7 +1022,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return int	Returns the proteinInterior.
+	 * @return Returns the proteinInterior.
 	 */
 	public int getProteinInterior() {
 		return proteinInterior;
@@ -1095,7 +1038,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return double	Returns the rAtom.
+	 * @return Returns the rAtom.
 	 */
 	public double getRAtom() {
 		return rAtom;
@@ -1111,7 +1054,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return double	Returns the rSolvent.
+	 * @return Returns the rSolvent.
 	 */
 	public double getRSolvent() {
 		return rSolvent;
@@ -1127,7 +1070,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return int	Returns the solvantValue.
+	 * @return Returns the solvantValue.
 	 */
 	public int getSolvantValue() {
 		return solvantValue;
@@ -1143,7 +1086,7 @@ public class ProteinPocketFinder {
 
 
 	/**
-	 * @return String	Returns the vanDerWaalsFile.
+	 * @return Returns the vanDerWaalsFile.
 	 */
 	public String getVanDerWaalsFile() {
 		return vanDerWaalsFile;

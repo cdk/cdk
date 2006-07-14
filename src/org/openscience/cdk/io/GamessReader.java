@@ -132,7 +132,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * 
 	 * @param	inputReader		The "Reader" object given as input parameter.
 	 * 
-	 * @see org.openscience.cdk.io.GamessReader#accepts(IChemObject)
+	 * @see #accepts(Class)
 	 * @see	java.io.Reader
 	 *  
 	 */

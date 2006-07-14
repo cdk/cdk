@@ -55,7 +55,8 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
     /**
     * Constructor.
-    * @param output the stream to write the XYZ file to.
+    * 
+    * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
     	logger = new LoggingTool(this);

@@ -56,7 +56,7 @@ public interface ICMLCustomizer {
 	/**
 	 * Customized the nodeToAdd for the given IBond.
 	 * 
-	 * @param atom       Bond to base the customization on 
+	 * @param bond       Bond to base the customization on 
 	 * @param nodeToAdd  XOM Element to customize
 	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
 	 */

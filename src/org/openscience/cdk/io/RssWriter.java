@@ -313,7 +313,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * @param imagelinkt This will be the imagelink for the rss feed
+	 * @param imagelink This will be the imagelink for the rss feed
 	 */
 	public void setImagelink(String imagelink) {
 		this.imagelink = imagelink;
@@ -348,7 +348,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * @param multiMap. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+	 * @param multiMap If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
 	 */
 	public void setMultiMap(Map multiMap) {
 		this.multiMap = multiMap;

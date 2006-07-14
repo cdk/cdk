@@ -120,8 +120,6 @@ public class WriterFactory {
     
     /**
      * Creates a new IChemObjectWriter based on the given IChemFormat.
-     *
-     * @see #createWriter(InputStream)
      */
     public IChemObjectWriter createWriter(IChemFormat format) {
         if (format != null) {
