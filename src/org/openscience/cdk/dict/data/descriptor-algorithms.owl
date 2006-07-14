@@ -138,6 +138,11 @@
         <rdfs:label>Christian Hoppe</rdfs:label>
     </Contributor>
 
+
+    <Contributor rdf:ID="rguha">
+        <rdfs:label>Christian Hoppe</rdfs:label>
+    </Contributor>
+
     <Contributor rdf:ID="mf">
         <rdfs:label>Matteo Floris</rdfs:label>
     </Contributor>
@@ -1287,6 +1292,75 @@
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="aminoAcidCount">
+        <rdfs:label>Amino Acid Count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of amino acids found in the system
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="longestAliphaticChain">
+        <rdfs:label>Longest Aliphatic Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the longest aliphatic chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="largestChain">
+        <rdfs:label>Largest Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the largest chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+
+    <Descriptor rdf:ID="largestPiChain">
+        <rdfs:label>Largest Pi Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the largest pi chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="sigmaElectronegativity">
         <rdfs:label>Sigma Electronegativity</rdfs:label>
         <annotation>
@@ -1323,6 +1397,7 @@
             ,
             where a, b and c are Gasteiger Marsili parameters, and q is the sigma charge.
         </description>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
     </Descriptor>
 
@@ -1368,7 +1443,7 @@
         <rdfs:label>WHIM</rdfs:label>
         <annotation>
             <documentation>
-                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#rguha"/>
                 <dc:contributor rdf:resourrce="#elw"/>
                 <dc:date>2005-01-27</dc:date>
             </documentation>
