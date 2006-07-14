@@ -23,6 +23,11 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+
 
 /**
  * Represents the concept of a chemical molecule, an object composed of 
@@ -35,7 +40,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword    molecule
  */
-public class Molecule extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IMolecule
+public class Molecule extends AtomContainer implements Serializable, IMolecule, Cloneable
 {
 
 	/**
@@ -73,18 +78,9 @@ public class Molecule extends AtomContainer implements java.io.Serializable, org
 	 *
 	 * @param   container  An Molecule to copy the atoms and bonds from
 	 */
-	public Molecule(org.openscience.cdk.interfaces.IAtomContainer container)
+	public Molecule(IAtomContainer container)
 	{
 		super(container);
-	}
-
-	/**
-	 * Clones this molecule object.
-	 *
-	 * @return  The cloned molecule object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
 	}
 
     /**
@@ -98,7 +94,7 @@ public class Molecule extends AtomContainer implements java.io.Serializable, org
         description.append("Molecule(");
         description.append(getID()).append(", ");
         description.append(super.toString());
-        description.append(")");
+        description.append(')');
         return description.toString();
     }
 }

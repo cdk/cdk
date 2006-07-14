@@ -24,6 +24,11 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.ISetOfReactions;
+
 
 /** 
  * A set of reactions, for example those taking part in a reaction.
@@ -50,7 +55,7 @@ package org.openscience.cdk;
  * @cdk.keyword reaction
  * @cdk.keyword reaction
  */
-public class SetOfReactions extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ISetOfReactions
+public class SetOfReactions extends ChemObject implements Serializable, ISetOfReactions, Cloneable
 {
 
 	/**
@@ -152,15 +157,15 @@ public class SetOfReactions extends ChemObject implements java.io.Serializable, 
 	}
 
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer(32);
         buffer.append("SetOfReactions(");
-        buffer.append(this.hashCode()).append(", ");
-        buffer.append("R=").append(getReactionCount()).append(", ");
-        org.openscience.cdk.interfaces.IReaction[] reactions = getReactions();
+        buffer.append(this.hashCode());
+        buffer.append(", R=").append(getReactionCount()).append(", ");
+        IReaction[] reactions = getReactions();
         for (int i=0; i<reactions.length; i++) {
             buffer.append(reactions[i].toString());
         }
-        buffer.append(")");
+        buffer.append(')');
         return buffer.toString();
     }
 

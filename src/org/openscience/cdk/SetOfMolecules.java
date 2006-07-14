@@ -24,6 +24,8 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISetOfMolecules;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.
@@ -50,7 +52,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends SetOfAtomContainers implements org.openscience.cdk.interfaces.ISetOfMolecules {
+public class SetOfMolecules extends SetOfAtomContainers implements ISetOfMolecules, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -143,8 +145,8 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
 	 *@return    the cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SetOfMolecules clone = new SetOfMolecules();
-		org.openscience.cdk.interfaces.IMolecule[] result = getMolecules();
+		SetOfMolecules clone = (SetOfMolecules)super.clone();
+		IMolecule[] result = getMolecules();
 		for (int i = 0; i < result.length; i++) {
 			clone.addMolecule((Molecule) result[i].clone());
 		}
@@ -155,7 +157,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements org.openscien
         StringBuffer buffer = new StringBuffer();
         buffer.append("SetOfMolecules(");
         buffer.append(super.toString());
-        buffer.append(")");
+        buffer.append(')');
         return buffer.toString();
     }
     

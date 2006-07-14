@@ -26,9 +26,7 @@ package org.openscience.cdk;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.PseudoAtom;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.

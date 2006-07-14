@@ -25,6 +25,10 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IElectronContainer;
+
 /**
  * Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
  *
@@ -34,7 +38,7 @@ package org.openscience.cdk;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class ElectronContainer extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IElectronContainer 
+public class ElectronContainer extends ChemObject implements Serializable, IElectronContainer, Cloneable 
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -82,14 +86,6 @@ public class ElectronContainer extends ChemObject implements java.io.Serializabl
 		notifyChanged();
 	}
 
-    /**
-     * Clones this atom object and its content.
-     *
-     * @return  The cloned object   
-     */
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 }
 
 

@@ -24,8 +24,11 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to
@@ -37,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemSequence, IChemObjectListener
+public class ChemSequence extends ChemObject implements Serializable, IChemSequence, IChemObjectListener, Cloneable
 {
 
 	/**
@@ -153,7 +156,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
 	}
 
 	public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer(32);
         buffer.append("ChemSequence(#M=");
         org.openscience.cdk.interfaces.IChemModel[] models = getChemModels();
         buffer.append(models.length);
@@ -162,7 +165,7 @@ public class ChemSequence extends ChemObject implements java.io.Serializable, or
         	org.openscience.cdk.interfaces.IChemModel model = models[i];
             buffer.append(model.toString());
         }
-        buffer.append(")");
+        buffer.append(')');
         return buffer.toString();
     }
 	

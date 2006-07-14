@@ -28,6 +28,10 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IIsotope;
+
 /**
  * Used to store and retrieve data of a particular isotope.
  * For example, an carbon 13 isotope can be created with:
@@ -57,7 +61,7 @@ package org.openscience.cdk;
  *
  * @cdk.keyword     isotope
  */
-public class Isotope extends Element implements java.io.Serializable, org.openscience.cdk.interfaces.IIsotope 
+public class Isotope extends Element implements Serializable, IIsotope, Cloneable 
 {
 
     /**
@@ -230,27 +234,17 @@ public class Isotope extends Element implements java.io.Serializable, org.opensc
     }
 
 	/**
-	 * Clones this Isotope object.
-	 *
-	 * @return    The cloned isotope
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
-
-
-	/**
 	 *  A string representation of this isotope.
 	 *
 	 * @return    A string representation of this isotope
 	 */
 	public String toString() {
-        StringBuffer resultString = new StringBuffer();
+        StringBuffer resultString = new StringBuffer(32);
 		resultString.append("Isotope("); resultString.append(massNumber);
 		resultString.append(", EM:"); resultString.append(exactMass);
 		resultString.append(", AB:"); resultString.append(naturalAbundance);
         resultString.append(", "); resultString.append(super.toString());
-        resultString.append(")");
+        resultString.append(')');
 		return resultString.toString();
 	}
     

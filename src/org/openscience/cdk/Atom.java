@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -60,7 +62,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(IChemObjectBuilder)
  */
-public class Atom extends AtomType implements java.io.Serializable, IAtom  {
+public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
     
 	/* Let's keep this exact specification
 	 * of what kind of point2d we're talking of here,
@@ -589,19 +591,19 @@ public class Atom extends AtomType implements java.io.Serializable, IAtom  {
          * @return  The string representation of this Atom
          */
         public String toString() {
-                StringBuffer stringContent = new StringBuffer();
+                StringBuffer stringContent = new StringBuffer(64);
                 stringContent.append("Atom(");
                 stringContent.append(this.hashCode()).append(", ");
-                stringContent.append(getSymbol()).append(", ");
-                stringContent.append("H:").append(getHydrogenCount()).append(", ");
-                stringContent.append("SP:").append(getStereoParity()).append(", ");
-                stringContent.append("2D:[").append(getPoint2d()).append("], ");
-                stringContent.append("3D:[").append(getPoint3d()).append("], ");
-                stringContent.append("Fract3D:[").append(getFractionalPoint3d()).append("], ");
-                stringContent.append("C:").append(getCharge()).append(", ");
-                stringContent.append("FC:").append(getFormalCharge());
+                stringContent.append(getSymbol());
+                stringContent.append(", H:").append(getHydrogenCount());
+                stringContent.append(", SP:").append(getStereoParity());
+                stringContent.append(", 2D:[").append(getPoint2d());
+                stringContent.append("], 3D:[").append(getPoint3d());
+                stringContent.append("], Fract3D:[").append(getFractionalPoint3d());
+                stringContent.append("], C:").append(getCharge());
+                stringContent.append(", FC:").append(getFormalCharge());
                 stringContent.append(", ").append(super.toString());
-                stringContent.append(")");
+                stringContent.append(')');
                 return stringContent.toString();
         }
         

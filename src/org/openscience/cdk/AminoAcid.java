@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 
@@ -40,8 +42,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.created 2005-08-11
  * @cdk.keyword amino acid
  */
-public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializable
-{
+public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -151,7 +152,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
     }
     
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("AminoAcid(");
         stringContent.append(this.hashCode()).append(", ");
         if (nTerminus == null) {
@@ -165,7 +166,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, java.io.Serializab
         	stringContent.append("C: ").append(cTerminus.hashCode()).append(", ");
         }
         stringContent.append(super.toString());
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
 

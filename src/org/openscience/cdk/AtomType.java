@@ -28,22 +28,22 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- *  The base class for atom types. Atom types are typically used to describe the
- *  behaviour of an atom of a particular element in different environment like 
- *  sp<sup>3</sup>
- *  hybridized carbon C3, etc., in some molecular modelling applications.
+ * The base class for atom types. Atom types are typically used to describe the
+ * behaviour of an atom of a particular element in different environment like 
+ * sp<sup>3</sup>
+ * hybridized carbon C3, etc., in some molecular modelling applications.
  *
- * @cdk.module data
- *
- * @author     steinbeck
- * @cdk.created    2001-08-08
- *
- * @cdk.keyword     atom, type
+ * @author       steinbeck
+ * @cdk.created  2001-08-08
+ * @cdk.module   data
+ * @cdk.keyword  atom, type
  */
-public class AtomType extends Isotope implements java.io.Serializable, IAtomType
+public class AtomType extends Isotope implements IAtomType, Serializable, Cloneable
 {
 
 	/**
@@ -368,29 +368,20 @@ public class AtomType extends Isotope implements java.io.Serializable, IAtomType
 		return this.electronValency;
 	}
 	
-	/**
-	 *  Clones this AtomType object.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
-	
     public String toString() {
-        StringBuffer resultString = new StringBuffer();
+        StringBuffer resultString = new StringBuffer(64);
         resultString.append("AtomType(");
-        resultString.append(getAtomTypeName()).append(", ");
-        resultString.append("MBO:").append(getMaxBondOrder()).append(", ");
-        resultString.append("BOS:").append(getBondOrderSum()).append(", ");
-        resultString.append("FC:").append(getFormalCharge()).append(", ");
-        resultString.append("H:").append(getHybridization()).append(", ");
-        resultString.append("NC:").append(getFormalNeighbourCount()).append(", ");
-        resultString.append("CR:").append(getCovalentRadius()).append(", ");
-        resultString.append("VDWR:").append(getVanderwaalsRadius()).append(", ");
-        resultString.append("EV:").append(getValency()).append(", ");
+        resultString.append(getAtomTypeName());
+        resultString.append(", MBO:").append(getMaxBondOrder());
+        resultString.append(", BOS:").append(getBondOrderSum());
+        resultString.append(", FC:").append(getFormalCharge());
+        resultString.append(", H:").append(getHybridization());
+        resultString.append(", NC:").append(getFormalNeighbourCount());
+        resultString.append(", CR:").append(getCovalentRadius());
+        resultString.append(", VDWR:").append(getVanderwaalsRadius());
+        resultString.append(", EV:").append(getValency()).append(", ");
         resultString.append(super.toString());
-        resultString.append(")");
+        resultString.append(')');
         return resultString.toString(); 
     }
 }

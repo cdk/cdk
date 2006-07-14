@@ -66,19 +66,6 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	}
 	
 	/**
-	 * Adds the atom oAtom without specifying a Monomer. Therefore the
-	 * atom to this AtomContainer, but not to a certain Monomer (intended
-	 * e.g. for HETATMs).
-	 *
-	 * @param oAtom  The atom to add
-	 */
-	public void addAtom(IAtom oAtom) {
-		super.addAtom(oAtom);
-		/* notifyChanged() is called by addAtom in
-		 AtomContainer */
-	}
-	
-	/**
 	 * Adds the atom oAtom to a specified Monomer.
 	 *
 	 * @param oAtom  The atom to add
@@ -150,7 +137,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 //        stringContent.append("N:").append(getStrandName()).append(", ");
 //        stringContent.append("T:").append(getStrandType()).append(", ");
         stringContent.append(super.toString());
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
 

@@ -23,9 +23,11 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  * Class representing a molecular crystal.
@@ -39,7 +41,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.keyword crystal
  */
-public class Crystal extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ICrystal
+public class Crystal extends AtomContainer implements Serializable, ICrystal, Cloneable
 {
 
     /**
@@ -85,22 +87,6 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
     public Crystal(org.openscience.cdk.interfaces.IAtomContainer container) {
         super(container);
         setZeroAxes();
-    }
-
-    /**
-     * Adds the atoms in the AtomContainer as cell content. Symmetry related 
-     * atoms should not be added unless P1 space group is used.
-     */
-    public void add(org.openscience.cdk.interfaces.IAtomContainer container) {
-        super.add(container);
-    }
-
-    /**
-     * Adds the atom to the crystal. Symmetry related atoms should
-     * not be added unless P1 space group is used.
-     */
-    public void addAtom(IAtom atom) {
-        super.addAtom(atom);
     }
 
     /**
@@ -238,14 +224,14 @@ public class Crystal extends AtomContainer implements java.io.Serializable, org.
      * Returns a String representation of this crystal.
      */
     public String toString() {
-        StringBuffer resultString = new StringBuffer();
-        resultString.append("Crystal{");
-        resultString.append("SG=").append(getSpaceGroup()).append(", ");
-        resultString.append("Z=").append(getZ()).append(", ");
-        resultString.append("a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z).append("), ");
-        resultString.append("b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z).append("), ");
-        resultString.append("c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z).append("), ");
-        resultString.append("#A=").append(getAtomCount()).append("}");
+        StringBuffer resultString = new StringBuffer(64);
+        resultString.append("Crystal(SG=");
+        resultString.append(getSpaceGroup());
+        resultString.append(", Z=").append(getZ());
+        resultString.append(", a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z);
+        resultString.append("), b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z);
+        resultString.append("), c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z);
+        resultString.append("), #A=").append(getAtomCount()).append(')');
         return resultString.toString();
     }
 

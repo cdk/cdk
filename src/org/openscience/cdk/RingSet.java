@@ -24,6 +24,7 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @cdk.keyword     ring, set of
  */
-public class RingSet extends SetOfAtomContainers implements java.io.Serializable, IRingSet {
+public class RingSet extends SetOfAtomContainers implements Serializable, IRingSet, Cloneable {
 
 	private static final long serialVersionUID = 7168431521057961434L;
 	
@@ -219,7 +220,7 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
 	 * @return  The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		RingSet clone = new RingSet();
+		RingSet clone = (RingSet)super.clone();
 		IAtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {
 			clone.addAtomContainer((IAtomContainer) result[i].clone());
@@ -233,10 +234,10 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
      * @return The String representation of this RingSet
      */
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer(32);
         buffer.append("RingSet(");
-        buffer.append(this.hashCode()).append(", ");
-        buffer.append("R=").append(getAtomContainerCount()).append(", ");
+        buffer.append(this.hashCode());
+        buffer.append(", R=").append(getAtomContainerCount()).append(", ");
         IAtomContainer[] rings = getAtomContainers();
         for (int i = 0; i < rings.length; i++) {
             IRing possibleRing = (IRing)rings[i];
@@ -245,7 +246,7 @@ public class RingSet extends SetOfAtomContainers implements java.io.Serializable
                 buffer.append(", ");
             }
         }
-        buffer.append(")");
+        buffer.append(')');
         return buffer.toString();
     }
     

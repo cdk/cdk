@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -42,7 +44,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword    atom
  * @cdk.keyword    electron
  */
-public class Bond extends ElectronContainer implements java.io.Serializable, IBond
+public class Bond extends ElectronContainer implements IBond, Serializable, Cloneable
 {
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -408,7 +410,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, IBo
 	 *@return    The string representation of this Container
 	 */
 	public String toString() {
-		StringBuffer resultString = new StringBuffer();
+		StringBuffer resultString = new StringBuffer(32);
 		resultString.append("Bond(");
 		resultString.append(this.hashCode());
 		resultString.append(", #O:").append(getOrder());
@@ -425,7 +427,7 @@ public class Bond extends ElectronContainer implements java.io.Serializable, IBo
 				resultString.append(", ").append(atoms[i].toString());
 			}
 		}
-		resultString.append(")");
+		resultString.append(')');
 		return resultString.toString();
 	}
 

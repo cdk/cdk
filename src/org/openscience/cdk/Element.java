@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IElement;
+
 /**
  * Implements the idea of an element in the periodic table.
  * 
@@ -41,7 +45,7 @@ package org.openscience.cdk;
  *
  * @see org.openscience.cdk.config.IsotopeFactory
  */
-public class Element extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IElement
+public class Element extends ChemObject implements Serializable, IElement, Cloneable
 {
 
     /**
@@ -147,22 +151,13 @@ public class Element extends ChemObject implements java.io.Serializable, org.ope
 	notifyChanged();
     }
 
-    /**
-         * Clones this atom object.
-         *
-         * @return  The cloned object   
-         */
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-    
     public String toString() {
-        StringBuffer resultString = new StringBuffer();
+        StringBuffer resultString = new StringBuffer(32);
         resultString.append("Element(");
         resultString.append(getSymbol());
-        resultString.append(", ID:"); resultString.append(getID());
-        resultString.append(", AN:"); resultString.append(getAtomicNumber());
-        resultString.append(")");
+        resultString.append(", ID:").append(getID());
+        resultString.append(", AN:").append(getAtomicNumber());
+        resultString.append(')');
         return resultString.toString();
     }
     

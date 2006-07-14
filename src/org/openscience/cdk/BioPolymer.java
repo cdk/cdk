@@ -74,27 +74,11 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	}
 	
 	/**
-	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-	 * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
-	 * e.g. for HETATMs).
-	 *
-	 * @param oAtom  The atom to add
-	 *
-	 */
-	public void addAtom(IAtom oAtom) {
-//		addAtom(oAtom, getStrand(""));
-		super.addAtom(oAtom);
-		/* notifyChanged() is called by addAtom in
-		 AtomContainer */
-	}
-	
-	/**
 	 * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
 	 * the atom will be added to a Monomer of type UNKNOWN in the specified Strand.
 	 *
 	 * @param oAtom   The atom to add
 	 * @param oStrand The strand the atom belongs to
-	 *
 	 */
 	public void addAtom(IAtom oAtom, IStrand oStrand) {
 		
@@ -103,14 +87,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 		// Add atom to AtomContainer
 		super.addAtom(oAtom);
 
-		if(atomCount != super.getAtomCount()) { // ok, super did not yet contain the atom
-			
-			if(oStrand != null)	{	// Maybe better to throw nullpointer exception here, so user realises that
-									// Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
-				oStrand.addAtom(oAtom);	
-				if (!strands.contains(oStrand.getStrandName())) {
-					strands.put(oStrand.getStrandName(), oStrand);
-				}
+		if (atomCount != super.getAtomCount() && 
+		    oStrand != null) {	// Maybe better to throw nullpointer exception here, so user realises that
+								// Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
+			oStrand.addAtom(oAtom);	
+			if (!strands.contains(oStrand.getStrandName())) {
+				strands.put(oStrand.getStrandName(), oStrand);
 			}
 		}
 		/* notifyChanged() is called by addAtom in
@@ -131,13 +113,12 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 		// Add atom to AtomContainer
 		super.addAtom(oAtom);
 
-		if(atomCount != super.getAtomCount()) { // ok, super did not yet contain the atom
-			// Add atom to Strand (also adds the atom to the monomer).
-			if(oStrand != null)	{
-				oStrand.addAtom(oAtom, oMonomer);	// Same problem as above: better to throw nullpointer exception?
-				if (!strands.containsKey(oStrand.getStrandName())) {
-					strands.put(oStrand.getStrandName(), oStrand);
-				}
+		if(atomCount != super.getAtomCount() && // ok, super did not yet contain the atom
+			   // Add atom to Strand (also adds the atom to the monomer).
+		       oStrand != null)	{
+			oStrand.addAtom(oAtom, oMonomer);	// Same problem as above: better to throw nullpointer exception?
+			if (!strands.containsKey(oStrand.getStrandName())) {
+				strands.put(oStrand.getStrandName(), oStrand);
 			}
 		}
 		/* The reasoning above is: 
@@ -279,7 +260,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
         stringContent.append("BioPolymer(");
         stringContent.append(this.hashCode()).append(", ");
         stringContent.append(super.toString());
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
 }

@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -54,7 +55,8 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * @author     steinbeck
  * @cdk.created    2000-10-02
  */
-public class AtomContainer extends ChemObject implements java.io.Serializable, IAtomContainer , IChemObjectListener {
+public class AtomContainer extends ChemObject 
+  implements IAtomContainer, IChemObjectListener, Serializable, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -516,13 +518,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom1))
-			{
-				if (electronContainers[i] instanceof IBond &&
-						((Bond) electronContainers[i]).getConnectedAtom(atom1) == atom2)
-				{
-					return (Bond) electronContainers[i];
-				}
+			    ((IBond) electronContainers[i]).contains(atom1) &&
+			    ((IBond) electronContainers[i]).getConnectedAtom(atom1) == atom2) {
+				return (IBond) electronContainers[i];
 			}
 		}
 		return null;
@@ -1060,20 +1058,9 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	 */
 	public IBond removeBond(IAtom atom1, IAtom atom2)
 	{
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom1))
-			{
-				if (((Bond) electronContainers[i]).getConnectedAtom(atom1) == atom2)
-				{
-					/* We don't call notify changed here because
-					   the method called below does it */
-					return (Bond) removeElectronContainer(electronContainers[i]);
-				}
-			}
-		}
-		return null;
+		IBond bond = getBond(atom1, atom2);
+		if (bond != null) removeElectronContainer(bond);
+		return bond;
 	}
 
 
@@ -1289,11 +1276,11 @@ public class AtomContainer extends ChemObject implements java.io.Serializable, I
 	public String toString()
 	{
 		IElectronContainer electronContainer;
-		StringBuffer stringContent = new StringBuffer();
+		StringBuffer stringContent = new StringBuffer(64);
 		stringContent.append("AtomContainer(");
-		stringContent.append(this.hashCode()).append(", ");
-		stringContent.append("#A:").append(getAtomCount()).append(", ");
-		stringContent.append("#EC:").append(getElectronContainerCount()).append(", ");
+		stringContent.append(this.hashCode());
+		stringContent.append(", #A:").append(getAtomCount());
+		stringContent.append(", #EC:").append(getElectronContainerCount()).append(", ");
 		for (int i = 0; i < getAtomCount(); i++)
 		{
 			stringContent.append(getAtomAt(i).toString()).append(", ");

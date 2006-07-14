@@ -28,6 +28,12 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+import java.util.Hashtable;
+
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IReaction;
+
 /**
  * Represents the idea of a chemical reaction. The reaction consists of 
  * a set of reactants and a set of products.
@@ -42,7 +48,7 @@ package org.openscience.cdk;
  * @cdk.created 2003-02-13
  * @cdk.keyword reaction
  */
-public class Reaction extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IReaction {
+public class Reaction extends ChemObject implements Serializable, IReaction, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -366,14 +372,14 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
      * @return  The string representation of this Atom
      */
     public String toString() {
-        StringBuffer description = new StringBuffer();
+        StringBuffer description = new StringBuffer(64);
         description.append("Reaction(");
-        description.append(getID()).append(", ");
-        description.append("#M:").append(mappingCount).append(", ");
-        description.append("reactants=").append(reactants.toString()).append(", ");
-        description.append("products=").append(products.toString()).append(", ");
-        description.append("agents=").append(agents.toString());
-        description.append(")");
+        description.append(getID());
+        description.append(", #M:").append(mappingCount);
+        description.append(", reactants=").append(reactants.toString());
+        description.append(", products=").append(products.toString());
+        description.append(", agents=").append(agents.toString());
+        description.append(')');
         return description.toString();
     }
     
@@ -390,18 +396,18 @@ public class Reaction extends ChemObject implements java.io.Serializable, org.op
         clone.products = (SetOfMolecules)((SetOfMolecules)products).clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
-        java.util.Hashtable aa = new java.util.Hashtable();
+        Hashtable atomatom = new Hashtable();
         for (int i = 0; i < ((SetOfMolecules)reactants).getMoleculeCount(); ++i) {
             Molecule mol = (Molecule)((SetOfMolecules)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
-            for (int j = 0; j < mol.getAtomCount(); ++j) aa.put(mol.getAtomAt(j), mol2.getAtomAt(j));
+            for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtomAt(j), mol2.getAtomAt(j));
         }
         
         // clone the maps
 		clone.map = new Mapping[map.length];
 		for (int f = 0; f < mappingCount; f++) {
-            org.openscience.cdk.interfaces.IChemObject[] rel = map[f].getRelatedChemObjects();
-			clone.map[f] = new Mapping((ChemObject)aa.get(rel[0]), (ChemObject)aa.get(rel[1]));
+            IChemObject[] rel = map[f].getRelatedChemObjects();
+			clone.map[f] = new Mapping((ChemObject)atomatom.get(rel[0]), (ChemObject)atomatom.get(rel[1]));
 		}
 		return clone;
 	}

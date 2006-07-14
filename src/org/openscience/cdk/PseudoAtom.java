@@ -175,15 +175,6 @@ public class PseudoAtom extends Atom
         // this is undefined, always
     }
 
-	/**
-	 * Clones this PseudoAtom object.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
-	
     /**
      * Returns a one line string representation of this Atom.
      * Methods is conform RFC #9.
@@ -196,7 +187,7 @@ public class PseudoAtom extends Atom
         description.append(this.hashCode()).append(", ");
         description.append(getLabel()).append(", ");
         description.append(super.toString());
-        description.append(")");
+        description.append(')');
         return description.toString();
     }
 

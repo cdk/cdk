@@ -27,6 +27,10 @@
  *  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IMonomer;
+
 
 /**
  * A Monomer is an AtomContainer which stores additional monomer specific 
@@ -40,7 +44,7 @@ package org.openscience.cdk;
  * @cdk.keyword    monomer
  *
  */
-public class Monomer extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IMonomer
+public class Monomer extends AtomContainer implements Serializable, IMonomer, Cloneable
 {
 
     /**
@@ -116,14 +120,5 @@ public class Monomer extends AtomContainer implements java.io.Serializable, org.
 		monomerType = cMonomerType;
 		notifyChanged();
 	}
-
-    /**
-     * Clones this Monomer object.
-     *
-     * @return    The cloned object
-     */
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 
 }

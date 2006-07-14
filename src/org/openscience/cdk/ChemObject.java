@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -47,7 +48,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *@author        steinbeck
  *@cdk.module    data
  */
-public class ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.IChemObject
+public class ChemObject implements Serializable, IChemObject, Cloneable
 {
 
 	/**

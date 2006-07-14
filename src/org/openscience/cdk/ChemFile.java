@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -37,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
  *@author        steinbeck
  *@cdk.module    data
  */
-public class ChemFile extends ChemObject implements java.io.Serializable,
+public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		IChemFile, IChemObjectListener
 {
 
@@ -169,7 +171,7 @@ public class ChemFile extends ChemObject implements java.io.Serializable,
 			IChemSequence sequence = seqs[i];
 			buffer.append(sequence.toString());
 		}
-		buffer.append(")");
+		buffer.append(')');
 		return buffer.toString();
 	}
 

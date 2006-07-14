@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ILonePair;
 
 /**
  * A LonePair is an orbital primarily located with one Atom, containing
@@ -36,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.keyword lone-pair
  * @cdk.keyword bond
  */
-public class LonePair extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ILonePair
+public class LonePair extends ElectronContainer implements Serializable, ILonePair, Cloneable
 {
 
     /**
@@ -143,7 +146,7 @@ public class LonePair extends ElectronContainer implements java.io.Serializable,
             resultString.append(", ");
             resultString.append(atom.toString());
         }
-        resultString.append(")");
+        resultString.append(')');
         return resultString.toString();
     }
 }

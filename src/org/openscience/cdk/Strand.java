@@ -226,13 +226,13 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	}
     
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("Strand(");
-        stringContent.append(this.hashCode()).append(", ");
-        stringContent.append("N:").append(getStrandName()).append(", ");
-        stringContent.append("T:").append(getStrandType()).append(", ");
+        stringContent.append(this.hashCode());
+        stringContent.append(", N:").append(getStrandName());
+        stringContent.append(", T:").append(getStrandType()).append(", ");
         stringContent.append(super.toString());
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
     

@@ -24,6 +24,8 @@
 
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -39,7 +41,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  *
  * @cdk.module data
  */
-public class ChemModel extends ChemObject implements java.io.Serializable, IChemModel, IChemObjectListener
+public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable
 {
 
 	/**
@@ -186,7 +188,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, IChem
      * @return String representation of content
      */
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer(64);
         buffer.append("ChemModel(");
         buffer.append(hashCode());
         if (getSetOfMolecules() != null) {
@@ -207,7 +209,7 @@ public class ChemModel extends ChemObject implements java.io.Serializable, IChem
         } else {
             buffer.append(", No SetOfReactions");
         }
-        buffer.append(")");
+        buffer.append(')');
         return buffer.toString();
     }
 

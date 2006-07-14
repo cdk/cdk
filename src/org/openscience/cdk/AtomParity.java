@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
 
@@ -41,7 +43,7 @@ import org.openscience.cdk.interfaces.IAtomParity;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity extends ChemObject implements java.io.Serializable, IAtomParity  {
+public class AtomParity extends ChemObject implements IAtomParity, Serializable, Cloneable  {
     
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -119,16 +121,16 @@ public class AtomParity extends ChemObject implements java.io.Serializable, IAto
      * @return  The string representation of this AtomParity
      */
     public String toString() {
-        StringBuffer resultString = new StringBuffer();
+        StringBuffer resultString = new StringBuffer(32);
         resultString.append("AtomParity(");
         resultString.append(this.hashCode()).append(", ");
-        resultString.append(centralAtom.getID()).append(", ");
-        resultString.append("F:[").append(neighbors[0].getID()).append(", ");
+        resultString.append(centralAtom.getID());
+        resultString.append(", F:[").append(neighbors[0].getID()).append(", ");
         resultString.append(neighbors[1].getID()).append(", ");
         resultString.append(neighbors[2].getID()).append(", ");
         resultString.append(neighbors[3].getID()).append("], ");
         resultString.append(parity);
-        resultString.append(")");
+        resultString.append(')');
         return resultString.toString();
     }
 

@@ -24,8 +24,12 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 
 /**
  * A set of AtomContainers.
@@ -33,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements java.io.Serializable, org.openscience.cdk.interfaces.ISetOfAtomContainers, IChemObjectListener {
+public class SetOfAtomContainers extends ChemObject implements Serializable, ISetOfAtomContainers, IChemObjectListener, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -304,10 +308,10 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return    The String representation of this SetOfAtomContainers
 	 */
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = new StringBuffer(32);
 		buffer.append("SetOfAtomContainers(");
-		buffer.append(this.hashCode()).append(", ");
-		buffer.append("M=").append(getAtomContainerCount()).append(", ");
+		buffer.append(this.hashCode());
+		buffer.append(", M=").append(getAtomContainerCount()).append(", ");
 		org.openscience.cdk.interfaces.IAtomContainer[] atomContainers = getAtomContainers();
 		for (int i = 0; i < atomContainers.length; i++) {
 			buffer.append(atomContainers[i].toString());
@@ -315,7 +319,7 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 				buffer.append(", ");
 			}
 		}
-		buffer.append(")");
+		buffer.append(')');
 		return buffer.toString();
 	}
 
@@ -326,10 +330,10 @@ public class SetOfAtomContainers extends ChemObject implements java.io.Serializa
 	 * @return    the cloned Object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SetOfAtomContainers clone = new SetOfAtomContainers();
-		org.openscience.cdk.interfaces.IAtomContainer[] result = getAtomContainers();
+		SetOfAtomContainers clone = (SetOfAtomContainers)super.clone();
+		IAtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {
-				clone.addAtomContainer((AtomContainer)((AtomContainer)result[i]).clone(), 1.0);
+			clone.addAtomContainer((AtomContainer)((AtomContainer)result[i]).clone(), 1.0);
 		}
 		return (Object) clone;
 	}

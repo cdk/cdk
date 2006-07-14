@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
  * A Single Electron is an orbital which is occupied by only one electron.
@@ -42,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
  */
-public class SingleElectron extends ElectronContainer implements java.io.Serializable, org.openscience.cdk.interfaces.ISingleElectron
+public class SingleElectron extends ElectronContainer implements Serializable, ISingleElectron, Cloneable
 {
 
     /**
@@ -132,7 +135,7 @@ public class SingleElectron extends ElectronContainer implements java.io.Seriali
             stringContent.append(", ");
             stringContent.append(atom.toString());
         }
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
 

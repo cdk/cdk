@@ -303,7 +303,7 @@ public class PeriodicTableElement extends Element
 		resultString.append(", Ph:"); resultString.append(getPhase());
 		resultString.append(", CAS:"); resultString.append(getCASid());
 		
-		resultString.append(")");
+		resultString.append(')');
 		return resultString.toString();
 	}
 }
