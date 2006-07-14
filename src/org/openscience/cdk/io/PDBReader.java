@@ -83,7 +83,6 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.created 2001-08-06
  * @cdk.keyword file format, PDB
  * @cdk.bug     1487368
- * @cdk.bug     1508835
  */
 public class PDBReader extends DefaultChemObjectReader {
 	

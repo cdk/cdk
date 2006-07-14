@@ -84,7 +84,6 @@ import org.openscience.cdk.validate.ProblemMarker;
  * @cdk.module     render
  * @cdk.created    2002-10-03
  * @cdk.keyword    viewer, 2D-viewer
- * @cdk.bug        834515
  * @cdk.bug        1323624
  * @cdk.bug        1471595
  * 

@@ -95,7 +95,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  * @cdk.created    2005-05-02
  * @cdk.keyword    mouse events
  * @cdk.require    java1.4+
- * @cdk.bug        1509883
  */
  abstract class AbstractController2D implements MouseMotionListener, MouseListener, KeyListener
 {

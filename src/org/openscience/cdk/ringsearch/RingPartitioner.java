@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IRingSet;
  *  RingSet are considered connected.
  *
  * @cdk.module standard
- * @cdk.bug    1117775
  */
 public class RingPartitioner {
     

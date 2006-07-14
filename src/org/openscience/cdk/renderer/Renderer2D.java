@@ -69,7 +69,6 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  *@cdk.module     render
  *@cdk.created    2002-10-03
  *@cdk.keyword    viewer, 2D-viewer
- *@cdk.bug        834515
  *@see            org.openscience.cdk.renderer.Renderer2DModel
  */
 public class Renderer2D extends SimpleRenderer2D
