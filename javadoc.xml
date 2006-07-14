@@ -62,6 +62,7 @@
             <tag name="cdk.depends" scope="all" description="Required library to be able to run this class:" />
             <tag name="cdk.builddepends" scope="all" description="Required library to be able to compile this class:" />
             <tag name="cdk.todo" scope="all" description="To do:" />
+            <tag name="cdk.license" scope="all" description="License:" />
             <taglet name="net.sf.cdk.tools.CDKModuleTaglet" path="doc/javadoc" />
             <taglet name="net.sf.cdk.tools.CDKCiteTaglet" path="doc/javadoc" />
             <taglet name="net.sf.cdk.tools.CDKBugTaglet" path="doc/javadoc" />
