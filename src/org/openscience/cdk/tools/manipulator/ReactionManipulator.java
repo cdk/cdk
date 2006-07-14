@@ -108,6 +108,10 @@ public class ReactionManipulator {
         }
     }
     
+    /** 
+     * @deprecated This method has a serious performace impact. Try to use
+     *   other methods.
+     */
     public static IAtomContainer getAllInOneContainer(IReaction reaction) {
         IAtomContainer container = reaction.getBuilder().newAtomContainer();
         if (reaction == null) {

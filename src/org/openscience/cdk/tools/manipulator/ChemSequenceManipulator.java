@@ -68,6 +68,9 @@ public class ChemSequenceManipulator {
      * AtomCcntainer.
      *
      * @return  The AtomContainer with all the Molecules of this container
+     * 
+     * @deprecated This method has a serious performace impact. Try to use
+     *   other methods.
      */
     public static IAtomContainer getAllInOneContainer(IChemSequence sequence) {
         IAtomContainer container = sequence.getBuilder().newAtomContainer();

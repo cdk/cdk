@@ -80,6 +80,10 @@ public class SetOfReactionsManipulator {
         }
     }
     
+    /** 
+     * @deprecated This method has a serious performace impact. Try to use
+     *   other methods.
+     */
     public static IAtomContainer getAllInOneContainer(ISetOfReactions set) {
         IAtomContainer container = set.getBuilder().newAtomContainer();
         IReaction[] reactions = set.getReactions();
