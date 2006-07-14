@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.AtomicProperties;
  * chemicals in cluster?
  * 
  * @author     Todd Martin
- * @cdk.module qsar
+ * @cdk.module nocompile
  * @cdk.set    qsar-descriptors
  */
 public class ALOGP implements IMolecularDescriptor {
