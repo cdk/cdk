@@ -709,15 +709,11 @@
                         <fileset dir="." includes="build.xml" />
                         <fileset dir="." includes="javadoc.xml" />
                         <fileset dir="." includes="README" />
-                        <fileset dir="." includes="CHANGELOG" />
+                        <fileset dir="." includes="changelog*" />
                 </copy>
                 <copy todir="${sourcedist.dir}/jar">
                         <fileset dir="jar">
                             <exclude name="libio/*.jar"/>
-                            <exclude name="pmd-1.8.jar"/>
-                            <exclude name="xalan-2.0.1.jar"/>
-                            <exclude name="doccheck.jar"/>
-                            <exclude name="dbdoclet*.*"/>
                         </fileset>
                 </copy>
             <copy todir="${sourcedist.dir}/develjar">
