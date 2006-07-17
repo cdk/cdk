@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
  * {@cdk.cite GM81}. This class doesn't implement the original method of the Marsili but the 
- * method based on H. Saller which is described from Petra manual</p> 
+ * method based on H. Saller which is described from Petra manual version 2.6</p> 
  * <p>They are calculated by generating all valence bond(resonance) structures
  * for this system and then weighting them on the basis of pi-orbital electronegativies
  * and formal considerations based on PEPE (Partial Equalization of pi-electronegativity).</p>
@@ -71,9 +71,6 @@ public class GasteigerPEPEPartialCharges {
 	private AtomTypeFactory factory;
 	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
 	private static int ISCHANGEDFC = 0;
-	
-	//private double DEOC_HYDROGEN = 20.02;
-	//private double MX_DAMP = 0.5;
 	
 	private LoggingTool logger = new LoggingTool(GasteigerPEPEPartialCharges.class);
 
@@ -113,11 +110,11 @@ public class GasteigerPEPEPartialCharges {
 			if(setHI.getAtomContainerCount() == 0 ){
 				for(int i = 0; i < ac.getAtomCount() ; i++)
 					ac.getAtomAt(i).setCharge(0.0);
-				return ac;
+				
 			}
 		}
 
-		
+
 		/*0: remove charge, flag ac*/
 		for(int j = 0 ; j < ac.getAtomCount(); j++){
 			ac.getAtomAt(j).setCharge(0.0);
@@ -127,7 +124,9 @@ public class GasteigerPEPEPartialCharges {
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR = new StructureResonanceGenerator();
 		ISetOfAtomContainers iSet = gR.getAllStructures(ac);
-		
+		if(setHI != null) 
+			if(	setHI.getAtomContainerCount() != 0)
+				iSet.add(setHI);
 		
 		/*2: search whose atoms which don't keep their formal charge and set flags*/
 		double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount( )];
