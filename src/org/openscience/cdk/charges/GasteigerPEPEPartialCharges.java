@@ -133,13 +133,13 @@ public class GasteigerPEPEPartialCharges {
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			IAtomContainer iac = iSet.getAtomContainer(i);
 			for(int j = 0 ; j < iac.getAtomCount(); j++){
-				sumCharges[i][j] += iac.getAtomAt(j).getFormalCharge();
+				sumCharges[i][j] = iac.getAtomAt(j).getFormalCharge();
 			}
 		}
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			IAtomContainer iac = iSet.getAtomContainer(i);
 			for(int j = 0 ; j < ac.getAtomCount(); j++){
-				if(sumCharges[i][j] != 0.0){
+				if(sumCharges[i][j] != ac.getAtomAt(j).getFormalCharge()){
 					ac.getAtomAt(j).setFlag(ISCHANGEDFC, true);
 					iac.getAtomAt(j).setFlag(ISCHANGEDFC, true);
 				}
@@ -162,6 +162,7 @@ public class GasteigerPEPEPartialCharges {
 		double[] Wt = new double[iSet.getAtomContainerCount()-1];
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++)
 			Wt[i-1]= getTopologicalFactors(iSet.getAtomContainer(i),ac);
+		
 		
 		
 		double fE = 1.0;/*1.1*/
@@ -369,9 +370,10 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	private double getTopologicalFactors(IAtomContainer atomContainer,IAtomContainer ac) {
 		/*factor for separation of charge*/
-		int totalNCharge = AtomContainerManipulator.getTotalNegativeFormalCharge(atomContainer);
+		int totalNCharge1 = AtomContainerManipulator.getTotalNegativeFormalCharge(atomContainer);
+		int totalNCharge2 = AtomContainerManipulator.getTotalNegativeFormalCharge(atomContainer);
 		double fQ = 1.0;
-		if(totalNCharge != 0.0){
+		if(totalNCharge1 != 0.0){
 			fQ = 0.5;
 			for(int i = 0; i < atomContainer.getBondCount(); i++){
 				IBond bond = atomContainer.getBondAt(i);
@@ -394,10 +396,10 @@ public class GasteigerPEPEPartialCharges {
             if (ac.getBondAt(i).getOrder() == 2.0) 
             	numBond2 += 1;
         }
-        if(numBond1 != numBond2)
+        if(numBond1 > numBond2)
 			fB = 0.8;
 		
-//		System.out.println("return= sp:"+fQ+", dc:"+fB);
+//		System.out.println("return "+fQ*fB+"= sp:"+fQ+", dc:"+fB);
 		
 		return fQ*fB;
 	}
