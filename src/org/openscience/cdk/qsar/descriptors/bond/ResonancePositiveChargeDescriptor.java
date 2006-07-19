@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
+//import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 
@@ -81,14 +81,12 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 
     private int bondPosition = 0;
     private PiElectronegativityDescriptor pielectronegativity = null;
-	private BreakingBondReaction bbr;
 
 
     /**
      *  Constructor for the ResonancePositiveChargeDescriptor object
      */
     public ResonancePositiveChargeDescriptor() { 
-    	bbr = new BreakingBondReaction();
     }
 
 
@@ -184,8 +182,8 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	        	IAtomContainer product = setOfReactions.getReaction(i).getProducts().getAtomContainer(z);
 	        	if(product.getAtomCount() < 2)
 	        		continue;
-	        	SmilesGenerator sg = new SmilesGenerator(ac.getBuilder());
-	    		String smiles2 = sg.createSMILES((IMolecule) product);
+//	        	SmilesGenerator sg = new SmilesGenerator(ac.getBuilder());
+//	    		String smiles2 = sg.createSMILES((IMolecule) product);
 //	    		System.out.println("smiles; "+smiles2);
 	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,false);
 	    		ISetOfAtomContainers setOfResonance = gRI.getAllStructures(product);
@@ -227,7 +225,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    				outRes:
 		    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 		    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
-		    				String smilesr = sg.createSMILES((IMolecule) prod);
+//		    				String smilesr = sg.createSMILES((IMolecule) prod);
 //		    	    		System.out.println("smilesR�; "+smilesr);
 		    	        	
 		    				HydrogenAdder hAdder = new HydrogenAdder();
@@ -313,8 +311,8 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 //        System.out.println(p0+"="+p1);
         if(p0 > p1){
 //        	System.out.println("icorrect");
-        	Double o1 = dar.get(0);
-        	Double o0 = dar.get(1);
+        	double o1 = dar.get(0);
+        	double o0 = dar.get(1);
         	dar = new DoubleArrayResult(2);
         	dar.add(o0);
         	dar.add(o1);
