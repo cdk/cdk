@@ -266,6 +266,29 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			assertEquals(testResult[i],result, 0.08);
 		}
 	}
+	/**
+	 *  A unit test for JUnit. This molecule break. With PETRA as well.
+	 */
+	public void testPartialPiChargeDescripto3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+//		double [] testResult={};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+//		for (int i = 0 ; i < mol.getAtomCount(); i++){
+//			System.out.println("i: "+i);
+//	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+////	        System.out.println(mol.getAtomAt(i).getSymbol()+"-result: "+result);
+//			assertEquals(0.0,result, 0.0001);
+//		}
+	}
 
 }
 

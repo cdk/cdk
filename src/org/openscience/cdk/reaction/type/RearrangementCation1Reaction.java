@@ -224,7 +224,7 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 					if(bonds[j].getOrder() == 1.0){
 						IAtom atom = bonds[j].getConnectedAtom(atoms[i]);
 						ILonePair[] lp = reactant.getLonePairs(atom);
-						if(lp.length > 0 ){
+						if((lp.length > 0 )&& (atom.getFormalCharge() == 0)){
 							if(rings.contains(atom))
 								continue;
 							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);

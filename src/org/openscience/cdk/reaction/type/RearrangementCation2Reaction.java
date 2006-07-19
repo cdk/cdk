@@ -7,6 +7,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -148,47 +149,51 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
 							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0){
-								/* positions atoms and bonds */
-								int atom0P = reactant.getAtomNumber(atoms[i]);
-								int bond1P = reactant.getBondNumber(bonds[j]);
-								int bond2P = reactant.getBondNumber(bondsI[k]);
-								int atom1P = reactant.getAtomNumber(atom);
-								int atom2P = reactant.getAtomNumber(bondsI[k].getConnectedAtom(atom));
-								
-								/* action */
-								IAtomContainer acCloned;
-								try {
-									acCloned = (IAtomContainer)reactant.clone();
-								} catch (CloneNotSupportedException e) {
-									throw new CDKException("Could not clone IMolecule!", e);
+								IAtom atomConn = bondsI[k].getConnectedAtom(atom);
+								ILonePair[] lp = reactant.getLonePairs(atomConn);
+								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length == 0){
+									/* positions atoms and bonds */
+									int atom0P = reactant.getAtomNumber(atoms[i]);
+									int bond1P = reactant.getBondNumber(bonds[j]);
+									int bond2P = reactant.getBondNumber(bondsI[k]);
+									int atom1P = reactant.getAtomNumber(atom);
+									int atom2P = reactant.getAtomNumber(bondsI[k].getConnectedAtom(atom));
+									
+									/* action */
+									IAtomContainer acCloned;
+									try {
+										acCloned = (IAtomContainer)reactant.clone();
+									} catch (CloneNotSupportedException e) {
+										throw new CDKException("Could not clone IMolecule!", e);
+									}
+									
+									int charge = acCloned.getAtomAt(atom0P).getFormalCharge();
+									acCloned.getAtomAt(atom0P).setFormalCharge(charge-1);
+									
+									double order = acCloned.getBondAt(bond1P).getOrder();
+									acCloned.getBondAt(bond1P).setOrder(order+1);
+									
+									order = acCloned.getBondAt(bond2P).getOrder();
+									acCloned.getBondAt(bond2P).setOrder(order-1);
+									
+									charge = acCloned.getAtomAt(atom2P).getFormalCharge();
+									acCloned.getAtomAt(atom2P).setFormalCharge(charge+1);
+									
+									/* mapping */
+									IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
+							        reaction.addMapping(mapping);
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtomAt(atom1P));
+							        reaction.addMapping(mapping);
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k].getConnectedAtom(atom), acCloned.getAtomAt(atom2P));
+							        reaction.addMapping(mapping);
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
+							        reaction.addMapping(mapping);
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBondAt(bond2P));
+							        reaction.addMapping(mapping);
+									
+									reaction.addProduct((IMolecule) acCloned);
+									setOfReactions.addReaction(reaction);
 								}
-								
-								int charge = acCloned.getAtomAt(atom0P).getFormalCharge();
-								acCloned.getAtomAt(atom0P).setFormalCharge(charge-1);
-								
-								double order = acCloned.getBondAt(bond1P).getOrder();
-								acCloned.getBondAt(bond1P).setOrder(order+1);
-								
-								order = acCloned.getBondAt(bond2P).getOrder();
-								acCloned.getBondAt(bond2P).setOrder(order-1);
-								
-								charge = acCloned.getAtomAt(atom2P).getFormalCharge();
-								acCloned.getAtomAt(atom2P).setFormalCharge(charge+1);
-								
-								/* mapping */
-								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
-						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtomAt(atom1P));
-						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k].getConnectedAtom(atom), acCloned.getAtomAt(atom2P));
-						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
-						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBondAt(bond2P));
-						        reaction.addMapping(mapping);
-								
-								reaction.addProduct((IMolecule) acCloned);
-								setOfReactions.addReaction(reaction);
 							}
 						}
 					}
@@ -225,11 +230,15 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
 							if(bondsI[k].getOrder() == 2.0){
-								atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bondsI[k].getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bondsI[k].setFlag(CDKConstants.REACTIVE_CENTER,true);
+								IAtom atomConn = bondsI[k].getConnectedAtom(atom);
+								ILonePair[] lp = reactant.getLonePairs(atomConn);
+								if(lp.length == 0){
+									atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+									atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									atomConn.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
+									bondsI[k].setFlag(CDKConstants.REACTIVE_CENTER,true);
+								}
 							}
 						}
 					}

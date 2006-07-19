@@ -133,8 +133,10 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
 	    	try {
-	        	pepe.assignGasteigerPiPartialCharges(ac, true);
 	        	IAtom[] atoms = ac.getAtoms();
+	    		for (int i=0; i<atoms.length; i++)
+	    			atoms[i].setCharge(0.0);
+	        	pepe.assignGasteigerPiPartialCharges(ac, true);
 				for (int i=0; i<atoms.length; i++) {
 					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
 					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(ac.getAtomAt(i).getCharge()));

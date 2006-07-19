@@ -85,7 +85,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
 
 		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
-       
+		
 		/*1*/
         Molecule molecule1 = (new SmilesParser()).parseSmiles("C[C+](O)C=O");
         adder = new HydrogenAdder();
@@ -98,50 +98,21 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 		
-		/*2*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("CC(O)=CO");
-		adder = new HydrogenAdder();
-		adder.addImplicitHydrogensToSatisfyValency(molecule2);
-		lpcheck.newSaturate(molecule2);
-		IAtom atom2a =  molecule2.getAtomAt(2);
-		molecule2.addElectronContainer(new SingleElectron(atom2a));
-		atom2a.setHydrogenCount(0);
-		IAtom atom2b =  molecule2.getAtomAt(4);
-		atom2b.setHydrogenCount(0);
-		atom2b.setFormalCharge(1);
-
-		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
-		
-		/*3*/
-		Molecule molecule3 = (new SmilesParser()).parseSmiles("CC(=O)CO");
-		adder = new HydrogenAdder();
-		adder.addImplicitHydrogensToSatisfyValency(molecule3);
-		lpcheck.newSaturate(molecule3);
-		IAtom atom3a =  molecule3.getAtomAt(3);
-		molecule3.addElectronContainer(new SingleElectron(atom3a));
-		atom3a.setHydrogenCount(1);
-		IAtom atom3b =  molecule3.getAtomAt(4);
-		atom3b.setHydrogenCount(0);
-		atom3b.setFormalCharge(1);
-
-		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule3);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(5),qAC));
-		
-		/*4*/
-		Molecule molecule4 = (new SmilesParser()).parseSmiles("CC(=O)C=O");
-		adder = new HydrogenAdder();
-		adder.addImplicitHydrogensToSatisfyValency(molecule4);
-		lpcheck.newSaturate(molecule4);
-		IAtom atom4 =  molecule4.getAtomAt(4);
-		molecule4.addElectronContainer(new SingleElectron(atom4));	
-		selectron = molecule4.getLonePairs(atom4);
-		molecule4.removeElectronContainer(selectron[0]);
-		atom4.setFormalCharge(1);
-		
-
-		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule4);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(7),qAC));
+//		/*2*/
+//		Molecule molecule2 = (new SmilesParser()).parseSmiles("CC(O)=CO");
+//		adder = new HydrogenAdder();
+//		adder.addImplicitHydrogensToSatisfyValency(molecule2);
+//		lpcheck.newSaturate(molecule2);
+//		IAtom atom2a =  molecule2.getAtomAt(2);
+//		molecule2.addElectronContainer(new SingleElectron(atom2a));
+//		atom2a.setHydrogenCount(0);
+//		IAtom atom2b =  molecule2.getAtomAt(4);
+//		atom2b.setHydrogenCount(0);
+//		atom2b.setFormalCharge(1);
+//
+//		qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(3),qAC));
+//		 t.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(7),qAC));
 	}
 	/**
 	 * A unit test suite for JUnit: Resonance CC(=[O*+])C=O <=> CC(=O)C=[O*+]
