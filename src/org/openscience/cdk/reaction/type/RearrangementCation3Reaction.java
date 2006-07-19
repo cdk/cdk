@@ -206,7 +206,7 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++)
-			if(atoms[i].getFormalCharge() == 1 ){
+			if((atoms[i].getFormalCharge() == 1)&& (!atoms[i].getSymbol().equals("C"))/*Carbon don't acquire charge*/ ){
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 2.0){

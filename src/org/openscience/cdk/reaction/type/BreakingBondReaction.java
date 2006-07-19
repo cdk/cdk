@@ -1,10 +1,13 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.ArrayList;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
@@ -12,6 +15,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
@@ -149,14 +153,19 @@ public class BreakingBondReaction implements IReactionProcess{
 					}
 					
 					double order = reactantCloned.getBondAt(bond).getOrder();
+					
 					reactantCloned.getBondAt(bond).setOrder(order - 1);
+		
 					int charge = 0;
+					ISetOfMolecules setOfMolecules = null;
 					if (j == 0){
 						charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
 						reactantCloned.getAtomAt(atom1).setFormalCharge(charge+1);
 						charge = reactantCloned.getAtomAt(atom2).getFormalCharge();
 						reactantCloned.getAtomAt(atom2).setFormalCharge(charge-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(atom2)));
+						if(order == 1)
+							setOfMolecules = fragmentMolecule(reactantCloned,bond);
 						
 					} else{
 						charge = reactantCloned.getAtomAt(atom2).getFormalCharge();
@@ -164,7 +173,8 @@ public class BreakingBondReaction implements IReactionProcess{
 						charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
 						reactantCloned.getAtomAt(atom1).setFormalCharge(-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(atom1)));
-							
+						if(order == 1)
+							setOfMolecules = fragmentMolecule(reactantCloned,bond);
 					}
 					
 					/* mapping */
@@ -175,8 +185,11 @@ public class BreakingBondReaction implements IReactionProcess{
 			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(atom2));
 			        reaction.addMapping(mapping);
 					
-					
-					reaction.addProduct(reactantCloned);
+					if(setOfMolecules != null)
+						for(int z = 0 ; z < setOfMolecules.getAtomContainerCount(); z++)
+							reaction.addProduct(setOfMolecules.getMolecule(z));
+					else
+						reaction.addProduct(reactantCloned);
 					setOfReactions.addReaction(reaction);
 				}
 			}
@@ -186,6 +199,86 @@ public class BreakingBondReaction implements IReactionProcess{
 		return setOfReactions;	
 		
 		
+	}
+	/**
+	 * fragment a molecule in two. It search where don't exist a connection between two atoms
+	 * @param reactantCloned IMolecule to fragment
+	 * @param bond           Bond to remove
+	 * @return               The ISetOfMolecules
+	 */
+	private ISetOfMolecules fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
+		if(!GeometryTools.has2DCoordinates(molecule)){
+			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+			sdg.setMolecule(molecule);
+			molecule = sdg.getMolecule();
+			try {
+				sdg.generateCoordinates();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		ISetOfMolecules setOfFragments = molecule.getBuilder().newSetOfMolecules();
+		IMolecule molecule1,molecule2;
+		try {
+			molecule1 = (IMolecule)molecule.clone();
+			molecule1.removeElectronContainer(bond);
+			molecule2 = (IMolecule)molecule.clone();
+			molecule2.removeElectronContainer(bond);
+			molecule.removeElectronContainer(bond);
+		} catch (CloneNotSupportedException e) {
+			throw new CDKException("Could not clone IMolecule!", e);
+		}
+		
+		for(int i = 0 ; i < molecule.getAtomCount() ; i++)
+			molecule.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+		
+		
+		
+		molecule.getAtomAt(0).setFlag(CDKConstants.VISITED, true);
+		ArrayList atomsVisited = new ArrayList();
+		atomsVisited.add(molecule.getAtomAt(0));
+		
+		
+		for (int i = 0; i < atomsVisited.size(); i++){
+			IAtom[] atomsConnected = molecule.getConnectedAtoms((IAtom)atomsVisited.get(i));
+			for (int j = 0; j < atomsConnected.length; j++){
+				if(atomsConnected[j].getFlag(CDKConstants.VISITED) == false){
+					atomsConnected[j].setFlag(CDKConstants.VISITED, true);
+					atomsVisited.add(atomsConnected[j]);
+				}
+			}
+		}
+		for (int i = 0; i < molecule.getAtomCount(); i++){
+			if(molecule.getAtomAt(i).getFlag(CDKConstants.VISITED) == true){
+				for (int j = 0; j < molecule1.getAtomCount(); j++){
+					if (compareCoordenates(molecule.getAtomAt(i),molecule1.getAtomAt(j))){
+						molecule1.removeAtomAndConnectedElectronContainers(molecule1.getAtomAt(j));}
+				}
+				
+			} else{
+				for (int j = 0; j < molecule2.getAtomCount(); j++){
+					if (compareCoordenates(molecule.getAtomAt(i),molecule2.getAtomAt(j))){
+						molecule2.removeAtomAndConnectedElectronContainers(molecule2.getAtomAt(j));}
+				}
+				
+			}
+		}
+		if(molecule1.getAtomCount()< molecule.getAtomCount())
+			setOfFragments.addAtomContainer(molecule1);
+		if(molecule2.getAtomCount()< molecule.getAtomCount())
+			setOfFragments.addAtomContainer(molecule2);
+		return setOfFragments;
+	}
+	/**
+	 * Compare two atoms if they have the same coordenates.
+	 * @param atom1 IAtom
+	 * @param atom2 IAtom
+	 * @return True, if they the same coordenates.
+	 */
+	private boolean compareCoordenates(IAtom atom1, IAtom atom2) {
+		if(atom1.getPoint2d().equals(atom2.getPoint2d()))
+			return true;
+		return false;
 	}
 	/**
 	 * set the active center for this molecule. 
@@ -207,7 +300,6 @@ public class BreakingBondReaction implements IReactionProcess{
 			atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-			
 		}
 			
 	}

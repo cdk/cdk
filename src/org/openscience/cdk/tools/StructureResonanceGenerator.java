@@ -62,11 +62,11 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  **/
 public class StructureResonanceGenerator {
 	
-	private boolean cationR;
-	private boolean anionR;
-	private boolean radicalR;
-	private boolean bondR;
-	private boolean hasActiveCenter;
+	private boolean cationR = true;
+	private boolean anionR= true;
+	private boolean radicalR= true;
+	private boolean bondR= true;
+	private boolean hasActiveCenter= false;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	
@@ -350,7 +350,7 @@ public class StructureResonanceGenerator {
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ac = setID(set.getAtomContainer(i));
 			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(ac);
-			//QueryAtomContainer qAC2 = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
+//			QueryAtomContainer qAC = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
 //					System.out.println("exist");

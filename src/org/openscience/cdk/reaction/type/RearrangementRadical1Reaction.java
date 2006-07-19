@@ -203,7 +203,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
-		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 || AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0)
+		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 /*|| AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0*/)
 			return;
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(reactant.getSingleElectron(atoms[i]).length == 1 ){

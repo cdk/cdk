@@ -81,7 +81,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false);
 		ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
 
 		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
@@ -161,7 +161,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
 
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
@@ -199,7 +199,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,false,false);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
 
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
@@ -235,7 +235,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		molecule.getBondAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtomAt(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,true);
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		ISetOfAtomContainers setOfMolecules = gRI.getStructures(molecule);
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
@@ -336,7 +336,8 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
         
-        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
         
 		Assert.assertEquals(4,setOfMolecules.getAtomContainerCount());
 
@@ -364,8 +365,9 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
         
-        ISetOfAtomContainers setOfMolecules = gR.getAllStructures(molecule);
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		 ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
         
-		Assert.assertEquals(12,setOfMolecules.getAtomContainerCount());
+		Assert.assertEquals(10,setOfMolecules.getAtomContainerCount());
 	}
 }

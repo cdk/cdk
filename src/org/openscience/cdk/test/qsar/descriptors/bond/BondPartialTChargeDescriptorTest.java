@@ -103,7 +103,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.015);
+			assertEquals(testResult[i],result,0.02);
 		}
 	}
 	/**
