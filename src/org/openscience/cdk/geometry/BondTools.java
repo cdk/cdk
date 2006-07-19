@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.
+ * The methods for detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
  *
  * @author      shk3
  * @cdk.created 2005-08-04
