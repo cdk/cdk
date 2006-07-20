@@ -31,6 +31,7 @@ package org.openscience.cdk.applications.jchempaint;
 import java.lang.reflect.Field;
 import java.util.MissingResourceException;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
@@ -193,6 +194,8 @@ public class JChemPaintMenuBar extends JMenuBar {
 						itemKeys[i].substring(0, itemKeys[i].length() - 1),
 						true, false
 						);
+				if(itemKeys[i].substring(0, itemKeys[i].length() - 1).equals("addImplHydrogen"))
+					((JCheckBoxMenuItem)mi).setSelected(true);
 				// default off, because we cannot turn it on anywhere (yet)
 				menu.add(mi);
 			}

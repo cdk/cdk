@@ -82,7 +82,7 @@ public class Renderer2DModelEditor extends FieldTablePanel implements ActionList
         showEndCarbons = new JCheckBox();
         addField("Show explicit methyl groups", showEndCarbons);
         showImplicitHydrogens = new JCheckBox();
-        addField("Show implicit hydrogens", showImplicitHydrogens);
+        addField("Show implicit hydrogens if atom symbol is shown", showImplicitHydrogens);
         showAromaticity = new JCheckBox();
         addField("Use aromatic ring circles", showAromaticity);
         showAromaticityInCDKStyle = new JCheckBox();

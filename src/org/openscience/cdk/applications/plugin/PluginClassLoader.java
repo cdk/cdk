@@ -42,6 +42,11 @@ public class PluginClassLoader extends URLClassLoader {
         if (logger == null) logger = new LoggingTool(this);
     }
 
+    public PluginClassLoader(URL url, ClassLoader parent) {
+        super(new URL[] { url },parent);
+        if (logger == null) logger = new LoggingTool(this);
+    }
+    
     /**
      * This class loading method overwrites the default behaviour and tries
      * to look in the plugin jar first. This allows that users put

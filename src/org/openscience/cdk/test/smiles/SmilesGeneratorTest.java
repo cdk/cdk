@@ -705,6 +705,5 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		//System.out.println(filename + " -> " + moleculeSmile);
 		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
 	}
-
 }
 

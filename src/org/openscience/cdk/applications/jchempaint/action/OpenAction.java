@@ -49,6 +49,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * Shows the open dialog
@@ -154,6 +155,22 @@ public class OpenAction extends JCPAction {
 					if (chemFile != null) {
 												
 						jcpPanel.processChemFile(chemFile);
+						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
+							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getSetOfMolecules().getMolecules();
+							for (int i = 0; i < mols.length; i++)
+							{
+								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+							    if (molecule != null)
+								{
+									try{
+											hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+									}catch(Exception ex){
+										//do nothing
+									}
+								}
+							}
+						}
 						//The following do apply either to the existing or the new frame
 						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);
@@ -183,6 +200,22 @@ public class OpenAction extends JCPAction {
 					chemModel = (ChemModel) cor.read((IChemObject) new ChemModel());
 					if (chemModel != null) {
 						jcpPanel.processChemModel(chemModel);
+						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
+							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getSetOfMolecules().getMolecules();
+							for (int i = 0; i < mols.length; i++)
+							{
+								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+							    if (molecule != null)
+								{
+									try{
+											hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+									}catch(Exception ex){
+										//do nothing
+									}
+								}
+							}
+						}
 						//The following do apply either to the existing or the new frame
 						jcpPanel.lastUsedJCPP.getJChemPaintModel().setTitle(inFile.getName());
 						jcpPanel.lastUsedJCPP.setIsAlreadyAFile(inFile);

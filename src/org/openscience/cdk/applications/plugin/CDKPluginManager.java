@@ -63,6 +63,8 @@ public class CDKPluginManager {
     private String pluginConfigDirName;
     private ICDKEditBus editBus;
     
+    private ClassLoader parentClassLoader=null;
+    
     /**
      * Instantiate a CDKPluginManager.
      *
@@ -257,6 +259,8 @@ public class CDKPluginManager {
                                 logger.debug("Plugin URL: ", plugins[i].toURL());
                                 URL u = new URL("jar", "", plugins[i].toURL() + "!/");
                                 ClassLoader loader = new PluginClassLoader(u);
+                                if(parentClassLoader!=null)
+                                	loader = new PluginClassLoader(u,parentClassLoader);
                                 try {
                                     loadPlugin(loader, pluginName);
                                     logger.info("  loaded.");
@@ -352,6 +356,10 @@ public class CDKPluginManager {
         }
         
     }
+
+	public void setParentClassLoader(ClassLoader parentClassLoader) {
+		this.parentClassLoader = parentClassLoader;
+	}
     
 }
 

@@ -117,6 +117,15 @@ public class AddHydrogenAction extends JCPAction
             }
             jcpPanel.getUndoSupport().postEdit(edit);
 			jcpmodel.fireChange();
+			Controller2DModel controllerModel = jcpPanel.getJChemPaintModel().getControllerModel();
+			if (type.equals("implicit"))
+			{
+				if(!controllerModel.getAutoUpdateImplicitHydrogens()){
+					controllerModel.setAutoUpdateImplicitHydrogens(true);
+				}else{
+	                controllerModel.setAutoUpdateImplicitHydrogens(false);
+				}
+			}
 		}
 	}
 
@@ -164,9 +173,16 @@ public class AddHydrogenAction extends JCPAction
 				{
 					if (type.equals("implicit"))
 					{
-                        hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
-                        controllerModel.setAutoUpdateImplicitHydrogens(true);
-//                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+						if(!controllerModel.getAutoUpdateImplicitHydrogens()){
+							hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+						}else{
+							org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+							for (int j = 0; j < atoms.length; j++)
+							{
+								logger.debug("Checking atom: ", j);
+								atoms[j].setHydrogenCount(0);
+							}
+	            		}
 					} else if (type.equals("explicit"))
 					{
 						double bondLength = GeometryTools.getBondLengthAverage(molecule);
@@ -175,28 +191,24 @@ public class AddHydrogenAction extends JCPAction
 							logger.warn("Could not determine average bond length from structure!");
 							bondLength = controllerModel.getBondPointerLength();
 						}
-//                        hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
                         changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
                         HydrogenPlacer hPlacer = new HydrogenPlacer();
 						hPlacer.placeHydrogens2D(molecule, bondLength);
-						controllerModel.setAutoUpdateImplicitHydrogens(false);
 					} else if (type.equals("allimplicit"))
 					{
-						// remove explicit hydrogen if necessary
-						org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
-						for (int j = 0; j < atoms.length; j++)
-						{
-							logger.debug("Checking atom: ", j);
-							if (atoms[j].getSymbol().equals("H"))
+							// remove explicit hydrogen if necessary
+							org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+							for (int j = 0; j < atoms.length; j++)
 							{
-								logger.debug("Atom is a hydrogen");
-								molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+								logger.debug("Checking atom: ", j);
+								if (atoms[j].getSymbol().equals("H"))
+								{
+									logger.debug("Atom is a hydrogen");
+									molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+								}
 							}
-						}
-						// add implicit hydrogen
-                        hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
-//                        changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
-                        controllerModel.setAutoUpdateImplicitHydrogens(true);
+							// add implicit hydrogen
+	                        hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 					}
 				} else
 				{
@@ -205,6 +217,7 @@ public class AddHydrogenAction extends JCPAction
 			}
 		} catch (Exception exc)
 		{
+			exc.printStackTrace();
 			logger.error("Error while adding hydrogen: ", exc.getMessage());
 			logger.debug(exc);
 		}

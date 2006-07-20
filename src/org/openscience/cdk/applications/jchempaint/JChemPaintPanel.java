@@ -464,6 +464,20 @@ public abstract class JChemPaintPanel
 				model.getRendererModel().setBackgroundDimension(viewerDim);
 				}
 		}
+		if(jchemPaintModel!=null && jchemPaintModel.getControllerModel()!=null)
+			model.getControllerModel().setAutoUpdateImplicitHydrogens(jchemPaintModel.getControllerModel().getAutoUpdateImplicitHydrogens());
+		if(jchemPaintModel!=null && jchemPaintModel.getRendererModel()!=null){
+			model.getRendererModel().setUseAntiAliasing(jchemPaintModel.getRendererModel().getUseAntiAliasing());
+			model.getRendererModel().setShowImplicitHydrogens(jchemPaintModel.getRendererModel().getShowImplicitHydrogens());
+			model.getRendererModel().setShowEndCarbons(jchemPaintModel.getRendererModel().getShowEndCarbons());
+			model.getRendererModel().setShowAromaticityInCDKStyle(jchemPaintModel.getRendererModel().getShowAromaticityInCDKStyle());
+			model.getRendererModel().setDrawNumbers(jchemPaintModel.getRendererModel().getDrawNumbers());
+			model.getRendererModel().setShowAtomAtomMapping(jchemPaintModel.getRendererModel().getShowAtomAtomMapping());
+			model.getRendererModel().setKekuleStructure(jchemPaintModel.getRendererModel().getKekuleStructure());
+			model.getRendererModel().setColorAtomsByType(jchemPaintModel.getRendererModel().getColorAtomsByType());
+			model.getRendererModel().setShowTooltip(jchemPaintModel.getRendererModel().getShowTooltip());
+			model.getRendererModel().setShowReactionBoxes(jchemPaintModel.getRendererModel().getShowReactionBoxes());
+		}
 		this.jchemPaintModel = model;
 		jchemPaintModel.addChangeListener(this);
 		org.openscience.cdk.interfaces.IChemModel chemModel = model.getChemModel();
@@ -595,7 +609,7 @@ public abstract class JChemPaintPanel
 			try {
 				coa = new ClearAllEdit(this.getChemModel(),(ISetOfMolecules)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
 				this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
-			} catch (CloneNotSupportedException e) {
+			} catch (Exception e) {
 				logger.error("Clone of ISetOfMolecules failed: ", e.getMessage());
             	logger.debug(e);
 			}
@@ -745,7 +759,7 @@ public abstract class JChemPaintPanel
 		}else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null ||
 				getJChemPaintModel().getChemModel().getSetOfReactions() == null /*|| 
 				getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0*/) {
-			registerModel(jcpm);
+			    registerModel(jcpm);
 				setJChemPaintModel(jcpm);
 				repaint();
 		} else {

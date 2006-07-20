@@ -489,6 +489,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 					((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().setBackgroundDimension(new Dimension(((JChemPaintEditorPanel)((JFrame)e.getSource()).getContentPane().getComponent(0)).getJChemPaintModel().getRendererModel().getBackgroundDimension().width,((JFrame)e.getSource()).getHeight()-30));
 			}
 		});
+		model.getControllerModel().setAutoUpdateImplicitHydrogens(true);
+		model.getRendererModel().setShowEndCarbons(true);
 		return frame;
 	}
 

@@ -152,7 +152,7 @@ public class InsertFromSmiles extends JFrame
 				SmilesParser sp = new SmilesParser();
 				IMolecule m = sp.parseSmiles(SMILES);
 
-                // ok, get relevent bits from active model
+				// ok, get relevent bits from active model
                 JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
                 Renderer2DModel renderModel = jcpModel.getRendererModel();
                 org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();

@@ -152,8 +152,31 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		if(getParameter("compact")!=null && getParameter("compact").equals("true")){
 			theModel.getRendererModel().setIsCompact(true);
 		}
-		if(getParameter("impliciths")!=null && getParameter("impliciths").equals("true")){
+		if(getParameter("impliciths")!=null && getParameter("impliciths").equals("false")){
+			 theModel.getControllerModel().setAutoUpdateImplicitHydrogens(false);
+			 theModel.getRendererModel().setShowImplicitHydrogens(false);
+			 theModel.getRendererModel().setShowEndCarbons(false);
+		}else{
 			 theModel.getControllerModel().setAutoUpdateImplicitHydrogens(true);
+			 theModel.getRendererModel().setShowImplicitHydrogens(true);
+			 theModel.getRendererModel().setShowEndCarbons(true);
+			 
+			 HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+	        	org.openscience.cdk.interfaces.IMolecule[] mols = theModel.getChemModel().getSetOfMolecules().getMolecules();
+				for (int i = 0; i < mols.length; i++)
+				{
+					org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+					if (molecule != null)
+						
+					{
+						try{
+								hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+						}catch(Exception ex){
+							//do nothing
+						}
+					}
+				}
+			 
 		}
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
