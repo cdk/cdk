@@ -47,7 +47,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
-import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 //import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
@@ -153,12 +152,20 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IAtomContainer!", e);
 		}
-    	int positionCharge = 0;
     	ArrayList result1 = new ArrayList();
     	ArrayList distance1 = new ArrayList();
     	ArrayList result2 = new ArrayList();
     	ArrayList distance2 = new ArrayList();
     	IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
+    	
+
+        /* RESTRICTION: only possible to break H or doble bonds*/
+    	if(ac.getBondAt(bondPosition).getOrder() < 2)
+    		if(!atoms[0].getSymbol().equals("H") && !atoms[1].getSymbol().equals("H")){
+				DoubleArrayResult dar = new DoubleArrayResult();
+				dar.add(0.0);dar.add(0.0);
+    			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
+    		}
     	
     	/*break bond*/
     	BreakingBondReaction type = new BreakingBondReaction();
@@ -168,6 +175,9 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     	int atomPos1 = ac.getAtomNumber(atoms[1]);
     	ac.getBondAt(bondPosition).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
+
+    	
+    	
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
         
@@ -185,88 +195,67 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 //	        	SmilesGenerator sg = new SmilesGenerator(ac.getBuilder());
 //	    		String smiles2 = sg.createSMILES((IMolecule) product);
 //	    		System.out.println("smiles; "+smiles2);
-	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,false);
+	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false);
 	    		ISetOfAtomContainers setOfResonance = gRI.getAllStructures(product);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
 	    			continue;
-//				System.out.println("numSet: "+setOfResonance.getAtomContainerCount());
-	    		/*hyperconjugation*/
-	    		HyperconjugationReaction typeHC = new HyperconjugationReaction();
-	            ISetOfMolecules setOfReactantsHC = ac.getBuilder().newSetOfMolecules();
-	            setOfReactantsHC.addMolecule((IMolecule) product);
-	    		ISetOfReactions setOfReactionsHC = typeHC.initiate(setOfReactantsHC, null);
-				
-	//			if(setOfReactionsHC != null)
-	//    			if(setOfReactionsHC.getReactionCount() > 0)
-	//    				for(int j = 0 ; j < setOfReactionsHC.getReactionCount(); j++)
-	//    					setOfMolecules.addAtomContainer(setOfReactionsHC.getReaction(j).getProducts().getAtomContainer(0));
 	    		
-	//    		if(setOfMolecules.getAtomContainerCount() > 1){
-	    			int positionAC = 0;
-	    			
-	    			if(product.getAtomAt(atomPos0).getFormalCharge() == 1){
-//	    				System.out.println(atomPos0+" <0");
-	    				positionAC = atomPos0;}
-	    			else
-	    				positionAC = atomPos1;
-	    				
-	//    			for(int j = 0; j < product.getAtomCount(); j++){
-	//					 IAtom atomsPr = product.getAtomAt(j);
-	//					 if(atomsPr.getFormalCharge() > 0){
-	//						 positionAC = j;
-	//						 if(atomsPr.equals(atoms[0]))
-	//								 positionCharge = 0;
-	//						 else if(atomsPr.equals(atoms[1]))
-	//							 positionCharge = 1;
-	//    				}
-	//				}
-//	    			System.out.println("res--");
-	    			if(setOfResonance.getAtomContainerCount() > 1){
-	    				outRes:
-		    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
-		    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
+    			int positionAC = 0;
+    			
+    			if(product.getAtomAt(atomPos0).getFormalCharge() == 1){
+    				positionAC = atomPos0;}
+    			else
+    				positionAC = atomPos1;
+    			
+    			if(setOfResonance.getAtomContainerCount() > 1){
+    				outRes:
+	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
+	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
 //		    				String smilesr = sg.createSMILES((IMolecule) prod);
 //		    	    		System.out.println("smilesR�; "+smilesr);
-		    	        	
-		    				HydrogenAdder hAdder = new HydrogenAdder();
-		    				hAdder.addImplicitHydrogensToSatisfyValency((IMolecule) prod);
-		    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
-		    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
-		    					 /*search positive charge*/
-		    					 for(int k = 0; k < prod.getAtomCount(); k++){
-		    						 IAtom atomsP = prod.getAtomAt(k);
-		    						 if(atomsP.getFormalCharge() > 0){
-		    							DoubleResult electroneg = new DoubleResult(0.0); 
-		    						    Integer[] params = new Integer[1];
-		    	    					params[0] = new Integer(6);
-		    	    			    	pielectronegativity = new PiElectronegativityDescriptor();
-		    	    					pielectronegativity.setParameters(params);
-		    	    					try{
-		    	    						electroneg = (DoubleResult)pielectronegativity.calculate(atomsP,prod).getValue();
-		    	    					} catch (Exception ex1) {
-		    	    						continue outRes;
-		    	    					}
-//		    	    					System.out.println("result_: "+electroneg.doubleValue());
-		    	    			        if(i == 0)result1.add(electroneg);
-		    	    			        else result2.add(electroneg);
-		    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
-		    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
-		    	    			        descriptor.setParameters(paramsD);
-		    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtomAt(positionAC),prod).getValue());
-		    	    			        if(i == 0)distance1.add(dis);
-		    	    			        else distance2.add(dis);
+	    	        	
+	    				HydrogenAdder hAdder = new HydrogenAdder();
+	    				hAdder.addImplicitHydrogensToSatisfyValency((IMolecule) prod);
+	    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
+	    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
+	    					 /*search positive charge*/
+	    					 for(int k = 0; k < prod.getAtomCount(); k++){
+	    						 if(prod.getAtomCount() < 2)
+	    							 continue;
+	    						 IAtom atomsP = prod.getAtomAt(k);
+	    						 if(product.getAtomAt(k).getFormalCharge() !=
+	    							 atomsP.getFormalCharge() /*> 0*/)
+	    						 if(atomsP.getFormalCharge()== 1 || product.getAtomAt(k).getFormalCharge() == 1){
+	    							DoubleResult electroneg = new DoubleResult(0.0); 
+	    						    Integer[] params = new Integer[1];
+	    	    					params[0] = new Integer(6);
+	    	    			    	pielectronegativity = new PiElectronegativityDescriptor();
+	    	    					pielectronegativity.setParameters(params);
+	    	    					try{
+	    	    						electroneg = (DoubleResult)pielectronegativity.calculate(atomsP,prod).getValue();
+	    	    					} catch (Exception ex1) {
+	    	    						continue;
+	    	    					}
+//	    	    					System.out.println("result_: "+electroneg.doubleValue());
+	    	    			        if(i == 0)result1.add(electroneg);
+	    	    			        else result2.add(electroneg);
+	    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
+	    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
+	    	    			        descriptor.setParameters(paramsD);
+	    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtomAt(positionAC),prod).getValue());
+	    	    			        if(i == 0)distance1.add(dis);
+	    	    			        else distance2.add(dis);
 //		    	    			        System.out.println("distan: "+dis.intValue());
-		    	    					break;
-		    						 }
-		    					 }
-		    					 
-		    				 }
-		    			}
+	    	    					break;
+	    						 }
+	    					 }
+	    					 
+	    				 }
 	    			}
-	    		}
+    			}
+    		}
         }
         /*logarithm*/
-//        System.out.println("---------");
         DoubleArrayResult dar = new DoubleArrayResult(2);
         double value = 0.0;
         double sum = 0.0;

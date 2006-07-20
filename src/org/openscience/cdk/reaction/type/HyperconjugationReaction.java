@@ -161,7 +161,14 @@ public class HyperconjugationReaction implements IReactionProcess{
 				reactantCloned.getAtomAt(atom1).setFormalCharge(charge-1);
 				
 				int numbH = reactantCloned.getAtomAt(atom2).getHydrogenCount();
-				reactantCloned.getAtomAt(atom2).setHydrogenCount(numbH-1);
+				if(numbH != 0)
+					reactantCloned.getAtomAt(atom2).setHydrogenCount(numbH-1);
+				else{
+					IAtom hyd = getHydrogenConnected(reactantCloned,reactantCloned.getAtomAt(atom2));
+					if(hyd == null)
+						continue;
+					reactantCloned.removeAtomAndConnectedElectronContainers(hyd);
+				}
 				
 				
 				/* mapping */
@@ -208,15 +215,31 @@ public class HyperconjugationReaction implements IReactionProcess{
 			IAtom atom1 = bonds[i].getAtoms()[0];
 			IAtom atom2 = bonds[i].getAtoms()[1];
 			if(bonds[i].getOrder() == 1 &&
-					((atom1.getFormalCharge() == 1 && atom2.getFormalCharge() == 0 && reactant.getSingleElectron(atom2).length == 0)||
-					 (atom2.getFormalCharge() == 1 && atom1.getFormalCharge() == 0 && reactant.getSingleElectron(atom1).length == 0))){
+					((atom1.getFormalCharge() == 1 && atom2.getFormalCharge() == 0 && reactant.getSingleElectron(atom2).length == 0 && 
+							(atom2.getHydrogenCount() != 0 || getHydrogenConnected(reactant, atom2) != null))||
+					 (atom2.getFormalCharge() == 1 && atom1.getFormalCharge() == 0 && reactant.getSingleElectron(atom1).length == 0 && 
+							 (atom1.getHydrogenCount() != 0 || getHydrogenConnected(reactant, atom1) != null)))){
 						atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 			
 		}
-			
+	}
+	/**
+	 * get the hydrogen atom which is connected for this atom
+	 * 
+	 * @param molecule
+	 * @param atom
+	 * @return The IAtom hydrogen.
+	 */
+	private IAtom getHydrogenConnected(IMolecule molecule, IAtom atom){
+		IAtom[] atomsCo = molecule.getConnectedAtoms(atom);
+		IAtom  atomH = null;
+		for(int i = 0 ; i < atomsCo.length ; i++)
+			if(atomsCo[i].getSymbol().equals("H"))
+				return atomsCo[i];
+		return atomH;
 	}
 	/**
 	 *  Gets the parameterNames attribute of the HyperconjugationReaction object

@@ -219,6 +219,8 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
+		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0)
+			return;
 		IAtom[] atoms = reactant.getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++)
 			if(atoms[i].getFormalCharge() == 1 ){

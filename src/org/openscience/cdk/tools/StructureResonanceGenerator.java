@@ -57,6 +57,7 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * @see RearrangementRadical1Reaction
  * @see RearrangementRadical2Reaction
  * @see RearrangementRadical3Reaction
+ * @see HyperconjugationReaction
  * 
  **/
 public class StructureResonanceGenerator {
@@ -66,7 +67,7 @@ public class StructureResonanceGenerator {
 	private boolean radicalR = true;
 	private boolean bondR = true;
 	private boolean hasActiveCenter = false;
-	private Boolean hyperconjugationR = false;
+	private boolean hyperconjugationR = false;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	
@@ -93,7 +94,7 @@ public class StructureResonanceGenerator {
 			boolean anionR,
 			boolean radicalR,
 			boolean bondR,
-			Boolean hyperconjugationR,
+			boolean hyperconjugationR,
 			boolean hasActiveCenter){
 		this.cationR = cationR;
 		this.anionR = anionR;
