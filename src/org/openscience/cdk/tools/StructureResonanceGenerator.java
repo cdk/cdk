@@ -2,9 +2,7 @@ package org.openscience.cdk.tools;
 
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.SetOfAtomContainers;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.ISetOfMolecules;
@@ -15,6 +13,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.DisplacementChargeFromAcceptorReaction;
 import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
+import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion1Reaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion2Reaction;
 import org.openscience.cdk.reaction.type.RearrangementAnion3Reaction;
@@ -63,28 +62,30 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
 public class StructureResonanceGenerator {
 	
 	private boolean cationR = true;
-	private boolean anionR= true;
-	private boolean radicalR= true;
-	private boolean bondR= true;
-	private boolean hasActiveCenter= false;
+	private boolean anionR = true;
+	private boolean radicalR = true;
+	private boolean bondR = true;
+	private boolean hasActiveCenter = false;
+	private Boolean hyperconjugationR = false;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
-	 * Default: all possible search (Radical,Cation,Anion,Bond), not specified the active center
+	 * Default: all possible search (Radical,Cation,Anion,Bond,hyperconjugation), not specified the active center
 	 */
 	public StructureResonanceGenerator(){
-		this(true,true,true,true,false);
+		this(true,true,true,true,false,false);
 	}
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
-	 * @param cationR          True, search of Cation.
-	 * @param anionR           True, search of Anion.
-	 * @param radicalR         True, search of Radical.
-	 * @param bondR            True, search of Bond.
+	 * @param cationR           True, search of Cation.
+	 * @param anionR            True, search of Anion.
+	 * @param radicalR          True, search of Radical.
+	 * @param bondR             True, search of Bond.
+	 * @param hyperconjugationR True, search of hyperconjugation.
 	 * @param hasActiveCenter  False, search of active Center.
 	 */
 	public StructureResonanceGenerator(
@@ -92,11 +93,13 @@ public class StructureResonanceGenerator {
 			boolean anionR,
 			boolean radicalR,
 			boolean bondR,
+			Boolean hyperconjugationR,
 			boolean hasActiveCenter){
 		this.cationR = cationR;
 		this.anionR = anionR;
 		this.radicalR = radicalR;
 		this.bondR = bondR;
+		this.hyperconjugationR = hyperconjugationR;
 		this.hasActiveCenter = hasActiveCenter;
 		
 	}
@@ -323,6 +326,24 @@ public class StructureResonanceGenerator {
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
 				}
+				if(hyperconjugationR){
+					/* HyperconjugationReaction*/
+					IReactionProcess type  = new HyperconjugationReaction();
+			        type.setParameters(params);
+
+			        removeFlags(setOfAtomContainer.getAtomContainer(i));
+			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        
+			        if(setOfReactions.getReactionCount() != 0)
+						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
+							for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
+								IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
+//								System.out.println("HyperconjugationReaction");
+								if(!existAC(setOfAtomContainer,set))
+									setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
+							}
+			    }
+
 				/* this makes a limition of the search */
 //				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
 //					overLoaded = true;

@@ -81,7 +81,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         ILonePair[] selectron = molecule.getLonePairs(atom);
 		molecule.removeElectronContainer(selectron[0]);
 
-		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false);
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false);
 		ISetOfAtomContainers setOfMolecules = gRI.getAllStructures(molecule);
 
 		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
