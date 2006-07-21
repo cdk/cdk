@@ -67,12 +67,12 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         Assert.assertEquals(1, molecule.getAtomAt(1).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(0)));
 
-        molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
         
 
-        Assert.assertEquals(6,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappings().length);
 		
 	}
 	/**
@@ -100,7 +100,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         Assert.assertEquals(1, molecule.getAtomAt(1).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(0)));
 
-        molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
 		
@@ -129,12 +129,12 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         Assert.assertEquals(1, molecule.getAtomAt(1).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(0)));
 
-        molecule = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtomAt(0).getFormalCharge());
         Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtomAt(1)));
         
 
-        Assert.assertEquals(6,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappings().length);
 		
 	}
 }

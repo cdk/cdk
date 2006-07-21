@@ -127,17 +127,18 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2){
 				
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactants.getMolecule(0));
-				IMolecule reactant = reaction.getReactants().getMolecule(0);
 				
-				int posA1 = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
-				int posA2 = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
-				int posB1 = reactant .getBondNumber(bonds[i]);
 				
 				/**/
 				for (int j = 0; j < 2; j++)
 				{
+					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+					reaction.addReactant(reactants.getMolecule(0));
+					IMolecule reactant = reaction.getReactants().getMolecule(0);
+					
+					int posA1 = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
+					int posA2 = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
+					int posB1 = reactant .getBondNumber(bonds[i]);
 					IMolecule reactantCloned;
 					try {
 						reactantCloned = (IMolecule) reactant.clone();
