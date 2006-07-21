@@ -51,6 +51,20 @@ import org.openscience.cdk.tools.AtomicProperties;
  * then dont use descriptor if have this  value for any 
  * chemicals in cluster?
  * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author     Todd Martin
  * @cdk.module nocompile
  * @cdk.set    qsar-descriptors

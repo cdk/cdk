@@ -41,7 +41,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p/>
  * The descriptor returns a <code>DoubleArrayResult</code> which contains the topological
  * shape index and the geometric shape index in that order.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author Rajarshi Guha
  * @cdk.created 2006-01-14
  * @cdk.module qsar

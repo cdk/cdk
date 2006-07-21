@@ -55,7 +55,21 @@ import Jama.Matrix;
  * </ul>
  * One important aspect of the algorithm is that if the eigenvalues of the MI tensor
  * are below 1e-3, then the ratio's are set to a default of 1000.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      Rajarshi Guha
  * @cdk.created     2005-02-07
  *

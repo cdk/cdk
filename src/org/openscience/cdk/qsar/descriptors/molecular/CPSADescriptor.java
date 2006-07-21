@@ -109,7 +109,20 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * <p>
  * However, a comparison of the values calculated by the two implementations indicates
  * that they are qualitatively the same.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
  *
  * @author      Rajarshi Guha
  * @cdk.created     2005-05-16

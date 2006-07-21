@@ -44,7 +44,21 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
  * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      ulif
  * @cdk.created 2005-22-07
  * @cdk.module  qsar

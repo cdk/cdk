@@ -42,6 +42,20 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  *  and let p3 denote the number of paths of length 3". 
  *  Values kier1, kier2 and kier3 are returned as arrayList of doubles.
  *
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar

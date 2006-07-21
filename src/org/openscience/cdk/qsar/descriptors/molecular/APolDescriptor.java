@@ -41,7 +41,21 @@ import org.openscience.cdk.tools.LoggingTool;
  * <a href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm">http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm</a>.
  * <p>
  * This class need explicit hydrogens.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  qsar

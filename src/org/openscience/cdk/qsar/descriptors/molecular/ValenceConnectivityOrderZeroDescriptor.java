@@ -47,7 +47,21 @@ import org.openscience.cdk.tools.LoggingTool;
  * <li>chi0v is the Atomic valence connectivity index (order 0),
  * </ul>
  * where the valence is the number of s and p valence electrons of atom.
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar

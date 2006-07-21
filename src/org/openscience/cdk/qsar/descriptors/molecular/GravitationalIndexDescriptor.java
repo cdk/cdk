@@ -55,7 +55,21 @@ import org.openscience.cdk.tools.LoggingTool;
  * <li>grav5 -  grav2 for all pairs of atoms (not just bonded pairs)
  * <li>grav6 -  grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      Rajarshi Guha
  * @cdk.created     2004-11-23
  * @cdk.module  qsar

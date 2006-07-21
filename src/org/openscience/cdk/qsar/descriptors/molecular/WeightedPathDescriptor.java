@@ -56,7 +56,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * from nitrogens</td></tr>
  * </table>
  * </center>
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author Rajarshi Guha
  * @cdk.created 2006-01-15
  * @cdk.module qsar

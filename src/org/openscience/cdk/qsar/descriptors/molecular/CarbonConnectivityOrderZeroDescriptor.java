@@ -37,7 +37,21 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH
  *  returned value is:
  *  chi0C is the Carbon connectivity index (order 0);
- *
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module	qsar

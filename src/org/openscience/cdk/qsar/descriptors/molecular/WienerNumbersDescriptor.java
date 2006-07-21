@@ -49,12 +49,26 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
  * or <b>explicit hydrogens</b>.
- *
- *@author         mfe4
- *@cdk.created        December 7, 2004
- *@cdk.created    2004-11-03
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
+ * @author         mfe4
+ * @cdk.created        December 7, 2004
+ * @cdk.created    2004-11-03
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:wienerNumbers
  */
 public class WienerNumbersDescriptor implements IMolecularDescriptor {

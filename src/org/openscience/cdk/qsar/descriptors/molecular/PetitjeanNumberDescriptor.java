@@ -41,13 +41,27 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
  *  The graph diameter D is defined as the largest vertex eccentricity in the graph.
  *  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
- *
- *@author         mfe4
- *@cdk.created        December 7, 2004
- *@cdk.created    2004-11-03
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:petitjeanNumber
+ * 
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ *   <tr>
+ *     <td>Name</td>
+ *     <td>Default</td>
+ *     <td>Description</td>
+ *   </tr>
+ *   <tr>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
+ *   </tr>
+ * </table>
+ * 
+ * @author         mfe4
+ * @cdk.created    December 7, 2004
+ * @cdk.created    2004-11-03
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
+ * @cdk.dictref    qsar-descriptors:petitjeanNumber
  */
 public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
 
