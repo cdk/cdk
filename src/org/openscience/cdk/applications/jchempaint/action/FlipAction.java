@@ -58,10 +58,10 @@ public class FlipAction extends JCPAction {
         boolean horiz = "horizontal".equals(type);
         if (renderModel.getSelectedPart()!=null && (horiz || "vertical".equals(type))) {
             IAtomContainer toflip = renderModel.getSelectedPart();
-            Point2d center = GeometryTools.get2DCenter(toflip);
+            Point2d center = GeometryTools.get2DCenter(toflip, renderModel.getRenderingCoordinates());
             org.openscience.cdk.interfaces.IAtom[] atoms = toflip.getAtoms();
             for (int i=0; i<atoms.length; i++) {
-                Point2d atom = atoms[i].getPoint2d();
+                Point2d atom = renderModel.getRenderingCoordinate(atoms[i]);
                 Point2d oldCoord = new Point2d(atom.x, atom.y);
                 if (horiz) {
                     atom.y = 2.0*center.y - atom.y;
