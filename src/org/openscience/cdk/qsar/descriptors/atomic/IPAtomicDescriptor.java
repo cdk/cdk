@@ -38,7 +38,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  *  This class returns the ionization potential of an atom. It is

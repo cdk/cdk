@@ -78,7 +78,8 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
-        assertEquals(result, resultAccordingNIST, 0.05);
+//        System.out.println(resultAccordingNIST+"="+result);
+        assertEquals(result, resultAccordingNIST, 0.02);
     }
     /**
 	 *  A unit test for JUnit with C-C-Br
@@ -101,7 +102,8 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29; 
-        assertEquals(result, resultAccordingNIST, 1.2);
+//        System.out.println(resultAccordingNIST+"="+result);
+        assertEquals(result, resultAccordingNIST, 1.05);
     }
     /**
 	 *  A unit test for JUnit with C-C-C-I
@@ -124,6 +126,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.03);
     }
     /**
@@ -147,6 +150,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.48;
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.05);
     }/**
 	 *  A unit test for JUnit with C-O-C
@@ -169,6 +173,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.025;
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.03);
     }
     /**
@@ -192,6 +197,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.24; 
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 3.1);
     }
     /**
@@ -215,6 +221,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9; 
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.5);
     }
     /**
@@ -238,6 +245,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.5; 
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.4);
     }
 
@@ -261,7 +269,8 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.15; 
-        assertEquals(result, resultAccordingNIST, 1);
+//        System.out.println(resultAccordingNIST+"="+result);
+        assertEquals(result, resultAccordingNIST, 0.01);
     }
     /**
 	 *  A unit test for JUnit with O=C1CCCC1
@@ -283,7 +292,8 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.26; 
-        assertEquals(result, resultAccordingNIST, 1.2);
+//        System.out.println(resultAccordingNIST+"="+result);
+        assertEquals(result, resultAccordingNIST, 0.2);
     }
     /**
 	 *  A unit test for JUnit with CCCC=CCCCC
@@ -306,6 +316,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80; 
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.05);
     }
     /**
@@ -329,6 +340,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95; 
+//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.11);
     }
     /**
