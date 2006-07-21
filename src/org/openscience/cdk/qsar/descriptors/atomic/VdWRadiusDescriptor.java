@@ -48,9 +48,9 @@ import org.openscience.cdk.tools.LoggingTool;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the atom whose protons calculate total partial charge</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td></td>
  *   </tr>
  * </table>
  *

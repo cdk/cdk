@@ -45,9 +45,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
+ *     <td>maxIterations</td>
  *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td>Number of maximum iterations</td>
  *   </tr>
  * </table>
  *
@@ -58,7 +58,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
  */
 public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
-
+	/**Number of maximum iterations*/
     private int maxIterations = 0;
     private GasteigerMarsiliPartialCharges peoe = null;
     private IAtomContainer oldac = null;

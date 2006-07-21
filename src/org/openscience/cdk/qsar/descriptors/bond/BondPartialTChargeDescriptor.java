@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 

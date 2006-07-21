@@ -51,11 +51,6 @@ import org.openscience.cdk.qsar.result.BooleanResult;
  *     <td>false</td>
  *     <td>True is the aromaticity has to be checked</td>
  *   </tr>
- *   <tr>
- *     <td>atomPosition</td>
- *     <td> </td>
- *     <td>Position of the proton</td>
- *   </tr>
  * </table>
  *
  * @author      mfe4

@@ -45,11 +45,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>targetPosition</td>
- *     <td>0</td>
- *     <td>The position of the first atom</td>
- *   </tr>
- *   <tr>
  *     <td>focusPosition</td>
  *     <td>0</td>
  *     <td>The position of the second atom</td>

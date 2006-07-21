@@ -44,9 +44,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *

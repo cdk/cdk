@@ -59,11 +59,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the target atom</td>
- *   </tr>
- *   <tr>
  *     <td>checkAromaticity</td>
  *     <td>false</td>
  *     <td>True is the aromaticity has to be checked</td>

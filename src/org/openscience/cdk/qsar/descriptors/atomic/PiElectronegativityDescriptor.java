@@ -46,9 +46,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
+ *     <td>maxIterations</td>
  *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td>Number of maximum iterations</td>
  *   </tr>
  * </table>
  *
@@ -60,6 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 
+	/**Number of maximum iterations*/
     private int maxIterations = -1;
     private GasteigerPEPEPartialCharges pepe = null;
 	private IAtomicDescriptor  descriptor;

@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;

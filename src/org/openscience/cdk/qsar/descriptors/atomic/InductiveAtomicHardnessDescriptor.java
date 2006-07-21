@@ -64,15 +64,15 @@ import org.openscience.cdk.tools.LoggingTool;
  *    <tr>
  *
  *      <td>
- *        atomPosition
+ *        
  *      </td>
  *
  *      <td>
- *        0
+ *        
  *      </td>
  *
  *      <td>
- *        The position of the target atom
+ *        no parameters
  *      </td>
  *
  *    </tr>

@@ -55,9 +55,9 @@ import java.util.Vector;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>targetPosition</td>
- *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *

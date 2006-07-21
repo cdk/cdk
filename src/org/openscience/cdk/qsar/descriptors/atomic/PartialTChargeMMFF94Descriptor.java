@@ -34,7 +34,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- *  The calculation of total partial charges of an heavy atom is based on MMFF94.
+ *  The calculation of total partial charges of an heavy atom is based on MMFF94 model.
  *  
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -44,9 +44,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *

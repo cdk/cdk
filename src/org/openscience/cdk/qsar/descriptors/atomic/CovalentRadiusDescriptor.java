@@ -48,9 +48,9 @@ import org.openscience.cdk.tools.LoggingTool;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *

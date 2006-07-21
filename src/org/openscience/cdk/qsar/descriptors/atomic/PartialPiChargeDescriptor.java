@@ -34,8 +34,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- *  <p>The calculation of pi partial charges in pi-bonded systems (PEPE) of an heavy 
- *  atom is based on Gasteiger H.Saller.</p>
+ *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
+ *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
+ *  implemented with the Partal Equalization of Pi-Electronegativity (PEPE).</p>
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -44,9 +45,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
+ *     <td>maxIterations</td>
  *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td>Number of maximum iterations</td>
  *   </tr>
  * </table>
  *
@@ -61,6 +62,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
     private GasteigerPEPEPartialCharges pepe = null;
+    /**Number of maximum iterations*/
 	private int maxIterations = -1;
 
 

@@ -36,9 +36,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  <p>The calculation of total partial charges of an heavy atom is based on 
- *  Partial Equalization of Orbital Electronegativity method (PEOE) from Gasteiger. </p>
+ *  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
  *  <p>They are obtained by summation of the results of the calculations on 
- *  sigma- and pi-charges </p>
+ *  sigma- and pi-charges. </p>
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -47,9 +47,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
- *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *

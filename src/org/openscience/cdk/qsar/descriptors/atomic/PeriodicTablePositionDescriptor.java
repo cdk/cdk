@@ -45,9 +45,9 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>targetPosition</td>
- *     <td>1</td>
- *     <td>The position of the target atom</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>no parameters</td>
  *   </tr>
  * </table>
  *
