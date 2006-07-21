@@ -145,7 +145,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
     	  ISetOfAtomContainers iSet = ac.getBuilder().newSetOfAtomContainers();
     	  iSet.addAtomContainer(ac);/*2 times*/
     	  iSet.addAtomContainer(ac);
-    	  double[][] gasteigerFactors = pepe.assignGasteigerPiMarsiliFactors2(iSet);
+    	  double[][] gasteigerFactors = pepe.assignrPiMarsilliFactors(iSet);
     	  
     	  int stepSize = pepe.getStepSize();
 	      int atomPosition = ac.getAtomNumber(atom);

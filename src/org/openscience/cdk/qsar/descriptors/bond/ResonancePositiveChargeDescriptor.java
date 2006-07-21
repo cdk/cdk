@@ -47,7 +47,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
-//import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 
@@ -62,9 +61,9 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td>atomPosition</td>
+ *     <td>bondPosition</td>
  *     <td>0</td>
- *     <td>The position of the target atom</td>
+ *     <td>The position of the target bond</td>
  *   </tr>
  * </table>
  *
@@ -175,9 +174,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     	int atomPos1 = ac.getAtomNumber(atoms[1]);
     	ac.getBondAt(bondPosition).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-
-    	
-    	
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
         
@@ -192,9 +188,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	        	IAtomContainer product = setOfReactions.getReaction(i).getProducts().getAtomContainer(z);
 	        	if(product.getAtomCount() < 2)
 	        		continue;
-//	        	SmilesGenerator sg = new SmilesGenerator(ac.getBuilder());
-//	    		String smiles2 = sg.createSMILES((IMolecule) product);
-//	    		System.out.println("smiles; "+smiles2);
+	        	
 	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false);
 	    		ISetOfAtomContainers setOfResonance = gRI.getAllStructures(product);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
@@ -211,8 +205,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     				outRes:
 	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
-//		    				String smilesr = sg.createSMILES((IMolecule) prod);
-//		    	    		System.out.println("smilesR�; "+smilesr);
 	    	        	
 	    				HydrogenAdder hAdder = new HydrogenAdder();
 	    				hAdder.addImplicitHydrogensToSatisfyValency((IMolecule) prod);
@@ -236,17 +228,17 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    	    					} catch (Exception ex1) {
 	    	    						continue;
 	    	    					}
-//	    	    					System.out.println("result_: "+electroneg.doubleValue());
 	    	    			        if(i == 0)result1.add(electroneg);
 	    	    			        else result2.add(electroneg);
 	    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
 	    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
 	    	    			        descriptor.setParameters(paramsD);
 	    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtomAt(positionAC),prod).getValue());
+	    	    			        
 	    	    			        if(i == 0)distance1.add(dis);
 	    	    			        else distance2.add(dis);
-//		    	    			        System.out.println("distan: "+dis.intValue());
-	    	    					break;
+	    	    					
+	    	    			        break;
 	    						 }
 	    					 }
 	    					 
@@ -261,45 +253,35 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         double sum = 0.0;
         for(int i = 0 ; i < result1.size() ; i++){
         	double suM = ((DoubleResult)result1.get(i)).doubleValue();
-//        	System.out.println(i+"; "+suM);
         	if(suM < 0)
         		suM = -1*suM;
         	sum += suM*Math.pow(0.67,((IntegerResult)distance1.get(i)).intValue());
-
-//        	System.out.println("sum; "+sum);
         }
         value = 26.63/sum;
         if(result1.size() > 0){
-//        	System.out.println("value1="+value);
             dar.add(value);
         }else{
-//        	System.out.println("value1_="+0.0);
         	dar.add(0.0);
         }
         value = 0.0;
         sum = 0.0;
         for(int i = 0 ; i < result2.size() ; i++){
         	double suM = ((DoubleResult)result2.get(i)).doubleValue();
-//        	System.out.println(i+"; "+suM);
         	if(suM < 0)
         		suM = -1*suM;
         	sum += suM*Math.pow(0.67,((IntegerResult)distance2.get(i)).intValue());
         }
         value = 26.63/sum;
         if(result2.size() > 0){
-//        	System.out.println("value2="+value);
             dar.add(value);
         }else{
-//        	System.out.println("value2="+0.0);
         	dar.add(0.0);
         }
         
         /*put first the atom which is smaller*/
         int p0 = atomPos0;
         int p1 = atomPos1;
-//        System.out.println(p0+"="+p1);
         if(p0 > p1){
-//        	System.out.println("icorrect");
         	double o1 = dar.get(0);
         	double o0 = dar.get(1);
         	dar = new DoubleArrayResult(2);
