@@ -1,3 +1,4 @@
 org/openscience/cdk/qsar/model/data/*.R
+data/arff/*.arff
 qsar-descriptors.set
 
