@@ -43,16 +43,20 @@
 
 <h3>Hydrogens</h3>
 <h4>Add Implicit Hydrogens</h4>
- <p>Selects and marks all atoms in the molecule, so that it can be rotated, 
- moved, deleted, etc. This is the only chance to recover parts of the molecule 
- that are outside the display area - select all, go into move mode and 
- move the molecule using a visible part of it.</p>
+ <p>If switched on, implicit hydrogens will be calculated for all atoms and added. As long as the mode is 
+ switched on, the implict hydrogen count will be adjusted. Note that:
+ <li>
+ <listitem>The implict hydrogens will be only visible when the option "Show implicit hydrogens when the atom symbol is shown"
+ is selected in View -> Options (default: on). For which atoms the symbols are visible is controlled by other settings here.</listitem>
+ <listitem>If the hydrogens will be contained in an exported file, depends on the file format.(e. g. CML has got implicit Hs, mol has not).</listitem>
+ </li>
+ </p>
 <h4>Make Hydrogens Explicit</h4>
- <p>This will transform hydrogens, which are directly connected to another atom,
- separate atoms connected by a single bond.</p>
+ <p>This will transform implicit hydrogens to
+ separate atoms connected by a single bond. This will only have an effect if you are in implicit mode (see "Add implicit Hydrogens")</p>
 <h4>Make Hydrogens Implicit</h4>
  <p>This will delete bonds to hydrogens and add hydrogens directly to their 
- parent atoms.</p>
+ parent atoms as implicit hydrogens.</p>
 
 <p>
 <h3>Adjust Bond Orders</h3>

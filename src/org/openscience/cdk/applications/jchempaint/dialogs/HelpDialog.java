@@ -87,7 +87,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 
 		try
 		{
-			URL helpURL = ClassLoader.getSystemResource(helpfile);
+			URL helpURL = this.getClass().getClassLoader().getResource(helpfile);
 			if (helpURL != null)
 			{
 				html = new JEditorPane(helpURL);

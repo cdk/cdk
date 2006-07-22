@@ -1,3 +1,6 @@
 org/openscience/cdk/applications/jchempaint/resources/large-bin/**
 org/openscience/cdk/applications/jchempaint/resources/small-bin/**
 org/openscience/cdk/applications/jchempaint/resources/text/**
+org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/**
+org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/contain/**
+org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/JavaHelpSearch/**
