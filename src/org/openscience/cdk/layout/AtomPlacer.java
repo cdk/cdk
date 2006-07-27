@@ -29,6 +29,7 @@
 package org.openscience.cdk.layout;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -136,6 +137,28 @@ public class AtomPlacer
 	public void distributePartners(IAtom atom, IAtomContainer placedNeighbours, Point2d sharedAtomsCenter,
 			IAtomContainer unplacedNeighbours, double bondLength)
 	{
+		distributePartners(atom, placedNeighbours, sharedAtomsCenter, unplacedNeighbours, bondLength, null);
+	}
+	
+	
+	/**
+	 *  Distribute the bonded atoms (neighbours) of an atom such that they fill the
+	 *  remaining space around an atom in a geometrically nice way.
+	 *  IMPORTANT: This method is not supposed to handle the 
+	 *  case of one or no place neighbor. In the case of 
+	 *  one placed neigbor, the chain placement methods 
+	 *  should be used.
+	 *
+	 *@param  atom                The atom whose partners are to be placed
+	 *@param  placedNeighbours    The atoms which are already placed
+	 *@param  unplacedNeighbours  The partners to be placed
+	 *@param  bondLength          The standared bond length for the newly placed
+	 *      Atoms
+	 *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
+	 */
+	public void distributePartners(IAtom atom, IAtomContainer placedNeighbours, Point2d sharedAtomsCenter,
+			IAtomContainer unplacedNeighbours, double bondLength, HashMap renderingCoordinates)
+	{
 		double occupiedAngle = 0;
 		//double smallestDistance = Double.MAX_VALUE;
 		//IAtom[] nearestAtoms = new IAtom[2];
@@ -151,6 +174,8 @@ public class AtomPlacer
 		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);
 
 		Vector2d newDirection = new Vector2d(atom.getPoint2d());
+		if(renderingCoordinates!=null && renderingCoordinates.get(atom)!=null)
+			newDirection = new Vector2d((Point2d)renderingCoordinates.get(atom));
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
 		occupiedDirection.sub(newDirection);
 		logger.debug("distributePartners->occupiedDirection.lenght(): " + occupiedDirection.length());
@@ -183,6 +208,12 @@ public class AtomPlacer
 //			double yDiff = atom.getY2d() - placedAtom.getY2d();
 			double xDiff = placedAtom.getX2d() - atom.getX2d();
 			double yDiff = placedAtom.getY2d() - atom.getY2d();
+			if(renderingCoordinates!=null){
+				if(renderingCoordinates.get(atom)==null)
+					renderingCoordinates.put(atom,atom.getPoint2d());
+				xDiff = ((Point2d)renderingCoordinates.get(placedAtom)).x - ((Point2d)renderingCoordinates.get(atom)).x;
+				yDiff = ((Point2d)renderingCoordinates.get(placedAtom)).y - ((Point2d)renderingCoordinates.get(atom)).y;
+			}
 
 			logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
 			logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
@@ -190,7 +221,7 @@ public class AtomPlacer
 			//- (Math.PI / 2.0);
 			logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength);
 			return;
 		} else if (placedNeighbours.getAtomCount() == 0)
 		{
@@ -206,7 +237,7 @@ public class AtomPlacer
 			 * start angle. Not done yet.
 			 */
 			startAngle = 0.0;
-			populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength);
 			return;
 		}
 
@@ -232,12 +263,24 @@ public class AtomPlacer
 		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
 		closestPoint1.sub(new Vector2d(atom.getPoint2d()));
 		closestPoint2.sub(new Vector2d(atom.getPoint2d()));
+		if(renderingCoordinates!=null){
+			GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure, renderingCoordinates);
+			closestPoint1 = new Vector2d(((Point2d)renderingCoordinates.get(sortedAtoms[0])));
+			closestPoint2 = new Vector2d(((Point2d)renderingCoordinates.get(sortedAtoms[1])));
+			closestPoint1.sub(new Vector2d(((Point2d)renderingCoordinates.get(atom))));
+			closestPoint2.sub(new Vector2d(((Point2d)renderingCoordinates.get(atom))));
+		}
 		occupiedAngle = closestPoint1.angle(occupiedDirection);
 		occupiedAngle += closestPoint2.angle(occupiedDirection);
 
 		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2d() - atom.getX2d(), sortedAtoms[0].getY2d() - atom.getY2d());
 		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2d() - atom.getX2d(), sortedAtoms[1].getY2d() - atom.getY2d());
 		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2d(), distanceMeasure.y - atom.getY2d());
+		if(renderingCoordinates!=null){
+			angle1 = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(sortedAtoms[0])).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(sortedAtoms[0])).y - ((Point2d)renderingCoordinates.get(atom)).y);
+			angle2 = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(sortedAtoms[1])).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(sortedAtoms[1])).y - ((Point2d)renderingCoordinates.get(atom)).y);
+			angle3 = GeometryTools.getAngle(distanceMeasure.x - ((Point2d)renderingCoordinates.get(atom)).x, distanceMeasure.y - ((Point2d)renderingCoordinates.get(atom)).y);
+		}
 		if (debug)
 		{
 			try
@@ -296,6 +339,9 @@ public class AtomPlacer
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
+		if(renderingCoordinates!=null){
+			startAngle = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(startAtom)).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(startAtom)).y - ((Point2d)renderingCoordinates.get(atom)).y);
+		}
 		logger.debug("Before check: distributePartners->startAngle: " + startAngle);
 		if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
 			-0.001))
@@ -303,7 +349,7 @@ public class AtomPlacer
 			startAngle = Math.PI/placedNeighbours.getAtomCount();
 		}
 		logger.debug("After check: distributePartners->startAngle: " + startAngle);
-		populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
+		populatePolygonCorners(atomsToDraw, renderingCoordinates==null ? new Point2d(atom.getPoint2d()) : ((Point2d)renderingCoordinates.get(atom)), startAngle, addAngle, radius);
 
 	}
 

@@ -185,7 +185,7 @@ public class AddHydrogenAction extends JCPAction
 	            		}
 					} else if (type.equals("explicit"))
 					{
-						double bondLength = GeometryTools.getBondLengthAverage(molecule);
+						double bondLength = GeometryTools.getBondLengthAverage(molecule, jcpmodel.getRendererModel().getRenderingCoordinates());
 						if (Double.isNaN(bondLength))
 						{
 							logger.warn("Could not determine average bond length from structure!");
@@ -193,7 +193,7 @@ public class AddHydrogenAction extends JCPAction
 						}
                         changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
                         HydrogenPlacer hPlacer = new HydrogenPlacer();
-						hPlacer.placeHydrogens2D(molecule, bondLength);
+						hPlacer.placeHydrogens2D(molecule, bondLength, jcpmodel.getRendererModel().getRenderingCoordinates());
 					} else if (type.equals("allimplicit"))
 					{
 							// remove explicit hydrogen if necessary

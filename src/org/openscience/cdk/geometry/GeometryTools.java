@@ -1113,6 +1113,42 @@ public class GeometryTools {
 
 
 	/**
+	 *  Sorts a Vector of atoms such that the 2D distances of the atom locations
+	 *  from a given point are smallest for the first atoms in the vector
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  point  The point from which the distances to the atoms are measured
+	 *@param  atoms  The atoms for which the distances to point are measured
+	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
+	 */
+	public static void sortBy2DDistance(IAtom[] atoms, Point2d point, HashMap renderingCoordinates) {
+		double distance1;
+		double distance2;
+		IAtom atom1 = null;
+		IAtom atom2 = null;
+		boolean doneSomething = false;
+		do {
+			doneSomething = false;
+			for (int f = 0; f < atoms.length - 1; f++) {
+				atom1 = atoms[f];
+				atom2 = atoms[f + 1];
+				if(renderingCoordinates.get(atom1)==null)
+					renderingCoordinates.put(atom1,atom1.getPoint2d());
+				if(renderingCoordinates.get(atom2)==null)
+					renderingCoordinates.put(atom2,atom2.getPoint2d());
+				distance1 = point.distance(((Point2d)renderingCoordinates.get(atom1)));
+				distance2 = point.distance(((Point2d)renderingCoordinates.get(atom2)));
+				if (distance2 < distance1) {
+					atoms[f] = atom2;
+					atoms[f + 1] = atom1;
+					doneSomething = true;
+				}
+			}
+		} while (doneSomething);
+	}
+
+	
+	/**
 	 *  Determines the scale factor for displaying a structure loaded from disk in
 	 *  a frame. An average of all bond length values is produced and a scale
 	 *  factor is determined which would scale the given molecule such that its

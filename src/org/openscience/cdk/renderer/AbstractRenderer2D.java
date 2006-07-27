@@ -1028,9 +1028,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintRingRing(IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryTools.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring, r2dm.getRenderingCoordinates());
 
-		double[] minmax = GeometryTools.getMinMax(ring);
+		double[] minmax = GeometryTools.getMinMax(ring, r2dm.getRenderingCoordinates());
 		double width = (minmax[2] - minmax[0]) * 0.7;
 		double height = (minmax[3] - minmax[1]) * 0.7;
 		int[] coords = {
