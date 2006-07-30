@@ -124,12 +124,12 @@ public class AtomContainer extends ChemObject
 		atomParities = new Hashtable((int)(atomCount/2));
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
-			atoms[f] = container.getAtomAt(f);
-			container.getAtomAt(f).addListener(this);
+			atoms[f] = container.getAtom(f);
+			container.getAtom(f).addListener(this);
 		}
 		for (int f = 0; f < container.getElectronContainerCount(); f++) {
-			electronContainers[f] = container.getElectronContainerAt(f);
-			container.getElectronContainerAt(f).addListener(this);
+			electronContainers[f] = container.getElectronContainer(f);
+			container.getElectronContainer(f).addListener(this);
 		}
 	}
 
@@ -221,7 +221,7 @@ public class AtomContainer extends ChemObject
 	 *@param  atom    The atom to be stored at position <code>number</code>
 	 *@see            #getAtomAt
 	 */
-	public void setAtomAt(int number, IAtom atom)
+	public void setAtom(int number, IAtom atom)
 	{
 		atom.addListener(this);
 		atoms[number] = atom;
@@ -236,7 +236,7 @@ public class AtomContainer extends ChemObject
 	 *@return         The atomAt value
 	 *@see            #setAtomAt
 	 */
-	public IAtom getAtomAt(int number)
+	public IAtom getAtom(int number)
 	{
 		return atoms[number];
 	}
@@ -249,7 +249,7 @@ public class AtomContainer extends ChemObject
 	 *@return         The bondAt value
 	 *@see            #setElectronContainerAt
 	 */
-	public IBond getBondAt(int number)
+	public IBond getBond(int number)
 	{
 		return getBonds()[number];
 	}
@@ -263,7 +263,7 @@ public class AtomContainer extends ChemObject
 	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
 	 * @see                      #getElectronContainerAt
 	 */
-	public void setElectronContainerAt(int number, IElectronContainer electronContainer)
+	public void setElectronContainer(int number, IElectronContainer electronContainer)
 	{
 		electronContainer.addListener(this);
 		electronContainers[number] = electronContainer;
@@ -351,7 +351,7 @@ public class AtomContainer extends ChemObject
 		int bondCounter = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			IElectronContainer electronContainer = getElectronContainerAt(i);
+			IElectronContainer electronContainer = getElectronContainer(i);
 			if (electronContainer instanceof IBond)
 			{
 				result[bondCounter] = (Bond) electronContainer;
@@ -376,7 +376,7 @@ public class AtomContainer extends ChemObject
 		int counter = 0;
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			IElectronContainer electronContainer = getElectronContainerAt(i);
+			IElectronContainer electronContainer = getElectronContainer(i);
 			if (electronContainer instanceof ILonePair)
 			{
 				result[counter] = (ILonePair) electronContainer;
@@ -400,7 +400,7 @@ public class AtomContainer extends ChemObject
 		List lps = new ArrayList();
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			IElectronContainer electronContainer = getElectronContainerAt(i);
+			IElectronContainer electronContainer = getElectronContainer(i);
 			if ((electronContainer instanceof ILonePair) && 
 			    (((ILonePair) electronContainer).contains(atom)))
 			{
@@ -448,7 +448,7 @@ public class AtomContainer extends ChemObject
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			if (getAtomAt(f) == atom)
+			if (getAtom(f) == atom)
 			{
 				return f;
 			}
@@ -483,7 +483,7 @@ public class AtomContainer extends ChemObject
 	{
 		for (int f = 0; f < getElectronContainerCount(); f++)
 		{
-			if (getElectronContainerAt(f) == bond)
+			if (getElectronContainer(f) == bond)
 			{
 				return f;
 			}
@@ -500,7 +500,7 @@ public class AtomContainer extends ChemObject
 	 *@return         The ElectronContainer at position <code>number</code>.
 	 *@see            #setElectronContainerAt
 	 */
-	public IElectronContainer getElectronContainerAt(int number)
+	public IElectronContainer getElectronContainer(int number)
 	{
 		return (ElectronContainer)electronContainers[number];
 	}
@@ -641,7 +641,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public int getBondCount(int atomnumber)
 	{
-		return getBondCount(getAtomAt(atomnumber));
+		return getBondCount(getAtom(atomnumber));
 	}
 
 
@@ -871,16 +871,16 @@ public class AtomContainer extends ChemObject
 
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (container.contains(getAtomAt(i)))
+			if (container.contains(getAtom(i)))
 			{
-				intersection.addAtom(getAtomAt(i));
+				intersection.addAtom(getAtom(i));
 			}
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			if (container.contains(getElectronContainerAt(i)))
+			if (container.contains(getElectronContainer(i)))
 			{
-				intersection.addElectronContainer(getElectronContainerAt(i));
+				intersection.addElectronContainer(getElectronContainer(i));
 			}
 		}
 		return intersection;
@@ -896,9 +896,9 @@ public class AtomContainer extends ChemObject
 	{
 		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
 		{
-			if (!contains(atomContainer.getElectronContainerAt(f)))
+			if (!contains(atomContainer.getElectronContainer(f)))
 			{
-				addElectronContainer(atomContainer.getElectronContainerAt(f));
+				addElectronContainer(atomContainer.getElectronContainer(f));
 			}
 		}
 		notifyChanged();
@@ -915,16 +915,16 @@ public class AtomContainer extends ChemObject
 	{
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			if (!contains(atomContainer.getAtomAt(f)))
+			if (!contains(atomContainer.getAtom(f)))
 			{
-				addAtom(atomContainer.getAtomAt(f));
+				addAtom(atomContainer.getAtom(f));
 			}
 		}
 		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
 		{
-			if (!contains(atomContainer.getElectronContainerAt(f)))
+			if (!contains(atomContainer.getElectronContainer(f)))
 			{
-				addElectronContainer(atomContainer.getElectronContainerAt(f));
+				addElectronContainer(atomContainer.getElectronContainer(f));
 			}
 		}
 		notifyChanged();
@@ -997,11 +997,11 @@ public class AtomContainer extends ChemObject
 	{
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			removeAtom(atomContainer.getAtomAt(f));
+			removeAtom(atomContainer.getAtom(f));
 		}
 		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
 		{
-			removeElectronContainer(atomContainer.getElectronContainerAt(f));
+			removeElectronContainer(atomContainer.getElectronContainer(f));
 		}
 		notifyChanged();
 	}
@@ -1015,7 +1015,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public IElectronContainer removeElectronContainer(int position)
 	{
-		IElectronContainer electronContainer = getElectronContainerAt(position);
+		IElectronContainer electronContainer = getElectronContainer(position);
 		electronContainer.removeListener(this);
 		for (int i = position; i < electronContainerCount - 1; i++)
 		{
@@ -1130,10 +1130,10 @@ public class AtomContainer extends ChemObject
 	 */
 	public void removeAllElements() {
         for (int f = 0; f < getAtomCount(); f++) {
-			getAtomAt(f).removeListener(this);	
+			getAtom(f).removeListener(this);	
 		}
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-			getElectronContainerAt(f).removeListener(this);	
+			getElectronContainer(f).removeListener(this);	
 		}
 		atoms = new IAtom[growArraySize];
 		electronContainers = new IElectronContainer[growArraySize];
@@ -1149,7 +1149,7 @@ public class AtomContainer extends ChemObject
 	public void removeAllElectronContainers()
 	{
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-			getElectronContainerAt(f).removeListener(this);	
+			getElectronContainer(f).removeListener(this);	
 		}
 		electronContainers = new IElectronContainer[growArraySize];
 		electronContainerCount = 0;
@@ -1177,7 +1177,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addBond(int atom1, int atom2, double order, int stereo)
 	{
-		IBond bond = getBuilder().newBond(getAtomAt(atom1), getAtomAt(atom2), order, stereo);
+		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order, stereo);
 
 		if (contains(bond))
 		{
@@ -1203,7 +1203,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addBond(int atom1, int atom2, double order)
 	{
-		IBond bond = getBuilder().newBond(getAtomAt(atom1), getAtomAt(atom2), order);
+		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order);
 
 		if (electronContainerCount >= electronContainers.length)
 		{
@@ -1283,11 +1283,11 @@ public class AtomContainer extends ChemObject
 		stringContent.append(", #EC:").append(getElectronContainerCount()).append(", ");
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			stringContent.append(getAtomAt(i).toString()).append(", ");
+			stringContent.append(getAtom(i).toString()).append(", ");
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
-			electronContainer = getElectronContainerAt(i);
+			electronContainer = getElectronContainer(i);
 			// this check should be removed!
 			if (electronContainer != null)
 			{
@@ -1321,11 +1321,11 @@ public class AtomContainer extends ChemObject
 		clone.removeAllElements();
         // clone all atoms
 		for (int f = 0; f < getAtomCount(); f++) {
-			clone.addAtom((Atom) getAtomAt(f).clone());
+			clone.addAtom((Atom) getAtom(f).clone());
 		}
         // clone the electronContainer
 		for (int f = 0; f < getElectronContainerCount(); f++) {
-			electronContainer = this.getElectronContainerAt(f);
+			electronContainer = this.getElectronContainer(f);
 			newEC = getBuilder().newElectronContainer();
 			if (electronContainer instanceof IBond) {
 				IBond bond = (IBond) electronContainer;
@@ -1333,17 +1333,17 @@ public class AtomContainer extends ChemObject
 				natoms = bond.getAtoms();
 				newAtoms = new IAtom[natoms.length];
 				for (int g = 0; g < bond.getAtomCount(); g++) {
-					newAtoms[g] = clone.getAtomAt(getAtomNumber(natoms[g]));
+					newAtoms[g] = clone.getAtom(getAtomNumber(natoms[g]));
 				}
 				((IBond) newEC).setAtoms(newAtoms);
 			} else if (electronContainer instanceof ILonePair) {
 				IAtom atom = ((ILonePair) electronContainer).getAtom();
 				newEC = (ILonePair)electronContainer.clone();
-				((ILonePair) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
+				((ILonePair) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
             } else if (electronContainer instanceof ISingleElectron) {
             	IAtom atom = ((ISingleElectron) electronContainer).getAtom();
                 newEC = (ISingleElectron)electronContainer.clone();
-                ((ISingleElectron) newEC).setAtom(clone.getAtomAt(getAtomNumber(atom)));
+                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
 			} else {
 				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
 				newEC = (IElectronContainer) electronContainer.clone();

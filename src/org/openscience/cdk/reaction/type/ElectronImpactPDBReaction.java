@@ -146,27 +146,27 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
-					double order = reactantCloned.getBondAt(posB1).getOrder();
-					reactantCloned.getBondAt(posB1).setOrder(order - 1);
+					double order = reactantCloned.getBond(posB1).getOrder();
+					reactantCloned.getBond(posB1).setOrder(order - 1);
 					
 					if (j == 0)
 					{
-						reactantCloned.getAtomAt(posA1).setFormalCharge(1);
+						reactantCloned.getAtom(posA1).setFormalCharge(1);
 						reactantCloned.addElectronContainer(
-								new SingleElectron(reactantCloned.getAtomAt(posA2)));
+								new SingleElectron(reactantCloned.getAtom(posA2)));
 					} else
 					{
-						reactantCloned.getAtomAt(posA2).setFormalCharge(1);
+						reactantCloned.getAtom(posA2).setFormalCharge(1);
 						reactantCloned.addElectronContainer(
-								new SingleElectron(reactantCloned.getAtomAt(posA1)));
+								new SingleElectron(reactantCloned.getAtom(posA1)));
 					}
 					
 					/* mapping */
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBondAt(posB1));
+					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(posB1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(posA1));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(posA1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(posA2));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(posA2));
 			        reaction.addMapping(mapping);
 					
 					

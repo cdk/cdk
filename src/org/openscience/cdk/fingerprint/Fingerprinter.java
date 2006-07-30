@@ -266,10 +266,10 @@ public class Fingerprinter implements IFingerprinter {
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			currentPath.removeAllElements();
-			currentPath.addElement(ac.getAtomAt(f));
+			currentPath.addElement(ac.getAtom(f));
 			checkAndStore(currentPath);
-			logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtomAt(f).getSymbol());
-			depthFirstSearch(ac, ac.getAtomAt(f), currentPath, 0, searchDepth);
+			logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtom(f).getSymbol());
+			depthFirstSearch(ac, ac.getAtom(f), currentPath, 0, searchDepth);
 
 		}
 	}

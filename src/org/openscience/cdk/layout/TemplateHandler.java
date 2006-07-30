@@ -172,8 +172,8 @@ public class TemplateHandler
 				for (int i = 0; i < list.size(); i++)
 				{
 					map = (RMap) list.get(i);
-					atom1 = molecule.getAtomAt(map.getId1());
-					atom2 = template.getAtomAt(map.getId2());
+					atom1 = molecule.getAtom(map.getId1());
+					atom2 = template.getAtom(map.getId2());
 					atom1.setX2d(atom2.getX2d());
 					atom1.setY2d(atom2.getY2d());
 					atom1.setFlag(CDKConstants.ISPLACED, true);

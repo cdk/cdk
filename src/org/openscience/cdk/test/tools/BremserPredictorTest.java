@@ -226,7 +226,7 @@ double[] result = {
 			//System.out.println("Molecule has " + molecule.getAtomCount() + " atoms.");
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
 				prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
 				//System.out.println("\"" + prediction + "\",");
 				assertTrue(prediction == result[f]);	
@@ -302,7 +302,7 @@ double[] result = {
 		int f = ac.getAtomCount() - 1;
 		
 		do{
-			atom = ac.getAtomAt(f);
+			atom = ac.getAtom(f);
 			if (atom.getSymbol().equals("H"))
 			{
 				ac.removeAtomAndConnectedElectronContainers(atom);

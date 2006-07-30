@@ -99,7 +99,7 @@ public class CreateSmilesAction extends JCPAction
 			boolean[] bool=new boolean[moleculewithh.getBondCount()];
 		    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
 			for(int i=0;i<bool.length;i++){
-		      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBondAt(i)))
+		      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
 				bool[i]=true;
 			}
 			chiralsmiles=generator.createChiralSMILES(moleculewithh,bool);

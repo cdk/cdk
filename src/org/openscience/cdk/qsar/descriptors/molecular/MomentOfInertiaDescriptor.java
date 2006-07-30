@@ -170,7 +170,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double ysq;
         double zsq;
         for (int i = 0; i < container.getAtomCount(); i++) {
-            org.openscience.cdk.interfaces.IAtom currentAtom = container.getAtomAt(i);
+            org.openscience.cdk.interfaces.IAtom currentAtom = container.getAtom(i);
             if (currentAtom.getPoint3d() == null) {
                 throw new CDKException("Atom "+i+" did not have any 3D coordinates. These are required");
             }

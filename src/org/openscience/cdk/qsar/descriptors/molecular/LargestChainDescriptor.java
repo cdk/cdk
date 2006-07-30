@@ -169,15 +169,15 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             rs = (IRingSet) (new AllRingsFinder()).findAllRings(container);
             HueckelAromaticityDetector.detectAromaticity(container, rs, true);
             for (int i=0;i<container.getAtomCount();i++){
-            	if (rs.contains(container.getAtomAt(i))){
-            		container.getAtomAt(i).setFlag(CDKConstants.ISINRING,true);
+            	if (rs.contains(container.getAtom(i))){
+            		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
             	}
             }
         }else if (!checkAromaticity && checkRingSystem) {
         	rs = (IRingSet) new SSSRFinder(container).findSSSR();
         	for (int i=0;i<container.getAtomCount();i++){
-            	if (rs.contains(container.getAtomAt(i))){
-            		container.getAtomAt(i).setFlag(CDKConstants.ISINRING,true);
+            	if (rs.contains(container.getAtom(i))){
+            		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
             	}
             }
         }

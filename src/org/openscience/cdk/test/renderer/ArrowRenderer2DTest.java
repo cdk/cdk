@@ -103,8 +103,8 @@ public class ArrowRenderer2DTest extends JPanel {
 			molecule = setOfMolecules.getMolecule(0);
 			ht = r2dm.getColorHash();
 			r2dm.setDrawNumbers(true);
-			ht.put(molecule.getAtomAt(an1), Color.red);
-			ht.put(molecule.getAtomAt(an2), Color.red);
+			ht.put(molecule.getAtom(an1), Color.red);
+			ht.put(molecule.getAtom(an2), Color.red);
 			GeometryTools.translateAllPositive(molecule,r2dm.getRenderingCoordinates());
 			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8,r2dm.getRenderingCoordinates());
 			GeometryTools.center(molecule, getPreferredSize(),r2dm.getRenderingCoordinates());
@@ -112,8 +112,8 @@ public class ArrowRenderer2DTest extends JPanel {
 			exc.printStackTrace();
 		}
 
-		IAtom a1 = molecule.getAtomAt(an1);
-		IAtom a2 = molecule.getAtomAt(an2);
+		IAtom a1 = molecule.getAtom(an1);
+		IAtom a2 = molecule.getAtom(an2);
 		arrows[0] = new Arrow(a1, a2);
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

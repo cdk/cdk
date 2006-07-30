@@ -81,9 +81,9 @@ public class AtomPlacer3D {
 		int[] heavy = {-1, -1};
 		int hc = 0;
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			if (!(chain.getAtomAt(i).getSymbol()).equals("H")) {
+			if (!(chain.getAtom(i).getSymbol()).equals("H")) {
 				if (heavy[0] < 0) {
-					heavy[0] = molecule.getAtomNumber(chain.getAtomAt(i));
+					heavy[0] = molecule.getAtomNumber(chain.getAtom(i));
 				}
 				hc++;
 			}
@@ -101,7 +101,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtomContainer markPlaced(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
+			ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 		}
 		return ac;
 	}
@@ -129,22 +129,22 @@ public class AtomPlacer3D {
 		dihedrals = new double[first[1]];
 		third_atoms = new int[first[1]];
 		first_atoms[0] = first[0];
-		molecule.getAtomAt(first_atoms[0]).setFlag(CDKConstants.VISITED, true);
+		molecule.getAtom(first_atoms[0]).setFlag(CDKConstants.VISITED, true);
 		int hybridisation = 0;
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			if (!(chain.getAtomAt(i).getSymbol()).equals("H") &
-					!chain.getAtomAt(i).getFlag(CDKConstants.VISITED)) {
+			if (!(chain.getAtom(i).getSymbol()).equals("H") &
+					!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
 				//System.out.print("Counter:" + counter);
-				nextAtomNr = molecule.getAtomNumber(chain.getAtomAt(i));
-				ID2 = molecule.getAtomAt(first_atoms[counter - 1]).getAtomTypeName();
-				ID1 = molecule.getAtomAt(nextAtomNr).getAtomTypeName();
+				nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
+				ID2 = molecule.getAtom(first_atoms[counter - 1]).getAtomTypeName();
+				ID1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
 				distances[counter] = getBondLengthValue(ID1, ID2);
 				//System.out.print(" Distance:" + distances[counter]);
 				first_atoms[counter] = nextAtomNr;
 				second_atoms[counter] = first_atoms[counter - 1];
 				if (counter > 1) {
-					ID3 = molecule.getAtomAt(first_atoms[counter - 2]).getAtomTypeName();
-					hybridisation = getHybridisationState(molecule.getAtomAt(first_atoms[counter - 1]));
+					ID3 = molecule.getAtom(first_atoms[counter - 2]).getAtomTypeName();
+					hybridisation = getHybridisationState(molecule.getAtom(first_atoms[counter - 1]));
 					angles[counter] = getAngleValue(ID1, ID2, ID3);
 					//Check if sp,sp2
 					if (angles[counter] == -1) {
@@ -165,9 +165,9 @@ public class AtomPlacer3D {
 				if (counter > 2) {
 					//double bond
 					try{
-						if (getDoubleBondConfiguration2D( molecule.getBond(molecule.getAtomAt(first_atoms[counter-1]),molecule.getAtomAt(first_atoms[counter-2])),
-										(molecule.getAtomAt(first_atoms[counter])).getPoint2d(),(molecule.getAtomAt(first_atoms[counter-1])).getPoint2d(),
-										(molecule.getAtomAt(first_atoms[counter-2])).getPoint2d(),(molecule.getAtomAt(first_atoms[counter-3])).getPoint2d())
+						if (getDoubleBondConfiguration2D( molecule.getBond(molecule.getAtom(first_atoms[counter-1]),molecule.getAtom(first_atoms[counter-2])),
+										(molecule.getAtom(first_atoms[counter])).getPoint2d(),(molecule.getAtom(first_atoms[counter-1])).getPoint2d(),
+										(molecule.getAtom(first_atoms[counter-2])).getPoint2d(),(molecule.getAtom(first_atoms[counter-3])).getPoint2d())
 							==5){
 							dihedrals[counter] = DIHEDRAL_BRANCHED_CHAIN;
 						}else{ dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;}
@@ -205,10 +205,10 @@ public class AtomPlacer3D {
 						0d);
 			} else {
 				Vector3d cd = new Vector3d();
-				cd.sub((molecule.getAtomAt(third_atoms[index])).getPoint3d(), (molecule.getAtomAt(second_atoms[index])).getPoint3d());
+				cd.sub((molecule.getAtom(third_atoms[index])).getPoint3d(), (molecule.getAtom(second_atoms[index])).getPoint3d());
 
 				Vector3d bc = new Vector3d();
-				bc.sub(molecule.getAtomAt(second_atoms[index]).getPoint3d(), molecule.getAtomAt(first_atoms[index - 3]).getPoint3d());
+				bc.sub(molecule.getAtom(second_atoms[index]).getPoint3d(), molecule.getAtom(first_atoms[index - 3]).getPoint3d());
 
 				Vector3d n1 = new Vector3d();
 				n1.cross(cd, bc);
@@ -236,14 +236,14 @@ public class AtomPlacer3D {
 				ban.scale(distances[index]);
 
 				result = new Point3d();
-				result.add(molecule.getAtomAt(first_atoms[index - 1]).getPoint3d(), ban);
+				result.add(molecule.getAtom(first_atoms[index - 1]).getPoint3d(), ban);
 			}
 
-			if ((molecule.getAtomAt(first_atoms[index]).getPoint3d() == null || !(molecule.getAtomAt(first_atoms[index])).getFlag(CDKConstants.ISPLACED))
-					 && !(molecule.getAtomAt(first_atoms[index])).getFlag(CDKConstants.ISINRING)
-					 && !(molecule.getAtomAt(first_atoms[index])).getSymbol().equals("H")) {
-				molecule.getAtomAt(first_atoms[index]).setPoint3d(result);
-				molecule.getAtomAt(first_atoms[index]).setFlag(CDKConstants.ISPLACED, true);
+			if ((molecule.getAtom(first_atoms[index]).getPoint3d() == null || !(molecule.getAtom(first_atoms[index])).getFlag(CDKConstants.ISPLACED))
+					 && !(molecule.getAtom(first_atoms[index])).getFlag(CDKConstants.ISINRING)
+					 && !(molecule.getAtom(first_atoms[index])).getSymbol().equals("H")) {
+				molecule.getAtom(first_atoms[index]).setPoint3d(result);
+				molecule.getAtom(first_atoms[index]).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
 	}
@@ -430,10 +430,10 @@ public class AtomPlacer3D {
 		double distance = 0;
 		IAtom atom = null;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (ac.getAtomAt(i).getPoint3d() != null) {
-				if (Math.abs(refAtomPoint.distance(ac.getAtomAt(i).getPoint3d())) > distance) {
-					atom = ac.getAtomAt(i);
-					distance = Math.abs(refAtomPoint.distance(ac.getAtomAt(i).getPoint3d()));
+			if (ac.getAtom(i).getPoint3d() != null) {
+				if (Math.abs(refAtomPoint.distance(ac.getAtom(i).getPoint3d())) > distance) {
+					atom = ac.getAtom(i);
+					distance = Math.abs(refAtomPoint.distance(ac.getAtom(i).getPoint3d()));
 				}
 			}
 		}
@@ -599,7 +599,7 @@ public class AtomPlacer3D {
 	public int numberOfUnplacedHeavyAtoms(IAtomContainer ac) {
 		int nUnplacedHeavyAtoms=0;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtomAt(i).getFlag(CDKConstants.ISPLACED) && !ac.getAtomAt(i).equals("H")) {
+			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !ac.getAtom(i).equals("H")) {
 				nUnplacedHeavyAtoms+=1;
 			}
 		}
@@ -614,8 +614,8 @@ public class AtomPlacer3D {
 	public IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
 		IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			if (molecule.getAtomAt(i).getFlag(CDKConstants.ISPLACED)) {
-				placedAtoms.addAtom(molecule.getAtomAt(i));
+			if (molecule.getAtom(i).getFlag(CDKConstants.ISPLACED)) {
+				placedAtoms.addAtom(molecule.getAtom(i));
 			}
 		}
 		return placedAtoms;
@@ -629,7 +629,7 @@ public class AtomPlacer3D {
 	 */
 	public boolean allHeavyAtomsPlaced(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtomAt(i).getFlag(CDKConstants.ISPLACED) & !(ac.getAtomAt(i).getSymbol().equals("H"))) {
+			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) & !(ac.getAtom(i).getSymbol().equals("H"))) {
 				return false;
 			}
 		}

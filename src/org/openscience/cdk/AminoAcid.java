@@ -145,9 +145,9 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
         if (getNTerminus() != null)
-        	clone.setNTerminus(clone.getAtomAt(getAtomNumber(getNTerminus())));
+        	clone.setNTerminus(clone.getAtom(getAtomNumber(getNTerminus())));
         if (getCTerminus() != null)
-        	clone.setCTerminus(clone.getAtomAt(getAtomNumber(getCTerminus())));
+        	clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
         return clone;
     }
     

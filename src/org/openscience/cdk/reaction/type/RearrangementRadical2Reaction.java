@@ -141,7 +141,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getFlag(CDKConstants.REACTIVE_CENTER)&& bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
+						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
 							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0){
@@ -162,27 +162,27 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 										throw new CDKException("Could not clone IMolecule!", e);
 									}
 									
-									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtomAt(atom0P));
+									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 									acCloned.removeElectronContainer(selectron[0]);
 									
-									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtomAt(atom2P)));	
+									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
 
-									double order = acCloned.getBondAt(bond1P).getOrder();
-									acCloned.getBondAt(bond1P).setOrder(order+1);
+									double order = acCloned.getBond(bond1P).getOrder();
+									acCloned.getBond(bond1P).setOrder(order+1);
 									
-									order = acCloned.getBondAt(bond2P).getOrder();
-									acCloned.getBondAt(bond2P).setOrder(order-1);
+									order = acCloned.getBond(bond2P).getOrder();
+									acCloned.getBond(bond2P).setOrder(order-1);
 									
 									/* mapping */
-									IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
+									IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtomAt(atom1P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtomAt(atom2P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtom(atom2P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBondAt(bond2P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBond(bond2P));
 							        reaction.addMapping(mapping);
 									
 									reaction.addProduct((IMolecule) acCloned);
@@ -222,7 +222,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
+						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
 							if(bondsI[k].getOrder() == 2.0){

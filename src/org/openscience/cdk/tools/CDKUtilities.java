@@ -64,7 +64,7 @@ public class CDKUtilities {
 		boolean changed=false;
 		try {
 		for (int i=0;i<=m.getAtomCount()-1;i++) {
-			IAtom a=m.getAtomAt(i);
+			IAtom a=m.getAtom(i);
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
@@ -129,7 +129,7 @@ public class CDKUtilities {
 		boolean changed=false;
 		try {
 		for (int i=0;i<=m.getAtomCount()-1;i++) {
-			IAtom a=m.getAtomAt(i);
+			IAtom a=m.getAtom(i);
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
@@ -283,7 +283,7 @@ public class CDKUtilities {
 		
 		for (int i=0;i<=m.getAtomCount()-1;i++) {
 			
-			m.getAtomAt(i).setFlag(CDKConstants.ISAROMATIC,false);
+			m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,false);
 			
 			jloop:
 			for (int j=0;j<=rs.getAtomContainerCount()-1;j++) {
@@ -293,12 +293,12 @@ public class CDKUtilities {
 					continue jloop;
 				}
 				
-				boolean haveatom=r.contains(m.getAtomAt(i));
+				boolean haveatom=r.contains(m.getAtom(i));
 
 				//System.out.println("haveatom="+haveatom);
 				
 				if (haveatom && r.getAtomCount()==6) {
-					m.getAtomAt(i).setFlag(CDKConstants.ISAROMATIC,true);
+					m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,true);
 				}
 				
 			}
@@ -315,7 +315,7 @@ public class CDKUtilities {
 		
 		for (int i = 0; i <= m.getAtomCount()-1; i++)
 		{
-			IAtom a=m.getAtomAt(i);
+			IAtom a=m.getAtom(i);
 			
 			if (a.getSymbol().equals("S")) {
 				IAtom [] connectedAtoms=m.getConnectedAtoms(a);

@@ -62,7 +62,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
 	
 	public void testPyridine() {
 		Ring pyridine = new Ring(6, "C");
-		pyridine.getAtomAt(0).setSymbol("N");
+		pyridine.getAtom(0).setSymbol("N");
 		IBond[] bond = pyridine.getBonds();
 		for (int i=0; i<bond.length; i++) bond[i].setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);

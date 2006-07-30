@@ -119,9 +119,9 @@ public class INChIContentProcessorTool {
                     int target = Integer.parseInt(targetStr);
                     logger.debug("Source atom: ", source);
                     logger.debug("Target atom: ", targetStr);
-                    IAtom targetAtom = container.getAtomAt(target-1);
+                    IAtom targetAtom = container.getAtom(target-1);
                     if (source != -1) {
-                    	IAtom sourceAtom = container.getAtomAt(source-1);
+                    	IAtom sourceAtom = container.getAtom(source-1);
                         bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, 1.0);
                         container.addBond(bondToAdd);
                     }

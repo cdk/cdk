@@ -92,11 +92,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(3, ac.getBondCount());
         
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac.getAtomAt(i)));
+            assertTrue(mol.contains(ac.getAtom(i)));
         }
         
         for (int i = 0; i < ac.getBondCount(); i++) {
-            assertTrue(mol.contains(ac.getBondAt(i)));
+            assertTrue(mol.contains(ac.getBond(i)));
         }
 	}
 	/**
@@ -128,11 +128,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(11, ac.getBondCount());
         
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac.getAtomAt(i)));
+            assertTrue(mol.contains(ac.getAtom(i)));
         }
         
         for (int i = 0; i < ac.getBondCount(); i++) {
-            assertTrue(mol.contains(ac.getBondAt(i)));
+            assertTrue(mol.contains(ac.getBond(i)));
         }
 	}
     /**
@@ -164,11 +164,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(6, ac.getBondCount());
         
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac.getAtomAt(i)));
+            assertTrue(mol.contains(ac.getAtom(i)));
         }
         
         for (int i = 0; i < ac.getBondCount(); i++) {
-            assertTrue(mol.contains(ac.getBondAt(i)));
+            assertTrue(mol.contains(ac.getBond(i)));
         }
 	}
     /**
@@ -202,11 +202,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(3, ac1.getBondCount());
         
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac1.getAtomAt(i)));
+            assertTrue(mol.contains(ac1.getAtom(i)));
         }
         
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            assertTrue(mol.contains(ac1.getBondAt(i)));
+            assertTrue(mol.contains(ac1.getBond(i)));
         }
         
         IAtomContainer ac2 = acSet.getAtomContainer(1);
@@ -214,11 +214,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(3, ac2.getBondCount());
         
         for (int i = 0; i < ac2.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac2.getAtomAt(i)));
+            assertTrue(mol.contains(ac2.getAtom(i)));
         }
         
         for (int i = 0; i < ac2.getBondCount(); i++) {
-            assertTrue(mol.contains(ac2.getBondAt(i)));
+            assertTrue(mol.contains(ac2.getBond(i)));
         }
 	}
     /**
@@ -253,11 +253,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(8, ac1.getBondCount());
         
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac1.getAtomAt(i)));
+            assertTrue(mol.contains(ac1.getAtom(i)));
         }
         
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            assertTrue(mol.contains(ac1.getBondAt(i)));
+            assertTrue(mol.contains(ac1.getBond(i)));
         }
         
 	}
@@ -293,11 +293,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(3, ac1.getBondCount());
         
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac1.getAtomAt(i)));
+            assertTrue(mol.contains(ac1.getAtom(i)));
         }
         
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            assertTrue(mol.contains(ac1.getBondAt(i)));
+            assertTrue(mol.contains(ac1.getBond(i)));
         }
         
         IAtomContainer ac2 = acSet.getAtomContainer(0);
@@ -305,11 +305,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(3, ac2.getBondCount());
         
         for (int i = 0; i < ac2.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac1.getAtomAt(i)));
+            assertTrue(mol.contains(ac1.getAtom(i)));
         }
         
         for (int i = 0; i < ac2.getBondCount(); i++) {
-            assertTrue(mol.contains(ac1.getBondAt(i)));
+            assertTrue(mol.contains(ac1.getBond(i)));
         }
         
 	}
@@ -344,11 +344,11 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         assertEquals(2, ac1.getBondCount());
         
         for (int i = 0; i < ac1.getAtomCount(); i++) {
-            assertTrue(mol.contains(ac1.getAtomAt(i)));
+            assertTrue(mol.contains(ac1.getAtom(i)));
         }
         
         for (int i = 0; i < ac1.getBondCount(); i++) {
-            assertTrue(mol.contains(ac1.getBondAt(i)));
+            assertTrue(mol.contains(ac1.getBond(i)));
         }
         
 	}
@@ -368,7 +368,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
             mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);  
             for(int i =0;i<mol.getAtomCount();i++)
-				System.out.println(i+", "+mol.getAtomAt(i).getSymbol()+" "+mol.getAtomAt(i).getHydrogenCount());
+				System.out.println(i+", "+mol.getAtom(i).getSymbol()+" "+mol.getAtom(i).getHydrogenCount());
             
 //            mol.getAtomAt(6).setFormalCharge(1);
             HydrogenAdder adder = new HydrogenAdder();
@@ -467,7 +467,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		try
 		{
 			mol = (new SmilesParser()).parseSmiles("CN(C)C(N(C)C)N(C)C");
-			mol.getAtomAt(3).setFormalCharge(+1);
+			mol.getAtom(3).setFormalCharge(+1);
             HydrogenAdder adder = new HydrogenAdder();
             adder.addImplicitHydrogensToSatisfyValency(mol);
 			LonePairElectronChecker lpcheck = new LonePairElectronChecker();

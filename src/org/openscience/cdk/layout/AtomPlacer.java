@@ -194,7 +194,7 @@ public class AtomPlacer
 			logger.debug("Only one neighbour...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
-				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
+				atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
 			}
 
 			addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
@@ -203,7 +203,7 @@ public class AtomPlacer
 			 *  start angle.
 			 *  Not done yet.
 			 */
-			IAtom placedAtom = placedNeighbours.getAtomAt(0);
+			IAtom placedAtom = placedNeighbours.getAtom(0);
 //			double xDiff = atom.getX2d() - placedAtom.getX2d();
 //			double yDiff = atom.getY2d() - placedAtom.getY2d();
 			double xDiff = placedAtom.getX2d() - atom.getX2d();
@@ -228,7 +228,7 @@ public class AtomPlacer
 			logger.debug("First atom...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 			{
-				atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
+				atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
 			}
 
 			addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
@@ -335,7 +335,7 @@ public class AtomPlacer
 		}
 		for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
 		{
-			atomsToDraw.addElement(unplacedNeighbours.getAtomAt(f));
+			atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
 		}
 		radius = bondLength;
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
@@ -385,8 +385,8 @@ public class AtomPlacer
 		IAtom nextAtom = null;
 		for (int f = 0; f < ac.getAtomCount() - 1; f++)
 		{
-			atom = ac.getAtomAt(f);
-			nextAtom = ac.getAtomAt(f + 1);
+			atom = ac.getAtom(f);
+			nextAtom = ac.getAtom(f + 1);
 			atomPoint = new Point2d(atom.getPoint2d());
 			bondVector.normalize();
 			bondVector.scale(bondLength);
@@ -396,8 +396,8 @@ public class AtomPlacer
 			boolean trans=false;
 			if(GeometryTools.has2DCoordinatesNew(ac)==2){
 				try{
-					if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtomAt(f-2),withh.getAtomAt(f-1)))){
-						trans=BondTools.isCisTrans(withh.getAtomAt(f-3),withh.getAtomAt(f-2),withh.getAtomAt(f-1),withh.getAtomAt(f-0),withh);
+					if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
+						trans=BondTools.isCisTrans(withh.getAtom(f-3),withh.getAtom(f-2),withh.getAtom(f-1),withh.getAtom(f-0),withh);
 					}
 				}catch(Exception ex){
 					logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
@@ -580,7 +580,7 @@ public class AtomPlacer
 		//IAtom endAtom = null;
 		for (int f = 0; f < apsp.length; f++)
 		{
-			atom = molecule.getAtomAt(f);
+			atom = molecule.getAtom(f);
 			if (molecule.getBondCount(atom) == 1)
 			{
 				for (int g = 0; g < apsp.length; g++)
@@ -596,7 +596,7 @@ public class AtomPlacer
 		}
 		logger.debug("Longest chaing in molecule is of length " + maxPathLength + " between atoms " + (bestStartAtom+1) +  " and " + (bestEndAtom+1) );
 		
-		startAtom = molecule.getAtomAt(bestStartAtom);
+		startAtom = molecule.getAtom(bestStartAtom);
 		//endAtom = molecule.getAtomAt(bestEndAtom);
 		IAtomContainer path = new org.openscience.cdk.AtomContainer();
 		path.addAtom(startAtom);
@@ -632,7 +632,7 @@ public class AtomPlacer
 		IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			molecule.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
+			molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
 			pathes[f] = molecule.getBuilder().newAtomContainer();
 			pathes[f].addAtom(startAtom);
 
@@ -736,7 +736,7 @@ public class AtomPlacer
 		String s = "Placed: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))
+			if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
 			{
 				s += (f + 1) + "+ ";
 			} else
@@ -767,7 +767,7 @@ public class AtomPlacer
 		String s = "Numbers: ";
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			s += (mol.getAtomNumber(ac.getAtomAt(f)) + 1) + " ";
+			s += (mol.getAtomNumber(ac.getAtom(f)) + 1) + " ";
 		}
 		return s;
 	}
@@ -806,7 +806,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (!ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))
+			if (!ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
 			{
 				return false;
 			}
@@ -824,7 +824,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).setFlag(CDKConstants.ISPLACED, false);
+			ac.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
 		}
 
 	}
@@ -840,7 +840,7 @@ public class AtomPlacer
 	{
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).setFlag(CDKConstants.ISPLACED, true);
+			ac.getAtom(f).setFlag(CDKConstants.ISPLACED, true);
 		}
 	}
 
@@ -856,9 +856,9 @@ public class AtomPlacer
 		IAtomContainer ret = ac.getBuilder().newAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			if (ac.getAtomAt(f).getFlag(CDKConstants.ISPLACED))
+			if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
 			{
-				ret.addAtom(ac.getAtomAt(f));
+				ret.addAtom(ac.getAtom(f));
 			}
 		}
 		return ret;
@@ -875,7 +875,7 @@ public class AtomPlacer
 		int[] weights = getWeightNumbers(ac);
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			ac.getAtomAt(f).setProperty("Weight", new Integer(weights[f]));
+			ac.getAtom(f).setProperty("Weight", new Integer(weights[f]));
 		}
 	}
 
@@ -904,7 +904,7 @@ public class AtomPlacer
 			for (int f = 0; f < N; f++)
 			{
 				morganMatrix[f] = 0;
-				atoms = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(f));
+				atoms = atomContainer.getConnectedAtoms(atomContainer.getAtom(f));
 				for (int g = 0; g < atoms.length; g++)
 				{
 					if (!atoms[g].getFlag(CDKConstants.ISPLACED))

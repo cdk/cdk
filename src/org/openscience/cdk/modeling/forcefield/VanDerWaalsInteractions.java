@@ -106,7 +106,7 @@ public class VanDerWaalsInteractions {
 				params[0] = new Integer(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
 					vdwInteractionNumber += 1;
 				}
 			}
@@ -148,9 +148,9 @@ public class VanDerWaalsInteractions {
 				params[0] = new Integer(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
 					l += 1;
-					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtomAt(i).getAtomTypeName());
+					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtom(i).getAtomTypeName());
 					//logger.debug("vdwInteractionData " + l + " : " + vdwInteractionData);
 					aaI = ((Double) vdwInteractionData.get(6)).doubleValue();
 					gI = ((Double) vdwInteractionData.get(7)).doubleValue();
@@ -159,7 +159,7 @@ public class VanDerWaalsInteractions {
 					eI = ((Double) vdwInteractionData.get(0)).doubleValue();
 					asteriskRI = aaI * Math.pow(alphaI,0.25);
 					
-					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtomAt(j).getAtomTypeName());
+					vdwInteractionData = (Vector) parameterSet.get("data" + molecule.getAtom(j).getAtomTypeName());
 					//logger.debug("vdwInteractionData : " + vdwInteractionData);
 					aaJ = ((Double) vdwInteractionData.get(6)).doubleValue();
 					gJ = ((Double) vdwInteractionData.get(7)).doubleValue();
@@ -168,7 +168,7 @@ public class VanDerWaalsInteractions {
 					eJ = ((Double) vdwInteractionData.get(0)).doubleValue();
 					asteriskRJ = aaJ * Math.pow(alphaJ,0.25);
 					
-					if (molecule.getAtomAt(i).getAtomTypeName() == molecule.getAtomAt(j).getAtomTypeName()) {
+					if (molecule.getAtom(i).getAtomTypeName() == molecule.getAtom(j).getAtomTypeName()) {
 						asteriskR[l] = asteriskRI;
 					} else {
 						gamma = (asteriskRI - asteriskRJ) / (asteriskRI + asteriskRJ);
@@ -178,10 +178,10 @@ public class VanDerWaalsInteractions {
 					eSK[l] = ((181.16 * gI * gJ * alphaI * alphaJ) / (Math.sqrt(alphaI/nI) + Math.sqrt(alphaJ/nJ))) * 1 / Math.pow(asteriskR[l], 6);
 					//logger.debug("eSK = " + eSK[l]);
 					
-					vdwInteractionData = (Vector) parameterSet.get("vdw" + molecule.getAtomAt(i).getAtomTypeName());
+					vdwInteractionData = (Vector) parameterSet.get("vdw" + molecule.getAtom(i).getAtomTypeName());
 					//logger.debug("vdwInteractionData " + l + " : " + vdwInteractionData);
 					atomRadiu0[i] = ((Double) vdwInteractionData.get(0)).doubleValue();
-					vdwInteractionData = (Vector) parameterSet.get("vdw" + molecule.getAtomAt(j).getAtomTypeName());
+					vdwInteractionData = (Vector) parameterSet.get("vdw" + molecule.getAtom(j).getAtomTypeName());
 					atomRadiu0[j] = ((Double) vdwInteractionData.get(0)).doubleValue();
 					
 					dI = 2 * atomRadiu0[i];
@@ -194,7 +194,7 @@ public class VanDerWaalsInteractions {
 					
 					params[0] = new Integer(j);
 					shortestPathBetweenToAtoms.setParameters(params);
-					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()==3){
+					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()==3){
 					//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))] == 3) {
 						ivdw[l] = vdwScale14;
 					}else {

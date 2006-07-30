@@ -163,7 +163,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
 
         double sum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-        	org.openscience.cdk.interfaces.IBond bond = container.getBondAt(i);
+        	org.openscience.cdk.interfaces.IBond bond = container.getBond(i);
 
             if (bond.getAtomCount() != 2) {
                 System.out.println("GravitationalIndex: Only handles 2 center bonds");
@@ -187,7 +187,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         // heavy atoms only
         double heavysum = 0;
         for (int i = 0; i < container.getBondCount(); i++) {
-        	org.openscience.cdk.interfaces.IBond b = container.getBondAt(i);
+        	org.openscience.cdk.interfaces.IBond b = container.getBond(i);
 
             if (b.getAtomCount() != 2) {
                 System.out.println("GravitationalIndex: Only handles 2 center bonds");
@@ -216,7 +216,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         // all pairs
         Vector x = new Vector();
         for (int i = 0; i < container.getAtomCount(); i++) {
-            if (container.getAtomAt(i).getSymbol().equals("H")) continue;
+            if (container.getAtom(i).getSymbol().equals("H")) continue;
             else x.add( new Integer(i) );
         }
         int npair = x.size() * (x.size()-1) / 2;
@@ -243,15 +243,15 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             int atomNumber1 = p[i].x;
             int atomNumber2 = p[i].y;
 
-            mass1 = factory.getMajorIsotope( container.getAtomAt(atomNumber1).getSymbol() ).getMassNumber();
-            mass2 = factory.getMajorIsotope( container.getAtomAt(atomNumber2).getSymbol() ).getMassNumber();
+            mass1 = factory.getMajorIsotope( container.getAtom(atomNumber1).getSymbol() ).getMassNumber();
+            mass2 = factory.getMajorIsotope( container.getAtom(atomNumber2).getSymbol() ).getMassNumber();
 
-            double x1 = container.getAtomAt(atomNumber1).getX3d();
-            double y1 = container.getAtomAt(atomNumber1).getY3d();
-            double z1 = container.getAtomAt(atomNumber1).getZ3d();
-            double x2 = container.getAtomAt(atomNumber2).getX3d();
-            double y2 = container.getAtomAt(atomNumber2).getY3d();
-            double z2 = container.getAtomAt(atomNumber2).getZ3d();
+            double x1 = container.getAtom(atomNumber1).getX3d();
+            double y1 = container.getAtom(atomNumber1).getY3d();
+            double z1 = container.getAtom(atomNumber1).getZ3d();
+            double x2 = container.getAtom(atomNumber2).getX3d();
+            double y2 = container.getAtom(atomNumber2).getY3d();
+            double z2 = container.getAtom(atomNumber2).getZ3d();
 
             double dist = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
             allheavysum += (mass1*mass2) / dist;

@@ -88,16 +88,16 @@ public class StrandTest extends TestCase {
 		oStrand.addAtom(oAtom3, oMono1);
 		oStrand.addAtom(oAtom4, oMono2);
 		oStrand.addAtom(oAtom5, oMono3);
-		assertNotNull(oStrand.getAtomAt(0));
-		assertNotNull(oStrand.getAtomAt(1));
-		assertNotNull(oStrand.getAtomAt(2));
-		assertNotNull(oStrand.getAtomAt(3));
-		assertNotNull(oStrand.getAtomAt(4));
-		assertEquals(oAtom1, oStrand.getAtomAt(0));
-		assertEquals(oAtom2, oStrand.getAtomAt(1));
-		assertEquals(oAtom3, oStrand.getAtomAt(2));
-		assertEquals(oAtom4, oStrand.getAtomAt(3));
-		assertEquals(oAtom5, oStrand.getAtomAt(4));
+		assertNotNull(oStrand.getAtom(0));
+		assertNotNull(oStrand.getAtom(1));
+		assertNotNull(oStrand.getAtom(2));
+		assertNotNull(oStrand.getAtom(3));
+		assertNotNull(oStrand.getAtom(4));
+		assertEquals(oAtom1, oStrand.getAtom(0));
+		assertEquals(oAtom2, oStrand.getAtom(1));
+		assertEquals(oAtom3, oStrand.getAtom(2));
+		assertEquals(oAtom4, oStrand.getAtom(3));
+		assertEquals(oAtom5, oStrand.getAtom(4));
 
 		assertNull(oStrand.getMonomer("0815"));
 		assertNotNull(oStrand.getMonomer(""));

@@ -114,9 +114,9 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
-		molecule.getAtomAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
         Object[] params = {Boolean.TRUE};
         type.setParameters(params);
@@ -156,12 +156,12 @@ public class BreakingBondReactionTest extends CDKTestCase {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappings().length);
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(0));
-        assertEquals(mappedProductA1, product.getAtomAt(0));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBondAt(0));
-        assertEquals(mappedProductB1, product.getBondAt(0));
-        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
-        assertEquals(mappedProductA2, product.getAtomAt(1));
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProductA1, product.getAtom(0));
+        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
+        assertEquals(mappedProductB1, product.getBond(0));
+        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        assertEquals(mappedProductA2, product.getAtom(1));
 	}
 
 }

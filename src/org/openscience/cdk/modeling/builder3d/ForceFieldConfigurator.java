@@ -257,7 +257,7 @@ public class ForceFieldConfigurator {
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atom = molecule.getAtomAt(i);
+			atom = molecule.getAtom(i);
 			if (ringSetMolecule.contains(atom)) {
 				NumberOfRingAtoms = NumberOfRingAtoms + 1;
 				atom.setFlag(CDKConstants.ISINRING, true);
@@ -300,7 +300,7 @@ public class ForceFieldConfigurator {
 	private boolean isHeteroRingSystem(IAtomContainer ac) {
 		if (ac != null) {
 			for (int i = 0; i < ac.getAtomCount(); i++) {
-				if (!(ac.getAtomAt(i).getSymbol()).equals("H") && !(ac.getAtomAt(i).getSymbol()).equals("C")) {
+				if (!(ac.getAtom(i).getSymbol()).equals("H") && !(ac.getAtom(i).getSymbol()).equals("C")) {
 					return true;
 				}
 			}

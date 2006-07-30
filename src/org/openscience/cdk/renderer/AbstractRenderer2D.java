@@ -244,7 +244,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			paintColouredAtomBackground(atom, r2dm.getHoverOverColor(), graphics);
 		}
-		if((r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond())) && r2dm.getSelectedPart().contains(atom)) || (r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()==1 && r2dm.getSelectedPart().getAtomAt(0)==atom)){
+		if((r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond())) && r2dm.getSelectedPart().contains(atom)) || (r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()==1 && r2dm.getSelectedPart().getAtom(0)==atom)){
 			paintColouredAtomBackground(atom, r2dm.getSelectedPartColor(), graphics);
 		}	
 		if(r2dm.getExternalSelectedPart()!=null && r2dm.getExternalSelectedPart().contains(atom)){
@@ -1487,8 +1487,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	
 	public void updateRenderingCoordinates(IAtomContainer atomCon, Renderer2DModel r2dm){
 		for(int i=0;i<atomCon.getAtomCount();i++){
-			if(r2dm.getRenderingCoordinate(atomCon.getAtomAt(i))==null)
-				r2dm.setRenderingCoordinate(atomCon.getAtomAt(i),atomCon.getAtomAt(i).getPoint2d());
+			if(r2dm.getRenderingCoordinate(atomCon.getAtom(i))==null)
+				r2dm.setRenderingCoordinate(atomCon.getAtom(i),atomCon.getAtom(i).getPoint2d());
 		}
 	}
 }

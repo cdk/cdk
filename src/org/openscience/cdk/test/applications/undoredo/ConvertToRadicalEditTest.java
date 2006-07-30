@@ -42,7 +42,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 	public void testRedo() {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtom(i);
 			ElectronContainer electronContainer = new SingleElectron(atom);
 			ConvertToRadicalEdit edit = new ConvertToRadicalEdit(mol,
 					electronContainer);
@@ -50,7 +50,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		}
 		int singleElectronContainerCount = 0;
 		for (int i = 0; i < mol.getElectronContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IElectronContainer container = mol.getElectronContainerAt(i);
+			org.openscience.cdk.interfaces.IElectronContainer container = mol.getElectronContainer(i);
 			if (container.getClass() == SingleElectron.class) {
 				singleElectronContainerCount += 1;
 			}
@@ -75,7 +75,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		int singleElectronContainerCount = 0;
 		for (int i = 0; i < allRadicalsMol.getElectronContainerCount(); i++) {
 			org.openscience.cdk.interfaces.IElectronContainer container = allRadicalsMol
-					.getElectronContainerAt(i);
+					.getElectronContainer(i);
 			if (container instanceof SingleElectron) {
 				singleElectronContainerCount += 1;
 			}
@@ -87,7 +87,7 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		Molecule allRadicalsMol = (Molecule) mol.clone();
 		electronContainerList = new ArrayList();
 		for (int i = 0; i < allRadicalsMol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.IAtom atom = allRadicalsMol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = allRadicalsMol.getAtom(i);
 			ElectronContainer electronContainer = new SingleElectron(atom);
 			allRadicalsMol.addElectronContainer(electronContainer);
 			electronContainerList.add(electronContainer);

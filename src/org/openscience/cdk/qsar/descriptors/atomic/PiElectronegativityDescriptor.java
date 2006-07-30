@@ -150,9 +150,9 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
     	  int stepSize = pepe.getStepSize();
 	      int atomPosition = ac.getAtomNumber(atom);
 	      int start = (stepSize * (atomPosition) + atomPosition);
-	      if(ac.getLonePairCount(ac.getAtomAt(atomPosition)) > 0 ||
-					ac.getMaximumBondOrder(ac.getAtomAt(atomPosition)) >1 ||
-					ac.getAtomAt(atomPosition).getFormalCharge() != 0)
+	      if(ac.getLonePairCount(ac.getAtom(atomPosition)) > 0 ||
+					ac.getMaximumBondOrder(ac.getAtom(atomPosition)) >1 ||
+					ac.getAtom(atomPosition).getFormalCharge() != 0)
 	    	  piElectronegativity = ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
 //	      System.out.println(ac.getAtomAt(atomPosition).getSymbol()+" - "+piElectronegativity+"="+q+" a("+gasteigerFactors[1][start]+")+b("+gasteigerFactors[1][start+1]+")+c"+gasteigerFactors[1][start+2]+")");
 	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(piElectronegativity));

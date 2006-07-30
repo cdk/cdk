@@ -231,14 +231,14 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			double ymin=Double.MAX_VALUE;
 			double ymax=Double.MIN_VALUE;
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
-				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).x>xmax)
-					xmax=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).x;
-				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).y>ymax)
-					ymax=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).y;
-				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).x<xmin)
-					xmin=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).x;
-				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).y<ymin)
-					ymin=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).y;
+				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).x>xmax)
+					xmax=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).x;
+				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).y>ymax)
+					ymax=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).y;
+				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).x<xmin)
+					xmin=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).x;
+				if(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).y<ymin)
+					ymin=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).y;
 			}
 			if(mouseCoords[0]>xmin && mouseCoords[0]<xmax && mouseCoords[1]>ymin && mouseCoords[1]<ymax){
 				//ok, we want to rotate
@@ -322,9 +322,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IAtomContainer selected=r2dm.getSelectedPart();
 			r2dm.getMerge().clear();
 			for(int i=0;i<selected.getAtomCount();i++){
-				IAtom inrange=getAtomInRange((int)((Point2d)r2dm.getRenderingCoordinate(selected.getAtomAt(i))).x, (int)((Point2d)r2dm.getRenderingCoordinate(selected.getAtomAt(i))).y, selected.getAtomAt(i));
-				if(inrange!=null && inrange!=selected.getAtomAt(i)){
-					r2dm.getMerge().put(selected.getAtomAt(i),inrange);
+				IAtom inrange=getAtomInRange((int)((Point2d)r2dm.getRenderingCoordinate(selected.getAtom(i))).x, (int)((Point2d)r2dm.getRenderingCoordinate(selected.getAtom(i))).y, selected.getAtom(i));
+				if(inrange!=null && inrange!=selected.getAtom(i)){
+					r2dm.getMerge().put(selected.getAtom(i),inrange);
 				}
 			}
 			/*
@@ -339,9 +339,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			double angle=BondTools.giveAngleBothMethods(new Point2d(r2dm.getRotateCenter()[0],r2dm.getRotateCenter()[1]),new Point2d(prevDragCoordX,prevDragCoordY),new Point2d(mouseX, mouseY),true);
 			Polygon polygon=new Polygon();
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++) {
-				polygon.addPoint((int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).x*1000),(int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i))).y*1000));
+				polygon.addPoint((int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).x*1000),(int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(i))).y*1000));
 			}
-			polygon.addPoint((int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).x*1000),(int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).y*1000));
+			polygon.addPoint((int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).x*1000),(int)(((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).y*1000));
 			AffineTransform at=AffineTransform.getRotateInstance(angle,r2dm.getRotateCenter()[0]*1000,r2dm.getRotateCenter()[1]*1000);
 			Shape transformedpolygon=at.createTransformedShape(polygon);
 			PathIterator pa=transformedpolygon.getPathIterator(null);
@@ -350,7 +350,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				pa.next();
 				double[] d=new double[6];
 				pa.currentSegment(d);
-				r2dm.setRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(i),new Point2d(d[0]/1000,d[1]/1000));
+				r2dm.setRenderingCoordinate(r2dm.getSelectedPart().getAtom(i),new Point2d(d[0]/1000,d[1]/1000));
 			}
 			fireChange();
 		}
@@ -446,9 +446,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			dragMode = DRAG_ROTATE;
 		}
 		if(dragMode==DRAG_MOVING_SELECTED){
-			if (r2dm.getSelectedPart() != null && r2dm.getSelectedPart().getAtomAt(0) != null) {
-				moveoldX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).x;
-				moveoldY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).y;
+			if (r2dm.getSelectedPart() != null && r2dm.getSelectedPart().getAtom(0) != null) {
+				moveoldX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).x;
+				moveoldY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).y;
 			}
 		}
 	}
@@ -584,8 +584,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			IMolecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
 			for (int k = 0; k < mol.getAtomCount(); k++)
 			{
-				((Point2d)r2dm.getRenderingCoordinate(mol.getAtomAt(k))).x=((Point2d)r2dm.getRenderingCoordinate(mol.getAtomAt(k))).x -shiftX;
-				((Point2d)r2dm.getRenderingCoordinate(mol.getAtomAt(k))).y=((Point2d)r2dm.getRenderingCoordinate(mol.getAtomAt(k))).y -shiftY;
+				((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x=((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x -shiftX;
+				((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).y=((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).y -shiftY;
 			}
 		}
 		r2dm.fireChange();
@@ -598,8 +598,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtomContainer undoredoContainer = new org.openscience.cdk.AtomContainer();
 		if(r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()>0){
 			undoredoContainer.add(r2dm.getSelectedPart());
-			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).x-moveoldX;
-			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtomAt(0))).y-moveoldY;
+			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).x-moveoldX;
+			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).y-moveoldY;
 			
 		}else if(r2dm.getHighlightedAtom()!=null){
 			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedAtom())).x-moveoldX;
@@ -762,7 +762,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			bondLength = r2dm.getBondLength();
 			ringRadius = (bondLength / 2) / Math.sin(Math.PI / c2dm.getRingSize());
 			sharedAtomsCenter = new Point2d(mouseX, mouseY - ringRadius);
-			firstAtom = newRing.getAtomAt(0);
+			firstAtom = newRing.getAtom(0);
 			firstAtom.setPoint2d(sharedAtomsCenter);
 			sharedAtoms.addAtom(firstAtom);
 			ringCenterVector = new Vector2d(new Point2d(mouseX, mouseY));
@@ -773,7 +773,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			undoRedoContainer.add(newRing);
 		} else if (sharedAtoms.getAtomCount() == 1)
 		{
-			spiroAtom = sharedAtoms.getAtomAt(0);
+			spiroAtom = sharedAtoms.getAtom(0);
 			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
 			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
@@ -815,8 +815,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 			// calculate two points that are perpendicular to the highlighted bond
 			// and have a certain distance from the bondcenter
-			firstAtom = sharedAtoms.getAtomAt(0);
-			secondAtom = sharedAtoms.getAtomAt(1);
+			firstAtom = sharedAtoms.getAtom(0);
+			secondAtom = sharedAtoms.getAtom(1);
 			xDiff = ((Point2d)r2dm.getRenderingCoordinate(secondAtom)).x - ((Point2d)r2dm.getRenderingCoordinate(firstAtom)).x;
 			yDiff = ((Point2d)r2dm.getRenderingCoordinate(secondAtom)).y - ((Point2d)r2dm.getRenderingCoordinate(firstAtom)).y;
 			bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
@@ -910,12 +910,12 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		double highlightRadius = r2dm.getHighlightRadius();
 		for (int i = 0; i < newRing.getAtomCount(); i++)
 		{
-			IAtom atom=newRing.getAtomAt(i);
+			IAtom atom=newRing.getAtom(i);
 			r2dm.setRenderingCoordinate(atom,new Point2d(atom.getPoint2d()));
 		}
 		for (int i = 0; i < newRing.getAtomCount(); i++)
 		{
-			IAtom atom=newRing.getAtomAt(i);
+			IAtom atom=newRing.getAtom(i);
 			r2dm.setRenderingCoordinate(atom,new Point2d(atom.getPoint2d()));
 			centerAtom(atom,chemModel);
 			//We make sure atoms don't overlap
@@ -927,7 +927,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			}
 		}
 		this.updateMoleculeCoordinates();
-		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtomAt(0)), newRing.getAtoms());
+		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), newRing.getAtoms());
 		undoRedoContainer.add(newRing);
 		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
 		undoRedoHandler.postEdit(edit);
@@ -984,12 +984,12 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
 			logger.info("User asks to delete selected part");
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
-				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtomAt(i));
-				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtomAt(i));
+				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
+				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
 			}
 			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
-				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBondAt(i));
-				undoRedoContainer.addBond(r2dm.getSelectedPart().getBondAt(i));
+				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
+				undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
 			}
 			type = "Remove Substructure";
 			// update atoms
@@ -1222,7 +1222,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				if (placedAtoms.getAtomCount() == 1)
 				{
 					Vector2d bondVector = atomPlacer.getNextBondVector(
-							atomInRange, placedAtoms.getAtomAt(0), 
+							atomInRange, placedAtoms.getAtom(0), 
 							GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon)),
 							true // FIXME: is this correct? (see SF bug #1367002)
 					);
@@ -1771,7 +1771,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtom[] ringAtoms = new org.openscience.cdk.Atom[ringSize];
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
-			ringAtoms[i] = sharedAtoms.getAtomAt(i);
+			ringAtoms[i] = sharedAtoms.getAtom(i);
 		}
 		for (int i = sharedAtoms.getAtomCount(); i < ringSize; i++)
 		{
@@ -1807,7 +1807,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
-			currentAtom = sharedAtoms.getAtomAt(i);
+			currentAtom = sharedAtoms.getAtom(i);
 			conAtoms.addAtom(currentAtom);
 			conAtomsArray = atomCon.getConnectedAtoms(currentAtom);
 			for (int j = 0; j < conAtomsArray.length; j++)
@@ -1834,7 +1834,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			currentAtom = atomCon.getAtomAt(i);
+			currentAtom = atomCon.getAtom(i);
 			logger.debug("Atom: ", currentAtom);
 			if (polygon.contains(new Point((int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).x, (int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).y)))
 			{
@@ -1847,7 +1847,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			currentBond = bonds[i];
 			for (int j = 0; j < selectedPart.getAtomCount(); j++)
 			{
-				currentAtom = selectedPart.getAtomAt(j);
+				currentAtom = selectedPart.getAtom(j);
 				if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
 				{
 					selectedPart.addBond(currentBond);
@@ -2060,7 +2060,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		    IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 			for (int i = 0; i < atomCon.getAtomCount(); i++)
 			{
-				IAtom currentAtom = atomCon.getAtomAt(i);
+				IAtom currentAtom = atomCon.getAtom(i);
 				if(r2dm.getRenderingCoordinate(currentAtom)!=null){
 					currentAtom.setPoint2d(new Point2d((Point2d)r2dm.getRenderingCoordinate(currentAtom)));
 				}
@@ -2125,14 +2125,14 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		 double largesty=Integer.MIN_VALUE;
 		 IAtomContainer allinone=SetOfMoleculesManipulator.getAllInOneContainer(chemModel.getSetOfMolecules());
 		 for(int i=0;i<allinone.getAtomCount();i++){
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).x<smallestx)
-				 smallestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).x;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).y<smallesty)
-				 smallesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).y;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).x>largestx)
-				 largestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).x;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).y>largesty)
-				 largesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtomAt(i))).y;
+			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x<smallestx)
+				 smallestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x;
+			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y<smallesty)
+				 smallesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y;
+			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x>largestx)
+				 largestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x;
+			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y>largesty)
+				 largesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y;
 		 }
 		 int xstretch=((int)(largestx-smallestx))+20;
 		 int ystretch=((int)(largesty-smallesty))+20;

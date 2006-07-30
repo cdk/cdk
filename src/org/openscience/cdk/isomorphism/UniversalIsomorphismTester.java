@@ -113,17 +113,17 @@ public class UniversalIsomorphismTester {
 	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
       // check single atom case
       if (g2.getAtomCount() == 1) {
-          IAtom atom = g1.getAtomAt(0);
-          IAtom atom2 = g2.getAtomAt(0);
+          IAtom atom = g1.getAtom(0);
+          IAtom atom2 = g2.getAtom(0);
 		  if (atom instanceof IQueryAtom) {
 			  IQueryAtom qAtom = (IQueryAtom)atom;
-              return qAtom.matches(g2.getAtomAt(0));
+              return qAtom.matches(g2.getAtom(0));
 		  } else if (atom2 instanceof IQueryAtom) {
               IQueryAtom qAtom = (IQueryAtom)atom2;
-              return qAtom.matches(g1.getAtomAt(0));
+              return qAtom.matches(g1.getAtom(0));
           } else {
 			  String atomSymbol = atom.getSymbol();
-              return g1.getAtomAt(0).getSymbol().equals(atomSymbol);
+              return g1.getAtom(0).getSymbol().equals(atomSymbol);
 		  }
       }
 	  return (getIsomorphMap(g1, g2) != null);
@@ -268,9 +268,9 @@ public class UniversalIsomorphismTester {
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
       // test for single atom case
       if (g2.getAtomCount() == 1) {
-          IAtom atom = g2.getAtomAt(0);
+          IAtom atom = g2.getAtom(0);
 		  for (int i=0; i<g1.getAtomCount(); i++) {
-		      IAtom atom2 = g1.getAtomAt(i);
+		      IAtom atom2 = g1.getAtom(i);
 		      if (atom instanceof IQueryAtom) {
 		    	  IQueryAtom qAtom = (IQueryAtom)atom;
 		    	  if (qAtom.matches(atom2)) return true;
@@ -516,26 +516,26 @@ public class UniversalIsomorphismTester {
 
 	  if (g2.getAtomCount() == 1) {
 		  ArrayList arrayList = new ArrayList();
-		  IAtom atom = g2.getAtomAt(0);
+		  IAtom atom = g2.getAtom(0);
 		  if (atom instanceof IQueryAtom) {
 			  IQueryAtom qAtom = (IQueryAtom)atom;
 			  for (int i=0; i<g1.getAtomCount(); i++){
-				  if(qAtom.matches(g1.getAtomAt(i)))
+				  if(qAtom.matches(g1.getAtom(i)))
 					  arrayList.add(new RMap(i,0));
 			  }
 		  } else {
 			  String atomSymbol = atom.getSymbol();
 			  for(int i=0; i<g1.getAtomCount(); i++){
-				  if(g1.getAtomAt(i).getSymbol().equals(atomSymbol))
+				  if(g1.getAtom(i).getSymbol().equals(atomSymbol))
 					  arrayList.add(new RMap(i,0));
 			  }
 		  }
 		  return arrayList;
 	  } else if (g1.getAtomCount() == 1) {
 		  ArrayList arrayList = new ArrayList();
-		  IAtom atom = g1.getAtomAt(0);
+		  IAtom atom = g1.getAtom(0);
 		  for (int i=0; i<g2.getAtomCount(); i++) {
-		      IAtom atom2 = g2.getAtomAt(i);
+		      IAtom atom2 = g2.getAtom(i);
 		      if (atom2 instanceof IQueryAtom) {
 		    	  IQueryAtom qAtom = (IQueryAtom)atom2;
 		    	  if (qAtom.matches(atom))
@@ -884,7 +884,7 @@ public class UniversalIsomorphismTester {
 	  IAtom atom;
 	  for (int i = 0; i < ac1.getBondCount(); i++)
 	  {
-		  bond = ac1.getBondAt(i);
+		  bond = ac1.getBond(i);
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac1AromaticBondCount ++;
 		  else if (bond.getOrder() == 1) ac1SingleBondCount ++;
 		  else if (bond.getOrder() == 2) ac1DoubleBondCount ++;
@@ -892,7 +892,7 @@ public class UniversalIsomorphismTester {
 	  }
 	  for (int i = 0; i < ac2.getBondCount(); i++)
 	  {
-		  bond = ac2.getBondAt(i);
+		  bond = ac2.getBond(i);
           if (bond instanceof IQueryBond) continue;
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac2AromaticBondCount ++;
 		  else if (bond.getOrder() == 1) ac2SingleBondCount ++;
@@ -907,7 +907,7 @@ public class UniversalIsomorphismTester {
 
 	  for (int i = 0; i < ac1.getAtomCount(); i++)
 	  {
-		  atom = ac1.getAtomAt(i);
+		  atom = ac1.getAtom(i);
 		  if (atom.getSymbol().equals("S")) ac1SCount ++;
 		  else if (atom.getSymbol().equals("N")) ac1NCount ++;
 		  else if (atom.getSymbol().equals("O")) ac1OCount ++;
@@ -919,7 +919,7 @@ public class UniversalIsomorphismTester {
 	  }
 	  for (int i = 0; i < ac2.getAtomCount(); i++)
 	  {
-		  atom = ac2.getAtomAt(i);
+		  atom = ac2.getAtom(i);
           if (atom instanceof IQueryAtom) continue;
 		  if (atom.getSymbol().equals("S")) ac2SCount ++;
 		  else if (atom.getSymbol().equals("N")) ac2NCount ++;

@@ -69,12 +69,12 @@ public class HydrogenPlacerTest extends CDKTestCase {
     public void testBug933572() throws IOException, ClassNotFoundException, CDKException{
         Molecule ac=new Molecule();
         ac.addAtom(new Atom("H"));
-        ac.getAtomAt(0).setPoint2d(new Point2d(0,0));
+        ac.getAtom(0).setPoint2d(new Point2d(0,0));
         new HydrogenAdder().addExplicitHydrogensToSatisfyValency(ac);
         HydrogenPlacer hPlacer = new HydrogenPlacer();
         hPlacer.placeHydrogens2D(ac, 36);
         for(int i=0;i<ac.getAtomCount();i++){
-            assertNotNull(ac.getAtomAt(i).getPoint2d());
+            assertNotNull(ac.getAtom(i).getPoint2d());
         }
      }
 

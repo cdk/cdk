@@ -334,10 +334,10 @@ public class PathTools {
 
     public static void resetFlags(IAtomContainer ac) {
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            ac.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
+            ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
         }
         for (int f = 0; f < ac.getElectronContainerCount(); f++) {
-            ac.getElectronContainerAt(f).setFlag(CDKConstants.VISITED, false);
+            ac.getElectronContainer(f).setFlag(CDKConstants.VISITED, false);
         }
 
     }
@@ -464,11 +464,11 @@ public class PathTools {
                 }
             }
             Q.remove(index);
-            S.add(atomContainer.getAtomAt(u));
+            S.add(atomContainer.getAtom(u));
             if (u == endNumber) break;
 
             // relaxation
-            IAtom[] connected = atomContainer.getConnectedAtoms( atomContainer.getAtomAt(u) );
+            IAtom[] connected = atomContainer.getConnectedAtoms( atomContainer.getAtom(u) );
             for (int i = 0; i < connected.length; i++) {
                 int anum = atomContainer.getAtomNumber(connected[i]);
                 if (d[anum] > d[u] + 1) { // all edges have equals weights
@@ -481,10 +481,10 @@ public class PathTools {
         ArrayList tmp = new ArrayList();
         int u = endNumber;
         while (true) {
-            tmp.add(0, atomContainer.getAtomAt(u));
+            tmp.add(0, atomContainer.getAtom(u));
             u = previous[u];
             if (u == startNumber){
-                tmp.add(0, atomContainer.getAtomAt(u));
+                tmp.add(0, atomContainer.getAtom(u));
                 break;
             }
         }

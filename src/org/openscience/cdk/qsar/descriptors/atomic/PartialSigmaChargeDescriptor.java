@@ -142,7 +142,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 				IAtom[] atoms = mol.getAtoms();
 				for (int i=0; i<atoms.length; i++) {
 					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
-					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(mol.getAtomAt(i).getCharge()));
+					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
 				}
 			} catch (Exception e) {
 				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);

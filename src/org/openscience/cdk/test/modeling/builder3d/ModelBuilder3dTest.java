@@ -101,25 +101,25 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mol = mb3d.getMolecule();
 			for (int i=0;i<mol.getAtomCount();i++){
 				if (i==0){
-					assertEquals(c_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
-					assertEquals(c_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
-					assertEquals(c_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
+					assertEquals(c_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+					assertEquals(c_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+					assertEquals(c_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 				}else if(i==1){
-					assertEquals(f_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
-					assertEquals(f_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
-					assertEquals(f_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
+					assertEquals(f_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+					assertEquals(f_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+					assertEquals(f_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 				}else if(i==2){
-					assertEquals(h1_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
-					assertEquals(h1_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
-					assertEquals(h1_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
+					assertEquals(h1_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+					assertEquals(h1_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+					assertEquals(h1_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 				}else if(i==3){
-					assertEquals(h2_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
-					assertEquals(h2_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
-					assertEquals(h2_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
+					assertEquals(h2_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+					assertEquals(h2_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+					assertEquals(h2_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 				}else if(i==4){
-					assertEquals(h3_coord.x, mol.getAtomAt(i).getPoint3d().x, 0.0001);
-					assertEquals(h3_coord.y, mol.getAtomAt(i).getPoint3d().y, 0.0001);
-					assertEquals(h3_coord.z, mol.getAtomAt(i).getPoint3d().z, 0.0001);
+					assertEquals(h3_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+					assertEquals(h3_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+					assertEquals(h3_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 				}
 			}
 			
@@ -147,7 +147,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mb3d.generate3DCoordinates();
 			mol = mb3d.getMolecule();
 			for (int i=0;i<mol.getAtomCount();i++){
-				assertNotNull(mol.getAtomAt(i).getPoint3d());
+				assertNotNull(mol.getAtom(i).getPoint3d());
 			}
 			//System.out.println("Layout molecule with SMILE: "+smile);
 		} catch (Exception exc) {

@@ -324,7 +324,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         int numberOfBonds=0;
         if(upToWhichAtom<container.getAtomCount()){
           for(int i=0;i<container.getBondCount();i++){
-            if(isVisible[container.getAtomNumber(container.getBondAt(i).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBondAt(i).getAtoms()[1])])
+            if(isVisible[container.getAtomNumber(container.getBond(i).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBond(i).getAtoms()[1])])
               numberOfBonds++;
           }
         }else{
@@ -355,10 +355,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 line += formatMDLFloat((float)0.0);
                 line += formatMDLFloat((float)0.0) + " ";
             }
-            if(container.getAtomAt(f) instanceof IPseudoAtom)
-		    line += formatMDLString(((IPseudoAtom) container.getAtomAt(f)).getLabel(), 3);
+            if(container.getAtom(f) instanceof IPseudoAtom)
+		    line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
 	    else
-		    line += formatMDLString(container.getAtomAt(f).getSymbol(), 3); 
+		    line += formatMDLString(container.getAtom(f).getSymbol(), 3); 
             line += " 0  0  0  0  0  0  0  0  0  0  0  0";
             writer.write(line);
             writer.newLine();
@@ -368,7 +368,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write Bond block
         IBond[] bonds = container.getBonds();
         for (int g = 0; g < bonds.length; g++) {
-          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBondAt(g).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBondAt(g).getAtoms()[1])])){
+          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBond(g).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBond(g).getAtoms()[1])])){
         	  IBond bond = bonds[g];
             if (bond.getAtoms().length != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);

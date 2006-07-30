@@ -69,7 +69,7 @@ public class Rule1dot2 extends NamingRule {
                             inp = new IUPACNamePart(name + localize("yl"), this);
                             m.setProperty(COMPLETED_FLAG, "yes");
                             for (int i = 0; i < m.getAtomCount(); i++) {
-                                m.getAtomAt(i).setProperty(ATOM_NAMED_FLAG, "yes");
+                                m.getAtom(i).setProperty(ATOM_NAMED_FLAG, "yes");
                             }
                         }
                     };

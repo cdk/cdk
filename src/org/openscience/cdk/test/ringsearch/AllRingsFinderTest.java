@@ -96,7 +96,7 @@ public class AllRingsFinderTest extends CDKTestCase
 				Ring ring = (Ring)ringSet.getAtomContainer(i);
 				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
 				{
-					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainerAt(j);
+					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainer(j);
 					if (ec instanceof org.openscience.cdk.interfaces.IBond)
 					{
 						org.openscience.cdk.interfaces.IAtom atom1 = ((Bond)ec).getAtomAt(0);

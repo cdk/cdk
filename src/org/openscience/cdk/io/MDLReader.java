@@ -476,8 +476,8 @@ public class MDLReader extends DefaultChemObjectReader {
                     stereo = CDKConstants.STEREO_BOND_UNDEFINED;
                 }
                 // interpret CTfile's special bond orders
-                IAtom a1 = molecule.getAtomAt(atom1 - 1);
-                IAtom a2 = molecule.getAtomAt(atom2 - 1);
+                IAtom a1 = molecule.getAtom(atom1 - 1);
+                IAtom a2 = molecule.getAtom(atom2 - 1);
                 if (order == 4) {
                     // aromatic bond
                     bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
@@ -512,7 +512,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         int atomNumber = Integer.parseInt(token.trim());
                         token = st.nextToken();
                         int charge = Integer.parseInt(token.trim());
-                        molecule.getAtomAt(atomNumber - 1).setFormalCharge(charge);
+                        molecule.getAtom(atomNumber - 1).setFormalCharge(charge);
                     }
                 } else if (line.startsWith("M  ISO")) {
                     try {
@@ -523,7 +523,7 @@ public class MDLReader extends DefaultChemObjectReader {
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
                             int absMass = Integer.parseInt(st.nextToken().trim());
                             if (absMass != 0) { 
-                                IAtom isotope = molecule.getAtomAt(atomNumber - 1);
+                                IAtom isotope = molecule.getAtom(atomNumber - 1);
                                 isotope.setMassNumber(absMass);
                             }
                         }
@@ -542,7 +542,7 @@ public class MDLReader extends DefaultChemObjectReader {
                             int atomNumber = Integer.parseInt(st.nextToken().trim());
                             int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
                             if (spinMultiplicity > 1) {
-                                IAtom radical = molecule.getAtomAt(atomNumber - 1);
+                                IAtom radical = molecule.getAtom(atomNumber - 1);
                                 for (int j=2; j <= spinMultiplicity; j++) {
                                     // 2 means doublet -> one unpaired electron
                                     // 3 means triplet -> two unpaired electron
@@ -565,7 +565,7 @@ public class MDLReader extends DefaultChemObjectReader {
                         String atomName = input.readLine();
                         
                         // convert Atom into a PseudoAtom
-                        IAtom prevAtom = molecule.getAtomAt(atomNumber - 1);
+                        IAtom prevAtom = molecule.getAtom(atomNumber - 1);
                         IPseudoAtom pseudoAtom = molecule.getBuilder().newPseudoAtom(atomName);
                         if (prevAtom.getPoint2d() != null) {
                             pseudoAtom.setPoint2d(prevAtom.getPoint2d());

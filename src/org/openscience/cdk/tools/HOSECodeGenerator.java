@@ -171,7 +171,7 @@ public class HOSECodeGenerator implements java.io.Serializable
     spheresWithAtoms = new Vector[noOfSpheres + 1];
 		for (int i = 0; i < ac.getAtomCount(); i++)
 		{
-			ac.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+			ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 		root.setFlag(CDKConstants.VISITED, true);
 		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
@@ -241,7 +241,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		spheres = new Vector[noOfSpheres + 1];
 		for (int i = 0; i < ac.getAtomCount(); i++)
 		{
-			ac.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+			ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 		root.setFlag(CDKConstants.VISITED, true);
 		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
@@ -440,7 +440,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		TreeNode tn = null;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			atomContainer.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
+			atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
 		}
 
 		for (int f = 0; f < maxSphere; f++)

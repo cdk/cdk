@@ -52,6 +52,6 @@ public class AtomValenceDescriptorTest extends CDKTestCase {
         IAtomicDescriptor descriptor = new AtomValenceDescriptor();
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCCl"); //
-        assertEquals(7, ((IntegerResult)descriptor.calculate(mol.getAtomAt(2), mol).getValue()).intValue());
+        assertEquals(7, ((IntegerResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
     }
 }

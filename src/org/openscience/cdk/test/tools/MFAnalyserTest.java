@@ -137,7 +137,7 @@ public class MFAnalyserTest extends CDKTestCase {
                 i < ac.getAtomCount();
                 i++)
         {
-            final org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
+            final org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);
             String sym = atom.getSymbol();
             if (sym.equals("B"))
             {
@@ -187,7 +187,7 @@ public class MFAnalyserTest extends CDKTestCase {
     }
     
     public void testGetHTMLMolecularFormulaWithCharge() {
-    	org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(0);
+    	org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(0);
         MFAnalyser mfa = new MFAnalyser(molecule);
 	assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
 	atom.setFormalCharge(atom.getFormalCharge() + 1);

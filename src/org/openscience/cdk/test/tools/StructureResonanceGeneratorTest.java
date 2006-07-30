@@ -75,7 +75,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
 		
-        IAtom atom =  molecule.getAtomAt(2);
+        IAtom atom =  molecule.getAtom(2);
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(1);
         ILonePair[] selectron = molecule.getLonePairs(atom);
@@ -91,7 +91,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule1);
         lpcheck.newSaturate(molecule1);
-        IAtom atom1 =  molecule1.getAtomAt(2);
+        IAtom atom1 =  molecule1.getAtom(2);
         molecule1.addElectronContainer(new SingleElectron(atom1));
         atom1.setHydrogenCount(0);
 
@@ -126,7 +126,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
 		
-        IAtom atom =  molecule.getAtomAt(2);
+        IAtom atom =  molecule.getAtom(2);
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(1);
         ILonePair[] selectron = molecule.getLonePairs(atom);
@@ -141,7 +141,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		adder = new HydrogenAdder();
 		adder.addImplicitHydrogensToSatisfyValency(molecule1);
 		lpcheck.newSaturate(molecule1);
-		IAtom atom1 =  molecule1.getAtomAt(4);
+		IAtom atom1 =  molecule1.getAtom(4);
 		molecule1.addElectronContainer(new SingleElectron(atom1));	
 		selectron = molecule1.getLonePairs(atom1);
 		molecule1.removeElectronContainer(selectron[0]);
@@ -164,7 +164,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
         
-        IAtom atom =  molecule.getAtomAt(3);
+        IAtom atom =  molecule.getAtom(3);
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(1);
         ILonePair[] selectron = molecule.getLonePairs(atom);
@@ -180,7 +180,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		adder.addImplicitHydrogensToSatisfyValency(molecule1);
 		lpcheck.newSaturate(molecule1);
 
-        IAtom atom1 =  molecule1.getAtomAt(6);
+        IAtom atom1 =  molecule1.getAtom(6);
         molecule1.addElectronContainer(new SingleElectron(atom1));
         atom1.setFormalCharge(1);
         selectron = molecule1.getLonePairs(atom1);
@@ -200,11 +200,11 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         
-        molecule.getAtomAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
+        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);

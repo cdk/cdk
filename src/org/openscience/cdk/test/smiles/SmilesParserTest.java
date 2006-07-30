@@ -274,8 +274,8 @@ public class SmilesParserTest extends CDKTestCase {
 		{
 			String smiles = "c1cc[c-]cc1";
 			Molecule molecule = sp.parseSmiles(smiles);
-			assertTrue(molecule.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC));
-			assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 		} catch (Exception exception)
 		{
 			fail(exception.getMessage());
@@ -292,8 +292,8 @@ public class SmilesParserTest extends CDKTestCase {
 		{
 			String smiles = "c1ccccc1";
 			Molecule molecule = sp.parseSmiles(smiles);
-			assertTrue(molecule.getAtomAt(0).getFlag(CDKConstants.ISAROMATIC));
-			assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 		} catch (Exception exception)
 		{
 			fail(exception.getMessage());
@@ -388,7 +388,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "[Na]";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals("Na", mol.getAtomAt(0).getSymbol());
+			assertEquals("Na", mol.getAtom(0).getSymbol());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -400,7 +400,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "[K]";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals("K", mol.getAtomAt(0).getSymbol());
+			assertEquals("K", mol.getAtom(0).getSymbol());
 		} catch (Exception e) {
 			fail(e.toString());
 		}
@@ -417,7 +417,7 @@ public class SmilesParserTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals("Ni", mol.getAtomAt(0).getSymbol());
+			assertEquals("Ni", mol.getAtom(0).getSymbol());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -427,8 +427,8 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "Ni";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
-			assertEquals("N", mol.getAtomAt(0).getSymbol());
-			assertEquals("I", mol.getAtomAt(1).getSymbol());
+			assertEquals("N", mol.getAtom(0).getSymbol());
+			assertEquals("I", mol.getAtom(1).getSymbol());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -447,8 +447,8 @@ public class SmilesParserTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser();
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals("C", mol.getAtomAt(0).getSymbol());
-			assertEquals(13, mol.getAtomAt(0).getMassNumber());
+			assertEquals("C", mol.getAtom(0).getSymbol());
+			assertEquals(13, mol.getAtom(0).getMassNumber());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -466,8 +466,8 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "[OH-]";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals("O", mol.getAtomAt(0).getSymbol());
-			assertEquals(-1, mol.getAtomAt(0).getFormalCharge());
+			assertEquals("O", mol.getAtom(0).getSymbol());
+			assertEquals(-1, mol.getAtom(0).getFormalCharge());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -504,7 +504,7 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
 			assertEquals(1, mol.getBondCount());
-			assertEquals(1.0, mol.getBondAt(0).getOrder(), 0.0001);
+			assertEquals(1.0, mol.getBond(0).getOrder(), 0.0001);
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -541,8 +541,8 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
 			assertEquals(1, mol.getBondCount());
-			assertTrue(mol.getAtomAt(0) instanceof PseudoAtom);
-			assertFalse(mol.getAtomAt(1) instanceof PseudoAtom);
+			assertTrue(mol.getAtom(0) instanceof PseudoAtom);
+			assertFalse(mol.getAtom(1) instanceof PseudoAtom);
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -553,8 +553,8 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
 			assertEquals(1, mol.getBondCount());
-			assertTrue(mol.getAtomAt(0) instanceof PseudoAtom);
-			assertFalse(mol.getAtomAt(1) instanceof PseudoAtom);
+			assertTrue(mol.getAtom(0) instanceof PseudoAtom);
+			assertFalse(mol.getAtom(1) instanceof PseudoAtom);
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -618,7 +618,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "[H+]";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals(1, mol.getAtomAt(0).getFormalCharge());
+			assertEquals(1, mol.getAtom(0).getFormalCharge());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -775,9 +775,9 @@ public class SmilesParserTest extends CDKTestCase {
 		    Thread.sleep(100000);*/
 		    
 		    for(int i=0;i<mol.getAtomCount();i++){
-		    	if(mol.getAtomAt(i).getSymbol().equals("N")){
-		    		assertEquals(1,mol.getConnectedBonds(mol.getAtomAt(i))[0].getOrder(),.1);
-		    		assertEquals(1,mol.getConnectedBonds(mol.getAtomAt(i))[1].getOrder(),.1);
+		    	if(mol.getAtom(i).getSymbol().equals("N")){
+		    		assertEquals(1,mol.getConnectedBonds(mol.getAtom(i))[0].getOrder(),.1);
+		    		assertEquals(1,mol.getConnectedBonds(mol.getAtom(i))[1].getOrder(),.1);
 		    	}
 		    }
 		} catch (Exception e)
@@ -811,7 +811,7 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(8.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtomAt(1);
+			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(1);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
@@ -849,7 +849,7 @@ public class SmilesParserTest extends CDKTestCase {
 				assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
 			}
 			// and the first atom should have a negative charge
-			assertEquals(-1, mol.getAtomAt(0).getFormalCharge());
+			assertEquals(-1, mol.getAtom(0).getFormalCharge());
 		} catch (Exception e)
 		{
 			fail(e.toString());
@@ -864,8 +864,8 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "Nc1ncnc2[nH]cnc12";
 		Molecule mol = sp.parseSmiles(smiles);
 		assertEquals(10, mol.getAtomCount());
-		assertEquals("N", mol.getAtomAt(6).getSymbol());
-		assertEquals(1, mol.getAtomAt(6).getHydrogenCount());
+		assertEquals("N", mol.getAtom(6).getSymbol());
+		assertEquals(1, mol.getAtom(6).getHydrogenCount());
 	}
 
 
@@ -945,7 +945,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "C";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(1, mol.getAtomCount());
-			assertEquals(4, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(4, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -963,7 +963,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "CC";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
-			assertEquals(3, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(3, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -981,7 +981,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "C=C";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
-			assertEquals(2, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(2, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -999,7 +999,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "C#C";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(2, mol.getAtomCount());
-			assertEquals(1, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(1, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1017,7 +1017,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "CCC";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(3, mol.getAtomCount());
-			assertEquals(2, mol.getAtomAt(1).getHydrogenCount());
+			assertEquals(2, mol.getAtom(1).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1035,7 +1035,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "C1CCCCC1";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(6, mol.getAtomCount());
-			assertEquals(2, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(2, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1053,7 +1053,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "c1=cc=cc=c1";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(6, mol.getAtomCount());
-			assertEquals(1, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(1, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1071,7 +1071,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "c1ccccc1";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(6, mol.getAtomCount());
-			assertEquals(1, mol.getAtomAt(0).getHydrogenCount());
+			assertEquals(1, mol.getAtom(0).getHydrogenCount());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1089,7 +1089,7 @@ public class SmilesParserTest extends CDKTestCase {
 			String smiles = "CC=CBr";
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(4, mol.getAtomCount());
-			assertEquals("Br", mol.getAtomAt(3).getSymbol());
+			assertEquals("Br", mol.getAtom(3).getSymbol());
 		} catch (Exception e)
 		{
 			fail(e.getMessage());
@@ -1119,7 +1119,7 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
-			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtomAt(3);
+			org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(3);
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
@@ -1182,7 +1182,7 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
 			assertNotNull(mol);
 			assertEquals(9, mol.getAtomCount());
-			assertTrue(mol.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 		} catch (CDKException exception) {
 			logger.debug(exception);
 			fail(exception.getMessage());
@@ -1201,11 +1201,11 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(19, mol.getAtomCount());
 			assertEquals(20, mol.getBondCount());
 			// test only option for delocalized bond system
-			assertEquals(4.0, mol.getBondOrderSum(mol.getAtomAt(12)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(13)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(14)), 0.001);
-			assertEquals(2.0, mol.getBondOrderSum(mol.getAtomAt(15)), 0.001);
-			assertEquals(4.0, mol.getBondOrderSum(mol.getAtomAt(16)), 0.001);
+			assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(12)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(13)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(14)), 0.001);
+			assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(15)), 0.001);
+			assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(16)), 0.001);
 		} catch (CDKException exception) {
 			logger.debug(exception);
 			fail(exception.getMessage());
@@ -1241,12 +1241,12 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(6, mol.getAtomCount());
 			assertEquals(6, mol.getBondCount());
 			// test only option for delocalized bond system
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(0)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(1)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(2)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(3)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(4)), 0.001);
-			assertEquals(3.0, mol.getBondOrderSum(mol.getAtomAt(5)), 0.001);			
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(0)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(1)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(2)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(3)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(4)), 0.001);
+			assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(5)), 0.001);			
 		} catch (CDKException exception) {
 			logger.debug(exception);
 			fail(exception.getMessage());

@@ -40,12 +40,12 @@ public class ConvertToPseudoAtomEditTest extends CDKTestCase {
 		createPseudoAtomMolecule();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			ConvertToPseudoAtomEdit edit = new ConvertToPseudoAtomEdit(mol, mol
-					.getAtomAt(i), new PseudoAtom(mol.getAtomAt(i)));
+					.getAtom(i), new PseudoAtom(mol.getAtom(i)));
 			edit.undo();
 			edit.redo();
 		}
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			assertTrue(mol.getAtomAt(i) instanceof PseudoAtom);
+			assertTrue(mol.getAtom(i) instanceof PseudoAtom);
 		}
 	}
 
@@ -57,11 +57,11 @@ public class ConvertToPseudoAtomEditTest extends CDKTestCase {
 		createPseudoAtomMolecule();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
 			ConvertToPseudoAtomEdit edit = new ConvertToPseudoAtomEdit(mol, mol
-					.getAtomAt(i), (PseudoAtom) mol.getAtomAt(i));
+					.getAtom(i), (PseudoAtom) mol.getAtom(i));
 			edit.undo();
 		}
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			assertTrue(mol.getAtomAt(i) instanceof Atom);
+			assertTrue(mol.getAtom(i) instanceof Atom);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class ConvertToPseudoAtomEditTest extends CDKTestCase {
 	private void createPseudoAtomMolecule() {
 		mol = MoleculeFactory.makeAlphaPinene();
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			org.openscience.cdk.interfaces.IAtom atom = mol.getAtomAt(i);
+			org.openscience.cdk.interfaces.IAtom atom = mol.getAtom(i);
 			PseudoAtom pseudoAtom = new PseudoAtom(atom);
 			AtomContainerManipulator.replaceAtomByAtom(mol, atom, pseudoAtom);
 		}

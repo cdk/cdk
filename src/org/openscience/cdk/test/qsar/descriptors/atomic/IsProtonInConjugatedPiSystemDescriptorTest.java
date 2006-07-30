@@ -58,7 +58,7 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends CDKTestCase {
 		Molecule mol = sp.parseSmiles("CNC=CC=C"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		assertTrue(((BooleanResult)descriptor.calculate(mol.getAtomAt(13),mol).getValue()).booleanValue());
+		assertTrue(((BooleanResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).booleanValue());
 	}
 }
 

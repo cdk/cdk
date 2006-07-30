@@ -101,21 +101,21 @@ public class ReactionManipulatorTest extends CDKTestCase {
     	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
     	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
     	
-    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(0),product.getAtomAt(0));
+    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(1),product.getAtomAt(1));
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(1),product.getAtom(1));
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(2),product.getAtomAt(2));
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(2),product.getAtom(2));
         reaction.addMapping(mapping);
     	
         reaction.addReactant(reactant);
         reaction.addProduct(product);
         
-        IAtom mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, reactant.getAtomAt(0));
-        assertEquals(mappedAtom, product.getAtomAt(0));
+        IAtom mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
+        assertEquals(mappedAtom, product.getAtom(0));
         
-        mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, product.getAtomAt(1));
-        assertEquals(mappedAtom, reactant.getAtomAt(1));
+        mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
+        assertEquals(mappedAtom, reactant.getAtom(1));
         
         
     }
@@ -129,21 +129,21 @@ public class ReactionManipulatorTest extends CDKTestCase {
     	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
     	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
     	
-    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtomAt(0),product.getAtomAt(0));
+    	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBondAt(0),product.getBondAt(0));
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBond(0),product.getBond(0));
         reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBondAt(1),product.getBondAt(1));
+        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getBond(1),product.getBond(1));
         reaction.addMapping(mapping);
     	
         reaction.addReactant(reactant);
         reaction.addProduct(product);
         
-        IBond mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, reactant.getBondAt(0));
-        assertEquals(mappedBond, product.getBondAt(0));
+        IBond mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
+        assertEquals(mappedBond, product.getBond(0));
         
-        mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBondAt(1));
-        assertEquals(mappedBond, reactant.getBondAt(1));
+        mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
+        assertEquals(mappedBond, reactant.getBond(1));
         
         
     }

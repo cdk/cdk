@@ -63,6 +63,6 @@ public class DistanceToAtomDescriptorTest extends CDKTestCase {
 		mol.addBond(1, 2, 1); // 2
 		mol.addBond(2, 3, 1); // 3
 		
-		assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).doubleValue(), 0.1);
+		assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue(), 0.1);
 	}
 }

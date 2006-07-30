@@ -276,7 +276,7 @@ public class RingSearchTest extends CDKTestCase
 		{
 			try
 			{
-				str += molecule.getAtomNumber(ring.getAtomAt(f)) +  " - ";
+				str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
 			}
 			catch(Exception exc)
 			{

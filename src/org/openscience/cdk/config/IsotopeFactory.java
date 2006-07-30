@@ -335,7 +335,7 @@ public class IsotopeFactory
 	{
 		for (int f = 0; f < container.getAtomCount(); f++)
 		{
-			configure(container.getAtomAt(f));
+			configure(container.getAtom(f));
 		}
 	}
 

@@ -593,7 +593,7 @@ public class BondTools {
 	
 	public static void  makeUpDownBonds(IAtomContainer container){
 	    for (int i = 0; i < container.getAtomCount(); i++) {
-	        IAtom a = container.getAtomAt(i);
+	        IAtom a = container.getAtom(i);
 	        if (container.getConnectedAtoms(a).length == 4) {
 	          int up = 0;
 	          int down = 0;

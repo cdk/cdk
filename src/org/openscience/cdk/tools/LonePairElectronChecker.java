@@ -83,7 +83,7 @@ public class LonePairElectronChecker {
         for (int f = 0; f < ac.getAtomCount(); f++) {
 //        	if (!ac.getAtomAt(f).getSymbol().equals("C"))
 //        		if(!ac.getAtomAt(f).getSymbol().equals("H"))
-        			if (!isSaturated(ac.getAtomAt(f), ac)) 
+        			if (!isSaturated(ac.getAtom(f), ac)) 
         				return false;
         }
         return true;

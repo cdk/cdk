@@ -192,14 +192,14 @@ public class CreateReactionAction extends JCPAction
 		for(int i=0;i<reactionSet.getReactionCount();i++){
 			for(int k=0;k<reactionSet.getReaction(i).getProductCount();k++){
 				for(int l=0;l<reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomCount();l++){
-					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l))==null)
-						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l),new Point2d(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtomAt(l).getPoint2d()));
+					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtom(l))==null)
+						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtom(l),new Point2d(reactionSet.getReaction(i).getProducts().getAtomContainer(k).getAtom(l).getPoint2d()));
 				}
 			}
 			for(int k=0;k<reactionSet.getReaction(i).getReactantCount();k++){
 				for(int l=0;l<reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomCount();l++){
-					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l))==null)
-						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l),new Point2d(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtomAt(l).getPoint2d()));
+					if(jcpmodel.getRendererModel().getRenderingCoordinates().get(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtom(l))==null)
+						jcpmodel.getRendererModel().getRenderingCoordinates().put(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtom(l),new Point2d(reactionSet.getReaction(i).getReactants().getAtomContainer(k).getAtom(l).getPoint2d()));
 				}
 			}
 		}

@@ -61,9 +61,9 @@ public class NormalizerTest extends CDKTestCase {
     ac.addAtom(new Atom("N"));
     ac.addAtom(new Atom("O"));
     ac.addAtom(new Atom("O"));
-    ac.addBond(new Bond(ac.getAtomAt(0),ac.getAtomAt(1)));
-    ac.addBond(new Bond(ac.getAtomAt(1),ac.getAtomAt(2),2));
-    ac.addBond(new Bond(ac.getAtomAt(1),ac.getAtomAt(3),2));
+    ac.addBond(new Bond(ac.getAtom(0),ac.getAtom(1)));
+    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(2),2));
+    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(3),2));
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document doc = db.newDocument();
@@ -76,7 +76,7 @@ public class NormalizerTest extends CDKTestCase {
     set.appendChild(replacement);
     replacement.appendChild(doc.createTextNode("[O-][N+]=O"));
     Normalizer.normalize(ac,doc);
-    assertTrue(ac.getBondAt(1).getOrder()==1 ^ ac.getBondAt(2).getOrder()==1);
+    assertTrue(ac.getBond(1).getOrder()==1 ^ ac.getBond(2).getOrder()==1);
 	}
 }
 

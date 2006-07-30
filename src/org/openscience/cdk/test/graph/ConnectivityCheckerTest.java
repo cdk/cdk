@@ -100,8 +100,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		}
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
-		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtomAt(0);
-		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getMolecule(1).getAtomAt(0);
+		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtom(0);
+		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getMolecule(1).getAtom(0);
         
         assertEquals(atom1.getID(), copy1.getID());
         assertEquals(atom2.getID(), copy2.getID());
@@ -174,10 +174,10 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertEquals(1, molecules[1].getAtomCount());
         assertEquals(1, molecules[1].getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        assertTrue(molecules[0].getSingleElectronSum(molecules[0].getAtomAt(0)) == 0 ||
-                   molecules[1].getSingleElectronSum(molecules[1].getAtomAt(0)) == 0);
-        assertTrue(molecules[0].getLonePairCount(molecules[0].getAtomAt(0)) == 0 ||
-                   molecules[1].getLonePairCount(molecules[1].getAtomAt(0)) == 0);
+        assertTrue(molecules[0].getSingleElectronSum(molecules[0].getAtom(0)) == 0 ||
+                   molecules[1].getSingleElectronSum(molecules[1].getAtom(0)) == 0);
+        assertTrue(molecules[0].getLonePairCount(molecules[0].getAtom(0)) == 0 ||
+                   molecules[1].getLonePairCount(molecules[1].getAtom(0)) == 0);
 	}
     
 	/**

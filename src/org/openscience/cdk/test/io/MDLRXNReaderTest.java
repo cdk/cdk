@@ -86,12 +86,12 @@ public class MDLRXNReaderTest extends CDKTestCase {
 			// Check Atom symbols of first educt
 			String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
 			for (int i = 0; i < educts[0].getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfEduct1[i], educts[0].getAtomAt(i).getSymbol());
+				assertEquals(atomSymbolsOfEduct1[i], educts[0].getAtom(i).getSymbol());
 			}
 			
 			// Check Atom symbols of second educt
 			for (int i = 0; i < educts[1].getAtomCount(); i++) {
-				assertEquals("C", educts[1].getAtomAt(i).getSymbol());
+				assertEquals("C", educts[1].getAtom(i).getSymbol());
 			}
 			
 			// Check Atom symbols of first product
@@ -108,7 +108,7 @@ public class MDLRXNReaderTest extends CDKTestCase {
 				"C"
 			};
 			for (int i = 0; i < products[0].getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfProduct1[i], products[0].getAtomAt(i).getSymbol());
+				assertEquals(atomSymbolsOfProduct1[i], products[0].getAtom(i).getSymbol());
 			}
 			
         } catch (Exception e) {

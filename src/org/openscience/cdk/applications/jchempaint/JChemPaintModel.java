@@ -228,7 +228,7 @@ public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener
 			String formula = new MFAnalyser(wholeModel,true).getHTMLMolecularFormulaWithCharge();
 			int impliciths=0;
 			for(int i=0;i<wholeModel.getAtomCount();i++){
-				impliciths+=wholeModel.getAtomAt(i).getHydrogenCount();
+				impliciths+=wholeModel.getAtom(i).getHydrogenCount();
 			}
 			status = "<html>" + formula + (impliciths==0 ? "" : " (of these "+impliciths+" Hs implicit)")+"</html>";
 		}

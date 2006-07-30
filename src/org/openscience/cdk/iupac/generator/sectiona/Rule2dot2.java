@@ -55,7 +55,7 @@ public class Rule2dot2 extends NumberingRule {
                 // ok, molecule looks like a carbon chain
                 // thus, now find the two chain end atoms
                 for (int i=0; i < m.getAtomCount(); i++) {
-                	org.openscience.cdk.interfaces.IAtom ai = m.getAtomAt(i);
+                	org.openscience.cdk.interfaces.IAtom ai = m.getAtom(i);
                     // is atom first or last?
                 }
             }

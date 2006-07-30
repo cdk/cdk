@@ -366,7 +366,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = 0;
 						Integer thisAtom = (Integer)atoms.get(at);
 						position = thisAtom.intValue();
-						atom2 = mol.getAtomAt(position);
+						atom2 = mol.getAtom(position);
 						distance = calculateDistanceBetweenTwoAtoms( mol, target, atom2 );
 						partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghr - distance) , 2)));
 						sum += partial;
@@ -410,8 +410,8 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						distance = 0;
 						thisAtom = (Integer)atoms.get(at);
 						position = thisAtom.intValue();
-						endVertex = mol.getAtomAt(position);
-						atom2 = mol.getAtomAt(position);
+						endVertex = mol.getAtom(position);
+						atom2 = mol.getAtom(position);
 						mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
 						for (int u = 0; u < mylist.size(); u++) {
 							edg = (org._3pq.jgrapht.Edge)mylist.get(u);
@@ -459,9 +459,9 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = 0;
 						Integer thisDoubleBond = (Integer)doubles.get(dou);
 						position = thisDoubleBond.intValue();
-						theDoubleBond = mol.getBondAt(position);
+						theDoubleBond = mol.getBond(position);
 						goodPosition = getNearestBondtoAGivenAtom(mol, target, theDoubleBond);
-						goodBond = mol.getBondAt(goodPosition);
+						goodBond = mol.getBond(goodPosition);
 						goodAtoms = goodBond.getAtoms();
 						
 						//System.out.println("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
@@ -514,7 +514,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = 0;
 						Integer thisSingleBond = (Integer)singles.get(sing);
 						position = thisSingleBond.intValue();
-						theSingleBond = mol.getBondAt(position);
+						theSingleBond = mol.getBond(position);
 						middlePoint = theSingleBond.get3DCenter();
 						atomsInSingleBond = theSingleBond.getAtoms();
 						dist0 = calculateDistanceBetweenTwoAtoms(mol, atomsInSingleBond[0], target);
@@ -570,7 +570,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = 0;
 						Integer thisInCycloexBond = (Integer)bondsInCycloex.get(cyc);
 						position = thisInCycloexBond.intValue();
-						theInCycloexBond = mol.getBondAt(position);
+						theInCycloexBond = mol.getBond(position);
 						atomsInCycloexBond = theInCycloexBond.getAtoms();
 						
 						connAtoms = mol.getConnectedAtoms(atomsInCycloexBond[0]);

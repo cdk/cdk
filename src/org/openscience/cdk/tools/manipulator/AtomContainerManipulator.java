@@ -68,8 +68,8 @@ public class AtomContainerManipulator {
 	 */
 	public static IAtom getAtomById(IAtomContainer ac, String id) throws CDKException{
 		for(int i=0;i<ac.getAtomCount();i++){
-			if(ac.getAtomAt(i).getID()!=null && ac.getAtomAt(i).getID().equals(id))
-				return ac.getAtomAt(i);
+			if(ac.getAtom(i).getID()!=null && ac.getAtom(i).getID().equals(id))
+				return ac.getAtom(i);
 		}
 		throw new CDKException("no suc atom");
 	}
@@ -79,7 +79,7 @@ public class AtomContainerManipulator {
             // it should complain
 	    return false;
         } else {
-            container.setAtomAt(container.getAtomNumber(atom), newAtom);
+            container.setAtom(container.getAtomNumber(atom), newAtom);
             IElectronContainer[] electronContainers = container.getElectronContainers();
             for (int i=0; i<electronContainers.length; i++) {
                 if (electronContainers[i] instanceof IBond) {
@@ -109,7 +109,7 @@ public class AtomContainerManipulator {
     public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            charge += atomContainer.getAtomAt(i).getCharge();
+            charge += atomContainer.getAtom(i).getCharge();
         }
         return charge;
     }
@@ -130,7 +130,7 @@ public class AtomContainerManipulator {
     public static int getTotalNegativeFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-        	double chargeI = atomContainer.getAtomAt(i).getFormalCharge();
+        	double chargeI = atomContainer.getAtom(i).getFormalCharge();
         	if(chargeI < 0)
         		charge += chargeI;
         }
@@ -142,7 +142,7 @@ public class AtomContainerManipulator {
     public static int getTotalPositiveFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-        	double chargeI = atomContainer.getAtomAt(i).getFormalCharge();
+        	double chargeI = atomContainer.getAtom(i).getFormalCharge();
         	if(chargeI > 0)
         		charge += chargeI;
         }
@@ -155,7 +155,7 @@ public class AtomContainerManipulator {
     public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
         int hCount = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            hCount += atomContainer.getAtomAt(i).getHydrogenCount();
+            hCount += atomContainer.getAtom(i).getHydrogenCount();
         }
         return hCount;
     }
@@ -200,7 +200,7 @@ public class AtomContainerManipulator {
                 i++)
         {
             // Clone/remove this atom?
-            IAtom atom = atomContainer.getAtomAt(i);
+            IAtom atom = atomContainer.getAtom(i);
             if (!atom.getSymbol().equals("H"))
             {
                 IAtom clonedAtom = null;
@@ -227,7 +227,7 @@ public class AtomContainerManipulator {
                 i++)
         {
             // Check bond.
-            final IBond bond = atomContainer.getBondAt(i);
+            final IBond bond = atomContainer.getBond(i);
             IAtom[] atoms = bond.getAtoms();
             boolean removedBond = false;
             final int length = atoms.length;
@@ -248,7 +248,7 @@ public class AtomContainerManipulator {
             {
                 IBond clone = null;
 				try {
-					clone = (IBond) atomContainer.getBondAt(i).clone();
+					clone = (IBond) atomContainer.getBond(i).clone();
 				} catch (CloneNotSupportedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -302,7 +302,7 @@ public class AtomContainerManipulator {
 	{
 		for (int f = 0; f < container.getElectronContainerCount(); f++)
 		{
-			container.getElectronContainerAt(f).removeListener(container);	
+			container.getElectronContainer(f).removeListener(container);	
 		}
 	}
 
@@ -319,7 +319,7 @@ public class AtomContainerManipulator {
 	{
 		for (int f = 0; f < container.getAtomCount(); f++)
 		{
-			container.getAtomAt(f).removeListener(container);	
+			container.getAtom(f).removeListener(container);	
 		}
 	}
 

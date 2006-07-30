@@ -69,11 +69,11 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
-			IBond bond = undoRedoContainer.getBondAt(i);
+			IBond bond = undoRedoContainer.getBond(i);
 			container.addBond(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
-			IAtom atom = undoRedoContainer.getAtomAt(i);
+			IAtom atom = undoRedoContainer.getAtom(i);
 			container.addAtom(atom);
 		}
 		IMolecule molecule = new org.openscience.cdk.Molecule(container);
@@ -90,11 +90,11 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
-			IBond bond = undoRedoContainer.getBondAt(i);
+			IBond bond = undoRedoContainer.getBond(i);
 			container.removeElectronContainer(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
-			IAtom atom = undoRedoContainer.getAtomAt(i);
+			IAtom atom = undoRedoContainer.getAtom(i);
 			container.removeAtom(atom);
 		}
 		IMolecule molecule = new org.openscience.cdk.Molecule(container);

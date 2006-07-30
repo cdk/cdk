@@ -165,7 +165,7 @@ public class HOSECodeTest extends CDKTestCase
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 1);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
         if (standAlone)
           System.out.print("|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
@@ -298,7 +298,7 @@ public class HOSECodeTest extends CDKTestCase
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
         if (standAlone)
           System.out.println(f+"|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
@@ -340,7 +340,7 @@ public class HOSECodeTest extends CDKTestCase
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
         if (standAlone)
           System.out.println(f+"|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
@@ -374,7 +374,7 @@ public class HOSECodeTest extends CDKTestCase
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
         if (standAlone)
           System.out.print("|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);
@@ -437,13 +437,13 @@ public class HOSECodeTest extends CDKTestCase
 			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
             boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
             assertFalse(isAromatic);
-			molecule.getAtomAt(0).setFormalCharge(-1);
-            molecule.getAtomAt(3).setFormalCharge(+4);
+			molecule.getAtom(0).setFormalCharge(-1);
+            molecule.getAtom(3).setFormalCharge(+4);
 			hcg = new HOSECodeGenerator();
 			String s = null;
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				s = hcg.getHOSECode(molecule, molecule.getAtomAt(f), 4);
+				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
                 if (standAlone)
                     System.out.print("|" + s + "| -> " + result[f]);
 				assertEquals(result[f], s);

@@ -170,8 +170,8 @@ public class TemplateHandler3D {
 
                     for (int j = 0; j < list.size(); j++) {
                         map = (RMap) list.get(j);
-                        atom1 = ringSystems.getAtomAt(map.getId1());
-                        atom2 = template.getAtomAt(map.getId2());
+                        atom1 = ringSystems.getAtom(map.getId1());
+                        atom2 = template.getAtom(map.getId2());
                         if (atom1.getFlag(CDKConstants.ISINRING)) {
                             atom1.setX3d(atom2.getX3d());
                             atom1.setY3d(atom2.getY3d());

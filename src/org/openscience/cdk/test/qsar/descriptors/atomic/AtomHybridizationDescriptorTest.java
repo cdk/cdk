@@ -56,6 +56,6 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
         AtomContainer mol = sp.parseSmiles("C#CC=C"); //
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency((Molecule)mol);
-        assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtomAt(0), mol).getValue()).intValue());
+        assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
     }
 }

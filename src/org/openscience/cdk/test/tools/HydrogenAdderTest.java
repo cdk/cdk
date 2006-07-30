@@ -453,9 +453,9 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addBond(6, 7, 3.0); // 8
         
         for (int f = 0; f < 6; f++) {
-            mol.getAtomAt(f).setFlag(CDKConstants.ISAROMATIC, true);
-            mol.getAtomAt(f).setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-            mol.getBondAt(f).setFlag(CDKConstants.ISAROMATIC, true);
+            mol.getAtom(f).setFlag(CDKConstants.ISAROMATIC, true);
+            mol.getAtom(f).setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+            mol.getBond(f).setFlag(CDKConstants.ISAROMATIC, true);
         }
         try {
             adder.addHydrogensToSatisfyValency(mol);

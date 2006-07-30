@@ -155,21 +155,21 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 									
-							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtomAt(atom0P));
+							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 							acCloned.removeElectronContainer(selectron[0]);
 							
-							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtomAt(atom1P)));	
+							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
 
-							double order = acCloned.getBondAt(bond1P).getOrder();
-							acCloned.getBondAt(bond1P).setOrder(order-1);
+							double order = acCloned.getBond(bond1P).getOrder();
+							acCloned.getBond(bond1P).setOrder(order-1);
 							
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtomAt(atom1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);
@@ -204,7 +204,7 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 2.0){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtomAt(i));
+						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() == 0){
 							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 							bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);

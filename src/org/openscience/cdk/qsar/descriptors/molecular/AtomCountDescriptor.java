@@ -148,23 +148,23 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
 
         if (elementName.equals("*")) {
             for (int i = 0; i < atoms.length; i++) {
-                atomCount += container.getAtomAt(i).getHydrogenCount();
+                atomCount += container.getAtom(i).getHydrogenCount();
             }
             atomCount += atoms.length;
         }
         else if (elementName.equals("H")) {
             for (int i = 0; i < atoms.length; i++) {
-                if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
                 }
                 else {
-                    atomCount += container.getAtomAt(i).getHydrogenCount();
+                    atomCount += container.getAtom(i).getHydrogenCount();
                 }
             }
         }
         else {
             for (int i = 0; i < atoms.length; i++) {
-                if (container.getAtomAt(i).getSymbol().equals(elementName)) {
+                if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
                 }
             }

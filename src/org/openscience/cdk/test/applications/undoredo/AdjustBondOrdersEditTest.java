@@ -115,8 +115,8 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 		AtomContainer containerCopy = (AtomContainer) clearMol.clone();
 		satChecker.unsaturate(clearMol.getBonds());
 		for (int j = 0; j < containerCopy.getBondCount(); j++) {
-			org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBondAt(j);
-			org.openscience.cdk.interfaces.IBond bond = clearMol.getBondAt(j);
+			org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
+			org.openscience.cdk.interfaces.IBond bond = clearMol.getBond(j);
 			if (bond.getOrder() != bondCopy.getOrder()) {
 				double[] bondOrders = new double[2];
 				bondOrders[0] = bond.getOrder();
@@ -133,8 +133,8 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 		AtomContainer containerCopy = (AtomContainer) fittingMol.clone();
 		satChecker.saturate(fittingMol);
 		for (int j = 0; j < containerCopy.getBondCount(); j++) {
-			org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBondAt(j);
-			org.openscience.cdk.interfaces.IBond bond = fittingMol.getBondAt(j);
+			org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
+			org.openscience.cdk.interfaces.IBond bond = fittingMol.getBond(j);
 			if (bond.getOrder() != bondCopy.getOrder()) {
 				double[] bondOrders = new double[2];
 				bondOrders[0] = bond.getOrder();

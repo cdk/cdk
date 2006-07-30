@@ -155,11 +155,11 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     	ArrayList distance1 = new ArrayList();
     	ArrayList result2 = new ArrayList();
     	ArrayList distance2 = new ArrayList();
-    	IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
+    	IAtom[] atoms = ac.getBond(bondPosition).getAtoms();
     	
 
         /* RESTRICTION: only possible to break H or doble bonds*/
-    	if(ac.getBondAt(bondPosition).getOrder() < 2)
+    	if(ac.getBond(bondPosition).getOrder() < 2)
     		if(!atoms[0].getSymbol().equals("H") && !atoms[1].getSymbol().equals("H")){
 				DoubleArrayResult dar = new DoubleArrayResult();
 				dar.add(0.0);dar.add(0.0);
@@ -172,7 +172,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     	int atomPos0 = ac.getAtomNumber(atoms[0]);
     	atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
     	int atomPos1 = ac.getAtomNumber(atoms[1]);
-    	ac.getBondAt(bondPosition).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	ac.getBond(bondPosition).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
@@ -196,7 +196,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    		
     			int positionAC = 0;
     			
-    			if(product.getAtomAt(atomPos0).getFormalCharge() == 1){
+    			if(product.getAtom(atomPos0).getFormalCharge() == 1){
     				positionAC = atomPos0;}
     			else
     				positionAC = atomPos1;
@@ -214,10 +214,10 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    					 for(int k = 0; k < prod.getAtomCount(); k++){
 	    						 if(prod.getAtomCount() < 2)
 	    							 continue;
-	    						 IAtom atomsP = prod.getAtomAt(k);
-	    						 if(product.getAtomAt(k).getFormalCharge() !=
+	    						 IAtom atomsP = prod.getAtom(k);
+	    						 if(product.getAtom(k).getFormalCharge() !=
 	    							 atomsP.getFormalCharge() /*> 0*/)
-	    						 if(atomsP.getFormalCharge()== 1 || product.getAtomAt(k).getFormalCharge() == 1){
+	    						 if(atomsP.getFormalCharge()== 1 || product.getAtom(k).getFormalCharge() == 1){
 	    							DoubleResult electroneg = new DoubleResult(0.0); 
 	    						    Integer[] params = new Integer[1];
 	    	    					params[0] = new Integer(6);
@@ -233,7 +233,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
 	    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
 	    	    			        descriptor.setParameters(paramsD);
-	    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtomAt(positionAC),prod).getValue());
+	    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtom(positionAC),prod).getValue());
 	    	    			        
 	    	    			        if(i == 0)distance1.add(dis);
 	    	    			        else distance2.add(dis);

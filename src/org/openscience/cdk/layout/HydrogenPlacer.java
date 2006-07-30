@@ -60,7 +60,7 @@ public class HydrogenPlacer {
 	    IAtom atom = null; 
 	    for (int f = 0; f < atomContainer.getAtomCount();f++)
 	    {
-	        atom = atomContainer.getAtomAt(f);
+	        atom = atomContainer.getAtom(f);
 //	        if (!atom.getSymbol().equals("H"))
 //	        {
 	            if (debug1) System.out.println("Now placing hydrogens at atom " + f);
@@ -109,7 +109,7 @@ public class HydrogenPlacer {
 		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f, ": ", unplacedAtoms.getAtomAt(f).getPoint2d());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtom(f).getPoint2d());
 		}
         Point2d centerPlacedAtoms = null;
         if (placedAtoms.getAtomCount() > 0) {
@@ -131,7 +131,7 @@ public class HydrogenPlacer {
 		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f, ": ", renderingCoordinates!=null ? ((Point2d)renderingCoordinates.get(unplacedAtoms.getAtomAt(f))) : unplacedAtoms.getAtomAt(f).getPoint2d());
+			logger.debug("H-" + f, ": ", renderingCoordinates!=null ? ((Point2d)renderingCoordinates.get(unplacedAtoms.getAtom(f))) : unplacedAtoms.getAtom(f).getPoint2d());
 		}				
 	}
 }

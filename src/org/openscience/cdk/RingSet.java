@@ -160,7 +160,7 @@ public class RingSet extends SetOfAtomContainers implements Serializable, IRingS
 		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)
 		{
-			atom = ring.getAtomAt(i);
+			atom = ring.getAtom(i);
 			for (int j = 0; j < getAtomContainerCount(); j++)
 			{	
 				tempRing = (IRing)getAtomContainer(j);

@@ -93,10 +93,10 @@ public class Mol2ReaderTest extends CDKTestCase {
             assertEquals(12, m.getAtomCount());
             assertEquals(12, m.getBondCount());
             
-            assertEquals("C.ar", m.getAtomAt(0).getAtomTypeName());
-            assertEquals("C", m.getAtomAt(0).getSymbol());
-            assertEquals("H", m.getAtomAt(6).getAtomTypeName());
-            assertEquals("H", m.getAtomAt(6).getSymbol());
+            assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
+            assertEquals("C", m.getAtom(0).getSymbol());
+            assertEquals("H", m.getAtom(6).getAtomTypeName());
+            assertEquals("H", m.getAtom(6).getSymbol());
         } catch (Exception e) {
             fail(e.toString());
         }

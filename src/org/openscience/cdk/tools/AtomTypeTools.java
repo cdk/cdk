@@ -90,7 +90,7 @@ public class AtomTypeTools {
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			// FIXME: remove casting
-			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtomAt(i);
+			org.openscience.cdk.Atom atom2 = (org.openscience.cdk.Atom)molecule.getAtom(i);
 			//Atom aromatic is set by HueckelAromaticityDetector
 			//Atom in ring?
 			if (ringSetMolecule.contains((org.openscience.cdk.interfaces.IAtom)atom2)) {
@@ -143,7 +143,7 @@ public class AtomTypeTools {
 		
 		int ncount=0;
 		for (int i=0; i<ring.getAtomCount();i++){
-			if (ring.getAtomAt(i).getSymbol().equals("N")){
+			if (ring.getAtom(i).getSymbol().equals("N")){
 				ncount=ncount+1;
 			}
 		}

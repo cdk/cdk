@@ -403,7 +403,7 @@ public class ALOGP implements IMolecularDescriptor {
 	private void calcGroup001_005(int i) {
 		// C in CH3R
 		if (fragment[i].equals("SsCH3")) {
-			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 			if (ca[0].getSymbol().equals("C")) {
 				frags[1]++;
 				alogpfrag[i] = 1;
@@ -421,7 +421,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 		if (fragment[i].equals("SssCH2")) {
 
-			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 			int CarbonCount = 0;
 			int HeteroCount = 0;
@@ -453,7 +453,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 		if (fragment[i].equals("SsssCH")) {
 
-			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 			int CarbonCount = 0;
 			int HeteroCount = 0;
@@ -489,7 +489,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 		if (fragment[i].equals("SssssC")) {
 
-			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+			IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 			int CarbonCount = 0;
 			int HeteroCount = 0;
@@ -533,7 +533,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 	private void calcGroup016_018_036_037(int i) {
 
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom ai = atomContainer.getAtom(i);
 
 		if (!fragment[i].equals("SdsCH"))
 			return;
@@ -583,7 +583,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 	private void calcGroup017_019_020_038_to_041(int i) {
 
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom ai = atomContainer.getAtom(i);
 
 		if (!fragment[i].equals("SdssC"))
 			return;
@@ -659,8 +659,8 @@ public class ALOGP implements IMolecularDescriptor {
 
 	private void calcGroup021_to_023_040(int i) {
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
+		IAtom ai = atomContainer.getAtom(i);
 
 		if (fragment[i].equals("StCH")) {
 			frags[21]++;
@@ -718,8 +718,8 @@ public class ALOGP implements IMolecularDescriptor {
 			return;
 		// System.out.println("here");
 
-		IAtom ai = atomContainer.getAtomAt(i);
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom ai = atomContainer.getAtom(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		if (ca[0].getSymbol().equals("C") && ca[1].getSymbol().equals("C")) {
 			frags[24]++;
@@ -794,8 +794,8 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SaasC") && !fragment[i].equals("SaaaC"))
 			return;
 
-		IAtom ai = atomContainer.getAtomAt(i);
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom ai = atomContainer.getAtom(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		IAtom[] sameringatoms = new IAtom[2];
 		IAtom nonringatom = atomContainer.getBuilder().newAtom();
@@ -918,8 +918,8 @@ public class ALOGP implements IMolecularDescriptor {
 
 	private void calcGroup046_to_055(int i) {
 
-		IAtom ai = atomContainer.getAtomAt(i);
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom ai = atomContainer.getAtom(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		if (ai.getHydrogenCount() == 0)
 			return;
@@ -1071,7 +1071,7 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SsOH"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		if (ca[0].getFlag(CDKConstants.ISAROMATIC)) { // phenol
 			frags[57]++;
@@ -1095,7 +1095,7 @@ public class ALOGP implements IMolecularDescriptor {
 	}
 
 	private void calcGroup058_61(int i) {
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		// 58: O in =O
 		// 61: --O in nitro, N-oxides
@@ -1130,7 +1130,7 @@ public class ALOGP implements IMolecularDescriptor {
 			return;
 
 		// Al-O-Ar, Ar2O
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		if (fragment[i].equals("SssO")) {
 			if (ca[0].getFlag(CDKConstants.ISAROMATIC)
@@ -1180,11 +1180,11 @@ public class ALOGP implements IMolecularDescriptor {
 
 		int NAr = 0;
 		int NAl = 0;
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom ai = atomContainer.getAtom(i);
 		if (!ai.getSymbol().equals("N"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		for (int j = 0; j <= ca.length - 1; j++) {
 			if (ca[j].getFlag(CDKConstants.ISAROMATIC))
@@ -1349,7 +1349,7 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SsF"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		IBond[] bonds = atomContainer.getConnectedBonds(ca[0]);
 
@@ -1423,7 +1423,7 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SsCl"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		IBond[] bonds = atomContainer.getConnectedBonds(ca[0]);
 
@@ -1495,7 +1495,7 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SsBr"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		IBond[] bonds = atomContainer.getConnectedBonds(ca[0]);
 
@@ -1569,7 +1569,7 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SsI"))
 			return;
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
 
 		IBond[] bonds = atomContainer.getConnectedBonds(ca[0]);
 
@@ -1639,7 +1639,7 @@ public class ALOGP implements IMolecularDescriptor {
 	}
 
 	private void calcGroup101_to_104(int i) {
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom ai = atomContainer.getAtom(i);
 		String s = ai.getSymbol();
 
 		if (ai.getFormalCharge() == -1) {
@@ -1718,8 +1718,8 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SdssS")) return;
 		
 		
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
+		IAtom ai = atomContainer.getAtom(i);
 		int SdOCount=0;
 		int SsCCount=0;
 		
@@ -1744,8 +1744,8 @@ public class ALOGP implements IMolecularDescriptor {
 		if (!fragment[i].equals("SddssS"))
 			return;
 		
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
+		IAtom ai = atomContainer.getAtom(i);
 		int SdOCount=0;
 		int SsCCount=0;
 		
@@ -1778,8 +1778,8 @@ public class ALOGP implements IMolecularDescriptor {
 
 		// S in R=S
 
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
+		IAtom ai = atomContainer.getAtom(i);
 		
 		int XCount=0;
 		int RCount=0;
@@ -1818,8 +1818,8 @@ public class ALOGP implements IMolecularDescriptor {
 	private void calcGroup118_119(int i) {
 		if (!fragment[i].equals("SsssP")) return;
 	
-		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(i));
-		IAtom ai = atomContainer.getAtomAt(i);
+		IAtom[] ca = atomContainer.getConnectedAtoms(atomContainer.getAtom(i));
+		IAtom ai = atomContainer.getAtom(i);
 		int XCount=0;
 		int RCount=0;
 
@@ -1860,9 +1860,9 @@ public class ALOGP implements IMolecularDescriptor {
 			boolean HaveTwo = false;
 			
 			for (int j = 0; j <= r.getAtomCount() - 1; j++) {
-				if (atomContainer.getAtomNumber(r.getAtomAt(j)) == atomContainer.getAtomNumber(atom1))
+				if (atomContainer.getAtomNumber(r.getAtom(j)) == atomContainer.getAtomNumber(atom1))
 					HaveOne = true;
-				if (atomContainer.getAtomNumber(r.getAtomAt(j)) == atomContainer.getAtomNumber(atom2))
+				if (atomContainer.getAtomNumber(r.getAtom(j)) == atomContainer.getAtomNumber(atom2))
 					HaveTwo = true;
 			}
 			

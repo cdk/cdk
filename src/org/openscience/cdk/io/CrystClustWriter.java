@@ -189,7 +189,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         // output atoms
         for (int i = 0; i < noatoms; i++) {
             // output atom sumbol
-        	IAtom atom = crystal.getAtomAt(i);
+        	IAtom atom = crystal.getAtom(i);
             write(atom.getSymbol());
             write(":");
             // output atom charge

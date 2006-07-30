@@ -158,9 +158,9 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 			boolean HaveTwo = false;
 			
 			for (int j = 0; j <= r.getAtomCount() - 1; j++) {
-				if (m.getAtomNumber(r.getAtomAt(j)) == m.getAtomNumber(atom1))
+				if (m.getAtomNumber(r.getAtom(j)) == m.getAtomNumber(atom1))
 					HaveOne = true;
-				if (m.getAtomNumber(r.getAtomAt(j)) == m.getAtomNumber(atom2))
+				if (m.getAtomNumber(r.getAtom(j)) == m.getAtomNumber(atom2))
 					HaveTwo = true;
 			}
 			

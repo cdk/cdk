@@ -52,6 +52,6 @@ public class BondsToAtomDescriptorTest extends CDKTestCase {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("CCCCCC"); //
-        assertEquals(5, ((IntegerResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).intValue());
+        assertEquals(5, ((IntegerResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).intValue());
     }
 }

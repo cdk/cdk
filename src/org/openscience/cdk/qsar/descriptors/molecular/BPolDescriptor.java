@@ -139,7 +139,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
 			String symbol0 = null;
 			String symbol1 = null;
 			for (int i = 0; i < bonds.length; i++) {
-				atoms = container.getBondAt(i).getAtoms();
+				atoms = container.getBond(i).getAtoms();
 				symbol0 = atoms[0].getSymbol();
 				symbol1 = atoms[1].getSymbol();
 				element0 = ifac.getElement(symbol0);

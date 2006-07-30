@@ -59,7 +59,7 @@ public class CovalentRadiusDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor  = new CovalentRadiusDescriptor();
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("NCCN(C)(C)"); 
-		double retval = ((DoubleResult)descriptor.calculate(mol.getAtomAt(1), mol).getValue()).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
 		assertEquals(testResult[0], retval, 0.01);
 	}

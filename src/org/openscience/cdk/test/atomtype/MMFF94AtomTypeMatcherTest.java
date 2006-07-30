@@ -95,22 +95,22 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
        
         att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
-        	logger.debug("atomNr:" + mol.getAtomAt(i).toString());
-        	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        	logger.debug("atomNr:" + mol.getAtom(i).toString());
+        	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         
-        logger.debug("MMFF94 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        logger.debug("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
         //System.out.println("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
         
-        assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());
-        assertEquals("Csp2",mol.getAtomAt(7).getAtomTypeName());
-        assertEquals("Csp",mol.getAtomAt(51).getAtomTypeName());
-        assertEquals("N=O",mol.getAtomAt(148).getAtomTypeName());
-        assertEquals("Oar",mol.getAtomAt(198).getAtomTypeName());
-        assertEquals("N2OX",mol.getAtomAt(233).getAtomTypeName());
-        assertEquals("NAZT",mol.getAtomAt(256).getAtomTypeName());
+        assertEquals("Sthi",mol.getAtom(0).getAtomTypeName());
+        assertEquals("Csp2",mol.getAtom(7).getAtomTypeName());
+        assertEquals("Csp",mol.getAtom(51).getAtomTypeName());
+        assertEquals("N=O",mol.getAtom(148).getAtomTypeName());
+        assertEquals("Oar",mol.getAtom(198).getAtomTypeName());
+        assertEquals("N2OX",mol.getAtom(233).getAtomTypeName());
+        assertEquals("NAZT",mol.getAtom(256).getAtomTypeName());
         //System.out.println("**** END OF ATOMTYPE TEST ******");
     }
 }

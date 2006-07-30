@@ -75,8 +75,8 @@ public class ElectrostaticInteractions {
 		//logger.debug("molecule.getAtomCount() : " + molecule.getAtomCount());
 		//logger.debug("molecule.getBondCount() : " + molecule.getBondCount());
 		if (molecule.getAtomCount() == 12 & molecule.getBondCount() == 11) {
-		    molecule.getAtomAt(3).setCharge(1);
-		    molecule.getAtomAt(8).setCharge(1);
+		    molecule.getAtom(3).setCharge(1);
+		    molecule.getAtom(8).setCharge(1);
 		}
 		
 		electrostaticInteractionNumber = 0;
@@ -85,7 +85,7 @@ public class ElectrostaticInteractions {
 				params[0] = new Integer(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
 					electrostaticInteractionNumber += 1;
 				}
 			}
@@ -105,12 +105,12 @@ public class ElectrostaticInteractions {
 				params[0] = new Integer(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
-				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()>2){
+				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
 					l += 1;
-					qi[l]= molecule.getAtomAt(i).getCharge();
-					qj[l]= molecule.getAtomAt(j).getCharge();
+					qi[l]= molecule.getAtom(i).getCharge();
+					qj[l]= molecule.getAtom(j).getCharge();
 					//logger.debug("qi[" + l + "] = " + qi[l] + ", qj[" + l + "] = " + qj[l]);
-					if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtomAt(i),molecule).getValue()).intValue()==3){
+					if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()==3){
 						iQ[l] = electrostatic14interactionsScale;
 					} else {
 						iQ[l] = 1;

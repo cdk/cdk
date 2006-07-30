@@ -150,33 +150,33 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 							throw new CDKException("Could not clone reactant", e);
 						}
 						
-						double order = acCloned.getBondAt(bond1P).getOrder();
-						acCloned.getBondAt(bond1P).setOrder(order - 1);
+						double order = acCloned.getBond(bond1P).getOrder();
+						acCloned.getBond(bond1P).setOrder(order - 1);
 						
 						IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 						reaction.addReactant(reactant);
 
 						
 						if(reactant.getLonePairCount(atom1) > 0){
-							acCloned.getAtomAt(atom0P).setFormalCharge(-1);
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom0P));
+							acCloned.getAtom(atom0P).setFormalCharge(-1);
+							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
 							acCloned.addElectronContainer(lpelectron[0]);
 							
-							acCloned.getAtomAt(atom1P).setFormalCharge(1);
+							acCloned.getAtom(atom1P).setFormalCharge(1);
 						}else{
-							acCloned.getAtomAt(atom0P).setFormalCharge(1);
-							acCloned.getAtomAt(atom1P).setFormalCharge(-1);
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom1P));
+							acCloned.getAtom(atom0P).setFormalCharge(1);
+							acCloned.getAtom(atom1P).setFormalCharge(-1);
+							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
 							acCloned.addElectronContainer(lpelectron[0]);
 							
 						}
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], acCloned.getBondAt(bond1P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], acCloned.getAtomAt(atom0P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], acCloned.getAtomAt(atom1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
 							
 					        

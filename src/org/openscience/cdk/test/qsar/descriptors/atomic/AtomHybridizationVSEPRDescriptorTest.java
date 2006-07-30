@@ -75,11 +75,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -104,11 +104,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP1, ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -135,11 +135,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(1),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(2),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3, ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -166,7 +166,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b2);
         molecule.addBond(b3);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP2, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
@@ -198,7 +198,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b3);
         molecule.addBond(b4);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3D2, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3D2, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
@@ -223,7 +223,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(CDKConstants.HYBRIDIZATION_SP3D1, ((IntegerResult)descriptor.calculate(molecule.getAtomAt(0),molecule).getValue()).intValue());
+        assertEquals(CDKConstants.HYBRIDIZATION_SP3D1, ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
     /**
@@ -245,7 +245,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).intValue());
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
 		}
     }
     /**
@@ -267,7 +267,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).intValue());
+	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
 
 		}
     }

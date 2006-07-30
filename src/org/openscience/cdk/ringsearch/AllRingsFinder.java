@@ -380,7 +380,7 @@ public class AllRingsFinder
 		IAtom atom = null;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			atom = ac.getAtomAt(f);
+			atom = ac.getAtom(f);
 			degree = ac.getBondCount(atom);
 
 			if (degree < minDegree)

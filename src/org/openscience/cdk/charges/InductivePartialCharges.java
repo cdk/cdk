@@ -136,7 +136,7 @@ public class InductivePartialCharges {
 		try {
 			ifac = IsotopeFactory.getInstance(ac.getBuilder());
 			for (int i = 0; i < atoms.length; i++) {
-				symbol = ac.getAtomAt(i).getSymbol();
+				symbol = ac.getAtom(i).getSymbol();
 				element = ifac.getElement(symbol);
 				atomicNumber = element.getAtomicNumber();
 				if (modified) {
@@ -202,14 +202,14 @@ public class InductivePartialCharges {
 		org.openscience.cdk.interfaces.IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
-		target = ac.getAtomAt(atomPosition);
+		target = ac.getAtom(atomPosition);
 		allAtoms = ac.getAtoms();
 		double partial = 0;
 		double radius = 0;
 		String symbol = null;
 		IAtomType type = null;
 		try {
-			symbol = ac.getAtomAt(atomPosition).getSymbol();
+			symbol = ac.getAtom(atomPosition).getSymbol();
 			type = factory.getAtomType(symbol);
 			if (getCovalentRadius(symbol, ac.getMaximumBondOrder(target)) > 0) {
 				radiusTarget = getCovalentRadius(symbol, ac.getMaximumBondOrder(target));
@@ -266,7 +266,7 @@ public class InductivePartialCharges {
 		org.openscience.cdk.interfaces.IAtom target = null;
 		double incrementedCharge = 0;
 		double radiusTarget = 0;
-		target = ac.getAtomAt(atomPosition);
+		target = ac.getAtom(atomPosition);
 		////System.out.println("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
 		allAtoms = ac.getAtoms();
 		double tmp = 0;

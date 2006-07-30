@@ -145,8 +145,8 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
                         continue;
                     }
 
-                    Point3d a = container.getAtomAt(i).getPoint3d();
-                    Point3d b = container.getAtomAt(j).getPoint3d();
+                    Point3d a = container.getAtom(i).getPoint3d();
+                    Point3d b = container.getAtom(j).getPoint3d();
                     distanceMatrix[i][j] = Math.sqrt((a.x - b.x) * (a.x - b.x) +
                             (a.y - b.y) * (a.y - b.y) +
                             (a.z - b.z) * (a.z - b.z));

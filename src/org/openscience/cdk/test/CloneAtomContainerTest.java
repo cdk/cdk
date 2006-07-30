@@ -64,9 +64,9 @@ public class CloneAtomContainerTest extends CDKTestCase {
 		{
 			for (int g = 0; g < clonedMol.getAtomCount(); g++)
 			{
-				assertNotNull(molecule.getAtomAt(f));
-				assertNotNull(clonedMol.getAtomAt(g));
-				assertTrue(molecule.getAtomAt(f) != clonedMol.getAtomAt(g));
+				assertNotNull(molecule.getAtom(f));
+				assertNotNull(clonedMol.getAtom(g));
+				assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
 			}
 		}
 	}

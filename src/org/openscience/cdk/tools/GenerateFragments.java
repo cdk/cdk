@@ -128,7 +128,7 @@ public class GenerateFragments {
 		generateRingFragments(molecule);
 		
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			molecule.getAtomAt(i).setFlag(CDKConstants.ISINRING, false);
+			molecule.getAtom(i).setFlag(CDKConstants.ISINRING, false);
 		}
 				
 		//System.out.println("Number of RingSystems:"+this.ringFragments.size());
@@ -138,7 +138,7 @@ public class GenerateFragments {
 			if (firstRingAtomContainer.getAtomCount()>=minimumRingSize){
 				tmpRingFragments.add(firstRingAtomContainer);
 				for (int g = 0; g < firstRingAtomContainer.getAtomCount(); g++) {
-					molecule.getAtomAt(molecule.getAtomNumber(firstRingAtomContainer.getAtomAt(g))).setFlag(CDKConstants.ISINRING, true);
+					molecule.getAtom(molecule.getAtomNumber(firstRingAtomContainer.getAtom(g))).setFlag(CDKConstants.ISINRING, true);
 				}
 				
 			}
@@ -157,14 +157,14 @@ public class GenerateFragments {
 				for (int g = f+1; g < tmpRingFragments.size(); g++) {
 					secondRingAtomContainer = (IAtomContainer)tmpRingFragments.get(g);
 					for (int h = 0; h < firstRingAtomContainer.getAtomCount(); h++){
-						firstRingAtom=firstRingAtomContainer.getAtomAt(h);
+						firstRingAtom=firstRingAtomContainer.getAtom(h);
 						firstRingSubstituents=getPossibleLinkerSubstituents(firstRingAtom,molecule,firstRingAtomContainer);
 						if (firstRingSubstituents.getAtomCount()>0){
 							//go through substituents of first ring
 							for (int i = 0; i < firstRingSubstituents.getAtomCount(); i++){
 //								System.out.println("First Ring Sub is in RING");
 //								//check for ring-ring system
-								if (firstRingSubstituents.getAtomAt(i).getFlag(CDKConstants.ISINRING) && secondRingAtomContainer.contains(firstRingSubstituents.getAtomAt(i))){
+								if (firstRingSubstituents.getAtom(i).getFlag(CDKConstants.ISINRING) && secondRingAtomContainer.contains(firstRingSubstituents.getAtom(i))){
 									//System.out.println("\tFound a ring-ring System");
 									murckoFragment=new Molecule();
 									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
@@ -179,7 +179,7 @@ public class GenerateFragments {
 								}
 //								compare to substituents of second ring
 								for (int j = 0; j < secondRingAtomContainer.getAtomCount(); j++){
-									secondRingAtom=secondRingAtomContainer.getAtomAt(j);
+									secondRingAtom=secondRingAtomContainer.getAtom(j);
 									secondRingSubstituents=getPossibleLinkerSubstituents(secondRingAtom,molecule,secondRingAtomContainer);
 									if (secondRingSubstituents.getAtomCount()>0){
 										//go through substituents of second ring
@@ -190,7 +190,7 @@ public class GenerateFragments {
 											path=new AtomContainer();
 											try {
 												resetFlags(molecule);
-												PathTools.depthFirstTargetSearch(molecule,firstRingSubstituents.getAtomAt(i),secondRingSubstituents.getAtomAt(k),path);
+												PathTools.depthFirstTargetSearch(molecule,firstRingSubstituents.getAtom(i),secondRingSubstituents.getAtom(k),path);
 												/*System.out.print("\tPATHSIZE:"+path.getAtomCount());
 												System.out.print("\tFIRST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(0)));
 												try{
@@ -199,9 +199,9 @@ public class GenerateFragments {
 													System.out.println("\tNO LAST PATHATOM");
 												}*/
 												
-												if (firstRingSubstituents.getAtomAt(i)==secondRingSubstituents.getAtomAt(k)){
+												if (firstRingSubstituents.getAtom(i)==secondRingSubstituents.getAtom(k)){
 													//System.out.println("\tSubstituents are equal");
-													path.addAtom(firstRingSubstituents.getAtomAt(i));
+													path.addAtom(firstRingSubstituents.getAtom(i));
 												}
 												
 												//Check Path, direct connection between the substituents ->linker
@@ -209,8 +209,8 @@ public class GenerateFragments {
 													murckoFragment=new Molecule();
 													
 													//add root atom to path
-													if (!path.contains(firstRingSubstituents.getAtomAt(i))){
-														path.addAtom(firstRingSubstituents.getAtomAt(i));
+													if (!path.contains(firstRingSubstituents.getAtom(i))){
+														path.addAtom(firstRingSubstituents.getAtom(i));
 													}												
 													//1. add path
 													//2. add rings  
@@ -270,32 +270,32 @@ public class GenerateFragments {
 		//3. check if exocyclic double or triple bonded atoms to linker schould be included
 		for (int i=0;i<addAtomContainer.getAtomCount();i++){
 			
-			if (addAtomContainer.getAtomAt(i).getFlag(CDKConstants.ISINRING)&& !targetMolecule.contains(addAtomContainer.getAtomAt(i))){
+			if (addAtomContainer.getAtom(i).getFlag(CDKConstants.ISINRING)&& !targetMolecule.contains(addAtomContainer.getAtom(i))){
 				//Find all Ring atoms and add them 
 				for (int j = 0; j < this.ringFragments.size(); j++) {
 					ringAtomContainer = RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(j));
-					if (ringAtomContainer.contains(addAtomContainer.getAtomAt(i))){
+					if (ringAtomContainer.contains(addAtomContainer.getAtom(i))){
 						targetMolecule=addFragments(ringAtomContainer, targetMolecule,mainMolecule);
 						break;
 					}
 				}
-			}else if((this.sidechainHetatoms || this.exocyclicDoubleBonds) && !targetMolecule.contains(addAtomContainer.getAtomAt(i))){
-				atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtomAt(i));
-				targetMolecule.addAtom(addAtomContainer.getAtomAt(i));	
+			}else if((this.sidechainHetatoms || this.exocyclicDoubleBonds) && !targetMolecule.contains(addAtomContainer.getAtom(i))){
+				atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtom(i));
+				targetMolecule.addAtom(addAtomContainer.getAtom(i));	
 				for (int j = 0; j < atoms.length; j++) {
 					//System.out.println("HETATOM:"+atoms[j].getSymbol());
-					if (this.sidechainHetatoms && !addAtomContainer.getAtomAt(i).getFlag(CDKConstants.ISINRING) && !(atoms[j].getSymbol()).equals("C") && !(atoms[j].getSymbol()).equals("H") && !targetMolecule.contains(atoms[j])){
+					if (this.sidechainHetatoms && !addAtomContainer.getAtom(i).getFlag(CDKConstants.ISINRING) && !(atoms[j].getSymbol()).equals("C") && !(atoms[j].getSymbol()).equals("H") && !targetMolecule.contains(atoms[j])){
 						//System.out.println("HETATOM TRUE");
 						targetMolecule.addAtom(atoms[j]);
 					}
-					if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
+					if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtom(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
 						//System.out.println("EXOCYCLIC DB TRUE");
 						targetMolecule.addAtom(atoms[j]);
 					}	
 				}
 			}else{
-				if (!targetMolecule.contains(addAtomContainer.getAtomAt(i))){
-					targetMolecule.addAtom(addAtomContainer.getAtomAt(i));
+				if (!targetMolecule.contains(addAtomContainer.getAtom(i))){
+					targetMolecule.addAtom(addAtomContainer.getAtom(i));
 				}
 			}
 		}
@@ -315,12 +315,12 @@ public class GenerateFragments {
 		for (int i=0;i<targetMolecule.getAtomCount()-1;i++){
 			for (int j = i+1; j < targetMolecule.getAtomCount(); j++) {
 				
-				if (mainMolecule.getBond(targetMolecule.getAtomAt(i),targetMolecule.getAtomAt(j)) !=null){
-					firstAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtomAt(i));
-					secondAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtomAt(j));
-					targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(targetMolecule.getAtomAt(i),targetMolecule.getAtomAt(j)).getOrder());
-					if (mainMolecule.getBond(targetMolecule.getAtomAt(i),targetMolecule.getAtomAt(j)).getFlag(CDKConstants.ISAROMATIC) == true){
-						targetMolecule.getBond(targetMolecule.getAtomAt(firstAtomNumber),targetMolecule.getAtomAt(secondAtomNumber)).setFlag(CDKConstants.ISAROMATIC, true);
+				if (mainMolecule.getBond(targetMolecule.getAtom(i),targetMolecule.getAtom(j)) !=null){
+					firstAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtom(i));
+					secondAtomNumber=targetMolecule.getAtomNumber(targetMolecule.getAtom(j));
+					targetMolecule.addBond(firstAtomNumber,secondAtomNumber,mainMolecule.getBond(targetMolecule.getAtom(i),targetMolecule.getAtom(j)).getOrder());
+					if (mainMolecule.getBond(targetMolecule.getAtom(i),targetMolecule.getAtom(j)).getFlag(CDKConstants.ISAROMATIC) == true){
+						targetMolecule.getBond(targetMolecule.getAtom(firstAtomNumber),targetMolecule.getAtom(secondAtomNumber)).setFlag(CDKConstants.ISAROMATIC, true);
 					}
 				}
 			}
@@ -339,12 +339,12 @@ public class GenerateFragments {
 	private IMolecule addFragments(IAtomContainer addAtomContainer, IMolecule targetMolecule, IMolecule mainMolecule){
 		IAtom[] atoms=null;
 		for (int i=0;i<addAtomContainer.getAtomCount();i++){
-			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));
-			targetMolecule.addAtom(addAtomContainer.getAtomAt(i));	
+			targetMolecule.addAtom(addAtomContainer.getAtom(i));
+			targetMolecule.addAtom(addAtomContainer.getAtom(i));	
 			//Check for double bonds
-			atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtomAt(i));
+			atoms=mainMolecule.getConnectedAtoms(addAtomContainer.getAtom(i));
 			for (int j = 0; j < atoms.length; j++) {
-				if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtomAt(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
+				if (this.exocyclicDoubleBonds && mainMolecule.getBond(atoms[j],addAtomContainer.getAtom(i)).getOrder()>1 && !targetMolecule.contains(atoms[j])){
 					targetMolecule.addAtom(atoms[j]);
 				}
 			}
@@ -464,7 +464,7 @@ public class GenerateFragments {
 	
 	private void resetFlags(IMolecule molecule){
 		for (int i=0;i<molecule.getAtomCount();i++){
-			molecule.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 	}
 	

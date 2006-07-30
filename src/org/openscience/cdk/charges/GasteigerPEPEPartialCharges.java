@@ -117,14 +117,14 @@ public class GasteigerPEPEPartialCharges {
 			setHI = getHyperconjugationInteractions(ac);
 			if(setHI.getAtomContainerCount() == 0 )
 				for(int i = 0; i < ac.getAtomCount() ; i++)
-					ac.getAtomAt(i).setCharge(0.0);
+					ac.getAtom(i).setCharge(0.0);
 		}
 
 
 		/*0: remove charge, and possible flag ac*/
 		for(int j = 0 ; j < ac.getAtomCount(); j++){
-			ac.getAtomAt(j).setCharge(0.0);
-			ac.getAtomAt(j).setFlag(ISCHANGEDFC, false);
+			ac.getAtom(j).setCharge(0.0);
+			ac.getAtom(j).setFlag(ISCHANGEDFC, false);
 		}
 		
 		/*1: detect resonance structure*/
@@ -139,15 +139,15 @@ public class GasteigerPEPEPartialCharges {
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			IAtomContainer iac = iSet.getAtomContainer(i);
 			for(int j = 0 ; j < iac.getAtomCount(); j++)
-				sumCharges[i][j] = iac.getAtomAt(j).getFormalCharge();
+				sumCharges[i][j] = iac.getAtom(j).getFormalCharge();
 			
 		}
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			IAtomContainer iac = iSet.getAtomContainer(i);
 			for(int j = 0 ; j < ac.getAtomCount(); j++)
-				if(sumCharges[i][j] != ac.getAtomAt(j).getFormalCharge()){
-					ac.getAtomAt(j).setFlag(ISCHANGEDFC, true);
-					iac.getAtomAt(j).setFlag(ISCHANGEDFC, true);
+				if(sumCharges[i][j] != ac.getAtom(j).getFormalCharge()){
+					ac.getAtom(j).setFlag(ISCHANGEDFC, true);
+					iac.getAtom(j).setFlag(ISCHANGEDFC, true);
 				}
 		}
 		
@@ -180,13 +180,13 @@ public class GasteigerPEPEPartialCharges {
 				int atom1 = 0;
 				int atom2 = 0;
 				for (int j = 0; j < iac.getAtomCount(); j++) {
-					if(iac.getAtomAt(j).getFlag(ISCHANGEDFC)){
+					if(iac.getAtom(j).getFlag(ISCHANGEDFC)){
 						if(count == 0)
 							atom1 = j;
 						else 
 							atom2 = j;
 						
-						double q1 = acCloned.getAtomAt(j).getCharge();
+						double q1 = acCloned.getAtom(j).getCharge();
 						electronegativity[count] = gasteigerFactors[k][STEP_SIZE * j + j + 2] * q1 * q1 + gasteigerFactors[k][STEP_SIZE * j + j + 1] * q1 + gasteigerFactors[k][STEP_SIZE * j + j];
 						
 						count++;
@@ -217,7 +217,7 @@ public class GasteigerPEPEPartialCharges {
 				/* total topological*/
 				double W = WE*Wt[k-1]*fS/(iTE);
 //					System.out.println("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
-				if(iac.getAtomAt(atom1).getFormalCharge() == 1){
+				if(iac.getAtom(atom1).getFormalCharge() == 1){
 					gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
 					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
 				}else{
@@ -228,10 +228,10 @@ public class GasteigerPEPEPartialCharges {
 			
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				for (int i = 0; i < ac.getAtomCount(); i++) {
-				double charge = ac.getAtomAt(i).getCharge();
+				double charge = ac.getAtom(i).getCharge();
 				double chargeT = 0.0;
 				chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
-				ac.getAtomAt(i).setCharge(chargeT);
+				ac.getAtom(i).setCharge(chargeT);
 				}
 			}
 			
@@ -256,8 +256,8 @@ public class GasteigerPEPEPartialCharges {
         try {
             IReactionProcess type = new BreakingBondReaction();
     		for(int k = 0; k < ac.getAtomCount(); k++){
-    			if(ac.getAtomAt(k).getSymbol().equals("H")){
-    				ac.removeAtomAndConnectedElectronContainers(ac.getAtomAt(k));
+    			if(ac.getAtom(k).getSymbol().equals("H")){
+    				ac.removeAtomAndConnectedElectronContainers(ac.getAtom(k));
     				k--;
     			}
     		}
@@ -267,10 +267,10 @@ public class GasteigerPEPEPartialCharges {
     		
     		IMoleculeSet setOfReactants = ac.getBuilder().newSetOfMolecules();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
-    			if(ac.getBondAt(i).getOrder() > 1){
-    				ac.getBondAt(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
-    				ac.getBondAt(i).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
-    				ac.getBondAt(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    			if(ac.getBond(i).getOrder() > 1){
+    				ac.getBond(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
+    				ac.getBond(i).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
+    				ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
     			}
     		}
     			
@@ -284,15 +284,15 @@ public class GasteigerPEPEPartialCharges {
 	    		IMoleculeSet setOfM2 = ac.getBuilder().newSetOfMolecules();
 	    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
 	    		for(int k = 0; k < mol.getAtomCount(); k++){
-	    			if(mol.getAtomAt(k).getSymbol().equals("H")){
-	    				mol.removeAtomAndConnectedElectronContainers(mol.getAtomAt(k));
+	    			if(mol.getAtom(k).getSymbol().equals("H")){
+	    				mol.removeAtomAndConnectedElectronContainers(mol.getAtom(k));
 	    				k--;
 	    			}
 	    		}
 	    		for(int k = 0; k < mol.getBondCount(); k++){
-	    			mol.getBondAt(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBondAt(k).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBondAt(k).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,false);
+	    			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
+	    			mol.getBond(k).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,false);
+	    			mol.getBond(k).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,false);
 	    		}
 	    		setOfM2.addMolecule((IMolecule) mol);
 	    		Object[] params2 = {Boolean.FALSE};
@@ -335,7 +335,7 @@ public class GasteigerPEPEPartialCharges {
                     ac.getBuilder()
                 );
 
-			IAtom[] atoms = ac.getConnectedAtoms(ac.getAtomAt(atom1));
+			IAtom[] atoms = ac.getConnectedAtoms(ac.getAtom(atom1));
 			for(int i = 0 ; i < atoms.length ; i++){
 				double covalentradius = 0;
 	            String symbol = atoms[i].getSymbol();
@@ -374,7 +374,7 @@ public class GasteigerPEPEPartialCharges {
 		if(totalNCharge1 != 0.0){
 			fQ = 0.5;
 			for(int i = 0; i < atomContainer.getBondCount(); i++){
-				IBond bond = atomContainer.getBondAt(i);
+				IBond bond = atomContainer.getBond(i);
 				IAtom[] atoms = bond.getAtoms();
 				if(atoms[0].getFormalCharge() != 0.0 && atoms[1].getFormalCharge() != 0.0){
 					fQ = 0.25;
@@ -389,9 +389,9 @@ public class GasteigerPEPEPartialCharges {
 		int numBond2 = 0;
         IBond[] bonds = atomContainer.getBonds();
         for (int i = 0; i < bonds.length; i++) {
-            if (atomContainer.getBondAt(i).getOrder() == 2.0) 
+            if (atomContainer.getBond(i).getOrder() == 2.0) 
             	numBond1 += 1;
-            if (ac.getBondAt(i).getOrder() == 2.0) 
+            if (ac.getBond(i).getOrder() == 2.0) 
             	numBond2 += 1;
         }
         if(numBond1 > numBond2)
@@ -430,19 +430,19 @@ public class GasteigerPEPEPartialCharges {
 				factors[0] = 0.0;
 				factors[1] = 0.0;
 				factors[2] = 0.0;
-				AtomSymbol = ac.getAtomAt(i).getSymbol();
+				AtomSymbol = ac.getAtom(i).getSymbol();
 				if (AtomSymbol.equals("H")) {
 					factors[0] = 0.0;
 					factors[1] = 0.0;
 					factors[2] = 0.0;
 				} else if (AtomSymbol.equals("C")) {
-					if(ac.getAtomAt(i).getFlag(ISCHANGEDFC)){
+					if(ac.getAtom(i).getFlag(ISCHANGEDFC)){
 						factors[0] = 5.60;
 						factors[1] = 8.93;
 						factors[2] = 2.94;
 					}
 				} else if (AtomSymbol.equals("O")) {
-						if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
+						if(ac.getMaximumBondOrder(ac.getAtom(i)) == 1){
 							factors[0] = 10.0;
 							factors[1] = 13.86;
 							factors[2] = 9.68;
@@ -452,7 +452,7 @@ public class GasteigerPEPEPartialCharges {
 							factors[2] = 6.85;
 						}
 				} else if (AtomSymbol.equals("N")) {
-					if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) == 1){
 						factors[0] = 7.95;/*7.95*/
 						factors[1] = 9.73;/*9.73*/
 						factors[2] = 2.67;/*2.67*/
@@ -462,7 +462,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 7.99;/*7.32*/
 					}
 				} else if (AtomSymbol.equals("S")) {
-					if(ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) == 1){
 						factors[0] = 7.73;
 						factors[1] = 8.16;
 						factors[2] = 1.81;
@@ -492,7 +492,7 @@ public class GasteigerPEPEPartialCharges {
 				gasteigerFactors[k][STEP_SIZE * i + i] = factors[0];
 				gasteigerFactors[k][STEP_SIZE * i + i + 1] = factors[1];
 				gasteigerFactors[k][STEP_SIZE * i + i + 2] = factors[2];
-				gasteigerFactors[k][STEP_SIZE * i + i + 5] = ac.getAtomAt(i).getCharge();
+				gasteigerFactors[k][STEP_SIZE * i + i + 5] = ac.getAtom(i).getCharge();
 	
 				if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
 					gasteigerFactors[k][STEP_SIZE * i + i + 3] = 1;
@@ -522,7 +522,7 @@ public class GasteigerPEPEPartialCharges {
 				factors[0] = 0.0;
 				factors[1] = 0.0;
 				factors[2] = 0.0;
-				AtomSymbol = ac.getAtomAt(i).getSymbol();
+				AtomSymbol = ac.getAtom(i).getSymbol();
 				if (AtomSymbol.equals("H")) {
 					factors[0] = 0.0;
 					factors[1] = 0.0;
@@ -532,7 +532,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[1] = 7.93;/*7.93-8.93*/
 						factors[2] = 1.94;
 				} else if (AtomSymbol.equals("O")) {
-						if(ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1){
+						if(ac.getMaximumBondOrder(ac.getAtom(i)) > 1){
 							factors[0] = 11.2;/*11.2-10.0*/
 							factors[1] = 13.24;/*13.24-13.86*/
 							factors[2] = 9.68;
@@ -542,7 +542,7 @@ public class GasteigerPEPEPartialCharges {
 							factors[2] = 6.85;
 						}
 				} else if (AtomSymbol.equals("N")) {
-					if(ac.getMaximumBondOrder(ac.getAtomAt(i))  > 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
 						
 						factors[0] = 8.95;/*7.95*/
 						factors[1] = 9.73;/*9.73*/
@@ -553,7 +553,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 7.32;
 					}
 				} else if (AtomSymbol.equals("S")) {
-					if(ac.getMaximumBondOrder(ac.getAtomAt(i))  > 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
 						
 						factors[0] = 7.73;
 						factors[1] = 8.16;
@@ -584,7 +584,7 @@ public class GasteigerPEPEPartialCharges {
 				gasteigerFactors[k][STEP_SIZE * i + i] = factors[0];
 				gasteigerFactors[k][STEP_SIZE * i + i + 1] = factors[1];
 				gasteigerFactors[k][STEP_SIZE * i + i + 2] = factors[2];
-				gasteigerFactors[k][STEP_SIZE * i + i + 5] = ac.getAtomAt(i).getCharge();
+				gasteigerFactors[k][STEP_SIZE * i + i + 5] = ac.getAtom(i).getCharge();
 				
 				if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
 					gasteigerFactors[k][STEP_SIZE * i + i + 3] = 1;

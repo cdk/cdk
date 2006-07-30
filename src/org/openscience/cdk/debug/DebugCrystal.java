@@ -85,24 +85,24 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		super.setElectronContainers(electronContainers);
 	}
 
-	public void setAtomAt(int number, IAtom atom) {
+	public void setAtom(int number, IAtom atom) {
 		logger.debug("Setting atom at: pos=" + number, " atom=" + atom);
-		super.setAtomAt(number, atom);
+		super.setAtom(number, atom);
 	}
 
-	public IAtom getAtomAt(int number) {
+	public IAtom getAtom(int number) {
 		logger.debug("Getting atom at: ", number);
-		return super.getAtomAt(number);
+		return super.getAtom(number);
 	}
 
-	public IBond getBondAt(int number) {
+	public IBond getBond(int number) {
 		logger.debug("Getting bond at: ", number);
-		return super.getBondAt(number);
+		return super.getBond(number);
 	}
 
-	public void setElectronContainerAt(int number, IElectronContainer electronContainer) {
+	public void setElectronContainer(int number, IElectronContainer electronContainer) {
 		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
-		super.setElectronContainerAt(number, electronContainer);
+		super.setElectronContainer(number, electronContainer);
 	}
 
 	public void setElectronContainerCount(int electronContainerCount) {
@@ -170,9 +170,9 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		return super.getBondNumber(bond);
 	}
 
-	public IElectronContainer getElectronContainerAt(int number) {
+	public IElectronContainer getElectronContainer(int number) {
 		logger.debug("Getting electron container at: ", number);
-		return super.getElectronContainerAt(number);
+		return super.getElectronContainer(number);
 	}
 
 	public IBond getBond(IAtom atom1, IAtom atom2) {

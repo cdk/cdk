@@ -141,8 +141,8 @@ public class WeightDescriptor implements IMolecularDescriptor {
             try {
                 for (int i = 0; i < atoms.length; i++) {
                     //System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
-                    weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+                    weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                    weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
                 }
             } catch (Exception e) {
                 System.out.println(e.toString());
@@ -151,11 +151,11 @@ public class WeightDescriptor implements IMolecularDescriptor {
         else if (elementName.equals("H")) {
             try {
                 for (int i = 0; i < atoms.length; i++) {
-                    if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    if (container.getAtom(i).getSymbol().equals(elementName)) {
+                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                     else {
-                        weight += (container.getAtomAt(i).getHydrogenCount() * 1.00782504);
+                        weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
                     }
                 }
             } catch (Exception e) {
@@ -165,8 +165,8 @@ public class WeightDescriptor implements IMolecularDescriptor {
         else {
             try {
                 for (int i = 0; i < atoms.length; i++) {
-                    if (container.getAtomAt(i).getSymbol().equals(elementName)) {
-                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass();
+                    if (container.getAtom(i).getSymbol().equals(elementName)) {
+                        weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                 }
             } catch (Exception e) {

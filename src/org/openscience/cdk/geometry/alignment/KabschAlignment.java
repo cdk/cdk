@@ -449,9 +449,9 @@ public class KabschAlignment {
             p[i].z = p[i].z - this.cm2.z;
 
             // do the actual rotation
-            ac.getAtomAt(i).setX3d( U[0][0]*p[i].x + U[0][1]*p[i].y + U[0][2]*p[i].z );
-            ac.getAtomAt(i).setY3d( U[1][0]*p[i].x + U[1][1]*p[i].y + U[1][2]*p[i].z );
-            ac.getAtomAt(i).setZ3d( U[2][0]*p[i].x + U[2][1]*p[i].y + U[2][2]*p[i].z );
+            ac.getAtom(i).setX3d( U[0][0]*p[i].x + U[0][1]*p[i].y + U[0][2]*p[i].z );
+            ac.getAtom(i).setY3d( U[1][0]*p[i].x + U[1][1]*p[i].y + U[1][2]*p[i].z );
+            ac.getAtom(i).setZ3d( U[2][0]*p[i].x + U[2][1]*p[i].y + U[2][2]*p[i].z );
         }
     }
 

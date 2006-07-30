@@ -629,21 +629,21 @@ public class ForceFieldTests extends CDKTestCase {
 			coord = Math.random();
 			if (coord <= 0.33) {
 				if (Math.random() <= 0.) {
-					molecule.getAtomAt(i).setX3d(molecule.getAtomAt(i).getX3d() + positiveShift);
+					molecule.getAtom(i).setX3d(molecule.getAtom(i).getX3d() + positiveShift);
 				} else {
-					molecule.getAtomAt(i).setX3d(molecule.getAtomAt(i).getX3d() - negativeShift);
+					molecule.getAtom(i).setX3d(molecule.getAtom(i).getX3d() - negativeShift);
 				}
 			} else if (coord <= 0.66) {
 				if (Math.random() <= 0.) {
-					molecule.getAtomAt(i).setY3d(molecule.getAtomAt(i).getY3d() + positiveShift);
+					molecule.getAtom(i).setY3d(molecule.getAtom(i).getY3d() + positiveShift);
 				} else {
-					molecule.getAtomAt(i).setY3d(molecule.getAtomAt(i).getY3d() - negativeShift);
+					molecule.getAtom(i).setY3d(molecule.getAtom(i).getY3d() - negativeShift);
 				}
 			} else {
 				if (Math.random() <= 0.) {
-					molecule.getAtomAt(i).setZ3d(molecule.getAtomAt(i).getZ3d() + positiveShift);
+					molecule.getAtom(i).setZ3d(molecule.getAtom(i).getZ3d() + positiveShift);
 				} else {
-					molecule.getAtomAt(i).setZ3d(molecule.getAtomAt(i).getZ3d() - negativeShift);
+					molecule.getAtom(i).setZ3d(molecule.getAtom(i).getZ3d() - negativeShift);
 				}
 			}
 		}

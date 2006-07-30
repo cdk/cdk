@@ -354,7 +354,7 @@ public class ValencyChecker implements IValencyChecker {
 	public boolean allSaturated(IAtomContainer ac) throws CDKException {
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            if (!isSaturated(ac.getAtomAt(f), ac)) {
+            if (!isSaturated(ac.getAtom(f), ac)) {
                 return false;
             }
         }

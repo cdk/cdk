@@ -98,12 +98,12 @@ public class PolymerTest extends TestCase {
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
-		assertNotNull(oPolymer.getAtomAt(0));
-		assertNotNull(oPolymer.getAtomAt(1));
-		assertNotNull(oPolymer.getAtomAt(2));
-		assertEquals(oAtom1, oPolymer.getAtomAt(0));
-		assertEquals(oAtom2, oPolymer.getAtomAt(1));
-		assertEquals(oAtom3, oPolymer.getAtomAt(2));
+		assertNotNull(oPolymer.getAtom(0));
+		assertNotNull(oPolymer.getAtom(1));
+		assertNotNull(oPolymer.getAtom(2));
+		assertEquals(oAtom1, oPolymer.getAtom(0));
+		assertEquals(oAtom2, oPolymer.getAtom(1));
+		assertEquals(oAtom3, oPolymer.getAtom(2));
 		assertEquals(3, oPolymer.getAtomCount());
 		assertEquals(1, oPolymer.getMonomer("TRP279").getAtomCount());
 		assertEquals(1, oPolymer.getMonomerCount());

@@ -181,7 +181,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
 			while(st.hasMoreTokens()){
-				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtomAt(Integer.parseInt(st.nextToken())-1);
+				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtom(Integer.parseInt(st.nextToken())-1);
 				theModel.getRendererModel().getToolTipTextMap().put(atom,st.nextToken());
 			}
 			theModel.getRendererModel().setShowTooltip(true);
@@ -195,14 +195,14 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	        int largestY=Integer.MIN_VALUE;
 	        for(int i=0;i<theModel.getChemModel().getSetOfMolecules().getMolecules().length;i++){
 	          for(int k=0;k<theModel.getChemModel().getSetOfMolecules().getMolecule(i).getAtomCount();k++){
-	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x<smallestX)
-	              smallestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x;
-	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x>largestX)
-	              largestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).x;
-	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y<smallestY)
-	              smallestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y;
-	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y>largestY)
-	              largestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtomAt(k))).y;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).x<smallestX)
+	              smallestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).x;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).x>largestX)
+	              largestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).x;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).y<smallestY)
+	              smallestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).y;
+	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).y>largestY)
+	              largestY=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getSetOfMolecules().getMolecule(0).getAtom(k))).y;
 	          }
 	        }
 	        if(!theModel.getRendererModel().getIsCompact()){
@@ -262,7 +262,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				int count=0;
 				for(int i=0;i<chemModel.getSetOfMolecules().getMolecules().length;i++){
 					for(int k=0;k<chemModel.getSetOfMolecules().getMolecules()[i].getAtomCount();k++){
-						chemModel.getSetOfMolecules().getMolecules()[i].getAtomAt(k).setProperty("OriginalNumber", new Integer(count));
+						chemModel.getSetOfMolecules().getMolecules()[i].getAtom(k).setProperty("OriginalNumber", new Integer(count));
 						count++;
 					}
 				}
@@ -344,7 +344,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		boolean[] bool=new boolean[moleculewithh.getBondCount()];
 	    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
 		for(int i=0;i<bool.length;i++){
-	      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBondAt(i)))
+	      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
 			bool[i]=true;
 		}
 		return generator.createChiralSMILES(moleculewithh,bool);
@@ -385,7 +385,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   public void selectAtom(int atom){
     theJcpp.getJChemPaintModel().getRendererModel().setExternalHighlightColor(Color.RED);
     IAtomContainer ac=theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getBuilder().newAtomContainer();
-    ac.addAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtomAt(atom));
+    ac.addAtom(theJcpp.getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecules()[0].getAtom(atom));
     theJcpp.getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
     getTheJcpp().repaint();
   }

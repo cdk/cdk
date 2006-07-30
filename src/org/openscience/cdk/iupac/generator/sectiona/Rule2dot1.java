@@ -111,8 +111,8 @@ public class Rule2dot1 extends NamingRule {
                     inp = new IUPACNamePart(name + localize("ane"), this);
                     // mark named atoms
                     for (int i = 0; i < length; i++) {
-                        longestChain.getAtomAt(i).setProperty(ATOM_NAMED_FLAG, "yes");
-                        longestChain.getAtomAt(i).setProperty(ATOM_MUST_BE_NUMBERED_FLAG, "yes");
+                        longestChain.getAtom(i).setProperty(ATOM_NAMED_FLAG, "yes");
+                        longestChain.getAtom(i).setProperty(ATOM_MUST_BE_NUMBERED_FLAG, "yes");
                     }
                 }
             } catch (Exception e) {

@@ -75,7 +75,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -99,7 +99,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -123,7 +123,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -147,7 +147,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -171,7 +171,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 4; i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -195,7 +195,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -218,7 +218,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < 3 ; i++){
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
@@ -243,7 +243,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -266,7 +266,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -292,7 +292,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
@@ -318,7 +318,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtomAt(i).getSymbol()+"-result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);

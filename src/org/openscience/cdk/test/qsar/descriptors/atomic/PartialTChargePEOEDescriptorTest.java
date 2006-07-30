@@ -98,7 +98,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 	        
 	        assertEquals(testResult[i],result, 0.01);
 		}
@@ -123,7 +123,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			
 			assertEquals(testResult[i],result, 0.01);
 		}
@@ -148,7 +148,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 5 ; i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 
 			assertEquals(testResult[i],result, 0.012);
 		}
@@ -173,7 +173,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 	        
 	        assertEquals(testResult[i],result, 0.01);
 		}
@@ -198,7 +198,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
-	        double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtomAt(i).getSymbol()+" = "+result);
 	        assertEquals(testResult[i],result, 0.01);
 		}

@@ -850,7 +850,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 				IAtom atom1=null;
 				for (int j = 0; j < list.size(); j++){
 					map = (RMap) list.get(j);
-					atom1 = ac.getAtomAt(map.getId1());
+					atom1 = ac.getAtom(map.getId1());
 					if (atom1.getSymbol().equals("O")&& ac.getMaximumBondOrder(atom1)==1){
 						if (ac.getBondCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
 						}else{

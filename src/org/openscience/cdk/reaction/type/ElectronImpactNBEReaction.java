@@ -141,14 +141,14 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 					throw new CDKException("Could not clone IMolecule!", e);
 				}
 				
-				ILonePair[] lps = reactantCloned.getLonePairs(reactantCloned.getAtomAt(posA));
+				ILonePair[] lps = reactantCloned.getLonePairs(reactantCloned.getAtom(posA));
 				reactantCloned.removeElectronContainer(lps[0]);
 
-				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(posA)));
-				reactantCloned.getAtomAt(posA).setFormalCharge(1);
+				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(posA)));
+				reactantCloned.getAtom(posA).setFormalCharge(1);
 
 				/* mapping */
-				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtomAt(posA));
+				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtom(posA));
 		        reaction.addMapping(mapping);
 				
 				reaction.addProduct(reactantCloned);

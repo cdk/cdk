@@ -68,7 +68,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.011);
 		}
 	}
@@ -86,7 +86,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 6 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.02);
 		}
 	}
@@ -104,7 +104,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.021);
 		}
 	}
@@ -122,7 +122,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.04);
 		}
 	}
@@ -140,7 +140,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -158,7 +158,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 9 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -176,7 +176,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.06);
 		}
 	}

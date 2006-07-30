@@ -68,10 +68,10 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
 		s.append("#A:" + getAtomCount() + ", ");
 		s.append("#EC:" + getElectronContainerCount() + ", ");
 		for (int i = 0; i < getAtomCount(); i++) {
-			s.append(getAtomAt(i).toString() + ", ");
+			s.append(getAtom(i).toString() + ", ");
 		}
 		for (int i = 0; i < getElectronContainerCount(); i++) {
-			s.append(getElectronContainerAt(i).toString() + ", ");
+			s.append(getElectronContainer(i).toString() + ", ");
 		}
 		s.append(")");
 		return s.toString();

@@ -65,7 +65,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        IAtom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtom(0);
         assertEquals("a1", atom.getID());
     }
 
@@ -76,7 +76,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(3, mol.getAtomCount());
-        IAtom atom = mol.getAtomAt(1);
+        IAtom atom = mol.getAtom(1);
         assertEquals("a2", atom.getID());
     }
 
@@ -87,7 +87,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals(1, mol.getAtomCount());
-        IAtom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtom(0);
         assertEquals("C", atom.getSymbol());
     }
     
@@ -99,7 +99,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(2, bond.getAtomCount());
         IAtom atom1 = bond.getAtomAt(0);
         IAtom atom2 = bond.getAtomAt(1);
@@ -115,13 +115,13 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, mol.getBondCount());
-        org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(2, bond.getAtomCount());
         IAtom atom1 = bond.getAtomAt(0);
         IAtom atom2 = bond.getAtomAt(1);
         assertEquals("a1", atom1.getID());
         assertEquals("a2", atom2.getID());
-        assertEquals("b2", mol.getBondAt(1).getID());
+        assertEquals("b2", mol.getBond(1).getID());
     }
 
     public void testBond5() {
@@ -132,10 +132,10 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, mol.getBondCount());
-        org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(2, bond.getAtomCount());
         assertEquals(1.0, bond.getOrder(), 0.0001);
-        bond = mol.getBondAt(1);
+        bond = mol.getBond(1);
         assertEquals(2, bond.getAtomCount());
         assertEquals(1.0, bond.getOrder(), 0.0001);
     }
@@ -147,7 +147,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(CDKConstants.BONDORDER_AROMATIC, bond.getOrder(), 0.0001);
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
@@ -160,7 +160,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
 
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
-        org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(0);
+        org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals("b1", bond.getID());
     }
     
@@ -182,10 +182,10 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNotNull(mol.getAtomAt(0).getPoint2d());
-        assertNotNull(mol.getAtomAt(1).getPoint2d());
-        assertNull(mol.getAtomAt(0).getPoint3d());
-        assertNull(mol.getAtomAt(1).getPoint3d());
+        assertNotNull(mol.getAtom(0).getPoint2d());
+        assertNotNull(mol.getAtom(1).getPoint2d());
+        assertNull(mol.getAtom(0).getPoint3d());
+        assertNull(mol.getAtom(1).getPoint3d());
     }
   
     public void testCoordinates3D() {
@@ -195,10 +195,10 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNull(mol.getAtomAt(0).getPoint2d());
-        assertNull(mol.getAtomAt(1).getPoint2d());
-        assertNotNull(mol.getAtomAt(0).getPoint3d());
-        assertNotNull(mol.getAtomAt(1).getPoint3d());
+        assertNull(mol.getAtom(0).getPoint2d());
+        assertNull(mol.getAtom(1).getPoint2d());
+        assertNotNull(mol.getAtom(0).getPoint3d());
+        assertNotNull(mol.getAtom(1).getPoint3d());
     }
     
     public void testFractional3D() {
@@ -208,10 +208,10 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(2, mol.getAtomCount());
-        assertNull(mol.getAtomAt(0).getPoint3d());
-        assertNull(mol.getAtomAt(1).getPoint3d());
-        assertNotNull(mol.getAtomAt(0).getFractionalPoint3d());
-        assertNotNull(mol.getAtomAt(1).getFractionalPoint3d());
+        assertNull(mol.getAtom(0).getPoint3d());
+        assertNull(mol.getAtom(1).getPoint3d());
+        assertNotNull(mol.getAtom(0).getFractionalPoint3d());
+        assertNotNull(mol.getAtom(1).getFractionalPoint3d());
     }
     
     public void testMissing2DCoordinates() {
@@ -222,9 +222,9 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(3, mol.getAtomCount());
-        IAtom atom1 = mol.getAtomAt(0);
-        IAtom atom2 = mol.getAtomAt(1);
-        IAtom atom3 = mol.getAtomAt(2);
+        IAtom atom1 = mol.getAtom(0);
+        IAtom atom2 = mol.getAtom(1);
+        IAtom atom3 = mol.getAtom(2);
         
         assertNotNull(atom1.getPoint2d());
         assertNull   (atom2.getPoint2d());
@@ -239,9 +239,9 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals(3, mol.getAtomCount());
-        IAtom atom1 = mol.getAtomAt(0);
-        IAtom atom2 = mol.getAtomAt(1);
-        IAtom atom3 = mol.getAtomAt(2);
+        IAtom atom1 = mol.getAtom(0);
+        IAtom atom2 = mol.getAtom(1);
+        IAtom atom3 = mol.getAtom(2);
         
         assertNotNull(atom1.getPoint3d());
         assertNull   (atom2.getPoint3d());

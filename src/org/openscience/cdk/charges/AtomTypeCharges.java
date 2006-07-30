@@ -103,7 +103,7 @@ public class AtomTypeCharges {
 
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			try {
-				hoseCode = hcg.getHOSECode(ac, ac.getAtomAt(i), 3);
+				hoseCode = hcg.getHOSECode(ac, ac.getAtom(i), 3);
 			} catch (CDKException ex1) {
 				throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.toString(), ex1);
 			}
@@ -116,17 +116,17 @@ public class AtomTypeCharges {
 			mat_n = p_n.matcher(hoseCode);
 
 			if (matOC.matches()) {
-				ac.getAtomAt(i).setCharge(-0.500);
+				ac.getAtom(i).setCharge(-0.500);
 			} else if (matOP.matches()) {
-				ac.getAtomAt(i).setCharge(-0.666);
+				ac.getAtom(i).setCharge(-0.666);
 			} else if (matOS.matches()) {
-				ac.getAtomAt(i).setCharge(-0.500);
+				ac.getAtom(i).setCharge(-0.500);
 			} else if (mat_p.matches()) {
-				ac.getAtomAt(i).setCharge(+1.000);
+				ac.getAtom(i).setCharge(+1.000);
 			} else if (mat_n.matches()) {
-				ac.getAtomAt(i).setCharge(-1.000);
+				ac.getAtom(i).setCharge(-1.000);
 			} else {
-				ac.getAtomAt(i).setCharge(ac.getAtomAt(i).getFormalCharge());
+				ac.getAtom(i).setCharge(ac.getAtom(i).getFormalCharge());
 			}
 		}
 		return ac;

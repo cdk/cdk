@@ -101,7 +101,7 @@ public class SingleStructureRandomGeneratorTest
 		org.openscience.cdk.interfaces.IAtom atom;
 		 for (int f = 0; f < mol.getAtomCount(); f++)
 		{
-			atom = mol.getAtomAt(f);
+			atom = mol.getAtom(f);
 			bondCount =  mol.getBondOrderSum(atom);
 			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
 			atom.setHydrogenCount(4 - (int)bondCount - (int)atom.getCharge());

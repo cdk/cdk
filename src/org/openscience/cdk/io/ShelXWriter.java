@@ -187,7 +187,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write("UNIT  " + elemCounts + "\n");
         /* write atoms */
         for (int i = 0; i < crystal.getAtomCount(); i++) {
-        	IAtom atom = crystal.getAtomAt(i);
+        	IAtom atom = crystal.getAtom(i);
             Point3d cartCoord = atom.getPoint3d();
             Point3d fracCoord = CrystalGeometryTools.cartesianToFractional(a, b, c, cartCoord);
             String symbol = atom.getSymbol();

@@ -204,9 +204,9 @@ public class ModelBuilder3D {
 		}
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
 			System.out.println("Only one Heavy Atom");
-			molecule.getAtomAt(0).setX3d(0);
-			molecule.getAtomAt(0).setY3d(0);
-			molecule.getAtomAt(0).setZ3d(0);
+			molecule.getAtom(0).setX3d(0);
+			molecule.getAtom(0).setY3d(0);
+			molecule.getAtom(0).setZ3d(0);
 			try {
 				atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
 			} catch (Exception ex3) {
@@ -361,14 +361,14 @@ public class ModelBuilder3D {
 		Vector3d ringCenter = new Vector3d();
 
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!(ac.getAtomAt(i).getFlag(CDKConstants.ISPLACED))) {
-				ringCenter.x = (ac.getAtomAt(i).getPoint3d()).x - newCoord.x;
-				ringCenter.y = (ac.getAtomAt(i).getPoint3d()).y - newCoord.y;
-				ringCenter.z = (ac.getAtomAt(i).getPoint3d()).z - newCoord.z;
+			if (!(ac.getAtom(i).getFlag(CDKConstants.ISPLACED))) {
+				ringCenter.x = (ac.getAtom(i).getPoint3d()).x - newCoord.x;
+				ringCenter.y = (ac.getAtom(i).getPoint3d()).y - newCoord.y;
+				ringCenter.z = (ac.getAtom(i).getPoint3d()).z - newCoord.z;
 				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, n1, angle);
-				ac.getAtomAt(i).setX3d((ringCenter.x + newCoord.x));
-				ac.getAtomAt(i).setY3d((ringCenter.y + newCoord.y));
-				ac.getAtomAt(i).setZ3d((ringCenter.z + newCoord.z));
+				ac.getAtom(i).setX3d((ringCenter.x + newCoord.x));
+				ac.getAtom(i).setY3d((ringCenter.y + newCoord.y));
+				ac.getAtom(i).setZ3d((ringCenter.z + newCoord.z));
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
@@ -394,15 +394,15 @@ public class ModelBuilder3D {
 		//rotate ring around axis with best angle
 		rotAngleMax = (rotAngleMax / 180) * Math.PI;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!(ac.getAtomAt(i).getFlag(CDKConstants.ISPLACED))) {
-				ringCenter.x = (ac.getAtomAt(i).getPoint3d()).x;
-				ringCenter.y = (ac.getAtomAt(i).getPoint3d()).y;
-				ringCenter.z = (ac.getAtomAt(i).getPoint3d()).z;
+			if (!(ac.getAtom(i).getFlag(CDKConstants.ISPLACED))) {
+				ringCenter.x = (ac.getAtom(i).getPoint3d()).x;
+				ringCenter.y = (ac.getAtom(i).getPoint3d()).y;
+				ringCenter.z = (ac.getAtom(i).getPoint3d()).z;
 				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, axis, rotAngleMax);
-				ac.getAtomAt(i).setX3d(ringCenter.x);
-				ac.getAtomAt(i).setY3d(ringCenter.y);
-				ac.getAtomAt(i).setZ3d(ringCenter.z);
-				ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
+				ac.getAtom(i).setX3d(ringCenter.x);
+				ac.getAtom(i).setY3d(ringCenter.y);
+				ac.getAtom(i).setZ3d(ringCenter.z);
+				ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
 	}
@@ -421,7 +421,7 @@ public class ModelBuilder3D {
 		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
-		IAtom atomB = atomNeighbours.getAtomAt(0);
+		IAtom atomB = atomNeighbours.getAtom(0);
 		double length = ap3d.getBondLengthValue(atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName());
 		double angle = (ap3d.getAngleValue(atomB.getAtomTypeName(), atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName())) * Math.PI / 180;
 		/*
@@ -454,7 +454,7 @@ public class ModelBuilder3D {
 				 && Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) != 0)
 				 && molecule.getMaximumBondOrder(atomA) < 1.5) {
 			if (atomNeighbours.getAtomCount() > 1) {
-				stereo = atlp3d.makeStereocenter(atomA.getPoint3d(), molecule.getBond(atomA, unplacedAtom), (atomNeighbours.getAtomAt(0)).getPoint3d(), (atomNeighbours.getAtomAt(1)).getPoint3d(), branchPoints);
+				stereo = atlp3d.makeStereocenter(atomA.getPoint3d(), molecule.getBond(atomA, unplacedAtom), (atomNeighbours.getAtom(0)).getPoint3d(), (atomNeighbours.getAtom(1)).getPoint3d(), branchPoints);
 			}
 		}
 		if (stereo != -1) {
@@ -477,13 +477,13 @@ public class ModelBuilder3D {
 		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			atoms = molecule.getConnectedAtoms(chain.getAtomAt(i));
+			atoms = molecule.getConnectedAtoms(chain.getAtom(i));
 			for (int j = 0; j < atoms.length; j++) {
 				if (!(atoms[j].getSymbol()).equals("H") & !(atoms[j].getFlag(CDKConstants.ISPLACED)) & !(atoms[j].getFlag(CDKConstants.ISINRING))) {
 					//System.out.println("SEARCH PLACE AND FOUND Branch Atom "+molecule.getAtomNumber(chain.getAtomAt(i))+
 					//			" New Atom:"+molecule.getAtomNumber(atoms[j])+" -> STORE");
 					try {
-						connectedAtoms.add(ap3d.getPlacedHeavyAtoms(molecule, chain.getAtomAt(i)));
+						connectedAtoms.add(ap3d.getPlacedHeavyAtoms(molecule, chain.getAtom(i)));
 						//System.out.println("Connected atom1:"+molecule.getAtomNumber(connectedAtoms.getAtomAt(0))+" atom2:"+
 						//molecule.getAtomNumber(connectedAtoms.getAtomAt(1))+ " Length:"+connectedAtoms.getAtomCount());
 					} catch (Exception ex1) {
@@ -491,7 +491,7 @@ public class ModelBuilder3D {
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find connected placed atoms");
 					}
 					try {
-						setBranchAtom(atoms[j], chain.getAtomAt(i), connectedAtoms);
+						setBranchAtom(atoms[j], chain.getAtom(i), connectedAtoms);
 					} catch (Exception ex2) {
 						System.out.println("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to" + ex2.toString());
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms");
@@ -524,13 +524,13 @@ public class ModelBuilder3D {
 			for (int i = 0; i < startAtoms.getAtomCount(); i++) {
 				//System.out.println("FOUND BRANCHED ALKAN");
 				//System.out.println("Atom NOT NULL:" + molecule.getAtomNumber(startAtoms.getAtomAt(i)));
-				thirdPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, startAtoms.getAtomAt(i));
-				dihPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, thirdPlacedAtom, startAtoms.getAtomAt(i));
+				thirdPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, startAtoms.getAtom(i));
+				dihPlacedAtom = ap3d.getPlacedHeavyAtom(molecule, thirdPlacedAtom, startAtoms.getAtom(i));
 				longestUnplacedChain.addAtom(dihPlacedAtom);
 				longestUnplacedChain.addAtom(thirdPlacedAtom);
-				longestUnplacedChain.addAtom(startAtoms.getAtomAt(i));
+				longestUnplacedChain.addAtom(startAtoms.getAtom(i));
 
-				longestUnplacedChain.add(atomPlacer.getLongestUnplacedChain(molecule, startAtoms.getAtomAt(i)));
+				longestUnplacedChain.add(atomPlacer.getLongestUnplacedChain(molecule, startAtoms.getAtom(i)));
 				setAtomsToUnVisited();
 				
 				if (longestUnplacedChain.getAtomCount() < 4) {
@@ -564,10 +564,10 @@ public class ModelBuilder3D {
 		transVector.y = transVector.y - newCoord.y;
 		transVector.z = transVector.z - newCoord.z;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!(ac.getAtomAt(i).getFlag(CDKConstants.ISPLACED))) {
-				ac.getAtomAt(i).setX3d(ac.getAtomAt(i).getX3d() - transVector.x);
-				ac.getAtomAt(i).setY3d(ac.getAtomAt(i).getY3d() - transVector.y);
-				ac.getAtomAt(i).setZ3d(ac.getAtomAt(i).getZ3d() - transVector.z);
+			if (!(ac.getAtom(i).getFlag(CDKConstants.ISPLACED))) {
+				ac.getAtom(i).setX3d(ac.getAtom(i).getX3d() - transVector.x);
+				ac.getAtom(i).setY3d(ac.getAtom(i).getY3d() - transVector.y);
+				ac.getAtom(i).setZ3d(ac.getAtom(i).getZ3d() - transVector.z);
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
@@ -603,8 +603,8 @@ public class ModelBuilder3D {
 	 */
 	private boolean checkAllRingAtomsHasCoordinates(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (ac.getAtomAt(i).getPoint3d() != null && ac.getAtomAt(i).getFlag(CDKConstants.ISINRING)) {
-			} else if (!ac.getAtomAt(i).getFlag(CDKConstants.ISINRING)) {
+			if (ac.getAtom(i).getPoint3d() != null && ac.getAtom(i).getFlag(CDKConstants.ISINRING)) {
+			} else if (!ac.getAtom(i).getFlag(CDKConstants.ISINRING)) {
 			} else {
 				return false;
 			}
@@ -620,7 +620,7 @@ public class ModelBuilder3D {
 	 */
 	private void setAtomsToPlace(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
+			ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 		}
 	}
 
@@ -630,7 +630,7 @@ public class ModelBuilder3D {
 	 */
 	private void setAtomsToUnPlaced() {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			molecule.getAtomAt(i).setFlag(CDKConstants.ISPLACED, false);
+			molecule.getAtom(i).setFlag(CDKConstants.ISPLACED, false);
 		}
 	}
 
@@ -640,7 +640,7 @@ public class ModelBuilder3D {
 	 */
 	private void setAtomsToUnVisited() {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			molecule.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 	}
 

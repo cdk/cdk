@@ -130,12 +130,12 @@ public class MoleculeBuilder
             if (addPos < 0)
             {
                 //Set the first bond to an order of 2 (i.e. a double bond)
-                currentMolecule.getBondAt(0).setOrder(2.0);
+                currentMolecule.getBond(0).setOrder(2.0);
             }
             else
             {
                 //Set the addPos'th bond to an order of 2 (i.e. a double bond)
-                currentMolecule.getBondAt(addPos).setOrder(2.0);
+                currentMolecule.getBond(addPos).setOrder(2.0);
             }
         }
         //Alkynes - Tripple bond
@@ -145,12 +145,12 @@ public class MoleculeBuilder
             if (addPos < 0)
             {
                 //Set the first bond to an order of 3 (i.e. a tripple bond)
-                currentMolecule.getBondAt(0).setOrder(3.0);
+                currentMolecule.getBond(0).setOrder(3.0);
             }
             else
             {
                 //Set the addPos'th bond to an order of 3 (i.e. a tripple bond)
-                currentMolecule.getBondAt(addPos).setOrder(3.0);
+                currentMolecule.getBond(addPos).setOrder(3.0);
             }
         }
         //FUNCTIONAL GROUP SUFFIXES
@@ -170,7 +170,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("O", currentMolecule.getAtomAt(addPos), 1.0, 1);
+                addAtom("O", currentMolecule.getAtom(addPos), 1.0, 1);
             }
         }
         //Aldehydes
@@ -202,7 +202,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("Cl", currentMolecule.getAtomAt(addPos), 1.0, 0);
+                addAtom("Cl", currentMolecule.getAtom(addPos), 1.0, 0);
             }
         }
         //Fluorine
@@ -215,7 +215,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("F", currentMolecule.getAtomAt(addPos), 1.0, 0);
+                addAtom("F", currentMolecule.getAtom(addPos), 1.0, 0);
             }
         }
         //Bromine
@@ -228,7 +228,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("Br", currentMolecule.getAtomAt(addPos), 1.0, 0);
+                addAtom("Br", currentMolecule.getAtom(addPos), 1.0, 0);
             }
         }
         //Iodine
@@ -241,7 +241,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("I", currentMolecule.getAtomAt(addPos), 1.0, 0);
+                addAtom("I", currentMolecule.getAtom(addPos), 1.0, 0);
             }
         }
         //Nitro
@@ -254,7 +254,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("N", currentMolecule.getAtomAt(addPos), 1.0, 0);
+                addAtom("N", currentMolecule.getAtom(addPos), 1.0, 0);
             }
             
             //Stuff which applied no matter where the N atom is:
@@ -274,7 +274,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("O", currentMolecule.getAtomAt(addPos), 2.0, 0);
+                addAtom("O", currentMolecule.getAtom(addPos), 2.0, 0);
             }
         }
         //Nitrile
@@ -305,7 +305,7 @@ public class MoleculeBuilder
             }
             else
             {
-                joiningBond = new Bond(currentMolecule.getAtomAt(addPos), benzene.getFirstAtom());
+                joiningBond = new Bond(currentMolecule.getAtom(addPos), benzene.getFirstAtom());
             }
             currentMolecule.addBond(joiningBond);
         }
@@ -318,7 +318,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("N", currentMolecule.getAtomAt(addPos), 1.0, 2);
+                addAtom("N", currentMolecule.getAtom(addPos), 1.0, 2);
             }
         }
         //ORGANO METALLICS ADDED AS PREFIXES
@@ -331,7 +331,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("Al", currentMolecule.getAtomAt(addPos), 1.0, 2);
+                addAtom("Al", currentMolecule.getAtom(addPos), 1.0, 2);
             }
         }
         else if (funGroupToken == "litho" )
@@ -343,7 +343,7 @@ public class MoleculeBuilder
             }
             else
             {
-                addAtom("Li", currentMolecule.getAtomAt(addPos), 1.0, 2);
+                addAtom("Li", currentMolecule.getAtom(addPos), 1.0, 2);
             }
         }
         //PRIORITY SUBSTITUENTS
@@ -496,7 +496,7 @@ public class MoleculeBuilder
                 }
                 else
                 {
-                    connectingAtom = currentMolecule.getAtomAt(joinLocation);
+                    connectingAtom = currentMolecule.getAtom(joinLocation);
                 }
                 
                 Molecule subChain = buildChain(attachedSubstituent.getLength(), false);

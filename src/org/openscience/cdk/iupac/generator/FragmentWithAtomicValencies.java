@@ -89,7 +89,7 @@ public class FragmentWithAtomicValencies extends Fragment {
     public Enumeration getAtomicValences() {
         Vector result = new Vector();
         for (int i=0; i < getFreeValences(); i++) {
-            result.add(getAtomAt(valenciesAt[i]));
+            result.add(getAtom(valenciesAt[i]));
         }
         return result.elements();
     }

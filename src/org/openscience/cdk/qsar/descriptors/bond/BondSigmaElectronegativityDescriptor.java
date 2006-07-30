@@ -127,7 +127,7 @@ public class BondSigmaElectronegativityDescriptor implements IMolecularDescripto
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
     	
-        IAtom[] atoms = ac.getBondAt(bondPosition).getAtoms();
+        IAtom[] atoms = ac.getBond(bondPosition).getAtoms();
         double[] results = new double[2];
         
     	Integer[] params = new Integer[1];

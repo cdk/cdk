@@ -253,7 +253,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     // exception
                                     for (int i=0; i < expatoms; i++) {
                                         line = readLine();
-                                        IAtom a = crystal.getAtomAt(i);
+                                        IAtom a = crystal.getAtom(i);
                                         StringTokenizer st = new StringTokenizer(line, " ");
                                         a.setX3d(Double.parseDouble(st.nextToken()));
                                         a.setY3d(Double.parseDouble(st.nextToken()));
@@ -356,7 +356,7 @@ public class PMPReader extends DefaultChemObjectReader {
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                IAtom a = molecule.getAtomAt(realatomid);
+                IAtom a = molecule.getAtom(realatomid);
                 ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
@@ -365,7 +365,7 @@ public class PMPReader extends DefaultChemObjectReader {
                 logger.debug("atomids: " + atomids);
                 logger.debug("atomid: " + atomid);
                 int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                IAtom a = molecule.getAtomAt(realatomid);
+                IAtom a = molecule.getAtom(realatomid);
                 ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);

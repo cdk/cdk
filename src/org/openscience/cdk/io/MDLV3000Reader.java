@@ -296,7 +296,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom1String = tokenizer.nextToken();
                     int indexAtom1 = Integer.parseInt(indexAtom1String);
-                    IAtom atom1 = readData.getAtomAt(indexAtom1 -1);
+                    IAtom atom1 = readData.getAtom(indexAtom1 -1);
                     bond.setAtomAt(atom1, 0);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 1 in bond";
@@ -308,7 +308,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 try {
                     String indexAtom2String = tokenizer.nextToken();
                     int indexAtom2 = Integer.parseInt(indexAtom2String);
-                    IAtom atom2 = readData.getAtomAt(indexAtom2 -1);
+                    IAtom atom2 = readData.getAtom(indexAtom2 -1);
                     bond.setAtomAt(atom2, 1);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 2 in bond";
@@ -408,12 +408,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                             throw new CDKException(error, exception);
                         }
                         if (atomID != -1 && label.length() > 0) {
-                        	IAtom atom = readData.getAtomAt(atomID-1);
+                        	IAtom atom = readData.getAtom(atomID-1);
                             if (!(atom instanceof IPseudoAtom)) {
                                 atom = readData.getBuilder().newPseudoAtom(atom);
                             }
                             ((IPseudoAtom)atom).setLabel(label);
-                            readData.setAtomAt(atomID-1, atom);
+                            readData.setAtom(atomID-1, atom);
                         }
                     }
                 } else {

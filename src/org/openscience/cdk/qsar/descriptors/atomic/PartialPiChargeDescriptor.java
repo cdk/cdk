@@ -141,7 +141,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 	        	pepe.assignGasteigerPiPartialCharges(ac, true);
 				for (int i=0; i<atoms.length; i++) {
 					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
-					cacheDescriptorValue(ac.getAtomAt(i), ac, new DoubleResult(ac.getAtomAt(i).getCharge()));
+					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(ac.getAtom(i).getCharge()));
 				}
 	        } catch (Exception ex1) {
 	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);

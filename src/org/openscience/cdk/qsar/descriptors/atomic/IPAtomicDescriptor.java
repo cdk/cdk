@@ -161,7 +161,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		Double[][] resultsH = null;
 		String path = "";
 		if(targetType.equals(AtomicTarget)){
-			IAtom atom = container.getAtomAt(targetPosition);
+			IAtom atom = container.getAtom(targetPosition);
 			if(atom.getSymbol().equals("F")||
 					atom.getSymbol().equals("Cl")||
 					atom.getSymbol().equals("Br")||
@@ -176,7 +176,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 				isTarget = true;
 			}
 		}else if(targetType.equals(BondTarget)){
-			IBond bond = container.getBondAt(targetPosition);
+			IBond bond = container.getBond(targetPosition);
 			IAtom[] atoms = bond.getAtoms();
 			if((bond.getOrder() == 2)){
 				if((atoms[0].getSymbol().equals("C")) && ( atoms[1].getSymbol().equals("C"))) {
@@ -218,7 +218,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
 		PartialSigmaChargeDescriptor descriptor2 = new PartialSigmaChargeDescriptor();
 		EffectiveAtomPolarizabilityDescriptor descriptor3 = new EffectiveAtomPolarizabilityDescriptor();
-		IAtom atom = atomContainer.getAtomAt(targetPosition);
+		IAtom atom = atomContainer.getAtom(targetPosition);
 		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue());
 		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue());
 		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue());
@@ -233,7 +233,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	private Double[][] calculateCarbonylDescriptor(IAtomContainer atomContainer) {
 		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
-		IBond bond = atomContainer.getBondAt(targetPosition);
+		IBond bond = atomContainer.getBond(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
 		IAtom positionC = null;
 		IAtom positionX = null;
@@ -284,7 +284,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 	private Double[][] calculatePiSystWithoutHeteroDescriptor(IAtomContainer atomContainer) {
 		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
-		IBond bond = atomContainer.getBondAt(targetPosition);
+		IBond bond = atomContainer.getBond(targetPosition);
 		IAtom[] atoms = bond.getAtoms();
 		IAtom positionC = atoms[0];
 		IAtom positionX = atoms[1];

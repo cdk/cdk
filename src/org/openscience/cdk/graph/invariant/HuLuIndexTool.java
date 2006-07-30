@@ -100,7 +100,7 @@ public class HuLuIndexTool
 			{
 				if (i==j)
 				{
-					if (atomContainer.getAtomAt(i).getSymbol()=="O")
+					if (atomContainer.getAtom(i).getSymbol()=="O")
 					{
 						adjaMatrix[i][j] = Math.sqrt(0.74)/6;						
 					}
@@ -160,7 +160,7 @@ public class HuLuIndexTool
 		
 		for (int i = 0; i < atomContainer.getAtomCount(); i++)
 		{
-			atom = atomContainer.getAtomAt(i);
+			atom = atomContainer.getAtom(i);
 			
 			valenceSum = new int[atomLayers[i]];			
 			for (int v = 0; v < valenceSum.length; v++)
@@ -185,10 +185,10 @@ public class HuLuIndexTool
 
 			for (int j = 0; j < apspMatrix.length; j++)
 			{
-				if(atomContainer.getAtomAt(j).getSymbol()=="O")
-					valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtomAt(j).getHydrogenCount();
+				if(atomContainer.getAtom(j).getSymbol()=="O")
+					valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getHydrogenCount();
 				else
-					valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtomAt(j).getHydrogenCount();					
+					valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getHydrogenCount();					
 			}
 			org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
 			for (int j = 0; j < bonds.length; j++)

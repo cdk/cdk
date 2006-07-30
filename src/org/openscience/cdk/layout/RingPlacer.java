@@ -128,7 +128,7 @@ public class RingPlacer
 				unplacedPartners.removeAllElements();
 				sharedAtoms.removeAllElements();
 				primaryAtoms.removeAllElements();
-				atom = ring.getAtomAt(k);
+				atom = ring.getAtom(k);
 				rings = rs.getRings(atom);
 				centerOfRingGravity = GeometryTools.get2DCenter(rings);
 				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
@@ -137,7 +137,7 @@ public class RingPlacer
 				{
 						for (int f = 0; f < unplacedPartners.getAtomCount(); f++)
 						{
-							logger.debug("placeRingSubstituents->unplacedPartners: " + (molecule.getAtomNumber(unplacedPartners.getAtomAt(f)) + 1));
+							logger.debug("placeRingSubstituents->unplacedPartners: " + (molecule.getAtomNumber(unplacedPartners.getAtom(f)) + 1));
 						}
 				}
 				catch(Exception exc)
@@ -263,9 +263,9 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.IBond) break;
+            if (ring.getElectronContainer(k) instanceof org.openscience.cdk.interfaces.IBond) break;
         }
-        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainer(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -313,7 +313,7 @@ public class RingPlacer
 		ringCenter.add(ringCenterVector);
 		double addAngle = 2 * Math.PI / ring.getRingSize();
 
-		IAtom startAtom = sharedAtoms.getAtomAt(0);
+		IAtom startAtom = sharedAtoms.getAtom(0);
 
 		//double centerX = ringCenter.x;
 		//double centerY = ringCenter.y;
@@ -370,8 +370,8 @@ public class RingPlacer
 		ringCenterVector.scale(newRingPerpendicular);
 		ringCenter.add(ringCenterVector);
 
-		IAtom bondAtom1 = sharedAtoms.getAtomAt(0);
-		IAtom bondAtom2 = sharedAtoms.getAtomAt(1);
+		IAtom bondAtom1 = sharedAtoms.getAtom(0);
+		IAtom bondAtom2 = sharedAtoms.getAtom(1);
 
 		Vector2d bondAtom1Vector = new Vector2d(bondAtom1.getPoint2d());
 		Vector2d bondAtom2Vector = new Vector2d(bondAtom2.getPoint2d());		
@@ -455,9 +455,9 @@ public class RingPlacer
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainerAt(k) instanceof org.openscience.cdk.interfaces.IBond) break;
+            if (ring.getElectronContainer(k) instanceof org.openscience.cdk.interfaces.IBond) break;
         }
-        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainerAt(k);
+        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainer(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -516,7 +516,7 @@ public class RingPlacer
 			allPlaced = true;
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
-				if (!((IAtom)ring.getAtomAt(j)).getFlag(CDKConstants.ISPLACED))
+				if (!((IAtom)ring.getAtom(j)).getFlag(CDKConstants.ISPLACED))
 				{
 					allPlaced = false; 
 					break;
@@ -541,7 +541,7 @@ public class RingPlacer
 		int counter = 0; 
 		for (int f = 0; f < sharedAtoms.getAtomCount(); f++)
 		{
-			atom = sharedAtoms.getAtomAt(f);	
+			atom = sharedAtoms.getAtom(f);	
 			if (sharedAtoms.getConnectedAtoms(atom).length == 1)
 			{
 				bridgeAtoms[counter] = atom;

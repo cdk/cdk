@@ -289,7 +289,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");
                 }
-                IAtom atom = molecule.getAtomAt(atomCounter - 1);
+                IAtom atom = molecule.getAtom(atomCounter - 1);
                 atom.setCharge(charge);
             }
         }

@@ -141,13 +141,13 @@ public class GasteigerMarsiliPartialCharges {
 				atom2 = ac.getAtomNumber(atoms[1]);
 
 				if (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] >= gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) {
-					if (ac.getAtomAt(atom2).getSymbol().equals("H")) {
+					if (ac.getAtom(atom2).getSymbol().equals("H")) {
 						deoc = DEOC_HYDROGEN;
 					} else {
 						deoc = gasteigerFactors[STEP_SIZE * atom2 + atom2 + 3];
 					}
 				} else {
-					if (ac.getAtomAt(atom1).getSymbol().equals("H")) {
+					if (ac.getAtom(atom1).getSymbol().equals("H")) {
 						deoc = DEOC_HYDROGEN;
 					} else {
 						deoc = gasteigerFactors[STEP_SIZE * atom1 + atom1 + 3];
@@ -161,7 +161,7 @@ public class GasteigerMarsiliPartialCharges {
 		}
 		
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			ac.getAtomAt(i).setCharge(gasteigerFactors[STEP_SIZE * i + i + 5]);
+			ac.getAtom(i).setCharge(gasteigerFactors[STEP_SIZE * i + i + 5]);
 		}
 		return ac;
 	}
@@ -191,42 +191,42 @@ public class GasteigerMarsiliPartialCharges {
 			factors[0] = 0.0;
 			factors[1] = 0.0;
 			factors[2] = 0.0;
-			AtomSymbol = ac.getAtomAt(i).getSymbol();
+			AtomSymbol = ac.getAtom(i).getSymbol();
 			if (AtomSymbol.equals("H")) {
 				factors[0] = 7.17;
 				factors[1] = 6.24;
 				factors[2] = -0.56;
 			} else if (AtomSymbol.equals("C")) {
-				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
+				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
 					factors[0] = 7.98;
 					factors[1] = 9.18;
 					factors[2] = 1.88;
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
+				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
 					factors[0] = 8.81;/*8.79*/
 					factors[1] = 9.34;/*9.32*/
 					factors[2] = 1.52;/*1.51*/
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
+				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) >= 3) {
 					factors[0] = 10.39;/*10.39*/
 					factors[1] = 9.45;/*9.45*/
 					factors[2] = 0.73;
 				}
 			} else if (AtomSymbol.equals("N")) {
-				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
+				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
 					factors[0] = 11.54;
 					factors[1] = 10.82;
 					factors[2] = 1.36;
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
+				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
 					factors[0] = 12.87;
 					factors[1] = 11.15;
 					factors[2] = 0.85;
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) >= 3) {
+				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) >= 3) {
 					factors[0] = 17.68;/*15.68*/
 					factors[1] = 12.70;/*11.70*/
 					factors[2] = -0.27;/*-0.27*/
 				}
 			} else if (AtomSymbol.equals("O")) {
-				if (ac.getMaximumBondOrder(ac.getAtomAt(i)) == 1) {
-					if (ac.getAtomAt(i).getCharge() == -1) {
+				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
+					if (ac.getAtom(i).getCharge() == -1) {
 						factors[0] = 17.07;/*17.07*/
 						factors[1] = 13.79;/*13.79*/
 						factors[2] = 0.47;/*0.47*/
@@ -235,7 +235,7 @@ public class GasteigerMarsiliPartialCharges {
 						factors[1] = 12.92;/*12.92*/
 						factors[2] = 1.39;/*1.39*/
 					}
-				} else if (ac.getMaximumBondOrder(ac.getAtomAt(i)) > 1 && ac.getMaximumBondOrder(ac.getAtomAt(i)) < 3) {
+				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
 					factors[0] = 17.07;
 					factors[1] = 13.79;
 					factors[2] = 0.47;
@@ -269,7 +269,7 @@ public class GasteigerMarsiliPartialCharges {
 			gasteigerFactors[STEP_SIZE * i + i] = factors[0];
 			gasteigerFactors[STEP_SIZE * i + i + 1] = factors[1];
 			gasteigerFactors[STEP_SIZE * i + i + 2] = factors[2];
-			gasteigerFactors[STEP_SIZE * i + i + 5] = ac.getAtomAt(i).getCharge();
+			gasteigerFactors[STEP_SIZE * i + i + 5] = ac.getAtom(i).getCharge();
 			if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0) {
 				gasteigerFactors[STEP_SIZE * i + i + 3] = 1;
 			} else {

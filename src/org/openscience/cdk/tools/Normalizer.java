@@ -92,16 +92,16 @@ public class Normalizer {
           Iterator bondit = l.iterator();
           while (bondit.hasNext()) {
             RMap rmap = (RMap) bondit.next();
-            org.openscience.cdk.interfaces.IBond acbond = ac.getBondAt(rmap.getId1());
-            org.openscience.cdk.interfaces.IBond replacebond = replacementStructure.getBondAt(rmap.getId2());
+            org.openscience.cdk.interfaces.IBond acbond = ac.getBond(rmap.getId1());
+            org.openscience.cdk.interfaces.IBond replacebond = replacementStructure.getBond(rmap.getId2());
             acbond.setOrder(replacebond.getOrder());
             change=true;
           }
           Iterator atomit = l2.iterator();
           while (atomit.hasNext()) {
             RMap rmap = (RMap) atomit.next();
-            org.openscience.cdk.interfaces.IAtom acatom = ac.getAtomAt(rmap.getId1());
-            org.openscience.cdk.interfaces.IAtom replaceatom = replacementStructure.getAtomAt(rmap.getId2());
+            org.openscience.cdk.interfaces.IAtom acatom = ac.getAtom(rmap.getId1());
+            org.openscience.cdk.interfaces.IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());
             change=true;
           }

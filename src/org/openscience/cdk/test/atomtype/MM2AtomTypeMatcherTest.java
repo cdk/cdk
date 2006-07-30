@@ -102,7 +102,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         	logger.debug("atomNr:"+i);
         	IAtomType matched = null;
         	try {
-        		matched = atm.findMatchingAtomType(mol, mol.getAtomAt(i));
+        		matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         		logger.debug("Found AtomType: ", matched);
         	} catch (Exception exception) {
         		logger.error("Could not percieve atom type: " + exception.getMessage());
@@ -110,18 +110,18 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         		fail("Could not percieve atom type: " + exception.getMessage());
         	}
         	assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtomAt(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         
-        logger.debug("MM2 Atom 0:"+mol.getAtomAt(0).getAtomTypeName());
+        logger.debug("MM2 Atom 0:"+mol.getAtom(0).getAtomTypeName());
         
-        assertEquals("Sthi",mol.getAtomAt(0).getAtomTypeName());
-        assertEquals("Csp2",mol.getAtomAt(7).getAtomTypeName());
-        assertEquals("Csp",mol.getAtomAt(51).getAtomTypeName());
-        assertEquals("N=C",mol.getAtomAt(148).getAtomTypeName());
-        assertEquals("Oar",mol.getAtomAt(198).getAtomTypeName());
-        assertEquals("N2OX",mol.getAtomAt(233).getAtomTypeName());
-        assertEquals("Nsp2",mol.getAtomAt(256).getAtomTypeName());
+        assertEquals("Sthi",mol.getAtom(0).getAtomTypeName());
+        assertEquals("Csp2",mol.getAtom(7).getAtomTypeName());
+        assertEquals("Csp",mol.getAtom(51).getAtomTypeName());
+        assertEquals("N=C",mol.getAtom(148).getAtomTypeName());
+        assertEquals("Oar",mol.getAtom(198).getAtomTypeName());
+        assertEquals("N2OX",mol.getAtom(233).getAtomTypeName());
+        assertEquals("Nsp2",mol.getAtom(256).getAtomTypeName());
         logger.debug("**** END OF ATOMTYPE TEST ******");
     }
 }

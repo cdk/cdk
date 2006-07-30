@@ -97,11 +97,11 @@ public class MDLReaderTest extends CDKTestCase {
             assertEquals(2, m.getBondCount());
             
             // test reading of formal charges
-            org.openscience.cdk.interfaces.IAtom a = m.getAtomAt(0);
+            org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
             assertNotNull(a);
             assertEquals("Na", a.getSymbol());
             assertEquals(1, a.getFormalCharge());
-            a = m.getAtomAt(2); 
+            a = m.getAtom(2); 
             assertNotNull(a);
             assertEquals("O", a.getSymbol());
             assertEquals(-1, a.getFormalCharge());
@@ -337,7 +337,7 @@ public class MDLReaderTest extends CDKTestCase {
         try {
             MDLReader reader = new MDLReader(ins);
             Molecule mol = (Molecule)reader.read(new Molecule());
-            assertEquals("R2",((PseudoAtom)mol.getAtomAt(19)).getLabel());
+            assertEquals("R2",((PseudoAtom)mol.getAtom(19)).getLabel());
              } catch (Exception e) {
             fail(e.toString());
         }

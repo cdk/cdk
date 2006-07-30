@@ -152,8 +152,8 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     	if (checkRingSystem) {
         	rs = new SSSRFinder(container).findSSSR();
         	for (int i=0;i<container.getAtomCount();i++){
-            	if (rs.contains(container.getAtomAt(i))){
-            		container.getAtomAt(i).setFlag(CDKConstants.ISINRING,true);
+            	if (rs.contains(container.getAtom(i))){
+            		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
             	}
             }
         }

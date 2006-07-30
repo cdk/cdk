@@ -56,7 +56,7 @@ public class ConnectionMatrix implements IGraphMatrix {
 		double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];
 		for (int f = 0; f < container.getElectronContainerCount(); f++)
 		{
-			electronContainer = container.getElectronContainerAt(f);
+			electronContainer = container.getElectronContainer(f);
 			if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				IBond bond = (IBond) electronContainer;

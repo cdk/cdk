@@ -52,6 +52,6 @@ public class PeriodicTablePositionDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
 		SmilesParser sp = new SmilesParser();
 		AtomContainer mol = sp.parseSmiles("CCCl"); // 
-		assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtomAt(2),mol).getValue()).intValue());
+		assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
 	}
 }

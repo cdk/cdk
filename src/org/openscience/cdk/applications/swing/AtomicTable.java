@@ -108,19 +108,19 @@ public class AtomicTable extends JPanel implements ICDKChangeListener {
     
     public Object getValueAt(int row, int col) {
       if (getColumnName(col).equals("atom")) {
-        return (atomContainer.getAtomAt(row)).getSymbol();
+        return (atomContainer.getAtom(row)).getSymbol();
       } else if (getColumnName(col).equals("x2")) {
-        return new Double((atomContainer.getAtomAt(row)).getX2d());
+        return new Double((atomContainer.getAtom(row)).getX2d());
       } else if (getColumnName(col).equals("y2")) {
-        return new Double((atomContainer.getAtomAt(row)).getY2d());
+        return new Double((atomContainer.getAtom(row)).getY2d());
       } else if (getColumnName(col).equals("x3")) {
-        return new Double((atomContainer.getAtomAt(row)).getX3d());
+        return new Double((atomContainer.getAtom(row)).getX3d());
       } else if (getColumnName(col).equals("y3")) {
-        return new Double((atomContainer.getAtomAt(row)).getY3d());
+        return new Double((atomContainer.getAtom(row)).getY3d());
       } else if (getColumnName(col).equals("z3")) {
-        return new Double((atomContainer.getAtomAt(row)).getZ3d());
+        return new Double((atomContainer.getAtom(row)).getZ3d());
       } else if (getColumnName(col).equals("charge")) {
-        return new Double((atomContainer.getAtomAt(row)).getCharge());
+        return new Double((atomContainer.getAtom(row)).getCharge());
       } else {
         return null;
       }

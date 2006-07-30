@@ -168,8 +168,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotNull(smiles1);
 		assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
-		mol1.getBondAt(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
-		mol1.getBondAt(2).setStereo(CDKConstants.STEREO_BOND_UP);
+		mol1.getBond(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
+		mol1.getBond(2).setStereo(CDKConstants.STEREO_BOND_UP);
 		
 		// what is tested below?
 		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
@@ -310,7 +310,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotNull(smiles1);
 		assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
-		mol1.getBondAt(6).setStereo(CDKConstants.STEREO_BOND_UP);
+		mol1.getBond(6).setStereo(CDKConstants.STEREO_BOND_UP);
 		String smiles3 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotSame(smiles1, smiles3);
 	}
@@ -356,8 +356,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles1 = sg.createSMILES(mol1, true, bool);
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
-		mol1.getAtomAt(4).setPoint2d(new Point2d(0, 3));
-		mol1.getAtomAt(5).setPoint2d(new Point2d(2, 3));
+		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
+		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
 		
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		assertNotNull(smiles1);
@@ -370,8 +370,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
 		
-		mol1.getAtomAt(5).setPoint2d(new Point2d(0, 3));
-		mol1.getAtomAt(4).setPoint2d(new Point2d(2, 3));
+		mol1.getAtom(5).setPoint2d(new Point2d(0, 3));
+		mol1.getAtom(4).setPoint2d(new Point2d(2, 3));
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		assertTrue(smiles1.equals("[H]S/C(F)=C\\(F)S[H]"));
 	}
@@ -483,8 +483,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 2, 2.0);
 		mol.addBond(0, 3, 1.0);
 		mol.addBond(0, 4, 1.0);
-		mol.getAtomAt(3).setHydrogenCount(1);
-		mol.getAtomAt(4).setHydrogenCount(1);
+		mol.getAtom(3).setHydrogenCount(1);
+		mol.getAtom(4).setHydrogenCount(1);
 		AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
 		String smiles = "";
@@ -514,8 +514,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol.addBond(0, 2, 2.0);
 		mol.addBond(0, 3, 1.0);
 		mol.addBond(0, 4, 1.0);
-		mol.getAtomAt(3).setHydrogenCount(1);
-		mol.getAtomAt(4).setHydrogenCount(1);
+		mol.getAtom(3).setHydrogenCount(1);
+		mol.getAtom(4).setHydrogenCount(1);
 		AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(mol);
 		SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
 		String smiles = "";
@@ -539,7 +539,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		org.openscience.cdk.interfaces.IAtom atom;
 		for (int f = 0; f < mol.getAtomCount(); f++)
 		{
-			atom = mol.getAtomAt(f);
+			atom = mol.getAtom(f);
 			bondCount = mol.getBondOrderSum(atom);
 			if (atom.getSymbol().equals("C"))
 			{

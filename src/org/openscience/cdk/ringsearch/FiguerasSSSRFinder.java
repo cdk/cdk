@@ -91,7 +91,7 @@ public class FiguerasSSSRFinder {
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			fullSet.addElement(molecule.getAtomAt(f));
+			fullSet.addElement(molecule.getAtom(f));
 		}
 		logger.debug("fullSet.size(): " + fullSet.size());						
 		
@@ -105,7 +105,7 @@ public class FiguerasSSSRFinder {
 			nodesN2.removeAllElements();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(f);
+				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(f);
 				degree = molecule.getBondCount(atom);
 				if (degree == 0)
 				{
@@ -221,7 +221,7 @@ public class FiguerasSSSRFinder {
 		for (int f = 0; f < OKatoms; f++)
 		{
 			path[f] = new Vector();		
-			((Vector)molecule.getAtomAt(f).getProperty(PATH)).removeAllElements();
+			((Vector)molecule.getAtom(f).getProperty(PATH)).removeAllElements();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtoms(rootNode);
@@ -340,7 +340,7 @@ public class FiguerasSSSRFinder {
 	private void initPath(Molecule molecule)
 	{
 	 	for (int i = 0; i < molecule.getAtomCount(); i++) {
-	 		org.openscience.cdk.interfaces.IAtom atom = molecule.getAtomAt(i);
+	 		org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
 			atom.setProperty(PATH, new Vector());
 	 	}		
 	}
@@ -438,7 +438,7 @@ public class FiguerasSSSRFinder {
 				minMax = i;
 			}
 		}
-		return (IBond)ring.getElectronContainerAt(minMax);
+		return (IBond)ring.getElectronContainer(minMax);
 	}
 	
 	

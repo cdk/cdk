@@ -229,8 +229,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
                 logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
                              " and " + bond_a2);
             } else {
-            	IAtom a1 = currentMolecule.getAtomAt(bond_a1);
-            	IAtom a2 = currentMolecule.getAtomAt(bond_a2);
+            	IAtom a1 = currentMolecule.getAtom(bond_a1);
+            	IAtom a2 = currentMolecule.getAtom(bond_a2);
                 IBond b = currentChemFile.getBuilder().newBond(a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {

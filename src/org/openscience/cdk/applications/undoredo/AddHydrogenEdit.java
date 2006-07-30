@@ -145,10 +145,10 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 			IAtomContainer container = ChemModelManipulator
 					.getAllInOneContainer(model);
 			for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
-				container.addAtom(changedAtomsAndBonds.getAtomAt(i));
+				container.addAtom(changedAtomsAndBonds.getAtom(i));
 			}
 			for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
-				IBond bond = changedAtomsAndBonds.getBondAt(i);
+				IBond bond = changedAtomsAndBonds.getBond(i);
 				container.addBond(bond);
 			}
 			IMolecule molecule = container.getBuilder().newMolecule(container);
@@ -166,15 +166,15 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 			for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
 				IAtomContainer container = ChemModelManipulator
 						.getRelevantAtomContainer(model, changedAtomsAndBonds
-								.getAtomAt(i));
-				container.removeAtom(changedAtomsAndBonds.getAtomAt(i));
+								.getAtom(i));
+				container.removeAtom(changedAtomsAndBonds.getAtom(i));
 			}
 			for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
-				IBond bond = changedAtomsAndBonds.getBondAt(i);
+				IBond bond = changedAtomsAndBonds.getBond(i);
 				IAtom[] atoms = (IAtom[]) bond.getAtoms();
 				IAtomContainer container = ChemModelManipulator
 						.getRelevantAtomContainer(model, changedAtomsAndBonds
-								.getBondAt(i));
+								.getBond(i));
 				container.removeBond(atoms[0], atoms[1]);
 			}
 		}

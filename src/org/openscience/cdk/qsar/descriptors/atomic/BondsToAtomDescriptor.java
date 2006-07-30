@@ -128,7 +128,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
         int bondsToAtom = 0;
         
         IAtom target = atom;
-        IAtom focus = container.getAtomAt(focusPosition);
+        IAtom focus = container.getAtom(focusPosition);
         
         startVertex = target;
         endVertex = focus;

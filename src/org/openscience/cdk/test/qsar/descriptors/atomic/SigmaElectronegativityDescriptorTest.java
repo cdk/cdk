@@ -62,7 +62,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
         for (int i = 0 ; i < 2 ; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
         
@@ -83,7 +83,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 2 ; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.05);
 		}
 	}
@@ -104,7 +104,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 4 ; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.02);
 		}
 	}
@@ -120,7 +120,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
-		double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(5),mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
 		assertEquals(testResult,result,0.08);
 	}
 	/**
@@ -139,7 +139,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 5 ; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.002);
 		}
 	}
@@ -159,7 +159,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < 4 ; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.002);
 		}
 	}
@@ -176,7 +176,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 4 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i),mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.005);
 		}
 	}

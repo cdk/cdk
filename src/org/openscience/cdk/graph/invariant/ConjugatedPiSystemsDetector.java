@@ -77,12 +77,12 @@ public class ConjugatedPiSystemsDetector {
         SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);
             atom.setFlag(CDKConstants.VISITED, false);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	IAtom firstAtom = ac.getAtomAt(i);
+        	IAtom firstAtom = ac.getAtom(i);
             // if this atom was already visited in a previous DFS, continue
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;

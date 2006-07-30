@@ -55,7 +55,7 @@ public class AdjacencyMatrix implements IGraphMatrix {
 		int indexAtom2;
 		int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
 		for (int f = 0; f < container.getElectronContainerCount(); f++){
-            electronContainer = container.getElectronContainerAt(f);
+            electronContainer = container.getElectronContainer(f);
 			if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				IBond bond = (IBond) electronContainer;

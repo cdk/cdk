@@ -88,7 +88,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @param  atom    The atom to be stored at position <code>number</code>
 	 * @see            #getAtomAt
 	 */
-	public void setAtomAt(int number, IAtom atom);
+	public void setAtom(int number, IAtom atom);
 
 	/**
 	 * Get the atom at position <code>number</code> in [0,..].
@@ -97,7 +97,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @return         The atomAt value
 	 * @see            #setAtomAt
 	 */
-	public IAtom getAtomAt(int number);
+	public IAtom getAtom(int number);
 
 	/**
 	 *  Get the bond at position <code>number</code> in [0,..].
@@ -106,7 +106,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return         The bondAt value
 	 *@see            #setElectronContainerAt
 	 */
-	public IBond getBondAt(int number);
+	public IBond getBond(int number);
 
 
 
@@ -117,7 +117,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
 	 * @see                      #getElectronContainerAt
 	 */
-	public void setElectronContainerAt(int number, IElectronContainer electronContainer);
+	public void setElectronContainer(int number, IElectronContainer electronContainer);
 
 
 	/**
@@ -252,7 +252,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return         The ElectronContainer at position <code>number</code>.
 	 *@see            #setElectronContainerAt
 	 */
-	public IElectronContainer getElectronContainerAt(int number);
+	public IElectronContainer getElectronContainer(int number);
 
 
 	/**

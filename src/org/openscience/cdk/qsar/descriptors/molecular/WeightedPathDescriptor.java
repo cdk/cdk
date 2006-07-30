@@ -149,9 +149,9 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
 
         // unique paths
         for (int i = 0; i < natom - 1; i++) {
-            IAtom a = local.getAtomAt(i);
+            IAtom a = local.getAtom(i);
             for (int j = i + 1; j < natom; j++) {
-                IAtom b = local.getAtomAt(j);
+                IAtom b = local.getAtom(j);
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
         }
@@ -169,11 +169,11 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         pathList.clear();
         int count = 0;
         for (int i = 0; i < natom; i++) {
-            IAtom a = local.getAtomAt(i);
+            IAtom a = local.getAtom(i);
             if (a.getSymbol().equalsIgnoreCase("C")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                IAtom b = local.getAtomAt(j);
+                IAtom b = local.getAtom(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
@@ -189,11 +189,11 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         pathList.clear();
         count = 0;
         for (int i = 0; i < natom; i++) {
-            IAtom a = local.getAtomAt(i);
+            IAtom a = local.getAtom(i);
             if (!a.getSymbol().equalsIgnoreCase("O")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                IAtom b = local.getAtomAt(j);
+                IAtom b = local.getAtom(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }
@@ -209,11 +209,11 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         pathList.clear();
         count = 0;
         for (int i = 0; i < natom; i++) {
-            IAtom a = local.getAtomAt(i);
+            IAtom a = local.getAtom(i);
             if (!a.getSymbol().equalsIgnoreCase("N")) continue;
             count++;
             for (int j = 0; j < natom; j++) {
-                IAtom b = local.getAtomAt(j);
+                IAtom b = local.getAtom(j);
                 if (a.equals(b)) continue;
                 pathList.addAll(PathTools.getAllPaths(local, a, b));
             }

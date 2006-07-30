@@ -371,7 +371,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");
                 }
-                IAtom atom = molecule.getAtomAt(atomCounter - 1);
+                IAtom atom = molecule.getAtom(atomCounter - 1);
                 atom.setCharge(charge);
             }
         }
@@ -489,7 +489,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 }
                 double shielding = Double.valueOf(st1.nextToken()).doubleValue();
                 logger.info("Type of shielding: " + label);
-                ac.getAtomAt(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
+                ac.getAtom(atomIndex).setProperty(CDKConstants.ISOTROPIC_SHIELDING, new Double(shielding));
                 ++atomIndex;
             } catch (Exception exc) {
                 logger.debug("failed to read line from gaussian98 file where I expected one.");

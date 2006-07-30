@@ -85,7 +85,7 @@ public class InductiveAtomicSoftnessDescriptorTest extends CDKTestCase {
 		
 		IAtomicDescriptor descriptor  = new InductiveAtomicSoftnessDescriptor();
 		
-		double retval = ((DoubleResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
 		assertEquals(testResult[0], retval, 0.1);
 		
 		// F: expected is 0.32, calculated is 0.35

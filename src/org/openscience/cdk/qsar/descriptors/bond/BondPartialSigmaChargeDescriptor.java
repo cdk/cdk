@@ -129,7 +129,7 @@ public class BondPartialSigmaChargeDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
-        IAtom[] atoms = mol.getBondAt(bondPosition).getAtoms();
+        IAtom[] atoms = mol.getBond(bondPosition).getAtoms();
         double[] results = new double[2];
         
     	Integer[] params = new Integer[1];

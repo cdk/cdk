@@ -187,7 +187,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		}
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			result = (molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResult[f]);
+			result = (molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResult[f]);
 			assertTrue(result);
 			logger.debug("Result for atom " + f + " is correct?: " + result);
 		}
@@ -221,7 +221,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 		} catch (Exception exc)
 		{
@@ -246,7 +246,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 
 		} catch (Exception exc)
@@ -404,7 +404,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 		} catch (Exception exc)
 		{
@@ -450,7 +450,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 		} catch (Exception exc)
 		{
@@ -498,7 +498,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 
 		} catch (Exception exc)
@@ -522,7 +522,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 
 		} catch (Exception exc)
@@ -543,12 +543,12 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
       Molecule molecule = (Molecule) reader.read(new Molecule());
       HueckelAromaticityDetector.detectAromaticity(molecule);
       assertEquals(15, molecule.getBondCount());
-      assertTrue(molecule.getBondAt(0).getFlag(CDKConstants.ISAROMATIC));
-      assertTrue(molecule.getBondAt(1).getFlag(CDKConstants.ISAROMATIC));
-      assertTrue(molecule.getBondAt(2).getFlag(CDKConstants.ISAROMATIC));
-      assertTrue(molecule.getBondAt(3).getFlag(CDKConstants.ISAROMATIC));
-      assertTrue(molecule.getBondAt(4).getFlag(CDKConstants.ISAROMATIC));
-      assertTrue(molecule.getBondAt(6).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+      assertTrue(molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
   }
 
 	/**
@@ -564,7 +564,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
-				assertTrue(molecule.getAtomAt(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 			}
 
 		} catch (Exception exc)

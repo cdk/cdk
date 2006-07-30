@@ -148,7 +148,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
         }
         org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
-            if (ac.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)) {
+            if (ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticAtomsCount += 1;
             }
         }

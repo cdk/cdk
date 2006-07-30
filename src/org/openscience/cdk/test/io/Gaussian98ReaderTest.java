@@ -77,7 +77,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 				atomContainer = atomContainers[f];
 				for (int g = 0; g <  atomContainer.getAtomCount(); g++)
 				{
-					object = atomContainer.getAtomAt(g).getProperty(CDKConstants.ISOTROPIC_SHIELDING);
+					object = atomContainer.getAtom(g).getProperty(CDKConstants.ISOTROPIC_SHIELDING);
 					if (object != null)
 					{
 						//shielding = (Double)object;

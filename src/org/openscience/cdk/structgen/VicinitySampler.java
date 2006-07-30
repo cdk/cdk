@@ -111,10 +111,10 @@ public class VicinitySampler
 					for (int y2 = y1 + 1; y2 < nrOfAtoms; y2++)
 					{
 						nonZeroBondsCounter = 0;
-						ax1 = ac.getAtomAt(x1);
-						ay1 = ac.getAtomAt(y1);
-						ax2 = ac.getAtomAt(x2);
-						ay2 = ac.getAtomAt(y2);
+						ax1 = ac.getAtom(x1);
+						ay1 = ac.getAtom(y1);
+						ax2 = ac.getAtom(x2);
+						ay2 = ac.getAtom(y2);
 												
 						/* Get four bonds for these four atoms */
 						
@@ -255,10 +255,10 @@ public class VicinitySampler
 		if (debug) System.out.println("Changes for molecule no. " + molCounter);
 		try
 		{
-			ax1 = ac.getAtomAt(x1);
-			ax2 = ac.getAtomAt(x2);
-			ay1 = ac.getAtomAt(y1);
-			ay2 = ac.getAtomAt(y2);
+			ax1 = ac.getAtom(x1);
+			ax2 = ac.getAtom(x2);
+			ay1 = ac.getAtom(y1);
+			ay2 = ac.getAtom(y2);
 		}
 		catch(Exception exc)
 		{

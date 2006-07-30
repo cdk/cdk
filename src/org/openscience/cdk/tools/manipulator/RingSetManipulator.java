@@ -121,7 +121,7 @@ public class RingSetManipulator {
 			/* look at each Atom in this ring whether it is part of any other ring */
 			for (int j = 0; j < ring1.getAtomCount(); j++)
 			{
-				atom1 = ring1.getAtomAt(j);
+				atom1 = ring1.getAtom(j);
 				/* Look at each of the other rings in the ringset */
 				for (int k = i + 1; k < ringSet.getAtomContainerCount(); k++)
 				{
@@ -130,7 +130,7 @@ public class RingSetManipulator {
 					{
 						for (int l = 0; l < ring2.getAtomCount(); l++)
 						{
-							atom2 = ring2.getAtomAt(l);
+							atom2 = ring2.getAtom(l);
 							if (atom1 == atom2)
 							{
 								neighbors[i]++;								

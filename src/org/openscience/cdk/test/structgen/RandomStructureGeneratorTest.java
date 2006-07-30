@@ -91,13 +91,13 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 					s = "BondCounts:    ";
 					for (int g = 0; g < mol.getAtomCount(); g++)
 					{
-						s += mol.getBondCount(mol.getAtomAt(g)) + " ";
+						s += mol.getBondCount(mol.getAtom(g)) + " ";
 					}
 					//System.out.println(s);
 					s = "BondOrderSums: ";
 					for (int g = 0; g < mol.getAtomCount(); g++)
 					{
-						s += mol.getBondOrderSum(mol.getAtomAt(g)) + " ";
+						s += mol.getBondOrderSum(mol.getAtom(g)) + " ";
 					}
 					//System.out.println(s);
 					s = "Bonds: ";

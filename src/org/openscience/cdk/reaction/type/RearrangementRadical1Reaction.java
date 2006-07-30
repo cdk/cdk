@@ -158,23 +158,23 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 							
-							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtomAt(atom0P));
+							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 							acCloned.removeElectronContainer(selectron[0]);
 							
-							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtomAt(atom1P)));	
+							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
 					        
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtomAt(atom1P));
+							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
 							acCloned.removeElectronContainer(lpelectron[0]);
 							
-							double order = acCloned.getBondAt(bond1P).getOrder();
-							acCloned.getBondAt(bond1P).setOrder(order+1);
+							double order = acCloned.getBond(bond1P).getOrder();
+							acCloned.getBond(bond1P).setOrder(order+1);
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtomAt(atom1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);

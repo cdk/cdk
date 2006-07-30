@@ -58,11 +58,11 @@ public class SetOfAtomContainersManipulatorTest extends CDKTestCase {
 		ac.addAtom(new Atom("C")); // 1
 		ac.addAtom(new Atom("C")); // 2
 		ac.addAtom(new Atom("C")); // 3
-		ac.addBond(new Bond(ac.getAtomAt(0),ac.getAtomAt(1),1));
-		ac.addBond(new Bond(ac.getAtomAt(1),ac.getAtomAt(2),1));
+		ac.addBond(new Bond(ac.getAtom(0),ac.getAtom(1),1));
+		ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(2),1));
 		SetOfAtomContainers soac=new SetOfAtomContainers();
 		soac.addAtomContainer(ac);
-		SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(soac,ac.getAtomAt(1));
+		SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(soac,ac.getAtom(1));
 		assertEquals(2, soac.getAtomContainerCount(), 0.000001);
     }
 }

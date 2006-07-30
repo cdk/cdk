@@ -152,37 +152,37 @@ public class BreakingBondReaction implements IReactionProcess{
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
-					double order = reactantCloned.getBondAt(bond).getOrder();
+					double order = reactantCloned.getBond(bond).getOrder();
 					
-					reactantCloned.getBondAt(bond).setOrder(order - 1);
+					reactantCloned.getBond(bond).setOrder(order - 1);
 		
 					int charge = 0;
 					IMoleculeSet setOfMolecules = null;
 					if (j == 0){
-						charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
-						reactantCloned.getAtomAt(atom1).setFormalCharge(charge+1);
-						charge = reactantCloned.getAtomAt(atom2).getFormalCharge();
-						reactantCloned.getAtomAt(atom2).setFormalCharge(charge-1);
-						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(atom2)));
+						charge = reactantCloned.getAtom(atom1).getFormalCharge();
+						reactantCloned.getAtom(atom1).setFormalCharge(charge+1);
+						charge = reactantCloned.getAtom(atom2).getFormalCharge();
+						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
+						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom2)));
 						if(order == 1)
 							setOfMolecules = fragmentMolecule(reactantCloned,bond);
 						
 					} else{
-						charge = reactantCloned.getAtomAt(atom2).getFormalCharge();
-						reactantCloned.getAtomAt(atom2).setFormalCharge(1);
-						charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
-						reactantCloned.getAtomAt(atom1).setFormalCharge(-1);
-						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtomAt(atom1)));
+						charge = reactantCloned.getAtom(atom2).getFormalCharge();
+						reactantCloned.getAtom(atom2).setFormalCharge(1);
+						charge = reactantCloned.getAtom(atom1).getFormalCharge();
+						reactantCloned.getAtom(atom1).setFormalCharge(-1);
+						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom1)));
 						if(order == 1)
 							setOfMolecules = fragmentMolecule(reactantCloned,bond);
 					}
 					
 					/* mapping */
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBondAt(bond));
+					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(atom1));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(atom1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(atom2));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(atom2));
 			        reaction.addMapping(mapping);
 					
 					if(setOfMolecules != null)
@@ -230,13 +230,13 @@ public class BreakingBondReaction implements IReactionProcess{
 		}
 		
 		for(int i = 0 ; i < molecule.getAtomCount() ; i++)
-			molecule.getAtomAt(i).setFlag(CDKConstants.VISITED, false);
+			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		
 		
 		
-		molecule.getAtomAt(0).setFlag(CDKConstants.VISITED, true);
+		molecule.getAtom(0).setFlag(CDKConstants.VISITED, true);
 		ArrayList atomsVisited = new ArrayList();
-		atomsVisited.add(molecule.getAtomAt(0));
+		atomsVisited.add(molecule.getAtom(0));
 		
 		
 		for (int i = 0; i < atomsVisited.size(); i++){
@@ -249,16 +249,16 @@ public class BreakingBondReaction implements IReactionProcess{
 			}
 		}
 		for (int i = 0; i < molecule.getAtomCount(); i++){
-			if(molecule.getAtomAt(i).getFlag(CDKConstants.VISITED) == true){
+			if(molecule.getAtom(i).getFlag(CDKConstants.VISITED) == true){
 				for (int j = 0; j < molecule1.getAtomCount(); j++){
-					if (compareCoordenates(molecule.getAtomAt(i),molecule1.getAtomAt(j))){
-						molecule1.removeAtomAndConnectedElectronContainers(molecule1.getAtomAt(j));}
+					if (compareCoordenates(molecule.getAtom(i),molecule1.getAtom(j))){
+						molecule1.removeAtomAndConnectedElectronContainers(molecule1.getAtom(j));}
 				}
 				
 			} else{
 				for (int j = 0; j < molecule2.getAtomCount(); j++){
-					if (compareCoordenates(molecule.getAtomAt(i),molecule2.getAtomAt(j))){
-						molecule2.removeAtomAndConnectedElectronContainers(molecule2.getAtomAt(j));}
+					if (compareCoordenates(molecule.getAtom(i),molecule2.getAtom(j))){
+						molecule2.removeAtomAndConnectedElectronContainers(molecule2.getAtom(j));}
 				}
 				
 			}

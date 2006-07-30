@@ -143,7 +143,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
 	      }
 	      int stepSize = peoe.getStepSize();
 	            int start = (stepSize * (atomPosition) + atomPosition);
-	            sigmaElectronegativity = ((gasteigerFactors[start]) + (ac.getAtomAt(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((ac.getAtomAt(atomPosition).getCharge() * ac.getAtomAt(atomPosition).getCharge()))));
+	            sigmaElectronegativity = ((gasteigerFactors[start]) + (ac.getAtom(atomPosition).getCharge() * gasteigerFactors[start + 1]) + (gasteigerFactors[start + 2] * ((ac.getAtom(atomPosition).getCharge() * ac.getAtom(atomPosition).getCharge()))));
 	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(sigmaElectronegativity));
         } catch (Exception ex1) {
         	ex1.printStackTrace();

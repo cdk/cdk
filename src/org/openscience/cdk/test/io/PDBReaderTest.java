@@ -175,7 +175,7 @@ public class PDBReaderTest extends TestCase {
       assertNotNull(mol.getMonomer("ILEA7", "A"));
       assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
       
-      IAtom nAtom = mol.getAtomAt(94);
+      IAtom nAtom = mol.getAtom(94);
       assertNotNull(nAtom);
       assertTrue(nAtom instanceof PDBAtom);
       PDBAtom atom = (PDBAtom)nAtom;
@@ -187,7 +187,7 @@ public class PDBReaderTest extends TestCase {
       assertEquals(1.0, atom.getOccupancy(), 0.001);
       assertEquals(6.84, atom.getTempFactor(), 0.001);
       
-      org.openscience.cdk.interfaces.IBond bond = mol.getBondAt(93);
+      org.openscience.cdk.interfaces.IBond bond = mol.getBond(93);
       assertNotNull(bond);
       assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
       org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();

@@ -141,7 +141,7 @@ public class SaturationChecker implements IValencyChecker {
 	{
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
-            if (!isSaturated(ac.getAtomAt(f), ac)) {
+            if (!isSaturated(ac.getAtom(f), ac)) {
                 return false;
             }
         }
@@ -463,7 +463,7 @@ public class SaturationChecker implements IValencyChecker {
 			// handle atoms with degree 1 first and then proceed to higher order
 			for (int f = 0; f < atomContainer.getAtomCount(); f++)
 			{
-				atom = atomContainer.getAtomAt(f);
+				atom = atomContainer.getAtom(f);
 				logger.debug("symbol: ", atom.getSymbol());
 				atomTypes1 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if(atomTypes1.length>0){
@@ -532,14 +532,14 @@ public class SaturationChecker implements IValencyChecker {
 			temp = new int[ac.getAtomCount()];
 			for (int g = 0; g < ac.getAtomCount(); g++)
 			{
-				atom = ac.getAtomAt(g);
+				atom = ac.getAtom(g);
 				temp[g] = atom.getHydrogenCount();
 				atom.setHydrogenCount(atomContainer.getBondCount(atom) - ac.getBondCount(atom) - temp[g]);
 			}
 			saturate(ac);
 			for (int g = 0; g < ac.getAtomCount(); g++)
 			{
-				atom = ac.getAtomAt(g);
+				atom = ac.getAtom(g);
 				atom.setHydrogenCount(temp[g]);
 			}
 			

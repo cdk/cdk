@@ -84,7 +84,7 @@ public class AngleBending {
 		IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));
+			atomConnected = molecule.getConnectedAtoms(molecule.getAtom(i));
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
@@ -108,11 +108,11 @@ public class AngleBending {
 
 		int l = -1;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtomAt(i));
+			atomConnected = molecule.getConnectedAtoms(molecule.getAtom(i));
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
-						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), molecule.getAtomAt(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
+						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), molecule.getAtom(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
 						//logger.debug("angleData : " + angleData);
 						l += 1;
 						v0[l] = ((Double) angleData.get(0)).doubleValue();

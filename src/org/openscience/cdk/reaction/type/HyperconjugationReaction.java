@@ -154,17 +154,17 @@ public class HyperconjugationReaction implements IReactionProcess{
 					throw new CDKException("Could not clone IMolecule!", e);
 				}
 					
-				double order = reactantCloned.getBondAt(bond).getOrder();
-				reactantCloned.getBondAt(bond).setOrder(order + 1);
+				double order = reactantCloned.getBond(bond).getOrder();
+				reactantCloned.getBond(bond).setOrder(order + 1);
 				
-				int charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
-				reactantCloned.getAtomAt(atom1).setFormalCharge(charge-1);
+				int charge = reactantCloned.getAtom(atom1).getFormalCharge();
+				reactantCloned.getAtom(atom1).setFormalCharge(charge-1);
 				
-				int numbH = reactantCloned.getAtomAt(atom2).getHydrogenCount();
+				int numbH = reactantCloned.getAtom(atom2).getHydrogenCount();
 				if(numbH != 0)
-					reactantCloned.getAtomAt(atom2).setHydrogenCount(numbH-1);
+					reactantCloned.getAtom(atom2).setHydrogenCount(numbH-1);
 				else{
-					IAtom hyd = getHydrogenConnected(reactantCloned,reactantCloned.getAtomAt(atom2));
+					IAtom hyd = getHydrogenConnected(reactantCloned,reactantCloned.getAtom(atom2));
 					if(hyd == null)
 						continue;
 					reactantCloned.removeAtomAndConnectedElectronContainers(hyd);
@@ -172,11 +172,11 @@ public class HyperconjugationReaction implements IReactionProcess{
 				
 				
 				/* mapping */
-				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBondAt(bond));
+				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
 		        reaction.addMapping(mapping);
-		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtomAt(atom1));
+		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(atom1));
 		        reaction.addMapping(mapping);
-		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtomAt(atom2));
+		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(atom2));
 		        reaction.addMapping(mapping);
 					
 					

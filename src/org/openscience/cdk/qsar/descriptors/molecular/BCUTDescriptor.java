@@ -203,8 +203,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < natom-1; i++) {
                 for (int j = i+1; j < natom; j++) {
                     for (int k = 0; k < local.getBondCount(); k++) {
-                    	org.openscience.cdk.interfaces.IBond b = local.getBondAt(k);
-                        if (b.contains(local.getAtomAt(i)) && b.contains(local.getAtomAt(j))) {
+                    	org.openscience.cdk.interfaces.IBond b = local.getBond(k);
+                        if (b.contains(local.getAtom(i)) && b.contains(local.getAtom(j))) {
                             if (b.getOrder() == CDKConstants.BONDORDER_SINGLE) m[i][j] = 0.1;
                             else if (b.getOrder() == CDKConstants.BONDORDER_DOUBLE) m[i][j] = 0.2;
                             else if (b.getOrder() == CDKConstants.BONDORDER_TRIPLE) m[i][j] = 0.3;
@@ -262,7 +262,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         // find number of heavy atoms
         int nheavy = 0;
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (!ac.getAtomAt(i).getSymbol().equals("H")) nheavy++;
+            if (!ac.getAtom(i).getSymbol().equals("H")) nheavy++;
         }
 
         if (this.nhigh > nheavy || this.nlow > nheavy) {
@@ -275,9 +275,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         j = 0;
         try {
             for (int i = 0; i < ac.getAtomCount(); i++) {
-                if (ac.getAtomAt(i).getSymbol().equals("H")) continue;
+                if (ac.getAtom(i).getSymbol().equals("H")) continue;
                 diagvalue[j] = IsotopeFactory.getInstance(ac.getBuilder()).
-                    getMajorIsotope( ac.getAtomAt(i).getSymbol() ).getExactMass();
+                    getMajorIsotope( ac.getAtom(i).getSymbol() ).getExactMass();
                 j++;        
             }
         } catch (Exception e) {
@@ -299,8 +299,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         }
         j = 0;
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (ac.getAtomAt(i).getSymbol().equals("H")) continue;
-            diagvalue[j] = ac.getAtomAt(i).getCharge();
+            if (ac.getAtom(i).getSymbol().equals("H")) continue;
+            diagvalue[j] = ac.getAtom(i).getCharge();
             j++;
         }
         bm = BurdenMatrix.evalMatrix(ac, diagvalue);
@@ -312,8 +312,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         Polarizability pol = new Polarizability();
         j = 0;
         for (int i =0 ; i < ac.getAtomCount(); i++) {
-            if (ac.getAtomAt(i).getSymbol().equals("H")) continue;
-            diagvalue[j] = pol.calculateGHEffectiveAtomPolarizability(ac, ac.getAtomAt(i), 1000);
+            if (ac.getAtom(i).getSymbol().equals("H")) continue;
+            diagvalue[j] = pol.calculateGHEffectiveAtomPolarizability(ac, ac.getAtom(i), 1000);
             j++;
         }
         bm = BurdenMatrix.evalMatrix(ac, diagvalue);

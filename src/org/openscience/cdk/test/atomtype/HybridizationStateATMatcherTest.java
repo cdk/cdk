@@ -82,7 +82,7 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addBond(8,3,1);
         
-        IAtom atom = mol.getAtomAt(0);
+        IAtom atom = mol.getAtom(0);
         
         HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);

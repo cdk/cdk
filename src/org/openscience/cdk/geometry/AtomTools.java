@@ -67,7 +67,7 @@ public class AtomTools {
         // get vector of possible referenceAtoms?
         AtomContainer refAtoms = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atomContainer.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom atom = atomContainer.getAtom(i);
             // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3d() == null) {
             	org.openscience.cdk.interfaces.IAtom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
@@ -90,7 +90,7 @@ public class AtomTools {
         double length = 1.0;
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom refAtom = refAtoms.getAtomAt(i);
+        	org.openscience.cdk.interfaces.IAtom refAtom = refAtoms.getAtom(i);
         	org.openscience.cdk.interfaces.IAtom noCoordLigands[] = noCoords.getConnectedAtoms(refAtom);
             int nLigands = noCoordLigands.length;
             int nwanted = nLigands;
@@ -210,7 +210,7 @@ public class AtomTools {
             newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
         } else if (nwithCoords == 1) {
 // ligand on A            
-        	org.openscience.cdk.interfaces.IAtom bAtom = ligandsWithCoords.getAtomAt(0);
+        	org.openscience.cdk.interfaces.IAtom bAtom = ligandsWithCoords.getAtom(0);
             connectedAtoms = ligandsWithCoords.getConnectedAtomsVector(bAtom);
 // does B have a ligand (other than A)            
             Atom jAtom = null;
@@ -223,13 +223,13 @@ public class AtomTools {
             }
             newPoints = calculate3DCoordinates1(aPoint, bAtom.getPoint3d(), (jAtom != null) ? jAtom.getPoint3d() : null, nwanted, length, angle);
         } else if (nwithCoords == 2) {
-            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3d();
-            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3d();
+            Point3d bPoint = ligandsWithCoords.getAtom(0).getPoint3d();
+            Point3d cPoint = ligandsWithCoords.getAtom(1).getPoint3d();
             newPoints = calculate3DCoordinates2(aPoint, bPoint, cPoint, nwanted, length, angle);
         } else if (nwithCoords == 3) {
-            Point3d bPoint = ligandsWithCoords.getAtomAt(0).getPoint3d();
-            Point3d cPoint = ligandsWithCoords.getAtomAt(1).getPoint3d();
-            Point3d dPoint = ligandsWithCoords.getAtomAt(2).getPoint3d();
+            Point3d bPoint = ligandsWithCoords.getAtom(0).getPoint3d();
+            Point3d cPoint = ligandsWithCoords.getAtom(1).getPoint3d();
+            Point3d dPoint = ligandsWithCoords.getAtom(2).getPoint3d();
             newPoints = new Point3d[1];
             newPoints[0] = calculate3DCoordinates3(aPoint, bPoint, cPoint, dPoint, length);
         }

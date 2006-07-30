@@ -512,7 +512,7 @@ public class PDBReader extends DefaultChemObjectReader {
 			int atomsInPresentResidue = 0;
 			
 			while (atoms < strand.getAtomCount() - 1) {
-				PDBAtom anAtom = (PDBAtom)strand.getAtomAt(atoms);
+				PDBAtom anAtom = (PDBAtom)strand.getAtom(atoms);
 				
 				// Check that we have bond info about residue/ligand, if not - exit.
 				if(!AAs.containsKey(anAtom.getResName()))	{
@@ -526,7 +526,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				 * correct number of atom records). */
 				int counter = 1;
 				while (atoms + counter < strand.getAtomCount() &&
-						anAtom.getResName().equals(strand.getAtomAt(atoms + counter).getProperty(AminoAcids.RESIDUE_NAME))) {
+						anAtom.getResName().equals(strand.getAtom(atoms + counter).getProperty(AminoAcids.RESIDUE_NAME))) {
 					counter++;
 				}
 				// Check if something is wrong. Remember to deal with possible OXT atom...
@@ -537,13 +537,13 @@ public class PDBReader extends DefaultChemObjectReader {
 				// If nothing's wrong, add bonds
 				int bondID = Integer.parseInt((String)monomer.getProperty(AminoAcids.ID));
 				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_BONDS)); l++) {
-					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(AABondInfo[bondID + l][1] + atoms), strand.getAtomAt(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
+					IBond bond = pol.getBuilder().newBond(strand.getAtom(AABondInfo[bondID + l][1] + atoms), strand.getAtom(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
 					pol.addBond(bond);
 				}
 				
 				// If not first residue, connect residues
 				if (atomsInLastResidue != 0)	{
-					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					IBond bond = pol.getBuilder().newBond(strand.getAtom(atoms - atomsInLastResidue + 2), strand.getAtom(atoms), 1);					
 					pol.addBond(bond);
 				}
 				
@@ -553,9 +553,9 @@ public class PDBReader extends DefaultChemObjectReader {
 				// Check if next atom is an OXT. The reason to why this is seemingly overly complex is because
 				// not all PDB-files have ending OXT. If that were the case you could just check if
 				// atoms == mol.getAtomCount()...
-				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtomAt(atoms)).getOxt())	{
+				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtom(atoms)).getOxt())	{
 //				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
-					IBond bond = pol.getBuilder().newBond(strand.getAtomAt(atoms - atomsInLastResidue + 2), strand.getAtomAt(atoms), 1);					
+					IBond bond = pol.getBuilder().newBond(strand.getAtom(atoms - atomsInLastResidue + 2), strand.getAtom(atoms), 1);					
 					pol.addBond(bond);
 				}
 			}

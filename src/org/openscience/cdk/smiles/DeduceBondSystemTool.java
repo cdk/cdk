@@ -174,7 +174,7 @@ public class DeduceBondSystemTool {
 			
 			//System.out.println(s1+"\t"+s2);
 			
-			IBond b=m.getBond(m.getAtomAt(i1),m.getAtomAt(i2));
+			IBond b=m.getBond(m.getAtom(i1),m.getAtom(i2));
 			b.setOrder(2);
 			
 			
@@ -189,7 +189,7 @@ public class DeduceBondSystemTool {
 		int [] num=new int [5]; // stores atom numbers based on atom numbers in molecule instead of ring
 		
 		for (int j=0;j<=4;j++) {
-			num[j]=m.getAtomNumber(r.getAtomAt(j));
+			num[j]=m.getAtomNumber(r.getAtom(j));
 			//System.out.println(num[j]);
 		}
 		
@@ -255,12 +255,12 @@ public class DeduceBondSystemTool {
 		
 		IAtom [] ringatoms=new Atom [6];					
 		
-		ringatoms[0]=r.getAtomAt(0);
+		ringatoms[0]=r.getAtom(0);
 		
 		int [] num=new int [6];
 		
 		for (int j=0;j<=5;j++) {
-			num[j]=m.getAtomNumber(r.getAtomAt(j));
+			num[j]=m.getAtomNumber(r.getAtom(j));
 		}
 		
 		java.util.ArrayList al1=new java.util.ArrayList();
@@ -362,12 +362,12 @@ public class DeduceBondSystemTool {
 		
 		IAtom[] ringatoms = new Atom[7];
 		
-		ringatoms[0] = r.getAtomAt(0);
+		ringatoms[0] = r.getAtom(0);
 		
 		int[] num = new int[7];
 		
 		for (int j = 0; j <= 6; j++) {
-			num[j] = m.getAtomNumber(r.getAtomAt(j));
+			num[j] = m.getAtomNumber(r.getAtom(j));
 		}
 		
 		java.util.ArrayList al1 = new java.util.ArrayList();
@@ -421,7 +421,7 @@ public class DeduceBondSystemTool {
 		int count=0;
 		
 		for (int j=0;j<=mol.getAtomCount()-1;j++) {
-			IAtom a=mol.getAtomAt(j);
+			IAtom a=mol.getAtom(j);
 			
 			//System.out.println(mol.getBondOrderSum(a));
 			
@@ -572,7 +572,7 @@ public class DeduceBondSystemTool {
 			//System.out.println(mj.getBondOrderSum(mj.getAtomAt(i)));
 			try {
 //				Note: valencyHybridChecker.couldMatchAtomType shouldnt check Hybridization to get it to work for non carbon atoms
-				this.valencyChecker.isSaturated(m.getAtomAt(i),m); 
+				this.valencyChecker.isSaturated(m.getAtom(i),m); 
 				
 				//valencyChecker.allSaturated didnt seem to work so did it this way
 			} catch (Exception e) {
@@ -594,7 +594,7 @@ public class DeduceBondSystemTool {
 			
 			
 			for (int i=0;i<=m.getAtomCount()-1;i++) {
-				m.getAtomAt(i).setFlag(CDKConstants.ISAROMATIC,false);				
+				m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,false);				
 			}
 			
 			for (int i=0;i<=rs.getAtomContainerCount()-1;i++) {
@@ -677,9 +677,9 @@ public class DeduceBondSystemTool {
 						
 						//System.out.println(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 						
-						if (r.getAtomAt(j).getHybridization()!=2) {
+						if (r.getAtom(j).getHybridization()!=2) {
 							NonSP2Count++;
-							if (r.getAtomAt(j).getSymbol().equals("C")) {
+							if (r.getAtom(j).getSymbol().equals("C")) {
 								rs.removeAtomContainer(i);
 								i--; // go back 
 								continue iloop;
@@ -728,9 +728,9 @@ public class DeduceBondSystemTool {
 					
 					// System.out.println(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 					
-					if (r.getAtomAt(j).getHybridization() != 2) {
+					if (r.getAtom(j).getHybridization() != 2) {
 						NonSP2Count++;
-						if (r.getAtomAt(j).getSymbol().equals("C")) {
+						if (r.getAtom(j).getSymbol().equals("C")) {
 							Check[i] = false;
 							continue iloop;
 						}

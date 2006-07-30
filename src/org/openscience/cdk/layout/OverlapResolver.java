@@ -200,11 +200,11 @@ public class OverlapResolver
 		logger.debug("Now cyling through all pairs of atoms");
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			atom1 = ac.getAtomAt(f);
+			atom1 = ac.getAtom(f);
 			p1 = atom1.getPoint2d();
 			for (int g = f + 1; g < ac.getAtomCount(); g++)
 			{
-				atom2 = ac.getAtomAt(g);
+				atom2 = ac.getAtom(g);
 				p2 = atom2.getPoint2d();
 				distance = p1.distance(p2);
 				if (distance < overlapCutoff)
@@ -235,10 +235,10 @@ public class OverlapResolver
 		double overlapCutoff = bondLength / 2;
 		for (int f = 0; f < ac.getBondCount(); f++)
 		{
-			bond1 = ac.getBondAt(f);
+			bond1 = ac.getBond(f);
 			for (int g = f; g < ac.getBondCount(); g++)
 			{
-				bond2 = ac.getBondAt(g);
+				bond2 = ac.getBond(g);
 				/* bonds must not be connected */
 				if (!bond1.isConnectedTo(bond2))
 				{

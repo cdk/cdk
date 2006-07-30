@@ -228,14 +228,14 @@ public class CPSADescriptor implements IMolecularDescriptor {
         double totpcharge = 0.0;
         double totncharge = 0.0;
         for (int i = 0; i < container.getAtomCount(); i++) {
-            if (container.getAtomAt(i).getCharge() > 0) {
+            if (container.getAtom(i).getCharge() > 0) {
                 ppsa1 += atomSurfaces[i];
-                ppsa3 += container.getAtomAt(i).getCharge() * atomSurfaces[i];
-                totpcharge += container.getAtomAt(i).getCharge();
+                ppsa3 += container.getAtom(i).getCharge() * atomSurfaces[i];
+                totpcharge += container.getAtom(i).getCharge();
             } else {
                 pnsa1 += atomSurfaces[i];
-                pnsa3 += container.getAtomAt(i).getCharge() * atomSurfaces[i];
-                totncharge += container.getAtomAt(i).getCharge();
+                pnsa3 += container.getAtom(i).getCharge() * atomSurfaces[i];
+                totncharge += container.getAtom(i).getCharge();
             }
         }
 
@@ -262,7 +262,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
        double phobic = 0.0;
        double polar = 0.0;
        for (int i = 0; i < container.getAtomCount(); i++) {
-           if (Math.abs(container.getAtomAt(i).getCharge()) < 0.2) {
+           if (Math.abs(container.getAtom(i).getCharge()) < 0.2) {
                phobic += atomSurfaces[i];
            } else {
                polar += atomSurfaces[i];
@@ -283,7 +283,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
        int pidx = 0;
        int nidx = 0;
        for (int i = 0; i < container.getAtomCount(); i++) {
-           double charge = container.getAtomAt(i).getCharge();
+           double charge = container.getAtom(i).getCharge();
            if (charge > maxpcharge) {
                maxpcharge = charge;
                pidx = i;

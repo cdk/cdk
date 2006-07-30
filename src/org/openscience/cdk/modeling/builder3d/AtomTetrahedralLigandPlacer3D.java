@@ -103,12 +103,12 @@ public class AtomTetrahedralLigandPlacer3D {
 		IAtom atomC = null;
 		int nwanted = 0;
 		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-			refAtom = atomContainer.getAtomAt(i);
+			refAtom = atomContainer.getAtom(i);
 			if (!refAtom.getSymbol().equals("H") && hasUnsetNeighbour(refAtom, atomContainer)) {
 				noCoords = getUnsetAtomsInAtomContainer(refAtom, atomContainer);
 				withCoords = getPlacedAtomsInAtomContainer(refAtom, atomContainer);
 				if (withCoords.getAtomCount() > 0) {
-					atomC = getPlacedHeavyAtomInAtomContainer(withCoords.getAtomAt(0), refAtom, atomContainer);
+					atomC = getPlacedHeavyAtomInAtomContainer(withCoords.getAtom(0), refAtom, atomContainer);
 				}
 				if (refAtom.getFormalNeighbourCount() == 0 && refAtom.getSymbol().equals("C")) {
 					nwanted = noCoords.getAtomCount();
@@ -120,7 +120,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				Point3d[] newPoints = get3DCoordinatesForLigands(refAtom,
 						noCoords, withCoords, atomC, nwanted, DEFAULT_BOND_LENGTH_H, -1);
 				for (int j = 0; j < noCoords.getAtomCount(); j++) {
-					IAtom ligand = noCoords.getAtomAt(j);
+					IAtom ligand = noCoords.getAtom(j);
 					Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
 					ligand.setPoint3d(newPoint);
 					ligand.setFlag(CDKConstants.ISPLACED, true);
@@ -260,7 +260,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	public Point3d get3DCoordinatesForSPLigands(IAtom refAtom, IAtomContainer withCoords, double length, double angle) {
 		//System.out.println(" SP Ligands start "+refAtom.getPoint3d()+" "+(withCoords.getAtomAt(0)).getPoint3d());
 		Vector3d ca = new Vector3d(refAtom.getPoint3d());
-		ca.sub((withCoords.getAtomAt(0)).getPoint3d());
+		ca.sub((withCoords.getAtom(0)).getPoint3d());
 		ca.normalize();
 		ca.scale(length);
 		Point3d newPoint = new Point3d(refAtom.getPoint3d());
@@ -289,12 +289,12 @@ public class AtomTetrahedralLigandPlacer3D {
 		}
 		if (withCoords.getAtomCount() >= 2) {
 			//System.out.println("Wanted:1 "+noCoords.getAtomCount());
-			newPoints[0] = calculate3DCoordinatesSP2_1(refAtom.getPoint3d(), (withCoords.getAtomAt(0)).getPoint3d(),
-					(withCoords.getAtomAt(1)).getPoint3d(), length, -1 * angle);
+			newPoints[0] = calculate3DCoordinatesSP2_1(refAtom.getPoint3d(), (withCoords.getAtom(0)).getPoint3d(),
+					(withCoords.getAtom(1)).getPoint3d(), length, -1 * angle);
 
 		} else if (withCoords.getAtomCount() <= 1) {
 			//System.out.println("NoCoords 2:"+noCoords.getAtomCount());
-			newPoints = calculate3DCoordinatesSP2_2(refAtom.getPoint3d(), (withCoords.getAtomAt(0)).getPoint3d(),
+			newPoints = calculate3DCoordinatesSP2_2(refAtom.getPoint3d(), (withCoords.getAtom(0)).getPoint3d(),
 					(atomC != null) ? atomC.getPoint3d() : null, length, angle);
 		}
 		//System.out.println("Ready SP2");
@@ -327,16 +327,16 @@ public class AtomTetrahedralLigandPlacer3D {
 		if (nwithCoords == 0) {
 			newPoints = calculate3DCoordinates0(refAtom.getPoint3d(), nwanted, length);
 		} else if (nwithCoords == 1) {
-			newPoints = calculate3DCoordinates1(aPoint, (withCoords.getAtomAt(0)).getPoint3d(), (atomC != null) ? atomC.getPoint3d() : null, nwanted, length, angle);
+			newPoints = calculate3DCoordinates1(aPoint, (withCoords.getAtom(0)).getPoint3d(), (atomC != null) ? atomC.getPoint3d() : null, nwanted, length, angle);
 		} else if (nwithCoords == 2) {
-			Point3d bPoint = withCoords.getAtomAt(0).getPoint3d();
-			Point3d cPoint = withCoords.getAtomAt(1).getPoint3d();
+			Point3d bPoint = withCoords.getAtom(0).getPoint3d();
+			Point3d cPoint = withCoords.getAtom(1).getPoint3d();
 			newPoints = calculate3DCoordinates2(aPoint, bPoint, cPoint, nwanted, length, angle);
 		} else if (nwithCoords == 3) {
-			Point3d bPoint = withCoords.getAtomAt(0).getPoint3d();
-			Point3d cPoint = withCoords.getAtomAt(1).getPoint3d();
+			Point3d bPoint = withCoords.getAtom(0).getPoint3d();
+			Point3d cPoint = withCoords.getAtom(1).getPoint3d();
 			newPoints = new Point3d[1];
-			Point3d dPoint = withCoords.getAtomAt(2).getPoint3d();
+			Point3d dPoint = withCoords.getAtom(2).getPoint3d();
 			newPoints[0] = calculate3DCoordinates3(aPoint, bPoint, cPoint, dPoint, length);
 		}
 		//System.out.println("...Ready");

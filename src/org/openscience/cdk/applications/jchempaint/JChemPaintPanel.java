@@ -741,8 +741,8 @@ public abstract class JChemPaintPanel
 			}else{
 				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
 					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
-						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k).getPoint2d()==null)
-							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k));
+						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
+							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k));
 					}						
 				}
 			}
@@ -849,8 +849,8 @@ public abstract class JChemPaintPanel
 			}else{
 				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
 					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
-						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k).getPoint2d()==null)
-							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomAt(k));
+						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
+							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k));
 					}						
 				}
 			}

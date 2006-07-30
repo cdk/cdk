@@ -58,7 +58,7 @@ public class MorganNumbersTools {
     for (int e = 0; e < N; e++) {
       for (int f = 0; f < N; f++) {
         morganMatrix[f] = 0;
-        atoms = atomContainer.getConnectedAtoms(atomContainer.getAtomAt(f));
+        atoms = atomContainer.getConnectedAtoms(atomContainer.getAtom(f));
         for (int g = 0; g < atoms.length; g++) {
           morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atoms[g])];
         }
@@ -80,7 +80,7 @@ public class MorganNumbersTools {
     int[] morgannumbers = getMorganNumbers(atomContainer);
     String[] morgannumberswithelement = new String[morgannumbers.length];
     for (int i = 0; i < morgannumbers.length; i++) {
-      morgannumberswithelement[i] = atomContainer.getAtomAt(i).getSymbol() + "-" + morgannumbers[i];
+      morgannumberswithelement[i] = atomContainer.getAtom(i).getSymbol() + "-" + morgannumbers[i];
     }
     return (morgannumberswithelement);
   }

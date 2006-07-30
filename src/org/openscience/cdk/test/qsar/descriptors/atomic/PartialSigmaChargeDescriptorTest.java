@@ -78,7 +78,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -94,7 +94,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -109,7 +109,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -124,7 +124,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
 	}
@@ -139,7 +139,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -154,7 +154,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
-		double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(3), mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
 		assertEquals(testResult,result,0.01);
 	}
 	/**
@@ -169,7 +169,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 6 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
@@ -184,7 +184,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
-		double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(2), mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
 		assertEquals(testResult,result,0.01);
 	}
 	/**
@@ -199,7 +199,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
         
 		for (int i = 0 ; i < 4 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
 	}
@@ -215,7 +215,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 4 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtomAt(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.015);
 		}
 	}

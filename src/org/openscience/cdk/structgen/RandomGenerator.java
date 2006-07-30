@@ -96,13 +96,13 @@ public class RandomGenerator
 				String s = "BondCounts:    ";
 				for (int f = 0; f < trial.getAtomCount(); f++)
 				{
-					s += trial.getBondCount(trial.getAtomAt(f)) + " ";
+					s += trial.getBondCount(trial.getAtom(f)) + " ";
 				}
 				System.out.println(s);
 				s = "BondOrderSums: ";
 				for (int f = 0; f < trial.getAtomCount(); f++)
 				{
-					s += trial.getBondOrderSum(trial.getAtomAt(f)) + " ";
+					s += trial.getBondOrderSum(trial.getAtom(f)) + " ";
 				}
 				System.out.println(s);
 			}
@@ -160,10 +160,10 @@ public class RandomGenerator
 					if (debug) System.out.println("RandomGenerator->mutate(): x1, x2, y1, y2: " + x1 + ", " + x2 + ", " + y1 + ", " + y2);
 				}
 				while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
-				ax1 = ac.getAtomAt(x1);
-				ay1 = ac.getAtomAt(y1);
-				ax2 = ac.getAtomAt(x2);
-				ay2 = ac.getAtomAt(y2);
+				ax1 = ac.getAtom(x1);
+				ay1 = ac.getAtom(y1);
+				ax2 = ac.getAtom(x2);
+				ay2 = ac.getAtom(y2);
 				/* Get four bonds for these four atoms */
 				
 				b1 = ac.getBond(ax1, ay1);

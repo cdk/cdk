@@ -49,7 +49,7 @@ public class Rule103dot1 extends NamingRule {
                 (((Integer)m.getProperty(CHLORO_COUNT)).intValue() > 0) ||
                 (((Integer)m.getProperty(FLUORO_COUNT)).intValue() > 0)) {
                 for (int i = 0; i < m.getAtomCount(); i++) {
-                	org.openscience.cdk.interfaces.IAtom a = m.getAtomAt(i);
+                	org.openscience.cdk.interfaces.IAtom a = m.getAtom(i);
                     if ("Br".equals(a.getSymbol())) {
                         a.setProperty(ATOM_NAMED_FLAG, "yes");
                         return new IUPACNamePart(localize("bromide"), this);

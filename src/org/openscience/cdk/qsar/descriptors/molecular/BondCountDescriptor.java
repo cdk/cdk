@@ -120,7 +120,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         int bondCount = 0;
         org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
-            if (container.getBondAt(i).getOrder() == order) {
+            if (container.getBond(i).getOrder() == order) {
                 bondCount += 1;
             }
         }

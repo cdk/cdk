@@ -96,8 +96,8 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(-1, product.getAtomAt(2).getFormalCharge());
-        Assert.assertEquals(0, product.getLonePairCount(molecule.getAtomAt(1)));
+        Assert.assertEquals(-1, product.getAtom(2).getFormalCharge());
+        Assert.assertEquals(0, product.getLonePairCount(molecule.getAtom(1)));
         
         /*C=C-[C-]-C*/
         IMolecule molecule2 = getMolecule2();
@@ -107,8 +107,8 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         
         Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
         
-        IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(0));
-        assertEquals(mappedProduct, product.getAtomAt(0));
+        IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProduct, product.getAtom(0));
 	}
 
 	/**
@@ -124,13 +124,13 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
-		molecule.getAtomAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
         Object[] params = {Boolean.TRUE};
         type.setParameters(params);
@@ -173,12 +173,12 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
         Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(0));
-        assertEquals(mappedProductA1, product.getAtomAt(0));
-        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
-        assertEquals(mappedProductA1, product.getAtomAt(1));
-        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(2));
-        assertEquals(mappedProductA1, product.getAtomAt(2));
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProductA1, product.getAtom(0));
+        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        assertEquals(mappedProductA1, product.getAtom(1));
+        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
+        assertEquals(mappedProductA1, product.getAtom(2));
         
 	}
 	/**

@@ -75,7 +75,7 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
 		Atom atom = new Atom("C");
-		Bond bond = new Bond(atom, mol.getAtomAt(2));
+		Bond bond = new Bond(atom, mol.getAtom(2));
 		undoCont.addAtom(atom);
 		undoCont.addBond(bond);
 		mol.addAtom(atom);

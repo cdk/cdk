@@ -57,8 +57,8 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     public void testBreadthFirstTargetSearch() {
-        org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtomAt(0);
-        org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtomAt(8);
+        org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
+        org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
         Vector sphere = new Vector();
         sphere.addElement(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
@@ -74,20 +74,20 @@ public class PathToolsTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser();
         try {
             atomContainer = sp.parseSmiles("CCCC");
-            start = atomContainer.getAtomAt(0);
-            end = atomContainer.getAtomAt(3);
+            start = atomContainer.getAtom(0);
+            end = atomContainer.getAtom(3);
             path = PathTools.getShortestPath(atomContainer, start, end);
             Assert.assertEquals(4, path.size());
 
             atomContainer = sp.parseSmiles("CC(N)CC");
-            start = atomContainer.getAtomAt(0);
-            end = atomContainer.getAtomAt(2);
+            start = atomContainer.getAtom(0);
+            end = atomContainer.getAtom(2);
             path = PathTools.getShortestPath(atomContainer, start, end);
             Assert.assertEquals(3, path.size());
 
             atomContainer = sp.parseSmiles("C1C(N)CC1");
-            start = atomContainer.getAtomAt(0);
-            end = atomContainer.getAtomAt(2);
+            start = atomContainer.getAtom(0);
+            end = atomContainer.getAtom(2);
             path = PathTools.getShortestPath(atomContainer, start, end);
             Assert.assertEquals(3, path.size());
             
@@ -106,12 +106,12 @@ public class PathToolsTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser();
         try {
             atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
-            start = atomContainer.getAtomAt(0);
+            start = atomContainer.getAtom(0);
             paths = PathTools.getPathsOfLength(atomContainer, start, 1);
             Assert.assertEquals(2, paths.size());
 
             atomContainer = sp.parseSmiles("Cc1cc2ccccc2cc1");
-            start = atomContainer.getAtomAt(0);
+            start = atomContainer.getAtom(0);
             paths = PathTools.getPathsOfLength(atomContainer, start, 1);
             Assert.assertEquals(1, paths.size());
 
@@ -125,8 +125,8 @@ public class PathToolsTest extends CDKTestCase {
         try {
             IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
-            IAtom start = atomContainer.getAtomAt(0);
-            IAtom end = atomContainer.getAtomAt(2);
+            IAtom start = atomContainer.getAtom(0);
+            IAtom end = atomContainer.getAtom(2);
             List paths = PathTools.getAllPaths(atomContainer, start, end);
 
             Assert.assertEquals(3, paths.size());
@@ -136,13 +136,13 @@ public class PathToolsTest extends CDKTestCase {
             List path3 = (List) paths.get(2);
 
             Assert.assertEquals(start, path1.get(0));
-            Assert.assertEquals(atomContainer.getAtomAt(1), path1.get(1));
+            Assert.assertEquals(atomContainer.getAtom(1), path1.get(1));
             Assert.assertEquals(end, path1.get(2));
 
             Assert.assertEquals(start, path2.get(0));
-            Assert.assertEquals(atomContainer.getAtomAt(5), path2.get(1));
-            Assert.assertEquals(atomContainer.getAtomAt(4), path2.get(2));
-            Assert.assertEquals(atomContainer.getAtomAt(3), path2.get(3));
+            Assert.assertEquals(atomContainer.getAtom(5), path2.get(1));
+            Assert.assertEquals(atomContainer.getAtom(4), path2.get(2));
+            Assert.assertEquals(atomContainer.getAtom(3), path2.get(3));
             Assert.assertEquals(end, path2.get(4));
             Assert.assertNotNull(path3);
 

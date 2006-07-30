@@ -85,7 +85,7 @@ public class InductiveAtomicHardnessDescriptorTest extends CDKTestCase {
 		
 		IAtomicDescriptor descriptor  = new InductiveAtomicHardnessDescriptor();
 		
-		double retval = ((DoubleResult)descriptor.calculate(mol.getAtomAt(0),mol).getValue()).doubleValue();
+		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
 		assertEquals(testResult[0], retval, 0.1);
 	}
 }

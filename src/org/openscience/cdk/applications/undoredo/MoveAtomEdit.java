@@ -59,7 +59,7 @@ public class MoveAtomEdit extends AbstractUndoableEdit {
 	 */
 	public void redo() throws CannotRedoException {
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
-			IAtom atom=undoRedoContainer.getAtomAt(i);
+			IAtom atom=undoRedoContainer.getAtom(i);
 			((Point2d)renderingCoordinates.get(atom)).x+=deltaX;
 			((Point2d)renderingCoordinates.get(atom)).y+=deltaY;
 		}
@@ -72,7 +72,7 @@ public class MoveAtomEdit extends AbstractUndoableEdit {
 	 */
 	public void undo() throws CannotUndoException {
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
-			IAtom atom=undoRedoContainer.getAtomAt(i);
+			IAtom atom=undoRedoContainer.getAtom(i);
 			((Point2d)renderingCoordinates.get(atom)).x-=deltaX;
 			((Point2d)renderingCoordinates.get(atom)).y-=deltaY;
 		}

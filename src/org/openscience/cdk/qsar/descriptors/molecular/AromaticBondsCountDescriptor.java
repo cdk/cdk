@@ -147,7 +147,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
         }
         org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
         for (int i = 0; i < bonds.length; i++) {
-            if (ac.getBondAt(i).getFlag(CDKConstants.ISAROMATIC)) {
+            if (ac.getBond(i).getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticBondsCount += 1;
             }
         }

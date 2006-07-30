@@ -395,15 +395,15 @@ public class SmilesGenerator
 				IAtomContainer allrings = RingSetManipulator.getAllInOneContainer((IRingSet) v.get(i));
 				for (int k = 0; k < allrings.getAtomCount(); k++)
 				{
-					if (!BondTools.isStereo(molecule, allrings.getAtomAt(k)) && hasWedges(molecule, allrings.getAtomAt(k)) != null)
+					if (!BondTools.isStereo(molecule, allrings.getAtom(k)) && hasWedges(molecule, allrings.getAtom(k)) != null)
 					{
-						IBond bond = molecule.getBond(allrings.getAtomAt(k), hasWedges(molecule, allrings.getAtomAt(k)));
+						IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
 						if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
-							allrings.getAtomAt(k).setProperty(RING_CONFIG, UP);
+							allrings.getAtom(k).setProperty(RING_CONFIG, UP);
 						} else
 						{
-							allrings.getAtomAt(k).setProperty(RING_CONFIG, DOWN);
+							allrings.getAtom(k).setProperty(RING_CONFIG, DOWN);
 						}
 						counter++;
 					}
@@ -412,7 +412,7 @@ public class SmilesGenerator
 				{
 					for (int k = 0; k < allrings.getAtomCount(); k++)
 					{
-						allrings.getAtomAt(k).setProperty(RING_CONFIG, UP);
+						allrings.getAtom(k).setProperty(RING_CONFIG, UP);
 					}
 				}
 			}

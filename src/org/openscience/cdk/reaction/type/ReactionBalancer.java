@@ -92,7 +92,7 @@ public class ReactionBalancer {
             hydrogen.addBond(0, 1, 1.0);
             hydrogen.setProperty("name", "H2");
             proton.addAtom(new Atom("H"));
-            proton.getAtomAt(0).setFormalCharge(1);
+            proton.getAtom(0).setFormalCharge(1);
             proton.setProperty("name", "H+");
         }
 	}
@@ -394,7 +394,7 @@ public class ReactionBalancer {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {
 			if (som.getAtomContainer(i).getAtomCount() == mol.getAtomCount()) {
 				if (mol.getBondCount() == 0 || som.getAtomContainer(i).getBondCount() == 0) {
-					if (mol.getAtomAt(0).getSymbol().equals(som.getAtomContainer(i).getAtomAt(0).getSymbol())) {
+					if (mol.getAtom(0).getSymbol().equals(som.getAtomContainer(i).getAtom(0).getSymbol())) {
 						return i;
 					} else {
 						continue;

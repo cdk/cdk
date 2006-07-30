@@ -39,7 +39,7 @@ public class Projector  {
   
   public static void project2D(IAtomContainer container) {
     for (int i = 0; i < container.getAtomCount(); i++) {
-      IAtom atom = container.getAtomAt(i);
+      IAtom atom = container.getAtom(i);
       if (atom.getPoint3d() != null) {
         atom.setX2d(atom.getX3d());
         atom.setY2d(atom.getY3d());

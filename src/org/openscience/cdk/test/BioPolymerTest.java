@@ -86,16 +86,16 @@ public class BioPolymerTest extends CDKTestCase {
 		oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom4, oMono2, oStrand2);
 		oBioPolymer.addAtom(oAtom5, oMono3, oStrand2);
-		assertNotNull(oBioPolymer.getAtomAt(0));
-		assertNotNull(oBioPolymer.getAtomAt(1));
-		assertNotNull(oBioPolymer.getAtomAt(2));
-		assertNotNull(oBioPolymer.getAtomAt(3));
-		assertNotNull(oBioPolymer.getAtomAt(4));
-		assertEquals(oAtom1, oBioPolymer.getAtomAt(0));
-		assertEquals(oAtom2, oBioPolymer.getAtomAt(1));
-		assertEquals(oAtom3, oBioPolymer.getAtomAt(2));
-		assertEquals(oAtom4, oBioPolymer.getAtomAt(3));
-		assertEquals(oAtom5, oBioPolymer.getAtomAt(4));
+		assertNotNull(oBioPolymer.getAtom(0));
+		assertNotNull(oBioPolymer.getAtom(1));
+		assertNotNull(oBioPolymer.getAtom(2));
+		assertNotNull(oBioPolymer.getAtom(3));
+		assertNotNull(oBioPolymer.getAtom(4));
+		assertEquals(oAtom1, oBioPolymer.getAtom(0));
+		assertEquals(oAtom2, oBioPolymer.getAtom(1));
+		assertEquals(oAtom3, oBioPolymer.getAtom(2));
+		assertEquals(oAtom4, oBioPolymer.getAtom(3));
+		assertEquals(oAtom5, oBioPolymer.getAtom(4));
 
 		assertNull(oBioPolymer.getMonomer("0815", "A"));
 		assertNull(oBioPolymer.getMonomer("0815", "B"));
@@ -131,12 +131,12 @@ public class BioPolymerTest extends CDKTestCase {
 		oBioPolymer.addAtom(oAtom1);
 		oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom3, oMono2, oStrand2);
-		assertNotNull(oBioPolymer.getAtomAt(0));
-		assertNotNull(oBioPolymer.getAtomAt(1));
-		assertNotNull(oBioPolymer.getAtomAt(2));
-		assertEquals(oAtom1, oBioPolymer.getAtomAt(0));
-		assertEquals(oAtom2, oBioPolymer.getAtomAt(1));
-		assertEquals(oAtom3, oBioPolymer.getAtomAt(2));
+		assertNotNull(oBioPolymer.getAtom(0));
+		assertNotNull(oBioPolymer.getAtom(1));
+		assertNotNull(oBioPolymer.getAtom(2));
+		assertEquals(oAtom1, oBioPolymer.getAtom(0));
+		assertEquals(oAtom2, oBioPolymer.getAtom(1));
+		assertEquals(oAtom3, oBioPolymer.getAtom(2));
 
 		assertEquals(2, oBioPolymer.getMonomerCount());
 	}
@@ -159,12 +159,12 @@ public class BioPolymerTest extends CDKTestCase {
 		oBioPolymer.addAtom(oAtom1);
 		oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom3, oMono2, oStrand2);
-		assertNotNull(oBioPolymer.getAtomAt(0));
-		assertNotNull(oBioPolymer.getAtomAt(1));
-		assertNotNull(oBioPolymer.getAtomAt(2));
-		assertEquals(oAtom1, oBioPolymer.getAtomAt(0));
-		assertEquals(oAtom2, oBioPolymer.getAtomAt(1));
-		assertEquals(oAtom3, oBioPolymer.getAtomAt(2));
+		assertNotNull(oBioPolymer.getAtom(0));
+		assertNotNull(oBioPolymer.getAtom(1));
+		assertNotNull(oBioPolymer.getAtom(2));
+		assertEquals(oAtom1, oBioPolymer.getAtom(0));
+		assertEquals(oAtom2, oBioPolymer.getAtom(1));
+		assertEquals(oAtom3, oBioPolymer.getAtom(2));
 
 		assertEquals(3, oBioPolymer.getMonomerNames().size());
 		assertTrue(oBioPolymer.getMonomerNames().contains(oMono1.getMonomerName()));

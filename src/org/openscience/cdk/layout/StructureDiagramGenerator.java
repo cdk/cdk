@@ -137,7 +137,7 @@ public class StructureDiagramGenerator
 		}
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			atom = molecule.getAtomAt(f);
+			atom = molecule.getAtom(f);
 			atom.setPoint2d(null);
 			atom.setFlag(CDKConstants.ISPLACED, false);
 			atom.setFlag(CDKConstants.VISITED, false);
@@ -284,7 +284,7 @@ public class StructureDiagramGenerator
 		logger.debug("We have a molecules with " + molecule.getAtomCount() + " atoms.");
 		if (molecule.getAtomCount() == 1)
 		{
-			molecule.getAtomAt(0).setPoint2d(new Point2d(0, 0));
+			molecule.getAtom(0).setPoint2d(new Point2d(0, 0));
 			return;
 		}
 		if (!ConnectivityChecker.isConnected(molecule))
@@ -392,8 +392,8 @@ public class StructureDiagramGenerator
 			IAtomContainer longestChain = atomPlacer.getInitialLongestChain(molecule);
 			logger.debug("Found linear chain of length " + longestChain.getAtomCount());
 			logger.debug("Setting coordinated of first atom to 0,0");
-			longestChain.getAtomAt(0).setPoint2d(new Point2d(0, 0));
-			longestChain.getAtomAt(0).setFlag(CDKConstants.ISPLACED, true);
+			longestChain.getAtom(0).setPoint2d(new Point2d(0, 0));
+			longestChain.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
 
 			/*
 			 *  place the first bond such that the whole chain will be horizontally
@@ -463,7 +463,7 @@ public class StructureDiagramGenerator
 		int i = 0;
 		for (i = 0; i < ring.getElectronContainerCount(); i++)
 		{
-			if (ring.getElectronContainerAt(i) instanceof org.openscience.cdk.interfaces.IBond)
+			if (ring.getElectronContainer(i) instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				break;
 			}
@@ -473,7 +473,7 @@ public class StructureDiagramGenerator
 		 */
 		if (!ring.getFlag(CDKConstants.ISPLACED))
 		{
-			sharedAtoms = placeFirstBond((IBond) ring.getElectronContainerAt(i), firstBondVector);
+			sharedAtoms = placeFirstBond((IBond) ring.getElectronContainer(i), firstBondVector);
 			/*
 			 *  Call the method which lays out the new ring.
 			 */
@@ -556,7 +556,7 @@ public class StructureDiagramGenerator
 						logger.debug("More than one atoms placed already");
 						logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
 						atomPlacer.distributePartners(atom, placedAtoms, GeometryTools.get2DCenter(placedAtoms), unplacedAtoms, bondLength);
-						direction = new Vector2d(longestUnplacedChain.getAtomAt(1).getPoint2d());
+						direction = new Vector2d(longestUnplacedChain.getAtom(1).getPoint2d());
 						startVector = new Vector2d(atom.getPoint2d());
 						direction.sub(startVector);
 						logger.debug("Done placing neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
@@ -564,13 +564,13 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("Less than one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
-						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtomAt(0), GeometryTools.get2DCenter(molecule),true);
+						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtom(0), GeometryTools.get2DCenter(molecule),true);
 
 					}
 
 					for (int f = 1; f < longestUnplacedChain.getAtomCount(); f++)
 					{
-						longestUnplacedChain.getAtomAt(f).setFlag(CDKConstants.ISPLACED, false);
+						longestUnplacedChain.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
 					}
 					atomPlacer.placeLinearChain(longestUnplacedChain, direction, bondLength);
 
@@ -723,7 +723,7 @@ public class StructureDiagramGenerator
 		IBond bond = null;
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
 		{
-			org.openscience.cdk.interfaces.IElectronContainer ec = molecule.getElectronContainerAt(f);
+			org.openscience.cdk.interfaces.IElectronContainer ec = molecule.getElectronContainer(f);
 			if (ec instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				bond = (IBond) ec;
@@ -830,7 +830,7 @@ public class StructureDiagramGenerator
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			atom = molecule.getAtomAt(f);
+			atom = molecule.getAtom(f);
 			if (atom.getPoint2d() == null)
 			{
 				atom.setPoint2d(new Point2d(0, 0));
@@ -886,7 +886,7 @@ public class StructureDiagramGenerator
 			ring = (IRing) rings.getAtomContainer(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
-				ring.getAtomAt(j).setFlag(CDKConstants.ISINRING, true);
+				ring.getAtom(j).setFlag(CDKConstants.ISINRING, true);
 			}
 		}
 	}
@@ -956,7 +956,7 @@ public class StructureDiagramGenerator
 				unplacedCounter++;
 				for (int g = 0; g < ring.getAtomCount(); g++)
 				{
-					ring.getAtomAt(g).setFlag(CDKConstants.ISPLACED, false);
+					ring.getAtom(g).setFlag(CDKConstants.ISPLACED, false);
 				}
 			}
 		}

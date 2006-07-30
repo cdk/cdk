@@ -118,11 +118,11 @@ public class StructureResonanceGenerator {
 		/*analize sum of bonds */
 		double bondSum = 0;
 		for(int i = 0; i < atomContainer.getBondCount(); i++)
-			bondSum = bondSum + atomContainer.getBondAt(i).getOrder();
+			bondSum = bondSum + atomContainer.getBond(i).getOrder();
 		for(int i = 0; i < set.getAtomContainerCount(); i++){
 			double bondSumI = 0;
 			for(int j = 0; j < set.getAtomContainer(i).getBondCount(); j++)
-				bondSumI += set.getAtomContainer(i).getBondAt(j).getOrder();
+				bondSumI += set.getAtomContainer(i).getBond(j).getOrder();
 			if(bondSumI >= bondSum)
 				setOfAC.addAtomContainer(set.getAtomContainer(i));
 		}
@@ -394,10 +394,10 @@ public class StructureResonanceGenerator {
 	 */
 	private IAtomContainer removeFlags(IAtomContainer atomContainer){
 		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
-			atomContainer.getAtomAt(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
+			atomContainer.getAtom(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
 
 		for(int i = 0 ; i < atomContainer.getBondCount(); i++)
-			atomContainer.getBondAt(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
+			atomContainer.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
 		return atomContainer;
 	}
 	/**
@@ -408,7 +408,7 @@ public class StructureResonanceGenerator {
 	 */
 	private IAtomContainer setID(IAtomContainer atomContainer){
 		for(int i = 0 ; i < atomContainer.getAtomCount(); i++){
-			atomContainer.getAtomAt(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtomAt(i)));
+			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
 		}
 		return atomContainer;
 	}

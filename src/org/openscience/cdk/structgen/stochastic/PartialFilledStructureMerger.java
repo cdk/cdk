@@ -108,7 +108,7 @@ public class PartialFilledStructureMerger
 				bondFormed = false;
 				for (int f = 0; f < atomContainer.getAtomCount(); f++)
 				{
-					atom = atomContainer.getAtomAt(f);
+					atom = atomContainer.getAtom(f);
 
 					if (!satCheck.isSaturated(atom, atomContainer))
 					{
@@ -155,7 +155,7 @@ public class PartialFilledStructureMerger
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)
 		{
-			atom = atomContainer.getAtomAt(f);
+			atom = atomContainer.getAtom(f);
 			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
 			{
 				return atom;
@@ -163,7 +163,7 @@ public class PartialFilledStructureMerger
 		}
 		for (int f = 0; f < next; f++)
 		{
-			atom = atomContainer.getAtomAt(f);
+			atom = atomContainer.getAtom(f);
 			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
 			{
 				return atom;

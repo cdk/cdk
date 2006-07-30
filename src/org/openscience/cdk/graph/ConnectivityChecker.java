@@ -70,9 +70,9 @@ public class ConnectivityChecker
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			atom = atomContainer.getAtomAt(f);
-			atomContainer.getAtomAt(f).setFlag(CDKConstants.VISITED, false);
-			ac.addAtom(atomContainer.getAtomAt(f));
+			atom = atomContainer.getAtom(f);
+			atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
+			ac.addAtom(atomContainer.getAtom(f));
 		}
 		IBond[] bonds = atomContainer.getBonds();
 		for (int f = 0; f < bonds.length; f++)
@@ -80,7 +80,7 @@ public class ConnectivityChecker
 			bonds[f].setFlag(CDKConstants.VISITED, false);
 			ac.addBond(bonds[f]);
 		}
-		atom = ac.getAtomAt(0);
+		atom = ac.getAtom(0);
 		sphere.addElement(atom);
 		atom.setFlag(CDKConstants.VISITED, true);
 		PathTools.breadthFirstSearch(ac, sphere, molecule);
@@ -110,7 +110,7 @@ public class ConnectivityChecker
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
-			atom = atomContainer.getAtomAt(f);
+			atom = atomContainer.getAtom(f);
 			atom.setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atom);
 		}
@@ -121,7 +121,7 @@ public class ConnectivityChecker
 			ac.addElectronContainer(eContainer);
 		}
 		while(ac.getAtomCount() > 0) {
-			atom = ac.getAtomAt(0);
+			atom = ac.getAtom(0);
 			molecule = atomContainer.getBuilder().newMolecule();
 			sphere.removeAllElements();
 			sphere.addElement(atom);

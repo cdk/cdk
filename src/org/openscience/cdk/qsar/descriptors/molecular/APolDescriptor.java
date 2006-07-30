@@ -156,7 +156,7 @@ public class APolDescriptor implements IMolecularDescriptor {
             org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
             String symbol = null;
             for (int i = 0; i < atoms.length; i++) {
-                symbol = container.getAtomAt(i).getSymbol();
+                symbol = container.getAtom(i).getSymbol();
                 element = ifac.getElement(symbol);
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];

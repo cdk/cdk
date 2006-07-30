@@ -817,7 +817,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		getColorHash().clear();
 		for (int i = 0; i < selectedPart.getAtomCount(); i++)
 		{
-			getColorHash().put(selectedPart.getAtomAt(i), this.getSelectedPartColor());
+			getColorHash().put(selectedPart.getAtom(i), this.getSelectedPartColor());
 		}
         IBond[] bonds = selectedPart.getBonds();
 		for (int i = 0; i < bonds.length; i++) {
@@ -1052,7 +1052,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		getColorHash().clear();
 		for (int i = 0; i < externalSelectedPart.getAtomCount(); i++)
 		{
-			getColorHash().put(externalSelectedPart.getAtomAt(i), this.getExternalHighlightColor());
+			getColorHash().put(externalSelectedPart.getAtom(i), this.getExternalHighlightColor());
 		}
         IBond[] bonds = externalSelectedPart.getBonds();
 		for (int i = 0; i < bonds.length; i++) {

@@ -171,7 +171,7 @@ public class ValenceConnectivityOrderZeroDescriptor implements IMolecularDescrip
                         hcount += 1;
                     }
                 }
-                hcount += atomContainer.getAtomAt(i).getHydrogenCount();
+                hcount += atomContainer.getAtom(i).getHydrogenCount();
                 atomValue = (valence - hcount) / (atomicNumber - valence - 1);
                 if (atomValue > 0) {
                     chi0v += (1 / (Math.sqrt(atomValue))); // chi0v

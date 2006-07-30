@@ -123,7 +123,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
         double distanceToAtom = 0;
         
         IAtom target = atom;
-        IAtom focus = container.getAtomAt(focusPosition);
+        IAtom focus = container.getAtom(focusPosition);
 
         if (target.getPoint3d() == null || focus.getPoint3d() == null) {
         	throw new CDKException("Target or focus atom must have 3D coordinates.");

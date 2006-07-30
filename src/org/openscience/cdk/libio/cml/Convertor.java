@@ -308,7 +308,7 @@ public class Convertor {
             cmlMolecule.setTitle((String) structure.getProperty(CDKConstants.TITLE));
         }
         for (int i = 0; i < structure.getAtomCount(); i++) {
-            IAtom cdkAtom = structure.getAtomAt(i);
+            IAtom cdkAtom = structure.getAtom(i);
             CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
             if (structure.getSingleElectronSum(cdkAtom) > 0) {
                 cmlAtom.setSpinMultiplicity(structure.getSingleElectronSum(cdkAtom) + 1);
@@ -316,7 +316,7 @@ public class Convertor {
             cmlMolecule.addAtom(cmlAtom, false);
         }
         for (int i = 0; i < structure.getBondCount(); i++) {
-            CMLBond cmlBond = cdkBondToCMLBond(structure.getBondAt(i));
+            CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
             cmlMolecule.addBond(cmlBond, true);
         }
 

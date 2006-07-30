@@ -59,14 +59,14 @@ public class DeAromatizationTool {
 	public static boolean deAromatize(IRing ring) {
 		boolean allaromatic=true;
 		for(int i=0;i<ring.getBondCount();i++){
-			if(!ring.getBondAt(i).getFlag(CDKConstants.ISAROMATIC))
+			if(!ring.getBond(i).getFlag(CDKConstants.ISAROMATIC))
 				allaromatic=false;
 		}
 		if(!allaromatic)
 			return false;
 		for(int i=0;i<ring.getBondCount();i++){
-			if(ring.getBondAt(i).getOrder()==1.5)
-				ring.getBondAt(i).setOrder(1);
+			if(ring.getBond(i).getOrder()==1.5)
+				ring.getBond(i).setOrder(1);
 		}
 		boolean result = false;
 		Hashtable elementCounts = new MFAnalyser(ring).getFormulaHashtable();

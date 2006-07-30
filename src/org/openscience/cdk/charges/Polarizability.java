@@ -85,7 +85,7 @@ public class Polarizability {
 		} catch (Exception ex1) {
 		}
 		for (int i = 0; i < acH.getAtomCount(); i++) {
-			polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtomAt(i));
+			polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
 		}
 		return polarizabilitiy;
 	}
@@ -112,13 +112,13 @@ public class Polarizability {
 		}
 		polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
 		for (int i = 0; i < acH.getAtomCount(); i++) {
-			if (acH.getAtomAt(i) != atom) {
+			if (acH.getAtom(i) != atom) {
 				bond = PathTools.breadthFirstTargetSearch(acH,
-						startAtom, acH.getAtomAt(i), 0, influenceSphereCutOff);
+						startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
 				if (bond == 1) {
-					polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtomAt(i));
+					polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
 				} else {
-					polarizabilitiy += (Math.pow(0.5, bond - 1) * getKJPolarizabilityFactor(acH, acH.getAtomAt(i)));
+					polarizabilitiy += (Math.pow(0.5, bond - 1) * getKJPolarizabilityFactor(acH, acH.getAtom(i)));
 				}//if bond==0
 			}//if !=atom
 		}//for

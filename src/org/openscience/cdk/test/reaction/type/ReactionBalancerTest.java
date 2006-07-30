@@ -122,7 +122,7 @@ public class ReactionBalancerTest extends CDKTestCase {
 		hydrogen.addAtom(new Atom("H"));
 		hydrogen.addBond(0, 1, 1.0);
 		proton.addAtom(new Atom("H"));
-		proton.getAtomAt(0).setFormalCharge(1);
+		proton.getAtom(0).setFormalCharge(1);
 		//Reaction r = new Reaction();
 		//r.getProducts().addAtomContainer(proton, 2.0);
 		//ReactionBalancer rb = new ReactionBalancer(r);

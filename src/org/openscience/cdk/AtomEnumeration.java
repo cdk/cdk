@@ -92,7 +92,7 @@ public class AtomEnumeration implements java.io.Serializable, Cloneable, Enumera
 	public Object nextElement()
 	{
 		atomEnumerationCounter ++;
-		return container.getAtomAt(atomEnumerationCounter - 1);
+		return container.getAtom(atomEnumerationCounter - 1);
 	}
 }
 

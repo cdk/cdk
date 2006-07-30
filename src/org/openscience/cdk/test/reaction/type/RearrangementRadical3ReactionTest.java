@@ -78,8 +78,8 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
         
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappings().length);
         
-        IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
-        assertEquals(mappedProduct, product.getAtomAt(1));
+        IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        assertEquals(mappedProduct, product.getAtom(1));
 	}
 
 
@@ -96,9 +96,9 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
-		molecule.getAtomAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtomAt(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBondAt(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 		
         Object[] params = {Boolean.TRUE};
@@ -141,12 +141,12 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappings().length);
         
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(0));
-        assertEquals(mappedProductA1, product.getAtomAt(0));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBondAt(0));
-        assertEquals(mappedProductB1, product.getBondAt(0));
-        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtomAt(1));
-        assertEquals(mappedProductA1, product.getAtomAt(1));
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProductA1, product.getAtom(0));
+        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
+        assertEquals(mappedProductB1, product.getBond(0));
+        mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        assertEquals(mappedProductA1, product.getAtom(1));
 	}
 	/**
 	 * get the molecule 1: [C*]=C-C
@@ -157,7 +157,7 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]=C-C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
-        IAtom atom =  molecule.getAtomAt(0);
+        IAtom atom =  molecule.getAtom(0);
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setHydrogenCount(2);
         atom.setFormalCharge(0);
@@ -172,10 +172,10 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 		Molecule molecule = (new SmilesParser()).parseSmiles("C-C-C");
 		HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
-        IAtom atom1 =  molecule.getAtomAt(0);
+        IAtom atom1 =  molecule.getAtom(0);
         molecule.addElectronContainer(new LonePair(atom1));
         atom1.setHydrogenCount(2);
-        IAtom atom2 =  molecule.getAtomAt(1);
+        IAtom atom2 =  molecule.getAtom(1);
         molecule.addElectronContainer(new SingleElectron(atom2));
         atom2.setHydrogenCount(1);
         return molecule;
