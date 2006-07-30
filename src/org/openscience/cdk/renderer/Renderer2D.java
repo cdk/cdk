@@ -165,7 +165,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  graphics     Description of the Parameter
 	 *@param  split        If true the setOfMolecule will be united and then splitted again in single molecules before painted. Typically not needed a performance killler
 	 */
-	public void paintSetOfMolecules(org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet, Graphics2D graphics, boolean split) {
+	public void paintSetOfMolecules(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
 		IMolecule[] molecules = null;
 		if(split){

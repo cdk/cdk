@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
@@ -452,7 +452,7 @@ public class GeometryTools {
 	 *@param  setOfMolecules Of which the dimension should be returned
 	 *@return The java.awt.Dimension of this SetOfMolecules
 	 */
-	public static Dimension get2DDimension(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
+	public static Dimension get2DDimension(IMoleculeSet setOfMolecules, HashMap renderingCoordinates) {
 		double[] minmax = getMinMax(setOfMolecules, renderingCoordinates);
 		double maxX = minmax[2];
 		double
@@ -523,7 +523,7 @@ public class GeometryTools {
 	 *
 	 *@return            An four int array as defined above.
 	 */
-	public static double[] getMinMax(ISetOfMolecules setOfMolecules, HashMap renderingCoordinates) {
+	public static double[] getMinMax(IMoleculeSet setOfMolecules, HashMap renderingCoordinates) {
 		double maxX = Double.MIN_VALUE;
 		double
 				maxY = Double.MIN_VALUE;

@@ -11,7 +11,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
@@ -50,7 +50,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 			}
 		}
 		
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction();
@@ -81,7 +81,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		lpeCheck.newSaturate(reactant);
 		
 		
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction();

@@ -39,7 +39,7 @@ import java.io.Writer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -118,7 +118,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
-			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 			if (IMolecule.class.equals(interfaces[i])) return true;
 		}
 		return false;
@@ -130,8 +130,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   object  IChemObject of which the data is outputted.
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof ISetOfMolecules) {
-		    writeSetOfMolecules((ISetOfMolecules)object);
+		if (object instanceof IMoleculeSet) {
+		    writeSetOfMolecules((IMoleculeSet)object);
 		} else if (object instanceof IMolecule) {
 		    writeMolecule((IMolecule)object);
 		} else {
@@ -144,7 +144,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   som  SetOfMolecules that is written to an OutputStream
 	 */
-	public void  writeSetOfMolecules(ISetOfMolecules som)
+	public void  writeSetOfMolecules(IMoleculeSet som)
 	{
 		IMolecule[] molecules = som.getMolecules();
 		writeMolecule(molecules[0]);

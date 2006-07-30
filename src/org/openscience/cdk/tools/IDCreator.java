@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -121,7 +121,7 @@ public class IDCreator {
         }
     }
 
-    public void createIDs(ISetOfMolecules containerSet) {
+    public void createIDs(IMoleculeSet containerSet) {
     	createIDs((ISetOfAtomContainers)containerSet);
     }    
     
@@ -196,7 +196,7 @@ public class IDCreator {
     public void createIDs(IChemModel model) {
     	ICrystal crystal = model.getCrystal();
     	if (crystal != null) createIDs(crystal);
-    	ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+    	IMoleculeSet moleculeSet = model.getSetOfMolecules();
     	if (moleculeSet != null) createIDs(moleculeSet);
     	ISetOfReactions reactionSet = model.getSetOfReactions();
     	if (reactionSet != null) createIDs(reactionSet);

@@ -12,7 +12,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -54,7 +54,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testAutomaticSearchCentreActiveEthenol() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
@@ -93,7 +93,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveEthenol() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
@@ -128,7 +128,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingEthenol() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
@@ -162,7 +162,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=N-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();

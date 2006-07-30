@@ -418,7 +418,7 @@ public interface IChemObjectBuilder {
 	 * 
      * @return ISetOfMolecules implementation defined for this IChemObjectBuilder
 	 */
-	public ISetOfMolecules newSetOfMolecules();
+	public IMoleculeSet newSetOfMolecules();
 	
 	/**
 	 * Constructs an empty ISetOfReactions.

@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.tools.DataFeatures;
@@ -106,14 +106,14 @@ public class XindiceReader {
    }
 
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ISetOfMolecules) {
-            return readSetOfMolecules((ISetOfMolecules)object);
+        if (object instanceof IMoleculeSet) {
+            return readSetOfMolecules((IMoleculeSet)object);
         } else {
             throw new CDKException("Only supported is SetOfMolecules.");
         }
     }
     
-    private ISetOfMolecules readSetOfMolecules(ISetOfMolecules mols) throws CDKException {
+    private IMoleculeSet readSetOfMolecules(IMoleculeSet mols) throws CDKException {
         Collection col = null;
         try {
             String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
@@ -159,7 +159,7 @@ public class XindiceReader {
     private IMolecule getMolecule(IChemFile cf) {
     	IChemSequence cs = cf.getChemSequence(0);
         IChemModel cm = cs.getChemModel(0);
-        ISetOfMolecules som = cm.getSetOfMolecules();
+        IMoleculeSet som = cm.getSetOfMolecules();
         return som.getMolecule(0);
     }
 

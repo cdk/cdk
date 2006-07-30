@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PhysicalConstants;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -202,7 +202,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	private IChemFile readChemFile(IChemFile file) throws IOException {
 		IChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
-		ISetOfMolecules moleculeSet = file.getBuilder().newSetOfMolecules();
+		IMoleculeSet moleculeSet = file.getBuilder().newSetOfMolecules();
 		
 		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?

@@ -25,7 +25,7 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.ISetOfMolecules;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends SetOfAtomContainers implements ISetOfMolecules, Cloneable {
+public class SetOfMolecules extends SetOfAtomContainers implements IMoleculeSet, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -82,7 +82,7 @@ public class SetOfMolecules extends SetOfAtomContainers implements ISetOfMolecul
      *
      * @param  moleculeSet  The SetOfMolecules 
      */
-    public void add(org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet) {
+    public void add(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet) {
     	org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
         for (int i=0; i< mols.length; i++) {
             addMolecule(mols[i]);

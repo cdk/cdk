@@ -30,7 +30,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Fragment;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
@@ -214,7 +214,7 @@ public class IUPACNameGenerator {
         // step 3
         logger.info("Step 3");
         try {
-            ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
+            IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
             IMolecule[] molecules = moleculeSet.getMolecules();
             for (int j=0; j<molecules.length; j++) {
                 FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);

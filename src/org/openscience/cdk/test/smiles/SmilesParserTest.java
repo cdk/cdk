@@ -34,7 +34,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -879,7 +879,7 @@ public class SmilesParserTest extends CDKTestCase {
 		assertEquals(8, mol.getAtomCount());
 		assertEquals(7, mol.getBondCount());
 		
-		ISetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+		IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 		int fragmentCount = fragments.getMoleculeCount();
 		assertEquals(2, fragmentCount);
 		org.openscience.cdk.interfaces.IMolecule mol1 = fragments.getMolecule(0);
@@ -900,7 +900,7 @@ public class SmilesParserTest extends CDKTestCase {
 		assertEquals(3, mol.getAtomCount());
 		assertEquals(2, mol.getBondCount());
 		
-		ISetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+		IMoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(mol);
 		int fragmentCount = fragments.getMoleculeCount();
 		assertEquals(1, fragmentCount);
 		org.openscience.cdk.interfaces.IMolecule mol1 = fragments.getMolecule(0);

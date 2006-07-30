@@ -264,7 +264,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        ISetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
         IMolecule molecule = model.getBuilder().newMolecule();
         String line = input.readLine();
         line = input.readLine();
@@ -344,7 +344,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      */
     private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
-        ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getSetOfMolecules();
         IMolecule molecule = moleculeSet.getMolecule(0);
         String line = input.readLine();
         // skip first line after "Total atomic charges"

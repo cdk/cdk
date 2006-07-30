@@ -78,7 +78,7 @@ import org.openscience.cdk.applications.plugin.ICDKEditBus;
 import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
@@ -607,7 +607,7 @@ public abstract class JChemPaintPanel
 			//In case of the applet we do not ask for save but put the clear into the undo stack
 			ClearAllEdit coa = null;
 			try {
-				coa = new ClearAllEdit(this.getChemModel(),(ISetOfMolecules)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
+				coa = new ClearAllEdit(this.getChemModel(),(IMoleculeSet)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
 				this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
 			} catch (Exception e) {
 				logger.error("Clone of ISetOfMolecules failed: ", e.getMessage());

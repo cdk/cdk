@@ -1,7 +1,7 @@
 package org.openscience.cdk.reaction;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 
 /**
@@ -68,12 +68,12 @@ public interface IReactionProcess {
      * 
      * Optionally, parameters may be set which can affect the course of the process.
      *
-     * @param reactants   An {@link ISetOfMolecules} for which this process should be initiate.
-     * @param agents      An {@link ISetOfMolecules} for which this process should be initiate.
+     * @param reactants   An {@link IMoleculeSet} for which this process should be initiate.
+     * @param agents      An {@link IMoleculeSet} for which this process should be initiate.
      * 
      * @throws CDKException if an error occurs during the reaction process. 
      * See documentation for individual reaction processes
      */
-    public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException;
+    public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException;
 
 }

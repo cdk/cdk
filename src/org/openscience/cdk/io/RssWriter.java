@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -203,8 +203,8 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      	root = convertor.cdkReactionToCMLReaction((IReaction)object);
 		      } else if (object instanceof ISetOfReactions) {
 		      	root = convertor.cdkSetOfReactionsToCMLReactionList((ISetOfReactions)object);
-		      } else if (object instanceof ISetOfMolecules) {
-		      	root = convertor.cdkSetOfMoleculesToCMLList((ISetOfMolecules)object);
+		      } else if (object instanceof IMoleculeSet) {
+		      	root = convertor.cdkSetOfMoleculesToCMLList((IMoleculeSet)object);
 		      } else if (object instanceof IChemSequence) {
 		      	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
 		      } else if (object instanceof IChemModel) {

@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 
 /** 
@@ -57,7 +57,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	/**
 	 *  A SetOfMolecules.
 	 */
-	protected ISetOfMolecules setOfMolecules = null;
+	protected IMoleculeSet setOfMolecules = null;
 
 	/**
 	 *  A SetOfReactions.
@@ -86,7 +86,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setSetOfMolecules
 	 */
-	public ISetOfMolecules getSetOfMolecules()
+	public IMoleculeSet getSetOfMolecules()
 	{
 		return (SetOfMolecules)this.setOfMolecules;
 	}
@@ -99,7 +99,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #getSetOfMolecules
 	 */
-	public void setSetOfMolecules(ISetOfMolecules setOfMolecules)
+	public void setSetOfMolecules(IMoleculeSet setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 		this.setOfMolecules.addListener(this);

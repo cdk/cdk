@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -147,7 +147,7 @@ public class HINReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
-        ISetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
+        IMoleculeSet setOfMolecules = file.getBuilder().newSetOfMolecules();
         String info;
 
         StringTokenizer tokenizer;

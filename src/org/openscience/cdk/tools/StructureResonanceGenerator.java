@@ -5,7 +5,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -146,7 +146,7 @@ public class StructureResonanceGenerator {
 
 		try {
 			for(int i = 0 ; i < setOfAtomContainer.getAtomContainerCount() ; i++){
-				ISetOfMolecules setOfReactants = atomContainer.getBuilder().newSetOfMolecules();
+				IMoleculeSet setOfReactants = atomContainer.getBuilder().newSetOfMolecules();
 				setOfReactants.addAtomContainer(setOfAtomContainer.getAtomContainer(i));
 				if(cationR){
 					/* RearrangementCation1Reaction */

@@ -75,7 +75,7 @@ public interface IReaction extends IChemObject {
      * @return A ISetOfMolecules containing the reactants in this reaction
      * @see    #setReactants
      */
-    public ISetOfMolecules getReactants();
+    public IMoleculeSet getReactants();
 
     /**
      * Assigns a ISetOfMolecules to the reactants in this reaction.
@@ -83,7 +83,7 @@ public interface IReaction extends IChemObject {
      * @param  reactants The new set of reactants
      * @see              #getReactants
      */
-    public void setReactants(ISetOfMolecules reactants);
+    public void setReactants(IMoleculeSet reactants);
 	
     /**
      * Returns a ISetOfMolecules containing the products of this reaction.
@@ -91,7 +91,7 @@ public interface IReaction extends IChemObject {
      * @return A ISetOfMolecules containing the products in this reaction
      * @see    #setProducts
      */
-    public ISetOfMolecules getProducts();
+    public IMoleculeSet getProducts();
     
 	/**
      * Assigns a ISetOfMolecules to the products of this reaction.
@@ -99,7 +99,7 @@ public interface IReaction extends IChemObject {
      * @param products The new set of products
      * @see            #getProducts
      */
-    public void setProducts(ISetOfMolecules products);
+    public void setProducts(IMoleculeSet products);
 	
     /**
      * Returns a ISetOfMolecules containing the agents in this reaction.
@@ -107,7 +107,7 @@ public interface IReaction extends IChemObject {
      * @return A ISetOfMolecules containing the agents in this reaction
      * @see    #addAgent
      */
-    public ISetOfMolecules getAgents();
+    public IMoleculeSet getAgents();
     
     /**
      * Returns the mappings between the reactant and the product side.

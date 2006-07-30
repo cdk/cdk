@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * TestCase for the Reaction class.
@@ -103,7 +103,7 @@ public class ReactionTest extends CDKTestCase {
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
-        ISetOfMolecules reactants = builder.newSetOfMolecules();
+        IMoleculeSet reactants = builder.newSetOfMolecules();
         reactants.addMolecule(sodiumhydroxide);
         reactants.addMolecule(aceticAcid);
         reactants.addMolecule(water);
@@ -146,7 +146,7 @@ public class ReactionTest extends CDKTestCase {
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
-        ISetOfMolecules products = builder.newSetOfMolecules();
+        IMoleculeSet products = builder.newSetOfMolecules();
         products.addMolecule(sodiumhydroxide);
         products.addMolecule(aceticAcid);
         products.addMolecule(water);

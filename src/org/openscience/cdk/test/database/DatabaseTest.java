@@ -115,7 +115,7 @@ public class DatabaseTest {
 		}
 	}
   
-  public void write(org.openscience.cdk.interfaces.ISetOfMolecules som) {
+  public void write(org.openscience.cdk.interfaces.IMoleculeSet som) {
     try {
       DBWriter dbw = new DBWriter(db);
       dbw.write(som);
@@ -217,7 +217,7 @@ public class DatabaseTest {
               
               org.openscience.cdk.interfaces.IChemSequence chemSequence;
               org.openscience.cdk.interfaces.IChemModel chemModel;
-              org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules;
+              org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules;
               System.out.println("  number of sequences: " + chemFile.getChemSequenceCount());
               for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
                 chemSequence = chemFile.getChemSequence(sequence);

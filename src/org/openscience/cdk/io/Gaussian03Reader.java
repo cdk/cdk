@@ -254,7 +254,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);
         }
-        ISetOfMolecules moleculeSet = model.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
         moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
         model.setSetOfMolecules(moleculeSet);
     }
@@ -264,7 +264,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      */
     private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
-        ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getSetOfMolecules();
         IMolecule molecule = moleculeSet.getMolecule(0);
         String line = input.readLine(); // skip first line after "Total atomic charges"
         while (input.ready()) {

@@ -60,7 +60,7 @@ public class ArrowRenderer2DTest extends JPanel {
 
 	org.openscience.cdk.interfaces.IChemModel chemModel;
 
-	org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules;
+	org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules;
 
 	org.openscience.cdk.interfaces.IMolecule molecule;
 

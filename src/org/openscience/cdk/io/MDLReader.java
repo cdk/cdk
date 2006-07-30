@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -170,7 +170,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-    	ISetOfMolecules setOfMolecules = chemModel.getSetOfMolecules();
+    	IMoleculeSet setOfMolecules = chemModel.getSetOfMolecules();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newSetOfMolecules();
         }
@@ -191,7 +191,7 @@ public class MDLReader extends DefaultChemObjectReader {
         IChemSequence chemSequence = chemFile.getBuilder().newChemSequence();
         
         IChemModel chemModel = chemFile.getBuilder().newChemModel();
-		ISetOfMolecules setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
+		IMoleculeSet setOfMolecules = chemFile.getBuilder().newSetOfMolecules();
 		IMolecule m = readMolecule(chemFile.getBuilder().newMolecule());
 		if (m != null) {
 			setOfMolecules.addMolecule(m);

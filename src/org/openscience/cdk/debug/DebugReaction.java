@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -155,27 +155,27 @@ public class DebugReaction extends org.openscience.cdk.Reaction
 		return super.getProductCount();
 	}
 
-	public ISetOfMolecules getReactants() {
+	public IMoleculeSet getReactants() {
 		logger.debug("Getting reactants: ", super.getReactants());
 		return super.getReactants();
 	}
 
-	public void setReactants(ISetOfMolecules reactants) {
+	public void setReactants(IMoleculeSet reactants) {
 		logger.debug("Setting reactants: ", reactants);
 		super.setReactants(reactants);
 	}
 
-	public ISetOfMolecules getProducts() {
+	public IMoleculeSet getProducts() {
 		logger.debug("Getting products: ", super.getProducts());
 		return super.getProducts();
 	}
 
-	public void setProducts(ISetOfMolecules products) {
+	public void setProducts(IMoleculeSet products) {
 		logger.debug("Setting products: ", products);
 		super.setProducts(products);
 	}
 
-	public ISetOfMolecules getAgents() {
+	public IMoleculeSet getAgents() {
 		logger.debug("Getting agents: ", super.getAgents());
 		return super.getAgents();
 	}

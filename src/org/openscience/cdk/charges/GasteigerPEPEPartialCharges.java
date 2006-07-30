@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
@@ -265,7 +265,7 @@ public class GasteigerPEPEPartialCharges {
     		HydrogenAdder adder = new HydrogenAdder();
             adder.addImplicitHydrogensToSatisfyValency(ac);
     		
-    		ISetOfMolecules setOfReactants = ac.getBuilder().newSetOfMolecules();
+    		IMoleculeSet setOfReactants = ac.getBuilder().newSetOfMolecules();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
     			if(ac.getBondAt(i).getOrder() > 1){
     				ac.getBondAt(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -281,7 +281,7 @@ public class GasteigerPEPEPartialCharges {
 			ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
 	        for(int i = 0; i < setOfReactions.getReactionCount(); i++){
 	        	type = new HyperconjugationReaction();
-	    		ISetOfMolecules setOfM2 = ac.getBuilder().newSetOfMolecules();
+	    		IMoleculeSet setOfM2 = ac.getBuilder().newSetOfMolecules();
 	    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
 	    		for(int k = 0; k < mol.getAtomCount(); k++){
 	    			if(mol.getAtomAt(k).getSymbol().equals("H")){

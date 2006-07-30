@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -100,7 +100,7 @@ public class DeduceBondSystemTool {
 		}
 		
 		
-		ISetOfMolecules som=new SetOfMolecules();
+		IMoleculeSet som=new SetOfMolecules();
 		
 		
 //		int number=1; // total number of possibilities
@@ -481,7 +481,7 @@ public class DeduceBondSystemTool {
 		return false;
 	}
 	
-	IMolecule loop (long starttime,IMolecule molecule,int index,ArrayList MasterList,int [] choices,ISetOfMolecules som) {
+	IMolecule loop (long starttime,IMolecule molecule,int index,ArrayList MasterList,int [] choices,IMoleculeSet som) {
 		
 		
 		//System.out.println(System.currentTimeMillis());

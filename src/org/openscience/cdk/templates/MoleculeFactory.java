@@ -769,7 +769,7 @@ public class MoleculeFactory {
 		ChemFile chemFile = null;
 		org.openscience.cdk.interfaces.IChemSequence chemSequence = null;
 		org.openscience.cdk.interfaces.IChemModel chemModel = null;
-		org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules = null;
+		org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules = null;
 		org.openscience.cdk.interfaces.IMolecule molecule = null;
 		try
 		{

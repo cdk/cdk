@@ -78,7 +78,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
@@ -625,7 +625,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			atom2=(IAtom)r2dm.getMerge().get(atom1);
 			undoObject[0] = atom1;
 			undoObject[1] = atom2;
-			ISetOfMolecules som=chemModel.getSetOfMolecules();
+			IMoleculeSet som=chemModel.getSetOfMolecules();
 			IAtomContainer container1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom1);
 			IAtomContainer container2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom2);
 			if (container1 != container2) {
@@ -1171,7 +1171,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 					try
 					{
-						ISetOfMolecules setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
+						IMoleculeSet setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
 						chemModel.setSetOfMolecules(setOfMolecules);
 						logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
 					} catch (Exception exception)

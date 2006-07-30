@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -148,7 +148,7 @@ public class XYZReader extends DefaultChemObjectReader {
                 String info = input.readLine();
                 
                 IChemModel chemModel = file.getBuilder().newChemModel();
-                ISetOfMolecules setOfMolecules = file.getBuilder().newSetOfMolecules();
+                IMoleculeSet setOfMolecules = file.getBuilder().newSetOfMolecules();
                 
                 IMolecule m = file.getBuilder().newMolecule();
                 m.setProperty(CDKConstants.TITLE, info);

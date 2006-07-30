@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -77,7 +77,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 			container.addAtom(atom);
 		}
 		IMolecule molecule = new org.openscience.cdk.Molecule(container);
-		ISetOfMolecules moleculeSet = ConnectivityChecker
+		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
 	}
@@ -98,7 +98,7 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 			container.removeAtom(atom);
 		}
 		IMolecule molecule = new org.openscience.cdk.Molecule(container);
-		ISetOfMolecules moleculeSet = ConnectivityChecker
+		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
 	}

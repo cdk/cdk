@@ -14,7 +14,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -60,7 +60,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
         /*[C*]-O|*/
         IMolecule molecule = getMolecule1();
         
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(molecule);
 		
         Object[] params = {Boolean.FALSE};
@@ -87,7 +87,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/* [C*]-O| */
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -122,7 +122,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*[C*]-O|*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);

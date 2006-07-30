@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -71,7 +71,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        ISetOfMolecules moleculeSet = null;
+        IMoleculeSet moleculeSet = null;
 		try {
 			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
@@ -92,7 +92,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atom2.setID("atom2");
         atomCon.addAtom(atom1);
         atomCon.addAtom(atom2);
-        ISetOfMolecules moleculeSet = null;
+        IMoleculeSet moleculeSet = null;
 		try {
 			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
@@ -117,7 +117,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        ISetOfMolecules moleculeSet = null;
+        IMoleculeSet moleculeSet = null;
 		try {
 			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {
@@ -155,7 +155,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atomCon.add(mol2);
         
         // now partition
-        ISetOfMolecules moleculeSet = null;
+        IMoleculeSet moleculeSet = null;
 		try {
 			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
 		} catch (Exception exc) {

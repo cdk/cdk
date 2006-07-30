@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
@@ -61,7 +61,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 	private IChemFile currentChemFile;
 	
     private IAtomContainer currentMolecule;
-    private ISetOfMolecules currentSetOfMolecules;
+    private IMoleculeSet currentSetOfMolecules;
     private IChemModel currentChemModel;
     private IChemSequence currentChemSequence;
     private ISetOfReactions currentSetOfReactions;

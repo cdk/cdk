@@ -64,7 +64,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
@@ -593,7 +593,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
 		Dimension newDim = new Dimension(baseDim);
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+		IMoleculeSet moleculeSet = model.getSetOfMolecules();
 		if (moleculeSet != null)
 		{
 			newDim.height = newDim.height * (moleculeSet.getMoleculeCount());
@@ -618,7 +618,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private void layoutInTable(Dimension baseDim, IChemModel model, Renderer2DModel rm)
 	{
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		ISetOfMolecules moleculeSet = model.getSetOfMolecules();
+		IMoleculeSet moleculeSet = model.getSetOfMolecules();
 		if (moleculeSet != null)
 		{
 			org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();

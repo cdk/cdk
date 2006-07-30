@@ -11,7 +11,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -112,7 +112,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
+	public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RearrangementRadical2Reaction");
 		

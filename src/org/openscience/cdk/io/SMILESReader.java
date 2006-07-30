@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -109,7 +109,7 @@ public class SMILESReader extends DefaultChemObjectReader {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -123,8 +123,8 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @see IChemFile
      */
     public IChemObject read(IChemObject object) throws CDKException {
-        if (object instanceof ISetOfMolecules) {
-            return (IChemObject)readSetOfMolecules((ISetOfMolecules)object);
+        if (object instanceof IMoleculeSet) {
+            return (IChemObject)readSetOfMolecules((IMoleculeSet)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newChemSequence();
@@ -148,7 +148,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private ISetOfMolecules readSetOfMolecules(ISetOfMolecules som) {
+    private IMoleculeSet readSetOfMolecules(IMoleculeSet som) {
         try {
             String line = input.readLine().trim();
             while (line != null) {

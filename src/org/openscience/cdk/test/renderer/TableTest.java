@@ -58,7 +58,7 @@ public class TableTest {
 
         org.openscience.cdk.interfaces.IChemSequence chemSequence;
         org.openscience.cdk.interfaces.IChemModel chemModel;
-        org.openscience.cdk.interfaces.ISetOfMolecules setOfMolecules;
+        org.openscience.cdk.interfaces.IMoleculeSet setOfMolecules;
         for (int sequence = 0; sequence < chemFile.getChemSequenceCount(); sequence++) {
           chemSequence = chemFile.getChemSequence(sequence);
           for (int model = 0; model < chemSequence.getChemModelCount(); model++) {

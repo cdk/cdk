@@ -144,7 +144,7 @@ public class CopyPasteAction extends JCPAction{
 	                //translate the new structure a bit
 	                GeometryTools.translate2D(topaste, 25, 25,jcpModel.getRendererModel().getRenderingCoordinates()); //in pixels
 	                //paste the new structure into the active model
-	                org.openscience.cdk.interfaces.ISetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+	                org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
 	                if (moleculeSet == null) {
 	                    moleculeSet = new SetOfMolecules();
 		                chemModel.setSetOfMolecules(moleculeSet);

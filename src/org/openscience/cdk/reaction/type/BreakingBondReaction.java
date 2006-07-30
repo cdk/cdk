@@ -13,7 +13,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -112,7 +112,7 @@ public class BreakingBondReaction implements IReactionProcess{
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
+	public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: BreakingBondReaction");
 		
@@ -157,7 +157,7 @@ public class BreakingBondReaction implements IReactionProcess{
 					reactantCloned.getBondAt(bond).setOrder(order - 1);
 		
 					int charge = 0;
-					ISetOfMolecules setOfMolecules = null;
+					IMoleculeSet setOfMolecules = null;
 					if (j == 0){
 						charge = reactantCloned.getAtomAt(atom1).getFormalCharge();
 						reactantCloned.getAtomAt(atom1).setFormalCharge(charge+1);
@@ -206,7 +206,7 @@ public class BreakingBondReaction implements IReactionProcess{
 	 * @param bond           Bond to remove
 	 * @return               The ISetOfMolecules
 	 */
-	private ISetOfMolecules fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
+	private IMoleculeSet fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
 		if(!GeometryTools.has2DCoordinates(molecule)){
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			sdg.setMolecule(molecule);
@@ -217,7 +217,7 @@ public class BreakingBondReaction implements IReactionProcess{
 				e.printStackTrace();
 			}
 		}
-		ISetOfMolecules setOfFragments = molecule.getBuilder().newSetOfMolecules();
+		IMoleculeSet setOfFragments = molecule.getBuilder().newSetOfMolecules();
 		IMolecule molecule1,molecule2;
 		try {
 			molecule1 = (IMolecule)molecule.clone();

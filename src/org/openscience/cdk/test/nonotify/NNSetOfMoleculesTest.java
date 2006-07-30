@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.SetOfMoleculesTest;
 
@@ -56,7 +56,7 @@ public class NNSetOfMoleculesTest extends SetOfMoleculesTest {
     
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ISetOfMolecules chemObject = builder.newSetOfMolecules();
+        IMoleculeSet chemObject = builder.newSetOfMolecules();
         chemObject.addListener(listener);
         
         chemObject.addMolecule(builder.newMolecule());

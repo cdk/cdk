@@ -54,7 +54,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -306,7 +306,7 @@ public class SmilesGenerator
 	 */
 	public synchronized String createSMILES(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
-		ISetOfMolecules moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
 		if (moleculeSet.getMoleculeCount() > 1)
 		{
 			StringBuffer fullSMILES = new StringBuffer();

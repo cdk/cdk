@@ -236,7 +236,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new SetOfAtomContainers();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfMolecules newSetOfMolecules() {
+	public org.openscience.cdk.interfaces.IMoleculeSet newSetOfMolecules() {
 		return new SetOfMolecules();
 	}
 

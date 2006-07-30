@@ -11,7 +11,7 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -111,7 +111,7 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public ISetOfReactions initiate(ISetOfMolecules reactants, ISetOfMolecules agents) throws CDKException{
+	public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RearrangementAnion3Reaction");
 		

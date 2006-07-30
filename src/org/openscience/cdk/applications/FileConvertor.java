@@ -56,7 +56,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.IChemObjectIO;
@@ -609,7 +609,7 @@ public class FileConvertor {
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
-            ISetOfMolecules som = cm.getSetOfMolecules();
+            IMoleculeSet som = cm.getSetOfMolecules();
             if (som != null) {
                 write(som, outputFilename);
             }
@@ -624,7 +624,7 @@ public class FileConvertor {
         }
     }
 
-    private void write(ISetOfMolecules som, String outputFilename) throws IOException {
+    private void write(IMoleculeSet som, String outputFilename) throws IOException {
         try {
 	        if (apply2DCleanup) {
 				logger.info("Creating 2D coordinates");
@@ -645,7 +645,7 @@ public class FileConvertor {
             cow.write(som);
         } catch (CDKException exception) {
             int count = som.getMoleculeCount();
-            boolean needMoreFiles = (cow.accepts(ISetOfMolecules.class)) && (count > 1);
+            boolean needMoreFiles = (cow.accepts(IMoleculeSet.class)) && (count > 1);
             logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {

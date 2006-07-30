@@ -215,7 +215,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel));
 			} else
 			{
-				org.openscience.cdk.interfaces.ISetOfMolecules som = chemModel.getSetOfMolecules();
+				org.openscience.cdk.interfaces.IMoleculeSet som = chemModel.getSetOfMolecules();
 				if (som != null)
 				{
 					logger.debug("no mols in som: ", som.getMoleculeCount());

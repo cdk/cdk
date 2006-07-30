@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  */
 public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
-    implements ISetOfMolecules {
+    implements IMoleculeSet {
 
     private static final long serialVersionUID = -2925577323304207688L;
     
@@ -222,7 +222,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		super.addMolecule(molecule);
 	}
 
-	public void add(ISetOfMolecules moleculeSet) {
+	public void add(IMoleculeSet moleculeSet) {
 		logger.debug("Adding set of molecules: ", moleculeSet);
 		super.add(moleculeSet);
 	}

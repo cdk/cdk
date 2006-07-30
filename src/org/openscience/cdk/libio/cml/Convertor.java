@@ -204,11 +204,11 @@ public class Convertor {
         return reactionList;
     }
 
-    public CMLList cdkSetOfMoleculesToCMLList(ISetOfMolecules moleculeSet) {
+    public CMLList cdkSetOfMoleculesToCMLList(IMoleculeSet moleculeSet) {
         return cdkSetOfMoleculesToCMLList(moleculeSet, true);
     }
 
-    private CMLList cdkSetOfMoleculesToCMLList(ISetOfMolecules moleculeSet, boolean setIDs) {
+    private CMLList cdkSetOfMoleculesToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
         CMLList cmlList = new CMLList();
 
         if (useCMLIDs && setIDs) {

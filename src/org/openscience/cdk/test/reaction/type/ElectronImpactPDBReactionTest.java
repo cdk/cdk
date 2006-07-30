@@ -12,7 +12,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
@@ -53,7 +53,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 			}
 		}
 		
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
@@ -85,7 +85,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		Molecule reactant = (new SmilesParser()).parseSmiles("C=CC");
 		
 		
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
@@ -115,7 +115,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
 		
 			
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();

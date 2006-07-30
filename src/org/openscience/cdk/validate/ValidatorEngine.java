@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -193,7 +193,7 @@ public class ValidatorEngine implements IValidator {
         if (reactionSet != null) {
             report.addReport(validateSetOfReactions(reactionSet));
         }
-        ISetOfMolecules moleculeSet = subject.getSetOfMolecules();
+        IMoleculeSet moleculeSet = subject.getSetOfMolecules();
         if (moleculeSet != null) {
             report.addReport(validateSetOfMolecules(moleculeSet));
         }
@@ -322,7 +322,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
-    public ValidationReport validateSetOfMolecules(ISetOfMolecules subject) {
+    public ValidationReport validateSetOfMolecules(IMoleculeSet subject) {
         logger.info("Validating org.openscience.cdk.SetOfMolecules");
         ValidationReport report = new ValidationReport();
         // apply validators

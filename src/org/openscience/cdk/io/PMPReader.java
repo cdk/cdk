@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
@@ -76,7 +76,7 @@ public class PMPReader extends DefaultChemObjectReader {
     private LoggingTool logger;
 
     /* Keep a copy of the PMP model */
-    private ISetOfMolecules som;
+    private IMoleculeSet som;
     private IChemModel modelModel;
     private IMolecule molecule;
     private IChemObject chemObject;

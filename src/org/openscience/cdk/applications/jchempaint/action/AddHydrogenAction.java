@@ -37,7 +37,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
@@ -138,7 +138,7 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.IChemModel model)
 	{
-		ISetOfMolecules som = model.getSetOfMolecules();
+		IMoleculeSet som = model.getSetOfMolecules();
 		org.openscience.cdk.interfaces.ISetOfReactions sor = model.getSetOfReactions();
 		if (som != null)
 		{
@@ -159,7 +159,7 @@ public class AddHydrogenAction extends JCPAction
 	 *
 	 *@param  som  The feature to be added to the HydrogenToAllMolecules attribute
 	 */
-	private void addHydrogenToAllMolecules(ISetOfMolecules som)
+	private void addHydrogenToAllMolecules(IMoleculeSet som)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();

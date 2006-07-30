@@ -45,7 +45,7 @@ import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -181,7 +181,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -196,8 +196,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * @see org.openscience.cdk.ChemFile
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof ISetOfMolecules) {
-			writeSetOfMolecules((ISetOfMolecules)object);
+		if (object instanceof IMoleculeSet) {
+			writeSetOfMolecules((IMoleculeSet)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
 		} else if (object instanceof IMolecule) {
@@ -223,7 +223,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
-	private void writeSetOfMolecules(ISetOfMolecules som)
+	private void writeSetOfMolecules(IMoleculeSet som)
 	{
 		IMolecule[] molecules = som.getMolecules();
 		for (int i = 0; i < som.getMoleculeCount(); i++)

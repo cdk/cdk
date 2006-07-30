@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -509,7 +509,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertEquals(1, sequence.getChemModelCount());
             IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
-            ISetOfMolecules moleculeSet = chemModel.getSetOfMolecules();
+            IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
             mol = moleculeSet.getMolecule(0);

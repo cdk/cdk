@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * @cdk.module standard
@@ -130,8 +130,8 @@ public class ReactionManipulator {
         return container;
     }
     
-    public static ISetOfMolecules getAllMolecules(IReaction reaction) {
-        ISetOfMolecules moleculeSet = reaction.getBuilder().newSetOfMolecules();
+    public static IMoleculeSet getAllMolecules(IReaction reaction) {
+        IMoleculeSet moleculeSet = reaction.getBuilder().newSetOfMolecules();
         IMolecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             moleculeSet.addMolecule(reactants[i]);

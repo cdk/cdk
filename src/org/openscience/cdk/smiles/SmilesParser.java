@@ -39,7 +39,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -142,7 +142,7 @@ public class SmilesParser {
 
 		// add reactants
 		IMolecule reactantContainer = parseSmiles(reactantSmiles);
-		ISetOfMolecules reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
+		IMoleculeSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
 		IMolecule[] reactants = reactantSet.getMolecules();
 		for (int i = 0; i < reactants.length; i++)
 		{
@@ -153,7 +153,7 @@ public class SmilesParser {
 		if (agentSmiles.length() > 0)
 		{
 			IMolecule agentContainer = parseSmiles(agentSmiles);
-			ISetOfMolecules agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
+			IMoleculeSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
 			IMolecule[] agents = agentSet.getMolecules();
 			for (int i = 0; i < agents.length; i++)
 			{
@@ -163,7 +163,7 @@ public class SmilesParser {
 
 		// add products
 		IMolecule productContainer = parseSmiles(productSmiles);
-		ISetOfMolecules productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
+		IMoleculeSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
 		IMolecule[] products = productSet.getMolecules();
 		for (int i = 0; i < products.length; i++)
 		{

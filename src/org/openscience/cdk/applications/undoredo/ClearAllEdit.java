@@ -5,7 +5,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 
 public class ClearAllEdit extends AbstractUndoableEdit {
@@ -13,10 +13,10 @@ public class ClearAllEdit extends AbstractUndoableEdit {
     private static final long serialVersionUID = -9022673628051651034L;
     
     private IChemModel chemModel;
-	private ISetOfMolecules som;
+	private IMoleculeSet som;
 	private ISetOfReactions sor;
 
-	public ClearAllEdit(IChemModel chemModel, ISetOfMolecules som, ISetOfReactions sor) {
+	public ClearAllEdit(IChemModel chemModel, IMoleculeSet som, ISetOfReactions sor) {
 		this.chemModel = chemModel;
 		this.som=som;
 		this.sor=sor;

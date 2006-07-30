@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -143,12 +143,12 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public ISetOfMolecules getSetOfMolecules() {
+	public IMoleculeSet getSetOfMolecules() {
 		logger.debug("Getting setOfMolecules: ", super.getSetOfMolecules());
 		return super.getSetOfMolecules();
 	}
 
-	public void setSetOfMolecules(ISetOfMolecules setOfMolecules) {
+	public void setSetOfMolecules(IMoleculeSet setOfMolecules) {
 		logger.debug("Setting setOfMolecules: ", setOfMolecules);
 		super.setSetOfMolecules(setOfMolecules);
 	}

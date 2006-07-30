@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 //import org.openscience.cdk.tools.LoggingTool;
@@ -107,7 +107,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
-			if (ISetOfMolecules.class.equals(interfaces[i])) return true;
+			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -115,15 +115,15 @@ public class HINWriter extends DefaultChemObjectWriter {
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {
-                ISetOfMolecules som = object.getBuilder().newSetOfMolecules();
+                IMoleculeSet som = object.getBuilder().newSetOfMolecules();
                 som.addMolecule((IMolecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {
                 throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
-        } else if (object instanceof ISetOfMolecules) {
+        } else if (object instanceof IMoleculeSet) {
             try {
-                writeMolecule((ISetOfMolecules)object);
+                writeMolecule((IMoleculeSet)object);
             } catch (IOException ex) {
                 //
             }
@@ -138,7 +138,7 @@ public class HINWriter extends DefaultChemObjectWriter {
      * as well
      * @param mol the Molecule to write
      */
-    private void writeMolecule(ISetOfMolecules som) throws IOException {
+    private void writeMolecule(IMoleculeSet som) throws IOException {
 
         //int na = 0;
         //String info = "";

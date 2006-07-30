@@ -78,7 +78,7 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
             org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
@@ -107,7 +107,7 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
             org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
@@ -136,7 +136,7 @@ public class HINReaderTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            org.openscience.cdk.interfaces.ISetOfMolecules som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
             assertNotNull(som);
             assertEquals(3, som.getMoleculeCount());
         } catch (Exception e) {

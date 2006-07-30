@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  * @author      egonw
  * @cdk.created 2005-08-25
  */
-public interface ISetOfMolecules extends ISetOfAtomContainers {
+public interface IMoleculeSet extends ISetOfAtomContainers {
 
     /**
      * Adds an IMolecule to this container.
@@ -44,7 +44,7 @@ public interface ISetOfMolecules extends ISetOfAtomContainers {
      *
      * @param  moleculeSet  The SetOfMolecules to add
      */
-    public void add(ISetOfMolecules moleculeSet);
+    public void add(IMoleculeSet moleculeSet);
     
     /**
      * Sets the molecules in the ISetOfMolecules, removing previously added

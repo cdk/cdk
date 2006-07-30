@@ -12,7 +12,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -54,7 +54,7 @@ public class RearrangementCation2ReactionTest extends CDKTestCase {
 	 */
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*[C+]-C=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -87,7 +87,7 @@ public class RearrangementCation2ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*[C+]-C=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -124,7 +124,7 @@ public class RearrangementCation2ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*[C+]-C=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);

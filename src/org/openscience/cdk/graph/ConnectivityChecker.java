@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -101,12 +101,12 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static ISetOfMolecules partitionIntoMolecules(IAtomContainer atomContainer) {
+	public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IElectronContainer eContainer = null;
 		IMolecule molecule = null;
-		ISetOfMolecules molecules = atomContainer.getBuilder().newSetOfMolecules();
+		IMoleculeSet molecules = atomContainer.getBuilder().newSetOfMolecules();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{

@@ -12,7 +12,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -54,7 +54,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
@@ -104,7 +104,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testBB_ManuallyPutCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
@@ -137,7 +137,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testBB_MappingFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();

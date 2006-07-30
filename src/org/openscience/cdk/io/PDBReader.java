@@ -54,7 +54,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -196,7 +196,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		// initialize all containers
 		IChemSequence oSeq = oFile.getBuilder().newChemSequence();
 		IChemModel oModel = oFile.getBuilder().newChemModel();
-		ISetOfMolecules oSet = oFile.getBuilder().newSetOfMolecules();
+		IMoleculeSet oSet = oFile.getBuilder().newSetOfMolecules();
 		
 		// some variables needed
 		String cCol;

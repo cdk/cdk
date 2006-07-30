@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
-import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.ISetOfReactions;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -178,7 +178,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         type.setParameters(paramsR);
         
         
-        ISetOfMolecules setOfReactants = ac.getBuilder().newSetOfMolecules();
+        IMoleculeSet setOfReactants = ac.getBuilder().newSetOfMolecules();
 		setOfReactants.addMolecule((IMolecule) ac);
         ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
         
