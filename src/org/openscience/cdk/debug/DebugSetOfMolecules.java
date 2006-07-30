@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -187,7 +187,7 @@ public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
 		super.addAtomContainer(atomContainer, multiplier);
 	}
 
-	public void add(ISetOfAtomContainers atomContainerSet) {
+	public void add(IAtomContainerSet atomContainerSet) {
 		logger.debug("Adding set of atom containers: ", atomContainerSet);
 		super.add(atomContainerSet);
 	}

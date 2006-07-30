@@ -37,7 +37,7 @@ import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -60,7 +60,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 
 	public void testFunctionalGroups() {
 		BitSet bitset = null;
-		ISetOfAtomContainers set = null;
+		IAtomContainerSet set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 			
@@ -82,7 +82,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 	
 	public void testFunctionalGroups_matchAll() {
 		BitSet bitset = null;
-		ISetOfAtomContainers set = null;
+		IAtomContainerSet set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 			
@@ -103,7 +103,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 	
 	public void testAminoAcids() {
 		BitSet bitset = null;
-		ISetOfAtomContainers set = null;
+		IAtomContainerSet set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 				

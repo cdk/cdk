@@ -30,7 +30,7 @@ package org.openscience.cdk.interfaces;
  * @author      egonw
  * @cdk.created 2005-08-25
  */
-public interface IMoleculeSet extends ISetOfAtomContainers {
+public interface IMoleculeSet extends IAtomContainerSet {
 
     /**
      * Adds an IMolecule to this container.

@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @cdk.keyword ring, set of
  */
-public interface IRingSet extends ISetOfAtomContainers {
+public interface IRingSet extends IAtomContainerSet {
 
 	/**
 	 * Checks - and returns 'true' - if a certain ring is already

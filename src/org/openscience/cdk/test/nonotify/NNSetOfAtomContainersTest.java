@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.SetOfAtomContainersTest;
 
@@ -56,7 +56,7 @@ public class NNSetOfAtomContainersTest extends SetOfAtomContainersTest {
     
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ISetOfAtomContainers chemObject = builder.newSetOfAtomContainers();
+        IAtomContainerSet chemObject = builder.newSetOfAtomContainers();
         chemObject.addListener(listener);
         
         chemObject.addAtomContainer(builder.newAtomContainer());

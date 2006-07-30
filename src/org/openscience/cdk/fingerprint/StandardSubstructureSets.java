@@ -1,6 +1,6 @@
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
@@ -12,12 +12,12 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class StandardSubstructureSets {
 
-	private static ISetOfAtomContainers functionalGroupSubstructureSet = null;
+	private static IAtomContainerSet functionalGroupSubstructureSet = null;
 	
 	/**
 	 * @return A set of the functional groups.
 	 */
-	public static ISetOfAtomContainers getFunctionalGroupSubstructureSet() throws Exception {
+	public static IAtomContainerSet getFunctionalGroupSubstructureSet() throws Exception {
 		if (functionalGroupSubstructureSet == null) {
 			functionalGroupSubstructureSet = new org.openscience.cdk.SetOfAtomContainers();
 			

@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -108,7 +108,7 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 
-		ISetOfAtomContainers setHI = null;
+		IAtomContainerSet setHI = null;
 
 		/* detect conjugated Pi systems*/
 		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
@@ -129,7 +129,7 @@ public class GasteigerPEPEPartialCharges {
 		
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR = new StructureResonanceGenerator();
-		ISetOfAtomContainers iSet = gR.getAllStructures(ac);
+		IAtomContainerSet iSet = gR.getAllStructures(ac);
 		if(setHI != null) 
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
@@ -250,9 +250,9 @@ public class GasteigerPEPEPartialCharges {
 	 * @throws ClassNotFoundException 
 	 * @throws IOException 
 	 */
-	private ISetOfAtomContainers getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
+	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
 		HydrogenAdder hAdder = new HydrogenAdder();
-		ISetOfAtomContainers set = ac.getBuilder().newSetOfAtomContainers();
+		IAtomContainerSet set = ac.getBuilder().newSetOfAtomContainers();
         try {
             IReactionProcess type = new BreakingBondReaction();
     		for(int k = 0; k < ac.getAtomCount(); k++){
@@ -419,7 +419,7 @@ public class GasteigerPEPEPartialCharges {
 	 *
 	 * @return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
-	private double[][] assignPiFactors(ISetOfAtomContainers setAc) {
+	private double[][] assignPiFactors(IAtomContainerSet setAc) {
 		//a,b,c,denom,chi,q
 		double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0).getAtomCount() * (STEP_SIZE+1))];
 		String AtomSymbol = "";
@@ -510,7 +510,7 @@ public class GasteigerPEPEPartialCharges {
 	 *
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
-	public double[][] assignrPiMarsilliFactors(ISetOfAtomContainers setAc) {
+	public double[][] assignrPiMarsilliFactors(IAtomContainerSet setAc) {
 		//a,b,c,denom,chi,q
 		double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0).getAtomCount() * (STEP_SIZE+1))];
 		String AtomSymbol = "";

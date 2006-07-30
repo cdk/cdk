@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -90,7 +90,7 @@ public class IDCreator {
      * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML.
      *
-     * @see #createIDs(ISetOfAtomContainers)
+     * @see #createIDs(IAtomContainerSet)
      */
     public void createIDs(IAtomContainer container) {
         if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);
@@ -122,7 +122,7 @@ public class IDCreator {
     }
 
     public void createIDs(IMoleculeSet containerSet) {
-    	createIDs((ISetOfAtomContainers)containerSet);
+    	createIDs((IAtomContainerSet)containerSet);
     }    
     
     /**
@@ -131,7 +131,7 @@ public class IDCreator {
      * them m1, m2, etc.
      * It will not the SetOfAtomContainers itself.
      */
-    public void createIDs(ISetOfAtomContainers containerSet) {
+    public void createIDs(IAtomContainerSet containerSet) {
         if (tabuList == null) tabuList = SetOfAtomContainersManipulator.getAllIDs(containerSet);
 
         if (containerSet.getID() == null) {

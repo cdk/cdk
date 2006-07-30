@@ -34,7 +34,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -51,7 +51,7 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 	}
 
 	public void testGetFunctionalGroupSubstructureSet() {
-		ISetOfAtomContainers set = null;
+		IAtomContainerSet set = null;
 		try {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 

@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
  * @cdk.module standard
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ISetOfAtomContainers;
  */
 public class SetOfAtomContainersManipulator {
     
-	public static int getAtomCount(ISetOfAtomContainers set) {
+	public static int getAtomCount(IAtomContainerSet set) {
 		int count = 0;
 		IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
@@ -55,7 +55,7 @@ public class SetOfAtomContainersManipulator {
         return count;
 	}
 	
-	public static int getBondCount(ISetOfAtomContainers set) {
+	public static int getBondCount(IAtomContainerSet set) {
 		int count = 0;
 		IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
@@ -64,7 +64,7 @@ public class SetOfAtomContainersManipulator {
         return count;
 	}
 	
-    public static void removeAtomAndConnectedElectronContainers(ISetOfAtomContainers set, IAtom atom) {
+    public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
         IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
             IAtomContainer container = acs[i];
@@ -82,7 +82,7 @@ public class SetOfAtomContainersManipulator {
         }
     }
     
-    public static void removeElectronContainer(ISetOfAtomContainers set, IElectronContainer electrons) {
+    public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
         IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
             IAtomContainer container = acs[i];
@@ -109,7 +109,7 @@ public class SetOfAtomContainersManipulator {
      * @deprecated This method has a serious performace impact. Try to use
      *   other methods.
      */
-    public static IAtomContainer getAllInOneContainer(ISetOfAtomContainers set) {
+    public static IAtomContainer getAllInOneContainer(IAtomContainerSet set) {
         IAtomContainer container = set.getBuilder().newAtomContainer();
         IAtomContainer[] acs = set.getAtomContainers();
         for (int i=0; i < acs.length; i++) {
@@ -121,14 +121,14 @@ public class SetOfAtomContainersManipulator {
 	/**
      * Returns all the AtomContainer's of a SetOfMolecules.
      */
-    public static IAtomContainer[] getAllAtomContainers(ISetOfAtomContainers set) {
+    public static IAtomContainer[] getAllAtomContainers(IAtomContainerSet set) {
 		return set.getAtomContainers();
     }
 	
 	/**
 	 * @return The summed charges of all atoms in this set.
 	 */
-	public static double getTotalCharge(ISetOfAtomContainers set) {
+	public static double getTotalCharge(IAtomContainerSet set) {
 		double charge = 0;
 		for (int i = 0; i < set.getAtomContainerCount(); i++) {
 			int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
@@ -141,7 +141,7 @@ public class SetOfAtomContainersManipulator {
 	/**
 	 * @return The summed formal charges of all atoms in this set.
 	 */
-	public static double getTotalFormalCharge(ISetOfAtomContainers set) {
+	public static double getTotalFormalCharge(IAtomContainerSet set) {
 		int charge = 0;
 		for (int i = 0; i < set.getAtomContainerCount(); i++) {
 			int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
@@ -154,7 +154,7 @@ public class SetOfAtomContainersManipulator {
 	/**
 	 * @return The summed implicit hydrogens of all atoms in this set.
 	 */
-	public static int getTotalHydrogenCount(ISetOfAtomContainers set) {
+	public static int getTotalHydrogenCount(IAtomContainerSet set) {
 		int hCount = 0;
 		for (int i = 0; i < set.getAtomContainerCount(); i++) {
 			hCount += AtomContainerManipulator.getTotalHydrogenCount(set.getAtomContainer(i));
@@ -162,7 +162,7 @@ public class SetOfAtomContainersManipulator {
 		return hCount;
 	}
 	
-    public static Vector getAllIDs(ISetOfAtomContainers set) {
+    public static Vector getAllIDs(IAtomContainerSet set) {
         Vector idList = new Vector();
         if (set != null) {
             if (set.getID() != null) idList.addElement(set.getID());
@@ -173,7 +173,7 @@ public class SetOfAtomContainersManipulator {
         return idList;
     }
     
-    public static void setAtomProperties(ISetOfAtomContainers set, Object propKey, Object propVal) {
+    public static void setAtomProperties(IAtomContainerSet set, Object propKey, Object propVal) {
         if (set != null) {
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
                 AtomContainerManipulator.setAtomProperties(set.getAtomContainer(i), propKey, propVal);
@@ -181,7 +181,7 @@ public class SetOfAtomContainersManipulator {
         }
     }
 
-    public static IAtomContainer getRelevantAtomContainer(ISetOfAtomContainers containerSet, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
         IAtomContainer[] containers = containerSet.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
             if (containers[i].contains(atom)) {
@@ -191,7 +191,7 @@ public class SetOfAtomContainersManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(ISetOfAtomContainers containerSet, IBond bond) {
+    public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
         IAtomContainer[] containers = containerSet.getAtomContainers();
         for (int i=0; i<containers.length; i++) {
             if (containers[i].contains(bond)) {
@@ -201,7 +201,7 @@ public class SetOfAtomContainersManipulator {
         return null;
     }
     
-    public static List getAllChemObjects(ISetOfAtomContainers set) {
+    public static List getAllChemObjects(IAtomContainerSet set) {
         ArrayList list = new ArrayList();
         list.add(set);
         IAtomContainer[] acs = set.getAtomContainers();

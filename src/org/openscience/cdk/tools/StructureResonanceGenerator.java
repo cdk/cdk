@@ -4,7 +4,7 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -111,10 +111,10 @@ public class StructureResonanceGenerator {
 	 * @param atomContainer The atomContainer to analize
 	 * @return The different resonance structures
 	 */
-	public ISetOfAtomContainers getStructures(IAtomContainer atomContainer) {
-		ISetOfAtomContainers setOfAC = atomContainer.getBuilder().newSetOfAtomContainers();
+	public IAtomContainerSet getStructures(IAtomContainer atomContainer) {
+		IAtomContainerSet setOfAC = atomContainer.getBuilder().newSetOfAtomContainers();
 		
-		ISetOfAtomContainers set = getAllStructures(atomContainer); 
+		IAtomContainerSet set = getAllStructures(atomContainer); 
 		/*analize sum of bonds */
 		double bondSum = 0;
 		for(int i = 0; i < atomContainer.getBondCount(); i++)
@@ -134,9 +134,9 @@ public class StructureResonanceGenerator {
 	 * @param atomContainer The atomContainer to analize
 	 * @return The different resonance structures
 	 */
-	public ISetOfAtomContainers getAllStructures(IAtomContainer atomContainer){
+	public IAtomContainerSet getAllStructures(IAtomContainer atomContainer){
 //		boolean overLoaded = false;
-		ISetOfAtomContainers setOfAtomContainer = atomContainer.getBuilder().newSetOfAtomContainers();
+		IAtomContainerSet setOfAtomContainer = atomContainer.getBuilder().newSetOfAtomContainers();
 		setOfAtomContainer.addAtomContainer(atomContainer);
 		Object[] params = new Object[1];
 		if(hasActiveCenter)
@@ -367,7 +367,7 @@ public class StructureResonanceGenerator {
 	 * @param atomContainer  IAtomContainer to search
 	 * @return   			 True, if the atomContainer is contained
 	 */
-	private boolean existAC(ISetOfAtomContainers set, IAtomContainer atomContainer) {
+	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
 		atomContainer = setID(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ac = setID(set.getAtomContainer(i));

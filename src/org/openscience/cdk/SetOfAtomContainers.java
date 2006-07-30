@@ -29,7 +29,7 @@ import java.io.Serializable;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
  * A set of AtomContainers.
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.ISetOfAtomContainers;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements Serializable, ISetOfAtomContainers, IChemObjectListener, Cloneable {
+public class SetOfAtomContainers extends ChemObject implements Serializable, IAtomContainerSet, IChemObjectListener, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -216,7 +216,7 @@ public class SetOfAtomContainers extends ChemObject implements Serializable, ISe
 	 *
 	 * @param  atomContainerSet  The SetOfAtomContainers
 	 */
-	public void add(org.openscience.cdk.interfaces.ISetOfAtomContainers atomContainerSet) {
+	public void add(org.openscience.cdk.interfaces.IAtomContainerSet atomContainerSet) {
 		org.openscience.cdk.interfaces.IAtomContainer[] mols = atomContainerSet.getAtomContainers();
 		for (int i = 0; i < mols.length; i++) {
 			addAtomContainer(mols[i]);

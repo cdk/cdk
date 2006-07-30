@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -260,7 +260,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugRingSet();
 	}
 
-	public ISetOfAtomContainers newSetOfAtomContainers() {
+	public IAtomContainerSet newSetOfAtomContainers() {
 		return new DebugSetOfAtomContainers();
 	}
 

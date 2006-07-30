@@ -232,7 +232,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new RingSet();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfAtomContainers newSetOfAtomContainers() {
+	public org.openscience.cdk.interfaces.IAtomContainerSet newSetOfAtomContainers() {
 		return new SetOfAtomContainers();
 	}
 

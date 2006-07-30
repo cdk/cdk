@@ -32,7 +32,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -190,7 +190,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	        		continue;
 	        	
 	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false);
-	    		ISetOfAtomContainers setOfResonance = gRI.getAllStructures(product);
+	    		IAtomContainerSet setOfResonance = gRI.getAllStructures(product);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
 	    			continue;
 	    		

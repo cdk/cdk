@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfAtomContainers;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
@@ -147,7 +147,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    channelElement.addAttribute(new Attribute("rdf:about",NS_RDF,about));
 		    rdfElement.appendChild(channelElement);
 		    List l=new Vector();
-		    if(object instanceof ISetOfAtomContainers){
+		    if(object instanceof IAtomContainerSet){
 		    	for(int i=0;i<((SetOfAtomContainers)object).getAtomContainerCount();i++){
 		    		l.add(((SetOfAtomContainers)object).getAtomContainer(i));
 		    	}
