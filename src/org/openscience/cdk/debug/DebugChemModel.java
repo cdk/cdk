@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -173,12 +173,12 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		super.setCrystal(crystal);
 	}
 
-	public ISetOfReactions getSetOfReactions() {
+	public IReactionSet getSetOfReactions() {
 		logger.debug("Getting setOfReactions: ", super.getSetOfReactions());
 		return super.getSetOfReactions();
 	}
 
-	public void setSetOfReactions(ISetOfReactions sor) {
+	public void setSetOfReactions(IReactionSet sor) {
 		logger.debug("Setting setOfReactions: ", sor);
 		super.setSetOfReactions(sor);
 	}

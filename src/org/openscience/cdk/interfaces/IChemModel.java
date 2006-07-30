@@ -86,7 +86,7 @@ public interface IChemModel extends IChemObject {
      * @return The SetOfReactions in this model
      * @see      #setSetOfReactions
      */
-    public ISetOfReactions getSetOfReactions();
+    public IReactionSet getSetOfReactions();
 
     /**
      * Sets the SetOfReactions contained in this ChemModel.
@@ -94,7 +94,7 @@ public interface IChemModel extends IChemObject {
      * @param sor the SetOfReactions to store in this model
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(ISetOfReactions sor);
+    public void setSetOfReactions(IReactionSet sor);
     
 }
 

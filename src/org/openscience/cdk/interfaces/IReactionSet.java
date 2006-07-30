@@ -31,7 +31,7 @@ package org.openscience.cdk.interfaces;
  *
  * @cdk.keyword reaction
  */
-public interface ISetOfReactions extends IChemObject {
+public interface IReactionSet extends IChemObject {
 
 	/**
 	 * Adds an reaction to this container.

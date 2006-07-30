@@ -53,7 +53,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -316,8 +316,8 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 		return object;
 	}
 
-	public ISetOfReactions newSetOfReactions() {
-		ISetOfReactions object = new NNSetOfReactions();
+	public IReactionSet newSetOfReactions() {
+		IReactionSet object = new NNSetOfReactions();
 		return object;
 	}
 	

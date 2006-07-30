@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -174,7 +174,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemSequence.class.equals(interfaces[i])) return true;
 			if (IMoleculeSet.class.equals(interfaces[i])) return true;
-			if (ISetOfReactions.class.equals(interfaces[i])) return true;
+			if (IReactionSet.class.equals(interfaces[i])) return true;
 			if (IReaction.class.equals(interfaces[i])) return true;
 		}
 		return false;
@@ -189,7 +189,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         if (object instanceof IMolecule) {
         } else if (object instanceof IAtomContainer) {
         } else if (object instanceof IReaction) {
-        } else if (object instanceof ISetOfReactions) {
+        } else if (object instanceof IReactionSet) {
         } else if (object instanceof IMoleculeSet) {
         } else if (object instanceof IChemSequence) {
         } else if (object instanceof IChemModel) {
@@ -220,8 +220,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkBondToCMLBond((IBond)object);
         } else if (object instanceof IReaction) {
         	root = convertor.cdkReactionToCMLReaction((IReaction)object);
-        } else if (object instanceof ISetOfReactions) {
-        	root = convertor.cdkSetOfReactionsToCMLReactionList((ISetOfReactions)object);
+        } else if (object instanceof IReactionSet) {
+        	root = convertor.cdkSetOfReactionsToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IMoleculeSet) {
         	root = convertor.cdkSetOfMoleculesToCMLList((IMoleculeSet)object);
         } else if (object instanceof IChemSequence) {

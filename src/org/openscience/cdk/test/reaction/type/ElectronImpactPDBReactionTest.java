@@ -13,7 +13,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -59,7 +59,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		IReactionProcess type  = new ElectronImpactPDBReaction();
         Object[] params = {Boolean.TRUE};
         type.setParameters(params);
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(2, setOfReactions.getReactionCount());
 
@@ -91,7 +91,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		IReactionProcess type  = new ElectronImpactPDBReaction();
 //        Object[] params = {false};
 //        type.setParameters(params);
-		ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
 		Assert.assertEquals(2, setOfReactions.getReactionCount());
 
@@ -121,7 +121,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		IReactionProcess type  = new ElectronImpactPDBReaction();
         Object[] params = {Boolean.FALSE};
         type.setParameters(params);
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(2, setOfReactions.getReactionCount());
 

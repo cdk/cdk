@@ -6,7 +6,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -154,7 +154,7 @@ public class StructureResonanceGenerator {
 			        type.setParameters(params);
 					
 			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
@@ -203,7 +203,7 @@ public class StructureResonanceGenerator {
 			        type.setParameters(params);
 					
 			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
@@ -252,7 +252,7 @@ public class StructureResonanceGenerator {
 			        type.setParameters(params);
 					
 			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
@@ -301,7 +301,7 @@ public class StructureResonanceGenerator {
 			        type.setParameters(params);
 
 			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
@@ -333,7 +333,7 @@ public class StructureResonanceGenerator {
 			        type.setParameters(params);
 
 			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 			        
 			        if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)

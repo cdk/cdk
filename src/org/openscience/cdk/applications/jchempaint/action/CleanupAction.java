@@ -128,7 +128,7 @@ public class CleanupAction extends JCPAction
                 UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
                 jcpPanel.getUndoSupport().postEdit(edit);
 			}
-			org.openscience.cdk.interfaces.ISetOfReactions reactionSet = model.getSetOfReactions();
+			org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getSetOfReactions();
 			if (reactionSet != null)
 			{
 				SetOfReactions newSet = new SetOfReactions();

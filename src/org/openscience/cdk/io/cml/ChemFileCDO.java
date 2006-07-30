@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
@@ -64,7 +64,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private IMoleculeSet currentSetOfMolecules;
     private IChemModel currentChemModel;
     private IChemSequence currentChemSequence;
-    private ISetOfReactions currentSetOfReactions;
+    private IReactionSet currentSetOfReactions;
     private IReaction currentReaction;
     private IAtom currentAtom;
     private Hashtable atomEnumeration;

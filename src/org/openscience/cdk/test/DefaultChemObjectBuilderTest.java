@@ -57,7 +57,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -534,7 +534,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ISetOfReactions);
+		assertTrue(object instanceof IReactionSet);
 	}
 
 	public void testNewSingleElectron() {

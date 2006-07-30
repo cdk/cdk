@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module standard
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  */
 public class SetOfReactionsManipulator {
     
-    public static int getAtomCount(ISetOfReactions set) {
+    public static int getAtomCount(IReactionSet set) {
     	int count = 0;
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
@@ -55,7 +55,7 @@ public class SetOfReactionsManipulator {
         return count;
     }
 
-    public static int getBondCount(ISetOfReactions set) {
+    public static int getBondCount(IReactionSet set) {
     	int count = 0;
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
@@ -64,7 +64,7 @@ public class SetOfReactionsManipulator {
         return count;
     }
 
-    public static void removeAtomAndConnectedElectronContainers(ISetOfReactions set, IAtom atom) {
+    public static void removeAtomAndConnectedElectronContainers(IReactionSet set, IAtom atom) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -72,7 +72,7 @@ public class SetOfReactionsManipulator {
         }
     }
     
-    public static void removeElectronContainer(ISetOfReactions set, IElectronContainer electrons) {
+    public static void removeElectronContainer(IReactionSet set, IElectronContainer electrons) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -84,7 +84,7 @@ public class SetOfReactionsManipulator {
      * @deprecated This method has a serious performace impact. Try to use
      *   other methods.
      */
-    public static IAtomContainer getAllInOneContainer(ISetOfReactions set) {
+    public static IAtomContainer getAllInOneContainer(IReactionSet set) {
         IAtomContainer container = set.getBuilder().newAtomContainer();
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
@@ -94,7 +94,7 @@ public class SetOfReactionsManipulator {
         return container;
     }
     
-    public static IMoleculeSet getAllMolecules(ISetOfReactions set) {
+    public static IMoleculeSet getAllMolecules(IReactionSet set) {
         IMoleculeSet moleculeSet = set.getBuilder().newSetOfMolecules();
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
@@ -104,7 +104,7 @@ public class SetOfReactionsManipulator {
         return moleculeSet;
     }
     
-    public static Vector getAllIDs(ISetOfReactions set) {
+    public static Vector getAllIDs(IReactionSet set) {
         Vector IDlist = new Vector();
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
@@ -117,13 +117,13 @@ public class SetOfReactionsManipulator {
     /**
      * Returns all the AtomContainer's of a Reaction.
      */
-    public static IAtomContainer[] getAllAtomContainers(ISetOfReactions set) {
+    public static IAtomContainer[] getAllAtomContainers(IReactionSet set) {
 		return SetOfMoleculesManipulator.getAllAtomContainers(
             getAllMolecules(set)
         );
     }
     
-    public static IReaction getRelevantReaction(ISetOfReactions set, IAtom atom) {
+    public static IReaction getRelevantReaction(IReactionSet set, IAtom atom) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -135,7 +135,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static IReaction getRelevantReaction(ISetOfReactions set, IBond bond) {
+    public static IReaction getRelevantReaction(IReactionSet set, IBond bond) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -147,7 +147,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(ISetOfReactions set, IAtom atom) {
+    public static IAtomContainer getRelevantAtomContainer(IReactionSet set, IAtom atom) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -159,7 +159,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
 
-    public static IAtomContainer getRelevantAtomContainer(ISetOfReactions set, IBond bond) {
+    public static IAtomContainer getRelevantAtomContainer(IReactionSet set, IBond bond) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -171,7 +171,7 @@ public class SetOfReactionsManipulator {
         return null;
     }
     
-    public static void setAtomProperties(ISetOfReactions set, Object propKey, Object propVal) {
+    public static void setAtomProperties(IReactionSet set, Object propKey, Object propVal) {
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];
@@ -179,7 +179,7 @@ public class SetOfReactionsManipulator {
         }
     }
     
-    public static List getAllChemObjects(ISetOfReactions set) {
+    public static List getAllChemObjects(IReactionSet set) {
         ArrayList list = new ArrayList();
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {

@@ -240,7 +240,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new SetOfMolecules();
 	}
 
-	public org.openscience.cdk.interfaces.ISetOfReactions newSetOfReactions() {
+	public org.openscience.cdk.interfaces.IReactionSet newSetOfReactions() {
 		return new SetOfReactions();
 	}
 	

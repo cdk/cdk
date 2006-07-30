@@ -34,7 +34,7 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.exception.CDKException;
@@ -106,7 +106,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
              return readReaction(object.getBuilder());
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newChemModel();
-             ISetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
+             IReactionSet reactionSet = object.getBuilder().newSetOfReactions();
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;

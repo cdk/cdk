@@ -10,7 +10,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -62,7 +62,7 @@ public class HyperconjugationReactionTest extends CDKTestCase {
         type.setParameters(params);
         
         /* iniciate */
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());

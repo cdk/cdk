@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module datadebug
  */
 public class DebugSetOfReactions extends org.openscience.cdk.SetOfReactions
-    implements ISetOfReactions {
+    implements IReactionSet {
 
     private static final long serialVersionUID = 1620489912540131959L;
     

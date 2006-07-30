@@ -13,7 +13,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -64,7 +64,7 @@ public class RearrangementAnion1ReactionTest extends CDKTestCase {
         type.setParameters(params);
         
         /* iniciate */
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -98,7 +98,7 @@ public class RearrangementAnion1ReactionTest extends CDKTestCase {
         type.setParameters(params);
         
         /* iniciate */
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -130,7 +130,7 @@ public class RearrangementAnion1ReactionTest extends CDKTestCase {
         type.setParameters(params);
         
         /* iniciate */
-        ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 

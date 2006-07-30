@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -189,7 +189,7 @@ public class ValidatorEngine implements IValidator {
         if (crystal != null) {
             report.addReport(validateCrystal(crystal));
         }
-        ISetOfReactions reactionSet = subject.getSetOfReactions();
+        IReactionSet reactionSet = subject.getSetOfReactions();
         if (reactionSet != null) {
             report.addReport(validateSetOfReactions(reactionSet));
         }
@@ -340,7 +340,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
-    public ValidationReport validateSetOfReactions(ISetOfReactions subject) {
+    public ValidationReport validateSetOfReactions(IReactionSet subject) {
         logger.info("Validating org.openscience.cdk.SetOfReactions");
         ValidationReport report = new ValidationReport();
         // apply validators

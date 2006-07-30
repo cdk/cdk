@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * Abstract validator that does nothing but provide all the methods that the
@@ -113,7 +113,7 @@ public class AbstractValidator implements IValidator {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateSetOfReactions(ISetOfReactions subject) {
+    public ValidationReport validateSetOfReactions(IReactionSet subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

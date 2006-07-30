@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /** 
  * An object containig multiple SetOfMolecules and 
@@ -62,7 +62,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	/**
 	 *  A SetOfReactions.
 	 */
-	protected ISetOfReactions setOfReactions = null;
+	protected IReactionSet setOfReactions = null;
 
 	/**
 	 *  A RingSet.
@@ -164,7 +164,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see      #setSetOfReactions
      */
-    public ISetOfReactions getSetOfReactions() {
+    public IReactionSet getSetOfReactions() {
         return this.setOfReactions;
     }
 
@@ -175,7 +175,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      *
      * @see       #getSetOfReactions
      */
-    public void setSetOfReactions(ISetOfReactions sor) {
+    public void setSetOfReactions(IReactionSet sor) {
         this.setOfReactions = sor;
 	this.setOfReactions.addListener(this);
 	notifyChanged();
@@ -227,7 +227,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (ISetOfReactions)((SetOfReactions)setOfReactions).clone();
+            clone.setOfReactions = (IReactionSet)((SetOfReactions)setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }

@@ -2,7 +2,7 @@ package org.openscience.cdk.reaction;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * Classes that implement this interface are Reactions types.
@@ -74,6 +74,6 @@ public interface IReactionProcess {
      * @throws CDKException if an error occurs during the reaction process. 
      * See documentation for individual reaction processes
      */
-    public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException;
+    public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException;
 
 }

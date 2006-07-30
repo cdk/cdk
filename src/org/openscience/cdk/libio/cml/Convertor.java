@@ -185,11 +185,11 @@ public class Convertor {
         return cmlList;
     }
 
-    public CMLReactionList cdkSetOfReactionsToCMLReactionList(ISetOfReactions reactionSet) {
+    public CMLReactionList cdkSetOfReactionsToCMLReactionList(IReactionSet reactionSet) {
         return cdkSetOfReactionsToCMLReactionList(reactionSet, true);
     }
 
-    private CMLReactionList cdkSetOfReactionsToCMLReactionList(ISetOfReactions reactionSet, boolean setIDs) {
+    private CMLReactionList cdkSetOfReactionsToCMLReactionList(IReactionSet reactionSet, boolean setIDs) {
         CMLReactionList reactionList = new CMLReactionList();
 
         if (useCMLIDs && setIDs) {

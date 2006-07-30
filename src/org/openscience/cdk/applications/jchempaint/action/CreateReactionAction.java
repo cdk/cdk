@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
@@ -67,7 +67,7 @@ public class CreateReactionAction extends JCPAction
 		logger.debug("CreateReaction action");
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		IChemModel model = jcpmodel.getChemModel();
-		ISetOfReactions reactionSet = model.getSetOfReactions();
+		IReactionSet reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{
 			reactionSet = model.getBuilder().newSetOfReactions();
@@ -212,7 +212,7 @@ public class CreateReactionAction extends JCPAction
 	 *@param  reactionSet  Description of the Parameter
 	 *@return              The reactionIDs value
 	 */
-	private Object[] getReactionIDs(ISetOfReactions reactionSet)
+	private Object[] getReactionIDs(IReactionSet reactionSet)
 	{
 		if (reactionSet != null)
 		{
@@ -237,7 +237,7 @@ public class CreateReactionAction extends JCPAction
 	 *@param  id           Description of the Parameter
 	 *@return              The reaction value
 	 */
-	private org.openscience.cdk.interfaces.IReaction getReaction(org.openscience.cdk.interfaces.ISetOfReactions reactionSet, String id)
+	private org.openscience.cdk.interfaces.IReaction getReaction(org.openscience.cdk.interfaces.IReactionSet reactionSet, String id)
 	{
 		org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)

@@ -12,7 +12,7 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -112,7 +112,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public ISetOfReactions initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
+	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RearrangementRadical2Reaction");
 		
@@ -123,7 +123,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 			throw new CDKException("RearrangementRadical2Reaction don't expects agents");
 		}
 		
-		ISetOfReactions setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
 		IMolecule reactant = reactants.getMolecule(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

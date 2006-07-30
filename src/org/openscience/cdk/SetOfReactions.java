@@ -27,7 +27,7 @@ package org.openscience.cdk;
 import java.io.Serializable;
 
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 
 
 /** 
@@ -55,7 +55,7 @@ import org.openscience.cdk.interfaces.ISetOfReactions;
  * @cdk.keyword reaction
  * @cdk.keyword reaction
  */
-public class SetOfReactions extends ChemObject implements Serializable, ISetOfReactions, Cloneable
+public class SetOfReactions extends ChemObject implements Serializable, IReactionSet, Cloneable
 {
 
 	/**

@@ -425,7 +425,7 @@ public interface IChemObjectBuilder {
 	 * 
      * @return ISetOfReactions implementation defined for this IChemObjectBuilder
 	 */
-	public ISetOfReactions newSetOfReactions();
+	public IReactionSet newSetOfReactions();
 	
     /**
      * Constructs an single electron orbital with an associated IAtom.

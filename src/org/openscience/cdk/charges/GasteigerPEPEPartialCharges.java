@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISetOfAtomContainers;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
@@ -278,7 +278,7 @@ public class GasteigerPEPEPartialCharges {
     		Object[] params = {Boolean.TRUE};
     		
 			type.setParameters(params);
-			ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+			IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        for(int i = 0; i < setOfReactions.getReactionCount(); i++){
 	        	type = new HyperconjugationReaction();
 	    		IMoleculeSet setOfM2 = ac.getBuilder().newSetOfMolecules();
@@ -297,7 +297,7 @@ public class GasteigerPEPEPartialCharges {
 	    		setOfM2.addMolecule((IMolecule) mol);
 	    		Object[] params2 = {Boolean.FALSE};
 				type.setParameters(params2);
-				ISetOfReactions setOfReactions2 = type.initiate(setOfM2, null);
+				IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
 				if(setOfReactions2.getReactionCount() > 0){
 					
 				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);

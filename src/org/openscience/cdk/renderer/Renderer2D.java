@@ -149,7 +149,7 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  reactionSet  Description of the Parameter
 	 *@param  graphics     Description of the Parameter
 	 */
-	public void paintSetOfReactions(org.openscience.cdk.interfaces.ISetOfReactions reactionSet, Graphics2D graphics) {
+	public void paintSetOfReactions(org.openscience.cdk.interfaces.IReactionSet reactionSet, Graphics2D graphics) {
 		IReaction[] reactions = reactionSet.getReactions();
 		for (int i = 0; i < reactions.length; i++)
 		{

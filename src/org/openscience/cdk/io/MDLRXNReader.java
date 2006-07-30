@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -124,7 +124,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              return (IChemObject) readReaction(object.getBuilder());
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newChemModel();
-             ISetOfReactions reactionSet = object.getBuilder().newSetOfReactions();
+             IReactionSet reactionSet = object.getBuilder().newSetOfReactions();
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;

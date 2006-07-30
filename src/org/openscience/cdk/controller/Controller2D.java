@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -105,7 +105,7 @@ public class Controller2D extends SimpleController2D
 	 *@return    A Reaction if it is in a certain range of the given point
 	 */
 	IReaction getReactionInRange(int X, int Y) {
-		ISetOfReactions reactionSet = chemModel.getSetOfReactions();
+		IReactionSet reactionSet = chemModel.getSetOfReactions();
 		if (reactionSet != null)
 		{
 			// process reaction by reaction

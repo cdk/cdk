@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.ISetOfReactions;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -56,18 +56,18 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testSetOfReactions() {
-        ISetOfReactions reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newSetOfReactions();
         assertNotNull(reactionSet);
     }
     
 	public void testClone() throws Exception {
-        ISetOfReactions reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newSetOfReactions();
         Object clone = reactionSet.clone();
-        assertTrue(clone instanceof ISetOfReactions);
+        assertTrue(clone instanceof IReactionSet);
     }    
         
     public void testGetReactionCount() {
-		ISetOfReactions reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -76,14 +76,14 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testRemoveAllReactions(){
-  		ISetOfReactions reactionSet = builder.newSetOfReactions();
+  		IReactionSet reactionSet = builder.newSetOfReactions();
    		reactionSet.addReaction(builder.newReaction());
    		reactionSet.removeAllReactions();
    		assertEquals(0,reactionSet.getReactions().length);
     }
 
     public void testGetReactions() {
-		ISetOfReactions reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -98,7 +98,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testGetReaction_int() {
-		ISetOfReactions reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -110,7 +110,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testAddReaction_IReaction() {
-		ISetOfReactions reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
         IReaction third = builder.newReaction();
@@ -122,13 +122,13 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testClone_Reaction() throws Exception {
-		ISetOfReactions reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newSetOfReactions();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
 
-		ISetOfReactions clone = (ISetOfReactions)reactionSet.clone();
+		IReactionSet clone = (IReactionSet)reactionSet.clone();
 		assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
 		for (int f = 0; f < reactionSet.getReactionCount(); f++) {
 			for (int g = 0; g < clone.getReactionCount(); g++) {
@@ -143,7 +143,7 @@ public class SetOfReactionsTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        ISetOfReactions reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newSetOfReactions();
         String description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
