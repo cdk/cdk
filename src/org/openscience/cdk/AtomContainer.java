@@ -852,39 +852,6 @@ public class AtomContainer extends ChemObject
 	}
 
 
-
-	/**
-	 * Compares this AtomContainer with another given AtomContainer and returns
-	 * the Intersection between them. <p>
-	 * 
-	 * <b>Important Note</b> : This is not the maximum common substructure.
-	 *
-	 * @param  container  an AtomContainer object
-	 * @return            An AtomContainer containing the Intersection between this
-	 *                    AtomContainer and another given one
-	 */
-
-	public IAtomContainer getIntersection(IAtomContainer container)
-	{
-		IAtomContainer intersection = getBuilder().newAtomContainer();
-
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			if (container.contains(getAtom(i)))
-			{
-				intersection.addAtom(getAtom(i));
-			}
-		}
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			if (container.contains(getElectronContainer(i)))
-			{
-				intersection.addElectronContainer(getElectronContainer(i));
-			}
-		}
-		return intersection;
-	}
-
 	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
 	 *  container.

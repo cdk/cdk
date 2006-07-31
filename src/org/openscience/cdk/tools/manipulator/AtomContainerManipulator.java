@@ -323,5 +323,38 @@ public class AtomContainerManipulator {
 		}
 	}
 
+	/**
+	 * Compares this AtomContainer with another given AtomContainer and returns
+	 * the Intersection between them. <p>
+	 * 
+	 * <b>Important Note</b> : This is not the maximum common substructure.
+	 *
+	 * @param  container1 an AtomContainer object
+	 * @param  container2 an AtomContainer object
+	 * @return            An AtomContainer containing the intersection between
+	 *                    container1 and container2
+	 */
+	public static IAtomContainer getIntersection(
+		IAtomContainer container1, IAtomContainer container2)
+	{
+		IAtomContainer intersection = container1.getBuilder().newAtomContainer();
+
+		for (int i = 0; i < container1.getAtomCount(); i++)
+		{
+			if (container2.contains(container1.getAtom(i)))
+			{
+				intersection.addAtom(container1.getAtom(i));
+			}
+		}
+		for (int i = 0; i < container1.getElectronContainerCount(); i++)
+		{
+			if (container2.contains(container1.getElectronContainer(i)))
+			{
+				intersection.addElectronContainer(container1.getElectronContainer(i));
+			}
+		}
+		return intersection;
+	}
+	
 }
 

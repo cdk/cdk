@@ -256,11 +256,6 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getMinimumBondOrder(atom);
 	}
 
-	public IAtomContainer getIntersection(IAtomContainer container) {
-		logger.debug("Getting intersection with: ", container);
-		return super.getIntersection(container);
-	}
-
 	public void addElectronContainers(IAtomContainer atomContainer) {
 		logger.debug("Adding electron containers from atom container: ", atomContainer);
 		super.addElectronContainers(atomContainer);

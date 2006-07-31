@@ -29,9 +29,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -169,6 +173,39 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         assertEquals(-1,totalCharge);
     }
+
+    public void testGetIntersection_IAtomContainer() {
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtom c1 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c2 = builder.newAtom("C");
+        IAtom c3 = builder.newAtom("C");
+        
+        IBond b1 = builder.newBond(c1, o);
+        IBond b2 = builder.newBond(o, c2);
+        IBond b3 = builder.newBond(c2, c3);
+        
+        IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
+        container1.addAtom(c1);
+        container1.addAtom(o);
+        container1.addAtom(c2);
+        container1.addBond(b1);
+        container1.addBond(b2);
+        IAtomContainer container2 = new org.openscience.cdk.AtomContainer();
+        container2.addAtom(o);
+        container2.addAtom(c3);
+        container2.addAtom(c2);
+        container2.addBond(b3);
+        container2.addBond(b2);
+
+        IAtomContainer intersection = AtomContainerManipulator.getIntersection(container1, container2);
+        assertEquals(2, intersection.getAtomCount());
+        assertEquals(1, intersection.getBondCount());
+        assertTrue(intersection.contains(b2));
+        assertTrue(intersection.contains(o));
+        assertTrue(intersection.contains(c2));
+    }
+    
 }
 
 

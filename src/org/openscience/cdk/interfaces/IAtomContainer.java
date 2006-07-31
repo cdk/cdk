@@ -411,21 +411,6 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public double getMinimumBondOrder(IAtom atom);
 
-
-
-	/**
-	 * Compares this AtomContainer with another given AtomContainer and returns
-	 * the Intersection between them. <p>
-	 * 
-	 * <b>Important Note</b> : This is not the maximum common substructure.
-	 *
-	 * @param  container  an AtomContainer object
-	 * @return            An AtomContainer containing the Intersection between this
-	 *                    AtomContainer and another given one
-	 */
-
-	public IAtomContainer getIntersection(IAtomContainer container);
-	
 	/**
 	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
 	 *  container.

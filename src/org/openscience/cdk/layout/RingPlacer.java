@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Class providing methods for generating coordinates for ring atoms.
@@ -639,7 +640,7 @@ public class RingPlacer
 			{
 //				logger.debug(ring.toString(molecule));
 //				logger.debug(connectedRing.toString(molecule));				
-				sharedAtoms = ring.getIntersection(connectedRing);
+				sharedAtoms = AtomContainerManipulator.getIntersection(ring, connectedRing);
 				sac = sharedAtoms.getAtomCount();
 				logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
 				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))

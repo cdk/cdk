@@ -595,37 +595,6 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals("C", container.getAtom(0).getSymbol());
     }
     
-    public void testGetIntersection_IAtomContainer() {
-        IAtom c1 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c2 = builder.newAtom("C");
-        IAtom c3 = builder.newAtom("C");
-        
-        IBond b1 = builder.newBond(c1, o);
-        IBond b2 = builder.newBond(o, c2);
-        IBond b3 = builder.newBond(c2, c3);
-        
-        IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
-        container1.addAtom(c1);
-        container1.addAtom(o);
-        container1.addAtom(c2);
-        container1.addBond(b1);
-        container1.addBond(b2);
-        IAtomContainer container2 = new org.openscience.cdk.AtomContainer();
-        container2.addAtom(o);
-        container2.addAtom(c3);
-        container2.addAtom(c2);
-        container2.addBond(b3);
-        container2.addBond(b2);
-
-        org.openscience.cdk.interfaces.IAtomContainer intersection = container1.getIntersection(container2);
-        assertEquals(2, intersection.getAtomCount());
-        assertEquals(1, intersection.getBondCount());
-        assertTrue(intersection.contains(b2));
-        assertTrue(intersection.contains(o));
-        assertTrue(intersection.contains(c2));
-    }
-    
     public void testGetAtomAt_int() {
         IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
         
