@@ -194,8 +194,8 @@ public class HuLuIndexTool
 			for (int j = 0; j < bonds.length; j++)
 			{
 				bond = bonds[j];
-				headAtom = bond.getAtomAt(0);
-				endAtom = bond.getAtomAt(1);
+				headAtom = bond.getAtom(0);
+				endAtom = bond.getAtom(1);
 				
 				
 				headAtomPosition = atomContainer.getAtomNumber(headAtom);

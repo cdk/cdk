@@ -102,7 +102,7 @@ public class RingPartitioner {
             	org.openscience.cdk.interfaces.IBond bond = ring.getBond(r);
                 if (!ac.contains(bond)) {
                     for (int j = 0; j < bond.getAtomCount(); j++) {
-                        ac.addAtom(bond.getAtomAt(j));
+                        ac.addAtom(bond.getAtom(j));
                     }
                     ac.addBond(bond);
                 }

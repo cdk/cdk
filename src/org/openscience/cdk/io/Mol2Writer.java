@@ -222,8 +222,8 @@ NO_CHARGES
             IBond[] bonds = mol.getBonds();
             for (int i=0; i<bonds.length; i++) {
                 writer.write(i + " " +
-                             mol.getAtomNumber(bonds[i].getAtomAt(0)) + " " +
-                             mol.getAtomNumber(bonds[i].getAtomAt(1)) + " " +
+                             mol.getAtomNumber(bonds[i].getAtom(0)) + " " +
+                             mol.getAtomNumber(bonds[i].getAtom(1)) + " " +
                              ((int)bonds[i].getOrder()) + 
                              "\n");
             } 

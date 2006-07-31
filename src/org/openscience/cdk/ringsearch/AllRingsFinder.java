@@ -328,7 +328,7 @@ public class AllRingsFinder
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
-					if (ring.contains(bond.getAtomAt(0)) && ring.contains(bond.getAtomAt(1)))
+					if (ring.contains(bond.getAtom(0)) && ring.contains(bond.getAtom(1)))
 					{
 						ring.addBond(bond);
 					}
@@ -354,7 +354,7 @@ public class AllRingsFinder
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
-			path = new Path(bond.getAtomAt(0), bond.getAtomAt(1));
+			path = new Path(bond.getAtom(0), bond.getAtom(1));
 			pathes.add(path);
 			if (debug)
 			{

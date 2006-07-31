@@ -86,7 +86,7 @@ public class AtomContainerManipulator {
                     IBond bond = (IBond)electronContainers[i];
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {
-                            if (atom.equals(bond.getAtomAt(j))) {
+                            if (atom.equals(bond.getAtom(j))) {
                                 bond.setAtomAt(newAtom, j);
                             }
                         }

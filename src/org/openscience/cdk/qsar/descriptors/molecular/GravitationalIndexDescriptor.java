@@ -170,15 +170,15 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
                 return(null);
             }
 
-            mass1 = factory.getMajorIsotope( bond.getAtomAt(0).getSymbol() ).getMassNumber();
-            mass2 = factory.getMajorIsotope( bond.getAtomAt(1).getSymbol() ).getMassNumber();
+            mass1 = factory.getMajorIsotope( bond.getAtom(0).getSymbol() ).getMassNumber();
+            mass2 = factory.getMajorIsotope( bond.getAtom(1).getSymbol() ).getMassNumber();
 
-            double x1 = bond.getAtomAt(0).getX3d();
-            double y1 = bond.getAtomAt(0).getY3d();
-            double z1 = bond.getAtomAt(0).getZ3d();
-            double x2 = bond.getAtomAt(1).getX3d();
-            double y2 = bond.getAtomAt(1).getY3d();
-            double z2 = bond.getAtomAt(1).getZ3d();
+            double x1 = bond.getAtom(0).getX3d();
+            double y1 = bond.getAtom(0).getY3d();
+            double z1 = bond.getAtom(0).getZ3d();
+            double x2 = bond.getAtom(1).getX3d();
+            double y2 = bond.getAtom(1).getY3d();
+            double z2 = bond.getAtom(1).getZ3d();
 
             double dist = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
             sum += (mass1*mass2) / dist;
@@ -194,20 +194,20 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
                 return(null);
             }
 
-            if (b.getAtomAt(0).getSymbol().equals("H") || 
-                    b.getAtomAt(1).getSymbol().equals("H")) continue;
+            if (b.getAtom(0).getSymbol().equals("H") || 
+                    b.getAtom(1).getSymbol().equals("H")) continue;
 
 
 
-            mass1 = factory.getMajorIsotope( b.getAtomAt(0).getSymbol() ).getMassNumber();
-            mass2 = factory.getMajorIsotope( b.getAtomAt(1).getSymbol() ).getMassNumber();
+            mass1 = factory.getMajorIsotope( b.getAtom(0).getSymbol() ).getMassNumber();
+            mass2 = factory.getMajorIsotope( b.getAtom(1).getSymbol() ).getMassNumber();
 
-            double x1 = b.getAtomAt(0).getX3d();
-            double y1 = b.getAtomAt(0).getY3d();
-            double z1 = b.getAtomAt(0).getZ3d();
-            double x2 = b.getAtomAt(1).getX3d();
-            double y2 = b.getAtomAt(1).getY3d();
-            double z2 = b.getAtomAt(1).getZ3d();
+            double x1 = b.getAtom(0).getX3d();
+            double y1 = b.getAtom(0).getY3d();
+            double z1 = b.getAtom(0).getZ3d();
+            double x2 = b.getAtom(1).getX3d();
+            double y2 = b.getAtom(1).getY3d();
+            double z2 = b.getAtom(1).getZ3d();
 
             double dist = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
             heavysum += (mass1*mass2) / dist;

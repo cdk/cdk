@@ -606,8 +606,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedAtom())).y-moveoldY;
 			undoredoContainer.addAtom(r2dm.getHighlightedAtom());
 		}else if (r2dm.getHighlightedBond()!=null){
-			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtomAt(0))).x-moveoldX;
-			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtomAt(0))).y-moveoldY;	
+			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtom(0))).x-moveoldX;
+			deltaY=((Point2d)r2dm.getRenderingCoordinate(r2dm.getHighlightedBond().getAtom(0))).y-moveoldY;	
 		}
 		UndoableEdit edit = new MoveAtomEdit(undoredoContainer, (int)deltaX, (int)deltaY, r2dm.getRenderingCoordinates());
 		undoRedoHandler.postEdit(edit);
@@ -636,11 +636,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			undoObject[2] = bondson2;
 			undoredoContainer.add(undoObject);
 			for(int i=0;i<bondson2.length;i++){
-				if(bondson2[i].getAtomAt(0)==atom2)
+				if(bondson2[i].getAtom(0)==atom2)
 					bondson2[i].setAtomAt(atom1,0);
-				if(bondson2[i].getAtomAt(1)==atom2)
+				if(bondson2[i].getAtom(1)==atom2)
 					bondson2[i].setAtomAt(atom1,1);
-				if(bondson2[i].getAtomAt(0)==bondson2[i].getAtomAt(1)){
+				if(bondson2[i].getAtom(0)==bondson2[i].getAtom(1)){
 					container1.removeElectronContainer(bondson2[i]);
 				}
 			}
@@ -1747,7 +1747,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			highlighted.addBond(highlightedBond);
 			for (int i = 0; i < highlightedBond.getAtomCount(); i++)
 			{
-				highlighted.addAtom(highlightedBond.getAtomAt(i));
+				highlighted.addAtom(highlightedBond.getAtom(i));
 			}
 		}
 		logger.debug("sharedAtoms  ", highlighted);

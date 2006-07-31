@@ -299,11 +299,11 @@ public class SaturationChecker implements IValencyChecker {
             boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
             IBond[] bonds=atomContainer.getBonds();
             for(int i=0;i<bonds.length;i++){
-              if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtomAt(0).getSymbol().equals("N") && bonds[i].getAtomAt(1).getSymbol().equals("N"))){
+              if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtom(0).getSymbol().equals("N") && bonds[i].getAtom(1).getSymbol().equals("N"))){
                 int atomtohandle=0;
-                if(bonds[i].getAtomAt(0).getSymbol().equals("N"))
+                if(bonds[i].getAtom(0).getSymbol().equals("N"))
                   atomtohandle=1;
-                IBond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtomAt(atomtohandle));
+                IBond[] bondstohandle=atomContainer.getConnectedBonds(bonds[i].getAtom(atomtohandle));
                 for(int k=0;k<bondstohandle.length;k++){
                   if(bondstohandle[k].getOrder()==1 && bondstohandle[k].getFlag(CDKConstants.ISAROMATIC)){
                     bondstohandle[k].setOrder(2);

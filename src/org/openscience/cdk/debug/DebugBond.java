@@ -184,9 +184,9 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.getAtomCount();
 	}
 
-	public IAtom getAtomAt(int position) {
+	public IAtom getAtom(int position) {
 		logger.debug("Getting atom at position: ", position);
-		return super.getAtomAt(position);
+		return super.getAtom(position);
 	}
 
 	public IAtom getConnectedAtom(IAtom atom) {

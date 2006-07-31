@@ -176,7 +176,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *@return           The atom at the specified position
 	 *@see              #setAtomAt
 	 */
-	public IAtom getAtomAt(int position)
+	public IAtom getAtom(int position)
 	{
 		return (IAtom)atoms[position];
 	}
@@ -303,8 +303,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		double yOfCenter = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			xOfCenter += getAtomAt(f).getX2d();
-			yOfCenter += getAtomAt(f).getY2d();
+			xOfCenter += getAtom(f).getX2d();
+			yOfCenter += getAtom(f).getY2d();
 		}
 		return new Point2d(xOfCenter / ((double) getAtomCount()), 
                            yOfCenter / ((double) getAtomCount()));
@@ -324,9 +324,9 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		double zOfCenter = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			xOfCenter += getAtomAt(f).getX3d();
-			yOfCenter += getAtomAt(f).getY3d();
-			zOfCenter += getAtomAt(f).getZ3d();
+			xOfCenter += getAtom(f).getX3d();
+			yOfCenter += getAtom(f).getY3d();
+			zOfCenter += getAtom(f).getZ3d();
 		}
 		return new Point3d(xOfCenter / getAtomCount(), 
                            yOfCenter / getAtomCount(), 
@@ -373,7 +373,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	{
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			if (bond.contains(getAtomAt(f)))
+			if (bond.contains(getAtom(f)))
 			{
 				return true;
 			}

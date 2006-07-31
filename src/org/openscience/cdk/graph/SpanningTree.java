@@ -144,8 +144,8 @@ public class SpanningTree {
 		for (int b=0; b < E; b++ ) {
 			bondsInTree[b] = false;			
 			bond = atomContainer.getBond(b);
-			v1 = Integer.parseInt((bond.getAtomAt(0)).getProperty("ST_ATOMNO").toString());
-			v2 = Integer.parseInt((bond.getAtomAt(1)).getProperty("ST_ATOMNO").toString());
+			v1 = Integer.parseInt((bond.getAtom(0)).getProperty("ST_ATOMNO").toString());
+			v2 = Integer.parseInt((bond.getAtom(1)).getProperty("ST_ATOMNO").toString());
 			//this below is a little bit  slower
 			//v1 = atomContainer.getAtomNumber(bond.getAtomAt(0))+1; 
 			//v2 = atomContainer.getAtomNumber(bond.getAtomAt(1))+1;
@@ -202,8 +202,8 @@ public class SpanningTree {
 	private IRing getRing(IAtomContainer spt, IBond bond) throws NoSuchAtomException {
 		IRing ring = spt.getBuilder().newRing();
 		PathTools.resetFlags(spt);
-		ring.addAtom(bond.getAtomAt(0));		
-		PathTools.depthFirstTargetSearch(spt,bond.getAtomAt(0),bond.getAtomAt(1),ring);		
+		ring.addAtom(bond.getAtom(0));		
+		PathTools.depthFirstTargetSearch(spt,bond.getAtom(0),bond.getAtom(1),ring);		
 		ring.addBond(bond);
 		return ring;
 	}

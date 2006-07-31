@@ -60,8 +60,8 @@ public class ConnectionMatrix implements IGraphMatrix {
 			if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				IBond bond = (IBond) electronContainer;
-				indexAtom1 = container.getAtomNumber(bond.getAtomAt(0));
-				indexAtom2 = container.getAtomNumber(bond.getAtomAt(1));
+				indexAtom1 = container.getAtomNumber(bond.getAtom(0));
+				indexAtom2 = container.getAtomNumber(bond.getAtom(1));
 				conMat[indexAtom1][indexAtom2] = bond.getOrder();
 				conMat[indexAtom2][indexAtom1] = bond.getOrder();
 			}

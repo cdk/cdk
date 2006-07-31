@@ -857,7 +857,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				bondColor = r2dm.getHoverOverColor();
 				for (int j = 0; j < currentBond.getAtomCount(); j++)
 				{
-					paintColouredAtomBackground(currentBond.getAtomAt(j),
+					paintColouredAtomBackground(currentBond.getAtom(j),
 							bondColor, graphics);
 				}
 			}
@@ -937,8 +937,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (r2dm.getRenderingCoordinate(bond.getAtomAt(0)) == null ||
-				r2dm.getRenderingCoordinate(bond.getAtomAt(1)) == null)
+		if (r2dm.getRenderingCoordinate(bond.getAtom(0)) == null ||
+				r2dm.getRenderingCoordinate(bond.getAtom(1)) == null)
 		{
 			return;
 		}
@@ -1248,13 +1248,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		// this value should be made customazible
 
 		double widthStep = wedgeWidth / (double) numberOfLines;
-		Point2d p1 = r2dm.getRenderingCoordinate(bond.getAtomAt(0));
-		Point2d p2 = r2dm.getRenderingCoordinate(bond.getAtomAt(1));
+		Point2d p1 = r2dm.getRenderingCoordinate(bond.getAtom(0));
+		Point2d p2 = r2dm.getRenderingCoordinate(bond.getAtom(1));
 		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV)
 		{
 			// draw the wedge bond the other way around
-			p1 = r2dm.getRenderingCoordinate(bond.getAtomAt(1));
-			p2 = r2dm.getRenderingCoordinate(bond.getAtomAt(0));
+			p1 = r2dm.getRenderingCoordinate(bond.getAtom(1));
+			p2 = r2dm.getRenderingCoordinate(bond.getAtom(0));
 		}
 		Vector2d lengthStep = new Vector2d(p2);
 		lengthStep.sub(p1);

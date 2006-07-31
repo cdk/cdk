@@ -229,7 +229,7 @@ public class BasicValidator extends AbstractValidator {
                 bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
-                org.openscience.cdk.interfaces.IAtom atom = bond.getAtomAt(i);
+                org.openscience.cdk.interfaces.IAtom atom = bond.getAtom(i);
                 if (atom instanceof PseudoAtom) {
                     // ok, all is fine; we don't know the properties of pseudo atoms
                     break;

@@ -42,11 +42,11 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 			IBond[] bonds = (IBond[]) undoObjects[2];
 			
 			for(int i=0;i<bonds.length;i++){
-				if(bonds[i].getAtomAt(0)==atom2)
+				if(bonds[i].getAtom(0)==atom2)
 					bonds[i].setAtomAt(atom1,0);
-				if(bonds[i].getAtomAt(1)==atom2)
+				if(bonds[i].getAtom(1)==atom2)
 					bonds[i].setAtomAt(atom1,1);
-				if(bonds[i].getAtomAt(0)==bonds[i].getAtomAt(1)){
+				if(bonds[i].getAtom(0)==bonds[i].getAtom(1)){
 					container.removeElectronContainer(bonds[i]);
 				}
 			}
@@ -73,11 +73,11 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 			
 			container.addAtom(atom2);
 			for(int i=0;i<bonds.length;i++){
-				if(bonds[i].getAtomAt(0)==atom1)
+				if(bonds[i].getAtom(0)==atom1)
 					bonds[i].setAtomAt(atom2,0);
-				if(bonds[i].getAtomAt(1)==atom1)
+				if(bonds[i].getAtom(1)==atom1)
 					bonds[i].setAtomAt(atom2,1);
-				if(bonds[i].getAtomAt(0)==bonds[i].getAtomAt(1)){
+				if(bonds[i].getAtom(0)==bonds[i].getAtom(1)){
 					container.removeElectronContainer(bonds[i]);
 				}
 			}

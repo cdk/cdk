@@ -612,12 +612,12 @@ public class StructureDiagramGenerator
 		if (nextRingAttachmentBond != null)
 		{
 			vectorAtom2 = getRingAtom(nextRingAttachmentBond);
-			if (nextRingAttachmentBond.getAtomAt(0) == vectorAtom2)
+			if (nextRingAttachmentBond.getAtom(0) == vectorAtom2)
 			{
-				vectorAtom1 = nextRingAttachmentBond.getAtomAt(1);
+				vectorAtom1 = nextRingAttachmentBond.getAtom(1);
 			} else
 			{
-				vectorAtom1 = nextRingAttachmentBond.getAtomAt(0);
+				vectorAtom1 = nextRingAttachmentBond.getAtom(0);
 			}
 			oldPoint2 = vectorAtom2.getPoint2d();
 			oldPoint1 = vectorAtom1.getPoint2d();
@@ -727,16 +727,16 @@ public class StructureDiagramGenerator
 			if (ec instanceof org.openscience.cdk.interfaces.IBond)
 			{
 				bond = (IBond) ec;
-				if (bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))
+				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(0).getFlag(CDKConstants.ISPLACED))
 				{
-					return bond.getAtomAt(1);
+					return bond.getAtom(1);
 				}
 
-				if (bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED))
+				if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(1).getFlag(CDKConstants.ISPLACED))
 				{
-					return bond.getAtomAt(0);
+					return bond.getAtom(0);
 				}
 			}
 		}
@@ -756,16 +756,16 @@ public class StructureDiagramGenerator
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
-			if (bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED) &&
-					!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED) &&
-					bond.getAtomAt(0).getFlag(CDKConstants.ISINRING))
+			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+					!bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+					bond.getAtom(0).getFlag(CDKConstants.ISINRING))
 			{
 				return bond;
 			}
 
-			if (bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED) &&
-					!bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED) &&
-					bond.getAtomAt(1).getFlag(CDKConstants.ISINRING))
+			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+					!bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+					bond.getAtom(1).getFlag(CDKConstants.ISINRING))
 			{
 				return bond;
 			}
@@ -794,12 +794,12 @@ public class StructureDiagramGenerator
 			logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
 			org.openscience.cdk.interfaces.IAtom atom;
 			Point2d point = new Point2d(0, 0);
-			atom = bond.getAtomAt(0);
+			atom = bond.getAtom(0);
 			logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
 			atom.setPoint2d(point);
 			atom.setFlag(CDKConstants.ISPLACED, true);
 			point = new Point2d(0, 0);
-			atom = bond.getAtomAt(1);
+			atom = bond.getAtom(1);
 			logger.debug("Atom 2 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
 			point.add(bondVector);
 			atom.setPoint2d(point);
@@ -812,8 +812,8 @@ public class StructureDiagramGenerator
 			 */
 			sharedAtoms = new org.openscience.cdk.AtomContainer();
 			sharedAtoms.addBond(bond);
-			sharedAtoms.addAtom(bond.getAtomAt(0));
-			sharedAtoms.addAtom(bond.getAtomAt(1));
+			sharedAtoms.addAtom(bond.getAtom(0));
+			sharedAtoms.addAtom(bond.getAtom(1));
 		} catch (Exception exc) {
 			logger.debug(exc);
 		}
@@ -900,15 +900,15 @@ public class StructureDiagramGenerator
 	 */
 	private org.openscience.cdk.interfaces.IAtom getRingAtom(org.openscience.cdk.interfaces.IBond bond)
 	{
-		if (bond.getAtomAt(0).getFlag(CDKConstants.ISINRING) &&
-				!bond.getAtomAt(0).getFlag(CDKConstants.ISPLACED))
+		if (bond.getAtom(0).getFlag(CDKConstants.ISINRING) &&
+				!bond.getAtom(0).getFlag(CDKConstants.ISPLACED))
 		{
-			return bond.getAtomAt(0);
+			return bond.getAtom(0);
 		}
-		if (bond.getAtomAt(1).getFlag(CDKConstants.ISINRING) &&
-				!bond.getAtomAt(1).getFlag(CDKConstants.ISPLACED))
+		if (bond.getAtom(1).getFlag(CDKConstants.ISINRING) &&
+				!bond.getAtom(1).getFlag(CDKConstants.ISPLACED))
 		{
-			return bond.getAtomAt(1);
+			return bond.getAtom(1);
 		}
 		return null;
 	}

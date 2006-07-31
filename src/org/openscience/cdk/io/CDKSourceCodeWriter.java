@@ -161,8 +161,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     
     public void writeBond(IBond bond) throws Exception {
         writer.write("  Bond " + bond.getID() + " = new Bond(" + 
-                     bond.getAtomAt(0).getID() + ", " +
-                     bond.getAtomAt(1).getID() + ", " +
+                     bond.getAtom(0).getID() + ", " +
+                     bond.getAtom(1).getID() + ", " +
                      bond.getOrder() + ");\n");
     }
     

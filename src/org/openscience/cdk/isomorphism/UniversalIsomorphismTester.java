@@ -423,7 +423,7 @@ public class UniversalIsomorphismTester {
         bond = bondList[rMap.getId2()];
       }
 
-      a = bond.getAtomAt(0);
+      a = bond.getAtom(0);
       a1 = (IAtom) table.get(a);
 
       if (a1 == null) {
@@ -436,7 +436,7 @@ public class UniversalIsomorphismTester {
         table.put(a, a1);
       }
 
-      a = bond.getAtomAt(1);
+      a = bond.getAtom(1);
       a2 = (IAtom) table.get(a);
 
       if (a2 == null) {
@@ -654,13 +654,13 @@ public class UniversalIsomorphismTester {
           IBond bondA2 = bondsA2[j];
           if (bondA2 instanceof IQueryBond) {
               IQueryBond queryBond = (IQueryBond)bondA2;
-              IQueryAtom atom1 = (IQueryAtom)(bondA2.getAtomAt(0));
-              IQueryAtom atom2 = (IQueryAtom)(bondA2.getAtomAt(1));
+              IQueryAtom atom1 = (IQueryAtom)(bondA2.getAtom(0));
+              IQueryAtom atom2 = (IQueryAtom)(bondA2.getAtom(1));
               IBond bond = bondsA1[i];
               if (queryBond.matches(bond)) {
                   // ok, bonds match
-            	    if (atom1.matches(bond.getAtomAt(0)) && atom2.matches(bond.getAtomAt(1)) ||
-                      atom1.matches(bond.getAtomAt(1)) && atom2.matches(bond.getAtomAt(0))) {
+            	    if (atom1.matches(bond.getAtom(0)) && atom2.matches(bond.getAtom(1)) ||
+                      atom1.matches(bond.getAtom(1)) && atom2.matches(bond.getAtom(0))) {
                       // ok, atoms match in either order
                       gr.addNode(new RNode(i,j));
                   }
@@ -684,13 +684,13 @@ public class UniversalIsomorphismTester {
                 &&
                 ( // atome type conditions
                   ( // a1 = a2 && b1 = b2
-                    bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol()) &&
-                    bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol())
+                    bondsA1[i].getAtom(0).getSymbol().equals(bondsA2[j].getAtom(0).getSymbol()) &&
+                    bondsA1[i].getAtom(1).getSymbol().equals(bondsA2[j].getAtom(1).getSymbol())
                   )
                   ||
                   ( // a1 = b2 && b1 = a2
-                    bondsA1[i].getAtomAt(0).getSymbol().equals(bondsA2[j].getAtomAt(1).getSymbol()) &&
-                    bondsA1[i].getAtomAt(1).getSymbol().equals(bondsA2[j].getAtomAt(0).getSymbol())
+                    bondsA1[i].getAtom(0).getSymbol().equals(bondsA2[j].getAtom(1).getSymbol()) &&
+                    bondsA1[i].getAtom(1).getSymbol().equals(bondsA2[j].getAtom(0).getSymbol())
                   )
                 )
               ) {
@@ -780,9 +780,9 @@ public class UniversalIsomorphismTester {
    */
   private static boolean hasCommonAtom(IBond a, IBond b) {
 
-    if (a.contains(b.getAtomAt(0))) {
+    if (a.contains(b.getAtom(0))) {
       return true;
-    } else if (a.contains(b.getAtomAt(1))) {
+    } else if (a.contains(b.getAtom(1))) {
       return true;
     }
 
@@ -800,10 +800,10 @@ public class UniversalIsomorphismTester {
   private static String getCommonSymbol(IBond a, IBond b) {
     String symbol = "";
 
-    if (a.contains(b.getAtomAt(0))) {
-      symbol = b.getAtomAt(0).getSymbol();
-    } else if (a.contains(b.getAtomAt(1))) {
-      symbol = b.getAtomAt(1).getSymbol();
+    if (a.contains(b.getAtom(0))) {
+      symbol = b.getAtom(0).getSymbol();
+    } else if (a.contains(b.getAtom(1))) {
+      symbol = b.getAtom(1).getSymbol();
     }
 
     return symbol;
@@ -822,16 +822,16 @@ public class UniversalIsomorphismTester {
 	  IAtom atom1 = null;
 	  IAtom atom2 = null;
 
-      if (a1.contains(b1.getAtomAt(0))) {
-          atom1 = b1.getAtomAt(0);
-      } else if (a1.contains(b1.getAtomAt(1))) {
-          atom1 = b1.getAtomAt(1);
+      if (a1.contains(b1.getAtom(0))) {
+          atom1 = b1.getAtom(0);
+      } else if (a1.contains(b1.getAtom(1))) {
+          atom1 = b1.getAtom(1);
       }
 
-      if (a2.contains(b2.getAtomAt(0))) {
-          atom2 = b2.getAtomAt(0);
-      } else if (a2.contains(b2.getAtomAt(1))) {
-          atom2 = b2.getAtomAt(1);
+      if (a2.contains(b2.getAtom(0))) {
+          atom2 = b2.getAtom(0);
+      } else if (a2.contains(b2.getAtom(1))) {
+          atom2 = b2.getAtom(1);
       }
 
       if (atom1 != null && atom2 != null){

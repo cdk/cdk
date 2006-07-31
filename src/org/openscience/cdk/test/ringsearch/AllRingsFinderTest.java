@@ -99,8 +99,8 @@ public class AllRingsFinderTest extends CDKTestCase
 					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainer(j);
 					if (ec instanceof org.openscience.cdk.interfaces.IBond)
 					{
-						org.openscience.cdk.interfaces.IAtom atom1 = ((Bond)ec).getAtomAt(0);
-						org.openscience.cdk.interfaces.IAtom atom2 = ((Bond)ec).getAtomAt(1);
+						org.openscience.cdk.interfaces.IAtom atom1 = ((Bond)ec).getAtom(0);
+						org.openscience.cdk.interfaces.IAtom atom2 = ((Bond)ec).getAtom(1);
 						assertTrue(ring.contains(atom1) && ring.contains(atom2));
 					}
 				}

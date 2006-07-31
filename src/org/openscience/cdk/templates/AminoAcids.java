@@ -71,8 +71,8 @@ public class AminoAcids {
         	logger.debug("total #bonds: ", total);
         	for (int bCounter=0; bCounter<bonds.length; bCounter++) {
         		info[counter][0] = counter;
-        		info[counter][1] = acid.getAtomNumber(bonds[bCounter].getAtomAt(0));
-        		info[counter][2] = acid.getAtomNumber(bonds[bCounter].getAtomAt(1));
+        		info[counter][1] = acid.getAtomNumber(bonds[bCounter].getAtom(0));
+        		info[counter][2] = acid.getAtomNumber(bonds[bCounter].getAtom(1));
         		info[counter][3] = (int)bonds[bCounter].getOrder();
         		counter++;
         	}

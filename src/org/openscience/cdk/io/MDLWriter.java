@@ -376,11 +376,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
                     bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
                     // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtomAt(1)) + 1,3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtomAt(0)) + 1,3);
+                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
+                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
                 } else {
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtomAt(0)) + 1,3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtomAt(1)) + 1,3);
+                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
+                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
                 }
                 line += formatMDLInt((int)bond.getOrder(),3);
                 line += "  ";

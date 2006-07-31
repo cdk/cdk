@@ -911,20 +911,20 @@ public class GeometryTools {
 	 *@return       The array with the coordinates
 	 */
 	public static int[] getBondCoordinates(IBond bond, HashMap renderingCoordinates) {
-		if (renderingCoordinates.get(bond.getAtomAt(0)) == null && bond.getAtomAt(0).getPoint2d()!=null) {
-			renderingCoordinates.put(bond.getAtomAt(0),new Point2d(bond.getAtomAt(0).getPoint2d().x,bond.getAtomAt(0).getPoint2d().y));
+		if (renderingCoordinates.get(bond.getAtom(0)) == null && bond.getAtom(0).getPoint2d()!=null) {
+			renderingCoordinates.put(bond.getAtom(0),new Point2d(bond.getAtom(0).getPoint2d().x,bond.getAtom(0).getPoint2d().y));
 		}
-		if (renderingCoordinates.get(bond.getAtomAt(1)) == null && bond.getAtomAt(1).getPoint2d()!=null) {
-			renderingCoordinates.put(bond.getAtomAt(1),new Point2d(bond.getAtomAt(1).getPoint2d().x,bond.getAtomAt(1).getPoint2d().y));
+		if (renderingCoordinates.get(bond.getAtom(1)) == null && bond.getAtom(1).getPoint2d()!=null) {
+			renderingCoordinates.put(bond.getAtom(1),new Point2d(bond.getAtom(1).getPoint2d().x,bond.getAtom(1).getPoint2d().y));
 		}
-		if (bond.getAtomAt(0).getPoint2d() == null || bond.getAtomAt(1).getPoint2d() == null) {
+		if (bond.getAtom(0).getPoint2d() == null || bond.getAtom(1).getPoint2d() == null) {
 			logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
 			return new int[0];
 		}
-		int beginX = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(0))).x;
-		int endX = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(1))).x;
-		int beginY = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(0))).y;
-		int endY = (int) ((Point2d)renderingCoordinates.get(bond.getAtomAt(1))).y;
+		int beginX = (int) ((Point2d)renderingCoordinates.get(bond.getAtom(0))).x;
+		int endX = (int) ((Point2d)renderingCoordinates.get(bond.getAtom(1))).x;
+		int beginY = (int) ((Point2d)renderingCoordinates.get(bond.getAtom(0))).y;
+		int endY = (int) ((Point2d)renderingCoordinates.get(bond.getAtom(1))).y;
 		int[] coords = {beginX, beginY, endX, endY};
 		return coords;
 	}
@@ -939,15 +939,15 @@ public class GeometryTools {
 	 *@return       The array with the coordinates
 	 */
 	public static int[] getBondCoordinates(IBond bond) {
-		if (bond.getAtomAt(0).getPoint2d() == null ||
-				bond.getAtomAt(1).getPoint2d() == null) {
+		if (bond.getAtom(0).getPoint2d() == null ||
+				bond.getAtom(1).getPoint2d() == null) {
 			logger.error("getBondCoordinates() called on Bond without 2D coordinates!");
 			return new int[0];
 		}
-		int beginX = (int) bond.getAtomAt(0).getPoint2d().x;
-		int endX = (int) bond.getAtomAt(1).getPoint2d().x;
-		int beginY = (int) bond.getAtomAt(0).getPoint2d().y;
-		int endY = (int) bond.getAtomAt(1).getPoint2d().y;
+		int beginX = (int) bond.getAtom(0).getPoint2d().x;
+		int endX = (int) bond.getAtom(1).getPoint2d().x;
+		int beginY = (int) bond.getAtom(0).getPoint2d().y;
+		int endY = (int) bond.getAtom(1).getPoint2d().y;
 		int[] coords = {beginX, beginY, endX, endY};
 		return coords;
 	}
@@ -1213,8 +1213,8 @@ public class GeometryTools {
 		int bondCounter = 0;
 		for (int f = 0; f < bonds.length; f++) {
 			IBond bond = bonds[f];
-			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtomAt(0);
-			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtomAt(1);
+			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
+			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 			if (renderingCoordinates.get(atom1) != null &&
 					renderingCoordinates.get(atom2) != null) {
 				bondCounter++;
@@ -1240,8 +1240,8 @@ public class GeometryTools {
 		int bondCounter = 0;
 		for (int f = 0; f < bonds.length; f++) {
 			IBond bond = bonds[f];
-			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtomAt(0);
-			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtomAt(1);
+			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
+			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 			if (atom1.getPoint2d() != null &&
 					atom2.getPoint2d() != null) {
 				bondCounter++;
@@ -1261,12 +1261,12 @@ public class GeometryTools {
 	 *@return       The geometric length of this bond
 	 */
 	public static double getLength2D(IBond bond, HashMap renderingCoordinates) {
-		if (bond.getAtomAt(0) == null ||
-				bond.getAtomAt(1) == null) {
+		if (bond.getAtom(0) == null ||
+				bond.getAtom(1) == null) {
 			return 0.0;
 		}
-		Point2d p1 = ((Point2d)renderingCoordinates.get(bond.getAtomAt(0)));
-		Point2d p2 = ((Point2d)renderingCoordinates.get(bond.getAtomAt(1)));
+		Point2d p1 = ((Point2d)renderingCoordinates.get(bond.getAtom(0)));
+		Point2d p2 = ((Point2d)renderingCoordinates.get(bond.getAtom(1)));
 		if (p1 == null || p2 == null) {
 			return 0.0;
 		}
@@ -1281,12 +1281,12 @@ public class GeometryTools {
 	 *@return       The geometric length of this bond
 	 */
 	public static double getLength2D(IBond bond) {
-		if (bond.getAtomAt(0) == null ||
-				bond.getAtomAt(1) == null) {
+		if (bond.getAtom(0) == null ||
+				bond.getAtom(1) == null) {
 			return 0.0;
 		}
-		Point2d p1 = bond.getAtomAt(0).getPoint2d();
-		Point2d p2 = bond.getAtomAt(1).getPoint2d();
+		Point2d p1 = bond.getAtom(0).getPoint2d();
+		Point2d p2 = bond.getAtom(1).getPoint2d();
 		if (p1 == null || p2 == null) {
 			return 0.0;
 		}
@@ -1422,8 +1422,8 @@ public class GeometryTools {
 			// only consider two atom bonds into account
 			if (bonds[f].getAtomCount() == 2) {
 				counter++;
-				org.openscience.cdk.interfaces.IAtom atom1 = bonds[f].getAtomAt(0);
-				org.openscience.cdk.interfaces.IAtom atom2 = bonds[f].getAtomAt(1);
+				org.openscience.cdk.interfaces.IAtom atom1 = bonds[f].getAtom(0);
+				org.openscience.cdk.interfaces.IAtom atom2 = bonds[f].getAtom(1);
 				bondlength += Math.sqrt(Math.pow(atom1.getX2d() - atom2.getX2d(), 2) +
 						Math.pow(atom1.getY2d() - atom2.getY2d(), 2));
 			}

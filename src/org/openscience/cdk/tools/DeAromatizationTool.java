@@ -103,10 +103,10 @@ public class DeAromatizationTool {
 				int count=0;
 				while(done!=2){
 					bond=getNextBond(atom,bond,ring);
-					if(bond.getAtomAt(0)==atom)
-						atom=bond.getAtomAt(1);
+					if(bond.getAtom(0)==atom)
+						atom=bond.getAtom(1);
 					else
-						atom=bond.getAtomAt(0);
+						atom=bond.getAtom(0);
 					count++;
 					if(count%2==0){
 						bond.setOrder(2);

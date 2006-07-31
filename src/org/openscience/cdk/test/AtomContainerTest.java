@@ -149,8 +149,8 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test cloning of atoms in bonds
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
-        assertNotSame(atom1, clonedMol.getBond(0).getAtomAt(0));
-        assertNotSame(atom2, clonedMol.getBond(0).getAtomAt(1));
+        assertNotSame(atom1, clonedMol.getBond(0).getAtom(0));
+        assertNotSame(atom2, clonedMol.getBond(0).getAtom(1));
 	}
 
     public void testClone_IBond3() throws Exception {
@@ -163,8 +163,8 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test that cloned bonds contain atoms from cloned atomcontainer
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
-        assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtomAt(0)));
-        assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtomAt(1)));
+        assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(0)));
+        assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(1)));
 	}
 
     public void testGetConnectedElectronContainers_IAtom() {
@@ -1166,14 +1166,14 @@ public class AtomContainerTest extends CDKTestCase {
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
-        assertEquals(c1, bonds[0].getAtomAt(0));
-        assertEquals(c2, bonds[0].getAtomAt(1));
+        assertEquals(c1, bonds[0].getAtom(0));
+        assertEquals(c2, bonds[0].getAtom(1));
         assertEquals(1.0, bonds[0].getOrder(), 0.001);
-        assertEquals(c2, bonds[1].getAtomAt(0));
-        assertEquals(o, bonds[1].getAtomAt(1));
+        assertEquals(c2, bonds[1].getAtom(0));
+        assertEquals(o, bonds[1].getAtom(1));
         assertEquals(2.0, bonds[1].getOrder(), 0.001);
-        assertEquals(c2, bonds[2].getAtomAt(0));
-        assertEquals(c3, bonds[2].getAtomAt(1));
+        assertEquals(c2, bonds[2].getAtom(0));
+        assertEquals(c3, bonds[2].getAtom(1));
         assertEquals(1.0, bonds[2].getOrder(), 0.001);
     }
 
@@ -1197,16 +1197,16 @@ public class AtomContainerTest extends CDKTestCase {
         for (int i=0; i<bonds.length; i++) {
             assertNotNull(bonds[i]);
         }
-        assertEquals(c1, bonds[0].getAtomAt(0));
-        assertEquals(c2, bonds[0].getAtomAt(1));
+        assertEquals(c1, bonds[0].getAtom(0));
+        assertEquals(c2, bonds[0].getAtom(1));
         assertEquals(1.0, bonds[0].getOrder(), 0.001);
         assertEquals(CDKConstants.STEREO_BOND_UP, bonds[0].getStereo());
-        assertEquals(c2, bonds[1].getAtomAt(0));
-        assertEquals(o, bonds[1].getAtomAt(1));
+        assertEquals(c2, bonds[1].getAtom(0));
+        assertEquals(o, bonds[1].getAtom(1));
         assertEquals(2.0, bonds[1].getOrder(), 0.001);
         assertEquals(CDKConstants.STEREO_BOND_DOWN, bonds[1].getStereo());
-        assertEquals(c2, bonds[2].getAtomAt(0));
-        assertEquals(c3, bonds[2].getAtomAt(1));
+        assertEquals(c2, bonds[2].getAtom(0));
+        assertEquals(c3, bonds[2].getAtom(1));
         assertEquals(1.0, bonds[2].getOrder(), 0.001);
         assertEquals(CDKConstants.STEREO_BOND_NONE, bonds[2].getStereo());
     }

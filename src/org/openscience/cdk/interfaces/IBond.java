@@ -70,7 +70,7 @@ public interface IBond extends IElectronContainer {
 	 * @return           The atom at the specified position
 	 * @see              #setAtomAt
 	 */
-	public IAtom getAtomAt(int position);
+	public IAtom getAtom(int position);
 
 
 	/**
