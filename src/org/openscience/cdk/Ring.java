@@ -135,7 +135,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 *
 	 * @return the sum of all bond orders in the ring
 	 */
-	public int getOrderSum()
+	public int getBondOrderSum()
 	{
 		int orderSum = 0;
 		Bond tempBond;

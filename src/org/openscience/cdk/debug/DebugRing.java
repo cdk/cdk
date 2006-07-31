@@ -489,9 +489,9 @@ public class DebugRing extends org.openscience.cdk.Ring
 		return super.getNextBond(bond, atom);
 	}
 
-	public int getOrderSum() {
-		logger.debug("Getting order sum: ", super.getOrderSum());
-		return super.getOrderSum();
+	public int getBondOrderSum() {
+		logger.debug("Getting order sum: ", super.getBondOrderSum());
+		return super.getBondOrderSum();
 	}
 
 	public void stateChanged(IChemObjectChangeEvent event) {

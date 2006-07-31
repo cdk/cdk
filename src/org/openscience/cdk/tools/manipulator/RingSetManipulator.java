@@ -93,10 +93,10 @@ public class RingSetManipulator {
 		int maxOrderSum = 0;
 		for (int i = 0; i < rings.size(); i++)
 		{
-			if (maxOrderSum < ((IRing)rings.get(i)).getOrderSum()) 
+			if (maxOrderSum < ((IRing)rings.get(i)).getBondOrderSum()) 
 			{
 				ring = (IRing)rings.get(i);
-				maxOrderSum = ring.getOrderSum();
+				maxOrderSum = ring.getBondOrderSum();
 			} 
 		}
 		return ring;

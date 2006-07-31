@@ -90,7 +90,7 @@ public class RingTest extends CDKTestCase {
 
     public void testGetOrderSum() {
         IRing r = builder.newRing(5, "C");
-        assertEquals(5, r.getOrderSum());
+        assertEquals(5, r.getBondOrderSum());
     }
     
     public void testGetRingSize() {

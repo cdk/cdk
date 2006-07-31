@@ -59,6 +59,6 @@ public interface IRing extends IAtomContainer {
 	 *
 	 * @return the sum of all bond orders in the ring
 	 */
-	public int getOrderSum();
+	public int getBondOrderSum();
 	
 }
