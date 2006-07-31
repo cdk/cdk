@@ -33,9 +33,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.vecmath.Point3d;
@@ -53,8 +53,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PDBFormat;
@@ -502,11 +502,11 @@ public class PDBReader extends DefaultChemObjectReader {
 	public boolean createBonds(IBioPolymer pol){
 		HashMap AAs = AminoAcids.getHashMapByThreeLetterCode();
 		int[][] AABondInfo = AminoAcids.aaBondInfo();
-		Hashtable strands = pol.getStrands();
-		Enumeration strandKeys = strands.keys();
+		Map strands = pol.getStrands();
+		Iterator strandKeys = strands.keySet().iterator();
 		
-		while(strandKeys.hasMoreElements())	{
-			IStrand strand = (IStrand)strands.get(strandKeys.nextElement());
+		while(strandKeys.hasNext())	{
+			IStrand strand = (IStrand)strands.get(strandKeys.next());
 			int atoms = 0;
 			int atomsInLastResidue = 0;
 			int atomsInPresentResidue = 0;
