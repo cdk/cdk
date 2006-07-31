@@ -110,10 +110,10 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		super.setElectronContainerCount(electronContainerCount);
 	}
 
-	public void setAtomCount(int atomCount) {
-		logger.debug("Settting atom count: ", atomCount);
-		super.setAtomCount(atomCount);
-	}
+//	public void setAtomCount(int atomCount) {
+//		logger.debug("Settting atom count: ", atomCount);
+//		super.setAtomCount(atomCount);
+//	}
 
 	public IAtom[] getAtoms() {
 		logger.debug("Getting atoms: ", super.getAtoms().length);

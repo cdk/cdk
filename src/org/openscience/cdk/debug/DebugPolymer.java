@@ -100,10 +100,10 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		super.setElectronContainerCount(electronContainerCount);
 	}
 
-	public void setAtomCount(int atomCount) {
-		logger.debug("Settting atom count: ", atomCount);
-		super.setAtomCount(atomCount);
-	}
+//	public void setAtomCount(int atomCount) {
+//		logger.debug("Settting atom count: ", atomCount);
+//		super.setAtomCount(atomCount);
+//	}
 
 	public IAtom[] getAtoms() {
 		logger.debug("Getting atoms: ", super.getAtoms().length);

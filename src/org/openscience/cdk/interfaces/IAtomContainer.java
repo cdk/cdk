@@ -136,7 +136,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atomCount  The number of atoms in this container
 	 *@see               #getAtomCount
 	 */
-	public void setAtomCount(int atomCount);
+//	public void setAtomCount(int atomCount);
 
 
 	/**

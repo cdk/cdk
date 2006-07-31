@@ -773,12 +773,12 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(2, container.getElectronContainerCount());
     }
     
-    public void testSetAtomCount_int() {
-        IAtomContainer container = new org.openscience.cdk.AtomContainer();
-        container.setAtomCount(2);
-        
-        assertEquals(2, container.getAtomCount());
-    }
+//    public void testSetAtomCount_int() {
+//        IAtomContainer container = new org.openscience.cdk.AtomContainer();
+//        container.setAtomCount(2);
+//        
+//        assertEquals(2, container.getAtomCount());
+//    }
     
     public void testGetAtoms() {
         // acetone molecule

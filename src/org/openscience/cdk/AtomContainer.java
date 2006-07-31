@@ -189,9 +189,8 @@ public class AtomContainer extends ChemObject
 		{
 			atoms[f].addListener(this);	
 		}
-		setAtomCount(atoms.length);
+		this.atomCount = atoms.length;
 		notifyChanged();
-
 	}
 
 
@@ -291,11 +290,11 @@ public class AtomContainer extends ChemObject
 	 *@param  atomCount  The number of atoms in this container
 	 *@see               #getAtomCount
 	 */
-	public void setAtomCount(int atomCount)
-	{
-		this.atomCount = atomCount;
-		notifyChanged();
-	}
+//	public void setAtomCount(int atomCount)
+//	{
+//		this.atomCount = atomCount;
+//		notifyChanged();
+//	}
 
 
 	/**
