@@ -30,6 +30,7 @@ package org.openscience.cdk;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -251,7 +252,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	/**
 	 * @return hashtable containing the monomers in the strand.
 	 */
-	public Hashtable getStrands()	{
+	public Map getStrands()	{
 		return strands;
 	}
 	

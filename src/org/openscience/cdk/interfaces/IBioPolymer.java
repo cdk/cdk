@@ -28,7 +28,7 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * A BioPolymer is a subclass of a Polymer which is supposed to store
@@ -134,6 +134,6 @@ public interface IBioPolymer extends IPolymer {
 	 * 
 	 * @return hashtable containing the strands in the Polymer
 	 */
-	public Hashtable getStrands();
+	public Map getStrands();
 	
 }

@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -517,7 +518,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		super.removeStrand(name);
 	}
 
-	public Hashtable getStrands() {
+	public Map getStrands() {
 		logger.debug("Getting strands: ", super.getStrands());
 		return super.getStrands();
 	}
