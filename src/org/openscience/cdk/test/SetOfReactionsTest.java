@@ -56,18 +56,18 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testSetOfReactions() {
-        IReactionSet reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newReactionSet();
         assertNotNull(reactionSet);
     }
     
 	public void testClone() throws Exception {
-        IReactionSet reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newReactionSet();
         Object clone = reactionSet.clone();
         assertTrue(clone instanceof IReactionSet);
     }    
         
     public void testGetReactionCount() {
-		IReactionSet reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -76,14 +76,14 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testRemoveAllReactions(){
-  		IReactionSet reactionSet = builder.newSetOfReactions();
+  		IReactionSet reactionSet = builder.newReactionSet();
    		reactionSet.addReaction(builder.newReaction());
    		reactionSet.removeAllReactions();
    		assertEquals(0,reactionSet.getReactions().length);
     }
 
     public void testGetReactions() {
-		IReactionSet reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -98,7 +98,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testGetReaction_int() {
-		IReactionSet reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -110,7 +110,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testAddReaction_IReaction() {
-		IReactionSet reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
         IReaction third = builder.newReaction();
@@ -122,7 +122,7 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
     
     public void testClone_Reaction() throws Exception {
-		IReactionSet reactionSet = builder.newSetOfReactions();
+		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
@@ -143,7 +143,7 @@ public class SetOfReactionsTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        IReactionSet reactionSet = builder.newSetOfReactions();
+        IReactionSet reactionSet = builder.newReactionSet();
         String description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');

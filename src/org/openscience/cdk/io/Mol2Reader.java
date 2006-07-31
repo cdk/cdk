@@ -125,7 +125,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              IChemFile file = (IChemFile)object;
              IChemSequence sequence = file.getBuilder().newChemSequence();
              IChemModel model = file.getBuilder().newChemModel();
-             IMoleculeSet moleculeSet = file.getBuilder().newSetOfMolecules();
+             IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));
@@ -135,7 +135,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              return file;
          } else if (object instanceof IChemModel) {
              IChemModel model = (IChemModel)object;
-             IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
+             IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));

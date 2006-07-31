@@ -306,17 +306,17 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 		return object;
 	}
 
-	public IAtomContainerSet newSetOfAtomContainers() {
+	public IAtomContainerSet newAtomContainerSet() {
 		IAtomContainerSet object = new NNSetOfAtomContainers();
 		return object;
 	}
 
-	public IMoleculeSet newSetOfMolecules() {
+	public IMoleculeSet newMoleculeSet() {
 		IMoleculeSet object = new NNSetOfMolecules();
 		return object;
 	}
 
-	public IReactionSet newSetOfReactions() {
+	public IReactionSet newReactionSet() {
 		IReactionSet object = new NNSetOfReactions();
 		return object;
 	}

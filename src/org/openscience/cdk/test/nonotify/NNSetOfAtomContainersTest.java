@@ -56,7 +56,7 @@ public class NNSetOfAtomContainersTest extends SetOfAtomContainersTest {
     
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainerSet chemObject = builder.newSetOfAtomContainers();
+        IAtomContainerSet chemObject = builder.newAtomContainerSet();
         chemObject.addListener(listener);
         
         chemObject.addAtomContainer(builder.newAtomContainer());

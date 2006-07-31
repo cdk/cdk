@@ -103,7 +103,7 @@ public class ReactionTest extends CDKTestCase {
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
-        IMoleculeSet reactants = builder.newSetOfMolecules();
+        IMoleculeSet reactants = builder.newMoleculeSet();
         reactants.addMolecule(sodiumhydroxide);
         reactants.addMolecule(aceticAcid);
         reactants.addMolecule(water);
@@ -146,7 +146,7 @@ public class ReactionTest extends CDKTestCase {
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
         IMolecule water = builder.newMolecule();
-        IMoleculeSet products = builder.newSetOfMolecules();
+        IMoleculeSet products = builder.newMoleculeSet();
         products.addMolecule(sodiumhydroxide);
         products.addMolecule(aceticAcid);
         products.addMolecule(water);

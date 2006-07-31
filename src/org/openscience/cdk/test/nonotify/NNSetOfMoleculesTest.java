@@ -56,7 +56,7 @@ public class NNSetOfMoleculesTest extends SetOfMoleculesTest {
     
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IMoleculeSet chemObject = builder.newSetOfMolecules();
+        IMoleculeSet chemObject = builder.newMoleculeSet();
         chemObject.addListener(listener);
         
         chemObject.addMolecule(builder.newMolecule());

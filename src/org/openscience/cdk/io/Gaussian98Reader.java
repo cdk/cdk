@@ -264,7 +264,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private void readCoordinates(IChemModel model) throws CDKException, IOException {
-        IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
         IMolecule molecule = model.getBuilder().newMolecule();
         String line = input.readLine();
         line = input.readLine();

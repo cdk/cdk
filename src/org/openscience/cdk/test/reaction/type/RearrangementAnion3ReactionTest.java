@@ -52,7 +52,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 	 */
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -87,7 +87,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -123,7 +123,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);

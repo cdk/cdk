@@ -70,7 +70,7 @@ public class CreateReactionAction extends JCPAction
 		IReactionSet reactionSet = model.getSetOfReactions();
 		if (reactionSet == null)
 		{
-			reactionSet = model.getBuilder().newSetOfReactions();
+			reactionSet = model.getBuilder().newReactionSet();
 		}
 		IAtomContainer container = null;
 		if (object instanceof IAtom)

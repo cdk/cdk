@@ -120,7 +120,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 			throw new CDKException("HyperconjugationReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = reactants.getBuilder().newSetOfReactions();
+		IReactionSet setOfReactions = reactants.getBuilder().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

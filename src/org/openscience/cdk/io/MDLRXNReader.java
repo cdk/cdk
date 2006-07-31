@@ -124,7 +124,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              return (IChemObject) readReaction(object.getBuilder());
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newChemModel();
-             IReactionSet reactionSet = object.getBuilder().newSetOfReactions();
+             IReactionSet reactionSet = object.getBuilder().newReactionSet();
              reactionSet.addReaction(readReaction(object.getBuilder()));
              model.setSetOfReactions(reactionSet);
              return model;

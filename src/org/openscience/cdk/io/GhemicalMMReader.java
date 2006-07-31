@@ -238,7 +238,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
                     }
                     
-                    IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
+                    IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
                     moleculeSet.addMolecule(model.getBuilder().newMolecule(container));
                     model.setSetOfMolecules(moleculeSet);
                     

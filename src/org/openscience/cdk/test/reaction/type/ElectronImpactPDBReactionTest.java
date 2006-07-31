@@ -53,7 +53,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 			}
 		}
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
@@ -85,7 +85,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		Molecule reactant = (new SmilesParser()).parseSmiles("C=CC");
 		
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
@@ -115,7 +115,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
 		
 			
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();

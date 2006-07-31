@@ -196,7 +196,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		// initialize all containers
 		IChemSequence oSeq = oFile.getBuilder().newChemSequence();
 		IChemModel oModel = oFile.getBuilder().newChemModel();
-		IMoleculeSet oSet = oFile.getBuilder().newSetOfMolecules();
+		IMoleculeSet oSet = oFile.getBuilder().newMoleculeSet();
 		
 		// some variables needed
 		String cCol;
@@ -336,7 +336,7 @@ public class PDBReader extends DefaultChemObjectReader {
 							// setup a new one
 							oBP = new PDBPolymer();
 							oModel = oFile.getBuilder().newChemModel();
-							oSet = oFile.getBuilder().newSetOfMolecules();						
+							oSet = oFile.getBuilder().newMoleculeSet();						
 						}
 					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
 						Object comment = oFile.getProperty(CDKConstants.COMMENT);

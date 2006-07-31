@@ -168,7 +168,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);
                     
-                    IMoleculeSet moleculeSet = cf.getBuilder().newSetOfMolecules();
+                    IMoleculeSet moleculeSet = cf.getBuilder().newMoleculeSet();
                     moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
                     IChemModel model = cf.getBuilder().newChemModel();
                     model.setSetOfMolecules(moleculeSet);

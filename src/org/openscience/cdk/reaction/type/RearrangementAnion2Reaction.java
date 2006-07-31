@@ -120,7 +120,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 			throw new CDKException("RearrangementAnion2Reaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/

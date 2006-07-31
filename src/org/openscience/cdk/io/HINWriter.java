@@ -115,7 +115,7 @@ public class HINWriter extends DefaultChemObjectWriter {
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {
-                IMoleculeSet som = object.getBuilder().newSetOfMolecules();
+                IMoleculeSet som = object.getBuilder().newMoleculeSet();
                 som.addMolecule((IMolecule)object);
                 writeMolecule(som);
             } catch(Exception ex) {

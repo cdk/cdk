@@ -514,7 +514,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	}
 
 	public void testNewSetOfAtomContainers() {
-		Object object = rootObject.getBuilder().newSetOfAtomContainers();
+		Object object = rootObject.getBuilder().newAtomContainerSet();
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
@@ -522,7 +522,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	}
 
 	public void testNewSetOfMolecules() {
-		Object object = rootObject.getBuilder().newSetOfMolecules();
+		Object object = rootObject.getBuilder().newMoleculeSet();
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
@@ -530,7 +530,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	}
 
 	public void testNewSetOfReactions() {
-		Object object = rootObject.getBuilder().newSetOfReactions();
+		Object object = rootObject.getBuilder().newReactionSet();
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 

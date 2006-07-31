@@ -49,7 +49,7 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*[C+]CC*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]CC");

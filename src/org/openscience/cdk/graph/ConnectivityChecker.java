@@ -106,7 +106,7 @@ public class ConnectivityChecker
 		IAtom atom = null;
 		IElectronContainer eContainer = null;
 		IMolecule molecule = null;
-		IMoleculeSet molecules = atomContainer.getBuilder().newSetOfMolecules();
+		IMoleculeSet molecules = atomContainer.getBuilder().newMoleculeSet();
 		Vector sphere = new Vector();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{

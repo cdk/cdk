@@ -252,7 +252,7 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
 		HydrogenAdder hAdder = new HydrogenAdder();
-		IAtomContainerSet set = ac.getBuilder().newSetOfAtomContainers();
+		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
         try {
             IReactionProcess type = new BreakingBondReaction();
     		for(int k = 0; k < ac.getAtomCount(); k++){
@@ -265,7 +265,7 @@ public class GasteigerPEPEPartialCharges {
     		HydrogenAdder adder = new HydrogenAdder();
             adder.addImplicitHydrogensToSatisfyValency(ac);
     		
-    		IMoleculeSet setOfReactants = ac.getBuilder().newSetOfMolecules();
+    		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
     			if(ac.getBond(i).getOrder() > 1){
     				ac.getBond(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -281,7 +281,7 @@ public class GasteigerPEPEPartialCharges {
 			IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        for(int i = 0; i < setOfReactions.getReactionCount(); i++){
 	        	type = new HyperconjugationReaction();
-	    		IMoleculeSet setOfM2 = ac.getBuilder().newSetOfMolecules();
+	    		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
 	    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
 	    		for(int k = 0; k < mol.getAtomCount(); k++){
 	    			if(mol.getAtom(k).getSymbol().equals("H")){

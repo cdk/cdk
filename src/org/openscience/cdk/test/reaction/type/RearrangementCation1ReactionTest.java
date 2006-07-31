@@ -56,7 +56,7 @@ public class RearrangementCation1ReactionTest extends CDKTestCase {
 		/*[C+]-O*/
 		IMolecule molecule = getMolecule1();
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
 		
 		 
@@ -88,7 +88,7 @@ public class RearrangementCation1ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C+]-O*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);
@@ -124,7 +124,7 @@ public class RearrangementCation1ReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C+]-O*/
 		IMolecule molecule = getMolecule1();
 		setOfReactants.addMolecule(molecule);

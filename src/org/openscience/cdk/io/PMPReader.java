@@ -390,7 +390,7 @@ public class PMPReader extends DefaultChemObjectReader {
             chemObject = builder.newBond();
         } else if ("Model".equals(object)) {
             modelModel = builder.newChemModel();
-            som = builder.newSetOfMolecules();
+            som = builder.newMoleculeSet();
             molecule = builder.newMolecule();
         } else {
             logger.error("Cannot construct PMP object type: " + object);

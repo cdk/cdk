@@ -260,15 +260,15 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugRingSet();
 	}
 
-	public IAtomContainerSet newSetOfAtomContainers() {
+	public IAtomContainerSet newAtomContainerSet() {
 		return new DebugSetOfAtomContainers();
 	}
 
-	public IMoleculeSet newSetOfMolecules() {
+	public IMoleculeSet newMoleculeSet() {
 		return new DebugSetOfMolecules();
 	}
 
-	public IReactionSet newSetOfReactions() {
+	public IReactionSet newReactionSet() {
 		return new DebugSetOfReactions();
 	}
 	

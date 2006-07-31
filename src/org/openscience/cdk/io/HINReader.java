@@ -147,7 +147,7 @@ public class HINReader extends DefaultChemObjectReader {
     private IChemFile readChemFile(IChemFile file) {
         IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
-        IMoleculeSet setOfMolecules = file.getBuilder().newSetOfMolecules();
+        IMoleculeSet setOfMolecules = file.getBuilder().newMoleculeSet();
         String info;
 
         StringTokenizer tokenizer;

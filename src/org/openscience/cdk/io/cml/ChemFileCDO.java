@@ -91,7 +91,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       currentChemFile = file;
       currentChemSequence = file.getBuilder().newChemSequence();
       currentChemModel = file.getBuilder().newChemModel();
-      currentSetOfMolecules = file.getBuilder().newSetOfMolecules();
+      currentSetOfMolecules = file.getBuilder().newMoleculeSet();
       currentSetOfReactions = null;
       currentReaction = null;
       currentMolecule = file.getBuilder().newMolecule();
@@ -108,7 +108,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       logger.info("New CDO Object");
       currentChemSequence = currentChemFile.getBuilder().newChemSequence();
       currentChemModel = currentChemFile.getBuilder().newChemModel();
-      currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+      currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
       currentMolecule = currentChemFile.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();
     }
@@ -158,7 +158,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
           if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newChemModel();
-          if (currentSetOfMolecules == null) currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+          if (currentSetOfMolecules == null) currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
           currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = currentChemFile.getBuilder().newAtom("H");
@@ -172,7 +172,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       } else if (objectType.equals("Frame")) {
         currentChemModel = currentChemFile.getBuilder().newChemModel();
       } else if (objectType.equals("SetOfMolecules")) {
-        currentSetOfMolecules = currentChemFile.getBuilder().newSetOfMolecules();
+        currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
         currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Crystal")) {
         currentMolecule = currentChemFile.getBuilder().newCrystal(currentMolecule);
@@ -183,7 +183,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           crystal_axis_y = 0.0;
           crystal_axis_z = 0.0;
       } else if (objectType.equals("SetOfReactions")) {
-          currentSetOfReactions = currentChemFile.getBuilder().newSetOfReactions();
+          currentSetOfReactions = currentChemFile.getBuilder().newReactionSet();
       } else if (objectType.equals("Reaction")) {
           if (currentSetOfReactions == null) startObject("SetOfReactions");
           currentReaction = currentChemFile.getBuilder().newReaction();

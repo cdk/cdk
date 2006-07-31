@@ -123,7 +123,7 @@ public class BreakingBondReaction implements IReactionProcess{
 			throw new CDKException("BreakingBondReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
@@ -217,7 +217,7 @@ public class BreakingBondReaction implements IReactionProcess{
 				e.printStackTrace();
 			}
 		}
-		IMoleculeSet setOfFragments = molecule.getBuilder().newSetOfMolecules();
+		IMoleculeSet setOfFragments = molecule.getBuilder().newMoleculeSet();
 		IMolecule molecule1,molecule2;
 		try {
 			molecule1 = (IMolecule)molecule.clone();

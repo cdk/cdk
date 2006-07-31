@@ -202,7 +202,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	private IChemFile readChemFile(IChemFile file) throws IOException {
 		IChemSequence sequence = file.getBuilder().newChemSequence(); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
-		IMoleculeSet moleculeSet = file.getBuilder().newSetOfMolecules();
+		IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
 		
 		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?

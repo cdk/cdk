@@ -407,25 +407,25 @@ public interface IChemObjectBuilder {
 	public IRingSet newRingSet();
 	
 	/**  
-	 * Constructs an empty ISetOfAtomContainers.
+	 * Constructs an empty IAtomContainerSet.
 	 * 
-     * @return ISetOfAtomContainers implementation defined for this IChemObjectBuilder
+     * @return IAtomContainerSet implementation defined for this IChemObjectBuilder
 	 */
-	public IAtomContainerSet newSetOfAtomContainers();
+	public IAtomContainerSet newAtomContainerSet();
 	
 	/**  
-	 * Constructs an empty ISetOfMolecules.
+	 * Constructs an empty IMoleculeSet.
 	 * 
-     * @return ISetOfMolecules implementation defined for this IChemObjectBuilder
+     * @return IMoleculeSet implementation defined for this IChemObjectBuilder
 	 */
-	public IMoleculeSet newSetOfMolecules();
+	public IMoleculeSet newMoleculeSet();
 	
 	/**
-	 * Constructs an empty ISetOfReactions.
+	 * Constructs an empty IReactionSet.
 	 * 
-     * @return ISetOfReactions implementation defined for this IChemObjectBuilder
+     * @return IReactionSet implementation defined for this IChemObjectBuilder
 	 */
-	public IReactionSet newSetOfReactions();
+	public IReactionSet newReactionSet();
 	
     /**
      * Constructs an single electron orbital with an associated IAtom.

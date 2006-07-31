@@ -117,7 +117,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 			throw new CDKException("ElectronImpactNBEReaction don't expects agents");
 		}
 		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newSetOfReactions();
+		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		if(!hasActiveCenter){

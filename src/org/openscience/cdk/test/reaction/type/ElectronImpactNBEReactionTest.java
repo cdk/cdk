@@ -50,7 +50,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 			}
 		}
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction();
@@ -81,7 +81,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		lpeCheck.newSaturate(reactant);
 		
 		
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
 		
 		IReactionProcess type  = new ElectronImpactNBEReaction();

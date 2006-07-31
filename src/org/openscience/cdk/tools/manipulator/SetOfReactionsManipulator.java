@@ -95,7 +95,7 @@ public class SetOfReactionsManipulator {
     }
     
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
-        IMoleculeSet moleculeSet = set.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
         IReaction[] reactions = set.getReactions();
         for (int i=0; i < reactions.length; i++) {
             IReaction reaction = reactions[i];

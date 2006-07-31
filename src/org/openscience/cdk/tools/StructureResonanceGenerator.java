@@ -112,7 +112,7 @@ public class StructureResonanceGenerator {
 	 * @return The different resonance structures
 	 */
 	public IAtomContainerSet getStructures(IAtomContainer atomContainer) {
-		IAtomContainerSet setOfAC = atomContainer.getBuilder().newSetOfAtomContainers();
+		IAtomContainerSet setOfAC = atomContainer.getBuilder().newAtomContainerSet();
 		
 		IAtomContainerSet set = getAllStructures(atomContainer); 
 		/*analize sum of bonds */
@@ -136,7 +136,7 @@ public class StructureResonanceGenerator {
 	 */
 	public IAtomContainerSet getAllStructures(IAtomContainer atomContainer){
 //		boolean overLoaded = false;
-		IAtomContainerSet setOfAtomContainer = atomContainer.getBuilder().newSetOfAtomContainers();
+		IAtomContainerSet setOfAtomContainer = atomContainer.getBuilder().newAtomContainerSet();
 		setOfAtomContainer.addAtomContainer(atomContainer);
 		Object[] params = new Object[1];
 		if(hasActiveCenter)
@@ -146,7 +146,7 @@ public class StructureResonanceGenerator {
 
 		try {
 			for(int i = 0 ; i < setOfAtomContainer.getAtomContainerCount() ; i++){
-				IMoleculeSet setOfReactants = atomContainer.getBuilder().newSetOfMolecules();
+				IMoleculeSet setOfReactants = atomContainer.getBuilder().newMoleculeSet();
 				setOfReactants.addAtomContainer(setOfAtomContainer.getAtomContainer(i));
 				if(cationR){
 					/* RearrangementCation1Reaction */

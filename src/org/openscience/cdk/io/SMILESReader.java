@@ -130,7 +130,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             IChemSequence sequence = file.getBuilder().newChemSequence();
             IChemModel chemModel = file.getBuilder().newChemModel();
             chemModel.setSetOfMolecules(readSetOfMolecules(
-            	file.getBuilder().newSetOfMolecules()
+            	file.getBuilder().newMoleculeSet()
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);

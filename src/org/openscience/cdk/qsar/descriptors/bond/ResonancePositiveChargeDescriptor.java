@@ -178,7 +178,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         type.setParameters(paramsR);
         
         
-        IMoleculeSet setOfReactants = ac.getBuilder().newSetOfMolecules();
+        IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
 		setOfReactants.addMolecule((IMolecule) ac);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         

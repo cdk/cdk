@@ -58,7 +58,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testGetMoleculeCount() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -67,7 +67,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testGetMolecule_int() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -77,7 +77,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testAddMolecule_IMolecule() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -94,21 +94,21 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testAdd_ISetOfMolecules() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
 
-        IMoleculeSet som2 = builder.newSetOfMolecules();
+        IMoleculeSet som2 = builder.newMoleculeSet();
         som2.add(som);
         
         assertEquals(5, som2.getMoleculeCount());
     }
     
     public void testSetMolecules_arrayIMolecule() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         
         IMolecule[] set = new IMolecule[5];
         set[0] = builder.newMolecule();
@@ -125,7 +125,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     public void testGrowMoleculeArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
@@ -140,13 +140,13 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
     
     public void testSetOfMolecules() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         assertNotNull(som);
         assertEquals(0, som.getMoleculeCount());
     }
     
     public void testGetMolecules() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         
         org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
         assertEquals(0, mols.length);
@@ -163,7 +163,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
 
     public void testToString() {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         String description = som.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -172,7 +172,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
 
     public void testClone() throws Exception {
-        IMoleculeSet som = builder.newSetOfMolecules();
+        IMoleculeSet som = builder.newMoleculeSet();
         Object clone = som.clone();
         assertTrue(clone instanceof IMoleculeSet);
 	assertNotSame(som, clone);
@@ -180,7 +180,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IMoleculeSet chemObject = builder.newSetOfMolecules();
+        IMoleculeSet chemObject = builder.newMoleculeSet();
         chemObject.addListener(listener);
         
         chemObject.addMolecule(builder.newMolecule());

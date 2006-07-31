@@ -58,13 +58,13 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testSetOfAtomContainers() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         assertNotNull(som);
         assertEquals(0, som.getAtomContainerCount());
     }
     
     public void testGetAtomContainerCount() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
@@ -73,19 +73,19 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testAdd_ISetOfAtomContainers() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
         
-        IAtomContainerSet tested = builder.newSetOfAtomContainers();
+        IAtomContainerSet tested = builder.newAtomContainerSet();
         assertEquals(0, tested.getAtomContainerCount());
         tested.add(som);
         assertEquals(3, tested.getAtomContainerCount());
     }
 
     public void testGetAtomContainer_int() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
@@ -95,14 +95,14 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testGetMultiplier_int() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
     public void testSetMultiplier_int_double() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(1.0, som.getMultiplier(0), 0.00001);
@@ -111,7 +111,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testSetMultipliers_arraydouble() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);
         IAtomContainer container2 = builder.newAtomContainer();
@@ -128,7 +128,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testSetMultiplier_IAtomContainer_double() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);
 
@@ -138,7 +138,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testGetMultipliers() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer(), 1.0);
         
         double[] multipliers = som.getMultipliers();
@@ -147,14 +147,14 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
         
     public void testGetMultiplier_IAtomContainer() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
 
         assertEquals(-1.0, som.getMultiplier(builder.newAtomContainer()), 0.00001);
     }
     
     public void testAddAtomContainer_IAtomContainer() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
@@ -171,7 +171,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testAddAtomContainer_IAtomContainer_double() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer(), 2.0);
         assertEquals(1, som.getAtomContainerCount());
         assertEquals(2.0, som.getMultiplier(0), 0.00001);
@@ -180,7 +180,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     public void testGrowAtomContainerArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         
         som.addAtomContainer(builder.newAtomContainer());
         som.addAtomContainer(builder.newAtomContainer());
@@ -195,7 +195,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testGetAtomContainers() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         
         org.openscience.cdk.interfaces.IAtomContainer[] mols = som.getAtomContainers();
         assertEquals(0, mols.length);
@@ -212,7 +212,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testToString() {
-        IAtomContainerSet containerSet = builder.newSetOfAtomContainers();
+        IAtomContainerSet containerSet = builder.newAtomContainerSet();
         String description = containerSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
@@ -221,7 +221,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
      public void testClone() throws Exception {
-        IAtomContainerSet containerSet = builder.newSetOfAtomContainers();
+        IAtomContainerSet containerSet = builder.newAtomContainerSet();
         Object clone = containerSet.clone();
         assertTrue(clone instanceof IAtomContainerSet);
 	assertNotSame(containerSet, clone);
@@ -229,7 +229,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
 
     public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainerSet chemObject = builder.newSetOfAtomContainers();
+        IAtomContainerSet chemObject = builder.newAtomContainerSet();
         chemObject.addListener(listener);
         
         chemObject.addAtomContainer(builder.newAtomContainer());
@@ -237,7 +237,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public void testRemoveAtomContainer_IAtomContainer() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer ac1 = builder.newAtomContainer();
         IAtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);
@@ -248,7 +248,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testRemoveAllAtomContainers() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer ac1 = builder.newAtomContainer();
         IAtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);
@@ -260,7 +260,7 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
     
     public void testRemoveAtomContainer_int() {
-        IAtomContainerSet som = builder.newSetOfAtomContainers();
+        IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer ac1 = builder.newAtomContainer();
         IAtomContainer ac2 = builder.newAtomContainer();
         som.addAtomContainer(ac1);

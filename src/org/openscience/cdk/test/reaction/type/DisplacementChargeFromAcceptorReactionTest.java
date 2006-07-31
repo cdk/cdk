@@ -54,7 +54,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testAutomaticSearchCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
@@ -93,7 +93,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testManuallyPutCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
@@ -126,7 +126,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMappingFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
@@ -159,7 +159,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("N=CC");
 	    HydrogenAdder adder = new HydrogenAdder();

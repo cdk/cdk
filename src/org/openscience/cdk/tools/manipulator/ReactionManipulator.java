@@ -131,7 +131,7 @@ public class ReactionManipulator {
     }
     
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
-        IMoleculeSet moleculeSet = reaction.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
         IMolecule[] reactants = reaction.getReactants().getMolecules();
         for (int i=0; i<reactants.length; i++) {
             moleculeSet.addMolecule(reactants[i]);

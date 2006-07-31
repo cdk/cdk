@@ -160,7 +160,7 @@ public class ChemModelManipulator {
             IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
             moleculeSet.addMolecule(molecule);
         } else {
-            IMoleculeSet moleculeSet = chemModel.getBuilder().newSetOfMolecules();
+            IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
             moleculeSet.addMolecule(molecule);
             chemModel.setSetOfMolecules(moleculeSet);
         }
@@ -169,7 +169,7 @@ public class ChemModelManipulator {
 
     public static IChemModel newChemModel(IAtomContainer molecule) {
         IChemModel model = molecule.getBuilder().newChemModel();
-        IMoleculeSet moleculeSet = model.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
         moleculeSet.addAtomContainer(molecule);
         model.setSetOfMolecules(moleculeSet);
         return model;
@@ -226,7 +226,7 @@ public class ChemModelManipulator {
      * Returns all the AtomContainer's of a ChemModel.
      */
     public static IAtomContainer[] getAllAtomContainers(IChemModel chemModel) {
-        IMoleculeSet moleculeSet = chemModel.getBuilder().newSetOfMolecules();
+        IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
         if (chemModel.getSetOfMolecules() != null) {
             moleculeSet.add(chemModel.getSetOfMolecules());
         }
