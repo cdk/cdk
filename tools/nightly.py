@@ -46,6 +46,7 @@
 # Update 06/26/2006 - Added column totals to the JUnit summary page
 # Update 07/03/2006 - Added the bug analysis section. Also trapped exceptions from the
 #                     bug analysis code
+# Update 07/31/2006 - Added success rate to junit summary
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -305,11 +306,11 @@ def writeJunitSummaryHTML(stats):
     <table border=0 cellspacing=5>
     <thead>
     <tr>
-    <td><b>Module</b></td><td><b>Number of Tests</b></td><td><b>Failed</b></td><td><b>Errors</b></td>
+    <td><b>Module</b></td><td><b>Number of Tests</b></td><td><b>Failed</b></td><td><b>Errors</b></td><td></td>
     </tr>
     </thead>
     <tr>
-    <td colspan=4><hr></td>
+    <td colspan=5><hr></td>
     </tr>
     """ % (todayNice, todayNice)
 
@@ -326,14 +327,16 @@ def writeJunitSummaryHTML(stats):
         summary = summary + "<td align=\"left\"><a href=\"test/result-%s.txt\">%s</a></td>" % (entry[0], entry[0])
         for i in entry[1:]:
             summary = summary + "<td align=\"center\">%s</td>" % (i)
+        summary = summary + "<td align=\"center\">%s</td>" % (100*(entry[1]-entry[2]-entry[3])/entry[1])
         summary = summary + "</tr>"
 
     summary = summary + """
     <tr>
-    <td colspan=4><hr></td>
+    <td colspan=5><hr></td>
     </tr>
     <tr>
     <td><b>Totals</b></td>
+    <td align=\"center\">%d</td>
     <td align=\"center\">%d</td>
     <td align=\"center\">%d</td>
     <td align=\"center\">%d</td>
@@ -344,7 +347,7 @@ def writeJunitSummaryHTML(stats):
     </table>
     </center>
     </body>
-    </html>""" % (totalTest, totalFail, totalError)
+    </html>""" % (totalTest, totalFail, totalError, ((totalTest-totalFail-totalError)/totalTest)*100)
     return summary
 
 def parseJunitOutput(summaryFile):
