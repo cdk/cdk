@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #
-# Rajarshi Guha <rajarshi@presidency.com>
+# Rajarshi Guha <rguha@indiana.edu>
 # 04/30/2006
 #
 # Requires a Unix system, for now
@@ -46,7 +46,8 @@
 # Update 06/26/2006 - Added column totals to the JUnit summary page
 # Update 07/03/2006 - Added the bug analysis section. Also trapped exceptions from the
 #                     bug analysis code
-# Update 07/31/2006 - Added success rate to junit summary
+# Update 07/31/2006 - Added success rate to junit summary. Added some code to cleanup
+#                     japize files
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -62,15 +63,15 @@ import smtplib
 
 # should point to an SVN repo, within which doing
 # ant dist-all should work
-nightly_repo = '/home/rajarshi/src/java/cdk-nightly/cdk/'
+nightly_repo = '/home/rguha/src/java/cdk-nightly/cdk/'
 
 # should point to a directory in which this script
 # is to be placed and will contain log files
-nightly_dir = '/home/rajarshi/src/java/cdk-nightly/'
+nightly_dir = '/home/rguha/src/java/cdk-nightly/'
 
 # points to a web accessible directory where the
 # nightly build site will be generated
-nightly_web = '/home/rajarshi/public_html/code/java/nightly/'
+nightly_web = '/home/rguha/public_html/code/java/nightly/'
 #nightly_web = '/home/rajarshi/public_html/tmp/'
 
 
@@ -79,17 +80,17 @@ nightly_web = '/home/rajarshi/public_html/code/java/nightly/'
 # required to generate the dependency graph. Should
 # contain the path to the BeanShell and JGraphT jar files
 # if not required set to "" or None
-classpath = '/home/rajarshi/src/java/beanshell/bsh.jar:/home/rajarshi/src/java/cdk/trunk/cdk/jar/jgrapht-0.6.0.jar'
+classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk/trunk/cdk/jar/jgrapht-0.6.0.jar'
 
 # Optional
 # path to the japitools directory for API comparison
 # if not required set to "" or None
-japitools_path = '/home/rajarshi/src/java/japitools'
+japitools_path = '/home/rguha/src/java/japitools'
 
 # Optional
 # path to the last stable CDK distribution jar
 # if not required set to "" or None
-last_stable = '/home/rajarshi/src/java/cdk-20050826.jar'
+last_stable = '/home/rguha/src/java/cdk-20060714.jar'
 
 per_line = 8
 
@@ -98,7 +99,7 @@ per_line = 8
 # should be self explanatory. Set to "" or None if
 # you dont want to send mail
 smtpServerName = 'smtp.psu.edu'
-fromName = 'nightly.py <rajarshi@presidency.com>'
+fromName = 'nightly.py <rguha@indiana.edu>'
 toName = 'cdk-devel@lists.sourceforge.net'
 
 #################################################################
@@ -303,10 +304,14 @@ def writeJunitSummaryHTML(stats):
     <body>
     <center>
     <h2>CDK JUnit Test Summary (%s)</h2>
-    <table border=0 cellspacing=5>
+    <table border=0 cellspacing=5 cellpadding=3>
     <thead>
     <tr>
-    <td><b>Module</b></td><td><b>Number of Tests</b></td><td><b>Failed</b></td><td><b>Errors</b></td><td></td>
+    <td valign="top"><b>Module</b></td>
+    <td valign="top"><b>Number<br>of Tests</b></td>
+    <td valign="top"><b>Failed</b></td>
+    <td valign="top"><b>Errors</b></td>
+    <td valign="top"><b>Success<br>Rate (%%)</b></td>
     </tr>
     </thead>
     <tr>
@@ -326,8 +331,8 @@ def writeJunitSummaryHTML(stats):
         summary = summary + "<tr>"
         summary = summary + "<td align=\"left\"><a href=\"test/result-%s.txt\">%s</a></td>" % (entry[0], entry[0])
         for i in entry[1:]:
-            summary = summary + "<td align=\"center\">%s</td>" % (i)
-        summary = summary + "<td align=\"center\">%s</td>" % (100*(entry[1]-entry[2]-entry[3])/entry[1])
+            summary = summary + "<td align=\"right\">%s</td>" % (i)
+        summary = summary + "<td align=\"right\">%.2f</td>" % (100*(float(entry[1])-float(entry[2])-float(entry[3]))/float(entry[1]))
         summary = summary + "</tr>"
 
     summary = summary + """
@@ -336,18 +341,18 @@ def writeJunitSummaryHTML(stats):
     </tr>
     <tr>
     <td><b>Totals</b></td>
-    <td align=\"center\">%d</td>
-    <td align=\"center\">%d</td>
-    <td align=\"center\">%d</td>
-    <td align=\"center\">%d</td>
+    <td align=\"right\">%d</td>
+    <td align=\"right\">%d</td>
+    <td align=\"right\">%d</td>
+    <td align=\"right\">%.2f</td>
     </tr>
     <tr>
-    <td colspan=4><hr></td>
+    <td colspan=5><hr></td>
     </tr>
     </table>
     </center>
     </body>
-    </html>""" % (totalTest, totalFail, totalError, ((totalTest-totalFail-totalError)/totalTest)*100)
+    </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100)
     return summary
 
 def parseJunitOutput(summaryFile):
@@ -748,7 +753,12 @@ if __name__ == '__main__':
             os.unlink(logfile)
 
         # clean up source distribution files            
-        logfiles = glob.glob(os.path.join(nightly_dir, 'cdk-source*'))
+        logfiles = glob.glob(os.path.join(nightly_repo, 'cdk-source*'))
+        for logfile in logfiles:
+            os.unlink(logfile)
+
+        # clean up japize files
+        logfiles = glob.glob(os.path.join(nightly_dir, '*.japi.gz'))
         for logfile in logfiles:
             os.unlink(logfile)
 
