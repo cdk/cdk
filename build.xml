@@ -58,6 +58,7 @@
             <echo message="" />
             <echo message="JavaDoc Environment:" />
             <echo message="    SUN JavaDoc: ${sunJavaDoc}" />
+            <echo message="  SUN JavaDoc 6: ${sunJavaDoc6}" />
             <echo message="  gjdoc JavaDoc: ${gjdocJavaDoc}" />
             <echo message="" />
             <echo message="CDK Environment:" />
@@ -188,14 +189,21 @@
             <condition property="isJava15">
                 <contains string="${java.version}" substring="1.5"/>
             </condition>
+            <condition property="isJava16">
+                <contains string="${java.version}" substring="1.6."/>
+            </condition>
             <condition property="isJava14+">
                 <or>
                     <contains string="${java.version}" substring="1.4"/>
                     <contains string="${java.version}" substring="1.5"/>
+                    <contains string="${java.version}" substring="1.6"/>
                 </or>
             </condition>
-            <condition property="isJava15">
-                <contains string="${java.version}" substring="1.5"/>
+            <condition property="isJava15+">
+                <or>
+                    <contains string="${java.version}" substring="1.5"/>
+                    <contains string="${java.version}" substring="1.6"/>
+                </or>
             </condition>
 
             <!-- testing which JavaDoc is present -->
@@ -211,10 +219,24 @@
               </or>
             </condition>
             <condition property="sunJavaDoc">
-              <or>
-                <available file="${java.ext.dirs}/tools.jar" />
-                <available file="${java.home}/../lib/tools.jar" />
-              </or>
+              <and>
+                <or>
+                  <available file="${java.ext.dirs}/tools.jar" />
+                  <available file="${java.home}/../lib/tools.jar" />
+                </or>
+                <not>
+                  <contains string="${java.version}" substring="1.6"/>
+                </not>
+              </and>
+            </condition>
+            <condition property="sunJavaDoc6">
+              <and>
+                <or>
+                  <available file="${java.home}/lib/tools.jar" />
+                  <available file="${java.home}/../lib/tools.jar" />
+                </or>
+              	<contains string="${java.version}" substring="1.6"/>
+              </and>
             </condition>
             <condition property="gjdocJavaDoc">
               <available file="/usr/share/java/gnu-classpath-tools-gjdoc.jar" />
@@ -268,6 +290,7 @@
              <antcall target="compileDoclet.MacOSX"/>
              <antcall target="compileDoclet.gjDoc" />
              <antcall target="compileDoclet.sunJavaDoc" />
+             <antcall target="compileDoclet.sunJavaDoc6" />
         </target>
 
         <target name="compileDoclet.MacOSX" id="compileDoclet.MacOSX" if="isMacOsX">
@@ -275,7 +298,7 @@
                    includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java" />
         </target>
 
-        <target name="compileDoclet.sunJavaDoc" id="compileDoclet.sunJavaDoc" if="sunJavaDoc" unless="isMacOsX">
+        <target name="compileDoclet.sunJavaDoc6" id="compileDoclet.sunJavaDoc6" if="sunJavaDoc6" unless="isMacOsX">
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
                    includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
                 <classpath>
@@ -291,6 +314,23 @@
                 </classpath>
             </javac>
         </target>
+
+    <target name="compileDoclet.sunJavaDoc" id="compileDoclet.sunJavaDoc" if="sunJavaDoc" unless="isMacOsX">
+        <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
+               includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
+            <classpath>
+              <fileset dir="${java.ext.dirs}">
+                <include name="tools.jar" if="sunJavaDocInExt"/>
+              </fileset>
+              <fileset dir="${java.home}/lib">
+                <include name="tools.jar" if="sunJavaDocInLib"/>
+              </fileset>
+              <fileset dir="${java.home}/../lib">
+                <include name="tools.jar" if="sunJavaDocInLib"/>
+              </fileset>
+            </classpath>
+        </javac>
+    </target>
 
         <target name="compileDoclet.gjDoc" id="compileDoclet.gjDoc" if="gjdocJavaDoc">
           <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
