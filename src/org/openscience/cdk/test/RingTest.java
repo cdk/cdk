@@ -88,7 +88,7 @@ public class RingTest extends CDKTestCase {
         assertEquals(0, ring.getBondCount());
     }
 
-    public void testGetOrderSum() {
+    public void testGetBondOrderSum() {
         IRing r = builder.newRing(5, "C");
         assertEquals(5, r.getBondOrderSum());
     }

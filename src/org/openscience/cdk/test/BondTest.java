@@ -171,7 +171,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(o, atoms[1]);
     }
     
-    public void testGetAtomAt_int() {
+    public void testGetAtom_int() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         

@@ -98,7 +98,7 @@ public class ReactionTest extends CDKTestCase {
         assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testSetReactants_ISetOfMolecules() {
+    public void testSetReactants_IMoleculeSet() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -141,7 +141,7 @@ public class ReactionTest extends CDKTestCase {
         assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testSetProducts_ISetOfMolecules() {
+    public void testSetProducts_IMoleculeSet() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();

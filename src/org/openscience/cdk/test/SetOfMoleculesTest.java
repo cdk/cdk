@@ -93,7 +93,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         assertEquals(7, som.getMoleculeCount());        
     }
     
-    public void testAdd_ISetOfMolecules() {
+    public void testAdd_IMoleculeSet() {
         IMoleculeSet som = builder.newMoleculeSet();
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
