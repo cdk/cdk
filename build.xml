@@ -205,6 +205,14 @@
                     <contains string="${java.version}" substring="1.6"/>
                 </or>
             </condition>
+            <condition property="isNotJava15+">
+                <not>
+                  <or>
+                    <contains string="${java.version}" substring="1.5"/>
+                    <contains string="${java.version}" substring="1.6"/>
+                  </or>
+            	</not>
+            </condition>
 
             <!-- testing which JavaDoc is present -->
             <condition property="sunJavaDocInExt">
@@ -302,9 +310,6 @@
             <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
                    includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
                 <classpath>
-                  <fileset dir="${java.ext.dirs}">
-                    <include name="tools.jar" if="sunJavaDocInExt"/>
-                  </fileset>
                   <fileset dir="${java.home}/lib">
                     <include name="tools.jar" if="sunJavaDocInLib"/>
                   </fileset>
@@ -471,7 +476,8 @@
                 <fileset dir="${src}">
                     <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                     <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
-                    <excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
+                    <!-- excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/ -->
+                    <excludesfile name="${src}/java1.5+.javafiles" if="isNotJava15"/>
                     <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
                     <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
                     <excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
@@ -501,7 +507,8 @@
             
                 <excludesfile name="${src}/java1.4+.javafiles" if="isJava13"/>
                 <!-- excludesfile name="${src}/java1.4.javafiles" unless="isJava14"/ -->
-            	<excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/>
+                <!-- excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/ -->
+                <excludesfile name="${src}/java1.5+.javafiles" if="isNotJava15"/>
                 <excludesfile name="${src}/ant1.6.javafiles" unless="hasAnt16"/>
             	<excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
@@ -516,7 +523,8 @@
                     <includesfile name="${src}/${module}.classes" />
                     <excludesfile name="${src}/java1.4+.classes" if="isJava13"/>
                     <!-- excludesfile name="${src}/java1.4.classes" unless="isJava14"/ -->
-                	<excludesfile name="${src}/java1.5.classes" unless="isJava15"/>
+                    <!-- excludesfile name="${src}/java1.5.javafiles" unless="isJava15"/ -->
+                    <excludesfile name="${src}/java1.5+.javafiles" if="isNotJava15"/>
                     <excludesfile name="${src}/ant1.6.classes" unless="hasAnt16"/>
 	                <excludesfile name="${src}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${src}/dadml.javafiles" unless="dadml.present"/>
