@@ -49,7 +49,7 @@ import org.xmlcml.cml.element.CMLCml;
  *
  * @cdk.module       jchempaint
  * @author           steinbeck
- * @cdk.require      java1.5
+ * @cdk.require      java1.5+
  * @cdk.builddepends xom-1.0.jar
  */
 public class ShowChemObjectDumpAction extends JCPAction

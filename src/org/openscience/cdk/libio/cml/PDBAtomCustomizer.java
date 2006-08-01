@@ -47,7 +47,7 @@ import org.openscience.cdk.protein.data.PDBAtom;
  * @cdk.created   2005-05-04
  * @cdk.module    pdb-cml
  * @cdk.set       libio-cml-customizers
- * @cdk.require   java1.5
+ * @cdk.require   java1.5+
  */
 public class PDBAtomCustomizer implements ICMLCustomizer {
 

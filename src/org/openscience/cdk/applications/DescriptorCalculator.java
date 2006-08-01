@@ -64,14 +64,13 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.element.CMLMolecule;
 
-
 /**
  * Command line utility that calculates QSAR descriptor values.
  *
  * @cdk.module applications
  *
  * @author           Egon Willighagen
- * @cdk.require      java1.5
+ * @cdk.require      java1.5+
  * @cdk.keyword      command line util descriptor calculation
  * @cdk.builddepends commons-cli-1.0.jar
  * @cdk.created      2004-12-02

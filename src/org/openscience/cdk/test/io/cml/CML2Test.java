@@ -43,7 +43,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * in data/cmltest.
  *
  * @cdk.module test-io
- * @cdk.require java1.5
+ * @cdk.require java1.5+
  */
 public class CML2Test extends CDKTestCase {
 

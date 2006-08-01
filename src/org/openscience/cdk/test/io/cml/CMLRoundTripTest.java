@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module  test-io
  * @cdk.require xom-1.0.jar
- * @cdk.require java1.5
+ * @cdk.require java1.5+
  */
 public class CMLRoundTripTest extends CDKTestCase {
 

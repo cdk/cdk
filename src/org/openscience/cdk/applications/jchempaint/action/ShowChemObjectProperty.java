@@ -43,7 +43,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
  *
  * @cdk.module  jchempaint
  * @author      steinbeck
- * @cdk.require java1.5
+ * @cdk.require java1.5+
  */
 public class ShowChemObjectProperty extends JCPAction
 {
