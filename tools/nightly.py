@@ -48,6 +48,7 @@
 #                     bug analysis code
 # Update 07/31/2006 - Added success rate to junit summary. Added some code to cleanup
 #                     japize files
+# Update 08/01/2006 - Made some error cases more consistent
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -592,23 +593,28 @@ def executableExists(executable):
     return found
 
 def generateJAPI():
+
     olddir = os.getcwd()
     os.chdir(nightly_dir)
     
     if japitools_path == "" or japitools_path == None:
         print 'japitools_path not specified. Skipping japi'
-        return page
+        return None
 
     java_home = None
     try:
         java_home = os.environ['JAVA_HOME']
     except KeyError, ke:
         print 'java_home not specified. Skipping japi'
-        return page
+        return None
     
     if last_stable == "" or last_stable == None:
         print 'last_stable not specified. Skipping japi'
-        return page
+        return None
+
+    if not os.path.isfile(last_stable):
+        print 'last_stable specified an invalid file. Skipping japi'
+        return None
 
     # get the paths to the japi binaries
     japize = os.path.join(japitools_path, 'bin', 'japize')
