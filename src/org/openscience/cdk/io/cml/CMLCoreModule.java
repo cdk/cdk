@@ -425,6 +425,14 @@ public class CMLCoreModule implements ICMLModule {
                 }
             }
             curRef = 0;
+        } else if ("bondStereo".equals(name)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("dictRef")) {
+                	if (atts.getValue(i).startsWith("mdl:"))
+                	bondStereo.addElement(atts.getValue(i).substring(4));
+                    stereoGiven=true;
+                }
+            }
         } else if ("molecule".equals(name)) {
             newMolecule();
             BUILTIN = "";

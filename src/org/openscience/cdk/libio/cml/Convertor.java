@@ -467,16 +467,14 @@ public class Convertor {
 
         if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||
                 cdkBond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
-            CMLScalar scalar = new CMLScalar();
-            this.checkPrefix(scalar);
-            scalar.setDataType("xsd:string");
-            scalar.setDictRef("mdl:stereo");
+        	CMLBondStereo bondStereo = new CMLBondStereo();
+            this.checkPrefix(bondStereo);
             if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-                scalar.setValue("W");
+                bondStereo.setDictRef("mdl:W");
             } else {
-                scalar.setValue("H");
+                bondStereo.setDictRef("mdl:H");
             }
-            cmlBond.appendChild(scalar);
+            cmlBond.appendChild(bondStereo);
         }
         if (cdkBond.getProperties().size() > 0) writeProperties(cdkBond, cmlBond);
 

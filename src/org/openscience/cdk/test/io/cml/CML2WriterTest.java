@@ -161,10 +161,9 @@ public class CML2WriterTest extends CDKTestCase {
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
-        logger.debug("****************************** testPDBAtomCustomization()");
-        logger.debug(cmlContent);
-        logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
+        System.out.println("****************************** testPDBAtomCustomization()");
+        System.out.println(cmlContent);
+        System.out.println("******************************");
         assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
     }
     
