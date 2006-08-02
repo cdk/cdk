@@ -166,7 +166,7 @@ public class QSARCustomizer implements ICMLCustomizer {
                 metadataList.appendChild(metaData);
                 // add parameter setting to the metadata list
                 Object[] params = value.getParameters();
-                System.out.println("Value: " + value.getSpecification().getImplementationIdentifier());
+//                System.out.println("Value: " + value.getSpecification().getImplementationIdentifier());
                 if (params != null && params.length > 0) {
                     String[] paramNames = value.getParameterNames();
                     Element paramSettings = new CMLMetadataList();
