@@ -421,6 +421,13 @@ public class SmilesGenerator
 		StringBuffer l = new StringBuffer();
 		createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
 		rings = null;
+		
+		// remove all CanonicalLable/InvariancePair props
+		for (int k = 0; k < molecule.getAtomCount(); k++) {
+			molecule.getAtom(k).removeProperty("CanonicalLable");
+			molecule.getAtom(k).removeProperty("InvariancePair");
+		}
+		
 		return l.toString();
 	}
 
