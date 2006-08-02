@@ -200,25 +200,6 @@ public class PDBReaderTest extends TestCase {
     }
   }
   
-  public void testCreateBondsIOOption() {
-	    String filename = "data/pdb/114D.pdb";
-	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
-
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      
-	      // chemical validation
-	      assertTrue(ChemFileManipulator.getBondCount(chemFile) > 0);
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
-  }
-
     public void test114D() {
 	    String filename = "data/pdb/114D.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

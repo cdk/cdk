@@ -33,9 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.vecmath.Point3d;
@@ -48,7 +46,6 @@ import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -65,7 +62,6 @@ import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStrand;
 import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -88,7 +84,6 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	private LoggingTool logger;
 	private BufferedReader _oInput; // The internal used BufferedReader
-	private BooleanIOSetting deduceBonding;
 	private BooleanIOSetting useRebondTool;
 	private BooleanIOSetting readConnect;
 	
@@ -295,28 +290,16 @@ public class PDBReader extends DefaultChemObjectReader {
 					} else if ("END   ".equalsIgnoreCase(cCol)) {
 						atomNumberMap.clear();
 						// create bonds and finish the molecule
-						if (deduceBonding.isSet()) {
-							// OK, try to deduce the bonding patterns
-							if (oBP.getAtomCount() != 0) {
-								// Create bonds. If bonds could not be created, all bonds are deleted.
-								try {
-									if (useRebondTool.isSet()) {
-										if(!createBondsWithRebondTool(oBP))	{
-											// Get rid of all potentially created bonds.
-											logger.info("Bonds could not be created using the RebondTool when PDB file was read.");								
-											oBP.removeAllBonds();								
-										}
-									} else {
-										if(!createBonds(oBP))	{
-											// Get rid of all potentially created bonds.
-											logger.info("Bonds could not be created when PDB file was read.");								
-											oBP.removeAllBonds();								
-										}
-									}
-								} catch (Exception exception) {
-									logger.info("Bonds could not be created when PDB file was read.");
-									logger.debug(exception);
+						if (useRebondTool.isSet()) {
+							try {
+								if(!createBondsWithRebondTool(oBP))	{
+									// Get rid of all potentially created bonds.
+									logger.info("Bonds could not be created using the RebondTool when PDB file was read.");								
+									oBP.removeAllBonds();								
 								}
+							} catch (Exception exception) {
+								logger.info("Bonds could not be created when PDB file was read.");
+								logger.debug(exception);
 							}
 						}
 						oSet.addMolecule(oBP);
@@ -489,80 +472,6 @@ public class PDBReader extends DefaultChemObjectReader {
 		obp.addBond(firstAtom.getBuilder().newBond(firstAtom, secondAtom, 1));
 	}
 
-	/**
-	 * Create bonds when reading a protein PDB file. NB ONLY works for protein
-	 * PDB files! If you want to read small molecules I recommend using molecule
-	 * file format where the connectivity is explicitly stated. [This method can
-	 * however reasonably easily be extended to cover e.g. nucleic acids or your
-	 * favourite small molecule]. Returns 'false' if bonds could not be created
-	 * due to incomplete pdb-records or other reasons. 
-	 * 
-	 * @param pol The Biopolymer to work on
-	 */
-	public boolean createBonds(IBioPolymer pol){
-		HashMap AAs = AminoAcids.getHashMapByThreeLetterCode();
-		int[][] AABondInfo = AminoAcids.aaBondInfo();
-		Map strands = pol.getStrands();
-		Iterator strandKeys = strands.keySet().iterator();
-		
-		while(strandKeys.hasNext())	{
-			IStrand strand = (IStrand)strands.get(strandKeys.next());
-			int atoms = 0;
-			int atomsInLastResidue = 0;
-			int atomsInPresentResidue = 0;
-			
-			while (atoms < strand.getAtomCount() - 1) {
-				PDBAtom anAtom = (PDBAtom)strand.getAtom(atoms);
-				
-				// Check that we have bond info about residue/ligand, if not - exit.
-				if(!AAs.containsKey(anAtom.getResName()))	{
-					return false;
-				}
-				IMonomer monomer = (IMonomer)AAs.get(anAtom.getResName());
-		
-				atomsInPresentResidue = Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_ATOMS));
-				
-				/* Check if there's something wrong with the residue record (e.g. it doesn't contain the
-				 * correct number of atom records). */
-				int counter = 1;
-				while (atoms + counter < strand.getAtomCount() &&
-						anAtom.getResName().equals(strand.getAtom(atoms + counter).getProperty(AminoAcids.RESIDUE_NAME))) {
-					counter++;
-				}
-				// Check if something is wrong. Remember to deal with possible OXT atom...
-				if(counter % atomsInPresentResidue != 0 && (atoms + counter == strand.getAtomCount() && counter % atomsInPresentResidue != 1))	{
-					return false;
-				}
-				
-				// If nothing's wrong, add bonds
-				int bondID = Integer.parseInt((String)monomer.getProperty(AminoAcids.ID));
-				for (int l = 0; l < Integer.parseInt((String)monomer.getProperty(AminoAcids.NO_BONDS)); l++) {
-					IBond bond = pol.getBuilder().newBond(strand.getAtom(AABondInfo[bondID + l][1] + atoms), strand.getAtom(AABondInfo[bondID + l][2] + atoms), (double)(AABondInfo[bondID + l][3]));					
-					pol.addBond(bond);
-				}
-				
-				// If not first residue, connect residues
-				if (atomsInLastResidue != 0)	{
-					IBond bond = pol.getBuilder().newBond(strand.getAtom(atoms - atomsInLastResidue + 2), strand.getAtom(atoms), 1);					
-					pol.addBond(bond);
-				}
-				
-				atoms = atoms + atomsInPresentResidue;
-				atomsInLastResidue = atomsInPresentResidue;
-				
-				// Check if next atom is an OXT. The reason to why this is seemingly overly complex is because
-				// not all PDB-files have ending OXT. If that were the case you could just check if
-				// atoms == mol.getAtomCount()...
-				if(strand.getAtomCount() < atoms && ((PDBAtom)strand.getAtom(atoms)).getOxt())	{
-//				if(strand.getAtomCount() < atoms && ((String)strand.getAtomAt(atoms).getProperty("oxt")).equals("1"))	{
-					IBond bond = pol.getBuilder().newBond(strand.getAtom(atoms - atomsInLastResidue + 2), strand.getAtom(atoms), 1);					
-					pol.addBond(bond);
-				}
-			}
-		}
-		return true;
-	}
-	
 	private boolean createBondsWithRebondTool(IBioPolymer pol){
 		RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
 		try {
@@ -689,28 +598,23 @@ public class PDBReader extends DefaultChemObjectReader {
 	}
 
     private void initIOSettings() {
-        deduceBonding = new BooleanIOSetting("DeduceBonding", IOSetting.LOW,
+    	useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
           "Should the PDBReader deduce bonding patterns?", 
-          "true");
-        useRebondTool = new BooleanIOSetting("UseRebondTool", IOSetting.LOW,
-          "Should the RebondTool be used (or a heuristic approach otherwise)?",
-          "true");
+          "false");
         readConnect = new BooleanIOSetting("ReadConnectSection", IOSetting.LOW,
           "Should the CONECT be read?",
           "true");
     }
     
     public void customizeJob() {
-        fireIOSettingQuestion(deduceBonding);
         fireIOSettingQuestion(useRebondTool);
         fireIOSettingQuestion(readConnect);
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[3];
-        settings[0] = deduceBonding;
-        settings[1] = useRebondTool;
-        settings[2] = readConnect;
+        IOSetting[] settings = new IOSetting[2];
+        settings[0] = useRebondTool;
+        settings[1] = readConnect;
         return settings;
     }
 
