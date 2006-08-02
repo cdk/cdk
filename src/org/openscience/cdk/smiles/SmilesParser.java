@@ -645,21 +645,22 @@ public class SmilesParser {
 	 *@param  pos  Description of the Parameter
 	 *@return      The RingNumber value
 	 */
-	private String getRingNumber(String s, int pos)
-	{
+	private String getRingNumber(String s, int pos) throws InvalidSmilesException {
 		logger.debug("getRingNumber()");
-		String retString = "";
 		pos++;
-		do
-		{
-			retString += s.charAt(pos);
-			pos++;
-		} while (pos < s.length() &&
-				(s.charAt(pos) >= '0' && s.charAt(pos) <= '9'))
-				;
+
+		// Two digits impossible due to end of string
+		if (pos >= s.length() - 1)
+			throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
+
+		String retString = s.substring(pos, pos + 2);
+
+		if (retString.charAt(0) < '0' || retString.charAt(0) > '9' || 
+			retString.charAt(1) < '0' || retString.charAt(1) > '9')
+			throw new InvalidSmilesException("Percent sign ring closure numbers must be two-digit.");
+
 		return retString;
 	}
-
 
 	/**
 	 *  Description of the Method
