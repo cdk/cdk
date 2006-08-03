@@ -34,6 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.IValencyChecker;
+import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
@@ -105,5 +106,17 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
 		new ValencyHybridChecker().saturate(mol);
 	}
+	
+	/**
+     * 
+     * @throws CDKException
+     */
+    public void test1() throws CDKException {
+    	SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[F+]=C=C");
+		
+		assertTrue(satcheck.isSaturated(mol.getAtom(0),mol));
+    }
+    
 }
 
