@@ -165,7 +165,7 @@ public class HydrogenAdder {
      * @cdk.keyword          hydrogen, adding
      * @cdk.keyword          explicit hydrogen
      */
-    public IAtomContainer addExplicitHydrogensToSatisfyValency(IMolecule molecule) throws IOException, ClassNotFoundException, CDKException
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer molecule) throws IOException, ClassNotFoundException, CDKException
     {
     	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
