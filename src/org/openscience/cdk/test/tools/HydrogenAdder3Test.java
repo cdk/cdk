@@ -23,14 +23,23 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.ValencyHybridChecker;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -43,8 +52,11 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  */
 public class HydrogenAdder3Test extends HydrogenAdderTest {
 
+	private LoggingTool logger;
+	
     public HydrogenAdder3Test(String name) {
         super(name);
+        logger = new LoggingTool(this);
     }
 
     /**
@@ -90,6 +102,68 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         assertEquals(0, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(0, mol.getBondCount(cl));
         assertEquals(0, mol.getBondCount(na));
+    }
+    
+    /**
+     * @cdk.bug 1244612
+     */
+    public void testSulfurCompound() {
+        String filename = "data/mdl/sulfurCompound.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containers.length);
+            
+            assertEquals(10, containers[0].getAtomCount());
+            IAtom sulfur = containers[0].getAtom(1);
+            assertEquals("S", sulfur.getSymbol());
+            assertEquals(0, sulfur.getHydrogenCount());
+            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            
+            // add explicit hydrogens
+            adder.addExplicitHydrogensToSatisfyValency(containers[0]);
+            assertEquals(21, containers[0].getAtomCount());
+            
+            assertEquals(0, sulfur.getHydrogenCount());
+            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+        } catch (Exception exception) {
+        	exception.printStackTrace();
+        	fail(exception.getMessage());
+        }
+    }
+
+    /**
+     * @cdk.bug 1244612
+     */
+    public void testSulfurCompound_ImplicitHydrogens() {
+        String filename = "data/mdl/sulfurCompound.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containers.length);
+            
+            assertEquals(10, containers[0].getAtomCount());
+            IAtom sulfur = containers[0].getAtom(1);
+            assertEquals("S", sulfur.getSymbol());
+            assertEquals(0, sulfur.getHydrogenCount());
+            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            
+            // add explicit hydrogens
+            adder.addImplicitHydrogensToSatisfyValency(containers[0]);
+            assertEquals(10, containers[0].getAtomCount());
+            
+            assertEquals(0, sulfur.getHydrogenCount());
+            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+        } catch (Exception exception) {
+        	exception.printStackTrace();
+        	fail(exception.getMessage());
+        }
     }
 }
 
