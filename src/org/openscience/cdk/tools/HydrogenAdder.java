@@ -80,9 +80,11 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *   int atomCount = ethane.getAtomCount(); // = 5
  * </pre>
  *
+ * <p>This class skips adding hydrogens for radicals, i.e IAtom's that
+ * have an associated ISingleAtom.
+ *
  * @cdk.keyword    hydrogen, adding
  * @cdk.module     valencycheck
- * @cdk.bug        1221810
  * @cdk.bug        1244612
  */
 public class HydrogenAdder {
@@ -234,7 +236,7 @@ public class HydrogenAdder {
         // set number of implicit hydrogens to zero
         // add explicit hydrogens
 	logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
-        int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
+        int missingHydrogens = calculateNumberOfImplicitHydrogens(container, atom);
   logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
         IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, totalContainer);
 	logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
@@ -305,7 +307,7 @@ public class HydrogenAdder {
     public int[] addImplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom) throws CDKException
     {
         int formerHydrogens = atom.getHydrogenCount();
-        int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
+        int missingHydrogens = calculateNumberOfImplicitHydrogens(container, atom);
         atom.setHydrogenCount(missingHydrogens);
         int[] hydrogens = new int[2];
         hydrogens[0] = formerHydrogens;
@@ -313,15 +315,12 @@ public class HydrogenAdder {
         return hydrogens;
     }
 
-    /*
-     * Method that saturates an atom by adding implicit hydrogens.
-     *
-     * @param  atom      Atom to satureate.
-     *
-    public void addImplicitHydrogensToSatisfyValency(Atom atom) throws CDKException
-    {
-        int missingHydrogens = valencyChecker.calculateNumberOfImplicitHydrogens(atom);
-        atom.setHydrogenCount(missingHydrogens);
-    } */
+    private int calculateNumberOfImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
+    	if (container.getSingleElectronSum(atom) > 0) {
+    		// This method does not deal with radicals yet, so don't add hydrogens as stupid default
+    		return 0;
+    	}
+    	return valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
+    }
 }
 
