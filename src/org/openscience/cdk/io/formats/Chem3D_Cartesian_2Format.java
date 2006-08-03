@@ -34,8 +34,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Chem3D_Cartesian_2Format implements IChemFormat {
 
-    public Chem3D_Cartesian_2Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Chem3D_Cartesian_2Format() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Chem3D_Cartesian_2Format();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Chem3D Cartesian 2";
     }

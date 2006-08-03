@@ -84,7 +84,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new CMLFormat();
+        return CMLFormat.getInstance();
     }
 
     public IAtomContainer getAtomContainer() {

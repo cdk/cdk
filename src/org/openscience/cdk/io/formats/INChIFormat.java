@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class INChIFormat implements IChemFormatMatcher {
 
-    public INChIFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private INChIFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new INChIFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "IUPAC-NIST Chemical Identifier (XML)";

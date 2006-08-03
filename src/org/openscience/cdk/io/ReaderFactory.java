@@ -37,6 +37,7 @@ import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
+import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -189,11 +190,11 @@ public class ReaderFactory {
             if (tokenCount == 1) {
                 new Integer(tokenizer.nextToken());
                 // if not failed, then it is a XYZ file
-                return new org.openscience.cdk.io.formats.XYZFormat();
+                return (IChemFormat)XYZFormat.getInstance();
             } else if (tokenCount == 2) {
                 new Integer(tokenizer.nextToken());
                 if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return new org.openscience.cdk.io.formats.XYZFormat();
+                    return (IChemFormat)XYZFormat.getInstance();
                 }
             }
         } catch (NumberFormatException exception) {

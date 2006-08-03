@@ -87,7 +87,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new PDBFormat();
+        return PDBFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

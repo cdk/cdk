@@ -81,7 +81,7 @@ public class HINWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new HINFormat();
+        return HINFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

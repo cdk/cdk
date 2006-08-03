@@ -35,8 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CacaoCartesianFormat implements IChemFormat {
 
-    public CacaoCartesianFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CacaoCartesianFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CacaoCartesianFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Cacao Cartesian";
     }

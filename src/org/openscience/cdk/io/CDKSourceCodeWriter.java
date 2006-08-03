@@ -91,7 +91,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     public IResourceFormat getFormat() {
-        return new CDKSourceCodeFormat();
+        return CDKSourceCodeFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

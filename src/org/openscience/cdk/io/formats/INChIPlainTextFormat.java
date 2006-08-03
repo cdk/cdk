@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class INChIPlainTextFormat implements IChemFormatMatcher {
 
-    public INChIPlainTextFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private INChIPlainTextFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new INChIPlainTextFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "IUPAC-NIST Chemical Identifier (Plain Text)";

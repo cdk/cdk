@@ -91,7 +91,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new ShelXFormat();
+        return ShelXFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

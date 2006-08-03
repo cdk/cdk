@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class SMARTSFormat implements IChemFormat {
 
-    public SMARTSFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SMARTSFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SMARTSFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "SMARTS";

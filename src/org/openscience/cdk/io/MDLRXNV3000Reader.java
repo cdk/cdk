@@ -77,7 +77,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new MDLRXNV3000Format();
+        return MDLRXNV3000Format.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

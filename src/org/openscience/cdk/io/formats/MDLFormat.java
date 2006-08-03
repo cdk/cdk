@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MDLFormat implements IChemFormatMatcher {
 
-    public MDLFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MDLFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MDLFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MDL Molfile";

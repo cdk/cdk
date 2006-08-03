@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class SMILESFIXFormat implements IChemFormat {
 
-    public SMILESFIXFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SMILESFIXFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SMILESFIXFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "SMILES FIX";

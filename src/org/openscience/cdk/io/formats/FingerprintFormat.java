@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class FingerprintFormat implements IChemFormat {
 
-    public FingerprintFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private FingerprintFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new FingerprintFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Fingerprint";

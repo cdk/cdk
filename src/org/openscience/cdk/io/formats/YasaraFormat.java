@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class YasaraFormat implements IChemFormat {
     
-    public YasaraFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private YasaraFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new YasaraFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Yasara";

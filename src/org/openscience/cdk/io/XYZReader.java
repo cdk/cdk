@@ -84,7 +84,7 @@ public class XYZReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new XYZFormat();
+        return XYZFormat.getInstance();
     }
     
     public void setReader(Reader input) throws CDKException {

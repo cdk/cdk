@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class DaltonFormat implements IChemFormatMatcher {
 
-    public DaltonFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private DaltonFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new DaltonFormat();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "Dalton";

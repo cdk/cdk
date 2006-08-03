@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PDBMLFormat implements IChemFormat {
 
-    public PDBMLFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PDBMLFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PDBMLFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Protein Data Bank Markup Language (PDBML)";

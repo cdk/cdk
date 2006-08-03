@@ -72,7 +72,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new GhemicalMMFormat();
+        return GhemicalMMFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

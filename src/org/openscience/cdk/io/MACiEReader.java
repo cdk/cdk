@@ -143,7 +143,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new MACiEFormat();
+        return MACiEFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

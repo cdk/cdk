@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Gaussian90Format implements IChemFormatMatcher {
 
-    public Gaussian90Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Gaussian90Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Gaussian90Format();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "Gaussian90";

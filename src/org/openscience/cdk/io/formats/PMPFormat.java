@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PMPFormat implements IChemFormatMatcher {
 
-    public PMPFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PMPFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PMPFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "PolyMorph Predictor (Cerius)";

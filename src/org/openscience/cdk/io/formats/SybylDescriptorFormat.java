@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class SybylDescriptorFormat implements IChemFormat {
 
-    public SybylDescriptorFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SybylDescriptorFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SybylDescriptorFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Sybyl descriptor";

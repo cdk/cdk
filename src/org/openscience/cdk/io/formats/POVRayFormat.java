@@ -34,7 +34,14 @@ package org.openscience.cdk.io.formats;
  */
 public class POVRayFormat implements IResourceFormat {
 
-    public POVRayFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private POVRayFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new POVRayFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "POV Ray";

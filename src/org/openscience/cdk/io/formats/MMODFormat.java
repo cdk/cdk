@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MMODFormat implements IChemFormat {
 
-    public MMODFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MMODFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MMODFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MacroModel";

@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MACiEFormat implements IChemFormatMatcher {
 
-    public MACiEFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MACiEFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MACiEFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MACiE";

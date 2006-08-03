@@ -35,8 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class BSFormat implements IChemFormat {
 
-    public BSFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private BSFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new BSFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Ball and Stick";
     }

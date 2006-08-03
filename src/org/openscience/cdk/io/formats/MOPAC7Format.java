@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MOPAC7Format implements IChemFormatMatcher {
 
-    public MOPAC7Format() {}
+	private static IResourceFormat myself = null;
+	
+    private MOPAC7Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MOPAC7Format();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "MOPAC7";

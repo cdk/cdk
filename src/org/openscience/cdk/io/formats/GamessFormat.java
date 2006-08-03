@@ -26,14 +26,21 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html"></a>
+ * See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
 public class GamessFormat implements IChemFormatMatcher {
 
-    public GamessFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private GamessFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new GamessFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "GAMESS log file";

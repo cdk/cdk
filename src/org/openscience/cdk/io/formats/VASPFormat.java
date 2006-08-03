@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class VASPFormat implements IChemFormatMatcher {
 
-    public VASPFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private VASPFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new VASPFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "VASP";

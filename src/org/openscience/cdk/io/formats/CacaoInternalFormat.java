@@ -35,8 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CacaoInternalFormat implements IChemFormat {
 
-    public CacaoInternalFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CacaoInternalFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CacaoInternalFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Cacao Internal";
     }

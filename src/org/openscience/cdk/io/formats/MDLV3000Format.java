@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MDLV3000Format implements IChemFormatMatcher {
 
-    public MDLV3000Format() {}
+	private static IResourceFormat myself = null;
+	
+    private MDLV3000Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MDLV3000Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MDL Mol/SDF V3000";

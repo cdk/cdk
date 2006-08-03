@@ -79,7 +79,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new XYZFormat();
+        return XYZFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

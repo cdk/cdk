@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class JMEFormat implements IChemFormat {
 
-    public JMEFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private JMEFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new JMEFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "JME";

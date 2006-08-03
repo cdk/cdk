@@ -102,7 +102,7 @@ public class CIFReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new CIFFormat();
+        return CIFFormat.getInstance();
     }
 
     public void setReader(Reader reader) throws CDKException {

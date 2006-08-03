@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class UniChemXYZFormat implements IChemFormat {
 
-    public UniChemXYZFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private UniChemXYZFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new UniChemXYZFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "UniChemXYZ";

@@ -92,7 +92,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new SMILESFormat();
+        return SMILESFormat.getInstance();
     }
 
     public boolean hasNext() {

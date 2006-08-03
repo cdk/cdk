@@ -104,7 +104,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new MDLFormat();
+        return MDLFormat.getInstance();
     }
 
     /**

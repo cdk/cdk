@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MOPAC2002Format implements IChemFormatMatcher {
 
-    public MOPAC2002Format() {}
+	private static IResourceFormat myself = null;
+	
+    private MOPAC2002Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MOPAC2002Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MOPAC 2002";

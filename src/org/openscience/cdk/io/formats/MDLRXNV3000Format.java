@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MDLRXNV3000Format implements IChemFormatMatcher {
 
-    public MDLRXNV3000Format() {}
+	private static IResourceFormat myself = null;
+	
+    private MDLRXNV3000Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MDLRXNV3000Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MDL RXN V3000";

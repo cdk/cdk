@@ -144,7 +144,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public IResourceFormat getFormat() {
-        return new CMLFormat();
+        return CMLFormat.getInstance();
     }
     
     public void setWriter(Writer writer) throws CDKException {

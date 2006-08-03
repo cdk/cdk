@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class SDFFormat implements IChemFormatMatcher {
 
-    public SDFFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SDFFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SDFFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MDL Structure-data file";

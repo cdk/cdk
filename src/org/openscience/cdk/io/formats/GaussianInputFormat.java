@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class GaussianInputFormat implements IChemFormat {
 
-    public GaussianInputFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private GaussianInputFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new GaussianInputFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Gaussian Input";

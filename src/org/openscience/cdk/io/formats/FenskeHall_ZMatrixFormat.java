@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class FenskeHall_ZMatrixFormat implements IChemFormat {
 
-    public FenskeHall_ZMatrixFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private FenskeHall_ZMatrixFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new FenskeHall_ZMatrixFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Fenske-Hall Z-Matrix";

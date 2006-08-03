@@ -110,7 +110,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
     public IResourceFormat getFormat() {
-        return new MDLFormat();
+        return MDLFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

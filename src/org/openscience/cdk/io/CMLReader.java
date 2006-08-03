@@ -110,7 +110,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new CMLFormat();
+        return CMLFormat.getInstance();
     }
 
     public void setReader(Reader reader) throws CDKException {

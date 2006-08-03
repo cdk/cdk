@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ADFFormat implements IChemFormatMatcher {
 
-    public ADFFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ADFFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ADFFormat();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "ADF";

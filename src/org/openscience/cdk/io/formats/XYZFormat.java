@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class XYZFormat implements IChemFormat {
 
-    public XYZFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private XYZFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new XYZFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "XYZ";

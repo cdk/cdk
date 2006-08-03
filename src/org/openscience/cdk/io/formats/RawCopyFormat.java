@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class RawCopyFormat implements IChemFormat {
 
-    public RawCopyFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private RawCopyFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new RawCopyFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Raw Copy";

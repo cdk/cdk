@@ -33,8 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class BGFFormat implements IChemFormat {
 
-    public BGFFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private BGFFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new BGFFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "MSI BGF";
     }

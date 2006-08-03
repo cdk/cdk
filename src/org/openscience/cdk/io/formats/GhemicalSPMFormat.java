@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class GhemicalSPMFormat implements IChemFormatMatcher {
 
-    public GhemicalSPMFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private GhemicalSPMFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new GhemicalSPMFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Ghemical Simplified Protein Model";

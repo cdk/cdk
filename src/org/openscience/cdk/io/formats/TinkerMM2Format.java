@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class TinkerMM2Format implements IChemFormat {
 
-    public TinkerMM2Format() {}
+	private static IResourceFormat myself = null;
+	
+    private TinkerMM2Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new TinkerMM2Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Tinker MM2";

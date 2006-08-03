@@ -82,7 +82,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new CrystClustFormat();
+        return CrystClustFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

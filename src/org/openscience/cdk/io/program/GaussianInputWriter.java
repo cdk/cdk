@@ -94,7 +94,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
 
     public IResourceFormat getFormat() {
-        return new GaussianInputFormat();
+        return GaussianInputFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

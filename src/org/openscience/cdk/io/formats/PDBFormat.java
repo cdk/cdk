@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PDBFormat implements IChemFormatMatcher {
 
-    public PDBFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PDBFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PDBFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Protein Brookhave Database (PDB)";

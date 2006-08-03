@@ -29,6 +29,8 @@ package org.openscience.cdk.io.formats;
 
 /**
  * This class is the interface that all ResourceFormat's should implement.
+ * An implementation is supposed to be a singleton class, so it should have
+ * only private constructors, and implement the getInstance() method.
  *
  * @cdk.module io
  *

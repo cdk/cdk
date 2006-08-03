@@ -65,7 +65,7 @@ public class WriterFactoryTest extends CDKTestCase {
     }
 
     public void testCreateWriter_IChemFormat() {
-    	IChemFormat format = new XYZFormat();
+    	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
         IChemObjectWriter writer = factory.createWriter(format);
         assertNotNull(writer);
         assertEquals(format.getFormatName(), writer.getFormat().getFormatName());

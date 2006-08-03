@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ShelXFormat implements IChemFormatMatcher {
 
-    public ShelXFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ShelXFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ShelXFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "ShelXL";

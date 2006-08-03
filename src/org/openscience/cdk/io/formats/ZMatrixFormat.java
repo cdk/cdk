@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ZMatrixFormat implements IChemFormatMatcher {
 
-    public ZMatrixFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ZMatrixFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ZMatrixFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "ZMatrix";

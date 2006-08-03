@@ -36,7 +36,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class HINFormat implements IChemFormatMatcher {
 
-    public HINFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private HINFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new HINFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "HyperChem HIN";

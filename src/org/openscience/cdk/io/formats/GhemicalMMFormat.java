@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class GhemicalMMFormat implements IChemFormatMatcher {
 
-    public GhemicalMMFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private GhemicalMMFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new GhemicalMMFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Ghemical Quantum/Molecular Mechanics Model";

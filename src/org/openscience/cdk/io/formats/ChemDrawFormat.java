@@ -34,8 +34,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ChemDrawFormat implements IChemFormat {
 
-    public ChemDrawFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ChemDrawFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ChemDrawFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "ChemDraw eXchange file";
     }

@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PCModelFormat implements IChemFormat {
 
-    public PCModelFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PCModelFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PCModelFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "PCModel";

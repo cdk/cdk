@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CrystClustFormat implements IChemFormatMatcher {
 
-    public CrystClustFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CrystClustFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CrystClustFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "CrystClust";

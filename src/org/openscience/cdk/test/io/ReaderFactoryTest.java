@@ -52,6 +52,7 @@ import org.openscience.cdk.io.formats.GhemicalSPMFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.JaguarFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
@@ -85,83 +86,83 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
 
     public void testCreateReader_IChemFormat() {
-    	IChemFormat format = new XYZFormat();
+    	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
         IChemObjectReader reader = factory.createReader(format);
         assertNotNull(reader);
         assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
     }
     public void testGaussian94() {
         expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
-                     new Gaussian94Format());
+                     Gaussian94Format.getInstance());
     }
     public void testGaussian98() {
-        expectReader("data/gaussian/g98.out", new Gaussian98Format());
+        expectReader("data/gaussian/g98.out", Gaussian98Format.getInstance());
     }
     public void testGaussian92() {
-        expectFormat("data/gaussian/phenylnitrene.g92.out", new Gaussian92Format());
+        expectFormat("data/gaussian/phenylnitrene.g92.out", Gaussian92Format.getInstance());
     }
 
     public void testGhemical() {
-        expectReader("data/ghemical/ethene.mm1gp", new GhemicalSPMFormat());
+        expectReader("data/ghemical/ethene.mm1gp", GhemicalSPMFormat.getInstance());
     }
 
     public void testJaguar() {
-        expectFormat("data/jaguar/ch4-opt.out", new JaguarFormat());
+        expectFormat("data/jaguar/ch4-opt.out", JaguarFormat.getInstance());
     }
 
     public void testINChI() {
-        expectReader("data/inchi/guanine.inchi.xml", new INChIFormat());
+        expectReader("data/inchi/guanine.inchi.xml", INChIFormat.getInstance());
     }
 
     public void testINChIPlainText() {
-        expectReader("data/inchi/guanine.inchi", new INChIPlainTextFormat());
+        expectReader("data/inchi/guanine.inchi", INChIPlainTextFormat.getInstance());
     }
 
     public void testVASP() {
-        expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", new VASPFormat());
+        expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
     public void testAces2() {
-        expectFormat("data/aces2/ch3oh_ace.out", new Aces2Format());
+        expectFormat("data/aces2/ch3oh_ace.out", Aces2Format.getInstance());
     }
 
     public void testADF() {
-        expectFormat("data/adf/ammonia.adf.out", new ADFFormat());
+        expectFormat("data/adf/ammonia.adf.out", ADFFormat.getInstance());
     }
 
     public void testGamess() {
-        expectReader("data/gamess/ch3oh_gam.out", new GamessFormat());
+        expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance());
     }
 
     public void testABINIT() {
-        expectFormat("data/abinit/t54.in", new ABINITFormat());
+        expectFormat("data/abinit/t54.in", ABINITFormat.getInstance());
     }
 
     public void testCML() {
-        expectReader("data/cml/estron.cml", new CMLFormat());
+        expectReader("data/cml/estron.cml", CMLFormat.getInstance());
     }
 
     public void testXYZ() {
-        expectReader("data/xyz/bf3.xyz", new XYZFormat());
+        expectReader("data/xyz/bf3.xyz", XYZFormat.getInstance());
     }
 
     public void testShelX() {
-        expectReader("data/shelx/frame_1.res", new ShelXFormat());
+        expectReader("data/shelx/frame_1.res", ShelXFormat.getInstance());
     }
     
     public void testMDLMol() {
-        expectReader("data/mdl/methylbenzol.mol", new MDLFormat());
+        expectReader("data/mdl/methylbenzol.mol", MDLFormat.getInstance());
     }
 
     public void testPDB() {
-        expectReader("data/pdb/coffeine.pdb", new PDBFormat());
+        expectReader("data/pdb/coffeine.pdb", PDBFormat.getInstance());
     }
     
     public void testMol2() {
-    	expectReader("data/mol2/fromWebsite.mol2", new Mol2Format());
+    	expectReader("data/mol2/fromWebsite.mol2", Mol2Format.getInstance());
     }
     
-    private void expectFormat(String filename, IChemFormat expectedFormat) {
+    private void expectFormat(String filename, IResourceFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
@@ -177,7 +178,7 @@ public class ReaderFactoryTest extends CDKTestCase {
         assertNotNull(format);
         assertEquals(expectedFormat.getFormatName(), format.getFormatName());
     }
-    private void expectReader(String filename, IChemFormat expectedFormat) {
+    private void expectReader(String filename, IResourceFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);

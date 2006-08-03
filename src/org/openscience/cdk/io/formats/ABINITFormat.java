@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ABINITFormat implements IChemFormatMatcher {
 
-    public ABINITFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ABINITFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ABINITFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "ABINIT";

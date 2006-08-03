@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Gaussian98Format implements IChemFormatMatcher {
 
-    public Gaussian98Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Gaussian98Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Gaussian98Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Gaussian98";

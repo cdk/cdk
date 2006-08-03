@@ -95,7 +95,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new INChIPlainTextFormat();
+        return INChIPlainTextFormat.getInstance();
     }
     
     public void setReader(Reader input) {

@@ -84,7 +84,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new MDLRXNFormat();
+        return MDLRXNFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

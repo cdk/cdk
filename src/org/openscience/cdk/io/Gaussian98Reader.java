@@ -84,7 +84,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new Gaussian98Format();
+        return Gaussian98Format.getInstance();
     }
 
     /**

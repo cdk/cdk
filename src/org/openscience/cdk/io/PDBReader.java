@@ -123,7 +123,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	}
 	
 	public IResourceFormat getFormat() {
-		return new PDBFormat();
+		return PDBFormat.getInstance();
 	}
 	
 	public void setReader(Reader input) throws CDKException {

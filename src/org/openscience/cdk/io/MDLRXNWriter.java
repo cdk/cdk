@@ -104,7 +104,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
 
     public IResourceFormat getFormat() {
-        return new MDLFormat();
+        return MDLFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

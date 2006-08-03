@@ -154,7 +154,7 @@ public class GamessReader extends DefaultChemObjectReader {
 	//TODO Update comment with appropriate information to comply Constructor's documentation. 
 	
     public IResourceFormat getFormat() {
-        return new GamessFormat();
+        return GamessFormat.getInstance();
     }
     
     public void setReader(Reader reader) throws CDKException {

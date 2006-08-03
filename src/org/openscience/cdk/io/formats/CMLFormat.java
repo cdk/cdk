@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CMLFormat implements IChemFormatMatcher {
 
-    public CMLFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CMLFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CMLFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Chemical Markup Language";

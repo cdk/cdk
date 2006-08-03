@@ -71,7 +71,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new CrystClustFormat();
+        return CrystClustFormat.getInstance();
     }
     
     public void setReader(Reader reader) throws CDKException {

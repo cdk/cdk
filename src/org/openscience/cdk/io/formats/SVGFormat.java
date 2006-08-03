@@ -29,7 +29,14 @@ package org.openscience.cdk.io.formats;
  */
 public class SVGFormat implements IResourceFormat {
 
-    public SVGFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SVGFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SVGFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Scalable Vector Graphics";

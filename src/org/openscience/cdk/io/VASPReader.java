@@ -101,7 +101,7 @@ public class VASPReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new VASPFormat();
+        return VASPFormat.getInstance();
     }
     
     public void setReader(Reader input) throws CDKException {

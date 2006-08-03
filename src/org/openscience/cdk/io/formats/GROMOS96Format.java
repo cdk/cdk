@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class GROMOS96Format implements IChemFormat {
 
-    public GROMOS96Format() {}
+	private static IResourceFormat myself = null;
+	
+    private GROMOS96Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new GROMOS96Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "GROMOS96";

@@ -97,7 +97,7 @@ public class INChIReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new INChIFormat();
+        return INChIFormat.getInstance();
     }
     
     

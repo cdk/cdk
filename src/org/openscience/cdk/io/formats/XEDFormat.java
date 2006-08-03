@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class XEDFormat implements IChemFormat {
 
-    public XEDFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private XEDFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new XEDFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "XED";

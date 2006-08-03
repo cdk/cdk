@@ -63,7 +63,7 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new MOPAC97Format();
+        return MOPAC97Format.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MPQCFormat implements IChemFormat {
 
-    public MPQCFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MPQCFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MPQCFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Massively Parallel Quantum Chemistry Program";

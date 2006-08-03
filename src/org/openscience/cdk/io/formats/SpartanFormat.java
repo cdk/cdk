@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class SpartanFormat implements IChemFormatMatcher {
 
-    public SpartanFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private SpartanFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new SpartanFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Spartan Quantum Mechanics Program";

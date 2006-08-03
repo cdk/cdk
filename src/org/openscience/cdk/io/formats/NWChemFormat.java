@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class NWChemFormat implements IChemFormatMatcher {
 
-    public NWChemFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private NWChemFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new NWChemFormat();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "NWChem";

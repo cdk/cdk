@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Mol2Format implements IChemFormatMatcher {
 
-    public Mol2Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Mol2Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Mol2Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Mol2 (Sybyl)";

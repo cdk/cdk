@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PubChemFormat implements IChemFormat {
 
-    public PubChemFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PubChemFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PubChemFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "PubChem";

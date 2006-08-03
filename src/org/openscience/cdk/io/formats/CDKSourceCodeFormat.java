@@ -31,8 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CDKSourceCodeFormat implements IChemFormat {
 
-    public CDKSourceCodeFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CDKSourceCodeFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CDKSourceCodeFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "CDK Source Code";
     }

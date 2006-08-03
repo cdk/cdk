@@ -31,8 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CIFFormat implements IChemFormatMatcher {
 
-    public CIFFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CIFFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CIFFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Crystallographic Interchange Format";
     }

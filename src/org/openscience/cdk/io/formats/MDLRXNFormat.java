@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MDLRXNFormat implements IChemFormatMatcher {
 
-    public MDLRXNFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MDLRXNFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MDLRXNFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MDL Reaction format";

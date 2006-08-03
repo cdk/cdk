@@ -74,7 +74,7 @@ public class JMEReader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new JMEFormat();
+        return JMEFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

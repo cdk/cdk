@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class PQSChemFormat implements IChemFormat {
 
-    public PQSChemFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private PQSChemFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new PQSChemFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Parallel Quantum Solutions";

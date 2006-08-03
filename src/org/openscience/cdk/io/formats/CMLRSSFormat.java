@@ -31,7 +31,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CMLRSSFormat implements IChemFormat {
 
-    public CMLRSSFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CMLRSSFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CMLRSSFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "CML enriched RSS";

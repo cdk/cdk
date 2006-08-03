@@ -93,7 +93,7 @@ public class ShelXReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new ShelXFormat();
+        return ShelXFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

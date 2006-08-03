@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CRK3DFormat implements IChemFormat {
 
-    public CRK3DFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private CRK3DFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CRK3DFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Chemical Resource Kit 3D";

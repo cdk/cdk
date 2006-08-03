@@ -79,7 +79,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     }
 
     public IResourceFormat getFormat() {
-        return new Mol2Format();
+        return Mol2Format.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

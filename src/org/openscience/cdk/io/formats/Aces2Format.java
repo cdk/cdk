@@ -32,7 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Aces2Format implements IChemFormatMatcher {
 
-    public Aces2Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Aces2Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Aces2Format();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "Aces2";

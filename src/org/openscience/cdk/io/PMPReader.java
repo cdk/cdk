@@ -116,7 +116,7 @@ public class PMPReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new PMPFormat();
+        return PMPFormat.getInstance();
     }
     
     public void setReader(Reader input) throws CDKException {

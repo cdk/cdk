@@ -32,8 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class CACheFormat implements IChemFormatMatcher {
 
-    public CACheFormat() {}
-
+	private static IResourceFormat myself = null;
+	
+    private CACheFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new CACheFormat();
+    	return myself;
+    }
     public String getFormatName() {
         return "CAChe MolStruct";
     }

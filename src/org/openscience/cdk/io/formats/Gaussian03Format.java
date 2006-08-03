@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class Gaussian03Format implements IChemFormatMatcher {
 
-    public Gaussian03Format() {}
+	private static IResourceFormat myself = null;
+	
+    private Gaussian03Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new Gaussian03Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Gaussian 2003";

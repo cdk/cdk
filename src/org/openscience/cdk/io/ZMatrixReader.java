@@ -82,7 +82,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     }
   
     public IResourceFormat getFormat() {
-        return new ZMatrixFormat();
+        return ZMatrixFormat.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

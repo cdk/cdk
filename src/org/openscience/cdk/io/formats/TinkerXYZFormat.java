@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class TinkerXYZFormat implements IChemFormat {
 
-    public TinkerXYZFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private TinkerXYZFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new TinkerXYZFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Tinker XYZ";

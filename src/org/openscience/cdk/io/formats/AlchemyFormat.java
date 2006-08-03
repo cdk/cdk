@@ -33,8 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class AlchemyFormat implements IChemFormat {
 
-    public AlchemyFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private AlchemyFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new AlchemyFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Alchemy";
     }

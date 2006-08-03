@@ -87,7 +87,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new Mol2Format();
+        return Mol2Format.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {

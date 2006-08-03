@@ -35,8 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ChemtoolFormat implements IChemFormat {
 
-    public ChemtoolFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ChemtoolFormat() {}
     
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ChemtoolFormat();
+    	return myself;
+    }
+
     public String getFormatName() {
         return "Chemtool";
     }

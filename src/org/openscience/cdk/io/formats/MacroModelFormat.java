@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MacroModelFormat implements IChemFormat {
 
-    public MacroModelFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private MacroModelFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new MacroModelFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "MacroModel";

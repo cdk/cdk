@@ -90,7 +90,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new SMILESFormat();
+        return SMILESFormat.getInstance();
     }
     
     public void setReader(Reader input) throws CDKException {

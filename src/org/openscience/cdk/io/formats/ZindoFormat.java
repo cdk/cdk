@@ -35,7 +35,13 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ZindoFormat implements IChemFormat {
 
-	public ZindoFormat() {
+	private static IResourceFormat myself = null;
+	
+    private ZindoFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ZindoFormat();
+    	return myself;
     }
     
     public String getFormatName() {

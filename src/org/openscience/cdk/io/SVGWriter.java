@@ -103,7 +103,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new SVGFormat();
+        return SVGFormat.getInstance();
     }
     
     public void setWriter(Writer out) throws CDKException {

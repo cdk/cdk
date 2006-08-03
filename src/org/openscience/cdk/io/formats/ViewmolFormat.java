@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class ViewmolFormat implements IChemFormat {
 
-    public ViewmolFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private ViewmolFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new ViewmolFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Viewmol";

@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class DOCK5Format implements IChemFormat {
 
-    public DOCK5Format() {}
+	private static IResourceFormat myself = null;
+	
+    private DOCK5Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new DOCK5Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Dock 5 Box";

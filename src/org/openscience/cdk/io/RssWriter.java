@@ -83,7 +83,7 @@ public class RssWriter extends DefaultChemObjectWriter {
     }
     
     public IResourceFormat getFormat() {
-        return new CMLRSSFormat();
+        return CMLRSSFormat.getInstance();
     }
     
     

@@ -35,7 +35,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class TurboMoleFormat implements IChemFormat {
 
-    public TurboMoleFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private TurboMoleFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new TurboMoleFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "TurboMole";

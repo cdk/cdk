@@ -79,7 +79,7 @@ public class HINReader extends DefaultChemObjectReader {
     }
     
     public IResourceFormat getFormat() {
-        return new HINFormat();
+        return HINFormat.getInstance();
     }
 
     public void close() throws IOException {

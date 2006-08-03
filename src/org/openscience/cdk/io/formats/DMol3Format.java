@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class DMol3Format implements IChemFormat {
 
-    public DMol3Format() {}
+	private static IResourceFormat myself = null;
+	
+    private DMol3Format() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new DMol3Format();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "DMol3";

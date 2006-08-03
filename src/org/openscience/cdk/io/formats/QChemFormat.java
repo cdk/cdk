@@ -33,7 +33,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class QChemFormat implements IChemFormatMatcher {
 
-    public QChemFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private QChemFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new QChemFormat();
+    	return myself;
+    }
     
     public String getFormatName() {
         return "Q-Chem";

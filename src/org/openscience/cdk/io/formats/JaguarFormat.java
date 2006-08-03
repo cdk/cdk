@@ -34,7 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class JaguarFormat implements IChemFormatMatcher {
 
-    public JaguarFormat() {}
+	private static IResourceFormat myself = null;
+	
+    private JaguarFormat() {}
+    
+    public static IResourceFormat getInstance() {
+    	if (myself == null) myself = new JaguarFormat();
+    	return myself;
+    }
 
     public String getFormatName() {
         return "Jaguar";

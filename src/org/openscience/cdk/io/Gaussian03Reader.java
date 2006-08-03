@@ -77,7 +77,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return new Gaussian03Format();
+        return Gaussian03Format.getInstance();
     }
 
     public void setReader(Reader reader) throws CDKException {
