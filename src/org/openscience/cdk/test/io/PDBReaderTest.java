@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -95,11 +96,11 @@ public class PDBReaderTest extends TestCase {
             assertEquals(1, oModel.getSetOfMolecules().getMoleculeCount());
 
             IAtomContainer container = oModel.getSetOfMolecules().getMolecule(0);
-            assertTrue(container instanceof IBioPolymer);
-            IBioPolymer oMol = (IBioPolymer)container;
+            assertFalse(container instanceof IBioPolymer);
+            assertTrue(container instanceof IAtomContainer);
+            IAtomContainer oMol = (IAtomContainer)container;
             assertNotNull(oMol);
             assertEquals(oMol.getAtomCount(), 14);
-            assertNotNull(oMol.getMonomer("MOLA1", "A"));
 
             IAtom nAtom = oMol.getFirstAtom();
             assertNotNull(nAtom);
@@ -187,15 +188,8 @@ public class PDBReaderTest extends TestCase {
       assertEquals(1.0, atom.getOccupancy(), 0.001);
       assertEquals(6.84, atom.getTempFactor(), 0.001);
       
-      org.openscience.cdk.interfaces.IBond bond = mol.getBond(93);
-      assertNotNull(bond);
-      assertEquals("Test failed. Bond order not the same.", 2.0, bond.getOrder(), 0.001);
-      org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-      assertEquals("C", atoms[0].getSymbol());
-      assertEquals("O", atoms[1].getSymbol());
-      assertEquals(true, bond.getProperties().isEmpty());
-
     } catch (Exception ex) {
+      ex.printStackTrace();
       fail(ex.toString());
     }
   }
@@ -466,16 +460,16 @@ public class PDBReaderTest extends TestCase {
 	      IBioPolymer polymer = (IBioPolymer)container;
 	      
 	      // chemical validation
-	      assertEquals(2219, ChemFileManipulator.getAtomCount(chemFile));
+	      assertEquals(31066, ChemFileManipulator.getAtomCount(chemFile));
 	      assertEquals(1, polymer.getStrandCount());
 	      // TODO: get the next tests going
-//	      assertEquals(141, polymer.getMonomerCount());
-//
-//	      assertTrue(polymer instanceof PDBPolymer);
-//	      PDBPolymer pdb = (PDBPolymer)polymer;
-//	      
-//	      // PDB validation
-//	      assertEquals(9, pdb.getStructures().size());
+	      assertEquals(141, polymer.getMonomerCount());
+
+	      assertTrue(polymer instanceof PDBPolymer);
+	      PDBPolymer pdb = (PDBPolymer)polymer;
+	      
+	      // PDB validation
+	      assertEquals(9, pdb.getStructures().size());
 	      
 	    } catch (Exception ex) {
 	      fail(ex.toString());

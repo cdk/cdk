@@ -50,6 +50,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
@@ -197,6 +198,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		String cCol;
 		PDBAtom oAtom;
 		PDBPolymer oBP = new PDBPolymer();
+		IMolecule molecularStructure = oFile.getBuilder().newMolecule();
 		StringBuffer cResidue;
 		String oObj;
 		IMonomer oMonomer;
@@ -204,6 +206,8 @@ public class PDBReader extends DefaultChemObjectReader {
 		char chain = 'A';	// To ensure stringent name giving of monomers
 		IStrand oStrand;
 		int lineLength = 0;
+		
+		boolean isProteinStructure = false;
 		
 		atomNumberMap = new Hashtable();
 		
@@ -225,50 +229,56 @@ public class PDBReader extends DefaultChemObjectReader {
 					}
 					// check the first column to decide what to do
 					cCol = cRead.substring(0,6);
-					if ("ATOM  ".equalsIgnoreCase(cCol)) {
+					if ("SEQRES".equalsIgnoreCase(cCol)) {
+						isProteinStructure = true;
+					} else if ("ATOM  ".equalsIgnoreCase(cCol)) {
 						// read an atom record
 						oAtom = readAtom(cRead, lineLength);
 						
-						// construct a string describing the residue
-						cResidue = new StringBuffer(8);
-						oObj = oAtom.getResName();
-						if (oObj != null) {
-							cResidue = cResidue.append(oObj.trim());
+						if (isProteinStructure) {
+							// construct a string describing the residue
+							cResidue = new StringBuffer(8);
+							oObj = oAtom.getResName();
+							if (oObj != null) {
+								cResidue = cResidue.append(oObj.trim());
+							}
+							oObj = oAtom.getChainID();
+							if (oObj != null) {
+								// cResidue = cResidue.append(((String)oObj).trim());
+								cResidue = cResidue.append(String.valueOf(chain));
+							}
+							oObj = oAtom.getResSeq();
+							if (oObj != null) {
+								cResidue = cResidue.append(oObj.trim());
+							}
+
+							// search for an existing strand or create a new one.
+							oStrand = oBP.getStrand(String.valueOf(chain));
+							if (oStrand == null) {
+								oStrand = new PDBStrand();
+								oStrand.setStrandName(String.valueOf(chain));
+							}
+
+							// search for an existing monomer or create a new one.
+							oMonomer = oBP.getMonomer(cResidue.toString(), String.valueOf(chain));
+							if (oMonomer == null) {
+								PDBMonomer monomer = new PDBMonomer();
+								monomer.setMonomerName(cResidue.toString());
+								monomer.setMonomerType(oAtom.getResName());
+								monomer.setChainID(oAtom.getChainID());
+								monomer.setICode(oAtom.getICode());
+								oMonomer = monomer;
+							}
+
+							// add the atom
+							oBP.addAtom(oAtom, oMonomer, oStrand);
+							if (readConnect.isSet() && atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
+								logger.warn("Duplicate serial ID found for atom: ", oAtom);
+							}
+						} else {
+							molecularStructure.addAtom(oAtom);
 						}
-						oObj = oAtom.getChainID();
-						if (oObj != null) {
-							// cResidue = cResidue.append(((String)oObj).trim());
-							cResidue = cResidue.append(String.valueOf(chain));
-						}
-						oObj = oAtom.getResSeq();
-						if (oObj != null) {
-							cResidue = cResidue.append(oObj.trim());
-						}
-						
-						// search for an existing strand or create a new one.
-						oStrand = oBP.getStrand(String.valueOf(chain));
-						if (oStrand == null) {
-							oStrand = new PDBStrand();
-							oStrand.setStrandName(String.valueOf(chain));
-						}
-						
-						// search for an existing monomer or create a new one.
-						oMonomer = oBP.getMonomer(cResidue.toString(), String.valueOf(chain));
-						if (oMonomer == null) {
-							PDBMonomer monomer = new PDBMonomer();
-							monomer.setMonomerName(cResidue.toString());
-							monomer.setMonomerType(oAtom.getResName());
-							monomer.setChainID(oAtom.getChainID());
-							monomer.setICode(oAtom.getICode());
-							oMonomer = monomer;
-						}
-						
-						// add the atom
-						oBP.addAtom(oAtom, oMonomer, oStrand);
-						if (readConnect.isSet() && atomNumberMap.put(new Integer(oAtom.getSerial()), oAtom) != null) {
-							logger.warn("Duplicate serial ID found for atom: ", oAtom);
-						}
-//						logger.debug("Added ATOM: ", oAtom);
+						logger.debug("Added ATOM: ", oAtom);
 						
 						/** As HETATMs cannot be considered to either belong to a certain monomer or strand,
 						 * they are dealt with seperately.*/
@@ -289,37 +299,48 @@ public class PDBReader extends DefaultChemObjectReader {
 						logger.debug("Added new STRAND");
 					} else if ("END   ".equalsIgnoreCase(cCol)) {
 						atomNumberMap.clear();
-						// create bonds and finish the molecule
-						if (useRebondTool.isSet()) {
-							try {
-								if(!createBondsWithRebondTool(oBP))	{
-									// Get rid of all potentially created bonds.
-									logger.info("Bonds could not be created using the RebondTool when PDB file was read.");								
-									oBP.removeAllBonds();								
+						if (isProteinStructure) {
+							// create bonds and finish the molecule
+							if (useRebondTool.isSet()) {
+								try {
+									if(!createBondsWithRebondTool(oBP))	{
+										// Get rid of all potentially created bonds.
+										logger.info("Bonds could not be created using the RebondTool when PDB file was read.");								
+										oBP.removeAllBonds();								
+									}
+								} catch (Exception exception) {
+									logger.info("Bonds could not be created when PDB file was read.");
+									logger.debug(exception);
 								}
-							} catch (Exception exception) {
-								logger.info("Bonds could not be created when PDB file was read.");
-								logger.debug(exception);
 							}
+							oSet.addMolecule(oBP);
+						} else {
+							oSet.addMolecule(molecularStructure);
 						}
-						oSet.addMolecule(oBP);
-						//						oBP = new BioPolymer();					
-						//				} else if (cCol.equals("USER  ")) {
-						//						System.out.println(cLine);
-						//					System.out.println(cLine);
-						//				} else if (cCol.equals("ENDMDL")) {
-						//					System.out.println(cLine);
 					} else if (cCol.equals("MODEL ")) {
 						// OK, start a new model and save the current one first *if* it contains atoms
-						if (oBP.getAtomCount() > 0) {
-							// save the model
-							oSet.addAtomContainer(oBP);
-							oModel.setSetOfMolecules(oSet);
-							oSeq.addChemModel(oModel);
-							// setup a new one
-							oBP = new PDBPolymer();
-							oModel = oFile.getBuilder().newChemModel();
-							oSet = oFile.getBuilder().newMoleculeSet();						
+						if (isProteinStructure) {
+							if (oBP.getAtomCount() > 0) {
+								// save the model
+								oSet.addAtomContainer(oBP);
+								oModel.setSetOfMolecules(oSet);
+								oSeq.addChemModel(oModel);
+								// setup a new one
+								oBP = new PDBPolymer();
+								oModel = oFile.getBuilder().newChemModel();
+								oSet = oFile.getBuilder().newMoleculeSet();						
+							}
+						} else {
+							if (molecularStructure.getAtomCount() > 0) {
+//								 save the model
+								oSet.addAtomContainer(molecularStructure);
+								oModel.setSetOfMolecules(oSet);
+								oSeq.addChemModel(oModel);
+								// setup a new one
+								molecularStructure = oFile.getBuilder().newMolecule();
+								oModel = oFile.getBuilder().newChemModel();
+								oSet = oFile.getBuilder().newMoleculeSet();		
+							}
 						}
 					} else if ("REMARK".equalsIgnoreCase(cCol)) {						
 						Object comment = oFile.getProperty(CDKConstants.COMMENT);
