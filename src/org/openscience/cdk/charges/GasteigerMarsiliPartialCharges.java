@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
  * 
  *
  * @author      chhoppe
+ * @author      rojas
  * 
  * @cdk.module  charges
  * @cdk.created 2004-11-03
@@ -103,7 +104,10 @@ public class GasteigerMarsiliPartialCharges {
 		if (setCharge) {
 			atomTypeCharges.setCharges(ac);
 		}
-
+		/*add the initial charge to 0. According results of Gasteiger*/
+		for(int i = 0; i < ac.getAtomCount(); i++)
+			ac.getAtom(i).setCharge(0.0);
+		
 		double[] gasteigerFactors = assignGasteigerSigmaMarsiliFactors(ac);//a,b,c,deoc,chi,q
 		double alpha = 1.0;
 		double q;
@@ -123,13 +127,13 @@ public class GasteigerMarsiliPartialCharges {
 			boolean isDifferent = false;
 			for (int j = 0; j < ac.getAtomCount(); j++) {
 				q = gasteigerFactors[STEP_SIZE * j + j + 5];
-				
 				double difference = Math.abs(q_old[j])-Math.abs(q);
 				if(Math.abs(difference) > 0.001)
 					isDifferent = true;
 				q_old[j] = q;
 				
 				gasteigerFactors[STEP_SIZE * j + j + 4] = gasteigerFactors[STEP_SIZE * j + j + 2] * q * q + gasteigerFactors[STEP_SIZE * j + j + 1] * q + gasteigerFactors[STEP_SIZE * j + j];
+//				System.out.println("g4: "+gasteigerFactors[STEP_SIZE * j + j + 4]);
 			}
 			if(!isDifferent)/* automatically break the maximum iterations*/
 				break out;
@@ -155,6 +159,7 @@ public class GasteigerMarsiliPartialCharges {
 				}
 
 				q = (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] - gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) / deoc;
+//				System.out.println("qq: "+q);
 				gasteigerFactors[STEP_SIZE * atom1 + atom1 + 5] -= (q*alpha);
 				gasteigerFactors[STEP_SIZE * atom2 + atom2 + 5] += (q*alpha);
 			}
@@ -197,20 +202,23 @@ public class GasteigerMarsiliPartialCharges {
 				factors[1] = 6.24;
 				factors[2] = -0.56;
 			} else if (AtomSymbol.equals("C")) {
-				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
+				if ((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&&
+				(ac.getAtom(i).getFormalCharge() != -1)){
 					factors[0] = 7.98;
 					factors[1] = 9.18;
 					factors[2] = 1.88;
-				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
-					factors[0] = 8.81;/*8.79*/
-					factors[1] = 9.34;/*9.32*/
-					factors[2] = 1.52;/*1.51*/
+				} else if ((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3)
+						||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)) {
+					factors[0] = 8.79;/*8.79*//*8.81*/
+					factors[1] = 9.32;/*9.32*//*9.34*/
+					factors[2] = 1.51;/*1.51*//*1.52*/
 				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) >= 3) {
 					factors[0] = 10.39;/*10.39*/
 					factors[1] = 9.45;/*9.45*/
 					factors[2] = 0.73;
 				}
-			} else if (AtomSymbol.equals("N")) {
+			} else if ((AtomSymbol.equals("N"))&&
+					(ac.getAtom(i).getFormalCharge() != -1)) {
 				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
 					factors[0] = 11.54;
 					factors[1] = 10.82;
@@ -225,20 +233,16 @@ public class GasteigerMarsiliPartialCharges {
 					factors[2] = -0.27;/*-0.27*/
 				}
 			} else if (AtomSymbol.equals("O")) {
-				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
-					if (ac.getAtom(i).getCharge() == -1) {
-						factors[0] = 17.07;/*17.07*/
-						factors[1] = 13.79;/*13.79*/
-						factors[2] = 0.47;/*0.47*/
-					} else {
-						factors[0] = 14.18;/*14.18*/
-						factors[1] = 12.92;/*12.92*/
-						factors[2] = 1.39;/*1.39*/
-					}
-				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
-					factors[0] = 17.07;
+				if ((ac.getMaximumBondOrder(ac.getAtom(i)) == 1) &&
+				(ac.getAtom(i).getFormalCharge() != -1)){
+					factors[0] = 14.18;
+					factors[1] = 12.92;
+					factors[2] = 1.39;
+				} else if((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3)
+					||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)){
+					factors[0] = 17.07;/* paramaters aren'T correct parametrized. */
 					factors[1] = 13.79;
-					factors[2] = 0.47;
+					factors[2] = 0.47;/*0.47*/
 				}
 			} else if (AtomSymbol.equals("P")) {
 				factors[0] = 8.90;
