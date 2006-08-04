@@ -249,6 +249,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		}	
 		if(r2dm.getExternalSelectedPart()!=null && r2dm.getExternalSelectedPart().contains(atom)){
 			paintColouredAtomBackground(atom, r2dm.getExternalHighlightColor(), graphics);
+			atomBackColor=r2dm.getExternalHighlightColor();
 		}	
 		if(r2dm.getMerge().get(atom)!=null || r2dm.getMerge().values().contains(atom)){
 			paintColouredAtomBackground(atom, r2dm.getHoverOverColor(),graphics);
@@ -337,10 +338,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				(int) r2dm.getRenderingCoordinate(atom).y + (atomRadius / 2)};
 		int radius = (int) getScreenSize(atomRadius);
 		coords = getScreenCoordinates(coords);
-    if(r2dm.getIsCompact())
-      graphics.drawRect(coords[0], coords[1], radius, radius);
-    else
-      graphics.fillRect(coords[0], coords[1], radius, radius);
+		if(r2dm.getIsCompact())
+			graphics.drawRect(coords[0], coords[1], radius, radius);
+		else
+			graphics.fillRect(coords[0], coords[1], radius, radius);
 	}
 
 
