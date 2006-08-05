@@ -9,4 +9,5 @@ cdk-libio-cml.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-jchempaint.jar
-
+cdk-sdk.jar
+cdk-control.jar

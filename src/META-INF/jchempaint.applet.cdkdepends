@@ -11,3 +11,5 @@ cdk-standard.jar
 cdk-jchempaint.jar
 cdk-smiles.jar
 cdk-valencycheck.jar
+cdk-sdg.jar
+cdk-control.jar

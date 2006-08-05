@@ -12,3 +12,5 @@ cdk-standard.jar
 cdk-svg.jar
 cdk-nonotify.jar
 cdk-smiles.jar
+cdk-sdg.jar
+cdk-control.jar

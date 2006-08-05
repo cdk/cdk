@@ -82,6 +82,8 @@
                 <includesfile name="${metainf}/render.libdepends"/>
                 <includesfile name="${metainf}/standard.libdepends"/>
                 <includesfile name="${metainf}/svg.libdepends"/>
+                <includesfile name="${metainf}/sdg.libdepends"/>
+                <includesfile name="${metainf}/control.libdepends"/>
                 <includesfile name="${metainf}/jchempaint.libdepends"/>
             </fileset>
         </unjar>
@@ -132,6 +134,8 @@
                 <include name="cdk-nonotify.jar"/>
 		<include name="cdk-valencycheck.jar"/>
 		<include name="cdk-smiles.jar"/>
+                <include name="cdk-sdg.jar"/>
+                <include name="cdk-control.jar"/>
             </fileset>
         </unjar>
     </target>
