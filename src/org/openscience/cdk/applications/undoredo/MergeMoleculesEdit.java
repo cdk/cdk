@@ -12,6 +12,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
+/**
+ * @cdk.module control
+ */
 public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 	
     private static final long serialVersionUID = -4093867960954400453L;

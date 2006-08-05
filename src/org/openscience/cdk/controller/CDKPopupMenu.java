@@ -40,9 +40,10 @@ import org.openscience.cdk.interfaces.IChemObject;
  * It would be better that the Event passed to the popup menu would define
  * the IChemObject source.
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
+ * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-36
  * @cdk.require swing
+ * @cdk.module  control
  */
 public class CDKPopupMenu extends JPopupMenu {
    

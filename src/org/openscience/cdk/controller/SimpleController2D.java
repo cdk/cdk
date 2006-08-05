@@ -39,9 +39,10 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  *
  *@author         steinbeck
  *@author         egonw
- *@cdk.created    2. Mai 2005
+ *@cdk.created    2005-05-02
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
+ * @cdk.module     control
  */
 public class SimpleController2D extends AbstractController2D
 {

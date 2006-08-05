@@ -29,7 +29,7 @@ import javax.swing.undo.CannotUndoException;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * methods for undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
+ * @cdk.module control
  */
 public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {
 
@@ -45,7 +45,7 @@ public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {
 
     private IAtom atom;
 
-	private PseudoAtom pseudoAtom;
+	private IPseudoAtom pseudoAtom;
 
 	private IAtomContainer container;
 
@@ -58,7 +58,7 @@ public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {
 	 *            The pseudoAtom
 	 */
 	public ConvertToPseudoAtomEdit(IAtomContainer relevantContainer, IAtom atom,
-			PseudoAtom pseudo) {
+			IPseudoAtom pseudo) {
 		this.atom = atom;
 		this.pseudoAtom = pseudo;
 		this.container = relevantContainer;

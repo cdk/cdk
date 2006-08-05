@@ -38,7 +38,7 @@ import org.openscience.cdk.config.IsotopeFactory;
  * for undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
+ * @cdk.module control
  */
 public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 

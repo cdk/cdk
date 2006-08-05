@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
+ * @cdk.module control
  */
 public class ChangeIsotopeEdit extends AbstractUndoableEdit {
 

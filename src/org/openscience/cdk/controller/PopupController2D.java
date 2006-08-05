@@ -48,6 +48,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    mouse events
  * @cdk.keyword    popup menus
  * @cdk.bug        1291100
+ * @cdk.module     control
+ * @cdk.require    swing
  */
 public class PopupController2D extends Controller2D {
 

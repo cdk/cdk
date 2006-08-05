@@ -33,6 +33,9 @@ import javax.swing.undo.UndoableEditSupport;
 
 import org.openscience.cdk.applications.undoredo.UndoAdapter;
 
+/**
+ * @cdk.module     control
+ */
 public class Controller2DModel implements java.io.Serializable, Cloneable
 {
 	

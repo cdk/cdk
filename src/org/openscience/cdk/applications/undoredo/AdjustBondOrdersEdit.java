@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IBond;
  * for undoing and redoing the regarding changes
  * 
  * @author tohel
+ * @cdk.module control
  */
 public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 

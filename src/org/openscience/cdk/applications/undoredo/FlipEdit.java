@@ -30,6 +30,7 @@ import java.util.HashMap;
  * for providing undo/redo functionality
  * 
  * @author tohel
+ * @cdk.module control
  */
 public class FlipEdit extends ChangeCoordsEdit {
 

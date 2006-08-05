@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  *@cdk.created    2. Mai 2005
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
+ * @cdk.module     control
  */
 public class Controller2D extends SimpleController2D
 {

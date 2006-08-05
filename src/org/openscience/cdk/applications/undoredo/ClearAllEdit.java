@@ -8,6 +8,9 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 
+/**
+ * @cdk.module control
+ */
 public class ClearAllEdit extends AbstractUndoableEdit {
 
     private static final long serialVersionUID = -9022673628051651034L;

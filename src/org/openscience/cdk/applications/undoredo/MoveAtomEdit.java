@@ -33,6 +33,9 @@ import javax.vecmath.Point2d;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+/**
+ * @cdk.module control
+ */
 public class MoveAtomEdit extends AbstractUndoableEdit {
 
     private static final long serialVersionUID = -2277790465507859547L;

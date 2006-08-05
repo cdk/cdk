@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * actions, containing the methods for undoing and redoing the regarding changes
  * 
  * @author tohel
+ * @cdk.module control
  */
 public class ChangeCoordsEdit extends AbstractUndoableEdit {
 

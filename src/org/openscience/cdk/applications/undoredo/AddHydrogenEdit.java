@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * undoing and redoing the regarding changes
  * 
  * @author tohel
- * 
+ * @cdk.module control
  */
 public class AddHydrogenEdit extends AbstractUndoableEdit {
 

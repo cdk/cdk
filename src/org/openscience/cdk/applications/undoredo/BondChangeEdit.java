@@ -36,6 +36,9 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
+/**
+ * @cdk.module control
+ */
 public class BondChangeEdit extends AbstractUndoableEdit {
 
     private static final long serialVersionUID = -2723716036619377584L;
@@ -67,7 +70,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		container.removeElectronContainer(formerBond);
 		container.addBond(newBond);
-		IMolecule molecule = new org.openscience.cdk.Molecule(container);
+		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);
@@ -83,7 +86,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		container.removeElectronContainer(newBond);
 		container.addBond(formerBond);
-		IMolecule molecule = new org.openscience.cdk.Molecule(container);
+		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
 		chemModel.setSetOfMolecules(moleculeSet);

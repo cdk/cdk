@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IBond;
  *
  * @author      shk3
  * @cdk.created 2005-08-04
+ * @cdk.module  standard
  */
 public class BondTools {
   /**

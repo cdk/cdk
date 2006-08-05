@@ -30,6 +30,7 @@ import java.util.HashMap;
  * superclass for providing undo/redo functionality
  * 
  * @author tohel
+ * @cdk.module control
  */
 public class CleanUpEdit extends ChangeCoordsEdit {
 

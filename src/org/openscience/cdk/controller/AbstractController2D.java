@@ -54,7 +54,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Mapping;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -75,6 +74,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
@@ -95,6 +95,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  * @cdk.created    2005-05-02
  * @cdk.keyword    mouse events
  * @cdk.require    java1.4+
+ * @cdk.module     control
  */
  abstract class AbstractController2D implements MouseMotionListener, MouseListener, KeyListener
 {
@@ -401,7 +402,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 		
 		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange)) && r2dm.getRotateRadius()==0){
-			r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+			r2dm.setSelectedPart(atomInRange.getBuilder().newAtomContainer());
 		}
 
 		if (c2dm.getDrawMode() == Controller2DModel.MOVE)
@@ -509,7 +510,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			if (c2dm.getDrawMode() == Controller2DModel.SELECT && wasDragged)
 			{
 				logger.info("User asks to selected atoms");
-				IAtomContainer selectedPart = new org.openscience.cdk.AtomContainer();
+				IAtomContainer selectedPart = chemModel.getBuilder().newAtomContainer();
 				r2dm.setSelectedPart(selectedPart);
 				r2dm.setSelectedPart(getContainedAtoms(r2dm.getSelectRect()));
 				r2dm.setSelectRect(null);
@@ -529,7 +530,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			if (c2dm.getDrawMode() == Controller2DModel.LASSO && r2dm.getRotateRadius()==0)
 			{
 				// first deselect all atoms
-				r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+				r2dm.setSelectedPart(chemModel.getBuilder().newAtomContainer());
 				// now select new atoms
 				if (wasDragged)
 				{
@@ -557,7 +558,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				if (draggingSelected == false)
 				{					
 					// then it was dragging nearest Bond or Atom
-					r2dm.setSelectedPart(new org.openscience.cdk.AtomContainer());
+					r2dm.setSelectedPart(chemModel.getBuilder().newAtomContainer());
 				}
 				if(r2dm.getMerge().size()>0){
 					mergeMolecules();
@@ -595,7 +596,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private void dragAndDropSelection() {
 		double deltaX=0;
 		double deltaY=0;
-		IAtomContainer undoredoContainer = new org.openscience.cdk.AtomContainer();
+		IAtomContainer undoredoContainer = chemModel.getBuilder().newAtomContainer();
 		if(r2dm.getSelectedPart()!=null && r2dm.getSelectedPart().getAtomCount()>0){
 			undoredoContainer.add(r2dm.getSelectedPart());
 			deltaX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).x-moveoldX;
@@ -654,7 +655,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	private void singleObjectSelected(int mouseX, int mouseY) {
 //		 one atom clicked or one bond clicked
 		IChemObject chemObj = getChemObjectInRange(mouseX, mouseY);
-		IAtomContainer container = new org.openscience.cdk.AtomContainer();
+		IAtomContainer container = chemObj.getBuilder().newAtomContainer();
 		if (chemObj instanceof IAtom)
 		{
 			container.addAtom((IAtom) chemObj);
@@ -715,7 +716,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 	private void drawRing(int mouseX, int mouseY) {
 		this.updateMoleculeCoordinates();
-		IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+		IAtomContainer undoRedoContainer = chemModel.getBuilder().newAtomContainer();
 		IRing newRing = null;
 		Point2d sharedAtomsCenter;
 		Vector2d ringCenterVector;
@@ -748,8 +749,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 		if (sharedAtoms.getAtomCount() == 0)
 		{
-			sharedAtoms = new org.openscience.cdk.AtomContainer();
-			newRing = new org.openscience.cdk.Ring(ringSize, symbol);
+			sharedAtoms = sharedAtoms.getBuilder().newAtomContainer();
+			newRing = sharedAtoms.getBuilder().newRing(ringSize, symbol);
 			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
 				// make newRing a benzene ring
@@ -936,7 +937,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	}
 
 	private void eraseSelection() {
-		IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+		IAtomContainer undoRedoContainer = chemModel.getBuilder().newAtomContainer();
 		String type = null;
 		IAtom highlightedAtom = r2dm.getHighlightedAtom();
 		IBond highlightedBond = r2dm.getHighlightedBond();
@@ -1111,7 +1112,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			updateAtoms(container, atoms);
 		} else
 		{
-			IAtomContainer undoRedoContainer = new org.openscience.cdk.AtomContainer();
+			IAtomContainer undoRedoContainer = chemModel.getBuilder().newAtomContainer();
 			if (atomInRange != null)
 			{
 				logger.debug("We had an atom in range");
@@ -1120,7 +1121,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			{
 				// create a new molecule
 				logger.debug("We make a new molecule");
-				newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+				newAtom1 = undoRedoContainer.getBuilder().newAtom(c2dm.getDrawElement(), new Point2d(startX, startY));
 				IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
 				atomCon.addAtom(newAtom1);
 				r2dm.setRenderingCoordinate(newAtom1,new Point2d(startX, startY));
@@ -1146,7 +1147,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					} else
 					{
 						logger.debug("*** new atom");
-						newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(endX, endY));
+						newAtom2 = atomCon.getBuilder().newAtom(c2dm.getDrawElement(), new Point2d(endX, endY));
 						atomCon.addAtom(newAtom2);
 						r2dm.setRenderingCoordinate(newAtom2,new Point2d(endX, endY));
 						undoRedoContainer.addAtom(newAtom2);
@@ -1154,12 +1155,12 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					newAtom1 = lastAtomInRange;
 					if (newAtom1 == null)
 					{
-						newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
+						newAtom1 = atomCon.getBuilder().newAtom(c2dm.getDrawElement(), new Point2d(r2dm.getPointerVectorStart().x, r2dm.getPointerVectorStart().y));
 						undoRedoContainer.addAtom(newAtom1);
 					}
 					if (newAtom1 != newAtom2)
 					{
-						newBond = new org.openscience.cdk.Bond(newAtom1, newAtom2, 1);
+						newBond = atomCon.getBuilder().newBond(newAtom1, newAtom2, 1);
 						if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
 							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
 						if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND)
@@ -1200,22 +1201,22 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				// add a new atom to the current atom in some random
 				// direction
 				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-				newAtom2 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), ((Point2d)r2dm.getRenderingCoordinate(atomInRange)));
+				newAtom2 = atomCon.getBuilder().newAtom(c2dm.getDrawElement(), ((Point2d)r2dm.getRenderingCoordinate(atomInRange)));
 
 				// now create 2D coords for new atom
 				double bondLength = r2dm.getBondLength();
 				IAtom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
 				logger.debug("connectedAtoms.length: " + connectedAtoms.length);
-				IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
+				IAtomContainer placedAtoms = atomCon.getBuilder().newAtomContainer();
 				//placedAtoms.addAtom(atomInRange);
 				for (int i = 0; i < connectedAtoms.length; i++)
 				{
 					placedAtoms.addAtom(connectedAtoms[i]);
 				}
-				IAtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
+				IAtomContainer unplacedAtoms = atomCon.getBuilder().newAtomContainer();
 				unplacedAtoms.addAtom(newAtom2);
 				AtomPlacer atomPlacer = new AtomPlacer();
-				atomPlacer.setMolecule(new org.openscience.cdk.Molecule(atomCon));
+				atomPlacer.setMolecule(atomCon.getBuilder().newMolecule(atomCon));
 				Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
 				logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
 				logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
@@ -1223,7 +1224,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				{
 					Vector2d bondVector = atomPlacer.getNextBondVector(
 							atomInRange, placedAtoms.getAtom(0), 
-							GeometryTools.get2DCenter(new org.openscience.cdk.Molecule(atomCon)),
+							GeometryTools.get2DCenter(atomCon.getBuilder().newMolecule(atomCon)),
 							true // FIXME: is this correct? (see SF bug #1367002)
 					);
 					Point2d atomPoint = new Point2d(((Point2d)r2dm.getRenderingCoordinate(atomInRange)));
@@ -1243,7 +1244,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				atomCon.addAtom(newAtom2);
 				undoRedoContainer.addAtom(newAtom2);
 				r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getX2d(),newAtom2.getY2d()));
-				newBond=new org.openscience.cdk.Bond(atomInRange, newAtom2, 1.0);
+				newBond= undoRedoContainer.getBuilder().newBond(atomInRange, newAtom2, 1.0);
 				atomCon.addBond(newBond);
 				undoRedoContainer.addBond(newBond);
 				if(c2dm.getDrawMode() == Controller2DModel.UP_BOND)
@@ -1383,7 +1384,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}else{
 			int startX = r2dm.getPointerVectorStart().x;
 			int startY = r2dm.getPointerVectorStart().y;
-			IAtom newAtom1 = new org.openscience.cdk.Atom(c2dm.getDrawElement(), new Point2d(startX, startY));
+			IAtom newAtom1 = chemModel.getBuilder().newAtom(c2dm.getDrawElement(), new Point2d(startX, startY));
 			r2dm.setRenderingCoordinate(newAtom1,new Point2d(startX, startY));
 			IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
 			atomCon.addAtom(newAtom1);
@@ -1391,7 +1392,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			updateAtom(atomCon, newAtom1);
 			chemModel.getSetOfMolecules().addAtomContainer(atomCon);
 			//FIXME undoredo
-			IAtomContainer undoRedoContainer=new org.openscience.cdk.AtomContainer();
+			IAtomContainer undoRedoContainer= chemModel.getBuilder().newAtomContainer();
 			undoRedoContainer.addAtom(newAtom1);
 			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Atom");
 			undoRedoHandler.postEdit(edit);
@@ -1558,7 +1559,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atoms       The Atoms to update
 	 */
-	private void updateAtoms(IAtomContainer container, org.openscience.cdk.interfaces.IAtom[] atoms)
+	private void updateAtoms(IAtomContainer container, IAtom[] atoms)
 	{
 		for (int i = 0; i < atoms.length; i++)
 		{
@@ -1573,7 +1574,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atom       The Atom to update
 	 */
-	private void updateAtom(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom)
+	private void updateAtom(IAtomContainer container, IAtom atom)
 	{
 		if (c2dm.getAutoUpdateImplicitHydrogens())
 		{
@@ -1736,7 +1737,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 */
 	 IAtomContainer getHighlighted()
 	{
-		IAtomContainer highlighted = new org.openscience.cdk.AtomContainer();
+		IAtomContainer highlighted = chemModel.getBuilder().newAtomContainer();
 		IAtom highlightedAtom = r2dm.getHighlightedAtom();
 		IBond highlightedBond = r2dm.getHighlightedBond();
 		if (highlightedAtom != null)
@@ -1757,7 +1758,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 	/**
 	 *  Constructs a new Ring of a certain size that contains all the atoms and
-	 *  bonds of the given AtomContainer and is filled up with new org.openscience.cdk.Atoms and Bonds.
+	 *  bonds of the given AtomContainer and is filled up with new Atoms and Bonds.
 	 *
 	 *@param  sharedAtoms  The AtomContainer containing the Atoms and bonds for the
 	 *      new Ring
@@ -1767,15 +1768,15 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	 */
 	 IRing createAttachRing(IAtomContainer sharedAtoms, int ringSize, String symbol)
 	{
-		IRing newRing = new org.openscience.cdk.Ring(ringSize);
-		IAtom[] ringAtoms = new org.openscience.cdk.Atom[ringSize];
+		IRing newRing = sharedAtoms.getBuilder().newRing(ringSize);
+		IAtom[] ringAtoms = new IAtom[ringSize];
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
 			ringAtoms[i] = sharedAtoms.getAtom(i);
 		}
 		for (int i = sharedAtoms.getAtomCount(); i < ringSize; i++)
 		{
-			ringAtoms[i] = new org.openscience.cdk.Atom(symbol);
+			ringAtoms[i] = sharedAtoms.getBuilder().newAtom(symbol);
 		}
 		IBond[] bonds = sharedAtoms.getBonds();
 		for (int i = 0; i < bonds.length; i++)
@@ -1784,9 +1785,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		}
 		for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
 		{
-			newRing.addBond(new org.openscience.cdk.Bond(ringAtoms[i], ringAtoms[i + 1], 1));
+			newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[i], ringAtoms[i + 1], 1));
 		}
-		newRing.addBond(new org.openscience.cdk.Bond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
+		newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
 		newRing.setAtoms(ringAtoms);
 		return newRing;
 	}
@@ -1803,7 +1804,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	{
 		IAtom currentAtom;
 		IAtom[] conAtomsArray;
-		IAtomContainer conAtoms = new org.openscience.cdk.AtomContainer();
+		IAtomContainer conAtoms = sharedAtoms.getBuilder().newAtomContainer();
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
@@ -1830,7 +1831,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	{
 		IAtom currentAtom;
 		IBond currentBond;
-		IAtomContainer selectedPart = new org.openscience.cdk.AtomContainer();
+		IAtomContainer selectedPart = chemModel.getBuilder().newAtomContainer();
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
@@ -1941,7 +1942,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		{
 			r2dm.setHighlightedAtom((IAtom) objectInRange);
 			r2dm.setHighlightedBond(null);
-		} else if (objectInRange instanceof org.openscience.cdk.interfaces.IBond)
+		} else if (objectInRange instanceof IBond)
 		{
 			r2dm.setHighlightedBond((IBond) objectInRange);
 			r2dm.setHighlightedAtom(null);
@@ -2085,7 +2086,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			// mouse is released, the draggingSelected boolean is set
 			logger.warn("No atoms selected: temporarily selecting nearest atom/bond");
 			draggingSelected = false;
-			IAtomContainer selected = new org.openscience.cdk.AtomContainer();
+			IAtomContainer selected = chemModel.getBuilder().newAtomContainer();
 			IAtom atomInRange = getAtomInRange(mouseX, mouseY);
 			if (atomInRange != null)
 			{
@@ -2098,7 +2099,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				// in the bond, instead of the bond itself
 				if (bondInRange != null)
 				{
-					org.openscience.cdk.interfaces.IAtom[] atoms = bondInRange.getAtoms();
+					IAtom[] atoms = bondInRange.getAtoms();
 					for (int i = 0; i < atoms.length; i++)
 					{
 						selected.addAtom(atoms[i]);
@@ -2179,7 +2180,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				IAtom mappedFromAtom = getAtomInRange(startX, startY);
 				if (mappedFromAtom != null)
 				{
-					Mapping mapping = new Mapping(mappedFromAtom, mappedToAtom);
+					IMapping mapping = mappedFromAtom.getBuilder().newMapping(mappedFromAtom, mappedToAtom);
 					logger.debug("Created mapping: ", mapping);
 					logger.debug("  between ", mappedFromAtom);
 					logger.debug("  and ", mappedToAtom);
@@ -2189,7 +2190,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					if (reaction1 != null && reaction2 != null && reaction1 == reaction2)
 					{
 						logger.debug("Adding mapping to reaction: ", reaction1.getID());
-						((org.openscience.cdk.Reaction)reaction1).addMapping(mapping);
+						((IReaction)reaction1).addMapping(mapping);
 					} else
 					{
 						logger.warn("Reactions do not match, or one or both are reactions are null");

@@ -37,9 +37,8 @@ import org.openscience.cdk.controller.Controller2DModel;
  * This is an implementation of IUndoRedoHandler, which is used in JCP. It forwards the postEdit to the postEdit in UndoSupport from Controller2dModel
  * 
  * @author shk3
- *
+ * @cdk.module control
  */
-
 public class JCPUndoRedoHandler implements IUndoRedoHandler {
 	Controller2DModel c2dm=null;
 
