@@ -163,7 +163,7 @@ public class InsertFromSmiles extends JFrame
 
 				// ok, now generate 2D coordinates
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-                sdg.setTemplateHandler(new TemplateHandler());
+                sdg.setTemplateHandler(new TemplateHandler(moleculeSet.getBuilder()));
 				try
 				{
 					sdg.setMolecule(m);
