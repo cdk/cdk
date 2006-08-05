@@ -31,12 +31,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Method;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
+import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -110,8 +112,9 @@ public class ReaderFactory {
                     String formatName = reader.readLine();
                     formatCount++;
                     try {
-                        IChemFormatMatcher format = (IChemFormatMatcher)this.getClass().getClassLoader().
-                            loadClass(formatName).newInstance();
+                    	Class formatClass = this.getClass().getClassLoader().loadClass(formatName);
+                    	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
+                    	IChemFormatMatcher format = (IChemFormatMatcher)getinstanceMethod.invoke(null, new Object[0]);
                         formats.addElement(format);
                         logger.info("Loaded IO format: " + format.getClass().getName());
                     } catch (ClassNotFoundException exception) {
