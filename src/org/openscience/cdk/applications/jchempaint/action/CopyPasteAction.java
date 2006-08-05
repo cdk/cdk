@@ -130,7 +130,7 @@ public class CopyPasteAction extends JCPAction{
         				topaste = sp.parseSmiles((String) transfer.getTransferData (DataFlavor.stringFlavor));
         				StructureDiagramGenerator sdg = new StructureDiagramGenerator((Molecule)topaste);
                         sdg.setTemplateHandler(
-                            new TemplateHandler()
+                            new TemplateHandler(topaste.getBuilder())
                         );
                         sdg.generateCoordinates();
         				jcpPanel.scaleAndCenterMolecule(topaste,jcpPanel.getSize());
