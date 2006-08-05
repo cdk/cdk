@@ -37,6 +37,8 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -63,21 +65,22 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>The method will fail if the molecule is disconnected. The
  * partitionIntoMolecules(AtomContainer) can help here.
  *
- *@author     steinbeck
- *@cdk.created    February 2, 2004
- *@see        org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
+ *@author      steinbeck
+ *@cdk.created 2004-02-02
+ *@see         org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
  *@cdk.keyword Layout
  *@cdk.keyword Structure Diagram Generation (SDG)
  *@cdk.keyword 2D coordinates
  *@cdk.keyword Coordinate generation, 2D
  *@cdk.dictref blue-obelisk:layoutMolecule
+ *@cdk.module  sdg
  */
 public class StructureDiagramGenerator
 {
 
     private LoggingTool logger = new LoggingTool(StructureDiagramGenerator.class);
 
-    private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = new TemplateHandler();
+    private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = null;
 
 	IMolecule molecule;
 	IRingSet sssr;
@@ -105,10 +108,10 @@ public class StructureDiagramGenerator
 	 *
 	 *@param  molecule  The molecule to be layed out.
 	 */
-	public StructureDiagramGenerator(IMolecule molecule)
-	{
+	public StructureDiagramGenerator(IMolecule molecule) {
 		this();
 		setMolecule(molecule, false);
+		templateHandler = new TemplateHandler(molecule.getBuilder());
 	}
 
 
@@ -120,9 +123,9 @@ public class StructureDiagramGenerator
 	 *@param  mol    the molecule for which coordinates are to be generated.
 	 *@param  clone  Should the whole process be performed with a cloned copy?
 	 */
-	public void setMolecule(IMolecule mol, boolean clone)
-	{
-		org.openscience.cdk.interfaces.IAtom atom = null;
+	public void setMolecule(IMolecule mol, boolean clone) {
+		templateHandler = new TemplateHandler(mol.getBuilder());
+		IAtom atom = null;
 		if (clone)
 		{
 			try {
@@ -245,9 +248,9 @@ public class StructureDiagramGenerator
     public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
         // first make a shallow copy: Atom/Bond references are kept
         IMolecule original = molecule;
-        IMolecule shallowCopy = (IMolecule)((org.openscience.cdk.Molecule)molecule).shallowCopy();
+        IMolecule shallowCopy = molecule.getBuilder().newMolecule(molecule);
         // ok, delete H's from 
-        org.openscience.cdk.interfaces.IAtom[] atoms = shallowCopy.getAtoms();
+        IAtom[] atoms = shallowCopy.getAtoms();
         for (int i = 0; i < atoms.length; i++) {
             if (atoms[i].getSymbol().equals("H")) {
                 shallowCopy.removeAtomAndConnectedElectronContainers(atoms[i]);
@@ -463,7 +466,7 @@ public class StructureDiagramGenerator
 		int i = 0;
 		for (i = 0; i < ring.getElectronContainerCount(); i++)
 		{
-			if (ring.getElectronContainer(i) instanceof org.openscience.cdk.interfaces.IBond)
+			if (ring.getElectronContainer(i) instanceof IBond)
 			{
 				break;
 			}
@@ -518,7 +521,7 @@ public class StructureDiagramGenerator
 	private void handleAliphatics() throws org.openscience.cdk.exception.CDKException
 	{
 		int safetyCounter = 0;
-		org.openscience.cdk.interfaces.IAtom atom = null;
+		IAtom atom = null;
 		IAtomContainer unplacedAtoms = null;
 		IAtomContainer placedAtoms = null;
 		IAtomContainer longestUnplacedChain = null;
@@ -593,15 +596,15 @@ public class StructureDiagramGenerator
 	private void layoutNextRingSystem()
 	{
 		logger.debug("Start of layoutNextRingSystem()");
-		org.openscience.cdk.interfaces.IAtom vectorAtom1 = null;
-		org.openscience.cdk.interfaces.IAtom vectorAtom2 = null;
+		IAtom vectorAtom1 = null;
+		IAtom vectorAtom2 = null;
 		Point2d oldPoint1 = null;
 		Point2d newPoint1 = null;
 		Point2d oldPoint2 = null;
 		Point2d newPoint2 = null;
 		IRingSet nextRingSystem = null;
 		IAtomContainer ringSystem = null;
-		org.openscience.cdk.interfaces.IBond nextRingAttachmentBond = null;
+		IBond nextRingAttachmentBond = null;
 		//double angle;
 		double angle1;
 		double angle2;
@@ -626,7 +629,7 @@ public class StructureDiagramGenerator
 			logger.debug("oldPoint2: " + oldPoint2);
 			angle1 = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
-			ringSystem = new org.openscience.cdk.AtomContainer();
+			ringSystem = tempAc.getBuilder().newAtomContainer();
 			ringSystem.add(RingSetManipulator.getAllInOneContainer(nextRingSystem));
 
 			/*
@@ -671,11 +674,11 @@ public class StructureDiagramGenerator
 	 *@return       an AtomContainer with all the unplaced atoms connected to a
 	 *      given atom
 	 */
-	private IAtomContainer getUnplacedAtoms(org.openscience.cdk.interfaces.IAtom atom)
+	private IAtomContainer getUnplacedAtoms(IAtom atom)
 	{
-		IAtomContainer unplacedAtoms = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
-		org.openscience.cdk.interfaces.IAtom connectedAtom = null;
+		IAtomContainer unplacedAtoms = atom.getBuilder().newAtomContainer();
+		IBond[] bonds = molecule.getConnectedBonds(atom);
+		IAtom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
@@ -696,11 +699,11 @@ public class StructureDiagramGenerator
 	 *@return       an AtomContainer with all the placed atoms connected to a given
 	 *      atom
 	 */
-	private IAtomContainer getPlacedAtoms(org.openscience.cdk.interfaces.IAtom atom)
+	private IAtomContainer getPlacedAtoms(IAtom atom)
 	{
-		IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getConnectedBonds(atom);
-		org.openscience.cdk.interfaces.IAtom connectedAtom = null;
+		IAtomContainer placedAtoms = atom.getBuilder().newAtomContainer();
+		IBond[] bonds = molecule.getConnectedBonds(atom);
+		IAtom connectedAtom = null;
 		for (int f = 0; f < bonds.length; f++)
 		{
 			connectedAtom = bonds[f].getConnectedAtom(atom);
@@ -718,13 +721,13 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next atom with unplaced aliphatic neighbors
 	 */
-	private org.openscience.cdk.interfaces.IAtom getNextAtomWithAliphaticUnplacedNeigbors()
+	private IAtom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
 		IBond bond = null;
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
 		{
-			org.openscience.cdk.interfaces.IElectronContainer ec = molecule.getElectronContainer(f);
-			if (ec instanceof org.openscience.cdk.interfaces.IBond)
+			IElectronContainer ec = molecule.getElectronContainer(f);
+			if (ec instanceof IBond)
 			{
 				bond = (IBond) ec;
 				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
@@ -749,10 +752,10 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next bond with an unplaced ring atom
 	 */
-	private org.openscience.cdk.interfaces.IBond getNextBondWithUnplacedRingAtom()
+	private IBond getNextBondWithUnplacedRingAtom()
 	{
-		org.openscience.cdk.interfaces.IBond bond = null;
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
+		IBond bond = null;
+		IBond[] bonds = molecule.getBonds();
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
@@ -792,7 +795,7 @@ public class StructureDiagramGenerator
 			logger.debug("placeFirstBondOfFirstRing->bondVector.length():" + bondVector.length());
 			bondVector.scale(bondLength);
 			logger.debug("placeFirstBondOfFirstRing->bondVector.length() after scaling:" + bondVector.length());
-			org.openscience.cdk.interfaces.IAtom atom;
+			IAtom atom;
 			Point2d point = new Point2d(0, 0);
 			atom = bond.getAtom(0);
 			logger.debug("Atom 1 of first Bond: " + (molecule.getAtomNumber(atom) + 1));
@@ -810,7 +813,7 @@ public class StructureDiagramGenerator
 			 *  ring is somehow connected, or some other system of atoms in an aliphatic chain.
 			 *  In this case, it's the first bond that we layout by hand.
 			 */
-			sharedAtoms = new org.openscience.cdk.AtomContainer();
+			sharedAtoms = atom.getBuilder().newAtomContainer();
 			sharedAtoms.addBond(bond);
 			sharedAtoms.addAtom(bond.getAtom(0));
 			sharedAtoms.addAtom(bond.getAtom(1));
@@ -827,7 +830,7 @@ public class StructureDiagramGenerator
 	 */
 	private void fixRest()
 	{
-		org.openscience.cdk.interfaces.IAtom atom = null;
+		IAtom atom = null;
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			atom = molecule.getAtom(f);
@@ -898,7 +901,7 @@ public class StructureDiagramGenerator
 	 *@param  bond  the bond to be search for the unplaced ring atom
 	 *@return       the unplaced ring atom in this bond
 	 */
-	private org.openscience.cdk.interfaces.IAtom getRingAtom(org.openscience.cdk.interfaces.IBond bond)
+	private IAtom getRingAtom(IBond bond)
 	{
 		if (bond.getAtom(0).getFlag(CDKConstants.ISINRING) &&
 				!bond.getAtom(0).getFlag(CDKConstants.ISPLACED))
@@ -921,7 +924,7 @@ public class StructureDiagramGenerator
 	 *@param  ringAtom     The ring atom to be search in the ring system.
 	 *@return              the ring system of which the given atom is part of
 	 */
-	private IRingSet getRingSystemOfAtom(Vector ringSystems, org.openscience.cdk.interfaces.IAtom ringAtom)
+	private IRingSet getRingSystemOfAtom(Vector ringSystems, IAtom ringAtom)
 	{
 		IRingSet ringSet = null;
 		for (int f = 0; f < ringSystems.size(); f++)

@@ -38,6 +38,7 @@ import java.util.Vector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
@@ -57,6 +58,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.keyword  layout
  * @cdk.keyword  2D-coordinates
  * @cdk.require  java1.4+
+ * @cdk.module   sdg
  */
 public class TemplateHandler
 {
@@ -73,11 +75,11 @@ public class TemplateHandler
 	/**
 	 * Creates a new TemplateHandler.
 	 */
-	public TemplateHandler()
+	public TemplateHandler(IChemObjectBuilder builder)
 	{
 		logger = new LoggingTool(this);
 		templates = new Vector();
-		loadTemplates();
+		loadTemplates(builder);
 	}
 
 
@@ -86,7 +88,7 @@ public class TemplateHandler
 	 * SDG, place a drawing with the new template in data/templates and add the
 	 * template filename to data/templates/template.list
 	 */
-	public void loadTemplates()
+	public void loadTemplates(IChemObjectBuilder builder)
 	{
 		String line = null;
 		try
@@ -101,7 +103,7 @@ public class TemplateHandler
 				CMLReader structureReader = new CMLReader(
                     this.getClass().getClassLoader().getResourceAsStream(line)
                 );
-                IChemFile file = (IChemFile)structureReader.read(new org.openscience.cdk.ChemFile());
+                IChemFile file = (IChemFile)structureReader.read(builder.newChemFile());
 				templates.addElement(file.getBuilder().newMolecule(
                     ChemFileManipulator.getAllInOneContainer(file)
                 ));

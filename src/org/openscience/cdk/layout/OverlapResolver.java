@@ -45,11 +45,11 @@ import org.openscience.cdk.interfaces.IRingSet;
  * Helper class for Structure Diagram Generation. Resolves atom or bond
  * overlaps after the actual SDG was done
  *
- * @author     steinbeck
- * @cdk.created    2003-09-4
- *
- * @cdk.keyword    layout
- * @cdk.keyword    2D-coordinates
+ * @author      steinbeck
+ * @cdk.created 2003-09-4
+ * @cdk.keyword layout
+ * @cdk.keyword 2D-coordinates
+ * @cdk.module  sdg
  */
 public class OverlapResolver
 {

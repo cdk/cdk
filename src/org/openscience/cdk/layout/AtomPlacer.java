@@ -52,8 +52,9 @@ import org.openscience.cdk.tools.LoggingTool;
  *  be used for Automated Structure Diagram Generation or in the interactive
  *  buildup of molecules by the user.
  *
- *@author     steinbeck
- *@cdk.created    2003-08-29
+ *@author      steinbeck
+ *@cdk.created 2003-08-29
+ *@cdk.module  sdg
  */
 public class AtomPlacer
 {
@@ -598,7 +599,7 @@ public class AtomPlacer
 		
 		startAtom = molecule.getAtom(bestStartAtom);
 		//endAtom = molecule.getAtomAt(bestEndAtom);
-		IAtomContainer path = new org.openscience.cdk.AtomContainer();
+		IAtomContainer path = molecule.getBuilder().newAtomContainer();
 		path.addAtom(startAtom);
 		path = getLongestUnplacedChain(molecule, startAtom);
 		//PathTools.depthFirstTargetSearch(molecule, startAtom, endAtom, path);

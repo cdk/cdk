@@ -42,8 +42,9 @@ import org.openscience.cdk.tools.LoggingTool;
  * you to layout 2D and 3D coordinates for hydrogen atoms added to a molecule
  * which already has coordinates for the rest of the atoms.
  *
- * @author   Christop Steinbeck
+ * @author       Christop Steinbeck
  * @cdk.created  2003-08-06
+ * @cdk.module   sdg
  */
 public class HydrogenPlacer {
     

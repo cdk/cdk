@@ -35,27 +35,29 @@ import java.util.Vector;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Class providing methods for generating coordinates for ring atoms.
  * Various situations are supported, like condensation, spiro-attachment, etc.
  * They can be used for Automated Structure Diagram Generation or in the interactive
- * buildup of ringsystems by the user. 
+ * buildup of ringsystems by the user.
+ * 
+ * @cdk.module sdg
  **/
-
 public class RingPlacer 
 {
 	final static boolean debug = false;
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private LoggingTool logger;
 	
 	private IMolecule molecule; 
 	
@@ -70,7 +72,7 @@ public class RingPlacer
 	 */
 	public RingPlacer() 
 	{
-		logger = new org.openscience.cdk.tools.LoggingTool(this);
+		logger = new LoggingTool(this);
 	}
 
 
@@ -115,11 +117,11 @@ public class RingPlacer
 		logger.debug("RingPlacer.placeRingSubstituents() start");
 		IRing ring = null;
 		IAtom atom = null;
-		org.openscience.cdk.interfaces.IRingSet rings = null;
-		IAtomContainer unplacedPartners = new org.openscience.cdk.AtomContainer();;
-		IAtomContainer sharedAtoms = new org.openscience.cdk.AtomContainer();
-		IAtomContainer primaryAtoms = new org.openscience.cdk.AtomContainer();
-		IAtomContainer treatedAtoms = new org.openscience.cdk.AtomContainer();
+		IRingSet rings = null;
+		IAtomContainer unplacedPartners = rs.getBuilder().newAtomContainer();
+		IAtomContainer sharedAtoms = rs.getBuilder().newAtomContainer();
+		IAtomContainer primaryAtoms = rs.getBuilder().newAtomContainer();
+		IAtomContainer treatedAtoms = rs.getBuilder().newAtomContainer();
 		Point2d centerOfRingGravity = null;
 		for (int j = 0; j < rs.getAtomContainerCount(); j++)
 		{
@@ -260,13 +262,13 @@ public class RingPlacer
 		}
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 
-		org.openscience.cdk.interfaces.IAtom currentAtom = startAtom;
+		IAtom currentAtom = startAtom;
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainer(k) instanceof org.openscience.cdk.interfaces.IBond) break;
+            if (ring.getElectronContainer(k) instanceof IBond) break;
         }
-        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainer(k);
+        IBond currentBond = (IBond)sharedAtoms.getElectronContainer(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -321,15 +323,15 @@ public class RingPlacer
 		
 		//int direction = 1;
 
-		org.openscience.cdk.interfaces.IAtom currentAtom = startAtom;
+		IAtom currentAtom = startAtom;
 		double startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
-		org.openscience.cdk.interfaces.IBond[] bonds = ring.getConnectedBonds(startAtom);
+		IBond[] bonds = ring.getConnectedBonds(startAtom);
 		
-		org.openscience.cdk.interfaces.IBond currentBond = bonds[0];
+		IBond currentBond = bonds[0];
 		
 		Vector atomsToDraw = new Vector();
 		/* 
@@ -452,13 +454,13 @@ public class RingPlacer
 		}
 		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
 	
-		org.openscience.cdk.interfaces.IAtom currentAtom = startAtom;
+		IAtom currentAtom = startAtom;
         // determine first bond in Ring
         int k = 0;
         for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainer(k) instanceof org.openscience.cdk.interfaces.IBond) break;
+            if (ring.getElectronContainer(k) instanceof IBond) break;
         }
-        org.openscience.cdk.interfaces.IBond currentBond = (Bond)sharedAtoms.getElectronContainer(k);
+        IBond currentBond = (IBond)sharedAtoms.getElectronContainer(k);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
