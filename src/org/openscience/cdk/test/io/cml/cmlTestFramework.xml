@@ -150,4 +150,9 @@
       <scalar dataType="xsd:float" dictRef="cdk:partialCharge">-0.234</scalar>
     </atom>
   </atomArray></molecule>
+  
+  <molecule id='m1'><atomArray>
+    <atom id='a1' elementType="Dummy" />
+  </atomArray></molecule>
+  
 </cml>

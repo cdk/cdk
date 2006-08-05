@@ -111,4 +111,25 @@
     </propertyList>
   </molecule>
 
+  <!-- JFragmentsTests.testCrystal() -->
+  <molecule id="crystal1">
+    <crystal z="4">
+      <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc2" title="b" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc3" title="c" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc4" title="alpha" units="units:degrees">90</scalar>
+      <scalar id="sc5" title="beta" units="units:degrees">90</scalar>
+      <scalar id="sc6" title="gamma" units="units:degrees">90</scalar>
+      <symmetry id="s1" spaceGroup="Fm3m"/>
+    </crystal>
+    <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
+    <atomArray>
+      <atom id="a1" elementType="Na" formalCharge="1" xFract="0.0"
+            yFract="0.0" zFract="0.0"/>
+      <atom id="a2" elementType="Cl" formalCharge="-1"
+            xFract="0.5" yFract="0.0" zFract="0.0"/>
+    </atomArray>
+  </molecule>
+
+
 </cml>
