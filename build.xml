@@ -606,13 +606,15 @@
             <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+            <antcall target="compile-module"><param name="module" value="render"/></antcall>
+            <antcall target="compile-module"><param name="module" value="io"/></antcall>
+            <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
+            <antcall target="compile-module"><param name="module" value="sdg"/></antcall>
+            <antcall target="compile-module"><param name="module" value="control"/></antcall>
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
             <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
-            <antcall target="compile-module"><param name="module" value="render"/></antcall>
-            <antcall target="compile-module"><param name="module" value="io"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
-            <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>

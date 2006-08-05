@@ -7,3 +7,5 @@ cdk-qsar.jar
 cdk-standard.jar
 cdk-charges.jar
 cdk-forcefield.jar
+cdk-valencycheck.jar
+cdk-sdg.jar

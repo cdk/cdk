@@ -4,3 +4,5 @@ cdk-core.jar
 cdk-standard.jar
 cdk-extra.jar
 cdk-libio-cml.jar
+cdk-valencycheck.jar
+cdk-sdg.jar
