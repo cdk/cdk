@@ -29,6 +29,7 @@ package org.openscience.cdk.internet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -216,9 +217,9 @@ public class WWMMatrixReader {
         out.close();
 
         // now read the CML file into a data structure
+        InputStream stream = connection.getInputStream();
         BufferedReader in = new BufferedReader(
-            new InputStreamReader(
-            connection.getInputStream()));
+            new InputStreamReader(stream));
         in.mark(1000000);
 
         //Get the number of the results
@@ -238,7 +239,7 @@ public class WWMMatrixReader {
 
         //Read the molecules from the output of WWMM
         in.reset();
-        CMLReader reader = new CMLReader(in);
+        CMLReader reader = new CMLReader(stream);
         ChemFile cf = (ChemFile)reader.read((ChemObject)new ChemFile());
         logger.debug("#sequences: " + cf.getChemSequenceCount());
         IMolecule m = null;

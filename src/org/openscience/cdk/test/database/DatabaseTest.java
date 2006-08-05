@@ -207,7 +207,7 @@ public class DatabaseTest {
             try {
               System.out.println("Loading: " + inFile);
               if (inFile.endsWith(".cml")) {
-                reader = new CMLReader(new FileReader(inFile));
+                reader = new CMLReader(new FileInputStream(inFile));
                 System.out.println("Expecting CML format...");
               } else {
                 reader = new MDLReader(new FileInputStream(inFile));

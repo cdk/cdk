@@ -28,9 +28,10 @@
  */
 package org.openscience.cdk.database;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -93,7 +94,7 @@ public class DBReader {
 	private org.openscience.cdk.interfaces.IChemObject readMolecule() {
 		org.openscience.cdk.interfaces.IMolecule mol = null;
 		CMLReader cmlr;
-		StringReader reader;
+		InputStream reader;
 		Statement st;
 		ResultSet rs;
 		try {
@@ -103,8 +104,7 @@ public class DBReader {
 			rs = st.executeQuery(query);
 			while (rs.next()) {
 				byte[] bytes = rs.getBytes(14);
-                String CMLString = new String(bytes);
-				reader = new StringReader(CMLString);
+				reader = new ByteArrayInputStream(bytes);
 				cmlr = new CMLReader(reader);
 				mol = getMolecule((ChemFile)cmlr.read(new ChemFile()));
 				
