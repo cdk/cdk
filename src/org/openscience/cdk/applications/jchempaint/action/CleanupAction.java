@@ -84,13 +84,13 @@ public class CleanupAction extends JCPAction
         logger.info("Going to performe a clean up...");
 		if (jcpPanel.getJChemPaintModel() != null)
 		{
+			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			if (diagramGenerator == null) {
                 diagramGenerator = new StructureDiagramGenerator();
                 diagramGenerator.setTemplateHandler(
-                    new TemplateHandler()
+                    new TemplateHandler(jcpmodel.getChemModel().getBuilder())
                 );
             }
-			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 			Renderer2DModel renderModel = jcpmodel.getRendererModel();
 			double bondLength = renderModel.getBondLength() / renderModel.getScaleFactor();
 			diagramGenerator.setBondLength(bondLength * 2.0);
