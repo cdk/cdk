@@ -108,19 +108,21 @@ public class CleanupAction extends JCPAction
 				for (int i = 0; i < mols.length; i++)
 				{
                     IMolecule molecule = mols[i];
-                    IMolecule cleanedMol = relayoutMolecule(mols[i]);
-					newsom.addMolecule(cleanedMol);
-                    IAtom[] atoms = molecule.getAtoms();
-					IAtom[] newAtoms = cleanedMol.getAtoms();
-                    for (int j=0; j<atoms.length; j++) {
-                        Point2d oldCoord = atoms[j].getPoint2d();
-                        Point2d newCoord = newAtoms[j].getPoint2d();
-                         if (!oldCoord.equals(newCoord)) {
-                            Point2d[] coords = new Point2d[2];
-                            coords[0] = newCoord;
-                            coords[1] = oldCoord;
-                            atomCoordsMap.put(newAtoms[j], coords);
-                        }
+                    if (molecule != null && molecule.getAtomCount() > 0) {
+                    	IMolecule cleanedMol = relayoutMolecule(mols[i]);
+                    	newsom.addMolecule(cleanedMol);
+                    	IAtom[] atoms = molecule.getAtoms();
+                    	IAtom[] newAtoms = cleanedMol.getAtoms();
+                    	for (int j=0; j<atoms.length; j++) {
+                    		Point2d oldCoord = atoms[j].getPoint2d();
+                    		Point2d newCoord = newAtoms[j].getPoint2d();
+                    		if (!oldCoord.equals(newCoord)) {
+                    			Point2d[] coords = new Point2d[2];
+                    			coords[0] = newCoord;
+                    			coords[1] = oldCoord;
+                    			atomCoordsMap.put(newAtoms[j], coords);
+                    		}
+                    	}
                     }
 				}
 				model.setSetOfMolecules(newsom);
@@ -162,19 +164,11 @@ public class CleanupAction extends JCPAction
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  molecule  Description of the Parameter
-	 *@return           Description of the Return Value
-	 */
 	private IMolecule relayoutMolecule(IMolecule molecule)
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
-		IMolecule cleanedMol = null;
-       if (molecule != null)
-		{
+		IMolecule cleanedMol = molecule;
+		if (molecule != null) {
 			if (molecule.getAtomCount() > 2) {
 				try {
 			    	Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
