@@ -28,18 +28,13 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.HashMap;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Provides methods for adding missing hydrogen atoms.
@@ -213,6 +208,34 @@ public class HydrogenAdder {
 	logger.debug("End of addHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
     return changedAtomsAndBonds;
     }
+
+    /**
+     * Method that saturates an atom in a molecule by adding explicit hydrogens.
+     * In order to get coordinates for these Hydrogens, you need to
+     * remember the average bondlength of you molecule (coordinates for
+     * all atoms should be available) by using
+     * double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+     * and then use this method here and then use
+     * org.openscience.cdk.HydrogenPlacer(atomContainer, bondLength);
+     *
+     * @param  atom      Atom to saturate
+     * @param  container AtomContainer containing the atom
+     *
+     * @cdk.keyword hydrogen, adding
+     * @cdk.keyword explicit hydrogen
+     */
+    public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom)
+            throws IOException, ClassNotFoundException, CDKException {
+        // set number of implicit hydrogens to zero
+        // add explicit hydrogens
+        logger.debug("Start of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
+        int missingHydrogens = calculateNumberOfImplicitHydrogens(container, atom);
+        logger.debug("According to valencyChecker, " + missingHydrogens + " are missing");
+        IAtomContainer changedAtomsAndBonds = addExplicitHydrogensToSatisfyValency(container, atom, missingHydrogens, container);
+        logger.debug("End of addExplicitHydrogensToSatisfyValency(AtomContainer container, Atom atom)");
+        return changedAtomsAndBonds;
+    }
+
 
     /**
      * Method that saturates an atom in a molecule by adding explicit hydrogens.
