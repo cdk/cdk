@@ -348,10 +348,10 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			PathIterator pa=transformedpolygon.getPathIterator(null);
 			
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++) {
-				pa.next();
 				double[] d=new double[6];
 				pa.currentSegment(d);
 				r2dm.setRenderingCoordinate(r2dm.getSelectedPart().getAtom(i),new Point2d(d[0]/1000,d[1]/1000));
+				pa.next();
 			}
 			fireChange();
 		}
@@ -401,7 +401,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			r2dm.setPointerVectorStart(new Point(mouseX, mouseY));
 		}
 		
-		if(r2dm.getSelectedPart()!=null && !(r2dm.getSelectedPart().contains(atomInRange) || r2dm.getSelectedPart().contains(bondInRange)) && r2dm.getRotateRadius()==0){
+		if(r2dm.getSelectedPart()!=null &&
+		   !((atomInRange == null) || (atomInRange == null)) &&
+		   !(r2dm.getSelectedPart().contains(atomInRange) ||
+		   r2dm.getSelectedPart().contains(bondInRange)) && 
+		   r2dm.getRotateRadius()==0){
 			r2dm.setSelectedPart(atomInRange.getBuilder().newAtomContainer());
 		}
 
