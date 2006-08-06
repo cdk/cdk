@@ -28,6 +28,9 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+
 /**
  * Represents the idea of a non-chemical atom-like entity, like Me,
  * R, X, Phe, His, etc.
@@ -39,7 +42,7 @@ package org.openscience.cdk;
  * @see  Atom
  */
 public class PseudoAtom extends Atom 
-  implements java.io.Serializable, Cloneable, org.openscience.cdk.interfaces.IPseudoAtom 
+  implements java.io.Serializable, Cloneable, IPseudoAtom 
 {
 
     /**
@@ -81,21 +84,18 @@ public class PseudoAtom extends Atom
     }
 
     /**
-     * Constructs an Atom from a String containing an element symbol.
+     * Constructs an PseudoAtom from a IAtom.
      *
-     * @param   atom  Atom from which the PseudoAtom is constructed
+     * @param   atom  IAtom from which the PseudoAtom is constructed
      */
-    public PseudoAtom(org.openscience.cdk.interfaces.IAtom atom) {
-        super("R");
-        super.fractionalPoint3d = atom.getFractionalPoint3d();
-        super.point3d = atom.getPoint3d();
-        super.point2d = atom.getPoint2d();
-        this.label = atom.getSymbol();
-        super.hydrogenCount = 0;
-        super.stereoParity = 0;
-        super.exactMass = 0.0;
-        super.formalCharge = 0;
-        super.charge = 0.0;
+    public PseudoAtom(IAtom atom) {
+        super(atom);
+        if (atom instanceof IPseudoAtom) {
+            this.label = ((IPseudoAtom)atom).getLabel();   	
+        } else {
+        	this.setSymbol("R");
+        	this.label = atom.getSymbol();
+        }
     }
 
     /**

@@ -34,6 +34,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Represents the idea of an chemical atom.
@@ -109,7 +111,10 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * Constructs an completely unset Atom.
          */
         public Atom() {
-            this(null);
+            super((String)null);
+            this.fractionalPoint3d = null;
+            this.point3d = null;
+            this.point2d = null;
         }
         
         /**
@@ -149,7 +154,33 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 this.point2d = point2d;
         }
 
-        /**
+    	/**
+    	 * Constructs an isotope by copying the symbol, atomic number,
+    	 * flags, identifier, exact mass, natural abundance, mass 
+    	 * number, maximum bond order, bond order sum, vanderwaals
+    	 * and covalent radii, formal charge, hybridization, electron
+    	 * valency, formal neighbour count and atom type name from the 
+    	 * given IAtomType. It does not copy the listeners and
+    	 * properties. If the isotope is an instanceof
+    	 * IAtom, then the 2D, 3D and fractional coordinates, partial
+    	 * atomic charge, hydrogen count and stereo parity are copied
+    	 * too.
+    	 * 
+    	 * @param atomType IAtomType to copy information from
+    	 */
+    	public Atom(IAtomType atomType) {
+    		super(atomType);
+    		if (atomType instanceof IAtom) {
+    			this.point2d = new Point2d(((IAtom)atomType).getPoint2d());
+    			this.point3d = new Point3d(((IAtom)atomType).getPoint3d());
+    			this.fractionalPoint3d = new Point3d(((IAtom)atomType).getFractionalPoint3d());
+    			this.hydrogenCount = ((IAtom)atomType).getHydrogenCount();
+    			this.charge = ((IAtom)atomType).getCharge();
+    			this.stereoParity = ((IAtom)atomType).getStereoParity();
+    		}
+    	}
+
+    	/**
          *  Sets the partial charge of this atom.
          *
          * @param  charge  The partial charge

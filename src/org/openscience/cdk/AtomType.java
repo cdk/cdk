@@ -31,6 +31,7 @@ package org.openscience.cdk;
 import java.io.Serializable;
 
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -129,6 +130,32 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		this.identifier = identifier;
 	}
 
+	/**
+	 * Constructs an isotope by copying the symbol, atomic number,
+	 * flags, identifier, exact mass, natural abundance and mass 
+	 * number from the given IIsotope. It does not copy the
+	 * listeners and properties. If the isotope is an instanceof
+	 * IAtomType, then the maximum bond order, bond order sum,
+	 * vanderwaals and covalent radii, formal charge, hybridization,
+	 * electron valency, formal neighbour count and atom type name
+	 * are copied too.
+	 * 
+	 * @param isotope IIsotope to copy information from
+	 */
+	public AtomType(IIsotope isotope) {
+		super(isotope);
+		if (isotope instanceof IAtomType) {
+			this.maxBondOrder = ((IAtomType)isotope).getMaxBondOrder();
+			this.bondOrderSum = ((IAtomType)isotope).getBondOrderSum();
+			this.vanderwaalsRadius = ((IAtomType)isotope).getVanderwaalsRadius();
+			this.covalentRadius = ((IAtomType)isotope).getCovalentRadius();
+			this.formalCharge = ((IAtomType)isotope).getFormalCharge();
+			this.hybridization = ((IAtomType)isotope).getHybridization();
+			this.electronValency = ((IAtomType)isotope).getValency();
+			this.formalNeighbourCount = ((IAtomType)isotope).getFormalNeighbourCount();
+			this.identifier = ((IAtomType)isotope).getAtomTypeName();
+		}
+	}
 
 	/**
 	 *  Sets the if attribute of the AtomType object.

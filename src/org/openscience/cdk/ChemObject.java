@@ -96,6 +96,20 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		identifier = null;
 	}
 
+	/**
+	 * Constructs a new IChemObject by copying the flags, and the
+	 * identifier. It does not copy the listeners and properties.
+	 * 
+	 * @param chemObject 
+	 */
+	public ChemObject(IChemObject chemObject) {
+		// copy the flags
+		boolean[] oldflags = chemObject.getFlags();
+		flags = new boolean[oldflags.length];
+		System.arraycopy(oldflags, 0, flags, 0, flags.length);
+		// copy the identifier
+		identifier = chemObject.getID();
+	}	
 
 	/**
 	 *  Lazy creation of chemObjectListeners List.

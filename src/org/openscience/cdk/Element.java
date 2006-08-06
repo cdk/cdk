@@ -73,6 +73,19 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     }
 
     /**
+     * Constructs an empty by copying the symbol, atomic number,
+     * flags, and identifier from the given IElement. It does
+     * not copy the listeners and properties.
+     * 
+     * @param element IElement to copy information from
+     */
+    public Element(IElement element) {
+    	super(element);
+    	this.symbol = element.getSymbol();
+    	this.atomicNumber = element.getAtomicNumber();
+    }
+    
+    /**
      * Constructs an Element with a given 
      * element symbol.
      *

@@ -30,6 +30,7 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
@@ -131,6 +132,24 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 		this.massNumber = massNumber;
 	}
 
+	/**
+     * Constructs an empty by copying the symbol, atomic number,
+     * flags, and identifier from the given IElement. It does
+     * not copy the listeners and properties. If the element is
+     * an instanceof IIsotope, then the exact mass, natural
+     * abundance and mass number are copied too.
+	 * 
+	 * @param element IElement to copy information from
+	 */
+	public Isotope(IElement element) {
+		super(element);
+		if (element instanceof IIsotope) {
+			this.exactMass = ((IIsotope)element).getExactMass();
+			this.naturalAbundance = ((IIsotope)element).getNaturalAbundance();
+			this.massNumber = ((IIsotope)element).getMassNumber();
+		}
+	}
+	
 	/**
 	 *  Sets the NaturalAbundance attribute of the Isotope object.
 	 *
