@@ -34,8 +34,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Represents the idea of an chemical atom.
@@ -161,22 +161,22 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
     	 * and covalent radii, formal charge, hybridization, electron
     	 * valency, formal neighbour count and atom type name from the 
     	 * given IAtomType. It does not copy the listeners and
-    	 * properties. If the isotope is an instanceof
+    	 * properties. If the element is an instanceof
     	 * IAtom, then the 2D, 3D and fractional coordinates, partial
     	 * atomic charge, hydrogen count and stereo parity are copied
     	 * too.
     	 * 
-    	 * @param atomType IAtomType to copy information from
+    	 * @param element IAtomType to copy information from
     	 */
-    	public Atom(IAtomType atomType) {
-    		super(atomType);
-    		if (atomType instanceof IAtom) {
-    			this.point2d = new Point2d(((IAtom)atomType).getPoint2d());
-    			this.point3d = new Point3d(((IAtom)atomType).getPoint3d());
-    			this.fractionalPoint3d = new Point3d(((IAtom)atomType).getFractionalPoint3d());
-    			this.hydrogenCount = ((IAtom)atomType).getHydrogenCount();
-    			this.charge = ((IAtom)atomType).getCharge();
-    			this.stereoParity = ((IAtom)atomType).getStereoParity();
+    	public Atom(IElement element) {
+    		super(element);
+    		if (element instanceof IAtom) {
+    			this.point2d = new Point2d(((IAtom)element).getPoint2d());
+    			this.point3d = new Point3d(((IAtom)element).getPoint3d());
+    			this.fractionalPoint3d = new Point3d(((IAtom)element).getFractionalPoint3d());
+    			this.hydrogenCount = ((IAtom)element).getHydrogenCount();
+    			this.charge = ((IAtom)element).getCharge();
+    			this.stereoParity = ((IAtom)element).getStereoParity();
     		}
     	}
 

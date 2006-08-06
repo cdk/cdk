@@ -28,7 +28,7 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
@@ -88,13 +88,13 @@ public class PseudoAtom extends Atom
      *
      * @param   atom  IAtom from which the PseudoAtom is constructed
      */
-    public PseudoAtom(IAtom atom) {
-        super(atom);
-        if (atom instanceof IPseudoAtom) {
-            this.label = ((IPseudoAtom)atom).getLabel();   	
+    public PseudoAtom(IElement element) {
+        super(element);
+        if (element instanceof IPseudoAtom) {
+            this.label = ((IPseudoAtom)element).getLabel();   	
         } else {
         	this.setSymbol("R");
-        	this.label = atom.getSymbol();
+        	this.label = element.getSymbol();
         }
     }
 

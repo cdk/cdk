@@ -31,7 +31,7 @@ package org.openscience.cdk;
 import java.io.Serializable;
 
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -134,26 +134,26 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	 * Constructs an isotope by copying the symbol, atomic number,
 	 * flags, identifier, exact mass, natural abundance and mass 
 	 * number from the given IIsotope. It does not copy the
-	 * listeners and properties. If the isotope is an instanceof
+	 * listeners and properties. If the element is an instanceof
 	 * IAtomType, then the maximum bond order, bond order sum,
 	 * vanderwaals and covalent radii, formal charge, hybridization,
 	 * electron valency, formal neighbour count and atom type name
 	 * are copied too.
 	 * 
-	 * @param isotope IIsotope to copy information from
+	 * @param element IIsotope to copy information from
 	 */
-	public AtomType(IIsotope isotope) {
-		super(isotope);
-		if (isotope instanceof IAtomType) {
-			this.maxBondOrder = ((IAtomType)isotope).getMaxBondOrder();
-			this.bondOrderSum = ((IAtomType)isotope).getBondOrderSum();
-			this.vanderwaalsRadius = ((IAtomType)isotope).getVanderwaalsRadius();
-			this.covalentRadius = ((IAtomType)isotope).getCovalentRadius();
-			this.formalCharge = ((IAtomType)isotope).getFormalCharge();
-			this.hybridization = ((IAtomType)isotope).getHybridization();
-			this.electronValency = ((IAtomType)isotope).getValency();
-			this.formalNeighbourCount = ((IAtomType)isotope).getFormalNeighbourCount();
-			this.identifier = ((IAtomType)isotope).getAtomTypeName();
+	public AtomType(IElement element) {
+		super(element);
+		if (element instanceof IAtomType) {
+			this.maxBondOrder = ((IAtomType)element).getMaxBondOrder();
+			this.bondOrderSum = ((IAtomType)element).getBondOrderSum();
+			this.vanderwaalsRadius = ((IAtomType)element).getVanderwaalsRadius();
+			this.covalentRadius = ((IAtomType)element).getCovalentRadius();
+			this.formalCharge = ((IAtomType)element).getFormalCharge();
+			this.hybridization = ((IAtomType)element).getHybridization();
+			this.electronValency = ((IAtomType)element).getValency();
+			this.formalNeighbourCount = ((IAtomType)element).getFormalNeighbourCount();
+			this.identifier = ((IAtomType)element).getAtomTypeName();
 		}
 	}
 
