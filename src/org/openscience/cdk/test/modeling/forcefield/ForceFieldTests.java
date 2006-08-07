@@ -131,7 +131,7 @@ public class ForceFieldTests extends CDKTestCase {
 	 */
 	public void testGetMMFF94EnergyOfAMolecule() {
 		
-		double testResult_mmff94Energy = 34.02087874256057; //(ethane)
+		double testResult_mmff94Energy = 9949.379126095528; //(ethane)
 		
 		//System.out.println("");
 		//System.out.println("FORCEFIELDTESTS Get MMFF94 energy of a molecule (ethane)");
@@ -140,7 +140,7 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		try {
 
-			String localInput = "src/data/mdl/Ethane-TestFF-output";
+			String localInput = "src/data/mdl/butanoic_acid";
 			FileReader fileReader = new FileReader(localInput + ".mol");
 			MDLReader mdlReader = new MDLReader(fileReader);
 			molecule = (Molecule)mdlReader.read(new org.openscience.cdk.Molecule());
@@ -1108,7 +1108,7 @@ public class ForceFieldTests extends CDKTestCase {
         //logger.debug("Molecule: ", molecule);
 
         try {
-        	FileWriter fileWriter = new FileWriter("src/" + input + "-output.mol");
+        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
         	//stringWriter.write(input + "-output.mol");
         	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
@@ -1241,7 +1241,7 @@ public class ForceFieldTests extends CDKTestCase {
 
         try {
         	// Please don't write a file in the test cases.
-        	FileWriter fileWriter = new FileWriter("src/" + input + "-output.mol");
+        	FileWriter fileWriter = new FileWriter(input + "-output.mol");
         	//stringWriter.write(input + "-output.mol");
         	MDLWriter mdlWriter = new MDLWriter(fileWriter);
     		mdlWriter.write(molecule);
