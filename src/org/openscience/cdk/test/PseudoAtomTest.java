@@ -155,9 +155,9 @@ public class PseudoAtomTest extends CDKTestCase {
         atom.setPoint2d(twoD);
         
         IPseudoAtom a = builder.newPseudoAtom(atom);
-        assertEquals(fract, a.getFractionalPoint3d());
-        assertEquals(threeD, a.getPoint3d());
-        assertEquals(twoD, a.getPoint2d());
+        assertEquals(fract, a.getFractionalPoint3d(), 0.0001);
+        assertEquals(threeD, a.getPoint3d(), 0.0001);
+        assertEquals(twoD, a.getPoint2d(), 0.0001);
     }
 
     /**
