@@ -28,10 +28,10 @@ import java.util.Hashtable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -50,10 +50,12 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 	
 	public DebugPseudoAtom() {
 		super();
+		logger.debug("Instantiated a DebugAtom");
 	}
 	
-	public DebugPseudoAtom(IAtom atom) {
-		super(atom);
+	public DebugPseudoAtom(IElement element) {
+		super(element);
+		logger.debug("Instantiated a DebugAtom: element= ", element);
 	}
 
 	public DebugPseudoAtom(String symbol) {
