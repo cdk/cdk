@@ -171,9 +171,21 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
     	public Atom(IElement element) {
     		super(element);
     		if (element instanceof IAtom) {
-    			this.point2d = new Point2d(((IAtom)element).getPoint2d());
-    			this.point3d = new Point3d(((IAtom)element).getPoint3d());
-    			this.fractionalPoint3d = new Point3d(((IAtom)element).getFractionalPoint3d());
+    			if (((IAtom)element).getPoint2d() != null) {
+    				this.point2d = new Point2d(((IAtom)element).getPoint2d());
+                } else {
+                    this.point2d = null;
+                }
+                if (((IAtom)element).getPoint3d() != null) {
+                    this.point3d = new Point3d(((IAtom)element).getPoint3d());
+                } else {
+                    this.point3d = null;
+                }
+                if (((IAtom)element).getFractionalPoint3d() != null) {
+                    this.fractionalPoint3d = new Point3d(((IAtom)element).getFractionalPoint3d());
+                } else {
+                    this.fractionalPoint3d = null;
+                }
     			this.hydrogenCount = ((IAtom)element).getHydrogenCount();
     			this.charge = ((IAtom)element).getCharge();
     			this.stereoParity = ((IAtom)element).getStereoParity();
