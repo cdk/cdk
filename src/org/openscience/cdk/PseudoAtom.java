@@ -93,7 +93,7 @@ public class PseudoAtom extends Atom
         if (element instanceof IPseudoAtom) {
             this.label = ((IPseudoAtom)element).getLabel();   	
         } else {
-        	this.setSymbol("R");
+        	super.symbol = "R";
         	this.label = element.getSymbol();
         }
     }
