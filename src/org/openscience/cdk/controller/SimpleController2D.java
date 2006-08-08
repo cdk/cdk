@@ -29,6 +29,8 @@
  */
 package org.openscience.cdk.controller;
 
+import java.awt.event.MouseEvent;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
@@ -47,20 +49,30 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 public class SimpleController2D extends AbstractController2D
 {
 		
+	
+	public void mousePressed(MouseEvent event) {
+		super.mousePressed(event);
+	}
+
+	
+	public void mouseReleased(MouseEvent event) {
+		super.mouseReleased(event);
+	}
+
 	public final static String MATCHING_ATOMCONTAINER = "Matching IAtomContainer";
 	 
-	SimpleController2D()
+	public SimpleController2D()
 	{
 		super();
 
 	}
 
-	SimpleController2D(Controller2DModel c2dm)
+	public SimpleController2D(Controller2DModel c2dm)
 	{
 		super(c2dm);
 	}
 
-	SimpleController2D(Renderer2DModel r2dm, Controller2DModel c2dm)
+	public SimpleController2D(Renderer2DModel r2dm, Controller2DModel c2dm)
 	{
 		super(r2dm, c2dm);
 	}
