@@ -18,7 +18,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
