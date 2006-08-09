@@ -128,6 +128,12 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
+  <atomType id="F+">
+    <atom elementType="F" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
+    </atom>
+  </atomType>
   <atomType id="Cl">
     <atom elementType="Cl" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
@@ -138,6 +144,12 @@
     <atom elementType="Cl" formalCharge="-1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="Cl+">
+    <atom elementType="Cl" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
     </atom>
   </atomType>
   <atomType id="Br">
@@ -152,6 +164,12 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
+  <atomType id="Br+">
+    <atom elementType="Br" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
+    </atom>
+  </atomType>
   <atomType id="I">
     <atom elementType="I" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
@@ -162,6 +180,12 @@
     <atom elementType="I" formalCharge="-1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="I+">
+    <atom elementType="I" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
     </atom>
   </atomType>
   <atomType id="Si">
