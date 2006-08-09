@@ -94,29 +94,35 @@ public class LonePairElectronChecker {
 	 * @return       True, if it's right satured
 	 */
 	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
-
+		
 		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
         double bondOrderSum = ac.getBondOrderSum(atom);
 		int charge = atom.getFormalCharge();
 		int hcount = atom.getHydrogenCount();
+		if(hcount == 0){
+			IAtom[] atomsC = ac.getConnectedAtoms(atom);
+			for(int i = 0 ; i < atomsC.length ; i++)
+				if(atomsC[i].getSymbol().equals("H"))
+					hcount++;
+			bondOrderSum -= hcount;
+		}
 		int valency = atomType.getValency();
 		
 		double nLonePair = (valency - (hcount + bondOrderSum) - charge) / 2;
-        
         try {
-            logger.debug("*** Checking saturation of atom ", atom.getSymbol(), "" + ac.getAtomNumber(atom) + " ***");
-            logger.debug("bondOrderSum: " + bondOrderSum);
-            logger.debug("valency: " + valency);
-            logger.debug("hcount: " + hcount);
-            logger.debug("cahrge: " + charge);
+        	logger.info("*** Checking saturation of atom "+ atom.getSymbol()+ "" + ac.getAtomNumber(atom) + " ***");
+            logger.info("bondOrderSum: " + bondOrderSum);
+            logger.info("valency: " + valency);
+            logger.info("hcount: " + hcount);
+            logger.info("cahrge: " + charge);
         } catch (Exception exc) {
             logger.debug(exc);
         }
         if((double)ac.getLonePairs(atom).length != nLonePair){
-            logger.debug("*** Bad ! ***");
+        	logger.info("*** Bad ! ***");
         	return false;
         }else{
-            logger.debug("*** Good ! ***");
+        	logger.info("*** Good ! ***");
             return true;
         }
     }
@@ -146,10 +152,17 @@ public class LonePairElectronChecker {
             double bondOrderSum = ac.getBondOrderSum(atom);
     		int charge = atom.getFormalCharge();
     		int hcount = atom.getHydrogenCount();
+    		if(hcount == 0){
+    			IAtom[] atomsC = ac.getConnectedAtoms(atom);
+    			for(int i = 0 ; i < atomsC.length ; i++)
+    				if(atomsC[i].getSymbol().equals("H"))
+    					hcount++;
+    			bondOrderSum -= hcount;
+    		}
     		int valency = atomType.getValency();
     		
     		double nLonePair = (valency - (hcount + bondOrderSum) - charge) / 2;
-            ILonePair lp = atom.getBuilder().newLonePair(atom);
+    		ILonePair lp = atom.getBuilder().newLonePair(atom);
 			for (int j = 0; j < nLonePair - nLonePairI; j++)
 			{
 				ac.addElectronContainer(lp);

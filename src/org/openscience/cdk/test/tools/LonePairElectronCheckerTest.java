@@ -8,6 +8,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
@@ -131,7 +132,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 	 *  A unit test for JUnit
 	 */
 	public void testNewSaturate_Methyl_alcohol() throws CDKException {
-		// test Methyl alcohol, CH3OH
+		// test Methyl chloride, CH3OH
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
 		Atom o = new Atom("O");
@@ -144,9 +145,29 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(b1);
 		
 		lpcheck.newSaturate(m);
-		
 		assertEquals(2, m.getLonePairCount(o));
 		assertEquals(0, m.getLonePairCount(c1));
+	}
+	/**
+	 *  A unit test for JUnit
+	 */
+	public void testNewSaturate_Methyl_alcohol_AddH() throws CDKException {
+		// test Methyl alcohol, CH3OH
+		Molecule m = new Molecule();
+		m.addAtom(new Atom("C"));
+		m.addAtom(new Atom("O"));
+		for(int i = 0 ; i < 4 ; i++)
+			m.addAtom(new Atom("H"));
+		
+		m.addBond(0,1,1);
+		m.addBond(0,2,1);
+		m.addBond(0,3,1);
+		m.addBond(0,4,1);
+		m.addBond(1,5,1);
+		lpcheck.newSaturate(m);
+		
+		assertEquals(2, m.getLonePairCount(m.getAtom(1)));
+		assertEquals(0, m.getLonePairCount(m.getAtom(0)));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -224,5 +245,18 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		lpcheck.newSaturate(m);
 		
 		assertEquals(0, m.getLonePairCount(n));
+	}
+	/**
+	 *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
+	 */
+	public void testNewSaturate_withHAdded() throws CDKException {
+		// O=C([H])[C+]([H])[C-]([H])[H]
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+		lpcheck.newSaturate(mol);
+		
+		assertEquals(2, mol.getLonePairCount(mol.getAtom(0)));
+		assertEquals(0, mol.getLonePairCount(mol.getAtom(3)));
+		assertEquals(1, mol.getLonePairCount(mol.getAtom(5)));
 	}
 }
