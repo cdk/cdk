@@ -28,7 +28,10 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
  * <p>Make sure that the molecule has the corresponend lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
+ * <p>It is needed to call the addExplicitHydrogensToSatisfyValency
+ *  from the class tools.HydrogenAdder.</p>
  * <p>It is based on rearrengements of electrons and charge</p>
+ * <p>The method is based on call by reactions which occur in a resonance.</p>
  * 
  * <pre>
  * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
@@ -74,7 +77,7 @@ public class StructureResonanceGenerator {
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
-	 * Default: all possible search (Radical,Cation,Anion,Bond,hyperconjugation), not specified the active center
+	 * Default search: (Radical,Cation,Anion,Bond,hyperconjugation)
 	 */
 	public StructureResonanceGenerator(){
 		this(true,true,true,true,false,false);
@@ -87,7 +90,7 @@ public class StructureResonanceGenerator {
 	 * @param radicalR          True, search of Radical.
 	 * @param bondR             True, search of Bond.
 	 * @param hyperconjugationR True, search of hyperconjugation.
-	 * @param hasActiveCenter  False, search of active Center.
+	 * @param hasActiveCenter   True, search of active Center.
 	 */
 	public StructureResonanceGenerator(
 			boolean cationR,
@@ -368,6 +371,7 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
+//		System.out.println("smiles: "+(new SmilesGenerator(set.getBuilder())).createSMILES((IMolecule) atomContainer));
 		atomContainer = setID(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ac = setID(set.getAtomContainer(i));

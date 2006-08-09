@@ -18,6 +18,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.RearrangementAnion2Reaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -203,11 +204,11 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(2, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        
+
         /*[F+]=C1-[C=]-C-[C-]-C=C1*/
         Molecule molecule2 = (new SmilesParser()).parseSmiles("[F+]=C1-C=C-[C-]-C=C1");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);

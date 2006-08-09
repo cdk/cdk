@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -53,9 +54,16 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 		
 		/*[C+]CC*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]CC");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
-        setOfReactants.addMolecule(molecule);
+		for(int i = 0; i < 7 ; i++)
+			molecule.addAtom(new Atom("H"));
+	    molecule.addBond(0, 3, 1);
+	    molecule.addBond(0, 4, 1);
+	    molecule.addBond(1, 5, 1);
+	    molecule.addBond(1, 6, 1);
+	    molecule.addBond(2, 7, 1);
+	    molecule.addBond(2, 8, 1);
+	    molecule.addBond(2, 9, 1);
+		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
         Object[] params = {Boolean.FALSE};
@@ -70,17 +78,15 @@ public class HyperconjugationReactionTest extends CDKTestCase {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*C=CC*/
 		Molecule molecule2 = (new SmilesParser()).parseSmiles("C=CC");
-	    adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
-        
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(molecule2);
+		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         /*[H+]*/
 		molecule2 = (new SmilesParser()).parseSmiles("[H+]");
-	    adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
         
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

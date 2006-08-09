@@ -177,7 +177,7 @@ public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.005);
+			assertEquals(testResult[i],result,0.01);
 		}
 	}
 }

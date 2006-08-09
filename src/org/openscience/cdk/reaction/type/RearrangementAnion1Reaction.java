@@ -106,6 +106,8 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -140,7 +142,7 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER) && atoms[i].getFormalCharge() == -1
-					&& reactant.getLonePairCount(atoms[i])  > 1  ){
+					&& reactant.getLonePairCount(atoms[i])  > 0  ){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				
@@ -211,7 +213,7 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IAtom[] atoms = reactant.getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++)
-			if(atoms[i].getFormalCharge() == -1 && reactant.getLonePairCount(atoms[i]) > 1 ){
+			if(atoms[i].getFormalCharge() == -1 && reactant.getLonePairCount(atoms[i]) > 0 ){
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				for(int j = 0 ; j < bonds.length ; j++){
 					if(bonds[j].getOrder() == 1.0){

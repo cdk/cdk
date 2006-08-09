@@ -1,24 +1,30 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ValencyChecker;
 
 /**
  * <p>IReactionProcess which a bond that is being broken to generate charges. 
@@ -26,7 +32,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * each bond is investigated twice:</p>
  * <pre>A-B => [A+] + |[B-]</pre>
  * <pre>A-B => [A-] + |[B+]</pre>
- * 
+ * <pre> It will not be created structures no possible, for example; C=O => [C-][O+].
  * <pre>
  *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
  *  setOfReactants.addMolecule(new Molecule());
@@ -54,6 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class BreakingBondReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private ValencyChecker valChecker;
 
 	/**
 	 * Constructor of the BreakingBondReaction object
@@ -61,6 +68,13 @@ public class BreakingBondReaction implements IReactionProcess{
 	 */
 	public BreakingBondReaction(){
 		logger = new LoggingTool(this);
+		try{
+			valChecker = new ValencyChecker();
+		}catch(IOException e){
+			e.printStackTrace();
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
 	}
 	/**
 	 *  Gets the specification attribute of the BreakingBondReaction object
@@ -106,6 +120,8 @@ public class BreakingBondReaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -130,18 +146,16 @@ public class BreakingBondReaction implements IReactionProcess{
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
 		}
-		
+		IAtomContainerSet acSet = reactant.getBuilder().newAtomContainerSet();
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
-				
-				
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[0]);
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[1]);
 				int bond =  reactants.getMolecule(0).getBondNumber(bonds[i]);
+				
 				/**/
-				for (int j = 0; j < 2; j++)
-				{
+				for (int j = 0; j < 2; j++){
 					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 					reaction.addReactant(reactants.getMolecule(0));
 					
@@ -164,7 +178,10 @@ public class BreakingBondReaction implements IReactionProcess{
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom2)));
-						if(order == 1)
+						/* an acceptor atom cannot be charged positive*/
+						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
+							continue;
+						if(order == 1)/*break molecule*/
 							setOfMolecules = fragmentMolecule(reactantCloned,bond);
 						
 					} else{
@@ -173,8 +190,11 @@ public class BreakingBondReaction implements IReactionProcess{
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom1)));
-						if(order == 1)
-							setOfMolecules = fragmentMolecule(reactantCloned,bond);
+						/* an acceptor atom cannot be charged positive*/
+						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
+							continue;
+						if(order == 1)/*break molecule*/
+							setOfMolecules = fragmentMolecule(reactantCloned,bond);// TODO- better method
 					}
 					
 					/* mapping */
@@ -186,19 +206,45 @@ public class BreakingBondReaction implements IReactionProcess{
 			        reaction.addMapping(mapping);
 					
 					if(setOfMolecules != null)
-						for(int z = 0 ; z < setOfMolecules.getAtomContainerCount(); z++)
-							reaction.addProduct(setOfMolecules.getMolecule(z));
+						for(int z = 0 ; z < setOfMolecules.getAtomContainerCount(); z++){
+							IMolecule ac = setOfMolecules.getMolecule(z);
+					        /* the fragmentation of Hydrogens can be produc duplicates*/
+							if(existAC(acSet,ac))
+								continue;
+							reaction.addProduct(ac);
+							acSet.addAtomContainer(ac);
+						}
 					else
 						reaction.addProduct(reactantCloned);
-					setOfReactions.addReaction(reaction);
+					
+					/*adding only that contains product*/
+					if(reaction.getProductCount() != 0)
+						setOfReactions.addReaction(reaction);
 				}
 			}
 				
 		}
 		
 		return setOfReactions;	
-		
-		
+	}
+	/**
+	 * controll if the new product was already found before
+	 * @param acSet 
+	 * @param fragment
+	 * @return True, if it contains
+	 */
+	private boolean existAC(IAtomContainerSet acSet, IMolecule fragment) {
+		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(fragment);
+		for(int i = 0; i < acSet.getAtomContainerCount(); i++){
+			IAtomContainer ac = acSet.getAtomContainer(i);
+			try {
+				if(UniversalIsomorphismTester.isIsomorph(ac, qAC))
+					return true;
+			} catch (CDKException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 	/**
 	 * fragment a molecule in two. It search where don't exist a connection between two atoms
@@ -207,7 +253,7 @@ public class BreakingBondReaction implements IReactionProcess{
 	 * @return               The ISetOfMolecules
 	 */
 	private IMoleculeSet fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
-		if(!GeometryTools.has2DCoordinates(molecule)){
+//		if(!GeometryTools.has2DCoordinates(molecule)){
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			sdg.setMolecule(molecule);
 			molecule = sdg.getMolecule();
@@ -216,7 +262,7 @@ public class BreakingBondReaction implements IReactionProcess{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+//		}
 		IMoleculeSet setOfFragments = molecule.getBuilder().newMoleculeSet();
 		IMolecule molecule1,molecule2;
 		try {
@@ -282,7 +328,8 @@ public class BreakingBondReaction implements IReactionProcess{
 	}
 	/**
 	 * set the active center for this molecule. 
-	 * The active center will be those which correspond with A-B. 
+	 * The active center will be those which correspond with A-B. If
+	 * the bond is simple, it will be breaked forming two fragments 
 	 * <pre>
 	 * A: Atom
 	 * #/=/-: bond
@@ -301,7 +348,6 @@ public class BreakingBondReaction implements IReactionProcess{
 			atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 		}
-			
 	}
 	/**
 	 *  Gets the parameterNames attribute of the BreakingBondReaction object

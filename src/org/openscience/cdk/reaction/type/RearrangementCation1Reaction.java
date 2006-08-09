@@ -107,6 +107,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).

@@ -103,6 +103,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -137,8 +139,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& atoms[i].getFormalCharge() == -1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
+				
 				
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				
@@ -147,7 +148,9 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() == 0){
+							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() >= 0){
+								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+								reaction.addReactant(reactant);
 								/* positions atoms and bonds */
 								int atom0P = reactant.getAtomNumber(atoms[i]);
 								int bond1P = reactant.getBondNumber(bonds[j]);
@@ -225,7 +228,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 							continue;
 						IBond[] bondsI = reactant.getConnectedBonds(atom);
 						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() == 0){
+							if(bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() >= 0){
 								atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								bondsI[k].getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);

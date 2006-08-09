@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -59,7 +60,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -78,9 +79,14 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         
         /*[O+]=C-[C+]*/
 		Molecule molecule2 = (new SmilesParser()).parseSmiles("[O+]=C-[C-]");
-	    adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
-        lpcheck.newSaturate(molecule2);
+		for(int i = 0; i < 4; i++)
+			molecule2.addAtom(new Atom("H"));
+		molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(1, 4, 1);
+	    molecule2.addBond(2, 5, 1);
+	    molecule2.addBond(2, 6, 1);
+	    
+	    lpcheck.newSaturate(molecule2);
 		setOfReactants.addMolecule(molecule2);
 		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
@@ -97,7 +103,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -117,8 +123,6 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
-
-        
         		
 	}
 	/**
@@ -132,7 +136,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -163,10 +167,10 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	 */
 	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-		/*O-C=C*/
+		/*C=N-C=C*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=N-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);

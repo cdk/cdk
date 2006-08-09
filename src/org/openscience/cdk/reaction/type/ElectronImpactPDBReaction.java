@@ -99,6 +99,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -126,12 +128,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2){
-				
-				
-				
 				/**/
-				for (int j = 0; j < 2; j++)
-				{
+				for (int j = 0; j < 2; j++){
 					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 					reaction.addReactant(reactants.getMolecule(0));
 					IMolecule reactant = reaction.getReactants().getMolecule(0);
@@ -149,13 +147,11 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					double order = reactantCloned.getBond(posB1).getOrder();
 					reactantCloned.getBond(posB1).setOrder(order - 1);
 					
-					if (j == 0)
-					{
+					if (j == 0){
 						reactantCloned.getAtom(posA1).setFormalCharge(1);
 						reactantCloned.addElectronContainer(
 								new SingleElectron(reactantCloned.getAtom(posA2)));
-					} else
-					{
+					} else{
 						reactantCloned.getAtom(posA2).setFormalCharge(1);
 						reactantCloned.addElectronContainer(
 								new SingleElectron(reactantCloned.getAtom(posA1)));

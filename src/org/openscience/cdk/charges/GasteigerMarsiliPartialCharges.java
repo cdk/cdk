@@ -101,13 +101,13 @@ public class GasteigerMarsiliPartialCharges {
 	 *@exception  Exception  Possible Exceptions
 	 */
 	public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-		if (setCharge) {
-			atomTypeCharges.setCharges(ac);
-		}
+
+//		if (setCharge) {
+//			atomTypeCharges.setCharges(ac); // not necessary initial charge
+//		}
 		/*add the initial charge to 0. According results of Gasteiger*/
 		for(int i = 0; i < ac.getAtomCount(); i++)
 			ac.getAtom(i).setCharge(0.0);
-		
 		double[] gasteigerFactors = assignGasteigerSigmaMarsiliFactors(ac);//a,b,c,deoc,chi,q
 		double alpha = 1.0;
 		double q;
@@ -217,13 +217,14 @@ public class GasteigerMarsiliPartialCharges {
 					factors[1] = 9.45;/*9.45*/
 					factors[2] = 0.73;
 				}
-			} else if ((AtomSymbol.equals("N"))&&
-					(ac.getAtom(i).getFormalCharge() != -1)) {
-				if (ac.getMaximumBondOrder(ac.getAtom(i)) == 1) {
+			} else if(AtomSymbol.equals("N")){
+				if((ac.getMaximumBondOrder(ac.getAtom(i)) == 1) &&
+				(ac.getAtom(i).getFormalCharge() != -1)) {
 					factors[0] = 11.54;
 					factors[1] = 10.82;
 					factors[2] = 1.36;
-				} else if (ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) {
+				} else if ((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3) 
+						||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)) {
 					factors[0] = 12.87;
 					factors[1] = 11.15;
 					factors[2] = 0.85;

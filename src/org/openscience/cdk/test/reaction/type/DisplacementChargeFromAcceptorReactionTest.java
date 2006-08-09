@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -59,7 +60,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -78,9 +79,12 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
         
         /*[C+]-[O-]*/
 		Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]-[O-]");
-	    adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
-        lpcheck.newSaturate(molecule2);
+		molecule2.addAtom(new Atom("H"));
+	    molecule2.addAtom(new Atom("H"));
+	    molecule2.addBond(0, 2, 1);
+	    molecule2.addBond(0, 3, 1);
+        
+		lpcheck.newSaturate(molecule2);
 		setOfReactants.addMolecule(molecule2);
 		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
@@ -97,7 +101,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -115,9 +119,6 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
-
-        
-        		
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: C=O => [C+]-[O-]
@@ -130,7 +131,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -154,7 +155,6 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: N=CC => [N-]-[C+]C
-	 * Test of mapped between the reactant and product. Only is mapped the centre active.
 	 *
 	 * @return    The test suite
 	 */
@@ -163,7 +163,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		Molecule molecule = (new SmilesParser()).parseSmiles("N=CC");
 	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -176,18 +176,21 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-
+        
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         /*[N-]-[C+]C*/
 		Molecule molecule2 = (new SmilesParser()).parseSmiles("[N-]-[C+]C");
-	    adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
-        lpcheck.newSaturate(molecule2);
-		setOfReactants.addMolecule(molecule2);
-		
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+		for(int i = 0; i < 5; i++)
+			molecule2.addAtom(new Atom("H"));
+	    molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(1, 4, 1);
+	    molecule2.addBond(2, 5, 1);
+	    molecule2.addBond(2, 6, 1);
+	    molecule2.addBond(2, 7, 1);
+        
+		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 	}
 

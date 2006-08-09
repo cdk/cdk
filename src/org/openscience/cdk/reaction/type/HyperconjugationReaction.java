@@ -5,14 +5,20 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -103,6 +109,8 @@ public class HyperconjugationReaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -127,68 +135,69 @@ public class HyperconjugationReaction implements IReactionProcess{
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
 		}
+		IAtomContainerSet acSet = reactant.getBuilder().newAtomContainerSet();
 		
-		IBond[] bonds = reactants.getMolecule(0).getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
-			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
+		IAtom[] atoms = reactant.getAtoms();
+		for(int i = 0 ; i < atoms.length ; i++)
+		if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& atoms[i].getFormalCharge() == 1&& !(atoms[i].getSymbol().equals("H"))){
+			IAtom[] atoms1 = reactant.getConnectedAtoms(atoms[i]);
+			for(int j = 0; j < atoms1.length; j++)
+			if(atoms1[j].getFlag(CDKConstants.REACTIVE_CENTER)&& !(atoms1[j].getSymbol().equals("H"))){
+				IBond bond = reactant.getBond(atoms[i], atoms1[j]);
+				if(bond.getOrder() == 1)
+				if(bond.getFlag(CDKConstants.REACTIVE_CENTER)){
+					IAtom[] atoms2 = reactant.getConnectedAtoms(atoms1[j]);
+					for(int k = 0; k < atoms2.length ; k++){
+						if(atoms2[k].getSymbol().equals("H")){
 				
-				int atom1;
-				int atom2;
-				if(bonds[i].getAtoms()[0].getFormalCharge() == 1){
-					atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[0]);
-					atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[1]);
-				}else{
-					atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[0]);
-					atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[1]);
-				}
-					
-				int bond =  reactants.getMolecule(0).getBondNumber(bonds[i]);
+							int atom1 = reactants.getMolecule(0).getAtomNumber(atoms[i]);
+							int atom2 = reactants.getMolecule(0).getAtomNumber(atoms1[j]);
+							int atomH = reactants.getMolecule(0).getAtomNumber(atoms2[k]);
+							int bond1 =  reactants.getMolecule(0).getBondNumber(bond);
 
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactants.getMolecule(0));
-					
-				IMolecule reactantCloned;
-				try {
-					reactantCloned = (IMolecule) reactant.clone();
-				} catch (CloneNotSupportedException e) {
-					throw new CDKException("Could not clone IMolecule!", e);
+							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+							reaction.addReactant(reactants.getMolecule(0));
+								
+							IMolecule reactantCloned;
+							try {
+								reactantCloned = (IMolecule) reactant.clone();
+							} catch (CloneNotSupportedException e) {
+								throw new CDKException("Could not clone IMolecule!", e);
+							}
+								
+							double order = reactantCloned.getBond(bond1).getOrder();
+							reactantCloned.getBond(bond1).setOrder(order + 1);
+							
+							int charge = reactantCloned.getAtom(atom1).getFormalCharge();
+							reactantCloned.getAtom(atom1).setFormalCharge(charge-1);
+							
+							reactantCloned.removeAtomAndConnectedElectronContainers(reactantCloned.getAtom(atomH));
+							
+							
+							/* mapping */
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, reactantCloned.getBond(bond1));
+					        reaction.addMapping(mapping);
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtom(atom1));
+					        reaction.addMapping(mapping);
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms2[j], reactantCloned.getAtom(atom2));
+					        reaction.addMapping(mapping);
+								
+					        if(existAC(acSet,reactantCloned))
+								continue;
+					        acSet.addAtomContainer(reactantCloned);
+					        
+							reaction.addProduct(reactantCloned);
+							
+							IAtom hydrogen = reactants.getBuilder().newAtom("H");
+							hydrogen.setFormalCharge(1);
+							IMolecule proton = reactants.getBuilder().newMolecule();
+							proton.addAtom(hydrogen);
+							reaction.addProduct(proton);
+			
+							setOfReactions.addReaction(reaction);
+						}
+					}
 				}
-					
-				double order = reactantCloned.getBond(bond).getOrder();
-				reactantCloned.getBond(bond).setOrder(order + 1);
-				
-				int charge = reactantCloned.getAtom(atom1).getFormalCharge();
-				reactantCloned.getAtom(atom1).setFormalCharge(charge-1);
-				
-				int numbH = reactantCloned.getAtom(atom2).getHydrogenCount();
-				if(numbH != 0)
-					reactantCloned.getAtom(atom2).setHydrogenCount(numbH-1);
-				else{
-					IAtom hyd = getHydrogenConnected(reactantCloned,reactantCloned.getAtom(atom2));
-					if(hyd == null)
-						continue;
-					reactantCloned.removeAtomAndConnectedElectronContainers(hyd);
-				}
-				
-				
-				/* mapping */
-				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
-		        reaction.addMapping(mapping);
-		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(atom1));
-		        reaction.addMapping(mapping);
-		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(atom2));
-		        reaction.addMapping(mapping);
-					
-					
-				reaction.addProduct(reactantCloned);
-				
-				IAtom hydrogen = reactants.getBuilder().newAtom("H");
-				hydrogen.setFormalCharge(1);
-				IMolecule proton = reactants.getBuilder().newMolecule();
-				proton.addAtom(hydrogen);
-				reaction.addProduct(proton);
-
-				setOfReactions.addReaction(reaction);
 			}
 				
 		}
@@ -199,7 +208,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 	}
 	/**
 	 * set the active center for this molecule. 
-	 * The active center will be those which correspond with [A+]-B. 
+	 * The active center will be those which correspond with [A+]-B([H]). 
 	 * <pre>
 	 * A: Atom with charge
 	 * -: Singlebond
@@ -210,36 +219,45 @@ public class HyperconjugationReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IBond[] bonds = reactant.getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
-			IAtom atom1 = bonds[i].getAtoms()[0];
-			IAtom atom2 = bonds[i].getAtoms()[1];
-			if(bonds[i].getOrder() == 1 &&
-					((atom1.getFormalCharge() == 1 && atom2.getFormalCharge() == 0 && reactant.getSingleElectron(atom2).length == 0 && 
-							(atom2.getHydrogenCount() != 0 || getHydrogenConnected(reactant, atom2) != null))||
-					 (atom2.getFormalCharge() == 1 && atom1.getFormalCharge() == 0 && reactant.getSingleElectron(atom1).length == 0 && 
-							 (atom1.getHydrogenCount() != 0 || getHydrogenConnected(reactant, atom1) != null)))){
-						atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
-						atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
-						bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+		IAtom[] atoms = reactant.getAtoms();
+		for(int i = 0 ; i < atoms.length ; i++)
+			if(!atoms[i].getSymbol().equals("H")&& atoms[i].getFormalCharge() == 1){
+			IAtom[] atoms1 = reactant.getConnectedAtoms(atoms[i]);
+			for(int j = 0; j < atoms1.length; j++)
+				if(!atoms1[j].getSymbol().equals("H")){
+				IBond bond = reactant.getBond(atoms[i], atoms1[j]);
+				if(bond.getOrder() == 1){
+					IAtom[] atoms2 = reactant.getConnectedAtoms(atoms1[j]);
+					for(int k = 0; k < atoms2.length ; k++){
+						if(atoms2[k].getSymbol().equals("H")){
+							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							atoms1[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
+						}
+					}
+				}
+				
 			}
-			
 		}
 	}
 	/**
-	 * get the hydrogen atom which is connected for this atom
-	 * 
-	 * @param molecule
-	 * @param atom
-	 * @return The IAtom hydrogen.
+	 * controll if the new product was already found before
+	 * @param acSet 
+	 * @param fragment
+	 * @return True, if it contains
 	 */
-	private IAtom getHydrogenConnected(IMolecule molecule, IAtom atom){
-		IAtom[] atomsCo = molecule.getConnectedAtoms(atom);
-		IAtom  atomH = null;
-		for(int i = 0 ; i < atomsCo.length ; i++)
-			if(atomsCo[i].getSymbol().equals("H"))
-				return atomsCo[i];
-		return atomH;
+	private boolean existAC(IAtomContainerSet acSet, IMolecule fragment) {
+		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(fragment);
+		for(int i = 0; i < acSet.getAtomContainerCount(); i++){
+			IAtomContainer ac = acSet.getAtomContainer(i);
+			try {
+				if(UniversalIsomorphismTester.isIsomorph(ac, qAC))
+					return true;
+			} catch (CDKException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 	/**
 	 *  Gets the parameterNames attribute of the HyperconjugationReaction object

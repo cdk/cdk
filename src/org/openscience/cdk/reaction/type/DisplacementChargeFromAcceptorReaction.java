@@ -21,8 +21,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * <p>IReactionProcess which participate in movement resonance. 
  * This reaction could be represented as two forms</p>
- * <pre>X=A => [X-]-[A+]. X represents an acceptor atomType</pre>
- * 
+ * <pre>X=A => [X-]-[A+]. X represents an acceptor atomType. 
+ * It is a case specific of the method BreakingBondReaction</pre>
  * <pre>
  *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
  *  setOfReactants.addMolecule(new Molecule());
@@ -102,6 +102,8 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	
 	/**
 	 *  Initiate process.
+	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
+	 *  from the class tools.HydrogenAdder.
 	 *
 	 *@param  reactants         reactants of the reaction.
 	 *@param  agents            agents of the reaction (Must be in this case null).
@@ -194,7 +196,8 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	 * set the active center for this molecule. 
 	 * The active center will be those which correspond with A=B. 
 	 * <pre>
-	 * A: Atom with lone pair electrons
+	 * A: Atom with lone pair electrons // TODO- not only the atoms with 
+	 * lone electrons are acceptor atoms.
 	 * =: Double bond
 	 * B: Atom
 	 *  </pre>
