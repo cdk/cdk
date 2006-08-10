@@ -1,9 +1,34 @@
+/*  $Revision$ $Author$ $Date$    
+ *
+ *  Copyright (C) 1997-2006  The CDK project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.structgen.stochastic.operator;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.RandomNumbersTool;
 
 public class ChemGraph
@@ -18,9 +43,9 @@ public class ChemGraph
 	/*Flag: true if atom visited during a traversal*/
 	protected boolean[] visited;
 	/*Depth first traversal of the graph*/
-	protected Vector subGraph;
+	protected List subGraph;
 		
-	public ChemGraph(AtomContainer chrom)
+	public ChemGraph(IAtomContainer chrom)
 	{
 		dim = chrom.getAtomCount();
 		numAtoms = (int)(dim/2);
@@ -28,12 +53,12 @@ public class ChemGraph
 		contab = ConnectionMatrix.getMatrix(chrom);
 	}
 	
-	public Vector pickDFgraph()
+	public List pickDFgraph()
 	{
 		//depth first search from a randomly selected atom
 		
 		travIndex = 0;
-		subGraph = new Vector();		
+		subGraph = new ArrayList();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
@@ -52,7 +77,7 @@ public class ChemGraph
 			
 //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
 //				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
-            Vector adjSet = new Vector();
+            List adjSet = new ArrayList();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
 				if ((int)contab[atom][nextAtom] != 0)
@@ -64,23 +89,23 @@ public class ChemGraph
 			{
 				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
 				recursiveDFT(((Integer)adjSet.get(adjIndex)).intValue());
-				adjSet.removeElementAt(adjIndex);
+				adjSet.remove(adjIndex);
 			}
 			
 		}
 	}
 	
-	public Vector pickBFgraph()
+	public List pickBFgraph()
 	{
 		//breadth first search from a randomly selected atom
 		
 		travIndex = 0;
-		subGraph = new Vector();		
+		subGraph = new ArrayList();		
 		visited = new boolean[dim];			 		
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		
-		Vector atomQueue = new Vector();
+		List atomQueue = new ArrayList();
 		atomQueue.add(new Integer(seedAtom));
 		visited[seedAtom] = true;		
 		
@@ -88,10 +113,10 @@ public class ChemGraph
 		{
 			int foreAtom = ((Integer)atomQueue.get(0)).intValue();
 			subGraph.add(new Integer(foreAtom));
-			atomQueue.removeElementAt(0);
+			atomQueue.remove(0);
 			travIndex++;
 			
-			Vector adjSet = new Vector();
+			List adjSet = new ArrayList();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
 				if (((int)contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
@@ -104,19 +129,19 @@ public class ChemGraph
 				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
 				atomQueue.add((Integer)adjSet.get(adjIndex));
 				visited[((Integer)adjSet.get(adjIndex)).intValue()] = true;
-				adjSet.removeElementAt(adjIndex);
+				adjSet.remove(adjIndex);
 			}
 
 		}
 		return subGraph;	
 	}
 	
-	public Vector getSubgraph()
+	public List getSubgraph()
 	{
 		return subGraph;
 	}
 	
-	public void setSubgraph(Vector subgraph)
+	public void setSubgraph(List subgraph)
 	{
 		subGraph = subgraph;
 	}

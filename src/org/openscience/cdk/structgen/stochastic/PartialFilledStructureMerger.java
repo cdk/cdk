@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$  
- *  $Date$  
- *  $Revision$
+/*  $Revision$ $Author$ $Date$    
  *
  *  Copyright (C) 1997-2006  The CDK project
  *
@@ -24,15 +21,14 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.structgen.stochastic;
 
-
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
@@ -43,29 +39,34 @@ import org.openscience.cdk.tools.SaturationChecker;
  * and add more structures to the panel using the "More" button. 
  * In order to use this class, use MFAnalyser to get an AtomContainer from 
  * a molecular formula string.
- * Assign hydrogen counts to each heavy atom. The hydrogens should not be
+ * 
+ * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
  * in the atom pool but should be assigned implicitly to the heavy atoms in 
  * order to reduce computational cost.
- * Assign this AtomContainer to the  
+ * 
+ * <p>Assign this AtomContainer to the  
  * PartialFilledStructureMerger and retrieve a randomly generated, but correctly bonded
  * structure by using the generate() method. You can then repeatedly call
  * the generate() method in order to retrieve further structures. 
  * 
- * Agenda: - add a method for randomly adding hydrogens to the atoms
- *         - add a seed for random generator for reproducability
+ * <p>Agenda:
+ * <ul>
+ *   <li>add a method for randomly adding hydrogens to the atoms
+ *   <li>add a seed for random generator for reproducability
+ * </ul>
  *
  * @author     steinbeck
  * @cdk.created    2001-09-04
  */
-public class PartialFilledStructureMerger
-{
-	AtomContainer atomContainer;
+public class PartialFilledStructureMerger {
+	
+	private LoggingTool logger = new LoggingTool(PartialFilledStructureMerger.class);
+	
+	IAtomContainer atomContainer;
 	SaturationChecker satCheck;
-	final static boolean debug = false;
-
 
 	/**
-	 *  Constructor for the PartialFilledStructureMerger object
+	 * Constructor for the PartialFilledStructureMerger object.
 	 */
 	public PartialFilledStructureMerger() throws java.lang.Exception
 	{
@@ -78,26 +79,26 @@ public class PartialFilledStructureMerger
 	 *
 	 * @param  gc  The new AtomContainer value
 	 */
-	public void setAtomContainer(AtomContainer gc)
+	public void setAtomContainer(IAtomContainer gc)
 	{
 		this.atomContainer = gc;
 	}
 
-	public AtomContainer getAtomContainer()
+	public IAtomContainer getAtomContainer()
 	{
 		return this.atomContainer;
 	}
 
-	public AtomContainer generate() throws CDKException
+	public IAtomContainer generate() throws CDKException
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
 		double order;
 		double max, cmax1, cmax2;
 		int iteration = 0;
-		org.openscience.cdk.interfaces.IAtom partner;
-		org.openscience.cdk.interfaces.IAtom atom;
-		AtomContainer backup = new org.openscience.cdk.AtomContainer(atomContainer);
+		IAtom partner;
+		IAtom atom;
+		IAtomContainer backup = atomContainer.getBuilder().newAtomContainer(atomContainer);
 		do
 		{
 			iteration++;
@@ -119,12 +120,11 @@ public class PartialFilledStructureMerger
 							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
 							max = Math.min(cmax1, cmax2);
 							order = Math.min(Math.max(1.0, (double)Math.round(Math.random() * max)), 3.0);
-							if (debug)
-							{
-								System.out.println("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
-							}
+							logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
 
-							atomContainer.addBond(new Bond(atom, partner, order));
+							atomContainer.addBond(
+								atomContainer.getBuilder().newBond(atom, partner, order)
+							);
 							bondFormed = true;
 						}
                                      					}
@@ -135,10 +135,7 @@ public class PartialFilledStructureMerger
 				structureFound = true;
 			}
 		} while (!structureFound && iteration < 20);
-		if (debug)
-		{
-			System.out.println("Structure found after " + iteration + " iterations.");	
-		}
+		logger.debug("Structure found after " + iteration + " iterations.");	
 		return atomContainer;
 	}
 
@@ -148,9 +145,9 @@ public class PartialFilledStructureMerger
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private org.openscience.cdk.interfaces.IAtom getAnotherUnsaturatedNode(org.openscience.cdk.interfaces.IAtom exclusionAtom) throws CDKException
+	private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException
 	{
-		org.openscience.cdk.interfaces.IAtom atom;
+		IAtom atom;
 		int next = (int) (Math.random() * atomContainer.getAtomCount());
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)
@@ -172,18 +169,5 @@ public class PartialFilledStructureMerger
 		return null;
 	}
 
-	public Object clone()
-	{
-		Object o = null;
-		try
-		{
-			o = super.clone();
-		}
-		catch (CloneNotSupportedException e)
-		{
-			System.err.println("MyObject can't clone");
-		}
-		return o;
-	}
 }
 
