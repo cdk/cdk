@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -24,17 +21,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
-
 package org.openscience.cdk.structgen;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
@@ -45,35 +43,20 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  * @cdk.keyword structure generator
  */
  
-public class VicinitySampler
-{
-	//private Molecule proposedStructure = null;
-	private Molecule molecule = null;
-	//private Molecule trial = null;
-	//private ConnectivityChecker cc = null; 
-	//private Vector bonds = null;
-	public boolean debug = false;
-	//private int[] correctBondOrderSums;
+public class VicinitySampler {
+	
+	LoggingTool logger = new LoggingTool(VicinitySampler.class);
+	
+	private IMolecule molecule = null;
 	int molCounter = 0;
-
-	/**
-	 * The empty contructor.
-	 */
-	public VicinitySampler()
-	{
-		//cc = new ConnectivityChecker();
-		//trial = new Molecule();
-	}
-
 
 	/**
 	 * Constructs a RandomGenerator with a given starting structure.
 	 *
 	 * @param   molecule  The starting structure
 	 */
-	public VicinitySampler(Molecule molecule)
+	public VicinitySampler(IMolecule molecule)
 	{
-		this ();
 		setMolecule(molecule);
 	}
 
@@ -82,10 +65,10 @@ public class VicinitySampler
 	 * in ac and establish all of the possible bonding schemes according to 
 	 * Faulon's equations.
 	 */
-	public Vector sample(AtomContainer ac)
+	public List sample(IAtomContainer ac)
 	{
-		if(debug) if (debug) System.out.println("RandomGenerator->mutate() Start");
-		Vector structures = new Vector();
+		logger.debug("RandomGenerator->mutate() Start");
+		List structures = new ArrayList();
 		
 		int nrOfAtoms = ac.getAtomCount();
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
@@ -95,10 +78,10 @@ public class VicinitySampler
 		double b22 = 0;
 		double[] cmax = new double[4]; 
 		double[] cmin = new double[4];
-		AtomContainer newAc = null;
+		IAtomContainer newAc = null;
 
-		org.openscience.cdk.interfaces.IAtom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
-		org.openscience.cdk.interfaces.IBond b1 = null, b2 = null, b3 = null, b4 = null;
+		IAtom ax1 = null, ax2 = null, ay1 = null, ay2  = null;
+		IBond b1 = null, b2 = null, b3 = null, b4 = null;
 		//int[] choices = new int[3];
 		/* We need at least two non-zero bonds in order to be successful */
 		int nonZeroBondsCounter = 0;
@@ -183,9 +166,9 @@ public class VicinitySampler
 									b12 = a11 + a12 - b11;
 									b21 = a11 + a21 - b11;
 									b22 = a22 - a11 + b11;
-									if (debug) System.out.println("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
+									logger.debug("Trying atom combination : " + x1 + ":" + x2 + ":"+ y1 + ":"+ y2);
 									try {
-										newAc = (AtomContainer)ac.clone();
+										newAc = (IAtomContainer)ac.clone();
 										change(newAc, x1, y1, x2, y2, b11, b12, b21, b22);
 										if (ConnectivityChecker.isConnected(newAc))
 										{
@@ -193,10 +176,11 @@ public class VicinitySampler
 										}
 										else
 										{
-											if (debug) System.out.println("not connected");	
+											logger.debug("not connected");	
 										}
 									} catch (CloneNotSupportedException e) {
-										System.out.println("Cloning exception: " + e.getMessage());
+										logger.error("Cloning exception: " + e.getMessage());
+										logger.debug(e);
 									}
 								}
 							}
@@ -246,13 +230,13 @@ public class VicinitySampler
 		return min;
 	}
 
-	private AtomContainer change(AtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
+	private IAtomContainer change(IAtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
 	{
-		org.openscience.cdk.interfaces.IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
-		org.openscience.cdk.interfaces.IBond b1 = null, b2 = null, b3 = null, b4 = null;
-		if (debug) System.out.println("About to make modification " + molCounter);
+		IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
+		IBond b1 = null, b2 = null, b3 = null, b4 = null;
+		logger.debug("About to make modification ", molCounter);
 		molCounter ++;
-		if (debug) System.out.println("Changes for molecule no. " + molCounter);
+		logger.debug("Changes for molecule no. ", molCounter);
 		try
 		{
 			ax1 = ac.getAtom(x1);
@@ -262,7 +246,7 @@ public class VicinitySampler
 		}
 		catch(Exception exc)
 		{
-			exc.printStackTrace();	
+			logger.debug(exc);	
 		}
 		b1 = ac.getBond(ax1, ay1);
 		b2 = ac.getBond(ax1, ay2);
@@ -272,80 +256,80 @@ public class VicinitySampler
 		{
 			if (b1 == null)
 			{
-				if (debug) System.out.println("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
-				b1 = new Bond(ax1, ay1, b11);
+				logger.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
+				b1 = ac.getBuilder().newBond(ax1, ay1, b11);
 				ac.addBond(b1);
 			}
 			else
 			{
 				b1.setOrder(b11);
-				if (debug) System.out.println("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
+				logger.debug("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
 			}
 		}
 		else if (b1 != null)
 		{
 			ac.removeElectronContainer(b1);
-			if (debug) System.out.println("removing bond " + x1 + "-" + y1);			
+			logger.debug("removing bond " + x1 + "-" + y1);			
 		}
 		
 		if (b12 > 0) 
 		{
 			if (b2 == null)
 			{
-				if (debug) System.out.println("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
-				b2 = new Bond(ax1, ay2, b12);
+				logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
+				b2 = ac.getBuilder().newBond(ax1, ay2, b12);
 				ac.addBond(b2);
 			}
 			else
 			{
 				b2.setOrder(b12);
-				if (debug) System.out.println("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
+				logger.debug("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
 			}
 		}
 		else if (b2 != null)
 		{
 			ac.removeElectronContainer(b2);
-			if (debug) System.out.println("removing bond " + x1 + "-" + y2);			
+			logger.debug("removing bond " + x1 + "-" + y2);			
 		}
 		
 		if (b21 > 0) 
 		{
 			if (b3 == null)
 			{
-				if (debug) System.out.println("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
-				b3 = new Bond(ax2, ay1, b21);
+				logger.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
+				b3 = ac.getBuilder().newBond(ax2, ay1, b21);
 				ac.addBond(b3);
 			}
 			else
 			{
 				b3.setOrder(b21);
-				if (debug) System.out.println("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
+				logger.debug("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
 			}
 		}
 		else if (b3 != null)
 		{
 			ac.removeElectronContainer(b3);
-			if (debug) System.out.println("removing bond " + x2 + "-" + y1);
+			logger.debug("removing bond " + x2 + "-" + y1);
 		}
 
 		if (b22 > 0) 
 		{
 			if (b4 == null)
 			{
-				if (debug) System.out.println("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
-				b4 = new Bond(ax2, ay2, b22);
+				logger.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
+				b4 = ac.getBuilder().newBond(ax2, ay2, b22);
 				ac.addBond(b4);
 			}
 			else
 			{
 				b4.setOrder(b22);
-				if (debug) System.out.println("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
+				logger.debug("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
 			}
 		}
 		else if (b4 != null)
 		{
 			ac.removeElectronContainer(b4);
-			if (debug) System.out.println("removing bond " + x2 + "-" + y2);
+			logger.debug("removing bond " + x2 + "-" + y2);
 		}
 		return ac;
 	}
@@ -356,7 +340,7 @@ public class VicinitySampler
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(Molecule molecule)
+	public void setMolecule(IMolecule molecule)
 	{
 		this.molecule = molecule;	
 	}
@@ -364,11 +348,11 @@ public class VicinitySampler
 
 	/**
 	 * Returns the molecule which reflects the current state of this
-	 * Stochastic Structure Generator.
+	 * stochastic structure generator.
 	 *
 	 * @return The molecule    
 	 */
-	public Molecule getMolecule()
+	public IMolecule getMolecule()
 	{
 		return this.molecule;
 	}
