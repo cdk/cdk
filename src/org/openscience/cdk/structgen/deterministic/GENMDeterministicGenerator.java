@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$    
  *
  *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  *
@@ -20,19 +17,21 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.structgen.deterministic;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-//import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -48,43 +47,43 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @author      Junfeng Hao
  * @cdk.created 2004-02-16
  */
-public class GENMDeterministicGenerator
-{
+public class GENMDeterministicGenerator {
+	
+	private LoggingTool logger;
+
 	private int numberOfSetFragment;
 	private int numberOfStructure;
-	private AtomContainer atomContainer;
+	private IAtomContainer atomContainer;
 	private int[] molecularFormula;
 	private int[] numberOfBasicUnit;
 	private int[] numberOfBasicFragment;
-	private Vector basicFragment;
-	private Vector structures;
-//	private Vector smiles;
-	private org.openscience.cdk.tools.LoggingTool logger;
+	private List basicFragment;
+	private List structures;
 	private PrintWriter structureout;
 	
 	private static double LOST=0.000000000001;
 	
 	/**
-	 *  Constructor for the GENMDeterministicGenerator object. This constructor is only 
-	 *  for molecular formula
-	 * @param	mf	molecular formula string
-	 * @param   path        Path to the file used for writing structures. Leave blank if current directory should be used.
-	 *
+	 * Constructor for the GENMDeterministicGenerator object. This constructor is only 
+	 * for molecular formula.
+	 * 
+	 * @param	mf	 molecular formula string
+	 * @param   path Path to the file used for writing structures. Leave blank if current directory should be used.
 	 */
-	 public GENMDeterministicGenerator(String mf, String path) throws java.lang.Exception
+	public GENMDeterministicGenerator(String mf, String path) throws Exception
 	{
+		logger = new LoggingTool(GENMDeterministicGenerator.class);
+
 		numberOfSetFragment=0;
 		numberOfStructure=0;
-		System.out.println(mf);
+		logger.debug(mf);
 		MFAnalyser mfa = new MFAnalyser(mf, new AtomContainer());
 		molecularFormula=new int[12];
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
-		basicFragment=new Vector();
-		structures=new Vector();
-//		smiles=new Vector();
+		basicFragment=new ArrayList();
+		structures=new ArrayList();
 		
-		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
 		structureout=new PrintWriter(new FileWriter(path+"structuredata.txt"),true);
 		
@@ -98,18 +97,18 @@ public class GENMDeterministicGenerator
 	/**
 	 * Constructor for GENMDeterministicGenerator object. This constructor could be 
 	 * used for a set of basic units.
+	 * 
 	 * @param	basicUnits	Vector contain a basic unit set
 	 * @param   path        Path to the file used for writing structures. Leave blank if current directory should be used.
-	 *
 	 */
-	public GENMDeterministicGenerator(Vector basicUnits, String path) throws IOException,Exception
+	public GENMDeterministicGenerator(List basicUnits, String path) throws IOException,Exception
 	{
 		numberOfSetFragment=0;
 		numberOfStructure=0;
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
-		basicFragment=new Vector();
-		structures=new Vector();
+		basicFragment=new ArrayList();
+		structures=new ArrayList();
 		
 		logger = new org.openscience.cdk.tools.LoggingTool(this);
 		
@@ -125,10 +124,11 @@ public class GENMDeterministicGenerator
 	
 	
 	/**
-	 * get basic units from input information.
+	 * Get basic units from input information.
+	 * 
 	 * @param	basicUnits	vector contains basic units which stored as string
 	 */
-	 public void getBasicUnit(Vector basicUnits)
+	 public void getBasicUnit(List basicUnits)
 	 {
 		 int i;
 		 for(i=0;i<basicUnits.size();i++)
@@ -159,71 +159,70 @@ public class GENMDeterministicGenerator
 	
 	
 	/**
-	 *  Initialize the basic fragment. For the definition, please see the BasicFragment class.
-	 *  
+	 * Initialize the basic fragment. For the definition, please see the BasicFragment class.
 	 */
 	public void initializeParameters() throws java.lang.Exception
 	{
 		
-		basicFragment.addElement(new BasicFragment(1,4,1,0,1,">C<","C"));
-		basicFragment.addElement(new BasicFragment(2,3,102,0,2,">C=","C"));
-		basicFragment.addElement(new BasicFragment(3,2,2,0,3,"=C=","C"));
-		basicFragment.addElement(new BasicFragment(4,2,103,0,4,"-C#","C"));
-		basicFragment.addElement(new BasicFragment(5,3,1,1,5,">CH-","C"));
-		basicFragment.addElement(new BasicFragment(6,2,102,1,6,"=CH-","C"));
-		basicFragment.addElement(new BasicFragment(7,1,3,1,6,"CH#","C"));
-		basicFragment.addElement(new BasicFragment(8,3,1,0,8,">N-","N"));
-		basicFragment.addElement(new BasicFragment(9,2,102,0,9,"=N-","N"));
-		basicFragment.addElement(new BasicFragment(10,1,3,0,10,"N#","N"));
-		basicFragment.addElement(new BasicFragment(11,2,1,2,11,"-CH2-","C"));
-		basicFragment.addElement(new BasicFragment(12,1,2,2,12,"CH2=","C"));
+		basicFragment.add(new BasicFragment(1,4,1,0,1,">C<","C"));
+		basicFragment.add(new BasicFragment(2,3,102,0,2,">C=","C"));
+		basicFragment.add(new BasicFragment(3,2,2,0,3,"=C=","C"));
+		basicFragment.add(new BasicFragment(4,2,103,0,4,"-C#","C"));
+		basicFragment.add(new BasicFragment(5,3,1,1,5,">CH-","C"));
+		basicFragment.add(new BasicFragment(6,2,102,1,6,"=CH-","C"));
+		basicFragment.add(new BasicFragment(7,1,3,1,6,"CH#","C"));
+		basicFragment.add(new BasicFragment(8,3,1,0,8,">N-","N"));
+		basicFragment.add(new BasicFragment(9,2,102,0,9,"=N-","N"));
+		basicFragment.add(new BasicFragment(10,1,3,0,10,"N#","N"));
+		basicFragment.add(new BasicFragment(11,2,1,2,11,"-CH2-","C"));
+		basicFragment.add(new BasicFragment(12,1,2,2,12,"CH2=","C"));
 		
-		basicFragment.addElement(new BasicFragment(13,2,1,1,13,"-NH-","N"));
-		basicFragment.addElement(new BasicFragment(14,1,2,1,14,"NH=","N"));
-		basicFragment.addElement(new BasicFragment(15,2,1,0,15,"-O-","O"));
-		basicFragment.addElement(new BasicFragment(16,1,2,0,16,"O=","O"));
-		basicFragment.addElement(new BasicFragment(17,2,1,0,17,"-S-","S"));
-		basicFragment.addElement(new BasicFragment(18,1,2,0,18,"S=","S"));
-		basicFragment.addElement(new BasicFragment(19,1,1,3,19,"CH3-","C"));
-		basicFragment.addElement(new BasicFragment(20,1,1,2,20,"NH2-","N"));
-		basicFragment.addElement(new BasicFragment(21,1,1,1,21,"OH-","O"));
-		basicFragment.addElement(new BasicFragment(22,1,1,1,22,"-SH","S"));
-		basicFragment.addElement(new BasicFragment(23,3,1,0,23,">P-","P"));
-		basicFragment.addElement(new BasicFragment(24,2,1,1,24,"-PH-","P"));
-		basicFragment.addElement(new BasicFragment(25,1,1,2,25,"PH2-","P"));
-		basicFragment.addElement(new BasicFragment(26,4,1,0,26,">Si<","Si"));
-		basicFragment.addElement(new BasicFragment(27,3,1,1,26,">SiH-","Si"));
-		basicFragment.addElement(new BasicFragment(28,2,1,2,28,"-SiH2-","Si"));
-		basicFragment.addElement(new BasicFragment(29,1,1,3,29,"SiH3-","Si"));
-		basicFragment.addElement(new BasicFragment(30,1,1,0,30,"F-","F"));
-		basicFragment.addElement(new BasicFragment(31,1,1,0,31,"Cl-","Cl"));
-		basicFragment.addElement(new BasicFragment(32,1,1,0,32,"Br-","Br"));
-		basicFragment.addElement(new BasicFragment(33,1,1,0,33,"I-","I"));
+		basicFragment.add(new BasicFragment(13,2,1,1,13,"-NH-","N"));
+		basicFragment.add(new BasicFragment(14,1,2,1,14,"NH=","N"));
+		basicFragment.add(new BasicFragment(15,2,1,0,15,"-O-","O"));
+		basicFragment.add(new BasicFragment(16,1,2,0,16,"O=","O"));
+		basicFragment.add(new BasicFragment(17,2,1,0,17,"-S-","S"));
+		basicFragment.add(new BasicFragment(18,1,2,0,18,"S=","S"));
+		basicFragment.add(new BasicFragment(19,1,1,3,19,"CH3-","C"));
+		basicFragment.add(new BasicFragment(20,1,1,2,20,"NH2-","N"));
+		basicFragment.add(new BasicFragment(21,1,1,1,21,"OH-","O"));
+		basicFragment.add(new BasicFragment(22,1,1,1,22,"-SH","S"));
+		basicFragment.add(new BasicFragment(23,3,1,0,23,">P-","P"));
+		basicFragment.add(new BasicFragment(24,2,1,1,24,"-PH-","P"));
+		basicFragment.add(new BasicFragment(25,1,1,2,25,"PH2-","P"));
+		basicFragment.add(new BasicFragment(26,4,1,0,26,">Si<","Si"));
+		basicFragment.add(new BasicFragment(27,3,1,1,26,">SiH-","Si"));
+		basicFragment.add(new BasicFragment(28,2,1,2,28,"-SiH2-","Si"));
+		basicFragment.add(new BasicFragment(29,1,1,3,29,"SiH3-","Si"));
+		basicFragment.add(new BasicFragment(30,1,1,0,30,"F-","F"));
+		basicFragment.add(new BasicFragment(31,1,1,0,31,"Cl-","Cl"));
+		basicFragment.add(new BasicFragment(32,1,1,0,32,"Br-","Br"));
+		basicFragment.add(new BasicFragment(33,1,1,0,33,"I-","I"));
 		
 		/*for decompose the complex fragment*/
 		
-		basicFragment.addElement(new BasicFragment(42,2,1,0,2,">C","C"));
-		basicFragment.addElement(new BasicFragment(43,1,2,0,2,"C=","C"));
+		basicFragment.add(new BasicFragment(42,2,1,0,2,">C","C"));
+		basicFragment.add(new BasicFragment(43,1,2,0,2,"C=","C"));
 		
 		
-		basicFragment.addElement(new BasicFragment(44,1,1,0,4,"C-","C"));
-		basicFragment.addElement(new BasicFragment(45,1,3,0,4,"C#","C"));
+		basicFragment.add(new BasicFragment(44,1,1,0,4,"C-","C"));
+		basicFragment.add(new BasicFragment(45,1,3,0,4,"C#","C"));
 		
 		
-		basicFragment.addElement(new BasicFragment(46,1,1,1,6,"CH-","C"));
-		basicFragment.addElement(new BasicFragment(47,1,2,1,6,"CH=","C"));
+		basicFragment.add(new BasicFragment(46,1,1,1,6,"CH-","C"));
+		basicFragment.add(new BasicFragment(47,1,2,1,6,"CH=","C"));
 		
 		
-		basicFragment.addElement(new BasicFragment(50,1,1,0,9,"N-","N"));
-		basicFragment.addElement(new BasicFragment(51,1,2,0,9,"N=","N"));
+		basicFragment.add(new BasicFragment(50,1,1,0,9,"N-","N"));
+		basicFragment.add(new BasicFragment(51,1,2,0,9,"N=","N"));
 		//Maybe add later
 		return;
 	}
 	
 	/**
-	 *  Analyse molecular formula to verify it is valid.
-	 *  @param mfa	MFAnalyser object to operate the molecular formula
-	 *
+	 * Analyse molecular formula to verify it is valid.
+	 * 
+	 * @param mfa	MFAnalyser object to operate the molecular formula
 	 */
 	 public void analyseMolecularFormula(MFAnalyser mfa) throws java.lang.Exception
 	 {
@@ -255,8 +254,7 @@ public class GENMDeterministicGenerator
 	 }
 	
 	/**
-	 *  The first step: generate sets of basic units by backtracking algorithm
-	 *
+	 * The first step: generate sets of basic units by backtracking algorithm.
 	 */
 	 public void generateBasicUnits() throws java.lang.Exception
 	 {
@@ -489,38 +487,60 @@ public class GENMDeterministicGenerator
 	 
 	 
 	/**
-	 *  Second step: generate basic fragments, the generating rules from basic units are the following:
-	 *  for C: >C<, >C=,=C=,-C#(triple bond), 1~4
-	 *  CH: >CH-,=CH-,CH#, 5~7
-	 *  CH2: -CH2-,CH2=, 11~12
-	 *  CH3: CH3-,19
-
-	 *  for N: >N-,-N=,N#,8~10
-	 *  NH: -NH-, NH= ,13~14
-	 *  NH2: NH2-,20
-
-	 *  for O: -O-,O=, 15~16
-	 *  OH: -OH, 21
-
-	 *  for S: -S-,S=, 17~18
-	 *  SH, -SH,22
-
-	 *  for P: >P-, 23
-	 *  PH: -PH-,24
-	 *  PH2: -PH2,25
-
-	 *  for Si: >Si< 26
-	 *  SiH: >SiH- 27
-	 *  SiH2: -SiH2- 28
-	 *  SiH3: SiH3- 29
-
-	 *  for F:F- 30
-	 *  for Cl: Cl- 31
-	 *  for Br: Br- 32
-	 *  for I: I- 33
-	 *  It could be easily add the new fragments, such as valence, variable valence, such as N,P,also, fragments contains
-	 *  charges.
-	 * it is a combinatorial algorithm n1*n2*n3...
+	 * Second step: generate basic fragments, the generating rules from basic
+	 * units are as follows.
+	 * For carbon:
+	 * <ul>
+	 *  <li>>C<, >C=,=C=,-C#(triple bond), 1~4
+	 *  <li>CH: >CH-,=CH-,CH#, 5~7
+	 *  <li>CH2: -CH2-,CH2=, 11~12
+	 *  <li>CH3: CH3-,19
+	 * </ul>
+	 * 
+	 * For nitrogen:
+	 * <ul>
+	 *  <li>>N-,-N=,N#,8~10
+	 *  <li>NH: -NH-, NH= ,13~14
+	 *  <li>NH2: NH2-,20
+	 * </ul>
+	 * 
+	 * For oxygen:
+	 * <ul>
+	 *  <li>-O-,O=, 15~16
+	 *  <li>OH: -OH, 21
+	 * </ul>
+	 * 
+	 * For sulfur:
+	 * <ul>
+	 *  <li>-S-,S=, 17~18
+	 *  <li>SH, -SH,22
+	 * </ul>
+	 * 
+	 * For phosphorus:
+	 * <ul>
+	 *  <li>>P-, 23
+	 *  <li>PH: -PH-,24
+	 *  <li>PH2: -PH2,25
+	 * </ul>
+	 * 
+	 * For silicon:
+	 * <ul>
+	 *  <li>>Si< 26
+	 *  <li>SiH: >SiH- 27
+	 *  <li>SiH2: -SiH2- 28
+	 *  <li>SiH3: SiH3- 29
+	 * </ul>
+	 * 
+	 * For others:
+	 * <ul>
+	 *  <li>F- 30
+	 *  <li>Cl- 31
+	 *  <li>Br- 32
+	 *  <li>I- 33
+	 * </ul>
+	 * It could be easily add the new fragments, such as valence, variable
+	 * valence, such as N,P,also, fragments contains charges.
+	 * It is a combinatorial algorithm, as in n1*n2*n3.
 	 */
 	 public void generateBasicFragments() throws java.lang.Exception
 	 {
@@ -702,8 +722,7 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	 *  Test for the set of basic fragment.
-	 *
+	 * Test for the set of basic fragment.
 	 */
 	 public boolean testBasicFragment()
 	 {
@@ -777,8 +796,7 @@ public class GENMDeterministicGenerator
 	 
 	 
 	/**
-	 *  The thrid step: generate all the possible consititional isomers
-	 *
+	 * The thrid step: generate all the possible consititional isomers.
 	 */
 	 public void generateIsomers()
 	 {
@@ -797,7 +815,7 @@ public class GENMDeterministicGenerator
 		 int[] bondAttribute;
 		 int[] parentID;
 		 int[] storedSymbolOfStructure=new int[4000000];
-		 Vector setOfBasicFragment=new Vector();
+		 List setOfBasicFragment=new ArrayList();
 		 AtomContainer atomContainer=null;
 		 
 		 /*1. prepare the vector of basic fragment and atomContainer
@@ -830,42 +848,42 @@ public class GENMDeterministicGenerator
 					 case 2:
 					 	for(j=1;j<=numberOfBasicFragment[i];j++)
 						{
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(33)));
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(34)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(33)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(34)));
 						}
 						
 						break;
 					 case 4:
 					 	for(j=1;j<=numberOfBasicFragment[i];j++)
 						{
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(35)));
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(36)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(35)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(36)));
 						}
 						break;
 					case 6:
 					 	for(j=1;j<=numberOfBasicFragment[i];j++)
 						{
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(37)));
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(38)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(37)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(38)));
 						}
 						break;
 					 case 9:
 					 	for(j=1;j<=numberOfBasicFragment[i];j++)
 						{
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(39)));
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(40)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(39)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(40)));
 						}
 						break;
 					default:
 						for(j=1;j<=numberOfBasicFragment[i];j++)
-							setOfBasicFragment.addElement((BasicFragment)(basicFragment.get(i-1)));
+							setOfBasicFragment.add((BasicFragment)(basicFragment.get(i-1)));
 						break;
 				 }
 				 
 			 }
 			 
 		//order the fragments
-		atomContainer=new org.openscience.cdk.AtomContainer();
+		atomContainer=new AtomContainer();
 		
 		parentID=new int[setOfBasicFragment.size()];
 		
@@ -886,10 +904,12 @@ public class GENMDeterministicGenerator
 		
 		for(i=0;i<setOfBasicFragment.size();i++)
 		{
-			atomContainer.addAtom(new Atom(((BasicFragment)(setOfBasicFragment.get(i))).getHeavyAtomSymbol()));
+			atomContainer.addAtom(
+				atomContainer.getBuilder().newAtom(((BasicFragment)(setOfBasicFragment.get(i))).getHeavyAtomSymbol())
+			);
 		}
 		
-		org.openscience.cdk.interfaces.IAtom[] atom=atomContainer.getAtoms();
+		IAtom[] atom=atomContainer.getAtoms();
 		
 		for(i=0;i<atom.length;i++)
 		{
@@ -980,12 +1000,13 @@ public class GENMDeterministicGenerator
 	 
 	/**
 	 * Initialized the adjacency matrix.
+	 * 
 	 * @param	setOfBasicFragment	set of basic fragment
 	 * @param	bondAttribute		to distinguish the bond
 	 * @param	adjacency		adjacency matrix
 	 * @param	previousMatrix		tracing the change of adjacency matrix
 	 */
-	 public void initializeMatrix(Vector setOfBasicFragment, int[] bondAttribute,int[][] adjacency,int[][] previousMatrix)
+	 public void initializeMatrix(List setOfBasicFragment, int[] bondAttribute,int[][] adjacency,int[][] previousMatrix)
 	 {
 		int i,j,row,sum;
 		row=setOfBasicFragment.size();
@@ -1046,7 +1067,8 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	  * restor the adjacency matrix to previous step
+	  * Restore the adjacency matrix to previous step.
+	  * 
 	  * @param	step		the line is filling
 	  * @param	freeValence	array for free valence of each node left
 	  * @param	sourceMatrix	the reference matrix 
@@ -1078,6 +1100,7 @@ public class GENMDeterministicGenerator
 	  
 	 /**
 	 * Maximum weakly canonical filling of line M.
+	 * 
 	 * @param	setOfBasicFragment	set of basic fragment
 	 * @param	step 			the line is filling
 	 * @param	rowMatrix		the row which contains the filling line
@@ -1085,7 +1108,7 @@ public class GENMDeterministicGenerator
 	 * @param	previousMatrix		matrix is used for tracing the change of adjacency matrix.
 	 * @param	parentID		mainly used for unsaturated part
 	 */
-	 public boolean getMaximumWCF(Vector setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[][] previousMatrix,int[] parentID)
+	 public boolean getMaximumWCF(List setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[][] previousMatrix,int[] parentID)
 	 {
 		 int i,iter,bondOrder,size;
 		 int totalBond,existBond,leftBond;
@@ -1160,7 +1183,8 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	 * get the partition for the left fragment at every step.
+	 * Get the partition for the left fragment at every step.
+	 * 
 	 * @param	setOfBasicFragment	set of basic fragment
 	 * @param	step			the line is filling
 	 * @param	rowMatrix		the row which contains the filling line
@@ -1168,7 +1192,7 @@ public class GENMDeterministicGenerator
 	 * @param	setOfStability		the previous equivalent partition
 	 * @param	parentID		mainly used for unsaturated part
 	 */
-	 public  void getSetOfStability(Vector setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[] setOfStability,int[] parentID)
+	 public  void getSetOfStability(List setOfBasicFragment,int step,int[] rowMatrix, int[][] adjacency,int[] setOfStability,int[] parentID)
 	 {
 		 int i,j,count,line;
 		 int temp,size;
@@ -1282,14 +1306,15 @@ public class GENMDeterministicGenerator
 	 }
 	 
 	 /**
-	 * force filling the left matrix at every step.
+	 * Force filling the left matrix at every step.
+	 * 
 	 * @param	step			the line is filling
 	 * @param 	setOfBasicFragment	vector contains the set of basic fragment.
 	 * @param 	adjacencyMatrix		adjacency matrix of the given basic fragment.
 	 * @param	previousMatrix		matrix is used for tracing the change of adjacency matrix.
 	 * @return	the first line which is unfilled
 	 */
-	 public int forceFilling(int step,Vector setOfBasicFragment,int[][] adjacencyMatrix,int[][] previousMatrix)
+	 public int forceFilling(int step,List setOfBasicFragment,int[][] adjacencyMatrix,int[][] previousMatrix)
 	 {
 		 /* 1.  Minimal forcing. The sum of filled elements of each unfilled row i->J(B)
 		  * 	is equal to the valence of the corresponding vertex.
@@ -1381,15 +1406,16 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	  * check admissibility of the matrix.
+	  * Check admissibility of the matrix.
 	  * Details see Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs,
 	  * Match, 30(213),1994
+	  * 
 	  * @param	step			the line is filling.
 	  * @param	setOfBasicFragment	set of basic fragment
 	  * @param	adjacencyMatrix		adjacency matrix
 	  * @return	a boolean value whether this line could pass adissibility or not
 	  */
-	 public boolean checkAdmissibility(int step,Vector setOfBasicFragment,int[][] adjacencyMatrix)
+	 public boolean checkAdmissibility(int step,List setOfBasicFragment,int[][] adjacencyMatrix)
 	 {
 		 for(int i=step;i<adjacencyMatrix.length;i++)
 		 {
@@ -1414,15 +1440,16 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	  * check constraint of the matrix. Currently, there is only connectivity test.
+	  * Check constraint of the matrix. Currently, there is only connectivity test.
 	  * Later, there might be other tests. 
+	  * 
 	  * @param	step			the line is filling.
 	  * @param	setOfBasicFragment	set of basic fragment
 	  * @param	adjacencyMatrix		adjacency matrix
 	  * @param	ac			atomContainer of the node set, not used now
 	  * @return	a boolean value whether this adjacency matrix pass  the constraint check or not
 	  */
-	 public boolean checkConstraint(int step,Vector setOfBasicFragment,int[][] adjacencyMatrix,AtomContainer ac)
+	 public boolean checkConstraint(int step,List setOfBasicFragment,int[][] adjacencyMatrix,AtomContainer ac)
 	 {
 		 int i,j,partialSum,totalSum,decomposedNumber;
 		 //boolean isConnectivity;
@@ -1525,9 +1552,10 @@ public class GENMDeterministicGenerator
 	 }
 	 
 	 /**
-	  * get the next WCF--weakly canonical complement. 
-	  * details see Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs,
+	  * Get the next WCF (weakly canonical complement). 
+	  * Details see Sergey G. Molodtsov, Computer-Aided Generation of Molecular Graphs,
 	  * Match, 30(213),1994
+	  * 
 	  * @param	setOfBasicFragment	set of basic fragment
 	  * @param	step			the step of the generation
 	  * @param	rowMatrix		the row which contains the filling line
@@ -1537,7 +1565,7 @@ public class GENMDeterministicGenerator
 	  * @return	a boolean value whether there is next WCF or not
 	  *
 	  */
-	 public boolean getNextWCF(Vector setOfBasicFragment,int step,int[] rowMatrix,int[][] adjacencyMatrix,int[][] previousMatrix,int[] parentID)
+	 public boolean getNextWCF(List setOfBasicFragment,int step,int[] rowMatrix,int[][] adjacencyMatrix,int[][] previousMatrix,int[] parentID)
 	 {
 		 int i,j,iter,existBond,leftBond,totalBond,changedCategory,sum; // changedFilledValue,nextNonZeroElement
 		 int bondOrder;
@@ -1725,11 +1753,11 @@ public class GENMDeterministicGenerator
 	 
 	 /**
 	  * Judge whether this line of the adjacency matrix is forced or not.
+	  * 
 	  * @param	step            the step of the generation
 	  * @param	previousMatrix  matrix to trace the change of adjacency matrix
 	  * @param	adjacency       adjacency matrix 
 	  * @return	a boolean value whether the line is force-filling or not
-	  *
 	  */
 	 public boolean isForceFilling(int step,int[][] previousMatrix,int[][] adjacency)
 	 {
@@ -1739,12 +1767,13 @@ public class GENMDeterministicGenerator
 	 }
 	 
 	 /**
-	  * get the initial equivalent partition.
+	  * Get the initial equivalent partition.
+	  * 
 	  * @param	setOfBasicFragment	set of basic fragment
 	  * @param	setOfStability		array contains the initial classing of the nodes
 	  * @return	the number of equivalent class
 	  */
-	 public int getEquivalentClass(Vector setOfBasicFragment,int[] setOfStability)
+	 public int getEquivalentClass(List setOfBasicFragment,int[] setOfStability)
 	 {
 		 int i,j,count;
 		 int temp,size;
@@ -1789,12 +1818,13 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	  * write adjacencyMatrix to debug. The method is only for debugging.
+	  * Write adjacencyMatrix to debug. The method is only for debugging.
+	  * 
 	  * @param	setOfBasicFragment	set of basic fragment
 	  * @param	number			the sequence number of the structure
 	  * @param	adjacency		adjacency matrix of the structure
 	  */
-	  public void writeToFile(Vector setOfBasicFragment,int number,int[][] adjacency)
+	  public void writeToFile(List setOfBasicFragment,int number,int[][] adjacency)
 	  {
 		  int i,j,size;
 		  
@@ -1824,7 +1854,8 @@ public class GENMDeterministicGenerator
 	  
 	  
 	 /**
-	  * recursive graph traversal with the adjacency matrix.
+	  * Recursive graph traversal with the adjacency matrix.
+	  * 
 	  * @param	adjacency	Adjacency matrix
 	  * @param	number		node which would be visited
 	  * @param	isVisited	boolean array which stored the visiting state for nodes
@@ -1838,13 +1869,15 @@ public class GENMDeterministicGenerator
 	 }
 	  
 	  /**
-	   * Sort the basic fragment set. The purpose is to improve the generation speed by some specific 
-	   * ordering. In fact, it is little usage in the whole step.
+	   * Sort the basic fragment set. The purpose is to improve the generation
+	   * speed by some specific ordering. In fact, it is little usage in the
+	   * whole step.
+	   * 
 	   * @param	setOfBasicFragment	set of basic fragment
 	   * @param	parentID		Array for storing the previous ID, only used for special fragment.
-	   * @return	vector contains the sorting result.
+	   * @return	List contains the sorting result.
 	   */
-	  public Vector getOrderOfBasicFragmentSet(Vector setOfBasicFragment,int[] parentID)
+	  public List getOrderOfBasicFragmentSet(List setOfBasicFragment,int[] parentID)
 	  {
 		  int i,j;
 		  int size=setOfBasicFragment.size();
@@ -1852,7 +1885,7 @@ public class GENMDeterministicGenerator
 		  int[] originalNumbering=new int[size];
 		  int[] revisedNumbering=new int[size];
 		  
-		  Vector orderSet=new Vector();
+		  List orderSet=new ArrayList();
 		  //int number=1;
 		  
 		  for(i=0;i<size;i++)
@@ -1865,18 +1898,18 @@ public class GENMDeterministicGenerator
 		  for(j=0;j<setOfBasicFragment.size();j++)
 		  {
 			  if(((BasicFragment)(setOfBasicFragment.get(j))).getID()==1)
-				  orderSet.addElement((BasicFragment)(setOfBasicFragment.get(j)));
+				  orderSet.add((BasicFragment)(setOfBasicFragment.get(j)));
 		  }
 		  for(j=0;j<setOfBasicFragment.size();j++)
 		  {
 			  if(((BasicFragment)(setOfBasicFragment.get(j))).getID()==5)
-				  orderSet.addElement((BasicFragment)(setOfBasicFragment.get(j)));
+				  orderSet.add((BasicFragment)(setOfBasicFragment.get(j)));
 		  }
 		  for(j=setOfBasicFragment.size()-1;j>=0;j--)
 		   {
 			if(((BasicFragment)(setOfBasicFragment.get(j))).getID()<=33)
 				continue;
-			orderSet.addElement((BasicFragment)(setOfBasicFragment.get(j)));
+			orderSet.add((BasicFragment)(setOfBasicFragment.get(j)));
 		  }
 		  
 		  for(j=0;j<setOfBasicFragment.size();j++)
@@ -1887,13 +1920,13 @@ public class GENMDeterministicGenerator
 				|| ((BasicFragment)(setOfBasicFragment.get(j))).getID()==3
 				||((BasicFragment)(setOfBasicFragment.get(j))).getID()==5)
 				continue;
-			orderSet.addElement((BasicFragment)(setOfBasicFragment.get(j)));
+			orderSet.add((BasicFragment)(setOfBasicFragment.get(j)));
 		  }
 		  
 		  for(j=0;j<setOfBasicFragment.size();j++)
 		  {
 			  if(((BasicFragment)(setOfBasicFragment.get(j))).getID()==3)
-				  orderSet.addElement((BasicFragment)(setOfBasicFragment.get(j)));
+				  orderSet.add((BasicFragment)(setOfBasicFragment.get(j)));
 		  }
 		 
 		  for(i=0;i<size;i++)
@@ -1923,8 +1956,11 @@ public class GENMDeterministicGenerator
 	  
 	  /**
 	   * Judge the possible structure. The idea is the following:
-	   * 1. get the canonical representation for each candidate.
-	   * 2. For each fragment set, compare with the previous structures to remove redundancy.
+	   * <ol>
+	   *  <li>get the canonical representation for each candidate.</li>
+	   *  <li>for each fragment set, compare with the previous
+	   *      structures to remove redundancy.</li>
+	   * </ol>
 	   *
 	   * @param	setOfBasicFragment	set of basic fragment
 	   * @param	adjacencyMatrix		adjacency Matrix of candidate
@@ -1932,13 +1968,13 @@ public class GENMDeterministicGenerator
 	   * @param	totalNumberOfThisSet	Number of the structures for this fragment set
 	   * @param	totalNumberOfAtomAndBond	for one fragment, total number of atom and bond
 	   */
-	  public void getFinalStructure(Vector setOfBasicFragment,int[][] adjacencyMatrix,int[] storedSymbolOfStructure,int[] totalNumberOfThisSet,int totalNumberOfAtomAndBond)
+	  public void getFinalStructure(List setOfBasicFragment,int[][] adjacencyMatrix,int[] storedSymbolOfStructure,int[] totalNumberOfThisSet,int totalNumberOfAtomAndBond)
 	  {
 		  int i,j,decomposedNumber,row,column,size;
 		  int m;
 		  int kk,k1;
 		  
-		  Vector originalSet=new Vector();
+		  List originalSet=new ArrayList();
 		  int[] isDecomposed=new int[adjacencyMatrix.length];
 		  int[] parentID=new int[adjacencyMatrix.length];
 		  int[] decomposedLine=new int[adjacencyMatrix.length];
@@ -1971,7 +2007,7 @@ public class GENMDeterministicGenerator
 		   {
 			for(i=0;i<adjacencyMatrix.length;i++)
 			{
-				if(isDecomposed[i]==-1)originalSet.addElement(((BasicFragment)(setOfBasicFragment.get(i))));
+				if(isDecomposed[i]==-1)originalSet.add(((BasicFragment)(setOfBasicFragment.get(i))));
 				else
 				{
 					if(decomposedLine[i]==1)continue;
@@ -1979,7 +2015,7 @@ public class GENMDeterministicGenerator
 					{
 						if(isDecomposed[i]!=isDecomposed[j] && parentID[i]==parentID[j] && j>i && decomposedLine[j]==-1)
 						{
-							originalSet.addElement((BasicFragment)(basicFragment.get(parentID[i]-1)));
+							originalSet.add((BasicFragment)(basicFragment.get(parentID[i]-1)));
 							decomposedLine[j]=1;
 							connectedFragment[j]=i;
 							connectedFragment[i]=j;
@@ -2156,11 +2192,12 @@ public class GENMDeterministicGenerator
 	  
 	  /**
 	   * Canonicalize the structure based on All-Path algorithm.
+	   * 
 	   * @param	setOfBasicFragment	basic fragment set
 	   * @param	adjacencyMatrix		adjacency matrix for a candidate
 	   * @return	the canonical representation of the given candidate
 	   */
-	  public int[][] normalization(Vector setOfBasicFragment,int[][] adjacencyMatrix) 
+	  public int[][] normalization(List setOfBasicFragment,int[][] adjacencyMatrix) 
 	  {
 		  
 		  int i,ii,j,number,number1,number2,size,startClass,ki;
@@ -2428,8 +2465,9 @@ public class GENMDeterministicGenerator
 	 
 	 
 	 /**
-	  * Method to get the equivalent class. It is a method based on All-Path algorithm.
-	  * Detail please see article  Hu CY, Chemom. Intell. Lab. Syst. 45(318),1999
+	  * Method to get the equivalent class. It is a method based on All-Path
+	  * algorithm. Detail please see article  Hu CY, Chemom. Intell. Lab. Syst. 45(318),1999
+	  * 
 	  * @param	size		the number of nonhydrogen atom.
 	  * @param	connectivity	adjacency matrix
 	  * @param	classID		initial class
@@ -2548,8 +2586,10 @@ public class GENMDeterministicGenerator
 
 
 	 /**
-	  * This method is used in the middle of partitioning nodes if there are two or more nodes which are equivalent. By
-	  * using this method, equivalent nodes could be divided into different class by adding some other method.
+	  * This method is used in the middle of partitioning nodes if there are
+	  * two or more nodes which are equivalent. By using this method, equivalent 
+	  * nodes could be divided into different class by adding some other method.
+	  * 
 	  * @param	size		the number of nonhydrogen atom.
 	  * @param	number		the existing class
 	  * @param	connectivity	adjacency matrix
@@ -2636,42 +2676,46 @@ public class GENMDeterministicGenerator
 	 }
 	 
 	/**
-	 * A bridge between CDK molecule and adjacency matrix. It might be a temporary thing, later,
-	 * all should be done according to CDK.
+	 * A bridge between CDK molecule and adjacency matrix. 
+	 * It might be a temporary thing, later, all should be 
+	 * done according to CDK.
+	 * 
 	 * @param	set			basic fragment set
 	 * @param	matrix			adjacency matrix of the corresponding structure
-	 * @param	structures		vector contains all generated structures
+	 * @param	structures		List contains all generated structures
 	 */
-	 public void convertToMol(Vector set,int[][] matrix,Vector structures)
+	 public void convertToMol(List set,int[][] matrix,List structures)
 	 {
 		 int i,j;
-		 Molecule mol=new Molecule();
+		 IMolecule mol=new Molecule();
 		 int size=set.size();
 		 for(i=0;i<size;i++)
-			 mol.addAtom(new Atom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol()));
+			 mol.addAtom(mol.getBuilder().newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol()));
 		 for(i=0;i<size-1;i++)
 			 for(j=i+1;j<size;j++)
 				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
 		 
-		 structures.addElement(mol);
+		 structures.add(mol);
 	 }
 	 
 	 
 	 /**
-	  * A bridge between CDK SMILES format and adjacency matrix. It might be a temporary thing, later,
-	  * all should be done according to CDK.
+	  * A bridge between CDK SMILES format and adjacency matrix. 
+	  * It might be a temporary thing, later, all should be done
+	  * according to CDK.
+	  * 
 	  * @param	set      basic fragment set
 	  * @param	matrix   adjacency matrix of the corresponding structure
-	  * @param	smiles   vector contains all generated structures
+	  * @param	smiles   List contains all generated structures
 	  */
-	 public void convertToSMILES(Vector set,int[][] matrix,Vector smiles)
+	 public void convertToSMILES(List set,int[][] matrix,List smiles)
 	 {
 		 int i,j;
-		 Molecule mol=new Molecule();
+		 IMolecule mol=new Molecule();
 		 int size=set.size();
 		 for(i=0;i<size;i++)
 		 {
-			 Atom atom=new Atom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
+			 IAtom atom= mol.getBuilder().newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
 			 
 			 atom.setHydrogenCount(((BasicFragment)(set.get(i))).getNumberOfHydrogen());
 			 
@@ -2689,35 +2733,28 @@ public class GENMDeterministicGenerator
 	 
 	 
 	  /**
-	   * Get the suitable structures
-	   * @return	vector contains suitable structures
+	   * Get the suitable structures.
+	   * 
+	   * @return	List contains suitable structures
 	   */
-	  public Vector getStructures()
+	  public List getStructures()
 	  {
 		 return this.structures;
 	  }
 	 
 	  /**
-	   * Get the number of isomers
+	   * Get the number of isomers.
+	   * 
 	   * @return	the number of isomers
 	   */
 	 public int getNumberOfStructure()
 	 {
 		return this.numberOfStructure;
 	 }
-	 
-	 
-	  /**
-	   * Get the vector of SMILES
-	   * @return	vector contains suitable SMILES format for suitable structures
-	   */
-//	  public Vector getSMILES()
-//	  {
-//		 return this.smiles;
-//	  }
-	 
+	 	 
 	 /**
-	  * As only used in this class might now, define it as an inner class. It just works as fragment class
+	  * As only used in this class might now, define it as an inner class.
+	  * It just works as fragment class.
 	  */
 	 private class BasicFragment
 	 {
@@ -2776,12 +2813,12 @@ public class GENMDeterministicGenerator
 		 }
 	 }
 
-	public AtomContainer getAtomContainer() {
+	public IAtomContainer getAtomContainer() {
 		return atomContainer;
 	}
 
 
-	public void setAtomContainer(AtomContainer atomContainer) {
+	public void setAtomContainer(IAtomContainer atomContainer) {
 		this.atomContainer = atomContainer;
 	}
 }

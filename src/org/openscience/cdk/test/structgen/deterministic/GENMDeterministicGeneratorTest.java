@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.test.structgen.deterministic;
 
-import java.util.Vector;
+import java.util.List;
 
 import javax.vecmath.Vector2d;
 
@@ -74,7 +74,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		try
 		{	
 			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1","");
-			Vector structures=gdg.getStructures();
+			List structures=gdg.getStructures();
 			everythingOk(structures);
 		}
 		catch(Exception e)
@@ -150,7 +150,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	
 	
 	
-	private boolean everythingOk(Vector structures) throws Exception 
+	private boolean everythingOk(List structures) throws Exception 
 	{
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;
@@ -159,7 +159,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		{
 			sdg = new StructureDiagramGenerator();
 
-			mol = (Molecule)structures.elementAt(f);
+			mol = (Molecule)structures.get(f);
 			//System.out.println(mol.getAtomCount());
 			//System.out.println(mol.getBondCount());
 			sdg.setMolecule((Molecule)mol.clone());

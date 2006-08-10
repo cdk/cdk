@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$    
  *
  *  Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -24,17 +20,19 @@
  */
 package org.openscience.cdk.structgen.deterministic;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 /**
- *  An implementation of Faulons equivalent classes deterministic generator 
+ * An implementation of Faulons equivalent classes deterministic generator. 
  *
- * @author     steinbeck
- * @cdk.created    2000-10-02
+ * @author      steinbeck
+ * @cdk.created 2000-10-02
  */
-public class Graph extends Vector
+public class Graph extends ArrayList
 {
     private static final long serialVersionUID = 1087357022768386719L;
     
@@ -48,21 +46,21 @@ public class Graph extends Vector
 	
 	public void partition()
 	{
-		AtomContainer ac = null;
+		IAtomContainer ac = null;
 		Integer eClass = null;
 		classes.clear();
 		for (int f = 0; f < size(); f++)
 		{
-			ac = (AtomContainer)elementAt(f);
+			ac = (IAtomContainer)get(f);
 			eClass = (Integer)ac.getProperty("class");
 			if (!classes.containsKey(eClass))
 			{
 				/* Create a new Vector for this non-existing class */
-				classes.put(eClass, new Vector());	
+				classes.put(eClass, new ArrayList());	
 			}
 			else
 			{
-				((Vector)classes.get(eClass)).addElement(ac);	
+				((List)classes.get(eClass)).add(ac);	
 			}
 		}
 		

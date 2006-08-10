@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$    
  *
  *  Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -24,55 +20,58 @@
  */
 package org.openscience.cdk.structgen.deterministic;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
+
 /**
- *  An implementation of Faulons equivalent classes deterministic generator 
+ * An implementation of Faulons equivalent classes deterministic generator.
  *
- * @author     steinbeck
- * @cdk.created    2000-10-02
+ * @author      steinbeck
+ * @cdk.created 2000-10-02
  */
-public class EquivalentClassesDeterministicGenerator
-{
+public class EquivalentClassesDeterministicGenerator {
+	
+	LoggingTool logger = new LoggingTool(EquivalentClassesDeterministicGenerator.class);
+	
 	/* The initial, unbonded AtomContainer
 	 * From this we construct a number of AtomContainers that contain the 
 	 * initial heavy atoms with assigned hydrogen counts. 
 	 */
-	AtomContainer baseAtomContainer = null;
-	Vector graphs = null;
+	IAtomContainer baseAtomContainer = null;
+	List graphs = null;
 		
 	public EquivalentClassesDeterministicGenerator()
 	{
 		Graph graph = new Graph();
-		graphs = new Vector();
-		graphs.addElement(graph);		
+		graphs = new ArrayList();
+		graphs.add(graph);		
 	}
 
-	public void setAtomContainer(AtomContainer ac)
-	{
+	public void setAtomContainer(IAtomContainer ac) {
 		baseAtomContainer  = ac;
 		initGraph();
-		System.out.println("Number of classes after initialization: " + ((Graph)graphs.elementAt(0)).size());
+		logger.debug("Number of classes after initialization: ", ((Graph)graphs.get(0)).size());
 	}	
 	
 	private void initGraph()
 	{
-		AtomContainer ac = null;
-		org.openscience.cdk.interfaces.IAtom atom = null;
-		Graph graph = (Graph)graphs.elementAt(0);
+		IAtomContainer ac = null;
+		IAtom atom = null;
+		Graph graph = (Graph)graphs.get(0);
 		for (int f = 0; f < baseAtomContainer.getAtomCount(); f++)
 		{
-			ac = new org.openscience.cdk.AtomContainer();
+			ac = baseAtomContainer.getBuilder().newAtomContainer();
 			atom = baseAtomContainer.getAtom(f);
 			ac.addAtom(atom);
 			ac.setProperty("class", new Integer(atom.getHydrogenCount()));
-			graph.addElement(ac);
+			graph.add(ac);
 		}
 		graph.partition();
-		System.out.println("Number of initial distinct classes: " + graph.getNumberOfClasses());
+		logger.debug("Number of initial distinct classes: ", graph.getNumberOfClasses());
 	}
 	
-	 
 }
-
