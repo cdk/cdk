@@ -137,6 +137,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 	double moveoldX;
 	double moveoldY;
 	private IUndoRedoHandler undoRedoHandler;
+	
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -226,7 +227,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		int mouseY = mouseCoords[1];
 		highlightNearestChemObject(mouseX, mouseY);
 		//this is the rotate feature
-		if(r2dm.getSelectedPart()!=null && r2dm.getHighlightedAtom()==null && r2dm.getHighlightedBond()==null && c2dm.getDrawMode() == Controller2DModel.LASSO){
+		if(c2dm.isMovingAllowed() && r2dm.getSelectedPart()!=null && r2dm.getHighlightedAtom()==null && r2dm.getHighlightedBond()==null && c2dm.getDrawMode() == Controller2DModel.LASSO){
 			double xmin=Double.MAX_VALUE;
 			double xmax=Double.MIN_VALUE;
 			double ymin=Double.MAX_VALUE;
@@ -408,7 +409,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		   r2dm.getRotateRadius()==0){
 			r2dm.setSelectedPart(atomInRange.getBuilder().newAtomContainer());
 		}
-
+		
 		if (c2dm.getDrawMode() == Controller2DModel.MOVE)
 		{
 			selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
@@ -431,7 +432,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			dragMode = DRAG_MAKING_SQUARE_SELECTION;
 		} else if (c2dm.getDrawMode() == Controller2DModel.LASSO && r2dm.getRotateRadius()==0)
 		{
-			if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
+			if(c2dm.isMovingAllowed() && r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
 				if(r2dm.getSelectedPart().getAtomCount()>0)
 					c2dm.setDrawMode(Controller2DModel.MOVE);
 				if(lastAction!=null){
@@ -440,7 +441,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					moveButton.setBackground(Color.GRAY);
 				}
 				dragMode = DRAG_MOVING_SELECTED;
-			}else{
+			}
+			else{
 				dragMode = DRAG_MAKING_LASSO_SELECTION;
 			}
 		} else if (c2dm.getDrawMode() == Controller2DModel.RING ||
@@ -450,6 +452,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		} else if(r2dm.getRotateRadius()!=0){
 			dragMode = DRAG_ROTATE;
 		}
+		
 		if(dragMode==DRAG_MOVING_SELECTED){
 			if (r2dm.getSelectedPart() != null && r2dm.getSelectedPart().getAtom(0) != null) {
 				moveoldX=((Point2d)r2dm.getRenderingCoordinate(r2dm.getSelectedPart().getAtom(0))).x;

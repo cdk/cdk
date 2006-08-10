@@ -81,7 +81,8 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
     private boolean autoUpdateImplicitHydrogens = false;
 	private UndoManager undoManager;
 	private UndoableEditSupport undoSupport;
-    
+	//for controlling, if the structure or substructural parts might be moved
+	private boolean isMovingAllowed = true;
     
     public Controller2DModel() {
         undoManager = new UndoManager();
@@ -371,4 +372,19 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 		this.undoManager = undoManager;
 	}
 
+	/**
+	 * To retrieve the value of the isMovingAllowed flag
+	 * @return boolean isMovingAllowed
+	 */
+	public boolean isMovingAllowed() {
+		return isMovingAllowed;
+	}
+
+	/**
+	 * Lets you set the siMovingAllowed flag
+	 * @param isMovingAllowed
+	 */
+	public void setMovingAllowed(boolean isMovingAllowed) {
+		this.isMovingAllowed = isMovingAllowed;
+	}
 }
