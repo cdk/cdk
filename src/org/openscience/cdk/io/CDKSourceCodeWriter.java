@@ -34,6 +34,9 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -41,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -136,7 +140,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     
     public void writeMolecule(IMolecule molecule) throws Exception {
         writer.write("{\n");
-        writer.write("  Molecule mol = new Molecule();\n");
+        writer.write("  IMolecule mol = new Molecule();\n");
         IDCreator idCreator = new IDCreator();
         idCreator.createIDs(molecule);
         IAtom[] atoms = molecule.getAtoms();
@@ -155,17 +159,38 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
     public void writeAtom(IAtom atom) throws Exception {
-        writer.write("  Atom " + atom.getID() + " = new Atom(\"" + atom.getSymbol() +
+        writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
                      "\");\n");
+        if (atom.getPoint2d() != null) {
+        	Point2d p2d = atom.getPoint2d();
+        	writer.write("  " + atom.getID() + ".setPoint2d(new Point2d(" +
+        		p2d.x + ", " + p2d.y + "));");
+        }
+        if (atom.getPoint3d() != null) {
+        	Point3d p3d = atom.getPoint3d();
+        	writer.write("  " + atom.getID() + ".setPoint3d(new Point3d(" +
+        		p3d.x + ", " + p3d.y + ", " + p3d.z + "));");
+        }
     }
     
     public void writeBond(IBond bond) throws Exception {
-        writer.write("  Bond " + bond.getID() + " = new Bond(" + 
+        writer.write("  IBond " + bond.getID() + " = mol.getBuilder().newBond(" + 
                      bond.getAtom(0).getID() + ", " +
                      bond.getAtom(1).getID() + ", " +
                      bond.getOrder() + ");\n");
     }
     
+	public int getSupportedDataFeatures() {
+		return DataFeatures.HAS_2D_COORDINATES |
+               DataFeatures.HAS_3D_COORDINATES |
+               DataFeatures.HAS_GRAPH_REPRESENTATION |
+               DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+	}
+
+	public int getRequiredDataFeatures() {
+		return DataFeatures.HAS_GRAPH_REPRESENTATION |
+        	   DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+	}
 }
 
 
