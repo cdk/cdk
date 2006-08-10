@@ -470,9 +470,9 @@ public class Convertor {
         	CMLBondStereo bondStereo = new CMLBondStereo();
             this.checkPrefix(bondStereo);
             if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP) {
-                bondStereo.setDictRef("mdl:W");
+                bondStereo.setDictRef("cml:W");
             } else {
-                bondStereo.setDictRef("mdl:H");
+                bondStereo.setDictRef("cml:H");
             }
             cmlBond.appendChild(bondStereo);
         }
