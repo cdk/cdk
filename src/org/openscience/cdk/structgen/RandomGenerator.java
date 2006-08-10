@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -24,15 +21,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
-
 package org.openscience.cdk.structgen;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
@@ -42,32 +37,21 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *
  * @cdk.keyword structure generator
  */
-public class RandomGenerator
-{
-	private Molecule proposedStructure = null;
-	private Molecule molecule = null;
-	private Molecule trial = null;
-	//private Vector bonds = null;
-	public boolean debug = false;
-	//private int[] correctBondOrderSums;
+public class RandomGenerator {
+	
+	LoggingTool logger = new LoggingTool(RandomGenerator.class);
+	
+	private IMolecule proposedStructure = null;
+	private IMolecule molecule = null;
+	private IMolecule trial = null;
 
 	/**
-	 * The empty contructor
-	 */
-	public RandomGenerator()
-	{
-		trial = new Molecule();
-	}
-
-
-	/**
-	 * Constructs a RandomGenerator with a given starting structure
+	 * Constructs a RandomGenerator with a given starting structure.
 	 *
 	 * @param   molecule  The starting structure
 	 */
-	public RandomGenerator(Molecule molecule)
+	public RandomGenerator(IMolecule molecule)
 	{
-		this ();
 		setMolecule(molecule);
 	}
 
@@ -79,32 +63,29 @@ public class RandomGenerator
 	 *
 	 * @return A proposed molecule    
 	 */
-	public Molecule proposeStructure()
+	public IMolecule proposeStructure()
 	{
-		if(debug) System.out.println("RandomGenerator->proposeStructure() Start");
+		logger.debug("RandomGenerator->proposeStructure() Start");
 		do
 		{
 			try {
-				trial = (Molecule)molecule.clone();
+				trial = (IMolecule)molecule.clone();
 			} catch (CloneNotSupportedException e) {
 				System.out.println("Could not clone IAtomContainer!" + e.getMessage());
 				trial = null;
 			}
 			mutate(trial);
-			if(debug)
-			{
+			if(logger.isDebugEnabled()) {
 				String s = "BondCounts:    ";
-				for (int f = 0; f < trial.getAtomCount(); f++)
-				{
+				for (int f = 0; f < trial.getAtomCount(); f++) {
 					s += trial.getBondCount(trial.getAtom(f)) + " ";
 				}
-				System.out.println(s);
+				logger.debug(s);
 				s = "BondOrderSums: ";
-				for (int f = 0; f < trial.getAtomCount(); f++)
-				{
+				for (int f = 0; f < trial.getAtomCount(); f++) {
 					s += trial.getBondOrderSum(trial.getAtom(f)) + " ";
 				}
-				System.out.println(s);
+				logger.debug(s);
 			}
 		}
 		while(trial == null || !ConnectivityChecker.isConnected(trial));
@@ -114,7 +95,7 @@ public class RandomGenerator
 	}
 
 	/**
-	 * Tell the RandomGenerator to accept the last structure that had been proposed
+	 * Tell the RandomGenerator to accept the last structure that had been proposed.
 	 */
 	public void acceptStructure()
 	{
@@ -128,11 +109,11 @@ public class RandomGenerator
 	/**
 	 * Randomly chooses four atoms and alters the bonding
 	 * pattern between them according to rules described 
-	 * in "Faulon, JCICS 1996, 36, 731"
+	 * in "Faulon, JCICS 1996, 36, 731".
 	 */
-	protected void mutate(AtomContainer ac)
+	protected void mutate(IAtomContainer ac)
 	{
-		if(debug) System.out.println("RandomGenerator->mutate() Start");
+		logger.debug("RandomGenerator->mutate() Start");
 		int nrOfAtoms = ac.getAtomCount();
 		int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
@@ -157,7 +138,7 @@ public class RandomGenerator
 					x2 = (int)(Math.random() * nrOfAtoms);
 					y1 = (int)(Math.random() * nrOfAtoms);
 					y2 = (int)(Math.random() * nrOfAtoms);
-					if (debug) System.out.println("RandomGenerator->mutate(): x1, x2, y1, y2: " + x1 + ", " + x2 + ", " + y1 + ", " + y2);
+					logger.debug("RandomGenerator->mutate(): x1, x2, y1, y2: " + x1 + ", " + x2 + ", " + y1 + ", " + y2);
 				}
 				while (!(x1 != x2 && x1 != y1 && x1 != y2 && x2 != y1 && x2 != y2 && y1 != y2));
 				ax1 = ac.getAtom(x1);
@@ -209,7 +190,7 @@ public class RandomGenerator
 				{
 					a22 = 0;
 				}
-				if(debug) System.out.println("RandomGenerator->mutate()->The old bond orders: a11, a12, a21, a22: " +  + a11 + ", " + a12 + ", " + a21 + ", " + a22);
+				logger.debug("RandomGenerator->mutate()->The old bond orders: a11, a12, a21, a22: " +  + a11 + ", " + a12 + ", " + a21 + ", " + a22);
 			}while(nonZeroBondsCounter < 2);
 			
 					
@@ -219,13 +200,10 @@ public class RandomGenerator
 			lowerborder = max(cmax);
 			upperborder = min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
-			if (debug) 				
-			{
-				System.out.println("*** New Try ***");
-				System.out.println("a11 = " + a11);
-				System.out.println("upperborder = " + upperborder);
-				System.out.println("lowerborder = " + lowerborder);
-			}
+			logger.debug("*** New Try ***");
+			logger.debug("a11 = ", a11);
+			logger.debug("upperborder = ", upperborder);
+			logger.debug("lowerborder = ", lowerborder);
 			choiceCounter = 0;
 			for (double f = lowerborder; f <= upperborder; f++)
 			{
@@ -240,11 +218,7 @@ public class RandomGenerator
 				b11 = choices[(int)(Math.random() * choiceCounter)];
 			}
 
-			if (debug) 				
-			{
-				System.out.println("b11 = " + b11);
-			}
-
+			logger.debug("b11 = " + b11);
 		}
 		while (!(b11 != a11 && (b11 >= lowerborder && b11 <= upperborder)));
 
@@ -257,7 +231,7 @@ public class RandomGenerator
 		{
 			if (b1 == null)
 			{
-				b1 = new Bond(ax1, ay1, b11);
+				b1 = ac.getBuilder().newBond(ax1, ay1, b11);
 				ac.addBond(b1);
 			}
 			else
@@ -274,7 +248,7 @@ public class RandomGenerator
 		{
 			if (b2 == null)
 			{
-				b2 = new Bond(ax1, ay2, b12);
+				b2 = ac.getBuilder().newBond(ax1, ay2, b12);
 				ac.addBond(b2);
 			}
 			else
@@ -291,7 +265,7 @@ public class RandomGenerator
 		{
 			if (b3 == null)
 			{
-				b3 = new Bond(ax2, ay1, b21);
+				b3 = ac.getBuilder().newBond(ax2, ay1, b21);
 				ac.addBond(b3);
 			}
 			else
@@ -308,7 +282,7 @@ public class RandomGenerator
 		{
 			if (b4 == null)
 			{
-				b4 = new Bond(ax2, ay2, b22);
+				b4 = ac.getBuilder().newBond(ax2, ay2, b22);
 				ac.addBond(b4);
 			}
 			else
@@ -321,16 +295,13 @@ public class RandomGenerator
 			ac.removeElectronContainer(b4);
 		}
 		
-		if (debug) 
-		{				
-			System.out.println("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
-			System.out.println("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
-		}
+		logger.debug("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
+		logger.debug("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
 	}
 
 
 	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints
+	 * Analog of <code>Math.max</code> that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the largest value among them
 	 * @return   the largest value among a set of given values  
@@ -349,7 +320,7 @@ public class RandomGenerator
 	}
 
 	/**
-	 * Analog of Math.min that returns the largest int value in an array of ints
+	 * Analog of <code>Math.min</code> that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the smallest value among them
 	 * @return   the smallest value among a set of given values  
@@ -369,11 +340,11 @@ public class RandomGenerator
 
 	
 	/**
-	 * Assigns a starting structure to this generator
+	 * Assigns a starting structure to this generator.
 	 *
 	 * @param   molecule  a starting structure for this generator
 	 */
-	public void setMolecule(Molecule molecule)
+	public void setMolecule(IMolecule molecule)
 	{
 		this.molecule = molecule;	
 	}
@@ -381,11 +352,11 @@ public class RandomGenerator
 
 	/**
 	 * Returns the molecule which reflects the current state of this
-	 * Stochastic Structure Generator
+	 * stochastic structure generator.
 	 *
 	 * @return The molecule    
 	 */
-	public Molecule getMolecule()
+	public IMolecule getMolecule()
 	{
 		return this.molecule;
 	}
