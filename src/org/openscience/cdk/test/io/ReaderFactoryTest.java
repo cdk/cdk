@@ -44,6 +44,7 @@ import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;
 import org.openscience.cdk.io.formats.CMLFormat;
+import org.openscience.cdk.io.formats.CTXFormat;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.Gaussian92Format;
 import org.openscience.cdk.io.formats.Gaussian94Format;
@@ -160,6 +161,10 @@ public class ReaderFactoryTest extends CDKTestCase {
     
     public void testMol2() {
     	expectReader("data/mol2/fromWebsite.mol2", Mol2Format.getInstance());
+    }
+    
+    public void testCTX() {
+    	expectReader("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance());
     }
     
     private void expectFormat(String filename, IResourceFormat expectedFormat) {
