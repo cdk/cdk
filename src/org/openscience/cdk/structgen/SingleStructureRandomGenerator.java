@@ -1,4 +1,4 @@
-/*  $RCSfile$
+/*  $RCSfile: $
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -30,11 +30,12 @@ package org.openscience.cdk.structgen;
 
 import java.util.Random;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
@@ -54,24 +55,25 @@ import org.openscience.cdk.tools.SaturationChecker;
  * structure by using the generate() method. You can then repeatedly call
  * the generate() method in order to retrieve further structures. 
  * 
- * <p>Agenda<ul>
+ * <p>Agenda:
+ * <ul>
  *  <li>add a method for randomly adding hydrogens to the atoms
  *  <li>add a seed for random generator for reproducability
  * </ul>
  *
- * @author     steinbeck
- * @cdk.created    2001-09-04
+ * @author      steinbeck
+ * @cdk.created 2001-09-04
  */
-public class SingleStructureRandomGenerator
-{
-	AtomContainer atomContainer;
+public class SingleStructureRandomGenerator {
+	
+	LoggingTool logger = new LoggingTool(SingleStructureRandomGenerator.class);
+	
+	IAtomContainer atomContainer;
 	SaturationChecker satCheck;
-	final static boolean debug = true;
 	Random random = null;
 
 	/**
-	 *  Constructor for the SingleStructureRandomGenerator object
-	 *
+	 * Constructor for the SingleStructureRandomGenerator object.
 	 */
 	public SingleStructureRandomGenerator(long seed) throws java.lang.Exception
 	{
@@ -80,7 +82,7 @@ public class SingleStructureRandomGenerator
 	}
 
 	/**
-	 *  Constructor for the SingleStructureRandomGenerator object
+	 * Constructor for the SingleStructureRandomGenerator object.
 	 */
 	public SingleStructureRandomGenerator() throws java.lang.Exception
 	{
@@ -89,24 +91,27 @@ public class SingleStructureRandomGenerator
 
 	
 	/**
-	 *  Sets the AtomContainer attribute of the SingleStructureRandomGenerator object
+	 * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
 	 *
 	 * @param  ac  The new AtomContainer value
 	 */
-	public void setAtomContainer(AtomContainer ac)
+	public void setAtomContainer(IAtomContainer ac)
 	{
 		this.atomContainer = ac;
 	}
 
-	public Molecule generate() throws CDKException
+	/**
+	 * Generates a random structure based on the atoms in the given IAtomContainer.
+	 */
+	public IMolecule generate() throws CDKException
 	{
 		boolean structureFound = false;
 		boolean bondFormed;
 		double order;
 		double max, cmax1, cmax2;
 		int iteration = 0;
-		org.openscience.cdk.interfaces.IAtom partner;
-		org.openscience.cdk.interfaces.IAtom atom;
+		IAtom partner;
+		IAtom atom;
 		do
 		{
 			iteration++;
@@ -128,41 +133,42 @@ public class SingleStructureRandomGenerator
 							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
 							max = Math.min(cmax1, cmax2);
 							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
-							if (debug) System.out.println("Forming bond of order " + order);
-							atomContainer.addBond(new Bond(atom, partner, order));
+							logger.debug("Forming bond of order ", order);
+							atomContainer.addBond(
+								atomContainer.getBuilder().newBond(atom, partner, order)
+							);
 							bondFormed = true;
 						}
 					}
 				}
 			} while (bondFormed);
-			//System.out.println("Blaeh");
-			if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer))
+			if (ConnectivityChecker.isConnected(atomContainer)
+					&& satCheck.allSaturated(atomContainer))
 			{
 				structureFound = true;
 			}
 		} while (!structureFound && iteration < 20);
-		if (debug)
-		{
-			System.out.println("Structure found after " + iteration + " iterations.");	
-		}
-		return new Molecule(atomContainer);
+		logger.debug("Structure found after #iterations: ", iteration);	
+		return atomContainer.getBuilder().newMolecule(atomContainer);
 	}
 
 	
 	/**
-	 *  Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object
+	 * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
 	 *
 	 * @return                The AnotherUnsaturatedNode value
 	 */
-	private org.openscience.cdk.interfaces.IAtom getAnotherUnsaturatedNode(org.openscience.cdk.interfaces.IAtom exclusionAtom) throws CDKException
+	private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException
 	{
-		org.openscience.cdk.interfaces.IAtom atom;
+		IAtom atom;
 		int next = random.nextInt(atomContainer.getAtomCount());
 
 		for (int f = next; f < atomContainer.getAtomCount(); f++)
 		{
 			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+			if (!satCheck.isSaturated(atom, atomContainer)
+					&& exclusionAtom != atom 
+					&& !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
 			{
 				return atom;
 			}
@@ -170,7 +176,9 @@ public class SingleStructureRandomGenerator
 		for (int f = 0; f < next; f++)
 		{
 			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom && !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+			if (!satCheck.isSaturated(atom, atomContainer) 
+					&& exclusionAtom != atom 
+					&& !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
 			{
 				return atom;
 			}
@@ -178,18 +186,5 @@ public class SingleStructureRandomGenerator
 		return null;
 	}
 
-	public Object clone()
-	{
-		Object o = null;
-		try
-		{
-			o = super.clone();
-		}
-		catch (CloneNotSupportedException e)
-		{
-			System.err.println("MyObject can't clone");
-		}
-		return o;
-	}
 }
 
