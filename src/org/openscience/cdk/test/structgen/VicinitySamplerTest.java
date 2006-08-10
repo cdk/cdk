@@ -29,7 +29,7 @@
 
 package org.openscience.cdk.test.structgen;
 
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -71,16 +71,15 @@ public class VicinitySamplerTest extends CDKTestCase
 		fixCarbonHCount(mol);
 		
 		//System.out.println("Initial Molecule: \n" + mol);
-		VicinitySampler vs = new VicinitySampler();
-		vs.setMolecule(mol);
+		VicinitySampler vs = new VicinitySampler(mol);
 
 		SmilesGenerator sg = null;
 		Molecule temp = null;
-		Vector structures = vs.sample((AtomContainer) mol);
-		structures.addElement(mol);
+		List structures = vs.sample((AtomContainer) mol);
+		structures.add(mol);
 		for (int f = 0; f < structures.size(); f++)
 		{
-			temp = (Molecule)structures.elementAt(f);
+			temp = (Molecule)structures.get(f);
 			sg = new SmilesGenerator(temp.getBuilder());
 			//System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
 		}
@@ -121,7 +120,7 @@ public class VicinitySamplerTest extends CDKTestCase
 	}
 
 	
-	private void display(Vector structures) throws Exception 
+	private void display(List structures) throws Exception 
 	{
 		MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
 		moleculeListViewer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,7 +132,7 @@ public class VicinitySamplerTest extends CDKTestCase
 			sdg = new StructureDiagramGenerator();
 			mv = new MoleculeViewer2D();
 			mv.getRenderer2DModel().setDrawNumbers(true);
-			mol = (Molecule)structures.elementAt(f);
+			mol = (Molecule)structures.get(f);
 			sdg.setMolecule((Molecule)mol.clone());
 
 			try

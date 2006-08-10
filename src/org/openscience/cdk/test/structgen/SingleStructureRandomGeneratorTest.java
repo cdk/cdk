@@ -35,6 +35,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.structgen.SingleStructureRandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -151,7 +152,7 @@ public class SingleStructureRandomGeneratorTest
         public void actionPerformed(ActionEvent e)
 		{
       try{
-        AtomContainer ac = ssrg.generate();
+        IAtomContainer ac = ssrg.generate();
         showIt((Molecule)ac, "Randomly generated for " + mf);
       }
       catch(CDKException ex){System.err.println(ex.getMessage());}

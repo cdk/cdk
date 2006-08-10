@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -71,12 +72,11 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	{
 		String s = null;
 		Vector structures = new Vector();	
-		Molecule mol = null;
+		IMolecule mol = null;
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		listviewer = new MoleculeListViewer();
 		//System.out.println(molecule);
-		RandomGenerator rg = new RandomGenerator();
-		rg.setMolecule(molecule);
+		RandomGenerator rg = new RandomGenerator(molecule);
 	
 		for (int f = 0; f < 20; f++)
 		{
