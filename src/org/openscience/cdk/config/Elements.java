@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IElement;
  * version 3.
  * 
  * @author     egonw
- * @cdk.module extra
+ * @cdk.module standard 
  */
 public class Elements {
 
