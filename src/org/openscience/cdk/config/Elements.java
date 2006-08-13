@@ -35,246 +35,126 @@ import org.openscience.cdk.interfaces.IElement;
  * version 3.
  * 
  * @author     egonw
- * @cdk.module standard 
+ * @cdk.module extra 
  */
 public class Elements {
-
-	public final static String[] symbols = {
-		"Xx", // 0
-		"H", // 1
-		"He", // 2
-		"Li", // 3
-		"Be", // 4
-		"B", // 5
-		"C", // 6
-		"N", // 7
-		"O", // 8
-		"F", // 9
-		"Ne", // 10
-		"Na", // 11
-		"Mg", // 12
-		"Al", // 13
-		"Si", // 14
-		"P", // 15
-		"S", // 16
-		"Cl", // 17
-		"Ar", // 18
-		"K", // 19
-		"Ca", // 20
-		"Sc", // 21
-		"Ti", // 22
-		"V", // 23
-		"Cr", // 24
-		"Mn", // 25
-		"Fe", // 26
-		"Co", // 27
-		"Ni", // 28
-		"Cu", // 29
-		"Zn", // 30
-		"Ga", // 31
-		"Ge", // 32
-		"As", // 33
-		"Se", // 34
-		"Br", // 35
-		"Kr", // 36
-		"Rb", // 37
-		"Sr", // 38
-		"Y", // 39
-		"Zr", // 40
-		"Nb", // 41
-		"Mo", // 42
-		"Tc", // 43
-		"Ru", // 44
-		"Rh", // 45
-		"Pd", // 46
-		"Ag", // 47
-		"Cd", // 48
-		"In", // 49
-		"Sn", // 50
-		"Sb", // 51
-		"Te", // 52
-		"I", // 53
-		"Xe", // 54
-		"Cs", // 55
-		"Ba", // 56
-		"La", // 57
-		"Ce", // 58
-		"Pr", // 59
-		"Nd", // 60
-		"Pm", // 61
-		"Sm", // 62
-		"Eu", // 63
-		"Gd", // 64
-		"Tb", // 65
-		"Dy", // 66
-		"Ho", // 67
-		"Er", // 68
-		"Tm", // 69
-		"Yb", // 70
-		"Lu", // 71
-		"Hf", // 72
-		"Ta", // 73
-		"W", // 74
-		"Re", // 75
-		"Os", // 76
-		"Ir", // 77
-		"Pt", // 78
-		"Au", // 79
-		"Hg", // 80
-		"Tl", // 81
-		"Pb", // 82
-		"Bi", // 83
-		"Po", // 84
-		"At", // 85
-		"Rn", // 86
-		"Fr", // 87
-		"Ra", // 88
-		"Ac", // 89
-		"Th", // 90
-		"Pa", // 91
-		"U", // 92
-		"Np", // 93
-		"Pu", // 94
-		"Am", // 95
-		"Cm", // 96
-		"Bk", // 97
-		"Cf", // 98
-		"Es", // 99
-		"Fm", // 100
-		"Md", // 101
-		"No", // 102
-		"Lr", // 103
-		"Rf", // 104
-		"Db", // 105
-		"Sg", // 106
-		"Bh", // 107
-		"Hs", // 108
-		"Mt", // 109
-		"Ds", // 110
-		"Rg", // 111
-		"Uub", // 112
-		"Uut", // 113
-		"Uuq", // 114
-		"Uup", // 115
-		"Uuh" // 116
-	};
 	
-	public final static IElement DUMMY = new Element(symbols[0], 0);
-	public final static IElement HYDROGEN = new Element(symbols[1], 1);
-	public final static IElement HELIUM = new Element(symbols[2], 2);
-	public final static IElement LITHIUM = new Element(symbols[3], 3);
-	public final static IElement BERYLLIUM = new Element(symbols[4], 4);
-	public final static IElement BORON = new Element(symbols[5], 5);
-	public final static IElement CARBON = new Element(symbols[6], 6);
-	public final static IElement NITROGEN = new Element(symbols[7], 7);
-	public final static IElement OXYGEN = new Element(symbols[8], 8);
-	public final static IElement FLUORINE = new Element(symbols[9], 9);
-	public final static IElement NEON = new Element(symbols[10], 10);
-	public final static IElement SODIUM = new Element(symbols[11], 11);
-	public final static IElement MAGNESIUM = new Element(symbols[12], 12);
-	public final static IElement ALUMINIUM = new Element(symbols[13], 13);
-	public final static IElement SILICON = new Element(symbols[14], 14);
-	public final static IElement PHOSPHORUS = new Element(symbols[15], 15);
-	public final static IElement SULFUR = new Element(symbols[16], 16);
-	public final static IElement CHLORINE = new Element(symbols[17], 17);
-	public final static IElement ARGON = new Element(symbols[18], 18);
-	public final static IElement POTASSIUM = new Element(symbols[19], 19);
-	public final static IElement CALCIUM = new Element(symbols[20], 20);
-	public final static IElement SCANDIUM = new Element(symbols[21], 21);
-	public final static IElement TITANIUM = new Element(symbols[22], 22);
-	public final static IElement VANADIUM = new Element(symbols[23], 23);
-	public final static IElement CHROMIUM = new Element(symbols[24], 24);
-	public final static IElement MANGANESE = new Element(symbols[25], 25);
-	public final static IElement IRON = new Element(symbols[26], 26);
-	public final static IElement COBALT = new Element(symbols[27], 27);
-	public final static IElement NICKEL = new Element(symbols[28], 28);
-	public final static IElement COPPER = new Element(symbols[29], 29);
-	public final static IElement ZINC = new Element(symbols[30], 30);
-	public final static IElement GALLIUM = new Element(symbols[31], 31);
-	public final static IElement GERMANIUM = new Element(symbols[32], 32);
-	public final static IElement ARSENIC = new Element(symbols[33], 33);
-	public final static IElement SELENIUM = new Element(symbols[34], 34);
-	public final static IElement BROMINE = new Element(symbols[35], 35);
-	public final static IElement KRYPTON = new Element(symbols[36], 36);
-	public final static IElement RUBIDIUM = new Element(symbols[37], 37);
-	public final static IElement STRONTIUM = new Element(symbols[38], 38);
-	public final static IElement YTTRIUM = new Element(symbols[39], 39);
-	public final static IElement ZIRCONIUM = new Element(symbols[40], 40);
-	public final static IElement NIOBIUM = new Element(symbols[41], 41);
-	public final static IElement MOLYBDENUM = new Element(symbols[42], 42);
-	public final static IElement TECHNETIUM = new Element(symbols[43], 43);
-	public final static IElement RUTHENIUM = new Element(symbols[44], 44);
-	public final static IElement RHODIUM = new Element(symbols[45], 45);
-	public final static IElement PALLADIUM = new Element(symbols[46], 46);
-	public final static IElement SILVER = new Element(symbols[47], 47);
-	public final static IElement CADMIUM = new Element(symbols[48], 48);
-	public final static IElement INDIUM = new Element(symbols[49], 49);
-	public final static IElement TIN = new Element(symbols[50], 50);
-	public final static IElement ANTIMONY = new Element(symbols[51], 51);
-	public final static IElement TELLURIUM = new Element(symbols[52], 52);
-	public final static IElement IODINE = new Element(symbols[53], 53);
-	public final static IElement XENON = new Element(symbols[54], 54);
-	public final static IElement CAESIUM = new Element(symbols[55], 55);
-	public final static IElement BARIUM = new Element(symbols[56], 56);
-	public final static IElement LANTHANUM = new Element(symbols[57], 57);
-	public final static IElement CERIUM = new Element(symbols[58], 58);
-	public final static IElement PRASEODYMIUM = new Element(symbols[59], 59);
-	public final static IElement NEODYMIUM = new Element(symbols[60], 60);
-	public final static IElement PROMETHIUM = new Element(symbols[61], 61);
-	public final static IElement SAMARIUM = new Element(symbols[62], 62);
-	public final static IElement EUROPIUM = new Element(symbols[63], 63);
-	public final static IElement GADOLINIUM = new Element(symbols[64], 64);
-	public final static IElement TERBIUM = new Element(symbols[65], 65);
-	public final static IElement DYSPROSIUM = new Element(symbols[66], 66);
-	public final static IElement HOLMIUM = new Element(symbols[67], 67);
-	public final static IElement ERBIUM = new Element(symbols[68], 68);
-	public final static IElement THULIUM = new Element(symbols[69], 69);
-	public final static IElement YTTERBIUM = new Element(symbols[70], 70);
-	public final static IElement LUTETIUM = new Element(symbols[71], 71);
-	public final static IElement HAFNIUM = new Element(symbols[72], 72);
-	public final static IElement TANTALUM = new Element(symbols[73], 73);
-	public final static IElement TUNGSTEN = new Element(symbols[74], 74);
-	public final static IElement RHENIUM = new Element(symbols[75], 75);
-	public final static IElement OSMIUM = new Element(symbols[76], 76);
-	public final static IElement IRIDIUM = new Element(symbols[77], 77);
-	public final static IElement PLATINUM = new Element(symbols[78], 78);
-	public final static IElement GOLD = new Element(symbols[79], 79);
-	public final static IElement MERCURY = new Element(symbols[80], 80);
-	public final static IElement THALLIUM = new Element(symbols[81], 81);
-	public final static IElement LEAD = new Element(symbols[82], 82);
-	public final static IElement BISMUTH = new Element(symbols[83], 83);
-	public final static IElement POLONIUM = new Element(symbols[84], 84);
-	public final static IElement ASTATINE = new Element(symbols[85], 85);
-	public final static IElement RADON = new Element(symbols[86], 86);
-	public final static IElement FRANCIUM = new Element(symbols[87], 87);
-	public final static IElement RADIUM = new Element(symbols[88], 88);
-	public final static IElement ACTINIUM = new Element(symbols[89], 89);
-	public final static IElement THORIUM = new Element(symbols[90], 90);
-	public final static IElement PROTACTINIUM = new Element(symbols[91], 91);
-	public final static IElement URANIUM = new Element(symbols[92], 92);
-	public final static IElement NEPTUNIUM = new Element(symbols[93], 93);
-	public final static IElement PLUTONIUM = new Element(symbols[94], 94);
-	public final static IElement AMERICIUM = new Element(symbols[95], 95);
-	public final static IElement CURIUM = new Element(symbols[96], 96);
-	public final static IElement BERKELIUM = new Element(symbols[97], 97);
-	public final static IElement CALIFORNIUM = new Element(symbols[98], 98);
-	public final static IElement EINSTEINIUM = new Element(symbols[99], 99);
-	public final static IElement FERMIUM = new Element(symbols[100], 100);
-	public final static IElement MENDELEVIUM = new Element(symbols[101], 101);
-	public final static IElement NOBELIUM = new Element(symbols[102], 102);
-	public final static IElement LAWRENCIUM = new Element(symbols[103], 103);
-	public final static IElement RUTHERFORDIUM = new Element(symbols[104], 104);
-	public final static IElement DUBNIUM = new Element(symbols[105], 105);
-	public final static IElement SEABORGIUM = new Element(symbols[106], 106);
-	public final static IElement BOHRIUM = new Element(symbols[107], 107);
-	public final static IElement HASSIUM = new Element(symbols[108], 108);
-	public final static IElement MEITNERIUM = new Element(symbols[109], 109);
-	public final static IElement DARMSTADTIUM = new Element(symbols[110], 110);
-	public final static IElement ROENTGENIUM = new Element(symbols[111], 111);
-	public final static IElement UNUNBIUM = new Element(symbols[112], 112);
-	public final static IElement UNUNTRIUM = new Element(symbols[113], 113);
-	public final static IElement UNUNQUADIUM = new Element(symbols[114], 114);
-	public final static IElement UNUNPENTIUM = new Element(symbols[115], 115);
-	public final static IElement UNUNHEXIUM = new Element(symbols[116], 116);
+	public final static IElement DUMMY = new Element(Symbols.byAtomicNumber[0], 0);
+	public final static IElement HYDROGEN = new Element(Symbols.byAtomicNumber[1], 1);
+	public final static IElement HELIUM = new Element(Symbols.byAtomicNumber[2], 2);
+	public final static IElement LITHIUM = new Element(Symbols.byAtomicNumber[3], 3);
+	public final static IElement BERYLLIUM = new Element(Symbols.byAtomicNumber[4], 4);
+	public final static IElement BORON = new Element(Symbols.byAtomicNumber[5], 5);
+	public final static IElement CARBON = new Element(Symbols.byAtomicNumber[6], 6);
+	public final static IElement NITROGEN = new Element(Symbols.byAtomicNumber[7], 7);
+	public final static IElement OXYGEN = new Element(Symbols.byAtomicNumber[8], 8);
+	public final static IElement FLUORINE = new Element(Symbols.byAtomicNumber[9], 9);
+	public final static IElement NEON = new Element(Symbols.byAtomicNumber[10], 10);
+	public final static IElement SODIUM = new Element(Symbols.byAtomicNumber[11], 11);
+	public final static IElement MAGNESIUM = new Element(Symbols.byAtomicNumber[12], 12);
+	public final static IElement ALUMINIUM = new Element(Symbols.byAtomicNumber[13], 13);
+	public final static IElement SILICON = new Element(Symbols.byAtomicNumber[14], 14);
+	public final static IElement PHOSPHORUS = new Element(Symbols.byAtomicNumber[15], 15);
+	public final static IElement SULFUR = new Element(Symbols.byAtomicNumber[16], 16);
+	public final static IElement CHLORINE = new Element(Symbols.byAtomicNumber[17], 17);
+	public final static IElement ARGON = new Element(Symbols.byAtomicNumber[18], 18);
+	public final static IElement POTASSIUM = new Element(Symbols.byAtomicNumber[19], 19);
+	public final static IElement CALCIUM = new Element(Symbols.byAtomicNumber[20], 20);
+	public final static IElement SCANDIUM = new Element(Symbols.byAtomicNumber[21], 21);
+	public final static IElement TITANIUM = new Element(Symbols.byAtomicNumber[22], 22);
+	public final static IElement VANADIUM = new Element(Symbols.byAtomicNumber[23], 23);
+	public final static IElement CHROMIUM = new Element(Symbols.byAtomicNumber[24], 24);
+	public final static IElement MANGANESE = new Element(Symbols.byAtomicNumber[25], 25);
+	public final static IElement IRON = new Element(Symbols.byAtomicNumber[26], 26);
+	public final static IElement COBALT = new Element(Symbols.byAtomicNumber[27], 27);
+	public final static IElement NICKEL = new Element(Symbols.byAtomicNumber[28], 28);
+	public final static IElement COPPER = new Element(Symbols.byAtomicNumber[29], 29);
+	public final static IElement ZINC = new Element(Symbols.byAtomicNumber[30], 30);
+	public final static IElement GALLIUM = new Element(Symbols.byAtomicNumber[31], 31);
+	public final static IElement GERMANIUM = new Element(Symbols.byAtomicNumber[32], 32);
+	public final static IElement ARSENIC = new Element(Symbols.byAtomicNumber[33], 33);
+	public final static IElement SELENIUM = new Element(Symbols.byAtomicNumber[34], 34);
+	public final static IElement BROMINE = new Element(Symbols.byAtomicNumber[35], 35);
+	public final static IElement KRYPTON = new Element(Symbols.byAtomicNumber[36], 36);
+	public final static IElement RUBIDIUM = new Element(Symbols.byAtomicNumber[37], 37);
+	public final static IElement STRONTIUM = new Element(Symbols.byAtomicNumber[38], 38);
+	public final static IElement YTTRIUM = new Element(Symbols.byAtomicNumber[39], 39);
+	public final static IElement ZIRCONIUM = new Element(Symbols.byAtomicNumber[40], 40);
+	public final static IElement NIOBIUM = new Element(Symbols.byAtomicNumber[41], 41);
+	public final static IElement MOLYBDENUM = new Element(Symbols.byAtomicNumber[42], 42);
+	public final static IElement TECHNETIUM = new Element(Symbols.byAtomicNumber[43], 43);
+	public final static IElement RUTHENIUM = new Element(Symbols.byAtomicNumber[44], 44);
+	public final static IElement RHODIUM = new Element(Symbols.byAtomicNumber[45], 45);
+	public final static IElement PALLADIUM = new Element(Symbols.byAtomicNumber[46], 46);
+	public final static IElement SILVER = new Element(Symbols.byAtomicNumber[47], 47);
+	public final static IElement CADMIUM = new Element(Symbols.byAtomicNumber[48], 48);
+	public final static IElement INDIUM = new Element(Symbols.byAtomicNumber[49], 49);
+	public final static IElement TIN = new Element(Symbols.byAtomicNumber[50], 50);
+	public final static IElement ANTIMONY = new Element(Symbols.byAtomicNumber[51], 51);
+	public final static IElement TELLURIUM = new Element(Symbols.byAtomicNumber[52], 52);
+	public final static IElement IODINE = new Element(Symbols.byAtomicNumber[53], 53);
+	public final static IElement XENON = new Element(Symbols.byAtomicNumber[54], 54);
+	public final static IElement CAESIUM = new Element(Symbols.byAtomicNumber[55], 55);
+	public final static IElement BARIUM = new Element(Symbols.byAtomicNumber[56], 56);
+	public final static IElement LANTHANUM = new Element(Symbols.byAtomicNumber[57], 57);
+	public final static IElement CERIUM = new Element(Symbols.byAtomicNumber[58], 58);
+	public final static IElement PRASEODYMIUM = new Element(Symbols.byAtomicNumber[59], 59);
+	public final static IElement NEODYMIUM = new Element(Symbols.byAtomicNumber[60], 60);
+	public final static IElement PROMETHIUM = new Element(Symbols.byAtomicNumber[61], 61);
+	public final static IElement SAMARIUM = new Element(Symbols.byAtomicNumber[62], 62);
+	public final static IElement EUROPIUM = new Element(Symbols.byAtomicNumber[63], 63);
+	public final static IElement GADOLINIUM = new Element(Symbols.byAtomicNumber[64], 64);
+	public final static IElement TERBIUM = new Element(Symbols.byAtomicNumber[65], 65);
+	public final static IElement DYSPROSIUM = new Element(Symbols.byAtomicNumber[66], 66);
+	public final static IElement HOLMIUM = new Element(Symbols.byAtomicNumber[67], 67);
+	public final static IElement ERBIUM = new Element(Symbols.byAtomicNumber[68], 68);
+	public final static IElement THULIUM = new Element(Symbols.byAtomicNumber[69], 69);
+	public final static IElement YTTERBIUM = new Element(Symbols.byAtomicNumber[70], 70);
+	public final static IElement LUTETIUM = new Element(Symbols.byAtomicNumber[71], 71);
+	public final static IElement HAFNIUM = new Element(Symbols.byAtomicNumber[72], 72);
+	public final static IElement TANTALUM = new Element(Symbols.byAtomicNumber[73], 73);
+	public final static IElement TUNGSTEN = new Element(Symbols.byAtomicNumber[74], 74);
+	public final static IElement RHENIUM = new Element(Symbols.byAtomicNumber[75], 75);
+	public final static IElement OSMIUM = new Element(Symbols.byAtomicNumber[76], 76);
+	public final static IElement IRIDIUM = new Element(Symbols.byAtomicNumber[77], 77);
+	public final static IElement PLATINUM = new Element(Symbols.byAtomicNumber[78], 78);
+	public final static IElement GOLD = new Element(Symbols.byAtomicNumber[79], 79);
+	public final static IElement MERCURY = new Element(Symbols.byAtomicNumber[80], 80);
+	public final static IElement THALLIUM = new Element(Symbols.byAtomicNumber[81], 81);
+	public final static IElement LEAD = new Element(Symbols.byAtomicNumber[82], 82);
+	public final static IElement BISMUTH = new Element(Symbols.byAtomicNumber[83], 83);
+	public final static IElement POLONIUM = new Element(Symbols.byAtomicNumber[84], 84);
+	public final static IElement ASTATINE = new Element(Symbols.byAtomicNumber[85], 85);
+	public final static IElement RADON = new Element(Symbols.byAtomicNumber[86], 86);
+	public final static IElement FRANCIUM = new Element(Symbols.byAtomicNumber[87], 87);
+	public final static IElement RADIUM = new Element(Symbols.byAtomicNumber[88], 88);
+	public final static IElement ACTINIUM = new Element(Symbols.byAtomicNumber[89], 89);
+	public final static IElement THORIUM = new Element(Symbols.byAtomicNumber[90], 90);
+	public final static IElement PROTACTINIUM = new Element(Symbols.byAtomicNumber[91], 91);
+	public final static IElement URANIUM = new Element(Symbols.byAtomicNumber[92], 92);
+	public final static IElement NEPTUNIUM = new Element(Symbols.byAtomicNumber[93], 93);
+	public final static IElement PLUTONIUM = new Element(Symbols.byAtomicNumber[94], 94);
+	public final static IElement AMERICIUM = new Element(Symbols.byAtomicNumber[95], 95);
+	public final static IElement CURIUM = new Element(Symbols.byAtomicNumber[96], 96);
+	public final static IElement BERKELIUM = new Element(Symbols.byAtomicNumber[97], 97);
+	public final static IElement CALIFORNIUM = new Element(Symbols.byAtomicNumber[98], 98);
+	public final static IElement EINSTEINIUM = new Element(Symbols.byAtomicNumber[99], 99);
+	public final static IElement FERMIUM = new Element(Symbols.byAtomicNumber[100], 100);
+	public final static IElement MENDELEVIUM = new Element(Symbols.byAtomicNumber[101], 101);
+	public final static IElement NOBELIUM = new Element(Symbols.byAtomicNumber[102], 102);
+	public final static IElement LAWRENCIUM = new Element(Symbols.byAtomicNumber[103], 103);
+	public final static IElement RUTHERFORDIUM = new Element(Symbols.byAtomicNumber[104], 104);
+	public final static IElement DUBNIUM = new Element(Symbols.byAtomicNumber[105], 105);
+	public final static IElement SEABORGIUM = new Element(Symbols.byAtomicNumber[106], 106);
+	public final static IElement BOHRIUM = new Element(Symbols.byAtomicNumber[107], 107);
+	public final static IElement HASSIUM = new Element(Symbols.byAtomicNumber[108], 108);
+	public final static IElement MEITNERIUM = new Element(Symbols.byAtomicNumber[109], 109);
+	public final static IElement DARMSTADTIUM = new Element(Symbols.byAtomicNumber[110], 110);
+	public final static IElement ROENTGENIUM = new Element(Symbols.byAtomicNumber[111], 111);
+	public final static IElement UNUNBIUM = new Element(Symbols.byAtomicNumber[112], 112);
+	public final static IElement UNUNTRIUM = new Element(Symbols.byAtomicNumber[113], 113);
+	public final static IElement UNUNQUADIUM = new Element(Symbols.byAtomicNumber[114], 114);
+	public final static IElement UNUNPENTIUM = new Element(Symbols.byAtomicNumber[115], 115);
+	public final static IElement UNUNHEXIUM = new Element(Symbols.byAtomicNumber[116], 116);
 	
 }

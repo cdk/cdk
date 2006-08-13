@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -177,7 +177,7 @@ public class CTXReader extends DefaultChemObjectReader {
 			int atomicNumber = Integer.parseInt(line.substring(7,10).trim());
 			IAtom atom = container.getBuilder().newAtom();
 			atom.setAtomicNumber(atomicNumber);
-			atom.setSymbol(Elements.symbols[atomicNumber]);
+			atom.setSymbol(Symbols.byAtomicNumber[atomicNumber]);
 			container.addAtom(atom);
 		}
 	}
