@@ -149,21 +149,6 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return point3d;
 	}
 
-	public double getX3d() {
-		logger.debug("Getting X3d: ", super.getX3d());
-		return super.getX3d();
-	}
-
-	public double getY3d() {
-		logger.debug("Getting Y3d: ", super.getY3d());
-		return super.getY3d();
-	}
-
-	public double getZ3d() {
-		logger.debug("Getting Z3d: ", super.getZ3d());
-		return super.getZ3d();
-	}
-
 	public void setFractX3d(double xFract) {
 		logger.debug("Setting fractional X3d: ", xFract);
 		super.setFractX3d(xFract);

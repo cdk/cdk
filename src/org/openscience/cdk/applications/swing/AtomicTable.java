@@ -114,11 +114,11 @@ public class AtomicTable extends JPanel implements ICDKChangeListener {
       } else if (getColumnName(col).equals("y2")) {
         return new Double((atomContainer.getAtom(row)).getPoint2d().y);
       } else if (getColumnName(col).equals("x3")) {
-        return new Double((atomContainer.getAtom(row)).getX3d());
+        return new Double((atomContainer.getAtom(row)).getPoint3d().x);
       } else if (getColumnName(col).equals("y3")) {
-        return new Double((atomContainer.getAtom(row)).getY3d());
+        return new Double((atomContainer.getAtom(row)).getPoint3d().y);
       } else if (getColumnName(col).equals("z3")) {
-        return new Double((atomContainer.getAtom(row)).getZ3d());
+        return new Double((atomContainer.getAtom(row)).getPoint3d().z);
       } else if (getColumnName(col).equals("charge")) {
         return new Double((atomContainer.getAtom(row)).getCharge());
       } else {

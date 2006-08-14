@@ -191,36 +191,12 @@ public class AtomTest extends CDKTestCase {
         assertEquals(3.0, a.getPoint3d().z, 0.001);
     }
     
-    /**
-     * Method to test the get[XYZ]3D() methods.
-     */
-    public void testGetX3d() {
-        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-        
-        IAtom a = builder.newAtom("C", point3d);
-        assertEquals(point3d.x, a.getX3d(), 0.001);
-    }
-    public void testGetY3d() {
-        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-        
-        IAtom a = builder.newAtom("C", point3d);
-        assertEquals(point3d.y, a.getY3d(), 0.001);
-    }
-    public void testGetZ3d() {
-        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-        
-        IAtom a = builder.newAtom("C", point3d);
-        assertEquals(point3d.z, a.getZ3d(), 0.001);
-    }
-
     public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
         IAtom a = builder.newAtom("C", point3d);
-	assertNotNull(a.getPoint3d());
-        assertEquals(point3d.x, a.getPoint3d().x, 0.001);
-        assertEquals(point3d.y, a.getPoint3d().y, 0.001);
-        assertEquals(point3d.z, a.getPoint3d().z, 0.001);
+        assertNotNull(a.getPoint3d());
+        assertEquals(point3d, a.getPoint3d(), 0.001);
     }
     public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
@@ -326,7 +302,7 @@ public class AtomTest extends CDKTestCase {
 
         // test cloning
         atom.setX3d(5);
-        assertEquals(clone.getX3d(), 2.0, 0.001);
+        assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
     /**

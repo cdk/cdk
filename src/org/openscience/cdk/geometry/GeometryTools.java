@@ -810,9 +810,9 @@ public class GeometryTools {
 			IAtom a = (IAtom) atoms.nextElement();
 			double mass = a.getExactMass();
 			totalmass += mass;
-			x += mass * a.getX3d();
-			y += mass * a.getY3d();
-			z += mass * a.getZ3d();
+			x += mass * a.getPoint3d().x;
+			y += mass * a.getPoint3d().y;
+			z += mass * a.getPoint3d().z;
 		}
 
 		return new Point3d(x / totalmass, y / totalmass, z / totalmass);
@@ -1737,19 +1737,19 @@ public class GeometryTools {
 	private static double getAngle(IAtom atom1, IAtom atom2, IAtom atom3){
 		
 		Vector3d centerAtom = new Vector3d();
-		centerAtom.x=atom1.getX3d();
-		centerAtom.y=atom1.getY3d();
-		centerAtom.z=atom1.getZ3d();
+		centerAtom.x=atom1.getPoint3d().x;
+		centerAtom.y=atom1.getPoint3d().y;
+		centerAtom.z=atom1.getPoint3d().z;
 		Vector3d firstAtom = new Vector3d();
 		Vector3d secondAtom = new Vector3d();
 			
-		firstAtom.x=atom2.getX3d();
-		firstAtom.y=atom2.getY3d();
-		firstAtom.z=atom2.getZ3d();
+		firstAtom.x=atom2.getPoint3d().x;
+		firstAtom.y=atom2.getPoint3d().y;
+		firstAtom.z=atom2.getPoint3d().z;
 				
-		secondAtom.x=atom3.getX3d();
-		secondAtom.y=atom3.getY3d();
-		secondAtom.z=atom3.getZ3d();
+		secondAtom.x=atom3.getPoint3d().x;
+		secondAtom.y=atom3.getPoint3d().y;
+		secondAtom.z=atom3.getPoint3d().z;
 				
 		firstAtom.sub(centerAtom);
 		secondAtom.sub(centerAtom);

@@ -341,9 +341,9 @@ public class MDLWriter extends DefaultChemObjectWriter {
         	  IAtom atom = atoms[f];
             line = "";
             if (atom.getPoint3d() != null) {
-                line += formatMDLFloat((float) atom.getX3d());
-                line += formatMDLFloat((float) atom.getY3d());
-                line += formatMDLFloat((float) atom.getZ3d()) + " ";
+                line += formatMDLFloat((float) atom.getPoint3d().x);
+                line += formatMDLFloat((float) atom.getPoint3d().y);
+                line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
             } else if (atom.getPoint2d() != null) {
                 line += formatMDLFloat((float) atom.getPoint2d().x);
                 line += formatMDLFloat((float) atom.getPoint2d().y);

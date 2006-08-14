@@ -62,9 +62,9 @@ public class JOELibIOTest extends CDKTestCase {
         JOEAtom converted = Convertor.convert(a);
         Atom reverted = Convertor.convert(converted);
 
-        assertTrue(a.getX3d() == reverted.getX3d());
-        assertTrue(a.getY3d() == reverted.getY3d());
-        assertTrue(a.getZ3d() == reverted.getZ3d());
+        assertTrue(a.getPoint3d().x == reverted.getPoint3d().x);
+        assertTrue(a.getPoint3d().y == reverted.getPoint3d().y);
+        assertTrue(a.getPoint3d().z == reverted.getPoint3d().z);
     }
 
     public void testBond() {

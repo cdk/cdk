@@ -173,9 +173,9 @@ public class TemplateHandler3D {
                         atom1 = ringSystems.getAtom(map.getId1());
                         atom2 = template.getAtom(map.getId2());
                         if (atom1.getFlag(CDKConstants.ISINRING)) {
-                            atom1.setX3d(atom2.getX3d());
-                            atom1.setY3d(atom2.getY3d());
-                            atom1.setZ3d(atom2.getZ3d());
+                            atom1.setX3d(atom2.getPoint3d().x);
+                            atom1.setY3d(atom2.getPoint3d().y);
+                            atom1.setZ3d(atom2.getPoint3d().z);
                         }
                     }//for j
 

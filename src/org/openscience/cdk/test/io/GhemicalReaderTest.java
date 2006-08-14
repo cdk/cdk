@@ -111,7 +111,7 @@ public class GhemicalReaderTest extends CDKTestCase {
             assertNotNull(a);
             assertEquals(6, a.getAtomicNumber());
             assertEquals(-0.2, a.getCharge(), 0.01);
-            assertEquals(0.06677, a.getX3d(), 0.01);
+            assertEquals(0.06677, a.getPoint3d().x, 0.01);
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.toString());

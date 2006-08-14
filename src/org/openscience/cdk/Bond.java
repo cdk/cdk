@@ -324,9 +324,9 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		double zOfCenter = 0;
 		for (int f = 0; f < getAtomCount(); f++)
 		{
-			xOfCenter += getAtom(f).getX3d();
-			yOfCenter += getAtom(f).getY3d();
-			zOfCenter += getAtom(f).getZ3d();
+			xOfCenter += getAtom(f).getPoint3d().x;
+			yOfCenter += getAtom(f).getPoint3d().y;
+			zOfCenter += getAtom(f).getPoint3d().z;
 		}
 		return new Point3d(xOfCenter / getAtomCount(), 
                            yOfCenter / getAtomCount(), 

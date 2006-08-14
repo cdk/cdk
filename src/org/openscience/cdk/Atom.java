@@ -327,58 +327,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         }
 
         /**
-         * Returns the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @return the x coordinate for of the 3D location of this atom
-         *
-         * @see    #setX3d
-         */
-        public double getX3d() {
-            if (point3d == null) {
-                return 0.0;
-            } else {
-                return point3d.x;
-            }
-        }
-
-
-        /**
-         * Returns the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @return the y coordinate for of the 3D location of this atom
-         *
-         * @see    #setY3d
-         */
-        public double getY3d() {
-            if (point3d == null) {
-                return 0.0;
-            } else {
-                return point3d.y;
-            }
-        }
-
-        /**
-         * Returns the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @return the z coordinate for of the 3D location of this atom
-         *
-         * @see    #setZ3d
-         */
-        public double getZ3d() {
-            if (point3d == null) {
-                return 0.0;
-            } else {
-                return point3d.z;
-            }
-        }
-
-        /**
          * Sets the x coordinate of the fractional coordinate of this atom.
          *
          * @param xFract The x coordinate of the fractional coordinate of this atom.

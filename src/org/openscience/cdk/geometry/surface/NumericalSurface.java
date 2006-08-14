@@ -132,9 +132,9 @@ public class NumericalSurface {
             if (atoms[i].getVanderwaalsRadius()+solvent_radius > max_radius)
                 max_radius = atoms[i].getVanderwaalsRadius()+solvent_radius;
 
-            cp.x = cp.x + atoms[i].getX3d();
-            cp.y = cp.y + atoms[i].getY3d();
-            cp.z = cp.z + atoms[i].getZ3d();
+            cp.x = cp.x + atoms[i].getPoint3d().x;
+            cp.y = cp.y + atoms[i].getPoint3d().y;
+            cp.z = cp.z + atoms[i].getPoint3d().z;
         }
         cp.x = cp.x / atoms.length;
         cp.y = cp.y / atoms.length;
@@ -267,9 +267,9 @@ public class NumericalSurface {
             sumz += p.z;
         }
         double vconst = 4.0/3.0 * Math.PI / (double)point_density;
-        double dotp1 = (atom.getX3d() - cp.x)*sumx +
-            (atom.getY3d() - cp.y)*sumy +
-            (atom.getZ3d() - cp.z)*sumz;
+        double dotp1 = (atom.getPoint3d().x - cp.x)*sumx +
+            (atom.getPoint3d().y - cp.y)*sumy +
+            (atom.getPoint3d().z - cp.z)*sumz;
         double volume = vconst*(total_radius*total_radius) *dotp1 +
             (total_radius*total_radius*total_radius)*points.length;
 
@@ -290,9 +290,9 @@ public class NumericalSurface {
         int[] nlist = nbrlist.getNeighbors(currAtomIdx);
         double[][] data = new double[ nlist.length ][4];
         for (int i = 0; i < nlist.length; i++) {
-            double x12 = atoms[nlist[i]].getX3d() - atom.getX3d();
-            double y12 = atoms[nlist[i]].getY3d() - atom.getY3d();
-            double z12 = atoms[nlist[i]].getZ3d() - atom.getZ3d();
+            double x12 = atoms[nlist[i]].getPoint3d().x - atom.getPoint3d().x;
+            double y12 = atoms[nlist[i]].getPoint3d().y - atom.getPoint3d().y;
+            double z12 = atoms[nlist[i]].getPoint3d().z - atom.getPoint3d().z;
 
             double d2 = x12*x12 + y12*y12 + z12*z12;
             double tmp = atoms[nlist[i]].getVanderwaalsRadius() + solvent_radius;
@@ -319,9 +319,9 @@ public class NumericalSurface {
             if (buried == false) {
                 Point3d[] tmp = new Point3d[2];
                 tmp[0] =  new Point3d(
-                        total_radius * pt.x + atom.getX3d(),
-                        total_radius * pt.y + atom.getY3d(),
-                        total_radius * pt.z + atom.getZ3d()
+                        total_radius * pt.x + atom.getPoint3d().x,
+                        total_radius * pt.y + atom.getPoint3d().y,
+                        total_radius * pt.z + atom.getPoint3d().z
                         );
                 tmp[1] = pt;
                 points.add( tmp );

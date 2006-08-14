@@ -61,9 +61,9 @@ class NeighborList {
     }
 
     private String getKeyString(IAtom atom) {
-        double x = atom.getX3d();
-        double y = atom.getY3d();
-        double z = atom.getZ3d();
+        double x = atom.getPoint3d().x;
+        double y = atom.getPoint3d().y;
+        double z = atom.getPoint3d().z;
 
         int k1,k2,k3;
         k1 = (int)(Math.floor(x/box_size));
@@ -77,9 +77,9 @@ class NeighborList {
         return(key);
     }
     private int[] getKeyArray(IAtom atom) {
-        double x = atom.getX3d();
-        double y = atom.getY3d();
-        double z = atom.getZ3d();
+        double x = atom.getPoint3d().x;
+        double y = atom.getPoint3d().y;
+        double z = atom.getPoint3d().z;
 
         int k1,k2,k3;
         k1 = (int)(Math.floor(x/box_size));
@@ -120,9 +120,9 @@ class NeighborList {
                             int i2 = ((Integer)nbrs.get(l)).intValue();
                             if (i2 != ii) {
                                 IAtom aj = atoms[i2];
-                                double x12 = aj.getX3d() - ai.getX3d();
-                                double y12 = aj.getY3d() - ai.getY3d();
-                                double z12 = aj.getZ3d() - ai.getZ3d();
+                                double x12 = aj.getPoint3d().x - ai.getPoint3d().x;
+                                double y12 = aj.getPoint3d().y - ai.getPoint3d().y;
+                                double z12 = aj.getPoint3d().z - ai.getPoint3d().z;
                                 double d2 = x12*x12 + y12*y12 + z12*z12;
                                 if (d2 < max_dist_2) nlist.add( new Integer(i2) );
                             }

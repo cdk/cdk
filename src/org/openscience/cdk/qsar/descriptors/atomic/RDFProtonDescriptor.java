@@ -470,15 +470,15 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						values = calculateDistanceBetweenAtomAndBond( mol, target, theDoubleBond );
 						
 						if(theDoubleBond.contains(goodAtoms[0])) {						
-							a_a.set(goodAtoms[0].getX3d(), goodAtoms[0].getY3d(), goodAtoms[0].getZ3d());
-							a_b.set(goodAtoms[1].getX3d(), goodAtoms[1].getY3d(), goodAtoms[1].getZ3d());
+							a_a.set(goodAtoms[0].getPoint3d().x, goodAtoms[0].getPoint3d().y, goodAtoms[0].getPoint3d().z);
+							a_b.set(goodAtoms[1].getPoint3d().x, goodAtoms[1].getPoint3d().y, goodAtoms[1].getPoint3d().z);
 						}
 						else {
-							a_a.set(goodAtoms[1].getX3d(), goodAtoms[1].getY3d(), goodAtoms[1].getZ3d());
-							a_b.set(goodAtoms[0].getX3d(), goodAtoms[0].getY3d(), goodAtoms[0].getZ3d());
+							a_a.set(goodAtoms[1].getPoint3d().x, goodAtoms[1].getPoint3d().y, goodAtoms[1].getPoint3d().z);
+							a_b.set(goodAtoms[0].getPoint3d().x, goodAtoms[0].getPoint3d().y, goodAtoms[0].getPoint3d().z);
 						}
 						b_b.set(middlePoint.x, middlePoint.y, middlePoint.z);
-						b_b.set(target.getX3d(), target.getY3d(), target.getZ3d());
+						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
 						angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 						partial = ( ( 1 / (Math.pow( values[0], 2 ) ) ) * Math.exp( smooth * (Math.pow( (ghd - angle) , 2) ) ) );
 						sum += partial;
@@ -521,10 +521,10 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						dist1 = calculateDistanceBetweenTwoAtoms(mol, atomsInSingleBond[1], target);
 							
 						a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-						if(dist1 > dist0) a_b.set(atomsInSingleBond[0].getX3d(), atomsInSingleBond[0].getY3d(), atomsInSingleBond[0].getZ3d());
-						else a_b.set(atomsInSingleBond[1].getX3d(), atomsInSingleBond[1].getY3d(), atomsInSingleBond[1].getZ3d());
+						if(dist1 > dist0) a_b.set(atomsInSingleBond[0].getPoint3d().x, atomsInSingleBond[0].getPoint3d().y, atomsInSingleBond[0].getPoint3d().z);
+						else a_b.set(atomsInSingleBond[1].getPoint3d().x, atomsInSingleBond[1].getPoint3d().y, atomsInSingleBond[1].getPoint3d().z);
 						b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-						b_b.set(target.getX3d(), target.getY3d(), target.getZ3d());
+						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
 						
 						values = calculateDistanceBetweenAtomAndBond( mol, target, theSingleBond );
 						
@@ -579,15 +579,15 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						}
 						
 						if(ya_counter > 0) {
-							a_a.set(atomsInCycloexBond[1].getX3d(), atomsInCycloexBond[1].getY3d(), atomsInCycloexBond[1].getZ3d());
-							a_b.set(atomsInCycloexBond[0].getX3d(), atomsInCycloexBond[0].getY3d(), atomsInCycloexBond[0].getZ3d());
+							a_a.set(atomsInCycloexBond[1].getPoint3d().x, atomsInCycloexBond[1].getPoint3d().y, atomsInCycloexBond[1].getPoint3d().z);
+							a_b.set(atomsInCycloexBond[0].getPoint3d().x, atomsInCycloexBond[0].getPoint3d().y, atomsInCycloexBond[0].getPoint3d().z);
 						}
 						else {
-							a_a.set(atomsInCycloexBond[0].getX3d(), atomsInCycloexBond[0].getY3d(), atomsInCycloexBond[0].getZ3d());
-							a_b.set(atomsInCycloexBond[1].getX3d(), atomsInCycloexBond[1].getY3d(), atomsInCycloexBond[1].getZ3d());
+							a_a.set(atomsInCycloexBond[0].getPoint3d().x, atomsInCycloexBond[0].getPoint3d().y, atomsInCycloexBond[0].getPoint3d().z);
+							a_b.set(atomsInCycloexBond[1].getPoint3d().x, atomsInCycloexBond[1].getPoint3d().y, atomsInCycloexBond[1].getPoint3d().z);
 						}
-						b_a.set(neighboors[0].getX3d(), neighboors[0].getY3d(), neighboors[0].getZ3d());
-						b_b.set(target.getX3d(), target.getY3d(), target.getZ3d());
+						b_a.set(neighboors[0].getPoint3d().x, neighboors[0].getPoint3d().y, neighboors[0].getPoint3d().z);
+						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
 						
 						angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 						

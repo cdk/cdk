@@ -187,9 +187,9 @@ NO_CHARGES
                 writer.write(i + " " +
                              atoms[i].getID() + " ");
                 if (atoms[i].getPoint3d() != null) {
-                    writer.write(atoms[i].getX3d() + " ");
-                    writer.write(atoms[i].getY3d() + " ");
-                    writer.write(atoms[i].getZ3d() + " ");
+                    writer.write(atoms[i].getPoint3d().x + " ");
+                    writer.write(atoms[i].getPoint3d().y + " ");
+                    writer.write(atoms[i].getPoint3d().z + " ");
                 } else if (atoms[i].getPoint2d() != null) {
                     writer.write(atoms[i].getPoint2d().x + " ");
                     writer.write(atoms[i].getPoint2d().y + " ");

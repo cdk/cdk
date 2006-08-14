@@ -73,9 +73,9 @@ import Jama.Matrix;
  * Point3d cm1 = sa.getCenterOfMass();
  * for (int i = 0; i &lt; ac1.getAtomCount(); i++) {
  *    Atom a = ac1.getAtomAt(i);
- *    a.setX3d( a.getX3d() - cm1.x );
- *    a.setY3d( a.getY3d() - cm1.y );
- *    a.setY3d( a.getZ3d() - cm1.z );
+ *    a.setX3d( a.getPoint3d().x - cm1.x );
+ *    a.setY3d( a.getPoint3d().y - cm1.y );
+ *    a.setY3d( a.getPoint3d().z - cm1.z );
  * }
  * sa.rotateAtomContainer(ac2);
  *

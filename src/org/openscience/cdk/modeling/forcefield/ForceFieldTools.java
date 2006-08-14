@@ -53,9 +53,9 @@ public abstract class ForceFieldTools {
             //System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
             j = 3 * i;
-            coords3d_0.setElement(j, molecule.getAtom(i).getX3d());
-            coords3d_0.setElement(j + 1, molecule.getAtom(i).getY3d());
-            coords3d_0.setElement(j + 2, molecule.getAtom(i).getZ3d());
+            coords3d_0.setElement(j, molecule.getAtom(i).getPoint3d().x);
+            coords3d_0.setElement(j + 1, molecule.getAtom(i).getPoint3d().y);
+            coords3d_0.setElement(j + 2, molecule.getAtom(i).getPoint3d().z);
         }
 
         //System.out.println("Atoms coordinates vector: " + coords3d_0);

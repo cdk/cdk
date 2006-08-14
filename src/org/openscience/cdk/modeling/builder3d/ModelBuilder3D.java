@@ -343,12 +343,12 @@ public class ModelBuilder3D {
 		//System.out.print("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
 		IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringSet);
 		Point3d newCoord = placedRingAtom.getPoint3d();
-		Vector3d axis = new Vector3d(atomB.getX3d() - newCoord.x, atomB.getY3d() - newCoord.y, atomB.getZ3d() - newCoord.z);
+		Vector3d axis = new Vector3d(atomB.getPoint3d().x - newCoord.x, atomB.getPoint3d().y - newCoord.y, atomB.getPoint3d().z - newCoord.z);
 		translateStructure(originalCoord, newCoord, ac);
 		//Rotate Ringsystem to farthest possible point
-		Vector3d startAtomVector = new Vector3d(newCoord.x - atomB.getX3d(), newCoord.y - atomB.getY3d(), newCoord.z - atomB.getZ3d());
+		Vector3d startAtomVector = new Vector3d(newCoord.x - atomB.getPoint3d().x, newCoord.y - atomB.getPoint3d().y, newCoord.z - atomB.getPoint3d().z);
 		IAtom farthestAtom = ap3d.getFarthestAtom(placedRingAtom.getPoint3d(), ac);
-		Vector3d farthestAtomVector = new Vector3d(farthestAtom.getX3d() - newCoord.x, farthestAtom.getY3d() - newCoord.y, farthestAtom.getZ3d() - newCoord.z);
+		Vector3d farthestAtomVector = new Vector3d(farthestAtom.getPoint3d().x - newCoord.x, farthestAtom.getPoint3d().y - newCoord.y, farthestAtom.getPoint3d().z - newCoord.z);
 		Vector3d n1 = new Vector3d();
 		n1.cross(axis, farthestAtomVector);
 		n1.normalize();
@@ -565,9 +565,9 @@ public class ModelBuilder3D {
 		transVector.z = transVector.z - newCoord.z;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			if (!(ac.getAtom(i).getFlag(CDKConstants.ISPLACED))) {
-				ac.getAtom(i).setX3d(ac.getAtom(i).getX3d() - transVector.x);
-				ac.getAtom(i).setY3d(ac.getAtom(i).getY3d() - transVector.y);
-				ac.getAtom(i).setZ3d(ac.getAtom(i).getZ3d() - transVector.z);
+				ac.getAtom(i).setX3d(ac.getAtom(i).getPoint3d().x - transVector.x);
+				ac.getAtom(i).setY3d(ac.getAtom(i).getPoint3d().y - transVector.y);
+				ac.getAtom(i).setZ3d(ac.getAtom(i).getPoint3d().z - transVector.z);
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}

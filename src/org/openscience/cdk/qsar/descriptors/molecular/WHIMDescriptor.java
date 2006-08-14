@@ -278,9 +278,9 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         // get the coordinate matrix
         double[][] cmat = new double[ac.getAtomCount()][3];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            cmat[i][0] = ac.getAtom(i).getX3d();
-            cmat[i][1] = ac.getAtom(i).getY3d();
-            cmat[i][2] = ac.getAtom(i).getZ3d();
+            cmat[i][0] = ac.getAtom(i).getPoint3d().x;
+            cmat[i][1] = ac.getAtom(i).getPoint3d().y;
+            cmat[i][2] = ac.getAtom(i).getPoint3d().z;
         }
 
         // set up the weight vector
