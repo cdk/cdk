@@ -136,26 +136,6 @@ public interface IAtom extends IAtomType {
 	public Point3d getFractionalPoint3d();
 	
 	/**
-	 * Returns the x coordinate for of the 2D location of this atom.
-	 * You should know your context here. There is no guarantee that point2d and point3d
-	 * contain consistent information. Both are handled independently.
-	 *
-	 * @return the x coordinate for of the 2D location of this atom
-	 * @see    #setX2d
-	 */
-	public double getX2d();	
-	
-	/**
-	 * Returns the y coordinate for of the 2D location of this atom.
-	 * You should know your context here. There is no guarantee that point2d and point3d
-	 * contain consistent information. Both are handled independently.
-	 *
-	 * @return the y coordinate for of the 2D location of this atom
-	 * @see    #setY2d
-	 */
-	public double getY2d();	
-	
-	/**
 	 * Returns the x coordinate for of the 3D location of this atom.
 	 * You should know your context here. There is no guarantee that point2d and point3d
 	 * contain consistent information. Both are handled independently.

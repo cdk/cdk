@@ -108,8 +108,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-        assertEquals(atom.getX2d(), roundTrippedAtom.getX2d(), 0.00001);
-        assertEquals(atom.getY2d(), roundTrippedAtom.getY2d(), 0.00001);
+        assertEquals(atom.getPoint2d(), roundTrippedAtom.getPoint2d(), 0.00001);
     }
     
     public void xtestAtom3D() {
@@ -123,9 +122,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-        assertEquals(atom.getX3d(), roundTrippedAtom.getX3d(), 0.00001);
-        assertEquals(atom.getY3d(), roundTrippedAtom.getY3d(), 0.00001);
-        assertEquals(atom.getZ3d(), roundTrippedAtom.getZ3d(), 0.00001);
+        assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
     
     public void xtestAtomFract3D() {

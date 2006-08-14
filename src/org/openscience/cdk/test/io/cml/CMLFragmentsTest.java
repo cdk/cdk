@@ -137,8 +137,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         assertNull(atom.getPoint3d());
         assertNotNull(atom.getPoint2d());
-        assertEquals(84, (int)atom.getX2d());
-        assertEquals(138, (int)atom.getY2d());
+        assertEquals(84, (int)atom.getPoint2d().x);
+        assertEquals(138, (int)atom.getPoint2d().y);
     }
     
     public void test2dCoord2() {
@@ -151,8 +151,8 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         assertNull(atom.getPoint3d());
         assertNotNull(atom.getPoint2d());
-        assertTrue(2.0833 == atom.getX2d());
-        assertTrue(4.9704 == atom.getY2d());
+        assertTrue(2.0833 == atom.getPoint2d().x);
+        assertTrue(4.9704 == atom.getPoint2d().y);
     }
     
     public void testBond() {

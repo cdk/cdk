@@ -35,6 +35,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -176,8 +178,7 @@ public class TemplateHandler
 					map = (RMap) list.get(i);
 					atom1 = molecule.getAtom(map.getId1());
 					atom2 = template.getAtom(map.getId2());
-					atom1.setX2d(atom2.getX2d());
-					atom1.setY2d(atom2.getY2d());
+					atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
 					atom1.setFlag(CDKConstants.ISPLACED, true);
 				}
 				mapped = true;

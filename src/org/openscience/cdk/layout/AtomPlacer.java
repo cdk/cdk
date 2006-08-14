@@ -207,8 +207,8 @@ public class AtomPlacer
 			IAtom placedAtom = placedNeighbours.getAtom(0);
 //			double xDiff = atom.getX2d() - placedAtom.getX2d();
 //			double yDiff = atom.getY2d() - placedAtom.getY2d();
-			double xDiff = placedAtom.getX2d() - atom.getX2d();
-			double yDiff = placedAtom.getY2d() - atom.getY2d();
+			double xDiff = placedAtom.getPoint2d().x - atom.getPoint2d().x;
+			double yDiff = placedAtom.getPoint2d().y - atom.getPoint2d().y;
 			if(renderingCoordinates!=null){
 				if(renderingCoordinates.get(atom)==null)
 					renderingCoordinates.put(atom,atom.getPoint2d());
@@ -274,9 +274,9 @@ public class AtomPlacer
 		occupiedAngle = closestPoint1.angle(occupiedDirection);
 		occupiedAngle += closestPoint2.angle(occupiedDirection);
 
-		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getX2d() - atom.getX2d(), sortedAtoms[0].getY2d() - atom.getY2d());
-		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getX2d() - atom.getX2d(), sortedAtoms[1].getY2d() - atom.getY2d());
-		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getX2d(), distanceMeasure.y - atom.getY2d());
+		double angle1 = GeometryTools.getAngle(sortedAtoms[0].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[0].getPoint2d().y - atom.getPoint2d().y);
+		double angle2 = GeometryTools.getAngle(sortedAtoms[1].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[1].getPoint2d().y - atom.getPoint2d().y);
+		double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getPoint2d().x, distanceMeasure.y - atom.getPoint2d().y);
 		if(renderingCoordinates!=null){
 			angle1 = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(sortedAtoms[0])).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(sortedAtoms[0])).y - ((Point2d)renderingCoordinates.get(atom)).y);
 			angle2 = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(sortedAtoms[1])).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(sortedAtoms[1])).y - ((Point2d)renderingCoordinates.get(atom)).y);
@@ -339,7 +339,7 @@ public class AtomPlacer
 			atomsToDraw.addElement(unplacedNeighbours.getAtom(f));
 		}
 		radius = bondLength;
-		startAngle = GeometryTools.getAngle(startAtom.getX2d() - atom.getX2d(), startAtom.getY2d() - atom.getY2d());
+		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y - atom.getPoint2d().y);
 		if(renderingCoordinates!=null){
 			startAngle = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(startAtom)).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(startAtom)).y - ((Point2d)renderingCoordinates.get(atom)).y);
 		}
@@ -433,7 +433,7 @@ public class AtomPlacer
 		  logger.debug("Entering AtomPlacer.getNextBondVector()");
 		  logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
     }  
-		double angle = GeometryTools.getAngle(previousAtom.getX2d() - atom.getX2d(), previousAtom.getY2d() - atom.getY2d());
+		double angle = GeometryTools.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x, previousAtom.getPoint2d().y - atom.getPoint2d().y);
 		double addAngle = Math.toRadians(120);
 		if(!trans)
 			addAngle=Math.toRadians(60);

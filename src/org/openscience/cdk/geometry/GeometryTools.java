@@ -403,17 +403,17 @@ public class GeometryTools {
 		for (int i = 0; i < container.getAtomCount(); i++) {
 			IAtom atom = container.getAtom(i);
 			if (atom.getPoint2d() != null) {
-				if (atom.getX2d() > maxX) {
-					maxX = atom.getX2d();
+				if (atom.getPoint2d().x > maxX) {
+					maxX = atom.getPoint2d().x;
 				}
-				if (atom.getX2d() < minX) {
-					minX = atom.getX2d();
+				if (atom.getPoint2d().x < minX) {
+					minX = atom.getPoint2d().x;
 				}
-				if (atom.getY2d() > maxY) {
-					maxY = atom.getY2d();
+				if (atom.getPoint2d().y > maxY) {
+					maxY = atom.getPoint2d().y;
 				}
-				if (atom.getY2d() < minY) {
-					minY = atom.getY2d();
+				if (atom.getPoint2d().y < minY) {
+					minY = atom.getPoint2d().y;
 				}
 			}
 		}
@@ -662,8 +662,8 @@ public class GeometryTools {
 		for (int f = 0; f < atoms.length; f++) {
 			atom = (IAtom) atoms[f];
 			if (atom.getPoint2d() != null) {
-				x += atom.getX2d();
-				y += atom.getY2d();
+				x += atom.getPoint2d().x;
+				y += atom.getPoint2d().y;
 			}
 		}
 		return new Point2d(x / (double) atoms.length, y / (double) atoms.length);
@@ -710,8 +710,8 @@ public class GeometryTools {
 			IAtom a = (IAtom) atoms.nextElement();
 			double mass = a.getExactMass();
 			totalmass += mass;
-			x += mass * a.getX2d();
-			y += mass * a.getY2d();
+			x += mass * a.getPoint2d().x;
+			y += mass * a.getPoint2d().y;
 		}
 
 		return new Point2d(x / totalmass, y / totalmass);
@@ -1009,8 +1009,8 @@ public class GeometryTools {
 		double atomY;
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			currentAtom = atomCon.getAtom(i);
-			atomX = currentAtom.getX2d();
-			atomY = currentAtom.getY2d();
+			atomX = currentAtom.getPoint2d().x;
+			atomY = currentAtom.getPoint2d().y;
 			mouseDistance = Math.sqrt(Math.pow(atomX - xPosition, 2) + Math.pow(atomY - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
 				smallestMouseDistance = mouseDistance;
@@ -1424,8 +1424,8 @@ public class GeometryTools {
 				counter++;
 				org.openscience.cdk.interfaces.IAtom atom1 = bonds[f].getAtom(0);
 				org.openscience.cdk.interfaces.IAtom atom2 = bonds[f].getAtom(1);
-				bondlength += Math.sqrt(Math.pow(atom1.getX2d() - atom2.getX2d(), 2) +
-						Math.pow(atom1.getY2d() - atom2.getY2d(), 2));
+				bondlength += Math.sqrt(Math.pow(atom1.getPoint2d().x - atom2.getPoint2d().x, 2) +
+						Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
 			}
 		}
 		bondlength = bondlength / counter;
@@ -1448,7 +1448,7 @@ public class GeometryTools {
 		int overallDiffX = 0;
 		for (int i = 0; i < connectedAtoms.length; i++) {
 			IAtom connectedAtom = connectedAtoms[i];
-			overallDiffX = overallDiffX + (int) (connectedAtom.getX2d() - atom.getX2d());
+			overallDiffX = overallDiffX + (int) (connectedAtom.getPoint2d().x - atom.getPoint2d().x);
 		}
 		if (overallDiffX <= 0) {
 			return 1;

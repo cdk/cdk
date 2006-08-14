@@ -115,7 +115,7 @@ public class AtomContainerTest extends CDKTestCase {
         // test cloning of Atoms
 		IMolecule clonedMol = (IMolecule)molecule.clone();
         carbon.setPoint2d(new Point2d(3, 1));
-		assertEquals(clonedMol.getAtom(0).getX2d(), 2.0, 0.001);
+		assertEquals(clonedMol.getAtom(0).getPoint2d().x, 2.0, 0.001);
 	}
 
     public void testClone_IBond() throws Exception {

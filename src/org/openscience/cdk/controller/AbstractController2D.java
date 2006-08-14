@@ -1250,7 +1250,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 				// now add the new atom
 				atomCon.addAtom(newAtom2);
 				undoRedoContainer.addAtom(newAtom2);
-				r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getX2d(),newAtom2.getY2d()));
+				r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getPoint2d()));
 				newBond= undoRedoContainer.getBuilder().newBond(atomInRange, newAtom2, 1.0);
 				atomCon.addBond(newBond);
 				undoRedoContainer.addBond(newBond);
@@ -2050,8 +2050,8 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			{
 				IAtom atom = atoms[i];
 				atom.setNotification(false);
-				atom.setX2d(atom.getX2d() + deltaX);
-				atom.setY2d(atom.getY2d() + deltaY);
+				atom.setX2d(atom.getPoint2d().x + deltaX);
+				atom.setY2d(atom.getPoint2d().y + deltaY);
 				atom.setNotification(true);
 				((Point2d)r2dm.getRenderingCoordinate(atom)).x+=deltaX;
 				((Point2d)r2dm.getRenderingCoordinate(atom)).y+=deltaY;

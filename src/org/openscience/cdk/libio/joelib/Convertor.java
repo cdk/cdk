@@ -102,7 +102,7 @@ public class Convertor {
                        (atom.getPoint2d() != null && coordType != -1)) {
                 convertedAtom.setVector(
                     atom.getX2d(),
-                    atom.getY2d(),
+                    atom.getPoint2d().y,
                     0.0
                 );
             } else {

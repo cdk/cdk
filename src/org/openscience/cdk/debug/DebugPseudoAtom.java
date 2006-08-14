@@ -149,16 +149,6 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return point3d;
 	}
 
-	public double getX2d() {
-		logger.debug("Getting X2d: ", super.getX2d());
-		return super.getX2d();
-	}
-
-	public double getY2d() {
-		logger.debug("Getting Y2d: ", super.getY2d());
-		return super.getY2d();
-	}
-
 	public double getX3d() {
 		logger.debug("Getting X3d: ", super.getX3d());
 		return super.getX3d();

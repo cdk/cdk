@@ -191,8 +191,8 @@ NO_CHARGES
                     writer.write(atoms[i].getY3d() + " ");
                     writer.write(atoms[i].getZ3d() + " ");
                 } else if (atoms[i].getPoint2d() != null) {
-                    writer.write(atoms[i].getX2d() + " ");
-                    writer.write(atoms[i].getY2d() + " ");
+                    writer.write(atoms[i].getPoint2d().x + " ");
+                    writer.write(atoms[i].getPoint2d().y + " ");
                     writer.write(" 0.000 ");
                 } else {
                     writer.write("0.000 0.000 0.000 ");

@@ -206,8 +206,8 @@ public class RingPlacer
 		double centerX = ringCenter.x;
 		double centerY = ringCenter.y;
 		
-		double xDiff = bondAtom1.getX2d() - bondAtom2.getX2d();
-		double yDiff = bondAtom1.getY2d() - bondAtom2.getY2d();
+		double xDiff = bondAtom1.getPoint2d().x - bondAtom2.getPoint2d().x;
+		double yDiff = bondAtom1.getPoint2d().y - bondAtom2.getPoint2d().y;
 		
 		double startAngle;;	
 		
@@ -217,7 +217,7 @@ public class RingPlacer
 		{
 			logger.debug("placeBridgedRing->Bond is vertical");
 			//starts with the lower Atom
-			if (bondAtom1.getY2d() > bondAtom2.getY2d())
+			if (bondAtom1.getPoint2d().y > bondAtom2.getPoint2d().y)
 			{
 				startAtom = bondAtom1;
 			}
@@ -227,7 +227,7 @@ public class RingPlacer
 			}
 			
 			//changes the drawing direction
-			if (centerX < bondAtom1.getX2d())
+			if (centerX < bondAtom1.getPoint2d().x)
 			{
 				direction = 1;
 			}
@@ -241,7 +241,7 @@ public class RingPlacer
 		else
 		{
 			//starts with the left Atom
-			if (bondAtom1.getX2d() > bondAtom2.getX2d())
+			if (bondAtom1.getPoint2d().x > bondAtom2.getPoint2d().x)
 			{
 				startAtom = bondAtom1;
 			}
@@ -251,7 +251,7 @@ public class RingPlacer
 			}
 			
 			//changes the drawing direction
-			if (centerY - bondAtom1.getY2d() > (centerX - bondAtom1.getX2d()) * yDiff / xDiff)
+			if (centerY - bondAtom1.getPoint2d().y > (centerX - bondAtom1.getPoint2d().x) * yDiff / xDiff)
 			{
 				direction = 1;
 			}
@@ -260,7 +260,7 @@ public class RingPlacer
 				direction = -1;
 			}
 		}
-		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
+		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring
@@ -324,7 +324,7 @@ public class RingPlacer
 		//int direction = 1;
 
 		IAtom currentAtom = startAtom;
-		double startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
+		double startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
@@ -398,8 +398,8 @@ public class RingPlacer
 		double centerX = ringCenter.x;
 		double centerY = ringCenter.y;
 		
-		double xDiff = bondAtom1.getX2d() - bondAtom2.getX2d();
-		double yDiff = bondAtom1.getY2d() - bondAtom2.getY2d();
+		double xDiff = bondAtom1.getPoint2d().x - bondAtom2.getPoint2d().x;
+		double yDiff = bondAtom1.getPoint2d().y - bondAtom2.getPoint2d().y;
 		
 		double startAngle;;	
 		
@@ -409,7 +409,7 @@ public class RingPlacer
 		{
 			logger.debug("placeFusedRing->Bond is vertical");
 			//starts with the lower Atom
-			if (bondAtom1.getY2d() > bondAtom2.getY2d())
+			if (bondAtom1.getPoint2d().y > bondAtom2.getPoint2d().y)
 			{
 				startAtom = bondAtom1;
 			}
@@ -419,7 +419,7 @@ public class RingPlacer
 			}
 			
 			//changes the drawing direction
-			if (centerX < bondAtom1.getX2d())
+			if (centerX < bondAtom1.getPoint2d().x)
 			{
 				direction = 1;
 			}
@@ -433,7 +433,7 @@ public class RingPlacer
 		else
 		{
 			//starts with the left Atom
-			if (bondAtom1.getX2d() > bondAtom2.getX2d())
+			if (bondAtom1.getPoint2d().x > bondAtom2.getPoint2d().x)
 			{
 				startAtom = bondAtom1;
 			}
@@ -443,7 +443,7 @@ public class RingPlacer
 			}
 			
 			//changes the drawing direction
-			if (centerY - bondAtom1.getY2d() > (centerX - bondAtom1.getX2d()) * yDiff / xDiff)
+			if (centerY - bondAtom1.getPoint2d().y > (centerX - bondAtom1.getPoint2d().x) * yDiff / xDiff)
 			{
 				direction = 1;
 			}
@@ -452,7 +452,7 @@ public class RingPlacer
 				direction = -1;
 			}
 		}
-		startAngle = GeometryTools.getAngle(startAtom.getX2d() - ringCenter.x, startAtom.getY2d() - ringCenter.y);
+		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 	
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring

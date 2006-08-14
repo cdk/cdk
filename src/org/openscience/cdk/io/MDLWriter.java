@@ -345,8 +345,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
                 line += formatMDLFloat((float) atom.getY3d());
                 line += formatMDLFloat((float) atom.getZ3d()) + " ";
             } else if (atom.getPoint2d() != null) {
-                line += formatMDLFloat((float) atom.getX2d());
-                line += formatMDLFloat((float) atom.getY2d());
+                line += formatMDLFloat((float) atom.getPoint2d().x);
+                line += formatMDLFloat((float) atom.getPoint2d().y);
                 line += "    0.0000 ";
             } else {
                 // if no coordinates available, then output a number

@@ -268,19 +268,6 @@ public class AtomTest extends CDKTestCase {
         assertEquals(2.0, a.getPoint2d().y, 0.001);
     }
     
-    public void testGetX2d() {
-        Point2d point2d = new Point2d(1.0, 2.0);
-        
-        IAtom a = builder.newAtom("C", point2d);
-        assertEquals(point2d.x, a.getX2d(), 0.001);
-    }
-
-    public void testGetY2d() {
-        Point2d point2d = new Point2d(1.0, 2.0);
-        
-        IAtom a = builder.newAtom("C", point2d);
-        assertEquals(point2d.y, a.getY2d(), 0.001);
-    }
     public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
@@ -344,7 +331,7 @@ public class AtomTest extends CDKTestCase {
 
         // test cloning
         atom.setX2d(5);
-        assertEquals(clone.getX2d(), 2.0, 0.001);
+        assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
     /**
