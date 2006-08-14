@@ -420,48 +420,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
             fractionalPoint3d.z = zFract;
 	    notifyChanged();
         }
-        /**
-         * Returns the x coordinate for of the fractional coordinate of this atom.
-         *
-         * @return the x coordinate for of the fractional coordinate of this atom.
-         *
-         * @see    #setFractX3d
-         */
-        public double getFractX3d() {
-            if (fractionalPoint3d == null) {
-                return 0.0;
-            } else {
-                return fractionalPoint3d.x;
-            }
-        }
-        /**
-         * Returns the y coordinate for of the fractional coordinate of this atom.
-         *
-         * @return the y coordinate for of the fractional coordinate of this atom.
-         *
-         * @see    #setFractY3d
-         */
-        public double getFractY3d() {
-            if (fractionalPoint3d == null) {
-                return 0.0;
-            } else {
-                return fractionalPoint3d.y;
-            }
-        }
-        /**
-         * Returns the z coordinate for of the fractional coordinate of this atom.
-         *
-         * @return the z coordinate for of the fractional coordinate of this atom.
-         *
-         * @see    #setFractZ3d
-         */
-        public double getFractZ3d() {
-            if (fractionalPoint3d == null) {
-                return 0.0;
-            } else {
-                return fractionalPoint3d.z;
-            }
-        }
 
         /**
          * Sets the x coordinate for of the 2D location of this atom.

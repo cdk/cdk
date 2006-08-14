@@ -171,21 +171,6 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setFractZ3d(zFract);
 	}
 
-	public double getFractX3d() {
-		logger.debug("Getting fractional X3d: ", super.getFractX3d());
-		return super.getFractX3d();
-	}
-
-	public double getFractY3d() {
-		logger.debug("Getting fractional Y3d: ", super.getFractY3d());
-		return super.getFractY3d();
-	}
-
-	public double getFractZ3d() {
-		logger.debug("Getting fractional Z3d: ", super.getFractZ3d());
-		return super.getFractZ3d();
-	}
-
 	public void setX2d(double xCoord) {
 		logger.debug("Setting X2d: ", xCoord);
 		super.setX2d(xCoord);

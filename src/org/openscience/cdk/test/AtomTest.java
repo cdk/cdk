@@ -145,24 +145,6 @@ public class AtomTest extends CDKTestCase {
         testSetFractionalPoint3d_Point3d();
     }
     
-    public void testGetFractX3d() {
-        IAtom a = builder.newAtom("C");
-        a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
-        assertEquals(0.5, a.getFractX3d(), 0.001);
-    }
-
-    public void testGetFractY3d() {
-        IAtom a = builder.newAtom("C");
-        a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
-        assertEquals(0.6, a.getFractY3d(), 0.001);
-    }
-
-    public void testGetFractZ3d() {
-        IAtom a = builder.newAtom("C");
-        a.setFractionalPoint3d(new Point3d(0.5, 0.6, 0.7));
-        assertEquals(0.7, a.getFractZ3d(), 0.001);
-    }
-
     public void testSetFractX3d_double() {
         IAtom a = builder.newAtom("C");
         a.setFractX3d(0.5);
@@ -357,7 +339,7 @@ public class AtomTest extends CDKTestCase {
 
         // test cloning
         atom.setFractX3d(5);
-        assertEquals(clone.getFractX3d(), 2.0, 0.001);
+        assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
     /**

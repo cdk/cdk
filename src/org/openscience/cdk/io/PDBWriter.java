@@ -212,10 +212,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            IAtom[] atoms = crystal.getAtoms();
             for (int i=0; i<atoms.length; i++) {
             	IAtom atom = atoms[i];
-                Point3d frac = new Point3d();
-                frac.x = atom.getFractX3d();
-                frac.y = atom.getFractY3d();
-                frac.z = atom.getFractZ3d();
+                Point3d frac = new Point3d(atom.getFractionalPoint3d());
                 Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
                 atom.setPoint3d(cart);
             }
