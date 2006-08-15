@@ -25,8 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -45,19 +50,19 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
     }
 
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        //IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
-        fail();
+        IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
+
         // napthalene .667 .802
         // nbutane .5 .536
-        /*
+
         SmilesParser sp = new SmilesParser();
         AtomContainer mol = sp.parseSmiles("O=C(O)CC");
 
         DescriptorValue result = descriptor.calculate(mol);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
 
-        assertEquals(0.33333334, dar.get(0), 0.0001) ;
-        */
+        assertEquals(0.33333334, dar.get(0), 0.0001);
+
     }
 }
 
