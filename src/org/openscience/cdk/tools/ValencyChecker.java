@@ -55,7 +55,7 @@ import org.openscience.cdk.exception.CDKException;
  * 
  * @cdk.module     valencycheck
  */
-public class ValencyChecker implements IValencyChecker {
+public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 
 	private String atomTypeList = null;
 	protected AtomTypeFactory structgenATF;

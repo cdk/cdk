@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module     valencycheck
  * @cdk.bug        1167386
  */
-public class SaturationChecker implements IValencyChecker {
+public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
 	AtomTypeFactory structgenATF;
 
