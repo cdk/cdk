@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-12 11:20:15 +0200 (Wed, 12 Apr 2006) $
- * $Revision: 5922 $
+/* $Revision: 5922 $ $Author: egonw $ $Date: 2006-04-12 11:20:15 +0200 (Wed, 12 Apr 2006) $
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -21,12 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogens;
+import org.openscience.cdk.test.tools.DeduceBondOrderTestFromHybridization;
 import org.openscience.cdk.test.tools.HydrogenAdder2Test;
 import org.openscience.cdk.test.tools.HydrogenAdder3Test;
 import org.openscience.cdk.test.tools.HydrogenAdderTest;
@@ -35,7 +33,7 @@ import org.openscience.cdk.test.tools.ValencyCheckerTest;
 import org.openscience.cdk.test.tools.ValencyHybridCheckerTest;
 
 /**
- * TestSuite that runs all the sample tests.
+ * TestSuite that runs all the tests for the valency module.
  *
  * @cdk.module  test-valencycheck
  * @cdk.depends log4j.jar
@@ -52,6 +50,8 @@ public class MvalencycheckTests {
         suite.addTest(HydrogenAdderTest.suite());
         suite.addTest(HydrogenAdder2Test.suite());
         suite.addTest(HydrogenAdder3Test.suite());
+        suite.addTest(DeduceBondOrderTestFromHybridization.suite());
+        suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
         
         return suite;
     }
