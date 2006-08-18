@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * hydrogen counts.
  * 
  * @author      egonw
- * @cdk.module  test-smiles
+ * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
 public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {

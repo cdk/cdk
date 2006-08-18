@@ -2,6 +2,7 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
+cdk-nonotify.jar
 cdk-io.jar
 cdk-extra.jar
 cdk-valencycheck.jar
