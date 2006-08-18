@@ -62,6 +62,32 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 	}
 
 	/**
+	 * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>. 
+	 */
+	public void testAcetylene() throws Exception {
+		IMolecule keto = new NNMolecule();
+		
+		// atom block
+		IAtom atom1 = new NNAtom(Elements.CARBON);
+		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
+		IAtom atom2 = new NNAtom(Elements.CARBON);
+		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
+		
+		// bond block
+		IBond bond1 = new NNBond(atom1, atom2);
+		
+		keto.addAtom(atom1);
+		keto.addAtom(atom2);
+		keto.addBond(bond1);
+		
+		// now have the algorithm have a go at it
+		dboTool.saturate(keto);
+		
+		// now check wether it did the right thing
+		assertEquals(CDKConstants.BONDORDER_TRIPLE, bond1.getOrder(), 0.00001);
+	}
+
+	/**
 	 * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>. 
 	 */
 	public void testKeto() throws Exception {
@@ -246,6 +272,109 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		IAtom atom5 = new NNAtom(Elements.CARBON);
 		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
 		IAtom atom6 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		
+		// bond block
+		IBond bond1 = new NNBond(atom1, atom2);
+		IBond bond2 = new NNBond(atom2, atom3);
+		IBond bond3 = new NNBond(atom3, atom4);
+		IBond bond4 = new NNBond(atom4, atom5);
+		IBond bond5 = new NNBond(atom5, atom6);
+		IBond bond6 = new NNBond(atom6, atom1);
+		
+		enol.addAtom(atom1);
+		enol.addAtom(atom2);
+		enol.addAtom(atom3);
+		enol.addAtom(atom4);
+		enol.addAtom(atom5);
+		enol.addAtom(atom6);
+		enol.addBond(bond1);
+		enol.addBond(bond2);
+		enol.addBond(bond3);
+		enol.addBond(bond4);
+		enol.addBond(bond5);
+		enol.addBond(bond6);
+		
+		// now have the algorithm have a go at it
+		dboTool.saturate(enol);
+		
+		// now check wether it did the right thing
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond1.getOrder() + bond6.getOrder(), 0.00001); // around atom1
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond1.getOrder() + bond2.getOrder(), 0.00001); // around atom2
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond2.getOrder() + bond3.getOrder(), 0.00001); // around atom3
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond3.getOrder() + bond4.getOrder(), 0.00001); // around atom4
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond4.getOrder() + bond5.getOrder(), 0.00001); // around atom5
+		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
+				bond5.getOrder() + bond6.getOrder(), 0.00001); // around atom6
+	}
+	
+	/**
+	 * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>. 
+	 */
+	public void testPyrrole() throws Exception {
+		IMolecule enol = new NNMolecule();
+		
+		// atom block
+		IAtom atom1 = new NNAtom(Elements.CARBON);
+		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom2 = new NNAtom(Elements.CARBON);
+		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom3 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom4 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom5 = new NNAtom(Elements.NITROGEN);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		
+		// bond block
+		IBond bond1 = new NNBond(atom1, atom2);
+		IBond bond2 = new NNBond(atom2, atom3);
+		IBond bond3 = new NNBond(atom3, atom4);
+		IBond bond4 = new NNBond(atom4, atom5);
+		IBond bond5 = new NNBond(atom5, atom1);
+		
+		enol.addAtom(atom1);
+		enol.addAtom(atom2);
+		enol.addAtom(atom3);
+		enol.addAtom(atom4);
+		enol.addAtom(atom5);
+		enol.addBond(bond1);
+		enol.addBond(bond2);
+		enol.addBond(bond3);
+		enol.addBond(bond4);
+		enol.addBond(bond5);
+		
+		// now have the algorithm have a go at it
+		dboTool.saturate(enol);
+		
+		// now check wether it did the right thing
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond5.getOrder(), 0.00001);
+	}
+	
+	public void testPyridine() throws Exception {
+		IMolecule enol = new NNMolecule();
+		
+		// atom block
+		IAtom atom1 = new NNAtom(Elements.CARBON);
+		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom2 = new NNAtom(Elements.CARBON);
+		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom3 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom4 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom5 = new NNAtom(Elements.CARBON);
+		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		IAtom atom6 = new NNAtom(Elements.NITROGEN);
 		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
 		
 		// bond block

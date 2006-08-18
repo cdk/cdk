@@ -24,6 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogens;
+import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogensAndCharges;
 import org.openscience.cdk.test.tools.DeduceBondOrderTestFromHybridization;
 import org.openscience.cdk.test.tools.HydrogenAdder2Test;
 import org.openscience.cdk.test.tools.HydrogenAdder3Test;
@@ -52,6 +53,7 @@ public class MvalencycheckTests {
         suite.addTest(HydrogenAdder3Test.suite());
         suite.addTest(DeduceBondOrderTestFromHybridization.suite());
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
+        suite.addTest(DeduceBondOrderTestFromExplicitHydrogensAndCharges.suite());
         
         return suite;
     }
