@@ -8,7 +8,7 @@ import org.openscience.cdk.test.libio.weka.WekaTest;
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
  *
- * @cdk.module  test-libio-weka
+ * @cdk.module  test-libioweka
  * @cdk.depends weka.jar
  * @cdk.depends junit.jar
  */

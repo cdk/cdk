@@ -40,7 +40,7 @@ import weka.classifiers.trees.J48;
 /**
  * TestCase for Weka class.
  *
- * @cdk.module test-libio-weka
+ * @cdk.module test-libioweka
  * 
  */
 public class WekaTest extends CDKTestCase {

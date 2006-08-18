@@ -54,7 +54,7 @@ import weka.core.Instances;
  *  </pre>
  * @author      Miguel Rojas
  * @cdk.created 2006-05-23
- * @cdk.module  libio-weka
+ * @cdk.module  libioweka
  * @cdk.keyword   weka,Machine Learning
  * @cdk.depends   weka.jar
  */
