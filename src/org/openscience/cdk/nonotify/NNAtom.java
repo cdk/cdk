@@ -31,6 +31,7 @@ package org.openscience.cdk.nonotify;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module nonotify
@@ -40,11 +41,16 @@ public class NNAtom extends Atom {
 	private static final long serialVersionUID = 7167767884979676864L;
 
 	public NNAtom() {
-		this(null);
+		this((String)null);
 	}
         
 	public NNAtom(String elementSymbol) {
 		super(elementSymbol);
+		setNotification(false);
+	}
+
+	public NNAtom(IElement element) {
+		super(element);
 		setNotification(false);
 	}
 
