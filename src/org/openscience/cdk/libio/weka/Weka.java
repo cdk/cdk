@@ -23,17 +23,12 @@
  */
 package org.openscience.cdk.libio.weka;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Vector;
-
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
+
+import java.io.*;
+import java.util.Vector;
 
 
 /**
@@ -101,18 +96,18 @@ public class Weka {
     /** 
      * Extract the class name attribute manually from the file
      * 
-     * @param insr  The BufferedReader
+     * @param input  The BufferedReader
      * @return      Array with the class attributes
      */
     private String[] extractClass(BufferedReader input) {
 		Vector attribV = new Vector();
     	String[] classAttrib = null;
-    	String line = "";
+    	String line;
         try {
 			while ((line = input.readLine()) != null) {
 				if(line.startsWith("@attribute class {")){
 					int strlen = line.length();
-					String line_ = null; 
+					String line_ = null;
 					out:
 					for (int i = 0; i < strlen; i++){
 						switch(line.charAt(i)){
@@ -141,7 +136,7 @@ public class Weka {
 							edited.append(line_.charAt(i));
 						}
 					}
-					
+
 				}
 			}
 			if(attribV.size() > 0){
@@ -289,8 +284,7 @@ public class Weka {
     	    	string += y[j]+", \n";
     		}
     	}
-    	Reader reader = new StringReader(string);
-    	return reader;
+        return (Reader)new StringReader(string);
     }
 
 	/**
