@@ -25,14 +25,20 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -52,16 +58,24 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
         IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
 
-        // napthalene .667 .802
-        // nbutane .5 .536
+        // first molecule is nbutane, second is naphthalene
+        String filename = "data/mdl/petitejean.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
+        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = c[0];
 
-        SmilesParser sp = new SmilesParser();
-        AtomContainer mol = sp.parseSmiles("O=C(O)CC");
-
-        DescriptorValue result = descriptor.calculate(mol);
+        DescriptorValue result = descriptor.calculate(ac);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
+        assertEquals(0.5, dar.get(0), 0.00001);
+        assertEquals(0.606477, dar.get(1), 0.000001);
 
-        assertEquals(0.33333334, dar.get(0), 0.0001);
+        ac = c[1];
+        result = descriptor.calculate(ac) ;
+        dar = (DoubleArrayResult)result.getValue();
+        assertEquals(0.666666, dar.get(0), 0.000001);
+        assertEquals(0.845452, dar.get(1), 0.000001);
 
     }
 }
