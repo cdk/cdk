@@ -773,5 +773,40 @@
       </bibtex:article>
   </bibtex:entry>
 
-
+  <bibtex:entry id="BREN1995">
+      <bibtex:article>
+          <bibtex:author>Breneman, C.M. and Thompson, T.R. and Rhem, M. and Dung, M.
+          </bibtex:author>
+          <bibtex:title> Electron Density Modeling of Large Systems Using the Transferable Atom Equivalent Method </bibtex:title>
+          <bibtex:journal>Computers and Chemistry</bibtex:journal>
+          <bibtex:year>1995</bibtex:year>
+          <bibtex:volume>19</bibtex:volume>
+          <bibtex:pages>161</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+  <bibtex:entry id="BREN1997">
+      <bibtex:article>
+          <bibtex:author>Breneman, C.M. and Rhem, M.
+          </bibtex:author>
+          <bibtex:title>A QSPR Analysis of HPLC Column Capacity
+Factors for a set of High-Energy Materials Using Electronic Van der Waals
+Surface Property Descriptors Computed by the Transferable Atom Equivalent 
+Method </bibtex:title>
+          <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+          <bibtex:year>1997</bibtex:year>
+          <bibtex:volume>18</bibtex:volume>
+          <bibtex:pages>182-197</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+  <bibtex:entry id="WHITE2003">
+      <bibtex:article>
+          <bibtex:author>Whitehead, C.E. and Sukumar, N. and Breneman, C.M. and Ryan, M.D.
+          </bibtex:author>
+          <bibtex:title> Transferable Atom Equivalent Multi-Centered Multipole Expansion Method</bibtex:title>
+          <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+          <bibtex:year>2003</bibtex:year>
+          <bibtex:volume>24</bibtex:volume>
+          <bibtex:pages>512-529</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
 </bibtex:file>
