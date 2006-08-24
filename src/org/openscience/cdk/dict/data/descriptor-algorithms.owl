@@ -140,7 +140,7 @@
 
 
     <Contributor rdf:ID="rguha">
-        <rdfs:label>Christian Hoppe</rdfs:label>
+        <rdfs:label>Rajarshi Guha</rdfs:label>
     </Contributor>
 
     <Contributor rdf:ID="mf">
@@ -293,7 +293,7 @@
 
     <Descriptor rdf:ID="BCUT">
         <rdfs:label>BCUT</rdfs:label>
-        <dc:contributor rdf:resourrce="#rg"/>
+        <dc:contributor rdf:resourrce="#rguha"/>
         <dc:contributor rdf:resourrce="#elw"/>
         <dc:date>2005-01-27</dc:date>
         <definition>
@@ -591,7 +591,7 @@
         <rdfs:label>Gravitational Index</rdfs:label>
         <annotation>
             <documentation>
-                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#rguha"/>
                 <dc:contributor rdf:resourrce="#elw"/>
                 <dc:date>2004-11-24</dc:date>
             </documentation>
@@ -614,7 +614,7 @@
         <rdfs:label>Gravitational Index (Square and Cube Roots)</rdfs:label>
         <annotation>
             <documentation>
-                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#rguha"/>
                 <dc:contributor rdf:resourrce="#elw"/>
                 <dc:date>2004-11-25</dc:date>
             </documentation>
@@ -889,7 +889,7 @@
         <rdfs:label>Moments of Inertia</rdfs:label>
         <annotation>
             <documentation>
-                <dc:contributor rdf:resourrce="#rg"/>
+                <dc:contributor rdf:resourrce="#rguha"/>
                 <dc:contributor rdf:resourrce="#elw"/>
                 <dc:date>2005-02-07</dc:date>
             </documentation>
@@ -2130,7 +2130,7 @@
 
     <Descriptor rdf:ID="petitjeanShapeIndex">
         <rdfs:label>Petitjean Shape Indices</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
             The topological and geometric shape indices described Petitjean and Bath et al.
@@ -2143,7 +2143,7 @@
 
     <Descriptor rdf:ID="eccentricConnectivityIndex">
         <rdfs:label>Eccentric Connectivity Index</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2005-03-19</dc:date>
         <definition>
             A topological descriptor combining distance and adjacency information.
@@ -2199,7 +2199,7 @@
 
     <Descriptor rdf:ID="CPSA">
         <rdfs:label>Charged Partial Surface Areas</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2005-05-16</dc:date>
         <definition>
             A variety of descriptors combining surface area and partial charge information
@@ -2211,7 +2211,7 @@
 
     <Descriptor rdf:ID="weightedPath">
         <rdfs:label>Weighted path descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
             The weighted path (molecular ID) descriptors described by Randic. They characterize molecular branching.
@@ -2222,12 +2222,24 @@
 
     <Descriptor rdf:ID="ats">
         <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
-        <dc:contributor rdf:resource="#rg"/>
+        <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
             The Moreau-Broto autocorrelation descriptors modified to remove dependency on molecular size.
         </definition>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="taeAminoAcid">
+        <rdfs:label>TAE RECON descriptors for amino acid sequences</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-08-23</dc:date>
+        <definition>
+            The TAE RECON descriptors for amino acid sequences. Uses precalculated quantum mechanical
+	    parameters to generate a set of 147 descriptors for a given sequence
+        </definition>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
