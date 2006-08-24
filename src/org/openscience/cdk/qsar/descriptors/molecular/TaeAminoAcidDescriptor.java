@@ -18,11 +18,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
+ * An implementation of the TAE descriptors for amino acids.
+ * <p/>
+ * The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
+ * are derived from pre-calculated quantum mechanical parameters. This class
+ * uses the paramaters for amino acids and thus evaluates a set of 147 descriptors for peptide
+ * sequences.
+ * <p/>
+ * The class expects that it will be supplied an object which implements the {@link IBioPolymer}. Thus ordinary
+ * AtomContainer objects  will result in an exception.
+ *
  * @author Rajarshi Guha
  * @cdk.created 2006-08-23
  * @cdk.module qsar-pdb
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:taeAminoAcid
+ * @see IBioPolymer
  */
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
@@ -148,8 +159,10 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     /**
      * Calculates the 147 TAE descriptors for amino acids.
      *
-     * @param container Parameter is the atom container.
-     * @return A DoubleArrayResult value representing the TAE descriptors
+     * @param container Parameter is the atom container which should implement {@link IBioPolymer}.
+     * @return A DoubleArrayResult value representing the 147 TAE descriptors
+     * @throws CDKException if the TAE parameters could not be intialized or if the supplied molecule
+     *                      does not implement {@link IBioPolymer}
      */
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
