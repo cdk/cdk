@@ -32,9 +32,13 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private HashMap nametrans = new HashMap();
 
     private void loadTAEParams() {
-        String filename = "data/taepeptides.txt";
+        String filename = "org/openscience/cdk/qsar/descriptors/data/taepeptides.txt";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-
+        if (ins == null) {
+            logger.debug("Could not load the TAE peptide parameter data file");
+            TAEParams = null;
+            return;
+        }
         try {
             BufferedReader breader = new BufferedReader(new InputStreamReader(ins));
             breader.readLine(); // throw away the header
@@ -94,7 +98,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
                 this.getClass().getName(),
-                "$Id: TaeAminoAcidDescriptor.java 6707 2006-07-30 20:38:18Z egonw $",
+                "$Id: TaeAminoAcidDescriptor.java 6707 2006-08-23 20:38:18Z rajarshi $",
                 "The Chemistry Development Kit");
     }
 
