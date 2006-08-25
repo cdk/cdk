@@ -685,6 +685,7 @@
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/svg.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
+                	<includesfile name="${metainf}/sdg.libdepends"/>
 		    <includesfile name="${metainf}/forcefield.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
@@ -714,6 +715,7 @@
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smiles.jar"/>
+                	<include name="cdk-sdg.jar"/>
                 </fileset>
             </unjar>
 
