@@ -29,25 +29,16 @@
  */
 package org.openscience.cdk.applications.demo;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Checkbox;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.TextField;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-
-import javax.swing.JApplet;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 
 /**
  * @cdk.module  applications
@@ -75,7 +66,7 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 		frame.addWindowListener(sv.getAWindowAdapter());
 		frame.getContentPane().add(sv);
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 
 	}
 
@@ -121,7 +112,7 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 				frame.getContentPane().setLayout(new BorderLayout());
 				try
 				{
-					MoleculeListViewer mlv = null;
+					MoleculeListViewer mlv;
 					mlv = new MoleculeListViewer();
 					mlv.setMolViewDim(new Dimension(400, 600));
 					SmilesParser sp = new SmilesParser();
@@ -139,8 +130,7 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 				catch(Exception exc)
 				{
 					System.out.println(exc);
-					return;
-				}
+                }
 			}
 	}
 	

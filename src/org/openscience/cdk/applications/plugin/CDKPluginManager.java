@@ -23,6 +23,11 @@
  */
 package org.openscience.cdk.applications.plugin;
 
+import org.openscience.cdk.applications.APIVersionTester;
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.tools.LoggingTool;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -31,17 +36,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import javax.swing.AbstractAction;
-import javax.swing.JDialog;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-
-import org.openscience.cdk.applications.APIVersionTester;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Manager that loads and maintains CDK plugins. In addition, it provides a JMenu 
@@ -329,7 +323,7 @@ public class CDKPluginManager {
                 pluginWindow.getContentPane().add(pluginPanel);
                 pluginWindow.setJMenuBar(getMenuBar());
                 pluginWindow.pack();
-                pluginWindow.show();
+                pluginWindow.setVisible(true);
             }
         }
         
