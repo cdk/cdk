@@ -274,6 +274,9 @@ public class PMPReader extends DefaultChemObjectReader {
                     }
                 } else if (line.startsWith("%%Traj Start")) {
                     chemSequence = chemFile.getBuilder().newChemSequence();
+                    double energyFragment = 0.0;
+                    double energyTotal = 0.0;
+                    int Z = 1;
                     while (input.ready() && line != null && !(line.startsWith("%%Traj End"))) {
                         if (line.startsWith("%%Start Frame")) {
                             chemModel = chemFile.getBuilder().newChemModel();
@@ -281,19 +284,33 @@ public class PMPReader extends DefaultChemObjectReader {
                             IAtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
-                                if (line.startsWith("%%Atom Coords")) {
+                            	if (line.startsWith("%%Atom Coords")) {
+                                	// calculate Z: as it is not explicitely given, try to derive it from the
+                                	// energy per fragment and the total energy
+                                	if (energyFragment != 0.0 && energyTotal != 0.0) {
+                                		Z = (int)(energyTotal/energyFragment);
+                                		logger.debug("Z derived from energies: ", Z);
+                                	}
                                     // add atomC as atoms to crystal
-                                    crystal.add((IAtomContainer)atomC.clone());
                                     int expatoms = atomC.getAtomCount();
-                                    // exception
-                                    for (int i=0; i < expatoms; i++) {
-                                        line = readLine();
-                                        IAtom a = crystal.getAtom(i);
-                                        StringTokenizer st = new StringTokenizer(line, " ");
-                                        a.setX3d(Double.parseDouble(st.nextToken()));
-                                        a.setY3d(Double.parseDouble(st.nextToken()));
-                                        a.setZ3d(Double.parseDouble(st.nextToken()));
+                                    for (int molCount = 1; molCount<=Z; molCount++) {
+                                    	IAtomContainer clone = (IAtomContainer)atomC.clone();
+                                        crystal.add(clone);
+                                    	for (int i=0; i < expatoms; i++) {
+                                    		line = readLine();
+                                    		IAtom a = clone.getAtom(i);
+                                    		StringTokenizer st = new StringTokenizer(line, " ");
+                                    		a.setX3d(Double.parseDouble(st.nextToken()));
+                                    		a.setY3d(Double.parseDouble(st.nextToken()));
+                                    		a.setZ3d(Double.parseDouble(st.nextToken()));
+                                    	}
                                     }
+                                } else if (line.startsWith("%%E/Frag")) {
+                                	line = readLine().trim();
+                                	energyFragment = Double.parseDouble(line);
+                                } else if (line.startsWith("%%Tot E")) {
+                                	line = readLine().trim();
+                                	energyTotal = Double.parseDouble(line);
                                 } else if (line.startsWith("%%Lat Vects")) {
                                     StringTokenizer st;
                                     line = readLine();

@@ -30,9 +30,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.io.PMPReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -57,9 +61,8 @@ public class PMPReaderTest extends CDKTestCase {
     }
 
     public void testAccepts() {
-    	Mol2Reader reader = new Mol2Reader();
+    	PMPReader reader = new PMPReader();
     	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(ChemModel.class));
     }
 
     public void testAceticAcid() {
@@ -67,11 +70,23 @@ public class PMPReaderTest extends CDKTestCase {
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
-            Mol2Reader reader = new Mol2Reader(ins);
+        	PMPReader reader = new PMPReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             
             assertNotNull(chemFile);
+            assertEquals(1, chemFile.getChemSequenceCount());
+            IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(1, seq.getChemModelCount());
+            IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            
+            ICrystal crystal = model.getCrystal();
+            assertNotNull(crystal);
+            assertEquals(32, crystal.getAtomCount());
+            assertEquals(28, crystal.getBondCount());
         } catch (Exception e) {
+        	e.printStackTrace();
             fail(e.toString());
         }
     }
