@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -35,6 +32,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,6 +81,9 @@ public class PMPReader extends DefaultChemObjectReader {
     /* Keep an index of PMP id -> AtomCountainer id */
     private Hashtable atomids = new Hashtable();
     private Hashtable bondids = new Hashtable();
+    private Hashtable bondAtomOnes = new Hashtable();
+    private Hashtable bondAtomTwos = new Hashtable();
+    private Hashtable bondOrders = new Hashtable();
 
     /* Often used patterns */
     Pattern objHeader;
@@ -90,6 +91,7 @@ public class PMPReader extends DefaultChemObjectReader {
     Pattern atomTypePattern;
 
     int lineNumber = 0;
+    int bondCounter = 0;
     
     /*
      * construct a new reader from a Reader type object
@@ -216,6 +218,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     String format = objCommandMatcher.group(1);
                                     String command = objCommandMatcher.group(2);
                                     String field = objCommandMatcher.group(3);
+                                    
                                     processModelCommand(object, command, format, field);
                                 } else {
                                     logger.warn("Skipping line: " + line);
@@ -225,9 +228,9 @@ public class PMPReader extends DefaultChemObjectReader {
                             if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
                                 molecule.addAtom((IAtom)chemObject);
-                            } else if (chemObject instanceof IBond) {
-                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-                                molecule.addBond((IBond)chemObject);
+//                            } else if (chemObject instanceof IBond) {
+//                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+//                                molecule.addBond((IBond)chemObject);
                             } else {
                                 logger.error("chemObject is not initialized or of bad class type");
                             }
@@ -235,8 +238,40 @@ public class PMPReader extends DefaultChemObjectReader {
                         }
                         line = readLine();
                     }
-                    som.addMolecule(molecule);
-                    modelModel.setSetOfMolecules(som);
+                    if (line.startsWith("%%Model End")) {
+                    	// during the Model Start, all bonds are cached as PMP files might
+                    	// define bonds *before* the involved atoms :(
+                    	// the next lines dump the cache into the atom container
+
+//                  	bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+//                  	molecule.addBond((IBond)chemObject);
+                    	int bondsFound = bondids.size();
+                    	logger.debug("Found #bonds: ", bondsFound);
+                    	logger.debug("#atom ones: ", bondAtomOnes.size());
+                    	logger.debug("#atom twos: ", bondAtomTwos.size());
+                    	logger.debug("#orders: ", bondOrders.size());
+                    	Iterator bonds = bondids.keySet().iterator();
+                    	while (bonds.hasNext()) {
+                    		Integer index = (Integer)bonds.next();
+                    		double order = (bondOrders.get(index) != null ? ((Double)bondOrders.get(index)).doubleValue() : 1.0);
+                    		logger.debug("index: ", index);
+                    		logger.debug("ones: ", bondAtomOnes.get(index));
+                    		IAtom atom1 = molecule.getAtom(
+                    			((Integer)atomids.get(
+                    				(Integer)bondAtomOnes.get(index)
+                    			)).intValue()
+                    		);
+                    		IAtom atom2 = molecule.getAtom(
+                        		((Integer)atomids.get(
+                        			(Integer)bondAtomTwos.get(index)
+                        		)).intValue()
+                        	);
+                    		IBond bond = molecule.getBuilder().newBond(atom1, atom2, order);
+                    		molecule.addBond(bond);
+                    	}
+                    	som.addMolecule(molecule);
+                    	modelModel.setSetOfMolecules(som);
+                    }
                 } else if (line.startsWith("%%Traj Start")) {
                     chemSequence = chemFile.getBuilder().newChemSequence();
                     while (input.ready() && line != null && !(line.startsWith("%%Traj End"))) {
@@ -355,22 +390,25 @@ public class PMPReader extends DefaultChemObjectReader {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
-                int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                IAtom a = molecule.getAtom(realatomid);
-                ((IBond)chemObject).setAtomAt(a, 0);
+                bondAtomOnes.put(new Integer(bondCounter), new Integer(atomid));
+//                IAtom a = molecule.getAtom(realatomid);
+//                ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 logger.debug("atomids: " + atomids);
                 logger.debug("atomid: " + atomid);
-                int realatomid = ((Integer)atomids.get(new Integer(atomid))).intValue();
-                IAtom a = molecule.getAtom(realatomid);
-                ((IBond)chemObject).setAtomAt(a, 1);
+                bondAtomTwos.put(new Integer(bondCounter), new Integer(atomid));
+//                IAtom a = molecule.getAtom(realatomid);
+//                ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);
-                ((IBond)chemObject).setOrder(order);
+                bondOrders.put(new Integer(bondCounter), new Double(order));
+//                ((IBond)chemObject).setOrder(order);
             } else if ("Id".equals(command)) {
+            	int bondid = Integer.parseInt(field);
+            	bondids.put(new Integer(bondCounter), new Integer(bondid));
             } else if ("Label".equals(command)) {
             } else if ("3DGridOrigin".equals(command)) {
             } else if ("3DGridMatrix".equals(command)) {
@@ -387,6 +425,7 @@ public class PMPReader extends DefaultChemObjectReader {
         if ("Atom".equals(object)) {
             chemObject = builder.newAtom("C");
         } else if ("Bond".equals(object)) {
+        	bondCounter++;
             chemObject = builder.newBond();
         } else if ("Model".equals(object)) {
             modelModel = builder.newChemModel();
