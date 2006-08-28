@@ -40,6 +40,7 @@ import org.openscience.cdk.test.io.MDLReaderTest;
 import org.openscience.cdk.test.io.MDLWriterTest;
 import org.openscience.cdk.test.io.Mol2ReaderTest;
 import org.openscience.cdk.test.io.PDBWriterTest;
+import org.openscience.cdk.test.io.PMPReaderTest;
 import org.openscience.cdk.test.io.ReaderFactoryTest;
 import org.openscience.cdk.test.io.SDFReaderTest;
 import org.openscience.cdk.test.io.ShelXReaderTest;
@@ -74,6 +75,7 @@ public class MioTests {
         suite.addTest(MDLRXNWriterTest.suite());
         suite.addTest(Mol2ReaderTest.suite());
         suite.addTest(PDBWriterTest.suite());
+        suite.addTest(PMPReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
         suite.addTest(ShelXWriterTest.suite());
         //suite.addTest(VASPReaderTest.suite()); Class is in experimental
