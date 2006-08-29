@@ -50,15 +50,12 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * Reads an frames from a PMP formated input.
@@ -81,9 +78,7 @@ public class PMPReader extends DefaultChemObjectReader {
     private LoggingTool logger;
 
     /* Keep a copy of the PMP model */
-    private IMoleculeSet som;
-    private IChemModel modelModel;
-    private IMolecule molecule;
+    private IAtomContainer modelStructure;
     private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
     private Hashtable atomids = new Hashtable();
@@ -102,7 +97,6 @@ public class PMPReader extends DefaultChemObjectReader {
     int lineNumber = 0;
     int bondCounter = 0;
 	private RebondTool rebonder;
-	private UniversalIsomorphismTester isomorpher;
     
     /*
      * construct a new reader from a Reader type object
@@ -120,7 +114,6 @@ public class PMPReader extends DefaultChemObjectReader {
         atomTypePattern = Pattern.compile("^(\\d+)\\s+(\\w+)$");
         
         rebonder = new RebondTool(2.0, 0.5, 0.5);
-        isomorpher = new UniversalIsomorphismTester();
     }
 
     public PMPReader(InputStream input) {
@@ -211,6 +204,7 @@ public class PMPReader extends DefaultChemObjectReader {
                     }
                 } else if (line.startsWith("%%Model Start")) {
                     // parse Model section
+                	modelStructure = chemFile.getBuilder().newAtomContainer();
                     while (input.ready() && line != null && !(line.startsWith("%%Model End"))) {
                         Matcher objHeaderMatcher = objHeader.matcher(line);
                         if (objHeaderMatcher.matches()) {
@@ -240,10 +234,10 @@ public class PMPReader extends DefaultChemObjectReader {
                                 line = readLine();
                             }
                             if (chemObject instanceof IAtom) {
-                                atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+                                atomids.put(new Integer(id), new Integer(modelStructure.getAtomCount()));
                                 atomZOrders.put(new Integer((String)chemObject.getProperty(PMP_ZORDER)), new Integer(id));
                                 atomGivenIds.put(new Integer((String)chemObject.getProperty(PMP_ID)), new Integer(id));
-                                molecule.addAtom((IAtom)chemObject);
+                                modelStructure.addAtom((IAtom)chemObject);
 //                            } else if (chemObject instanceof IBond) {
 //                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
 //                                molecule.addBond((IBond)chemObject);
@@ -272,21 +266,19 @@ public class PMPReader extends DefaultChemObjectReader {
                     		double order = (bondOrders.get(index) != null ? ((Double)bondOrders.get(index)).doubleValue() : 1.0);
                     		logger.debug("index: ", index);
                     		logger.debug("ones: ", bondAtomOnes.get(index));
-                    		IAtom atom1 = molecule.getAtom(
+                    		IAtom atom1 = modelStructure.getAtom(
                     			((Integer)atomids.get(
                     				(Integer)bondAtomOnes.get(index)
                     			)).intValue()
                     		);
-                    		IAtom atom2 = molecule.getAtom(
+                    		IAtom atom2 = modelStructure.getAtom(
                         		((Integer)atomids.get(
                         			(Integer)bondAtomTwos.get(index)
                         		)).intValue()
                         	);
-                    		IBond bond = molecule.getBuilder().newBond(atom1, atom2, order);
-                    		molecule.addBond(bond);
+                    		IBond bond = modelStructure.getBuilder().newBond(atom1, atom2, order);
+                    		modelStructure.addBond(bond);
                     	}
-                    	som.addMolecule(molecule);
-                    	modelModel.setSetOfMolecules(som);
                     }
                 } else if (line.startsWith("%%Traj Start")) {
                     chemSequence = chemFile.getBuilder().newChemSequence();
@@ -297,20 +289,19 @@ public class PMPReader extends DefaultChemObjectReader {
                         if (line.startsWith("%%Start Frame")) {
                             chemModel = chemFile.getBuilder().newChemModel();
                             crystal = chemFile.getBuilder().newCrystal();
-                            IAtomContainer atomC = ChemModelManipulator.getAllInOneContainer(modelModel);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
                             	if (line.startsWith("%%Atom Coords")) {
                                 	// calculate Z: as it is not explicitely given, try to derive it from the
                                 	// energy per fragment and the total energy
                                 	if (energyFragment != 0.0 && energyTotal != 0.0) {
-                                		Z = (int)(energyTotal/energyFragment);
+                                		Z = (int)Math.round(energyTotal/energyFragment);
                                 		logger.debug("Z derived from energies: ", Z);
                                 	}
                                     // add atomC as atoms to crystal
-                                    int expatoms = atomC.getAtomCount();
+                                    int expatoms = modelStructure.getAtomCount();
                                     for (int molCount = 1; molCount<=Z; molCount++) {
-                                    	IAtomContainer clone = atomC.getBuilder().newAtomContainer();
+                                    	IAtomContainer clone = modelStructure.getBuilder().newAtomContainer();
                                     	for (int i=0; i < expatoms; i++) {
                                     		line = readLine();
                                     		IAtom a = clone.getBuilder().newAtom();
@@ -325,16 +316,16 @@ public class PMPReader extends DefaultChemObjectReader {
                                     	// atom ordering in the model and the 'Frame's, do a isomorphism checking
                                     	rebonder.rebond(clone);
                                     	Iterator maps = UniversalIsomorphismTester.getIsomorphAtomsMap(
-                                    		atomC, 
+                                    		modelStructure, 
                                     		QueryAtomContainerCreator.createAnyAtomAnyBondContainer(clone,false)
                                     	).iterator();
                                     	while (maps.hasNext()) {
                                     		RMap map1 = (RMap)maps.next();
                                     		logger.debug("Map found: " + map1.getId1() + " -> " + map1.getId2());
                                     		logger.debug("  symbols: " + clone.getAtom(map1.getId1()).getSymbol()
-                                    				     + " -> " + atomC.getAtom(map1.getId2()).getSymbol());
+                                    				     + " -> " + modelStructure.getAtom(map1.getId2()).getSymbol());
                                     		clone.getAtom(map1.getId2()).setSymbol(
-                                    			atomC.getAtom(map1.getId1()).getSymbol()
+                                    			modelStructure.getAtom(map1.getId1()).getSymbol()
                                     		);
                                     	}
                                     	logger.debug("Bla");
@@ -485,9 +476,7 @@ public class PMPReader extends DefaultChemObjectReader {
         	bondCounter++;
             chemObject = builder.newBond();
         } else if ("Model".equals(object)) {
-            modelModel = builder.newChemModel();
-            som = builder.newMoleculeSet();
-            molecule = builder.newMolecule();
+            modelStructure = builder.newAtomContainer();
         } else {
             logger.error("Cannot construct PMP object type: " + object);
         }
