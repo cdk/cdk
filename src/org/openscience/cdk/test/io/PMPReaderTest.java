@@ -94,4 +94,36 @@ public class PMPReaderTest extends CDKTestCase {
         }
     }
 
+    public void testTwoAceticAcid() {
+        String filename = "data/pmp/two_aceticacid.pmp";
+        logger.info("Testing: ", filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+        	PMPReader reader = new PMPReader(ins);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            
+            assertNotNull(chemFile);
+            assertEquals(1, chemFile.getChemSequenceCount());
+            IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(2, seq.getChemModelCount());
+            
+            IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            ICrystal crystal = model.getCrystal();
+            assertNotNull(crystal);
+            assertEquals(32, crystal.getAtomCount());
+            assertEquals(28, crystal.getBondCount());
+            
+            model = seq.getChemModel(1);
+            assertNotNull(model);
+            crystal = model.getCrystal();
+            assertNotNull(crystal);
+            assertEquals(32, crystal.getAtomCount());
+            assertEquals(28, crystal.getBondCount());
+        } catch (Exception e) {
+        	e.printStackTrace();
+            fail(e.toString());
+        }
+    }
 }
