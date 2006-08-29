@@ -39,6 +39,8 @@ import java.util.regex.Pattern;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,9 +52,11 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -60,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Reads an frames from a PMP formated input.
  * Both compilation and use of this class requires Java 1.4.
  *
- * @cdk.module io
+ * @cdk.module  experimental
  *
  * @cdk.keyword file format, Polymorph Predictor (tm)
  *
@@ -69,7 +73,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  */
 public class PMPReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
+    private static final String PMP_ZORDER = "ZOrder";
+    private static final String PMP_ID = "Id";
+
+	private BufferedReader input;
 
     private LoggingTool logger;
 
@@ -80,6 +87,8 @@ public class PMPReader extends DefaultChemObjectReader {
     private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
     private Hashtable atomids = new Hashtable();
+    private Hashtable atomGivenIds = new Hashtable();
+    private Hashtable atomZOrders = new Hashtable();
     private Hashtable bondids = new Hashtable();
     private Hashtable bondAtomOnes = new Hashtable();
     private Hashtable bondAtomTwos = new Hashtable();
@@ -92,6 +101,8 @@ public class PMPReader extends DefaultChemObjectReader {
 
     int lineNumber = 0;
     int bondCounter = 0;
+	private RebondTool rebonder;
+	private UniversalIsomorphismTester isomorpher;
     
     /*
      * construct a new reader from a Reader type object
@@ -107,6 +118,9 @@ public class PMPReader extends DefaultChemObjectReader {
         objHeader = Pattern.compile(".*\\((\\d+)\\s(\\w+)$");
         objCommand = Pattern.compile(".*\\(A\\s(C|F|D|I|O)\\s(\\w+)\\s+\"?(.*?)\"?\\)$");
         atomTypePattern = Pattern.compile("^(\\d+)\\s+(\\w+)$");
+        
+        rebonder = new RebondTool(2.0, 0.5, 0.5);
+        isomorpher = new UniversalIsomorphismTester();
     }
 
     public PMPReader(InputStream input) {
@@ -227,6 +241,8 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+                                atomZOrders.put(new Integer((String)chemObject.getProperty(PMP_ZORDER)), new Integer(id));
+                                atomGivenIds.put(new Integer((String)chemObject.getProperty(PMP_ID)), new Integer(id));
                                 molecule.addAtom((IAtom)chemObject);
 //                            } else if (chemObject instanceof IBond) {
 //                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
@@ -294,16 +310,35 @@ public class PMPReader extends DefaultChemObjectReader {
                                     // add atomC as atoms to crystal
                                     int expatoms = atomC.getAtomCount();
                                     for (int molCount = 1; molCount<=Z; molCount++) {
-                                    	IAtomContainer clone = (IAtomContainer)atomC.clone();
-                                        crystal.add(clone);
+                                    	IAtomContainer clone = atomC.getBuilder().newAtomContainer();
                                     	for (int i=0; i < expatoms; i++) {
                                     		line = readLine();
-                                    		IAtom a = clone.getAtom(i);
+                                    		IAtom a = clone.getBuilder().newAtom();
                                     		StringTokenizer st = new StringTokenizer(line, " ");
                                     		a.setX3d(Double.parseDouble(st.nextToken()));
                                     		a.setY3d(Double.parseDouble(st.nextToken()));
                                     		a.setZ3d(Double.parseDouble(st.nextToken()));
+                                    		a.setCovalentRadius(0.6);
+                                    		clone.addAtom(a);
                                     	}
+                                    	// OK, since there does not seem to be *any* relation between the
+                                    	// atom ordering in the model and the 'Frame's, do a isomorphism checking
+                                    	rebonder.rebond(clone);
+                                    	Iterator maps = UniversalIsomorphismTester.getIsomorphAtomsMap(
+                                    		atomC, 
+                                    		QueryAtomContainerCreator.createAnyAtomAnyBondContainer(clone,false)
+                                    	).iterator();
+                                    	while (maps.hasNext()) {
+                                    		RMap map1 = (RMap)maps.next();
+                                    		logger.debug("Map found: " + map1.getId1() + " -> " + map1.getId2());
+                                    		logger.debug("  symbols: " + clone.getAtom(map1.getId1()).getSymbol()
+                                    				     + " -> " + atomC.getAtom(map1.getId2()).getSymbol());
+                                    		clone.getAtom(map1.getId2()).setSymbol(
+                                    			atomC.getAtom(map1.getId1()).getSymbol()
+                                    		);
+                                    	}
+                                    	logger.debug("Bla");
+                                    	crystal.add(clone);
                                     }
                                 } else if (line.startsWith("%%E/Frag")) {
                                 	line = readLine().trim();
@@ -363,9 +398,10 @@ public class PMPReader extends DefaultChemObjectReader {
             logger.error("An IOException happened: ", e.getMessage());
             logger.debug(e);
             chemFile = null;
-        } catch (CloneNotSupportedException e) {
-            logger.error("An CloneNotSupportedException happened: ", e.getMessage());
+        } catch (CDKException e) {
+            logger.error("An CDKException happened: ", e.getMessage());
             logger.debug(e);
+            chemFile = null;
 		}
 
         return chemFile;
@@ -396,9 +432,13 @@ public class PMPReader extends DefaultChemObjectReader {
             } else if ("CMAPPINGS".equals(command)) {
             } else if ("FFType".equals(command)) {
             } else if ("Id".equals(command)) {
+            	// ok, should take this into account too
+            	chemObject.setProperty(PMP_ID, field);
             } else if ("Mass".equals(command)) {
             } else if ("XYZ".equals(command)) {
             } else if ("ZOrder".equals(command)) {
+            	// ok, should take this into account too
+            	chemObject.setProperty(PMP_ZORDER, field);
             } else {
                 logger.warn("Unkown PMP Atom command: " + command);
             }

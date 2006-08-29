@@ -34,8 +34,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.PMPReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -43,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the reading Cerius2 Polymorph Predictor files using a test file.
  *
- * @cdk.module test-io
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.io.PMP2Reader
  */
@@ -85,6 +83,11 @@ public class PMPReaderTest extends CDKTestCase {
             assertNotNull(crystal);
             assertEquals(32, crystal.getAtomCount());
             assertEquals(28, crystal.getBondCount());
+            
+            assertEquals("O", crystal.getAtom(6).getSymbol());
+            assertEquals(1.4921997, crystal.getAtom(6).getPoint3d().x, 0.00001);
+            assertEquals("O", crystal.getAtom(7).getSymbol());
+            assertEquals(1.4922556, crystal.getAtom(7).getPoint3d().x, 0.00001);
         } catch (Exception e) {
         	e.printStackTrace();
             fail(e.toString());
