@@ -52,16 +52,13 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PMPFormat;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads an frames from a PMP formated input.
  * Both compilation and use of this class requires Java 1.4.
  *
- * @cdk.module  experimental
+ * @cdk.module  io
  *
  * @cdk.keyword file format, Polymorph Predictor (tm)
  *
@@ -310,25 +307,11 @@ public class PMPReader extends DefaultChemObjectReader {
                                     		a.setY3d(Double.parseDouble(st.nextToken()));
                                     		a.setZ3d(Double.parseDouble(st.nextToken()));
                                     		a.setCovalentRadius(0.6);
+                                    		IAtom modelAtom = modelStructure.getAtom(((Integer)atomids.get(atomGivenIds.get(new Integer(i+1)))).intValue());
+                                    		a.setSymbol(modelAtom.getSymbol());
                                     		clone.addAtom(a);
                                     	}
-                                    	// OK, since there does not seem to be *any* relation between the
-                                    	// atom ordering in the model and the 'Frame's, do a isomorphism checking
                                     	rebonder.rebond(clone);
-                                    	Iterator maps = UniversalIsomorphismTester.getIsomorphAtomsMap(
-                                    		modelStructure, 
-                                    		QueryAtomContainerCreator.createAnyAtomAnyBondContainer(clone,false)
-                                    	).iterator();
-                                    	while (maps.hasNext()) {
-                                    		RMap map1 = (RMap)maps.next();
-                                    		logger.debug("Map found: " + map1.getId1() + " -> " + map1.getId2());
-                                    		logger.debug("  symbols: " + clone.getAtom(map1.getId1()).getSymbol()
-                                    				     + " -> " + modelStructure.getAtom(map1.getId2()).getSymbol());
-                                    		clone.getAtom(map1.getId2()).setSymbol(
-                                    			modelStructure.getAtom(map1.getId1()).getSymbol()
-                                    		);
-                                    	}
-                                    	logger.debug("Bla");
                                     	crystal.add(clone);
                                     }
                                 } else if (line.startsWith("%%E/Frag")) {
