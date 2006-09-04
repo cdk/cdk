@@ -50,8 +50,8 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -514,6 +514,40 @@ public class MDLReader extends DefaultChemObjectReader {
                         int charge = Integer.parseInt(token.trim());
                         molecule.getAtom(atomNumber - 1).setFormalCharge(charge);
                     }
+                }  else if (line.matches("^A    \\d+")) {
+            		// Reads the pseudo atom property from the mol file
+                	
+                	// The atom number of the to replaced atom
+            		int aliasAtomNumber = Integer.parseInt(line.replaceFirst("^A    ", "")) - RGroupCounter;
+            		line = input.readLine(); linecount++;
+					String[] aliasArray = line.split("\\\\");
+					// name of the alias atom like R1 odr R2 etc. 
+					String alias = "";
+					for (int i = 0; i < aliasArray.length; i++) {
+						alias += aliasArray[i];
+					}
+					IAtom aliasAtom = molecule.getAtom(aliasAtomNumber);
+					IAtom newPseudoAtom = molecule.getBuilder().newPseudoAtom(alias);
+					if(aliasAtom.getPoint2d() != null) {
+						newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
+					}
+					if(aliasAtom.getPoint3d() != null) {
+						newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
+					}
+					molecule.addAtom(newPseudoAtom);
+					IBond[] bondsOfAliasAtom = molecule.getConnectedBonds(aliasAtom);
+					
+					for (int i = 0; i < bondsOfAliasAtom.length; i++) {
+						IAtom connectedToAliasAtom = bondsOfAliasAtom[i].getConnectedAtom(aliasAtom);
+						IBond newBond = bondsOfAliasAtom[i].getBuilder().newBond(); 
+						newBond.setAtoms(new IAtom[] {connectedToAliasAtom, newPseudoAtom});
+						newBond.setOrder(bondsOfAliasAtom[i].getOrder());
+						molecule.addBond(newBond);
+						molecule.removeBond(aliasAtom, connectedToAliasAtom);
+					}
+					molecule.removeAtom(aliasAtom);
+					RGroupCounter++;
+
                 } else if (line.startsWith("M  ISO")) {
                     try {
                         String countString = line.substring(6,9).trim();

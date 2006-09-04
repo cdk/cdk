@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.test.io;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.StringReader;
 
@@ -342,5 +343,19 @@ public class MDLReaderTest extends CDKTestCase {
             fail(e.toString());
         }
     }
-    
+    public void testAliasPropertyGroup() {
+        String filename = "data/mdl/AliasPropertyRGroup.sdf";
+        File file = new File(filename);
+        String fi = file.getAbsolutePath();
+        boolean a = file.exists();
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            Molecule mol = (Molecule)reader.read(new Molecule());
+            assertEquals("R1",((PseudoAtom)mol.getAtom(3)).getLabel());
+             } catch (Exception e) {
+            fail(e.toString());
+        }
+    }
 }
