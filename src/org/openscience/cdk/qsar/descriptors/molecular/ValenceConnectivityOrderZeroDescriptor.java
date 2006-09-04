@@ -160,7 +160,6 @@ public class ValenceConnectivityOrderZeroDescriptor implements IMolecularDescrip
                     throw new CDKException("Problem getting isotope " + symbol + " from ElementFactory: " + exc.toString(), exc);
                 }
                 atomicNumber = element.getAtomicNumber();
-                System.out.println(atomicNumber);
                 
                 valence = ((Integer) valences.get(symbol)).intValue();
                 hcount = 0;
