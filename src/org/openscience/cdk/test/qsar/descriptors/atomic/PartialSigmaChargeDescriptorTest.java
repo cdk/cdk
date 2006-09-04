@@ -28,9 +28,11 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -305,7 +307,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.3);
-		}// TODO- oxigen with charge negative gives incorrect results
+		}
 	}
 	/**
 	 *  A unit test for JUnit with [H]c1[n-][c+]([H])c([H])c([H])c1([H])

@@ -175,6 +175,10 @@ public class BreakingBondReaction implements IReactionProcess{
 					if (j == 0){
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(charge+1);
+						
+						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1), reactantCloned))
+							continue;
+						
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom2)));
@@ -187,6 +191,8 @@ public class BreakingBondReaction implements IReactionProcess{
 					} else{
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(1);
+						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2), reactantCloned))
+							continue;
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(-1);
 						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom1)));

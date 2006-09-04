@@ -26,6 +26,7 @@ package org.openscience.cdk.charges;
 import java.io.IOException;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -40,7 +41,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -73,7 +74,7 @@ public class GasteigerPEPEPartialCharges {
 	
 	/** Corresponds an empirical influence between the electrostatic potential and
 	 * the neighbours.*/
-	private double fE = 1.0;/*1.1*/
+	private double fE = 1.1;/*1.1*/
 	/** Scalle factor which makes same heavay for all structures*/
 	private double fS = 0.37;
 	
@@ -106,19 +107,8 @@ public class GasteigerPEPEPartialCharges {
 	 *@exception  Exception  Possible Exceptions
 	 */
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-
+//		System.out.println("smiles1: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) ac));
 		IAtomContainerSet setHI = null;
-
-		/* detect conjugated Pi systems*/
-//		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
-//		if(set.getAtomContainerCount() == 0 ){
-//			/* detect hyperconjugation interactions */
-//			setHI = getHyperconjugationInteractions(ac);
-//			if(setHI.getAtomContainerCount() == 0 )
-//				for(int i = 0; i < ac.getAtomCount() ; i++)
-//					ac.getAtom(i).setCharge(0.0);
-//		}
-//		System.out.println("setHI: "+setHI.getAtomContainerCount());
 		
 		/*0: remove charge, and possible flag ac*/
 		for(int j = 0 ; j < ac.getAtomCount(); j++){
@@ -126,18 +116,29 @@ public class GasteigerPEPEPartialCharges {
 			ac.getAtom(j).setFlag(ISCHANGEDFC, false);
 		}
 		for(int j = 0 ; j < ac.getBondCount(); j++){
-			ac.getAtom(j).setCharge(0.0);
-			ac.getAtom(j).setFlag(ISCHANGEDFC, false);
+			ac.getBond(j).setFlag(ISCHANGEDFC, false);
 		}
-//		System.out.println("smiles: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) ac));
 		
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
 		IAtomContainerSet iSet = gR.getAllStructures(ac);
+//		System.out.println("iset: "+iSet.getAtomContainerCount());
+		
+		/* detect conjugated Pi systems*/
+//		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
+		if(iSet.getAtomContainerCount()  < 2 ){
+			/* detect hyperconjugation interactions */
+			setHI = getHyperconjugationInteractions(ac);
+//			System.out.println("setHI: "+setHI.getAtomContainerCount());
+//			if(setHI.getAtomContainerCount() == 0 )
+//				System.out.println("setHI: "+setHI.getAtomContainerCount());
+//				for(int i = 0; i < ac.getAtomCount() ; i++)
+//					ac.getAtom(i).setCharge(0.0);
+		}
 		if(setHI != null) 
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
-//		System.out.println("iset: "+iSet.getAtomContainerCount());
+//		System.out.println("isetTT: "+iSet.getAtomContainerCount());
 
 		/*2: search whose atoms which don't keep their formal charge and set flags*/
 		double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount( )];
@@ -190,7 +191,7 @@ public class GasteigerPEPEPartialCharges {
 		for (int iter = 0; iter < MX_ITERATIONS; iter++) {
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				IAtomContainer iac = iSet.getAtomContainer(k);
-//				System.out.println("smiles: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) iac));
+//				System.out.println("smilesITERa: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) iac));
 				double[] electronegativity = new double[2];
 				int count = 0;
 				int atom1 = 0;
@@ -279,20 +280,19 @@ public class GasteigerPEPEPartialCharges {
 	 * @throws IOException 
 	 */
 	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
-		HydrogenAdder hAdder = new HydrogenAdder();
 		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
-        try {
+//        try {
             IReactionProcess type = new BreakingBondReaction();
-    		for(int k = 0; k < ac.getAtomCount(); k++){
-    			if(ac.getAtom(k).getSymbol().equals("H")){
-    				ac.removeAtomAndConnectedElectronContainers(ac.getAtom(k));
-    				k--;
-    			}
-    		}
-    		
-    		HydrogenAdder adder = new HydrogenAdder();
-            adder.addImplicitHydrogensToSatisfyValency(ac);
-    		
+//    		for(int k = 0; k < ac.getAtomCount(); k++){
+//    			if(ac.getAtom(k).getSymbol().equals("H")){
+//    				ac.removeAtomAndConnectedElectronContainers(ac.getAtom(k));
+//    				k--;
+//    			}
+//    		}
+//    		
+//    		HydrogenAdder adder = new HydrogenAdder();
+//            adder.addImplicitHydrogensToSatisfyValency(ac);
+//    		
     		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
     			if(ac.getBond(i).getOrder() > 1){
@@ -311,12 +311,12 @@ public class GasteigerPEPEPartialCharges {
 	        	type = new HyperconjugationReaction();
 	    		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
 	    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
-	    		for(int k = 0; k < mol.getAtomCount(); k++){
-	    			if(mol.getAtom(k).getSymbol().equals("H")){
-	    				mol.removeAtomAndConnectedElectronContainers(mol.getAtom(k));
-	    				k--;
-	    			}
-	    		}
+//	    		for(int k = 0; k < mol.getAtomCount(); k++){
+//	    			if(mol.getAtom(k).getSymbol().equals("H")){
+//	    				mol.removeAtomAndConnectedElectronContainers(mol.getAtom(k));
+//	    				k--;
+//	    			}
+//	    		}
 	    		for(int k = 0; k < mol.getBondCount(); k++){
 	    			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
 	    			mol.getBond(k).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,false);
@@ -331,17 +331,17 @@ public class GasteigerPEPEPartialCharges {
 				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
 				IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
 				
-				hAdder.addExplicitHydrogensToSatisfyValency(acc);
+//				hAdder.addExplicitHydrogensToSatisfyValency(acc);
 						
 				set.addAtomContainer(react);
 				}
 	        }
 	        
-		} catch (CDKException e) {
-			e.printStackTrace();
-		}
+//		} catch (CDKException e) {
+//			e.printStackTrace();
+//		}
 		
-		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) ac);
+//		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) ac);
 		
 		return set;
 	}
@@ -355,7 +355,8 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	private double getElectrostaticPotentialN(IAtomContainer ac, int atom1, double[] ds) {
 		
-		double CoulombForceConstant = 1/(4*Math.PI*9.1/*Math.pow(10, -12)*/);
+//		double CoulombForceConstant = 1/(4*Math.PI*8.81/*Math.pow(10, -12)*/);
+		double CoulombForceConstant = 0.048;
 		double sum = 0.0;
 		try {
 			if (factory == null) 
@@ -372,7 +373,7 @@ public class GasteigerPEPEPartialCharges {
 	            covalentradius = type.getCovalentRadius();
 
 	            double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
-				double sumI = CoulombForceConstant*charge/(covalentradius);
+				double sumI = CoulombForceConstant*charge/(covalentradius*covalentradius);
 //				System.out.println("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
 				sum += sumI;
 			}
@@ -427,6 +428,7 @@ public class GasteigerPEPEPartialCharges {
         
         if(numBond1 </*>*/ numBond2)
 			fB = 0.8;
+        
 		double fPlus = 1.0;
         if(totalNCharge1 == 0.0 && totalPCharge1 == 0.0 )
         	fPlus = 0.1;
@@ -441,7 +443,7 @@ public class GasteigerPEPEPartialCharges {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("return "+fQ*fB+"= sp:"+fQ+", dc:"+fB);
+//		System.out.println("return "+fQ*fB*fPlus*fA+"= sp:"+fQ+", dc:"+fB+", fPlus:"+fPlus+", fA:"+fA);
 		
 		return fQ*fB*fPlus*fA;
 	}

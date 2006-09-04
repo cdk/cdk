@@ -324,5 +324,31 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 		}
 	}
+	/**
+	 *  A unit test for JUnit with CCOCCCO
+	 */
+	public void testPiElectronegativity2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double [] testResult={0.0,0.0,3.2849,0.0,0.0,0.0,3.2849,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
+		Integer[] params = new Integer[1];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCOCCCO");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for (int i = 0 ; i < mol.getAtomCount(); i++){
+			params[0] = new Integer(6);
+	        descriptor.setParameters(params);
+	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
+//	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+			if(result == 0.0)
+				assertEquals(testResult[i],result, 0.0001);
+		}
+	}
 }
 

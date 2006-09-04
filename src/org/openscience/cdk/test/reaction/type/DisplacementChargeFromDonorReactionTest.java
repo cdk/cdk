@@ -20,6 +20,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -184,6 +185,34 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         
         
         Assert.assertEquals(0, setOfReactions.getReactionCount());
+
+        
+        
+	}
+	/**
+	 * A unit test suite for JUnit. Reaction: CC(=O)N => CC([O-]=[N+]
+	 * Test of mapped between the reactant and product. Only is mapped the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void testCON() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		/*CC(=O)N*/
+		Molecule molecule = (new SmilesParser()).parseSmiles("CC(=O)N");
+	    HydrogenAdder adder = new HydrogenAdder();
+        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(molecule);
+		setOfReactants.addMolecule(molecule);
+		
+		/*automatic search of the centre active*/
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        
+        /* iniciate */
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
 
         
         

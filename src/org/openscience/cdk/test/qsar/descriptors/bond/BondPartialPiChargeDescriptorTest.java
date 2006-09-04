@@ -99,7 +99,7 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			assertEquals(testResult[i],result,0.03);
 		}
 	}
 	/**
@@ -138,7 +138,7 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.02);
+			assertEquals(testResult[i],result,0.03);
 		}
 	}
 }
