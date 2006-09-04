@@ -223,7 +223,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 			if(!atoms[i].getSymbol().equals("H")&& atoms[i].getFormalCharge() == 1){
 			IAtom[] atoms1 = reactant.getConnectedAtoms(atoms[i]);
 			for(int j = 0; j < atoms1.length; j++)
-				if(!atoms1[j].getSymbol().equals("H")){
+				if(!atoms1[j].getSymbol().equals("H") && atoms1[j].getFormalCharge() == 0){
 				IBond bond = reactant.getBond(atoms[i], atoms1[j]);
 				if(bond.getOrder() == 1){
 					IAtom[] atoms2 = reactant.getConnectedAtoms(atoms1[j]);
