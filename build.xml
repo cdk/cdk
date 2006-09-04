@@ -270,10 +270,6 @@
                     <fileset dir="." includes="*.tar.gz" />
                     <fileset dir="." includes="*.zip" />
                     <fileset dir="." includes="*.rda" />
-                    <fileset dir="${src}" includes="*.classes" />
-                    <fileset dir="${src}" includes="*.javafiles">
-                        <exclude name="jmol*.javafiles" />
-                    </fileset>
                     <fileset dir="${src}" includes="*.entitylist" />
                     <!-- remove java files generated with JavaCC -->
                     <fileset dir="${src}/org/openscience/cdk/smiles/smarts" includes="*.java" />
@@ -470,7 +466,6 @@
                  classes that are in the same src/ directory. By making a copy first,
                  we explicitely make it impossible to compile files that are not
                  marked for a specific module -->
-            <mkdir dir="${build}"/>
             <mkdir dir="${build.src}"/>
             <copy todir="${build.src}">
                 <fileset dir="${src}">
@@ -657,8 +652,6 @@
             description="Builds on big jar file for the CDK, including experimental classes.">
             
             <!-- first unjar the CDK and other jars we need -->
-            <delete dir="${build}"/>
-            <mkdir dir="${build}"/>
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
