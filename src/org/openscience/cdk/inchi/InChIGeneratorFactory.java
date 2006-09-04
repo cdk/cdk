@@ -1,3 +1,23 @@
+/* $Revision: 6714 $ $Author: egonw $ $Date: 2006-07-31 21:58:20 +0200 (Mon, 31 Jul 2006) $
+ *
+ * Copyright (C) 2006  Sam Adams <sea36@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.inchi;
 
 import java.util.List;
@@ -29,6 +49,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * </ul>
  * 
  * @author Sam Adams
+ *
+ * @cdk.module inchi
  */
 public class InChIGeneratorFactory {
     
