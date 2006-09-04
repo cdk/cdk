@@ -40,6 +40,7 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -345,15 +346,14 @@ public class MDLReaderTest extends CDKTestCase {
     }
     public void testAliasPropertyGroup() {
         String filename = "data/mdl/AliasPropertyRGroup.sdf";
-        File file = new File(filename);
-        String fi = file.getAbsolutePath();
-        boolean a = file.exists();
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             MDLReader reader = new MDLReader(ins);
             Molecule mol = (Molecule)reader.read(new Molecule());
-            assertEquals("R1",((PseudoAtom)mol.getAtom(3)).getLabel());
+            IAtom atom = mol.getAtom(3);
+            assertTrue(atom instanceof PseudoAtom);
+            assertEquals("R1", ((PseudoAtom)atom).getLabel());
              } catch (Exception e) {
             fail(e.toString());
         }
