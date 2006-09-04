@@ -626,6 +626,7 @@
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
+            <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
         </target>
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
@@ -680,6 +681,7 @@
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                 	<includesfile name="${metainf}/sdg.libdepends"/>
 		    <includesfile name="${metainf}/forcefield.libdepends"/>
+                    <includesfile name="${metainf}/inchi.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
@@ -709,6 +711,7 @@
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smiles.jar"/>
                 	<include name="cdk-sdg.jar"/>
+                    <include name="cdk-inchi.jar"/>
                 </fileset>
             </unjar>
 
