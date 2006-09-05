@@ -565,7 +565,7 @@
             <mkdir dir="${dist}/jar" />
         </target>
 
-	    <target id="dist-joelib" name="dist-joelib" depends="nocompile-joelib, compile-joelib"/>
+	    <target id="dist-joelib" name="dist-joelib" depends="check, nocompile-joelib, compile-joelib"/>
 	    <target id="nocompile-joelib" name="nocompile-joelib" unless="${joelib.present}">
 	      <echo message="JOELib is not found. Removed depending functionality. JOELib can be downloaded from http://joelib.sf.net/."/>
 	    </target>
