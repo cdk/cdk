@@ -71,7 +71,7 @@
       <pmd shortFilenames="true" rulesetfiles="pmd/unused.xml">
         <formatter type="xml" toFile="${reports.tests}/pmd-unused/${module}.xml"/>
         <fileset dir="${src}">
-          <includesfile name="${src}/${module}.javafiles"/>
+          <includesfile name="${build}/${module}.javafiles"/>
         </fileset>
       </pmd>
     </target>

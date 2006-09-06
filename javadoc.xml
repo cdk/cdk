@@ -135,7 +135,7 @@
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
                     path="develjar/doccheck.jar" />
             <fileset dir="${src}">
-              <includesfile name="${src}/${module}.javafiles"/>
+              <includesfile name="${build}/${module}.javafiles"/>
             </fileset>
             <sourcepath>
                 <pathelement path="${src}"/>
