@@ -460,6 +460,12 @@ public class CMLCoreModule implements ICMLModule {
                     cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
                 }
             }
+        } else if ("identifier".equals(name)) {
+        	if (atts.getValue("convention") != null && 
+        		atts.getValue("convention").equals("iupac:inchi") &&
+        		atts.getValue("value") != null) {
+                cdo.setObjectProperty("Molecule", "inchi", atts.getValue("value"));
+            }
         } else if ("scalar".equals(name)) {
             if (xpath.toString().endsWith("crystal/scalar/"))
                 crystalScalar++;
@@ -858,7 +864,11 @@ public class CMLCoreModule implements ICMLModule {
             this.inchi = cData;
         } else if ("name".equals(name)) {
             if (xpath.toString().endsWith("molecule/name/")) {
-            	cdo.setObjectProperty("Molecule", DICTREF, cData); 
+            	if (DICTREF.length() > 0) {
+            		cdo.setObjectProperty("Molecule", DICTREF, cData);
+            	} else {
+            		cdo.setObjectProperty("Molecule", "Name", cData);
+            	}
             }
         } else {
             logger.warn("Skipping element: " + name);

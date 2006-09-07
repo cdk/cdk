@@ -311,8 +311,10 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       if (objectType.equals("Molecule")) {
         if (propertyType.equals("id")) {
           currentMolecule.setID(propertyValue);
+        } else if (propertyType.equals("Name")) {
+            currentMolecule.setProperty(CDKConstants.TITLE, propertyValue);
         } else if (propertyType.equals("inchi")) {
-          currentMolecule.setProperty("iupac.nist.chemical.identifier", propertyValue);
+          currentMolecule.setProperty(CDKConstants.INCHI, propertyValue);
         } else if (propertyType.equals("pdb:residueName")) {
           currentMolecule.setProperty(
         	new DictRef(propertyType, propertyValue), propertyValue
