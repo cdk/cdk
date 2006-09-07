@@ -131,5 +131,16 @@
     </atomArray>
   </molecule>
 
+  <!-- JFragmentsTest.testName() -->
+  <molecule id='m1'>
+    <name>acetic acid</name>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
+
+  <!-- JFragmentsTest.testInChI() -->
+  <molecule id='m1'>
+    <identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
 
 </cml>

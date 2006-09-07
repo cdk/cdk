@@ -55,7 +55,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(CMLFragmentsTest.class);
+        return new TestSuite(CML23FragmentsTest.class);
     }
 
     public void testAtomId() {
@@ -257,6 +257,24 @@ public class CML23FragmentsTest extends CDKTestCase {
         IMolecule mol = checkForSingleMoleculeFile(chemFile);
 
         assertEquals("m1", mol.getID());
+    }
+    
+    public void testName() {
+        String cmlString = "<molecule id='m1'><name>acetic acid</name><atomArray atomID='a1 a2 a3'/></molecule>";
+        
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals("acetic acid", mol.getProperty(CDKConstants.TITLE));
+    }
+    
+    public void testInChI() {
+        String cmlString = "<molecule id='m1'><identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/><atomArray atomID='a1 a2 a3'/></molecule>";
+        
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertEquals("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
     }
     
     private IChemFile parseCMLString(String cmlString) {
