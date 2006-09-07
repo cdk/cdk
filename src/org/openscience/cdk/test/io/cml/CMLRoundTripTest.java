@@ -28,22 +28,23 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import nu.xom.Element;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.test.CDKTestCase;
@@ -365,6 +366,17 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
+    }
+
+    public void testInChI() {
+        Molecule mol = new Molecule();
+        String inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
+        mol.setProperty(CDKConstants.INCHI, inchi);
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        assertNotNull(roundTrippedMol);
+        
+        assertEquals(inchi, roundTrippedMol.getProperty(CDKConstants.INCHI));
     }
 
     public void testSpinMultiplicity() {
