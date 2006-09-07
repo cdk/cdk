@@ -428,7 +428,7 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("bondStereo".equals(name)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("dictRef")) {
-                	if (atts.getValue(i).startsWith("mdl:"))
+                	if (atts.getValue(i).startsWith("cml:"))
                 	bondStereo.addElement(atts.getValue(i).substring(4));
                     stereoGiven=true;
                 }
