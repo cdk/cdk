@@ -307,6 +307,12 @@ public class Convertor {
         if (structure.getProperty(CDKConstants.TITLE) != null) {
             cmlMolecule.setTitle((String) structure.getProperty(CDKConstants.TITLE));
         }
+        if (structure.getProperty(CDKConstants.INCHI) != null) {
+        	CMLIdentifier ident = new CMLIdentifier();
+        	ident.setConvention("iupac:inchi");
+        	ident.setCMLValue(structure.getProperty(CDKConstants.INCHI).toString());
+        	cmlMolecule.addIdentifier(ident);
+        }
         for (int i = 0; i < structure.getAtomCount(); i++) {
             IAtom cdkAtom = structure.getAtom(i);
             CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
