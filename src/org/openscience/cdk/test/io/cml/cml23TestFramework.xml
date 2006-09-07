@@ -143,4 +143,10 @@
     <atomArray atomID='a1 a2 a3'/>
   </molecule>
 
+  <!-- JFragmentsTest.testBondStereo() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef="cml:H"/></bond></bondArray>
+  </molecule>
+
 </cml>

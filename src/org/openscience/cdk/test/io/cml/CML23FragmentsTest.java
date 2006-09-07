@@ -35,6 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -153,7 +154,18 @@ public class CML23FragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals("b1", bond.getID());
     }
-    
+
+    public void testBondStereo() {
+    	String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef='cml:H'/></bond></bondArray></molecule>";
+    	IChemFile chemFile = parseCMLString(cmlString);
+    	IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+    	assertEquals(2, mol.getAtomCount());
+    	assertEquals(1, mol.getBondCount());
+    	IBond bond = mol.getBond(0);
+    	assertEquals(CDKConstants.STEREO_BOND_DOWN, bond.getStereo());
+    }
+
     public void testBondAromatic() {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
