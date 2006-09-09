@@ -376,7 +376,7 @@
         </target>
         
         <target name="reallyRunDoclet" id="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
-            <javadoc private="true"  maxmemory="128m">
+            <javadoc private="true"  maxmemory="256m">
                 <classpath>
                     <fileset dir="${lib}">
                         <include name="*.jar" />
