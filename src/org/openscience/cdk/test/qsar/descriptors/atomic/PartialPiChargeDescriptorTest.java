@@ -28,11 +28,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -332,8 +330,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
-		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+//		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+//		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -351,10 +349,10 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Molecule mol = sp.parseSmiles("CC(=O)N");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		Integer[] object = {new Integer(6)};
+		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
-		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+//		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+//		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);

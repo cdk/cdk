@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.io.IOException;
+
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,6 +34,7 @@ import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
  *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
@@ -64,6 +67,8 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     private GasteigerPEPEPartialCharges pepe = null;
     /**Number of maximum iterations*/
 	private int maxIterations = -1;
+	/** make a lone pair electron checker. Default true*/
+	private boolean lpeChecker = true;
 
 
     /**
@@ -93,17 +98,23 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *  Sets the parameters attribute of the PartialPiChargeDescriptor
      *  object
      *
-     *@param  params            Number of maximum iterations
+     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
+        if (params.length > 2) {
             throw new CDKException("PartialPiChargeDescriptor only expects two parameter");
         }
         if (!(params[0] instanceof Integer) ){
-                throw new CDKException("The parameter 2 must be of type Integer");
+                throw new CDKException("The parameter must be of type Integer");
             }
+    
         maxIterations = ((Integer) params[0]).intValue();
+        if(params.length == 2){
+        	if (!(params[1] instanceof Boolean) )
+                throw new CDKException("The parameter must be of type Boolean");
+        	lpeChecker = ((Boolean) params[1]).booleanValue();
+        }
     }
 
 
@@ -131,6 +142,17 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    	if(lpeChecker){
+    		LonePairElectronChecker lpcheck;
+			try {
+				lpcheck = new LonePairElectronChecker();
+	    		lpcheck.newSaturate(ac);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+    	}
     	if (!isCachedAtomContainer(ac)) {
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
