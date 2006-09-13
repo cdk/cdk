@@ -359,6 +359,26 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			assertEquals(testResult[i],result,0.1);
 		}
 	}
+	/**
+	 *  A unit test for JUnit with 
+	 */
+	public void testSousa() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
+        double[] testResult = {0.0914,0.0193,-0.1107,0.0,0.0,0.0,-0.0063,0.0,-0.0101,0.0,0.0262,-0.0098,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("FC(=O)CCc1cccc(F)c1(C)");
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		Object[] object = {new Integer(6),new Boolean(true)};
+		descriptor.setParameters(object);
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			assertEquals(testResult[i],result,0.07);
+		}
+	}
 
 }
 
