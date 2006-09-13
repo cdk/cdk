@@ -8,6 +8,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -109,7 +110,6 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
-		boolean foundProducts = false;
 		logger.debug("initiate reaction: RadicalSiteInitiationReaction");
 		
 		if (reactants.getMoleculeCount() != 1) {
@@ -172,24 +172,30 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									acCloned.removeElectronContainer(bond2P);
 									
 									
-									foundProducts = true;
-									
+
 									/* mapping */
-//									IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtomAt(atom0P));
+									IMapping mapping = atom.getBuilder().newMapping(atoms[i], acCloned.getAtom(atom0P));
+							        reaction.addMapping(mapping);
+							        mapping = atom.getBuilder().newMapping(atom, acCloned.getAtom(atom1P));
+							        reaction.addMapping(mapping);
+							        mapping = atom.getBuilder().newMapping(atomConn, acCloned.getAtom(atom2P));
+							        reaction.addMapping(mapping);
+							        mapping = atom.getBuilder().newMapping(bonds[j], acCloned.getBond(bond1P));
+							        reaction.addMapping(mapping);
+							        /*breaked bond*/
+//							        mapping = atom.getBuilder().newMapping(bondsI[k], acCloned.getBond(bond2P));
 //							        reaction.addMapping(mapping);
-//							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtomAt(atom1P));
-//							        reaction.addMapping(mapping);
-//							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k].getConnectedAtom(atom), acCloned.getAtomAt(atom2P));
-//							        reaction.addMapping(mapping);
-//							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBondAt(bond1P));
-//							        reaction.addMapping(mapping);
-//							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBondAt(bond2P));
-//							        reaction.addMapping(mapping);
-									
+							        
 									IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(acCloned);
 									for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++)
 										reaction.addProduct(moleculeSet.getMolecule(z));
+									
+								
+									
+									
 									setOfReactions.addReaction(reaction);
+									
+									
 								}
 							}
 						}

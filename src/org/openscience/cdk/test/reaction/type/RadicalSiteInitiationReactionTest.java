@@ -10,6 +10,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -18,10 +19,10 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.RadicalSiteInitiationReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * TestSuite that runs a test for the RearrangementRadical2ReactionTest.
@@ -69,26 +70,35 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         
-        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        SmilesGenerator sg = new SmilesGenerator(product.getBuilder());
+        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=C*/
         Molecule molecule2 = (new SmilesParser()).parseSmiles("C=C");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
-		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
         /*[C*]*/
 		molecule2 = (new SmilesParser()).parseSmiles("[C+]");
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        adder.addImplicitHydrogensToSatisfyValency(molecule2);
         atom =  molecule2.getAtom(0);
         molecule2.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(0);
-        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        		
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
-        
+
+		Assert.assertEquals(4,setOfReactions.getReaction(0).getMappings().length);
+		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
+		assertEquals(mappedProductA1, product2.getAtom(0));
+        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
+        assertEquals(mappedProductB1, product1.getBond(0));
+        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProductA2, product1.getAtom(0));
+        IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        assertEquals(mappedProductA3, product1.getAtom(1));
        
 	}
 }
