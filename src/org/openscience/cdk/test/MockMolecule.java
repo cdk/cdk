@@ -41,7 +41,7 @@ import org.openscience.cdk.Molecule;
  * @author  Edgar Luttmann <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-class MockMolecule extends Molecule {
+public class MockMolecule extends Molecule {
 
     private static final long serialVersionUID = -3475592461591784619L;
 

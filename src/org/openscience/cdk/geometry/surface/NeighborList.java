@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.created 2005-05-09
  * @cdk.module extra
  */
-class NeighborList {
+public class NeighborList {
     HashMap boxes;
     double box_size;
     IAtom[] atoms;

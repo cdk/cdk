@@ -40,7 +40,7 @@ import javax.vecmath.Point3d;
  * @cdk.created 2005-05-08  
  * @cdk.module extra
  */
-class Tessellate {
+public class Tessellate {
 
     Triangle[] oldtess;
     int maxlevel;

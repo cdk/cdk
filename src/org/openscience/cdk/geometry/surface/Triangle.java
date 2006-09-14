@@ -31,7 +31,7 @@ import javax.vecmath.Point3d;
  * @author Rajarshi Guha
  * @cdk.module extra
  */
-class Triangle {
+public class Triangle {
     Point3d p1,p2,p3;
     public Triangle( Point3d p1, Point3d p2, Point3d p3 ) {
         this.p1 = p1;
