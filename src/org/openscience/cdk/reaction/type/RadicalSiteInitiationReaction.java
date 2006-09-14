@@ -130,8 +130,6 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
 		for(int i = 0 ; i < atoms.length ; i++){
 			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getSingleElectron(atoms[i]).length == 1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
 				
 				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
 				
@@ -146,6 +144,10 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 								IAtom atomConn = bondsI[k].getConnectedAtom(atom);
 								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) && atomConn.getFormalCharge() == 0
 										&& !atomConn.equals(atoms[i]) && !atomConn.getSymbol().equals("H")){
+									
+									IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+									reaction.addReactant(reactant);
+									
 									/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atoms[i]);
 									int bond1P = reactant.getBondNumber(bonds[j]);
