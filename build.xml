@@ -64,7 +64,6 @@
             <echo message="CDK Environment:" />
             <echo message="    CDK version: ${version}" />
             <echo message="      build.xml: $Id$" />
-            <echo message="  Doclets found: ${docletsAreCompiled}" />
             <echo message="    Junit found: ${junit.present}" />
             <echo message=" --- required libraries ---" />
             <echo message="  Vecmath found: ${vecmath.present}" />
@@ -85,7 +84,6 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
-            <echo message="     skipDoclet: ${doSkipDoclet}" />            
         </target>
 
         <target id="checkPlatforms" name="checkPlatforms">
@@ -99,12 +97,6 @@
         
         <target id="check" name="check" depends="checkPlatforms">
             <!-- Check wether Doclets are compiled and output is generated -->
-            <condition property="docletsAreCompiled">
-                <and>
-                    <available classname="net.sf.cdk.tools.MakeJavaFilesFilesDoclet" classpath="${doc}/javadoc"/>
-                    <available classname="net.sf.cdk.tools.MakeCDKSetFilesDoclet" classpath="${doc}/javadoc"/>
-                </and>
-            </condition>
             <uptodate property="dotjavafiles.uptodate"
                       targetfile="${src}/core.javafiles">
               <srcfiles dir="${src}" includes="**/*.java" />
@@ -120,9 +112,6 @@
                   <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
                 </uptodate>
               </and>
-            </condition>
-            <condition property="doSkipDoclet">
-              <equals arg1="${skipDoclet}" arg2="true"/>
             </condition>
 
             <!-- Checks which parts of CDK can be build. -->
@@ -214,42 +203,6 @@
             	</not>
             </condition>
 
-            <!-- testing which JavaDoc is present -->
-            <condition property="sunJavaDocInExt">
-              <or>
-                <available file="${java.ext.dirs}/tools.jar" />
-              </or>
-            </condition>
-            <condition property="sunJavaDocInLib">
-              <or>
-                <available file="${java.home}/lib/tools.jar" />
-                <available file="${java.home}/../lib/tools.jar" />
-              </or>
-            </condition>
-            <condition property="sunJavaDoc">
-              <and>
-                <or>
-                  <available file="${java.ext.dirs}/tools.jar" />
-                  <available file="${java.home}/../lib/tools.jar" />
-                </or>
-                <not>
-                  <contains string="${java.version}" substring="1.6"/>
-                </not>
-              </and>
-            </condition>
-            <condition property="sunJavaDoc6">
-              <and>
-                <or>
-                  <available file="${java.home}/lib/tools.jar" />
-                  <available file="${java.home}/../lib/tools.jar" />
-                </or>
-              	<contains string="${java.version}" substring="1.6"/>
-              </and>
-            </condition>
-            <condition property="gjdocJavaDoc">
-              <available file="/usr/share/java/gnu-classpath-tools-gjdoc.jar" />
-            </condition>
-
         </target>
 
 
@@ -289,146 +242,16 @@
                 <delete dir="${reports.tests}" />
         </target>
 
-        <target name="compileDoclet" id="compileDoclet" depends="check" unless="docletsAreCompiled">
-             <echo>Compiling doclets in doc/javadoc that are required for compiling CDK...</echo>
-             <antcall target="compileDoclet.MacOSX"/>
-             <antcall target="compileDoclet.gjDoc" />
-             <antcall target="compileDoclet.sunJavaDoc" />
-             <antcall target="compileDoclet.sunJavaDoc6" />
-        </target>
-
-        <target name="compileDoclet.MacOSX" id="compileDoclet.MacOSX" if="isMacOsX">
-            <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
-                   includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java" />
-        </target>
-
-        <target name="compileDoclet.sunJavaDoc6" id="compileDoclet.sunJavaDoc6" if="sunJavaDoc6" unless="isMacOsX">
-            <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
-                   includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
-                <classpath>
-                  <fileset dir="${java.home}/lib">
-                    <include name="tools.jar" if="sunJavaDocInLib"/>
-                  </fileset>
-                  <fileset dir="${java.home}/../lib">
-                    <include name="tools.jar" if="sunJavaDocInLib"/>
-                  </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-    <target name="compileDoclet.sunJavaDoc" id="compileDoclet.sunJavaDoc" if="sunJavaDoc" unless="isMacOsX">
-        <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
-               includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
-            <classpath>
-              <fileset dir="${java.ext.dirs}">
-                <include name="tools.jar" if="sunJavaDocInExt"/>
-              </fileset>
-              <fileset dir="${java.home}/lib">
-                <include name="tools.jar" if="sunJavaDocInLib"/>
-              </fileset>
-              <fileset dir="${java.home}/../lib">
-                <include name="tools.jar" if="sunJavaDocInLib"/>
-              </fileset>
-            </classpath>
-        </javac>
-    </target>
-
-        <target name="compileDoclet.gjDoc" id="compileDoclet.gjDoc" if="gjdocJavaDoc">
-          <javac srcdir="doc/javadoc/source" destdir="doc/javadoc" 
-                 includes="MakeJavaFilesFilesDoclet.java, MakeCDKSetFilesDoclet.java">
-            <classpath>
-              <fileset dir="/usr/share/java">
-                <include name="com-sun-javadoc.jar" if="gjdocJavaDoc"/>
-              </fileset>
-            </classpath>
-          </javac>
-        </target>
-
-        <target name="runDoclet" id="runDoclet" 
-                depends="check, customize" unless="doSkipDoclet">
-          <echo>Not skipping doclet run...</echo>
-          <antcall target="reallyRunDoclet"/>
-          <antcall target="failIfNoDocletResults"/>
-        </target>
-
-        <target name="checkDocletResults" id="checkDocletResults">
-            <condition property="dotjavafiles.uptodate">
-                <and>
-                    <available file="${build}/data.javafiles" />
-                    <available file="${build}/core.javafiles" />
-                    <available file="${build}/standard.javafiles" />
-                    <available file="${build}/extra.javafiles" />
-                    <available file="${build}/io.javafiles" />
-                </and>
-            </condition>
-        </target>
-
-        <target name="failIfNoDocletResults" id="failIfNoDocletResults" depends="checkDocletResults" unless="dotjavafiles.uptodate">
-            <fail>
-              There seems to be a problem with building the cdk/build/*.javafiles.
-              Often this is caused by malformed java source code, so please check the output
-              of the reallyRunDoclet target (ant reallyRunDoclet).
-              
-              If there is no reported source code error, please report this to 
-              cdk-devel@lists.sf.net and send the output of
-              this command: ant -v info runDoclet.
-            </fail>
-        </target>
-        
-        <target name="reallyRunDoclet" id="reallyRunDoclet" depends="compileDoclet" unless="dotjavafiles.uptodate">
-            <javadoc private="true"  maxmemory="256m">
-                <classpath>
-                    <fileset dir="${lib}">
-                        <include name="*.jar" />
-                    	<!-- some jars require some Java version -->
-                    	<exclude name="jumbo50.jar" unless="isJava15"/>
-                    </fileset>
-                    <fileset dir="${lib}/libio">
-                        <include name="*.jar" />
-                    </fileset>
-                    <fileset dir="${devellib}">
-                        <include name="*.jar" />
-                    </fileset>
-                </classpath>
-
-                <doclet name="net.sf.cdk.tools.MakeJavaFilesFilesDoclet" path="${doc}/javadoc"/>
-
-                <packageset dir="${src}">
-                    <include name="org/openscience/cdk/**"/>
-                </packageset>
-
-            </javadoc>
-            <javadoc private="true" maxmemory="128m">
-                <classpath>
-                    <fileset dir="${lib}">
-                        <include name="*.jar" />
-                    	<!-- some jars require some Java version -->
-                    	<exclude name="jumbo50.jar" unless="isJava15"/>
-                    </fileset>
-                    <fileset dir="${lib}/libio">
-                        <include name="*.jar" />
-                    </fileset>
-                    <fileset dir="${devellib}">
-                        <include name="*.jar" />
-                    </fileset>
-                </classpath>
-
-                <doclet name="net.sf.cdk.tools.MakeCDKSetFilesDoclet" path="${doc}/javadoc"/>
-
-                <packageset dir="${src}">
-                    <include name="org/openscience/cdk/**"/>
-                </packageset>
-
-            </javadoc>
+        <target name="runDoclet" id="runDoclet" depends="check, customize">
+            <echo>Not skipping doclet run...</echo>
             <mkdir dir="${build}" />
-            <move todir="${build}" failonerror="true">
-                <fileset dir=".">
-                  <include name="*.javafiles"/>
-                  <include name="*.classes"/>
-                  <include name="*.set"/>
-                  <include name="*.entitylist"/>
-                </fileset>
-            </move>
+        	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java" 
+        	    srcdir="${src}" destdir="${build}" optimize="${optimization}" 
+        	    debug="${debug}" deprecation="${deprecation}"/>
+        	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
+                <arg value="${src}"/>
+                <arg value="${build}"/>
+        	</java>
         </target>
         
         <target id="compile-needed-test" name="compile-needed-test">
