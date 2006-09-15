@@ -198,4 +198,33 @@ public class AminoAcids {
         }
         return map;
     }
+    
+    /**
+     * Returns the one letter code of an amino acid given a three letter code.
+     * For example, it will return "V" when "Val" was passed.
+     */
+    public static String convertThreeLetterCodeToOneLetterCode(String threeLetterCode) {
+        AminoAcid[] monomers = createAAs();
+        for (int i=0; i<monomers.length; i++) {
+        	if (monomers[i].getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
+        		return (String)monomers[i].getProperty(RESIDUE_NAME_SHORT);
+        	}
+        }
+        return null;
+    }
+
+    /**
+     * Returns the three letter code of an amino acid given a one letter code.
+     * For example, it will return "Val" when "V" was passed.
+     */
+    public static String convertOneLetterCodeToThreeLetterCode(String oneLetterCode) {
+        AminoAcid[] monomers = createAAs();
+        for (int i=0; i<monomers.length; i++) {
+        	if (monomers[i].getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
+        		return (String)monomers[i].getProperty(RESIDUE_NAME);
+        	}
+        }
+        return null;
+    }
+
 }
