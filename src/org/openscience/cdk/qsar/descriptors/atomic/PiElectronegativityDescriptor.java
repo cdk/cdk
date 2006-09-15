@@ -4,7 +4,7 @@
  *  $Date: 2006-05-06 00:21:46 +0200 (Sa, 06 Mai 2006) $
  *  $Revision: 6185 $
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

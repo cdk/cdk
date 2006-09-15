@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -81,7 +81,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *   </tr>
  * </table>
  *
- *@author         mrc
+ *@author         Miguel Rojas
  *@cdk.created    2005-03-24
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors

@@ -4,7 +4,7 @@
  *  $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
  *  $Revision: 5855 $
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
@@ -48,11 +47,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
-import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
  *  <p>The calculation of Resonance stabilization of a positive charge of an heavy 

@@ -3,7 +3,7 @@
  *  $Date: 2006-05-11 10:17:36 +0200 (Do, 11 Mai 2006) $
  *  $Revision: 6217 $
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -26,7 +26,6 @@ package org.openscience.cdk.charges;
 import java.io.IOException;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -41,7 +40,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -328,7 +326,7 @@ public class GasteigerPEPEPartialCharges {
 				IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
 				if(setOfReactions2.getReactionCount() > 0){
 					
-				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
+//				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
 				IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
 				
 //				hAdder.addExplicitHydrogensToSatisfyValency(acc);
