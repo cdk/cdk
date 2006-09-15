@@ -152,7 +152,7 @@
   </atomArray></molecule>
   
   <molecule id='m1'><atomArray>
-    <atom id='a1' elementType="Dummy" />
+    <atom id='a1' elementType="Dummy" title="R1"/>
   </atomArray></molecule>
   
 </cml>
