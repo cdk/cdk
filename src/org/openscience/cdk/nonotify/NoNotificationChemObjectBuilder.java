@@ -23,39 +23,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.openscience.cdk.interfaces.*;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
@@ -77,44 +48,36 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 	}
 	
 	public IAminoAcid newAminoAcid() {
-		IAminoAcid object = new NNAminoAcid();
-		return object;
+        return new NNAminoAcid();
 	}
 	
 	public IAtom newAtom() {
-		IAtom object = new NNAtom();
-		return object;
+        return new NNAtom();
 	}
 	
     public IAtom newAtom(String elementSymbol) {
-    	IAtom object = new NNAtom(elementSymbol);
-		return object;
+        return new NNAtom(elementSymbol);
     }
     
     public IAtom newAtom(String elementSymbol, javax.vecmath.Point2d point2d) {
-    	IAtom object = new NNAtom(elementSymbol, point2d);
 
-		return object;
+        return new NNAtom(elementSymbol, point2d);
     }
 
     public IAtom newAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
-    	IAtom object = new NNAtom(elementSymbol, point3d);
-		return object;
+        return new NNAtom(elementSymbol, point3d);
     }
 		
 	public IAtomContainer newAtomContainer() {
-		IAtomContainer object = new NNAtomContainer();
-		return object;
+        return new NNAtomContainer();
 	}
     
 	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
-		IAtomContainer object = new NNAtomContainer(atomCount, electronContainerCount);
-		return object;
+        return new NNAtomContainer(atomCount, electronContainerCount);
 	}
     
 	public IAtomContainer newAtomContainer(IAtomContainer container) {
-		IAtomContainer object = new NNAtomContainer(container);
-		return object;
+        return new NNAtomContainer(container);
 	}
 	
     public IAtomParity newAtomParity(
@@ -124,241 +87,196 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
     		IAtom third, 
     		IAtom fourth,
             int parity) {
-    	IAtomParity object = new NNAtomParity(centralAtom, first, second, third, fourth, parity);
-		return object;
+        return new NNAtomParity(centralAtom, first, second, third, fourth, parity);
     }
 
 	public IAtomType newAtomType(String elementSymbol) {
-		IAtomType object = new NNAtomType(elementSymbol);
-		return object;
+        return new NNAtomType(elementSymbol);
 	}
 
 	public IAtomType newAtomType(String identifier, String elementSymbol) {
-		IAtomType object = new NNAtomType(identifier, elementSymbol);
-		return object;
+        return new NNAtomType(identifier, elementSymbol);
 	}
 
 	public IBioPolymer newBioPolymer(){
-		IBioPolymer object = new NNBioPolymer();
-		return object;
+        return new NNBioPolymer();
 	}
 
 	public IBond newBond() {
-		IBond object = new NNBond();
-		return object;
+        return new NNBond();
 	}
 	
 	public IBond newBond(IAtom atom1, IAtom atom2) {
-		IBond object = new NNBond(atom1, atom2);
-		return object;
+        return new NNBond(atom1, atom2);
 	}
 	
 	public IBond newBond(IAtom atom1, IAtom atom2, double order) {
-		IBond object = new NNBond(atom1, atom2, order);
-		return object;
+        return new NNBond(atom1, atom2, order);
 	}
 	
 	public IBond newBond(IAtom atom1, IAtom atom2, double order, int stereo) {
-		IBond object = new NNBond(atom1, atom2, order, stereo);
-		return object;
+        return new NNBond(atom1, atom2, order, stereo);
 	}
 	
 	public IChemFile newChemFile() {
-		IChemFile object = new NNChemFile();
-		return object;
+        return new NNChemFile();
 	}
 
 	public IChemModel newChemModel() {
-		IChemModel object = new NNChemModel();
-		return object;
+        return new NNChemModel();
 	}
 	
 	public IChemObject newChemObject() {
-		IChemObject object = new NNChemObject();
-		return object;
+        return new NNChemObject();
 	}
 	
 	public IChemSequence newChemSequence() {
-		IChemSequence object = new NNChemSequence();   
-		return object;
+        return new NNChemSequence();
 	}
 	
     public ICrystal newCrystal() {
-    	ICrystal object = new NNCrystal();
-		return object;
+        return new NNCrystal();
     }
     
     public ICrystal newCrystal(IAtomContainer container) {
-    	ICrystal object = new NNCrystal(container);
-		return object;
+        return new NNCrystal(container);
     }
     
     public IElectronContainer newElectronContainer() {
-    	IElectronContainer object = new NNElectronContainer();
-		return object;
+        return new NNElectronContainer();
     }
     
     public IElement newElement() {
-    	IElement object = new NNElement();
-		return object;
+        return new NNElement();
     }
 
     public IElement newElement(String symbol) {
-    	IElement object = new NNElement(symbol);
-		return object;
+        return new NNElement(symbol);
     }
 
     public IElement newElement(String symbol, int atomicNumber) {
-    	IElement object = new NNElement(symbol, atomicNumber);
-		return object;
+        return new NNElement(symbol, atomicNumber);
     }
 
 	public IIsotope newIsotope(String elementSymbol) {
-		IIsotope object = new NNIsotope(elementSymbol);
-		return object;
+        return new NNIsotope(elementSymbol);
 	}
 	
 	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			int massNumber, double exactMass, double abundance) {
-		IIsotope object = new NNIsotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-		return object;
+        return new NNIsotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
 	}
 
 	public IIsotope newIsotope(int atomicNumber, String elementSymbol, 
 			double exactMass, double abundance) {
-		IIsotope object = new NNIsotope(atomicNumber, elementSymbol, exactMass, abundance);
-		return object;
+        return new NNIsotope(atomicNumber, elementSymbol, exactMass, abundance);
 	}
 
 	public IIsotope newIsotope(String elementSymbol, int massNumber) {
-		IIsotope object = new NNIsotope(elementSymbol, massNumber);
-		return object;
+
+        return new NNIsotope(elementSymbol, massNumber);
 	}
 
     public ILonePair newLonePair() {
-    	ILonePair object = new NNLonePair();
-		return object;
+        return new NNLonePair();
     }
 
     public ILonePair newLonePair(IAtom atom) {
-    	ILonePair object = new NNLonePair(atom);
-		return object;
+        return new NNLonePair(atom);
     }
 
     public IMapping newMapping(IChemObject objectOne, 
     		IChemObject objectTwo) {
-    	IMapping object = new NNMapping(objectOne, objectTwo);
-		return object;
+        return new NNMapping(objectOne, objectTwo);
 	}
     
 	public IMolecule newMolecule() {
-		IMolecule object = new NNMolecule();
-		return object;
+        return new NNMolecule();
 	}
 
 	public IMolecule newMolecule(int atomCount, int electronContainerCount) {
-		IMolecule object = new NNMolecule(atomCount, electronContainerCount);
-		return object;
+        return new NNMolecule(atomCount, electronContainerCount);
 	}
 
 	public IMolecule newMolecule(IAtomContainer container) {
-		IMolecule object = new NNMolecule(container);
-		return object;
+        return new NNMolecule(container);
 	}
 
 	public IMonomer newMonomer () {
-		IMonomer object = new NNMonomer();
-		return object;
+
+        return new NNMonomer();
 	}
 	
 	public IPolymer newPolymer() {
-		IPolymer object = new NNPolymer();
-		return object;
+        return new NNPolymer();
 	}
 
     public IReaction newReaction() {
-    	IReaction object = new NNReaction();	
-		return object;
+        return new NNReaction();
     }
 	
 	public IRing newRing() {
-		IRing object = new NNRing();
-		return object;
+        return new NNRing();
 	}
 	
 	public IRing newRing(IAtomContainer container) {
-		IRing object = new NNRing(container);
-		return object;
+        return new NNRing(container);
 	}
 	
 	public IRing newRing(int ringSize, String elementSymbol) {
-		IRing object = new NNRing(ringSize, elementSymbol);
-		return object;
+        return new NNRing(ringSize, elementSymbol);
 	}
 
 	public IRing newRing(int ringSize) {
-		IRing object = new NNRing(ringSize);
-		return object;
+        return new NNRing(ringSize);
 	}
 
 	public IRingSet newRingSet() {
-		IRingSet object = new NNRingSet();
-		return object;
+        return new NNRingSet();
 	}
 
 	public IAtomContainerSet newAtomContainerSet() {
-		IAtomContainerSet object = new NNSetOfAtomContainers();
-		return object;
+        return new NNSetOfAtomContainers();
 	}
 
 	public IMoleculeSet newMoleculeSet() {
-		IMoleculeSet object = new NNSetOfMolecules();
-		return object;
+        return new NNSetOfMolecules();
 	}
 
 	public IReactionSet newReactionSet() {
-		IReactionSet object = new NNSetOfReactions();
-		return object;
+        return new NNSetOfReactions();
 	}
 	
     public ISingleElectron newSingleElectron() {
-    	ISingleElectron object = new NNSingleElectron();
-		return object;
+        return new NNSingleElectron();
     }
     
     public ISingleElectron newSingleElectron(IAtom atom) {
-    	ISingleElectron object = new NNSingleElectron(atom);   
-		return object;
+        return new NNSingleElectron(atom);
     }
 
 	public IStrand newStrand() {
-		IStrand object = new NNStrand();
-		return object;
+        return new NNStrand();
 	}
 
 	public IPseudoAtom newPseudoAtom() {
-		IPseudoAtom object = new NNPseudoAtom();
-		return object;
+        return new NNPseudoAtom();
 	}
 
 	public IPseudoAtom newPseudoAtom(String label) {
-		IPseudoAtom object = new NNPseudoAtom(label);
-		return object;
+        return new NNPseudoAtom(label);
 	}
 
 	public IPseudoAtom newPseudoAtom(IAtom atom) {
-		IPseudoAtom object = new NNPseudoAtom(atom);
-		return object;
+		return new NNPseudoAtom(atom);
 	}
 
 	public IPseudoAtom newPseudoAtom(String label, Point3d point3d) {
-		IPseudoAtom object = new NNPseudoAtom(label, point3d);
-		return object;
+		return new NNPseudoAtom(label, point3d);
 	}
 
 	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
-		IPseudoAtom object = new NNPseudoAtom(label, point2d);
-		return object;
+        return new NNPseudoAtom(label, point2d);
 	}
 }
 

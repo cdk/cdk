@@ -40,8 +40,8 @@ public class NNRing extends Ring {
 		setNotification(false);
 	}
 	
-	public NNRing(IAtomContainer ac) {
-		super(ac);
+	public NNRing(IAtomContainer atomContainer) {
+		super(atomContainer);
 		setNotification(false);
 	}
 	
