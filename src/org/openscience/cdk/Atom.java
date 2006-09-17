@@ -28,14 +28,13 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.Serializable;
 
 /**
  * Represents the idea of an chemical atom.
@@ -331,7 +330,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param xFract The x coordinate of the fractional coordinate of this atom.
          *
-         * @see    #getFractX3d
+         * @see    #getFractionalPoint3d()
          */
         public void setFractX3d(double xFract) {
             if (fractionalPoint3d == null) {
@@ -345,7 +344,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param yFract The y coordinate of the fractional coordinate of this atom.
          *
-         * @see    #getFractY3d
+         * @see    #getFractionalPoint3d()
          */
         public void setFractY3d(double yFract) {
             if (fractionalPoint3d == null) {
@@ -359,7 +358,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param zFract The z coordinate of the fractional coordinate of this atom.
          *
-         * @see    #getFractZ3d
+         * @see    #getFractionalPoint3d()
          */
         public void setFractZ3d(double zFract) {
             if (fractionalPoint3d == null) {
@@ -376,7 +375,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param   xCoord  the new x coordinate for of the 2D location of this atom
          *
-         * @see     #getX2d
+         * @see     #getPoint2d()
          */
         public void setX2d(double xCoord) {
             if (point2d == null) {
@@ -394,7 +393,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param   yCoord  the new y coordinate for of the 2D location of this atom
          *
-         * @see     #getY2d
+         * @see     #getPoint2d()
          */
         public void setY2d(double yCoord) {
             if (point2d == null) {
@@ -412,7 +411,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param   xCoord  the new x coordinate for of the 3D location of this atom
          *
-         * @see     #getX3d
+         * @see     #getPoint3d()
          */
         public void setX3d(double xCoord) {
             if (point3d == null) {
@@ -430,7 +429,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param   yCoord  the new y coordinate for of the 3D location of this atom
          *
-         * @see     #getY3d
+         * @see     #getPoint3d()
          */
         public void setY3d(double yCoord) {
             if (point3d == null) {
@@ -448,7 +447,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @param   zCoord  the new z coordinate for of the 3d location of this atom
          *
-         * @see     #getZ3d
+         * @see     #getPoint3d()
          */
         public void setZ3d(double zCoord) {
             if (point3d == null) {
