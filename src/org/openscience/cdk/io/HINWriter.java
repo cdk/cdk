@@ -159,37 +159,37 @@ public class HINWriter extends DefaultChemObjectWriter {
                 for (int i = 0; i < natom; i++) {
 
                     String line = "atom ";
-                    IAtom a = atoms[i];
+                    IAtom atom = atoms[i];
 
-                    sym = a.getSymbol();
-                    chrg = a.getCharge();
-                    Point3d p3 = a.getPoint3d();
+                    sym = atom.getSymbol();
+                    chrg = atom.getCharge();
+                    Point3d point = atom.getPoint3d();
 
                     line = line + Integer.toString(i + 1) + " - " + sym + " ** - " +
                             Double.toString(chrg) + " " +
-                            Double.toString(p3.x) + " " +
-                            Double.toString(p3.y) + " " +
-                            Double.toString(p3.z) + " ";
+                            Double.toString(point.x) + " " +
+                            Double.toString(point.y) + " " +
+                            Double.toString(point.z) + " ";
 
                     String buf = "";
                     int ncon = 0;
                     for (int j = 0; j < nbond; j++) {
-                        IBond b = bonds[j];
-                        if (b.contains(a)) {
+                        IBond bond = bonds[j];
+                        if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
-                            IAtom ca = b.getConnectedAtom(a);
-                            double bo = b.getOrder();
+                            IAtom connectedAtom = bond.getConnectedAtom(atom);
+                            double bondOrder = bond.getOrder();
                             int serial;
-                            String bt = "";
+                            String bondType = "";
 
                             // get the serial no for this atom
-                            serial = mol.getAtomNumber(ca);
+                            serial = mol.getAtomNumber(connectedAtom);
 
-                            if (bo == 1) bt = "s";
-                            else if (bo == 2) bt = "d";
-                            else if (bo == 3) bt = "t";
-                            else if (bo == 1.5) bt = "a";
-                            buf = buf + Integer.toString(serial + 1) + " " + bt + " ";
+                            if (bondOrder == 1) bondType = "s";
+                            else if (bondOrder == 2) bondType = "d";
+                            else if (bondOrder == 3) bondType = "t";
+                            else if (bondOrder == 1.5) bondType = "a";
+                            buf = buf + Integer.toString(serial + 1) + " " + bondType + " ";
                             ncon++;
                         }
                     }
