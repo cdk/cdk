@@ -23,21 +23,13 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -121,7 +113,7 @@ public class AtomContainer extends ChemObject
 		this.electronContainerCount = container.getElectronContainerCount();
 		atoms = new IAtom[this.atomCount];
 		electronContainers = new IElectronContainer[this.electronContainerCount];
-		atomParities = new Hashtable((int)(atomCount/2));
+		atomParities = new Hashtable(atomCount/2);
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtom(f);
@@ -149,7 +141,7 @@ public class AtomContainer extends ChemObject
 		this.electronContainerCount = 0;
 		atoms = new IAtom[atomCount];
 		electronContainers = new IElectronContainer[electronContainerCount];
-        atomParities = new Hashtable((int)(atomCount/2));
+        atomParities = new Hashtable(atomCount/2);
 	}
 
     /**
@@ -218,7 +210,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the atom to be set.
 	 *@param  atom    The atom to be stored at position <code>number</code>
-	 *@see            #getAtomAt
+	 *@see            #getAtom(int)
 	 */
 	public void setAtom(int number, IAtom atom)
 	{
@@ -233,7 +225,9 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the atom to be retrieved.
 	 *@return         The atomAt value
-	 *@see            #setAtomAt
+     * @see #setAtom(int, org.openscience.cdk.interfaces.IAtom)
+     * @see #setAtoms(org.openscience.cdk.interfaces.IAtom[])
+     *
 	 */
 	public IAtom getAtom(int number)
 	{
@@ -246,7 +240,8 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the bond to be retrieved.
 	 *@return         The bondAt value
-	 *@see            #setElectronContainerAt
+	 *@see            #setElectronContainer(int, org.openscience.cdk.interfaces.IElectronContainer)
+     * @see #setElectronContainers(org.openscience.cdk.interfaces.IElectronContainer[])
 	 */
 	public IBond getBond(int number)
 	{
@@ -260,7 +255,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 * @param  number            The position of the ElectronContainer to be set.
 	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
-	 * @see                      #getElectronContainerAt
+	 * @see                      #getElectronContainer(int)
 	 */
 	public void setElectronContainer(int number, IElectronContainer electronContainer)
 	{
@@ -497,7 +492,8 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the ElectronContainer to be returned.
 	 *@return         The ElectronContainer at position <code>number</code>.
-	 *@see            #setElectronContainerAt
+	 *@see  #setElectronContainer(int, org.openscience.cdk.interfaces.IElectronContainer)
+     * @see #setElectronContainers(org.openscience.cdk.interfaces.IElectronContainer[])
 	 */
 	public IElectronContainer getElectronContainer(int number)
 	{
@@ -555,7 +551,7 @@ public class AtomContainer extends ChemObject
 		IElectronContainer electronContainer;
 		for (int i = 0; i < electronContainerCount; i++)
 		{
-			electronContainer = (IElectronContainer)electronContainers[i];
+			electronContainer = electronContainers[i];
 			if (electronContainer instanceof IBond && ((IBond) electronContainer).contains(atom))
 			{
 				atomsVec.add(((IBond) electronContainer).getConnectedAtom(atom));
@@ -617,10 +613,10 @@ public class AtomContainer extends ChemObject
 					((IBond) electronContainers[i]).contains(atom)) {
 				bondsVec.add(electronContainers[i]);
 			} else if (electronContainers[i] instanceof ILonePair &&
-                    ((ILonePair) electronContainers[i]).contains((Atom)atom)) {
+                    ((ILonePair) electronContainers[i]).contains(atom)) {
 				bondsVec.add(electronContainers[i]);
 			} else if (electronContainers[i] instanceof ISingleElectron &&
-					((ISingleElectron) electronContainers[i]).contains((Atom)atom)) {
+					((ISingleElectron) electronContainers[i]).contains(atom)) {
 				bondsVec.add(electronContainers[i]);
 			}
 		}
@@ -648,7 +644,6 @@ public class AtomContainer extends ChemObject
 	 *  Returns the number of Atoms in this Container.
 	 *
 	 *@return    The number of Atoms in this Container
-	 *@see       #setAtomCount
 	 */
 	public int getAtomCount()
 	{
@@ -758,7 +753,7 @@ public class AtomContainer extends ChemObject
 		for (int i = 0; i < getElectronContainerCount(); i++)
 		{
 			if ((electronContainers[i] instanceof ISingleElectron) && 
-				(((ISingleElectron) electronContainers[i]).contains((Atom)atom)))
+				(((ISingleElectron) electronContainers[i]).contains(atom)))
 			{
 				lps.add(electronContainers[i]);
 			}
@@ -780,7 +775,7 @@ public class AtomContainer extends ChemObject
 		int count = 0;
 		for (int i = 0; i <  getElectronContainerCount(); i++)
 		{if ((electronContainers[i] instanceof ISingleElectron) && 
-			 (((ISingleElectron) electronContainers[i]).contains((Atom)atom)))
+			 (((ISingleElectron) electronContainers[i]).contains(atom)))
 			{
 				count++;
 			}
@@ -1188,7 +1183,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addLonePair(int atomID)
 	{
-		IElectronContainer lonePair = getBuilder().newLonePair((Atom)atoms[atomID]);
+		IElectronContainer lonePair = getBuilder().newLonePair(atoms[atomID]);
 		lonePair.addListener(this);
 		addElectronContainer(lonePair);
 		/* no notifyChanged() here because addElectronContainer() does 
@@ -1263,7 +1258,7 @@ public class AtomContainer extends ChemObject
         stringContent.append(", AP:[#").append(atomParities.size()).append(", ");
         Enumeration parities = atomParities.elements();
         while (parities.hasMoreElements()) {
-			stringContent.append(((AtomParity)parities.nextElement()).toString());
+			stringContent.append(parities.nextElement().toString());
             if (parities.hasMoreElements()) stringContent.append(", ");
 		}
 		stringContent.append("])");
@@ -1278,8 +1273,8 @@ public class AtomContainer extends ChemObject
 	 * @see       #shallowCopy
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		IElectronContainer electronContainer = null;
-		IElectronContainer newEC = null;
+		IElectronContainer electronContainer;
+		IElectronContainer newEC;
 		IAtom[] natoms;
 		IAtom[] newAtoms;
 		IAtomContainer clone = (IAtomContainer) super.clone();
