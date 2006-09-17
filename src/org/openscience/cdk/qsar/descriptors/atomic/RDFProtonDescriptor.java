@@ -24,12 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
@@ -47,6 +41,11 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.
@@ -168,10 +167,9 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(IAtom atom, IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
-		IAtom target = atom;
-		int atomPosition = ac.getAtomNumber(atom);
+        int atomPosition = ac.getAtomNumber(atom);
 		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
-		if(target.getSymbol().equals("H")) {
+		if(atom.getSymbol().equals("H")) {
 			
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
 /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
@@ -207,7 +205,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 				}
 			}
 			// SET ISINRING FLAGS FOR ATOMS
-			org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom = null;
+			org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom;
 			IAtom[] atomsInContainer = ac.getAtoms();
 			
 			for (int w = 0; w < atomsInContainer.length; w++) {
@@ -220,15 +218,15 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
    		IAtomContainer detected = acSet.getAtomContainer(0);			
 			
 			// neighboors[0] is the atom joined to the target proton:
-			IAtom[] neighboors = mol.getConnectedAtoms(target);
+			IAtom[] neighboors = mol.getConnectedAtoms(atom);
 			
 			// 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
 			IAtom[] atomsInSecondSphere = mol.getConnectedAtoms(neighboors[0]);
-			IAtom[] atomsInThirdSphere = null;
-			IAtom[] atomsInFourthSphere = null;
-			IAtom[] atomsInFifthSphere = null;
-			IAtom[] atomsInSixthSphere = null;
-			IAtom[] atomsInSeventhSphere = null;
+			IAtom[] atomsInThirdSphere;
+			IAtom[] atomsInFourthSphere;
+			IAtom[] atomsInFifthSphere;
+			IAtom[] atomsInSixthSphere;
+			IAtom[] atomsInSeventhSphere;
 			
 			// SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
 			ArrayList singles = new ArrayList(); // list of any bond not rotatable
@@ -238,28 +236,28 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			ArrayList bondsInCycloex = new ArrayList(); // list for bonds in cycloexane-like rings
 			
 			// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
-			org.openscience.cdk.interfaces.IBond secondBond = null; // (remember that first bond is proton bond)
-			org.openscience.cdk.interfaces.IBond thirdBond = null; //
-			org.openscience.cdk.interfaces.IBond fourthBond = null; //
-			org.openscience.cdk.interfaces.IBond fifthBond = null; //
-			org.openscience.cdk.interfaces.IBond sixthBond = null; //
-			org.openscience.cdk.interfaces.IBond seventhBond = null; //
+			org.openscience.cdk.interfaces.IBond secondBond; // (remember that first bond is proton bond)
+			org.openscience.cdk.interfaces.IBond thirdBond; //
+			org.openscience.cdk.interfaces.IBond fourthBond; //
+			org.openscience.cdk.interfaces.IBond fifthBond; //
+			org.openscience.cdk.interfaces.IBond sixthBond; //
+			org.openscience.cdk.interfaces.IBond seventhBond; //
 			
 			// definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
-			boolean theBondIsInA6MemberedRing = false; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
-			double bondOrder = 0;
-			int bondNumber = 0;
-			int sphere = 0;
+			boolean theBondIsInA6MemberedRing; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
+			double bondOrder;
+			int bondNumber;
+			int sphere;
 			
 			// THIS MAIN FOR LOOP DETECT RIGID BONDS IN 7 SPHERES:
 			for(int a = 0; a < atomsInSecondSphere.length; a++) {
 				secondBond = mol.getBond(neighboors[0], atomsInSecondSphere[a]);
-				if(mol.getAtomNumber(atomsInSecondSphere[a])!=atomPosition && getIfBondIsNotRotatable(mol, secondBond, detected)==true) {
+				if(mol.getAtomNumber(atomsInSecondSphere[a])!=atomPosition && getIfBondIsNotRotatable(mol, secondBond, detected)) {
 					sphere = 2;
 					bondOrder = secondBond.getOrder();
 					bondNumber = mol.getBondNumber(secondBond);
 					theBondIsInA6MemberedRing = false;
-					checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSecondSphere[a]), atomsInSecondSphere[a].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+					checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSecondSphere[a]), atoms, sphere, theBondIsInA6MemberedRing);
 					atomsInThirdSphere = mol.getConnectedAtoms(atomsInSecondSphere[a]);
 					if(atomsInThirdSphere.length > 0) {
 					for(int b = 0; b < atomsInThirdSphere.length; b++) {
@@ -284,7 +282,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 									}
 								}
 							}
-							checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInThirdSphere[b]), atomsInThirdSphere[b].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+							checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInThirdSphere[b]), atoms, sphere, theBondIsInA6MemberedRing);
 							theBondIsInA6MemberedRing = false;
 							atomsInFourthSphere = mol.getConnectedAtoms(atomsInThirdSphere[b]);
 							if(atomsInFourthSphere.length > 0) {
@@ -295,7 +293,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 									bondOrder = fourthBond.getOrder();
 									bondNumber = mol.getBondNumber(fourthBond);
 									theBondIsInA6MemberedRing = false;
-									checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInFourthSphere[c]), atomsInFourthSphere[c].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+									checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInFourthSphere[c]), atoms, sphere, theBondIsInA6MemberedRing);
 									atomsInFifthSphere = mol.getConnectedAtoms(atomsInFourthSphere[c]);
 									if(atomsInFifthSphere.length > 0) {
 									for(int d = 0; d < atomsInFifthSphere.length; d++) {
@@ -305,7 +303,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 											bondOrder = fifthBond.getOrder();
 											bondNumber = mol.getBondNumber(fifthBond);
 											theBondIsInA6MemberedRing = false;
-											checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInFifthSphere[d]), atomsInFifthSphere[d].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+											checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInFifthSphere[d]), atoms, sphere, theBondIsInA6MemberedRing);
 											atomsInSixthSphere = mol.getConnectedAtoms(atomsInFifthSphere[d]);
 											if(atomsInSixthSphere.length > 0) {
 											for(int e = 0; e < atomsInSixthSphere.length; e++) {
@@ -315,7 +313,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 													bondOrder = sixthBond.getOrder();
 													bondNumber = mol.getBondNumber(sixthBond);
 													theBondIsInA6MemberedRing = false;
-													checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSixthSphere[e]), atomsInSixthSphere[e].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+													checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSixthSphere[e]), atoms, sphere, theBondIsInA6MemberedRing);
 													atomsInSeventhSphere = mol.getConnectedAtoms(atomsInSixthSphere[e]);
 													if(atomsInSeventhSphere.length > 0) {
 													for(int f = 0; f < atomsInSeventhSphere.length; f++) {
@@ -325,7 +323,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 															bondOrder = seventhBond.getOrder();
 															bondNumber = mol.getBondNumber(seventhBond);
 															theBondIsInA6MemberedRing = false;
-															checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSeventhSphere[f]), atomsInSeventhSphere[f].getSymbol(), atoms, sphere, theBondIsInA6MemberedRing);
+															checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(atomsInSeventhSphere[f]), atoms, sphere, theBondIsInA6MemberedRing);
 														}
 													}}
 												}
@@ -343,16 +341,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 ////////////////////// NOW ATOMS AND BONDS ARE DETECTED, THEN WE HAVE SOME LISTS WITH A DESCRIPTION OF THE PROTON ENVIRONMENT
 
 			// some of these variables are used in all descriptors:
-			double[] values = new double[4]; // for storage of results of other methods
-			double distance = 0;
-			double sum = 0;
+			double[] values; // for storage of results of other methods
+			double distance;
+			double sum;
 			double smooth = -20;
-			double partial = 0;
-			int position = 0;
+			double partial;
+			int position;
 			double limitInf = 1.4;
 			double limitSup = 4;
 			double step = (limitSup - limitInf)/15;
-			IAtom atom2 = null;
+			IAtom atom2;
 			
 ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:
 			
@@ -367,14 +365,14 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						Integer thisAtom = (Integer)atoms.get(at);
 						position = thisAtom.intValue();
 						atom2 = mol.getAtom(position);
-						distance = calculateDistanceBetweenTwoAtoms( mol, target, atom2 );
+						distance = calculateDistanceBetweenTwoAtoms(atom, atom2 );
 						partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghr - distance) , 2)));
 						sum += partial;
 					}
 					gHr_function.add(new Double(sum));
 					//System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
 				}
-				target.setProperty("gasteigerGHR", new ArrayList(gHr_function));
+				atom.setProperty("gasteigerGHR", new ArrayList(gHr_function));
 				rdfProtonCalculatedValues.add(1);
 			}
 			else rdfProtonCalculatedValues.add(0);
@@ -389,13 +387,13 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			position = 0;
 			atom2 = null;
 			org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(mol);
-			Object startVertex = target;
-			Object endVertex = null;
-			org._3pq.jgrapht.Edge edg = null;
-			java.util.List mylist = null;
-			IAtom atomTarget = null;
-			IAtom atomSource = null;
-			Integer thisAtom = null;
+			Object startVertex = atom;
+			Object endVertex;
+			org._3pq.jgrapht.Edge edg;
+			java.util.List mylist;
+			IAtom atomTarget;
+			IAtom atomSource;
+			Integer thisAtom;
 			partial = 0;
 			limitInf = 1.4;
 			limitSup = 4;
@@ -417,7 +415,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 							edg = (org._3pq.jgrapht.Edge)mylist.get(u);
 							atomTarget = (IAtom)edg.getTarget();
 							atomSource = (IAtom)edg.getSource();
-							distance += calculateDistanceBetweenTwoAtoms(mol, atomTarget, atomSource);
+							distance += calculateDistanceBetweenTwoAtoms(atomTarget, atomSource);
 						}
 						partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghrt - distance) , 2)));
 						sum += partial;
@@ -425,7 +423,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 					gHr_topol_function.add(new Double(sum));
 					//System.out.println("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
 				}
-				target.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
+				atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
 				rdfProtonCalculatedValues.add(1);
 			}
 			else rdfProtonCalculatedValues.add(0);
@@ -442,16 +440,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			double angle = 0;			
 			
 			if(doubles.size() > 0) {
-				IAtom[] goodAtoms = null;
+				IAtom[] goodAtoms;
 				limitInf = 0;
 				limitSup = Math.PI / 2;
 				step = (limitSup - limitInf)/7;
 				position = 0;
 				partial = 0;
-				org.openscience.cdk.interfaces.IBond theDoubleBond = null;
+				org.openscience.cdk.interfaces.IBond theDoubleBond;
 				smooth = -1.15;
 				int goodPosition = 0;
-				org.openscience.cdk.interfaces.IBond goodBond = null;
+				org.openscience.cdk.interfaces.IBond goodBond;
 				ArrayList gDr_function = new ArrayList(7);
 				for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 					sum = 0;
@@ -460,14 +458,14 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						Integer thisDoubleBond = (Integer)doubles.get(dou);
 						position = thisDoubleBond.intValue();
 						theDoubleBond = mol.getBond(position);
-						goodPosition = getNearestBondtoAGivenAtom(mol, target, theDoubleBond);
+						goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
 						goodBond = mol.getBond(goodPosition);
 						goodAtoms = goodBond.getAtoms();
 						
 						//System.out.println("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
 						
 						middlePoint = theDoubleBond.get3DCenter();
-						values = calculateDistanceBetweenAtomAndBond( mol, target, theDoubleBond );
+						values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond );
 						
 						if(theDoubleBond.contains(goodAtoms[0])) {						
 							a_a.set(goodAtoms[0].getPoint3d().x, goodAtoms[0].getPoint3d().y, goodAtoms[0].getPoint3d().z);
@@ -478,14 +476,14 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 							a_b.set(goodAtoms[0].getPoint3d().x, goodAtoms[0].getPoint3d().y, goodAtoms[0].getPoint3d().z);
 						}
 						b_b.set(middlePoint.x, middlePoint.y, middlePoint.z);
-						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
+						b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 						angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 						partial = ( ( 1 / (Math.pow( values[0], 2 ) ) ) * Math.exp( smooth * (Math.pow( (ghd - angle) , 2) ) ) );
 						sum += partial;
 					}
 					gDr_function.add(new Double(sum));
 				}
-				target.setProperty("gasteigerGDR", new ArrayList(gDr_function));
+				atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));
 				rdfProtonCalculatedValues.add(1);
 			}
 			else rdfProtonCalculatedValues.add(0);
@@ -496,9 +494,9 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			
 			
 			if(singles.size() > 0) {
-				double dist0 = 0;
-				double dist1 = 0;
-				IAtom[] atomsInSingleBond = null;				
+				double dist0;
+				double dist1;
+				IAtom[] atomsInSingleBond;
 				distance = 0;
 				position = 0;
 				org.openscience.cdk.interfaces.IBond theSingleBond = null;
@@ -517,16 +515,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						theSingleBond = mol.getBond(position);
 						middlePoint = theSingleBond.get3DCenter();
 						atomsInSingleBond = theSingleBond.getAtoms();
-						dist0 = calculateDistanceBetweenTwoAtoms(mol, atomsInSingleBond[0], target);
-						dist1 = calculateDistanceBetweenTwoAtoms(mol, atomsInSingleBond[1], target);
+						dist0 = calculateDistanceBetweenTwoAtoms(atomsInSingleBond[0], atom);
+						dist1 = calculateDistanceBetweenTwoAtoms(atomsInSingleBond[1], atom);
 							
 						a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
 						if(dist1 > dist0) a_b.set(atomsInSingleBond[0].getPoint3d().x, atomsInSingleBond[0].getPoint3d().y, atomsInSingleBond[0].getPoint3d().z);
 						else a_b.set(atomsInSingleBond[1].getPoint3d().x, atomsInSingleBond[1].getPoint3d().y, atomsInSingleBond[1].getPoint3d().z);
 						b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
+						b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 						
-						values = calculateDistanceBetweenAtomAndBond( mol, target, theSingleBond );
+						values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond );
 						
 						angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 							//System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
@@ -537,7 +535,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 					gSr_function.add(new Double(sum));
 					//System.out.println("RDF gSr prob.: " + sum +  " at distance " + ghs);
 				}
-				target.setProperty("gasteigerGSR", new ArrayList(gSr_function));
+				atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
 				rdfProtonCalculatedValues.add(1);
 			}
 			else rdfProtonCalculatedValues.add(0);
@@ -550,8 +548,8 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			
 			
 			if(bondsInCycloex.size() > 0) {
-				IAtom[] atomsInCycloexBond = null;
-				org.openscience.cdk.interfaces.IBond theInCycloexBond = null;
+				IAtom[] atomsInCycloexBond;
+				org.openscience.cdk.interfaces.IBond theInCycloexBond;
 				distance = 0;
 				limitInf = 0;
 				limitSup = Math.PI;
@@ -560,7 +558,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 				smooth = -2.86;
 				angle = 0;
 				int ya_counter = 0;
-				IAtom[] connAtoms = null;
+				IAtom[] connAtoms;
 				ArrayList g3r_function = new ArrayList(13);
 				for(double g3r = 0; g3r < limitSup; g3r = g3r + step) {
 					sum = 0;
@@ -587,7 +585,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 							a_b.set(atomsInCycloexBond[1].getPoint3d().x, atomsInCycloexBond[1].getPoint3d().y, atomsInCycloexBond[1].getPoint3d().z);
 						}
 						b_a.set(neighboors[0].getPoint3d().x, neighboors[0].getPoint3d().y, neighboors[0].getPoint3d().z);
-						b_b.set(target.getPoint3d().x, target.getPoint3d().y, target.getPoint3d().z);
+						b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 						
 						angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 						
@@ -599,7 +597,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 					g3r_function.add(new Double(sum));
 					//System.out.println("RDF g-cycl prob.: "+sum+ " at distance "+g3r);
 				}
-				target.setProperty("gasteigerG3R", new ArrayList(g3r_function));
+				atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
 				rdfProtonCalculatedValues.add(1);
 			}
 			else rdfProtonCalculatedValues.add(0);
@@ -626,8 +624,8 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 		if (detected != null) { 				
 			if(detected.contains(bond)) counter += 1;
 		}
-		if(atoms[0].getFlag(CDKConstants.ISINRING) == true) {
-			if(atoms[1].getFlag(CDKConstants.ISINRING) == true) { counter += 1; }
+		if(atoms[0].getFlag(CDKConstants.ISINRING)) {
+			if(atoms[1].getFlag(CDKConstants.ISINRING)) { counter += 1; }
 			else {
 				if(atoms[1].getSymbol().equals("H")) counter += 1;
 				else counter += 0;
@@ -646,7 +644,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol, IAtom carbonAtom) {
 		boolean isDoubleBondedToOxygen = false;
 		IAtom[] neighToCarbon = mol.getConnectedAtoms(carbonAtom);
-		org.openscience.cdk.interfaces.IBond tmpBond = null;
+		org.openscience.cdk.interfaces.IBond tmpBond;
 		int counter = 0;
 		for(int nei = 0; nei < neighToCarbon.length; nei++) {
 			if(neighToCarbon[nei].getSymbol().equals("O")) {
@@ -671,7 +669,10 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	}
 	
 	// this method store atoms and bonds in proper lists:
-	private void checkAndStore(int bondToStore, double bondOrder, ArrayList singleVec, ArrayList doubleVec, ArrayList cycloexVec, int a1, String symbol, ArrayList atomVec, int sphere, boolean isBondInCycloex) {
+	private void checkAndStore(int bondToStore, double bondOrder,
+                               ArrayList singleVec, ArrayList doubleVec,
+                               ArrayList cycloexVec, int a1,
+                               ArrayList atomVec, int sphere, boolean isBondInCycloex) {
 		if(!atomVec.contains(new Integer(a1))) {
 			if(sphere < 6) atomVec.add(new Integer(a1));
 		}
@@ -689,7 +690,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	}
 	
 	// generic method for calculation of distance btw 2 atoms
-	private double calculateDistanceBetweenTwoAtoms(Molecule mol, IAtom atom1, IAtom atom2) {
+	private double calculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
 		double distance;
 		Point3d firstPoint = atom1.getPoint3d();
 		Point3d secondPoint = atom2.getPoint3d();
@@ -702,13 +703,13 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	// this method returns a bond bonded to this double bond
 	private int getNearestBondtoAGivenAtom(Molecule mol, IAtom atom, org.openscience.cdk.interfaces.IBond bond) {
 		int nearestBond = 0;
-		double[] values = new double[4];
+		double[] values;
 		double distance = 0;
 		IAtom[] atomsInBond = bond.getAtoms();
 		org.openscience.cdk.interfaces.IBond[] bondsAtLeft = mol.getConnectedBonds(atomsInBond[0]);
-		int partial = 0;
+		int partial;
 		for(int i=0; i<bondsAtLeft.length;i++) {
-			values = calculateDistanceBetweenAtomAndBond(mol, atom, bondsAtLeft[i]);
+			values = calculateDistanceBetweenAtomAndBond(atom, bondsAtLeft[i]);
 			partial = mol.getBondNumber(bondsAtLeft[i]);
 			if(i==0) {
 				nearestBond = mol.getBondNumber(bondsAtLeft[i]);
@@ -731,7 +732,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	
 	// method which calculated distance btw an atom and the middle point of a bond
 	// and returns distance and coordinates of middle point
-	private double[] calculateDistanceBetweenAtomAndBond(Molecule mol, IAtom proton, org.openscience.cdk.interfaces.IBond theBond) {
+	private double[] calculateDistanceBetweenAtomAndBond(IAtom proton, org.openscience.cdk.interfaces.IBond theBond) {
 		Point3d middlePoint = theBond.get3DCenter();
 		Point3d protonPoint = proton.getPoint3d();
 		double[] values = new double[4];

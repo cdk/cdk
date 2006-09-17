@@ -66,15 +66,14 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
 	private AbstractAtomicDescriptor sigmaCharge;
 	private AbstractAtomicDescriptor piCharge;
-	private IAtomContainer acCloned;
 
 
     /**
      *  Constructor for the PartialTChargePEOEDescriptor object
      */
-    public PartialTChargePEOEDescriptor() { 
-    	sigmaCharge = new PartialSigmaChargeDescriptor();
-    	piCharge = new PartialPiChargeDescriptor();
+    public PartialTChargePEOEDescriptor() {
+        sigmaCharge = new PartialSigmaChargeDescriptor();
+        piCharge = new PartialPiChargeDescriptor();
     }
 
 
@@ -122,14 +121,9 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * @exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	
-		try {
-			acCloned = (IAtomContainer)ac.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
-	
-		double piRC= ((DoubleResult)piCharge.calculate(atom, ac).getValue()).doubleValue();
+    		
+
+        double piRC= ((DoubleResult)piCharge.calculate(atom, ac).getValue()).doubleValue();
     	double sigmaRC= ((DoubleResult)sigmaCharge.calculate(atom, ac).getValue()).doubleValue();
 	
 	

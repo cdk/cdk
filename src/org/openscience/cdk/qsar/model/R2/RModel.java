@@ -1,12 +1,5 @@
 package org.openscience.cdk.qsar.model.R2;
 
-import java.awt.*;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
-
 import org.openscience.cdk.qsar.model.IModel;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.tools.LoggingTool;
@@ -14,6 +7,13 @@ import org.rosuda.JRI.REXP;
 import org.rosuda.JRI.RList;
 import org.rosuda.JRI.RMainLoopCallbacks;
 import org.rosuda.JRI.Rengine;
+
+import java.awt.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Base class for the R-CDK interface.
@@ -89,12 +89,6 @@ public abstract class RModel implements IModel {
      */
     private static boolean doneInit = false;
     private static LoggingTool logger;
-
-    private void initRengine() throws QSARModelException {
-        String[] args = {"--vanilla", "--quiet", "--slave"};
-        boolean useDisk = false;
-        initRengine(args, useDisk);
-    }
 
     private void initRengine(String[] args, boolean useDisk) throws QSARModelException {
         if (!doneInit) {
