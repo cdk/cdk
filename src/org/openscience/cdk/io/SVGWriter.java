@@ -27,16 +27,6 @@
  *  */
 package org.openscience.cdk.io;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -50,6 +40,9 @@ import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+
+import java.awt.*;
+import java.io.*;
 
 /**
  * Writes the SVG strings to output. This class makes
@@ -84,13 +77,14 @@ public class SVGWriter extends DefaultChemObjectWriter {
      */
     public SVGWriter(Writer out) {
     	logger = new LoggingTool(this);
-    	try {
+        try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
             } else {
                 writer = new BufferedWriter(out);
             }
-        } catch (Exception exc) {
+        } catch(Exception excp) {
+            logger.debug(excp.toString());
         }
     }
 
@@ -179,7 +173,7 @@ public class SVGWriter extends DefaultChemObjectWriter {
 		}
         GeometryTools.translateAllPositive(container);
         GeometryTools.center(container, new Dimension(600,400));
-        r2d.paintMolecule(container, (Graphics2D)svgGenerator,false,true);
+        r2d.paintMolecule(container, svgGenerator,false,true);
         
         // save to stream
         boolean useCSS = true;
