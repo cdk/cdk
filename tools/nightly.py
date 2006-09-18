@@ -49,7 +49,7 @@
 # Update 07/31/2006 - Added success rate to junit summary. Added some code to cleanup
 #                     japize files
 # Update 08/01/2006 - Made some error cases more consistent
-
+# Update 09/18/2006 - Added current time to the title
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
 from email.MIMEText import MIMEText
@@ -840,11 +840,13 @@ if __name__ == '__main__':
     os.system('rm -rf %s/*' % (nightly_web))
     writeTemporaryPage()
 
+    currTime = time.localtime()
+    currTime = "%d:%d" % (currTime[3], currTime[4])	
     page = """
     <html>
     <head>
       <title>
-      CDK Nightly Build - %s
+      CDK Nightly Build - %s (%s)
       </title>
       <style>
       <!--
@@ -855,8 +857,8 @@ if __name__ == '__main__':
     <head>
     <body>
     <center>
-    <h2>CDK Nightly Build - %s</h2>
-    """ % (todayNice, todayNice)
+    <h2>CDK Nightly Build - %s (%s)</h2>
+    """ % (todayNice, currTime, todayNice, currTime)
 
     resultTable = HTMLTable()
     resultTable.addHeaderCell("")
@@ -1125,7 +1127,7 @@ if __name__ == '__main__':
     resultTable.addRule()
     resultTable.addRow()
     resultTable.addCell("<i>Build details</i>")
-    resultTable.addCell("<i>Fedora Core 5</i>")
+    resultTable.addCell("<i>Red Hat Enterprise Linux</i>")
     resultTable.appendToCell("<i>Sun JDK 1.5.0</i>")
     resultTable.appendToCell("<i>Ant 1.6.2</i>")
     resultTable.appendToCell("<a href=\"antinfo.txt\">ant info</a>")
