@@ -27,15 +27,13 @@
  */
 package org.openscience.cdk.applications.jchempaint.dnd;
 
+import org.openscience.cdk.tools.LoggingTool;
+
+import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.util.ArrayList;
-
-import javax.swing.JComponent;
-import javax.swing.TransferHandler;
-
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Created after http://java.sun.com/docs/books/tutorial/uiswing/misc/example-1dot4/ArrayListTransferHandler.java
@@ -46,8 +44,7 @@ public class JCPTransferHandler extends TransferHandler {
     
 	private static final long serialVersionUID = -2702180989701731589L;
 
-	private DataFlavor localFlavor = DataFlavor.plainTextFlavor;
-
+    private DataFlavor localFlavor = DataFlavor.getTextPlainUnicodeFlavor();
 	private LoggingTool logger;
     private String handlerFor;
     
