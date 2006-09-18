@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+/*  $Revision$ $Author$ $Date$
+ *  
+ *  Copyright (C) 2004-2006  Matteo Floris <mfe4@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
