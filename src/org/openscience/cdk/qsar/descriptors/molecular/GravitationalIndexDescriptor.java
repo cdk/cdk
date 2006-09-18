@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu>
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -37,10 +37,10 @@ import java.util.Vector;
 
 
 /**
- * IDescriptor characterizing the mass distribution of the molecule. 
+ * IDescriptor characterizing the mass distribution of the molecule.
  * Described by Katritzky et al. {@cdk.cite KAT96}.
  * For modelling purposes the value of the descriptor is calculated
- * both with and without H atoms. Furthermore the square and cube roots 
+ * both with and without H atoms. Furthermore the square and cube roots
  * of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
  *<p>
  * The descriptor routine generates 9 descriptors:
@@ -55,7 +55,7 @@ import java.util.Vector;
  * <li>grav5 -  grav2 for all pairs of atoms (not just bonded pairs)
  * <li>grav6 -  grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -69,22 +69,22 @@ import java.util.Vector;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
  * @author      Rajarshi Guha
  * @cdk.created     2004-11-23
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:gravitationalIndex
- * 
+ *
  * @cdk.keyword gravitational index
  * @cdk.keyword descriptor
  */
 public class GravitationalIndexDescriptor implements IMolecularDescriptor {
-    
+
     private LoggingTool logger;
     private class pair {
         int x,y;
-        public  pair() { 
+        public  pair() {
             x = 0;
             y = 0;
         }

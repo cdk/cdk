@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu>
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -39,7 +39,7 @@ import java.util.Hashtable;
 
 
 /**
- * Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}. 
+ * Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
  * The descriptors are based on a number of atom weightings. There are 6 different
  * possible weightings:
  * <ol>
@@ -53,7 +53,7 @@ import java.util.Hashtable;
  * Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
  * are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
  *
- * <p>For each weighting scheme we can obtain 
+ * <p>For each weighting scheme we can obtain
  * <ul>
  * <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
  * <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
@@ -61,7 +61,7 @@ import java.util.Hashtable;
  *
  * <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
  * descriptors are required the current code will return all 11.
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -76,17 +76,17 @@ import java.util.Hashtable;
  *   </tr>
  * </table>
  *
- * 
+ *
  * @author      Rajarshi Guha
  * @cdk.created     2004-12-1
- * 
+ *
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  *
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
- * 
+ *
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor
  */
@@ -95,7 +95,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
     LoggingTool logger;
     String type = "";
     Hashtable hashatwt,hashvdw,hasheneg,hashpol;
-    
+
     public WHIMDescriptor() {
         logger = new LoggingTool(this);
         this.type = "unity"; // default weighting scheme

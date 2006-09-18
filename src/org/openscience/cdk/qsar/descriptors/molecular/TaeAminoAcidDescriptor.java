@@ -3,7 +3,7 @@
  *  $Date: 2006-08-14 15:51:36 -0400 (Mon, 14 Aug 2006) $
  *  $Revision: 6785 $
  *
- *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu>
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

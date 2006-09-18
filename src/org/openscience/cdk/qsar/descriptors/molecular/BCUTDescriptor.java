@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu> 
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rajarshi@users.sourceforge.net> 
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -43,10 +43,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
  * Described by Pearlman et al. {@cdk.cite PEA99}.
- * 
+ *
  * <p>The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
  * which takes into account both the connectivity as well as atomic
- * properties of a molecule. The weights are a variety of atom properties placed along the 
+ * properties of a molecule. The weights are a variety of atom properties placed along the
  * diagonal of the Burden matrix. Currently three weighting schemes are employed
  * <ul>
  * <li>atomic weight
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * classes of descriptor in a single ArrayList (in the order shown above). However it is also
  * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
  * (for each class of descriptor) are required.
- * 
+ *
  * <p>The descriptor works with the hydrogen depleted molecule and thus the maximum number
  * of eigenvalues calculated for any class of BCUT descriptor is equal to the number
  * of heavy atoms present.
@@ -80,17 +80,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * 
+ *
  * @author      Rajarshi Guha
  * @cdk.created     2004-11-30
- * 
+ *
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  *
  * @cdk.module qsar
  * @cdk.set    qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
- * 
+ *
  * @cdk.keyword BCUT
  * @cdk.keyword descriptor
  */
@@ -101,7 +101,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     private int nhigh;
     private int nlow;
     private boolean checkAromaticity = true;
-    
+
     public BCUTDescriptor() {
         // set the default number of BCUT's
         this.nhigh = 1;
