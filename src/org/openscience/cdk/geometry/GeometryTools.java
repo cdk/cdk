@@ -1539,27 +1539,27 @@ public class GeometryTools {
         }
 		return mappedAtoms;
 	}
-	
-	/**
-	 *  Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
-	 *  AtomContainer) atomContainer. 
-	 *  
-	 *  Only for similar and aligned molecules with coordinates!
-	 *
-	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
-	 *@param  secondAtomContainer               the second aligned AtomContainer
-	 *@return                   				a Map of the mapped atoms
-	 */
-	public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) {
+
+    /**
+     * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
+     * AtomContainer) atomContainer.
+     * <p/>
+     * Only for similar and aligned molecules with coordinates!
+     *
+     * @param firstAtomContainer  the (largest) first aligned AtomContainer which is the reference
+     * @param secondAtomContainer the second aligned AtomContainer
+     * @return a Map of the mapped atoms
+     * @throws CDKException if there is an error in the UniversalIsomorphismTester
+     */
+    public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) throws CDKException {
         //System.out.println("**** GT MAP ATOMS ****");
         //Map atoms onto each other
-        if (firstAtomContainer.getAtomCount()<1 & secondAtomContainer.getAtomCount()<1){
+        if (firstAtomContainer.getAtomCount() < 1 & secondAtomContainer.getAtomCount() < 1) {
             return mappedAtoms;
         }
         RMap map;
         org.openscience.cdk.interfaces.IAtom atom1;
         org.openscience.cdk.interfaces.IAtom atom2;
-        int countMappedAtoms=0;
         List list;
         try {
             list = UniversalIsomorphismTester.getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
@@ -1568,24 +1568,22 @@ public class GeometryTools {
                 map = (RMap) list.get(i);
                 atom1 = firstAtomContainer.getAtom(map.getId1());
                 atom2 = secondAtomContainer.getAtom(map.getId2());
-                if (checkAtomMapping(firstAtomContainer,secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2))){
-                    mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)),new Integer(secondAtomContainer.getAtomNumber(atom2)));
-                    countMappedAtoms++;
+                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2)))
+                {
+                    mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)), new Integer(secondAtomContainer.getAtomNumber(atom2)));
                     //System.out.println("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
-                }else{
+                } else {
                     System.out.println("Error: Atoms are not similar !!");
                 }
             }
         } catch (CDKException e) {
-            // TODO Auto-generated catch block
-            System.out.println("Error in UniversalIsomorphismTester due to:");
-            e.printStackTrace();
+            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.toString());
         }
         return mappedAtoms;
     }
-	
-	
-	private static void getLargestAtomContainer(IAtomContainer firstAC, IAtomContainer secondAC) {
+
+
+    private static void getLargestAtomContainer(IAtomContainer firstAC, IAtomContainer secondAC) {
         if (firstAC.getAtomCount() < secondAC.getAtomCount()){
             IAtomContainer tmp;
             try {
