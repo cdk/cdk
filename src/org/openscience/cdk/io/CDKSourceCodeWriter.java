@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ *
+ * Copyright (C) 2003-2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
