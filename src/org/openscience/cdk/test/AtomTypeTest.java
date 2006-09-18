@@ -32,6 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the funcitonality of the AtomType class.
@@ -58,6 +59,12 @@ public class AtomTypeTest extends CDKTestCase {
     
     public void testAtomType_String() {
         IAtomType at = builder.newAtomType("C");
+        assertEquals("C", at.getSymbol());
+    }
+
+    public void testAtomType_IElement() {
+    	IElement element = builder.newElement("C");
+        IAtomType at = builder.newAtomType(element);
         assertEquals("C", at.getSymbol());
     }
 

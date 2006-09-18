@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -58,6 +59,15 @@ public class PseudoAtomTest extends CDKTestCase {
 
     public void testPseudoAtom() {
         IPseudoAtom a = builder.newPseudoAtom();
+        assertEquals("R", a.getSymbol());
+        assertNull(a.getPoint3d());
+        assertNull(a.getPoint2d());
+        assertNull(a.getFractionalPoint3d());
+    }
+    
+    public void testPseudoAtom_IElement() {
+    	IElement element = builder.newElement();
+        IPseudoAtom a = builder.newPseudoAtom(element);
         assertEquals("R", a.getSymbol());
         assertNull(a.getPoint3d());
         assertNull(a.getPoint2d());

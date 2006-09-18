@@ -34,6 +34,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -61,6 +62,12 @@ public class AtomTest extends CDKTestCase {
      */
     public void testAtom() {
         IAtom a = builder.newAtom();
+        assertNotNull(a);
+    }
+
+    public void testAtom_IElement() {
+    	IElement element = builder.newElement();
+        IAtom a = builder.newAtom(element);
         assertNotNull(a);
     }
 

@@ -63,6 +63,12 @@ public class ElementTest extends CDKTestCase {
         assertTrue(e instanceof IChemObject);
     }
     
+    public void testElement_IElement() {
+    	IElement element = builder.newElement();
+        IElement e = builder.newElement(element);
+        assertTrue(e instanceof IChemObject);
+    }
+    
     public void testElement_String() {
         IElement e = builder.newElement("C");
         assertEquals("C", e.getSymbol());

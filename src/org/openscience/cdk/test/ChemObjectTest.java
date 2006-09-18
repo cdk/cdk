@@ -36,8 +36,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * TestCase for the IChemObject class.
@@ -70,6 +70,12 @@ public class ChemObjectTest extends CDKTestCase {
 
     public void testChemObject() {
         IChemObject chemObject = builder.newChemObject();
+        assertNotNull(chemObject);
+    }
+
+    public void testChemObject_IChemObject() {
+    	IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject = builder.newChemObject(chemObject1);
         assertNotNull(chemObject);
     }
 

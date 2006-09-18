@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -20,9 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test;
 
 import javax.vecmath.Point2d;
@@ -41,6 +36,7 @@ import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
@@ -99,6 +95,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	 
 	public void testNewAtom() {
 		Object object = rootObject.getBuilder().newAtom();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IAtom);
+	}
+	 
+	public void testNewAtom_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newAtom(element);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
@@ -170,6 +175,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 	
 	public void testNewAtomType_String() {
 		Object object = rootObject.getBuilder().newAtomType("Carom");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IAtomType);
+	}
+	
+	public void testNewAtomType_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newAtomType(element);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
@@ -257,6 +271,13 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 	}
 
+	public void testNewChemObject_IChemObject() {
+		IChemObject chemObject = rootObject.getBuilder().newChemObject();
+		Object object = rootObject.getBuilder().newChemObject(chemObject);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+	}
+
 	public void testNewChemSequence() {
 		Object object = rootObject.getBuilder().newChemSequence();
 		assertNotNull(object);
@@ -299,6 +320,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IElement);
 	}
 	
+	public void testNewElement_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newElement(element);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IElement);
+	}
+	
 	public void testNewElement_String() {
 		Object object = rootObject.getBuilder().newElement("C");
 		assertNotNull(object);
@@ -329,6 +359,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		Object object = rootObject.getBuilder().newIsotope(
 			12, "C", 6, 12.001, 100.0
 		);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		
+		assertTrue(object instanceof IIsotope);
+	}
+	
+	public void testNewIsotope_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newIsotope(element);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 		
@@ -422,6 +461,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 	public void testNewPseudoAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPseudoAtom);
+	}
+
+	public void testNewPseudoAtom_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newPseudoAtom(element);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 

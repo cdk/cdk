@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -20,9 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
@@ -30,6 +25,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
@@ -57,6 +53,12 @@ public class IsotopeTest extends CDKTestCase {
     
     public void testIsotope_String() {
         IIsotope i = builder.newIsotope("C");
+        assertEquals("C", i.getSymbol());
+    }
+    
+    public void testIsotope_IElement() {
+    	IElement element = builder.newElement("C");
+        IIsotope i = builder.newIsotope(element);
         assertEquals("C", i.getSymbol());
     }
     
