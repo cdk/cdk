@@ -20,34 +20,17 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.sf.jniinchi.INCHI_BOND_STEREO;
-import net.sf.jniinchi.INCHI_BOND_TYPE;
-import net.sf.jniinchi.INCHI_PARITY;
-import net.sf.jniinchi.INCHI_RET;
-import net.sf.jniinchi.INCHI_STEREOTYPE;
-import net.sf.jniinchi.JniInchiAtom;
-import net.sf.jniinchi.JniInchiBond;
-import net.sf.jniinchi.JniInchiException;
-import net.sf.jniinchi.JniInchiInputInchi;
-import net.sf.jniinchi.JniInchiOutputStructure;
-import net.sf.jniinchi.JniInchiStereo0D;
-import net.sf.jniinchi.JniInchiWrapper;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomParity;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import net.sf.jniinchi.*;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
-import org.xmlcml.cml.base.CMLException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>This class generates a CDK IAtomContainer from an InChI string.  It places 
@@ -92,7 +75,7 @@ protected JniInchiInputInchi input;
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
      * @param inchi
-     * @throws CMLException
+     * @throws CDKException
      */
     protected InChIToStructure(String inchi) throws CDKException {
         try {
@@ -107,7 +90,7 @@ protected JniInchiInputInchi input;
      * Constructor. Generates CMLMolecule from InChI.
      * @param inchi
      * @param options
-     * @throws CMLException
+     * @throws CDKException
      */
     protected InChIToStructure(String inchi, String options) throws CDKException {
         try {
@@ -122,7 +105,7 @@ protected JniInchiInputInchi input;
      * Constructor. Generates CMLMolecule from InChI.
      * @param inchi
      * @param options
-     * @throws CMLException
+     * @throws CDKException
      */
     protected InChIToStructure(String inchi, List options) throws CDKException {
         try {
@@ -244,7 +227,7 @@ protected JniInchiInputInchi input;
                 IAtom at2 = (IAtom) inchiCdkAtomMap.get(neighbours[2]);
                 IAtom at3 = (IAtom) inchiCdkAtomMap.get(neighbours[3]);
                 
-                int sign = 0;
+                int sign;
                 if (stereo0d.getParity() == INCHI_PARITY.ODD) {
                     sign = -1;
                 } else if (stereo0d.getParity() == INCHI_PARITY.EVEN) {
@@ -264,7 +247,7 @@ protected JniInchiInputInchi input;
     
     /**
      * Returns generated molecule.
-     * @return
+     * @return An IAtomContainer object
      */
     public IAtomContainer getAtomContainer() {
         return(molecule);
