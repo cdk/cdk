@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Hashtable;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,8 +34,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import java.util.Hashtable;
 
 
 
@@ -77,7 +76,6 @@ import Jama.Matrix;
  *   </tr>
  * </table>
  *
- * @cdk.todo        Fix up the &gamm; descriptors
  * 
  * @author      Rajarshi Guha
  * @cdk.created     2004-12-1

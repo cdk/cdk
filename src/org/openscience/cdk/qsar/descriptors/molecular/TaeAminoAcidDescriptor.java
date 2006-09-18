@@ -1,5 +1,31 @@
+/*  $RCSfile$
+ *  $Author: rajarshi $
+ *  $Date: 2006-08-14 15:51:36 -0400 (Mon, 14 Aug 2006) $
+ *  $Revision: 6785 $
+ *
+ *  Copyright (C) 2004-2006  Rajarshi Guha <rguha@indiana.edu>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.Monomer;
+import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -13,9 +39,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
+
 
 /**
  * An implementation of the TAE descriptors for amino acids.
@@ -91,6 +116,25 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private int ndesc = 147;
 
     private HashMap nametrans = new HashMap();
+
+    private List getMonomers(IBioPolymer iBioPolymer) {
+        List monomList = new ArrayList();
+
+        Map strands = iBioPolymer.getStrands();
+        Set strandKeys = strands.keySet();
+        for (Iterator iterator = strandKeys.iterator(); iterator.hasNext();) {
+            Object key = iterator.next();
+            Strand aStrand = (Strand) strands.get(key);
+            Hashtable tmp = aStrand.getMonomers();
+            Set keys = tmp.keySet();
+            for (Iterator iterator1 = keys.iterator(); iterator1.hasNext();) {
+                Object o1 = iterator1.next();
+                monomList.add( tmp.get(o1) );
+            }
+        }
+
+        return monomList;
+    }
 
     private void loadTAEParams() {
         String filename = "org/openscience/cdk/qsar/descriptors/data/taepeptides.txt";
@@ -222,18 +266,23 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         IBioPolymer peptide = (IBioPolymer) container;
 
         // I assume that we get single letter names
-        Collection aas = peptide.getMonomerNames();
+        //Collection aas = peptide.getMonomerNames();
 
         double[] desc = new double[ndesc];
         for (int i = 0; i < ndesc; i++) desc[i] = 0.0;
 
-        for (Iterator iterator = aas.iterator(); iterator.hasNext();) {
-            String o = (String) iterator.next();
+        List monomers = getMonomers(peptide);
+
+        for (Iterator iterator = monomers.iterator(); iterator.hasNext();) {
+            Monomer monomer = (Monomer) iterator.next();
+
+            String o = monomer.getMonomerName();
 
             if (o.length() == 0) continue;
 
             String olc = String.valueOf(o.toLowerCase().charAt(0));
             String tlc = (String) nametrans.get(olc);
+
 
             logger.debug("Converted " + olc + " to " + tlc);
 
@@ -248,4 +297,5 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
     }
+
 }
