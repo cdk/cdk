@@ -34,6 +34,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -587,4 +588,34 @@ public class CML2Test extends CDKTestCase {
         }
     }
 
+    /**
+     * @cdk.bug 1560486
+     */
+    public void testCMLWithFormula() {
+        String filename = "data/cml/cmlWithFormula.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+
+            IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            assertNotNull(mol);
+            assertEquals(27, mol.getAtomCount());
+            assertEquals(32, mol.getBondCount());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
 }
