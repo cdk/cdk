@@ -28,17 +28,12 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
 
 /**
  * This class is an experimental alternative to the ValencyChecker.
@@ -67,11 +62,11 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         this("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
 	}
 
-	public ValencyHybridChecker(String atomTypeList) throws IOException, ClassNotFoundException {
-		this.atomTypeList = atomTypeList;
-		logger = new LoggingTool(this);
+	public ValencyHybridChecker(String atomTypeList) {
+        this.atomTypeList = atomTypeList;
+        logger = new LoggingTool(this);
         logger.info("Using configuration file: ", atomTypeList);
-	}
+    }
 
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
