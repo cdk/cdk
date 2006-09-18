@@ -33,8 +33,6 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
-import java.io.IOException;
-
 /**
  * This class is an experimental alternative to the ValencyChecker.
  * The main difference is that this checker uses a different atom type
@@ -58,9 +56,9 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
 	protected AtomTypeFactory structgenATF;
 	protected LoggingTool logger;
 
-	public ValencyHybridChecker() throws IOException, ClassNotFoundException {
+	public ValencyHybridChecker() {
         this("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
-	}
+    }
 
 	public ValencyHybridChecker(String atomTypeList) {
         this.atomTypeList = atomTypeList;
