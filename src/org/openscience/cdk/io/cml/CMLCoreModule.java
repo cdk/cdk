@@ -334,7 +334,8 @@ public class CMLCoreModule implements ICMLModule {
                     logger.warn("Unparsed attribute: " + att);
                 }
             }
-        } else if ("atomArray".equals(name)) {
+        } else if ("atomArray".equals(name) &&
+        		   !xpath.endsWith("formule", "atomArray")) {
             boolean atomsCounted = false;
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
