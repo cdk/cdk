@@ -1,0 +1,174 @@
+<molecule title="(=O)OC2)C34([H])))C5)">
+<atomArray>
+<atom id="a1">
+<string builtin="elementType">O</string>
+</atom>
+<atom id="a2">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a3">
+<string builtin="elementType">O</string>
+</atom>
+<atom id="a4">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a5">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a6">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a7">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a8">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a9">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a10">
+<string builtin="elementType">O</string>
+</atom>
+<atom id="a11">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a12">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a13">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a14">
+<string builtin="elementType">H</string>
+</atom>
+<atom id="a15">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a16">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a17">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a18">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a19">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a20">
+<string builtin="elementType">C</string>
+</atom>
+<atom id="a21">
+<string builtin="elementType">C</string>
+</atom>
+</atomArray>
+<bondArray>
+<bond>
+<string builtin="atomRef">a1</string>
+<string builtin="atomRef">a2</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a3</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a2</string>
+<string builtin="atomRef">a4</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a4</string>
+<string builtin="atomRef">a5</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a5</string>
+<string builtin="atomRef">a13</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a5</string>
+<string builtin="atomRef">a6</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a6</string>
+<string builtin="atomRef">a7</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a7</string>
+<string builtin="atomRef">a8</string>
+<string builtin="order">2</string>
+</bond>
+<bond>
+<string builtin="atomRef">a7</string>
+<string builtin="atomRef">a9</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a10</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a9</string>
+<string builtin="atomRef">a11</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a11</string>
+<string builtin="atomRef">a12</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a12</string>
+<string builtin="atomRef">a13</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a13</string>
+<string builtin="atomRef">a14</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a13</string>
+<string builtin="atomRef">a15</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a15</string>
+<string builtin="atomRef">a16</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a16</string>
+<string builtin="atomRef">a17</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a17</string>
+<string builtin="atomRef">a18</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a18</string>
+<string builtin="atomRef">a19</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a19</string>
+<string builtin="atomRef">a20</string>
+<string builtin="order">1</string>
+</bond>
+<bond>
+<string builtin="atomRef">a19</string>
+<string builtin="atomRef">a21</string>
+<string builtin="order">1</string>
+</bond>
+</bondArray>
+</molecule>

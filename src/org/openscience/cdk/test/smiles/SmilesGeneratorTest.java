@@ -33,12 +33,18 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -704,6 +710,31 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String moleculeSmile = sg.createSMILES(mol1);
 		//System.out.println(filename + " -> " + moleculeSmile);
 		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
+	}
+	/**
+	 * @cdk.bug 1089770
+	 */
+	public void testSFBug1014344_1() throws Exception {
+		String filename_cml = "data/cml/bug1014344-1.cml";
+		String filename_mol = "data/mdl/bug1014344-1.mol";
+		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
+		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
+		CMLReader reader1 = new CMLReader(ins1);
+        IChemFile chemFile = (IChemFile)reader1.read(new ChemFile());
+        IChemSequence seq = chemFile.getChemSequence(0);
+        IChemModel model = seq.getChemModel(0);
+        IMolecule mol1 = model.getSetOfMolecules().getMolecule(0);
+		
+		MDLReader reader2 = new MDLReader(ins2);		
+		Molecule mol2 = (Molecule) reader2.read(new Molecule());
+		
+		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
+		
+		String moleculeSmile1 = sg.createSMILES(mol1);
+//		System.out.println(filename_cml + " -> " + moleculeSmile1);
+		String moleculeSmile2 = sg.createSMILES(mol2);
+//		System.out.println(filename_mol + " -> " + moleculeSmile2);
+		assertEquals(moleculeSmile1, moleculeSmile2);
 	}
 }
 
