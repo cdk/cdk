@@ -468,7 +468,7 @@ public class CMLCoreModule implements ICMLModule {
                 cdo.setObjectProperty("Molecule", "inchi", atts.getValue("value"));
             }
         } else if ("scalar".equals(name)) {
-            if (xpath.toString().endsWith("crystal/scalar/"))
+            if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
         } else if ("list".equals(name)) {
             cdo.startObject("SetOfMolecules");
@@ -765,7 +765,7 @@ public class CMLCoreModule implements ICMLModule {
                 }
             }
         } else if ("scalar".equals(name)) {
-            if (xpath.toString().endsWith("crystal/scalar/")) {
+            if (xpath.endsWith("crystal", "scalar")) {
                 logger.debug("Going to set a crystal parameter: " + crystalScalar, 
                     " to ", cData);
                 try {
@@ -773,16 +773,16 @@ public class CMLCoreModule implements ICMLModule {
                 } catch (NumberFormatException exception) {
                     logger.error("Content must a float: " + cData);
                 }
-            } else if (xpath.toString().endsWith("bond/scalar/")) {
+            } else if (xpath.endsWith("bond", "scalar")) {
                 if (DICTREF.equals("mdl:stereo")) {
                 	bondStereo.addElement(cData.trim());
                     stereoGiven=true;
                 }
-            } else if (xpath.toString().endsWith("atom/scalar/")) {
+            } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.addElement(cData.trim());
                 }
-            } else if (xpath.toString().endsWith("molecule/scalar/")) {
+            } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
                 	cdo.setObjectProperty("Molecule", DICTREF, cData); 
                 }
@@ -864,7 +864,7 @@ public class CMLCoreModule implements ICMLModule {
             // assuming this is the child element of <identifier>
             this.inchi = cData;
         } else if ("name".equals(name)) {
-            if (xpath.toString().endsWith("molecule/name/")) {
+            if (xpath.endsWith("molecule", "name")) {
             	if (DICTREF.length() > 0) {
             		cdo.setObjectProperty("Molecule", DICTREF, cData);
             	} else {
