@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -27,7 +24,6 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.StringReader;
 
@@ -363,6 +359,7 @@ public class MDLReaderTest extends CDKTestCase {
             fail(e.toString());
         }
     }
+
     public void testAliasPropertyGroup() {
         String filename = "data/mdl/AliasPropertyRGroup.sdf";
         logger.info("Testing: " + filename);
@@ -375,6 +372,23 @@ public class MDLReaderTest extends CDKTestCase {
             assertEquals("R1", ((PseudoAtom)atom).getLabel());
              } catch (Exception e) {
             fail(e.toString());
+        }
+    }
+
+    public void testBug1542467() {
+        String filename = "data/mdl/Strychnine_nichtOK.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containers.length);
+            assertTrue(containers[0].getAtomCount() > 0);
+            assertTrue(containers[0].getBondCount() > 0);
+        } catch (Exception e) {
+        	fail(e.toString());
         }
     }
 }
