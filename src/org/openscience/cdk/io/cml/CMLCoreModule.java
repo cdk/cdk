@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -335,7 +332,7 @@ public class CMLCoreModule implements ICMLModule {
                 }
             }
         } else if ("atomArray".equals(name) &&
-        		   !xpath.endsWith("formule", "atomArray")) {
+        		   !xpath.endsWith("formula", "atomArray")) {
             boolean atomsCounted = false;
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
