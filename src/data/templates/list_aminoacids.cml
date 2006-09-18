@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<list title="List of amino acids"
-        xmlns="http://www.xml-cml.org/schema/cml2/core"
+<list title="List of amino acids" convention="cdk:substructureList"
+        xmlns="http://www.xml-cml.org/schema"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../org/openscience/cdk/io/cml/data/cmlAll.xsd">
+        xsi:schemaLocation="http://www.xml-cml.org/schema ../../org/openscience/cdk/io/cml/data/cmlAll.xsd">
 
     <molecule id="alanine" dictRef="pdb:aminoAcid">
         <name>alanine</name>
