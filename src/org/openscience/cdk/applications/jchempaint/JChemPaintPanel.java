@@ -28,45 +28,6 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Iterator;
-import java.util.MissingResourceException;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.JViewport;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.undo.UndoManager;
-import javax.swing.undo.UndoableEditSupport;
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -79,13 +40,29 @@ import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEditSupport;
+import javax.vecmath.Point2d;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.util.MissingResourceException;
+import java.util.StringTokenizer;
+import java.util.Vector;
 /**
  *  JPanel that contains a full JChemPaint program, either viewer or full
  *  editor.
@@ -764,7 +741,7 @@ public abstract class JChemPaintPanel
 				repaint();
 		} else {
 			JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
-			jcpf.show();
+			jcpf.setVisible(true);
 			scaleAndCenterMolecule(chemModel);
 			jcpf.pack();
 			lastUsedJCPP = (JChemPaintPanel) jcpf.getContentPane().getComponents()[0];
@@ -1040,7 +1017,7 @@ public abstract class JChemPaintPanel
     		          panel.drawingPanel = draw;
     		          viewPort.remove(draw);
     		        }
-    		        frame.show();
+    		        frame.setVisible(true);
     		        frame.pack();
     		    }
     		}

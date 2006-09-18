@@ -28,15 +28,11 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
-import javax.swing.JPanel;
-
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *  This class implements an editing JChemPaintPanel.
@@ -102,7 +98,7 @@ public class DrawingPanel extends JPanel
 		drawingNow = false;
 		if(!this.getPreferredSize().equals(oldPreferredSize)){
 			oldPreferredSize=this.getPreferredSize();
-			resize(this.getPreferredSize());
+			setSize(this.getPreferredSize());
 		}
 	}
 
