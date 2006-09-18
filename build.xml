@@ -601,8 +601,6 @@
             <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
             </copy>
-                <copy tofile="${sourcedist.dir}/doc/javadoc/source//MakeJavaFilesFilesDoclet.java"
-                      file="doc/javadoc/source/MakeJavaFilesFilesDoclet.java"/>
                 <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
                         <fileset dir="${src}/org/openscience/cdk/config/data/"
                                  includes="*" />
@@ -636,10 +634,6 @@
                     <fileset dir="doc/" includes="lgpl.license" />
                 </copy>
                 <mkdir dir="${sourcedist.dir}/doc/javadoc" />
-                <copy todir="${sourcedist.dir}/doc/javadoc">
-                    <fileset dir="doc/javadoc" includes="MakeJavaFilesFilesDoclet.class" />
-                    <fileset dir="doc/javadoc" includes="MakeCDKSetFilesDoclet.class" />
-                </copy>
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
                 <delete file="${package}.tar" />
