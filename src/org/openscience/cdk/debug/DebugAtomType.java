@@ -26,6 +26,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -53,6 +54,11 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		this.setAtomTypeName(identifier);
 	}
 	
+	public DebugAtomType(IElement element) {
+		super(element);
+		logger.debug("Instantiated a DebugAtomType: element= ", element);
+	}
+
 	public int getAtomicNumber() {
 		logger.debug("Getting atomic number: ", super.getAtomicNumber());
 		return super.getAtomicNumber();

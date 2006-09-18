@@ -278,6 +278,30 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
         return new NNPseudoAtom(label, point2d);
 	}
+
+	public IAtom newAtom(IElement element) {
+		return new NNAtom(element);
+	}
+
+	public IAtomType newAtomType(IElement element) {
+		return new NNAtomType(element);
+	}
+
+	public IChemObject newChemObject(IChemObject object) {
+		return new NNChemObject(object);
+	}
+
+	public IElement newElement(IElement element) {
+		return new NNElement(element);
+	}
+
+	public IIsotope newIsotope(IIsotope isotope) {
+		return new NNIsotope(isotope);
+	}
+
+	public IPseudoAtom newPseudoAtom(IElement element) {
+		return new NNPseudoAtom(element);
+	}
 }
 
 

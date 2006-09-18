@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -62,6 +63,11 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point3d=" + point3d);
 	}
 	
+	public DebugAtom(IElement element) {
+		super(element);
+		logger.debug("Instantiated a DebugAtom: element= ", element);
+	}
+
 	public void setCharge(double charge) {
 		logger.debug("Setting charge: ", charge);
 		super.setCharge(charge);

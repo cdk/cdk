@@ -41,6 +41,16 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
     
     LoggingTool logger = new LoggingTool(DebugChemObject.class);
 
+	public DebugChemObject(IChemObject object) {
+		super(object);
+		logger.debug("Instantiated DebugChemObject from object: ", object);
+	}
+
+	public DebugChemObject() {
+		super();
+		logger.debug("Instantiated DebugChemObject");
+	}
+
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);

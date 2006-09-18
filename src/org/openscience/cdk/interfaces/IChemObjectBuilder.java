@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2005-2006  The Chemistry Development Kit (CDK) project
  *
@@ -37,7 +34,7 @@ public interface IChemObjectBuilder {
      * @return IAminoAcid implementation defined for this IChemObjectBuilder
      */
 	public IAminoAcid newAminoAcid();
-	
+
     /**
      * Constructs an completely unset IAtom.
      * 
@@ -45,6 +42,14 @@ public interface IChemObjectBuilder {
      */
 	public IAtom newAtom();
 	
+    /**
+     * Constructs an IAtom from a String containing an element symbol.
+     *
+     * @param   element  The IElement from which the Atom should be constructed
+     * @return           IAtom implementation defined for this IChemObjectBuilder
+     */
+    public IAtom newAtom(IElement element);
+    
     /**
      * Constructs an IAtom from a String containing an element symbol.
      *
@@ -133,6 +138,13 @@ public interface IChemObjectBuilder {
 	 */
 	public IAtomType newAtomType(String identifier, String elementSymbol);
 	
+    /**
+     * Constructs an IAtomType from a String containing an element symbol.
+     *
+     * @param   element  The IElement from which the AtomType should be constructed
+     * @return           IAtomType implementation defined for this IChemObjectBuilder
+     */
+    public IAtomType newAtomType(IElement element);
 	/**
 	 * Contructs a new IBioPolymer to store the IStrands.
 	 * 
@@ -200,6 +212,13 @@ public interface IChemObjectBuilder {
 	public IChemObject newChemObject();
 	
 	/**
+	 * Constructs an new IChemObject from an existing one.
+	 * 
+     * @return IChemObject implementation defined for this IChemObjectBuilder
+	 */
+	public IChemObject newChemObject(IChemObject object);
+
+	/**
 	 * Constructs an empty IChemSequence.
 	 * 
      * @return IChemSequence implementation defined for this IChemObjectBuilder
@@ -237,6 +256,14 @@ public interface IChemObjectBuilder {
     public IElement newElement();
 
     /**
+     * Constructs an empty IElement from an existing IElement.
+     * 
+     * @param   element  The IElement from which the Element should be constructed
+     * @return IElement implementation defined for this IChemObjectBuilder
+     */
+    public IElement newElement(IElement element);
+
+    /**
      * Constructs an IElement with a given element symbol.
      *
      * @param  symbol The element symbol that this element should have.
@@ -261,6 +288,14 @@ public interface IChemObjectBuilder {
      * @return                IIsotope implementation defined for this IChemObjectBuilder
 	 */
 	public IIsotope newIsotope(String elementSymbol);
+	
+	/**
+	 * Constructs an IIsotope object from an existing IIsotope.
+	 *
+	 * @param  isotope  The isotope on which the new IIsotope is based
+     * @return          IIsotope implementation defined for this IChemObjectBuilder
+	 */
+	public IIsotope newIsotope(IIsotope isotope);
 	
 	/**
 	 * Constructor for the IIsotope object.
@@ -467,10 +502,10 @@ public interface IChemObjectBuilder {
     /**
      * Constructs an IPseudoAtom from an existing IAtom object.
      *
-     * @param   atom  IAtom from which the IPseudoAtom is constructed
-     * @return        IPseudoAtom implementation defined for this IChemObjectBuilder
+     * @param   element  The IElement from which the PseudoAtom should be constructed
+     * @return           IPseudoAtom implementation defined for this IChemObjectBuilder
      */
-    public IPseudoAtom newPseudoAtom(IAtom atom);
+    public IPseudoAtom newPseudoAtom(IElement element);
 
     /**
      * Constructs an IPseudoAtom from a label and a Point3d.

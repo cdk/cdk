@@ -31,6 +31,7 @@ package org.openscience.cdk.nonotify;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module nonotify
@@ -46,6 +47,11 @@ public class NNAtomType extends AtomType {
 
 	public NNAtomType(String identifier, String elementSymbol) {
 		super(identifier, elementSymbol);
+		setNotification(false);
+	}
+
+	public NNAtomType(IElement element) {
+		super(element);
 		setNotification(false);
 	}
 

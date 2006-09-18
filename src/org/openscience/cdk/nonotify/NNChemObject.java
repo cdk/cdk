@@ -30,6 +30,7 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
@@ -45,6 +46,11 @@ public class NNChemObject extends ChemObject {
 
 	public NNChemObject() {
 		super();
+		setNotification(false);
+	}
+
+	public NNChemObject(IChemObject object) {
+		super(object);
 		setNotification(false);
 	}
 

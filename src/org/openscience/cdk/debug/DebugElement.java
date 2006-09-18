@@ -56,6 +56,11 @@ public class DebugElement extends org.openscience.cdk.Element
 		logger.debug("Instantiated a DebugElement: symbol= ", symbol + " atomic number= " + atomicNumber);
 	}
 	
+	public DebugElement(IElement element) {
+		super(element);
+		logger.debug("Instantiated a DebugElement: element= ", element);
+	}
+
 	public int getAtomicNumber() {
 		logger.debug("Getting atomic number: ", super.getAtomicNumber());
 		return super.getAtomicNumber();

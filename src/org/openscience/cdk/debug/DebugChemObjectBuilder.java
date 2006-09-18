@@ -300,6 +300,30 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	public IPseudoAtom newPseudoAtom(String label, Point2d point2d) {
 		return new DebugPseudoAtom(label, point2d);
 	}
+
+	public IAtom newAtom(IElement element) {
+		return new DebugAtom(element);
+	}
+
+	public IAtomType newAtomType(IElement element) {
+		return new DebugAtomType(element);
+	}
+
+	public IChemObject newChemObject(IChemObject object) {
+		return new DebugChemObject(object);
+	}
+
+	public IElement newElement(IElement element) {
+		return new DebugElement(element);
+	}
+
+	public IIsotope newIsotope(IIsotope isotope) {
+		return new DebugIsotope(isotope);
+	}
+
+	public IPseudoAtom newPseudoAtom(IElement element) {
+		return new DebugPseudoAtom(element);
+	}
 }
 
 

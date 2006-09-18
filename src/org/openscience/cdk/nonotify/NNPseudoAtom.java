@@ -32,6 +32,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module nonotify
@@ -63,6 +64,11 @@ public class NNPseudoAtom extends PseudoAtom {
         super(label, point2d);
         setNotification(false);
     }
+
+	public NNPseudoAtom(IElement element) {
+		super(element);
+		setNotification(false);
+	}
 
 	public IChemObjectBuilder getBuilder() {
 		return NoNotificationChemObjectBuilder.getInstance();

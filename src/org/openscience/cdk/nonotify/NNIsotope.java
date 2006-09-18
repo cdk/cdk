@@ -31,6 +31,7 @@ package org.openscience.cdk.nonotify;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * @cdk.module nonotify
@@ -56,6 +57,11 @@ public class NNIsotope extends Isotope {
 
 	public NNIsotope(String elementSymbol, int massNumber) {
 		super(elementSymbol, massNumber);
+		setNotification(false);
+	}
+
+	public NNIsotope(IIsotope isotope) {
+		super(isotope);
 		setNotification(false);
 	}
 
