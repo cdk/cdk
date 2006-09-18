@@ -1,10 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
- * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -37,19 +33,19 @@ import java.io.*;
 /**
  * A reader for Gaussian03 output.
  * Gaussian 03 is a quantum chemistry program
- * by Gaussian, Inc. (http://www.gaussian.com/).
- * <p/>
+ * by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+ * 
  * <p>Molecular coordinates, energies, and normal coordinates of
  * vibrations are read. Each set of coordinates is added to the
  * ChemFile in the order they are found. Energies and vibrations
  * are associated with the previously read set of coordinates.
- * <p/>
+ * 
  * <p>This reader was developed from a small set of
  * example output files, and therefore, is not guaranteed to
  * properly read all Gaussian03 output. If you have problems,
  * please contact the author of this code, not the developers
  * of Gaussian03.
- * <p/>
+ * 
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
  *
@@ -155,20 +151,20 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                         model.setProperty("org.openscience.cdk.io.Gaussian03Reaer:SCF Done", line.trim());
                     } else if (line.indexOf("Harmonic frequencies") >= 0) {
                         // Found a set of vibrations
-                        try {
-                            readFrequencies(model);
-                        } catch (IOException exception) {
-                            throw new CDKException("Error while reading frequencies: " + exception.toString(), exception);
-                        }
+//                        try {
+//                            readFrequencies(model);
+//                        } catch (IOException exception) {
+//                            throw new CDKException("Error while reading frequencies: " + exception.toString(), exception);
+//                        }
                     } else if (line.indexOf("Mulliken atomic charges") >= 0) {
                         readPartialCharges(model);
                     } else if (line.indexOf("Magnetic shielding") >= 0) {
                         // Found NMR data
-                        try {
-                            readNMRData(model, line);
-                        } catch (IOException exception) {
-                            throw new CDKException("Error while reading NMR data: " + exception.toString(), exception);
-                        }
+//                        try {
+//                            readNMRData(model, line);
+//                        } catch (IOException exception) {
+//                            throw new CDKException("Error while reading NMR data: " + exception.toString(), exception);
+//                        }
                     } else if (line.indexOf("GINC") >= 0) {
                         // Found calculation level of theory
                         //levelOfTheory = parseLevelOfTheory(line);
@@ -301,7 +297,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * @param model the destination ChemModel
      * @throws IOException if an I/O error occurs
      */
-    private void readFrequencies(IChemModel model) throws IOException {
+//    private void readFrequencies(IChemModel model) throws IOException {
         /* This is yet to be ported. Vibrations don't exist yet in CDK.
         String line = input.readLine();
         line = input.readLine();
@@ -360,12 +356,12 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             line = input.readLine();
             line = input.readLine();
         } */
-    }
+//    }
 
     /**
      * Reads NMR nuclear shieldings.
      */
-    private void readNMRData(IChemModel model, String labelLine) throws IOException {
+//    private void readNMRData(IChemModel model, String labelLine) throws IOException {
         /* FIXME: this is yet to be ported. CDK does not have shielding stuff.
         // Determine label for properties
         String label;
@@ -405,7 +401,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             ((org.openscience.jmol.Atom)frame.getAtomAt(atomIndex)).addProperty(ns1);
             ++atomIndex;
         } */
-    }
+//    }
 
     /**
      * Select the theory and basis set from the first archive line.
