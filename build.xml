@@ -511,6 +511,7 @@
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
+                    <include name="cdk-controller.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-experimental.jar"/>
