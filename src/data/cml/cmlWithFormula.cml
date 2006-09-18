@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<molecule id="a" xmlns="http://www.xml-cml.org/schema">
+<atomArray>
+<atom id="a1" elementType="Mn" xFract="0.20231" yFract="0.48349" zFract="0.291978" x3="1.4608552730157478" y3="6.705329414" z3="5.529750828532723" n:sequenceNumber="1" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a2" elementType="Cl" xFract="0.55799" yFract="0.45887" zFract="0.33731" x3="4.029176184024799" y3="6.3638844820000005" z3="6.058837398268131" n:sequenceNumber="2" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a3" elementType="Cl" xFract="0.16408" yFract="0.33215" zFract="0.23183" x3="1.1848012119837077" y3="4.60645549" z3="4.38711076742387" n:sequenceNumber="3" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a4" hydrogenCount="1" elementType="N" xFract="0.2458" yFract="0.49819" zFract="0.51044" x3="1.774891137893682" y3="6.909197834" z3="9.776792881681297" n:sequenceNumber="4" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a5" elementType="N" xFract="0.1639" yFract="0.46016" zFract="0.4007" x3="1.1835014544376503" y3="6.381774976000001" z3="7.7043901676369595" n:sequenceNumber="5" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a6" hydrogenCount="1" elementType="N" xFract="0.2233" yFract="0.6383" zFract="0.3495" x3="1.6124214446365304" y3="8.85232738" z3="6.638324207317468" n:sequenceNumber="6" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a7" elementType="N" xFract="0.2679" yFract="0.59383" zFract="0.2184" x3="1.9344724810484843" y3="8.235590738" z3="4.017827107851991" n:sequenceNumber="7" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a8" hydrogenCount="1" elementType="N" xFract="0.3915" yFract="0.73373" zFract="0.19432" x3="2.8269726626744367" y3="10.175807878" z3="3.419250389530625" n:sequenceNumber="8" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a9" hydrogenCount="1" elementType="O" xFract="-0.0967" yFract="0.52918" zFract="0.27299" x3="-0.6982586372429579" y3="7.338985748" z3="5.460560973809678" n:sequenceNumber="9" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a10" elementType="C" xFract="0.1944" yFract="0.40242" zFract="0.5102" x3="1.4037381497417891" y3="5.581002012" z3="9.824300189863484" n:sequenceNumber="10" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a11" hydrogenCount="1" elementType="C" xFract="0.188" yFract="0.3357" zFract="0.56237" x3="1.3575245481041993" y3="4.6556890200000005" z3="10.855572583773329" n:sequenceNumber="11" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a13" hydrogenCount="1" elementType="C" xFract="0.1283" yFract="0.2444" zFract="0.54224" x3="0.9264382953285574" y3="3.3894858400000003" z3="10.520815282447968" n:sequenceNumber="13" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a15" hydrogenCount="1" elementType="C" xFract="0.0777" yFract="0.21999" zFract="0.47353" x3="0.5610620073813632" y3="3.050953314" z3="9.222560440016423" n:sequenceNumber="15" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a17" hydrogenCount="1" elementType="C" xFract="0.0827" yFract="0.28672" zFract="0.42159" x3="0.5971663836607303" y3="3.976404992" z3="8.197228291430608" n:sequenceNumber="17" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a19" elementType="C" xFract="0.1421" yFract="0.37893" zFract="0.44097" x3="1.0260863738596102" y3="5.255228598" z3="8.517558213111116" n:sequenceNumber="19" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a20" elementType="C" xFract="0.2267" yFract="0.52831" zFract="0.44467" x3="1.6369724205065002" y3="7.326920066" z3="8.504284652959115" n:sequenceNumber="20" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a21" hydrogenCount="2" elementType="C" xFract="0.2822" yFract="0.62591" zFract="0.42351" x3="2.0377309972074737" y3="8.680495426" z3="8.03225374825656" n:sequenceNumber="21" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a24" hydrogenCount="2" elementType="C" xFract="0.3297" yFract="0.7081" zFract="0.31562" x3="2.3807225718614604" y3="9.82035566" z3="5.864722002691309" n:sequenceNumber="24" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a27" elementType="C" xFract="0.3274" yFract="0.67816" zFract="0.24243" x3="2.3641145587729517" y3="9.405129776" z3="4.429394916080783" n:sequenceNumber="27" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a28" elementType="C" xFract="0.3731" yFract="0.68167" zFract="0.13408" x3="2.694108557966366" y3="9.453808562" z3="2.2546562086464275" n:sequenceNumber="28" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a29" hydrogenCount="1" elementType="C" xFract="0.4206" yFract="0.7014" zFract="0.06911" x3="3.037100132620352" y3="9.72743604" z3="0.9301977310811773" n:sequenceNumber="29" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a31" hydrogenCount="1" elementType="C" xFract="0.3806" yFract="0.6308" zFract="0.02031" x3="2.7482651223854164" y3="8.74831288" z3="0.012263591767703474" n:sequenceNumber="31" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a33" hydrogenCount="1" elementType="C" xFract="0.2997" yFract="0.544" zFract="0.03462" x3="2.1640963141852585" y3="7.544518400000001" z3="0.37554663820620254" n:sequenceNumber="33" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a35" hydrogenCount="1" elementType="C" xFract="0.256" yFract="0.5238" zFract="0.0994" x3="1.8485440655035907" y3="7.264372680000001" z3="1.6924122236062327" n:sequenceNumber="35" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a37" elementType="C" xFract="0.2941" yFract="0.59422" zFract="0.14899" x3="2.123659412752367" y3="8.240999492" z3="2.6277946245023167" n:sequenceNumber="37" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a38" hydrogenCount="2" elementType="C" xFract="-0.1953" yFract="0.5707" zFract="0.21159" x3="-1.4102369374720753" y3="7.91481002" z3="4.354662987201965" n:sequenceNumber="38" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+<atom id="a41" hydrogenCount="3" elementType="C" xFract="-0.2534" yFract="0.498" zFract="0.15821" x3="-1.8297697898383198" y3="6.906562800000001" z3="3.365153685649144" n:sequenceNumber="41" xmlns:n="http://wwmm.ch.cam.ac.uk/ned24/"></atom>
+</atomArray>
+<bondArray>
+<bond atomRefs2="a1 a2" id="a1-a2" order="1"/>
+<bond atomRefs2="a1 a3" id="a1-a3" order="1"/>
+<bond atomRefs2="a1 a5" id="a1-a5" order="1"/>
+<bond atomRefs2="a1 a6" id="a1-a6" order="1"/>
+<bond atomRefs2="a1 a7" id="a1-a7" order="1"/>
+<bond atomRefs2="a1 a9" id="a1-a9" order="1"/>
+<bond atomRefs2="a4 a10" id="a4-a10" order="1"/>
+<bond atomRefs2="a4 a20" id="a4-a20" order="1"/>
+<bond atomRefs2="a5 a19" id="a5-a19" order="1"/>
+<bond atomRefs2="a5 a20" id="a5-a20" order="1"/>
+<bond atomRefs2="a6 a21" id="a6-a21" order="1"/>
+<bond atomRefs2="a6 a24" id="a6-a24" order="1"/>
+<bond atomRefs2="a7 a27" id="a7-a27" order="1"/>
+<bond atomRefs2="a7 a37" id="a7-a37" order="1"/>
+<bond atomRefs2="a8 a27" id="a8-a27" order="1"/>
+<bond atomRefs2="a8 a28" id="a8-a28" order="1"/>
+<bond atomRefs2="a9 a38" id="a9-a38" order="1"/>
+<bond atomRefs2="a10 a11" id="a10-a11" order="2"/>
+<bond atomRefs2="a10 a19" id="a10-a19" order="1"/>
+<bond atomRefs2="a11 a13" id="a11-a13" order="1"/>
+<bond atomRefs2="a13 a15" id="a13-a15" order="2"/>
+<bond atomRefs2="a15 a17" id="a15-a17" order="1"/>
+<bond atomRefs2="a17 a19" id="a17-a19" order="2"/>
+<bond atomRefs2="a20 a21" id="a20-a21" order="1"/>
+<bond atomRefs2="a24 a27" id="a24-a27" order="1"/>
+<bond atomRefs2="a28 a29" id="a28-a29" order="2"/>
+<bond atomRefs2="a28 a37" id="a28-a37" order="1"/>
+<bond atomRefs2="a29 a31" id="a29-a31" order="1"/>
+<bond atomRefs2="a31 a33" id="a31-a33" order="2"/>
+<bond atomRefs2="a33 a35" id="a33-a35" order="1"/>
+<bond atomRefs2="a35 a37" id="a35-a37" order="2"/>
+<bond atomRefs2="a38 a41" id="a38-a41" order="1"/>
+</bondArray>
+<formula concise="C 18 H 21 Cl 2 Mn 1 N 5 O 1">
+<atomArray elementType="Mn Cl N O C H" count="1.0 2.0 5.0 1.0 18.0 21.0"/>
+</formula>
+</molecule>
