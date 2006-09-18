@@ -125,7 +125,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof ICrystal) {
-            write((ICrystal)object);
+            writeCrystal((ICrystal)object);
         } else {
             throw new CDKException("Only Crystal objects can be read.");
         }
@@ -133,7 +133,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(ICrystal crystal) {
+    private void writeCrystal(ICrystal crystal) {
         
         Object title = crystal.getProperty(CDKConstants.TITLE);
         if (title != null && title.toString().trim().length() > 0) {
