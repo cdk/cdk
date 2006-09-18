@@ -104,8 +104,8 @@ public class RebondTool {
     for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements(); ) {
       IAtom atomNear = ((TupleAtom)e.nextElement()).getAtom();
       if (atomNear != atom && container.getBond(atom, atomNear) == null) {
-        boolean isBonded = isBonded(myCovalentRadius,  atomNear.getCovalentRadius(), e.foundDistance2());
-        if (isBonded) {
+        boolean bonded = isBonded(myCovalentRadius,  atomNear.getCovalentRadius(), e.foundDistance2());
+        if (bonded) {
           IBond bond = atom.getBuilder().newBond(atom, atomNear, 1.0);
           container.addBond(bond);
         }
@@ -117,6 +117,7 @@ public class RebondTool {
    * Returns the bond order for the bond. At this moment, it only returns
    * 0 or 1, but not 2 or 3, or aromatic bond order.
    */
+
   private boolean isBonded(double covalentRadiusA,
                            double covalentRadiusB,
                            double distance2) {
@@ -128,6 +129,7 @@ public class RebondTool {
       return false;
       return distance2 <= maxAcceptable2;
   }
+
     
   class TupleAtom implements Bspt.Tuple {
     IAtom atom;
