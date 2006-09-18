@@ -28,11 +28,11 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ModifyRenderOptionsDialog;
 import org.openscience.cdk.renderer.Renderer2DModel;
+
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -58,7 +58,7 @@ public class ModifyDisplaySettingsAction extends JCPAction
 		Renderer2DModel renderModel = jcpm.getRendererModel();
 		ModifyRenderOptionsDialog frame =
 				new ModifyRenderOptionsDialog(jcpm, renderModel);
-		frame.show();
+		frame.setVisible(true);
 		jcpm.fireChange();
 	}
 

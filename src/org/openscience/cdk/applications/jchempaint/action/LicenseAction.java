@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.dialogs.LicenseDialog;
+
+import java.awt.event.ActionEvent;
 
 /**
  * Shows the dialog displaying JCPs license
@@ -52,7 +52,7 @@ public class LicenseAction extends JCPAction
 	{
 		LicenseDialog ad = new LicenseDialog();
 		ad.pack();
-		ad.show();
+		ad.setVisible(true);
 	}
 }
 

@@ -28,16 +28,14 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.WebDialog;
 import org.openscience.cdk.io.MACiEReader;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -96,7 +94,7 @@ public class WebLinkAction extends JCPAction
 			return;
 		}
 		dialog = new WebDialog(frame, url);
-		dialog.show();
+		dialog.setVisible(true);
 	}
 
 }

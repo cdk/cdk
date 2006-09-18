@@ -28,15 +28,15 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ChemObjectPropertyDialog;
 import org.openscience.cdk.applications.swing.editor.AtomContainerEditor;
 import org.openscience.cdk.applications.swing.editor.ChemObjectEditor;
 import org.openscience.cdk.controller.SimpleController2D;
+import org.openscience.cdk.interfaces.IChemObject;
+
+import java.awt.event.ActionEvent;
 
 /**
  * Action for triggering an edit of a IChemObject
@@ -66,7 +66,7 @@ public class EditAtomContainerPropsAction extends JCPAction {
 			ChemObjectPropertyDialog frame =
 				new ChemObjectPropertyDialog(jcpmodel, editor);
 			frame.pack();
-			frame.show();
+			frame.setVisible(true);
 		}
 	}
 

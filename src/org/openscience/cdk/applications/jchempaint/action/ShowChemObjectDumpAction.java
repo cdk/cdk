@@ -28,20 +28,18 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JFrame;
-
 import nu.xom.Element;
-
+import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.xmlcml.cml.element.CMLCml;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -95,7 +93,7 @@ public class ShowChemObjectDumpAction extends JCPAction
 			dialog.setText(message);
 		}
 
-		dialog.show();
+		dialog.setVisible(true);
 	}
 
 }

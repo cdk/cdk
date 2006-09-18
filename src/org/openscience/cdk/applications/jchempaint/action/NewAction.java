@@ -27,12 +27,10 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Opens a new empty JChemPaintFrame.
@@ -62,7 +60,7 @@ public class NewAction extends JCPAction {
         }
       }else{
         JFrame frame = JChemPaintEditorPanel.getEmptyFrameWithModel();
-        frame.show();
+        frame.setVisible(true);
         frame.pack();
       }
     }

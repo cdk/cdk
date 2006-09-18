@@ -28,18 +28,17 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.JCheckBoxMenuItem;
-
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.validate.BasicValidator;
 import org.openscience.cdk.validate.CDKValidator;
 import org.openscience.cdk.validate.ProblemMarker;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -165,7 +164,7 @@ public class ValidateAction extends JCPAction
 			frame = new ValidateFrame(jcpPanel);
 			frame.validate(object);
 			frame.pack();
-			frame.show();
+			frame.setVisible(true);
 		}
 	}
 

@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.dialogs.AboutDialog;
+
+import java.awt.event.ActionEvent;
 
 /**
  * Action to pop-up an About JChemPaint dialog.
@@ -52,7 +52,7 @@ public class AboutAction extends JCPAction
 	{
 		AboutDialog ad = new AboutDialog();
 		ad.pack();
-		ad.show();
+		ad.setVisible(true);
 	}
 }
 

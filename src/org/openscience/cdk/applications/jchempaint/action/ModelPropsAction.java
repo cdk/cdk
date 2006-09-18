@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.dialogs.JChemPaintModelPropsEditor;
+
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -59,7 +59,7 @@ public class ModelPropsAction extends JCPAction
 			editor = new JChemPaintModelPropsEditor(jcpPanel);
 		}
 		editor.pack();
-		editor.show();
+		editor.setVisible(true);
 	}
 }
 

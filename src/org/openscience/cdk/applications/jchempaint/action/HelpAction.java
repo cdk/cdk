@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.dialogs.HelpDialog;
+
+import java.awt.event.ActionEvent;
 
 /**
  * Pops up the help.
@@ -53,10 +53,10 @@ public class HelpAction extends JCPAction
 	{
 		if (type.equals("tutorial"))
 		{
-			new HelpDialog(null, "org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/contain/tutorial.html").show();
+			new HelpDialog(null, "org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/contain/tutorial.html").setVisible(true);
 		} else
 		{
-			new HelpDialog(null, "org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/jcp.html").show();
+			new HelpDialog(null, "org/openscience/cdk/applications/jchempaint/resources/userhelp_jcp/jcp.html").setVisible(true);
 		}
 	}
 }

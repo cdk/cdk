@@ -28,19 +28,17 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.util.EventObject;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.event.ChangeEvent;
-
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.ICDKChangeListener;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.EventObject;
 
 
 /**
@@ -101,7 +99,7 @@ public class ChemAction extends JCPAction
 							);
 				}
 				dialog.pack();
-				dialog.show();
+				dialog.setVisible(true);
 				c2dm.setDrawMode(Controller2DModel.ELEMENT);
 			} else if (type.equals("symbol"))
 			{
@@ -214,7 +212,7 @@ public class ChemAction extends JCPAction
 				String symbol = source.getSelectedElement().getSymbol();
 				logger.debug("Setting drawing element to: ", symbol);
 				model.setDrawElement(symbol);
-				dialog.hide();
+				dialog.setVisible(false);
 				dialog = null;
 			} else
 			{

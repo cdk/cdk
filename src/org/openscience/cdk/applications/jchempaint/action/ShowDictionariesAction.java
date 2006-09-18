@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.event.ActionEvent;
-
 import org.openscience.cdk.applications.jchempaint.dialogs.DictionaryDialog;
+
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -53,7 +53,7 @@ public class ShowDictionariesAction extends JCPAction
 	{
 		DictionaryDialog ad = new DictionaryDialog();
 		ad.pack();
-		ad.show();
+		ad.setVisible(true);
 	}
 }
 
