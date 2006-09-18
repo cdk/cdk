@@ -41,6 +41,8 @@ public class CMLIOTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.io.cml Tests");
+        suite.addTest(CMLStackTest.suite());
+        
         suite.addTest(JumboTest.suite());
         // suite.addTest(JmolTest.suite());
         suite.addTest(JChemPaintTest.suite());
