@@ -30,18 +30,17 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import javax.vecmath.Point2d;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.
@@ -287,15 +286,13 @@ public class BondTools {
 			return (0);
 		}
 		IBond[] bonds = container.getConnectedBonds(a);
-		int normal = 0;
-		int up = 0;
+        int up = 0;
 		int down = 0;
 		for (int i = 0; i < bonds.length; i++)
 		{
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE || bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED)
 			{
-				normal++;
-			}
+            }
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
@@ -353,15 +350,13 @@ public class BondTools {
 			return (0);
 		}
 		IBond[] bonds = container.getConnectedBonds(a);
-		int normal = 0;
-		int up = 0;
+        int up = 0;
 		int down = 0;
 		for (int i = 0; i < bonds.length; i++)
 		{
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE)
 			{
-				normal++;
-			}
+            }
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
@@ -509,15 +504,13 @@ public class BondTools {
 			return (false);
 		}
 		IBond[] bonds = container.getConnectedBonds(a);
-		int normal = 0;
-		int up = 0;
+        int up = 0;
 		int down = 0;
 		for (int i = 0; i < bonds.length; i++)
 		{
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE)
 			{
-				normal++;
-			}
+            }
 			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
