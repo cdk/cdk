@@ -376,7 +376,7 @@ public class MDLReaderTest extends CDKTestCase {
     }
 
     public void testBug1542467() {
-        String filename = "data/mdl/Strychnine_nichtOK.sdf";
+        String filename = "data/mdl/Strychnine_nichtOK.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -388,6 +388,7 @@ public class MDLReaderTest extends CDKTestCase {
             assertTrue(containers[0].getAtomCount() > 0);
             assertTrue(containers[0].getBondCount() > 0);
         } catch (Exception e) {
+        	e.printStackTrace();
         	fail(e.toString());
         }
     }
