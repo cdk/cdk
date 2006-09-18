@@ -101,6 +101,6 @@ public class CMLStack {
    * Convenience method to check the last three added elements. 
    */
   public boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
-	    return endsWith(twoButLast) && stack[sp-3].equals(oneButLast);
+	    return endsWith(oneButLast,lastElement) && stack[sp-3].equals(twoButLast);
   }
 }
