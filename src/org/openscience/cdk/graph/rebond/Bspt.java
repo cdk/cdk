@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2006  The Jmol Development Team
- * Copyright (C) 2003-2006  The CDK Project
+ * Copyright (C) 2003-2006  Miguel Howard <miguel@jmol.org>
  *
  * Contact: cdk-devel@lists.sf.net
  *

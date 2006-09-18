@@ -1,10 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003  The Jmol project
- * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2006  Miguel Howard <miguel@jmol.org>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
