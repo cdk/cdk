@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -24,7 +21,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.io.cml;
 
@@ -85,5 +81,26 @@ public class CMLStack {
       sb.append("/");
     }
     return sb.toString();
+  }
+
+  /**
+   * Convenience method to check the last added elements. 
+   */
+  public boolean endsWith(String lastElement) {
+    return stack[sp-1].equals(lastElement);
+  }
+
+  /**
+   * Convenience method to check the last two added elements. 
+   */
+  public boolean endsWith(String oneButLast, String lastElement) {
+	    return endsWith(lastElement) && stack[sp-2].equals(oneButLast);
+  }
+
+  /**
+   * Convenience method to check the last three added elements. 
+   */
+  public boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
+	    return endsWith(twoButLast) && stack[sp-3].equals(oneButLast);
   }
 }
