@@ -292,10 +292,10 @@ public interface IChemObjectBuilder {
 	/**
 	 * Constructs an IIsotope object from an existing IIsotope.
 	 *
-	 * @param  isotope  The isotope on which the new IIsotope is based
+     * @param   element  The IElement from which the Isotope should be constructed
      * @return          IIsotope implementation defined for this IChemObjectBuilder
 	 */
-	public IIsotope newIsotope(IIsotope isotope);
+	public IIsotope newIsotope(IElement element);
 	
 	/**
 	 * Constructor for the IIsotope object.

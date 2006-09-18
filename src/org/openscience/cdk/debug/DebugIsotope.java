@@ -25,6 +25,7 @@ import java.util.Hashtable;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -63,9 +64,9 @@ public class DebugIsotope extends org.openscience.cdk.Isotope
 		logger.debug("Instantiated a DebugIsotope.");
 	}
 
-	public DebugIsotope(IIsotope isotope) {
-		super(isotope);
-		logger.debug("Instantiated a DebugIsotope from isotope: ", isotope);
+	public DebugIsotope(IElement element) {
+		super(element);
+		logger.debug("Instantiated a DebugIsotope from element: ", element);
 	}
 
 	public int getAtomicNumber() {

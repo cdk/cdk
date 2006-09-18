@@ -317,8 +317,8 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugElement(element);
 	}
 
-	public IIsotope newIsotope(IIsotope isotope) {
-		return new DebugIsotope(isotope);
+	public IIsotope newIsotope(IElement element) {
+		return new DebugIsotope(element);
 	}
 
 	public IPseudoAtom newPseudoAtom(IElement element) {

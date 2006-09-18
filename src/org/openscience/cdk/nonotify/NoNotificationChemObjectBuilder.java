@@ -295,8 +295,8 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 		return new NNElement(element);
 	}
 
-	public IIsotope newIsotope(IIsotope isotope) {
-		return new NNIsotope(isotope);
+	public IIsotope newIsotope(IElement element) {
+		return new NNIsotope(element);
 	}
 
 	public IPseudoAtom newPseudoAtom(IElement element) {

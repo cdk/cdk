@@ -31,6 +31,7 @@ package org.openscience.cdk.nonotify;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
@@ -60,8 +61,8 @@ public class NNIsotope extends Isotope {
 		setNotification(false);
 	}
 
-	public NNIsotope(IIsotope isotope) {
-		super(isotope);
+	public NNIsotope(IElement element) {
+		super(element);
 		setNotification(false);
 	}
 

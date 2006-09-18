@@ -315,8 +315,8 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Element(element);
 	}
 
-	public IIsotope newIsotope(IIsotope isotope) {
-		return new Isotope(isotope);
+	public IIsotope newIsotope(IElement element) {
+		return new Isotope(element);
 	}
 
 	public IPseudoAtom newPseudoAtom(IElement element) {
