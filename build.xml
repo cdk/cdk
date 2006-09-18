@@ -94,7 +94,7 @@
                 </and>
             </condition>
         </target>
-        
+
         <target id="check" name="check" depends="checkPlatforms">
             <!-- Check wether Doclets are compiled and output is generated -->
             <uptodate property="dotjavafiles.uptodate"
@@ -103,11 +103,11 @@
             </uptodate>
             <condition property="dotjjfiles.uptodate">
               <and>
-                <uptodate property="NomParserJavafiles.uptodate" 
+                <uptodate property="NomParserJavafiles.uptodate"
                           targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
                   <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
                 </uptodate>
-                <uptodate property="SMARTSParserJavafiles.uptodate" 
+                <uptodate property="SMARTSParserJavafiles.uptodate"
                           targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
                   <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
                 </uptodate>
@@ -148,10 +148,10 @@
               </and>
             </condition>
             <available property="joelib.present"
-                       classname="joelib.molecule.JOEAtom" 
+                       classname="joelib.molecule.JOEAtom"
                        classpath="${lib}/libio/joelib.jar"/>
             <available property="jmol.present"
-                       classname="org.jmol.api.JmolAdapter" 
+                       classname="org.jmol.api.JmolAdapter"
                        classpath="${lib}/jmolApis.jar"/>
             <available property="junit.present"
                        classname="junit.framework.TestCase"
@@ -232,7 +232,7 @@
                         <exclude name="MoleculeBuilder.java" />
                     </fileset>
                     <fileset dir="${doc}">
-                        <include name="javadoc/net/sf/cdk/tools/*.class" /> 
+                        <include name="javadoc/net/sf/cdk/tools/*.class" />
                     </fileset>
                 </delete>
 
@@ -245,15 +245,15 @@
         <target name="runDoclet" id="runDoclet" depends="check, customize">
             <echo>Not skipping doclet run...</echo>
             <mkdir dir="${build}" />
-        	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java" 
-        	    srcdir="${src}" destdir="${build}" optimize="${optimization}" 
+        	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java"
+        	    srcdir="${src}" destdir="${build}" optimize="${optimization}"
         	    debug="${debug}" deprecation="${deprecation}"/>
         	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
                 <arg value="${src}"/>
                 <arg value="${build}"/>
         	</java>
         </target>
-        
+
         <target id="compile-needed-test" name="compile-needed-test">
             <uptodate property="module-uptodate" targetfile="${dist}/jar/cdk-${module}.jar">
                 <srcfiles dir="${src}">
@@ -262,29 +262,29 @@
             </uptodate>
         </target>
 
-        <target id="compile-init" name="compile-init" 
+        <target id="compile-init" name="compile-init"
                 depends="init, check, runDoclet"/>
 
-        <target id="compile-module" name="compile-module" 
+        <target id="compile-module" name="compile-module"
                 depends="check, dist.init, compile-needed-test"
                 unless="module-uptodate">
-            
+
             <echo message="Compiling classes for CDK's ${module} module." />
-            
+
             <!-- check for availability for meta info files -->
             <available file="${metainf}/${module}.datafiles" property="module.datafiles.present"/>
             <available file="${metainf}/${module}.extrafiles" property="module.extrafiles.present"/>
             <available file="${metainf}/${module}.cdkdepends" property="module.cdkdepends.present"/>
             <available file="${metainf}/${module}.libdepends" property="module.libdepends.present"/>
             <available file="${metainf}/${module}.devellibdepends" property="module.devellibdepends.present"/>
-        
+
             <!-- be somewhat informative -->
             <echo message="Datafiles defined: ${module.datafiles.present}"/>
             <echo message="Extra files defined: ${module.extrafiles.present}"/>
             <echo message="CDK dependencies defined: ${module.cdkdepends.present}"/>
             <echo message="Library dependencies defined: ${module.libdepends.present}"/>
             <echo message="Developer Library dependencies defined: ${module.devellibdepends.present}"/>
-            
+
             <!-- normally javac compiles not just the given files, but also missing
                  classes that are in the same src/ directory. By making a copy first,
                  we explicitely make it impossible to compile files that are not
@@ -304,9 +304,9 @@
                     <includesfile name="${build}/${module}.javafiles"/>
                 </fileset>
             </copy>
-            
+
             <!-- ok, now that we have a copy, compile this copy -->
-            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}" 
+            <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}"
                     debug="${debug}" deprecation="${deprecation}" target="1.3" source="1.3">
                 <classpath>
                     <fileset dir="${lib}" >
@@ -322,7 +322,7 @@
                         <includesfile name="${metainf}/${module}.cdkdepends" if="module.cdkdepends.present" />
                     </fileset>
                 </classpath>
-            
+
                 <excludesfile name="${build}/java1.4+.javafiles" if="isJava13"/>
                 <!-- excludesfile name="${build}/java1.4.javafiles" unless="isJava14"/ -->
                 <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
@@ -331,10 +331,10 @@
             	<excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
             	<excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
-            
+
                 <includesfile name="${build}/${module}.javafiles"/>
             </javac>
-            
+
             <!-- and then jar things up into the module jar -->
             <jar jarfile="${dist}/jar/cdk-${module}.jar">
                 <fileset dir="${build}">
@@ -367,20 +367,20 @@
           <echo message="Compiling Ant 1.6 depending classes." />
           <!-- the IUPAC name parser -->
           <delete>
-              <fileset id="javacc-generated" 
-                dir="${src}/org/openscience/cdk/iupac/parser/" 
+              <fileset id="javacc-generated"
+                dir="${src}/org/openscience/cdk/iupac/parser/"
                 includes="NomParser*.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
           </delete>
-          <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj" 
-            outputdirectory="${src}/org/openscience/cdk/iupac/parser/" 
+          <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj"
+            outputdirectory="${src}/org/openscience/cdk/iupac/parser/"
             javacchome="${lib}"/>
           <delete>
-              <fileset id="javacc-generated" 
-              dir="${src}/org/openscience/cdk/smiles/smarts/" 
+              <fileset id="javacc-generated"
+              dir="${src}/org/openscience/cdk/smiles/smarts/"
               includes="*.java"/>
           </delete>
-          <javacc target="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.jj" 
-            outputdirectory="${src}/org/openscience/cdk/smiles/smarts/" 
+          <javacc target="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.jj"
+            outputdirectory="${src}/org/openscience/cdk/smiles/smarts/"
             javacchome="${lib}"/>
         </target>
 
@@ -395,7 +395,7 @@
         <target id="compile-joelib" name="compile-joelib" if="${joelib.present}">
         	<antcall target="compile-module"><param name="module" value="libio-joelib"/></antcall>
 	    </target>
-	
+
     <target id="dist-jmol" name="dist-jmol" depends="nocompile-jmol, compile-jmol"/>
     <target id="nocompile-jmol" name="nocompile-jmol" unless="${jmol.present}">
       <echo message="Jmol is not found. Removed depending functionality. Jmol can be downloaded from http://www.jmol.org/."/>
@@ -472,9 +472,9 @@
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
 	</target>
 
-	<target id="dist-large" name="dist-large" depends="dist-all" 
+	<target id="dist-large" name="dist-large" depends="dist-all"
             description="Builds on big jar file for the CDK, including experimental classes.">
-            
+
             <!-- first unjar the CDK and other jars we need -->
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
@@ -483,6 +483,7 @@
                     <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/charges.libdepends"/>
                     <includesfile name="${metainf}/core.libdepends"/>
+                    <includesfile name="${metainf}/control.libdepends"/>
                     <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/experimental.libdepends"/>
@@ -511,7 +512,7 @@
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
-                    <include name="cdk-controller.jar"/>
+                    <include name="cdk-control.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-experimental.jar"/>
@@ -611,7 +612,7 @@
                 <copy
                   file="${src}/org/openscience/cdk/dict/data/chemical.xml"
                   tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/chemical.xml" />
-                <copy 
+                <copy
                   file="${src}/org/openscience/cdk/dict/data/elements.xml"
                   tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/elements.xml" />
                 <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
