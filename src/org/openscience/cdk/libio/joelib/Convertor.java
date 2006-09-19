@@ -31,11 +31,11 @@ package org.openscience.cdk.libio.joelib;
 import joelib.molecule.JOEAtom;
 import joelib.molecule.JOEBond;
 import joelib.molecule.JOEMol;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Abstract class that provides convertor procedures to
@@ -53,6 +53,8 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
  * @cdk.keyword    class convertor
  */
 public class Convertor {
+
+     private static LoggingTool logger = new LoggingTool();
 
      public static final int COORDINATES_3D = 3;
      public static final int COORDINATES_2D = 2;
@@ -136,6 +138,7 @@ public class Convertor {
                 org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
                 convertedAtom = new Atom(e.getSymbol());
             } catch (java.lang.Exception e) {
+                logger.debug("Error in getting the isotope factory");
             }
             try {
                 // try to give the atom its coordinates
@@ -143,12 +146,14 @@ public class Convertor {
                 convertedAtom.setY3d(atom.getVector().y());
                 convertedAtom.setZ3d(atom.getVector().z());
             } catch (java.lang.Exception e) {
+                logger.debug("Error in setting coordinates");
             }
             try {
                 // try to give the atom its atomic number
                 convertedAtom.setAtomicNumber(atom.getAtomicNum());
             } catch (java.lang.Exception e) {
                 // System.out.println("AtomicNumber failed");
+                logger.debug("Error in setting atomic number");
             }
             return convertedAtom;
         } else {
@@ -170,8 +175,8 @@ public class Convertor {
     public static JOEBond convert(Bond bond) {
         if (bond != null) {
             JOEBond convertedBond = new JOEBond();
-            convertedBond.setBegin(convert(bond.getAtomAt(0)));
-            convertedBond.setEnd(convert(bond.getAtomAt(1)));
+            convertedBond.setBegin(convert(bond.getAtom(0)));
+            convertedBond.setEnd(convert(bond.getAtom(1)));
             convertedBond.setBO((int)bond.getOrder());
             return convertedBond;
         } else {
@@ -192,11 +197,10 @@ public class Convertor {
      **/
     public static Bond convert(JOEBond bond) {
         if (bond != null) {
-            Bond convertedBond = new Bond(
+            return new Bond(
                                     convert(bond.getBeginAtom()),
                                     convert(bond.getEndAtom()),
                                     (double)bond.getBondOrder());
-            return convertedBond;
         } else {
             return null;
         }
@@ -249,7 +253,7 @@ public class Convertor {
             // add atoms
             converted.reserveAtoms(NOatoms);
             for (int i=0; i<NOatoms; i++) {
-                converted.addAtom(convert(mol.getAtomAt(i), coordType));
+                converted.addAtom(convert(mol.getAtom(i), coordType));
             }
             
             // add bonds
