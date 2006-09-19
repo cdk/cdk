@@ -29,7 +29,6 @@
 package org.openscience.cdk;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 
 import javax.vecmath.Point2d;
@@ -61,7 +60,7 @@ import java.io.Serializable;
  * @cdk.created    2000-10-02
  * @cdk.keyword    atom
  *
- * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(IChemObjectBuilder)
+ * @see  org.openscience.cdk.config.IsotopeFactory#getInstance(org.openscience.cdk.interfaces.IChemObjectBuilder)
  */
 public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
     
