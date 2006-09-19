@@ -183,40 +183,40 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    Object o = null;
-        if (name.equals("nhigh")) o = new Integer(1);
-        if (name.equals("nlow")) o = new Integer(1);
-        if (name.equals("checkAromaticity")) o = new Integer(1);
-        return(o);
+    Object object = null;
+        if (name.equals("nhigh")) object = new Integer(1);
+        if (name.equals("nlow")) object = new Integer(1);
+        if (name.equals("checkAromaticity")) object = new Integer(1);
+        return(object);
     }
 
 
     static private class BurdenMatrix {
         
-        static double[][] evalMatrix(IAtomContainer ac, double[] vsd) {
-            IAtomContainer local = AtomContainerManipulator.removeHydrogens(ac);
+        static double[][] evalMatrix(IAtomContainer atomContainer, double[] vsd) {
+            IAtomContainer local = AtomContainerManipulator.removeHydrogens(atomContainer);
 
             int natom = local.getAtomCount();
-            double[][] m = new double[natom][natom];
+            double[][] matrix = new double[natom][natom];
 
             /* set the off diagonal entries */
             for (int i = 0; i < natom-1; i++) {
                 for (int j = i+1; j < natom; j++) {
                     for (int k = 0; k < local.getBondCount(); k++) {
-                    	org.openscience.cdk.interfaces.IBond b = local.getBond(k);
-                        if (b.contains(local.getAtom(i)) && b.contains(local.getAtom(j))) {
-                            if (b.getOrder() == CDKConstants.BONDORDER_SINGLE) m[i][j] = 0.1;
-                            else if (b.getOrder() == CDKConstants.BONDORDER_DOUBLE) m[i][j] = 0.2;
-                            else if (b.getOrder() == CDKConstants.BONDORDER_TRIPLE) m[i][j] = 0.3;
-                            else if (b.getOrder() == CDKConstants.BONDORDER_AROMATIC) m[i][j] = 0.15;
+                    	org.openscience.cdk.interfaces.IBond bond = local.getBond(k);
+                        if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
+                            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) matrix[i][j] = 0.2;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_AROMATIC) matrix[i][j] = 0.15;
 
                             if (local.getBondCount(i) == 1 || local.getBondCount(j) == 1) {
-                                m[i][j] += 0.01;
+                                matrix[i][j] += 0.01;
                             }
-                            m[j][i] = m[i][j];
+                            matrix[j][i] = matrix[i][j];
                         } else {
-                            m[i][j] = 0.001;
-                            m[j][i] = 0.001;
+                            matrix[i][j] = 0.001;
+                            matrix[j][i] = 0.001;
                         }
                     }
                 }
@@ -224,10 +224,10 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
             /* set the diagonal entries */
             for (int i = 0; i < natom; i++) {
-                if (vsd != null) m[i][i] = vsd[i];
-                else m[i][i] = 0.0;
+                if (vsd != null) matrix[i][i] = vsd[i];
+                else matrix[i][i] = 0.0;
             }
-            return(m);
+            return(matrix);
         }
     }
     
@@ -243,26 +243,26 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * of heavy atoms)
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        int j;
-        Molecule ac = new Molecule(container);
+        int counter;
+        Molecule molecule = new Molecule(container);
 
         // add H's in case they're not present
-        HydrogenAdder ha = new HydrogenAdder();
+        HydrogenAdder hydrogenAdder = new HydrogenAdder();
         try {
-            ha.addExplicitHydrogensToSatisfyValency(ac);
+            hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-        	HueckelAromaticityDetector.detectAromaticity(ac);
+        	HueckelAromaticityDetector.detectAromaticity(molecule);
         }
 
         // find number of heavy atoms
         int nheavy = 0;
-        for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (!ac.getAtom(i).getSymbol().equals("H")) nheavy++;
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            if (!molecule.getAtom(i).getSymbol().equals("H")) nheavy++;
         }
 
         if (this.nhigh > nheavy || this.nlow > nheavy) {
@@ -272,54 +272,54 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         double[] diagvalue = new double[ nheavy ];
 
         // get atomic mass weighted BCUT
-        j = 0;
+        counter = 0;
         try {
-            for (int i = 0; i < ac.getAtomCount(); i++) {
-                if (ac.getAtom(i).getSymbol().equals("H")) continue;
-                diagvalue[j] = IsotopeFactory.getInstance(ac.getBuilder()).
-                    getMajorIsotope( ac.getAtom(i).getSymbol() ).getExactMass();
-                j++;        
+            for (int i = 0; i < molecule.getAtomCount(); i++) {
+                if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+                diagvalue[counter] = IsotopeFactory.getInstance(molecule.getBuilder()).
+                    getMajorIsotope( molecule.getAtom(i).getSymbol() ).getExactMass();
+                counter++;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        double[][]  bm = BurdenMatrix.evalMatrix(ac, diagvalue);
-        Matrix m = new Matrix(bm);
-        EigenvalueDecomposition ed = new EigenvalueDecomposition(m);
-        double[] eval1 = ed.getRealEigenvalues();
+        double[][]  burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
+        Matrix matrix = new Matrix(burdenMatrix);
+        EigenvalueDecomposition eigenDecomposition = new EigenvalueDecomposition(matrix);
+        double[] eval1 = eigenDecomposition.getRealEigenvalues();
 
 
         // get charge weighted BCUT
         GasteigerMarsiliPartialCharges peoe;
         try {
             peoe = new GasteigerMarsiliPartialCharges();
-            peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        j = 0;
-        for (int i = 0; i < ac.getAtomCount(); i++) {
-            if (ac.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[j] = ac.getAtom(i).getCharge();
-            j++;
+        counter = 0;
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+            diagvalue[counter] = molecule.getAtom(i).getCharge();
+            counter++;
         }
-        bm = BurdenMatrix.evalMatrix(ac, diagvalue);
-        m = new Matrix(bm);
-        ed = new EigenvalueDecomposition(m);
-        double[] eval2 = ed.getRealEigenvalues();
+        burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
+        matrix = new Matrix(burdenMatrix);
+        eigenDecomposition = new EigenvalueDecomposition(matrix);
+        double[] eval2 = eigenDecomposition.getRealEigenvalues();
 
         // get polarizability weighted BCUT
         Polarizability pol = new Polarizability();
-        j = 0;
-        for (int i =0 ; i < ac.getAtomCount(); i++) {
-            if (ac.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[j] = pol.calculateGHEffectiveAtomPolarizability(ac, ac.getAtom(i), 1000);
-            j++;
+        counter = 0;
+        for (int i =0 ; i < molecule.getAtomCount(); i++) {
+            if (molecule.getAtom(i).getSymbol().equals("H")) continue;
+            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), 1000);
+            counter++;
         }
-        bm = BurdenMatrix.evalMatrix(ac, diagvalue);
-        m = new Matrix(bm);
-        ed = new EigenvalueDecomposition(m);
-        double[] eval3 = ed.getRealEigenvalues();
+        burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
+        matrix = new Matrix(burdenMatrix);
+        eigenDecomposition = new EigenvalueDecomposition(matrix);
+        double[] eval3 = eigenDecomposition.getRealEigenvalues();
 
         DoubleArrayResult retval = new DoubleArrayResult( eval1.length + eval2.length + eval3.length );
 

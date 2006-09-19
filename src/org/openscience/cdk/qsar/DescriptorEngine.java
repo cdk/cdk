@@ -261,8 +261,8 @@ public class DescriptorEngine {
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
 
                 for (int i = 0; i < classifications.size(); i++) {
-                    Element e = classifications.get(i);
-                    Attribute attr = e.getAttribute("resource", rdfNS);
+                    Element element = classifications.get(i);
+                    Attribute attr = element.getAttribute("resource", rdfNS);
                     if ((attr.getValue().indexOf("molecularDescriptor") != -1) ||
                             (attr.getValue().indexOf("atomicDescriptor") != -1)) {
                         String[] tmp = attr.getValue().split("#");
@@ -333,8 +333,8 @@ public class DescriptorEngine {
                 Element rawElement = (Element) dictEntries[j].getRawContent();
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
                 for (int i = 0; i < classifications.size(); i++) {
-                    Element e = classifications.get(i);
-                    Attribute attr = e.getAttribute("resource", rdfNS);
+                    Element element = classifications.get(i);
+                    Attribute attr = element.getAttribute("resource", rdfNS);
                     if ((attr.getValue().indexOf("molecularDescriptor") >= 0) ||
                             (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
                         continue;
@@ -524,15 +524,15 @@ public class DescriptorEngine {
         ArrayList classlist = new ArrayList();
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
-            JarFile j;
+            JarFile jarFile;
             try {
-                j = new JarFile(jars[i]);
-                Enumeration e = j.entries();
-                while (e.hasMoreElements()) {
-                    JarEntry je = (JarEntry) e.nextElement();
-                    if (je.toString().indexOf(".class") != -1) {
-                        String className = je.toString().replace('/', '.').replaceAll(".class", "");
-                        if (className.indexOf("$") != -1) continue;
+                jarFile = new JarFile(jars[i]);
+                Enumeration enumeration = jarFile.entries();
+                while (enumeration.hasMoreElements()) {
+                    JarEntry jarEntry = (JarEntry) enumeration.nextElement();
+                    if (jarEntry.toString().indexOf(".class") != -1) {
+                        String className = jarEntry.toString().replace('/', '.').replaceAll(".class", "");
+                        if (className.indexOf('$') != -1) continue;
 
                         Class klass = null;
                         try {
@@ -602,16 +602,16 @@ public class DescriptorEngine {
 
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
-            JarFile j;
+            JarFile jarFile;
             try {
-                j = new JarFile(jars[i]);
-                Enumeration e = j.entries();
-                while (e.hasMoreElements()) {
-                    JarEntry je = (JarEntry) e.nextElement();
-                    if (je.toString().indexOf(".class") != -1) {
-                        String tmp = je.toString().replace('/', '.').replaceAll(".class", "");
+                jarFile = new JarFile(jars[i]);
+                Enumeration enumeration = jarFile.entries();
+                while (enumeration.hasMoreElements()) {
+                    JarEntry jarEntry = (JarEntry) enumeration.nextElement();
+                    if (jarEntry.toString().indexOf(".class") != -1) {
+                        String tmp = jarEntry.toString().replace('/', '.').replaceAll(".class", "");
                         if (!(tmp.indexOf(packageName) != -1)) continue;
-                        if (tmp.indexOf("$") != -1) continue;
+                        if (tmp.indexOf('$') != -1) continue;
                         classlist.add(tmp);
                     }
                 }
