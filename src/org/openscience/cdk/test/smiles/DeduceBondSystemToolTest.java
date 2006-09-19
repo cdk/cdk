@@ -34,12 +34,12 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     }
 
     public void testPyrrole() {
-        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";        
+        String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser();
         try {
             IMolecule molecule = smilesParser.parseSmiles(smiles);
             DeduceBondSystemTool dbst = new DeduceBondSystemTool();
-            //molecule = dbst.fixAromaticBondOrders(molecule);
+            molecule = dbst.fixAromaticBondOrders(molecule);
             assertNotNull(molecule);
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
