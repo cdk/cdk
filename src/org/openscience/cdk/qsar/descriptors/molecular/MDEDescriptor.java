@@ -29,6 +29,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.Vector;
 
@@ -80,27 +81,27 @@ import java.util.Vector;
 public class MDEDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
-    public static final int mdec11 = 1;
-    public static final int mdec12 = 2;
-    public static final int mdec13 = 3;
-    public static final int mdec14 = 4;
-    public static final int mdec22 = 5;
-    public static final int mdec23 = 6;
-    public static final int mdec24 = 7;
-    public static final int mdec33 = 8;
-    public static final int mdec34 = 9;
-    public static final int mdec44 = 10;
+    public static final int mdec11 = 0;
+    public static final int mdec12 = 1;
+    public static final int mdec13 = 2;
+    public static final int mdec14 = 3;
+    public static final int mdec22 = 4;
+    public static final int mdec23 = 5;
+    public static final int mdec24 = 6;
+    public static final int mdec33 = 7;
+    public static final int mdec34 = 8;
+    public static final int mdec44 = 9;
 
-    public static final int mdeo11 = 11;
-    public static final int mdeo12 = 12;
-    public static final int mdeo22 = 13;
+    public static final int mdeo11 = 10;
+    public static final int mdeo12 = 11;
+    public static final int mdeo22 = 12;
 
-    public static final int mden11 = 14;
-    public static final int mden12 = 15;
-    public static final int mden13 = 16;
-    public static final int mden22 = 17;
-    public static final int mden23 = 18;
-    public static final int mden33 = 19;
+    public static final int mden11 = 13;
+    public static final int mden12 = 14;
+    public static final int mden13 = 15;
+    public static final int mden22 = 16;
+    public static final int mden23 = 17;
+    public static final int mden33 = 18;
 
 
     private static final int C_1 = 1;
@@ -179,6 +180,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
         IAtomContainer local = null;
         try {
             local = (IAtomContainer) container.clone();
+            local = AtomContainerManipulator.removeHydrogens(local);
         } catch (CloneNotSupportedException e) {
             logger.debug("Could not clone input molecule");
             return null;

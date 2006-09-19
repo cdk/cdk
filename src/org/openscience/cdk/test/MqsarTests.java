@@ -110,6 +110,7 @@ public class MqsarTests {
         suite.addTest(PartialTChargePEOEDescriptorTest.suite());
         suite.addTest(IPAtomicDescriptorTest.suite());
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
+        suite.addTest(MDEDescriptorTest.suite());
 
         // from cdk.test.qsar.model
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
