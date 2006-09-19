@@ -27,29 +27,6 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.EventObject;
-
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.JViewport;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.PseudoAtom;
@@ -71,12 +48,21 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
-import org.openscience.cdk.validate.BasicValidator;
-import org.openscience.cdk.validate.CDKValidator;
-import org.openscience.cdk.validate.DictionaryValidator;
-import org.openscience.cdk.validate.PDBValidator;
-import org.openscience.cdk.validate.ValencyValidator;
-import org.openscience.cdk.validate.ValidatorEngine;
+import org.openscience.cdk.validate.*;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.EventObject;
 
 /**
  *  This class implements an editing JChemPaintPanel.
@@ -215,7 +201,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				remove(menu);
 				revalidate();
 			} catch (Exception exc) {
-
+               logger.debug("Error in removing menu");
 			}
 		}
 		if (showStatusBar) {
@@ -229,7 +215,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				remove(statusBar);
 				revalidate();
 			} catch (Exception exc) {
-
+               logger.debug("Error in removing status bar");
 			}
 		}
 	}
@@ -381,21 +367,16 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			}
 			mainContainer.add(toolBar, BorderLayout.NORTH);
 			mainContainer.revalidate();
-		}
-		else
-		{
-			try
-			{
-				mainContainer.remove(toolBar);
-				mainContainer.revalidate();
-			}
-			catch(Exception exc)
-			{
-				
-			}
-		}
+		} else {
+            try {
+                mainContainer.remove(toolBar);
+                mainContainer.revalidate();
+            } catch (Exception exc) {
+                logger.debug("Error in removing tool bar");
+            }
+        }
 
-	}
+    }
 
 
 	/**
