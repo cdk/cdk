@@ -23,7 +23,9 @@
  */
 package org.openscience.cdk.test.smiles;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.StringWriter;
 
 import javax.vecmath.Point2d;
 
@@ -40,17 +42,21 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -628,13 +634,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLReader reader = new MDLReader(ins);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
 		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/D+-glucose.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLReader(ins);
 		Molecule mol2 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
 		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 		SmilesGenerator sg = new SmilesGenerator(mol2.getBuilder());
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
@@ -711,6 +715,27 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		//System.out.println(filename + " -> " + moleculeSmile);
 		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
 	}
+	
+	public void testSFBug1014344() throws Exception {
+		String filename = "data/mdl/bug1014344-1.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		Molecule mol1 = (Molecule) reader.read(new Molecule());
+		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol1);
+		SmilesGenerator sg = new SmilesGenerator(mol1.getBuilder());
+		String molSmiles = sg.createSMILES(mol1);
+		StringWriter output=new StringWriter();
+		CMLWriter cmlWriter = new CMLWriter(output);
+        cmlWriter.write(mol1);
+        CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
+        IAtomContainer mol2=((ChemFileCDO)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getAtomContainer(0);
+        new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol2);
+        String cmlSmiles = sg.createSMILES(new Molecule(mol2));
+        System.err.println(molSmiles);
+        System.err.println(cmlSmiles);
+        assertEquals(molSmiles,cmlSmiles);        
+	}
+
 	/**
 	 * @cdk.bug 1089770
 	 */
@@ -736,5 +761,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 //		System.out.println(filename_mol + " -> " + moleculeSmile2);
 		assertEquals(moleculeSmile1, moleculeSmile2);
 	}
+
 }
 
