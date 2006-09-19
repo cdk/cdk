@@ -25,6 +25,7 @@ import java.util.Hashtable;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -340,6 +341,11 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
                 currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
             currentAtom.setSymbol(propertyValue);
+            try{
+            	IsotopeFactory.getInstance(currentAtom.getBuilder()).configure(currentAtom);
+            }catch(Exception ex){
+            	logger.warn("Could not configure atom");
+            }
         } else if (propertyType.equals("x2")) {
           currentAtom.setX2d(new Double(propertyValue).doubleValue());
         } else if (propertyType.equals("y2")) {
