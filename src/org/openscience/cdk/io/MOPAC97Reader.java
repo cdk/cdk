@@ -50,8 +50,8 @@ public class MOPAC97Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
 
-    public MOPAC97Reader(InputStream in) {
-        this(new BufferedReader(new InputStreamReader(in)));
+    public MOPAC97Reader(InputStream inputStream) {
+        this(new BufferedReader(new InputStreamReader(inputStream)));
     }
 
     public MOPAC97Reader(Reader input) {

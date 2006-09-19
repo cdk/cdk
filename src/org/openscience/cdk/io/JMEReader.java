@@ -61,8 +61,8 @@ public class JMEReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
-    public JMEReader(InputStream in) {
-        this(new InputStreamReader(in));
+    public JMEReader(InputStream inputStream) {
+        this(new InputStreamReader(inputStream));
     }
 
     public JMEReader(Reader input) {
