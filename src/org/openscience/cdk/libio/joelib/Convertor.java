@@ -133,11 +133,11 @@ public class Convertor {
             Atom convertedAtom = new Atom("C");
             try {
                 // try to give the atom the correct symbol
-                org.openscience.cdk.config.IsotopeFactory ef =
+                org.openscience.cdk.config.IsotopeFactory isotopeFactory =
                     org.openscience.cdk.config.IsotopeFactory.getInstance(convertedAtom.getBuilder());
-                org.openscience.cdk.Element e = ef.getElement(atom.getAtomicNum());
-                convertedAtom = new Atom(e.getSymbol());
-            } catch (java.lang.Exception e) {
+                org.openscience.cdk.Element element = isotopeFactory.getElement(atom.getAtomicNum());
+                convertedAtom = new Atom(element.getSymbol());
+            } catch (java.lang.Exception exception) {
                 logger.debug("Error in getting the isotope factory");
             }
             try {
@@ -145,13 +145,13 @@ public class Convertor {
                 convertedAtom.setX3d(atom.getVector().x());
                 convertedAtom.setY3d(atom.getVector().y());
                 convertedAtom.setZ3d(atom.getVector().z());
-            } catch (java.lang.Exception e) {
+            } catch (java.lang.Exception exception) {
                 logger.debug("Error in setting coordinates");
             }
             try {
                 // try to give the atom its atomic number
                 convertedAtom.setAtomicNumber(atom.getAtomicNum());
-            } catch (java.lang.Exception e) {
+            } catch (java.lang.Exception exception) {
                 // System.out.println("AtomicNumber failed");
                 logger.debug("Error in setting atomic number");
             }
