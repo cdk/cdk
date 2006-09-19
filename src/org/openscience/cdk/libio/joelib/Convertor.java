@@ -291,18 +291,18 @@ public class Convertor {
             int NOatoms = mol.numAtoms();
             for (int i=1; i<=NOatoms; i++) {
                 /* JOEMol.getAtom() needs ids [1,...] */
-                JOEAtom a = mol.getAtom(i);
-                Atom cdka = convert(a);
+                JOEAtom joeAtom = mol.getAtom(i);
+                Atom cdka = convert(joeAtom);
                 converted.addAtom(cdka);
             }
             int NObonds = mol.numBonds();
             for (int i=1; i<=NObonds; i++) {
                 /* JOEMol.getBond() needs ids [0,...] */
-                JOEBond b = mol.getBond(i-1);
+                JOEBond joeBond = mol.getBond(i-1);
                 /* Molecule.addBond() need atom ids [0,...] */
-                converted.addBond(b.getBeginAtomIdx()-1,
-                                  b.getEndAtomIdx()-1,
-                                  b.getBondOrder());
+                converted.addBond(joeBond.getBeginAtomIdx()-1,
+                                  joeBond.getEndAtomIdx()-1,
+                                  joeBond.getBondOrder());
             }
             return converted;
         } else {
