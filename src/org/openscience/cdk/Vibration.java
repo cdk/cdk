@@ -69,11 +69,11 @@ public class Vibration {
     /**
      * Adds a atom vector to the vibration.
      *
-     * @param av atom vector in double[3] array
+     * @param atomVector atom vector in double[3] array
      */
-    public void addAtomVector(double[] av) {
-        Object d3 = (Object) av;
-        atomVectors.addElement(d3);
+    public void addAtomVector(double[] atomVector) {
+        Object object = atomVector;
+        atomVectors.addElement(object);
     }
     
     /**
