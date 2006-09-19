@@ -27,13 +27,7 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.*;
 
 /**
  * This class transforms implicit references to dictionary of CDK
@@ -68,8 +62,6 @@ public class CDKDictionaryReferences {
             makeReferencesExplicitForMolecule((Molecule)object);
         } else if (object instanceof Reaction) {
             makeReferencesExplicitForReaction((Reaction)object);
-        } else {
-            // don't do anything yet
         }
     }
     
@@ -77,7 +69,7 @@ public class CDKDictionaryReferences {
         int selfCounter = 0;
         atom.setProperty(prefix + ":self:" + selfCounter++, "chemical:atom");
         
-        makeReferencesExplicitForElement((Element)atom);
+        makeReferencesExplicitForElement(atom);
     }
     
     private static void makeReferencesExplicitForBond(org.openscience.cdk.interfaces.IBond bond) {

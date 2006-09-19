@@ -103,8 +103,8 @@ public class DictionaryHandler extends DefaultHandler {
     }
     
 
-    public void characters(char ch[], int start, int length) {
-        currentChars += new String(ch, start, length);
+    public void characters(char character[], int start, int length) {
+        currentChars += new String(character, start, length);
     }
 
     public Dictionary getDictionary() {

@@ -108,20 +108,20 @@ public class Dictionary {
         return entryArray;
     }
     
-    public boolean hasEntry(String id) {
-        return entries.containsKey(id);
+    public boolean hasEntry(String identifier) {
+        return entries.containsKey(identifier);
     }
     
-    public Entry getEntry(String id) {
-        return (Entry)entries.get(id);
+    public Entry getEntry(String identifier) {
+        return (Entry)entries.get(identifier);
     }
     
     public int size() {
     	return entries.size();
     }
 
-    public void setNS(String ns) {
-        ownNS = ns;
+    public void setNS(String nameSpace) {
+        ownNS = nameSpace;
     }
     public String getNS() {
         return ownNS;

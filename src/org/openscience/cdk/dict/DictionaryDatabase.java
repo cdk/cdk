@@ -29,6 +29,7 @@
 package org.openscience.cdk.dict;
 
 import org.openscience.cdk.tools.LoggingTool;
+
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Enumeration;
@@ -77,7 +78,7 @@ public class DictionaryDatabase {
     }
 
     private Dictionary readDictionary(String databaseLocator, String type) {
-        Dictionary dictionary = null;
+        Dictionary dictionary;
         databaseLocator += "." + type;
         logger.info("Reading dictionary from ", databaseLocator);
         try {

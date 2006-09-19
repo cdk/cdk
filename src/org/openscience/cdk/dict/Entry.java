@@ -43,20 +43,20 @@ public class Entry {
     
 	private String className;
     private String label;
-    private String id;
+    private String identifier;
     private Vector descriptorInfo;
 	private String definition;
 	private String description;
 	private Object rawContent;
     
-    public Entry(String id, String term) {
-        this.id = id.toLowerCase();
+    public Entry(String identifier, String term) {
+        this.identifier = identifier.toLowerCase();
         this.label = term;
         this.descriptorInfo = new Vector();
     }
     
-    public Entry(String id) {
-    	this(id, "");
+    public Entry(String identifier) {
+    	this(identifier, "");
     }
     
     public Entry() {
@@ -71,20 +71,20 @@ public class Entry {
         return this.label;
     }
     
-    public void setID(String id) {
-        this.id = id.toLowerCase();
+    public void setID(String identifier) {
+        this.identifier = identifier.toLowerCase();
     }
     
     public String getID() {
-        return this.id;
+        return this.identifier;
     }
 
     public String getDefinition() {
     	return this.definition;
     }
     
-    public void setDefinition(String def) {
-    	this.definition = def;
+    public void setDefinition(String definition) {
+    	this.definition = definition;
     }
     
     public String getDescription() {
