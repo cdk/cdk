@@ -10,10 +10,10 @@ public class Arrow
 	IAtom start;
 	IAtom end;
 	
-	public Arrow(IAtom a1, IAtom a2)
+	public Arrow(IAtom atom1, IAtom atom2)
 	{
-		this.start = a1;
-		this.end = a2;
+		this.start = atom1;
+		this.end = atom2;
 	}
 	
 	public IAtom getEnd() {
