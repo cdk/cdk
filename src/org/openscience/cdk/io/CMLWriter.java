@@ -28,30 +28,12 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -59,6 +41,8 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
 
 /**
  * Serializes a SetOfMolecules or a Molecule object to CML 2 code.
@@ -124,8 +108,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     public CMLWriter(Writer out) {
         this.writer = out;
         output = new OutputStream() {
-			public void write(int b) throws IOException {
-				writer.write(b);
+			public void write(int anInt) throws IOException {
+				writer.write(anInt);
 			}
         };
         logger = new LoggingTool(this);
@@ -186,20 +170,24 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * @param object A Molecule of SetOfMolecules object
      */
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof IMolecule) {
-        } else if (object instanceof IAtomContainer) {
-        } else if (object instanceof IReaction) {
-        } else if (object instanceof IReactionSet) {
-        } else if (object instanceof IMoleculeSet) {
-        } else if (object instanceof IChemSequence) {
-        } else if (object instanceof IChemModel) {
-        } else if (object instanceof IChemFile) {
-        } else if (object instanceof ICrystal) {
-        } else if (object instanceof IAtom) {
-        } else if (object instanceof IBond) {
-        } else {
-        	throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
+       
+        if (!(object instanceof IMolecule) &&
+            !(object instanceof IAtomContainer) &&
+            !(object instanceof IReaction) &&
+            !(object instanceof IReactionSet) &&
+            !(object instanceof IMoleculeSet) &&
+            !(object instanceof IChemSequence) &&
+            !(object instanceof IChemModel) &&
+            !(object instanceof IChemFile) &&
+            !(object instanceof ICrystal) &&
+            !(object instanceof IAtom) &&
+            !(object instanceof IBond)) {
+             throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
         }
+
+
+
+
 
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
