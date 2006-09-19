@@ -29,35 +29,22 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -298,10 +285,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				{
 					drawSymbol = true;
 				}
-			} catch (Exception exception)
-			{
-			}
-			;
+			} catch (Exception exception) {
+                logger.debug("Could not get an instance of IsotopeFactory");
+            }
+
 		}
 		if (r2dm.drawNumbers())
 		{
@@ -431,10 +418,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			atomSymbol += "\u00B7";
 		}
 		graphics.setFont(normalFont);
-		FontMetrics fm = graphics.getFontMetrics();
-		int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
-		int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0, 1)))).intValue();
-		int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+		FontMetrics fontMetrics = graphics.getFontMetrics();
+		int atomSymbolW = (new Integer(fontMetrics.stringWidth(atomSymbol))).intValue();
+		int atomSymbolFirstCharW = (new Integer(fontMetrics.stringWidth(atomSymbol.substring(0, 1)))).intValue();
+		int atomSymbolH = (new Integer(fontMetrics.getAscent())).intValue();
 		int atomSymbolXOffset = atomSymbolFirstCharW / 2;
 		int atomSymbolYOffset = atomSymbolH / 2;
 
@@ -445,22 +432,22 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		int hSymbolH = 0;
 		// unless next condition, this is the default
 		String hSymbol = "H";
-		String hMultiplierString = new Integer(implicitHydrogenCount).toString();
+		String hMultiplierString = Integer.toString(implicitHydrogenCount);
 		if (implicitHydrogenCount > 0)
 		{
-			// fm is identical, don't change
-			hSymbolW = (new Integer(fm.stringWidth(hSymbol))).intValue();
+			// fontMetrics is identical, don't change
+			hSymbolW = (new Integer(fontMetrics.stringWidth(hSymbol))).intValue();
 			hSymbolH = atomSymbolH;
 		}
 		graphics.setFont(subscriptFont);
-		fm = graphics.getFontMetrics();
+		fontMetrics = graphics.getFontMetrics();
 		int hMultiplierW = 0;
 		int hMultiplierH = 0;
 		if (implicitHydrogenCount > 1)
 		{
-			// fm is identical, don't change
-			hMultiplierW = (new Integer(fm.stringWidth(hMultiplierString))).intValue();
-			hMultiplierH = (new Integer(fm.getAscent())).intValue();
+			// fontMetrics is identical, don't change
+			hMultiplierW = (new Integer(fontMetrics.stringWidth(hMultiplierString))).intValue();
+			hMultiplierH = (new Integer(fontMetrics.getAscent())).intValue();
 		}
 
 		// calculate CHARGE width, height
@@ -475,21 +462,21 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			if (formalCharge > 1)
 			{
-				formalChargeString = new Integer(formalCharge).toString() + "+";
+				formalChargeString = Integer.toString(formalCharge) + "+";
 			} else if (formalCharge > 0)
 			{
 				formalChargeString = "+";
 			} else if (formalCharge < -1)
 			{
-				formalChargeString = new Integer(formalCharge * -1).toString() + "-";
+				formalChargeString = Integer.toString(formalCharge * -1) + "-";
 			} else if (formalCharge < 0)
 			{
 				formalChargeString = "-";
 			}
 			graphics.setFont(subscriptFont);
-			fm = graphics.getFontMetrics();
-			formalChargeW = (new Integer(fm.stringWidth(formalChargeString))).intValue();
-			formalChargeH = (new Integer(fm.getAscent())).intValue();
+			fontMetrics = graphics.getFontMetrics();
+			formalChargeW = (new Integer(fontMetrics.stringWidth(formalChargeString))).intValue();
+			formalChargeH = (new Integer(fontMetrics.getAscent())).intValue();
 		}
 
 		// calculate ISOTOPE width, height
@@ -505,10 +492,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber())
 			{
 				graphics.setFont(subscriptFont);
-				fm = graphics.getFontMetrics();
-				isotopeString = new Integer(atomicMassNumber).toString();
-				isotopeW = (new Integer(fm.stringWidth(isotopeString))).intValue();
-				isotopeH = (new Integer(fm.getAscent())).intValue();
+				fontMetrics = graphics.getFontMetrics();
+				isotopeString = Integer.toString(atomicMassNumber);
+				isotopeW = (new Integer(fontMetrics.stringWidth(isotopeString))).intValue();
+				isotopeH = (new Integer(fontMetrics.getAscent())).intValue();
 			}
 		}
 
@@ -710,22 +697,22 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  x          Description of the Parameter
 	 *@param  y          Description of the Parameter
-	 *@param  w          Description of the Parameter
-	 *@param  h          Description of the Parameter
+	 *@param  width          Description of the Parameter
+	 *@param  height          Description of the Parameter
 	 *@param  border     Description of the Parameter
 	 *@param  backColor  Description of the Parameter
 	 *@param  graphics   Description of the Parameter
 	 */
-	public void paintEmptySpace(int x, int y, int w, int h, int border,
+	public void paintEmptySpace(int x, int y, int width, int height, int border,
 			Color backColor, Graphics2D graphics)
 	{
-		if (w != 0 && h != 0)
+		if (width != 0 && height != 0)
 		{
 			Color saveColor = graphics.getColor();
 			graphics.setColor(backColor);
 			int[] coords = {x - border, y + border};
-			int[] bounds = {(int) getScreenSize(w + 2 * border),
-					(int) getScreenSize(h + 2 * border)};
+			int[] bounds = {(int) getScreenSize(width + 2 * border),
+					(int) getScreenSize(height + 2 * border)};
 			int[] screenCoords = getScreenCoordinates(coords);
 			graphics.fillRect(screenCoords[0], screenCoords[1],
 					bounds[0], bounds[1]);
@@ -777,11 +764,11 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 		// calculate SYMBOL width, height
 		graphics.setFont(normalFont);
-		FontMetrics fm = graphics.getFontMetrics();
-		int atomSymbolW = (new Integer(fm.stringWidth(atomSymbol))).intValue();
-		int atomSymbolFirstCharW = (new Integer(fm.stringWidth(atomSymbol.substring(0, 1)))).intValue();
-		int atomSymbolLastCharW = (new Integer(fm.stringWidth(atomSymbol.substring(atomSymbol.length() - 1)))).intValue();
-		int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+		FontMetrics fontMetrics = graphics.getFontMetrics();
+		int atomSymbolW = (new Integer(fontMetrics.stringWidth(atomSymbol))).intValue();
+		int atomSymbolFirstCharW = (new Integer(fontMetrics.stringWidth(atomSymbol.substring(0, 1)))).intValue();
+		int atomSymbolLastCharW = (new Integer(fontMetrics.stringWidth(atomSymbol.substring(atomSymbol.length() - 1)))).intValue();
+		int atomSymbolH = (new Integer(fontMetrics.getAscent())).intValue();
 
 		int labelX = 0;
 		int labelY = 0;
@@ -1248,25 +1235,25 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		// this value should be made customazible
 
 		double widthStep = wedgeWidth / (double) numberOfLines;
-		Point2d p1 = r2dm.getRenderingCoordinate(bond.getAtom(0));
-		Point2d p2 = r2dm.getRenderingCoordinate(bond.getAtom(1));
+		Point2d point1 = r2dm.getRenderingCoordinate(bond.getAtom(0));
+		Point2d point2 = r2dm.getRenderingCoordinate(bond.getAtom(1));
 		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV)
 		{
 			// draw the wedge bond the other way around
-			p1 = r2dm.getRenderingCoordinate(bond.getAtom(1));
-			p2 = r2dm.getRenderingCoordinate(bond.getAtom(0));
+			point1 = r2dm.getRenderingCoordinate(bond.getAtom(1));
+			point2 = r2dm.getRenderingCoordinate(bond.getAtom(0));
 		}
-		Vector2d lengthStep = new Vector2d(p2);
-		lengthStep.sub(p1);
+		Vector2d lengthStep = new Vector2d(point2);
+		lengthStep.sub(point1);
 		lengthStep.scale(1.0 / numberOfLines);
-		Vector2d p = GeometryTools.calculatePerpendicularUnitVector(p1, p2);
+		Vector2d vector2d = GeometryTools.calculatePerpendicularUnitVector(point1, point2);
 
-		Point2d currentPoint = new Point2d(p1);
+		Point2d currentPoint = new Point2d(point1);
 		Point2d q1 = new Point2d();
 		Point2d q2 = new Point2d();
 		for (int i = 0; i <= numberOfLines; ++i)
 		{
-			Vector2d offset = new Vector2d(p);
+			Vector2d offset = new Vector2d(vector2d);
 			offset.scale(i * widthStep);
 			q1.add(currentPoint, offset);
 			q2.sub(currentPoint, offset);
@@ -1337,17 +1324,17 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  Gets the screenCoordinates attribute of the Renderer2D object
 	 *
-	 *@param  p  Description of the Parameter
+	 *@param  point  Description of the Parameter
 	 *@return    The screenCoordinates value
 	 */
-	protected Point getScreenCoordinates(Point p)
+	protected Point getScreenCoordinates(Point point)
 	{
 		graphicsHeight = (int) r2dm.getBackgroundDimension().getHeight();
 		//logger.debug("HEIGHT: " + graphicsHeight);
 		Point screenCoordinate = new Point();
 		double zoomFactor = r2dm.getZoomFactor();
-		screenCoordinate.x = (int) ((double) p.x * zoomFactor);
-		screenCoordinate.y = graphicsHeight - (int) ((double) p.y * zoomFactor);
+		screenCoordinate.x = (int) ((double) point.x * zoomFactor);
+		screenCoordinate.y = graphicsHeight - (int) ((double) point.y * zoomFactor);
         if(useScreenSize){
             screenCoordinate.y=graphicsHeight - screenCoordinate.y;
         }else{
@@ -1421,8 +1408,8 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				normalFont = graphics.getFont();
 			}
 			graphics.setFont(normalFont);
-			FontMetrics fm = graphics.getFontMetrics();
-			int atomSymbolW = (new Integer(fm.stringWidth(text2))).intValue();
+			FontMetrics fontMetrics = graphics.getFontMetrics();
+			int atomSymbolW = (new Integer(fontMetrics.stringWidth(text2))).intValue();
 			if (atomSymbolW > widestline)
 			{
 				widestline = atomSymbolW;
@@ -1434,7 +1421,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			normalFont = graphics.getFont();
 		}
 		graphics.setFont(normalFont);
-		FontMetrics fm = graphics.getFontMetrics();
+		FontMetrics fontMetrics = graphics.getFontMetrics();
 		int[] provcoords = {(int) r2dm.getRenderingCoordinate(atom).x + 10, (int) r2dm.getRenderingCoordinate(atom).y};
 		int[] screenCoords = getScreenCoordinates(provcoords);
 		for (int i = 0; i < result.length; i++)
@@ -1445,7 +1432,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				tooltiparea[1] = screenCoords[1];
 			}
 			String text2 = result[i];
-			int atomSymbolH = (new Integer(fm.getAscent())).intValue();
+			int atomSymbolH = (new Integer(fontMetrics.getAscent())).intValue();
 			graphics.setColor(Color.YELLOW);
 			graphics.fillRect(screenCoords[0], screenCoords[1] + ((atomSymbolH + 4) * i), widestline + 4, atomSymbolH + 4);
 			graphics.setColor(Color.BLACK);
@@ -1462,9 +1449,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  The mouseMoved event (used for atom toolTipTexts).
 	 *
-	 *@param  e  The event.
+	 *@param  mouseEvent  The event.
 	 */
-	public void mouseMoved(MouseEvent e)
+	public void mouseMoved(MouseEvent mouseEvent)
 	{
 		if (r2dm.getHighlightedAtom() != null)
 		{
@@ -1479,9 +1466,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  The mouseDragged event (not used currently).
 	 *
-	 *@param  e  The event.
+	 *@param  mouseEvent  The event.
 	 */
-	public void mouseDragged(MouseEvent e)
+	public void mouseDragged(MouseEvent mouseEvent)
 	{
 	}
 	
