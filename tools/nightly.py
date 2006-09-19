@@ -841,7 +841,7 @@ if __name__ == '__main__':
     writeTemporaryPage()
 
     currTime = time.localtime()
-    currTime = "%d:%d" % (currTime[3], currTime[4])	
+    currTime = "%02d:%02d" % (currTime[3], currTime[4])	
     page = """
     <html>
     <head>
