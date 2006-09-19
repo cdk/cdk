@@ -264,8 +264,7 @@ public class Convertor {
                         // atoms i,j are connected
                         /* JOEMol.addBond() needs atom ids [1,...] */
                         converted.addBond(i+1,j+1, (int)matrix[i][j]);
-                    } else {
-                    }
+                    } 
                 }
             }
             return converted;
