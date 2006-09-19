@@ -72,8 +72,7 @@ public class Vibration {
      * @param atomVector atom vector in double[3] array
      */
     public void addAtomVector(double[] atomVector) {
-        Object object = atomVector;
-        atomVectors.addElement(object);
+        atomVectors.addElement(atomVector);
     }
     
     /**
