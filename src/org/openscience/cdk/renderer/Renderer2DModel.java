@@ -27,24 +27,19 @@
  *  */
 package org.openscience.cdk.renderer;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
+
+import javax.vecmath.Point2d;
+import java.awt.*;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.
@@ -79,7 +74,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private double highlightRadius = 10.0;
 
-	private boolean drawNumbers = false;
+	private boolean willDrawNumbers = false;
 
     private boolean showAtomAtomMapping = true;
 
@@ -427,7 +422,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public boolean drawNumbers()
 	{
-		return this.drawNumbers;
+		return this.willDrawNumbers;
 	}
 
 	public boolean getKekuleStructure() {
@@ -491,7 +486,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setDrawNumbers(boolean drawNumbers)
 	{
-		this.drawNumbers = drawNumbers;
+		this.willDrawNumbers = drawNumbers;
         fireChange();
 	}
 
@@ -499,7 +494,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * Returns true if atom numbers are drawn.
 	 */
 	public boolean getDrawNumbers() {
-		return drawNumbers;
+		return willDrawNumbers;
 	}
 
 
@@ -582,14 +577,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setHighlightedAtom(IAtom highlightedAtom)
 	{
-		if ((this.highlightedAtom == null) &&
-            (highlightedAtom == null)) {
-            // do not do anything, nothing has changed
-        } else {
+        if ((this.highlightedAtom != null) || (highlightedAtom != null)) {
             this.highlightedAtom = highlightedAtom;
             fireChange();
         }
-	}
+    }
 
 	
 
@@ -611,14 +603,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void setHighlightedBond(IBond highlightedBond)
 	{
-		if ((this.highlightedBond == null) &&
-            (highlightedBond == null)) {
-            // do not do anything, nothing has changed
-        } else {
+        if ((this.highlightedBond != null) || (highlightedBond != null)) {
             this.highlightedBond = highlightedBond;
             fireChange();
         }
-	}
+    }
 
 	
 
@@ -683,11 +672,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     /**
      * Sets the atom colorer.
      *
-     * @param ac  the new colorer.
+     * @param atomColorer  the new colorer.
      */
-    public void setAtomColorer(final IAtomColorer ac)
+    public void setAtomColorer(final IAtomColorer atomColorer)
     {
-        colorer = ac;
+        colorer = atomColorer;
     }
 
 	/**
@@ -901,29 +890,29 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
   
   
   /**
-   *  Gets the toolTipText for a certain atom.
+   *  Gets the toolTipText for atom certain atom.
    *
-   * @param  a  The atom.
+   * @param  atom  The atom.
    * @return    The toolTipText value.
    */
-  public String getToolTipText(IAtom a) {
-    if (toolTipTextMap.get(a) != null) {
-      return ((String) toolTipTextMap.get(a));
-    } else {
-      return (null);
-    }
+  public String getToolTipText(IAtom atom) {
+      if (toolTipTextMap.get(atom) != null) {
+          return ((String) toolTipTextMap.get(atom));
+      } else {
+          return null;
+      }
   }
-  
-  
-  /**
+
+
+    /**
    *  Sets the showTooltip attribute.
    *
-   * @param  b  The new value.
+   * @param  showToolTip  The new value.
    */
-  public void setShowTooltip(boolean b){
-    showTooltip=b;
+    public void setShowTooltip(boolean showToolTip) {
+        this.showTooltip = showToolTip;
         fireChange();
-  }
+    }
   
   
   /**

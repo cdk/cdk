@@ -24,10 +24,10 @@
  */
 package org.openscience.cdk.renderer.color;
 
-import java.awt.Color;
-import java.util.HashMap;
-
 import org.openscience.cdk.interfaces.IAtom;
+
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
@@ -133,38 +133,38 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
     //////////
 
     /**
-     * Returns the font color for a given atom.
+     * Returns the font color for atom given atom.
      *
-     * @param a the atom.
+     * @param atom the atom.
      * @return A color for the atom.
      */
-    public Color getAtomColor(IAtom a)
+    public Color getAtomColor(IAtom atom)
     {
-        return getAtomColor(a, DEEP_PINK);
+        return getAtomColor(atom, DEEP_PINK);
     }
 
     /**
-     * Returns the font color for a given atom.
+     * Returns the font color for atom given atom.
      *
-     * @param a            the atom.
-     * @param defaultColor a default color.
+     * @param atom            the atom.
+     * @param defaultColor atom default color.
      * @return A color for the atom.  The default colour is used if none is
      *         found for the atom.
      */
-    public Color getAtomColor(IAtom a, Color defaultColor)
+    public Color getAtomColor(IAtom atom, Color defaultColor)
     {
-        Color c = defaultColor;
-        Integer number = new Integer(a.getAtomicNumber());
-        String symbol = a.getSymbol().toUpperCase();
+        Color color = defaultColor;
+        Integer number = new Integer(atom.getAtomicNumber());
+        String symbol = atom.getSymbol().toUpperCase();
         if (ATOM_COLORS.containsKey(number))
         {
-            c = (Color) ATOM_COLORS.get(number);    // lookup by atomic number.
+            color = (Color) ATOM_COLORS.get(number);    // lookup by atomic number.
         }
         else if (ATOM_COLORS.containsKey(symbol))
         {
-            c = (Color) ATOM_COLORS.get(symbol);    // lookup by atomic symbol.
+            color = (Color) ATOM_COLORS.get(symbol);    // lookup by atomic symbol.
         }
 
-        return new Color(c.getRed(), c.getGreen(), c.getBlue());    // return a copy.
+        return new Color(color.getRed(), color.getGreen(), color.getBlue());    // return atom copy.
     }
 }

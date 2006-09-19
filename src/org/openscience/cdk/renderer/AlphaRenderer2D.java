@@ -28,17 +28,15 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A subclass of Renderer2D that uses masks (Area Class) to make an area
@@ -69,28 +67,23 @@ public class AlphaRenderer2D extends Renderer2D {
     logger = new LoggingTool(this);
   }
 
-  public void paintEmptySpace(int x, int y, int w, int h, int border, Color backColor, Graphics2D g)
+  public void paintEmptySpace(int x, int y, int width, int height, int border, Color backColor, Graphics2D g)
   {
-    if ((w == 0) || (h == 0))
-    {
-      // don't bother - we have nothing to paint
-    }
-
     int[] coords = { x - border, y + border };
-    double[] bounds = { getScreenSize(w + 2 * border), getScreenSize(h + 2 * border)};
+    double[] bounds = { getScreenSize(width + 2 * border), getScreenSize(height + 2 * border)};
     int[] screenCoords = getScreenCoordinates(coords);
 
     mask.subtract(new Area(new Rectangle2D.Double(screenCoords[0], screenCoords[1], bounds[0], bounds[1])));
 }
 
-protected IRingSet getRingSet(IAtomContainer atomCon)
+protected IRingSet getRingSet(IAtomContainer atomContainer)
 {
-  IRingSet ringSet = atomCon.getBuilder().newRingSet();
+  IRingSet ringSet = atomContainer.getBuilder().newRingSet();
   org.openscience.cdk.interfaces.IMolecule[] molecules = null;
 
   try
   {
-    molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
   }
 
   catch (Exception exception)
@@ -110,7 +103,7 @@ protected IRingSet getRingSet(IAtomContainer atomCon)
   return ringSet;
 }
 
-public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics)
+public void paintMolecule(IAtomContainer atomContainer, Graphics2D graphics)
 {
   // make the initial mask cover the entire dimension we are going to paint
   mask =
@@ -121,11 +114,11 @@ public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics)
     paintPointerVector(graphics);
   }
 
-  paintAtoms(atomCon, graphics);
+  paintAtoms(atomContainer, graphics);
 
   Shape oldClip = graphics.getClip();
   graphics.setClip(mask);
-  paintBonds(atomCon, getRingSet(atomCon), graphics);
+  paintBonds(atomContainer, getRingSet(atomContainer), graphics);
   graphics.setClip(oldClip);
 
   paintLassoLines(graphics);

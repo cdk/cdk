@@ -29,20 +29,14 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.Graphics2D;
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+
+import java.awt.*;
+import java.util.Iterator;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -198,9 +192,9 @@ public class Renderer2D extends SimpleRenderer2D
 			paintMolecule(molecules[i], graphics,false, redossr);
 		}
 		if(r2dm.getMerge()!=null){
-			Iterator it=r2dm.getMerge().keySet().iterator();
-			while(it.hasNext()){
-				IAtom atom1=(IAtom)it.next();
+			Iterator iterator =r2dm.getMerge().keySet().iterator();
+			while(iterator.hasNext()){
+				IAtom atom1=(IAtom)iterator.next();
 				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
 				int[] screenCoords = getScreenCoordinates(coords);
 				graphics.setColor(r2dm.getSelectedPartColor());

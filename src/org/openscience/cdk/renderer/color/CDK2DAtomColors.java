@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.renderer.color;
 
-import java.awt.Color;
-
 import org.openscience.cdk.interfaces.IAtom;
+
+import java.awt.*;
 
 /**
  * Gives a short table of atom colors for 2D display.
@@ -50,33 +50,33 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
         return getAtomColor(a, DEFAULT);
     }
     
-    public Color getAtomColor(IAtom a, Color defaultColor) {
-        Color c = defaultColor;
-        int atomnumber = a.getAtomicNumber();
+    public Color getAtomColor(IAtom atom, Color defaultColor) {
+        Color color = defaultColor;
+        int atomnumber = atom.getAtomicNumber();
         if (atomnumber != 0) {
             switch (atomnumber) {
-                case 1:    c = CDK2DAtomColors.HYDROGEN; break;
-                case 6:    c = CDK2DAtomColors.CARBON; break;
-                case 7:    c = CDK2DAtomColors.NITROGEN; break;
-                case 8:    c = CDK2DAtomColors.OXYGEN; break;
-                case 15:   c = CDK2DAtomColors.PHOSPHORUS; break;
-                case 16:   c = CDK2DAtomColors.SULPHUR; break;
+                case 1:    color = CDK2DAtomColors.HYDROGEN; break;
+                case 6:    color = CDK2DAtomColors.CARBON; break;
+                case 7:    color = CDK2DAtomColors.NITROGEN; break;
+                case 8:    color = CDK2DAtomColors.OXYGEN; break;
+                case 15:   color = CDK2DAtomColors.PHOSPHORUS; break;
+                case 16:   color = CDK2DAtomColors.SULPHUR; break;
             }
         } else {
-            String symbol = a.getSymbol();
+            String symbol = atom.getSymbol();
             if (symbol.equals("N")) {
-                c = CDK2DAtomColors.NITROGEN;
+                color = CDK2DAtomColors.NITROGEN;
             }
             if (symbol.equals("O")) {
-                c = CDK2DAtomColors.OXYGEN;
+                color = CDK2DAtomColors.OXYGEN;
             }
             if (symbol.equals("P")) {
-                c = CDK2DAtomColors.PHOSPHORUS;
+                color = CDK2DAtomColors.PHOSPHORUS;
             }
             if (symbol.equals("S")) {
-                c = CDK2DAtomColors.SULPHUR;
+                color = CDK2DAtomColors.SULPHUR;
             }
         }
-        return c;
+        return color;
     }
 }

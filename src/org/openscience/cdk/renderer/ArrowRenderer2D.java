@@ -29,19 +29,16 @@
  */
 package org.openscience.cdk.renderer;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.awt.*;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 
 /**
  * A Renderer class which draws 2D representations of curly arrows as used for
@@ -62,7 +59,7 @@ public class ArrowRenderer2D {
 	double rotAngle; 
 	double offsetAngle;
 	Point2d center;	
-	Vector2d v3;
+	Vector2d vector3;
 
 	//private Vector points = new Vector(16, 4);
 
@@ -104,8 +101,8 @@ public class ArrowRenderer2D {
 		Dimension ss = r2dm.getBackgroundDimension();
 		Arc2D.Double arc = contructArc(arrow);
 		graphics.draw(arc);
-		Polygon p = contructArrowHead(arc);
-		graphics.fill(p);
+		Polygon polygon = contructArrowHead(arc);
+		graphics.fill(polygon);
 		graphics.draw(contructArrowHead(arc));
 		graphics.draw(new Ellipse2D.Double(center.x, ss.getHeight() - center.y, 10,10));
 	}
@@ -116,26 +113,26 @@ public class ArrowRenderer2D {
 		IAtom start = arrow.getStart();
 		IAtom end = arrow.getEnd();
 		Arc2D.Double arc = new Arc2D.Double();
-		IAtomContainer ac = start.getBuilder().newAtomContainer();
-		ac.addAtom(start);
-		ac.addAtom(end);
-		center = GeometryTools.get2DCenter(ac,r2dm.getRenderingCoordinates());
-		Point2d p1 = new Point2d((Point2d)r2dm.getRenderingCoordinate(start));
-		Point2d p2 = new Point2d((Point2d)r2dm.getRenderingCoordinate(end));
-		Vector2d v1 = new Vector2d(p1);
-		Vector2d v2 = new Vector2d(p2);
-		v2.sub(v1);
+		IAtomContainer atomContainer = start.getBuilder().newAtomContainer();
+		atomContainer.addAtom(start);
+		atomContainer.addAtom(end);
+		center = GeometryTools.get2DCenter(atomContainer,r2dm.getRenderingCoordinates());
+		Point2d point1 = new Point2d((Point2d)r2dm.getRenderingCoordinate(start));
+		Point2d point2 = new Point2d((Point2d)r2dm.getRenderingCoordinate(end));
+		Vector2d vector1 = new Vector2d(point1);
+		Vector2d vector2 = new Vector2d(point2);
+		vector2.sub(vector1);
 		
 
-		rotAngle = GeometryTools.getAngle(v2.x, v2.y);
+		rotAngle = GeometryTools.getAngle(vector2.x, vector2.y);
 		offsetAngle = rotAngle + (Math.PI/2);
-		v3 = new Vector2d(Math.cos(offsetAngle), Math.sin(offsetAngle));
-		v3.normalize();
-		v3.scale(20);
-		center.add(v3);
+		vector3 = new Vector2d(Math.cos(offsetAngle), Math.sin(offsetAngle));
+		vector3.normalize();
+		vector3.scale(20);
+		center.add(vector3);
 		System.out.println("rotAngle: " + rotAngle * 360 / (Math.PI * 2));
 		System.out.println("offsetAngle: " + offsetAngle * 360 / (Math.PI * 2));
-		arc.setArcByCenter(center.x, ss.height - center.y, p1.distance(p2)/2,(rotAngle* 360 / (Math.PI * 2)),180,Arc2D.OPEN );
+		arc.setArcByCenter(center.x, ss.height - center.y, point1.distance(point2)/2,(rotAngle* 360 / (Math.PI * 2)),180,Arc2D.OPEN );
 		return arc;
 	
 	}
@@ -145,20 +142,20 @@ public class ArrowRenderer2D {
 
 		Polygon polygon = new Polygon();
 		double wingOffset = (Math.PI/18); 
-		Vector2d v2 = new Vector2d(Math.cos(offsetAngle - wingOffset ), Math.sin(offsetAngle - wingOffset));
-		Vector2d v3 = new Vector2d(Math.cos(offsetAngle + wingOffset), Math.sin(offsetAngle + wingOffset ));
-		Point2d p2 = new Point2d(arc.getStartPoint().getX(), arc.getStartPoint().getY());
-		Point2d p3 = new Point2d(arc.getStartPoint().getX(), arc.getStartPoint().getY());
-		v2.normalize();
-		v2.scale(10);
-		v3.normalize();
-		v3.scale(10);
+		Vector2d vector2 = new Vector2d(Math.cos(offsetAngle - wingOffset ), Math.sin(offsetAngle - wingOffset));
+		Vector2d vector3 = new Vector2d(Math.cos(offsetAngle + wingOffset), Math.sin(offsetAngle + wingOffset ));
+		Point2d point2 = new Point2d(arc.getStartPoint().getX(), arc.getStartPoint().getY());
+		Point2d point3 = new Point2d(arc.getStartPoint().getX(), arc.getStartPoint().getY());
+		vector2.normalize();
+		vector2.scale(10);
+		vector3.normalize();
+		vector3.scale(10);
 		//Dimension ss = r2dm.getBackgroundDimension();
-		p2.add(v2);
-		p3.add(v3);
+		point2.add(vector2);
+		point3.add(vector3);
 		polygon.addPoint((int)arc.getStartPoint().getX(), (int)arc.getStartPoint().getY());
-		polygon.addPoint((int)p2.x, (int)p2.y);
-		polygon.addPoint((int)p3.x, (int)p3.y);
+		polygon.addPoint((int)point2.x, (int)point2.y);
+		polygon.addPoint((int)point3.x, (int)point3.y);
 		return polygon;
 	}
 
