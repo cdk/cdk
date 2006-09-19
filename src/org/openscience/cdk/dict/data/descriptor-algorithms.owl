@@ -2116,6 +2116,23 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+
+     <Descriptor rdf:ID="mde">
+        <rdfs:label>Molecular Distance Edge</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-09-18</dc:date>
+        <definition>
+            Evaluate molecular distance edge descriptors for C, N and O
+        </definition>
+        <description>
+            For a description of the methodology see
+            <bibtex:cite ref="LIU98"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="zagrebIndex">
         <rdfs:label>Zagreb Index</rdfs:label>
         <dc:contributor rdf:resource="#mf"/>
@@ -2426,6 +2443,22 @@
                 <bibtex:year>1984</bibtex:year>
                 <bibtex:volume>24</bibtex:volume>
                 <bibtex:pages>164-175</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="LIU98">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Liu, S. and Cao, C. and Li, Z.
+                </bibtex:author>
+                <bibtex:title>Approach to Estimation and Prediction for Normal
+                    Boiling Point (NBP) of Alkanes Based on a Novel Molecular
+                    Distance Edge (MDE) Vector, lambda</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
+                <bibtex:year>i1998</bibtex:year>
+                <bibtex:volume>38</bibtex:volume>
+                <bibtex:pages>387-394</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
