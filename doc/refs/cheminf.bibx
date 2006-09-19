@@ -810,3 +810,19 @@ Method </bibtex:title>
       </bibtex:article>
   </bibtex:entry>
 </bibtex:file>
+
+
+<bibtex:entry id="LIU98">
+      <bibtex:article>
+          <bibtex:author>Liu, S. and Cao, C. and Li, Z.
+          </bibtex:author>
+          <bibtex:title>Approach to Estimation and Prediction for Normal
+                Boiling Point (NBP) of Alkanes Based on a Novel Molecular
+                      Distance Edge (MDE) Vector, lambda</bibtex:title>
+          <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
+          <bibtex:year>i1998</bibtex:year>
+          <bibtex:volume>38</bibtex:volume>
+          <bibtex:pages>387-394</bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+</bibtex:file>
