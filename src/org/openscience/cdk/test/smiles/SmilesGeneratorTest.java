@@ -731,8 +731,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol2=((ChemFileCDO)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getAtomContainer(0);
         new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol2);
         String cmlSmiles = sg.createSMILES(new Molecule(mol2));
-        System.err.println(molSmiles);
-        System.err.println(cmlSmiles);
         assertEquals(molSmiles,cmlSmiles);        
 	}
 
