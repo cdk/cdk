@@ -105,7 +105,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     private String identifier;
     
     /**
-	 *  Constructor for the AtomType object.
+	 * Constructor for the AtomType object. Defaults to a zero formal charge.
      *
      * @param elementSymbol  Symbol of the atom
 	 */
@@ -115,12 +115,12 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		this.formalNeighbourCount = CDKConstants.UNSET;
 		this.electronValency = CDKConstants.UNSET;
 		this.hybridization = CDKConstants.HYBRIDIZATION_UNSET;
-		this.formalCharge = CDKConstants.UNSET;
+		this.formalCharge = 0;
 	}
 
 
 	/**
-	 *  Constructor for the AtomType object.
+	 * Constructor for the AtomType object. Defaults to a zero formal charge.
 	 *
 	 * @param  identifier     An id for this atom type, like C3 for sp3 carbon
 	 * @param  elementSymbol  The element symbol identifying the element to which this atom type applies
