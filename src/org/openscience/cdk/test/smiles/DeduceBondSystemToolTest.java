@@ -9,6 +9,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.DeduceBondSystemTool;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**
@@ -41,6 +42,8 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             DeduceBondSystemTool dbst = new DeduceBondSystemTool();
             molecule = dbst.fixAromaticBondOrders(molecule);
             assertNotNull(molecule);
+
+            molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
                 assertTrue(bond.getOrder() == CDKConstants.BONDORDER_AROMATIC);
