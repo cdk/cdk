@@ -28,10 +28,10 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IElement;
+
+import java.io.Serializable;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -76,7 +76,8 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     double covalentRadius;
     
     /**
-     *  The formal charge of the atom with 0 as default. Implements RFC #6.
+     *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
+     *
      */
     protected int formalCharge;
 
@@ -114,7 +115,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		this.formalNeighbourCount = CDKConstants.UNSET;
 		this.electronValency = CDKConstants.UNSET;
 		this.hybridization = CDKConstants.HYBRIDIZATION_UNSET;
-		this.formalCharge = 0;
+		this.formalCharge = CDKConstants.UNSET;
 	}
 
 
