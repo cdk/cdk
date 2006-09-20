@@ -46,8 +46,8 @@ import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.validate.*;
 
 import javax.swing.*;
@@ -365,7 +365,14 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			{
     		toolBar = ToolBarMaker.getToolbar(this, lines);
 			}
-			mainContainer.add(toolBar, BorderLayout.NORTH);
+
+            InsertTextPanel textPanel = new InsertTextPanel(this);
+            JPanel northPanel = new JPanel(new BorderLayout());
+            northPanel.add(toolBar, BorderLayout.NORTH);
+            northPanel.add(textPanel, BorderLayout.SOUTH);
+
+//            mainContainer.add(toolBar, BorderLayout.NORTH);
+            mainContainer.add(northPanel, BorderLayout.NORTH);            
 			mainContainer.revalidate();
 		} else {
             try {
