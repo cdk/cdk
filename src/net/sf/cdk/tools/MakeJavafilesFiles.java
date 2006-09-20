@@ -115,10 +115,10 @@ public class MakeJavafilesFiles {
     			System.out.println("Something wrong with the Java source file: " + path);    			
     		} else {
     			if (moduleAndSet[0] != null) {
-        			addClassToCDKPackage(getClassName(path), moduleAndSet[0]);
+        			addClassToCDKPackage(getSourceName(path), moduleAndSet[0]);
     			}
     			if (moduleAndSet[1] != null) {
-    				addClassToCDKSet(getClassName(path), moduleAndSet[0]);
+    				addClassToCDKSet(getClassName(path), moduleAndSet[1]);
     			}
     		}
     	}
@@ -170,9 +170,9 @@ public class MakeJavafilesFiles {
 					if (index != -1) {
 						index += 11;
 						// skip the first chars
-						while (line.charAt(index) == ' ') index++;
-						while (index < (line.length()-1) && 
-								line.charAt(index) != ' ') {
+						while (Character.isWhitespace(line.charAt(index))) index++;
+						while (index < line.length() && 
+							   !Character.isWhitespace(line.charAt(index))) {
 							set += line.charAt(index);
 							index++;
 						}
@@ -211,13 +211,21 @@ public class MakeJavafilesFiles {
         return sb.toString();
     }
 
+    private String getSourceName(File classFile) {
+    	// assume the pattern src/package/className.java
+    	// return package/className
+    	String tmp = classFile.getPath().substring(sourceDir.length()+1); 
+        return tmp.substring(0, tmp.length()-5);
+    }
+
     private String getClassName(File classFile) {
-    	// assume the pattern src/packaga/className.java
-        StringBuffer sb = new StringBuffer();
-        String className = classFile.getPath().substring(sourceDir.length()+1);
+    	// assume the pattern src/package/className.java
+    	// return package.className
+    	StringBuffer sb = new StringBuffer();
+    	String className = classFile.getPath().substring(sourceDir.length()+1);
         for (int i=0; i<className.length()-5; i++) {
-            if (className.charAt(i) == '.') {
-                sb.append('/');
+            if (className.charAt(i) == '/') {
+                sb.append('.');
             } else {
                 sb.append(className.charAt(i));
             }
