@@ -61,7 +61,6 @@ public class OpenAction extends JCPAction {
 
 	private static final long serialVersionUID = 1030940425527065876L;
 
-	private IChemFile chemFile;
 	private FileFilter currentFilter = null;
 
 	/**
@@ -148,6 +147,7 @@ public class OpenAction extends JCPAction {
 
 			String error = null;
 			ChemModel chemModel = null;
+			IChemFile chemFile=null;
 			if (cor.accepts(IChemFile.class)) {
 				// try to read a ChemFile
 				try {
@@ -157,7 +157,7 @@ public class OpenAction extends JCPAction {
 						jcpPanel.processChemFile(chemFile);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
 							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getSetOfMolecules().getMolecules();
+				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecules();
 							for (int i = 0; i < mols.length; i++)
 							{
 								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
