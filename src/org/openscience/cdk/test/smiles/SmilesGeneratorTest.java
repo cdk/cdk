@@ -716,6 +716,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
 	}
 	
+	/**
+	 * @cdk.bug 1014344
+	 */
 	public void testSFBug1014344() throws Exception {
 		String filename = "data/mdl/bug1014344-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -735,7 +738,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	}
 
 	/**
-	 * @cdk.bug 1089770
+	 * @cdk.bug 1014344
 	 */
 	public void testSFBug1014344_1() throws Exception {
 		String filename_cml = "data/cml/bug1014344-1.cml";
