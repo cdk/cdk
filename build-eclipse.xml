@@ -9,6 +9,7 @@
   <target name="preBuild" id="preBuild" depends=""
           description="Pre-build steps for Eclipse">
     <ant antfile="build.xml" target="javacc"/>
+    <ant antfile="build.xml" target="runDoclet"/>
   </target>
 
 </project>
