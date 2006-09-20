@@ -25,10 +25,13 @@
 */
 package org.openscience.cdk.applications.jchempaint;
 
+import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
@@ -42,7 +45,13 @@ import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A panel containing a text field and button to directly insert SMILES or InChI's
@@ -67,7 +76,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
 
         textCombo = new JComboBox(oldText);
         textCombo.setEditable(true);
-        textCombo.setToolTipText("Enter a SMILES or InChI string");
+        textCombo.setToolTipText("Enter a CAS, SMILES or InChI string");
 
         textCombo.addActionListener(this);
         editor = (JTextComponent) textCombo.getEditor().getEditorComponent();
@@ -109,6 +118,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
     }
 
     private IMolecule getMolecule() {
+
         IMolecule molecule;
         String text = (String) textCombo.getSelectedItem();
         text = text.trim(); // clean up extra white space
@@ -117,22 +127,26 @@ public class InsertTextPanel extends JPanel implements ActionListener {
 
         if (text.startsWith("InChI")) { // handle it as an InChI
             try {
-                /*
                 InChIGeneratorFactory inchiFactory = new InChIGeneratorFactory();
                 InChIToStructure inchiToStructure = inchiFactory.getInChIToStructure(text);
                 INCHI_RET status = inchiToStructure.getReturnStatus();
                 if (status != INCHI_RET.OKAY) {
-                  JOptionPane.showMessageDialog(jChemPaintPanel, "Could not parse string as SMILES or InChI");
-                  return;
+                  JOptionPane.showMessageDialog(jChemPaintPanel, "Could not process InChI");
+                  return null;
                 }
                 molecule = (IMolecule) inchiToStructure.getAtomContainer();
-                */
-                throw new CDKException("pending");
             } catch (CDKException e2) {
                 JOptionPane.showMessageDialog(jChemPaintPanel, "Could not load InChI subsystem");
                 return null;
             }
-        } else { // we assume it's a SMILES
+        } else if (isCASNumber(text)) { // is it a CAS number?
+            try {
+                molecule = getMoleculeFromCAS(text);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(jChemPaintPanel, "Error in reading data from PubChem");
+                return null;
+            }
+        } else { // OK, it must be a SMILES
             SmilesParser smilesParser = new SmilesParser();
             try {
                 molecule = smilesParser.parseSmiles(text);
@@ -151,7 +165,86 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         return molecule;
     }
 
+    private boolean isCASNumber(String text) {
+        String[] chars = text.split("-");
+        if (chars.length != 3) return false;
+        for (int i = 0; i < 3; i++) {
+            if (i == 2 && chars[i].length() != 1) return false;
+            if (i == 1 && chars[i].length() != 2) return false;
+            if (i == 0 && chars[i].length() > 6) return false;
+            try {
+                Integer.parseInt(chars[i]);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private IMolecule getMoleculeFromCAS(String cas) throws IOException {
+        String data;
+
+        String firstURL = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pccompound&term=" + cas;
+
+        data = getDataFromURL(firstURL);
+
+        Pattern pattern = Pattern.compile("http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi\\?cid=(\\d*)");
+        Matcher matcher = pattern.matcher(data);
+
+        String cid = null;
+        boolean found = false;
+        while (matcher.find()) {
+            cid = matcher.group(1);
+            try { // should be an integer
+                Integer.parseInt(cid);
+                found = true;
+                break;
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        if (!found) return null;
+
+        String secondURL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?tool=jcppubchem&db=pccompound&id=" + cid;
+        data = getDataFromURL(secondURL);
+
+        pattern = Pattern.compile("<Item Name=\"CanonicalSmile\" Type=\"String\">([^\\s]*?)</Item>");
+        matcher = pattern.matcher(data);
+        String smiles = null;
+        found = false;
+        while (matcher.find()) {
+            smiles = matcher.group(1);
+            if (smiles != null || !smiles.equals("")) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) return null;
+
+        // got the canonical SMILES, lets get the molecule
+        SmilesParser smilesParser = new SmilesParser();
+        IMolecule molecule;
+        try {
+            molecule = smilesParser.parseSmiles(smiles);
+        } catch (InvalidSmilesException e1) {
+            JOptionPane.showMessageDialog(jChemPaintPanel, "Couldn't process data from PubChem");
+            return null;
+        }
+        return molecule;
+    }
+
+    private String getDataFromURL(String url) throws IOException {
+        URL theURL = new URL(url);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(theURL.openStream()));
+        String data = "";
+        String line;
+        while ((line = bufferedReader.readLine()) != null) data += line;
+        bufferedReader.close();
+        return data;
+    }
+
     private void generateModel(IMolecule molecule) {
+        if (molecule == null) return;
 
         // ok, get relevent bits from active model
         JChemPaintModel jcpModel = jChemPaintPanel.getJChemPaintModel();
