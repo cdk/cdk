@@ -69,11 +69,11 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 		atomTypeTools=new AtomTypeTools();
 	}
 
-	private String getSphericalMatcher(IAtomType type) throws CDKException {
+	private String getSphericalMatcher(IAtomType type) throws CDKException {//NOPMD
 		return (String)type.getProperty(CDKConstants.SPHERICAL_MATCHER);
 	}
 
-	private String getSphericalMatcher(String type) throws CDKException {
+	private String getSphericalMatcher(String type) throws CDKException {//NOPMD
 		return getSphericalMatcher(factory.getAtomType(type));
 	}
 
