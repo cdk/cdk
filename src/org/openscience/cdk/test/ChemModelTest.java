@@ -35,7 +35,7 @@ import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
@@ -76,14 +76,14 @@ public class ChemModelTest extends CDKTestCase {
     	testSetSetOfMolecules_IMoleculeSet();
     }
     
-    public void testSetSetOfReactions_IReactionSet() {
+    public void testSetReactionSet_IReactionSet() {
 	    ChemModel chemModel = new ChemModel();
-	    SetOfReactions crystal = new SetOfReactions();
-        chemModel.setSetOfReactions(crystal);
-        assertEquals(crystal, chemModel.getSetOfReactions());
+	    ReactionSet crystal = new ReactionSet();
+        chemModel.setReactionSet(crystal);
+        assertEquals(crystal, chemModel.getReactionSet());
     }
-    public void testGetSetOfReactions() {
-    	testSetSetOfReactions_IReactionSet();
+    public void testGetReactionSet() {
+    	testSetReactionSet_IReactionSet();
     }
     
     public void testSetRingSet_IRingSet() {
@@ -136,12 +136,12 @@ public class ChemModelTest extends CDKTestCase {
     public void testClone_IReactionSet() throws Exception {
 		ChemModel model = new ChemModel();
         ChemModel clone = (ChemModel)model.clone();
-        assertNull(clone.getSetOfReactions());
+        assertNull(clone.getReactionSet());
         
-		model.setSetOfReactions(new SetOfReactions());
+		model.setReactionSet(new ReactionSet());
         clone = (ChemModel)model.clone();
-        assertNotNull(clone.getSetOfReactions());
-        assertNotSame(model.getSetOfReactions(), clone.getSetOfReactions());
+        assertNotNull(clone.getReactionSet());
+        assertNotSame(model.getReactionSet(), clone.getReactionSet());
     }
 
     public void testClone_Crystal() throws Exception {
@@ -176,7 +176,7 @@ public class ChemModelTest extends CDKTestCase {
         
         listener.reset();
         assertFalse(listener.changed);
-        chemObject.setSetOfReactions(new SetOfReactions());
+        chemObject.setReactionSet(new ReactionSet());
         assertTrue(listener.changed);
         
         listener.reset();

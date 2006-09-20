@@ -67,12 +67,12 @@ public class CMLReactionModule extends CMLCoreModule {
                 }
             }
         } else if ("reactionList".equals(local)) {
-            cdo.startObject("SetOfReactions");
+            cdo.startObject("ReactionSet");
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
                 String value = atts.getValue(i);
                 if (att.equals("id")) {
-                    cdo.setObjectProperty("SetOfReactions", "id", value);
+                    cdo.setObjectProperty("ReactionSet", "id", value);
                 }
             }
         } else if ("reactant".equals(local)) {
@@ -105,7 +105,7 @@ public class CMLReactionModule extends CMLCoreModule {
         if ("reaction".equals(local)) {
             cdo.endObject("Reaction");
         } else if ("reactionList".equals(local)) {
-            cdo.endObject("SetOfReactions");
+            cdo.endObject("ReactionSet");
         } else if ("reactant".equals(local)) {
             cdo.endObject("Reactant");
         } else if ("product".equals(local)) {

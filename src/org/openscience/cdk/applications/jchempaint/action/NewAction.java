@@ -54,8 +54,8 @@ public class NewAction extends JCPAction {
         if(clear==JOptionPane.YES_OPTION){
         	if(jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules()!=null)
         		jcpPanel.getJChemPaintModel().getChemModel().getSetOfMolecules().removeAllAtomContainers();
-        	if(jcpPanel.getJChemPaintModel().getChemModel().getSetOfReactions()!=null)
-        		jcpPanel.getJChemPaintModel().getChemModel().getSetOfReactions().removeAllReactions();
+        	if(jcpPanel.getJChemPaintModel().getChemModel().getReactionSet()!=null)
+        		jcpPanel.getJChemPaintModel().getChemModel().getReactionSet().removeAllReactions();
         	jcpPanel.repaint();
         }
       }else{

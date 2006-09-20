@@ -170,14 +170,14 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		super.setCrystal(crystal);
 	}
 
-	public IReactionSet getSetOfReactions() {
-		logger.debug("Getting setOfReactions: ", super.getSetOfReactions());
-		return super.getSetOfReactions();
+	public IReactionSet getReactionSet() {
+		logger.debug("Getting setOfReactions: ", super.getReactionSet());
+		return super.getReactionSet();
 	}
 
-	public void setSetOfReactions(IReactionSet sor) {
+	public void setReactionSet(IReactionSet sor) {
 		logger.debug("Setting setOfReactions: ", sor);
-		super.setSetOfReactions(sor);
+		super.setReactionSet(sor);
 	}
 
 }

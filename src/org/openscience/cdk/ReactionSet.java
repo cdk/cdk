@@ -1,7 +1,7 @@
 /* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-07-30 22:02:25 +0200 (Sun, 30 Jul 2006) $    
+ * $Revision: 6705 $
  * 
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -26,9 +26,10 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /** 
  * A set of reactions, for example those taking part in a reaction.
@@ -36,17 +37,17 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * To retrieve the reactions from the set, there are two options:
  *
  * <pre>
- * Reaction[] reactions = setOfReactions.getReactions();
- * for (int i=0; i < reactions.length; i++) {
- *     Reaction reaction = reactions[i];
+ * Iterator reactions = reactionSet.reactions();
+ * while (reactions.hasNext()) {
+ *     IReaction reaction = (IReaction)reactions.next();
  * }
  * </pre>
  *
  * and
  *
  * <pre>
- * for (int i=0; i < setOfReactions.getReactionCount(); i++) {
- *    Reaction reaction = setOfReactions.getReaction(i);
+ * for (int i=0; i < reactionSet.getReactionCount(); i++) {
+ *    IReaction reaction = reactionSet.getReaction(i);
  * }
  * </pre>
  *
@@ -55,7 +56,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * @cdk.keyword reaction
  * @cdk.keyword reaction
  */
-public class SetOfReactions extends ChemObject implements Serializable, IReactionSet, Cloneable
+public class ReactionSet extends ChemObject implements Serializable, IReactionSet, IChemObjectListener, Cloneable
 {
 
 	/**
@@ -66,7 +67,7 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
-	private static final long serialVersionUID = 1528749911904585204L;
+	private static final long serialVersionUID = 1555749911904585204L;
 
 	/**
 	 *  Array of Reactions.
@@ -86,9 +87,9 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
 
 
 	/**
-	 *  Constructs an empty SetOfReactions.
+	 *  Constructs an empty ReactionSet.
 	 */
-	public SetOfReactions() {
+	public ReactionSet() {
 		reactionCount = 0;
 		reactions = new Reaction[growArraySize];
 	}
@@ -107,6 +108,21 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
 		notifyChanged();
 	}
 
+	/**
+	 * Remove a reaction from this set.
+	 *
+	 * @param  pos  The position of the reaction to be removed.
+	 */
+	public void removeReaction(int pos) {
+		reactions[pos].removeListener(this);
+		for (int i = pos; i < reactionCount - 1; i++) {
+			reactions[i] = reactions[i + 1];
+		}
+		reactions[reactionCount - 1] = null;
+		reactionCount--;
+		notifyChanged();
+	}
+	
     
     /**
 	 *  
@@ -121,19 +137,39 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
     }
     
 
-	/**
-	 *  Returns the array of Reactions of this container.
-	 *
-	 * @return    The array of Reactions of this container 
-	 */
-	public org.openscience.cdk.interfaces.IReaction[] getReactions() {
-        Reaction[] result = new Reaction[reactionCount];
-        for (int i=0; i < reactionCount; i++) {
-            result[i] = (Reaction)reactions[i];
+    /**
+     * Get an iterator for this reaction set.
+     * 
+     * @return A new Iterator for this ReactionSet.
+     */
+    public java.util.Iterator reactions() {
+    	return new ReactionIterator();
+    }
+    
+    /**
+     * The inner Iterator class.
+     *
+     */
+    private class ReactionIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < reactionCount) return true;
+	    return false;
         }
-		return result;
-	}
-	
+
+        public Object next() {
+            ++pointer;
+            return reactions[pointer-1];
+        }
+
+        public void remove() {
+            removeReaction(pointer-1);
+        }
+    	
+    }
+    
 	/**
 	 *  Grows the reaction array by a given size.
 	 *
@@ -158,25 +194,25 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
 
     public String toString() {
         StringBuffer buffer = new StringBuffer(32);
-        buffer.append("SetOfReactions(");
+        buffer.append("ReactionSet(");
         buffer.append(this.hashCode());
         buffer.append(", R=").append(getReactionCount()).append(", ");
-        IReaction[] reactions = getReactions();
-        for (int i=0; i<reactions.length; i++) {
-            buffer.append(reactions[i].toString());
+        java.util.Iterator reactions = reactions();
+        while (reactions.hasNext()) {
+            buffer.append(((IReaction)reactions.next()).toString());
         }
         buffer.append(')');
         return buffer.toString();
     }
 
 	/**
-	 * Clones this <code>SetOfReactions</code> and the contained <code>Reaction</code>s
+	 * Clones this <code>ReactionSet</code> and the contained <code>Reaction</code>s
      * too.
 	 *
-	 * @return  The cloned SetOfReactions
+	 * @return  The cloned ReactionSet
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SetOfReactions clone = (SetOfReactions)super.clone();
+		ReactionSet clone = (ReactionSet)super.clone();
         // clone the reactions
         clone.reactionCount = this.reactionCount;
 		clone.reactions = new Reaction[clone.reactionCount];
@@ -196,5 +232,9 @@ public class SetOfReactions extends ChemObject implements Serializable, IReactio
 		}
 		this.reactionCount = 0;
 		notifyChanged();
+	}
+	
+	public void stateChanged(IChemObjectChangeEvent event) {
+		notifyChanged(event);
 	}
 }

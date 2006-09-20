@@ -64,6 +64,6 @@ public interface IValidator {
     public ValidationReport validateMolecule(IMolecule subject);
     public ValidationReport validateReaction(IReaction subject);
     public ValidationReport validateSetOfMolecules(IMoleculeSet subject);
-    public ValidationReport validateSetOfReactions(IReactionSet subject);
+    public ValidationReport validateReactionSet(IReactionSet subject);
     
 }

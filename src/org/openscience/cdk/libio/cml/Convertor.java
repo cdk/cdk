@@ -175,8 +175,8 @@ public class Convertor {
         if (model.getCrystal() != null) {
             cmlList.appendChild(cdkCrystalToCMLMolecule(model.getCrystal(), false));
         }
-        if (model.getSetOfReactions() != null) {
-            cmlList.appendChild(cdkSetOfReactionsToCMLReactionList(model.getSetOfReactions(), false));
+        if (model.getReactionSet() != null) {
+            cmlList.appendChild(cdkReactionSetToCMLReactionList(model.getReactionSet(), false));
         }
         if (model.getSetOfMolecules() != null) {
             cmlList.appendChild(cdkSetOfMoleculesToCMLList(model.getSetOfMolecules(), false));
@@ -185,20 +185,20 @@ public class Convertor {
         return cmlList;
     }
 
-    public CMLReactionList cdkSetOfReactionsToCMLReactionList(IReactionSet reactionSet) {
-        return cdkSetOfReactionsToCMLReactionList(reactionSet, true);
+    public CMLReactionList cdkReactionSetToCMLReactionList(IReactionSet reactionSet) {
+        return cdkReactionSetToCMLReactionList(reactionSet, true);
     }
 
-    private CMLReactionList cdkSetOfReactionsToCMLReactionList(IReactionSet reactionSet, boolean setIDs) {
+    private CMLReactionList cdkReactionSetToCMLReactionList(IReactionSet reactionSet, boolean setIDs) {
         CMLReactionList reactionList = new CMLReactionList();
 
         if (useCMLIDs && setIDs) {
             idCreator.createIDs(reactionSet);
         }
 
-        IReaction[] reactions = reactionSet.getReactions();
-        for (int i = 0; i < reactions.length; i++) {
-            reactionList.appendChild(cdkReactionToCMLReaction(reactions[i], false));
+        java.util.Iterator reactionIter = reactionSet.reactions();
+        while (reactionIter.hasNext()) {
+            reactionList.appendChild(cdkReactionToCMLReaction((IReaction)reactionIter.next(), false));
         }
 
         return reactionList;
@@ -361,7 +361,7 @@ public class Convertor {
         if (cdkAtom.getID() != null && !cdkAtom.getID().equals("")) {
             cmlAtom.setId(cdkAtom.getID());
         } else {
-            cmlAtom.setId("a" + Integer.toString(cdkAtom.hashCode()));
+            cmlAtom.setId("a" + new Integer(cdkAtom.hashCode()).toString());
         }
         return true;
     }
@@ -440,7 +440,7 @@ public class Convertor {
         for (int i = 0; i < atoms.length; i++) {
             String atomID = atoms[i].getID();
             if (atomID == null || atomID.length() == 0) {
-                atomRefArray[i] = "a" + Integer.toString(atoms[i].hashCode());
+                atomRefArray[i] = "a" + new Integer(atoms[i].hashCode()).toString();
             } else {
                 atomRefArray[i] = atomID;
             }
@@ -490,6 +490,7 @@ public class Convertor {
     private void writeProperties(IChemObject object, CMLElement cmlElement) {
         Hashtable props = object.getProperties();
         Enumeration keys = props.keys();
+        CMLElement propList = null;
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             if (key instanceof DictRef) {
@@ -512,6 +513,9 @@ public class Convertor {
                     cmlElement.appendChild(scalar);
                 }
             }
+        }
+        if (propList != null) {
+            cmlElement.appendChild(propList);
         }
     }
 

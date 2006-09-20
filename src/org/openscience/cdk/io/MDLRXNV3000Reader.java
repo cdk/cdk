@@ -108,7 +108,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
              IChemModel model = object.getBuilder().newChemModel();
              IReactionSet reactionSet = object.getBuilder().newReactionSet();
              reactionSet.addReaction(readReaction(object.getBuilder()));
-             model.setSetOfReactions(reactionSet);
+             model.setReactionSet(reactionSet);
              return model;
          } else {
              throw new CDKException("Only supported are Reaction and ChemModel, and not " +

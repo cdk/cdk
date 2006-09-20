@@ -173,9 +173,8 @@ public class IDCreator {
     }
     
     public void createIDs(IReactionSet reactionSet) {
-    	IReaction[] reactions = reactionSet.getReactions();
-        for (int i=0; i<reactions.length; i++) {
-            createIDs(reactions[i]);
+        for (java.util.Iterator iter = reactionSet.reactions(); iter.hasNext();) {
+            createIDs((IReaction)iter.next());
         }
     }
     
@@ -198,7 +197,7 @@ public class IDCreator {
     	if (crystal != null) createIDs(crystal);
     	IMoleculeSet moleculeSet = model.getSetOfMolecules();
     	if (moleculeSet != null) createIDs(moleculeSet);
-    	IReactionSet reactionSet = model.getSetOfReactions();
+    	IReactionSet reactionSet = model.getReactionSet();
     	if (reactionSet != null) createIDs(reactionSet);
     }
     

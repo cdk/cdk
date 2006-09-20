@@ -264,7 +264,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IReactionSet newReactionSet() {
-		return new SetOfReactions();
+		return new ReactionSet();
 	}
 	
     public ISingleElectron newSingleElectron() {

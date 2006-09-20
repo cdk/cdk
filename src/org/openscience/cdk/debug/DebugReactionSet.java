@@ -1,4 +1,4 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 6913 $ $Author: egonw $ $Date: 2006-09-18 20:13:21 +0200 (Mon, 18 Sep 2006) $
  *
  * Copyright (C) 2005-2006  Egon Willighagen <egonw@users.sf.net>
  *
@@ -35,12 +35,12 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module datadebug
  */
-public class DebugSetOfReactions extends org.openscience.cdk.SetOfReactions
+public class DebugReactionSet extends org.openscience.cdk.ReactionSet
     implements IReactionSet {
 
     private static final long serialVersionUID = 1620489912540131959L;
     
-    LoggingTool logger = new LoggingTool(DebugSetOfReactions.class);
+    LoggingTool logger = new LoggingTool(DebugReactionSet.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
@@ -147,9 +147,9 @@ public class DebugSetOfReactions extends org.openscience.cdk.SetOfReactions
 		return super.getReaction(number);
 	}
 
-	public IReaction[] getReactions() {
-		logger.debug("Getting reactions: ", super.getReactions().length);
-		return super.getReactions();
+	public java.util.Iterator reactions() {
+		logger.debug("Getting reactionIterator");
+		return super.reactions();
 	}
 
 	public int getReactionCount() {

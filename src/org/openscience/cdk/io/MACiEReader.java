@@ -45,7 +45,7 @@ import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.EnzymeResidueLocator;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.exception.CDKException;
@@ -109,7 +109,7 @@ public class MACiEReader extends DefaultChemObjectReader {
     
     private ChemModel currentEntry;
     private Reaction currentReaction;
-    private SetOfReactions currentReactionStepSet;
+    private ReactionSet currentReactionStepSet;
     
     private String reactionStepAnnotation;
     private String reactionStepComments;
@@ -238,7 +238,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 // new entry, store previous entry if any
                 if (currentEntry != null) {
                     // store previous entry
-                    currentEntry.setSetOfReactions(currentReactionStepSet);
+                    currentEntry.setReactionSet(currentReactionStepSet);
                     createNiceMACiETitle(currentEntry);
                     entries.addChemModel(currentEntry);
                     fireFrameRead();
@@ -256,7 +256,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                 } else {
                     readThisEntry = false;
                 }
-                currentReactionStepSet = new SetOfReactions();
+                currentReactionStepSet = new ReactionSet();
             } else if (line.startsWith("$DTYPE")) {
                 String[] tuple = readDtypeDatumTuple(line);
                 String dataType = tuple[0];
@@ -289,7 +289,7 @@ public class MACiEReader extends DefaultChemObjectReader {
         if (currentEntry != null) {
             createNiceMACiETitle(currentEntry);
             // store last entry
-            currentEntry.setSetOfReactions(currentReactionStepSet);
+            currentEntry.setReactionSet(currentReactionStepSet);
             entries.addChemModel(currentEntry);
             fireFrameRead();
         }

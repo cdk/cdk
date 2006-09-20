@@ -67,7 +67,7 @@ public class CreateReactionAction extends JCPAction
 		logger.debug("CreateReaction action");
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		IChemModel model = jcpmodel.getChemModel();
-		IReactionSet reactionSet = model.getSetOfReactions();
+		IReactionSet reactionSet = model.getReactionSet();
 		if (reactionSet == null)
 		{
 			reactionSet = model.getBuilder().newReactionSet();
@@ -187,7 +187,7 @@ public class CreateReactionAction extends JCPAction
 				return;
 			}
 		}
-		model.setSetOfReactions(reactionSet);
+		model.setReactionSet(reactionSet);
 		
 		for(int i=0;i<reactionSet.getReactionCount();i++){
 			for(int k=0;k<reactionSet.getReaction(i).getProductCount();k++){
@@ -216,11 +216,11 @@ public class CreateReactionAction extends JCPAction
 	{
 		if (reactionSet != null)
 		{
-			org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-			String[] ids = new String[reactions.length];
-			for (int i = 0; i < reactions.length; i++)
+			
+			String[] ids = new String[reactionSet.getReactionCount()];
+			for (int i = 0; i < reactionSet.getReactionCount(); i++)
 			{
-				ids[i] = reactions[i].getID();
+				ids[i] = reactionSet.getReaction(i).getID();
 			}
 			return ids;
 		} else
@@ -239,12 +239,13 @@ public class CreateReactionAction extends JCPAction
 	 */
 	private org.openscience.cdk.interfaces.IReaction getReaction(org.openscience.cdk.interfaces.IReactionSet reactionSet, String id)
 	{
-		org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-		for (int i = 0; i < reactions.length; i++)
+		java.util.Iterator reactionIter = reactionSet.reactions();
+		while (reactionIter.hasNext())
 		{
-			if (reactions[i].getID().equals(id))
+			IReaction reaction = (IReaction)reactionIter.next();
+			if (reaction.getID().equals(id))
 			{
-				return reactions[i];
+				return reaction;
 			}
 		}
 		return null;

@@ -1,9 +1,9 @@
-/* $RCSfile$
+/* $RCSfile$    
  * $Author: egonw $    
- * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
- * $Revision: 5921 $
+ * $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $    
+ * $Revision: 5855 $
  * 
- * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,33 +20,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package org.openscience.cdk.nonotify;
 
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.SetOfReactionsTest;
+import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
-/**
- * Checks the funcitonality of the AtomContainer.
- *
- * @cdk.module test-nonotify
+/** 
+ * @cdk.module nonotify
  */
-public class NNSetOfReactionsTest extends SetOfReactionsTest {
+public class NNReactionSet extends ReactionSet {
 
-    public NNSetOfReactionsTest(String name) {
-        super(name);
-    }
+	private static final long serialVersionUID = -3510230716323045283L;
 
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
+	public NNReactionSet() {
+		super();
+		setNotification(false);
+	}
 
-    public static Test suite() {
-        return new TestSuite(NNSetOfReactionsTest.class);
-    }
-
+	public IChemObjectBuilder getBuilder() {
+		return NoNotificationChemObjectBuilder.getInstance();
+	}
+	
+	public void addListener(IChemObjectListener col) {
+		// Ignore this: we do not listen anyway
+	}
 }

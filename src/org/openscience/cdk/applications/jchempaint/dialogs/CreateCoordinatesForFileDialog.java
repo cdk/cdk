@@ -51,7 +51,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
@@ -227,15 +227,15 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 					}
 					chemModel.setSetOfMolecules(newsom);
 				}
-				org.openscience.cdk.interfaces.IReactionSet reactionSet = chemModel.getSetOfReactions();
+				org.openscience.cdk.interfaces.IReactionSet reactionSet = chemModel.getReactionSet();
 				if (reactionSet != null)
 				{
-					SetOfReactions newSet = new SetOfReactions();
+					ReactionSet newSet = new ReactionSet();
 					// FIXME, this does not preserve reactionset properties!
-					org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-					for (int j = 0; j < reactions.length; j++)
+					java.util.Iterator reactionIter = reactionSet.reactions();
+					while (reactionIter.hasNext())
 					{
-						org.openscience.cdk.interfaces.IReaction reaction = reactions[j];
+						org.openscience.cdk.interfaces.IReaction reaction = (org.openscience.cdk.interfaces.IReaction)reactionIter.next();
 						Reaction newReaction = new Reaction();
 						// FIXME, this does not preserve reaction properties!
 						IMolecule[] reactants = reaction.getReactants().getMolecules();
@@ -250,7 +250,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 						}
 						newSet.addReaction(newReaction);
 					}
-					chemModel.setSetOfReactions(newSet);
+					chemModel.setReactionSet(newSet);
 				}
 			}
 			JChemPaintModel jcpm = new JChemPaintModel(chemModel);

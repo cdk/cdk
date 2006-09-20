@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  IReactionProcess type = new RearrangementCation3Reaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
- *  ISetOfReactions setOfReactions = type.initiate(setOfReactants, null);
+ *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
  * 
  * <p>We have the possibility to localize the reactive center. Good method if you

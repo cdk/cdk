@@ -45,7 +45,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfReactionsManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 
 /**
@@ -139,14 +139,14 @@ public class AddHydrogenAction extends JCPAction
 	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.IChemModel model)
 	{
 		IMoleculeSet som = model.getSetOfMolecules();
-		org.openscience.cdk.interfaces.IReactionSet sor = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.IReactionSet sor = model.getReactionSet();
 		if (som != null)
 		{
 			addHydrogenToAllMolecules(som);
 		} else if (sor != null)
 		{
 			logger.debug("#reactions ", sor.getReactionCount());
-			som = SetOfReactionsManipulator.getAllMolecules(sor);
+			som = ReactionSetManipulator.getAllMolecules(sor);
 			logger.debug("Found molecules: ", som.getMoleculeCount());
 			addHydrogenToAllMolecules(som);
 		}

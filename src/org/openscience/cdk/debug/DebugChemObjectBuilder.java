@@ -266,7 +266,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IReactionSet newReactionSet() {
-		return new DebugSetOfReactions();
+		return new DebugReactionSet();
 	}
 	
     public ISingleElectron newSingleElectron() {

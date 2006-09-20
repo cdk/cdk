@@ -365,15 +365,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			{
     		toolBar = ToolBarMaker.getToolbar(this, lines);
 			}
-
-            InsertTextPanel textPanel = new InsertTextPanel(this);
-            JPanel northPanel = new JPanel(new BorderLayout());
-            northPanel.add(toolBar, BorderLayout.NORTH);
-            northPanel.add(textPanel, BorderLayout.SOUTH);
-
-//            mainContainer.add(toolBar, BorderLayout.NORTH);
-            mainContainer.add(northPanel, BorderLayout.NORTH);
-            mainContainer.revalidate();
+			mainContainer.add(toolBar, BorderLayout.NORTH);
+			mainContainer.revalidate();
 		} else {
             try {
                 mainContainer.remove(toolBar);
@@ -587,7 +580,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			newDim.height = newDim.height * (moleculeSet.getMoleculeCount());
 			return newDim;
 		}
-		org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getReactionSet();
 		if (reactionSet != null)
 		{
 			newDim.height = newDim.height * (reactionSet.getReactionCount());
@@ -597,7 +590,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	/**
-	 *  Lays out the molecules in a SetOfMolecules, or reaction in a SetOfReactions
+	 *  Lays out the molecules in a SetOfMolecules, or reaction in a ReactionSet
 	 *  in a one column table.
 	 *
 	 *@param  baseDim  Description of the Parameter
@@ -617,15 +610,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			}
 			return;
 		}
-		org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getSetOfReactions();
+		org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getReactionSet();
 		if (reactionSet != null)
 		{
-			org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-			for (int i = 1; i <= reactions.length; i++)
+			
+			for (int i = 1; i <= reactionSet.getReactionCount(); i++)
 			{
-				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactions[i - 1]);
+				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactionSet.getReaction(i - 1));
 				GeometryTools.center(ac, baseDim,rm.getRenderingCoordinates());
-				GeometryTools.translate2D(ac, 0, baseDim.height * (reactions.length - i),rm.getRenderingCoordinates());
+				GeometryTools.translate2D(ac, 0, baseDim.height * (reactionSet.getReactionCount() - i),rm.getRenderingCoordinates());
 			}
 		}
 	}

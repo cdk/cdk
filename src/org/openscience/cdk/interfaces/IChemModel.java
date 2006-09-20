@@ -81,20 +81,20 @@ public interface IChemModel extends IChemObject {
     public void setCrystal(ICrystal crystal);
 
     /**
-     * Gets the SetOfReactions contained in this ChemModel.
+     * Gets the ReactionSet contained in this ChemModel.
      *
-     * @return The SetOfReactions in this model
-     * @see      #setSetOfReactions
+     * @return The ReactionSet in this model
+     * @see      #setReactionSet
      */
-    public IReactionSet getSetOfReactions();
+    public IReactionSet getReactionSet();
 
     /**
-     * Sets the SetOfReactions contained in this ChemModel.
+     * Sets the ReactionSet contained in this ChemModel.
      *
-     * @param sor the SetOfReactions to store in this model
-     * @see       #getSetOfReactions
+     * @param sor the ReactionSet to store in this model
+     * @see       #getReactionSet
      */
-    public void setSetOfReactions(IReactionSet sor);
+    public void setReactionSet(IReactionSet sor);
     
 }
 

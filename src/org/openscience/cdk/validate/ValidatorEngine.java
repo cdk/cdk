@@ -189,9 +189,9 @@ public class ValidatorEngine implements IValidator {
         if (crystal != null) {
             report.addReport(validateCrystal(crystal));
         }
-        IReactionSet reactionSet = subject.getSetOfReactions();
+        IReactionSet reactionSet = subject.getReactionSet();
         if (reactionSet != null) {
-            report.addReport(validateSetOfReactions(reactionSet));
+            report.addReport(validateReactionSet(reactionSet));
         }
         IMoleculeSet moleculeSet = subject.getSetOfMolecules();
         if (moleculeSet != null) {
@@ -340,21 +340,20 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
-    public ValidationReport validateSetOfReactions(IReactionSet subject) {
-        logger.info("Validating org.openscience.cdk.SetOfReactions");
+    public ValidationReport validateReactionSet(IReactionSet subject) {
+        logger.info("Validating org.openscience.cdk.ReactionSet");
         ValidationReport report = new ValidationReport();
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
             IValidator test = (IValidator)tests.nextElement();
-            report.addReport(test.validateSetOfReactions(subject));
+            report.addReport(test.validateReactionSet(subject));
         }
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IReaction[] reactions = subject.getReactions();
-        for (int i=0; i<reactions.length; i++) {
-            report.addReport(validateReaction(reactions[i]));
+        for (java.util.Iterator iter = subject.reactions(); iter.hasNext();) {
+            report.addReport(validateReaction((IReaction)iter.next()));
         }
         return report;
     }

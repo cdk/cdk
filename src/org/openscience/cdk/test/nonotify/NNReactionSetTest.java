@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
+ * $Revision: 5921 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -22,31 +22,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.debug;
+package org.openscience.cdk.test.nonotify;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.SetOfReactionsTest;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.test.ReactionSetTest;
 
 /**
  * Checks the funcitonality of the AtomContainer.
  *
- * @cdk.module test-datadebug
+ * @cdk.module test-nonotify
  */
-public class DebugSetOfReactionsTest extends SetOfReactionsTest {
+public class NNReactionSetTest extends ReactionSetTest {
 
-    public DebugSetOfReactionsTest(String name) {
+    public NNReactionSetTest(String name) {
         super(name);
     }
 
     public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
+    	super.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
     public static Test suite() {
-        return new TestSuite(DebugSetOfReactionsTest.class);
+        return new TestSuite(NNReactionSetTest.class);
     }
 
 }

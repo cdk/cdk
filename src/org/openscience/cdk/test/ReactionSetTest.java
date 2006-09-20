@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-07-31 11:23:24 +0200 (Mon, 31 Jul 2006) $    
+ * $Revision: 6710 $
  * 
  * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -31,19 +31,21 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Checks the funcitonality of the SetOfReactions class.
+ * Checks the funcitonality of the ReactionSet class.
  *
  * @cdk.module test-data
  *
- * @see org.openscience.cdk.SetOfReactions
+ * @see org.openscience.cdk.ReactionSet
  */
-public class SetOfReactionsTest extends CDKTestCase {
+public class ReactionSetTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
-    public SetOfReactionsTest(String name) {
+    public ReactionSetTest(String name) {
         super(name);
     }
 
@@ -52,10 +54,10 @@ public class SetOfReactionsTest extends CDKTestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(SetOfReactionsTest.class);
+        return new TestSuite(ReactionSetTest.class);
     }
     
-    public void testSetOfReactions() {
+    public void testReactionSet() {
         IReactionSet reactionSet = builder.newReactionSet();
         assertNotNull(reactionSet);
     }
@@ -79,22 +81,25 @@ public class SetOfReactionsTest extends CDKTestCase {
   		IReactionSet reactionSet = builder.newReactionSet();
    		reactionSet.addReaction(builder.newReaction());
    		reactionSet.removeAllReactions();
-   		assertEquals(0,reactionSet.getReactions().length);
+   		assertEquals(0,reactionSet.getReactionCount());
     }
 
-    public void testGetReactions() {
+    public void testReactions() {
 		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
         
-		org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-        assertNotNull(reactions);
-        assertEquals(4, reactions.length);
-        for (int i=0; i<reactions.length; i++) {
-            assertNotNull(reactions[i]);
+		java.util.Iterator reactionIter = reactionSet.reactions();
+        assertNotNull(reactionIter);
+        int count = 0;
+        
+        while (reactionIter.hasNext()) {
+            assertNotNull(reactionIter.next());
+            ++count;
         }
+        assertEquals(4, count);
     }
     
     public void testGetReaction_int() {
@@ -120,6 +125,17 @@ public class SetOfReactionsTest extends CDKTestCase {
         assertEquals(4, reactionSet.getReactionCount());
         assertEquals(third, reactionSet.getReaction(2));
     }
+   
+    public void testRemoveReaction_int() {
+	IReactionSet reactionSet = builder.newReactionSet();
+	reactionSet.addReaction(builder.newReaction()); // 1
+        reactionSet.addReaction(builder.newReaction()); // 2
+	assertEquals(2, reactionSet.getReactionCount());
+	reactionSet.removeReaction(1);
+	assertEquals(1, reactionSet.getReactionCount());
+    }
+    
+
     
     public void testClone_Reaction() throws Exception {
 		IReactionSet reactionSet = builder.newReactionSet();
@@ -150,4 +166,34 @@ public class SetOfReactionsTest extends CDKTestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    public void testStateChanged_IChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IReactionSet chemObject = new org.openscience.cdk.ReactionSet();
+        chemObject.addListener(listener);
+
+        chemObject.addReaction(builder.newReaction());
+        assertTrue(listener.changed);
+
+        listener.reset();
+        assertFalse(listener.changed);
+        
+    }
+
+    private class ChemObjectListenerImpl implements IChemObjectListener {
+        private boolean changed;
+
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+
+        public void stateChanged(IChemObjectChangeEvent e) {
+            changed = true;
+        }
+
+        public void reset() {
+            changed = false;
+        }
+    }
+
 }

@@ -586,10 +586,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfReactions().getReactionCount(), 1);
+            assertEquals(model.getReactionSet().getReactionCount(), 1);
 
             // test the reaction
-            IReaction reaction = model.getSetOfReactions().getReaction(0);
+            IReaction reaction = model.getReactionSet().getReaction(0);
             assertNotNull(reaction);
             assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
             assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());

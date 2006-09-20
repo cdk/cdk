@@ -60,7 +60,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	protected IMoleculeSet setOfMolecules = null;
 
 	/**
-	 *  A SetOfReactions.
+	 *  A ReactionSet.
 	 */
 	protected IReactionSet setOfReactions = null;
 
@@ -158,24 +158,24 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     }
 
     /**
-     * Gets the SetOfReactions contained in this ChemModel.
+     * Gets the ReactionSet contained in this ChemModel.
      *
-     * @return The SetOfReactions in this model
+     * @return The ReactionSet in this model
      *
-     * @see      #setSetOfReactions
+     * @see      #setReactionSet
      */
-    public IReactionSet getSetOfReactions() {
+    public IReactionSet getReactionSet() {
         return this.setOfReactions;
     }
 
     /**
-     * Sets the SetOfReactions contained in this ChemModel.
+     * Sets the ReactionSet contained in this ChemModel.
      *
-     * @param sor the SetOfReactions to store in this model
+     * @param sor the ReactionSet to store in this model
      *
-     * @see       #getSetOfReactions
+     * @see       #getReactionSet
      */
-    public void setSetOfReactions(IReactionSet sor) {
+    public void setReactionSet(IReactionSet sor) {
         this.setOfReactions = sor;
 	this.setOfReactions.addListener(this);
 	notifyChanged();
@@ -203,11 +203,11 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         } else {
             buffer.append(", No Crystal");
         }
-        if (getSetOfReactions() != null) {
-            buffer.append(getSetOfReactions().toString());
+        if (getReactionSet() != null) {
+            buffer.append(getReactionSet().toString());
             buffer.append(", ");
         } else {
-            buffer.append(", No SetOfReactions");
+            buffer.append(", No ReactionSet");
         }
         buffer.append(')');
         return buffer.toString();
@@ -227,7 +227,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (IReactionSet)((SetOfReactions)setOfReactions).clone();
+            clone.setOfReactions = (IReactionSet)((ReactionSet)setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }

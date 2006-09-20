@@ -584,7 +584,7 @@ public abstract class JChemPaintPanel
 			//In case of the applet we do not ask for save but put the clear into the undo stack
 			ClearAllEdit coa = null;
 			try {
-				coa = new ClearAllEdit(this.getChemModel(),(IMoleculeSet)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getSetOfReactions());
+				coa = new ClearAllEdit(this.getChemModel(),(IMoleculeSet)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getReactionSet());
 				this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
 			} catch (Exception e) {
 				logger.error("Clone of ISetOfMolecules failed: ", e.getMessage());
@@ -734,7 +734,7 @@ public abstract class JChemPaintPanel
 				repaint();
 			}
 		}else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null ||
-				getJChemPaintModel().getChemModel().getSetOfReactions() == null /*|| 
+				getJChemPaintModel().getChemModel().getReactionSet() == null /*|| 
 				getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0*/) {
 			    registerModel(jcpm);
 				setJChemPaintModel(jcpm);

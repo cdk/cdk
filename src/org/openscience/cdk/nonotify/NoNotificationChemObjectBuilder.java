@@ -244,7 +244,7 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IReactionSet newReactionSet() {
-        return new NNSetOfReactions();
+        return new NNReactionSet();
 	}
 	
     public ISingleElectron newSingleElectron() {

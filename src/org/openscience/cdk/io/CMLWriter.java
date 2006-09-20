@@ -209,7 +209,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof IReaction) {
         	root = convertor.cdkReactionToCMLReaction((IReaction)object);
         } else if (object instanceof IReactionSet) {
-        	root = convertor.cdkSetOfReactionsToCMLReactionList((IReactionSet)object);
+        	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IMoleculeSet) {
         	root = convertor.cdkSetOfMoleculesToCMLList((IMoleculeSet)object);
         } else if (object instanceof IChemSequence) {

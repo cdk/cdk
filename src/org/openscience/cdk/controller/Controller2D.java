@@ -106,20 +106,21 @@ public class Controller2D extends SimpleController2D
 	 *@return    A Reaction if it is in a certain range of the given point
 	 */
 	IReaction getReactionInRange(int X, int Y) {
-		IReactionSet reactionSet = chemModel.getSetOfReactions();
+		IReactionSet reactionSet = chemModel.getReactionSet();
 		if (reactionSet != null)
 		{
 			// process reaction by reaction
-			IReaction[] reactions = reactionSet.getReactions();
-			for (int i = 0; i < reactions.length; i++)
+			java.util.Iterator reactionIter = reactionSet.reactions();
+			while (reactionIter.hasNext())
 			{
-				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reactions[i]);
+				IReaction reaction = (IReaction)reactionIter.next();
+				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reaction);
 				double[] minmax = GeometryTools.getMinMax(atomContainer);
 				if ((X <= minmax[2]) && (X >= minmax[0]) &&
 						(Y <= minmax[3]) && (Y >= minmax[1]))
 				{
 					// cursor in in reaction bounding box
-					return reactions[i];
+					return reaction;
 				}
 			}
 		}

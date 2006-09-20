@@ -103,9 +103,9 @@ public class Renderer2D extends SimpleRenderer2D
 		setupIsotopeFactory(model);
 		tooltiparea = null;
 		paintPointerVector(graphics);
-		if (model.getSetOfReactions() != null)
+		if (model.getReactionSet() != null)
 		{
-			paintSetOfReactions(model.getSetOfReactions(), graphics);
+			paintReactionSet(model.getReactionSet(), graphics);
 		} else
 		{
 			logger.debug("setOfReactions is null");
@@ -143,11 +143,10 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  reactionSet  Description of the Parameter
 	 *@param  graphics     Description of the Parameter
 	 */
-	public void paintSetOfReactions(org.openscience.cdk.interfaces.IReactionSet reactionSet, Graphics2D graphics) {
-		IReaction[] reactions = reactionSet.getReactions();
-		for (int i = 0; i < reactions.length; i++)
+	public void paintReactionSet(org.openscience.cdk.interfaces.IReactionSet reactionSet, Graphics2D graphics) {
+		for (java.util.Iterator iter = reactionSet.reactions(); iter.hasNext();)
 		{
-			paintReaction(reactions[i], graphics);
+			paintReaction((IReaction)iter.next(), graphics);
 		}
 	}
 

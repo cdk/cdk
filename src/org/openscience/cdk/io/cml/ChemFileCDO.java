@@ -62,7 +62,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private IMoleculeSet currentSetOfMolecules;
     private IChemModel currentChemModel;
     private IChemSequence currentChemSequence;
-    private IReactionSet currentSetOfReactions;
+    private IReactionSet currentReactionSet;
     private IReaction currentReaction;
     private IAtom currentAtom;
     private Hashtable atomEnumeration;
@@ -90,7 +90,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       currentChemSequence = file.getBuilder().newChemSequence();
       currentChemModel = file.getBuilder().newChemModel();
       currentSetOfMolecules = file.getBuilder().newMoleculeSet();
-      currentSetOfReactions = null;
+      currentReactionSet = null;
       currentReaction = null;
       currentMolecule = file.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();    
@@ -117,14 +117,14 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
      */
     public void endDocument() {
         logger.debug("Closing document");
-        if (currentSetOfReactions != null && currentSetOfReactions.getReactionCount() == 0 &&
+        if (currentReactionSet != null && currentReactionSet.getReactionCount() == 0 &&
             currentReaction != null) {
-            logger.debug("Adding reaction to SetOfReactions");
-            currentSetOfReactions.addReaction(currentReaction);
+            logger.debug("Adding reaction to ReactionSet");
+            currentReactionSet.addReaction(currentReaction);
         }
-        if (currentSetOfReactions != null && currentChemModel.getSetOfReactions() == null) {
+        if (currentReactionSet != null && currentChemModel.getReactionSet() == null) {
             logger.debug("Adding SOR to ChemModel");
-            currentChemModel.setSetOfReactions(currentSetOfReactions);
+            currentChemModel.setReactionSet(currentReactionSet);
         }
         if (currentSetOfMolecules != null && currentSetOfMolecules.getMoleculeCount() != 0) {
             logger.debug("Adding reaction to SetOfMolecules");
@@ -180,10 +180,10 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           crystal_axis_x = 0.0;
           crystal_axis_y = 0.0;
           crystal_axis_z = 0.0;
-      } else if (objectType.equals("SetOfReactions")) {
-          currentSetOfReactions = currentChemFile.getBuilder().newReactionSet();
+      } else if (objectType.equals("ReactionSet")) {
+          currentReactionSet = currentChemFile.getBuilder().newReactionSet();
       } else if (objectType.equals("Reaction")) {
-          if (currentSetOfReactions == null) startObject("SetOfReactions");
+          if (currentReactionSet == null) startObject("ReactionSet");
           currentReaction = currentChemFile.getBuilder().newReaction();
       } else if (objectType.equals("Reactant")) {
           if (currentReaction == null) startObject("Reaction");
@@ -267,13 +267,13 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           } else {
               logger.warn("Current object is not a crystal");
           }
-      } else if (objectType.equals("SetOfReactions")) {
-          currentChemModel.setSetOfReactions(currentSetOfReactions);
+      } else if (objectType.equals("ReactionSet")) {
+          currentChemModel.setReactionSet(currentReactionSet);
           currentChemSequence.addChemModel(currentChemModel);
           /* FIXME: this should be when document is closed! */ 
       } else if (objectType.equals("Reaction")) {
           logger.debug("Adding reaction to SOR");
-          currentSetOfReactions.addReaction(currentReaction);
+          currentReactionSet.addReaction(currentReaction);
       } else if (objectType.equals("Reactant")) {
           currentReaction.addReactant((IMolecule)currentMolecule);
       } else if (objectType.equals("Product")) {
@@ -411,9 +411,9 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         if (propertyType.equals("id")) {
           currentReaction.setID(propertyValue);
         }
-      } else if (objectType.equals("SetOfReactions")) {
+      } else if (objectType.equals("ReactionSet")) {
           if (propertyType.equals("id")) {
-              currentSetOfReactions.setID(propertyValue);
+              currentReactionSet.setID(propertyValue);
           }
       } else if (objectType.equals("Reactant")) {
           if (propertyType.equals("id")) {
@@ -479,7 +479,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         objects.add("a-axis");
         objects.add("b-axis");
         objects.add("c-axis");
-        objects.add("SetOfReactions");
+        objects.add("ReactionSet");
         objects.add("Reactions");
         objects.add("Reactant");
         objects.add("Product");

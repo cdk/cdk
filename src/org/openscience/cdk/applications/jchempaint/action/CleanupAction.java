@@ -38,7 +38,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SetOfMolecules;
-import org.openscience.cdk.SetOfReactions;
+import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.DrawingPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.CleanUpEdit;
@@ -130,15 +130,15 @@ public class CleanupAction extends JCPAction
                 UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
                 jcpPanel.getUndoSupport().postEdit(edit);
 			}
-			org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getSetOfReactions();
+			org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getReactionSet();
 			if (reactionSet != null)
 			{
-				SetOfReactions newSet = new SetOfReactions();
+				ReactionSet newSet = new ReactionSet();
 				// FIXME, this does not preserve reactionset properties!
-				org.openscience.cdk.interfaces.IReaction[] reactions = reactionSet.getReactions();
-				for (int j = 0; j < reactions.length; j++)
+				java.util.Iterator reactionsIter = reactionSet.reactions();
+				while (reactionsIter.hasNext())
 				{
-					org.openscience.cdk.interfaces.IReaction reaction = reactions[j];
+					org.openscience.cdk.interfaces.IReaction reaction = (org.openscience.cdk.interfaces.IReaction)reactionsIter.next();
 					Reaction newReaction = new Reaction();
 					// FIXME, this does not preserve reaction properties!
 					IMolecule[] reactants = reaction.getReactants().getMolecules();
@@ -153,7 +153,7 @@ public class CleanupAction extends JCPAction
 					}
 					newSet.addReaction(newReaction);
 				}
-				model.setSetOfReactions(newSet);
+				model.setReactionSet(newSet);
 			}
 
 			jcpmodel.getRendererModel().setSelectedPart(new AtomContainer());

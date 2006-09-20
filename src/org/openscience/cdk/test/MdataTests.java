@@ -67,7 +67,7 @@ public class MdataTests {
         suite.addTest(RingSetTest.suite());
         suite.addTest(SetOfAtomContainersTest.suite());
         suite.addTest(SetOfMoleculesTest.suite());
-        suite.addTest(SetOfReactionsTest.suite());
+        suite.addTest(ReactionSetTest.suite());
         suite.addTest(SingleElectronTest.suite());
         suite.addTest(StrandTest.suite());
         suite.addTest(ChangeEventPropagationTest.suite());

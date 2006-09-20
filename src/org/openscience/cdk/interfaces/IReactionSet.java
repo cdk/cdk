@@ -39,22 +39,29 @@ public interface IReactionSet extends IChemObject {
 	 * @param  reaction  The reaction to be added to this container 
 	 */
 	public void addReaction(IReaction reaction);
-    
-    /**
+
+	/**
+         * Remove a reaction from this set.
+         *
+         * @param  pos  The position of the reaction to be removed.
+         */
+        public void removeReaction(int pos);
+	
+        /**
 	 * Returns the Reaction at position <code>number</code> in the
 	 * container.
 	 *
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public IReaction getReaction(int number);
+        public IReaction getReaction(int number);
 
 	/**
-	 * Returns the array of Reactions of this container.
+	 * Returns the Iterator over Reactions of this container.
 	 *
-	 * @return    The array of Reactions of this container 
+	 * @return    The Iterator over Reactions of this container 
 	 */
-	public IReaction[] getReactions();
+	public java.util.Iterator reactions();
 	
 	/**
 	 * Returns the number of Reactions in this Container.
