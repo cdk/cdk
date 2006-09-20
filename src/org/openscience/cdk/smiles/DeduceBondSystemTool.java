@@ -27,16 +27,24 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.*;
+import java.util.ArrayList;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ValencyHybridChecker;
-
-import java.util.ArrayList;
+import org.openscience.cdk.tools.SmilesValencyChecker;
 
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
@@ -49,27 +57,30 @@ import java.util.ArrayList;
 public class DeduceBondSystemTool {
 
     private LoggingTool logger;
-    private ValencyHybridChecker valencyChecker;
-//	private int status = 0;
+    private HydrogenAdder hAdder;
+    private IValencyChecker valencyChecker;
+	private int status = 0;
+	
+	private int counter = 0;
 
     /**
      * Constructor for the DeduceBondSystemTool object.
      */
     public DeduceBondSystemTool() {
         logger = new LoggingTool(this);
-        valencyChecker = new ValencyHybridChecker();
+        valencyChecker = new SmilesValencyChecker();
+        hAdder = new HydrogenAdder();
     }
 
     public IMolecule fixAromaticBondOrders(IMolecule molecule) {
         //System.out.println("here");
 
-        IRingSet ringSet;
+        IRingSet ringSet = null;
 
         // TODO remove rings with nonsp2 carbons(?) and rings larger than 7 atoms
         ringSet = removeExtraRings(molecule);
 
 //		System.out.println(rs.getAtomContainerCount());
-
 
         ArrayList MasterList = new ArrayList();
 
@@ -90,8 +101,7 @@ public class DeduceBondSystemTool {
             }
         }
 
-
-        IMoleculeSet som = new MoleculeSet();
+        IMoleculeSet som = molecule.getBuilder().newMoleculeSet();
 
 //		int number=1; // total number of possibilities
 //		
@@ -102,7 +112,7 @@ public class DeduceBondSystemTool {
 //		System.out.println("number= "+number);			
 
 
-        int [] choices;
+        int [] choices = null;
 
         //if (number> 1000000) return null;
 
@@ -110,7 +120,7 @@ public class DeduceBondSystemTool {
 
         if (MasterList.size() > 0) {
             IMolecule iMolecule = loop(System.currentTimeMillis(), molecule, 0, MasterList, choices, som);
-            if (iMolecule != null) return iMolecule;
+            if (iMolecule instanceof IMolecule) return iMolecule;
         }
 
 
@@ -133,6 +143,7 @@ public class DeduceBondSystemTool {
                 mincount = count;
                 best = i;
             }
+            
         }
 
         if (som.getAtomContainerCount() > 0) return som.getMolecule(best);
@@ -140,7 +151,7 @@ public class DeduceBondSystemTool {
     }
 
 
-    void applyBonds(IMolecule m, ArrayList al) {
+    private void applyBonds(IMolecule m, ArrayList al) {
 
         //System.out.println("");
 
@@ -163,7 +174,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    void fiveMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void fiveMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
         // 5 possibilities for placing 2 double bonds
         // 5 possibilities for placing 1 double bond
 
@@ -186,7 +197,7 @@ public class DeduceBondSystemTool {
         java.util.ArrayList al9 = new java.util.ArrayList();
         java.util.ArrayList al10 = new java.util.ArrayList();
 
-//		java.util.ArrayList al11=new java.util.ArrayList(); // no bonds
+		java.util.ArrayList al11=new java.util.ArrayList(); // no bonds
 
         al1.add(num[1] + "-" + num[2]);
         al1.add(num[3] + "-" + num[4]);
@@ -229,7 +240,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    void sixMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void sixMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
         // 2 possibilities for placing 3 double bonds
         // 6 possibilities for placing 2 double bonds
         // 6 possibilities for placing 1 double bonds
@@ -337,7 +348,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    void sevenMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
+    private void sevenMemberedRingPossibilities(IMolecule m, IRing r, ArrayList MasterList) {
         // for now only consider case where have 3 double bonds
 
         IAtom[] ringatoms = new Atom[7];
@@ -390,7 +401,7 @@ public class DeduceBondSystemTool {
     }
 
 
-    int getBadCount(IMolecule molecule, IRingSet ringSet) {
+    public int getBadCount(IMolecule molecule, IRingSet ringSet) {
         // finds count of nitrogens in the rings that have 4 bonds
         // to non hydrogen atoms and one to hydrogen
         // or nitrogens with 2 double bonds to atoms in the ringset
@@ -450,7 +461,7 @@ public class DeduceBondSystemTool {
     }
 
 
-    boolean inRingSet(IAtom atom, IRingSet ringSet) {
+    public boolean inRingSet(IAtom atom, IRingSet ringSet) {
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             Ring ring = (Ring) ringSet.getAtomContainer(i);
             if (ring.contains(atom)) return true;
@@ -458,7 +469,7 @@ public class DeduceBondSystemTool {
         return false;
     }
 
-    IMolecule loop(long starttime, IMolecule molecule, int index, ArrayList MasterList, int [] choices, IMoleculeSet som) {
+    private IMolecule loop(long starttime, IMolecule molecule, int index, ArrayList MasterList, int [] choices, IMoleculeSet som) {
 
         //System.out.println(System.currentTimeMillis());
 
@@ -494,10 +505,10 @@ public class DeduceBondSystemTool {
                     applyBonds(mnew, bondlist);
                 }
 //				System.out.println("");
-
+                counter++;
 
                 try {
-                    HydrogenAdder hydrogenAdder;
+                    HydrogenAdder hydrogenAdder = null;
                     hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
                     hydrogenAdder.addImplicitHydrogensToSatisfyValency(mnew);
                 } catch (Exception e) {
@@ -537,7 +548,7 @@ public class DeduceBondSystemTool {
 
     }
 
-    boolean isStructureOK(IMolecule molecule) {
+    public boolean isStructureOK(IMolecule molecule) {
         for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
             //System.out.println(mj.getBondOrderSum(mj.getAtomAt(i)));
             try {
@@ -546,6 +557,7 @@ public class DeduceBondSystemTool {
                 //valencyChecker.allSaturated didnt seem to work so did it this way
             } catch (Exception e) {
                 logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
+                e.printStackTrace();
                 return false;
             }
         }
@@ -614,39 +626,6 @@ public class DeduceBondSystemTool {
      * @return The set of reduced rings
      */
     IRingSet removeExtraRings(IMolecule m) {
-        AllRingsFinder allRingsFinder = new AllRingsFinder();
-        IRingSet ringSet = null;
-
-        try {
-            ringSet = allRingsFinder.findAllRings(m);
-        } catch (CDKException e) {
-            logger.debug(e.toString());
-            return ringSet;
-        }
-
-        IRingSet returnSet = DefaultChemObjectBuilder.getInstance().newRingSet();
-        for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
-            IRing ring = (IRing) ringSet.getAtomContainer(i);
-            if (ring.getAtomCount() > 7) continue;
-
-            int NonSP2Count = 0;
-            for (int j = 0; j < ring.getAtomCount(); j++) {
-                IAtom atom = ring.getAtom(j);
-                if (atom.getHybridization() != 2) {
-                    NonSP2Count++;
-
-                    // if there is a non-sp2 C, it's not an aromatic ring. Forget it
-                    if (atom.getSymbol().equals("C")) continue;
-                }
-                // TODO why do we allow one non-sp2 atom to be present?
-                if (NonSP2Count <= 1)
-                    returnSet.addAtomContainer(ring);
-            }
-        }
-        return returnSet;
-    }
-
-    IRingSet removeExtraRingsOLD(IMolecule m) {
 
         try {
             AllRingsFinder arf = new AllRingsFinder();
@@ -659,13 +638,15 @@ public class DeduceBondSystemTool {
             iloop:
             for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
 
+            	boolean AllAromatic = true;
+            	
                 IRing r = (Ring) rs.getAtomContainer(i);
 
 
                 if (r.getAtomCount() > 7) {
                     rs.removeAtomContainer(i);
                     i--; // go back to first one
-                    continue;
+                    continue iloop;
                 }
 
                 int NonSP2Count = 0;
@@ -687,6 +668,7 @@ public class DeduceBondSystemTool {
                 if (NonSP2Count > 1) {
                     rs.removeAtomContainer(i);
                     i--; // go back
+                    continue iloop;
                 }
 
             }
@@ -697,7 +679,7 @@ public class DeduceBondSystemTool {
         }
     }
 
-    boolean[] findRingsToCheck(IMolecule m, IRingSet rs) {
+    private boolean[] findRingsToCheck(IMolecule m, IRingSet rs) {
 
         boolean[] Check = new boolean[rs.getAtomContainerCount()];
 
@@ -709,11 +691,13 @@ public class DeduceBondSystemTool {
 
         for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
 
+        	boolean AllAromatic = true;
+        	
             IRing r = (Ring) rs.getAtomContainer(i);
 
             if (r.getAtomCount() > 7) {
                 Check[i] = false;
-                continue;
+                continue iloop;
             }
 
             int NonSP2Count = 0;
@@ -731,7 +715,10 @@ public class DeduceBondSystemTool {
                 }
             }
 
-            if (NonSP2Count > 1) Check[i] = false;
+            if (NonSP2Count > 1) {
+            	Check[i] = false;
+            	continue iloop;
+            }
 
         }
 

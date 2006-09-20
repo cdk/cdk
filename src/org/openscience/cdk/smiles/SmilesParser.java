@@ -36,16 +36,17 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ValencyHybridChecker;
+import org.openscience.cdk.tools.SmilesValencyChecker;
 
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -82,7 +83,7 @@ public class SmilesParser {
 
 	private LoggingTool logger;
 	private HydrogenAdder hAdder;
-	private ValencyHybridChecker valencyChecker;
+	private SmilesValencyChecker valencyChecker;
 	private int status = 0;
 
 
@@ -94,7 +95,7 @@ public class SmilesParser {
 		logger = new LoggingTool(this);
 		try
 		{
-			valencyChecker = new ValencyHybridChecker();
+			valencyChecker = new SmilesValencyChecker();
 			hAdder = new HydrogenAdder(valencyChecker);
 		} catch (Exception exception)
 		{

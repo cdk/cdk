@@ -97,7 +97,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		fixCarbonHCount(mol2);
 		String smiles2 = sg.createSMILES(mol2);
 		assertNotNull(smiles2);
-		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
+		assertEquals("C1=C(C)C2CC(C1)C2(C)(C)", smiles2);
 	}
 
 
@@ -111,7 +111,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
+		assertEquals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC", smiles1);
 	}
 
 	
@@ -126,7 +126,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("CCCC1CC1"));
+		assertEquals("CCCC1CC1", smiles1);
 	}
 	
 	
