@@ -628,10 +628,10 @@ public class FileConvertor {
         try {
 	        if (apply2DCleanup) {
 				logger.info("Creating 2D coordinates");
-				IMolecule[] mols = som.getMolecules();
-	           	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-				for (int i=0; i<mols.length; i++) {
-					IMolecule molecule = mols[i];
+				java.util.Iterator mols = som.molecules();
+				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				while (mols.hasNext()) {
+					IMolecule molecule = (IMolecule)mols.next();
 		            try {
 		                sdg.setMolecule(molecule, false); // false -> don't make clone!
 		                sdg.generateCoordinates(new Vector2d(0, 1));

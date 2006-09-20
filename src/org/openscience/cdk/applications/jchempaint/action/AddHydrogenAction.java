@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
@@ -165,10 +166,10 @@ public class AddHydrogenAction extends JCPAction
 		Controller2DModel controllerModel = jcpmodel.getControllerModel();
         try
 		{
-        	org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
-			for (int i = 0; i < mols.length; i++)
+        	java.util.Iterator mols = som.molecules();
+			while (mols.hasNext())
 			{
-				org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+				IMolecule molecule = (IMolecule)mols.next();
 				if (molecule != null)
 				{
 					if (type.equals("implicit"))

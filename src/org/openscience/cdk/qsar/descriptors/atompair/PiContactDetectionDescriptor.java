@@ -142,17 +142,18 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-        IAtomContainer[] detected = acSet.getAtomContainers();
+        java.util.Iterator detected = acSet.atomContainers();
 
         IAtom[] neighboorsFirst = mol.getConnectedAtoms(first);
         IAtom[] neighboorsSecond = mol.getConnectedAtoms(second);
 
-        for (int i = 0; i < detected.length; i++) {
-            if (detected[i].contains(first) && detected[i].contains(second)) {
+        while (detected.hasNext()) {
+        	IAtomContainer detectedAC = (IAtomContainer)detected.next();
+            if (detectedAC.contains(first) && detectedAC.contains(second)) {
                 counter += 1;
                 break;
             }
-            if (isANeighboorsInAnAtomContainer(neighboorsFirst, detected[i]) && isANeighboorsInAnAtomContainer(neighboorsSecond, detected[i])) {
+            if (isANeighboorsInAnAtomContainer(neighboorsFirst, detectedAC) && isANeighboorsInAnAtomContainer(neighboorsSecond, detectedAC)) {
                 counter += 1;
                 break;
             }

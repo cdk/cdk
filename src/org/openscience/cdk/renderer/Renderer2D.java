@@ -160,13 +160,13 @@ public class Renderer2D extends SimpleRenderer2D
 	 */
 	public void paintMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
-		IMolecule[] molecules = null;
+		IMoleculeSet molecules = null;
 		if(split){
 			org.openscience.cdk.interfaces.IAtomContainer atomContainer = MoleculeSetManipulator.getAllInOneContainer(moleculeSet);
 			try
 			{
-				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
-				logger.debug("We have " + molecules.length + " molecules on screen");
+				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+				logger.debug("We have " + molecules.getAtomContainerCount() + " molecules on screen");
 			} catch (Exception exception)
 			{
 				logger.warn("Could not partition molecule: ", exception.getMessage());
@@ -174,21 +174,22 @@ public class Renderer2D extends SimpleRenderer2D
 				return;
 			}
 		}else{
-			molecules=moleculeSet.getMolecules();
+			molecules=moleculeSet;
 		}
 		int bondcount=0;
 		int atomcount=0;
-		for (int i = 0; i < molecules.length; i++){
-			bondcount+=molecules[i].getBondCount();
-			atomcount+=molecules[i].getAtomCount();
+		for (int i = 0; i < molecules.getAtomContainerCount(); i++){
+			IMolecule mol = molecules.getMolecule(i);
+			bondcount+=mol.getBondCount();
+			atomcount+=mol.getAtomCount();
 		}
 		boolean redossr=false;
 		if(bondcount!=oldbondcount || atomcount!=oldatomcount)
 			redossr=true;
-		for (int i = 0; i < molecules.length; i++)
+		for (int i = 0; i < molecules.getAtomContainerCount(); i++)
 		{
 			logger.debug("painting molecule " + i);
-			paintMolecule(molecules[i], graphics,false, redossr);
+			paintMolecule(molecules.getMolecule(i), graphics,false, redossr);
 		}
 		if(r2dm.getMerge()!=null){
 			Iterator iterator =r2dm.getMerge().keySet().iterator();
@@ -265,16 +266,16 @@ public class Renderer2D extends SimpleRenderer2D
 		}
 	
 		IAtomContainer reactantContainer = reaction.getBuilder().newAtomContainer();
-		IMolecule[] reactants = reaction.getReactants().getMolecules();
-		for (int i = 0; i < reactants.length; i++)
+		IMoleculeSet reactants = reaction.getReactants();
+		for (int i = 0; i < reactants.getAtomContainerCount(); i++)
 		{
-			reactantContainer.add(reactants[i]);
+			reactantContainer.add(reactants.getMolecule(i));
 		}
 		IAtomContainer productContainer = reaction.getBuilder().newAtomContainer();
-		IMolecule[] products = reaction.getProducts().getMolecules();
-		for (int i = 0; i < products.length; i++)
+		IMoleculeSet products = reaction.getProducts();
+		for (int i = 0; i < products.getAtomContainerCount(); i++)
 		{
-			productContainer.add(products[i]);
+			productContainer.add(products.getMolecule(i));
 		}
 
 		// calculate some boundaries

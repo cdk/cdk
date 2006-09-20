@@ -266,7 +266,7 @@ public class ReactionTest extends CDKTestCase {
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
-        assertEquals(3, reaction.getReactants().getMolecules().length);
+        assertEquals(3, reaction.getReactants().getMoleculeCount());
     }
 	
     public void testGetProducts() {    
@@ -277,7 +277,7 @@ public class ReactionTest extends CDKTestCase {
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
-        assertEquals(3, reaction.getProducts().getMolecules().length);
+        assertEquals(3, reaction.getProducts().getMoleculeCount());
     }
     
     public void testGetAgents() {    

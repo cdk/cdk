@@ -217,9 +217,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param  atomContainerSet  The AtomContainerSet
 	 */
 	public void add(org.openscience.cdk.interfaces.IAtomContainerSet atomContainerSet) {
-		org.openscience.cdk.interfaces.IAtomContainer[] mols = atomContainerSet.getAtomContainers();
-		for (int i = 0; i < mols.length; i++) {
-			addAtomContainer(mols[i]);
+		for (java.util.Iterator iter = atomContainerSet.atomContainers();iter.hasNext();) {
+			addAtomContainer((IAtomContainer)iter.next());
 		}
 		/*
 		 *  notifyChanged() is called by addAtomContainer()
@@ -227,16 +226,36 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	}
 
 	/**
-	 *  Returns the array of AtomContainers of this container.
-	 *
-	 * @return    The array of AtomContainers of this container
+	 *  Get an iterator for this AtomContainerSet.
+     * 
+     * @return A new Iterator for this AtomContainerSet.
 	 */
-	public org.openscience.cdk.interfaces.IAtomContainer[] getAtomContainers() {
-		org.openscience.cdk.interfaces.IAtomContainer[] result = new AtomContainer[atomContainerCount];
-		System.arraycopy(this.atomContainers, 0, result, 0, result.length);
-		return result;
+	public java.util.Iterator atomContainers() {
+		return new AtomContainerIterator();
 	}
 
+	/**
+     * The inner Iterator class.
+     *
+     */
+	private class AtomContainerIterator implements java.util.Iterator {
+		private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < atomContainerCount) return true;
+	    return false;
+        }
+
+        public Object next() {
+            ++pointer;
+            return atomContainers[pointer-1];
+        }
+
+        public void remove() {
+            removeAtomContainer(pointer-1);
+        }
+	}
+	
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the
@@ -312,10 +331,9 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		buffer.append("AtomContainerSet(");
 		buffer.append(this.hashCode());
 		buffer.append(", M=").append(getAtomContainerCount()).append(", ");
-		org.openscience.cdk.interfaces.IAtomContainer[] atomContainers = getAtomContainers();
-		for (int i = 0; i < atomContainers.length; i++) {
+		for (int i = 0; i < atomContainerCount; i++) {
 			buffer.append(atomContainers[i].toString());
-			if (i < atomContainers.length - 1) {
+			if (i < atomContainerCount - 1) {
 				buffer.append(", ");
 			}
 		}
@@ -331,9 +349,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		AtomContainerSet clone = (AtomContainerSet)super.clone();
-		IAtomContainer[] result = getAtomContainers();
-		for (int i = 0; i < result.length; i++) {
-			clone.addAtomContainer((AtomContainer)((AtomContainer)result[i]).clone(), 1.0);
+		for (int i = 0; i < atomContainerCount; i++) {
+			clone.addAtomContainer((IAtomContainer)atomContainers[i].clone(), 1.0);
 		}
 		return (Object) clone;
 	}

@@ -219,31 +219,31 @@ public class SmilesGenerator
 	public synchronized String createSMILES(IReaction reaction) throws CDKException
 	{
 		StringBuffer reactionSMILES = new StringBuffer();
-		IMolecule[] reactants = reaction.getReactants().getMolecules();
-		for (int i = 0; i < reactants.length; i++)
+		IMoleculeSet reactants = reaction.getReactants();
+		for (int i = 0; i < reactants.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(reactants[i]));
-			if (i + 1 < reactants.length)
+			reactionSMILES.append(createSMILES(reactants.getMolecule(i)));
+			if (i + 1 < reactants.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');
 			}
 		}
 		reactionSMILES.append('>');
-		IMolecule[] agents = reaction.getAgents().getMolecules();
-		for (int i = 0; i < agents.length; i++)
+		IMoleculeSet agents = reaction.getAgents();
+		for (int i = 0; i < agents.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(agents[i]));
-			if (i + 1 < agents.length)
+			reactionSMILES.append(createSMILES(agents.getMolecule(i)));
+			if (i + 1 < agents.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');
 			}
 		}
 		reactionSMILES.append('>');
-		IMolecule[] products = reaction.getProducts().getMolecules();
-		for (int i = 0; i < products.length; i++)
+		IMoleculeSet products = reaction.getProducts();
+		for (int i = 0; i < products.getAtomContainerCount(); i++)
 		{
-			reactionSMILES.append(createSMILES(products[i]));
-			if (i + 1 < products.length)
+			reactionSMILES.append(createSMILES(products.getMolecule(i)));
+			if (i + 1 < products.getAtomContainerCount())
 			{
 				reactionSMILES.append('.');
 			}
@@ -309,12 +309,11 @@ public class SmilesGenerator
 		if (moleculeSet.getMoleculeCount() > 1)
 		{
 			StringBuffer fullSMILES = new StringBuffer();
-			IMolecule[] molecules = moleculeSet.getMolecules();
-			for (int i = 0; i < molecules.length; i++)
+			for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
 			{
-				IMolecule molPart = molecules[i];
+				IMolecule molPart = moleculeSet.getMolecule(i);
 				fullSMILES.append(createSMILESWithoutCheckForMultipleMolecules(molPart, chiral, doubleBondConfiguration));
-				if (i < (molecules.length - 1))
+				if (i < (moleculeSet.getAtomContainerCount() - 1))
 				{
 					// are there more molecules?
 					fullSMILES.append('.');

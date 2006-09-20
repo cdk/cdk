@@ -104,12 +104,12 @@ public class CleanupAction extends JCPAction
                 
 				logger.debug("no mols in som: ", som.getMoleculeCount());
 				MoleculeSet newsom = new MoleculeSet();
-				IMolecule[] mols = som.getMolecules();
-				for (int i = 0; i < mols.length; i++)
+				java.util.Iterator mols = som.molecules();
+				while (mols.hasNext())
 				{
-                    IMolecule molecule = mols[i];
+                    IMolecule molecule = (IMolecule)mols.next();
                     if (molecule != null && molecule.getAtomCount() > 0) {
-                    	IMolecule cleanedMol = relayoutMolecule(mols[i]);
+                    	IMolecule cleanedMol = relayoutMolecule(molecule);
                     	newsom.addMolecule(cleanedMol);
                     	IAtom[] atoms = molecule.getAtoms();
                     	IAtom[] newAtoms = cleanedMol.getAtoms();
@@ -141,15 +141,15 @@ public class CleanupAction extends JCPAction
 					org.openscience.cdk.interfaces.IReaction reaction = (org.openscience.cdk.interfaces.IReaction)reactionsIter.next();
 					Reaction newReaction = new Reaction();
 					// FIXME, this does not preserve reaction properties!
-					IMolecule[] reactants = reaction.getReactants().getMolecules();
-					for (int i = 0; i < reactants.length; i++)
+					java.util.Iterator reactants = reaction.getReactants().molecules();
+					while (reactants.hasNext())
 					{
-						newReaction.addReactant(relayoutMolecule(reactants[i]));
+						newReaction.addReactant(relayoutMolecule((IMolecule)reactants.next()));
 					}
-					IMolecule[] products = reaction.getProducts().getMolecules();
-					for (int i = 0; i < products.length; i++)
+					java.util.Iterator products = reaction.getProducts().molecules();
+					while (products.hasNext())
 					{
-						newReaction.addProduct(relayoutMolecule(products[i]));
+						newReaction.addProduct(relayoutMolecule((IMolecule)products.next()));
 					}
 					newSet.addReaction(newReaction);
 				}

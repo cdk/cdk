@@ -278,9 +278,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			IRing r = null;
 			int i = 0, aromacount = 0;
-			IAtomContainer[] rings = rs.getAtomContainers();
-			for (int j=0; j<rings.length; j++) {
-				r = (IRing)rings[j];
+			java.util.Iterator rings = rs.atomContainers();
+			while (rings.hasNext()) {
+				r = (IRing)rings.next();
 				isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 				
 				if (standAlone && isAromatic)

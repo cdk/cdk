@@ -589,7 +589,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 	private void shiftMolecule() {
 		for (int i = 0; i < chemModel.getMoleculeSet().getMoleculeCount(); i++)
 		{
-			IMolecule mol = chemModel.getMoleculeSet().getMolecules()[i];
+			IMolecule mol = chemModel.getMoleculeSet().getMolecule(i);
 			for (int k = 0; k < mol.getAtomCount(); k++)
 			{
 				((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x=((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x -shiftX;

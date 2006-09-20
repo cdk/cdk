@@ -114,11 +114,11 @@ public interface IAtomContainerSet extends IChemObject {
 	public void add(IAtomContainerSet atomContainerSet);
 	
 	/**
-	 * Returns the array of AtomContainers of this container.
-	 *
-	 * @return    The array of AtomContainers of this container
+	 *  Get an iterator for this AtomContainerSet.
+     * 
+     * @return A new Iterator for this AtomContainerSet.
 	 */
-	public IAtomContainer[] getAtomContainers();
+	public java.util.Iterator atomContainers();
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the

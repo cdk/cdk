@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -82,20 +83,20 @@ public class MDLRXNReaderTest extends CDKTestCase {
 			assertEquals(2, reaction1.getReactantCount());
 			assertEquals(1, reaction1.getProductCount());
 			
-			org.openscience.cdk.interfaces.IMolecule[] educts = reaction1.getReactants().getMolecules();
+			IMoleculeSet educts = reaction1.getReactants();
 			// Check Atom symbols of first educt
 			String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
-			for (int i = 0; i < educts[0].getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfEduct1[i], educts[0].getAtom(i).getSymbol());
+			for (int i = 0; i < educts.getMolecule(0).getAtomCount(); i++) {
+				assertEquals(atomSymbolsOfEduct1[i], educts.getMolecule(0).getAtom(i).getSymbol());
 			}
 			
 			// Check Atom symbols of second educt
-			for (int i = 0; i < educts[1].getAtomCount(); i++) {
-				assertEquals("C", educts[1].getAtom(i).getSymbol());
+			for (int i = 0; i < educts.getMolecule(1).getAtomCount(); i++) {
+				assertEquals("C", educts.getMolecule(1).getAtom(i).getSymbol());
 			}
 			
 			// Check Atom symbols of first product
-			org.openscience.cdk.interfaces.IMolecule[] products = reaction1.getProducts().getMolecules();
+			IMoleculeSet products = reaction1.getProducts();
 			String[] atomSymbolsOfProduct1 = { 
 				"C",
 				"C",
@@ -107,8 +108,8 @@ public class MDLRXNReaderTest extends CDKTestCase {
 				"O",
 				"C"
 			};
-			for (int i = 0; i < products[0].getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfProduct1[i], products[0].getAtom(i).getSymbol());
+			for (int i = 0; i < products.getMolecule(0).getAtomCount(); i++) {
+				assertEquals(atomSymbolsOfProduct1[i], products.getMolecule(0).getAtom(i).getSymbol());
 			}
 			
         } catch (Exception e) {

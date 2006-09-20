@@ -602,11 +602,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		IMoleculeSet moleculeSet = model.getMoleculeSet();
 		if (moleculeSet != null)
 		{
-			org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
-			for (int i = 0; i < mols.length; i++)
+			for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
 			{
-				GeometryTools.center(mols[i], baseDim,rm.getRenderingCoordinates());
-				GeometryTools.translate2D(mols[i], 0, baseDim.height * i,rm.getRenderingCoordinates());
+				GeometryTools.center(moleculeSet.getAtomContainer(i), baseDim,rm.getRenderingCoordinates());
+				GeometryTools.translate2D(moleculeSet.getAtomContainer(i), 0, baseDim.height * i,rm.getRenderingCoordinates());
 			}
 			return;
 		}

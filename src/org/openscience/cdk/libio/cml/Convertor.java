@@ -214,10 +214,9 @@ public class Convertor {
         if (useCMLIDs && setIDs) {
             idCreator.createIDs(moleculeSet);
         }
-
-        IMolecule[] molecules = moleculeSet.getMolecules();
-        for (int i = 0; i < molecules.length; i++) {
-            cmlList.appendChild(cdkMoleculeToCMLMolecule(molecules[i], false));
+        
+        for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
+            cmlList.appendChild(cdkMoleculeToCMLMolecule(moleculeSet.getMolecule(i), false));
         }
         return cmlList;
     }
@@ -235,19 +234,19 @@ public class Convertor {
 
         // reactants
         CMLReactantList cmlReactants = new CMLReactantList();
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i = 0; i < reactants.length; i++) {
+        java.util.Iterator reactants = reaction.getReactants().molecules();
+        while (reactants.hasNext()) {
             CMLReactant cmlReactant = new CMLReactant();
-            cmlReactant.addMolecule(cdkMoleculeToCMLMolecule(reactants[i], false));
+            cmlReactant.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)reactants.next(), false));
             cmlReactants.addReactant(cmlReactant);
         }
 
         // products
         CMLProductList cmlProducts = new CMLProductList();
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i = 0; i < products.length; i++) {
+        java.util.Iterator products = reaction.getProducts().molecules();
+        while (products.hasNext()) {
             CMLProduct cmlProduct = new CMLProduct();
-            cmlProduct.addMolecule(cdkMoleculeToCMLMolecule(products[i], false));
+            cmlProduct.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)products.next(), false));
             cmlProducts.addProduct(cmlProduct);
         }
 

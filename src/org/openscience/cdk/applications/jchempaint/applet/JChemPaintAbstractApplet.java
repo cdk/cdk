@@ -50,6 +50,7 @@ import org.openscience.cdk.applications.swing.JExternalFrame;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
@@ -162,10 +163,10 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			 theModel.getRendererModel().setShowEndCarbons(true);
 			 
 			 HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-	        	org.openscience.cdk.interfaces.IMolecule[] mols = theModel.getChemModel().getMoleculeSet().getMolecules();
-				for (int i = 0; i < mols.length; i++)
+	        	java.util.Iterator mols = theModel.getChemModel().getMoleculeSet().molecules();
+				while (mols.hasNext())
 				{
-					org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+					org.openscience.cdk.interfaces.IMolecule molecule = (IMolecule)mols.next();
 					if (molecule != null)
 						
 					{
@@ -193,7 +194,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	        int largestX=Integer.MIN_VALUE;
 	        int smallestY=Integer.MAX_VALUE;
 	        int largestY=Integer.MIN_VALUE;
-	        for(int i=0;i<theModel.getChemModel().getMoleculeSet().getMolecules().length;i++){
+	        for(int i=0;i<theModel.getChemModel().getMoleculeSet().getMoleculeCount();i++){
 	          for(int k=0;k<theModel.getChemModel().getMoleculeSet().getMolecule(i).getAtomCount();k++){
 	            if(((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getMoleculeSet().getMolecule(i).getAtom(k))).x<smallestX)
 	              smallestX=(int)((Point2d)theModel.getRendererModel().getRenderingCoordinate(theModel.getChemModel().getMoleculeSet().getMolecule(i).getAtom(k))).x;
@@ -260,9 +261,9 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				ChemModel chemModel = (ChemModel) reader.read(new ChemModel());
         
 				int count=0;
-				for(int i=0;i<chemModel.getMoleculeSet().getMolecules().length;i++){
-					for(int k=0;k<chemModel.getMoleculeSet().getMolecules()[i].getAtomCount();k++){
-						chemModel.getMoleculeSet().getMolecules()[i].getAtom(k).setProperty("OriginalNumber", new Integer(count));
+				for(int i=0;i<chemModel.getMoleculeSet().getMoleculeCount();i++){
+					for(int k=0;k<chemModel.getMoleculeSet().getMolecule(i).getAtomCount();k++){
+						chemModel.getMoleculeSet().getMolecule(i).getAtom(k).setProperty("OriginalNumber", new Integer(count));
 						count++;
 					}
 				}
@@ -385,7 +386,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   public void selectAtom(int atom){
     theJcpp.getJChemPaintModel().getRendererModel().setExternalHighlightColor(Color.RED);
     IAtomContainer ac=theJcpp.getJChemPaintModel().getChemModel().getMoleculeSet().getBuilder().newAtomContainer();
-    ac.addAtom(theJcpp.getJChemPaintModel().getChemModel().getMoleculeSet().getMolecules()[0].getAtom(atom));
+    ac.addAtom(theJcpp.getJChemPaintModel().getChemModel().getMoleculeSet().getMolecule(0).getAtom(atom));
     theJcpp.getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
     getTheJcpp().repaint();
   }

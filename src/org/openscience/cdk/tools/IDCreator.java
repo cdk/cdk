@@ -140,9 +140,9 @@ public class IDCreator {
             containerSet.setID("molSet" + moleculeCount);
         }
 
-        IAtomContainer[] containers = containerSet.getAtomContainers();
-        for (int i=0; i<containers.length; i++) {
-        	IAtomContainer container = containers[i];
+        java.util.Iterator acs = containerSet.atomContainers();
+        while (acs.hasNext()) {
+        	IAtomContainer container = (IAtomContainer)acs.next();
             if (container.getID() == null) {
                 createIDs(container);
             }
@@ -162,13 +162,13 @@ public class IDCreator {
             reaction.setID("r" + reactionCount);
         }
 
-        IAtomContainer[] reactants = reaction.getReactants().getAtomContainers();
-        for (int i=0; i<reactants.length; i++) {
-            createIDs(reactants[i]);
+        java.util.Iterator reactants = reaction.getReactants().atomContainers();
+        while (reactants.hasNext()) {
+            createIDs((IAtomContainer)reactants.next());
         }
-        IAtomContainer[] products = reaction.getProducts().getAtomContainers();
-        for (int i=0; i<products.length; i++) {
-            createIDs(products[i]);
+        java.util.Iterator products = reaction.getProducts().atomContainers();
+        while (products.hasNext()) {
+            createIDs((IAtomContainer)products.next());
         }
     }
     

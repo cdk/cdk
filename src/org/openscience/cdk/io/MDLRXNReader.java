@@ -249,14 +249,14 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
         IAtomContainer reactingSide = builder.newAtomContainer();
-        IMolecule[] molecules = reaction.getReactants().getMolecules();
-        for (int i=0; i<molecules.length; i++) {
-            reactingSide.add(molecules[i]);
+        java.util.Iterator molecules = reaction.getReactants().molecules();
+        while (molecules.hasNext()) {
+            reactingSide.add((IMolecule)molecules.next());
         }
         IAtomContainer producedSide = builder.newAtomContainer();
-        molecules = reaction.getProducts().getMolecules();
-        for (int i=0; i<molecules.length; i++) {
-            producedSide.add(molecules[i]);
+        molecules = reaction.getProducts().molecules();
+        while (molecules.hasNext()) {
+            producedSide.add((IMolecule)molecules.next());
         }
         
         // map the atoms

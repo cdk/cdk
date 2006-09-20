@@ -187,9 +187,9 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.add(atomContainerSet);
 	}
 
-	public IAtomContainer[] getAtomContainers() {
-		logger.debug("Getting atom container array: ", super.getAtomContainers().length);
-		return super.getAtomContainers();
+	public java.util.Iterator atomContainers() {
+		logger.debug("Getting AtomContainer iterator");
+		return super.atomContainers();
 	}
 
 	public IAtomContainer getAtomContainer(int number) {

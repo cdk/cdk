@@ -30,6 +30,7 @@ package org.openscience.cdk.applications.jchempaint;
 
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,7 +75,7 @@ public class DrawingPanel extends JPanel
 	}
 	
 	public void updateRingSetInRenderer(){
-		r2d.redoSSSR(jchemPaintModel.getChemModel().getMoleculeSet().getMolecules());
+		r2d.redoSSSR(AtomContainerSetManipulator.getAllAtomContainers(jchemPaintModel.getChemModel().getMoleculeSet()));
 	}
 	
 	/**

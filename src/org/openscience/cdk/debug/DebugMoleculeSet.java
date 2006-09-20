@@ -189,9 +189,9 @@ public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
 		super.add(atomContainerSet);
 	}
 
-	public IAtomContainer[] getAtomContainers() {
-		logger.debug("Getting atom container array: ", super.getAtomContainers().length);
-		return super.getAtomContainers();
+	public java.util.Iterator atomContainers() {
+		logger.debug("Getting atom container iterator");
+		return super.atomContainers();
 	}
 
 	public IAtomContainer getAtomContainer(int number) {
@@ -229,9 +229,9 @@ public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
 		super.setMolecules(molecules);
 	}
 
-	public IMolecule[] getMolecules() {
-		logger.debug("Getting molecule array: ", super.getMolecules().length);
-		return super.getMolecules();
+	public java.util.Iterator molecules() {
+		logger.debug("Getting molecule iterator");
+		return super.molecules();
 	}
 
 	public IMolecule getMolecule(int number) {

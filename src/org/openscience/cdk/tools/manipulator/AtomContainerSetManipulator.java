@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * @cdk.module standard
@@ -48,33 +49,33 @@ public class AtomContainerSetManipulator {
     
 	public static int getAtomCount(IAtomContainerSet set) {
 		int count = 0;
-		IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-        	count += acs[i].getAtomCount();
+		java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+        	count += ((IAtomContainer)acs.next()).getAtomCount();
         }
         return count;
 	}
 	
 	public static int getBondCount(IAtomContainerSet set) {
 		int count = 0;
-		IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-        	count += acs[i].getBondCount();
+		java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+        	count += ((IAtomContainer)acs.next()).getBondCount();
         }
         return count;
 	}
 	
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
-        IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-            IAtomContainer container = acs[i];
+    	java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+            IAtomContainer container = (IAtomContainer)acs.next();
             if (container.contains(atom)) {
                 container.removeAtomAndConnectedElectronContainers(atom);
-                IMolecule[] molecules = ConnectivityChecker.partitionIntoMolecules(container).getMolecules();
-                if(molecules.length>1){
+                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(container);
+                if(molecules.getAtomContainerCount()>1){
                 	set.removeAtomContainer(container);
-                	for(int k=0;k<molecules.length;k++){
-                		set.addAtomContainer(molecules[k]);
+                	for(int k=0;k<molecules.getAtomContainerCount();k++){
+                		set.addAtomContainer(molecules.getAtomContainer(k));
                 	}
                 }
                 return;
@@ -83,16 +84,16 @@ public class AtomContainerSetManipulator {
     }
     
     public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
-        IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-            IAtomContainer container = acs[i];
+    	java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+            IAtomContainer container = (IAtomContainer)acs.next();
             if (container.contains(electrons)) {
                 container.removeElectronContainer(electrons);
-                IMolecule[] molecules = ConnectivityChecker.partitionIntoMolecules(container).getMolecules();
-                if(molecules.length>1){
+                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(container);
+                if(molecules.getAtomContainerCount()>1){
                 	set.removeAtomContainer(container);
-                	for(int k=0;k<molecules.length;k++){
-                		set.addAtomContainer(molecules[k]);
+                	for(int k=0;k<molecules.getAtomContainerCount();k++){
+                		set.addAtomContainer(molecules.getMolecule(k));
                 	}
                 }
                 return;
@@ -111,9 +112,9 @@ public class AtomContainerSetManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IAtomContainerSet set) {
         IAtomContainer container = set.getBuilder().newAtomContainer();
-        IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-            container.add(acs[i]);
+        java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+            container.add((IAtomContainer)acs.next());
         }
         return container;
     }
@@ -122,7 +123,9 @@ public class AtomContainerSetManipulator {
      * Returns all the AtomContainer's of a MoleculeSet.
      */
     public static IAtomContainer[] getAllAtomContainers(IAtomContainerSet set) {
-		return set.getAtomContainers();
+    	IAtomContainer[] array = new IAtomContainer[set.getAtomContainerCount()];
+    	for (int i = 0; i < set.getAtomContainerCount(); ++i) array[i] = set.getAtomContainer(i);
+		return array;
     }
 	
 	/**
@@ -182,20 +185,22 @@ public class AtomContainerSetManipulator {
     }
 
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
-        IAtomContainer[] containers = containerSet.getAtomContainers();
-        for (int i=0; i<containers.length; i++) {
-            if (containers[i].contains(atom)) {
-                return containers[i];
+    	java.util.Iterator acs = containerSet.atomContainers();
+        while (acs.hasNext()) {
+        	IAtomContainer ac = (IAtomContainer)acs.next();
+            if (ac.contains(atom)) {
+                return ac;
             }
         }
         return null;
     }
 
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
-        IAtomContainer[] containers = containerSet.getAtomContainers();
-        for (int i=0; i<containers.length; i++) {
-            if (containers[i].contains(bond)) {
-                return containers[i];
+    	java.util.Iterator acs = containerSet.atomContainers();
+        while (acs.hasNext()) {
+        	IAtomContainer ac = (IAtomContainer)acs.next();
+            if (ac.contains(bond)) {
+                return ac;
             }
         }
         return null;
@@ -204,9 +209,9 @@ public class AtomContainerSetManipulator {
     public static List getAllChemObjects(IAtomContainerSet set) {
         ArrayList list = new ArrayList();
         list.add(set);
-        IAtomContainer[] acs = set.getAtomContainers();
-        for (int i=0; i < acs.length; i++) {
-            list.add(acs[i]); // don't recurse into AC's for now
+        java.util.Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+            list.add((IAtomContainer)acs.next()); // don't recurse into AC's for now
         }
         return list;
     }

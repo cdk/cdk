@@ -221,9 +221,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		RingSet clone = (RingSet)super.clone();
-		IAtomContainer[] result = getAtomContainers();
-		for (int i = 0; i < result.length; i++) {
-			clone.addAtomContainer((IAtomContainer) result[i].clone());
+		java.util.Iterator result = atomContainers();
+		while (result.hasNext()) {
+			clone.addAtomContainer((IAtomContainer) ((IAtomContainer)result.next()).clone());
 		}
 		return clone;
 	}
@@ -238,11 +238,10 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
         buffer.append("RingSet(");
         buffer.append(this.hashCode());
         buffer.append(", R=").append(getAtomContainerCount()).append(", ");
-        IAtomContainer[] rings = getAtomContainers();
-        for (int i = 0; i < rings.length; i++) {
-            IRing possibleRing = (IRing)rings[i];
+        for (int i = 0; i < atomContainerCount; i++) {
+            IRing possibleRing = (IRing)atomContainers[i];
             buffer.append(possibleRing.toString());
-            if (i++ < rings.length) {
+            if (i+1 < atomContainerCount) {
                 buffer.append(", ");
             }
         }

@@ -126,10 +126,9 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertNotNull(moleculeSet);
 		assertEquals(3, moleculeSet.getMoleculeCount());
         
-		org.openscience.cdk.interfaces.IMolecule[] molecules = moleculeSet.getMolecules();
-        assertTrue(ConnectivityChecker.isConnected(molecules[0]));
-        assertTrue(ConnectivityChecker.isConnected(molecules[1]));
-        assertTrue(ConnectivityChecker.isConnected(molecules[2]));
+        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
+        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
+        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(2)));
 	}
 
     /**
@@ -164,20 +163,19 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
         
-		org.openscience.cdk.interfaces.IMolecule[] molecules = moleculeSet.getMolecules();
-        assertTrue(ConnectivityChecker.isConnected(molecules[0]));
-        assertTrue(ConnectivityChecker.isConnected(molecules[1]));
+        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
+        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
         
         // make sure
-        assertEquals(1, molecules[0].getAtomCount());
-        assertEquals(1, molecules[0].getElectronContainerCount());
-        assertEquals(1, molecules[1].getAtomCount());
-        assertEquals(1, molecules[1].getElectronContainerCount());
+        assertEquals(1, moleculeSet.getMolecule(0).getAtomCount());
+        assertEquals(1, moleculeSet.getMolecule(0).getElectronContainerCount());
+        assertEquals(1, moleculeSet.getMolecule(1).getAtomCount());
+        assertEquals(1, moleculeSet.getMolecule(1).getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        assertTrue(molecules[0].getSingleElectronSum(molecules[0].getAtom(0)) == 0 ||
-                   molecules[1].getSingleElectronSum(molecules[1].getAtom(0)) == 0);
-        assertTrue(molecules[0].getLonePairCount(molecules[0].getAtom(0)) == 0 ||
-                   molecules[1].getLonePairCount(molecules[1].getAtom(0)) == 0);
+        assertTrue(moleculeSet.getMolecule(0).getSingleElectronSum(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        		moleculeSet.getMolecule(1).getSingleElectronSum(moleculeSet.getMolecule(1).getAtom(0)) == 0);
+        assertTrue(moleculeSet.getMolecule(0).getLonePairCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        		moleculeSet.getMolecule(1).getLonePairCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
 	}
     
 	/**

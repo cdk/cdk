@@ -165,11 +165,10 @@ public class HydrogenAdder {
     {
     	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
       IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-      IMolecule[] molecules = moleculeSet.getMolecules();
       IAtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
       IAtomContainer intermediateContainer= null;
-      for (int k = 0; k < molecules.length; k++) {
-    	  IMolecule molPart = molecules[k];
+      for (int k = 0; k < moleculeSet.getAtomContainerCount(); k++) {
+    	  IMolecule molPart = moleculeSet.getMolecule(k);
         IAtom[] atoms = molPart.getAtoms();
          for (int i = 0; i < atoms.length; i++) {
             intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
@@ -305,10 +304,9 @@ public class HydrogenAdder {
      */
     public HashMap addImplicitHydrogensToSatisfyValency(IAtomContainer container) throws CDKException {
       IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(container);
-      IMolecule[] molecules = moleculeSet.getMolecules();
       HashMap hydrogenAtomMap = new HashMap();
-      for (int k = 0; k < molecules.length; k++) {
-    	IMolecule molPart = molecules[k];
+      for (int k = 0; k < moleculeSet.getAtomContainerCount(); k++) {
+    	IMolecule molPart = moleculeSet.getMolecule(k);
         IAtom[] atoms = molPart.getAtoms();
         for (int f = 0; f < atoms.length; f++) {
             int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);

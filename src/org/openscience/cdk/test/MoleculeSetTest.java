@@ -135,8 +135,7 @@ public class MoleculeSetTest extends CDKTestCase {
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
 
-        org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
-        assertEquals(7, mols.length);
+        assertEquals(7, som.getAtomContainerCount());
     }
     
     public void testMoleculeSet() {
@@ -148,18 +147,16 @@ public class MoleculeSetTest extends CDKTestCase {
     public void testGetMolecules() {
         IMoleculeSet som = builder.newMoleculeSet();
         
-        org.openscience.cdk.interfaces.IMolecule[] mols = som.getMolecules();
-        assertEquals(0, mols.length);
+        assertEquals(0, som.getAtomContainerCount());
         
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
 
-        mols = som.getMolecules();
-        assertEquals(3, mols.length);
-        assertNotNull(mols[0]);
-        assertNotNull(mols[1]);
-        assertNotNull(mols[2]);
+        assertEquals(3, som.getAtomContainerCount());
+        assertNotNull(som.getMolecule(0));
+        assertNotNull(som.getMolecule(1));
+        assertNotNull(som.getMolecule(2));
     }
 
     public void testToString() {

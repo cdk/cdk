@@ -50,41 +50,41 @@ public class ReactionManipulator {
     
     public static int getAtomCount(IReaction reaction) {
     	int count = 0;
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-        	count += reactants[i].getAtomCount();
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        	count += reactants.getMolecule(i).getAtomCount();
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-        	count += products[i].getAtomCount();
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        	count += products.getMolecule(i).getAtomCount();
         }
         return count;
     }
     
     public static int getBondCount(IReaction reaction) {
     	int count = 0;
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-        	count += reactants[i].getBondCount();
+    	IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        	count += reactants.getMolecule(i).getBondCount();
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-        	count += products[i].getBondCount();
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        	count += products.getMolecule(i).getBondCount();
         }
         return count;
     }
     
     public static void removeAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom) {
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            IMolecule mol = reactants[i];
+    	IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            IMolecule mol = reactants.getMolecule(i);
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
             }
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            IMolecule mol = products[i];
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            IMolecule mol = products.getMolecule(i);
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
             }
@@ -92,16 +92,16 @@ public class ReactionManipulator {
     }
     
     public static void removeElectronContainer(IReaction reaction, IElectronContainer electrons) {
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            IMolecule mol = reactants[i];
+    	IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            IMolecule mol = reactants.getMolecule(i);
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
             }
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            IMolecule mol = products[i];
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            IMolecule mol = products.getMolecule(i);
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
             }
@@ -117,14 +117,14 @@ public class ReactionManipulator {
         if (reaction == null) {
             return container;
         }
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            IMolecule molecule = reactants[i];
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            IMolecule molecule = reactants.getMolecule(i);
             container.add(molecule);
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            IMolecule molecule = products[i];
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            IMolecule molecule = products.getMolecule(i);
             container.add(molecule);
         }
         return container;
@@ -132,13 +132,13 @@ public class ReactionManipulator {
     
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            moleculeSet.addMolecule(reactants[i]);
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            moleculeSet.addMolecule(reactants.getMolecule(i));
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            moleculeSet.addMolecule(products[i]);
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            moleculeSet.addMolecule(products.getMolecule(i));
         }
         return moleculeSet;
     }
@@ -156,15 +156,15 @@ public class ReactionManipulator {
         } else if (reaction.getDirection() == IReaction.BACKWARD) {
             reversedReaction.setDirection(IReaction.FORWARD);
         }
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            double coefficient = reaction.getReactantCoefficient(reactants[i]);
-            reversedReaction.addProduct(reactants[i], coefficient);
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            double coefficient = reaction.getReactantCoefficient(reactants.getMolecule(i));
+            reversedReaction.addProduct(reactants.getMolecule(i), coefficient);
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            double coefficient = reaction.getProductCoefficient(products[i]);
-            reversedReaction.addReactant(products[i], coefficient);
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            double coefficient = reaction.getProductCoefficient(products.getMolecule(i));
+            reversedReaction.addReactant(products.getMolecule(i), coefficient);
         }
         return reversedReaction;
     }
@@ -181,14 +181,14 @@ public class ReactionManipulator {
     public static Vector getAllIDs(IReaction reaction) {
         Vector idList = new Vector();
         if (reaction.getID() != null) idList.addElement(reaction.getID());
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            IMolecule mol = reactants[i];
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            IMolecule mol = reactants.getMolecule(i);;
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            IMolecule mol = products[i];
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            IMolecule mol = products.getMolecule(i);;
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
         return idList;
@@ -211,29 +211,29 @@ public class ReactionManipulator {
     }
     
     public static void setAtomProperties(IReaction reaction, Object propKey, Object propVal) {
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int j=0; j<reactants.length; j++) {
+    	IMoleculeSet reactants = reaction.getReactants();
+        for (int j=0; j<reactants.getAtomContainerCount(); j++) {
             AtomContainerManipulator.setAtomProperties(
-                reactants[j], propKey, propVal
+                reactants.getMolecule(j), propKey, propVal
             );
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int j=0; j<products.length; j++) {
+        IMoleculeSet products = reaction.getProducts();
+        for (int j=0; j<products.getAtomContainerCount(); j++) {
             AtomContainerManipulator.setAtomProperties(
-                products[j], propKey, propVal
+                products.getMolecule(j), propKey, propVal
             );
         }
     }
     
     public static List getAllChemObjects(IReaction reaction) {
         ArrayList list = new ArrayList();
-        IMolecule[] reactants = reaction.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            list.add(reactants[i]);
+        IMoleculeSet reactants = reaction.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            list.add(reactants.getMolecule(i));
         }
-        IMolecule[] products = reaction.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            list.add(products[i]);
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            list.add(products.getMolecule(i));
         }
         return list;
     }

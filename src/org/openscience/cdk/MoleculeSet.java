@@ -83,9 +83,9 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      * @param  moleculeSet  The MoleculeSet 
      */
     public void add(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet) {
-    	org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
-        for (int i=0; i< mols.length; i++) {
-            addMolecule(mols[i]);
+    	java.util.Iterator mols = moleculeSet.molecules();
+        while (mols.hasNext()) {
+            addMolecule((IMolecule)mols.next());
         }
 	/* notifyChanged() called in super.addAtomContainer() */
     }
@@ -105,13 +105,8 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      * @return    The array of Molecules of this container 
      * @see #setMolecules
      */
-    public org.openscience.cdk.interfaces.IMolecule[] getMolecules() {
-        Molecule[] result = new Molecule[super.getAtomContainerCount()];
-        org.openscience.cdk.interfaces.IAtomContainer[] containers = super.getAtomContainers();
-        for (int i=0; i<containers.length; i++) {
-            result[i] = (Molecule)containers[i];
-        }
-        return result;
+    public java.util.Iterator molecules() {
+        return super.atomContainers();
     }
     
     
@@ -146,9 +141,9 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		MoleculeSet clone = (MoleculeSet)super.clone();
-		IMolecule[] result = getMolecules();
-		for (int i = 0; i < result.length; i++) {
-			clone.addMolecule((Molecule) result[i].clone());
+		java.util.Iterator result = molecules();
+		while (result.hasNext()) {
+			clone.addMolecule((Molecule) ((Molecule)result.next()).clone());
 		}
 		return (Object) clone;
 	}

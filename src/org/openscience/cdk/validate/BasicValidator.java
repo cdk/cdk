@@ -30,6 +30,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -102,14 +103,14 @@ public class BasicValidator extends AbstractValidator {
     public ValidationReport validateReaction(Reaction subject) {
         ValidationReport report = new ValidationReport();
         AtomContainer container1 = new org.openscience.cdk.AtomContainer();
-        org.openscience.cdk.interfaces.IMolecule[] reactants = subject.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            container1.add(reactants[i]);
+        IMoleculeSet reactants = subject.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            container1.add(reactants.getMolecule(i));
         }
         AtomContainer container2 = new org.openscience.cdk.AtomContainer();
-        org.openscience.cdk.interfaces.IMolecule[] products = subject.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            container2.add(products[i]);
+        IMoleculeSet products = subject.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            container2.add(products.getMolecule(i));
         }
         report.addReport(validateAtomCountConservation(subject, container1, container2));
         report.addReport(validateChargeConservation(subject, container1, container2));

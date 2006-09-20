@@ -30,6 +30,7 @@ package org.openscience.cdk.renderer;
 
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -79,11 +80,11 @@ public class AlphaRenderer2D extends Renderer2D {
 protected IRingSet getRingSet(IAtomContainer atomContainer)
 {
   IRingSet ringSet = atomContainer.getBuilder().newRingSet();
-  org.openscience.cdk.interfaces.IMolecule[] molecules = null;
+  java.util.Iterator molecules = null;
 
   try
   {
-    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();
+    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).molecules();
   }
 
   catch (Exception exception)
@@ -93,9 +94,9 @@ protected IRingSet getRingSet(IAtomContainer atomContainer)
     return ringSet;
   }
 
-  for (int i = 0; i < molecules.length; i++)
+  while (molecules.hasNext())
   {
-    SSSRFinder sssrf = new SSSRFinder(molecules[i]);
+    SSSRFinder sssrf = new SSSRFinder((IMolecule)molecules.next());
 
     ringSet.add(sssrf.findSSSR());
   }

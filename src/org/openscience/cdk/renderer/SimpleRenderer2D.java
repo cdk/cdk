@@ -37,6 +37,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -123,7 +124,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		if(split){
 			try
 			{
-				molecules = ConnectivityChecker.partitionIntoMolecules(atomCon).getMolecules();
+				molecules = AtomContainerSetManipulator.getAllAtomContainers(ConnectivityChecker.partitionIntoMolecules(atomCon));
 			} catch (Exception exception)
 			{
 				logger.warn("Could not partition molecule: ", exception.getMessage());

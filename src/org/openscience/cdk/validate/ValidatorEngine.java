@@ -312,13 +312,13 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IMolecule[] reactants = subject.getReactants().getMolecules();
-        for (int i=0; i<reactants.length; i++) {
-            report.addReport(validateMolecule(reactants[i]));
+        IMoleculeSet reactants = subject.getReactants();
+        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+            report.addReport(validateMolecule(reactants.getMolecule(i)));
         }
-        IMolecule[] products = subject.getProducts().getMolecules();
-        for (int i=0; i<products.length; i++) {
-            report.addReport(validateMolecule(products[i]));
+        IMoleculeSet products = subject.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            report.addReport(validateMolecule(products.getMolecule(i)));
         }
         return report;
     }
@@ -334,9 +334,8 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IMolecule[] molecules = subject.getMolecules();
-        for (int i=0; i<molecules.length; i++) {
-            report.addReport(validateMolecule(molecules[i]));
+        for (int i=0; i<subject.getAtomContainerCount(); i++) {
+            report.addReport(validateMolecule(subject.getMolecule(i)));
         }
         return report;
     }

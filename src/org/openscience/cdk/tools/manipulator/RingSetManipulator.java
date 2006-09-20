@@ -68,9 +68,9 @@ public class RingSetManipulator {
      */
 	public static void sort(IRingSet ringSet) {
 		List ringList = new ArrayList();
-		IAtomContainer[] rings = ringSet.getAtomContainers();
-		for (int i=0; i<rings.length; i++) {
-			ringList.add(rings[i]);
+		java.util.Iterator rings = ringSet.atomContainers();
+		while (rings.hasNext()) {
+			ringList.add(rings.next());
 		}
 		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.LARGE_FIRST));
 		ringSet.removeAllAtomContainers();
@@ -167,9 +167,9 @@ public class RingSetManipulator {
 	   */
 	  public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
-	    IAtomContainer[] rings = ringSet.getAtomContainers();
-	    for (int i=0; i<rings.length; i++) {
-	      IRing ring = (IRing)rings[i];
+	    java.util.Iterator rings = ringSet.atomContainers();
+	    while (rings.hasNext()) {
+	      IRing ring = (IRing)rings.next();
 	      if(ring.contains(atom1))
 	        if(ring.contains(atom2))
 	          return true;

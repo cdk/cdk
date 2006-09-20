@@ -146,11 +146,10 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	 */
 	public void  writeMoleculeSet(IMoleculeSet som)
 	{
-		IMolecule[] molecules = som.getMolecules();
-		writeMolecule(molecules[0]);
+		writeMolecule(som.getMolecule(0));
 		for (int i = 1; i <= som.getMoleculeCount() - 1; i++) {
 			try {
-				writeMolecule(molecules[i]);
+				writeMolecule(som.getMolecule(i));
 			} catch (Exception exc) {
 			}
 		}

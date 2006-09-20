@@ -225,16 +225,17 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 */
 	private void writeMoleculeSet(IMoleculeSet som)
 	{
-		IMolecule[] molecules = som.getMolecules();
-		for (int i = 0; i < som.getMoleculeCount(); i++)
+		java.util.Iterator molecules = som.molecules();
+		while (molecules.hasNext())
 		{
+			IMolecule mol = (IMolecule)molecules.next();
 			try
 			{
-        boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
-        for(int k=0;k<isVisible.length;k++){
-          isVisible[k]=true;
-        }
-				writeMolecule(molecules[i], isVisible);
+				boolean[] isVisible=new boolean[mol.getAtomCount()];
+				for(int k=0;k<isVisible.length;k++){
+					isVisible[k]=true;
+				}
+				writeMolecule(mol, isVisible);
 			}
 			catch (Exception exc)
 			{

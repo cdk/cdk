@@ -215,9 +215,9 @@ public class IUPACNameGenerator {
         logger.info("Step 3");
         try {
             IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(ac);
-            IMolecule[] molecules = moleculeSet.getMolecules();
-            for (int j=0; j<molecules.length; j++) {
-                FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies(molecules[j]);
+            java.util.Iterator molecules = moleculeSet.molecules();
+            while (molecules.hasNext()) {
+                FragmentWithAtomicValencies fwav = new FragmentWithAtomicValencies((IMolecule)molecules.next());
                 for (int i=0; i < fwav.getAtomCount(); i++) {
                     try {
                     	org.openscience.cdk.interfaces.IAtom a = fwav.getAtom(i);

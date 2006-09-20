@@ -49,6 +49,7 @@ import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.libio.cml.Convertor;
@@ -244,9 +245,9 @@ public class DescriptorCalculator {
                     new StringReader(toProcess)
                 );
                 MoleculeSet moleculeSet = (MoleculeSet)reader.read(new MoleculeSet());
-                org.openscience.cdk.interfaces.IMolecule[] molecules = moleculeSet.getMolecules();
-                for (int i=0; i<molecules.length; i++) {
-                    processMolecule(writer, molecules[i]);
+                java.util.Iterator molecules = moleculeSet.molecules();
+                while (molecules.hasNext()) {
+                    processMolecule(writer, (IMolecule)molecules.next());
                 }
             } else {
                 IteratingMDLReader reader = new IteratingMDLReader(

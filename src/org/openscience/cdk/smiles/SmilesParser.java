@@ -142,10 +142,9 @@ public class SmilesParser {
 		// add reactants
 		IMolecule reactantContainer = parseSmiles(reactantSmiles);
 		IMoleculeSet reactantSet = ConnectivityChecker.partitionIntoMolecules(reactantContainer);
-		IMolecule[] reactants = reactantSet.getMolecules();
-		for (int i = 0; i < reactants.length; i++)
+		for (int i = 0; i < reactantSet.getAtomContainerCount(); i++)
 		{
-			reaction.addReactant(reactants[i]);
+			reaction.addReactant(reactantSet.getMolecule(i));
 		}
 
 		// add reactants
@@ -153,20 +152,18 @@ public class SmilesParser {
 		{
 			IMolecule agentContainer = parseSmiles(agentSmiles);
 			IMoleculeSet agentSet = ConnectivityChecker.partitionIntoMolecules(agentContainer);
-			IMolecule[] agents = agentSet.getMolecules();
-			for (int i = 0; i < agents.length; i++)
+			for (int i = 0; i < agentSet.getAtomContainerCount(); i++)
 			{
-				reaction.addAgent(agents[i]);
+				reaction.addAgent(agentSet.getMolecule(i));
 			}
 		}
 
 		// add products
 		IMolecule productContainer = parseSmiles(productSmiles);
 		IMoleculeSet productSet = ConnectivityChecker.partitionIntoMolecules(productContainer);
-		IMolecule[] products = productSet.getMolecules();
-		for (int i = 0; i < products.length; i++)
+		for (int i = 0; i < productSet.getAtomContainerCount(); i++)
 		{
-			reaction.addProduct(products[i]);
+			reaction.addProduct(productSet.getMolecule(i));
 		}
 
 		return reaction;
@@ -424,16 +421,17 @@ public class SmilesParser {
 		}
 
 		// conceive aromatic perception
-		IMolecule[] moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule).getMolecules();
-		logger.debug("#mols ", moleculeSet.length);
-		for (int i = 0; i < moleculeSet.length; i++)
+		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
+		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
 		{
-			logger.debug("mol: ", moleculeSet[i]);
+			IMolecule mol = moleculeSet.getMolecule(i);
+			logger.debug("mol: ", mol);
 			try
 			{
-				valencyChecker.saturate(moleculeSet[i]);
-				logger.debug(" after saturation: ", moleculeSet[i]);
-				if (HueckelAromaticityDetector.detectAromaticity(moleculeSet[i]))
+				valencyChecker.saturate(mol);
+				logger.debug(" after saturation: ", mol);
+				if (HueckelAromaticityDetector.detectAromaticity(mol))
 				{
 					logger.debug("Structure is aromatic...");
 				}

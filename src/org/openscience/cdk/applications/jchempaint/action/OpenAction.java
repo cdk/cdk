@@ -45,6 +45,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.IChemObjectReader;
@@ -157,10 +158,10 @@ public class OpenAction extends JCPAction {
 						jcpPanel.processChemFile(chemFile);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
 							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecules();
-							for (int i = 0; i < mols.length; i++)
+				        	java.util.Iterator mols = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().molecules();
+							while (mols.hasNext())
 							{
-								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+								org.openscience.cdk.interfaces.IMolecule molecule = (IMolecule)mols.next();
 							    if (molecule != null)
 								{
 									try{
@@ -202,10 +203,10 @@ public class OpenAction extends JCPAction {
 						jcpPanel.processChemModel(chemModel);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
 							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getMoleculeSet().getMolecules();
-							for (int i = 0; i < mols.length; i++)
+				        	java.util.Iterator mols = chemModel.getMoleculeSet().molecules();
+							while (mols.hasNext())
 							{
-								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
+								IMolecule molecule = (IMolecule)mols.next();
 							    if (molecule != null)
 								{
 									try{
