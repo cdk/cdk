@@ -23,20 +23,19 @@
  */
 package org.openscience.cdk.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Vector;
-
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the
@@ -98,10 +97,9 @@ public class AtomTypeFactory {
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *
-	 * @exception  IOException             Thrown if something goes wrong with reading the config
-	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
+	 *
 	 */
-    private AtomTypeFactory(String configFile, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
+    private AtomTypeFactory(String configFile, IChemObjectBuilder builder) {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -112,10 +110,8 @@ public class AtomTypeFactory {
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
 	 *
-	 * @exception  IOException             Thrown if something goes wrong with reading the config
-	 * @exception  ClassNotFoundException  Thrown if a class was not found :-)
 	 */
-    private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
+    private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
@@ -132,10 +128,8 @@ public class AtomTypeFactory {
      * @param  format                 String representing the possible formats ('xml' and 'txt')
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
-     * @throws IOException            when the file cannot be read
-     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) {
         return new AtomTypeFactory(ins, format, builder);
     }
 
@@ -145,10 +139,8 @@ public class AtomTypeFactory {
      * @see #getInstance(String, IChemObjectBuilder)
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
-     * @throws IOException            when the file cannot be read
-     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(IChemObjectBuilder builder) {
         return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", builder);
     }
 
@@ -166,10 +158,8 @@ public class AtomTypeFactory {
      * @param  configFile             String the name of the data file
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
-     * @throws IOException            when the file cannot be read
-     * @throws ClassNotFoundException when the AtomTypeFactory cannot be found
      */
-    public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) throws IOException, ClassNotFoundException {
+    public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
         if (tables == null) {
             tables = new Hashtable();
         }
@@ -182,14 +172,14 @@ public class AtomTypeFactory {
 	/**
 	 * Read the config from a text file.
 	 *
-	 * @param  configFile  name of the config file
+	 * @param  fileName  name of the config file
      * @param  builder     IChemObjectBuilder used to make IChemObject instances
 	 */
 	private void readConfiguration(String fileName, IChemObjectBuilder builder)
 	{
 		logger.info("Reading config file from ", fileName);
 
-		InputStream ins = null;
+		InputStream ins;
 		{
 			//try to see if this is a resource
 			ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
@@ -278,7 +268,7 @@ public class AtomTypeFactory {
 	 */
 	public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
-		IAtomType atomType = null;
+		IAtomType atomType;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			atomType = (IAtomType) atomTypes.elementAt(f);
@@ -302,7 +292,7 @@ public class AtomTypeFactory {
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
         Vector atomList = new Vector();
-        IAtomType atomType = null;
+        IAtomType atomType;
         for (int f = 0; f < atomTypes.size(); f++)
         {
             atomType = (IAtomType) atomTypes.elementAt(f);
@@ -338,11 +328,11 @@ public class AtomTypeFactory {
 	{
 		logger.debug("Returning list of size: ", getSize());
 		Vector atomtypeList = new Vector();
-		IAtomType atomType = null;
+		IAtomType atomType;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			try {
-				atomType = (IAtomType)((IAtomType)atomTypes.elementAt(f)).clone();
+				atomType = (IAtomType)atomTypes.elementAt(f).clone();
 				atomtypeList.addElement(atomType);
 			} catch (CloneNotSupportedException e) {
 				logger.error("Could not clone IAtomType: ", e.getMessage());
@@ -371,7 +361,7 @@ public class AtomTypeFactory {
             return atom;
         }
         try {
-            IAtomType atomType = null;
+            IAtomType atomType;
             String atomTypeName = atom.getAtomTypeName();
             if (atomTypeName == null || atomTypeName.length() == 0) {
                 logger.debug("Using atom symbol because atom type name is empty...");
