@@ -58,6 +58,10 @@ public class WriterFactoryTest extends CDKTestCase {
         return new TestSuite(WriterFactoryTest.class);
     }
 
+    public void testFormatCount() {
+    	assertTrue(factory.formatCount() > 0);
+    }
+    
     public void testFindChemFormats() {
         IChemFormat[] formats = factory.findChemFormats(DataFeatures.HAS_3D_COORDINATES);
         assertNotNull(formats);

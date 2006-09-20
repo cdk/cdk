@@ -29,7 +29,6 @@
 package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -79,7 +78,13 @@ public class WriterFactory {
     		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
     	}
     	
-    	return (IChemFormat[])matches.toArray(new IChemFormat[0]);
+    	return (IChemFormat[])matches.toArray(new IChemFormat[matches.size()]);
+    }
+    
+    public int formatCount() {
+    	if (formats == null) loadFormats();
+    	
+    	return formats.size(); 
     }
     
     private void loadFormats() {
