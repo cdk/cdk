@@ -1772,46 +1772,60 @@ public class GeometryTools {
 		RMSD=Math.sqrt(sum/n);
 		return RMSD;
 	}
+	
 	/**
 	 *  Return the RMSD of the heavy atoms between the 2 aligned molecules.
 	 *
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
+	 *@param hetAtomOnly                        boolean: true if only hetero atoms should be considered
 	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
 	 *@return                   				double: the value of the RMSD 
-	 *@exception  CDKException
+	 *@exception  CDK
 	 *
 	 **/
-	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean Coords3d)throws CDKException {
+	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean hetAtomOnly ,boolean Coords3d)throws CDKException {
 		//System.out.println("**** GT getAllAtomRMSD ****");
 		double sum=0;
-		double RMSD;
+		double RMSD=0;
 		Iterator firstAtoms=mappedAtoms.keySet().iterator();
-		int firstAtomNumber;
-		int secondAtomNumber;
+		int firstAtomNumber=0;
+		int secondAtomNumber=0;
 		int n=0;
 		while(firstAtoms.hasNext()){
 			firstAtomNumber=((Integer)firstAtoms.next()).intValue();
 			try{
 				secondAtomNumber=((Integer)mappedAtoms.get(new Integer(firstAtomNumber))).intValue();
 				IAtom firstAtom=firstAtomContainer.getAtom(firstAtomNumber);
-				if (!firstAtom.getSymbol().equals("H")){
-					if (Coords3d){
-						sum=sum+Math.pow(firstAtom.getPoint3d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()),2);
-						n++;
-					}else{
-						sum=sum+Math.pow(firstAtom.getPoint2d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()),2);
-						n++;
+				if (hetAtomOnly){
+					if (!firstAtom.getSymbol().equals("H") && !firstAtom.getSymbol().equals("C")){
+						if (Coords3d){
+							sum=sum+Math.pow(((Point3d)firstAtom.getPoint3d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()),2);
+							n++;
+						}else{
+							sum=sum+Math.pow(((Point2d)firstAtom.getPoint2d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()),2);
+							n++;
+						}
+					}
+				}else{
+					if (!firstAtom.getSymbol().equals("H")){
+						if (Coords3d){
+							sum=sum+Math.pow(((Point3d)firstAtom.getPoint3d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()),2);
+							n++;
+						}else{
+							sum=sum+Math.pow(((Point2d)firstAtom.getPoint2d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()),2);
+							n++;
+						}
 					}
 				}
 			}catch (Exception ex){
-                throw new CDKException(ex.toString());
-            }
+			}
 		}
 		RMSD=Math.sqrt(sum/n);
 		return RMSD;
 	}
+
 }
 
 
