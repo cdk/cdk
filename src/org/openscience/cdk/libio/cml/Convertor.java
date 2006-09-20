@@ -361,7 +361,7 @@ public class Convertor {
         if (cdkAtom.getID() != null && !cdkAtom.getID().equals("")) {
             cmlAtom.setId(cdkAtom.getID());
         } else {
-            cmlAtom.setId("a" + new Integer(cdkAtom.hashCode()).toString());
+            cmlAtom.setId("a" + Integer.toString(cdkAtom.hashCode()));
         }
         return true;
     }
@@ -440,7 +440,7 @@ public class Convertor {
         for (int i = 0; i < atoms.length; i++) {
             String atomID = atoms[i].getID();
             if (atomID == null || atomID.length() == 0) {
-                atomRefArray[i] = "a" + new Integer(atoms[i].hashCode()).toString();
+                atomRefArray[i] = "a" + Integer.toString(atoms[i].hashCode());
             } else {
                 atomRefArray[i] = atomID;
             }
@@ -490,7 +490,6 @@ public class Convertor {
     private void writeProperties(IChemObject object, CMLElement cmlElement) {
         Hashtable props = object.getProperties();
         Enumeration keys = props.keys();
-        CMLElement propList = null;
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             if (key instanceof DictRef) {
@@ -513,9 +512,6 @@ public class Convertor {
                     cmlElement.appendChild(scalar);
                 }
             }
-        }
-        if (propList != null) {
-            cmlElement.appendChild(propList);
         }
     }
 
