@@ -1511,14 +1511,15 @@ public class GeometryTools {
 		//for (int j=0;j<secondAtomContainer.getAtomCount();j++){
 			//System.out.print(j+" "+secondAtomContainer.getAtomAt(j).getSymbol()+"\t");
 		//}
-		double tmp=0;
+		//DEBUGG
+		/*double tmp=0;
 		for(int i=0;i<firstAtomContainer.getAtomCount();i++){
 			//System.out.print(i+" "+firstAtomContainer.getAtomAt(i).getSymbol()+"\t");
 			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
 				tmp=Math.floor(distanceMatrix[i][j]*10);
 				//System.out.println(tmp/10+"\t");
 			}			
-		}
+		}*/
 		
 		double minimumDistance;
         for(int i=0;i<firstAtomContainer.getAtomCount();i++){
