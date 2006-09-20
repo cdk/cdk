@@ -47,6 +47,7 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
  *  </pre>
  *
  * @author      mfe4
+ * @author chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module  forcefield
  */
