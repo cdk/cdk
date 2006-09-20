@@ -332,7 +332,7 @@ public class AtomTypeFactory {
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			try {
-				atomType = (IAtomType)atomTypes.elementAt(f).clone();
+                atomType = (IAtomType) ((IAtomType) atomTypes.elementAt(f)).clone();
 				atomtypeList.addElement(atomType);
 			} catch (CloneNotSupportedException e) {
 				logger.error("Could not clone IAtomType: ", e.getMessage());
