@@ -23,26 +23,19 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -375,13 +368,9 @@ public class GasteigerPEPEPartialCharges {
 //				System.out.println("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
 				sum += sumI;
 			}
-		} catch (IOException e) {
-			logger.debug(e);
-		} catch (ClassNotFoundException e) {
-			logger.debug(e);
 		} catch (CDKException e) {
-			logger.debug(e);
-		}
+            logger.debug(e);
+        }
 		
 		return sum;
 	}
