@@ -191,7 +191,7 @@ public class ProteinPocketFinder {
 		int checkGridPoints = 0;
 		double vdWRadius = 0;
 		int[] dim = gridGenerator.getDim();
-		int proteinAtomCount = 0;
+		//int proteinAtomCount = 0;//Debugging
 		int[] minMax = { 0, 0, 0, 0, 0, 0 };
 
 		for (int i = 0; i < atoms.length; i++) {
@@ -221,7 +221,7 @@ public class ProteinPocketFinder {
 				for (int y = minMax[2]; y <= minMax[3]; y++) {
 					for (int z = minMax[4]; z <= minMax[5]; z++) {
 						this.grid[x][y][z] = this.grid[x][y][z] - 1;
-						proteinAtomCount++;
+						//proteinAtomCount++;//Debugging
 					}
 				}
 
@@ -368,19 +368,19 @@ public class ProteinPocketFinder {
 //				+ " latticeConstant>" + latticeConstant + " pocketSize:"
 //				+ pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
 //				+ minPSCluster);
-		int pointsVisited = 0;
-		int significantPointsVisited = 0;
+		//int pointsVisited = 0;//Debugging
+		//int significantPointsVisited = 0;//Debugging
 		for (int x = 0; x < dim[0]; x++) {
 			for (int y = 0; y < dim[1]; y++) {
 				for (int z = 0; z < dim[2]; z++) {
 					// System.out.print(" x:"+x+" y:"+y+" z:"+z);
 					Point3d start = new Point3d(x, y, z);
-					pointsVisited++;
+					//pointsVisited++;
 					if (this.grid[x][y][z] >= minPSPocket
 							& !visited.containsKey(x + "." + y + "."+ z)) {
 						Vector subPocket = new Vector();
 						// System.out.print("new Point: "+grid[x][y][z]);
-						significantPointsVisited++;
+						//significantPointsVisited++;
 						// System.out.println("visited:"+pointsVisited);
 						subPocket = this
 								.clusterPSPPocket(start, subPocket, dim);
@@ -504,7 +504,7 @@ public class ProteinPocketFinder {
 		if (dimM < dimL) {
 			dimL = dimM;
 		}
-		int gridPoints = 0;
+		//int gridPoints = 0;//Debugging
 		Vector line = new Vector();
 		int pspEvent = 0;
 		int m = 0;
@@ -516,7 +516,7 @@ public class ProteinPocketFinder {
 				line.removeAllElements();
 				pspEvent = 0;
 				for (int l = dimL; l >= 0; l--) {// z
-					gridPoints++;
+					//gridPoints++;
 					if (grid[k][m][l] < 0) {
 						if (pspEvent < 2) {
 							line.removeAllElements();
@@ -550,7 +550,7 @@ public class ProteinPocketFinder {
 	public void diagonalAxisScanYZX(int dimK, int dimL, int dimM) {
 		// y min -> y max; right lower corner zmax->zmin, xmax ->min//4
 		// System.out.print(" diagonalAxisScanYZX");
-		int gridPoints = 0;
+		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
 		}
@@ -565,7 +565,7 @@ public class ProteinPocketFinder {
 				line.removeAllElements();
 				pspEvent = 0;
 				for (int l = dimL; l >= 0; l--) {// z
-					gridPoints++;
+					//gridPoints++;
 					if (grid[m][k][l] < 0) {
 						if (pspEvent < 2) {
 							line.removeAllElements();
@@ -599,7 +599,7 @@ public class ProteinPocketFinder {
 	public void diagonalAxisScanYXZ(int dimK, int dimL, int dimM) {
 		// y min -> y max; left lower corner z max->min, x min->max//2
 		// System.out.print(" diagonalAxisScanYXZ");
-		int gridPoints = 0;
+		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
 		} else {
@@ -616,7 +616,7 @@ public class ProteinPocketFinder {
 				pspEvent = 0;
 				l = 0;// x
 				for (int m = dimM; m >= 0; m--) {// z
-					gridPoints++;
+					//gridPoints++;
 					if (grid[l][k][m] < 0) {
 						if (pspEvent < 2) {
 							line.removeAllElements();
@@ -650,7 +650,7 @@ public class ProteinPocketFinder {
 	public void diagonalAxisScanXYZ(int dimK, int dimL, int dimM) {
 		// x min -> xmax;left lower corner z max->min, y min->max//3
 		// System.out.print(" diagonalAxisScanXYZ");
-		int gridPoints = 0;
+		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
 		} else {
@@ -667,7 +667,7 @@ public class ProteinPocketFinder {
 				pspEvent = 0;
 				l = 0;// y
 				for (int m = dimM; m >= 0; m--) {// z
-					gridPoints++;
+					//gridPoints++;
 					if (grid[k][l][m] < 0) {
 						if (pspEvent < 2) {
 							line.removeAllElements();
@@ -701,7 +701,7 @@ public class ProteinPocketFinder {
 	public void axisScanX(int dimK, int dimL, int dimM) {
 		// z,y,x
 //		System.out.print("	diagonalAxisScanX");
-		int gridPoints = 0;
+		//int gridPoints = 0;//Debugging
 		Vector line = new Vector();
 		int pspEvent = 0;
 		for (int k = 0; k <= dimK; k++) {
@@ -711,7 +711,7 @@ public class ProteinPocketFinder {
 				line.removeAllElements();
 				pspEvent = 0;
 				for (int m = 0; m <= dimM; m++) {
-					gridPoints++;
+					//gridPoints++;
 					if (grid[m][l][k] < 0) {
 						if (pspEvent < 2) {
 							pspEvent = 1;
