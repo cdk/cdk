@@ -25,7 +25,6 @@
 */
 package org.openscience.cdk.applications.jchempaint;
 
-import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -38,68 +37,85 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * A panel containing a text field and button to directly insert SMILES or InChI's
- *                 
+ *
  * @author Rajarshi Guha
  * @cdk.module jchempaint
  * @cdk.require swing
  */
 public class InsertTextPanel extends JPanel implements ActionListener {
 
-    private JTextField textField;
     private JChemPaintPanel jChemPaintPanel;
-    private ArrayList oldText;
+    private JComboBox textCombo;
+    private JTextComponent editor;
 
 
     public InsertTextPanel(JChemPaintPanel jChemPaintPanel) {
         super();
         setLayout(new GridBagLayout());
 
-        textField = new JTextField(50);
-        textField.addActionListener(this);
-        textField.setToolTipText("Enter a SMILES or InChI string");
+        Vector oldText = new Vector();
+        oldText.add("");
+
+        textCombo = new JComboBox(oldText);
+        textCombo.setEditable(true);
+        textCombo.setToolTipText("Enter a SMILES or InChI string");
+
+        textCombo.addActionListener(this);
+        editor = (JTextComponent) textCombo.getEditor().getEditorComponent();
+
 
         JButton button = new JButton("Insert");
         button.addActionListener(this);
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
+
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.0;
-        add(textField, gridBagConstraints);
-
         gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 5);
+        add(textCombo, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(0, 0, 2, 0);
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 2;
+        gridBagConstraints.weightx = 0.0;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
         add(button, gridBagConstraints);
 
-        oldText = new ArrayList();
+
         this.jChemPaintPanel = jChemPaintPanel;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        IMolecule molecule = null;
-        String text = textField.getText();
+    public void actionPerformed(ActionEvent actionEvent) {
+        String actionCommand = actionEvent.getActionCommand();
+        if (actionCommand.equals("comboBoxEdited") || actionCommand.equals("Insert")) {
+            IMolecule molecule = getMolecule();
+            if (molecule == null) return;
+            generateModel(molecule);
+        }
+    }
+
+    private IMolecule getMolecule() {
+        IMolecule molecule;
+        String text = (String) textCombo.getSelectedItem();
         text = text.trim(); // clean up extra white space
 
-        if (text.equals("")) return;
+        if (text.equals("")) return null;
 
-        // lets see if we can parse it as a SMILES
-        SmilesParser smilesParser = new SmilesParser();
-        try {
-            molecule = smilesParser.parseSmiles(text);
-        } catch (InvalidSmilesException e1) {
-            // ok, maybe an InChi?
+        if (text.startsWith("InChI")) { // handle it as an InChI
             try {
                 /*
                 InChIGeneratorFactory inchiFactory = new InChIGeneratorFactory();
@@ -111,15 +127,28 @@ public class InsertTextPanel extends JPanel implements ActionListener {
                 }
                 molecule = (IMolecule) inchiToStructure.getAtomContainer();
                 */
-                throw new CDKException("Pending");
+                throw new CDKException("pending");
             } catch (CDKException e2) {
-                JOptionPane.showMessageDialog(jChemPaintPanel, "Could not load InChI system");
-                return;
+                JOptionPane.showMessageDialog(jChemPaintPanel, "Could not load InChI subsystem");
+                return null;
+            }
+        } else { // we assume it's a SMILES
+            SmilesParser smilesParser = new SmilesParser();
+            try {
+                molecule = smilesParser.parseSmiles(text);
+            } catch (InvalidSmilesException e1) {
+                JOptionPane.showMessageDialog(jChemPaintPanel, "Invalid SMILES specified");
+                return null;
             }
         }
+
         // OK, we have a valid molecule, save it and show it
-        oldText.add(text);
-        generateModel(molecule);
+        String tmp = (String) textCombo.getItemAt(0);
+        if (tmp.equals("")) textCombo.removeItemAt(0);
+        textCombo.addItem(text);
+        editor.setText("");
+
+        return molecule;
     }
 
     private void generateModel(IMolecule molecule) {
@@ -159,7 +188,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         moleculeSet.addMolecule(molecule);
 //        renderModel.setSelectedPart(m);
         jChemPaintPanel.getChemModel().setSetOfMolecules(moleculeSet);
-        jChemPaintPanel.scaleAndCenterMolecule((ChemModel) jChemPaintPanel.getChemModel());
+        jChemPaintPanel.scaleAndCenterMolecule(jChemPaintPanel.getChemModel());
         jcpModel.fireChange(jChemPaintPanel.getChemModel());
     }
 }
