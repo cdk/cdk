@@ -30,7 +30,7 @@ Ant (http://jakarta.apache.org/ant/):
 
 cdk/$ ls build.xml
 build.xml
-cdk/$ ant
+cdk/$ ant 
 
 "ant -p" gives a list of possible compilation targets. The default target is 'dist-all', which
 creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
@@ -46,7 +46,7 @@ below. This documentation is created by 'ant' from the Java source code for the 
 
 cdk/$ ls javadoc.xml
 javadoc.xml
-cdk/$ ant -t javadoc.xml
+cdk/$ ant -buildfile javadoc.xml
 
 The documenation is created as a series of .html pages in doc/api. If you use firefox, you can read
 the documentation using the following command:
@@ -68,7 +68,7 @@ cdk/$ ant -Ddo.lazy.creation=yes clean dist-all
 After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
 tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
 directory or somewhere else in your classpath.
-Upon "ant test-all", you should see something like:
+Upon "ant dist-all test-dist-all test-all", you should see something like:
 
 test:
 Running org.openscience.cdk.test.CDKTests
@@ -97,7 +97,8 @@ target in the build.xml file to look like this:
 	</target>
 
 Then, a "ant run" should give you a window where you can add bonds to a given structure.
-Currently, there are about 1000 test, of which a large part tests the core classes.
+Currently, there are more than 2500 test, of which a large part tests the data, datadebug and 
+nonotify classes.
 
 4. Using CDK
 
@@ -119,3 +120,4 @@ examples and tutorials:
 
 Further examples can also be found in issues of the CDK News:
 * http://almost.cubic.uni-koeln.de/cdk/cdk_top/cdk_news/
+
