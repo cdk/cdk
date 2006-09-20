@@ -361,9 +361,9 @@
                     <exclude name="**/*" unless="module.extrafiles.present"/>
                     <includesfile name="${metainf}/${module}.extrafiles" if="module.extrafiles.present" />
                </fileset>
-                <fileset dir="${src}">
+                <fileset dir="${build}">
                      <exclude name="**/*" unless="module.buildfiles.present"/>
-                     <includesfile name="${build}/${module}.buildfiles" if="module.buildfiles.present" />
+                     <includesfile name="${metainf}/${module}.buildfiles" if="module.buildfiles.present" />
                 </fileset>
             </jar>
        </target>
