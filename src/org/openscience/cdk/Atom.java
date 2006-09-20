@@ -102,8 +102,11 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         protected int stereoParity;
         /**
          *  The partial charge of the atom.
+         *
+         * The default value is {@link CDKConstants.UNSET} and serves to provide a check whether the charge has been
+         * set or not
          */
-        protected double charge;
+        protected double charge = CDKConstants.UNSET;
         
         /**
          * Constructs an completely unset Atom.
@@ -204,6 +207,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
 
         /**
          *  Returns the partial charge of this atom.
+         *
+         * If the charge has not been set the return value is Double.NaN
          *
          * @return the charge of this atom
          *

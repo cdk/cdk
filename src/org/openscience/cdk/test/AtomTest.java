@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk.test;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -374,5 +373,13 @@ public class AtomTest extends CDKTestCase {
             assertTrue('\n' != description.charAt(i));
             assertTrue('\r' != description.charAt(i));
         }
+    }
+
+    /**
+     * Checks that the default charge is set to NaN
+     */
+    public void testDefaultChargeValue() {
+        IAtom atom = builder.newAtom("C");
+        assertEquals(CDKConstants.UNSET, atom.getCharge(), 0.00000001);
     }
 }
