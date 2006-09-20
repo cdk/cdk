@@ -232,7 +232,7 @@ public class ProteinPocketFinder {
 //				+ " ProteinGridPoints>" + proteinAtomCount);
 	}
 
-	public void debugg_checkPSPEvent() {
+	public void debuggCheckPSPEvent() {
 		System.out.print("	debugg_checkPSPEvent");
 		int[] dim = gridGenerator.getDim();
 		// int pspMin=0;
@@ -311,7 +311,7 @@ public class ProteinPocketFinder {
 		diagonalAxisScanYXZ(dim[1], dim[0], dim[2]);// diagonal3-Axis
 		diagonalAxisScanXYZ(dim[0], dim[1], dim[2]);// diagonal4-Axis
 
-		//debugg_checkPSPEvent();
+		//debuggCheckPSPEvent();
 
 		findPockets();
 
