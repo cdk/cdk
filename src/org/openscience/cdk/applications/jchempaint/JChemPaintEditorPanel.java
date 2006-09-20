@@ -33,7 +33,6 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
-import org.openscience.cdk.applications.swing.InsertTextPanel;
 import org.openscience.cdk.applications.undoredo.JCPUndoRedoHandler;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
