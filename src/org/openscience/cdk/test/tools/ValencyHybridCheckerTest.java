@@ -101,6 +101,9 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		assertEquals(3, satcheck.calculateNumberOfImplicitHydrogens(c2, m));
 	}
 
+	/**
+	 * @cdk.bug 1365547
+	 */
 	public void testBug1365547() throws Exception{
 		SmilesParser p = new SmilesParser();
 		Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
