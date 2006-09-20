@@ -370,6 +370,6 @@ public class AtomTypeTest extends CDKTestCase {
 
     public void testDefaultFormalCharge() {
         IAtomType atomType = builder.newAtomType("C");
-        assertEquals(CDKConstants.UNSET, atomType.getFormalCharge());
+        assertEquals(0, atomType.getFormalCharge());
     }
 }
