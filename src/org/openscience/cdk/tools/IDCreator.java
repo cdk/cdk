@@ -43,11 +43,11 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
- * Methods are implemented for Atom, Bond, AtomContainer, SetOfAtomContainers
+ * Methods are implemented for Atom, Bond, AtomContainer, AtomContainerSet
  * and Reaction. It will only create missing IDs. If you want to create new
  * IDs for all ChemObjects, you need to delete them first.
  *
@@ -129,10 +129,10 @@ public class IDCreator {
      * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML. It will also set id's for all AtomContainers, naming
      * them m1, m2, etc.
-     * It will not the SetOfAtomContainers itself.
+     * It will not the AtomContainerSet itself.
      */
     public void createIDs(IAtomContainerSet containerSet) {
-        if (tabuList == null) tabuList = SetOfAtomContainersManipulator.getAllIDs(containerSet);
+        if (tabuList == null) tabuList = AtomContainerSetManipulator.getAllIDs(containerSet);
 
         if (containerSet.getID() == null) {
             moleculeCount++;

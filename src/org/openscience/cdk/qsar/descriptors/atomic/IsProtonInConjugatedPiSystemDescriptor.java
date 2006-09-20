@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -63,7 +63,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
 
     private boolean checkAromaticity = false;
     private IAtomContainer acold=null;
-    private SetOfAtomContainers acSet=null;
+    private AtomContainerSet acSet=null;
 
 
     /**

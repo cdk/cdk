@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+ * $Author: egonw $ 
+ * $Date: 2006-07-30 22:10:12 +0200 (Sun, 30 Jul 2006) $
+ * $Revision: 6706 $
  * 
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
  *
  * @see ChemModelManipulator
  */
-public class SetOfAtomContainersManipulator {
+public class AtomContainerSetManipulator {
     
 	public static int getAtomCount(IAtomContainerSet set) {
 		int count = 0;

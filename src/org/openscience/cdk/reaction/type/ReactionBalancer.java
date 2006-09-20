@@ -43,7 +43,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.math.PermutationGenerator;
 import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 /**
  * The ReactionBalancer tries to stoichiometrically balance a reaction. It currently uses
@@ -131,8 +131,8 @@ public class ReactionBalancer {
             this.reaction = reaction;
             makeDiffHashtable();
         }
-		if (SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getProducts())
-				 - SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getReactants()) == 0
+		if (AtomContainerSetManipulator.getTotalFormalCharge(reaction.getProducts())
+				 - AtomContainerSetManipulator.getTotalFormalCharge(reaction.getReactants()) == 0
 				 && diff.isEmpty()) {
 			return true;
 		}
@@ -153,8 +153,8 @@ public class ReactionBalancer {
         }
         
 		double chargeDifference =
-				SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getProducts())
-				 - SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getReactants());
+				AtomContainerSetManipulator.getTotalFormalCharge(reaction.getProducts())
+				 - AtomContainerSetManipulator.getTotalFormalCharge(reaction.getReactants());
 
 		// If reaction is already balanced, return true.
 		if (diff.isEmpty() && chargeDifference == 0) {
@@ -240,8 +240,8 @@ public class ReactionBalancer {
 		}
 		
 		double chargeDifference =
-				SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getProducts())
-				 - SetOfAtomContainersManipulator.getTotalFormalCharge(reaction.getReactants());
+				AtomContainerSetManipulator.getTotalFormalCharge(reaction.getProducts())
+				 - AtomContainerSetManipulator.getTotalFormalCharge(reaction.getReactants());
 		
 		double molsToAdd = (chargeDifference) / ((double) molCharge);
 		

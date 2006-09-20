@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+ *  $Author: egonw $
+ *  $Date: 2006-07-30 22:10:12 +0200 (Sun, 30 Jul 2006) $
+ *  $Revision: 6706 $
  *
  *  Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  *
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
  * @author        hel
  * @cdk.module    data
  */
-public class SetOfAtomContainers extends ChemObject implements Serializable, IAtomContainerSet, IChemObjectListener, Cloneable {
+public class AtomContainerSet extends ChemObject implements Serializable, IAtomContainerSet, IChemObjectListener, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -67,8 +67,8 @@ public class SetOfAtomContainers extends ChemObject implements Serializable, IAt
 	protected int growArraySize = 5;
 
 
-	/**  Constructs an empty SetOfAtomContainers. */
-	public SetOfAtomContainers() {
+	/**  Constructs an empty AtomContainerSet. */
+	public AtomContainerSet() {
 		atomContainerCount = 0;
 		atomContainers = new AtomContainer[growArraySize];
 		multipliers = new double[growArraySize];
@@ -212,9 +212,9 @@ public class SetOfAtomContainers extends ChemObject implements Serializable, IAt
 	}
 
 	/**
-	 *  Adds all atomContainers in the SetOfAtomContainers to this container.
+	 *  Adds all atomContainers in the AtomContainerSet to this container.
 	 *
-	 * @param  atomContainerSet  The SetOfAtomContainers
+	 * @param  atomContainerSet  The AtomContainerSet
 	 */
 	public void add(org.openscience.cdk.interfaces.IAtomContainerSet atomContainerSet) {
 		org.openscience.cdk.interfaces.IAtomContainer[] mols = atomContainerSet.getAtomContainers();
@@ -303,13 +303,13 @@ public class SetOfAtomContainers extends ChemObject implements Serializable, IAt
 	}
 
 	/**
-	 * Returns the String representation of this SetOfAtomContainers.
+	 * Returns the String representation of this AtomContainerSet.
 	 *
-	 * @return    The String representation of this SetOfAtomContainers
+	 * @return    The String representation of this AtomContainerSet
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer(32);
-		buffer.append("SetOfAtomContainers(");
+		buffer.append("AtomContainerSet(");
 		buffer.append(this.hashCode());
 		buffer.append(", M=").append(getAtomContainerCount()).append(", ");
 		org.openscience.cdk.interfaces.IAtomContainer[] atomContainers = getAtomContainers();
@@ -325,12 +325,12 @@ public class SetOfAtomContainers extends ChemObject implements Serializable, IAt
 
 
 	/**
-	 *  Clones this SetOfAtomContainers and its content.
+	 *  Clones this AtomContainerSet and its content.
 	 *
 	 * @return    the cloned Object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SetOfAtomContainers clone = (SetOfAtomContainers)super.clone();
+		AtomContainerSet clone = (AtomContainerSet)super.clone();
 		IAtomContainer[] result = getAtomContainers();
 		for (int i = 0; i < result.length; i++) {
 			clone.addAtomContainer((AtomContainer)((AtomContainer)result[i]).clone(), 1.0);

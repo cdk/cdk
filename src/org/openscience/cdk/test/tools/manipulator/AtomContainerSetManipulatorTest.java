@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+ * $Author: egonw $
+ * $Date: 2006-07-30 22:38:18 +0200 (Sun, 30 Jul 2006) $
+ * $Revision: 6707 $
  *
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  *
@@ -29,10 +29,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.SetOfMolecules;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 /**
  * @cdk.module test-standard
@@ -40,16 +40,16 @@ import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class SetOfAtomContainersManipulatorTest extends CDKTestCase {
+public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	
 	SetOfMolecules som = new SetOfMolecules();
 	
-	public SetOfAtomContainersManipulatorTest(String name) {
+	public AtomContainerSetManipulatorTest(String name) {
 		super(name);
 	}
 	
     public static Test suite() {
-        TestSuite suite = new TestSuite(SetOfAtomContainersManipulatorTest.class);
+        TestSuite suite = new TestSuite(AtomContainerSetManipulatorTest.class);
         return suite;
 	}
 
@@ -60,9 +60,9 @@ public class SetOfAtomContainersManipulatorTest extends CDKTestCase {
 		ac.addAtom(new Atom("C")); // 3
 		ac.addBond(new Bond(ac.getAtom(0),ac.getAtom(1),1));
 		ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(2),1));
-		SetOfAtomContainers soac=new SetOfAtomContainers();
+		AtomContainerSet soac=new AtomContainerSet();
 		soac.addAtomContainer(ac);
-		SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(soac,ac.getAtom(1));
+		AtomContainerSetManipulator.removeAtomAndConnectedElectronContainers(soac,ac.getAtom(1));
 		assertEquals(2, soac.getAtomContainerCount(), 0.000001);
     }
 }

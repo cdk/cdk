@@ -3,7 +3,7 @@ package org.openscience.cdk.io;
 import nu.xom.*;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
@@ -120,8 +120,8 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    rdfElement.appendChild(channelElement);
 		    List list =new Vector();
 		    if(object instanceof IAtomContainerSet){
-		    	for(int i=0;i<((SetOfAtomContainers)object).getAtomContainerCount();i++){
-		    		list.add(((SetOfAtomContainers)object).getAtomContainer(i));
+		    	for(int i=0;i<((AtomContainerSet)object).getAtomContainerCount();i++){
+		    		list.add(((AtomContainerSet)object).getAtomContainer(i));
 		    	}
 		    }else{
 		    	list.add(object);

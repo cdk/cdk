@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-08-01 21:13:42 +0200 (Tue, 01 Aug 2006) $    
+ * $Revision: 6718 $
  * 
  * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -41,11 +41,11 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  *
  * @see org.openscience.cdk.SetOfMolecules
  */
-public class SetOfAtomContainersTest extends CDKTestCase {
+public class AtomContainerSetTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
-    public SetOfAtomContainersTest(String name) {
+    public AtomContainerSetTest(String name) {
         super(name);
     }
 
@@ -54,10 +54,10 @@ public class SetOfAtomContainersTest extends CDKTestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(SetOfAtomContainersTest.class);
+        return new TestSuite(AtomContainerSetTest.class);
     }
     
-    public void testSetOfAtomContainers() {
+    public void testAtomContainerSet() {
         IAtomContainerSet som = builder.newAtomContainerSet();
         assertNotNull(som);
         assertEquals(0, som.getAtomContainerCount());

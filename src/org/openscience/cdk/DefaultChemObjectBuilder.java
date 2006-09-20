@@ -256,7 +256,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IAtomContainerSet newAtomContainerSet() {
-		return new SetOfAtomContainers();
+		return new AtomContainerSet();
 	}
 
 	public IMoleculeSet newMoleculeSet() {

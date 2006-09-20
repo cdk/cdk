@@ -19,7 +19,7 @@ public class StandardSubstructureSets {
 	 */
 	public static IAtomContainerSet getFunctionalGroupSubstructureSet() throws Exception {
 		if (functionalGroupSubstructureSet == null) {
-			functionalGroupSubstructureSet = new org.openscience.cdk.SetOfAtomContainers();
+			functionalGroupSubstructureSet = new org.openscience.cdk.AtomContainerSet();
 			
 			SmilesParser parser = new SmilesParser();
 			String[] groups = {

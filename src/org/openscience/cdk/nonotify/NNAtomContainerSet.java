@@ -24,18 +24,18 @@
  */
 package org.openscience.cdk.nonotify;
 
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module    nonotify
  */
-public class NNSetOfAtomContainers extends SetOfAtomContainers {
+public class NNAtomContainerSet extends AtomContainerSet {
 
 	private static final long serialVersionUID = 323469380686853597L;
 
-	public NNSetOfAtomContainers() {
+	public NNAtomContainerSet() {
 		super();
 		setNotification(false);
 	}

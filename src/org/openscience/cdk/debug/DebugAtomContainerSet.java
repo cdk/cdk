@@ -1,4 +1,4 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 6913 $ $Author: egonw $ $Date: 2006-09-18 20:13:21 +0200 (Mon, 18 Sep 2006) $
  *
  * Copyright (C) 2005-2006  Egon Willighagen <egonw@users.sf.net>
  *
@@ -35,12 +35,12 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module datadebug
  */
-public class DebugSetOfAtomContainers extends org.openscience.cdk.SetOfAtomContainers
+public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
     implements IAtomContainerSet {
 
     private static final long serialVersionUID = -8358480615782437454L;
     
-    LoggingTool logger = new LoggingTool(DebugSetOfAtomContainers.class);
+    LoggingTool logger = new LoggingTool(DebugAtomContainerSet.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

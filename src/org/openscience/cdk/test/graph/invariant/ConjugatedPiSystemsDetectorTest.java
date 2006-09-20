@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -84,7 +84,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -120,7 +120,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -156,7 +156,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -194,7 +194,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -245,7 +245,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -285,7 +285,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -336,7 +336,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -382,7 +382,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -414,7 +414,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -446,7 +446,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -479,7 +479,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             fail("Error.");
 		}
         
-        SetOfAtomContainers acSet = ConjugatedPiSystemsDetector.detect(mol);
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);

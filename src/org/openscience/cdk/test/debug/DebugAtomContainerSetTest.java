@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
+ * $Revision: 5921 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -28,16 +28,16 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.SetOfAtomContainersTest;
+import org.openscience.cdk.test.AtomContainerSetTest;
 
 /**
  * Checks the funcitonality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
-public class DebugSetOfAtomContainersTest extends SetOfAtomContainersTest {
+public class DebugAtomContainerSetTest extends AtomContainerSetTest {
 
-    public DebugSetOfAtomContainersTest(String name) {
+    public DebugAtomContainerSetTest(String name) {
         super(name);
     }
 
@@ -46,7 +46,7 @@ public class DebugSetOfAtomContainersTest extends SetOfAtomContainersTest {
     }
 
     public static Test suite() {
-        return new TestSuite(DebugSetOfAtomContainersTest.class);
+        return new TestSuite(DebugAtomContainerSetTest.class);
     }
 
 }

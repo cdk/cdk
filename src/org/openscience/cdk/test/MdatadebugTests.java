@@ -50,7 +50,7 @@ import org.openscience.cdk.test.debug.DebugPseudoAtomTest;
 import org.openscience.cdk.test.debug.DebugReactionTest;
 import org.openscience.cdk.test.debug.DebugRingSetTest;
 import org.openscience.cdk.test.debug.DebugRingTest;
-import org.openscience.cdk.test.debug.DebugSetOfAtomContainersTest;
+import org.openscience.cdk.test.debug.DebugAtomContainerSetTest;
 import org.openscience.cdk.test.debug.DebugSetOfMoleculesTest;
 import org.openscience.cdk.test.debug.DebugReactionSetTest;
 import org.openscience.cdk.test.debug.DebugSingleElectronTest;
@@ -92,7 +92,7 @@ public class MdatadebugTests {
         suite.addTest(DebugReactionTest.suite());
         suite.addTest(DebugRingTest.suite());
         suite.addTest(DebugRingSetTest.suite());
-        suite.addTest(DebugSetOfAtomContainersTest.suite());
+        suite.addTest(DebugAtomContainerSetTest.suite());
         suite.addTest(DebugSetOfMoleculesTest.suite());
         suite.addTest(DebugReactionSetTest.suite());
         suite.addTest(DebugSingleElectronTest.suite());

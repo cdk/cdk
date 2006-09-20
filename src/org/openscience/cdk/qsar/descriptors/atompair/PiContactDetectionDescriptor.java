@@ -21,7 +21,7 @@
 package org.openscience.cdk.qsar.descriptors.atompair;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -70,7 +70,7 @@ import org.openscience.cdk.qsar.result.BooleanResult;
 public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
 
     private boolean checkAromaticity = false;
-    SetOfAtomContainers acSet = null;
+    AtomContainerSet acSet = null;
     private IAtomContainer acold=null;
 
     /**

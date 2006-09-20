@@ -107,9 +107,9 @@ public interface IAtomContainerSet extends IChemObject {
 	public void addAtomContainer(IAtomContainer atomContainer, double multiplier);
 
 	/**
-	 * Adds all atomContainers in the SetOfAtomContainers to this container.
+	 * Adds all atomContainers in the AtomContainerSet to this container.
 	 *
-	 * @param  atomContainerSet  The SetOfAtomContainers
+	 * @param  atomContainerSet  The AtomContainerSet
 	 */
 	public void add(IAtomContainerSet atomContainerSet);
 	

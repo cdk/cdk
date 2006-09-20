@@ -45,19 +45,19 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 public class SetOfMoleculesManipulator {
     
 	public static int getAtomCount(IAtomContainerSet set) {
-		return SetOfAtomContainersManipulator.getAtomCount(set);
+		return AtomContainerSetManipulator.getAtomCount(set);
 	}
 	
 	public static int getBondCount(IAtomContainerSet set) {
-		return SetOfAtomContainersManipulator.getBondCount(set);
+		return AtomContainerSetManipulator.getBondCount(set);
 	}
 	
     public static void removeAtomAndConnectedElectronContainers(IMoleculeSet set, IAtom atom) {
-        SetOfAtomContainersManipulator.removeAtomAndConnectedElectronContainers(set, atom);
+        AtomContainerSetManipulator.removeAtomAndConnectedElectronContainers(set, atom);
     }
     
     public static void removeElectronContainer(IMoleculeSet set, IElectronContainer electrons) {
-        SetOfAtomContainersManipulator.removeElectronContainer(set, electrons);
+        AtomContainerSetManipulator.removeElectronContainer(set, electrons);
     }
     
     /**
@@ -70,55 +70,55 @@ public class SetOfMoleculesManipulator {
      *   other methods.
      */
     public static IAtomContainer getAllInOneContainer(IMoleculeSet set) {
-        return SetOfAtomContainersManipulator.getAllInOneContainer(set);
+        return AtomContainerSetManipulator.getAllInOneContainer(set);
     }
     
     /**
      * Returns all the AtomContainer's of a SetOfMolecules.
      */
     public static IAtomContainer[] getAllAtomContainers(IMoleculeSet set) {
-		return SetOfAtomContainersManipulator.getAllAtomContainers(set);
+		return AtomContainerSetManipulator.getAllAtomContainers(set);
     }
     
 	/**
-	 * @see SetOfAtomContainersManipulator
+	 * @see AtomContainerSetManipulator
 	 */
 	public static double getTotalCharge(IMoleculeSet set) {
-		return SetOfAtomContainersManipulator.getTotalCharge(set);
+		return AtomContainerSetManipulator.getTotalCharge(set);
 	}
 	
 	/**
-	 * @see SetOfAtomContainersManipulator
+	 * @see AtomContainerSetManipulator
 	 */
 	public static double getTotalFormalCharge(IMoleculeSet set) {
-		return SetOfAtomContainersManipulator.getTotalFormalCharge(set);
+		return AtomContainerSetManipulator.getTotalFormalCharge(set);
 	}
 	
 	/**
-	 * @see SetOfAtomContainersManipulator
+	 * @see AtomContainerSetManipulator
 	 */
 	public static int getTotalHydrogenCount(IMoleculeSet set) {
-		return SetOfAtomContainersManipulator.getTotalHydrogenCount(set);
+		return AtomContainerSetManipulator.getTotalHydrogenCount(set);
 	}
 	
     public static Vector getAllIDs(IMoleculeSet set) {
-		return SetOfAtomContainersManipulator.getAllIDs(set);
+		return AtomContainerSetManipulator.getAllIDs(set);
 	}
 
     public static void setAtomProperties(IMoleculeSet set, Object propKey, Object propVal) {
-        SetOfAtomContainersManipulator.setAtomProperties(set, propKey, propVal);
+        AtomContainerSetManipulator.setAtomProperties(set, propKey, propVal);
     }
 
     public static IAtomContainer getRelevantAtomContainer(IMoleculeSet moleculeSet, IAtom atom) {
-        return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, atom);
+        return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, atom);
     }
 
     public static IAtomContainer getRelevantAtomContainer(IMoleculeSet moleculeSet, IBond bond) {
-        return SetOfAtomContainersManipulator.getRelevantAtomContainer(moleculeSet, bond);
+        return AtomContainerSetManipulator.getRelevantAtomContainer(moleculeSet, bond);
     }
 
     public static List getAllChemObjects(IMoleculeSet set) {
-        return SetOfAtomContainersManipulator.getAllChemObjects(set);
+        return AtomContainerSetManipulator.getAllChemObjects(set);
     }
 
 }

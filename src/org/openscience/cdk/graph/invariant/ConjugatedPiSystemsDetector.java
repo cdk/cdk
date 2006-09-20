@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class ConjugatedPiSystemsDetector {
 
     /**
-     *  Detect all conjugated pi systems in an AtomContainer. This method returns a SetOfAtomContainers
+     *  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
      *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known 
      *  before calling this method.
      *
@@ -73,8 +73,8 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-	public static SetOfAtomContainers detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
-        SetOfAtomContainers piSystemSet = new SetOfAtomContainers();
+	public static AtomContainerSet detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
+        AtomContainerSet piSystemSet = new AtomContainerSet();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
         	org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);

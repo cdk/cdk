@@ -47,7 +47,7 @@ import org.openscience.cdk.test.tools.MFAnalyserTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest;
-import org.openscience.cdk.test.tools.manipulator.SetOfAtomContainersManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.AtomContainerSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.SetOfMoleculesManipulatorTest;
 
 /**
@@ -88,7 +88,7 @@ public class MstandardTests {
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());
         suite.addTest(RingSetManipulatorTest.suite());
-        suite.addTest(SetOfAtomContainersManipulatorTest.suite());
+        suite.addTest(AtomContainerSetManipulatorTest.suite());
         suite.addTest(SetOfMoleculesManipulatorTest.suite());
         suite.addTest(RebondToolTest.suite());
         

@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  *
  * @cdk.keyword     ring, set of
  */
-public class RingSet extends SetOfAtomContainers implements Serializable, IRingSet, Cloneable {
+public class RingSet extends AtomContainerSet implements Serializable, IRingSet, Cloneable {
 
 	private static final long serialVersionUID = 7168431521057961434L;
 	

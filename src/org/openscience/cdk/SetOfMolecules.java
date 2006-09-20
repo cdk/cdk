@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends SetOfAtomContainers implements IMoleculeSet, Cloneable {
+public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.

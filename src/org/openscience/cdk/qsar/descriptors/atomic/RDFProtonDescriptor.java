@@ -23,7 +23,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.SetOfAtomContainers;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -71,7 +71,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	private boolean checkAromaticity = false;
 	private IAtomContainer acold=null;
 	private IRingSet rs = null;
-	private SetOfAtomContainers acSet=null;
+	private AtomContainerSet acSet=null;
   
 	/**
 	 *  Constructor for the RDFProtonDescriptor object

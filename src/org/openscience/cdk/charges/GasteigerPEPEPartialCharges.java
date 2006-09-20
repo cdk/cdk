@@ -116,7 +116,7 @@ public class GasteigerPEPEPartialCharges {
 //		System.out.println("iset: "+iSet.getAtomContainerCount());
 		
 		/* detect conjugated Pi systems*/
-//		SetOfAtomContainers set = ConjugatedPiSystemsDetector.detect(ac);
+//		AtomContainerSet set = ConjugatedPiSystemsDetector.detect(ac);
 		if(iSet.getAtomContainerCount()  < 2 ){
 			/* detect hyperconjugation interactions */
 			setHI = getHyperconjugationInteractions(ac);
@@ -265,7 +265,7 @@ public class GasteigerPEPEPartialCharges {
 	 * get the possibles structures after a hyperconjugation interactions.
 	 * 
 	 * @param ac IAtomContainer
-	 * @return ISetOfAtomContainers
+	 * @return IAtomContainerSet
 	 * @throws CDKException 
 	 * @throws ClassNotFoundException 
 	 * @throws IOException 

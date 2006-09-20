@@ -57,7 +57,7 @@ import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfAtomContainersManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 /**
@@ -181,7 +181,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
 			while(st.hasMoreTokens()){
-				IAtom atom=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtom(Integer.parseInt(st.nextToken())-1);
+				IAtom atom=AtomContainerSetManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules()).getAtom(Integer.parseInt(st.nextToken())-1);
 				theModel.getRendererModel().getToolTipTextMap().put(atom,st.nextToken());
 			}
 			theModel.getRendererModel().setShowTooltip(true);
@@ -216,7 +216,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
 	        }else{
 	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)(.9*this.getSize().getWidth()),(int)(.9*this.getSize().getHeight())));
-	        	IAtomContainer atomContainer=SetOfAtomContainersManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules());
+	        	IAtomContainer atomContainer=AtomContainerSetManipulator.getAllInOneContainer(theModel.getChemModel().getSetOfMolecules());
 	    		GeometryTools.translateAllPositive(atomContainer,theModel.getRendererModel().getRenderingCoordinates());
 	    		GeometryTools.scaleMolecule(atomContainer, theModel.getRendererModel().getBackgroundDimension(), 0.8,theModel.getRendererModel().getRenderingCoordinates());			
 	    		GeometryTools.center(atomContainer, theModel.getRendererModel().getBackgroundDimension(),theModel.getRendererModel().getRenderingCoordinates());
