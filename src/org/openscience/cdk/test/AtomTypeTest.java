@@ -27,7 +27,6 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -367,5 +366,10 @@ public class AtomTypeTest extends CDKTestCase {
 	        assertFalse(at.compare(hydrogen));
 	        assertFalse(at.compare("Li"));
     	}
+    }
+
+    public void testDefaultFormalCharge() {
+        IAtomType atomType = builder.newAtomType("C");
+        assertEquals(CDKConstants.UNSET, atomType.getFormalCharge());
     }
 }
