@@ -33,6 +33,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.plugin.CDKPluginManager;
+import org.openscience.cdk.applications.swing.InsertTextPanel;
 import org.openscience.cdk.applications.undoredo.JCPUndoRedoHandler;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -365,8 +366,15 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			{
     		toolBar = ToolBarMaker.getToolbar(this, lines);
 			}
-			mainContainer.add(toolBar, BorderLayout.NORTH);
-			mainContainer.revalidate();
+
+            InsertTextPanel textPanel = new InsertTextPanel(this);
+            JPanel northPanel = new JPanel(new BorderLayout());
+            northPanel.add(toolBar, BorderLayout.NORTH);
+            northPanel.add(textPanel, BorderLayout.SOUTH);
+
+//            mainContainer.add(toolBar, BorderLayout.NORTH);
+            mainContainer.add(northPanel, BorderLayout.NORTH);
+            mainContainer.revalidate();
 		} else {
             try {
                 mainContainer.remove(toolBar);
