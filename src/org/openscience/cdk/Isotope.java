@@ -289,5 +289,9 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
         return false;
     }
     
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }
 

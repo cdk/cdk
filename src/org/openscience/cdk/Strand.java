@@ -29,6 +29,7 @@ package org.openscience.cdk;
 
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -236,4 +237,16 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
         return stringContent.toString();
     }
     
+    public Object clone() throws CloneNotSupportedException {
+        Strand clone = (Strand)super.clone();
+        clone.monomers.clear();
+        for (Iterator iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
+        	Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
+        	IAtom[] atoms = monomerClone.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+            	clone.addAtom(atoms[i], monomerClone);
+            }
+        }
+        return clone;
+    }
 }

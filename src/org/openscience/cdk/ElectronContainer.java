@@ -86,6 +86,18 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
 		notifyChanged();
 	}
 
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public String toString() {
+        StringBuffer resultString = new StringBuffer(64);
+        resultString.append("ElectronContainer(");
+        resultString.append("EC:").append(getElectronCount());
+        resultString.append(')');
+        return resultString.toString(); 
+    }
+
 }
 
 

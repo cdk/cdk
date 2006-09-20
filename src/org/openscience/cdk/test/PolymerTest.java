@@ -211,4 +211,14 @@ public class PolymerTest extends TestCase {
             assertTrue('\r' != description.charAt(i));
         }
     }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone() throws Exception {
+    	IPolymer polymer = builder.newPolymer();
+        Object clone = polymer.clone();
+        assertTrue(clone instanceof IPolymer);
+    }
+
 }

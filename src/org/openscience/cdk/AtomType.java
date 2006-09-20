@@ -394,6 +394,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	{
 		return this.electronValency;
 	}
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 	
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);

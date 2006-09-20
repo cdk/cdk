@@ -35,6 +35,7 @@ import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -45,7 +46,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @see org.openscience.cdk.BioPolymer
  */
 public class BioPolymerTest extends CDKTestCase {
-
+	
 	protected IChemObjectBuilder builder;
 
 	public BioPolymerTest(String name) {
@@ -333,4 +334,14 @@ public class BioPolymerTest extends CDKTestCase {
             assertTrue('\r' != description.charAt(i));
         }
     }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone() throws Exception {
+    	IBioPolymer polymer = builder.newBioPolymer();
+        Object clone = polymer.clone();
+        assertTrue(clone instanceof IBioPolymer);
+    }
+
 }

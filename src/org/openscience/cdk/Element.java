@@ -174,6 +174,10 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         return resultString.toString();
     }
     
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     /**
      * Compare an Element with this Element.
      *

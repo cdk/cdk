@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -79,4 +80,15 @@ public class ElectronContainerTest extends CDKTestCase {
         assertEquals(ec.getElectronCount(), ((IElectronContainer)clone).getElectronCount());
     }
     
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    public void testToString() {
+        IAtomType at = builder.newAtomType("C");
+        String description = at.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+    }
 }

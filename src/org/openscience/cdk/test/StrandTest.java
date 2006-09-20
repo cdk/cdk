@@ -286,4 +286,14 @@ public class StrandTest extends TestCase {
             assertTrue('\r' != description.charAt(i));
         }
     }
+    
+    /**
+     * Method to test the clone() method
+     */
+    public void testClone() throws Exception {
+    	IStrand strand = builder.newStrand();
+        Object clone = strand.clone();
+        assertTrue(clone instanceof IStrand);
+    }
+    
 }

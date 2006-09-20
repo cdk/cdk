@@ -29,6 +29,7 @@ package org.openscience.cdk;
 
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -141,4 +142,16 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
         return stringContent.toString();
     }
 
+    public Object clone() throws CloneNotSupportedException {
+    	Polymer clone = (Polymer)super.clone();
+        clone.removeAllElements();
+        for (Iterator iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
+            Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
+            IAtom[] atoms = monomerClone.getAtoms();
+            for (int i=0; i<atoms.length; i++) {
+                clone.addAtom(atoms[i], monomerClone);
+            }
+        }
+        return clone;
+    }
 }
