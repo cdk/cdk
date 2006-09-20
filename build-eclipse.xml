@@ -1,0 +1,14 @@
+<project name="CDKEclipseBuild" default="fullBuild" basedir=".">
+
+  <property name="classes.dir" value="build/classes" />
+  <property name="classes.eclipse.dir" value="bin" />
+
+  <target name="fullBuild" id="fullBuild" depends="preBuild"
+          description="Default: full build" />
+
+  <target name="preBuild" id="preBuild" depends=""
+          description="Pre-build steps for Eclipse">
+    <ant antfile="build.xml" target="javacc"/>
+  </target>
+
+</project>
