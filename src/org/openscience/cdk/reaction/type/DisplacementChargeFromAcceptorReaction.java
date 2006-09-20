@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <pre>X=A => [X-]-[A+]. X represents an acceptor atomType. 
  * It is a case specific of the method BreakingBondReaction</pre>
  * <pre>
- *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new DisplacementChargeFromAcceptorReaction();
  *  Object[] params = {Boolean.FALSE};

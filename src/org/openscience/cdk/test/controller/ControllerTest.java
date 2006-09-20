@@ -31,7 +31,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.controller.PopupController2D;
@@ -83,9 +83,9 @@ public class ControllerTest
 //		r2dm.setDrawNumbers(true);
 		mv.display();
         ChemModel model = new ChemModel();
-        SetOfMolecules moleculeSet = new SetOfMolecules();
+        MoleculeSet moleculeSet = new MoleculeSet();
         moleculeSet.addMolecule(molecule);
-        model.setSetOfMolecules(moleculeSet);
+        model.setMoleculeSet(moleculeSet);
 		Controller2DModel c2dm = new Controller2DModel();
 		inputAdapter = new PopupController2D(model, r2dm, c2dm);
 		c2dm.setDrawMode(Controller2DModel.DRAWBOND);
@@ -274,7 +274,7 @@ public class ControllerTest
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules();
+			setOfMolecules = chemModel.getMoleculeSet();
 			molecule = setOfMolecules.getMolecule(0);
 		}
 		catch(Exception exc)

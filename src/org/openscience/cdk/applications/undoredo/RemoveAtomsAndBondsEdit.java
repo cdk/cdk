@@ -76,7 +76,7 @@ public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {
 		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
-		chemModel.setSetOfMolecules(moleculeSet);
+		chemModel.setMoleculeSet(moleculeSet);
 	}
 
 	/*
@@ -96,7 +96,7 @@ public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {
 		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker
 				.partitionIntoMolecules(molecule);
-		chemModel.setSetOfMolecules(moleculeSet);
+		chemModel.setMoleculeSet(moleculeSet);
 	}
 
 	/*

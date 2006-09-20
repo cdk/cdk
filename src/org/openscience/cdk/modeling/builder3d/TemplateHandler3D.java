@@ -58,7 +58,7 @@ import java.util.zip.GZIPInputStream;
 public class TemplateHandler3D {
     Molecule molecule;
     RingSet sssr;
-    SetOfMolecules templates = null;
+    MoleculeSet templates = null;
     Vector fingerprintData = null;
     Vector ringTemplates = null;
 
@@ -66,7 +66,7 @@ public class TemplateHandler3D {
      * The empty constructor.
      */
     public TemplateHandler3D() {
-        templates = new SetOfMolecules();
+        templates = new MoleculeSet();
         fingerprintData = new Vector();
         ringTemplates = new Vector(75);
     }

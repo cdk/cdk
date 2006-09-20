@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * 
  * <pre>
- *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RearrangementAnion1Reaction();
  *  Object[] params = {Boolean.FALSE};

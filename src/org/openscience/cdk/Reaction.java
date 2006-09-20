@@ -77,9 +77,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Constructs an empty, forward reaction.
      */
     public Reaction() {
-        this.reactants = new SetOfMolecules();
-        this.products = new SetOfMolecules();
-        this.agents = new SetOfMolecules();
+        this.reactants = new MoleculeSet();
+        this.products = new MoleculeSet();
+        this.agents = new MoleculeSet();
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
         reactionDirection = FORWARD;
@@ -104,17 +104,17 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     }
 
     /**
-     * Returns a SetOfMolecules containing the reactants in this reaction.
+     * Returns a MoleculeSet containing the reactants in this reaction.
      *
-     * @return A SetOfMolecules containing the reactants in this reaction
+     * @return A MoleculeSet containing the reactants in this reaction
      * @see    #setReactants
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getReactants() {
-        return (SetOfMolecules)reactants;
+        return (MoleculeSet)reactants;
     }
 
     /**
-     * Assigns a SetOfMolecules to the reactants in this reaction.
+     * Assigns a MoleculeSet to the reactants in this reaction.
      *
      * @param setOfMolecules The new set of reactants
      * @see   #getReactants
@@ -125,17 +125,17 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     }
 	
     /**
-     * Returns a SetOfMolecules containing the products of this reaction.
+     * Returns a MoleculeSet containing the products of this reaction.
      *
-     * @return A SetOfMolecules containing the products in this reaction
+     * @return A MoleculeSet containing the products in this reaction
      * @see    #setProducts
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getProducts() {
-        return (SetOfMolecules)products;
+        return (MoleculeSet)products;
     }
     
 	/**
-     * Assigns a SetOfMolecules to the products of this reaction.
+     * Assigns a MoleculeSet to the products of this reaction.
      *
      * @param setOfMolecules The new set of products
      * @see   #getProducts
@@ -146,13 +146,13 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     }
 	
     /**
-     * Returns a SetOfMolecules containing the agents in this reaction.
+     * Returns a MoleculeSet containing the agents in this reaction.
      *
-     * @return A SetOfMolecules containing the agents in this reaction
+     * @return A MoleculeSet containing the agents in this reaction
      * @see    #addAgent
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getAgents() {
-        return (SetOfMolecules)agents;
+        return (MoleculeSet)agents;
     }
     
     /**
@@ -391,14 +391,14 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 	public Object clone() throws CloneNotSupportedException {
 		Reaction clone = (Reaction)super.clone();
         // clone the reactants, products and agents
-        clone.reactants = (SetOfMolecules)((SetOfMolecules)reactants).clone();
-        clone.agents = (SetOfMolecules)((SetOfMolecules)agents).clone();
-        clone.products = (SetOfMolecules)((SetOfMolecules)products).clone();
+        clone.reactants = (MoleculeSet)((MoleculeSet)reactants).clone();
+        clone.agents = (MoleculeSet)((MoleculeSet)agents).clone();
+        clone.products = (MoleculeSet)((MoleculeSet)products).clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
         Hashtable atomatom = new Hashtable();
-        for (int i = 0; i < ((SetOfMolecules)reactants).getMoleculeCount(); ++i) {
-            Molecule mol = (Molecule)((SetOfMolecules)reactants).getMolecule(i);
+        for (int i = 0; i < ((MoleculeSet)reactants).getMoleculeCount(); ++i) {
+            Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));
         }

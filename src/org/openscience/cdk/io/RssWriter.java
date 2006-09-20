@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Generatas an rss feed. It the object is a SetOfMolecules, the molecules
+ * Generatas an rss feed. It the object is a MoleculeSet, the molecules
  * are put in separtly. All other objects a made cml and put in.
  *
  * @cdk.module       libio-cml
@@ -176,7 +176,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      } else if (object instanceof IReactionSet) {
 		      	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
 		      } else if (object instanceof IMoleculeSet) {
-		      	root = convertor.cdkSetOfMoleculesToCMLList((IMoleculeSet)object);
+		      	root = convertor.cdkMoleculeSetToCMLList((IMoleculeSet)object);
 		      } else if (object instanceof IChemSequence) {
 		      	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
 		      } else if (object instanceof IChemModel) {

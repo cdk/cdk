@@ -42,7 +42,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -156,9 +156,9 @@ public class InsertFromSmiles extends JFrame
                 JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
                 Renderer2DModel renderModel = jcpModel.getRendererModel();
                 org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
-                org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
+                org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
                 if (moleculeSet == null) {
-                    moleculeSet = new SetOfMolecules();
+                    moleculeSet = new MoleculeSet();
                 }
 
 				// ok, now generate 2D coordinates
@@ -190,7 +190,7 @@ public class InsertFromSmiles extends JFrame
                 // and select it
 //                renderModel.setSelectedPart(m);
                 // if the not again setting the chemModel setOfMolecules the chemModel remains empty
-                jcpPanel.getChemModel().setSetOfMolecules(moleculeSet);
+                jcpPanel.getChemModel().setMoleculeSet(moleculeSet);
                 // to ensure, that the molecule is  shown in the actual visibile part of jcp
                 jcpPanel.scaleAndCenterMolecule((ChemModel)jcpPanel.getChemModel());
 //             fire a change so that the view gets updated

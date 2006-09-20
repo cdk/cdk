@@ -1,7 +1,7 @@
 /* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: kaihartmann $    
+ * $Date: 2006-09-20 20:57:51 +0200 (Wed, 20 Sep 2006) $    
+ * $Revision: 6997 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  * @cdk.keyword reaction
  * @cdk.keyword molecule
  */
-public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cloneable {
+public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Cloneable {
 
 	/**
      * Determines if a de-serialized object is compatible with this class.
@@ -65,7 +65,7 @@ public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cl
 	 */
 	private static final long serialVersionUID = -861287315770869699L;
 
-	public SetOfMolecules() {}
+	public MoleculeSet() {}
 	
     /**
      *  Adds an molecule to this container.
@@ -78,9 +78,9 @@ public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cl
     }
     
     /**
-     *  Adds all molecules in the SetOfMolecules to this container.
+     *  Adds all molecules in the MoleculeSet to this container.
      *
-     * @param  moleculeSet  The SetOfMolecules 
+     * @param  moleculeSet  The MoleculeSet 
      */
     public void add(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet) {
     	org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();
@@ -140,12 +140,12 @@ public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cl
 	
 	
 	/**
-	 *  Clones this SetOfMolecules and its content.
+	 *  Clones this MoleculeSet and its content.
 	 *
 	 *@return    the cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		SetOfMolecules clone = (SetOfMolecules)super.clone();
+		MoleculeSet clone = (MoleculeSet)super.clone();
 		IMolecule[] result = getMolecules();
 		for (int i = 0; i < result.length; i++) {
 			clone.addMolecule((Molecule) result[i].clone());
@@ -155,7 +155,7 @@ public class SetOfMolecules extends AtomContainerSet implements IMoleculeSet, Cl
     
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("SetOfMolecules(");
+        buffer.append("MoleculeSet(");
         buffer.append(super.toString());
         buffer.append(')');
         return buffer.toString();

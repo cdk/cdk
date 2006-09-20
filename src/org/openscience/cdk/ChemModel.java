@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /** 
- * An object containig multiple SetOfMolecules and 
+ * An object containig multiple MoleculeSet and 
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
@@ -55,7 +55,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	private static final long serialVersionUID = -5213425310451366185L;
 
 	/**
-	 *  A SetOfMolecules.
+	 *  A MoleculeSet.
 	 */
 	protected IMoleculeSet setOfMolecules = null;
 
@@ -80,26 +80,26 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	public ChemModel() {}
 
 	/**
-	 * Returns the SetOfMolecules of this ChemModel.
+	 * Returns the MoleculeSet of this ChemModel.
 	 *
-	 * @return   The SetOfMolecules of this ChemModel
+	 * @return   The MoleculeSet of this ChemModel
      *
-     * @see      #setSetOfMolecules
+     * @see      #setMoleculeSet
 	 */
-	public IMoleculeSet getSetOfMolecules()
+	public IMoleculeSet getMoleculeSet()
 	{
-		return (SetOfMolecules)this.setOfMolecules;
+		return (MoleculeSet)this.setOfMolecules;
 	}
 
 
 	/**
-	 * Sets the SetOfMolecules of this ChemModel.
+	 * Sets the MoleculeSet of this ChemModel.
 	 *
 	 * @param   setOfMolecules  the content of this model
      *
-     * @see      #getSetOfMolecules
+     * @see      #getMoleculeSet
 	 */
-	public void setSetOfMolecules(IMoleculeSet setOfMolecules)
+	public void setMoleculeSet(IMoleculeSet setOfMolecules)
 	{
 		this.setOfMolecules = setOfMolecules;
 		this.setOfMolecules.addListener(this);
@@ -191,11 +191,11 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         StringBuffer buffer = new StringBuffer(64);
         buffer.append("ChemModel(");
         buffer.append(hashCode());
-        if (getSetOfMolecules() != null) {
+        if (getMoleculeSet() != null) {
             buffer.append(", ");
-            buffer.append(getSetOfMolecules().toString());
+            buffer.append(getMoleculeSet().toString());
         } else {
-            buffer.append(", No SetOfMolecules");
+            buffer.append(", No MoleculeSet");
         }
         if (getCrystal() != null) {
             buffer.append(getCrystal().toString());
@@ -222,7 +222,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 		ChemModel clone = (ChemModel)super.clone();
         // clone the content
         if (setOfMolecules != null) {
-            clone.setOfMolecules = (SetOfMolecules)((SetOfMolecules)setOfMolecules).clone();
+            clone.setOfMolecules = (MoleculeSet)((MoleculeSet)setOfMolecules).clone();
         } else {
             clone.setOfMolecules = null;
         }

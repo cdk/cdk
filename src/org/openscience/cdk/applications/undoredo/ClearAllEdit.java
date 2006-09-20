@@ -31,8 +31,8 @@ public class ClearAllEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-    	if(chemModel.getSetOfMolecules()!=null)
-    		chemModel.getSetOfMolecules().removeAllAtomContainers();
+    	if(chemModel.getMoleculeSet()!=null)
+    		chemModel.getMoleculeSet().removeAllAtomContainers();
     	if(chemModel.getReactionSet()!=null)
     		chemModel.getReactionSet().removeAllReactions();	}
 
@@ -43,7 +43,7 @@ public class ClearAllEdit extends AbstractUndoableEdit {
 	 */
 	public void undo() throws CannotUndoException {
 		if(som!=null)
-			chemModel.setSetOfMolecules(som);
+			chemModel.setMoleculeSet(som);
 		if(sor!=null)
 			chemModel.setReactionSet(sor);
 	}

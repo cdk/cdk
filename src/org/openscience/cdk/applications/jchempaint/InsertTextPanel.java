@@ -25,7 +25,7 @@
 */
 package org.openscience.cdk.applications.jchempaint;
 
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -157,9 +157,9 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         JChemPaintModel jcpModel = jChemPaintPanel.getJChemPaintModel();
         Renderer2DModel renderModel = jcpModel.getRendererModel();
         org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
+        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet == null) {
-            moleculeSet = new SetOfMolecules();
+            moleculeSet = new MoleculeSet();
         }
 
         // ok, now generate 2D coordinates
@@ -187,7 +187,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
 
         moleculeSet.addMolecule(molecule);
 //        renderModel.setSelectedPart(m);
-        jChemPaintPanel.getChemModel().setSetOfMolecules(moleculeSet);
+        jChemPaintPanel.getChemModel().setMoleculeSet(moleculeSet);
         jChemPaintPanel.scaleAndCenterMolecule(jChemPaintPanel.getChemModel());
         jcpModel.fireChange(jChemPaintPanel.getChemModel());
     }

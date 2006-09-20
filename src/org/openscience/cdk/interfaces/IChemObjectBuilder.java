@@ -198,7 +198,7 @@ public interface IChemObjectBuilder {
 	public IChemFile newChemFile();
 	
 	/**
-	 * Constructs an new IChemModel with a null ISetOfMolecules.
+	 * Constructs an new IChemModel with a null IMoleculeSet.
 	 * 
      * @return IChemModel implementation defined for this IChemObjectBuilder
 	 */

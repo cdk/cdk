@@ -779,7 +779,7 @@ public class MoleculeFactory {
 			fis.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules();
+			setOfMolecules = chemModel.getMoleculeSet();
 			molecule = setOfMolecules.getMolecule(0);
 			for (int i = 0; i < molecule.getAtomCount(); i++)
 			{

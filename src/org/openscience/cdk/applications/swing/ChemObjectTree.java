@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Displays a IChemObject as a tree. An example tree looks like this:
  * <pre>
  *   ChemModel
- *    +- SetOfMolecules
+ *    +- MoleculeSet
  *        +- Molecule
  *        |   +- Atom
  *        |   +- Atom

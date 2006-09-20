@@ -85,7 +85,7 @@ public class CTXReaderTest extends CDKTestCase {
             IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             
-            IMoleculeSet moleculeSet = model.getSetOfMolecules();
+            IMoleculeSet moleculeSet = model.getMoleculeSet();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getAtomContainerCount());
             

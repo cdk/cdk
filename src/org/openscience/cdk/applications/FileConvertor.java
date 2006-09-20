@@ -137,7 +137,7 @@ public class FileConvertor {
         this.oformat = "cml";
 
         chemObjectNames.add("org.openscience.cdk.Molecule");
-        chemObjectNames.add("org.openscience.cdk.SetOfMolecules");
+        chemObjectNames.add("org.openscience.cdk.MoleculeSet");
         chemObjectNames.add("org.openscience.cdk.Crystal");
         chemObjectNames.add("org.openscience.cdk.ChemModel");
         chemObjectNames.add("org.openscience.cdk.ChemSequence");
@@ -609,7 +609,7 @@ public class FileConvertor {
             if (crystal != null) {
                 write(crystal, outputFilename);
             }
-            IMoleculeSet som = cm.getSetOfMolecules();
+            IMoleculeSet som = cm.getMoleculeSet();
             if (som != null) {
                 write(som, outputFilename);
             }
@@ -646,7 +646,7 @@ public class FileConvertor {
         } catch (CDKException exception) {
             int count = som.getMoleculeCount();
             boolean needMoreFiles = (cow.accepts(IMoleculeSet.class)) && (count > 1);
-            logger.info("Cannot write SetOfMolecules, recursing into Molecules's.");
+            logger.info("Cannot write MoleculeSet, recursing into Molecules's.");
             for (int i=0; i < count; i++) {
                 if (needMoreFiles) {
                     cow.close(); // possibly closing empty file

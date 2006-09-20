@@ -85,7 +85,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
@@ -587,9 +587,9 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 
 
 	private void shiftMolecule() {
-		for (int i = 0; i < chemModel.getSetOfMolecules().getMoleculeCount(); i++)
+		for (int i = 0; i < chemModel.getMoleculeSet().getMoleculeCount(); i++)
 		{
-			IMolecule mol = chemModel.getSetOfMolecules().getMolecules()[i];
+			IMolecule mol = chemModel.getMoleculeSet().getMolecules()[i];
 			for (int k = 0; k < mol.getAtomCount(); k++)
 			{
 				((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x=((Point2d)r2dm.getRenderingCoordinate(mol.getAtom(k))).x -shiftX;
@@ -633,7 +633,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			atom2=(IAtom)r2dm.getMerge().get(atom1);
 			undoObject[0] = atom1;
 			undoObject[1] = atom2;
-			IMoleculeSet som=chemModel.getSetOfMolecules();
+			IMoleculeSet som=chemModel.getMoleculeSet();
 			IAtomContainer container1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom1);
 			IAtomContainer container2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atom2);
 			if (container1 != container2) {
@@ -1180,7 +1180,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 					try
 					{
 						IMoleculeSet setOfMolecules = ConnectivityChecker.partitionIntoMolecules(atomCon);
-						chemModel.setSetOfMolecules(setOfMolecules);
+						chemModel.setMoleculeSet(setOfMolecules);
 						logger.debug("We have " + setOfMolecules.getAtomContainerCount() + " molecules on screen");
 					} catch (Exception exception)
 					{
@@ -1397,7 +1397,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 			atomCon.addAtom(newAtom1);
 			// update atoms
 			updateAtom(atomCon, newAtom1);
-			chemModel.getSetOfMolecules().addAtomContainer(atomCon);
+			chemModel.getMoleculeSet().addAtomContainer(atomCon);
 			//FIXME undoredo
 			IAtomContainer undoRedoContainer= chemModel.getBuilder().newAtomContainer();
 			undoRedoContainer.addAtom(newAtom1);
@@ -2131,7 +2131,7 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
 		 double largestx=Integer.MIN_VALUE;
 		 double smallesty=Integer.MAX_VALUE;
 		 double largesty=Integer.MIN_VALUE;
-		 IAtomContainer allinone=SetOfMoleculesManipulator.getAllInOneContainer(chemModel.getSetOfMolecules());
+		 IAtomContainer allinone=MoleculeSetManipulator.getAllInOneContainer(chemModel.getMoleculeSet());
 		 for(int i=0;i<allinone.getAtomCount();i++){
 			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x<smallestx)
 				 smallestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x;

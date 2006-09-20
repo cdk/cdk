@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -41,7 +41,7 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		UndoableEdit edit = new RemoveAtomsAndBondsEdit(model, undoCont, "");
 		edit.undo();
 		edit.redo();
-		assertTrue(model.getSetOfMolecules().getMoleculeCount() == 0);
+		assertTrue(model.getMoleculeSet().getMoleculeCount() == 0);
 	}
 
 	/*
@@ -52,9 +52,9 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		ChemModel model = createAllRemovedMol();
 		UndoableEdit edit = new RemoveAtomsAndBondsEdit(model, undoCont, "");
 		edit.undo();
-		int newAtomCount = model.getSetOfMolecules().getMolecule(0)
+		int newAtomCount = model.getMoleculeSet().getMolecule(0)
 				.getAtomCount();
-		int newBondCount = model.getSetOfMolecules().getMolecule(0)
+		int newBondCount = model.getMoleculeSet().getMolecule(0)
 				.getBondCount();
 		assertTrue(newAtomCount == atomCount && newBondCount == bondCount);
 	}
@@ -77,9 +77,9 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		}
 		mol.removeAllElements();
 		ChemModel model = new ChemModel();
-		SetOfMolecules mols = new SetOfMolecules();
+		MoleculeSet mols = new MoleculeSet();
 		mols.addMolecule(mol);
-		model.setSetOfMolecules(mols);
+		model.setMoleculeSet(mols);
 		return model;
 	}
 

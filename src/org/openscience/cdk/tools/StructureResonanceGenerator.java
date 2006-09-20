@@ -58,7 +58,7 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * 
  * <pre>
  * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
- * SetOfMolecules setOf = gf.getResonances(new Molecule());
+ * MoleculeSet setOf = gf.getResonances(new Molecule());
  * </pre>
  * 
  * <p>We have the possibility to localize the reactive center. Good method if you

@@ -70,15 +70,15 @@ public interface IReaction extends IChemObject {
     public int getProductCount();
 
     /**
-     * Returns a ISetOfMolecules containing the reactants in this reaction.
+     * Returns a IMoleculeSet containing the reactants in this reaction.
      *
-     * @return A ISetOfMolecules containing the reactants in this reaction
+     * @return A IMoleculeSet containing the reactants in this reaction
      * @see    #setReactants
      */
     public IMoleculeSet getReactants();
 
     /**
-     * Assigns a ISetOfMolecules to the reactants in this reaction.
+     * Assigns a IMoleculeSet to the reactants in this reaction.
      *
      * @param  reactants The new set of reactants
      * @see              #getReactants
@@ -86,15 +86,15 @@ public interface IReaction extends IChemObject {
     public void setReactants(IMoleculeSet reactants);
 	
     /**
-     * Returns a ISetOfMolecules containing the products of this reaction.
+     * Returns a IMoleculeSet containing the products of this reaction.
      *
-     * @return A ISetOfMolecules containing the products in this reaction
+     * @return A IMoleculeSet containing the products in this reaction
      * @see    #setProducts
      */
     public IMoleculeSet getProducts();
     
 	/**
-     * Assigns a ISetOfMolecules to the products of this reaction.
+     * Assigns a IMoleculeSet to the products of this reaction.
      *
      * @param products The new set of products
      * @see            #getProducts
@@ -102,9 +102,9 @@ public interface IReaction extends IChemObject {
     public void setProducts(IMoleculeSet products);
 	
     /**
-     * Returns a ISetOfMolecules containing the agents in this reaction.
+     * Returns a IMoleculeSet containing the agents in this reaction.
      *
-     * @return A ISetOfMolecules containing the agents in this reaction
+     * @return A IMoleculeSet containing the agents in this reaction
      * @see    #addAgent
      */
     public IMoleculeSet getAgents();

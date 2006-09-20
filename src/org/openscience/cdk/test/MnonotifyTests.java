@@ -51,7 +51,7 @@ import org.openscience.cdk.test.nonotify.NNReactionTest;
 import org.openscience.cdk.test.nonotify.NNRingSetTest;
 import org.openscience.cdk.test.nonotify.NNRingTest;
 import org.openscience.cdk.test.nonotify.NNAtomContainerSetTest;
-import org.openscience.cdk.test.nonotify.NNSetOfMoleculesTest;
+import org.openscience.cdk.test.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.test.nonotify.NNReactionSetTest;
 import org.openscience.cdk.test.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.test.nonotify.NNStrandTest;
@@ -93,7 +93,7 @@ public class MnonotifyTests {
         suite.addTest(NNRingTest.suite());
         suite.addTest(NNRingSetTest.suite());
         suite.addTest(NNAtomContainerSetTest.suite());
-        suite.addTest(NNSetOfMoleculesTest.suite());
+        suite.addTest(NNMoleculeSetTest.suite());
         suite.addTest(NNReactionSetTest.suite());
         suite.addTest(NNSingleElectronTest.suite());
         suite.addTest(NNStrandTest.suite());

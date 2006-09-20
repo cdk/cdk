@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 
@@ -64,7 +64,7 @@ public class ChangeEventPropagationTest extends CDKTestCase {
         ChemFile cf = new ChemFile();
 	ChemSequence cs = new ChemSequence();
 	ChemModel cm = new ChemModel();
-	SetOfMolecules som = new SetOfMolecules();
+	MoleculeSet som = new MoleculeSet();
         Molecule mol = new Molecule();
 	Atom a1 = new Atom("C");
 	Atom a2 = new Atom("C");
@@ -73,7 +73,7 @@ public class ChangeEventPropagationTest extends CDKTestCase {
 	mol.addAtom(a2);
 	mol.addBond(b1);
 	som.addMolecule(mol);
-	cm.setSetOfMolecules(som);
+	cm.setMoleculeSet(som);
 	cs.addChemModel(cm);
 	cf.addChemSequence(cs);
 	TestListener ts = new TestListener();

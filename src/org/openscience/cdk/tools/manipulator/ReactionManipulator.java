@@ -173,7 +173,7 @@ public class ReactionManipulator {
      * Returns all the AtomContainer's of a Reaction.
      */
     public static IAtomContainer[] getAllAtomContainers(IReaction reaction) {
-		return SetOfMoleculesManipulator.getAllAtomContainers(
+		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(reaction)
         );
     }
@@ -195,19 +195,19 @@ public class ReactionManipulator {
     }
 
     public static IAtomContainer getRelevantAtomContainer(IReaction reaction, IAtom atom) {
-        IAtomContainer result = SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getReactants(), atom);
+        IAtomContainer result = MoleculeSetManipulator.getRelevantAtomContainer(reaction.getReactants(), atom);
         if (result != null) {
             return result;
         }
-        return SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getProducts(), atom);
+        return MoleculeSetManipulator.getRelevantAtomContainer(reaction.getProducts(), atom);
     }
 
     public static IAtomContainer getRelevantAtomContainer(IReaction reaction, IBond bond) {
-        IAtomContainer result = SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getReactants(), bond);
+        IAtomContainer result = MoleculeSetManipulator.getRelevantAtomContainer(reaction.getReactants(), bond);
         if (result != null) {
             return result;
         }
-        return SetOfMoleculesManipulator.getRelevantAtomContainer(reaction.getProducts(), bond);
+        return MoleculeSetManipulator.getRelevantAtomContainer(reaction.getProducts(), bond);
     }
     
     public static void setAtomProperties(IReaction reaction, Object propKey, Object propVal) {

@@ -48,7 +48,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.libio.cml.Convertor;
@@ -243,7 +243,7 @@ public class DescriptorCalculator {
                 SMILESReader reader = new SMILESReader(
                     new StringReader(toProcess)
                 );
-                SetOfMolecules moleculeSet = (SetOfMolecules)reader.read(new SetOfMolecules());
+                MoleculeSet moleculeSet = (MoleculeSet)reader.read(new MoleculeSet());
                 org.openscience.cdk.interfaces.IMolecule[] molecules = moleculeSet.getMolecules();
                 for (int i=0; i<molecules.length; i++) {
                     processMolecule(writer, molecules[i]);

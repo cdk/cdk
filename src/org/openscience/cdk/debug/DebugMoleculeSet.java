@@ -1,4 +1,4 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 6913 $ $Author: egonw $ $Date: 2006-09-18 20:13:21 +0200 (Mon, 18 Sep 2006) $
  *
  * Copyright (C) 2005-2006  Egon Willighagen <egonw@users.sf.net>
  *
@@ -37,12 +37,12 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     egonw
  * @cdk.module datadebug
  */
-public class DebugSetOfMolecules extends org.openscience.cdk.SetOfMolecules
+public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
     implements IMoleculeSet {
 
     private static final long serialVersionUID = -2925577323304207688L;
     
-    LoggingTool logger = new LoggingTool(DebugSetOfMolecules.class);
+    LoggingTool logger = new LoggingTool(DebugMoleculeSet.class);
 
 	public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);

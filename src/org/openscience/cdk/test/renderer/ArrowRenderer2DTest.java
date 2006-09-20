@@ -99,7 +99,7 @@ public class ArrowRenderer2DTest extends JPanel {
 			ins.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getSetOfMolecules();
+			setOfMolecules = chemModel.getMoleculeSet();
 			molecule = setOfMolecules.getMolecule(0);
 			ht = r2dm.getColorHash();
 			r2dm.setDrawNumbers(true);

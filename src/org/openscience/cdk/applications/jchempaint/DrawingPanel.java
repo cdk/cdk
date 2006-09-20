@@ -74,7 +74,7 @@ public class DrawingPanel extends JPanel
 	}
 	
 	public void updateRingSetInRenderer(){
-		r2d.redoSSSR(jchemPaintModel.getChemModel().getSetOfMolecules().getMolecules());
+		r2d.redoSSSR(jchemPaintModel.getChemModel().getMoleculeSet().getMolecules());
 	}
 	
 	/**

@@ -66,14 +66,14 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * one or more molecules. This class is capable of writing both mol files and
  * SD files. The correct format is automatically chosen:
  * <ul>
- * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules}
+ * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.MoleculeSet MoleculeSet}
  * as an argument a SD files is written</li>
  * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(IMolecule) this one} or
  * {@link #writeMolecule(IMolecule, boolean[]) that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
  * </ul>
  * <p>Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
- * a {@link org.openscience.cdk.SetOfMolecules SetOfMolecules} or you can repeatedly call one of the two
+ * a {@link org.openscience.cdk.MoleculeSet MoleculeSet} or you can repeatedly call one of the two
  * writeMolecule methods.
  * <p>For writing a MDL molfile you can this code:
  * <pre>
@@ -189,15 +189,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
     /**
      * Writes a IChemObject to the MDL molfile formated output. 
      * It can only output ChemObjects of type ChemFile, Molecule and
-     * SetOfMolecules.
+     * MoleculeSet.
      *
-     * @param object class must be of type ChemFile, Molecule or SetOfMolecules.
+     * @param object class must be of type ChemFile, Molecule or MoleculeSet.
      *
      * @see org.openscience.cdk.ChemFile
      */
 	public void write(IChemObject object) throws CDKException {
 		if (object instanceof IMoleculeSet) {
-			writeSetOfMolecules((IMoleculeSet)object);
+			writeMoleculeSet((IMoleculeSet)object);
 		} else if (object instanceof IChemFile) {
 			writeChemFile((IChemFile)object);
 		} else if (object instanceof IMolecule) {
@@ -214,7 +214,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 				throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
 			}
 		} else {
-			throw new CDKException("Only supported is writing of ChemFile, SetOfMolecules, AtomContainer and Molecule objects.");
+			throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
 		}
 	}
 	
@@ -223,7 +223,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   molecules  Array of Molecules that is written to an OutputStream 
 	 */
-	private void writeSetOfMolecules(IMoleculeSet som)
+	private void writeMoleculeSet(IMoleculeSet som)
 	{
 		IMolecule[] molecules = som.getMolecules();
 		for (int i = 0; i < som.getMoleculeCount(); i++)

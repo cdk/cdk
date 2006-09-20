@@ -401,11 +401,11 @@ public abstract class JChemPaintPanel
 	 */
 	public void setJChemPaintModel(JChemPaintModel model) {
 		lastUsedJCPP = this;
-		if (model != null && jchemPaintModel != null && model.getChemModel().getSetOfMolecules() != null) {
+		if (model != null && jchemPaintModel != null && model.getChemModel().getMoleculeSet() != null) {
 			model.getRendererModel().setBackgroundDimension(jchemPaintModel.getRendererModel().getBackgroundDimension());
 			IAtomContainer acc = ChemModelManipulator.getAllInOneContainer(model.getChemModel());
 			Dimension molDim = GeometryTools.get2DDimension(acc,model.getRendererModel().getRenderingCoordinates());
-//			Dimension molDim = GeometryTools.get2DDimension(model.getChemModel().getSetOfMolecules().getAtomContainer(0));
+//			Dimension molDim = GeometryTools.get2DDimension(model.getChemModel().getMoleculeSet().getAtomContainer(0));
 			
 			if (isViewerOnly) {
 				Dimension viewerDim = null;
@@ -430,7 +430,7 @@ public abstract class JChemPaintPanel
 			}
 			model.getRendererModel().setBackgroundDimension(new Dimension(width, height));
 		}
-		else if (model.getChemModel().getSetOfMolecules() == null && isViewerOnly) {
+		else if (model.getChemModel().getMoleculeSet() == null && isViewerOnly) {
 			Dimension viewerDim = null;
 			try {
 				viewerDim = getViewerDimension();
@@ -584,10 +584,10 @@ public abstract class JChemPaintPanel
 			//In case of the applet we do not ask for save but put the clear into the undo stack
 			ClearAllEdit coa = null;
 			try {
-				coa = new ClearAllEdit(this.getChemModel(),(IMoleculeSet)this.getChemModel().getSetOfMolecules().clone(),this.getChemModel().getReactionSet());
+				coa = new ClearAllEdit(this.getChemModel(),(IMoleculeSet)this.getChemModel().getMoleculeSet().clone(),this.getChemModel().getReactionSet());
 				this.jchemPaintModel.getControllerModel().getUndoSupport().postEdit(coa);
 			} catch (Exception e) {
-				logger.error("Clone of ISetOfMolecules failed: ", e.getMessage());
+				logger.error("Clone of IMoleculeSet failed: ", e.getMessage());
             	logger.debug(e);
 			}
 			return JOptionPane.YES_OPTION;
@@ -716,10 +716,10 @@ public abstract class JChemPaintPanel
 				frame.show();
 				return;
 			}else{
-				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
-					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
-						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
-							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k));
+				for(int i=0;i<chemModel.getMoleculeSet().getAtomContainerCount();i++){
+					for(int k=0;i<chemModel.getMoleculeSet().getAtomContainers()[i].getAtomCount();k++){
+						if(chemModel.getMoleculeSet().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
+							chemModel.getMoleculeSet().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getMoleculeSet().getAtomContainers()[i].getAtom(k));
 					}						
 				}
 			}
@@ -733,9 +733,9 @@ public abstract class JChemPaintPanel
 				setJChemPaintModel(jcpm);
 				repaint();
 			}
-		}else if (getJChemPaintModel().getChemModel().getSetOfMolecules() == null ||
+		}else if (getJChemPaintModel().getChemModel().getMoleculeSet() == null ||
 				getJChemPaintModel().getChemModel().getReactionSet() == null /*|| 
-				getJChemPaintModel().getChemModel().getSetOfMolecules().getMolecule(0).getAtoms().length == 0*/) {
+				getJChemPaintModel().getChemModel().getMoleculeSet().getMolecule(0).getAtoms().length == 0*/) {
 			    registerModel(jcpm);
 				setJChemPaintModel(jcpm);
 				repaint();
@@ -824,10 +824,10 @@ public abstract class JChemPaintPanel
 				frame.show();
 				return;
 			}else{
-				for(int i=0;i<chemModel.getSetOfMolecules().getAtomContainerCount();i++){
-					for(int k=0;i<chemModel.getSetOfMolecules().getAtomContainers()[i].getAtomCount();k++){
-						if(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
-							chemModel.getSetOfMolecules().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getSetOfMolecules().getAtomContainers()[i].getAtom(k));
+				for(int i=0;i<chemModel.getMoleculeSet().getAtomContainerCount();i++){
+					for(int k=0;i<chemModel.getMoleculeSet().getAtomContainers()[i].getAtomCount();k++){
+						if(chemModel.getMoleculeSet().getAtomContainers()[i].getAtom(k).getPoint2d()==null)
+							chemModel.getMoleculeSet().getAtomContainers()[i].removeAtomAndConnectedElectronContainers(chemModel.getMoleculeSet().getAtomContainers()[i].getAtom(k));
 					}						
 				}
 			}

@@ -91,7 +91,7 @@ public class DeduceBondSystemTool {
         }
 
 
-        IMoleculeSet som = new SetOfMolecules();
+        IMoleculeSet som = new MoleculeSet();
 
 //		int number=1; // total number of possibilities
 //		

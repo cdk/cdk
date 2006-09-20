@@ -107,13 +107,13 @@ public class XindiceReader {
 
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMoleculeSet) {
-            return readSetOfMolecules((IMoleculeSet)object);
+            return readMoleculeSet((IMoleculeSet)object);
         } else {
-            throw new CDKException("Only supported is SetOfMolecules.");
+            throw new CDKException("Only supported is MoleculeSet.");
         }
     }
     
-    private IMoleculeSet readSetOfMolecules(IMoleculeSet mols) throws CDKException {
+    private IMoleculeSet readMoleculeSet(IMoleculeSet mols) throws CDKException {
         Collection col = null;
         try {
             String driver = "org.apache.xindice.client.xmldb.DatabaseImpl";
@@ -159,7 +159,7 @@ public class XindiceReader {
     private IMolecule getMolecule(IChemFile cf) {
     	IChemSequence cs = cf.getChemSequence(0);
         IChemModel cm = cs.getChemModel(0);
-        IMoleculeSet som = cm.getSetOfMolecules();
+        IMoleculeSet som = cm.getMoleculeSet();
         return som.getMolecule(0);
     }
 

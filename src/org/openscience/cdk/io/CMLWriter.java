@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import java.io.*;
 
 /**
- * Serializes a SetOfMolecules or a Molecule object to CML 2 code.
+ * Serializes a MoleculeSet or a Molecule object to CML 2 code.
  * Chemical Markup Language is an XML based file format {@cdk.cite PMR99}.
  * Output can be redirected to other Writer objects like StringWriter
  * and FileWriter. An example:
@@ -167,7 +167,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     /**
      * Serializes the IChemObject to CML and redirects it to the output Writer.
      *
-     * @param object A Molecule of SetOfMolecules object
+     * @param object A Molecule of MoleculeSet object
      */
     public void write(IChemObject object) throws CDKException {
        
@@ -211,7 +211,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof IReactionSet) {
         	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IMoleculeSet) {
-        	root = convertor.cdkSetOfMoleculesToCMLList((IMoleculeSet)object);
+        	root = convertor.cdkMoleculeSetToCMLList((IMoleculeSet)object);
         } else if (object instanceof IChemSequence) {
         	root = convertor.cdkChemSequenceToCMLList((IChemSequence)object);
         } else if (object instanceof IChemModel) {

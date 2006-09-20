@@ -37,7 +37,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.DrawingPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -98,12 +98,12 @@ public class CleanupAction extends JCPAction
 			logger.debug("getting ChemModel");
 			org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
 			logger.debug("got ChemModel");
-			org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
+			org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
 			if (som != null)
 			{
                 
 				logger.debug("no mols in som: ", som.getMoleculeCount());
-				SetOfMolecules newsom = new SetOfMolecules();
+				MoleculeSet newsom = new MoleculeSet();
 				IMolecule[] mols = som.getMolecules();
 				for (int i = 0; i < mols.length; i++)
 				{
@@ -125,7 +125,7 @@ public class CleanupAction extends JCPAction
                     	}
                     }
 				}
-				model.setSetOfMolecules(newsom);
+				model.setMoleculeSet(newsom);
                 
                 UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
                 jcpPanel.getUndoSupport().postEdit(edit);

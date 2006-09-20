@@ -87,10 +87,10 @@ public class JumboTest extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 24);
             assertEquals(mol.getBondCount(), 28);
@@ -123,10 +123,10 @@ public class JumboTest extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 15);
             assertEquals(mol.getBondCount(), 16);
@@ -159,10 +159,10 @@ public class JumboTest extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals("Incorrect number of atoms", 11, mol.getAtomCount());
             assertEquals("Incorrect number of bonds", 12, mol.getBondCount());

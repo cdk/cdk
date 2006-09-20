@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
@@ -66,14 +66,14 @@ public class ChemModelTest extends CDKTestCase {
 	    assertNotNull(chemModel);
     }
 
-    public void testSetSetOfMolecules_IMoleculeSet() {
+    public void testSetMoleculeSet_IMoleculeSet() {
 	    ChemModel chemModel = new ChemModel();
-	    SetOfMolecules crystal = new SetOfMolecules();
-        chemModel.setSetOfMolecules(crystal);
-        assertEquals(crystal, chemModel.getSetOfMolecules());
+	    MoleculeSet crystal = new MoleculeSet();
+        chemModel.setMoleculeSet(crystal);
+        assertEquals(crystal, chemModel.getMoleculeSet());
     }
-    public void testGetSetOfMolecules() {
-    	testSetSetOfMolecules_IMoleculeSet();
+    public void testGetMoleculeSet() {
+    	testSetMoleculeSet_IMoleculeSet();
     }
     
     public void testSetReactionSet_IReactionSet() {
@@ -125,12 +125,12 @@ public class ChemModelTest extends CDKTestCase {
     public void testClone_IMoleculeSet() throws Exception {
 		ChemModel model = new ChemModel();
         ChemModel clone = (ChemModel)model.clone();
-        assertNull(clone.getSetOfMolecules());
+        assertNull(clone.getMoleculeSet());
         
-		model.setSetOfMolecules(new SetOfMolecules());
+		model.setMoleculeSet(new MoleculeSet());
         clone = (ChemModel)model.clone();
-        assertNotNull(clone.getSetOfMolecules());
-        assertNotSame(model.getSetOfMolecules(), clone.getSetOfMolecules());
+        assertNotNull(clone.getMoleculeSet());
+        assertNotSame(model.getMoleculeSet(), clone.getMoleculeSet());
     }
 
     public void testClone_IReactionSet() throws Exception {
@@ -171,7 +171,7 @@ public class ChemModelTest extends CDKTestCase {
         ChemModel chemObject = new ChemModel();
         chemObject.addListener(listener);
         
-        chemObject.setSetOfMolecules(new SetOfMolecules());
+        chemObject.setMoleculeSet(new MoleculeSet());
         assertTrue(listener.changed);
         
         listener.reset();

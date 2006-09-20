@@ -126,7 +126,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-		    org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+		    org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
 		    //System.out.println("Constructed Molecule");
 		    //System.out.println("Starting AllRingsFinder");
 		    ringSet = new AllRingsFinder().findAllRings(mol);
@@ -158,7 +158,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-		    org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+		    org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
 		    if (standAlone) System.out.println("Constructed Molecule");
 		    if (standAlone) System.out.println("Starting AllRingsFinder");
 		    IRingSet ringSet = new AllRingsFinder().findAllRings(mol);

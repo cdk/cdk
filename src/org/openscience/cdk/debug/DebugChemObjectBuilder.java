@@ -262,7 +262,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IMoleculeSet newMoleculeSet() {
-		return new DebugSetOfMolecules();
+		return new DebugMoleculeSet();
 	}
 
 	public IReactionSet newReactionSet() {

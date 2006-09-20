@@ -260,7 +260,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IMoleculeSet newMoleculeSet() {
-		return new SetOfMolecules();
+		return new MoleculeSet();
 	}
 
 	public IReactionSet newReactionSet() {

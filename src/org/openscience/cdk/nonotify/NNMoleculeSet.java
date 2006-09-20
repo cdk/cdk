@@ -1,7 +1,7 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $RCSfile$    
+ * $Author: egonw $    
+ * $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $    
+ * $Revision: 5855 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -20,33 +20,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-package org.openscience.cdk.test.debug;
+package org.openscience.cdk.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.SetOfMoleculesTest;
-
-/**
- * Checks the funcitonality of the AtomContainer.
- *
- * @cdk.module test-datadebug
+/** 
+ * @cdk.module nonotify
  */
-public class DebugSetOfMoleculesTest extends SetOfMoleculesTest {
+public class NNMoleculeSet extends MoleculeSet {
 
-    public DebugSetOfMoleculesTest(String name) {
-        super(name);
-    }
+	private static final long serialVersionUID = 5220158598240759515L;
 
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugSetOfMoleculesTest.class);
-    }
-
+	public NNMoleculeSet() {
+		super();
+		setNotification(false);
+	}
+	
+	public IChemObjectBuilder getBuilder() {
+		return NoNotificationChemObjectBuilder.getInstance();
+	}
+	
+	public void addListener(IChemObjectListener col) {
+		// Ignore this: we do not listen anyway
+	}
 }

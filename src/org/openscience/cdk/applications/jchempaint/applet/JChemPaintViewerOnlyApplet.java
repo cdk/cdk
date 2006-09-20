@@ -100,10 +100,10 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
       if (objectInRange!=lastHighlighted && objectInRange instanceof IAtom)
       {
    	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalHighlightColor(Color.RED);
-   	    IAtomContainer ac=getTheJcpp().getJChemPaintModel().getChemModel().getSetOfMolecules().getBuilder().newAtomContainer();
+   	    IAtomContainer ac=getTheJcpp().getJChemPaintModel().getChemModel().getMoleculeSet().getBuilder().newAtomContainer();
    	    ac.addAtom((IAtom)objectInRange);
    	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
-        highlightPeakInSpectrum(getTheJcpp().getChemModel().getSetOfMolecules().getMolecule(0).getAtomNumber((IAtom)objectInRange));
+        highlightPeakInSpectrum(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
         repaint();
         lastHighlighted=objectInRange;
       }

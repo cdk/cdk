@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  * <p>A disconnected AtomContainer can be fragmented into connected
  * fragments by using code like:
  * <pre>
- *   SetOfMolecules fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
+ *   MoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
  *   int fragmentCount = fragments.getMoleculeCount();
  * </pre> 
  *
@@ -97,7 +97,7 @@ public class ConnectivityChecker
 	 * Partitions the atoms in an AtomContainer into covalently connected components.
 	 *
 	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
-	 * @return                 A SetOfMolecules.
+	 * @return                 A MoleculeSet.
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */

@@ -37,7 +37,7 @@ import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.reaction.type.ReactionBalancer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * @author      Kai Hartmann
@@ -168,8 +168,8 @@ public class ReactionBalancerTest extends CDKTestCase {
 		assertTrue(success);
 		assertEquals(3, newReaction.getReactants().getAtomContainerCount());
 		assertEquals(1.0, newReaction.getReactants().getMultiplier(2), 0.00001);
-		assertEquals(0.0, SetOfMoleculesManipulator.getTotalFormalCharge(newReaction.getReactants()), 0.000001);
-		assertEquals(0.0, SetOfMoleculesManipulator.getTotalFormalCharge(newReaction.getProducts()), 0.000001);
+		assertEquals(0.0, MoleculeSetManipulator.getTotalFormalCharge(newReaction.getReactants()), 0.000001);
+		assertEquals(0.0, MoleculeSetManipulator.getTotalFormalCharge(newReaction.getProducts()), 0.000001);
 	}
 	
 	public void testBalance_hydrogen()  throws CDKException{

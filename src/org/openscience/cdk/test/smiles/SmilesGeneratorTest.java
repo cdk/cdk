@@ -731,7 +731,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		CMLWriter cmlWriter = new CMLWriter(output);
         cmlWriter.write(mol1);
         CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
-        IAtomContainer mol2=((ChemFileCDO)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getAtomContainer(0);
+        IAtomContainer mol2=((ChemFileCDO)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol2);
         String cmlSmiles = sg.createSMILES(new Molecule(mol2));
         assertEquals(molSmiles,cmlSmiles);        
@@ -749,7 +749,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IChemFile chemFile = (IChemFile)reader1.read(new ChemFile());
         IChemSequence seq = chemFile.getChemSequence(0);
         IChemModel model = seq.getChemModel(0);
-        IMolecule mol1 = model.getSetOfMolecules().getMolecule(0);
+        IMolecule mol1 = model.getMoleculeSet().getMolecule(0);
 		
 		MDLReader reader2 = new MDLReader(ins2);		
 		Molecule mol2 = (Molecule) reader2.read(new Molecule());

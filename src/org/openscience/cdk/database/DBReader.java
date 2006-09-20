@@ -125,7 +125,7 @@ public class DBReader {
 	private org.openscience.cdk.interfaces.IMolecule getMolecule(ChemFile cf) {		
 		org.openscience.cdk.interfaces.IChemSequence cs = cf.getChemSequence(0);
 		org.openscience.cdk.interfaces.IChemModel cm = cs.getChemModel(0);
-		org.openscience.cdk.interfaces.IMoleculeSet som = cm.getSetOfMolecules();
+		org.openscience.cdk.interfaces.IMoleculeSet som = cm.getMoleculeSet();
 		return som.getMolecule(0);
 	}
 

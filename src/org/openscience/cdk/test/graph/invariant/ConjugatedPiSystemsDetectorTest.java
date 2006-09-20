@@ -186,7 +186,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-            mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
+            mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
 			HueckelAromaticityDetector.detectAromaticity(mol);
 		} catch (Exception exc)
 		{
@@ -236,7 +236,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-            mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);    
+            mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);    
         
 			HueckelAromaticityDetector.detectAromaticity(mol);
 		} catch (Exception exc)
@@ -276,7 +276,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-            mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);    
+            mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);    
             
 			HueckelAromaticityDetector.detectAromaticity(mol);
 		} catch (Exception exc)
@@ -366,7 +366,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-            mol = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);  
+            mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);  
             for(int i =0;i<mol.getAtomCount();i++)
 				System.out.println(i+", "+mol.getAtom(i).getSymbol()+" "+mol.getAtom(i).getHydrogenCount());
             
@@ -509,7 +509,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
             assertEquals(1, sequence.getChemModelCount());
             IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
-            IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
+            IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
             mol = moleculeSet.getMolecule(0);

@@ -225,7 +225,7 @@ public class DatabaseTest {
                                    chemSequence.getChemModelCount());
                 for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
                   chemModel = chemSequence.getChemModel(model);
-                  setOfMolecules = chemModel.getSetOfMolecules();
+                  setOfMolecules = chemModel.getMoleculeSet();
                   System.out.println("  number of molecules in model " + model + ": " + 
                                        setOfMolecules.getMoleculeCount());
                   // do nothing yet

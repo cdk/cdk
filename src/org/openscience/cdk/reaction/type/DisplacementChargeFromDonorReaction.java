@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * lone pair electrons</pre>
  * 
  * <pre>
- *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new DisplacementChargeFromDonorReaction();
  *  Object[] params = {Boolean.FALSE};

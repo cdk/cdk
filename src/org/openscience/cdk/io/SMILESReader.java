@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * that is stored as "SMIdbNAME" property in the Molecule.
  *
  * <p>For each line a molecule is generated, and multiple Molecules are
- * read as SetOfMolecules.
+ * read as MoleculeSet.
  *
  * @cdk.module  smiles
  * @cdk.keyword file format, SMILES
@@ -124,19 +124,19 @@ public class SMILESReader extends DefaultChemObjectReader {
      */
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMoleculeSet) {
-            return (IChemObject)readSetOfMolecules((IMoleculeSet)object);
+            return (IChemObject)readMoleculeSet((IMoleculeSet)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newChemSequence();
             IChemModel chemModel = file.getBuilder().newChemModel();
-            chemModel.setSetOfMolecules(readSetOfMolecules(
+            chemModel.setMoleculeSet(readMoleculeSet(
             	file.getBuilder().newMoleculeSet()
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
             return (IChemObject) file;
         } else {
-            throw new CDKException("Only supported is reading of SetOfMolecules objects.");
+            throw new CDKException("Only supported is reading of MoleculeSet objects.");
         }
     }
 
@@ -148,7 +148,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @return A ChemFile containing the data parsed from input.
      */
-    private IMoleculeSet readSetOfMolecules(IMoleculeSet som) {
+    private IMoleculeSet readMoleculeSet(IMoleculeSet som) {
         try {
             String line = input.readLine().trim();
             while (line != null) {

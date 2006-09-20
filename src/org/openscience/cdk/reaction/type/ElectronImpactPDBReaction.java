@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * This reaction type is a representation of the processes which occure in the mass spectrometer.</p>
  * 
  * <pre>
- *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new RearrangementAnion1Reaction();
  *  Object[] params = {Boolean.FALSE};

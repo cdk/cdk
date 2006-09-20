@@ -143,7 +143,7 @@ public class CTXReader extends DefaultChemObjectReader {
                 line = input.readLine();
             }
             containerSet.addAtomContainer(container);
-            model.setSetOfMolecules(containerSet);
+            model.setMoleculeSet(containerSet);
             seq.addChemModel(model);
             file.addChemSequence(seq);
         } catch (Exception exception) {

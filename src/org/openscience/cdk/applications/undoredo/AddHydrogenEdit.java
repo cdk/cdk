@@ -141,7 +141,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 * Method realising the redo of explicit hydrogen addition
 	 */
 	private void redoExplicitHydrogenAdding() {
-		if (model.getSetOfMolecules() != null) {
+		if (model.getMoleculeSet() != null) {
 			IAtomContainer container = ChemModelManipulator
 					.getAllInOneContainer(model);
 			for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
@@ -154,7 +154,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 			IMolecule molecule = container.getBuilder().newMolecule(container);
 			IMoleculeSet moleculeSet = ConnectivityChecker
 					.partitionIntoMolecules(molecule);
-			model.setSetOfMolecules(moleculeSet);
+			model.setMoleculeSet(moleculeSet);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 * Method realising the undo of explicit hydrogen addition
 	 */
 	private void undoExplicitHydrogenAdding() {
-		if (model.getSetOfMolecules() != null) {
+		if (model.getMoleculeSet() != null) {
 			for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
 				IAtomContainer container = ChemModelManipulator
 						.getRelevantAtomContainer(model, changedAtomsAndBonds

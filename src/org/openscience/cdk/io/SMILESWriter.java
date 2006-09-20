@@ -131,7 +131,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException {
 		if (object instanceof IMoleculeSet) {
-		    writeSetOfMolecules((IMoleculeSet)object);
+		    writeMoleculeSet((IMoleculeSet)object);
 		} else if (object instanceof IMolecule) {
 		    writeMolecule((IMolecule)object);
 		} else {
@@ -142,9 +142,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	/**
 	 * Writes a list of molecules to an OutputStream
 	 *
-	 * @param   som  SetOfMolecules that is written to an OutputStream
+	 * @param   som  MoleculeSet that is written to an OutputStream
 	 */
-	public void  writeSetOfMolecules(IMoleculeSet som)
+	public void  writeMoleculeSet(IMoleculeSet som)
 	{
 		IMolecule[] molecules = som.getMolecules();
 		writeMolecule(molecules[0]);

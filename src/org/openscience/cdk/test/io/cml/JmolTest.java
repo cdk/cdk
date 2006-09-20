@@ -126,7 +126,7 @@ public class JmolTest extends CDKTestCase {
             assertEquals(34, seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
 
@@ -162,10 +162,10 @@ public class JmolTest extends CDKTestCase {
             //System.out.println("NO models: " + seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+            assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -195,7 +195,7 @@ public class JmolTest extends CDKTestCase {
             //System.out.println("NO models: " + seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
             assertEquals(1, som.getMoleculeCount());
 
             // test the molecule

@@ -63,7 +63,7 @@ public class TableTest {
           chemSequence = chemFile.getChemSequence(sequence);
           for (int model = 0; model < chemSequence.getChemModelCount(); model++) {
             chemModel = chemSequence.getChemModel(model);
-            setOfMolecules = chemModel.getSetOfMolecules();
+            setOfMolecules = chemModel.getMoleculeSet();
             MoleculesTable mt = new MoleculesTable(setOfMolecules);
             mt.display();
           }

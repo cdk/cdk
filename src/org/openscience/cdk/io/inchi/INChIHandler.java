@@ -27,7 +27,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -57,7 +57,7 @@ public class INChIHandler extends DefaultHandler {
     private ChemFile chemFile;
     private ChemSequence chemSequence;
     private ChemModel chemModel;
-    private SetOfMolecules setOfMolecules;
+    private MoleculeSet setOfMolecules;
     private Molecule tautomer;
 
     /** Used to store all chars between two tags */
@@ -82,7 +82,7 @@ public class INChIHandler extends DefaultHandler {
         chemFile = new ChemFile();
         chemSequence = new ChemSequence();
         chemModel = new ChemModel();
-        setOfMolecules = new SetOfMolecules();
+        setOfMolecules = new MoleculeSet();
     }
 
     public void endDocument() {
@@ -95,7 +95,7 @@ public class INChIHandler extends DefaultHandler {
             if (tautomer != null) {
                 // ok, add tautomer
                 setOfMolecules.addMolecule(tautomer);
-                chemModel.setSetOfMolecules(setOfMolecules);
+                chemModel.setMoleculeSet(setOfMolecules);
                 chemSequence.addChemModel(chemModel);
             }
         } else if ("formula".equals(local)) {

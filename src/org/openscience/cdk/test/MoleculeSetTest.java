@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+ * $Author: egonw $    
+ * $Date: 2006-08-01 21:13:42 +0200 (Tue, 01 Aug 2006) $    
+ * $Revision: 6718 $
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -35,17 +35,17 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Checks the funcitonality of the SetOfMolecules class.
+ * Checks the funcitonality of the MoleculeSet class.
  *
  * @cdk.module test-data
  *
- * @see org.openscience.cdk.SetOfMolecules
+ * @see org.openscience.cdk.MoleculeSet
  */
-public class SetOfMoleculesTest extends CDKTestCase {
+public class MoleculeSetTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
-    public SetOfMoleculesTest(String name) {
+    public MoleculeSetTest(String name) {
         super(name);
     }
 
@@ -54,7 +54,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(SetOfMoleculesTest.class);
+        return new TestSuite(MoleculeSetTest.class);
     }
     
     public void testGetMoleculeCount() {
@@ -139,7 +139,7 @@ public class SetOfMoleculesTest extends CDKTestCase {
         assertEquals(7, mols.length);
     }
     
-    public void testSetOfMolecules() {
+    public void testMoleculeSet() {
         IMoleculeSet som = builder.newMoleculeSet();
         assertNotNull(som);
         assertEquals(0, som.getMoleculeCount());

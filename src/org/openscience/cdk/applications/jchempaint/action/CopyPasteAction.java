@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -144,10 +144,10 @@ public class CopyPasteAction extends JCPAction{
 	                //translate the new structure a bit
 	                GeometryTools.translate2D(topaste, 25, 25,jcpModel.getRendererModel().getRenderingCoordinates()); //in pixels
 	                //paste the new structure into the active model
-	                org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
+	                org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
 	                if (moleculeSet == null) {
-	                    moleculeSet = new SetOfMolecules();
-		                chemModel.setSetOfMolecules(moleculeSet);
+	                    moleculeSet = new MoleculeSet();
+		                chemModel.setMoleculeSet(moleculeSet);
 	                }
 	                moleculeSet.addMolecule(new Molecule(topaste));
 	                // to ensure, that the molecule is  shown in the actual visibile part of jcp

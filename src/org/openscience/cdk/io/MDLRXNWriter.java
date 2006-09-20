@@ -138,7 +138,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * Writes a IChemObject to the MDL RXN file formated output. 
      * It can only output ChemObjects of type Reaction
      *
-     * @param object class must be of type Molecule or SetOfMolecules.
+     * @param object class must be of type Molecule or MoleculeSet.
      *
      * @see org.openscience.cdk.ChemFile
      */
@@ -187,8 +187,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             line += formatMDLInt(productCount, 3);
             writer.write(line + "\n");
             
-            writeSetOfMolecules(reaction.getReactants());
-            writeSetOfMolecules(reaction.getProducts());
+            writeMoleculeSet(reaction.getReactants());
+            writeMoleculeSet(reaction.getProducts());
         } catch (IOException ex) {
             logger.error(ex.getMessage());
             logger.debug(ex);
@@ -197,11 +197,11 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	}
 	
     /**
-	 * Writes a SetOfMolecules to an OutputStream for the reaction.
+	 * Writes a MoleculeSet to an OutputStream for the reaction.
 	 *
-	 * @param   som  The SetOfMolecules that is written to an OutputStream 
+	 * @param   som  The MoleculeSet that is written to an OutputStream 
 	 */
-	private void writeSetOfMolecules(IMoleculeSet som) throws IOException, CDKException {
+	private void writeMoleculeSet(IMoleculeSet som) throws IOException, CDKException {
         
         for (int i = 0; i < som.getMoleculeCount(); i++) {
         	IMolecule mol = som.getMolecule(i);

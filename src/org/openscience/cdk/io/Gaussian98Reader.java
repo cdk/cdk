@@ -331,7 +331,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
            */
         atomCount = molecule.getAtomCount();
         moleculeSet.addMolecule(molecule);
-        model.setSetOfMolecules(moleculeSet);
+        model.setMoleculeSet(moleculeSet);
     }
 
 
@@ -344,7 +344,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      */
     private void readPartialCharges(IChemModel model) throws CDKException, IOException {
         logger.info("Reading partial atomic charges");
-        IMoleculeSet moleculeSet = model.getSetOfMolecules();
+        IMoleculeSet moleculeSet = model.getMoleculeSet();
         IMolecule molecule = moleculeSet.getMolecule(0);
         String line = input.readLine();
         // skip first line after "Total atomic charges"

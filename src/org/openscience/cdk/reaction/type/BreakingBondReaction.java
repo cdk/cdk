@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.ValencyChecker;
  * <pre>A-B => [A-] + |[B+]</pre>
  * <pre> It will not be created structures no possible, for example; C=O => [C-][O+].
  * <pre>
- *  ISetOfMolecules setOfReactants = DefaultChemObjectBuilder.getInstance().newSetOfMolecules();
+ *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
  *  IReactionProcess type = new BreakingBondReaction();
  *  Object[] params = {Boolean.FALSE};
@@ -280,7 +280,7 @@ public class BreakingBondReaction implements IReactionProcess{
 	 * fragment a molecule in two. It search where don't exist a connection between two atoms
 	 * @param reactantCloned IMolecule to fragment
 	 * @param bond           Bond to remove
-	 * @return               The ISetOfMolecules
+	 * @return               The IMoleculeSet
 	 */
 	private IMoleculeSet fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
 //		if(!GeometryTools.has2DCoordinates(molecule)){

@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+ * $Author: egonw $
+ * $Date: 2006-04-06 19:24:31 +0200 (Thu, 06 Apr 2006) $
+ * $Revision: 5897 $
  *
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  *
@@ -28,9 +28,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * @cdk.module test-standard
@@ -38,11 +38,11 @@ import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class SetOfMoleculesManipulatorTest extends CDKTestCase {
+public class MoleculeSetManipulatorTest extends CDKTestCase {
 	
-	SetOfMolecules som = new SetOfMolecules();
+	MoleculeSet som = new MoleculeSet();
 	
-	public SetOfMoleculesManipulatorTest(String name) {
+	public MoleculeSetManipulatorTest(String name) {
 		super(name);
 	}
 	
@@ -62,22 +62,22 @@ public class SetOfMoleculesManipulatorTest extends CDKTestCase {
 	}
 	
     public static Test suite() {
-        TestSuite suite = new TestSuite(SetOfMoleculesManipulatorTest.class);
+        TestSuite suite = new TestSuite(MoleculeSetManipulatorTest.class);
         return suite;
 	}
 
     public void testGetTotalCharge() {
-        double charge = SetOfMoleculesManipulator.getTotalCharge(som);
+        double charge = MoleculeSetManipulator.getTotalCharge(som);
 		assertEquals(-1.0, charge, 0.000001);
     }
 	
 	public void testGetTotalFormalCharge() {
-        double charge = SetOfMoleculesManipulator.getTotalFormalCharge(som);
+        double charge = MoleculeSetManipulator.getTotalFormalCharge(som);
 		assertEquals(-1.0, charge, 0.000001);
     }
 	
 	public void testGetTotalHydrogenCount() {
-		int hCount = SetOfMoleculesManipulator.getTotalHydrogenCount(som);
+		int hCount = MoleculeSetManipulator.getTotalHydrogenCount(som);
 		assertEquals(3, hCount);
 	}
 }

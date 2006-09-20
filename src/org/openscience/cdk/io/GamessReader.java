@@ -204,7 +204,7 @@ public class GamessReader extends DefaultChemObjectReader {
 		IChemModel model = file.getBuilder().newChemModel(); // TODO Answer the question : Is this line needed ?
 		IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
 		
-		model.setSetOfMolecules(moleculeSet); //TODO Answer the question : Should I do this?
+		model.setMoleculeSet(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
 		file.addChemSequence(sequence); //TODO Answer the question : Should I do this?
 		

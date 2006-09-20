@@ -170,7 +170,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-    	IMoleculeSet setOfMolecules = chemModel.getSetOfMolecules();
+    	IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
         if (setOfMolecules == null) {
             setOfMolecules = chemModel.getBuilder().newMoleculeSet();
         }
@@ -178,7 +178,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
-        chemModel.setSetOfMolecules(setOfMolecules);
+        chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;
     }
 
@@ -196,7 +196,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		if (m != null) {
 			setOfMolecules.addMolecule(m);
 		}
-        chemModel.setSetOfMolecules(setOfMolecules);
+        chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         
         setOfMolecules = chemFile.getBuilder().newMoleculeSet();
@@ -215,7 +215,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		    if (m != null) {
 			setOfMolecules.addMolecule(m);
 			
-			chemModel.setSetOfMolecules(setOfMolecules);
+			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);
 			
 			setOfMolecules = chemFile.getBuilder().newMoleculeSet();

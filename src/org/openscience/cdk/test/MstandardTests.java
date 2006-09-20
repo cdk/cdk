@@ -48,7 +48,7 @@ import org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerSetManipulatorTest;
-import org.openscience.cdk.test.tools.manipulator.SetOfMoleculesManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.MoleculeSetManipulatorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -84,12 +84,12 @@ public class MstandardTests {
         suite.addTest(FormatStringBufferTest.suite());
         suite.addTest(IDCreatorTest.suite());
         suite.addTest(MFAnalyserTest.suite());
-        suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());
         suite.addTest(RingSetManipulatorTest.suite());
         suite.addTest(AtomContainerSetManipulatorTest.suite());
-        suite.addTest(SetOfMoleculesManipulatorTest.suite());
+        suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(RebondToolTest.suite());
         
         return suite;

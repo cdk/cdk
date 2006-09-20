@@ -109,7 +109,7 @@ public class AbstractValidator implements IValidator {
         ValidationReport report = new ValidationReport();
         return report;
     }
-    public ValidationReport validateSetOfMolecules(IMoleculeSet subject) {
+    public ValidationReport validateMoleculeSet(IMoleculeSet subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }

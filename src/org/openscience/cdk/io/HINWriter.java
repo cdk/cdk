@@ -124,7 +124,7 @@ public class HINWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * writes all the molecules supplied in a SetOfMolecules class to
+     * writes all the molecules supplied in a MoleculeSet class to
      * a single HIN file. You can also supply a single Molecule object
      * as well
      *

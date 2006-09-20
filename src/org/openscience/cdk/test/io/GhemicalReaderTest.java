@@ -97,8 +97,8 @@ public class GhemicalReaderTest extends CDKTestCase {
             ChemModel model = (ChemModel)reader.read((ChemObject)new ChemModel());
             
             assertNotNull(model);
-            assertNotNull(model.getSetOfMolecules());
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getSetOfMolecules();
+            assertNotNull(model.getMoleculeSet());
+            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
             assertNotNull(som);
             assertEquals(1, som.getMoleculeCount());
             org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);

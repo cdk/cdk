@@ -31,16 +31,16 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.SetOfMoleculesTest;
+import org.openscience.cdk.test.MoleculeSetTest;
 
 /**
  * Checks the funcitonality of the AtomContainer.
  *
  * @cdk.module test-nonotify
  */
-public class NNSetOfMoleculesTest extends SetOfMoleculesTest {
+public class NNMoleculeSetTest extends MoleculeSetTest {
 
-    public NNSetOfMoleculesTest(String name) {
+    public NNMoleculeSetTest(String name) {
         super(name);
     }
 
@@ -49,7 +49,7 @@ public class NNSetOfMoleculesTest extends SetOfMoleculesTest {
     }
 
     public static Test suite() {
-        return new TestSuite(NNSetOfMoleculesTest.class);
+        return new TestSuite(NNMoleculeSetTest.class);
     }
 
     // Overwrite default methods: no notifications are expected!

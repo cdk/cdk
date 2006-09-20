@@ -111,7 +111,7 @@ public class ReactionSetManipulator {
      * Returns all the AtomContainer's of a Reaction.
      */
     public static IAtomContainer[] getAllAtomContainers(IReactionSet set) {
-		return SetOfMoleculesManipulator.getAllAtomContainers(
+		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(set)
         );
     }

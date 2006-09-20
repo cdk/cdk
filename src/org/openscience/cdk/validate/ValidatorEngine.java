@@ -193,9 +193,9 @@ public class ValidatorEngine implements IValidator {
         if (reactionSet != null) {
             report.addReport(validateReactionSet(reactionSet));
         }
-        IMoleculeSet moleculeSet = subject.getSetOfMolecules();
+        IMoleculeSet moleculeSet = subject.getMoleculeSet();
         if (moleculeSet != null) {
-            report.addReport(validateSetOfMolecules(moleculeSet));
+            report.addReport(validateMoleculeSet(moleculeSet));
         }
         return report;
     }
@@ -322,14 +322,14 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
-    public ValidationReport validateSetOfMolecules(IMoleculeSet subject) {
-        logger.info("Validating org.openscience.cdk.SetOfMolecules");
+    public ValidationReport validateMoleculeSet(IMoleculeSet subject) {
+        logger.info("Validating org.openscience.cdk.MoleculeSet");
         ValidationReport report = new ValidationReport();
         // apply validators
         Enumeration tests = validators.elements();
         while (tests.hasMoreElements()) {
             IValidator test = (IValidator)tests.nextElement();
-            report.addReport(test.validateSetOfMolecules(subject));
+            report.addReport(test.validateMoleculeSet(subject));
         }
         // traverse into super class
         report.addReport(validateChemObject(subject));

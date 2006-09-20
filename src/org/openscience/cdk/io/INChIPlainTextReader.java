@@ -171,7 +171,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     IMoleculeSet moleculeSet = cf.getBuilder().newMoleculeSet();
                     moleculeSet.addMolecule(cf.getBuilder().newMolecule(parsedContent));
                     IChemModel model = cf.getBuilder().newChemModel();
-                    model.setSetOfMolecules(moleculeSet);
+                    model.setMoleculeSet(moleculeSet);
                     IChemSequence sequence = cf.getBuilder().newChemSequence();
                     sequence.addChemModel(model);
                     cf.addChemSequence(sequence);

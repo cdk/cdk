@@ -309,7 +309,7 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
         {
             FileInputStream fis = new FileInputStream(args[0]);
             MDLReader mr = new MDLReader(fis);
-            atomContainer = ((ChemFile) mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecule(0);
+            atomContainer = ((ChemFile) mr.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
             fis.close();
         }
         catch (Exception exc)

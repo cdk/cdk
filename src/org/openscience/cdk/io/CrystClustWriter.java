@@ -107,7 +107,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     /**
      * Serializes the IChemObject to CrystClust format and redirects it to the output Writer.
      *
-     * @param object A Molecule of SetOfMolecules object
+     * @param object A Molecule of MoleculeSet object
      */
     public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ICrystal) {

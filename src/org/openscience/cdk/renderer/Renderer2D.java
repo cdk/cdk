@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -110,9 +110,9 @@ public class Renderer2D extends SimpleRenderer2D
 		{
 			logger.debug("setOfReactions is null");
 		}
-		if (model.getSetOfMolecules() != null)
+		if (model.getMoleculeSet() != null)
 		{
-			paintSetOfMolecules(model.getSetOfMolecules(), graphics,false);
+			paintMoleculeSet(model.getMoleculeSet(), graphics,false);
 		} else
 		{
 			logger.debug("setOfMolecules is null");
@@ -158,11 +158,11 @@ public class Renderer2D extends SimpleRenderer2D
 	 *@param  graphics     Description of the Parameter
 	 *@param  split        If true the setOfMolecule will be united and then splitted again in single molecules before painted. Typically not needed a performance killler
 	 */
-	public void paintSetOfMolecules(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
+	public void paintMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
 		IMolecule[] molecules = null;
 		if(split){
-			org.openscience.cdk.interfaces.IAtomContainer atomContainer = SetOfMoleculesManipulator.getAllInOneContainer(moleculeSet);
+			org.openscience.cdk.interfaces.IAtomContainer atomContainer = MoleculeSetManipulator.getAllInOneContainer(moleculeSet);
 			try
 			{
 				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).getMolecules();

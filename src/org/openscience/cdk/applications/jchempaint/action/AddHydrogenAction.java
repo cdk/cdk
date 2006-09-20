@@ -138,7 +138,7 @@ public class AddHydrogenAction extends JCPAction
 	 */
 	private void addHydrogenToAllAtoms(org.openscience.cdk.interfaces.IChemModel model)
 	{
-		IMoleculeSet som = model.getSetOfMolecules();
+		IMoleculeSet som = model.getMoleculeSet();
 		org.openscience.cdk.interfaces.IReactionSet sor = model.getReactionSet();
 		if (som != null)
 		{

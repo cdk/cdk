@@ -30,7 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.AtomContainerSet;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
  */
 public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	
-	SetOfMolecules som = new SetOfMolecules();
+	MoleculeSet som = new MoleculeSet();
 	
 	public AtomContainerSetManipulatorTest(String name) {
 		super(name);

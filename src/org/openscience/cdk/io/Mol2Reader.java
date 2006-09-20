@@ -129,7 +129,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));
-             model.setSetOfMolecules(moleculeSet);
+             model.setMoleculeSet(moleculeSet);
              sequence.addChemModel(model);
              file.addChemSequence(sequence);
              return file;
@@ -139,7 +139,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
              moleculeSet.addMolecule(readMolecule(
                  model.getBuilder().newMolecule()
              ));
-             model.setSetOfMolecules(moleculeSet);
+             model.setMoleculeSet(moleculeSet);
              return model;
          } else {
              throw new CDKException("Only supported is ChemModel, and not " +

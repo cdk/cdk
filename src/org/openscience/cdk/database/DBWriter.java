@@ -85,16 +85,16 @@ public class DBWriter {
     }
 
     public IChemObject highestSupportedChemObject() {
-        return new org.openscience.cdk.SetOfMolecules();
+        return new org.openscience.cdk.MoleculeSet();
     };
 
 	public void write(IChemObject object) throws CDKException {
 		if (object instanceof IMolecule) {
 			writeMolecule((IMolecule)object);
 		} else if (object instanceof IMoleculeSet) {
-			writeSetOfMolecules((IMoleculeSet)object);
+			writeMoleculeSet((IMoleculeSet)object);
 		} else {
-		    throw new UnsupportedChemObjectException("Only supported SetOfMolecules and Molecule.");
+		    throw new UnsupportedChemObjectException("Only supported MoleculeSet and Molecule.");
 		}
 	}
 
@@ -157,11 +157,11 @@ public class DBWriter {
     }
 
 	/**
-	 * Stores a SetOfMolecules to the database.
+	 * Stores a MoleculeSet to the database.
 	 *
 	 * @param  som    The set of molecules to be stored
 	 */
-	private void writeSetOfMolecules(IMoleculeSet som) throws CDKException
+	private void writeMoleculeSet(IMoleculeSet som) throws CDKException
 	{
 		for (int i = 0; i < som.getMoleculeCount(); i++)
 		{

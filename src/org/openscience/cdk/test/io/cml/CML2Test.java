@@ -87,10 +87,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(4, mol.getAtomCount());
             assertEquals(2, mol.getBondCount());
@@ -125,10 +125,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(4, mol.getAtomCount());
             assertEquals(3, mol.getBondCount());
@@ -163,10 +163,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(38, mol.getAtomCount());
             assertEquals(48, mol.getBondCount());
@@ -195,10 +195,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(38, mol.getAtomCount());
             assertEquals(29, mol.getBondCount());
@@ -227,10 +227,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -259,10 +259,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -291,10 +291,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -323,10 +323,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(13, mol.getAtomCount());
             assertEquals(12, mol.getBondCount());
@@ -355,10 +355,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(27, mol.getAtomCount());
             assertEquals(27, mol.getBondCount());
@@ -387,10 +387,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(14, mol.getBondCount());
@@ -419,10 +419,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -451,10 +451,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -483,10 +483,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -515,10 +515,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(15, mol.getAtomCount());
             assertEquals(15, mol.getBondCount());
@@ -551,10 +551,10 @@ public class CML2Test extends CDKTestCase {
             assertEquals(seq.getChemModelCount(), 1);
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(model.getSetOfMolecules().getMoleculeCount(), 1);
+            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(17, mol.getAtomCount());
             assertEquals(18, mol.getBondCount());
@@ -620,7 +620,7 @@ public class CML2Test extends CDKTestCase {
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
 
-            IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(27, mol.getAtomCount());
             assertEquals(32, mol.getBondCount());
@@ -647,7 +647,7 @@ public class CML2Test extends CDKTestCase {
 		      IChemSequence seq = chemFile.getChemSequence(0);
 		      IChemModel model = seq.getChemModel(0);
 	
-		      IAtomContainer container = model.getSetOfMolecules().getMolecule(0);
+		      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
 		      IBioPolymer polymer = (IBioPolymer)container;
 		      
 		      PDBPolymer moleculePDB1 = (PDBPolymer)polymer;
@@ -662,7 +662,7 @@ public class CML2Test extends CDKTestCase {
 		      IChemFile chemFil2 = (IChemFile)reader2.read(new NNChemFile());
 		      IChemSequence seq2 = chemFil2.getChemSequence(0);
 		      IChemModel model2 = seq2.getChemModel(0);
-		      IMolecule container2 = model2.getSetOfMolecules().getMolecule(0);
+		      IMolecule container2 = model2.getMoleculeSet().getMolecule(0);
 
 		      IBioPolymer polymer2 = (IBioPolymer)container2;
 		      
@@ -680,7 +680,7 @@ public class CML2Test extends CDKTestCase {
 		      IChemSequence seq3 = chemFil3.getChemSequence(0);
 		      IChemModel model3 = seq3.getChemModel(0);
 
-		      IAtomContainer container3 = model3.getSetOfMolecules().getMolecule(0);
+		      IAtomContainer container3 = model3.getMoleculeSet().getMolecule(0);
 		      IBioPolymer polymer3 = (IBioPolymer)container3;
 		      
 		      PDBPolymer moleculePDB3 = (PDBPolymer)polymer3;

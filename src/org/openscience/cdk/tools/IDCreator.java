@@ -195,7 +195,7 @@ public class IDCreator {
     public void createIDs(IChemModel model) {
     	ICrystal crystal = model.getCrystal();
     	if (crystal != null) createIDs(crystal);
-    	IMoleculeSet moleculeSet = model.getSetOfMolecules();
+    	IMoleculeSet moleculeSet = model.getMoleculeSet();
     	if (moleculeSet != null) createIDs(moleculeSet);
     	IReactionSet reactionSet = model.getReactionSet();
     	if (reactionSet != null) createIDs(reactionSet);

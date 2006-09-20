@@ -50,7 +50,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -215,17 +215,17 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel));
 			} else
 			{
-				org.openscience.cdk.interfaces.IMoleculeSet som = chemModel.getSetOfMolecules();
+				org.openscience.cdk.interfaces.IMoleculeSet som = chemModel.getMoleculeSet();
 				if (som != null)
 				{
 					logger.debug("no mols in som: ", som.getMoleculeCount());
-					SetOfMolecules newsom = new SetOfMolecules();
+					MoleculeSet newsom = new MoleculeSet();
 					IMolecule[] mols = som.getMolecules();
 					for (int i = 0; i < mols.length; i++)
 					{
 						newsom.addMolecule(relayoutMolecule(mols[i]));
 					}
-					chemModel.setSetOfMolecules(newsom);
+					chemModel.setMoleculeSet(newsom);
 				}
 				org.openscience.cdk.interfaces.IReactionSet reactionSet = chemModel.getReactionSet();
 				if (reactionSet != null)

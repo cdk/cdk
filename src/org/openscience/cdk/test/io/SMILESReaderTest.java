@@ -33,7 +33,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.test.CDKTestCase;
 /**
@@ -59,7 +59,7 @@ public class SMILESReaderTest extends CDKTestCase {
     public void testAccepts() {
     	SMILESReader reader = new SMILESReader();
     	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(SetOfMolecules.class));
+    	assertTrue(reader.accepts(MoleculeSet.class));
     }
 
     public void testReading() {
@@ -68,7 +68,7 @@ public class SMILESReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             SMILESReader reader = new SMILESReader(ins);
-            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
             assertEquals(8, som.getMoleculeCount());
         } catch (Exception e) {
             fail(e.toString());
@@ -82,7 +82,7 @@ public class SMILESReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             SMILESReader reader = new SMILESReader(ins);
-            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
             String name = null;
             org.openscience.cdk.interfaces.IMolecule thisMol = null;
 	    
@@ -100,7 +100,7 @@ public class SMILESReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             SMILESReader reader = new SMILESReader(ins);
-            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
             org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
             assertNull(thisMol.getProperty("SMIdbNAME"));
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class SMILESReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             SMILESReader reader = new SMILESReader(ins);
-            SetOfMolecules som = (SetOfMolecules)reader.read(new SetOfMolecules());
+            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
             assertEquals(5, som.getMoleculeCount());
         } catch (Exception e) {
             e.printStackTrace();

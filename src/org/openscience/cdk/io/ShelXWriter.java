@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
- * <p>Serializes a SetOfMolecules or a Molecule object to ShelX code.
+ * <p>Serializes a MoleculeSet or a Molecule object to ShelX code.
  * The output can be read with Platon.
  *
  * @cdk.module io
@@ -121,7 +121,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     /**
      * Serializes the IChemObject to ShelX and redirects it to the output Writer.
      *
-     * @param object A Molecule of SetOfMolecules object
+     * @param object A Molecule of MoleculeSet object
      */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof ICrystal) {

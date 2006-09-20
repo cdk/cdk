@@ -178,8 +178,8 @@ public class Convertor {
         if (model.getReactionSet() != null) {
             cmlList.appendChild(cdkReactionSetToCMLReactionList(model.getReactionSet(), false));
         }
-        if (model.getSetOfMolecules() != null) {
-            cmlList.appendChild(cdkSetOfMoleculesToCMLList(model.getSetOfMolecules(), false));
+        if (model.getMoleculeSet() != null) {
+            cmlList.appendChild(cdkMoleculeSetToCMLList(model.getMoleculeSet(), false));
         }
 
         return cmlList;
@@ -204,11 +204,11 @@ public class Convertor {
         return reactionList;
     }
 
-    public CMLList cdkSetOfMoleculesToCMLList(IMoleculeSet moleculeSet) {
-        return cdkSetOfMoleculesToCMLList(moleculeSet, true);
+    public CMLList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet) {
+        return cdkMoleculeSetToCMLList(moleculeSet, true);
     }
 
-    private CMLList cdkSetOfMoleculesToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
+    private CMLList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
         CMLList cmlList = new CMLList();
 
         if (useCMLIDs && setIDs) {

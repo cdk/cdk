@@ -240,7 +240,7 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 	}
 
 	public IMoleculeSet newMoleculeSet() {
-        return new NNSetOfMolecules();
+        return new NNMoleculeSet();
 	}
 
 	public IReactionSet newReactionSet() {

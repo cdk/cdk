@@ -443,7 +443,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         assertNotNull(model);
         
-        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getSetOfMolecules();
+        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
         assertNotNull(moleculeSet);
         
         assertEquals(moleculeSet.getMoleculeCount(), numberOfMolecules);

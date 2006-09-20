@@ -468,7 +468,7 @@ public class CMLCoreModule implements ICMLModule {
             if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
         } else if ("list".equals(name)) {
-            cdo.startObject("SetOfMolecules");
+            cdo.startObject("MoleculeSet");
         }
     }
 
@@ -562,7 +562,7 @@ public class CMLCoreModule implements ICMLModule {
             }
             cdo.endObject("Crystal");
         } else if ("list".equals(name)) {
-            cdo.endObject("SetOfMolecules");
+            cdo.endObject("MoleculeSet");
         } else if ("coordinate3".equals(name)) {
             if (BUILTIN.equals("xyz3")) {
                 logger.debug("New coord3 xyz3 found: ", currentChars);

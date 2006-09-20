@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+ * $Author: kaihartmann $ 
+ * $Date: 2006-09-20 20:57:51 +0200 (Wed, 20 Sep 2006) $
+ * $Revision: 6997 $
  * 
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  *
  * @see ChemModelManipulator
  */
-public class SetOfMoleculesManipulator {
+public class MoleculeSetManipulator {
     
 	public static int getAtomCount(IAtomContainerSet set) {
 		return AtomContainerSetManipulator.getAtomCount(set);
@@ -74,7 +74,7 @@ public class SetOfMoleculesManipulator {
     }
     
     /**
-     * Returns all the AtomContainer's of a SetOfMolecules.
+     * Returns all the AtomContainer's of a MoleculeSet.
      */
     public static IAtomContainer[] getAllAtomContainers(IMoleculeSet set) {
 		return AtomContainerSetManipulator.getAllAtomContainers(set);

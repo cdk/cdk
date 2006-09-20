@@ -44,7 +44,7 @@ import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * This class implements editing options from the 'Edit' menu.
@@ -158,7 +158,7 @@ public class EditAction extends JCPAction {
 			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
-				renderModel.setSelectedPart(SetOfMoleculesManipulator.getAllInOneContainer(reaction.getReactants()));
+				renderModel.setSelectedPart(MoleculeSetManipulator.getAllInOneContainer(reaction.getReactants()));
 				jcpModel.fireChange();
 			}
 			else {
@@ -169,7 +169,7 @@ public class EditAction extends JCPAction {
 			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
-				renderModel.setSelectedPart(SetOfMoleculesManipulator.getAllInOneContainer(reaction.getProducts()));
+				renderModel.setSelectedPart(MoleculeSetManipulator.getAllInOneContainer(reaction.getProducts()));
 				jcpModel.fireChange();
 			}
 			else {

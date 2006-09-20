@@ -78,10 +78,10 @@ public class JChemPaintTest extends CDKTestCase {
             //System.out.println("NO models: " + seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            assertEquals(1, model.getSetOfMolecules().getMoleculeCount());
+            assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
             // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getSetOfMolecules().getMolecule(0);
+            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(4, mol.getAtomCount());
             assertTrue(GeometryTools.has3DCoordinates(mol));
@@ -110,7 +110,7 @@ public class JChemPaintTest extends CDKTestCase {
             assertEquals(1, seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
-            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
 

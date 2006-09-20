@@ -138,7 +138,7 @@ public class HINReader extends DefaultChemObjectReader {
      *  Private method that actually parses the input to read a ChemFile
      *  object. In its current state it is able to read all the molecules
      *  (if more than one is present) in the specified HIN file. These are
-     *  placed in a SetOfMolecules object which in turn is placed in a ChemModel
+     *  placed in a MoleculeSet object which in turn is placed in a ChemModel
      *  which in turn is placed in a ChemSequence object and which is finally 
      *  placed in a ChemFile object and returned to the user.
      *
@@ -269,7 +269,7 @@ public class HINReader extends DefaultChemObjectReader {
             }
 
             // got all the molecule in the HIN file (hopefully!)
-            chemModel.setSetOfMolecules(setOfMolecules);
+            chemModel.setMoleculeSet(setOfMolecules);
             chemSequence.addChemModel(chemModel);
             file.addChemSequence(chemSequence);
 

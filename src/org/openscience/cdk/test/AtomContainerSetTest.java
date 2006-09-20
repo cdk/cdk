@@ -35,11 +35,11 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Checks the funcitonality of the SetOfMolecules class.
+ * Checks the funcitonality of the MoleculeSet class.
  *
  * @cdk.module test-data
  *
- * @see org.openscience.cdk.SetOfMolecules
+ * @see org.openscience.cdk.MoleculeSet
  */
 public class AtomContainerSetTest extends CDKTestCase {
 

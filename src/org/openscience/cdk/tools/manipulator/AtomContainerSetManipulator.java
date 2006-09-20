@@ -119,7 +119,7 @@ public class AtomContainerSetManipulator {
     }
     
 	/**
-     * Returns all the AtomContainer's of a SetOfMolecules.
+     * Returns all the AtomContainer's of a MoleculeSet.
      */
     public static IAtomContainer[] getAllAtomContainers(IAtomContainerSet set) {
 		return set.getAtomContainers();

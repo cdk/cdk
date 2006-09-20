@@ -56,9 +56,9 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 			container.removeAtom(atom2);
 		}
 //		Molecule molecule = new org.openscience.cdk.Molecule(container);
-//		SetOfMolecules moleculeSet = ConnectivityChecker
+//		MoleculeSet moleculeSet = ConnectivityChecker
 //				.partitionIntoMolecules(molecule);
-//		chemModel.setSetOfMolecules(moleculeSet);
+//		chemModel.setMoleculeSet(moleculeSet);
 	}
 
 	/*
@@ -86,9 +86,9 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 			}
 		}
 //		Molecule molecule = new org.openscience.cdk.Molecule(container);
-//		SetOfMolecules moleculeSet = ConnectivityChecker
+//		MoleculeSet moleculeSet = ConnectivityChecker
 //				.partitionIntoMolecules(molecule);
-//		chemModel.setSetOfMolecules(moleculeSet);
+//		chemModel.setMoleculeSet(moleculeSet);
 		
 	}
 

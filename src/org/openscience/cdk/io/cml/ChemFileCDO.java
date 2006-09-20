@@ -59,7 +59,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 	private IChemFile currentChemFile;
 	
     private IAtomContainer currentMolecule;
-    private IMoleculeSet currentSetOfMolecules;
+    private IMoleculeSet currentMoleculeSet;
     private IChemModel currentChemModel;
     private IChemSequence currentChemSequence;
     private IReactionSet currentReactionSet;
@@ -89,7 +89,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       currentChemFile = file;
       currentChemSequence = file.getBuilder().newChemSequence();
       currentChemModel = file.getBuilder().newChemModel();
-      currentSetOfMolecules = file.getBuilder().newMoleculeSet();
+      currentMoleculeSet = file.getBuilder().newMoleculeSet();
       currentReactionSet = null;
       currentReaction = null;
       currentMolecule = file.getBuilder().newMolecule();
@@ -106,7 +106,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       logger.info("New CDO Object");
       currentChemSequence = currentChemFile.getBuilder().newChemSequence();
       currentChemModel = currentChemFile.getBuilder().newChemModel();
-      currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
+      currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
       currentMolecule = currentChemFile.getBuilder().newMolecule();
       atomEnumeration = new Hashtable();
     }
@@ -126,9 +126,9 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
             logger.debug("Adding SOR to ChemModel");
             currentChemModel.setReactionSet(currentReactionSet);
         }
-        if (currentSetOfMolecules != null && currentSetOfMolecules.getMoleculeCount() != 0) {
-            logger.debug("Adding reaction to SetOfMolecules");
-            currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+        if (currentMoleculeSet != null && currentMoleculeSet.getMoleculeCount() != 0) {
+            logger.debug("Adding reaction to MoleculeSet");
+            currentChemModel.setMoleculeSet(currentMoleculeSet);
         }
         if (currentChemSequence.getChemModelCount() == 0) {
             logger.debug("Adding ChemModel to ChemSequence");
@@ -156,7 +156,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       logger.debug("START:" + objectType);
       if (objectType.equals("Molecule")) {
           if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newChemModel();
-          if (currentSetOfMolecules == null) currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
+          if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
           currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Atom")) {
         currentAtom = currentChemFile.getBuilder().newAtom("H");
@@ -169,8 +169,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         currentChemSequence = currentChemFile.getBuilder().newChemSequence();
       } else if (objectType.equals("Frame")) {
         currentChemModel = currentChemFile.getBuilder().newChemModel();
-      } else if (objectType.equals("SetOfMolecules")) {
-        currentSetOfMolecules = currentChemFile.getBuilder().newMoleculeSet();
+      } else if (objectType.equals("MoleculeSet")) {
+        currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
         currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("Crystal")) {
         currentMolecule = currentChemFile.getBuilder().newCrystal(currentMolecule);
@@ -203,15 +203,15 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         if (objectType.equals("Molecule")) {
             if (currentMolecule instanceof IMolecule) {
                 logger.debug("Adding molecule to set");
-                currentSetOfMolecules.addMolecule((IMolecule)currentMolecule);
-                logger.debug("#mols in set: " + currentSetOfMolecules.getMoleculeCount());
+                currentMoleculeSet.addMolecule((IMolecule)currentMolecule);
+                logger.debug("#mols in set: " + currentMoleculeSet.getMoleculeCount());
             } else if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");
                 currentChemModel.setCrystal((ICrystal)currentMolecule);
                 currentChemSequence.addChemModel(currentChemModel);
             }
-        } else if (objectType.equals("SetOfMolecules")) {
-            currentChemModel.setSetOfMolecules(currentSetOfMolecules);
+        } else if (objectType.equals("MoleculeSet")) {
+            currentChemModel.setMoleculeSet(currentMoleculeSet);
             currentChemSequence.addChemModel(currentChemModel);
         } else if (objectType.equals("Frame")) {
             // endObject("Molecule");

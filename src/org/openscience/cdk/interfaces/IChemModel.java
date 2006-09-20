@@ -24,7 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 /** 
- * An object containig multiple SetOfMolecules and 
+ * An object containig multiple MoleculeSet and 
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
@@ -33,20 +33,20 @@ package org.openscience.cdk.interfaces;
 public interface IChemModel extends IChemObject {
 
 	/**
-	 * Returns the SetOfMolecules of this ChemModel.
+	 * Returns the MoleculeSet of this ChemModel.
 	 *
-	 * @return   The SetOfMolecules of this ChemModel
-     * @see      #setSetOfMolecules
+	 * @return   The MoleculeSet of this ChemModel
+     * @see      #setMoleculeSet
 	 */
-	public IMoleculeSet getSetOfMolecules();
+	public IMoleculeSet getMoleculeSet();
 
 	/**
-	 * Sets the SetOfMolecules of this ChemModel.
+	 * Sets the MoleculeSet of this ChemModel.
 	 *
 	 * @param   setOfMolecules  the content of this model
-     * @see      #getSetOfMolecules
+     * @see      #getMoleculeSet
 	 */
-	public void setSetOfMolecules(IMoleculeSet setOfMolecules);	
+	public void setMoleculeSet(IMoleculeSet setOfMolecules);	
 
 	/**
 	 * Returns the RingSet of this ChemModel.

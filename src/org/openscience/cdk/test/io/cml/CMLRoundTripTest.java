@@ -299,7 +299,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             assertEquals(1, sequence.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
             assertNotNull(chemModel);
-            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getSetOfMolecules();
+            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
             assertNotNull(moleculeSet);
             assertEquals(1, moleculeSet.getMoleculeCount());
             roundTrippedMol = moleculeSet.getMolecule(0);

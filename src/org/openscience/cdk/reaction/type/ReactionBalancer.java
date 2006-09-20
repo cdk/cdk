@@ -203,9 +203,9 @@ public class ReactionBalancer {
 
 
 	/**
-	 *  Adds the FormulaHashtables of a SetOfMolecules to a Hashtable
+	 *  Adds the FormulaHashtables of a MoleculeSet to a Hashtable
 	 *
-	 *@param  som   The SetOfMolecules to be added
+	 *@param  som   The MoleculeSet to be added
 	 *@param  side  equals 1 for products, -1 for reactants
 	 *@param  hash  The feature to be added to the MoleculeHashs attribute
 	 */
@@ -250,11 +250,11 @@ public class ReactionBalancer {
 		if (chargeDifference == 0) {
 			return;
 		} else if (molsToAdd < 0) {
-			balanceSetOfMolecules(reaction.getProducts(), -molsToAdd, mol);
+			balanceMoleculeSet(reaction.getProducts(), -molsToAdd, mol);
 			updateDiffHashtable(molsToAdd, molHash);
 			return;
 		} else if (molsToAdd > 0) {
-			balanceSetOfMolecules(reaction.getReactants(), molsToAdd, mol);
+			balanceMoleculeSet(reaction.getReactants(), molsToAdd, mol);
 			updateDiffHashtable(molsToAdd, molHash);
 			return;
 		}
@@ -321,7 +321,7 @@ public class ReactionBalancer {
 				updateDiffHashtable(stoich, molHash);
 			}
 			if (elementCount < 0) {
-				balanceSetOfMolecules(reaction.getProducts(), -elementCount, mol, prodPos);
+				balanceMoleculeSet(reaction.getProducts(), -elementCount, mol, prodPos);
 				updateDiffHashtable(elementCount, molHash);
 			}
 
@@ -342,7 +342,7 @@ public class ReactionBalancer {
 				updateDiffHashtable(stoich, molHash);
 			}
 			if (elementCount > 0) {
-				balanceSetOfMolecules(reaction.getReactants(), elementCount, mol, edPos);
+				balanceMoleculeSet(reaction.getReactants(), elementCount, mol, edPos);
 				updateDiffHashtable(elementCount, molHash);
 			}
 		}
@@ -352,26 +352,26 @@ public class ReactionBalancer {
 
 
 	/**
-	 *  Add a number of Molecules to a SetOfMolecules
+	 *  Add a number of Molecules to a MoleculeSet
 	 *
-	 *@param  som           The SetOfMolecules that the Molecules are to be added
+	 *@param  som           The MoleculeSet that the Molecules are to be added
 	 *@param  elementCount  The number of Molecules to be added
 	 *@param  mol           The Molecule to be added
 	 */
-	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.IMoleculeSet som, double elementCount, Molecule mol) throws CDKException{
+	public void balanceMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet som, double elementCount, Molecule mol) throws CDKException{
 		int molPosition = getMoleculePosition(som, mol);
-		balanceSetOfMolecules(som, elementCount, mol, molPosition);
+		balanceMoleculeSet(som, elementCount, mol, molPosition);
 	}
 
 	/**
-	 *  Add a number of Molecules to a SetOfMolecules
+	 *  Add a number of Molecules to a MoleculeSet
 	 *
-	 *@param  som           The SetOfMolecules that the Molecules are to be added
+	 *@param  som           The MoleculeSet that the Molecules are to be added
 	 *@param  elementCount  The number of Molecules to be added
 	 *@param  mol           The Molecule to be added
-	 *@param  molPosition   The position of Molecule mol in SetOfMolecules som
+	 *@param  molPosition   The position of Molecule mol in MoleculeSet som
 	 */
-	public void balanceSetOfMolecules(org.openscience.cdk.interfaces.IMoleculeSet som, double elementCount, Molecule mol, int molPosition) {
+	public void balanceMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet som, double elementCount, Molecule mol, int molPosition) {
 		
 		if (molPosition == -1) {
 			som.addAtomContainer(mol, elementCount);
@@ -384,11 +384,11 @@ public class ReactionBalancer {
 	
 	
 	/**
-	 *  Test whether a Molecule is already in this SetOfMolecules
+	 *  Test whether a Molecule is already in this MoleculeSet
 	 *
-	 *@param  som  The SetOfMolecules to be tested in
+	 *@param  som  The MoleculeSet to be tested in
 	 *@param  mol  The Molecule to be checked
-	 *@return      The position in SetOfMolecules if found, -1 otherwise
+	 *@return      The position in MoleculeSet if found, -1 otherwise
 	 */
 	public int getMoleculePosition(org.openscience.cdk.interfaces.IMoleculeSet som, Molecule mol) throws CDKException {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {

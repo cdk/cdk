@@ -10,7 +10,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -43,9 +43,9 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "");
 		edit.undo();
 		edit.redo();
-		int newAtomCount = model.getSetOfMolecules().getMolecule(0)
+		int newAtomCount = model.getMoleculeSet().getMolecule(0)
 				.getAtomCount();
-		int newBondCount = model.getSetOfMolecules().getMolecule(0)
+		int newBondCount = model.getMoleculeSet().getMolecule(0)
 				.getBondCount();
 		assertTrue(newAtomCount == atomCount + 1
 				&& newBondCount == bondCount + 1);
@@ -59,9 +59,9 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 		ChemModel model = createMol();
 		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "");
 		edit.undo();
-		int newAtomCount = model.getSetOfMolecules().getMolecule(0)
+		int newAtomCount = model.getMoleculeSet().getMolecule(0)
 				.getAtomCount();
-		int newBondCount = model.getSetOfMolecules().getMolecule(0)
+		int newBondCount = model.getMoleculeSet().getMolecule(0)
 				.getBondCount();
 		assertTrue(newAtomCount == atomCount && newBondCount == bondCount);
 	}
@@ -81,9 +81,9 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 		mol.addAtom(atom);
 		mol.addBond(bond);
 		ChemModel model = new ChemModel();
-		SetOfMolecules mols = new SetOfMolecules();
+		MoleculeSet mols = new MoleculeSet();
 		mols.addMolecule(mol);
-		model.setSetOfMolecules(mols);
+		model.setMoleculeSet(mols);
 		return model;
 	}
 

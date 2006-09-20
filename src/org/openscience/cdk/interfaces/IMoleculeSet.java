@@ -40,14 +40,14 @@ public interface IMoleculeSet extends IAtomContainerSet {
     public void addMolecule(IMolecule molecule);
     
     /**
-     * Adds all molecules in the SetOfMolecules to this container.
+     * Adds all molecules in the MoleculeSet to this container.
      *
-     * @param  moleculeSet  The SetOfMolecules to add
+     * @param  moleculeSet  The MoleculeSet to add
      */
     public void add(IMoleculeSet moleculeSet);
     
     /**
-     * Sets the molecules in the ISetOfMolecules, removing previously added
+     * Sets the molecules in the IMoleculeSet, removing previously added
      * IMolecule's.
      * 
      * @param molecules New set of molecules

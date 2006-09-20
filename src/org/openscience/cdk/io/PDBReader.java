@@ -322,7 +322,7 @@ public class PDBReader extends DefaultChemObjectReader {
 							if (oBP.getAtomCount() > 0) {
 								// save the model
 								oSet.addAtomContainer(oBP);
-								oModel.setSetOfMolecules(oSet);
+								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
 								oBP = new PDBPolymer();
@@ -333,7 +333,7 @@ public class PDBReader extends DefaultChemObjectReader {
 							if (molecularStructure.getAtomCount() > 0) {
 //								 save the model
 								oSet.addAtomContainer(molecularStructure);
-								oModel.setSetOfMolecules(oSet);
+								oModel.setMoleculeSet(oSet);
 								oSeq.addChemModel(oModel);
 								// setup a new one
 								molecularStructure = oFile.getBuilder().newMolecule();
@@ -473,7 +473,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		}
 		
 		// Set all the dependencies
-		oModel.setSetOfMolecules(oSet);
+		oModel.setMoleculeSet(oSet);
 		oSeq.addChemModel(oModel);
 		oFile.addChemSequence(oSeq);
 		

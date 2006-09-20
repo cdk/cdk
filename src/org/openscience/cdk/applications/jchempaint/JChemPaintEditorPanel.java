@@ -47,7 +47,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.manipulator.SetOfMoleculesManipulator;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 import org.openscience.cdk.validate.*;
 
 import javax.swing.*;
@@ -526,7 +526,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             	logger.debug(exception);
             	return null;
             }
-            IAtomContainer ac = SetOfMoleculesManipulator.getAllInOneContainer(model.getSetOfMolecules());
+            IAtomContainer ac = MoleculeSetManipulator.getAllInOneContainer(model.getMoleculeSet());
             Dimension dim = GeometryTools.get2DDimension(ac);
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
@@ -574,7 +574,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	{
 		Dimension newDim = new Dimension(baseDim);
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		IMoleculeSet moleculeSet = model.getSetOfMolecules();
+		IMoleculeSet moleculeSet = model.getMoleculeSet();
 		if (moleculeSet != null)
 		{
 			newDim.height = newDim.height * (moleculeSet.getMoleculeCount());
@@ -590,7 +590,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 
 	/**
-	 *  Lays out the molecules in a SetOfMolecules, or reaction in a ReactionSet
+	 *  Lays out the molecules in a MoleculeSet, or reaction in a ReactionSet
 	 *  in a one column table.
 	 *
 	 *@param  baseDim  Description of the Parameter
@@ -599,7 +599,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	private void layoutInTable(Dimension baseDim, IChemModel model, Renderer2DModel rm)
 	{
 		// a bit ugly, but assume moleculeSet *or* reactionSet
-		IMoleculeSet moleculeSet = model.getSetOfMolecules();
+		IMoleculeSet moleculeSet = model.getMoleculeSet();
 		if (moleculeSet != null)
 		{
 			org.openscience.cdk.interfaces.IMolecule[] mols = moleculeSet.getMolecules();

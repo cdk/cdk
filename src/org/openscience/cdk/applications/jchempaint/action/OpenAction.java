@@ -157,7 +157,7 @@ public class OpenAction extends JCPAction {
 						jcpPanel.processChemFile(chemFile);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
 							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemFile.getChemSequence(0).getChemModel(0).getSetOfMolecules().getMolecules();
+				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecules();
 							for (int i = 0; i < mols.length; i++)
 							{
 								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];
@@ -202,7 +202,7 @@ public class OpenAction extends JCPAction {
 						jcpPanel.processChemModel(chemModel);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
 							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getSetOfMolecules().getMolecules();
+				        	org.openscience.cdk.interfaces.IMolecule[] mols = chemModel.getMoleculeSet().getMolecules();
 							for (int i = 0; i < mols.length; i++)
 							{
 								org.openscience.cdk.interfaces.IMolecule molecule = mols[i];

@@ -63,7 +63,7 @@ public interface IValidator {
     public ValidationReport validateIsotope(IIsotope subject);
     public ValidationReport validateMolecule(IMolecule subject);
     public ValidationReport validateReaction(IReaction subject);
-    public ValidationReport validateSetOfMolecules(IMoleculeSet subject);
+    public ValidationReport validateMoleculeSet(IMoleculeSet subject);
     public ValidationReport validateReactionSet(IReactionSet subject);
     
 }

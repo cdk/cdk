@@ -118,7 +118,7 @@ public class ProteinPocketFinder {
 			// Get molecule from ChemFile
 			IChemSequence chemSequence = chemFile.getChemSequence(0);
 			IChemModel chemModel = chemSequence.getChemModel(0);
-			IMoleculeSet setOfMolecules = chemModel.getSetOfMolecules();
+			IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
 			protein = (IBioPolymer) setOfMolecules.getMolecule(0);
 		} catch (Exception exc) {
 			System.out.println("Could not read BioPolymer from file>"

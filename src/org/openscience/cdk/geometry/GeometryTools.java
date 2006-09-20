@@ -434,11 +434,11 @@ public class GeometryTools {
 	}
 	
 	/**
-	 *  Returns the java.awt.Dimension of a SetOfMolecules
-	 *  See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *  Returns the java.awt.Dimension of a MoleculeSet
+	 *  See comment for center(IMoleculeSet setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  setOfMolecules Of which the dimension should be returned
-	 *@return The java.awt.Dimension of this SetOfMolecules
+	 *@return The java.awt.Dimension of this MoleculeSet
 	 */
 	public static Dimension get2DDimension(IMoleculeSet setOfMolecules, HashMap renderingCoordinates) {
 		double[] minmax = getMinMax(setOfMolecules, renderingCoordinates);
@@ -501,13 +501,13 @@ public class GeometryTools {
 	
 	/**
 	 *  Returns the minimum and maximum X and Y coordinates of the molecules in the
-	 *  SetOfMolecules. The output is returned as: <pre>
+	 *  MoleculeSet. The output is returned as: <pre>
 	 *   minmax[0] = minX;
 	 *   minmax[1] = minY;
 	 *   minmax[2] = maxX;
 	 *   minmax[3] = maxY;
 	 * </pre>
-	 * See comment for center(ISetOfMolecules setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 * See comment for center(IMoleculeSet setOfMolecules, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@return            An four int array as defined above.
 	 */

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SetOfMolecules;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.layout.HydrogenPlacer;
@@ -53,9 +53,9 @@ public class AddHydrogenEditTest extends TestCase {
 	public void testRedoExplicitHydrogenAdding() throws Exception {
 		Molecule molecule = addExplicitHydrogens();
 		ChemModel model = new ChemModel();
-		SetOfMolecules som = new SetOfMolecules();
+		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
-		model.setSetOfMolecules(som);
+		model.setMoleculeSet(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
 		edit.redo();
@@ -76,9 +76,9 @@ public class AddHydrogenEditTest extends TestCase {
 	public void testRedoImplicitHydrogenAdding() throws CDKException {
 		Molecule molecule = addImplicitHydrogens();
 		ChemModel model = new ChemModel();
-		SetOfMolecules som = new SetOfMolecules();
+		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
-		model.setSetOfMolecules(som);
+		model.setMoleculeSet(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, hydrogenAtomMap);
 		edit.undo();
 		edit.redo();
@@ -96,9 +96,9 @@ public class AddHydrogenEditTest extends TestCase {
 	public void testUndoExplicitHydrogenAdding() throws Exception {
 		Molecule molecule = addExplicitHydrogens();
 		ChemModel model = new ChemModel();
-		SetOfMolecules som = new SetOfMolecules();
+		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
-		model.setSetOfMolecules(som);
+		model.setMoleculeSet(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
 		IAtomContainer container = ChemModelManipulator
@@ -117,9 +117,9 @@ public class AddHydrogenEditTest extends TestCase {
 	public void testUndoImplicitHydrogenAdding() throws CDKException {
 		Molecule molecule = addImplicitHydrogens();
 		ChemModel model = new ChemModel();
-		SetOfMolecules som = new SetOfMolecules();
+		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
-		model.setSetOfMolecules(som);
+		model.setMoleculeSet(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, hydrogenAtomMap);
 		edit.undo();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {

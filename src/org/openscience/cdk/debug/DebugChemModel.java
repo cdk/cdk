@@ -140,14 +140,14 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public IMoleculeSet getSetOfMolecules() {
-		logger.debug("Getting setOfMolecules: ", super.getSetOfMolecules());
-		return super.getSetOfMolecules();
+	public IMoleculeSet getMoleculeSet() {
+		logger.debug("Getting setOfMolecules: ", super.getMoleculeSet());
+		return super.getMoleculeSet();
 	}
 
-	public void setSetOfMolecules(IMoleculeSet setOfMolecules) {
+	public void setMoleculeSet(IMoleculeSet setOfMolecules) {
 		logger.debug("Setting setOfMolecules: ", setOfMolecules);
-		super.setSetOfMolecules(setOfMolecules);
+		super.setMoleculeSet(setOfMolecules);
 	}
 
 	public IRingSet getRingSet() {
