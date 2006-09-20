@@ -50,6 +50,8 @@
 #                     japize files
 # Update 08/01/2006 - Made some error cases more consistent
 # Update 09/18/2006 - Added current time to the title
+# Update 09/20/2006 - Updated to wrap Junit result files in HTML tags
+
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
 from email.MIMEText import MIMEText
@@ -330,7 +332,7 @@ def writeJunitSummaryHTML(stats):
         totalError = totalError + int(entry[3])
         
         summary = summary + "<tr>"
-        summary = summary + "<td align=\"left\"><a href=\"test/result-%s.txt\">%s</a></td>" % (entry[0], entry[0])
+        summary = summary + "<td align=\"left\"><a href=\"test/result-%s.html\">%s</a></td>" % (entry[0], entry[0])
         for i in entry[1:]:
             summary = summary + "<td align=\"right\">%s</td>" % (i)
         summary = summary + "<td align=\"right\">%.2f</td>" % (100*(float(entry[1])-float(entry[2])-float(entry[3]))/float(entry[1]))
@@ -681,6 +683,21 @@ def generateJAPI():
     
     return celltexts
 
+def transformJunitResultToHTML(filename):
+    s = StringIO.StringIO()
+    lines = open(filename, 'r').readlines()
+    lines = string.join(lines)
+    s.write("""
+    <html>
+    <body>
+    <pre>
+    %s
+    </pre>
+    </body>
+    </html>
+    """  % ( lines ))
+    return s.getvalue()
+
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
@@ -965,10 +982,14 @@ if __name__ == '__main__':
         # copy the individual report files
         reportFiles = glob.glob(os.path.join(nightly_repo, 'reports', 'result-*'))
         for report in reportFiles:
-            dest = os.path.join(testDir, os.path.basename(report))
-            shutil.copyfile(report, dest)
+            newfile = transformJunitResultToHTML(report)
+            newfilename = os.path.basename(report).split('.')[0]+".html"
+            dest = os.path.join(testDir, newfilename)
+            f = open(dest, 'w')
+            f.write(newfile)
+            f.close()
 
-        repFiles = glob.glob(os.path.join(nightly_repo,'reports/result-*.txt'))
+        repFiles = glob.glob(os.path.join(testDir,'result-*.html'))
         repFiles.sort()
         count = 1
         s = ""
