@@ -417,7 +417,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	/**
 	 *  Gets the menu attribute of the JChemPaintPanel object
 	 *
-	 *@return    The toolBar value
+	 *@return    The menu value
 	 */
 	public JChemPaintMenuBar getMenu()
 	{
