@@ -116,6 +116,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
             this.fractionalPoint3d = null;
             this.point3d = null;
             this.point2d = null;
+            this.hydrogenCount = 0;
         }
         
         /**
@@ -129,6 +130,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 this.fractionalPoint3d = null;
                 this.point3d = null;
                 this.point2d = null;
+                this.hydrogenCount = 0;
         }
 
         /**
