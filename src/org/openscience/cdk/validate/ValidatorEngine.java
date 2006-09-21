@@ -167,9 +167,8 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IChemSequence[] sequences = subject.getChemSequences();
-        for (int i=0; i< sequences.length; i++) {
-            report.addReport(validateChemSequence(sequences[i]));
+        for (int i=0; i< subject.getChemSequenceCount(); i++) {
+            report.addReport(validateChemSequence(subject.getChemSequence(i)));
         }
         return report;
     }
@@ -224,9 +223,9 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IChemModel[] models = subject.getChemModels();
-        for (int i=0; i<models.length; i++) {
-            report.addReport(validateChemModel(models[i]));
+        java.util.Iterator models = subject.chemModels();
+        while (models.hasNext()) {
+            report.addReport(validateChemModel((IChemModel)models.next()));
         }
         return report;
     }

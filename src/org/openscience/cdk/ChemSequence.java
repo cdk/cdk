@@ -101,22 +101,57 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		notifyChanged();
 	}
 
+	
+	/**
+	 * Remove a ChemModel from this ChemSequence.
+	 *
+	 * @param  pos  The position of the ChemModel to be removed.
+	 */
+	public void removeChemModel(int pos) {
+		chemModels[pos].removeListener(this);
+		for (int i = pos; i < chemModelCount - 1; i++) {
+			chemModels[i] = chemModels[i + 1];
+		}
+		chemModels[chemModelCount - 1] = null;
+		chemModelCount--;
+		notifyChanged();
+	}
 
-    /**
-     * Returns an array of ChemModels of length matching the number of ChemModels 
-     * in this container.
+	/**
+     * Returns an Iterator to ChemModels in this container.
      *
-     * @return    The array of ChemModels in this container
-     *
+     * @return    The Iterator to ChemModels in this container
      * @see       #addChemModel
      */
-     public org.openscience.cdk.interfaces.IChemModel[] getChemModels() {
-    	 org.openscience.cdk.interfaces.IChemModel[] returnModels = new ChemModel[getChemModelCount()];
-         System.arraycopy(this.chemModels, 0, returnModels, 0, returnModels.length);
-         return returnModels;
+     public java.util.Iterator chemModels() {
+    	 return new ChemModelIterator();
      }
 
+     /**
+      * The inner Iterator class.
+      *
+      */
+     private class ChemModelIterator implements java.util.Iterator {
 
+         private int pointer = 0;
+     	
+         public boolean hasNext() {
+             if (pointer < chemModelCount) return true;
+ 	    return false;
+         }
+
+         public Object next() {
+             ++pointer;
+             return chemModels[pointer-1];
+         }
+
+         public void remove() {
+             removeChemModel(pointer-1);
+         }
+     	
+     }
+     
+     
 	/**
 	 *
 	 * Returns the ChemModel at position <code>number</code> in the
@@ -158,12 +193,10 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("ChemSequence(#M=");
-        org.openscience.cdk.interfaces.IChemModel[] models = getChemModels();
-        buffer.append(models.length);
+        buffer.append(chemModelCount);
         buffer.append(", ");
-        for (int i=0; i<models.length; i++) {
-        	org.openscience.cdk.interfaces.IChemModel model = models[i];
-            buffer.append(model.toString());
+        for (int i=0; i<chemModelCount; i++) {
+            buffer.append(chemModels[i].toString());
         }
         buffer.append(')');
         return buffer.toString();

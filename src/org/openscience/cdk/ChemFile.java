@@ -81,7 +81,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 
 
 	/**
-	 *  Adds an ChemSequence to this container.
+	 *  Adds a ChemSequence to this container.
 	 *
 	 *@param  chemSequence  The chemSequence to be added to this container
 	 *@see                  #getChemSequences
@@ -98,23 +98,58 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		notifyChanged();
 	}
 
-
-
 	/**
-	 *  Returns the array of ChemSequences of this container.
+	 *  Removes a ChemSequence from this container.
 	 *
-	 *@return    The array of ChemSequences of this container
-	 *@see       #addChemSequence
+	 *@param  chemSequence  The chemSequence to be added to this container
+	 *@see                  #getChemSequences
 	 */
-	public IChemSequence[] getChemSequences()
+	public void removeChemSequence(int pos)
 	{
-		ChemSequence[] returnChemSequences = new ChemSequence[getChemSequenceCount()];
-		System.arraycopy(this.chemSequences, 0, returnChemSequences,
-				0, returnChemSequences.length);
-		return returnChemSequences;
+		chemSequences[pos].removeListener(this);
+		for (int i = pos; i < chemSequenceCount - 1; i++) {
+			chemSequences[i] = chemSequences[i + 1];
+		}
+		chemSequences[chemSequenceCount - 1] = null;
+		chemSequenceCount--;
+		notifyChanged();
 	}
 
+	/**
+	 *  Returns the Iterator to ChemSequences of this container.
+	 *
+	 *@return    The Iterator to ChemSequences of this container
+	 *@see       #addChemSequence
+	 */
+	public java.util.Iterator chemSequences()
+	{
+		return new ChemSequenceIterator();
+	}
 
+	/**
+     * The inner Iterator class.
+     *
+     */
+    private class ChemSequenceIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < chemSequenceCount) return true;
+	    return false;
+        }
+
+        public Object next() {
+            ++pointer;
+            return chemSequences[pointer-1];
+        }
+
+        public void remove() {
+            removeChemSequence(pointer-1);
+        }
+    	
+    }
+	
 	/**
 	 *  Returns the ChemSequence at position <code>number</code> in the container.
 	 *
@@ -163,12 +198,12 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	{
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("ChemFile(#S=");
-		IChemSequence[] seqs = getChemSequences();
-		buffer.append(seqs.length);
+		java.util.Iterator seqs = chemSequences();
+		buffer.append(chemSequenceCount);
 		buffer.append(", ");
-		for (int i = 0; i < seqs.length; i++)
+		while (seqs.hasNext())
 		{
-			IChemSequence sequence = seqs[i];
+			IChemSequence sequence = (IChemSequence)seqs.next();
 			buffer.append(sequence.toString());
 		}
 		buffer.append(')');

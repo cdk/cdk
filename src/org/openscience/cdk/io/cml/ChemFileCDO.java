@@ -490,8 +490,12 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
 		currentChemFile.addChemSequence(chemSequence);
 	}
 
-	public IChemSequence[] getChemSequences() {
-		return currentChemFile.getChemSequences();
+	public void removeChemSequence(int pos) {
+		currentChemFile.removeChemSequence(pos);
+	}
+	
+	public java.util.Iterator chemSequences() {
+		return currentChemFile.chemSequences();
 	}
 
 	public IChemSequence getChemSequence(int number) {

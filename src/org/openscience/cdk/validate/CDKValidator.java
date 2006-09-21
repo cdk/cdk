@@ -49,13 +49,12 @@ public class CDKValidator extends AbstractValidator {
 
     private ValidationReport validateChemFileNulls(IChemFile chemFile) {
         ValidationReport report = new ValidationReport();
-        IChemSequence[] sequences = chemFile.getChemSequences();
         ValidationTest hasNulls = new ValidationTest(chemFile,
             "ChemFile contains a null ChemSequence."
         );
         for (int i=0; i < chemFile.getChemSequenceCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
-            if (sequences[i] == null) {
+            if (chemFile.getChemSequence(i) == null) {
                 report.addError(hasNulls);
             } else {
                 report.addOK(hasNulls);
@@ -66,13 +65,12 @@ public class CDKValidator extends AbstractValidator {
         
     private ValidationReport validateChemSequenceNulls(IChemSequence sequence) {
         ValidationReport report = new ValidationReport();
-        IChemModel[] models = sequence.getChemModels();
         ValidationTest hasNulls = new ValidationTest(sequence,
             "ChemSequence contains a null ChemModel."
         );
         for (int i=0; i < sequence.getChemModelCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
-            if (models[i] == null) {
+            if (sequence.getChemModel(i) == null) {
                 report.addError(hasNulls);
             } else {
                 report.addOK(hasNulls);

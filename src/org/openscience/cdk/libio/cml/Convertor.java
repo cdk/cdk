@@ -129,9 +129,9 @@ public class Convertor {
         }
 
         if (file.getChemSequenceCount() > 0) {
-            IChemSequence[] sequences = file.getChemSequences();
-            for (int i = 0; i < sequences.length; i++) {
-                cmlList.appendChild(cdkChemSequenceToCMLList(sequences[i]));
+            java.util.Iterator sequences = file.chemSequences();
+            while (sequences.hasNext()) {
+                cmlList.appendChild(cdkChemSequenceToCMLList((IChemSequence)sequences.next()));
             }
         }
 
@@ -151,9 +151,8 @@ public class Convertor {
         }
 
         if (sequence.getChemModelCount() > 0) {
-            IChemModel[] models = sequence.getChemModels();
-            for (int i = 0; i < models.length; i++) {
-                cmlList.appendChild(cdkChemModelToCMLList(models[i]));
+            for (int i = 0; i < sequence.getChemModelCount(); i++) {
+                cmlList.appendChild(cdkChemModelToCMLList(sequence.getChemModel(i)));
             }
         }
 

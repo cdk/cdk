@@ -179,16 +179,16 @@ public class IDCreator {
     }
     
     public void createIDs(IChemFile file) {
-    	IChemSequence[] sequences = file.getChemSequences();
-    	for (int i=0; i<sequences.length; i++) {
-    		createIDs(sequences[i]);
+    	java.util.Iterator sequences = file.chemSequences();
+    	while (sequences.hasNext()) {
+    		createIDs((IChemSequence)sequences.next());
     	}
     }
     
     public void createIDs(IChemSequence sequence) {
-    	IChemModel[] models = sequence.getChemModels();
-    	for (int i=0; i<models.length; i++) {
-    		createIDs(models[i]);
+    	java.util.Iterator models = sequence.chemModels();
+    	while (models.hasNext()) {
+    		createIDs((IChemModel)models.next());
     	}
     }
     

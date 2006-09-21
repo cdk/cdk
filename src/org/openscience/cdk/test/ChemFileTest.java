@@ -71,6 +71,16 @@ public class ChemFileTest extends CDKTestCase {
         assertEquals(3, cs.getChemSequenceCount());
     }
     
+    public void testRemoveChemSequence_int() {
+    	ChemFile cs = new ChemFile();
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        cs.addChemSequence(new ChemSequence());
+        assertEquals(3, cs.getChemSequenceCount());
+        cs.removeChemSequence(1);
+        assertEquals(2, cs.getChemSequenceCount());
+    }
+    
     public void testGetChemSequence_int() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
@@ -92,14 +102,14 @@ public class ChemFileTest extends CDKTestCase {
         assertEquals(6, cs.getChemSequenceCount());
     }
 
-    public void testGetChemSequences() {
+    public void testchemSequences() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
 
-        assertNotNull(cs.getChemSequences());
-        assertEquals(3, cs.getChemSequences().length);
+        assertNotNull(cs.chemSequences());
+        assertEquals(3, cs.getChemSequenceCount());
     }
 
     public void testGetChemSequenceCount() {

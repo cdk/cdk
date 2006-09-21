@@ -42,12 +42,20 @@ public interface IChemFile extends IChemObject {
 	public void addChemSequence(IChemSequence chemSequence);
 
 	/**
-	 * Returns the array of ChemSequences of this container.
+	 *  Removes a ChemSequence from this container.
 	 *
-	 * @return    The array of ChemSequences of this container
-	 * @see       #addChemSequence
+	 *@param  chemSequence  The chemSequence to be added to this container
+	 *@see                  #getChemSequences
 	 */
-	public IChemSequence[] getChemSequences();
+	public void removeChemSequence(int pos);
+	
+	/**
+	 *  Returns the Iterator to ChemSequences of this container.
+	 *
+	 *@return    The Iterator to ChemSequences of this container
+	 *@see       #addChemSequence
+	 */
+	public java.util.Iterator chemSequences();
 
 	/**
 	 * Returns the ChemSequence at position <code>number</code> in the container.

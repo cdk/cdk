@@ -142,9 +142,14 @@ public class DebugChemSequence extends org.openscience.cdk.ChemSequence
 		super.addChemModel(chemModel);
 	}
 
-	public IChemModel[] getChemModels() {
-		logger.debug("Getting chemModels: ", super.getChemModels().length);
-		return super.getChemModels();
+	public void removeChemModel(int pos) {
+		logger.debug("Remove chemModel: ", pos);
+		super.removeChemModel(pos);
+	}
+	
+	public java.util.Iterator chemModels() {
+		logger.debug("Getting chemModels");
+		return super.chemModels();
 	}
 
 	public IChemModel getChemModel(int number) {

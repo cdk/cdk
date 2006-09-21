@@ -71,6 +71,16 @@ public class ChemSequenceTest extends CDKTestCase {
         assertEquals(3, cs.getChemModelCount());
     }
 
+    public void testRemoveChemModel_int() {
+        ChemSequence cs = new ChemSequence();
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        cs.addChemModel(new ChemModel());
+        assertEquals(3, cs.getChemModelCount());
+        cs.removeChemModel(1);
+        assertEquals(2, cs.getChemModelCount());
+    }
+    
     public void testGrowChemModelArray() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
@@ -101,18 +111,20 @@ public class ChemSequenceTest extends CDKTestCase {
         assertEquals(second, cs.getChemModel(1));
     }
 
-    public void testGetChemModels() {
+    public void testChemModels() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
 
         assertEquals(3, cs.getChemModelCount());
-        org.openscience.cdk.interfaces.IChemModel[] models = cs.getChemModels();
-        assertEquals(3, models.length);
-        assertNotNull(models[0]);
-        assertNotNull(models[1]);
-        assertNotNull(models[2]);
+        java.util.Iterator models = cs.chemModels();
+        int count = 0;
+        while (models.hasNext()) {
+        	assertNotNull(models.next());
+        	++count;
+        }
+        assertEquals(3, count);
     }
 
     /** Test for RFC #9 */

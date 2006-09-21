@@ -43,14 +43,20 @@ public interface IChemSequence extends IChemObject {
 	 */
 	public void addChemModel(IChemModel chemModel);
 
+	/**
+	 * Remove a ChemModel from this ChemSequence.
+	 *
+	 * @param  pos  The position of the ChemModel to be removed.
+	 */
+	public void removeChemModel(int pos);
+	
     /**
-     * Returns an array of ChemModels of length matching the number of ChemModels 
-     * in this container.
+     * Returns an Iterator to ChemModels in this container.
      *
-     * @return    The array of ChemModels in this container
+     * @return    The Iterator to ChemModels in this container
      * @see       #addChemModel
      */
-     public IChemModel[] getChemModels();
+     public java.util.Iterator chemModels();
 
 	/**
 	 * Returns the ChemModel at position <code>number</code> in the

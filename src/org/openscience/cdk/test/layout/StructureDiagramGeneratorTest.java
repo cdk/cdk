@@ -208,9 +208,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			CMLReader reader = new CMLReader(ins);
 			ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-			IChemSequence[] chemSequence = chemFile.getChemSequences();
-		    IChemModel[] chemModels = chemSequence[0].getChemModels();
-		    IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IChemSequence chemSequence = chemFile.getChemSequence(0);
+		    IChemModel chemModel = chemSequence.getChemModel(0);
+		    IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
 	
 			molecule = new Molecule(atomContainer);
 		}
@@ -236,9 +236,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(ins);
 			ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-			IChemSequence[] chemSequence = chemFile.getChemSequences();
-			IChemModel[] chemModels = chemSequence[0].getChemModels();
-			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModels[0]);
+			IChemSequence chemSequence = chemFile.getChemSequence(0);
+			IChemModel chemModel = chemSequence.getChemModel(0);
+			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
 	
 			molecule = new Molecule(atomContainer);
 		}

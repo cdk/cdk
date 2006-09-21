@@ -146,9 +146,14 @@ public class DebugChemFile extends org.openscience.cdk.ChemFile
 		super.addChemSequence(chemSequence);
 	}
 
-	public IChemSequence[] getChemSequences() {
-		logger.debug("Getting chemSequences: ", super.getChemSequences().length);
-		return super.getChemSequences();
+	public void removeChemSequence(int pos) {
+		logger.debug("Removing sequence: ", pos);
+		super.removeChemSequence(pos);
+	}
+	
+	public java.util.Iterator chemSequences() {
+		logger.debug("Getting chemSequences");
+		return super.chemSequences();
 	}
 
 	public IChemSequence getChemSequence(int number) {

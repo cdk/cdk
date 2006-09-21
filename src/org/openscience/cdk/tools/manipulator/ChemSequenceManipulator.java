@@ -85,12 +85,12 @@ public class ChemSequenceManipulator {
      * Returns all the AtomContainer's of a ChemSequence.
      */
     public static IAtomContainer[] getAllAtomContainers(IChemSequence sequence) {
-        IChemModel[] models = sequence.getChemModels();
+        java.util.Iterator models = sequence.chemModels();
         int acCount = 0;
         Vector acArrays = new Vector();
-        for (int i=0; i<models.length; i++) {
+        while (models.hasNext()) {
             IAtomContainer[] modelContainers = ChemModelManipulator.
-                getAllAtomContainers(models[i]);
+                getAllAtomContainers((IChemModel)models.next());
             acArrays.addElement(modelContainers);
             acCount += modelContainers.length;
         }
