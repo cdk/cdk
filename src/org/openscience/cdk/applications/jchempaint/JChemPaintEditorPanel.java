@@ -414,6 +414,16 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return toolBar;
 	}
 
+	/**
+	 *  Gets the menu attribute of the JChemPaintPanel object
+	 *
+	 *@return    The toolBar value
+	 */
+	public JChemPaintMenuBar getMenu()
+	{
+		return menu;
+	}
+	
 
 	/**
 	 *  Creates a new JFrame that owns a new JChemPaintModel and returns it.
