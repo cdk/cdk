@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.Hashtable;
 
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
@@ -58,7 +59,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
-	private static final long serialVersionUID = -554752528363533678L;
+	private static final long serialVersionUID = -554752558363533678L;
 
 	protected int growArraySize = 3;
 
@@ -158,13 +159,37 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     /**
      * Returns the mappings between the reactant and the product side.
      *
-     * @return An array of Mapping's.
+     * @return An Iterator to the Mappings.
      * @see    #addMapping
      */
-    public org.openscience.cdk.interfaces.IMapping[] getMappings() {
+    public java.util.Iterator mappings() {
         Mapping[] returnMappings = new Mapping[mappingCount];
         System.arraycopy(this.map, 0, returnMappings, 0, returnMappings.length);
-        return returnMappings;
+        return new MappingIterator();
+    }
+    
+    /**
+     * The inner Mapping Iterator class.
+     *
+     */
+    private class MappingIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < mappingCount) return true;
+	    return false;
+        }
+
+        public Object next() {
+            ++pointer;
+            return map[pointer-1];
+        }
+
+        public void remove() {
+            removeMapping(pointer-1);
+        }
+    	
     }
     
     /**
@@ -350,13 +375,49 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Reaction.
      *
      * @param mapping Mapping to add.
-     * @see   #getMappings
+     * @see   #mappings
      */
     public void addMapping(org.openscience.cdk.interfaces.IMapping mapping) {
         if (mappingCount + 1 >= map.length) growMappingArray();
         map[mappingCount] = mapping;
         mappingCount++;
         notifyChanged();
+    }
+    
+    /**
+     * Removes a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param  pos  Position of the Mapping to remove.
+     * @see   #mappings
+     */
+    public void removeMapping(int pos) {
+		for (int i = pos; i < mappingCount - 1; i++) {
+			map[i] = map[i + 1];
+		}
+		map[mappingCount - 1] = null;
+		mappingCount--;
+		notifyChanged();
+	}
+    
+    /**
+     * Retrieves a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param pos Position of Mapping to get.
+     */
+    public IMapping getMapping(int pos) {
+    	return map[pos];
+    }
+    
+    /**
+     * Get the number of mappings between the reactant and product side to this
+     * Reaction.
+     *
+     * @return Number of stored Mappings.
+     */
+    public int getMappingCount() {
+    	return mappingCount;
     }
     
     protected void growMappingArray() {

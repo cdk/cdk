@@ -245,9 +245,9 @@ public class ReactionManipulator {
      * @return           The mapped IChemObject
      */
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
-    	IMapping[] mappings = reaction.getMappings();
-    	for(int i = 0 ; i < mappings.length ; i++){
-    		IMapping mapping = mappings[i];
+    	java.util.Iterator mappings = reaction.mappings();
+    	while (mappings.hasNext()){
+    		IMapping mapping = (IMapping)mappings.next();
     		IChemObject[] map = mapping.getRelatedChemObjects();
 			if(map[0].equals(chemObject)){
 				return map[1];

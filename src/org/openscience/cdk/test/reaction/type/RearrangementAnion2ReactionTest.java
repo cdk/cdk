@@ -128,7 +128,7 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
         
-        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
         
         IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         assertEquals(mappedProduct, product.getAtom(0));
@@ -195,7 +195,7 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         assertEquals(mappedProductA1, product.getAtom(0));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
@@ -239,7 +239,7 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
         
-        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
 	}
 	/**
 	 * get the molecule 1: [C-]-C=C-C

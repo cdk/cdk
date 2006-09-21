@@ -149,8 +149,9 @@ public class MDLRXNReaderTest extends CDKTestCase {
 			reader2.close();
 			
 			assertNotNull(reaction2);
-            IMapping[] maps = reaction2.getMappings();
-			assertEquals(2, maps.length);
+            java.util.Iterator maps = reaction2.mappings();
+            maps.next();
+			assertTrue(maps.hasNext());
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());

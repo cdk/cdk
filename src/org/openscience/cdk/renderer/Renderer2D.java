@@ -220,11 +220,11 @@ public class Renderer2D extends SimpleRenderer2D
 		    reaction instanceof IReaction)
 		{
 			logger.debug("Showing atom-atom mapping");
-			IMapping[] mappings = ((IReaction)reaction).getMappings();
-			logger.debug(" #mappings: ", mappings.length);
-			for (int i = 0; i < mappings.length; i++)
+			java.util.Iterator mappings = ((IReaction)reaction).mappings();
+			//logger.debug(" #mappings: ", mappings.length);
+			while (mappings.hasNext())
 			{
-				IChemObject[] objects = mappings[i].getRelatedChemObjects();
+				IChemObject[] objects = ((IMapping)mappings.next()).getRelatedChemObjects();
 				// only draw mapping when one of the mapped atoms
 				// is highlighted
 				if (objects[0] instanceof IAtom && objects[1] instanceof IAtom)

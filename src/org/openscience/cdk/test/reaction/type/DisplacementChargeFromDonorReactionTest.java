@@ -173,7 +173,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 
-        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappings().length);
+        Assert.assertEquals(5,setOfReactions.getReaction(0).getMappingCount());
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         assertEquals(mappedProductA1, product.getAtom(0));
         IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));

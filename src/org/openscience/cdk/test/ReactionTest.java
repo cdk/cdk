@@ -323,25 +323,52 @@ public class ReactionTest extends CDKTestCase {
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
         IReaction clonedReaction = (IReaction)reaction.clone();
-        IMapping[] mappings = reaction.getMappings();
-        IMapping[] clonedMappings = clonedReaction.getMappings();
+        java.util.Iterator mappings = reaction.mappings();
+        java.util.Iterator clonedMappings = clonedReaction.mappings();
         assertNotNull(mappings);
-        assertEquals(1, mappings.length);
+        assertTrue(mappings.hasNext());
         assertNotNull(clonedMappings);
-        assertEquals(1, clonedMappings.length);
+        assertTrue(clonedMappings.hasNext());
     }
     
     public void testAddMapping_IMapping() {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        IMapping[] mappings = reaction.getMappings();
+        java.util.Iterator mappings = reaction.mappings();
         assertNotNull(mappings);
-        assertEquals(1, mappings.length);
-        assertEquals(mapping, mappings[0]);
+        assertTrue(mappings.hasNext());
+        assertEquals(mapping, (IMapping)mappings.next());
     }
     
-    public void testGetMappings() {
-        testAddMapping_IMapping();
+    public void testRemoveMapping_int() {
+        IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
+        reaction.addMapping(mapping);
+        assertEquals(1, reaction.getMappingCount());
+        reaction.removeMapping(0);
+        assertEquals(0, reaction.getMappingCount());
+    }
+    
+    public void testGetMapping_int() {
+    	IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
+        reaction.addMapping(mapping);
+        IMapping gotIt = reaction.getMapping(0);
+        assertEquals(mapping, gotIt);
+    }
+    
+    public void testGetMappingCount() {
+    	IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
+        reaction.addMapping(mapping);
+        assertEquals(1, reaction.getMappingCount());
+    }
+    
+    public void testMappings() {
+    	IReaction reaction = builder.newReaction();
+        IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
+        reaction.addMapping(mapping);
+        assertEquals(1, reaction.getMappingCount());
     }
 }

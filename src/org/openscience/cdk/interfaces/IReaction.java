@@ -112,10 +112,10 @@ public interface IReaction extends IChemObject {
     /**
      * Returns the mappings between the reactant and the product side.
      *
-     * @return An array of Mapping's.
+     * @return An Iterator to the Mappings.
      * @see    #addMapping
      */
-    public IMapping[] getMappings();
+    public java.util.Iterator mappings();
     
     /**
      * Adds a reactant to this reaction.
@@ -255,8 +255,34 @@ public interface IReaction extends IChemObject {
      * Reaction.
      *
      * @param mapping Mapping to add.
-     * @see   #getMappings
+     * @see   #mappings
      */
     public void addMapping(org.openscience.cdk.interfaces.IMapping mapping);
+    
+    /**
+     * Removes a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param  pos  Position of the Mapping to remove.
+     * @see   #mappings
+     */
+    public void removeMapping(int pos);
+    
+    /**
+     * Retrieves a mapping between the reactant and product side to this
+     * Reaction.
+     *
+     * @param pos Position of Mapping to get.
+     */
+    public IMapping getMapping(int pos);
+    
+    /**
+     * Get the number of mappings between the reactant and product side to this
+     * Reaction.
+     *
+     * @return Number of stored Mappings.
+     */
+    public int getMappingCount();
+    
     
 }

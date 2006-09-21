@@ -113,7 +113,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 
-		Assert.assertEquals(4,setOfReactions.getReaction(0).getMappings().length);
+		Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
 		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
 		assertEquals(mappedProductA1, product2.getAtom(0));
         IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
