@@ -80,25 +80,24 @@ public class MappingTest extends CDKTestCase {
         Bond ethene = new Bond(new Atom("C"), new Atom("C"), 2.0); // coordinated with metal
 		Mapping mapping = new Mapping(atom1, ethene);
 
-		IChemObject[] map = mapping.getRelatedChemObjects();
-        assertNotNull(map[0]);
-        assertNotNull(map[1]);
-        assertEquals(atom1, map[0]);
-        assertEquals(ethene, map[1]);
+        assertNotNull(mapping.getChemObject(0));
+        assertNotNull(mapping.getChemObject(1));
+        assertEquals(atom1, mapping.getChemObject(0));
+        assertEquals(ethene, mapping.getChemObject(1));
     }
 
     public void testClone_ChemObject() throws Exception {
 		Mapping mapping = new Mapping(new Atom(), new Atom());
 
 		Mapping clone = (Mapping)mapping.clone();
-        IChemObject[] map = mapping.getRelatedChemObjects();
-        IChemObject[] mapClone = clone.getRelatedChemObjects();
-        assertEquals(map.length, mapClone.length);
-		for (int f = 0; f < map.length; f++) {
-			for (int g = 0; g < mapClone.length; g++) {
-				assertNotNull(map[f]);
-				assertNotNull(mapClone[g]);
-				assertNotSame(map[f], mapClone[g]);
+        //IChemObject[] map = mapping.getRelatedChemObjects();
+        //IChemObject[] mapClone = clone.getRelatedChemObjects();
+        //assertEquals(map.length, mapClone.length);
+		for (int f = 0; f < 2; f++) {
+			for (int g = 0; g < 2; g++) {
+				assertNotNull(mapping.getChemObject(f));
+				assertNotNull(clone.getChemObject(g));
+				assertNotSame(mapping.getChemObject(f), clone.getChemObject(g));
 			}
 		}        
     }

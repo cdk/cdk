@@ -467,8 +467,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         // clone the maps
 		clone.map = new Mapping[map.length];
 		for (int f = 0; f < mappingCount; f++) {
-            IChemObject[] rel = map[f].getRelatedChemObjects();
-			clone.map[f] = new Mapping((ChemObject)atomatom.get(rel[0]), (ChemObject)atomatom.get(rel[1]));
+			clone.map[f] = new Mapping((ChemObject)atomatom.get(map[f].getChemObject(0)), (ChemObject)atomatom.get(map[f].getChemObject(1)));
 		}
 		return clone;
 	}

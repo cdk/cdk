@@ -248,11 +248,10 @@ public class ReactionManipulator {
     	java.util.Iterator mappings = reaction.mappings();
     	while (mappings.hasNext()){
     		IMapping mapping = (IMapping)mappings.next();
-    		IChemObject[] map = mapping.getRelatedChemObjects();
-			if(map[0].equals(chemObject)){
-				return map[1];
-			}else if(map[1].equals(chemObject))
-				return map[0];
+			if (mapping.getChemObject(0).equals(chemObject)){
+				return mapping.getChemObject(1);
+			} else if (mapping.getChemObject(1).equals(chemObject))
+				return mapping.getChemObject(0);
     	}
     	return null;
     }

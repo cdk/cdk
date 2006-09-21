@@ -224,18 +224,20 @@ public class Renderer2D extends SimpleRenderer2D
 			//logger.debug(" #mappings: ", mappings.length);
 			while (mappings.hasNext())
 			{
-				IChemObject[] objects = ((IMapping)mappings.next()).getRelatedChemObjects();
+				IMapping objects = (IMapping)mappings.next();
+				IChemObject object0 = objects.getChemObject(0);
+				IChemObject object1 = objects.getChemObject(1);
 				// only draw mapping when one of the mapped atoms
 				// is highlighted
-				if (objects[0] instanceof IAtom && objects[1] instanceof IAtom)
+				if (object0 instanceof IAtom && object1 instanceof IAtom)
 				{
-					logger.debug("    atom1: ", objects[0]);
-					logger.debug("    atom1: ", objects[1]);
+					logger.debug("    atom1: ", object0);
+					logger.debug("    atom1: ", object1);
 					logger.debug("    highlighted: ", highlighted);
-					if (highlighted == objects[0] || highlighted == objects[1])
+					if (highlighted == object0 || highlighted == object1)
 					{
-						IAtom atom1 = (IAtom) objects[0];
-						IAtom atom2 = (IAtom) objects[1];
+						IAtom atom1 = (IAtom) object0;
+						IAtom atom2 = (IAtom) object1;
 						int[] ints = new int[4];
 						ints[0] = (int) (atom1.getPoint2d().x);
 						ints[1] = (int) (atom1.getPoint2d().y);

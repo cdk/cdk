@@ -49,7 +49,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
-	private static final long serialVersionUID = -6541915644492043503L;
+	private static final long serialVersionUID = -6541914644492043503L;
 
 	private IChemObject[] relation;
     
@@ -66,14 +66,46 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     }
 
     /**
-     * Returns an array of the two IChemObject's.
+     * Returns an Iterator to the two IChemObjects.
      *
-     * @return An array of two IChemObject's that define the mapping
+     * @return An Iterator to two IChemObjects that define the mapping
      */
-    public IChemObject[] getRelatedChemObjects() {
-        return (IChemObject[])relation;
+    public java.util.Iterator relatedChemObjects() {
+    	return new ChemObjectIterator();
     }
+    
+    /**
+     * The inner Iterator class.
+     *
+     */
+    private class ChemObjectIterator implements java.util.Iterator {
 
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < 2) return true;
+            return false;
+        }
+
+        public Object next() {
+            ++pointer;
+            return relation[pointer-1];
+        }
+
+        public void remove() {}
+    	
+    }
+    
+    /**
+     * Retrieve the first or second of the related IChemObjects.
+     * 
+     * @param   pos  The position of the IChemObject.
+     * @return  The IChemObject to retrieve.
+     */
+    public IChemObject getChemObject(int pos) {
+    	return relation[pos];
+    }
+    
 	/**
 	 * Clones this <code>Mapping</code> and the mapped <code>IChemObject</code>s.
 	 *

@@ -142,9 +142,13 @@ public class DebugMapping extends org.openscience.cdk.Mapping
 		return DebugChemObjectBuilder.getInstance();
 	}
     
-    public IChemObject[] getRelatedChemObjects() {
-        logger.debug("Getting related ChemObjects:", super.getRelatedChemObjects().length);
-        return super.getRelatedChemObjects();
+    public IChemObject getChemObject(int pos) {
+        logger.debug("Getting related ChemObject:", pos);
+        return super.getChemObject(pos);
     }
 
+    public java.util.Iterator relatedChemObjects() {
+    	logger.debug("Getting related ChemObjects");
+    	return super.relatedChemObjects();
+    }
 }

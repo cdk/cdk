@@ -33,11 +33,19 @@ package org.openscience.cdk.interfaces;
 public interface IMapping extends IChemObject {
     
     /**
-     * Returns an array of the two IChemObject's.
+     * Returns an Iterator to the two IChemObjects.
      *
-     * @return An array of two IChemObject's that define the mapping
+     * @return An Iterator to two IChemObjects that define the mapping
      */
-    public IChemObject[] getRelatedChemObjects();
+    public java.util.Iterator relatedChemObjects();
+    
+    /**
+     * Retrieve the first or second of the related IChemObjects.
+     * 
+     * @param   pos  The position of the IChemObject.
+     * @return  The IChemObject to retrieve.
+     */
+    public IChemObject getChemObject(int pos);
     
 }
 
