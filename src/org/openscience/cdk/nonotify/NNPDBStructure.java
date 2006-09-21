@@ -43,11 +43,6 @@ public class NNPDBStructure extends PDBStructure {
 		setNotification(false);
 	}
 	
-	private void setNotification(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public IChemObjectBuilder getBuilder() {
 		return NoNotificationChemObjectBuilder.getInstance();
 	}

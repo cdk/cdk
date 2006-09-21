@@ -21,6 +21,7 @@
  */
 package org.openscience.cdk.protein.data;
 
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
@@ -31,7 +32,7 @@ import org.openscience.cdk.interfaces.IPDBStructure;
  * 
  * @cdk.module data
  */
-public class PDBStructure implements IPDBStructure {
+public class PDBStructure extends ChemObject implements IPDBStructure {
 	
 	private static final long serialVersionUID = -1877529009319324448L;
 	
