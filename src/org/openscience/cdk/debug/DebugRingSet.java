@@ -45,11 +45,6 @@ public class DebugRingSet extends org.openscience.cdk.RingSet
 		super();
 	}
 	
-	public boolean ringAlreadyInSet(IRing newRing) {
-		logger.debug("Is ring already in set:", super.ringAlreadyInSet(newRing));
-		return super.ringAlreadyInSet(newRing);
-	}
-
 	public List getRings(IBond bond) {
 		logger.debug("Getting rings for bond: ", bond);
 		return super.getRings(bond);

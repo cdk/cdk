@@ -33,15 +33,6 @@ import java.util.List;
  * @cdk.keyword ring, set of
  */
 public interface IRingSet extends IAtomContainerSet {
-
-	/**
-	 * Checks - and returns 'true' - if a certain ring is already
-	 * stored in this setOfRings.
-	 *
-	 * @param   newRing  The ring to be tested if it is already stored here
-	 * @return     true if it is already stored
-	 */
-	public boolean ringAlreadyInSet(IRing newRing);	
 	
 	/**
 	 * Returns a vector of all rings that this bond is part of.

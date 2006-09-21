@@ -6,6 +6,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.test.CDKTestCase;
@@ -16,6 +17,20 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class RingSetManipulatorTest extends CDKTestCase {
 
+	protected IChemObjectBuilder builder;
+	
+	public RingSetManipulatorTest(String name) {
+        super(name);
+    }
+	
+	public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
+	
+	public static Test suite() {
+		return new TestSuite(RingSetManipulatorTest.class);
+	}
+	
     public void testIsSameRing_IAtom_IAtom() {
     	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRingSet ringset = builder.newRingSet();
@@ -57,8 +72,23 @@ public class RingSetManipulatorTest extends CDKTestCase {
         assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
     }
 
-	public static Test suite() {
-		return new TestSuite(RingSetManipulatorTest.class);
-	}	
+    public void testRingAlreadyInSet_IRing() {
+        IRing r1 = builder.newRing(5, "C");
+        IRing r2 = builder.newRing(3, "C");
+        
+        IRingSet rs = builder.newRingSet();
+        assertFalse(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
+        
+        rs.addAtomContainer(r1);
+        assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
+        
+        rs.addAtomContainer(r2);
+        assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        assertTrue(RingSetManipulator.ringAlreadyInSet(r2, rs));
+    }
+    
+	
 	
 }

@@ -176,4 +176,46 @@ public class RingSetManipulator {
 	    }
 	    return false;
 	  }
+	  
+	  /**
+	   * Checks - and returns 'true' - if a certain ring is already
+	   * stored in the ringset. This is not a test for equality of Ring
+	   * objects, but compares all Bond objects of the ring. 
+	   *
+	   * @param   newRing  The ring to be tested if it is already stored
+	   * @return     true if it is already stored
+	   */
+	  public static boolean ringAlreadyInSet(IRing newRing, IRingSet ringSet) {
+		  IRing ring;
+		  IBond[] bonds;
+		  IBond[] newBonds;
+		  IBond bond;
+		  int equalCount;
+		  boolean equals;
+		  for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
+		  {
+			  equals = false;
+			  equalCount = 0;
+			  ring = (IRing)ringSet.getAtomContainer(f);
+			  bonds = ring.getBonds();
+			  newBonds = newRing.getBonds();
+			  if (bonds.length == newBonds.length) {
+				  for (int i = 0; i < bonds.length; i++) {
+					  bond = newBonds[i];
+					  for (int n = 0; n < bonds.length; n++) {
+						  if (bond == bonds[n]) {
+							  equals = true;
+							  equalCount++;
+							  break;
+						  }
+					  }
+					  if (!equals) break;
+				  }
+			  }
+			  if (equalCount == bonds.length) {
+				  return true;
+			  }
+		  }
+		  return false;	
+	  }
 }

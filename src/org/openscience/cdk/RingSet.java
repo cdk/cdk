@@ -58,47 +58,6 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	{
 		super();
 	}
-
-	/**
-	 * Checks - and returns 'true' - if a certain ring is already
-	 * stored in this setOfRings.
-	 *
-	 * @param   newRing  The ring to be tested if it is already stored here
-	 * @return     true if it is already stored
-	 */
-	public boolean ringAlreadyInSet(IRing newRing) {
-		IRing ring;
-		IBond[] bonds;
-		IBond[] newBonds;
-		IBond bond;
-		int equalCount;
-		boolean equals;
-		for (int f = 0; f < getAtomContainerCount(); f++)
-		{
-			equals = false;
-			equalCount = 0;
-			ring = (IRing)getAtomContainer(f);
-			bonds = ring.getBonds();
-            newBonds = newRing.getBonds();
-			if (bonds.length == newBonds.length) {
-				for (int i = 0; i < bonds.length; i++) {
-					bond = newBonds[i];
-					for (int n = 0; n < bonds.length; n++) {
-						if (bond == bonds[n]) {
-							equals = true;
-							equalCount++;
-							break;
-						}
-					}
-					if (!equals) break;
-				}
-			}
-			if (equalCount == bonds.length) {
-				return true;
-			}
-		}
-		return false;	
-	}
 	
 	
 	/**
@@ -204,7 +163,14 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Checks for presence of a ring in this RingSet.
+	 * 
+	 * @param  ring  The ring to check
+	 * @return  true if ring is part of RingSet
+	 * 
+	 */
 	public boolean contains(IAtomContainer ring) {
 		for (int i = 0; i < getAtomContainerCount(); i++) {
 			if (ring == getAtomContainer(i)) {

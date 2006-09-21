@@ -37,6 +37,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 
@@ -147,7 +148,7 @@ public class FiguerasSSSRFinder {
 					if (ring != null)
 					{
 						// check, if this ring already is in SSSR
-						if (!sssr.ringAlreadyInSet(ring))
+						if (!RingSetManipulator.ringAlreadyInSet(ring, sssr))
 						{
 							sssr.addAtomContainer(ring);
 							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
@@ -177,7 +178,7 @@ public class FiguerasSSSRFinder {
 				{
 					
 					// check, if this ring already is in SSSR
-					if (!sssr.ringAlreadyInSet(ring))
+					if (!RingSetManipulator.ringAlreadyInSet(ring, sssr))
 					{
 						sssr.addAtomContainer(ring);
 					}

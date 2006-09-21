@@ -63,22 +63,6 @@ public class RingSetTest extends CDKTestCase {
         assertNotNull(rs);
     }
     
-    public void testRingAlreadyInSet_IRing() {
-        IRing r1 = builder.newRing(5, "C");
-        IRing r2 = builder.newRing(3, "C");
-        
-        IRingSet rs = builder.newRingSet();
-        assertTrue(!rs.ringAlreadyInSet(r1));
-        assertTrue(!rs.ringAlreadyInSet(r2));
-        
-        rs.addAtomContainer(r1);
-        assertTrue(rs.ringAlreadyInSet(r1));
-        assertTrue(!rs.ringAlreadyInSet(r2));
-        
-        rs.addAtomContainer(r2);
-        assertTrue(rs.ringAlreadyInSet(r1));
-        assertTrue(rs.ringAlreadyInSet(r2));
-    }
     
     public void testAdd_IRingSet() {
         IRing r1 = builder.newRing(5, "C");
