@@ -35,7 +35,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
- *  This class returns the 3D distance between two atoms.
+ *  This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must be calculated beforehand.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
