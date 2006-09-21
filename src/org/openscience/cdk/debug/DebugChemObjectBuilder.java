@@ -26,6 +26,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -42,15 +43,17 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -125,6 +128,30 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
 	public IBioPolymer newBioPolymer(){
 		return new DebugBioPolymer();
+	}
+	
+	public IPDBAtom newPDBAtom(IElement element) {
+    	return new DebugPDBAtom(element);
+    }
+	
+	public IPDBAtom newPDBAtom(String elementSymbol) {
+    	return new DebugPDBAtom(elementSymbol);
+    }
+    
+    public IPDBAtom newPDBAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
+    	return new DebugPDBAtom(elementSymbol, point3d);
+    }
+    
+    public IPDBStructure newPDBStructure() {
+    	return new DebugPDBStructure();
+    }
+    
+	public IPDBPolymer newPDBPolymer(){
+		return new DebugPDBPolymer();
+	}
+	
+	public IPDBStructure newStructure(){
+		return new DebugPDBStructure();
 	}
 
 	public IBond newBond() {

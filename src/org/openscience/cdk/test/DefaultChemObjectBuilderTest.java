@@ -30,6 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -45,15 +46,17 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -458,7 +461,48 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 		assertTrue(object instanceof IPolymer);
 	}	
+	
+	public void testnewPDBAtom_IElement() {
+		IElement element = rootObject.getBuilder().newElement();
+		Object object = rootObject.getBuilder().newPDBAtom(element);
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
+		assertTrue(object instanceof IPDBAtom);
+	}	
+	
+	public void testnewPDBAtom_String() {
+		Object object = rootObject.getBuilder().newPDBAtom("C");
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBAtom);
+	}	
+	
+	public void testnewPDBAtom_String_Point3D() {
+		Object object = rootObject.getBuilder().newPDBAtom("C", new Point3d(1.0, 2.0, 3.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBAtom);
+	}
+	
+	public void testNewPDBPolymer() {
+		Object object = rootObject.getBuilder().newPDBPolymer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBPolymer);
+	}
+	
+	public void testNewPDBStructure() {
+		Object object = rootObject.getBuilder().newPDBStructure();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBStructure);
+	}
+	
 	public void testNewPseudoAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom();
 		assertNotNull(object);

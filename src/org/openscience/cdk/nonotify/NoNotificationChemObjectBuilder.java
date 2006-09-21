@@ -23,10 +23,42 @@
  */
 package org.openscience.cdk.nonotify;
 
-import org.openscience.cdk.interfaces.*;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
+import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
@@ -102,6 +134,26 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
         return new NNBioPolymer();
 	}
 
+	public IPDBPolymer newPDBPolymer() {
+        return new NNPDBPolymer();
+	}
+	
+	public IPDBAtom newPDBAtom(IElement element) {
+        return new NNPDBAtom(element);
+    }
+	
+    public IPDBAtom newPDBAtom(String elementSymbol) {
+        return new NNPDBAtom(elementSymbol);
+    }
+    
+    public IPDBAtom newPDBAtom(String elementSymbol, javax.vecmath.Point3d point3d) {
+        return new NNPDBAtom(elementSymbol, point3d);
+    }
+    
+	public IPDBStructure newPDBStructure() {
+        return new NNPDBStructure();
+	}
+	
 	public IBond newBond() {
         return new NNBond();
 	}

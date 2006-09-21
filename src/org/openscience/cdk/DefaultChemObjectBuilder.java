@@ -48,6 +48,9 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
@@ -56,6 +59,9 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.protein.data.PDBPolymer;
+import org.openscience.cdk.protein.data.PDBStructure;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
@@ -229,6 +235,26 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	
 	public IPolymer newPolymer() {
 		return new Polymer();
+	}
+	
+	public IPDBAtom newPDBAtom(IElement element){
+		return new PDBAtom(element);
+	}
+	
+	public IPDBAtom newPDBAtom(String symbol){
+		return new PDBAtom(symbol);
+	}
+	
+	public IPDBAtom newPDBAtom(String symbol, Point3d coordinate){
+		return new PDBAtom(symbol, coordinate);
+	}
+
+	public IPDBPolymer newPDBPolymer() {
+		return new PDBPolymer();
+	}
+	
+	public IPDBStructure newPDBStructure() {
+		return new PDBStructure();
 	}
 
     public IReaction newReaction() {

@@ -153,6 +153,45 @@ public interface IChemObjectBuilder {
 	public IBioPolymer newBioPolymer();
 	
 	/**
+	 * Constructs an IPDBAtom from a IElement.
+	 * 
+     * @param   elementSymbol  The Element for the PDBAtom
+     * @return                 IPDBAtom implementation defined for this IChemObjectBuilder
+	 */	
+	public IPDBAtom newPDBAtom(IElement element);
+	
+	/**
+	 * Constructs an IPDBAtom from a String containing an element symbol.
+	 * 
+     * @param   elementSymbol  The String describing the element for the PDBAtom
+     * @return                 IPDBAtom implementation defined for this IChemObjectBuilder
+	 */	
+	public IPDBAtom newPDBAtom(String symbol);
+	
+	 /**
+     * Constructs an IPDBAtom from an Element and a Point3d.
+     *
+     * @param   elementSymbol   The symbol of the atom
+     * @param   point3d         The 3D coordinates of the atom
+     * @return                  IPDBAtom implementation defined for this IChemObjectBuilder
+     */
+    public IPDBAtom newPDBAtom(String elementSymbol, javax.vecmath.Point3d point3d);
+    
+    /**
+	 * Contructs a new IPDBPolymer to store the IStrands.
+	 * 
+     * @return  IPDBPolymer implementation defined for this IChemObjectBuilder
+	 */	
+	public IPDBPolymer newPDBPolymer();
+	
+	/**
+     * Constructs an IPDBStructure.
+     *
+     * @return IStructure implementation defined for this IChemObjectBuilder
+     */
+    public IPDBStructure newPDBStructure();
+    
+	/**
 	 * Constructs an empty IBond.
 	 * 
      * @return IBond implementation defined for this IChemObjectBuilder
