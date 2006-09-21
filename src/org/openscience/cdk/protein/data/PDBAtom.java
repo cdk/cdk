@@ -31,16 +31,18 @@ package org.openscience.cdk.protein.data;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPDBAtom;
 
 /**
  * Represents the idea of an atom as used in PDB files. It contains extra fields
  * normally associated with atoms in such files.
  *
- * @cdk.module pdb
+ * @cdk.module data
  *
  * @see  Atom
  */
-public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
+public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -64,12 +66,31 @@ public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
     private String resSeq;
     private boolean oxt;
     private boolean hetAtom;
-    
+
+    /**
+	 * Constructs an IPDBAtom from a Element.
+	 * 
+	 * @param element IElement to copy information from
+	 */
+	public PDBAtom(IElement element) {
+		super(element);
+        initValues();
+	}
+    /**
+	 * Constructs an IPDBAtom from a String containing an element symbol.
+     * 
+     * @param symbol  The String describing the element for the PDBAtom
+     */
     public PDBAtom(String symbol) {
         super(symbol);
         initValues();
     }
-
+    /**
+     * Constructs an IPDBAtom from an Element and a Point3d.
+     *
+     * @param   elementSymbol   The symbol of the atom
+     * @param   point3d         The 3D coordinates of the atom
+     */
     public PDBAtom(String symbol, Point3d coordinate) {
         super(symbol, coordinate);
         initValues();
@@ -91,83 +112,166 @@ public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
         oxt = false;
         hetAtom = false;
     }
-    
+    /**
+     * get one entire line from the PDB entry file which describe the IPDBAtom. 
+     * It consists of 80 columns. 
+     * 
+     * @return a String with all information
+     */
     public String getRecord() {
         return record;
     }
-    
+    /**
+     * set one entire line from the PDB entry file which describe the IPDBAtom. 
+     * It consists of 80 columns. 
+	 * 
+	 * @param newRecord A String with all information
+	 */
     public void setRecord(String newRecord) {
         record = newRecord;
     }
-    
+    /**
+     * get the Temperature factor of this atom.
+     * 
+     * @return the Temperature factor of this atom
+     */
     public double getTempFactor() {
         return tempFactor;
     }
-    
+    /**
+     * set the Temperature factor of this atom.
+     * 
+     * @param newTempFactor  the Temperature factor of this atom
+     */
     public void setTempFactor(double newTempFactor) {
         tempFactor = newTempFactor;
     }
-    
+    /**
+     * set the Residue name of this atom.
+     * 
+     * @param newResName  the Residue name of this atom
+     */
     public void setResName(String newResName) {
         resName = newResName;
     }
     
+    /**
+     * get the Residue name of this atom.
+     * 
+     * @return the Residue name of this atom
+     */
     public String getResName() {
         return resName;
     }
-    
+    /**
+     * set the Code for insertion of residues of this atom.
+     * 
+     * @param newICode  the Code for insertion of residues of this atom
+     */
     public void setICode(String newICode) {
         iCode = newICode;
     }
-    
+    /**
+     * get Code for insertion of residues of this atom.
+     * 
+     * @return the Code for insertion of residues of this atom
+     */
     public String getICode() {
         return iCode;
     }
-    
+    /**
+     * set the Atom name of this atom.
+     * 
+     * @param newName  the Atom name of this atom
+     */
     public void setName(String newName) {
         name = newName;
     }
-    
+    /**
+     * get the Atom name of this atom.
+     * 
+     * @return the Atom name of this atom
+     */
     public String getName() {
         return name;
     }
-    
+    /**
+     * set the Chain identifier of this atom.
+     * 
+     * @param newChainID  the Chain identifier of this atom
+     */
     public void setChainID(String newChainID) {
         chainID = newChainID;
     }
-    
+    /**
+     * get the Chain identifier of this atom.
+     * 
+     * @return the Chain identifier of this atom
+     */
     public String getChainID() {
         return chainID;
     }
-    
+    /**
+     * set the Alternate location indicator of this atom.
+     * 
+     * @param newAltLoc  the Alternate location indicator of this atom
+     */
     public void setAltLoc(String newAltLoc) {
         altLoc = newAltLoc;
     }
-    
+    /**
+     * get the Alternate location indicator of this atom.
+     * 
+     * @return the Alternate location indicator of this atom
+     */
     public String getAltLoc() {
         return altLoc;
     }
-    
+    /**
+     * set the Segment identifier, left-justified of this atom.
+     * 
+     * @param newSegID  the Segment identifier, left-justified of this atom
+     */
     public void setSegID(String newSegID) {
         segID = newSegID;
     }
-    
+    /**
+     * get the Segment identifier, left-justified of this atom.
+     * 
+     * @return the Segment identifier, left-justified of this atom
+     */
     public String getSegID() {
         return segID;
     }
-    
+    /**
+     * set the Atom serial number of this atom.
+     * 
+     * @param newSerial  the Atom serial number of this atom
+     */
     public void setSerial(int newSerial) {
         serial = newSerial;
     }
-    
+    /**
+     * get the Atom serial number of this atom.
+     * 
+     * @return the Atom serial number of this atom
+     */
     public int getSerial() {
         return serial;
     }
-    
+    /**
+     * set the Residue sequence number of this atom.
+     * 
+     * @param newResSeq  the Residue sequence number of this atom
+     */
     public void setResSeq(String newResSeq) {
         resSeq = newResSeq;
     }
-    
+    /**
+     * get the Residue sequence number of this atom.
+     * 
+     * @return the Residue sequence number of this atom
+     */
     public String getResSeq() {
         return resSeq;
     }
@@ -187,11 +291,19 @@ public class PDBAtom extends Atom implements java.io.Serializable, Cloneable {
     public boolean getHetAtom() {
         return hetAtom;
     }
-    
+    /**
+     * set the Occupancy of this atom.
+     * 
+     * @param newOccupancy  the Occupancy of this atom
+     */
     public void setOccupancy(double newOccupancy) {
         occupancy = newOccupancy;
     }
-    
+    /**
+     * get the Occupancy of this atom.
+     * 
+     * @return the Occupancy of this atom
+     */
     public double getOccupancy() {
         return occupancy;
     }

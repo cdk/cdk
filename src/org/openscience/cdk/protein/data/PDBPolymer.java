@@ -34,6 +34,8 @@ import java.util.List;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IStrand;
 
 /**
@@ -41,13 +43,13 @@ import org.openscience.cdk.interfaces.IStrand;
  * regular PDB mix of protein or protein complexes, ligands, water molecules
  * and other species.
  *
- * @cdk.module  pdb
+ * @cdk.module  data
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
-public class PDBPolymer extends BioPolymer { 
+public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{ 
 
 	private static final long serialVersionUID = 4173552834313952358L;
 
@@ -63,7 +65,7 @@ public class PDBPolymer extends BioPolymer {
 		secundairyStructures = new ArrayList();
 	}
 	
-	public void addStructure(PDBStructure structure) {
+	public void addStructure(IPDBStructure structure) {
 		secundairyStructures.add(structure);
 	}
 	

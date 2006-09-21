@@ -21,15 +21,19 @@
  */
 package org.openscience.cdk.protein.data;
 
+import org.openscience.cdk.interfaces.IPDBStructure;
+
 /**
  * Holder for secundary protein structure elements. Lously modeled after
  * the Jmol Structure.java.
  * 
  * @author     egonw
  * 
- * @cdk.module pdb
+ * @cdk.module data
  */
-public class PDBStructure {
+public class PDBStructure implements IPDBStructure {
+	
+	private static final long serialVersionUID = -1877529009319324448L;
 	
 	public final static String HELIX = "helix";
 	public final static String SHEET = "sheet";
@@ -43,58 +47,115 @@ public class PDBStructure {
     private int endSequenceNumber;
     private char endInsertionCode;
     
+    /**
+     * get the ending Chain identifier of this structure.
+     * 
+     * @return the ending Chain identifier of this structure
+     */
     public char getEndChainID() {
     	return endChainID;
     }
-    
+    /**
+     * set the ending Chain identifier of this structure.
+     * 
+     * @param endChainID  the ending Chain identifier of this structure
+     */
     public void setEndChainID(char endChainID) {
     	this.endChainID = endChainID;
     }
-    
+    /**
+     * get the ending Code for insertion of residues of this structure.
+     * 
+     * @return the ending Code for insertion of residues of this structure
+     */
     public char getEndInsertionCode() {
     	return endInsertionCode;
     }
-    
+    /**
+     * set the ending Code for insertion of residues of this structure.
+     * 
+     * @param endInsertionCode  the ending Code for insertion of residues of this structure
+     */
     public void setEndInsertionCode(char endInsertionCode) {
     	this.endInsertionCode = endInsertionCode;
     }
-    
+    /**
+     * get the ending sequence number of this structure.
+     * 
+     * @return the ending sequence number of this structure
+     */
     public int getEndSequenceNumber() {
     	return endSequenceNumber;
     }
-    
+    /**
+     * set the ending sequence number of this structure.
+     * 
+     * @param endSequenceNumber  the ending sequence number of this structure
+     */
     public void setEndSequenceNumber(int endSequenceNumber) {
     	this.endSequenceNumber = endSequenceNumber;
     }
-    
+    /**
+     * get start Chain identifier of this structure.
+     * 
+     * @return the start Chain identifier of this structure
+     */
     public char getStartChainID() {
     	return startChainID;
     }
-    
+    /**
+     * set the start Chain identifier of this structure.
+     * 
+     * @param startChainID  the start Chain identifier of this structure
+     */
     public void setStartChainID(char startChainID) {
     	this.startChainID = startChainID;
     }
-    
+    /**
+     * get start Code for insertion of residues of this structure.
+     * 
+     * @return the start Code for insertion of residues of this structure
+     */
     public char getStartInsertionCode() {
     	return startInsertionCode;
     }
-    
+    /**
+     * set the start Chain identifier of this structure.
+     * 
+     * @param startInsertionCode  the start Chain identifier of this structure
+     */
     public void setStartInsertionCode(char startInsertionCode) {
     	this.startInsertionCode = startInsertionCode;
     }
-    
+    /**
+     * get the start sequence number of this structure.
+     * 
+     * @return the start sequence number of this structure
+     */
     public int getStartSequenceNumber() {
     	return startSequenceNumber;
     }
-    
+    /**
+     * set the start sequence number of this structure.
+     * 
+     * @param endSequenceNumber  the start sequence number of this structure
+     */
     public void setStartSequenceNumber(int startSequenceNumber) {
     	this.startSequenceNumber = startSequenceNumber;
     }
-    
+    /**
+     * get Structure Type of this structure.
+     * 
+     * @return the Structure Type of this structure
+     */
     public String getStructureType() {
     	return structureType;
     }
-    
+    /**
+     * set the Structure Type of this structure.
+     * 
+     * @param structureType  the Structure Type of this structure
+     */
     public void setStructureType(String structureType) {
     	this.structureType = structureType;
     }
