@@ -1443,6 +1443,30 @@ public class GeometryTools {
 
 
 	/**
+	 *  Determines the best alignment for the label of an atom in 2D space. It
+	 *  returns 1 if left aligned, and -1 if right aligned.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  container  Description of the Parameter
+	 *@param  atom       Description of the Parameter
+	 *@return            The bestAlignmentForLabel value
+	 */
+	public static int getBestAlignmentForLabel(IAtomContainer container, IAtom atom, HashMap renderingCoordinates) {
+		IAtom[] connectedAtoms = container.getConnectedAtoms(atom);
+		int overallDiffX = 0;
+		for (int i = 0; i < connectedAtoms.length; i++) {
+			IAtom connectedAtom = connectedAtoms[i];
+			overallDiffX = overallDiffX + (int) (((Point2d)renderingCoordinates.get(connectedAtom)).x - ((Point2d)renderingCoordinates.get(atom)).x);
+		}
+		if (overallDiffX <= 0) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	
+	/**
 	 *  Returns the atoms which are closes to an atom in an AtomContainer by
 	 *  distance in 3d.
 	 *
