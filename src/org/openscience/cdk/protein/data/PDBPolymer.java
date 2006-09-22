@@ -32,8 +32,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IStrand;
@@ -73,28 +73,38 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 //		don't return the original
 		return new ArrayList(secundairyStructures);
 	}
-	
+	/**
+	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+	 * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
+	 * e.g. for HETATMs).
+	 *
+	 * @param oAtom  The IPDBAtom to add
+	 */
+	public void addAtom(IPDBAtom oAtom){
+		super.addAtom(oAtom);
+	}
+
 	/**
 	 * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
 	 * record of the iCode.
 	 *
-	 * @param oAtom  The atom to add
+	 * @param oAtom  The IPDBAtom to add
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
-	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
+	public void addAtom(IPDBAtom oAtom, IMonomer oMonomer) {
 		super.addAtom(oAtom, oMonomer);
 		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
 			sequentialListOfMonomers.add(oMonomer.getMonomerName());
 	}
 
 	/**
-	 * Adds the atom oAtom to a specified Monomer of a specified Strand.
+	 * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
 	 * Additionally, it keeps record of the iCode.
 	 *
-	 * @param oAtom  The atom to add
+	 * @param oAtom  The IPDBAtom to add
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
-	public void addAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
+	public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
 		super.addAtom(oAtom, oMonomer, oStrand);
 		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
 			sequentialListOfMonomers.add(oMonomer.getMonomerName());

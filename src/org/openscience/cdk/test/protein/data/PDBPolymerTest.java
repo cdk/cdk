@@ -30,13 +30,14 @@ import java.util.Hashtable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBPolymer;
+
+import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -78,27 +79,27 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono2.setMonomerName(new String("HOH"));
 		Monomer oMono3 = new Monomer();
 		oMono3.setMonomerName(new String("GLYA16"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
-		Atom oAtom4 = new Atom("C4");
-		Atom oAtom5 = new Atom("C5");
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		PDBAtom oPDBAtom3 = new PDBAtom("C3");
+		PDBAtom oPDBAtom4 = new PDBAtom("C4");
+		PDBAtom oPDBAtom5 = new PDBAtom("C5");
 		
-		pdbPolymer.addAtom(oAtom1);
-		pdbPolymer.addAtom(oAtom2, oStrand1);
-		pdbPolymer.addAtom(oAtom3, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom4, oMono2, oStrand2);
-		pdbPolymer.addAtom(oAtom5, oMono3, oStrand2);
+		pdbPolymer.addAtom(oPDBAtom1);
+		pdbPolymer.addAtom(oPDBAtom2, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom4, oMono2, oStrand2);
+		pdbPolymer.addAtom(oPDBAtom5, oMono3, oStrand2);
 		assertNotNull(pdbPolymer.getAtom(0));
 		assertNotNull(pdbPolymer.getAtom(1));
 		assertNotNull(pdbPolymer.getAtom(2));
 		assertNotNull(pdbPolymer.getAtom(3));
 		assertNotNull(pdbPolymer.getAtom(4));
-		assertEquals(oAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oAtom3, pdbPolymer.getAtom(2));
-		assertEquals(oAtom4, pdbPolymer.getAtom(3));
-		assertEquals(oAtom5, pdbPolymer.getAtom(4));
+		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
+		assertEquals(oPDBAtom4, pdbPolymer.getAtom(3));
+		assertEquals(oPDBAtom5, pdbPolymer.getAtom(4));
 
 		assertNull(pdbPolymer.getMonomer("0815", "A"));
 		assertNull(pdbPolymer.getMonomer("0815", "B"));
@@ -128,18 +129,18 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = new Monomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
-		pdbPolymer.addAtom(oAtom1);
-		pdbPolymer.addAtom(oAtom2, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom3, oMono2, oStrand2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		PDBAtom oPDBAtom3 = new PDBAtom("C3");
+		pdbPolymer.addAtom(oPDBAtom1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
 		assertNotNull(pdbPolymer.getAtom(0));
 		assertNotNull(pdbPolymer.getAtom(1));
 		assertNotNull(pdbPolymer.getAtom(2));
-		assertEquals(oAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oAtom3, pdbPolymer.getAtom(2));
+		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
 
 		assertEquals(2, pdbPolymer.getMonomerCount());
 	}
@@ -156,18 +157,18 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = new Monomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
-		pdbPolymer.addAtom(oAtom1);
-		pdbPolymer.addAtom(oAtom2, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom3, oMono2, oStrand2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		PDBAtom oPDBAtom3 = new PDBAtom("C3");
+		pdbPolymer.addAtom(oPDBAtom1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
 		assertNotNull(pdbPolymer.getAtom(0));
 		assertNotNull(pdbPolymer.getAtom(1));
 		assertNotNull(pdbPolymer.getAtom(2));
-		assertEquals(oAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oAtom3, pdbPolymer.getAtom(2));
+		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
 
 		assertEquals(3, pdbPolymer.getMonomerNames().size());
 		assertTrue(pdbPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
@@ -185,57 +186,57 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = new Monomer();
 		oMono2.setMonomerName(new String("HOH"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom2, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom3, oMono2, oStrand2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		PDBAtom oPDBAtom3 = new PDBAtom("C3");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
 
 		assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
 		assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
 	}
     
-	public void testAddAtom_IAtom() {
+	public void testaddAtom_IPDBAtom() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		pdbPolymer.addAtom(oAtom1);
-		pdbPolymer.addAtom(oAtom2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		pdbPolymer.addAtom(oPDBAtom1);
+		pdbPolymer.addAtom(oPDBAtom2);
 
 		assertEquals(2, pdbPolymer.getAtomCount());
 	}
     
-	public void testAddAtom_IAtom_IStrand() {
+	public void testaddAtom_IPDBAtom_IStrand() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		Atom oAtom3 = new Atom("C3");
-		pdbPolymer.addAtom(oAtom1, oStrand1);
-		pdbPolymer.addAtom(oAtom2, oStrand1);
-		pdbPolymer.addAtom(oAtom3, oMono1, oStrand1);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		PDBAtom oPDBAtom3 = new PDBAtom("C3");
+		pdbPolymer.addAtom(oPDBAtom1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom2, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
 
 		assertEquals(2, pdbPolymer.getMonomer("", "A").getAtomCount());
 		assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
 		assertEquals(3, pdbPolymer.getAtomCount());
 	}
 	
-	public void testAddAtom_IAtom_IMonomer_IStrand()	{
+	public void testaddAtom_IPDBAtom_IMonomer_IStrand()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom2, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom1, null, oStrand1);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom1, null, oStrand1);
 		
 		assertEquals(2, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
 		assertEquals(0, pdbPolymer.getMonomer("", "A").getAtomCount());
@@ -247,8 +248,8 @@ public class PDBPolymerTest extends CDKTestCase {
 		oStrand1.setStrandName("A");
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
 		assertEquals(1, pdbPolymer.getStrandCount());
 	}
@@ -259,8 +260,8 @@ public class PDBPolymerTest extends CDKTestCase {
 		oStrand1.setStrandName("A");
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		
 		assertEquals(oStrand1, pdbPolymer.getStrand("A"));
 	}
@@ -275,10 +276,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = new Monomer();
 		oMono2.setMonomerName(new String("GLY123"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom2, oMono2, oStrand2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
 		Hashtable strands = new Hashtable();
 		strands = new Hashtable();
 		strands.put("A", oStrand1);
@@ -293,8 +294,8 @@ public class PDBPolymerTest extends CDKTestCase {
 		oStrand1.setStrandName("A");
 		Monomer oMono1 = new Monomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		Atom oAtom1 = new Atom("C1");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		
 		assertTrue(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
 		assertEquals(1, pdbPolymer.getAtomCount());
@@ -313,10 +314,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		oMono1.setMonomerName(new String("TRP279"));
 		Monomer oMono2 = new Monomer();
 		oMono2.setMonomerName(new String("GLY123"));
-		Atom oAtom1 = new Atom("C1");
-		Atom oAtom2 = new Atom("C2");
-		pdbPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		pdbPolymer.addAtom(oAtom2, oMono2, oStrand2);
+		PDBAtom oPDBAtom1 = new PDBAtom("C1");
+		PDBAtom oPDBAtom2 = new PDBAtom("C2");
+		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
 		Hashtable strands = new Hashtable();
 		strands = new Hashtable();
 		strands.put("A", oStrand1);

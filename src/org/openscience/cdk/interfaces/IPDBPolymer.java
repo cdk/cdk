@@ -29,6 +29,7 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Collection;
 
+
 /**
  * A PDBPolymer is a subclass of a BioPolymer which is supposed to store
  * additional informations about the BioPolymer which are connected to BioPolymers.
@@ -43,7 +44,24 @@ import java.util.Collection;
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBPolymer extends IBioPolymer {
-
+	/**
+	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+	 * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
+	 * e.g. for HETATMs).
+	 *
+	 * @param oAtom  The atom to add
+	 */
+	public void addAtom(IPDBAtom oAtom);
+	
+	/**
+	 * Adds the atom to a specified Strand and a specified Monomer.
+	 * 
+	 * @param oAtom    The atom to add
+	 * @param oMonomer The monomer the atom belongs to
+	 * @param oStrand  The strand the atom belongs to
+	 */
+	public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
+	
 	/**
 	 * Adds the PDBStructure structure a this PDBPolymer.
 	 *
