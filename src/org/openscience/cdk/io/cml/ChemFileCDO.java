@@ -38,14 +38,10 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
@@ -84,8 +80,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private double crystal_axis_z;
     
     protected LoggingTool logger;
-
-	private Object[] objects;
 
     /**
      * Basic contructor
@@ -197,12 +191,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       } else if (objectType.equals("Product")) {
           if (currentReaction == null) startObject("Reaction");
           currentMolecule = currentChemFile.getBuilder().newMolecule();
-      } else if (objectType.equals("PDBAtom")) {
-          currentAtom = currentChemFile.getBuilder().newPDBAtom("H");
-          logger.debug("Atom # " + numberOfAtoms);
-          numberOfAtoms++;
-      } else if (objectType.equals("PDBPolymer")) {
-          currentMolecule = currentChemFile.getBuilder().newPDBPolymer();
       }
     }
 
@@ -292,10 +280,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           currentReaction.addProduct((IMolecule)currentMolecule);
       } else if (objectType.equals("Crystal")) {
           logger.debug("Crystal: " + currentMolecule);
-      } else if (objectType.equals("PDBAtom")) {
-          ((IPDBPolymer)currentMolecule).addAtom(
-        		  ((IPDBAtom)currentAtom),(IMonomer)objects[0],(IStrand)objects[1]);
-      } 
+      }
     }
 
     /**
@@ -328,15 +313,18 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
             currentMolecule.setProperty(CDKConstants.TITLE, propertyValue);
         } else if (propertyType.equals("inchi")) {
           currentMolecule.setProperty(CDKConstants.INCHI, propertyValue);
-        } else if (propertyType.equals("dict")) {
-            currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-          //Not used anymore in the PDBConvention
-//        } else if (propertyType.equals("pdb:residueName")) {
-//          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-//        } else if (propertyType.equals("pdb:oneLetterCode")) {
-//          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-//        } else if (propertyType.equals("pdb:id")) {
-//            currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
+        } else if (propertyType.equals("pdb:residueName")) {
+          currentMolecule.setProperty(
+        	new DictRef(propertyType, propertyValue), propertyValue
+          );
+        } else if (propertyType.equals("pdb:oneLetterCode")) {
+          currentMolecule.setProperty(
+          	new DictRef(propertyType, propertyValue), propertyValue
+          );
+        } else if (propertyType.equals("pdb:id")) {
+            currentMolecule.setProperty(
+            	new DictRef(propertyType, propertyValue), propertyValue
+            );
         } else {
         	logger.warn("Not adding molecule property!");
         }
@@ -348,8 +336,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
             ((IPseudoAtom)currentAtom).setLabel(propertyValue);
         }
       } else if (objectType.equals("Atom")) {
-
-    	  if (propertyType.equals("type")) {
+        if (propertyType.equals("type")) {
             if (propertyValue.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
                 currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
             }
@@ -397,46 +384,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           logger.debug("id: ", propertyValue);
           currentAtom.setID(propertyValue);
           atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
-        } 
-      } else if(objectType.equals("PDBAtom")){
-    	  if (propertyType.equals("occupancy")) {
-              int occ = (new Double(propertyValue)).intValue();
-              if(occ >= 0)
-                  ((IPDBAtom)currentAtom).setOccupancy(occ);
-          } else if (propertyType.equals("altLoc"))
-    		  ((IPDBAtom)currentAtom).setAltLoc(propertyValue);
-    	  else if (propertyType.equals("chainID"))
-    		  ((IPDBAtom)currentAtom).setChainID(propertyValue);
-    	  else if (propertyType.equals("hetAtom")){
-    		  boolean hetAtom = false;
-    		  if(propertyValue.equals("true"))
-    			  hetAtom = true;
-    		  ((IPDBAtom)currentAtom).setHetAtom(hetAtom);
-    	  }
-    	  else if (propertyType.equals("iCode"))
-    		  ((IPDBAtom)currentAtom).setICode(propertyValue);
-    	  else if (propertyType.equals("name"))
-    		  ((IPDBAtom)currentAtom).setName(propertyValue);
-    	  else if (propertyType.equals("oxt")){
-    		  boolean oxt = false;
-    		  if(propertyValue.equals("true"))
-    			  oxt = true;
-    		  ((IPDBAtom)currentAtom).setOxt(oxt);
-    	  }
-    	  else if (propertyType.equals("resSeq"))
-    		  ((IPDBAtom)currentAtom).setResSeq(propertyValue);
-    	  else if (propertyType.equals("record"))
-    		  ((IPDBAtom)currentAtom).setRecord(propertyValue);
-    	  else if (propertyType.equals("resName"))
-    		  ((IPDBAtom)currentAtom).setResName(propertyValue);
-    	  else if (propertyType.equals("segID"))
-    		  ((IPDBAtom)currentAtom).setSegID(propertyValue);
-    	  else if (propertyType.equals("serial"))
-    		  ((IPDBAtom)currentAtom).setSerial((new Double(propertyValue)).intValue());
-    	  else if (propertyType.equals("tempFactor"))
-    		  ((IPDBAtom)currentAtom).setTempFactor((new Double(propertyValue)).doubleValue());
-    	  
-      }else if (objectType.equals("Bond")) {
+        }
+      } else if (objectType.equals("Bond")) {
         if (propertyType.equals("atom1")) {
           bond_a1 = new Integer(propertyValue).intValue();
         } else if (propertyType.equals("atom2")) {
@@ -513,14 +462,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       }
       logger.debug("Object property set...");
     }
-    /**
-     * set objects which can be necessaries
-     * 
-     * @param objects An Array with objects
-     */
-    public void setObjects(Object[] obj){
-    	this.objects = obj;
-    }
+
     /**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
@@ -530,8 +472,6 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         objects.add("Molecule");
         objects.add("Fragment");
         objects.add("Atom");
-        objects.add("PDBPolymer");
-        objects.add("PDBAtom");
         objects.add("Bond");
         objects.add("Animation");
         objects.add("Frame");

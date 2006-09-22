@@ -636,58 +636,67 @@ public class CML2Test extends CDKTestCase {
 	 */
 	public void testSFBug1085912_1() throws Exception {
 		String filename_pdb = "data/pdb/1CKV.pdb";
-		String filename_cml = "data/cml/1CKV_1.cml";
+		String filename_cml = "data/cml/1CKV.cml";
 	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
 	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 	    
 	    try {
 	    	/*1*/
 		      IChemObjectReader reader = new PDBReader(ins1);
-		      IChemFile chemFile1 = (IChemFile) reader.read(new NNChemFile());
-		      IChemSequence seq1 = chemFile1.getChemSequence(0);
-		      IChemModel model1 = seq1.getChemModel(0);
-		      IAtomContainer container = model1.getMoleculeSet().getMolecule(0);
-		      IBioPolymer polymer1 = (IBioPolymer)container;
-		      int countchemFile1 = chemFile1.getChemSequenceCount();
-		      int countseq1 = seq1.getChemModelCount();
-		      int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
-		      int countpolymer1 = polymer1.getAtomCount();
+		      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+		      IChemSequence seq = chemFile.getChemSequence(0);
+		      IChemModel model = seq.getChemModel(0);
+	
+		      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+		      IBioPolymer polymer = (IBioPolymer)container;
 		      
+		      PDBPolymer moleculePDB1 = (PDBPolymer)polymer;
 	          
 		      StringWriter writer = new StringWriter();
 		      CMLWriter cmlWriter = new CMLWriter(writer);
-		      cmlWriter.write(polymer1);
+		      cmlWriter.write(moleculePDB1);
 		      String cmlContent1 = writer.toString();
-		      
-		      
 		    /*2*/
+
 	          CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
 		      IChemFile chemFil2 = (IChemFile)reader2.read(new NNChemFile());
 		      IChemSequence seq2 = chemFil2.getChemSequence(0);
 		      IChemModel model2 = seq2.getChemModel(0);
-		      PDBPolymer polymer2 =  (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
+		      IMolecule container2 = model2.getMoleculeSet().getMolecule(0);
 
+		      IBioPolymer polymer2 = (IBioPolymer)container2;
+		      
+		      PDBPolymer moleculePDB2 = (PDBPolymer)polymer2;
+		      
+		      StringWriter writer2 = new StringWriter();
+		      CMLWriter cmlWriter2 = new CMLWriter(writer2);
+		      cmlWriter2.write(moleculePDB2);
+		      String cmlContent2 = writer2.toString();
+		      
+		      /*3*/
 
-		      int countchemFile2 = chemFil2.getChemSequenceCount();
-		      int countseq2 = seq2.getChemModelCount();
-		      int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
-		      int countpolymer2 = polymer2.getAtomCount();
-		      
-		      assertEquals(countchemFile1, countchemFile2);
-//		      assertEquals(countseq1,countseq2); /*not the same because the pdb file has more models*/
-		      assertEquals(countmodel1,countmodel2);
-		      assertEquals(countpolymer1,countpolymer2);
-		      
+		      CMLReader reader3 = new CMLReader(ins2);
+		      IChemFile chemFil3 = (IChemFile)reader3.read(new NNChemFile());
+		      IChemSequence seq3 = chemFil3.getChemSequence(0);
+		      IChemModel model3 = seq3.getChemModel(0);
 
-		     writer = new StringWriter();
-		     cmlWriter = new CMLWriter(writer);
-		      cmlWriter.write(polymer2);
-		      String cmlContent2 = writer.toString();
+		      IAtomContainer container3 = model3.getMoleculeSet().getMolecule(0);
+		      IBioPolymer polymer3 = (IBioPolymer)container3;
 		      
-		      String conte1 = cmlContent1.substring(0, 1000);
-		      String conte2 = cmlContent2.substring(0, 1000);
-		      assertEquals(conte1,conte2);
+		      PDBPolymer moleculePDB3 = (PDBPolymer)polymer3;
 		      
+		      StringWriter writer3 = new StringWriter();
+		      CMLWriter cmlWriter3 = new CMLWriter(writer3);
+		      cmlWriter3.write(moleculePDB3);
+		      String cmlContent3 = writer3.toString();
+		      
+		      assertEquals(cmlContent1,cmlContent2);
+		      assertEquals(cmlContent3,cmlContent2);
+		      
+		      assertEquals(moleculePDB1,moleculePDB2);
+		      for(int i = 0; i < moleculePDB2.getAtomCount() ; i++)
+		    	  assertEquals(((PDBAtom)moleculePDB1.getAtom(i)).getResName(),((PDBAtom)moleculePDB2.getAtom(i)).getResName());
+	      
 	    } catch (Exception ex) {
             fail(ex.getMessage());
 		}
