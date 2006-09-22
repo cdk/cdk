@@ -102,7 +102,7 @@ public class ChemFileTest extends CDKTestCase {
         assertEquals(6, cs.getChemSequenceCount());
     }
 
-    public void testchemSequences() {
+    public void testChemSequences() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());

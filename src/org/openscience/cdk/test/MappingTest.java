@@ -75,15 +75,25 @@ public class MappingTest extends CDKTestCase {
         assertTrue(clone instanceof Mapping);
     }    
         
-    public void testGetRelatedChemObjects() {
-        Atom atom1 = new PseudoAtom("M");
-        Bond ethene = new Bond(new Atom("C"), new Atom("C"), 2.0); // coordinated with metal
-		Mapping mapping = new Mapping(atom1, ethene);
+	public void testGetChemObject_int() {
+		Atom atom0 = new Atom();
+		Atom atom1 = new Atom();
+		Mapping mapping = new Mapping(atom0, atom1);
+		assertEquals(atom0, mapping.getChemObject(0));
+		assertEquals(atom1, mapping.getChemObject(1));
+	}
+	
+    public void testRelatedChemObjects() {
+    	Atom atom0 = new Atom();
+		Atom atom1 = new Atom();
+		Mapping mapping = new Mapping(atom0, atom1);
 
-        assertNotNull(mapping.getChemObject(0));
-        assertNotNull(mapping.getChemObject(1));
-        assertEquals(atom1, mapping.getChemObject(0));
-        assertEquals(ethene, mapping.getChemObject(1));
+		java.util.Iterator iter = mapping.relatedChemObjects();
+		assertTrue(iter.hasNext());
+		assertEquals(atom0, (Atom)iter.next());
+		assertTrue(iter.hasNext());
+		assertEquals(atom1, (Atom)iter.next());
+        assertFalse(iter.hasNext());
     }
 
     public void testClone_ChemObject() throws Exception {

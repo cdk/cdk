@@ -72,6 +72,24 @@ public class AtomContainerSetTest extends CDKTestCase {
         assertEquals(3, som.getAtomContainerCount());
     }
     
+    public void testAtomContainers() {
+        IAtomContainerSet som = builder.newAtomContainerSet();
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        som.addAtomContainer(builder.newAtomContainer());
+        
+        assertEquals(3, som.getAtomContainerCount());
+        java.util.Iterator iter = som.atomContainers();
+        int count = 0;
+        while (iter.hasNext()) {
+        	iter.next();
+        	++count;
+        	iter.remove();
+        }
+        assertEquals(0, som.getAtomContainerCount());
+        assertEquals(3, count);
+    }
+    
     public void testAdd_IAtomContainerSet() {
         IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());

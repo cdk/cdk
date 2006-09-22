@@ -67,6 +67,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 
     /**
      * Returns an Iterator to the two IChemObjects.
+     * Iterator.remove() is not implemented.
      *
      * @return An Iterator to two IChemObjects that define the mapping
      */
@@ -88,8 +89,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
         }
 
         public Object next() {
-            ++pointer;
-            return relation[pointer-1];
+            return relation[pointer++];
         }
 
         public void remove() {}

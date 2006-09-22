@@ -134,6 +134,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
 	/**
 	 *  Returns the Iterator to atoms making up this bond.
+	 *  Iterator.remove() is not implemented.
 	 *
 	 *@return    An Iterator to atoms participating in this bond
 	 *@see       #setAtoms
