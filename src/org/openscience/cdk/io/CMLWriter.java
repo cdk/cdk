@@ -28,21 +28,38 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
+
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
 
 /**
  * Serializes a MoleculeSet or a Molecule object to CML 2 code.
@@ -198,8 +215,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	(namespacePrefix.getSetting().length() >0) ? namespacePrefix.getSetting() : null
         );
         Element root = null;
-        if (object instanceof IMolecule) {
-        	root = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
+        if (object instanceof PDBPolymer) {
+        	root = convertor.cdkPDBPolymerToCMLMolecule((PDBPolymer)object);
+    	} else if (object instanceof IMolecule) {
+    		root = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
         } else if (object instanceof ICrystal) {
         	root = convertor.cdkCrystalToCMLMolecule((ICrystal)object);
         } else if (object instanceof IAtom) {
