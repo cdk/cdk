@@ -241,7 +241,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			paintColouredAtomBackground(atom, r2dm.getHoverOverColor(),graphics);
 		}
 
-		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom);
+		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom, r2dm.getRenderingCoordinates());
 		boolean drawSymbol = false;
 		boolean isRadical = (container.getSingleElectronSum(atom) > 0);
 		if (atom instanceof IPseudoAtom)
