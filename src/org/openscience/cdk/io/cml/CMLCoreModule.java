@@ -71,6 +71,7 @@ public class CMLCoreModule implements ICMLModule {
     protected Vector atomParities;
     protected Vector atomDictRefs;
     protected Vector spinMultiplicities;
+    protected Vector occupancies;
 
     protected int bondCounter;
     protected Vector bondid;
@@ -131,6 +132,7 @@ public class CMLCoreModule implements ICMLModule {
             this.atomParities = conv.atomParities;
             this.atomDictRefs = conv.atomDictRefs;
             this.spinMultiplicities = conv.spinMultiplicities;
+            this.occupancies = conv.occupancies;
             this.bondCounter = conv.bondCounter;
             this.bondid = conv.bondid;
             this.bondARef1 = conv.bondARef1;
@@ -190,6 +192,7 @@ public class CMLCoreModule implements ICMLModule {
         atomParities = new Vector();
         atomDictRefs = new Vector();
         spinMultiplicities = new Vector();
+        occupancies = new Vector();
     }
 
     /**
@@ -233,7 +236,6 @@ public class CMLCoreModule implements ICMLModule {
     
     public void startElement(CMLStack xpath, String uri, String local, String raw, 
                               Attributes atts) {
-
         String name = local;
         logger.debug("StartElement");
         currentChars = "";
@@ -324,10 +326,17 @@ public class CMLCoreModule implements ICMLModule {
                     isotope.addElement(value);
                 }
                 else if (att.equals("dictRef")) {
+                	System.out.println("ocupaccy: "+value);
                     atomDictRefs.addElement(value);
-                } else if (att.equals("spinMultiplicity")) {
+                } 
+                else if (att.equals("spinMultiplicity")) {
                     spinMultiplicities.addElement(value);
-                } else {
+                }
+                else if (att.equals("occupancy")) {
+                    occupancies.addElement(value);
+                } 
+                 
+                else {
                     logger.warn("Unparsed attribute: " + att);
                 }
             }
@@ -476,7 +485,6 @@ public class CMLCoreModule implements ICMLModule {
         logger.debug("EndElement: ", name);
 
         String cData = currentChars;
-        
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.addElement("");
@@ -499,6 +507,9 @@ public class CMLCoreModule implements ICMLModule {
             }
             if (atomCounter > spinMultiplicities.size()) {
                 spinMultiplicities.addElement(null);
+            }
+            if (atomCounter > occupancies.size()) {
+                occupancies.addElement(null);
             }
             if (atomCounter > formalCharges.size()) {
                 /* while strictly undefined, assume zero 
@@ -916,6 +927,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasIsotopes = false;
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
+        boolean hasOccupancies = false;
 
         if (elid.size() == atomCounter) {
             hasID = true;
@@ -992,6 +1004,14 @@ public class CMLCoreModule implements ICMLModule {
         } else {
             logger.debug(
                     "No spinMultiplicity info: " + spinMultiplicities.size(),
+                    " != " + atomCounter);
+        }
+
+        if (occupancies.size() == atomCounter) {
+            hasOccupancies = true;
+        } else {
+            logger.debug(
+                    "No occupancy info: " + occupancies.size(),
                     " != " + atomCounter);
         }
 
@@ -1082,6 +1102,10 @@ public class CMLCoreModule implements ICMLModule {
                 cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.elementAt(i));
             }
 
+            if (hasOccupancies && occupancies.elementAt(i) != null) {
+                cdo.setObjectProperty("Atom", "occupanciy", (String)occupancies.elementAt(i));
+            }
+
             if (hasIsotopes) {
                 cdo.setObjectProperty("Atom", "massNumber", (String)isotope.elementAt(i));
             }
@@ -1150,7 +1174,7 @@ public class CMLCoreModule implements ICMLModule {
         newBondData();
     }
 
-    private int addArrayElementsTo(Vector toAddto, String array) {
+    protected int addArrayElementsTo(Vector toAddto, String array) {
         StringTokenizer tokenizer = new StringTokenizer(array);
         int i = 0;
         while (tokenizer.hasMoreElements()) {
