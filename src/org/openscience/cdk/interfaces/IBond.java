@@ -41,12 +41,12 @@ import javax.vecmath.Point3d;
 public interface IBond extends IElectronContainer {
 
 	/**
-	 * Returns the array of atoms making up this bond.
+	 *  Returns the Iterator to atoms making up this bond.
 	 *
-	 * @return    An array of atoms participating in this bond
-	 * @see       #setAtoms
+	 *@return    An Iterator to atoms participating in this bond
+	 *@see       #setAtoms
 	 */
-	public IAtom[] getAtoms();
+	public java.util.Iterator atoms();
 
 	/**
 	 * Sets the array of atoms making up this bond.
@@ -68,7 +68,7 @@ public interface IBond extends IElectronContainer {
 	 *
 	 * @param  position  The position in this bond where the atom is
 	 * @return           The atom at the specified position
-	 * @see              #setAtomAt
+	 * @see              #setAtom
 	 */
 	public IAtom getAtom(int position);
 
@@ -94,9 +94,9 @@ public interface IBond extends IElectronContainer {
 	 *
 	 * @param  atom      The atom to be set
 	 * @param  position  The position in this bond where the atom is to be inserted
-	 * @see              #getAtomAt
+	 * @see              #getAtom
 	 */
-	public void setAtomAt(IAtom atom, int position);
+	public void setAtom(IAtom atom, int position);
 
 	/**
 	 * Returns the bond order of this bond.

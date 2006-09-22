@@ -135,13 +135,13 @@ public class BPolDescriptor implements IMolecularDescriptor {
 			IElement element0 = null;
 			IElement element1 = null;
 			org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
-			IAtom[] atoms = null;
+			org.openscience.cdk.interfaces.IBond bond = null;
 			String symbol0 = null;
 			String symbol1 = null;
 			for (int i = 0; i < bonds.length; i++) {
-				atoms = container.getBond(i).getAtoms();
-				symbol0 = atoms[0].getSymbol();
-				symbol1 = atoms[1].getSymbol();
+				bond = container.getBond(i);
+				symbol0 = bond.getAtom(0).getSymbol();
+				symbol1 = bond.getAtom(1).getSymbol();
 				element0 = ifac.getElement(symbol0);
 				element1 = ifac.getElement(symbol1);
 				atomicNumber0 = element0.getAtomicNumber();

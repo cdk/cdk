@@ -177,11 +177,10 @@ public class AddHydrogenAction extends JCPAction
 						if(!controllerModel.getAutoUpdateImplicitHydrogens()){
 							hydrogenAtomMap = hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
 						}else{
-							org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
-							for (int j = 0; j < atoms.length; j++)
+							for (int j = 0; j < molecule.getAtomCount(); j++)
 							{
 								logger.debug("Checking atom: ", j);
-								atoms[j].setHydrogenCount(0);
+								molecule.getAtom(j).setHydrogenCount(0);
 							}
 	            		}
 					} else if (type.equals("explicit"))
@@ -198,14 +197,15 @@ public class AddHydrogenAction extends JCPAction
 					} else if (type.equals("allimplicit"))
 					{
 							// remove explicit hydrogen if necessary
-							org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
-							for (int j = 0; j < atoms.length; j++)
+							//org.openscience.cdk.interfaces.IAtom[] atoms = molecule.getAtoms();
+							for (int j = 0; j < molecule.getAtomCount(); j++)
 							{
+								org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(j);
 								logger.debug("Checking atom: ", j);
-								if (atoms[j].getSymbol().equals("H"))
+								if (atom.getSymbol().equals("H"))
 								{
 									logger.debug("Atom is a hydrogen");
-									molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+									molecule.removeAtomAndConnectedElectronContainers(atom);
 								}
 							}
 							// add implicit hydrogen

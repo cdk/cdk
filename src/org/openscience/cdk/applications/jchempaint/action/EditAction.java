@@ -101,14 +101,14 @@ public class EditAction extends JCPAction {
 		}
 		else if (type.equals("cutSelected")) {
 			logger.debug("Deleting all selected atoms...");
-			if (renderModel.getSelectedPart() == null || renderModel.getSelectedPart().getAtoms().length == 0) {
+			if (renderModel.getSelectedPart() == null || renderModel.getSelectedPart().getAtomCount() == 0) {
 				JOptionPane.showMessageDialog(jcpPanel, "No selection made. Please select some atoms first!", "Error warning", JOptionPane.WARNING_MESSAGE);
 			}
 			else {
-				org.openscience.cdk.interfaces.IAtom[] selected = renderModel.getSelectedPart().getAtoms();
-				logger.debug("Found # atoms to delete: ", selected.length);
-				for (int i = 0; i < selected.length; i++) {
-					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected[i]);
+				IAtomContainer selected = renderModel.getSelectedPart();
+				logger.debug("Found # atoms to delete: ", selected.getAtomCount());
+				for (int i = 0; i < selected.getAtomCount(); i++) {
+					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected.getAtom(i));
 				}
 			}
 			renderModel.setSelectedPart(new org.openscience.cdk.AtomContainer());

@@ -427,11 +427,11 @@ public class DeduceBondSystemTool {
                         } else if (molecule.getBondOrderSum(atom) == 5) {
                             // check if have 2 double bonds to atom in ring
                             int doublebondcount = 0;
-                            IAtom [] ca = molecule.getConnectedAtoms(atom);
+                            java.util.List ca = molecule.getConnectedAtomsList(atom);
 
-                            for (int k = 0; k <= ca.length - 1; k++) {
-                                if (molecule.getBond(atom, ca[k]).getOrder() == 2) {
-                                    if (inRingSet(ca[k], ringSet)) {
+                            for (int k = 0; k <= ca.size() - 1; k++) {
+                                if (molecule.getBond(atom, (IAtom)ca.get(k)).getOrder() == 2) {
+                                    if (inRingSet((IAtom)ca.get(k), ringSet)) {
                                         doublebondcount++;
                                     }
                                 }

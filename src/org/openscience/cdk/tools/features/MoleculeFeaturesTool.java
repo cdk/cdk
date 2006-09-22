@@ -43,26 +43,27 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MoleculeFeaturesTool {
 
 	public static boolean hasPartialCharges(IMolecule molecule) {
-		IAtom[] atoms = molecule.getAtoms();
-		for (int i=0; i<atoms.length; i++) {
-			if (atoms[i].getCharge() != 0.0000) return true;
+		java.util.Iterator atoms = molecule.atoms();
+		while (atoms.hasNext()) {
+			if (((IAtom)atoms.next()).getCharge() != 0.0000) return true;
 		}
 		return false;
 	}
 	
 	public static boolean hasFormalCharges(IMolecule molecule) {
-		IAtom[] atoms = molecule.getAtoms();
-		for (int i=0; i<atoms.length; i++) {
-			if (atoms[i].getFormalCharge() != 0) return true;
+		java.util.Iterator atoms = molecule.atoms();
+		while (atoms.hasNext()) {
+			if (((IAtom)atoms.next()).getFormalCharge() != 0) return true;
 		}
 		return false;
 	}
 
 	public static boolean hasElementSymbols(IMolecule molecule) {
-		IAtom[] atoms = molecule.getAtoms();
-		for (int i=0; i<atoms.length; i++) {
-			if (atoms[i].getSymbol() != null &&
-				atoms[i].getSymbol().length() > 0) return true;
+		java.util.Iterator atoms = molecule.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = (IAtom)atoms.next();
+			if (atom.getSymbol() != null &&
+				atom.getSymbol().length() > 0) return true;
 		}
 		return false;
 	}

@@ -156,22 +156,21 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
             HueckelAromaticityDetector.detectAromaticity(container, rs, true);
         }
     	int largestPiSystemAtomsCount=0;
-    	IAtom[] atoms = container.getAtoms();
     	Vector startSphere = null;
     	Vector path = null;
     	//Set all VisitedFlags to False
-    	for (int i =0;i<atoms.length;i++){
-			atoms[i].setFlag(CDKConstants.VISITED, false);
+    	for (int i =0;i<container.getAtomCount();i++){
+			container.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
     	//System.out.println("Set all atoms to Visited False");
-    	for (int i =0;i<atoms.length;i++){
+    	for (int i =0;i<container.getAtomCount();i++){
     		//Possible pi System double bond or triple bond, charge, N or O (free electron pair)
     		//System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-    		if ((container.getMaximumBondOrder(atoms[i])>1 || Math.abs(atoms[i].getFormalCharge())>=1 || atoms[i].getFlag(CDKConstants.ISAROMATIC)|| atoms[i].getSymbol().equals("N")||atoms[i].getSymbol().equals("O"))& !atoms[i].getFlag(CDKConstants.VISITED)){
+    		if ((container.getMaximumBondOrder(container.getAtom(i))>1 || Math.abs(container.getAtom(i).getFormalCharge())>=1 || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)|| container.getAtom(i).getSymbol().equals("N")||container.getAtom(i).getSymbol().equals("O"))& !container.getAtom(i).getFlag(CDKConstants.VISITED)){
     			//System.out.println("...... -> Accepted");
     			startSphere = new Vector();
     			path = new Vector();
-    			startSphere.addElement(atoms[i]);
+    			startSphere.addElement(container.getAtom(i));
      			breadthFirstSearch(container, startSphere, path);
      			if (path.size() > largestPiSystemAtomsCount){
     				largestPiSystemAtomsCount=path.size();
@@ -205,9 +204,9 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 		for (int i = 0; i < sphere.size(); i++){
 			atom = (IAtom) sphere.elementAt(i);
 			//System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
-			IBond[] bonds = container.getConnectedBonds(atom);
-			for (int j = 0; j < bonds.length; j++){
-				nextAtom = bonds[j].getConnectedAtom(atom);
+			java.util.List bonds = container.getConnectedBondsList(atom);
+			for (int j = 0; j < bonds.size(); j++){
+				nextAtom = ((IBond)bonds.get(j)).getConnectedAtom(atom);
 				if ((container.getMaximumBondOrder(nextAtom)>1 || Math.abs(nextAtom.getFormalCharge())>=1 || nextAtom.getFlag(CDKConstants.ISAROMATIC) || nextAtom.getSymbol().equals("N")||nextAtom.getSymbol().equals("O"))& !nextAtom.getFlag(CDKConstants.VISITED)){
 		    		//System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));		
 		    		path.addElement(nextAtom);

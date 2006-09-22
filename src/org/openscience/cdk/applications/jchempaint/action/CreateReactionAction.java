@@ -94,10 +94,10 @@ public class CreateReactionAction extends JCPAction
 				return;
 			}
 			// delete atoms in current model
-			IAtom[] atoms = container.getAtoms();
-			for (int i = 0; i < atoms.length; i++)
+			java.util.Iterator atoms = container.atoms();
+			while (atoms.hasNext())
 			{
-				ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atoms[i]);
+				ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, (IAtom)atoms.next());
 			}
 			logger.debug("Deleted atom from old container...");
 

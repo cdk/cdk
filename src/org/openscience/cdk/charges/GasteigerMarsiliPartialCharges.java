@@ -140,9 +140,8 @@ public class GasteigerMarsiliPartialCharges {
 			
 			bonds = ac.getBonds();
 			for (int k = 0; k < bonds.length; k++) {
-				atoms = bonds[k].getAtoms();
-				atom1 = ac.getAtomNumber(atoms[0]);
-				atom2 = ac.getAtomNumber(atoms[1]);
+				atom1 = ac.getAtomNumber(bonds[k].getAtom(0));
+				atom2 = ac.getAtomNumber(bonds[k].getAtom(1));
 
 				if (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] >= gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) {
 					if (ac.getAtom(atom2).getSymbol().equals("H")) {

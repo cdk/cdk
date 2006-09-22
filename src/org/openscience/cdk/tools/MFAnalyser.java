@@ -450,12 +450,9 @@ public class MFAnalyser {
 		for (int i = 0;
 				i < count;
 				i++) {
-			final IAtom[] atoms = ac.getBond(i).getAtoms();
-			final int length = atoms.length;
-			for (int k = 0;
-					k < length;
-					k++) {
-				final IAtom atom = atoms[k];
+			java.util.Iterator atoms = ac.getBond(i).atoms();
+			while (atoms.hasNext()) {
+				final IAtom atom = (IAtom)atoms.next();
 				if (atom.getSymbol().equals(H_ELEMENT_SYMBOL)) {
 					(h.contains(atom) ? multi_h : h).add(atom);
 				}
@@ -518,13 +515,12 @@ public class MFAnalyser {
 				i++) {
 			// Check bond.
 			final IBond bond = ac.getBond(i);
-			IAtom[] atoms = bond.getAtoms();
+			IAtom atom0 = bond.getAtom(0);
+			IAtom atom1 = bond.getAtom(1);
+			java.util.Iterator atoms = bond.atoms();
 			boolean remove_bond = false;
-			final int length = atoms.length;
-			for (int k = 0;
-					k < length;
-					k++) {
-				if (remove.contains(atoms[k])) {
+			while (atoms.hasNext()){
+				if (remove.contains((IAtom)atoms.next())) {
 					remove_bond = true;
 					break;
 				}
@@ -541,7 +537,7 @@ public class MFAnalyser {
 					logger.error("Could not clone: ", ac.getBond(i));
 					logger.debug(e);
 				}
-				clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
+				clone.setAtoms(new IAtom[]{(IAtom) map.get(atom0), (IAtom) map.get(atom1)});
 				mol.addBond(clone);
 			}
 		}
@@ -550,7 +546,7 @@ public class MFAnalyser {
 		for (Iterator i = remove.iterator();
 				i.hasNext(); ) {
 			// Process neighbours.
-			for (Iterator n = ac.getConnectedAtomsVector((IAtom) i.next()).iterator();
+			for (Iterator n = ac.getConnectedAtomsList((IAtom) i.next()).iterator();
 					n.hasNext(); ) {
 				final IAtom neighb = (IAtom) map.get(n.next());
 				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);

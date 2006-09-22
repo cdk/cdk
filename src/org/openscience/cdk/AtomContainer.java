@@ -293,30 +293,38 @@ public class AtomContainer extends ChemObject
 
 
 	/**
-	 *  Returns the array of atoms of this AtomContainer.
+	 *  Returns an Iterator for looping over all atoms in this container.
 	 *
-	 *@return    The array of atoms of this AtomContainer
-	 *@see       #setAtoms
+	 *@return    An Iterator with the atoms in this container
 	 */
-	public IAtom[] getAtoms()
+	public java.util.Iterator atoms()
 	{
-		IAtom[] returnAtoms = new IAtom[getAtomCount()];
-		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
-		return returnAtoms;
+		return new AtomIterator();
 	}
-
 
 	/**
-	 *  Returns an AtomEnumeration for looping over all atoms in this container.
-	 *
-	 *@return    An AtomEnumeration with the atoms in this container
-	 *@see       #getAtoms
-	 */
-	public Enumeration atoms()
-	{
-		return new AtomEnumeration(this);
-	}
+     * The inner AtomIterator class.
+     *
+     */
+    private class AtomIterator implements java.util.Iterator {
 
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < atomCount) return true;
+            return false;
+        }
+
+        public Object next() {
+            return atoms[pointer++];
+        }
+
+        public void remove() {
+            removeAtom(--pointer);
+        }
+    	
+    }
+	
 
 	/**
 	 *  Returns the array of electronContainers of this AtomContainer.
@@ -521,31 +529,13 @@ public class AtomContainer extends ChemObject
 		return null;
 	}
 
-
-	/**
-	 *  Returns an array of all atoms connected to the given atom.
-	 *
-	 *@param  atom  The atom the bond partners are searched of.
-	 *@return       The array of <code>Atom</code>s with the size of connected
-	 *      atoms
-	 */
-	public IAtom[] getConnectedAtoms(IAtom atom) {
-		List atomList = getConnectedAtomsVector(atom);
-		IAtom[] atoms = new IAtom[atomList.size()];
-		for (int i=0; i<atomList.size(); i++) {
-			atoms[i] = (IAtom)atomList.get(i);
-		}
-		return atoms;
-	}
-
-
 	/**
 	 *  Returns a vector of all atoms connected to the given atom.
 	 *
 	 *@param  atom  The atom the bond partners are searched of.
-	 *@return       The vector with the size of connected atoms
+	 *@return       The list with the size of connected atoms
 	 */
-	public List getConnectedAtomsVector(IAtom atom)
+	public List getConnectedAtomsList(IAtom atom)
 	{
 		List atomsVec = new ArrayList();
 		IElectronContainer electronContainer;
@@ -560,30 +550,34 @@ public class AtomContainer extends ChemObject
 		return atomsVec;
 	}
 
-
 	/**
-	 *  Returns an array of all Bonds connected to the given atom.
+	 *  Returns the number of atoms connected to the given atom.
 	 *
-	 *@param  atom  The atom the connected bonds are searched of
-	 *@return       The array with the size of connected atoms
+	 *@param  atom  The atom the number of bond partners are searched of.
+	 *@return       The the size of connected atoms
 	 */
-	public IBond[] getConnectedBonds(IAtom atom)
+	public int getConnectedAtomsCount(IAtom atom)
 	{
-		List bondList = getConnectedBondsVector(atom);
-		IBond[] bonds = new IBond[bondList.size()];
-		for (int i=0; i<bondList.size(); i++) {
-			bonds[i] = (IBond)bondList.get(i);
+		int count = 0;
+		IElectronContainer electronContainer;
+		for (int i = 0; i < electronContainerCount; i++)
+		{
+			electronContainer = electronContainers[i];
+			if (electronContainer instanceof IBond && ((IBond) electronContainer).contains(atom))
+			{
+				++count;
+			}
 		}
-		return bonds;
+		return count;
 	}
   
 	/**
 	 *  Returns a Vector of all Bonds connected to the given atom.
 	 *
 	 *@param  atom  The atom the connected bonds are searched of
-	 *@return       The vector with the size of connected atoms
+	 *@return       The list with the size of connected atoms
 	 */
-  public List getConnectedBondsVector(IAtom atom)
+	public List getConnectedBondsList(IAtom atom)
 	{
 		List bondsVec = new ArrayList();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -594,17 +588,16 @@ public class AtomContainer extends ChemObject
 				bondsVec.add(electronContainers[i]);
 			}
 		}
-    return(bondsVec);
-  }
-
+		return(bondsVec);
+	}
 
 	/**
-	 *  Returns an array of all electronContainers connected to the given atom.
+	 *  Returns a List of all electronContainers connected to the given atom.
 	 *
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The array with the size of connected atoms
 	 */
-	public IElectronContainer[] getConnectedElectronContainers(IAtom atom)
+	public List getConnectedElectronContainersList(IAtom atom)
 	{
 		List bondsVec = new ArrayList();
 		for (int i = 0; i < electronContainerCount; i++)
@@ -620,11 +613,7 @@ public class AtomContainer extends ChemObject
 				bondsVec.add(electronContainers[i]);
 			}
 		}
-		IElectronContainer[] cons = new IElectronContainer[bondsVec.size()];
-		for (int i=0; i<bondsVec.size(); i++) {
-			cons[i] = (IElectronContainer)bondsVec.get(i);
-		}
-		return cons;
+		return bondsVec;
 	}
 
 
@@ -1057,10 +1046,10 @@ public class AtomContainer extends ChemObject
 		int position = getAtomNumber(atom);
 		if (position != -1)
 		{
-			IElectronContainer[] electronContainers = getConnectedElectronContainers(atom);
-           for (int f = 0; f < electronContainers.length; f++)
+			ArrayList electronContainers = (ArrayList)getConnectedElectronContainersList(atom);
+            for (int f = 0; f < electronContainers.size(); f++)
 			{
-				removeElectronContainer(electronContainers[f]);
+				removeElectronContainer((IElectronContainer)electronContainers.get(f));
 			}
 			removeAtom(position);
 		}
@@ -1275,7 +1264,6 @@ public class AtomContainer extends ChemObject
 	public Object clone() throws CloneNotSupportedException {
 		IElectronContainer electronContainer;
 		IElectronContainer newEC;
-		IAtom[] natoms;
 		IAtom[] newAtoms;
 		IAtomContainer clone = (IAtomContainer) super.clone();
         // start from scratch
@@ -1291,10 +1279,9 @@ public class AtomContainer extends ChemObject
 			if (electronContainer instanceof IBond) {
 				IBond bond = (IBond) electronContainer;
 				newEC = (IElectronContainer)bond.clone();
-				natoms = bond.getAtoms();
-				newAtoms = new IAtom[natoms.length];
+				newAtoms = new IAtom[bond.getAtomCount()];
 				for (int g = 0; g < bond.getAtomCount(); g++) {
-					newAtoms[g] = clone.getAtom(getAtomNumber(natoms[g]));
+					newAtoms[g] = clone.getAtom(getAtomNumber(bond.getAtom(g)));
 				}
 				((IBond) newEC).setAtoms(newAtoms);
 			} else if (electronContainer instanceof ILonePair) {

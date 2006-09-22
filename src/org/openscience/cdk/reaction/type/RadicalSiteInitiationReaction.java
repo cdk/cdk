@@ -151,31 +151,37 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 			setActiveCenters(reactant);
 		}
 		
-		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getSingleElectron(atoms[i]).length == 1 ){
+		IMolecule reactant0 = reactants.getMolecule(0);
+		IAtom atomi = null;
+		IBond bondj;
+		IBond bondk;
+		for(int i = 0 ; i < reactant0.getAtomCount() ; i++){
+			atomi = reactant0.getAtom(i);
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getSingleElectron(atomi).length == 1 ){
 				
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getFlag(CDKConstants.REACTIVE_CENTER)&& bonds[j].getOrder() < 3.0 ){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() < 3.0 ){
+						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() != 0)
 							continue;
-						IBond[] bondsI = reactant.getConnectedBonds(atom);
-						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() ==  1.0 && !bondsI[k].equals(bonds[j])){
-								IAtom atomConn = bondsI[k].getConnectedAtom(atom);
+						java.util.List bondsI = reactant.getConnectedBondsList(atom);
+						for(int k = 0 ; k < bondsI.size() ; k++){
+							bondk = (IBond)bondsI.get(k);
+							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() ==  1.0 && !bondk.equals(bondj)){
+								IAtom atomConn = bondk.getConnectedAtom(atom);
 								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) && atomConn.getFormalCharge() == 0
-										&& !atomConn.equals(atoms[i]) && !atomConn.getSymbol().equals("H")){
+										&& !atomConn.equals(atomi) && !atomConn.getSymbol().equals("H")){
 									
 									IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 									reaction.addReactant(reactant);
 									
 									/* positions atoms and bonds */
-									int atom0P = reactant.getAtomNumber(atoms[i]);
-									int bond1P = reactant.getBondNumber(bonds[j]);
-									int bond2P = reactant.getBondNumber(bondsI[k]);
+									int atom0P = reactant.getAtomNumber(atomi);
+									int bond1P = reactant.getBondNumber(bondj);
+									int bond2P = reactant.getBondNumber(bondk);
 									int atom1P = reactant.getAtomNumber(atom);
 									int atom2P = reactant.getAtomNumber(atomConn);
 									/* action */
@@ -200,16 +206,16 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									
 
 									/* mapping */
-									IMapping mapping = atom.getBuilder().newMapping(atoms[i], acCloned.getAtom(atom0P));
+									IMapping mapping = atom.getBuilder().newMapping(atomi, acCloned.getAtom(atom0P));
 							        reaction.addMapping(mapping);
 							        mapping = atom.getBuilder().newMapping(atom, acCloned.getAtom(atom1P));
 							        reaction.addMapping(mapping);
 							        mapping = atom.getBuilder().newMapping(atomConn, acCloned.getAtom(atom2P));
 							        reaction.addMapping(mapping);
-							        mapping = atom.getBuilder().newMapping(bonds[j], acCloned.getBond(bond1P));
+							        mapping = atom.getBuilder().newMapping(bondj, acCloned.getBond(bond1P));
 							        reaction.addMapping(mapping);
 							        /*breaked bond*/
-//							        mapping = atom.getBuilder().newMapping(bondsI[k], acCloned.getBond(bond2P));
+//							        mapping = atom.getBuilder().newMapping(bondk, acCloned.getBond(bond2P));
 //							        reaction.addMapping(mapping);
 							        
 									IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(acCloned);
@@ -247,31 +253,37 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IAtom[] atoms = reactant.getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++)
-			if(reactant.getSingleElectron(atoms[i]).length == 1 ){
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getOrder() < 3.0){
-						IAtom atom = bonds[j].getConnectedAtom(atoms[i]);
+		IAtom atomi = null;
+		IBond bondj = null;
+		IBond bondk = null;
+		for(int i = 0 ; i < reactant.getAtomCount() ; i++) {
+			atomi = reactant.getAtom(i);
+			if(reactant.getSingleElectron(atomi).length == 1 ){
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getOrder() < 3.0){
+						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFormalCharge() != 0)
 							continue;
-						IBond[] bondsI = reactant.getConnectedBonds(atom);
-						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getOrder() == 1 && !bondsI[k].equals(bonds[j])){
-							IAtom atomConn = bondsI[k].getConnectedAtom(atom);
+						java.util.List bondsI = reactant.getConnectedBondsList(atom);
+						for(int k = 0 ; k < bondsI.size() ; k++){
+							bondk = (IBond)bondsI.get(k);
+							if(bondk.getOrder() == 1 && !bondk.equals(bondj)){
+							IAtom atomConn = bondk.getConnectedAtom(atom);
 							if(atomConn.getFormalCharge() == 0 && !atomConn.getSymbol().equals("H")){
-								atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atomConn.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bondsI[k].setFlag(CDKConstants.REACTIVE_CENTER,true); 
+								bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								bondk.setFlag(CDKConstants.REACTIVE_CENTER,true); 
 							}
 						}
 						}
 					}
 				}
 			}
+		}
 	}
 	/**
 	 *  Gets the parameterNames attribute of the RadicalSiteInitiationReaction object

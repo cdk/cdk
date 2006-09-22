@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -120,25 +121,26 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         int hBondDonors = 0;
 
-        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+        //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
     atomloop:
-    for(int atomIndex = 0; atomIndex < atoms.length; atomIndex++)
+    for(int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++)
     {
+    	IAtom atom = (IAtom)ac.getAtom(atomIndex);
       // checking for O and N atoms where the formal charge is >= 0
-      if((atoms[atomIndex].getSymbol().equals("O") || atoms[atomIndex].getSymbol().equals("N")) && atoms[atomIndex].getFormalCharge() >= 0)
+      if((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0)
       {
         // implicit hydrogens
-        if(atoms[atomIndex].getHydrogenCount() > 0)
+        if(atom.getHydrogenCount() > 0)
         {
           hBondDonors++;
           continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
         }
         // explicit hydrogens
-        org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
+        java.util.List neighbours = ac.getConnectedAtomsList(atom);
+        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
         {
-          if(neighbours[neighbourIndex].getSymbol().equals("H"))
+          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("H"))
           {
             hBondDonors++;
             continue atomloop;

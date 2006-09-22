@@ -48,7 +48,6 @@ public class AnyOrderQueryBond extends SMARTSBond {
 		StringBuffer s = new StringBuffer();
 		s.append("AnyOrderQueryBond(");
         s.append(this.hashCode() + ", ");
-		org.openscience.cdk.interfaces.IAtom[] atoms = getAtoms();
 		s.append("#A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i] == null) {

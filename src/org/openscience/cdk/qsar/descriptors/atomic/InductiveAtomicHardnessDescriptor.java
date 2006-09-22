@@ -162,7 +162,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 
 		double radiusTarget = 0;
 		
-		IAtom[] allAtoms = ac.getAtoms();
+		java.util.Iterator allAtoms = ac.atoms();
 		atomicHardness = 0;
 		double partial = 0;
 		double radius = 0;
@@ -177,17 +177,17 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
 		}
 
-		for (int i = 0; i < allAtoms.length; i++) {
+		while (allAtoms.hasNext()) {
+			IAtom curAtom = (IAtom)allAtoms.next();
+			if (target.getPoint3d() == null || curAtom.getPoint3d() == null) {
+				throw new CDKException("The target atom or current atom had no 3D coordinates. These are required");
+			}
 
-                if (target.getPoint3d() == null || allAtoms[i].getPoint3d() == null) {
-                    throw new CDKException("The target atom or atom "+i+" had no 3D coordinates. These are required");
-                }
 
-
-   			if (!target.equals(allAtoms[i])) {
+			if (!target.equals(curAtom)) {
 				partial = 0;
-				symbol = allAtoms[i].getSymbol();
-				
+				symbol = curAtom.getSymbol();
+
 				try {
 					type = factory.getAtomType(symbol);
 				} catch (Exception ex1) {
@@ -197,7 +197,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 				radius = type.getCovalentRadius();
 				partial += radius * radius;
 				partial += (radiusTarget * radiusTarget);
-				partial = partial / (calculateSquareDistanceBetweenTwoAtoms(target, allAtoms[i]));
+				partial = partial / (calculateSquareDistanceBetweenTwoAtoms(target, curAtom));
 				atomicHardness += partial;
 			}
 		}

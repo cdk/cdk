@@ -44,6 +44,7 @@ import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
 import org.openscience.cdk.math.qm.SimpleBasisSet;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  
 /**
  * Demonstration of the quantum mechanical capabilities of CDK.
@@ -82,9 +83,9 @@ public class GaussiansCalculationTest
       org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
       org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
       IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-      org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
+      org.openscience.cdk.interfaces.IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
 
-			GaussiansBasis basis = new SimpleBasisSet(atoms);
+      GaussiansBasis basis = new SimpleBasisSet(atoms);
         
       Orbitals orbitals = new Orbitals(basis);
       

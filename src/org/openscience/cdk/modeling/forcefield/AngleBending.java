@@ -9,6 +9,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 //import org.openscience.cdk.tools.LoggingTool;
@@ -84,7 +85,7 @@ public class AngleBending {
 		IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtom(i));
+			atomConnected = AtomContainerManipulator.getAtomArray(molecule.getConnectedAtomsList(molecule.getAtom(i)));
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
@@ -108,7 +109,7 @@ public class AngleBending {
 
 		int l = -1;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtom(i));
+			atomConnected = AtomContainerManipulator.getAtomArray(molecule.getConnectedAtomsList(molecule.getAtom(i)));
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {

@@ -5,6 +5,7 @@ import javax.swing.undo.UndoableEdit;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
@@ -67,10 +68,10 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
-		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
+		java.util.Iterator atoms = mol.atoms();
 		org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
-		for (int i = 0; i < atoms.length; i++) {
-			undoCont.addAtom(atoms[i]);
+		while (atoms.hasNext()) {
+			undoCont.addAtom((IAtom)atoms.next());
 		}
 		for (int i = 0; i < bonds.length; i++) {
 			undoCont.addBond(bonds[i]);

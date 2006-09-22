@@ -35,6 +35,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -97,9 +98,9 @@ public class CML2Test extends CDKTestCase {
             assertTrue(GeometryTools.has3DCoordinates(mol));
             assertTrue(!GeometryTools.has2DCoordinates(mol));
             
-            org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-            	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+            java.util.Iterator atoms = mol.atoms();
+            while (atoms.hasNext()) {
+            	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
                 if (atom.getSymbol().equals("Na")) 
                     assertEquals(+1, atom.getFormalCharge()); 
             }
@@ -135,9 +136,9 @@ public class CML2Test extends CDKTestCase {
             assertTrue(GeometryTools.has3DCoordinates(mol));
             assertTrue(!GeometryTools.has2DCoordinates(mol));
             
-            org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-            	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+            java.util.Iterator atoms = mol.atoms();
+            while (atoms.hasNext()) {
+            	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
                 if (atom.getSymbol().equals("N")) 
                     assertEquals(+1, atom.getFormalCharge()); 
             }

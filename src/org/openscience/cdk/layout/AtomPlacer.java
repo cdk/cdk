@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -258,7 +259,7 @@ public class AtomPlacer
 		/*
 		 *  get the two sharedAtom partners with the smallest distance to the new center
 		 */
-		sortedAtoms = placedNeighbours.getAtoms();
+		sortedAtoms = AtomContainerManipulator.getAtomArray(placedNeighbours);
 		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
 		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2d());
 		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
@@ -540,15 +541,16 @@ public class AtomPlacer
 	 */
 	public void partitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners)
 	{
-		IAtom[] atoms = molecule.getConnectedAtoms(atom);
-		for (int i = 0; i < atoms.length; i++)
+		java.util.List atoms = molecule.getConnectedAtomsList(atom);
+		for (int i = 0; i < atoms.size(); i++)
 		{
-			if (atoms[i].getFlag(CDKConstants.ISPLACED))
+			IAtom curatom = (IAtom)atoms.get(i);
+			if (curatom.getFlag(CDKConstants.ISPLACED))
 			{
-				placedPartners.addAtom(atoms[i]);
+				placedPartners.addAtom(curatom);
 			} else
 			{
-				unplacedPartners.addAtom(atoms[i]);
+				unplacedPartners.addAtom(curatom);
 			}
 		}
 	}
@@ -689,10 +691,11 @@ public class AtomPlacer
 				atomNr = ac.getAtomNumber(atom);
 				logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
-				IBond[] bonds = ac.getConnectedBonds(atom);
-				for (int g = 0; g < bonds.length; g++)
+				java.util.List bonds = ac.getConnectedBondsList(atom);
+				for (int g = 0; g < bonds.size(); g++)
 				{
-					nextAtom = bonds[g].getConnectedAtom(atom);
+					IBond curBond = (IBond)bonds.get(g);
+					nextAtom = curBond.getConnectedAtom(atom);
 					if (!nextAtom.getFlag(CDKConstants.VISITED) &&
 							!nextAtom.getFlag(CDKConstants.ISPLACED))
 					{
@@ -704,7 +707,7 @@ public class AtomPlacer
 						logger.debug("Copied path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
 						pathes[nextAtomNr].addAtom(nextAtom);
 						logger.debug("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
-						pathes[nextAtomNr].addBond(bonds[g]);
+						pathes[nextAtomNr].addBond(curBond);
 						logger.debug("New path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
 						if (ac.getBondCount(nextAtom) > 1)
 						{
@@ -894,7 +897,7 @@ public class AtomPlacer
 		int N = atomContainer.getAtomCount();
 		morganMatrix = new int[N];
 		tempMorganMatrix = new int[N];
-		IAtom[] atoms = null;
+		java.util.List atoms = null;
 		for (int f = 0; f < N; f++)
 		{
 			morganMatrix[f] = atomContainer.getBondCount(f);
@@ -905,12 +908,13 @@ public class AtomPlacer
 			for (int f = 0; f < N; f++)
 			{
 				morganMatrix[f] = 0;
-				atoms = atomContainer.getConnectedAtoms(atomContainer.getAtom(f));
-				for (int g = 0; g < atoms.length; g++)
+				atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
+				for (int g = 0; g < atoms.size(); g++)
 				{
-					if (!atoms[g].getFlag(CDKConstants.ISPLACED))
+					IAtom atom = (IAtom)atoms.get(g);
+					if (!atom.getFlag(CDKConstants.ISPLACED))
 					{
-						morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atoms[g])];
+						morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atom)];
 					}
 				}
 			}
@@ -922,12 +926,13 @@ public class AtomPlacer
 	public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
 	{
 		int sum = 0;
-		IBond[] bonds = molecule.getConnectedBonds(atom);
-		for (int g = 0; g < bonds.length; g++)
+		java.util.List bonds = molecule.getConnectedBondsList(atom);
+		for (int g = 0; g < bonds.size(); g++)
 		{
-			if (bonds[g].getOrder() == 3) sum += 10;
-			if (bonds[g].getOrder() == 1) sum += 1;
-			if (bonds[g].getOrder() == 2) sum += 5;
+			IBond bond = (IBond)bonds.get(g);
+			if (bond.getOrder() == 3) sum += 10;
+			else if (bond.getOrder() == 1) sum += 1;
+			else if (bond.getOrder() == 2) sum += 5;
 		}
 		if (sum >= 10) return true;
 		return false;

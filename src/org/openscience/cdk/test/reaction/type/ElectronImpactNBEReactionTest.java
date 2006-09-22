@@ -66,10 +66,11 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		LonePairElectronChecker lpeCheck = new LonePairElectronChecker();
 		lpeCheck.newSaturate(reactant);
 		
-		IAtom[] atoms = reactant.getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(reactant.getLonePairs(atoms[i]).length > 0){
-				atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+		java.util.Iterator atoms = reactant.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = (IAtom)atoms.next();
+			if(reactant.getLonePairs(atom).length > 0){
+				atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		

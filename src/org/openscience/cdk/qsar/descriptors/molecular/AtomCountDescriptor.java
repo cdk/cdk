@@ -142,18 +142,16 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
 
         if (container == null) throw new CDKException("The supplied AtomContainer was NULL");
 
-        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
-
-        if (atoms == null) throw new CDKException("There were no atoms in the supplied AtomContainer");
+        if (container.getAtomCount() == 0) throw new CDKException("There were no atoms in the supplied AtomContainer");
 
         if (elementName.equals("*")) {
-            for (int i = 0; i < atoms.length; i++) {
+        	for (int i = 0; i < container.getAtomCount(); i++) {
                 atomCount += container.getAtom(i).getHydrogenCount();
             }
-            atomCount += atoms.length;
+            atomCount += container.getAtomCount();
         }
         else if (elementName.equals("H")) {
-            for (int i = 0; i < atoms.length; i++) {
+        	for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
                 }
@@ -163,7 +161,7 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
             }
         }
         else {
-            for (int i = 0; i < atoms.length; i++) {
+            for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
                 }

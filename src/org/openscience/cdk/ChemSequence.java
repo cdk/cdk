@@ -141,12 +141,11 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
          }
 
          public Object next() {
-             ++pointer;
-             return chemModels[pointer-1];
+             return chemModels[pointer++];
          }
 
          public void remove() {
-             removeChemModel(pointer-1);
+             removeChemModel(--pointer);
          }
      	
      }

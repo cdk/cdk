@@ -158,8 +158,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					reaction.addReactant(reactants.getMolecule(0));
 					IMolecule reactant = reaction.getReactants().getMolecule(0);
 					
-					int posA1 = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
-					int posA2 = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
+					int posA1 = reactant.getAtomNumber(bonds[i].getAtom(0));
+					int posA2 = reactant.getAtomNumber(bonds[i].getAtom(1));
 					int posB1 = reactant .getBondNumber(bonds[i]);
 					IMolecule reactantCloned;
 					try {
@@ -184,9 +184,9 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					/* mapping */
 					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(posB1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(posA1));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), reactantCloned.getAtom(posA1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(posA2));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), reactantCloned.getAtom(posA2));
 			        reaction.addMapping(mapping);
 					
 					
@@ -207,14 +207,17 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IBond[] bonds = reactant.getBonds();
+		IAtom atom0 = null;
+		IAtom atom1 = null;
 		for(int i = 0 ; i < bonds.length ; i++){
-			IAtom[] atoms = bonds[i].getAtoms();
+			atom0 = bonds[i].getAtom(0);
+			atom1 = bonds[i].getAtom(1);
 			if(bonds[i].getOrder() == 2&&
-					atoms[0].getSymbol().equals("C")&&
-					atoms[1].getSymbol().equals("C")){
+					atom0.getSymbol().equals("C")&&
+					atom1.getSymbol().equals("C")){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom0.setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 	}

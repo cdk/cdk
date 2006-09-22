@@ -163,23 +163,26 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 		if(posCharge > 1 || Math.abs(negCharge) > 1)
 			return setOfReactions;
 		
-		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER) && atoms[i].getFormalCharge() == -1
-					&& reactant.getLonePairCount(atoms[i])  > 0  ){
+		IAtom atomi = null;
+		IBond bondj = null;
+		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
+			atomi = reactant.getAtom(i);
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == -1
+					&& reactant.getLonePairCount(atomi)  > 0  ){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[j].getOrder() == 1.0){
-						IAtom atom1 = bonds[j].getConnectedAtom(atoms[i]);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
+						IAtom atom1 = bondj.getConnectedAtom(atomi);
 						
 						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom1.getFormalCharge() == 1){
 							/* positions atoms and bonds */
-							int atom0P = reactant.getAtomNumber(atoms[i]);
-							int bond1P = reactant.getBondNumber(bonds[j]);
+							int atom0P = reactant.getAtomNumber(atomi);
+							int bond1P = reactant.getBondNumber(bondj);
 							int atom1P = reactant.getAtomNumber(atom1);
 							
 							/* action */
@@ -203,9 +206,9 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 							acCloned.removeElectronContainer(selectron[0]);
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
@@ -235,21 +238,25 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IAtom[] atoms = reactant.getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++)
-			if(atoms[i].getFormalCharge() == -1 && reactant.getLonePairCount(atoms[i]) > 0 ){
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(atoms[i]);
+		IAtom atomi = null;
+		IBond bondj = null;
+		for(int i = 0; i < reactant.getAtomCount(); i++) {
+			atomi = reactant.getAtom(i);
+			if(atomi.getFormalCharge() == -1 && reactant.getLonePairCount(atomi) > 0 ){
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getOrder() == 1.0){
+						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFormalCharge() == 1 ){
-							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						}
 					}
 				}
 			}
+		}
 	}
 	/**
 	 *  Gets the parameterNames attribute of the RearrangementAnion1Reaction object

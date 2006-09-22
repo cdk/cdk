@@ -30,6 +30,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -144,20 +145,23 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 		ArrayList chiAtom = new ArrayList(2);
 		//double chi1v = 0;
 		double chi1vC = 0;
-		IAtom[] atoms = null;
-		IAtom[] neighatoms = null;
+		IAtom curAtom = null;
+		IBond bond = null;
+		java.util.List neighatoms = null;
 		IElement element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
 		org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
 		for (int b = 0; b < bonds.length; b++) {
-			atoms = bonds[b].getAtoms();
-			if ((!atoms[0].getSymbol().equals("H")) && (!atoms[1].getSymbol().equals("H"))) {
+			bond = bonds[b];
+			if ((!bond.getAtom(0).getSymbol().equals("H")) && (!bond.getAtom(0).getSymbol().equals("H"))) {
 				val0 = 0;
 				val1 = 0;
 				chiAtom.clear();
-				for (int a = 0; a < atoms.length; a++) {
-					symbol = atoms[a].getSymbol();
+				java.util.Iterator bondIter = bond.atoms();
+				while (bondIter.hasNext()) {
+					curAtom = (IAtom)bondIter.next();
+					symbol = curAtom.getSymbol();
 					try {
 						elfac = IsotopeFactory.getInstance(atomContainer.getBuilder());
 					} catch (Exception exc) {
@@ -174,13 +178,13 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 					valence = ((Integer)valences.get(symbol)).intValue();
 					hcount = 0;
 					atomValue = 0;
-					neighatoms = atomContainer.getConnectedAtoms(atoms[a]);
-					for (int n = 0; n < neighatoms.length; n++) {
-						if (neighatoms[n].getSymbol().equals("H")) {
+					neighatoms = atomContainer.getConnectedAtomsList(curAtom);
+					for (int n = 0; n < neighatoms.size(); n++) {
+						if (((IAtom)neighatoms.get(n)).getSymbol().equals("H")) {
 							hcount += 1;
 						}
 					}
-					hcount += atoms[a].getHydrogenCount();
+					hcount += curAtom.getHydrogenCount();
 					atomValue = (valence - hcount) / (atomicNumber - valence - 1);
 					//if(atomValue > 0) {
 						chiAtom.add(new Double(atomValue));
@@ -190,7 +194,7 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 				val0 = ( (Double)chiAtom.get(0) ).doubleValue();
 				val1 = ( (Double)chiAtom.get(1) ).doubleValue();
 				if(val0 > 0 && val1 >0) {
-					if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
+					if((bond.getAtom(0).getSymbol().equals("C")) && (bond.getAtom(1).getSymbol().equals("C"))) {
 						chi1vC += 1/(Math.sqrt(val0 * val1));
 					}
 				}

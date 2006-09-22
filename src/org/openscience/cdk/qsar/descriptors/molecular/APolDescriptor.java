@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -153,10 +154,10 @@ public class APolDescriptor implements IMolecularDescriptor {
         try {
             ifac = IsotopeFactory.getInstance(container.getBuilder());			
             IElement element = null;
-            org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
+            java.util.Iterator atoms = container.atoms();
             String symbol = null;
-            for (int i = 0; i < atoms.length; i++) {
-                symbol = container.getAtom(i).getSymbol();
+            while (atoms.hasNext()) {
+                symbol = ((IAtom)atoms.next()).getSymbol();
                 element = ifac.getElement(symbol);
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];

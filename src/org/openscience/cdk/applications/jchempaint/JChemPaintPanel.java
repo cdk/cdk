@@ -40,6 +40,7 @@ import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -645,7 +646,7 @@ public abstract class JChemPaintPanel
 		((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
-	    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+	    
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    GeometryTools.scaleMolecule(ac, scaleFactor, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
@@ -677,9 +678,11 @@ public abstract class JChemPaintPanel
 	        }
 	    }
 	    //fixing the coords regarding the position of the viewablePart
-	    for (int i = 0; i < atoms.length; i++) {
-	        if (jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i]) != null) {
-	        	jchemPaintModel.getRendererModel().setRenderingCoordinate(atoms[i],new Point2d(((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).x + relocatedX,((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atoms[i])).y + relocatedY));
+	    java.util.Iterator atoms = ac.atoms();
+	    while (atoms.hasNext()) {
+	    	IAtom atom = (IAtom)atoms.next();
+	        if (jchemPaintModel.getRendererModel().getRenderingCoordinate(atom) != null) {
+	        	jchemPaintModel.getRendererModel().setRenderingCoordinate(atom,new Point2d(((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atom)).x + relocatedX,((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinate(atom)).y + relocatedY));
 	        }
 	    }
 	}

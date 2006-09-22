@@ -140,21 +140,11 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 
 
 	/**
-	 *  Returns the array of atoms of this AtomContainer.
+	 *  Returns an Iterator for looping over all atoms in this container.
 	 *
-	 *@return    The array of atoms of this AtomContainer
-	 *@see       #setAtoms
+	 *@return    An Iterator with the atoms in this container
 	 */
-	public IAtom[] getAtoms();
-
-
-	/**
-	 *  Returns an AtomEnumeration for looping over all atoms in this container.
-	 *
-	 *@return    An AtomEnumeration with the atoms in this container
-	 *@see       #getAtoms
-	 */
-	public Enumeration atoms();
+	public java.util.Iterator atoms();
 
 
 	/**
@@ -272,42 +262,49 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       The array of <code>Atom</code>s with the size of connected
 	 *      atoms
 	 */
-	public IAtom[] getConnectedAtoms(IAtom atom);
+	//public java.util.Iterator connectedAtoms(IAtom atom);
 
 
 	/**
-	 *  Returns a vector of all atoms connected to the given atom.
+	 *  Returns an ArrayList of all atoms connected to the given atom.
 	 *
 	 *@param  atom  The atom the bond partners are searched of.
-	 *@return       The vector with the size of connected atoms
+	 *@return       The ArrayList with the connected atoms
 	 */
-	public List getConnectedAtomsVector(IAtom atom);
+	public List getConnectedAtomsList(IAtom atom);
 
+	/**
+	 *  Returns the number of atoms connected to the given atom.
+	 *
+	 *@param  atom  The atom the number of bond partners are searched of.
+	 *@return       The the size of connected atoms
+	 */
+	public int getConnectedAtomsCount(IAtom atom);
 
 	/**
 	 *  Returns an array of all Bonds connected to the given atom.
 	 *
 	 *@param  atom  The atom the connected bonds are searched of
-	 *@return       The array with the size of connected atoms
+	 *@return       The Iterator to the connected atoms
 	 */
-	public IBond[] getConnectedBonds(IAtom atom);
+	//public java.util.Iterator connectedBonds(IAtom atom);
   
 	/**
-	 *  Returns a Vector of all Bonds connected to the given atom.
+	 *  Returns an ArrayList of all Bonds connected to the given atom.
 	 *
 	 *@param  atom  The atom the connected bonds are searched of
-	 *@return       The vector with the size of connected atoms
+	 *@return       The ArrayList with connected atoms
 	 */
-  public List getConnectedBondsVector(IAtom atom);
+	public List getConnectedBondsList(IAtom atom);
 
 
 	/**
-	 *  Returns an array of all electronContainers connected to the given atom.
+	 *  Returns an ArrayList of all electronContainers connected to the given atom.
 	 *
 	 *@param  atom  The atom the connected electronContainers are searched of
-	 *@return       The array with the size of connected atoms
+	 *@return       The ArrayList with the  connected atoms
 	 */
-	public IElectronContainer[] getConnectedElectronContainers(IAtom atom);
+	public List getConnectedElectronContainersList(IAtom atom);
 
 
 	/**

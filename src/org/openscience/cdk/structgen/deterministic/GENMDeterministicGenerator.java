@@ -909,11 +909,11 @@ public class GENMDeterministicGenerator {
 			);
 		}
 		
-		IAtom[] atom=atomContainer.getAtoms();
+		//IAtom[] atom=atomContainer.getAtoms();
 		
-		for(i=0;i<atom.length;i++)
+		for(i=0;i<atomContainer.getAtomCount();i++)
 		{
-			atom[i].setHydrogenCount(((BasicFragment)(setOfBasicFragment.get(i))).getNumberOfHydrogen());
+			atomContainer.getAtom(i).setHydrogenCount(((BasicFragment)(setOfBasicFragment.get(i))).getNumberOfHydrogen());
 		}
 		
 		 //2. initialize the matrix

@@ -160,27 +160,32 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 		if(posCharge > 1 || Math.abs(negCharge) > 1)
 			return setOfReactions;
 
-		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)&& atoms[i].getFormalCharge() == -1 ){
+		IAtom atomi = null;
+		IBond bondj = null;
+		IBond bondk = null;
+		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
+			atomi = reactant.getAtom(i);
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& atomi.getFormalCharge() == -1 ){
 				
 				
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getFlag(CDKConstants.REACTIVE_CENTER)&& bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
-						IBond[] bondsI = reactant.getConnectedBonds(atom);
-						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getFlag(CDKConstants.REACTIVE_CENTER) && bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() >= 0){
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() == 1.0){
+						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
+						java.util.List bondsI = reactant.getConnectedBondsList(atom);
+						for(int k = 0 ; k < bondsI.size() ; k++){
+							bondk = (IBond)bondsI.get(k);
+							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0){
 								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 								reaction.addReactant(reactant);
 								/* positions atoms and bonds */
-								int atom0P = reactant.getAtomNumber(atoms[i]);
-								int bond1P = reactant.getBondNumber(bonds[j]);
-								int bond2P = reactant.getBondNumber(bondsI[k]);
+								int atom0P = reactant.getAtomNumber(atomi);
+								int bond1P = reactant.getBondNumber(bondj);
+								int bond2P = reactant.getBondNumber(bondk);
 								int atom1P = reactant.getAtomNumber(atom);
-								int atom2P = reactant.getAtomNumber(bondsI[k].getConnectedAtom(atom));
+								int atom2P = reactant.getAtomNumber(bondk.getConnectedAtom(atom));
 								/* action */
 								IAtomContainer acCloned;
 								try {
@@ -202,15 +207,15 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								acCloned.getAtom(atom2P).setFormalCharge(charge-1);
 								
 								/* mapping */
-								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
+								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 						        reaction.addMapping(mapping);
 						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k].getConnectedAtom(atom), acCloned.getAtom(atom2P));
+						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondk.getConnectedAtom(atom), acCloned.getAtom(atom2P));
 						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
+						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
 						        reaction.addMapping(mapping);
-						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondsI[k], acCloned.getBond(bond2P));
+						        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondk, acCloned.getBond(bond2P));
 						        reaction.addMapping(mapping);
 								
 								reaction.addProduct((IMolecule) acCloned);
@@ -240,29 +245,34 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IAtom[] atoms = reactant.getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++)
-			if(atoms[i].getFormalCharge() == -1 ){
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
-				
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(reactant.getAtom(i));
+		IAtom atomi = null;
+		IBond bondj = null;
+		IBond bondk = null;
+		for(int i = 0; i < reactant.getAtomCount(); i++) {
+			atomi = reactant.getAtom(i);
+			if(atomi.getFormalCharge() == -1 ){
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getOrder() == 1.0){
+						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() != 0)
 							continue;
-						IBond[] bondsI = reactant.getConnectedBonds(atom);
-						for(int k = 0 ; k < bondsI.length ; k++){
-							if(bondsI[k].getOrder() == 2.0 && bondsI[k].getConnectedAtom(atom).getFormalCharge() >= 0){
-								atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+						java.util.List bondsI = reactant.getConnectedBondsList(atom);
+						for(int k = 0 ; k < bondsI.size() ; k++){
+							bondk = (IBond)bondsI.get(k);
+							if(bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0){
+								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bondsI[k].getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
-								bondsI[k].setFlag(CDKConstants.REACTIVE_CENTER,true);
+								bondk.getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);
+								bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								bondk.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							}
 						}
 					}
 				}
 			}
+		}
 	}
 	/**
 	 *  Gets the parameterNames attribute of the RearrangementAnion2Reaction object

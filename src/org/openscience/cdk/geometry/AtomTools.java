@@ -36,6 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * A set of static utility classes for geometric calculations on Atoms.
@@ -67,12 +68,12 @@ public class AtomTools {
         // get vector of possible referenceAtoms?
         AtomContainer refAtoms = new org.openscience.cdk.AtomContainer();
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atomContainer.getAtom(i);
+        	IAtom atom = atomContainer.getAtom(i);
             // is this atom without 3D coords, and has only one ligand?
             if (atom.getPoint3d() == null) {
-            	org.openscience.cdk.interfaces.IAtom connectedAtoms[] = atomContainer.getConnectedAtoms(atom);
-                if (connectedAtoms.length == 1) {
-                	org.openscience.cdk.interfaces.IAtom refAtom = connectedAtoms[0];
+            	java.util.List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+                if (connectedAtoms.size() == 1) {
+                	IAtom refAtom = (IAtom)connectedAtoms.get(0);;
                     if (refAtom.getPoint3d() != null) {
                         refAtoms.addAtom(refAtom);
                         // store atoms with no coords and ref atoms in a 
@@ -90,9 +91,9 @@ public class AtomTools {
         double length = 1.0;
         double angle = TETRAHEDRAL_ANGLE;
         for (int i = 0; i < refAtoms.getAtomCount(); i++) {
-        	org.openscience.cdk.interfaces.IAtom refAtom = refAtoms.getAtom(i);
-        	org.openscience.cdk.interfaces.IAtom noCoordLigands[] = noCoords.getConnectedAtoms(refAtom);
-            int nLigands = noCoordLigands.length;
+        	IAtom refAtom = refAtoms.getAtom(i);
+        	java.util.List noCoordLigands = noCoords.getConnectedAtomsList(refAtom);
+            int nLigands = noCoordLigands.size();
             int nwanted = nLigands;
             String elementType = refAtom.getSymbol();
             // try to deal with lone pairs on small hetero
@@ -104,7 +105,7 @@ public class AtomTools {
             Point3d[] newPoints = calculate3DCoordinatesForLigands(
                 atomContainer, refAtom, nwanted, length, angle);
             for (int j = 0; j < nLigands; j++) {
-            	org.openscience.cdk.interfaces.IAtom ligand = noCoordLigands[j];
+            	IAtom ligand = (IAtom)noCoordLigands.get(j);
                 Point3d newPoint = rescaleBondLength(refAtom, ligand, newPoints[j]);
                 ligand.setPoint3d(newPoint);
             }
@@ -189,7 +190,7 @@ public class AtomTools {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
         // get ligands
-	    List connectedAtoms = atomContainer.getConnectedAtomsVector(refAtom);
+	    List connectedAtoms = atomContainer.getConnectedAtomsList(refAtom);
         if (connectedAtoms == null) {
             return newPoints;
         }
@@ -211,7 +212,7 @@ public class AtomTools {
         } else if (nwithCoords == 1) {
 // ligand on A            
         	org.openscience.cdk.interfaces.IAtom bAtom = ligandsWithCoords.getAtom(0);
-            connectedAtoms = ligandsWithCoords.getConnectedAtomsVector(bAtom);
+            connectedAtoms = ligandsWithCoords.getConnectedAtomsList(bAtom);
 // does B have a ligand (other than A)            
             Atom jAtom = null;
             for (int i = 0; i < connectedAtoms.size(); i++) {

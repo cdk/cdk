@@ -24,6 +24,8 @@
 package org.openscience.cdk.tools;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -68,16 +70,16 @@ public class CDKUtilities {
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
-				IAtom [] ca=m.getConnectedAtoms(a);
+				List ca=m.getConnectedAtomsList(a);
 				
-				if (ca.length==3) {					
+				if (ca.size()==3) {					
 					
 					IAtom [] cao= new IAtom[2];
 					
 					int count=0;
 					
 					for (int j=0;j<=2;j++) {					
-						if (ca[j].getSymbol().equals("O")) {
+						if (((IAtom)ca.get(j)).getSymbol().equals("O")) {
 							count++;
 						}						
 					}
@@ -85,10 +87,11 @@ public class CDKUtilities {
 					if (count>1) {
 					
 						count=0;
-						for (int j=0;j<=2;j++) {					
-							if (ca[j].getSymbol().equals("O")) {
-								if (m.getConnectedAtoms(ca[j]).length==1) {// account for possibility of ONO2
-									cao[count]=ca[j];
+						for (int j=0;j<=2;j++) {
+							IAtom caj = (IAtom)ca.get(j);
+							if (caj.getSymbol().equals("O")) {
+								if (m.getConnectedAtomsCount(caj)==1) {// account for possibility of ONO2
+									cao[count]=caj;
 									count++;									
 								}
 							}						
@@ -133,16 +136,17 @@ public class CDKUtilities {
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
-				IAtom [] ca=m.getConnectedAtoms(a);
+				List ca=m.getConnectedAtomsList(a);
 				
-				if (ca.length==3) {					
+				if (ca.size()==3) {					
 					
 					IAtom [] cao=new IAtom[2];
 					
 					int count=0;
 					
-					for (int j=0;j<=2;j++) {					
-						if (ca[j].getSymbol().equals("O")) {
+					for (int j=0;j<=2;j++) {
+						IAtom caj = (IAtom)ca.get(j);
+						if (caj.getSymbol().equals("O")) {
 							count++;
 						}						
 					}
@@ -150,10 +154,11 @@ public class CDKUtilities {
 					if (count>1) {
 					
 						count=0;
-						for (int j=0;j<=2;j++) {					
-							if (ca[j].getSymbol().equals("O")) {
-								if (m.getConnectedAtoms(ca[j]).length==1) {// account for possibility of ONO2
-									cao[count]=ca[j];
+						for (int j=0;j<=2;j++) {
+							IAtom caj = (IAtom)ca.get(j);
+							if (caj.getSymbol().equals("O")) {
+								if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
+									cao[count]=caj;
 									count++;									
 								}
 							}						
@@ -209,13 +214,14 @@ public class CDKUtilities {
 			
 			if (molecule != null) {
 				// remove explicit hydrogen if necessary
-				IAtom[] atoms = molecule.getAtoms();
+				Iterator atoms = molecule.atoms();
 				
-				for (int j = 0; j < atoms.length; j++)
+				while (atoms.hasNext())
 				{
-					if (atoms[j].getSymbol().equals("H"))
+					IAtom atom = (IAtom)atoms.next();
+					if (atom.getSymbol().equals("H"))
 					{
-						molecule.removeAtomAndConnectedElectronContainers(atoms[j]);
+						molecule.removeAtomAndConnectedElectronContainers(atom);
 					}
 				}
 				// add implicit hydrogen
@@ -240,13 +246,14 @@ public class CDKUtilities {
 	
 	
 	public static void removeHydrogens(IMolecule m) {
-		IAtom []atoms = m.getAtoms();
+		Iterator atoms = m.atoms();
 		
-		for (int j = 0; j < atoms.length; j++)
+		while (atoms.hasNext())
 		{
-			if (atoms[j].getSymbol().equals("H"))
+			IAtom atom = (IAtom)atoms.next();
+			if (atom.getSymbol().equals("H"))
 			{
-				m.removeAtomAndConnectedElectronContainers(atoms[j]);
+				m.removeAtomAndConnectedElectronContainers(atom);
 			}
 		}
 	}
@@ -318,24 +325,26 @@ public class CDKUtilities {
 			IAtom a=m.getAtom(i);
 			
 			if (a.getSymbol().equals("S")) {
-				IAtom [] connectedAtoms=m.getConnectedAtoms(a);
+				List connectedAtoms=m.getConnectedAtomsList(a);
 				
 				
 				int bondOrderSum=0;
 				
 				double oldBondOrderSum = m.getBondOrderSum(a); // includes H's
 												
-				for (int j=0;j<=connectedAtoms.length-1;j++) {
-					if (!connectedAtoms[j].getSymbol().equals("H")) {
-						IBond b=m.getBond(a,connectedAtoms[j]);
+				for (int j=0;j<connectedAtoms.size();j++) {
+					IAtom conAtom = (IAtom)connectedAtoms.get(j);
+					if (!conAtom.getSymbol().equals("H")) {
+						IBond b=m.getBond(a,conAtom);
 						bondOrderSum+=b.getOrder();						
 					}
 				}
 								
 				if (bondOrderSum>1) {
-					for (int j=0;j<=connectedAtoms.length-1;j++) {
-						if (connectedAtoms[j].getSymbol().equals("H")) {
-							m.removeAtomAndConnectedElectronContainers(connectedAtoms[j]);
+					for (int j=0;j<connectedAtoms.size();j++) {
+						IAtom conAtom = (IAtom)connectedAtoms.get(j);
+						if (conAtom.getSymbol().equals("H")) {
+							m.removeAtomAndConnectedElectronContainers(conAtom);
 						}
 					}
 				}

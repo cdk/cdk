@@ -62,7 +62,7 @@ public class OrderQueryBond extends org.openscience.cdk.Bond implements IQueryBo
     
 	public void setAtomAt(IAtom atom, int position) {
         if (atom instanceof IQueryAtom) {
-            super.setAtomAt(atom, position);
+            super.setAtom(atom, position);
         } else {
             throw new IllegalArgumentException("Atom is not of type QueryAtom");
         }

@@ -175,12 +175,13 @@ public class FileConvertor {
                 );
                 for (int i=0; i<containers.length; i++) {
                 	IAtomContainer container = containers[i];
-                	IAtom[] atoms = container.getAtoms();
+                	java.util.Iterator atoms = container.atoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
-                        for (int j=0; j<atoms.length; j++) {
-                            if (!(atoms[j] instanceof IPseudoAtom)) {
+                        while (atoms.hasNext()) {
+                        	IAtom atom = (IAtom)atoms.next();
+                            if (!(atom instanceof IPseudoAtom)) {
                                 try {
-                                    factory.configure(atoms[j]);
+                                    factory.configure(atom);
                                 } catch (CDKException exception) {
                                     logger.warn("Could not configure atom: ", exception.getMessage());
                                     logger.debug(exception);
@@ -195,9 +196,9 @@ public class FileConvertor {
                         	builder.newMolecule(container)
                         );
                     } else if (applyHRemoval) {
-                        for (int atomi=0; atomi<atoms.length; atomi++) {
-                            if (atoms[atomi].getSymbol().equals("H")) {
-                                container.removeAtomAndConnectedElectronContainers(atoms[atomi]);
+                        for (int atomi=0; atomi<container.getAtomCount(); atomi++) {
+                            if (container.getAtom(atomi).getSymbol().equals("H")) {
+                                container.removeAtomAndConnectedElectronContainers(container.getAtom(atomi));
                             }
                         }
                     }

@@ -122,6 +122,27 @@ public class MoleculeSetTest extends CDKTestCase {
         assertEquals(5, som.getMoleculeCount());
     }
     
+    public void testMolecules() {
+    	IMoleculeSet som = builder.newMoleculeSet();
+        som.addMolecule(builder.newMolecule());
+        som.addMolecule(builder.newMolecule());
+        som.addMolecule(builder.newMolecule());
+        assertEquals(3, som.getMoleculeCount());
+        java.util.Iterator mols = som.molecules();
+        int count = 0;
+        while (mols.hasNext()) {
+        	count++;
+        	mols.next();
+        }
+        assertEquals(3, count);
+        mols = som.molecules();
+        while (mols.hasNext()) {
+        	mols.next();
+        	mols.remove();
+        }
+        assertEquals(0, som.getMoleculeCount());
+    }
+    
     public void testGrowMoleculeArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow

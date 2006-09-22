@@ -41,6 +41,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.*;
 
@@ -588,19 +589,19 @@ public class UniversalIsomorphismTester {
     for (int i = 0; i < l.size(); i++) {
     	IBond bond1 = bonds1[((RMap) l.get(i)).getId1()];
     	IBond bond2 = bonds2[((RMap) l.get(i)).getId2()];
-      IAtom[] atom1 = bond1.getAtoms();
-      IAtom[] atom2 = bond2.getAtoms();
+      IAtom[] atom1 = BondManipulator.getAtomArray(bond1);
+      IAtom[] atom2 = BondManipulator.getAtomArray(bond2);
       for (int j = 0; j < 2; j++) {
-    	  IBond[] bondsConnectedToAtom1j = g1.getConnectedBonds(atom1[j]);
-        for (int k = 0; k < bondsConnectedToAtom1j.length; k++) {
-          if (bondsConnectedToAtom1j[k] != bond1) {
-        	  IBond testBond = bondsConnectedToAtom1j[k];
+    	  List bondsConnectedToAtom1j = g1.getConnectedBondsList(atom1[j]);
+        for (int k = 0; k < bondsConnectedToAtom1j.size(); k++) {
+          if (bondsConnectedToAtom1j.get(k) != bond1) {
+        	  IBond testBond = (IBond)bondsConnectedToAtom1j.get(k);
             for (int m = 0; m < l.size(); m++) {
             	IBond testBond2;
               if (((RMap) l.get(m)).getId1() == g1.getBondNumber(testBond)) {
                 testBond2 = bonds2[((RMap) l.get(m)).getId2()];
                 for (int n = 0; n < 2; n++) {
-                  List bondsToTest = g2.getConnectedBondsVector(atom2[n]);
+                  List bondsToTest = g2.getConnectedBondsList(atom2[n]);
                   if (bondsToTest.contains(testBond2)) {
                     RMap map;
                     if (j == n) {

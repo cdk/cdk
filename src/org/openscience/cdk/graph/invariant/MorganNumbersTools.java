@@ -50,7 +50,7 @@ public class MorganNumbersTools {
     int N = atomContainer.getAtomCount();
     morganMatrix = new int[N];
     tempMorganMatrix = new int[N];
-    IAtom[] atoms = null;
+    java.util.List atoms = null;
     for (int f = 0; f < N; f++) {
       morganMatrix[f] = atomContainer.getBondCount(f);
       tempMorganMatrix[f] = atomContainer.getBondCount(f);
@@ -58,9 +58,9 @@ public class MorganNumbersTools {
     for (int e = 0; e < N; e++) {
       for (int f = 0; f < N; f++) {
         morganMatrix[f] = 0;
-        atoms = atomContainer.getConnectedAtoms(atomContainer.getAtom(f));
-        for (int g = 0; g < atoms.length; g++) {
-          morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atoms[g])];
+        atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
+        for (int g = 0; g < atoms.size(); g++) {
+          morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber((IAtom)atoms.get(g))];
         }
       }
       System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);

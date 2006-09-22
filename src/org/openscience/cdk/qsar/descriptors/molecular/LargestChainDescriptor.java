@@ -184,23 +184,24 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     	
         	
         int largestChainAtomsCount=0;
-    	IAtom[] atoms = container.getAtoms();
+    	//IAtom[] atoms = container.getAtoms();
     	Vector startSphere = null;
     	Vector path = null;
     	//Set all VisitedFlags to False
-    	for (int i =0;i<atoms.length;i++){
-			atoms[i].setFlag(CDKConstants.VISITED, false);
+    	for (int i =0;i<container.getAtomCount();i++){
+    		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
     	
     	//System.out.println("Set all atoms to Visited False");
-    	for (int i =0;i<atoms.length;i++){
+    	for (int i =0;i<container.getAtomCount();i++){
+    		IAtom atomi = container.getAtom(i);
     		// chain sp3
     		//System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-    		if ((!atoms[i].getFlag(CDKConstants.ISAROMATIC) && !atoms[i].getFlag(CDKConstants.ISINRING)) & !atoms[i].getFlag(CDKConstants.VISITED)){
+    		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED)){
     			//System.out.println("...... -> containercepted");
     			startSphere = new Vector();
     			path = new Vector();
-    			startSphere.addElement(atoms[i]);
+    			startSphere.addElement(atomi);
      			breadthFirstSearch(container, startSphere, path);
      			if (path.size() > largestChainAtomsCount){
     				largestChainAtomsCount=path.size();
@@ -234,9 +235,9 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 		for (int i = 0; i < sphere.size(); i++){
 			atom = (IAtom) sphere.elementAt(i);
 			//System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
-			IBond[] bonds = container.getConnectedBonds(atom);
-			for (int j = 0; j < bonds.length; j++){
-				nextAtom = bonds[j].getConnectedAtom(atom);
+			java.util.List bonds = container.getConnectedBondsList(atom);
+			for (int j = 0; j < bonds.size(); j++){
+				nextAtom = ((IBond)bonds.get(j)).getConnectedAtom(atom);
 				if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC)&& !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED)){
 	    			//System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));		
 		    		path.addElement(nextAtom);

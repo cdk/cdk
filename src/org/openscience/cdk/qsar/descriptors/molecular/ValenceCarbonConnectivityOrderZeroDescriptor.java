@@ -28,6 +28,7 @@ import java.util.Map;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -138,13 +139,14 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements IMolecularD
 		int hcount = 0;
 		int atomValue = 0;
 		double chi0vC = 0;
-		org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
-		org.openscience.cdk.interfaces.IAtom[] neighatoms = null;
+		java.util.List neighatoms = null;
+		IAtom atom = null;
 		IElement element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-                for (int i = 0; i < atoms.length; i++) {
-                    symbol = atoms[i].getSymbol();
+                for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+                	atom = atomContainer.getAtom(i);
+                    symbol = atom.getSymbol();
                     if(!symbol.equals("H")) {
                         try {
                             elfac = IsotopeFactory.getInstance(atomContainer.getBuilder());
@@ -162,9 +164,9 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements IMolecularD
                         valence = ((Integer)valences.get(symbol)).intValue();
                         hcount = 0;
                         atomValue = 0;
-                        neighatoms = atomContainer.getConnectedAtoms(atoms[i]);
-                        for (int a = 0; a < neighatoms.length; a++) {
-                            if (neighatoms[a].getSymbol().equals("H")) {
+                        neighatoms = atomContainer.getConnectedAtomsList(atom);
+                        for (int a = 0; a < neighatoms.size(); a++) {
+                            if (((IAtom)neighatoms.get(a)).getSymbol().equals("H")) {
                                 hcount += 1;
                             }
                         }

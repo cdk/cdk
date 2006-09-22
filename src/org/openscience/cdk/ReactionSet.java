@@ -160,12 +160,11 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         }
 
         public Object next() {
-            ++pointer;
-            return reactions[pointer-1];
+            return reactions[pointer++];
         }
 
         public void remove() {
-            removeReaction(pointer-1);
+            removeReaction(--pointer);
         }
     	
     }

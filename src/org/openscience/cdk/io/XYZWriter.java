@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -143,10 +144,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.newLine();
             
             // Loop through the atoms and write them out:
-            IAtom[] atoms = mol.getAtoms();
-            for (int i = 0; i < atoms.length; i++) {
-                
-            	IAtom a = atoms[i];
+            java.util.Iterator atoms = mol.atoms();
+            while (atoms.hasNext()) {
+            	IAtom a = (IAtom)atoms.next();
                 st = a.getSymbol();
                 
                 Point3d p3 = a.getPoint3d();

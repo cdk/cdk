@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -124,10 +125,10 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
 
-        org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
-        org.openscience.cdk.interfaces.IAtom[] firstAtomNeighboors = null;
-        org.openscience.cdk.interfaces.IAtom[] secondAtomNeighboors = null;
-        org.openscience.cdk.interfaces.IAtom[] thirdAtomNeighboors = null;
+        //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
+        java.util.List firstAtomNeighboors = null;
+        java.util.List secondAtomNeighboors = null;
+        java.util.List thirdAtomNeighboors = null;
         DoubleArrayResult kierValues = new DoubleArrayResult(3);
         double bond1 = 0;
         double bond2 = 0;
@@ -135,7 +136,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         double kier1 = 0;
         double kier2 = 0;
         double kier3 = 0;
-        double atomsCount = atoms.length;
+        double atomsCount = atomContainer.getAtomCount();
         singlePaths = new ArrayList();
         doublePaths = new ArrayList();
         triplePaths = new ArrayList();
@@ -144,18 +145,18 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         String tmpbond2 = "";
         String tmpbond3 = "";
 
-        for (int a1 = 0; a1 < atoms.length; a1 ++) {
+        for (int a1 = 0; a1 < atomsCount; a1++) {
             bond1 = 0;
-            firstAtomNeighboors = atomContainer.getConnectedAtoms(atoms[a1]);
-            for (int a2 = 0; a2 < firstAtomNeighboors.length; a2 ++) {
-                bond1 = atomContainer.getBondNumber( atoms[a1], firstAtomNeighboors[a2] );
+            firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
+            for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2 ++) {
+                bond1 = atomContainer.getBondNumber( atomContainer.getAtom(a1), (IAtom)firstAtomNeighboors.get(a2) );
                 if(!singlePaths.contains(new Double(bond1))) {
                     singlePaths.add(new Double(bond1));
                     java.util.Collections.sort(singlePaths);
                 }
-                secondAtomNeighboors = atomContainer.getConnectedAtoms(firstAtomNeighboors[a2]);
-                for (int a3 = 0; a3 < secondAtomNeighboors.length; a3 ++) {
-                    bond2 = atomContainer.getBondNumber( firstAtomNeighboors[a2], secondAtomNeighboors[a3] );
+                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom)firstAtomNeighboors.get(a2));
+                for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3 ++) {
+                    bond2 = atomContainer.getBondNumber( (IAtom)firstAtomNeighboors.get(a2), (IAtom)secondAtomNeighboors.get(a3) );
                     if(!singlePaths.contains(new Double(bond2))) {
                         singlePaths.add(new Double(bond2));
                     }
@@ -168,9 +169,9 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
                     if(!doublePaths.contains(new String(tmpbond2)) && (bond1 != bond2)) {
                         doublePaths.add(new String(tmpbond2));
                     }
-                    thirdAtomNeighboors = atomContainer.getConnectedAtoms(secondAtomNeighboors[a3]);
-                    for (int a4 = 0; a4 < thirdAtomNeighboors.length; a4 ++) {
-                        bond3 = atomContainer.getBondNumber( secondAtomNeighboors[a3], thirdAtomNeighboors[a4] );
+                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom)secondAtomNeighboors.get(a3));
+                    for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4 ++) {
+                        bond3 = atomContainer.getBondNumber( (IAtom)secondAtomNeighboors.get(a3), (IAtom)thirdAtomNeighboors.get(a4) );
                         if(!singlePaths.contains(new Double(bond3))) {
                             singlePaths.add(new Double(bond3));
                         }
@@ -190,20 +191,20 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
             }
         }
 
-        if(atoms.length == 1) {
+        if(atomsCount == 1) {
             kier1 = 0;
             kier2 = 0;
             kier3 = 0;
         }
         else {
             kier1 = ( ( (atomsCount) * ( (atomsCount - 1) * (atomsCount - 1) ) ) / ( singlePaths.size() * singlePaths.size() ) );
-            if(atoms.length == 2) {
+            if(atomsCount == 2) {
                 kier2 = 0;
                 kier3 = 0;
             }
             else {
                 kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
-                if(atoms.length == 3) {
+                if(atomsCount == 3) {
                     kier3 = 0;
                 }
                 else {

@@ -29,6 +29,7 @@ import java.util.Hashtable;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
@@ -144,10 +145,10 @@ public class MFAnalyserTest extends CDKTestCase {
                 // Each B has two explicit and two implicit H.
                 b++;
                 assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
-                org.openscience.cdk.interfaces.IAtom[] nbs = ac.getConnectedAtoms(atom);
-                assertEquals("incorrect connected count", 2, nbs.length);
-                assertEquals("incorrect bond", "H", nbs[0].getSymbol());
-                assertEquals("incorrect bond", "H", nbs[1].getSymbol());
+                java.util.List nbs = ac.getConnectedAtomsList(atom);
+                assertEquals("incorrect connected count", 2, nbs.size());
+                assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());
+                assertEquals("incorrect bond", "H", ((IAtom)nbs.get(1)).getSymbol());
             }
             else if (sym.equals("H"))
             {

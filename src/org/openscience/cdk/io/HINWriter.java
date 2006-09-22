@@ -153,13 +153,13 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer.newLine();
 
                 // Loop through the atoms and write them out:
-                IAtom[] atoms = mol.getAtoms();
+                java.util.Iterator atoms = mol.atoms();
+                
                 IBond[] bonds = mol.getBonds();
-
-                for (int i = 0; i < natom; i++) {
-
+                int i = 0;
+                while (atoms.hasNext()) {
+                	IAtom atom = (IAtom)atoms.next();
                     String line = "atom ";
-                    IAtom atom = atoms[i];
 
                     sym = atom.getSymbol();
                     chrg = atom.getCharge();
@@ -196,6 +196,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                     line = line + " " + Integer.toString(ncon) + " " + buf;
                     writer.write(line, 0, line.length());
                     writer.newLine();
+                    i++;
                 }
                 String buf = "endmol " + (molnum + 1);
                 writer.write(buf, 0, buf.length());

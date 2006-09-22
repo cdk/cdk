@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -127,7 +128,7 @@ public class BondPartialPiChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        IAtom[] atoms = ac.getBond(bondPosition).getAtoms();
+        IAtom[] atoms = BondManipulator.getAtomArray(ac.getBond(bondPosition));
         double[] results = new double[2];
         
         Integer[] params = new Integer[1];

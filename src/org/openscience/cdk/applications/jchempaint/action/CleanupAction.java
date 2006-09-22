@@ -111,16 +111,16 @@ public class CleanupAction extends JCPAction
                     if (molecule != null && molecule.getAtomCount() > 0) {
                     	IMolecule cleanedMol = relayoutMolecule(molecule);
                     	newsom.addMolecule(cleanedMol);
-                    	IAtom[] atoms = molecule.getAtoms();
-                    	IAtom[] newAtoms = cleanedMol.getAtoms();
-                    	for (int j=0; j<atoms.length; j++) {
-                    		Point2d oldCoord = atoms[j].getPoint2d();
-                    		Point2d newCoord = newAtoms[j].getPoint2d();
+                    	for (int j=0; j<molecule.getAtomCount(); j++) {
+                    		IAtom atom = molecule.getAtom(j);
+                    		IAtom newAtom = cleanedMol.getAtom(j);
+                    		Point2d oldCoord = atom.getPoint2d();
+                    		Point2d newCoord = newAtom.getPoint2d();
                     		if (!oldCoord.equals(newCoord)) {
                     			Point2d[] coords = new Point2d[2];
                     			coords[0] = newCoord;
                     			coords[1] = oldCoord;
-                    			atomCoordsMap.put(newAtoms[j], coords);
+                    			atomCoordsMap.put(newAtom, coords);
                     		}
                     	}
                     }

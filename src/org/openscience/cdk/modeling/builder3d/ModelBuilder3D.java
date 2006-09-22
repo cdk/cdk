@@ -473,13 +473,14 @@ public class ModelBuilder3D {
 	 */
 	public void searchAndPlaceBranches(IAtomContainer chain) throws Exception {
 		//System.out.println("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
-		IAtom[] atoms = null;
+		java.util.List atoms = null;
 		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			atoms = molecule.getConnectedAtoms(chain.getAtom(i));
-			for (int j = 0; j < atoms.length; j++) {
-				if (!(atoms[j].getSymbol()).equals("H") & !(atoms[j].getFlag(CDKConstants.ISPLACED)) & !(atoms[j].getFlag(CDKConstants.ISINRING))) {
+			atoms = molecule.getConnectedAtomsList(chain.getAtom(i));
+			for (int j = 0; j < atoms.size(); j++) {
+				IAtom atom = (IAtom)atoms.get(j);
+				if (!(atom.getSymbol()).equals("H") & !(atom.getFlag(CDKConstants.ISPLACED)) & !(atom.getFlag(CDKConstants.ISINRING))) {
 					//System.out.println("SEARCH PLACE AND FOUND Branch Atom "+molecule.getAtomNumber(chain.getAtomAt(i))+
 					//			" New Atom:"+molecule.getAtomNumber(atoms[j])+" -> STORE");
 					try {
@@ -491,12 +492,12 @@ public class ModelBuilder3D {
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find connected placed atoms");
 					}
 					try {
-						setBranchAtom(atoms[j], chain.getAtom(i), connectedAtoms);
+						setBranchAtom(atom, chain.getAtom(i), connectedAtoms);
 					} catch (Exception ex2) {
 						System.out.println("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to" + ex2.toString());
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms");
 					}
-					branchAtoms.addAtom(atoms[j]);
+					branchAtoms.addAtom(atom);
 					connectedAtoms.removeAllElements();
 				}
 			}

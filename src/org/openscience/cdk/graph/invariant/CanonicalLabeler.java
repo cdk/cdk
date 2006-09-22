@@ -137,15 +137,15 @@ public class CanonicalLabeler {
    * @return Vector containting the
    */
   private Vector createInvarLabel(IAtomContainer atomContainer) {
-    IAtom[]  atoms = atomContainer.getAtoms();
+    java.util.Iterator atoms = atomContainer.atoms();
     IAtom a;
     StringBuffer inv;
     Vector vect = new Vector();
-    for(int x = 0; x < atoms.length; x++) {
-      a = atoms[x];
+    while(atoms.hasNext()) {
+      a = (IAtom)atoms.next();
       inv = new StringBuffer();
-      inv.append(atomContainer.getConnectedAtoms(a).length + a.getHydrogenCount()); //Num connections
-      inv.append(atomContainer.getConnectedAtoms(a).length);                        //Num of non H bonds
+      inv.append(atomContainer.getConnectedAtomsList(a).size() + a.getHydrogenCount()); //Num connections
+      inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
       inv.append(a.getAtomicNumber());                                              //Atomic number
       if (a.getCharge() < 0)                                                        //Sign of charge
         inv.append(1);
@@ -171,7 +171,7 @@ public class CanonicalLabeler {
     long summ;
     while (it.hasNext()) {
       inv = (InvPair) it.next();
-      List neighbour = atomContainer.getConnectedAtomsVector(inv.getAtom());
+      List neighbour = atomContainer.getConnectedAtomsList(inv.getAtom());
       n = neighbour.iterator();
       summ = 1;
       while (n.hasNext()) {

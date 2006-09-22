@@ -171,11 +171,10 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 			}
 			for (int i = 0; i < changedAtomsAndBonds.getBondCount(); i++) {
 				IBond bond = changedAtomsAndBonds.getBond(i);
-				IAtom[] atoms = (IAtom[]) bond.getAtoms();
 				IAtomContainer container = ChemModelManipulator
 						.getRelevantAtomContainer(model, changedAtomsAndBonds
 								.getBond(i));
-				container.removeBond(atoms[0], atoms[1]);
+				container.removeBond(bond.getAtom(0), bond.getAtom(1));
 			}
 		}
 

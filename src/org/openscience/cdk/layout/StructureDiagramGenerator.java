@@ -250,11 +250,12 @@ public class StructureDiagramGenerator
         IMolecule original = molecule;
         IMolecule shallowCopy = molecule.getBuilder().newMolecule(molecule);
         // ok, delete H's from 
-        IAtom[] atoms = shallowCopy.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].getSymbol().equals("H")) {
-                shallowCopy.removeAtomAndConnectedElectronContainers(atoms[i]);
-                atoms[i].setPoint2d(null);
+        //IAtom[] atoms = shallowCopy.getAtoms();
+        for (int i = 0; i < shallowCopy.getAtomCount(); i++) {
+        	IAtom curAtom = shallowCopy.getAtom(i);
+            if (curAtom.getSymbol().equals("H")) {
+                shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
+                curAtom.setPoint2d(null);
             }
         }
         // do layout on the shallow copy
@@ -677,11 +678,11 @@ public class StructureDiagramGenerator
 	private IAtomContainer getUnplacedAtoms(IAtom atom)
 	{
 		IAtomContainer unplacedAtoms = atom.getBuilder().newAtomContainer();
-		IBond[] bonds = molecule.getConnectedBonds(atom);
+		java.util.List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom = null;
-		for (int f = 0; f < bonds.length; f++)
+		for (int f = 0; f < bonds.size(); f++)
 		{
-			connectedAtom = bonds[f].getConnectedAtom(atom);
+			connectedAtom = ((IBond)bonds.get(f)).getConnectedAtom(atom);
 			if (!connectedAtom.getFlag(CDKConstants.ISPLACED))
 			{
 				unplacedAtoms.addAtom(connectedAtom);
@@ -702,11 +703,11 @@ public class StructureDiagramGenerator
 	private IAtomContainer getPlacedAtoms(IAtom atom)
 	{
 		IAtomContainer placedAtoms = atom.getBuilder().newAtomContainer();
-		IBond[] bonds = molecule.getConnectedBonds(atom);
+		java.util.List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom = null;
-		for (int f = 0; f < bonds.length; f++)
+		for (int f = 0; f < bonds.size(); f++)
 		{
-			connectedAtom = bonds[f].getConnectedAtom(atom);
+			connectedAtom = ((IBond)bonds.get(f)).getConnectedAtom(atom);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED))
 			{
 				placedAtoms.addAtom(connectedAtom);

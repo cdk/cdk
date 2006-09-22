@@ -113,9 +113,9 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        IAtom[] atoms = subject.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            report.addReport(validateAtom(atoms[i]));
+        java.util.Iterator atoms = subject.atoms();
+        while (atoms.hasNext()) {
+            report.addReport(validateAtom((IAtom)atoms.next()));
         }
         IBond[] bonds = subject.getBonds();
         for (int i=0; i<bonds.length; i++) {
@@ -149,9 +149,9 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateElectronContainer(subject));
         // traverse into hierarchy
-        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            report.addReport(validateAtom(atoms[i]));
+       java.util.Iterator atoms = subject.atoms();
+        while (atoms.hasNext()) {
+            report.addReport(validateAtom((IAtom)atoms.next()));
         }
         return report;
     }

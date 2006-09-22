@@ -141,34 +141,24 @@ public class BondTest extends CDKTestCase {
         IBond b = builder.newBond();
         b.setAtoms(atomsToAdd);
         
-        org.openscience.cdk.interfaces.IAtom[] atoms = b.getAtoms();
-        assertEquals(2, atoms.length);
-        assertEquals(atomsToAdd[0], atoms[0]);
-        assertEquals(atomsToAdd[1], atoms[1]);
+        assertEquals(2, b.getAtomCount());
+        assertEquals(atomsToAdd[0], b.getAtom(0));
+        assertEquals(atomsToAdd[1], b.getAtom(1));
     }
     
-    public void testGetAtoms() {
+    public void testAtoms() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
         IBond b = builder.newBond(c, o, 2.0); // C=O bond
         
-        org.openscience.cdk.interfaces.IAtom[] atoms = b.getAtoms();
-        assertEquals(2, atoms.length);
-        assertEquals(c, atoms[0]);
-        assertEquals(o, atoms[1]);
-    }
-    
-    public void testGetAtomsVector() {
-        IAtom c = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
-        
-        IAtom[] atoms = b.getAtoms();
-        assertEquals(2, atoms.length);
-        assertEquals(c, atoms[0]);
-        assertEquals(o, atoms[1]);
+        java.util.Iterator atoms = b.atoms();
+        assertEquals(2, b.getAtomCount());
+        assertTrue(atoms.hasNext());
+        assertEquals(c, atoms.next());
+        assertTrue(atoms.hasNext());
+        assertEquals(o, atoms.next());
+        assertFalse(atoms.hasNext());
     }
     
     public void testGetAtom_int() {
@@ -181,13 +171,13 @@ public class BondTest extends CDKTestCase {
         assertEquals(o, b.getAtom(1));
     }
     
-    public void testSetAtomAt_IAtom_int() {
+    public void testSetAtom_IAtom_int() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
         IBond b = builder.newBond();
-        b.setAtomAt(c, 0);
-        b.setAtomAt(o, 1);
+        b.setAtom(c, 0);
+        b.setAtom(o, 1);
         
         assertEquals(c, b.getAtom(0));
         assertEquals(o, b.getAtom(1));

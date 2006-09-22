@@ -131,9 +131,8 @@ public class IsotopeFactoryTest extends CDKTestCase
         container.addAtom(new Atom("Cl"));
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         isofac.configureAtoms(container);
-        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            assertTrue(0 < atoms[i].getAtomicNumber());
+        for (int i=0; i<container.getAtomCount(); i++) {
+            assertTrue(0 < container.getAtom(i).getAtomicNumber());
         }
     }
 

@@ -80,9 +80,9 @@ public class HybridizationStateATMatcher implements IAtomTypeMatcher {
 
         symbol = atom.getSymbol();
         //Hs are included?
-        IAtom[] neighboors = atomContainer.getConnectedAtoms(atom);
+        java.util.List neighboors = atomContainer.getConnectedAtomsList(atom);
         charge = atom.getFormalCharge();
-        neighboorsCount = neighboors.length;
+        neighboorsCount = neighboors.size();
         bondOrderSum = atomContainer.getBondOrderSum(atom);
         maxbondOrder = atomContainer.getMaximumBondOrder(atom);
         try {

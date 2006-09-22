@@ -177,9 +177,10 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			}
 		}else if(targetType.equals(BondTarget)){
 			IBond bond = container.getBond(targetPosition);
-			IAtom[] atoms = bond.getAtoms();
+			IAtom atom0 = bond.getAtom(0);
+			IAtom atom1 = bond.getAtom(1);
 			if((bond.getOrder() == 2)){
-				if((atoms[0].getSymbol().equals("C")) && ( atoms[1].getSymbol().equals("C"))) {
+				if((atom0.getSymbol().equals("C")) && ( atom1.getSymbol().equals("C"))) {
 					resultsH = calculatePiSystWithoutHeteroDescriptor(container);
 					path = "data/arff/PySystWithoutHetero.arff";
 					isTarget = true;
@@ -234,15 +235,16 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBond(targetPosition);
-		IAtom[] atoms = bond.getAtoms();
+		IAtom atom0 = bond.getAtom(0);
+		IAtom atom1 = bond.getAtom(1);
 		IAtom positionC = null;
 		IAtom positionX = null;
-		if((atoms[0].getSymbol().equals("C") && !atoms[1].getSymbol().equals("C"))){
-			positionC = atoms[0];
-			positionX = atoms[1];
-		}else if((atoms[1].getSymbol().equals("C") && !atoms[0].getSymbol().equals("C"))){
-			positionC = atoms[1];
-			positionX = atoms[0];
+		if((atom0.getSymbol().equals("C") && !atom1.getSymbol().equals("C"))){
+			positionC = atom0;
+			positionX = atom1;
+		}else if((atom1.getSymbol().equals("C") && !atom0.getSymbol().equals("C"))){
+			positionC = atom1;
+			positionX = atom0;
 		}
 		try {
         	/*0*/
@@ -285,9 +287,8 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 		Double[][] results = new Double[1][6];
 		Integer[] params = new Integer[1];
 		IBond bond = atomContainer.getBond(targetPosition);
-		IAtom[] atoms = bond.getAtoms();
-		IAtom positionC = atoms[0];
-		IAtom positionX = atoms[1];
+		IAtom positionC = bond.getAtom(0);
+		IAtom positionX = bond.getAtom(1);
 		try {
         	/*0_1*/
 			SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();

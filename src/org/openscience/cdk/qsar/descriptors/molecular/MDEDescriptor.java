@@ -295,11 +295,11 @@ public class MDEDescriptor implements IMolecularDescriptor {
     }
 
     private int[][] evalATable(IAtomContainer atomContainer, int atomicNum) {
-        IAtom[] atoms = atomContainer.getAtoms();
-        int natom = atoms.length;
+        //IAtom[] atoms = atomContainer.getAtoms();
+        int natom = atomContainer.getAtomCount();
         int[][] atypes = new int[natom][2];
         for (int i = 0; i < natom; i++) {
-            IAtom atom = atoms[i];
+            IAtom atom = atomContainer.getAtom(i);
             int numConnectedBonds = atomContainer.getBondCount(atom);
             atypes[i][1] = i;
             if (atom.getAtomicNumber() == atomicNum) atypes[i][0] = numConnectedBonds;

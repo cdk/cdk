@@ -26,7 +26,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -136,10 +138,9 @@ public class WeightDescriptor implements IMolecularDescriptor {
 
     public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
-        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
         if (elementName.equals("*")) {
             try {
-                for (int i = 0; i < atoms.length; i++) {
+                for (int i = 0; i < container.getAtomCount(); i++) {
                     //System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
                     weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
@@ -150,7 +151,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
         }
         else if (elementName.equals("H")) {
             try {
-                for (int i = 0; i < atoms.length; i++) {
+                for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
                         weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
@@ -164,7 +165,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
         }
         else {
             try {
-                for (int i = 0; i < atoms.length; i++) {
+                for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
                         weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }

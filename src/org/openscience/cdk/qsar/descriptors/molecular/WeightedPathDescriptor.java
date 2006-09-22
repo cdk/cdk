@@ -23,6 +23,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -237,8 +238,8 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
             for (int j = 0; j < p.size() - 1; j++) {
                 IAtom a = (IAtom) p.get(j);
                 IAtom b = (IAtom) p.get(j + 1);
-                int n1 = atomContainer.getConnectedAtomsVector(a).size();
-                int n2 = atomContainer.getConnectedAtomsVector(b).size();
+                int n1 = atomContainer.getConnectedAtomsList(a).size();
+                int n2 = atomContainer.getConnectedAtomsList(b).size();
                 pathWts[i] /= Math.sqrt(n1 * n2);
             }
         }

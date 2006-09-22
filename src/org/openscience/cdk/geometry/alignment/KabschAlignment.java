@@ -106,6 +106,14 @@ public class KabschAlignment {
         return(p);
     }
 
+    private Point3d[] getPoint3dArray(org.openscience.cdk.interfaces.IAtomContainer ac) {
+        Point3d[] p = new Point3d[ ac.getAtomCount() ];
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            p[i] = new Point3d( ac.getAtom(i).getPoint3d() );
+        }
+        return(p);
+    }
+    
     private double[] getAtomicMasses(org.openscience.cdk.interfaces.IAtom[] a) {
         double[] am = new double[a.length];
         IsotopeFactory factory = null;
@@ -117,6 +125,21 @@ public class KabschAlignment {
 
         for (int i = 0; i < a.length; i++) {
             am[i] = factory.getMajorIsotope( a[i].getSymbol() ).getExactMass();
+        }
+        return(am);
+    }
+    
+    private double[] getAtomicMasses(org.openscience.cdk.interfaces.IAtomContainer ac) {
+        double[] am = new double[ac.getAtomCount()];
+        IsotopeFactory factory = null;
+        try {
+            factory = IsotopeFactory.getInstance(ac.getAtom(0).getBuilder());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            am[i] = factory.getMajorIsotope( ac.getAtom(i).getSymbol() ).getExactMass();
         }
         return(am);
     }
@@ -204,13 +227,13 @@ public class KabschAlignment {
             throw new CDKException("The AtomContainer's being aligned must have the same number of atoms");
         }
         this.npoint = ac1.getAtomCount();
-        this.p1 = getPoint3dArray(ac1.getAtoms());
-        this.p2 = getPoint3dArray(ac2.getAtoms());
+        this.p1 = getPoint3dArray(ac1);
+        this.p2 = getPoint3dArray(ac2);
         this.wts = new double[npoint];
         for (int i = 0; i < npoint; i++) this.wts[i] = 1.0;
 
-        this.atwt1 = getAtomicMasses(ac1.getAtoms());
-        this.atwt2 = getAtomicMasses(ac2.getAtoms());
+        this.atwt1 = getAtomicMasses(ac1);
+        this.atwt2 = getAtomicMasses(ac2);
     }
 
     /**
@@ -231,13 +254,13 @@ public class KabschAlignment {
             throw new CDKException("Number of weights must equal number of atoms");
         }
         this.npoint = ac1.getAtomCount();
-        this.p1 = getPoint3dArray(ac1.getAtoms());
-        this.p2 = getPoint3dArray(ac2.getAtoms());
+        this.p1 = getPoint3dArray(ac1);
+        this.p2 = getPoint3dArray(ac2);
         this.wts = new double[npoint];
         for (int i = 0; i < npoint; i++) this.wts[i] = wts[i];
 
-        this.atwt1 = getAtomicMasses(ac1.getAtoms());
-        this.atwt2 = getAtomicMasses(ac2.getAtoms());
+        this.atwt1 = getAtomicMasses(ac1);
+        this.atwt2 = getAtomicMasses(ac2);
     }
 
     /**
@@ -441,7 +464,7 @@ public class KabschAlignment {
      * @param ac The {@link IAtomContainer} whose coordinates are to be rotated
      */
     public void rotateAtomContainer(IAtomContainer ac)  {
-        Point3d[] p = getPoint3dArray( ac.getAtoms() );
+        Point3d[] p = getPoint3dArray( ac );
         for (int i = 0; i < ac.getAtomCount(); i++) {
             // translate the the origin we have calculated
             p[i].x = p[i].x - this.cm2.x;

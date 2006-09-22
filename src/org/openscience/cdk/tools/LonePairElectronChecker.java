@@ -123,9 +123,9 @@ public class LonePairElectronChecker {
 		int charge = atom.getFormalCharge();
 		int hcount = atom.getHydrogenCount();
 		if(hcount == 0){
-			IAtom[] atomsC = ac.getConnectedAtoms(atom);
-			for(int i = 0 ; i < atomsC.length ; i++)
-				if(atomsC[i].getSymbol().equals("H"))
+			java.util.List atomsC = ac.getConnectedAtomsList(atom);
+			for(int i = 0 ; i < atomsC.size() ; i++)
+				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
 					hcount++;
 			bondOrderSum -= hcount;
 		}
@@ -156,9 +156,8 @@ public class LonePairElectronChecker {
         logger.info("Saturating atomContainer by adjusting lone pair electrons...");
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
-            IAtom[] atoms = atomContainer.getAtoms();
-            for(int i=0 ; i < atoms.length ; i++ ){
-            	newSaturate(atoms[i], atomContainer);
+            for(int i=0 ; i < atomContainer.getAtomCount() ; i++ ){
+            	newSaturate(atomContainer.getAtom(i), atomContainer);
             }
         }
     }
@@ -176,9 +175,9 @@ public class LonePairElectronChecker {
     		int charge = atom.getFormalCharge();
     		int hcount = atom.getHydrogenCount();
     		if(hcount == 0){
-    			IAtom[] atomsC = ac.getConnectedAtoms(atom);
-    			for(int i = 0 ; i < atomsC.length ; i++)
-    				if(atomsC[i].getSymbol().equals("H"))
+    			java.util.List atomsC = ac.getConnectedAtomsList(atom);
+    			for(int i = 0 ; i < atomsC.size() ; i++)
+    				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
     					hcount++;
     			bondOrderSum -= hcount;
     		}

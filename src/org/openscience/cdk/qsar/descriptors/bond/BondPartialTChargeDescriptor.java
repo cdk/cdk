@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  The calculation of bond total Partial charge is calculated 
@@ -127,7 +128,7 @@ public class BondPartialTChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-        IAtom[] atoms = ac.getBond(bondPosition).getAtoms();
+    	IAtom[] atoms = BondManipulator.getAtomArray(ac.getBond(bondPosition));
         double[] results = new double[2];
 
         Integer[] params = new Integer[1];

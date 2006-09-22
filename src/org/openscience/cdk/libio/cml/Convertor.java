@@ -433,17 +433,16 @@ public class Convertor {
             cmlBond.setId(cdkBond.getID());
         }
 
-        org.openscience.cdk.interfaces.IAtom[] atoms = cdkBond.getAtoms();
-        String[] atomRefArray = new String[atoms.length];
-        for (int i = 0; i < atoms.length; i++) {
-            String atomID = atoms[i].getID();
+        String[] atomRefArray = new String[cdkBond.getAtomCount()];
+        for (int i = 0; i < cdkBond.getAtomCount(); i++) {
+            String atomID = cdkBond.getAtom(i).getID();
             if (atomID == null || atomID.length() == 0) {
-                atomRefArray[i] = "a" + new Integer(atoms[i].hashCode()).toString();
+                atomRefArray[i] = "a" + new Integer(cdkBond.getAtom(i).hashCode()).toString();
             } else {
                 atomRefArray[i] = atomID;
             }
         }
-        if (atoms.length == 2) {
+        if (atomRefArray.length == 2) {
             cmlBond.setAtomRefs2(atomRefArray);
         } else {
             cmlBond.setAtomRefs(atomRefArray);

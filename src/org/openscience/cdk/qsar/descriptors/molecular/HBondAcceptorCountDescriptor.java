@@ -28,6 +28,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -137,29 +138,29 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
         if (checkAromaticity)
             HueckelAromaticityDetector.detectAromaticity(ac);
 
-        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+        //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop
     atomloop:
-        for (int atomIndex = 0; atomIndex < atoms.length; atomIndex++)
+        for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++)
     {
       // looking for suitable nitrogen atoms
-      if(atoms[atomIndex].getSymbol().equals("N") && atoms[atomIndex].getFormalCharge() <= 0)
+      if(ac.getAtom(atomIndex).getSymbol().equals("N") && ac.getAtom(atomIndex).getFormalCharge() <= 0)
       {
         // excluding nitrogens that are adjacent to an oxygen
-          org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
-          if(neighbours[neighbourIndex].getSymbol().equals("O"))
+          java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
+          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("O"))
             continue atomloop;
         hBondAcceptors++;
       }
       // looking for suitable oxygen atoms
-      if(atoms[atomIndex].getSymbol().equals("O") && atoms[atomIndex].getFormalCharge() <= 0)
+      if(ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0)
       {
         //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-          org.openscience.cdk.interfaces.IAtom[] neighbours = ac.getConnectedAtoms(atoms[atomIndex]);
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.length; neighbourIndex++)
-          if(neighbours[neighbourIndex].getSymbol().equals("N") ||
-              (neighbours[neighbourIndex].getSymbol().equals("C") && neighbours[neighbourIndex].getFlag(CDKConstants.ISAROMATIC)))
+    	  java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
+          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("N") ||
+              (((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("C") && ((IAtom)neighbours.get(neighbourIndex)).getFlag(CDKConstants.ISAROMATIC)))
             continue atomloop;
         hBondAcceptors++;
       }

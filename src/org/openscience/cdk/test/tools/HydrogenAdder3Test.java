@@ -121,14 +121,14 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
             IAtom sulfur = containers[0].getAtom(1);
             assertEquals("S", sulfur.getSymbol());
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
             
             // add explicit hydrogens
             adder.addExplicitHydrogensToSatisfyValency(containers[0]);
             assertEquals(21, containers[0].getAtomCount());
             
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
         } catch (Exception exception) {
         	exception.printStackTrace();
         	fail(exception.getMessage());
@@ -152,14 +152,14 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
             IAtom sulfur = containers[0].getAtom(1);
             assertEquals("S", sulfur.getSymbol());
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
             
             // add explicit hydrogens
             adder.addImplicitHydrogensToSatisfyValency(containers[0]);
             assertEquals(10, containers[0].getAtomCount());
             
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtoms(sulfur).length);
+            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
         } catch (Exception exception) {
         	exception.printStackTrace();
         	fail(exception.getMessage());

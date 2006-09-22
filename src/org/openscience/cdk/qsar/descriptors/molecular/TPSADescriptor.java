@@ -31,6 +31,8 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -175,7 +177,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
 
 	/**
 	 * Gets the parameters attribute of the TPSADescriptor object.
-	 *
+	 * 
 	 *@return    The parameter value. For this descriptor it returns a Boolean
          * indicating whether aromaticity was to be checked or not
          * @see #setParameters
@@ -185,6 +187,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
 		Object[] params = new Object[1];
 		params[0] = new Boolean(checkAromaticity);
 		return params;
+		
 	}
 
 
@@ -214,11 +217,12 @@ public class TPSADescriptor implements IMolecularDescriptor {
 			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
     
     // iterate over all atoms of ac
-    org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-		for(int atomIndex = 0; atomIndex < atoms.length; atomIndex ++)
+    java.util.Iterator atoms = ac.atoms();
+		while (atoms.hasNext())
     {
-			if( atoms[atomIndex].getSymbol().equals("N") || atoms[atomIndex].getSymbol().equals("O") ||
-          atoms[atomIndex].getSymbol().equals("S") || atoms[atomIndex].getSymbol().equals("P") )
+			IAtom atom = (IAtom)atoms.next();
+			if( atom.getSymbol().equals("N") || atom.getSymbol().equals("O") ||
+          atom.getSymbol().equals("S") || atom.getSymbol().equals("P") )
       {
 				int singleBondCount = 0;
 				int doubleBondCount = 0;
@@ -228,29 +232,31 @@ public class TPSADescriptor implements IMolecularDescriptor {
         double bondOrderSum = 0;
 				int hCount = 0;
         int isIn3MemberRing = 0;
-				
+        
         // counting the number of single/double/triple/aromatic bonds
-        org.openscience.cdk.interfaces.IBond[] connectedBonds = ac.getConnectedBonds(atoms[atomIndex]);
-				for(int bondIndex = 0; bondIndex < connectedBonds.length; bondIndex++)
+        java.util.List connectedBonds = ac.getConnectedBondsList(atom);
+				for(int bondIndex = 0; bondIndex < connectedBonds.size(); bondIndex++)
         {
-					if(connectedBonds[bondIndex].getFlag(CDKConstants.ISAROMATIC))
+					IBond connectedBond = (IBond)connectedBonds.get(bondIndex);
+					if(connectedBond.getFlag(CDKConstants.ISAROMATIC))
 						aromaticBondCount++;
-					else if(connectedBonds[bondIndex].getOrder() == CDKConstants.BONDORDER_SINGLE)
+					else if(connectedBond.getOrder() == CDKConstants.BONDORDER_SINGLE)
 						singleBondCount++;
-					else if(connectedBonds[bondIndex].getOrder() == CDKConstants.BONDORDER_DOUBLE)
+					else if(connectedBond.getOrder() == CDKConstants.BONDORDER_DOUBLE)
 						doubleBondCount++;
-					else if(connectedBonds[bondIndex].getOrder() == CDKConstants.BONDORDER_TRIPLE)
+					else if(connectedBond.getOrder() == CDKConstants.BONDORDER_TRIPLE)
 						tripleBondCount++;
 				}
-				int formalCharge = atoms[atomIndex].getFormalCharge();
-				org.openscience.cdk.interfaces.IAtom[] connectedAtoms = ac.getConnectedAtoms(atoms[atomIndex]);
-				int numberOfNeighbours = connectedAtoms.length;
+				int formalCharge = atom.getFormalCharge();
+				java.util.List connectedAtoms = ac.getConnectedAtomsList(atom);
+				int numberOfNeighbours = connectedAtoms.size();
+				
         // EXPLICIT hydrogens: count the number of hydrogen atoms
 				for(int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++)
-					if(connectedAtoms[neighbourIndex].getSymbol().equals("H"))
+					if(((IAtom)connectedAtoms.get(neighbourIndex)).getSymbol().equals("H"))
 						hCount++;
         // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
-        for(int hydrogenIndex = 0; hydrogenIndex < atoms[atomIndex].getHydrogenCount(); hydrogenIndex++)
+        for(int hydrogenIndex = 0; hydrogenIndex < atom.getHydrogenCount(); hydrogenIndex++)
         {
           hCount++;
           numberOfNeighbours++;
@@ -272,9 +278,9 @@ public class TPSADescriptor implements IMolecularDescriptor {
 					maxBondOrder = 3.0;
 
 				// isIn3MemberRing checker
-				if(rs.contains(atoms[atomIndex]))
+				if(rs.contains(atom))
         {
-					org.openscience.cdk.interfaces.IRingSet rsAtom = rs.getRings(atoms[atomIndex]);
+					org.openscience.cdk.interfaces.IRingSet rsAtom = rs.getRings(atom);
 					for(int ringSetIndex = 0; ringSetIndex < rsAtom.getAtomContainerCount(); ringSetIndex++)
 					{
 						Ring ring = (Ring)rsAtom.getAtomContainer(ringSetIndex);
@@ -283,7 +289,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
 					}
 				}
 				// create a profile of the current atom (atoms[atomIndex]) according to the profile definition in the constructor
-        String profile = atoms[atomIndex].getSymbol() +"+"+ maxBondOrder +"+"+ bondOrderSum +"+"+ 
+        String profile = atom.getSymbol() +"+"+ maxBondOrder +"+"+ bondOrderSum +"+"+ 
             numberOfNeighbours +"+"+ hCount +"+"+ formalCharge +"+"+ aromaticBondCount +"+"+
             isIn3MemberRing +"+"+ singleBondCount +"+"+ doubleBondCount +"+"+ tripleBondCount;
 				//System.out.println("tpsa profile: "+ profile);

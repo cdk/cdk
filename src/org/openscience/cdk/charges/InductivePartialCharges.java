@@ -30,11 +30,13 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * The calculation of the inductive partial atomic charges and equalization of
@@ -89,7 +91,7 @@ public class InductivePartialCharges {
         }
 
 		int stepsLimit = 9;
-		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
+		org.openscience.cdk.interfaces.IAtom[] atoms = AtomContainerManipulator.getAtomArray(ac);
 		double[] pChInch = new double[atoms.length * (stepsLimit + 1)];
 		double[] ElEn = new double[atoms.length * (stepsLimit + 1)];
 		double[] pCh = new double[atoms.length * (stepsLimit + 1)];
@@ -128,14 +130,14 @@ public class InductivePartialCharges {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws Exception {
-		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-		double[] paulingElectronegativities = new double[atoms.length];
+		double[] paulingElectronegativities = new double[ac.getAtomCount()];
 		IElement element = null;
 		String symbol = null;
 		int atomicNumber = 0;
 		try {
 			ifac = IsotopeFactory.getInstance(ac.getBuilder());
-			for (int i = 0; i < atoms.length; i++) {
+			for (int i = 0; i < ac.getAtomCount(); i++) {
+				IAtom atom = ac.getAtom(i);
 				symbol = ac.getAtom(i).getSymbol();
 				element = ifac.getElement(symbol);
 				atomicNumber = element.getAtomicNumber();
@@ -149,19 +151,19 @@ public class InductivePartialCharges {
 					} else if (symbol.equals("H")) {
 						paulingElectronegativities[i] = 2.10;
 					} else if (symbol.equals("C")) {
-						if (ac.getMaximumBondOrder(atoms[i]) == 1) {
+						if (ac.getMaximumBondOrder(atom) == 1) {
 							// Csp3
 							paulingElectronegativities[i] = 2.20;
-						} else if (ac.getMaximumBondOrder(atoms[i]) > 1 && ac.getMaximumBondOrder(atoms[i]) < 3) {
+						} else if (ac.getMaximumBondOrder(atom) > 1 && ac.getMaximumBondOrder(atom) < 3) {
 							paulingElectronegativities[i] = 2.31;
 						} else {
 							paulingElectronegativities[i] = 3.15;
 						}
 					} else if (symbol.equals("O")) {
-						if (ac.getMaximumBondOrder(atoms[i]) == 1) {
+						if (ac.getMaximumBondOrder(atom) == 1) {
 							// Osp3
 							paulingElectronegativities[i] = 3.20;
-						} else if (ac.getMaximumBondOrder(atoms[i]) > 1) {
+						} else if (ac.getMaximumBondOrder(atom) > 1) {
 							paulingElectronegativities[i] = 4.34;
 						}
 					} else if (symbol.equals("Si")) {
@@ -198,12 +200,10 @@ public class InductivePartialCharges {
 	 // that can be used for qsar descriptors and during the iterative calculation
 	 // of effective electronegativity
 	public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
-		org.openscience.cdk.interfaces.IAtom[] allAtoms = null;
 		org.openscience.cdk.interfaces.IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
 		target = ac.getAtom(atomPosition);
-		allAtoms = ac.getAtoms();
 		double partial = 0;
 		double radius = 0;
 		String symbol = null;
@@ -222,9 +222,11 @@ public class InductivePartialCharges {
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 		}
 
-		for (int i = 0; i < allAtoms.length; i++) {
-			if (!target.equals(allAtoms[i])) {
-				symbol = allAtoms[i].getSymbol();
+		java.util.Iterator atoms = ac.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = (IAtom)atoms.next();
+			if (!target.equals(atom)) {
+				symbol = atom.getSymbol();
 				partial = 0;
 				try {
 					type = factory.getAtomType(symbol);
@@ -232,14 +234,14 @@ public class InductivePartialCharges {
 					logger.debug(ex1);
 					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 				}
-				if (getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[i])) > 0) {
-					radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[i]));
+				if (getCovalentRadius(symbol, ac.getMaximumBondOrder(atom)) > 0) {
+					radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(atom));
 				} else {
 					radius = type.getCovalentRadius();
 				}
 				partial += radius * radius;
 				partial += (radiusTarget * radiusTarget);
-				partial = partial / (calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[i]));
+				partial = partial / (calculateSquaredDistanceBetweenTwoAtoms(target, atom));
 				core += partial;
 			}
 		}
@@ -268,7 +270,7 @@ public class InductivePartialCharges {
 		double radiusTarget = 0;
 		target = ac.getAtom(atomPosition);
 		////System.out.println("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
-		allAtoms = ac.getAtoms();
+		allAtoms = AtomContainerManipulator.getAtomArray(ac);
 		double tmp = 0;
 		double radius = 0;
 		String symbol = null;

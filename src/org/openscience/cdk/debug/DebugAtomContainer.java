@@ -111,13 +111,8 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 //		super.setAtomCount(atomCount);
 //	}
 
-	public IAtom[] getAtoms() {
-		logger.debug("Getting atoms: ", super.getAtoms().length);
-		return super.getAtoms();
-	}
-
-	public Enumeration atoms() {
-		logger.debug("Getting atoms enumaration");
+	public java.util.Iterator atoms() {
+		logger.debug("Getting atoms iterator");
 		return super.atoms();
 	}
 
@@ -176,29 +171,34 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 		return super.getBond(atom1, atom2);
 	}
 
-	public IAtom[] getConnectedAtoms(IAtom atom) {
-		logger.debug("Getting connected atoms for atom: ", atom);
-		return super.getConnectedAtoms(atom);
+//	public IAtom[] getConnectedAtoms(IAtom atom) {
+//		logger.debug("Getting connected atoms for atom: ", atom);
+//		return super.getConnectedAtoms(atom);
+//	}
+
+	public List getConnectedAtomsList(IAtom atom) {
+		logger.debug("Getting connecting atoms list for atom: ", atom);
+		return super.getConnectedAtomsList(atom);
 	}
 
-	public List getConnectedAtomsVector(IAtom atom) {
-		logger.debug("Getting connecting atoms vector for atom: ", atom);
-		return super.getConnectedAtomsVector(atom);
+	public int getConnectedAtomsCount(IAtom atom) {
+		logger.debug("Getting connecting atoms count for atom: ", atom);
+		return super.getConnectedAtomsCount(atom);
+	}
+	
+//	public IBond[] getConnectedBonds(IAtom atom) {
+//		logger.debug("Getting connected bonds for atom: ", atom);
+//		return super.getConnectedBonds(atom);
+//	}
+
+	public List getConnectedBondsList(IAtom atom) {
+		logger.debug("Getting connected bonds list for atom: ", atom);
+		return super.getConnectedBondsList(atom);
 	}
 
-	public IBond[] getConnectedBonds(IAtom atom) {
-		logger.debug("Getting connected bonds for atom: ", atom);
-		return super.getConnectedBonds(atom);
-	}
-
-	public List getConnectedBondsVector(IAtom atom) {
-		logger.debug("Getting connected bonds vector for atom: ", atom);
-		return super.getConnectedBondsVector(atom);
-	}
-
-	public IElectronContainer[] getConnectedElectronContainers(IAtom atom) {
+	public List getConnectedElectronContainersList(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
-		return super.getConnectedElectronContainers(atom);
+		return super.getConnectedElectronContainersList(atom);
 	}
 
 	public int getBondCount(int atomnumber) {

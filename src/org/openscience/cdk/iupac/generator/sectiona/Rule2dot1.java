@@ -126,9 +126,9 @@ public class Rule2dot1 extends NamingRule {
     private IAtomContainer deleteNonCarbonAtoms(IAtomContainer ac) throws Exception {
         IAtomContainer result = (IAtomContainer)ac.clone();
 //        System.out.println("Deleting non carbon atoms...");
-        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-        for (int i=0; i < atoms.length; i++) {
-        	org.openscience.cdk.interfaces.IAtom atom = atoms[i];
+        java.util.Iterator atoms = ac.atoms();
+        while (atoms.hasNext()) {
+        	org.openscience.cdk.interfaces.IAtom atom = (org.openscience.cdk.interfaces.IAtom)atoms.next();
             if (!"C".equals(atom.getSymbol())) {
 //                System.out.println("  deleting: " + atom.getSymbol());
                 ac.removeAtomAndConnectedElectronContainers(atom);

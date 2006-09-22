@@ -156,17 +156,17 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2.0){
-				IAtom atom1 = bonds[i].getAtoms()[0];
-				IAtom atom2 = bonds[i].getAtoms()[1];
+				IAtom atom1 = bonds[i].getAtom(0);
+				IAtom atom2 = bonds[i].getAtom(1);
 				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
 						&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
 						|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))
 						&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
 							
 						/* positions atoms and bonds */
-						int atom0P = reactant.getAtomNumber(bonds[i].getAtoms()[0]);
+						int atom0P = reactant.getAtomNumber(bonds[i].getAtom(0));
 						int bond1P = reactant.getBondNumber(bonds[i]);
-						int atom1P = reactant.getAtomNumber(bonds[i].getAtoms()[1]);
+						int atom1P = reactant.getAtomNumber(bonds[i].getAtom(1));
 						
 						/* action */
 						IAtomContainer acCloned;
@@ -200,9 +200,9 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], acCloned.getAtom(atom0P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], acCloned.getAtom(atom1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
 							
 					        
@@ -235,8 +235,8 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 			return;
 		for(int i = 0 ; i < bonds.length ; i++)
 			if(bonds[i].getOrder() == 2.0){
-				IAtom atom1 = bonds[i].getAtoms()[0];
-				IAtom atom2 = bonds[i].getAtoms()[1];
+				IAtom atom1 = bonds[i].getAtom(0);
+				IAtom atom2 = bonds[i].getAtom(1);
 				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
 					&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
 					|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))

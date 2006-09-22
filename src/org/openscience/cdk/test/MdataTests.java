@@ -41,7 +41,7 @@ public class MdataTests {
         
         suite.addTest(AminoAcidTest.suite());
         suite.addTest(AtomContainerTest.suite());
-        suite.addTest(AtomEnumerationTest.suite());
+        //suite.addTest(AtomEnumerationTest.suite());
         suite.addTest(AtomParityTest.suite());
         suite.addTest(AtomTest.suite());
         suite.addTest(AtomTypeTest.suite());

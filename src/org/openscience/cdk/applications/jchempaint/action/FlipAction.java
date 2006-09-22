@@ -37,6 +37,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.FlipEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
@@ -59,21 +60,21 @@ public class FlipAction extends JCPAction {
         if (renderModel.getSelectedPart()!=null && (horiz || "vertical".equals(type))) {
             IAtomContainer toflip = renderModel.getSelectedPart();
             Point2d center = GeometryTools.get2DCenter(toflip, renderModel.getRenderingCoordinates());
-            org.openscience.cdk.interfaces.IAtom[] atoms = toflip.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-                Point2d atom = renderModel.getRenderingCoordinate(atoms[i]);
-                Point2d oldCoord = new Point2d(atom.x, atom.y);
+            for (int i=0; i<toflip.getAtomCount(); i++) {
+            	IAtom atom = toflip.getAtom(i);
+                Point2d p2d = renderModel.getRenderingCoordinate(atom);
+                Point2d oldCoord = new Point2d(p2d.x, p2d.y);
                 if (horiz) {
-                    atom.y = 2.0*center.y - atom.y;
+                	p2d.y = 2.0*center.y - p2d.y;
                 } else {
-                    atom.x = 2.0*center.x - atom.x;
+                	p2d.x = 2.0*center.x - p2d.x;
                 }
-                Point2d newCoord = atom;
+                Point2d newCoord = p2d;
                 if (!oldCoord.equals(newCoord)) {
                     Point2d[] coords = new Point2d[2];
                     coords[0] = newCoord;
                     coords[1] = oldCoord;
-                    atomCoordsMap.put(atoms[i], coords);
+                    atomCoordsMap.put(atom, coords);
                 }
             }
             UndoableEdit  edit = new FlipEdit(atomCoordsMap);

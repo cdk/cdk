@@ -144,8 +144,8 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         }
         java.util.Iterator detected = acSet.atomContainers();
 
-        IAtom[] neighboorsFirst = mol.getConnectedAtoms(first);
-        IAtom[] neighboorsSecond = mol.getConnectedAtoms(second);
+        java.util.List neighboorsFirst = mol.getConnectedAtomsList(first);
+        java.util.List neighboorsSecond = mol.getConnectedAtomsList(second);
 
         while (detected.hasNext()) {
         	IAtomContainer detectedAC = (IAtomContainer)detected.next();
@@ -173,11 +173,11 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
      * @param  ac      AtomContainer
      * @return         The boolean result
      */
-    private boolean isANeighboorsInAnAtomContainer(IAtom[] neighs, IAtomContainer ac) {
+    private boolean isANeighboorsInAnAtomContainer(java.util.List neighs, IAtomContainer ac) {
         boolean isIn = false;
         int count = 0;
-        for (int i = 0; i < neighs.length; i++) {
-            if (ac.contains(neighs[i])) {
+        for (int i = 0; i < neighs.size(); i++) {
+            if (ac.contains((IAtom)neighs.get(i))) {
                 count += 1;
             }
         }

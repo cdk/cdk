@@ -97,8 +97,8 @@ public class ConjugatedPiSystemsDetector {
             while (!stack.empty()) {
                 //boolean addAtom = false;
                 Atom currentAtom = (Atom) stack.pop();
-                List atoms = ac.getConnectedAtomsVector(currentAtom);
-                List bonds = ac.getConnectedBondsVector(currentAtom);
+                List atoms = ac.getConnectedAtomsList(currentAtom);
+                List bonds = ac.getConnectedBondsList(currentAtom);
 
                 for (int j = 0; j < atoms.size(); j++) {
                     Atom atom = (Atom) atoms.get(j);
@@ -142,8 +142,8 @@ public class ConjugatedPiSystemsDetector {
      */
     private static int checkAtom(IAtomContainer ac, IAtom currentAtom) {
         int check = -1;
-        List atoms = ac.getConnectedAtomsVector(currentAtom);
-        List bonds = ac.getConnectedBondsVector(currentAtom);
+        List atoms = ac.getConnectedAtomsList(currentAtom);
+        List bonds = ac.getConnectedBondsList(currentAtom);
         if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == 1 /*&& currentAtom.getSymbol().equals("C")*/) {

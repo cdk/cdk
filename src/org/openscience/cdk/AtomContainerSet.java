@@ -247,12 +247,12 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
         }
 
         public Object next() {
-            ++pointer;
-            return atomContainers[pointer-1];
+            //++pointer;
+            return atomContainers[pointer++];
         }
 
         public void remove() {
-            removeAtomContainer(pointer-1);
+            removeAtomContainer(--pointer);
         }
 	}
 	

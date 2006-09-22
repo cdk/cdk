@@ -60,11 +60,12 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 	
 	public void initObjectArray()
 	{
-		org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
+		java.util.Iterator atoms = atomContainer.atoms();
 		objects = new Object[atomContainer.getAtomCount()];
-		for (int f = 0; f < N; f++)
+		int count = -1;
+		while (atoms.hasNext())
 		{
-			objects[f] = atoms[f];	
+			objects[++count] = atoms.next();	
 		}
 	}
 	

@@ -7,6 +7,7 @@ import javax.vecmath.Point2d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -66,9 +67,10 @@ public class FlipEditTest extends ChangeCoordsEditTest {
 		StructureDiagramGenerator generator = new StructureDiagramGenerator(mol);
 		generator.generateCoordinates();
 		Point2d center = GeometryTools.get2DCenter(mol);
-		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-		for (int i = 0; i < atoms.length; i++) {
-			Point2d atom = atoms[i].getPoint2d();
+		java.util.Iterator atoms = mol.atoms();
+		while (atoms.hasNext()) {
+			IAtom a = (IAtom)atoms.next();
+			Point2d atom = a.getPoint2d();
 			Point2d oldCoord = new Point2d(atom.x, atom.y);
 			atom.y = 2.0 * center.y - atom.y;
 			Point2d newCoord = atom;
@@ -76,7 +78,7 @@ public class FlipEditTest extends ChangeCoordsEditTest {
 				Point2d[] coords = new Point2d[2];
 				coords[0] = newCoord;
 				coords[1] = oldCoord;
-				atomCoordsMap.put(atoms[i], coords);
+				atomCoordsMap.put(a, coords);
 			}
 		}
 		return atomCoordsMap;

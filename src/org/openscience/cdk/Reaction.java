@@ -182,12 +182,11 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         }
 
         public Object next() {
-            ++pointer;
-            return map[pointer-1];
+            return map[pointer++];
         }
 
         public void remove() {
-            removeMapping(pointer-1);
+            removeMapping(--pointer);
         }
     	
     }

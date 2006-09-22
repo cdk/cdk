@@ -59,19 +59,20 @@ public class BondTools {
    * @return            true=is a potential configuration, false=is not.
    */
   public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
-    org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-    IAtom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
+    //org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
+    java.util.List connectedAtoms = container.getConnectedAtomsList(bond.getAtom(0));
     IAtom from = null;
-    for (int i = 0; i < connectedAtoms.length; i++) {
-      if (connectedAtoms[i] != atoms[1]) {
-        from = connectedAtoms[i];
-      }
+    for (int i = 0; i < connectedAtoms.size(); i++) {
+    	IAtom conAtom = (IAtom)connectedAtoms.get(i);
+    	if (conAtom != bond.getAtom(1)) {
+    		from = conAtom;
+    	}
     }
     boolean[] array = new boolean[container.getBonds().length];
     for (int i = 0; i < array.length; i++) {
       array[i] = true;
     }
-    if (isStartOfDoubleBond(container, atoms[0], from, array) && isEndOfDoubleBond(container, atoms[1], atoms[0], array) && !bond.getFlag(CDKConstants.ISAROMATIC)) {
+    if (isStartOfDoubleBond(container, bond.getAtom(0), from, array) && isEndOfDoubleBond(container, bond.getAtom(1), bond.getAtom(0), array) && !bond.getFlag(CDKConstants.ISAROMATIC)) {
       return (true);
     } else {
       return (false);
@@ -203,18 +204,19 @@ public class BondTools {
     if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
-    int lengthAtom = container.getConnectedAtoms(atom).length + atom.getHydrogenCount();
-    int lengthParent = container.getConnectedAtoms(parent).length + parent.getHydrogenCount();
+    int lengthAtom = container.getConnectedAtomsList(atom).size() + atom.getHydrogenCount();
+    int lengthParent = container.getConnectedAtomsList(parent).size() + parent.getHydrogenCount();
     if (container.getBond(atom, parent) != null) {
       if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
-        IAtom[] atoms = container.getConnectedAtoms(atom);
+        java.util.List atoms = container.getConnectedAtomsList(atom);
         IAtom one = null;
         IAtom two = null;
-        for (int i = 0; i < atoms.length; i++) {
-          if (atoms[i] != parent && one == null) {
-            one = atoms[i];
-          } else if (atoms[i] != parent && one != null) {
-            two = atoms[i];
+        for (int i = 0; i < atoms.size(); i++) {
+        	IAtom conAtom = (IAtom)atoms.get(i);
+          if (conAtom != parent && one == null) {
+            one = conAtom;
+          } else if (conAtom != parent && one != null) {
+            two = conAtom;
           }
         }
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
@@ -241,31 +243,32 @@ public class BondTools {
    * @return                          false=is not start of configuration, true=is
    */
   private static boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
-    int lengthAtom = container.getConnectedAtoms(a).length + a.getHydrogenCount();
+    int lengthAtom = container.getConnectedAtomsList(a).size() + a.getHydrogenCount();
     if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N"))) {
       return (false);
     }
-    IAtom[] atoms = container.getConnectedAtoms(a);
+    java.util.List atoms = container.getConnectedAtomsList(a);
     IAtom one = null;
     IAtom two = null;
     boolean doubleBond = false;
     IAtom nextAtom = null;
-    for (int i = 0; i < atoms.length; i++) {
-      if (atoms[i] != parent && container.getBond(atoms[i], a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atoms[i], a, doubleBondConfiguration)) {
-        doubleBond = true;
-        nextAtom = atoms[i];
-      }
-      if (atoms[i] != nextAtom && one == null) {
-        one = atoms[i];
-      } else if (atoms[i] != nextAtom && one != null) {
-        two = atoms[i];
-      }
+    for (int i = 0; i < atoms.size(); i++) {
+    	IAtom atom = (IAtom)atoms.get(i);
+    	if (atom != parent && container.getBond(atom, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
+    		doubleBond = true;
+    		nextAtom = atom;
+    	}
+    	if (atom != nextAtom && one == null) {
+    		one = atom;
+    	} else if (atom != nextAtom && one != null) {
+    		two = atom;
+    	}
     }
     String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
     if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
-      return (true);
+    	return (true);
     } else {
-      return (false);
+    	return (false);
     }
   }
   
@@ -280,24 +283,25 @@ public class BondTools {
 	 */
 	public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
 	{
-		IAtom[] atoms = container.getConnectedAtoms(a);
-		if (atoms.length != 4)
+		java.util.List atoms = container.getConnectedAtomsList(a);
+		if (atoms.size() != 4)
 		{
 			return (0);
 		}
-		IBond[] bonds = container.getConnectedBonds(a);
+		java.util.List bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.length; i++)
+		for (int i = 0; i < bonds.size(); i++)
 		{
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE || bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED)
+			IBond bond = (IBond)bonds.get(i);
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_NONE || bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED)
 			{
             }
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
 			}
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_DOWN)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
 			{
 				down++;
 			}
@@ -344,31 +348,32 @@ public class BondTools {
 	 */
 	public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
 	{
-		IAtom[] atoms = container.getConnectedAtoms(a);
-		if (atoms.length < 5 || atoms.length > 6)
+		java.util.List atoms = container.getConnectedAtomsList(a);
+		if (atoms.size() < 5 || atoms.size() > 6)
 		{
 			return (0);
 		}
-		IBond[] bonds = container.getConnectedBonds(a);
+		java.util.List bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.length; i++)
+		for (int i = 0; i < bonds.size(); i++)
 		{
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE)
+			IBond bond = (IBond)bonds.get(i);
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE)
 			{
             }
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
 			}
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_DOWN)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
 			{
 				down++;
 			}
 		}
 		if (up == 1 && down == 1)
 		{
-			if(atoms.length==5)
+			if(atoms.size()==5)
 				return 1;
 			else
 				return 2;
@@ -386,16 +391,16 @@ public class BondTools {
 	 */
 	public static boolean isStereo(IAtomContainer container, IAtom a)
 	{
-		IAtom[] atoms = container.getConnectedAtoms(a);
-		if (atoms.length < 4 || atoms.length > 6)
+		java.util.List atoms = container.getConnectedAtomsList(a);
+		if (atoms.size() < 4 || atoms.size() > 6)
 		{
 			return (false);
 		}
-		IBond[] bonds = container.getConnectedBonds(a);
+		java.util.List bonds = container.getConnectedBondsList(a);
 		int stereo = 0;
-		for (int i = 0; i < bonds.length; i++)
+		for (int i = 0; i < bonds.size(); i++)
 		{
-			if (bonds[i].getStereo() != 0)
+			if (((IBond)bonds.get(i)).getStereo() != 0)
 			{
 				stereo++;
 			}
@@ -405,12 +410,12 @@ public class BondTools {
 			return false;
 		}
 		int differentAtoms = 0;
-		for (int i = 0; i < atoms.length; i++)
+		for (int i = 0; i < atoms.size(); i++)
 		{
 			boolean isDifferent = true;
 			for (int k = 0; k < i; k++)
 			{
-				if (atoms[i].getSymbol().equals(atoms[k].getSymbol()))
+				if (((IAtom)atoms.get(i)).getSymbol().equals(((IAtom)atoms.get(i)).getSymbol()))
 				{
 					isDifferent = false;
 					break;
@@ -421,23 +426,25 @@ public class BondTools {
 				differentAtoms++;
 			}
 		}
-		if (differentAtoms != atoms.length)
+		if (differentAtoms != atoms.size())
 		{
 			int[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
 			Vector differentSymbols = new Vector();
-			for (int i = 0; i < atoms.length; i++)
+			for (int i = 0; i < atoms.size(); i++)
 			{
-				if (!differentSymbols.contains(atoms[i].getSymbol()))
+				IAtom atom = (IAtom)atoms.get(i);
+				if (!differentSymbols.contains(atom.getSymbol()))
 				{
-					differentSymbols.add(atoms[i].getSymbol());
+					differentSymbols.add(atom.getSymbol());
 				}
 			}
 			int[] onlyRelevantIfTwo = new int[2];
 			if (differentSymbols.size() == 2)
 			{
-				for (int i = 0; i < atoms.length; i++)
+				for (int i = 0; i < atoms.size(); i++)
 				{
-					if (differentSymbols.indexOf(atoms[i].getSymbol()) == 0)
+					IAtom atom = (IAtom)atoms.get(i);
+					if (differentSymbols.indexOf(atom.getSymbol()) == 0)
 					{
 						onlyRelevantIfTwo[0]++;
 					} else
@@ -453,15 +460,16 @@ public class BondTools {
 				symbolsWithDifferentMorganNumbers[i] = true;
 				symbolsMorganNumbers[i] = new Vector();
 			}
-			for (int k = 0; k < atoms.length; k++)
+			for (int k = 0; k < atoms.size(); k++)
 			{
-				int elementNumber = differentSymbols.indexOf(atoms[k].getSymbol());
-				if (symbolsMorganNumbers[elementNumber].contains(new Integer(morgannumbers[container.getAtomNumber(atoms[k])])))
+				IAtom atom = (IAtom)atoms.get(k);
+				int elementNumber = differentSymbols.indexOf(atom.getSymbol());
+				if (symbolsMorganNumbers[elementNumber].contains(new Integer(morgannumbers[container.getAtomNumber(atom)])))
 				{
 					symbolsWithDifferentMorganNumbers[elementNumber] = false;
 				} else
 				{
-					symbolsMorganNumbers[elementNumber].add(new Integer(morgannumbers[container.getAtomNumber(atoms[k])]));
+					symbolsMorganNumbers[elementNumber].add(new Integer(morgannumbers[container.getAtomNumber(atom)]));
 				}
 			}
 			int numberOfSymbolsWithDifferentMorganNumbers = 0;
@@ -474,7 +482,7 @@ public class BondTools {
 			}
 			if (numberOfSymbolsWithDifferentMorganNumbers != differentSymbols.size())
 			{
-				if ((atoms.length == 5 || atoms.length == 6) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1)))
+				if ((atoms.size() == 5 || atoms.size() == 6) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1)))
 				{
 					return (true);
 				}
@@ -498,24 +506,25 @@ public class BondTools {
 	 */
 	public static boolean isSquarePlanar(IAtomContainer container, IAtom a)
 	{
-		IAtom[] atoms = container.getConnectedAtoms(a);
-		if (atoms.length != 4)
+		java.util.List atoms = container.getConnectedAtomsList(a);
+		if (atoms.size() != 4)
 		{
 			return (false);
 		}
-		IBond[] bonds = container.getConnectedBonds(a);
+		java.util.List bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.length; i++)
+		for (int i = 0; i < bonds.size(); i++)
 		{
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bonds[i].getStereo() == CDKConstants.STEREO_BOND_NONE)
+			IBond bond = (IBond)bonds.get(i);
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE)
 			{
             }
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_UP)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 			{
 				up++;
 			}
-			if (bonds[i].getStereo() == CDKConstants.STEREO_BOND_DOWN)
+			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
 			{
 				down++;
 			}
@@ -539,7 +548,7 @@ public class BondTools {
 	 */
 	public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
-		List atoms = container.getConnectedAtomsVector(a);
+		List atoms = container.getConnectedAtomsList(a);
 		TreeMap hm = new TreeMap();
 		for (int i = 1; i < atoms.size(); i++)
 		{
@@ -588,22 +597,26 @@ public class BondTools {
 	public static void  makeUpDownBonds(IAtomContainer container){
 	    for (int i = 0; i < container.getAtomCount(); i++) {
 	        IAtom a = container.getAtom(i);
-	        if (container.getConnectedAtoms(a).length == 4) {
+	        if (container.getConnectedAtomsList(a).size() == 4) {
 	          int up = 0;
 	          int down = 0;
 	          int hs = 0;
 	          IAtom h = null;
 	          for (int k = 0; k < 4; k++) {
-	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_UP) {
-	              up++;
-	            }
-	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_DOWN) {
-	              down++;
-	            }
-	            if (container.getBond(a, container.getConnectedAtoms(a)[k]).getStereo() == CDKConstants.STEREO_BOND_NONE && container.getConnectedAtoms(a)[k].getSymbol().equals("H")) {
-	              h = container.getConnectedAtoms(a)[k];
-	              hs++;
-	            }
+	        	  IAtom conAtom = (IAtom)container.getConnectedAtomsList(a).get(k);
+	        	  int stereo = container.getBond(a,conAtom).getStereo();
+	        	  if (stereo  == CDKConstants.STEREO_BOND_UP) {
+	        		  up++;
+	        	  }
+	        	  else if (stereo == CDKConstants.STEREO_BOND_DOWN) {
+	        		  down++;
+	        	  }
+	        	  else if (stereo == CDKConstants.STEREO_BOND_NONE && conAtom.getSymbol().equals("H")) {
+	        		  h = conAtom;
+	        		  hs++;
+	        	  } else {
+	        		  h = null;
+	        	  }
 	          }
 	          if (up == 0 && down == 1 && h != null && hs == 1) {
 	            container.getBond(a, h).setStereo(CDKConstants.STEREO_BOND_UP);

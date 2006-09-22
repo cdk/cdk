@@ -160,21 +160,22 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
         	
     	int longestChainAtomsCount=0;
         int tmpLongestChainAtomCount=0;
-    	IAtom[] atoms = container.getAtoms();
+    	//IAtom[] atoms = container.getAtoms();
     	Vector startSphere = null;
     	Vector path = null;
     	//Set all VisitedFlags to False
-    	for (int i =0;i<atoms.length;i++){
-			atoms[i].setFlag(CDKConstants.VISITED, false);
+    	for (int i =0;i<container.getAtomCount();i++){
+    		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
     	//System.out.println("Set all atoms to Visited False");
-    	for (int i =0;i<atoms.length;i++){
+    	for (int i =0;i<container.getAtomCount();i++){
+    		IAtom atomi = container.getAtom(i);
     		//System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-    		if ((!atoms[i].getFlag(CDKConstants.ISAROMATIC) && !atoms[i].getFlag(CDKConstants.ISINRING) & atoms[i].getSymbol().equals("C")) & !atoms[i].getFlag(CDKConstants.VISITED)){
+    		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
     			//System.out.println("...... -> Accepted");
     			startSphere = new Vector();
     			path = new Vector();
-    			startSphere.addElement(atoms[i]);
+    			startSphere.addElement(atomi);
      			breadthFirstSearch(container, startSphere, path);
      			//create Atomcontainer
      			//System.out.println("Create new Atom Container");
@@ -254,9 +255,9 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 		Vector newSphere = new Vector();
 		for (int i = 0; i < sphere.size(); i++){
 			atom = (IAtom) sphere.elementAt(i);
-			IBond[] bonds = container.getConnectedBonds(atom);
-			for (int j = 0; j < bonds.length; j++){
-				nextAtom = bonds[j].getConnectedAtom(atom);
+			java.util.List bonds = container.getConnectedBondsList(atom);
+			for (int j = 0; j < bonds.size(); j++){
+				nextAtom = ((IBond)bonds.get(j)).getConnectedAtom(atom);
 				if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC)&& !nextAtom.getFlag(CDKConstants.ISINRING)& nextAtom.getSymbol().equals("C")) & !nextAtom.getFlag(CDKConstants.VISITED)){
 	    			path.addElement(nextAtom);
 		    		nextAtom.setFlag(CDKConstants.VISITED, true);

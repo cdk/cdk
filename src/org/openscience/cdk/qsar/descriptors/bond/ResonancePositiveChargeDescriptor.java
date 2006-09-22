@@ -48,6 +48,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  <p>The calculation of Resonance stabilization of a positive charge of an heavy 
@@ -154,7 +155,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     	ArrayList distance1 = new ArrayList();
     	ArrayList result2 = new ArrayList();
     	ArrayList distance2 = new ArrayList();
-    	IAtom[] atoms = ac.getBond(bondPosition).getAtoms();
+    	IAtom[] atoms = BondManipulator.getAtomArray(ac.getBond(bondPosition));
     	
 
         /* RESTRICTION: only possible to break H or doble bonds*/

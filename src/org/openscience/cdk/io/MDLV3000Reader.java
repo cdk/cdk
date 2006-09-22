@@ -297,7 +297,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String indexAtom1String = tokenizer.nextToken();
                     int indexAtom1 = Integer.parseInt(indexAtom1String);
                     IAtom atom1 = readData.getAtom(indexAtom1 -1);
-                    bond.setAtomAt(atom1, 0);
+                    bond.setAtom(atom1, 0);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 1 in bond";
                     logger.error(error);
@@ -309,7 +309,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     String indexAtom2String = tokenizer.nextToken();
                     int indexAtom2 = Integer.parseInt(indexAtom2String);
                     IAtom atom2 = readData.getAtom(indexAtom2 -1);
-                    bond.setAtomAt(atom2, 1);
+                    bond.setAtom(atom2, 1);
                 } catch (Exception exception) {
                     String error = "Error while parsing index atom 2 in bond";
                     logger.error(error);

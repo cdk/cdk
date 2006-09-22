@@ -57,18 +57,18 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 			
 			String element = atom.getSymbol();
 			
-			IAtom[] AttachedAtoms = atomContainer.getConnectedAtoms(atom);
+			java.util.List attachedAtoms = atomContainer.getConnectedAtomsList(atom);
 			
-			for (int j = 0; j <= AttachedAtoms.length - 1; j++) {
-				
-				IBond b = atomContainer.getBond(atom, AttachedAtoms[j]);
+			for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
+				IAtom attached = (IAtom)attachedAtoms.get(j);
+				IBond b = atomContainer.getBond(atom, attached);
 				
 				if (atom.getFlag(CDKConstants.ISAROMATIC)
-						&& AttachedAtoms[j]
+						&& attached
 						                 .getFlag(CDKConstants.ISAROMATIC)) {
 					
 					boolean SameRing = inSameAromaticRing(atomContainer, atom,
-							AttachedAtoms[j], rs);
+							attached, rs);
 					
 					if (SameRing) {
 						NumAromaticBonds2++;

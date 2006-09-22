@@ -207,10 +207,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintAtoms(IAtomContainer atomCon, Graphics2D graphics)
 	{
-		IAtom[] atoms = atomCon.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
+		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
-			paintAtom(atomCon, atoms[i], graphics);
+			paintAtom(atomCon, atomCon.getAtom(i), graphics);
 		}
 	}
 
@@ -265,11 +264,11 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			// ... unless carbon is charged
 			drawSymbol = true;
-		} else if (container.getConnectedBonds(atom).length < 1)
+		} else if (container.getConnectedBondsList(atom).size() < 1)
 		{
 			// ... unless carbon is unbonded
 			drawSymbol = true;
-		} else if (r2dm.getShowEndCarbons() && (container.getConnectedBonds(atom).length == 1))
+		} else if (r2dm.getShowEndCarbons() && (container.getConnectedBondsList(atom).size() == 1))
 		{
 			drawSymbol = true;
 		} else if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null)
@@ -891,10 +890,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public boolean ringIsAromatic(IRing ring)
 	{
 		boolean isAromatic = true;
-		IAtom[] atoms = ring.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
+		for (int i = 0; i < ring.getAtomCount(); i++)
 		{
-			if (!atoms[i].getFlag(CDKConstants.ISAROMATIC))
+			if (!ring.getAtom(i).getFlag(CDKConstants.ISAROMATIC))
 			{
 				isAromatic = false;
 			}

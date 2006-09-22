@@ -158,22 +158,25 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 			setActiveCenters(reactant);
 		}
 		
-		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atoms[i]).length == 1 ){
+		IAtom atomi = null;
+		IBond bondj = null;
+		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
+			atomi = reactant.getAtom(i);
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1 ){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[j].getOrder() == 1.0){
-						IAtom atom1 = bonds[j].getConnectedAtom(atoms[i]);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
+						IAtom atom1 = bondj.getConnectedAtom(atomi);
 						ILonePair[] lp = reactant.getLonePairs(atom1);
 						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 ){
 							/* positions atoms and bonds */
-							int atom0P = reactant.getAtomNumber(atoms[i]);
-							int bond1P = reactant.getBondNumber(bonds[j]);
+							int atom0P = reactant.getAtomNumber(atomi);
+							int bond1P = reactant.getBondNumber(bondj);
 							int atom1P = reactant.getAtomNumber(atom1);
 							
 							/* action */
@@ -196,11 +199,11 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 							acCloned.getBond(bond1P).setOrder(order+1);
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], acCloned.getAtom(atom0P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[j], acCloned.getBond(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);
@@ -228,20 +231,23 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IAtom[] atoms = reactant.getAtoms();
 		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 /*|| AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0*/)
 			return;
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(reactant.getSingleElectron(atoms[i]).length == 1 ){
-				IBond[] bonds = reactant.getConnectedBonds(atoms[i]);
-				for(int j = 0 ; j < bonds.length ; j++){
-					if(bonds[j].getOrder() == 1.0){
-						IAtom atom = bonds[j].getConnectedAtom(atoms[i]);
+		IAtom atomi = null;
+		IBond bondj = null;
+		for(int i = 0; i < reactant.getAtomCount(); i++) {
+			atomi = reactant.getAtom(i);
+			if(reactant.getSingleElectron(atomi).length == 1 ){
+				java.util.List bonds = reactant.getConnectedBondsList(atomi);
+				for(int j = 0 ; j < bonds.size() ; j++){
+					bondj = (IBond)bonds.get(j);
+					if(bondj.getOrder() == 1.0){
+						IAtom atom = bondj.getConnectedAtom(atomi);
 						ILonePair[] lp = reactant.getLonePairs(atom);
 						if(lp.length > 0 ){
-							atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							bonds[j].setFlag(CDKConstants.REACTIVE_CENTER,true);
+							bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						}
 					}
 				}

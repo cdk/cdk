@@ -146,8 +146,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
             IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
             HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
         }
-        org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
+        for (int i = 0; i < ac.getAtomCount(); i++) {
             if (ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticAtomsCount += 1;
             }

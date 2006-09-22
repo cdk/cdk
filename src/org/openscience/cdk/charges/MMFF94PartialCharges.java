@@ -83,29 +83,30 @@ public class MMFF94PartialCharges {
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
 		org.openscience.cdk.interfaces.IAtom thisAtom = null;
-		org.openscience.cdk.interfaces.IAtom[] neighboors = null;
+		java.util.List neighboors = null;
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;
-		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-		for(int i= 0; i < atoms.length; i++) {
+		java.util.Iterator atoms = ac.atoms();
+		while(atoms.hasNext()) {
 			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
-			thisAtom = atoms[i];
+			thisAtom = (org.openscience.cdk.interfaces.IAtom)atoms.next();
 			data = (Vector) parameterSet.get("data"+thisAtom.getAtomTypeName());
-			neighboors = ac.getConnectedAtoms(thisAtom);
+			neighboors = ac.getConnectedAtomsList(thisAtom);
 			formalCharge = thisAtom.getCharge();
 			theta = ((Double)data.get(5)).doubleValue();
-			charge = formalCharge * (1 - (neighboors.length * theta));
+			charge = formalCharge * (1 - (neighboors.size() * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
-			for(int n = 0; n < neighboors.length; n++) {
-				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getAtomTypeName());
-				if (parameterSet.containsKey("bond"+thisAtom.getAtomTypeName()+";"+neighboors[n].getAtomTypeName())) {
-					bondData = (Vector) parameterSet.get("bond"+thisAtom.getAtomTypeName()+";"+neighboors[n].getAtomTypeName());
+			for(int n = 0; n < neighboors.size(); n++) {
+				org.openscience.cdk.interfaces.IAtom neighbour = (org.openscience.cdk.interfaces.IAtom)neighboors.get(n);
+				dataNeigh = (Vector) parameterSet.get("data"+neighbour.getAtomTypeName());
+				if (parameterSet.containsKey("bond"+thisAtom.getAtomTypeName()+";"+neighbour.getAtomTypeName())) {
+					bondData = (Vector) parameterSet.get("bond"+thisAtom.getAtomTypeName()+";"+neighbour.getAtomTypeName());
 					sumOfBondIncrements -= ((Double) bondData.get(4)).doubleValue();
 				}
-				else if (parameterSet.containsKey("bond"+neighboors[n].getAtomTypeName()+";"+thisAtom.getAtomTypeName())) {
-					bondData = (Vector) parameterSet.get("bond"+neighboors[n].getAtomTypeName()+";"+thisAtom.getAtomTypeName());
+				else if (parameterSet.containsKey("bond"+neighbour.getAtomTypeName()+";"+thisAtom.getAtomTypeName())) {
+					bondData = (Vector) parameterSet.get("bond"+neighbour.getAtomTypeName()+";"+thisAtom.getAtomTypeName());
 					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
 				}
 				else {
@@ -114,8 +115,8 @@ public class MMFF94PartialCharges {
 				}
 				
 				
-				dataNeigh = (Vector) parameterSet.get("data"+neighboors[n].getID());
-				formalChargeNeigh = neighboors[n].getCharge();
+				dataNeigh = (Vector) parameterSet.get("data"+neighbour.getID());
+				formalChargeNeigh = neighbour.getCharge();
 				sumOfFormalCharges += formalChargeNeigh;
 			}
 			charge += sumOfFormalCharges * theta;

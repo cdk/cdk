@@ -36,6 +36,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -208,7 +209,7 @@ public class FiguerasSSSRFinder {
 	private Ring getRing(org.openscience.cdk.interfaces.IAtom rootNode, Molecule molecule)
 	{
 		org.openscience.cdk.interfaces.IAtom node, neighbor, mAtom; 
-		org.openscience.cdk.interfaces.IAtom[] neighbors, mAtoms;
+		java.util.List neighbors, mAtoms;
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
@@ -225,11 +226,11 @@ public class FiguerasSSSRFinder {
 			((Vector)molecule.getAtom(f).getProperty(PATH)).removeAllElements();
 		}
 		// Initialize the queue with nodes attached to rootNode
-		neighbors = molecule.getConnectedAtoms(rootNode);
-		for (int f = 0; f < neighbors.length; f++){
+		neighbors = molecule.getConnectedAtomsList(rootNode);
+		for (int f = 0; f < neighbors.size(); f++){
 			//if the degree of the f-st neighbor of rootNode is greater 
 			//than zero (i.e., it has not yet been deleted from the list)
-			neighbor = neighbors[f];
+			neighbor = (IAtom)neighbors.get(f);
 			// push the f-st node onto our FIFO queue	
 			// after assigning rootNode as its source
 			queue.push(neighbor);
@@ -238,9 +239,9 @@ public class FiguerasSSSRFinder {
 		}
 		while (queue.size() > 0){	
 			node = (Atom)queue.pop();
-			mAtoms = molecule.getConnectedAtoms(node);
-			for (int f = 0; f < mAtoms.length; f++){
-				mAtom = mAtoms[f];
+			mAtoms = molecule.getConnectedAtomsList(node);
+			for (int f = 0; f < mAtoms.size(); f++){
+				mAtom = (IAtom)mAtoms.get(f);
 				if (mAtom != ((Vector)node.getProperty(PATH)).elementAt(((Vector)node.getProperty(PATH)).size() - 2)){
 					if (((Vector)mAtom.getProperty(PATH)).size() > 0){
 						intersection = getIntersection((Vector)node.getProperty(PATH), (Vector)mAtom.getProperty(PATH));
@@ -325,9 +326,9 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule containing the atom
 	 */
 	 private void trim(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
-        IBond[] bonds = molecule.getConnectedBonds(atom);
-	 	for (int i = 0; i < bonds.length; i++) {
-            molecule.removeElectronContainer(bonds[i]);
+        java.util.List bonds = molecule.getConnectedBondsList(atom);
+	 	for (int i = 0; i < bonds.size(); i++) {
+            molecule.removeElectronContainer((IBond)bonds.get(i));
 	 	}
 		// you are erased! Har, har, har.....  >8-)
 	 }

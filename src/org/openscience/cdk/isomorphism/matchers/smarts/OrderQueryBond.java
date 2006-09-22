@@ -53,7 +53,6 @@ public class OrderQueryBond extends SMARTSBond {
 		s.append("OrderQueryBond(");
         s.append(this.hashCode() + ", ");
 		s.append("#O:" + getOrder());
-		org.openscience.cdk.interfaces.IAtom[] atoms = getAtoms();
 		s.append(", #A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i] == null) {

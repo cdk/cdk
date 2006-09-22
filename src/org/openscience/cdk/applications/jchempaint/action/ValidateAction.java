@@ -32,6 +32,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.ValidateFrame;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.validate.BasicValidator;
 import org.openscience.cdk.validate.CDKValidator;
@@ -140,11 +141,11 @@ public class ValidateAction extends JCPAction
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
-		org.openscience.cdk.interfaces.IAtom[] atoms = ChemModelManipulator.getAllInOneContainer(model).getAtoms();
-		logger.info("Clearing errors on atoms: " + atoms.length);
-		for (int i = 0; i < atoms.length; i++)
+		IAtomContainer atoms = ChemModelManipulator.getAllInOneContainer(model);
+		logger.info("Clearing errors on atoms: " + atoms.getAtomCount());
+		for (int i = 0; i < atoms.getAtomCount(); i++)
 		{
-			ProblemMarker.unmark(atoms[i]);
+			ProblemMarker.unmark(atoms.getAtom(i));
 		}
 		jcpmodel.fireChange();
 	}

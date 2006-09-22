@@ -53,7 +53,6 @@ public class AromaticQueryBond extends SMARTSBond {
 		StringBuffer s = new StringBuffer();
 		s.append("AromaticQueryBond(");
         s.append(this.hashCode() + ", ");
-        IAtom[] atoms = getAtoms();
 		s.append("#A:" + atoms.length);
 		for (int i = 0; i < atoms.length; i++) {
 			if (atoms[i] == null) {

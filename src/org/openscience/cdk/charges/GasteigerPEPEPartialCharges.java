@@ -287,8 +287,8 @@ public class GasteigerPEPEPartialCharges {
     		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
     		for(int i = 0 ; i < ac.getBondCount() ; i++){
     			if(ac.getBond(i).getOrder() > 1){
-    				ac.getBond(i).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
-    				ac.getBond(i).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
+    				ac.getBond(i).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    				ac.getBond(i).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
     				ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
     			}
     		}
@@ -310,8 +310,8 @@ public class GasteigerPEPEPartialCharges {
 //	    		}
 	    		for(int k = 0; k < mol.getBondCount(); k++){
 	    			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBond(k).getAtoms()[0].setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBond(k).getAtoms()[1].setFlag(CDKConstants.REACTIVE_CENTER,false);
+	    			mol.getBond(k).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,false);
+	    			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
 	    		}
 	    		setOfM2.addMolecule((IMolecule) mol);
 	    		Object[] params2 = {Boolean.FALSE};
@@ -356,10 +356,10 @@ public class GasteigerPEPEPartialCharges {
                     ac.getBuilder()
                 );
 
-			IAtom[] atoms = ac.getConnectedAtoms(ac.getAtom(atom1));
-			for(int i = 0 ; i < atoms.length ; i++){
+			java.util.List atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
+			for(int i = 0 ; i < atoms.size() ; i++){
 				double covalentradius = 0;
-	            String symbol = atoms[i].getSymbol();
+	            String symbol = ((IAtom)atoms.get(i)).getSymbol();
 	            IAtomType type = factory.getAtomType(symbol);
 	            covalentradius = type.getCovalentRadius();
 
@@ -393,8 +393,7 @@ public class GasteigerPEPEPartialCharges {
 			fQ = 0.5;
 			for(int i = 0; i < atomContainer.getBondCount(); i++){
 				IBond bond = atomContainer.getBond(i);
-				IAtom[] atoms = bond.getAtoms();
-				if(atoms[0].getFormalCharge() != 0.0 && atoms[1].getFormalCharge() != 0.0){
+				if(bond.getAtom(0).getFormalCharge() != 0.0 && bond.getAtom(1).getFormalCharge() != 0.0){
 					fQ = 0.25;
 					break;
 				}

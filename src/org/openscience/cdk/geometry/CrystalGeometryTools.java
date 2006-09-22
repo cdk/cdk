@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ICrystal;
 
 /**
@@ -238,9 +239,9 @@ public class CrystalGeometryTools {
 	 * @return  boolean indication that 3D coordinates are available 
 	 */
     public static boolean hasCrystalCoordinates(IAtomContainer container) {
-    	org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
-        for (int i=0; i < atoms.length; i++) {
-            if (atoms[i].getFractionalPoint3d() == null) {
+    	java.util.Iterator atoms = container.atoms();
+        while (atoms.hasNext()) {
+            if (((IAtom)atoms.next()).getFractionalPoint3d() == null) {
                 return false;
             }
         }
@@ -251,14 +252,15 @@ public class CrystalGeometryTools {
      * Creates cartesian coordinates for all Atoms in the Crystal.
 	 */
     public static void fractionalToCartesian(ICrystal crystal) {
-    	org.openscience.cdk.interfaces.IAtom[] atoms = crystal.getAtoms();
+    	java.util.Iterator atoms = crystal.atoms();
         Vector3d aAxis = crystal.getA();
         Vector3d bAxis = crystal.getB();
         Vector3d cAxis = crystal.getC();
-        for (int i=0; i < atoms.length; i++) {
-            Point3d fracPoint = atoms[i].getFractionalPoint3d();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
+            Point3d fracPoint = atom.getFractionalPoint3d();
             if (fracPoint != null) {
-                atoms[i].setPoint3d(fractionalToCartesian(aAxis,bAxis,cAxis, fracPoint));
+                atom.setPoint3d(fractionalToCartesian(aAxis,bAxis,cAxis, fracPoint));
             }
         }
     }

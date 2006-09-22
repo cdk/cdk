@@ -38,6 +38,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -286,7 +287,7 @@ public class Fingerprinter implements IFingerprinter {
 	 */
 	static void depthFirstSearch(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
-		org.openscience.cdk.interfaces.IBond[] bonds = ac.getConnectedBonds(root);
+		java.util.List bonds = ac.getConnectedBondsList(root);
 
 		/*
 		 *  try
@@ -311,9 +312,10 @@ public class Fingerprinter implements IFingerprinter {
 		currentDepth++;
 		//logger.info("New incremented searchDepth " + currentDepth);
 		//logger.info("Current Path is: " + currentPath);
-		for (int f = 0; f < bonds.length; f++)
+		for (int f = 0; f < bonds.size(); f++)
 		{
-			nextAtom = bonds[f].getConnectedAtom(root);
+			IBond bond = (IBond)bonds.get(f);
+			nextAtom = bond.getConnectedAtom(root);
 
 			/*
 			 *  try
@@ -325,7 +327,7 @@ public class Fingerprinter implements IFingerprinter {
 			if (!currentPath.contains(nextAtom))
 			{
 				newPath = new Vector(currentPath);
-				bondSymbol = getBondSymbol(bonds[f]);
+				bondSymbol = getBondSymbol(bond);
 				newPath.addElement(bondSymbol);
 				//logger.debug("Bond has symbol " + bondSymbol);
 				newPath.addElement(nextAtom);

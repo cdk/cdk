@@ -53,10 +53,11 @@ public class ValencyValidator extends AbstractValidator {
     
     public ValidationReport validateMolecule(IMolecule subject) {
         ValidationReport report = new ValidationReport();
-        IAtom[] atoms = subject.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            if (!(atoms[i] instanceof IPseudoAtom)) {
-                report.addReport(validateAtomValency(atoms[i], subject));
+        java.util.Iterator atoms = subject.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
+            if (!(atom instanceof IPseudoAtom)) {
+                report.addReport(validateAtomValency(atom, subject));
             }
         }
         return report;

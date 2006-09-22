@@ -261,14 +261,16 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         
         // map the atoms
         int mappingCount = 0;
-        IAtom[] reactantAtoms = reactingSide.getAtoms();
-        IAtom[] producedAtoms = producedSide.getAtoms();
-        for (int i=0; i<reactantAtoms.length; i++) {
-            for (int j=0; j<producedAtoms.length; j++) {
-                if (reactantAtoms[i].getID() != null &&
-                    reactantAtoms[i].getID().equals(producedAtoms[j].getID())) {
+//        IAtom[] reactantAtoms = reactingSide.getAtoms();
+//        IAtom[] producedAtoms = producedSide.getAtoms();
+        for (int i=0; i<reactingSide.getAtomCount(); i++) {
+            for (int j=0; j<producedSide.getAtomCount(); j++) {
+            	IAtom eductAtom = reactingSide.getAtom(i);
+            	IAtom productAtom = producedSide.getAtom(j);
+                if (eductAtom.getID() != null &&
+                		eductAtom.getID().equals(productAtom.getID())) {
                     reaction.addMapping(
-                        builder.newMapping(reactantAtoms[i], producedAtoms[j])
+                        builder.newMapping(eductAtom, productAtom)
                     );
                     mappingCount++;
                     break;

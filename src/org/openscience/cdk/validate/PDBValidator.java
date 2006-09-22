@@ -87,11 +87,12 @@ public class PDBValidator extends AbstractValidator {
             // ok, now make a hash with all residueLocator in the PDB file
             Vector residues = new Vector();
             IAtomContainer allPDBAtoms = ChemFileManipulator.getAllInOneContainer(file);
-            IAtom[] atoms = allPDBAtoms.getAtoms();
-            logger.info("Found in PDB file, #atoms: " + atoms.length);
-            for (int i=0; i< atoms.length; i++) {
-                String resName = (String)atoms[i].getProperty("pdb.resName");
-                String resSeq = (String)atoms[i].getProperty("pdb.resSeq");
+            java.util.Iterator atoms = allPDBAtoms.atoms();
+            logger.info("Found in PDB file, #atoms: " + allPDBAtoms.getAtomCount());
+            while (atoms.hasNext()) {
+            	IAtom atom = (IAtom)atoms.next();
+                String resName = (String)atom.getProperty("pdb.resName");
+                String resSeq = (String)atom.getProperty("pdb.resSeq");
                 String resLocator = resName + resSeq;
                 if (!residues.contains(resLocator.toLowerCase())) {
                     logger.debug("Found new residueLocator: " + resLocator);
@@ -101,10 +102,10 @@ public class PDBValidator extends AbstractValidator {
             
             // now see if the model undergoing validation has bad locators
             IAtomContainer allAtoms = ChemModelManipulator.getAllInOneContainer(subject);
-            IAtom[] validateAtoms = allAtoms.getAtoms();
-            for (int i=0; i<validateAtoms.length; i++) {
-                // only testing PseudoAtom's
-            	IAtom validateAtom = validateAtoms[i];
+            java.util.Iterator validateAtoms = allAtoms.atoms();
+            while (validateAtoms.hasNext()) {
+            	// only testing PseudoAtom's
+            	IAtom validateAtom = (IAtom)validateAtoms.next();
                 if (validateAtom instanceof EnzymeResidueLocator) {
                     ValidationTest badResidueLocator = new ValidationTest(validateAtom,
                         "ResidueLocator does not exist in PDB entry."

@@ -66,13 +66,14 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		
 		IBond[] bonds = reactant.getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
-			IAtom[] atoms = bonds[i].getAtoms();
+			IAtom atom0 = bonds[i].getAtom(0);
+			IAtom atom1 = bonds[i].getAtom(1);
 			if(bonds[i].getOrder() == 2 &&
-					atoms[0].getSymbol().equals("C")&&
-					atoms[1].getSymbol().equals("C")){
+					atom0.getSymbol().equals("C")&&
+					atom1.getSymbol().equals("C")){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom0.setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		

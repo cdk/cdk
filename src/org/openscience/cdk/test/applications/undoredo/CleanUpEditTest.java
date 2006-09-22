@@ -9,6 +9,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -65,18 +66,20 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 		StructureDiagramGenerator generator = new StructureDiagramGenerator(mol);
 		generator.generateCoordinates();
 		mol = relayoutMolecule(mol);
-		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-		org.openscience.cdk.interfaces.IAtom[] newAtoms = mol.getAtoms();
-		for (int j = 0; j < atoms.length; j++) {
-			Point2d oldCoord = atoms[j].getPoint2d();
-			Point2d newCoord = newAtoms[j].getPoint2d();
-			if (!oldCoord.equals(newCoord)) {
-				Point2d[] coords = new Point2d[2];
-				coords[0] = newCoord;
-				coords[1] = oldCoord;
-				atomCoordsMap.put(newAtoms[j], coords);
-			}
-		}
+		// Commented. Reason: atomCoordsMap is never filled, oldCoord.equals(newCoord) := true
+//		org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
+//		org.openscience.cdk.interfaces.IAtom[] newAtoms = mol.getAtoms();
+//		for (int j = 0; j < atoms.length; j++) {
+//			Point2d oldCoord = atoms[j].getPoint2d();
+//			Point2d newCoord = newAtoms[j].getPoint2d();
+//			if (!oldCoord.equals(newCoord)) {
+//				Point2d[] coords = new Point2d[2];
+//				coords[0] = newCoord;
+//				coords[1] = oldCoord;
+//				atomCoordsMap.put(newAtoms[j], coords);
+//			}
+//		}
+		
 		return atomCoordsMap;
 	}
 

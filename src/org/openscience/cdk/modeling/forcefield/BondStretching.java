@@ -73,7 +73,8 @@ public class BondStretching {
 		bondsNumber = bonds.length;
 		//System.out.println("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[bondsNumber][];
-		IAtom[] atomsInBond = null;
+		IAtom atom0 = null;
+		IAtom atom1 = null;
 
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -86,19 +87,23 @@ public class BondStretching {
 
 		for (int i = 0; i < bondsNumber; i++) {
 			//System.out.println("bonds[" + i + "]= " + bonds[i].toString());
-			atomsInBond = bonds[i].getAtoms();
-			bondAtomPosition[i] = new int[atomsInBond.length];
+			atom0 = bonds[i].getAtom(0);
+			atom1 = bonds[i].getAtom(1);
 			
-			for (int j = 0; j < atomsInBond.length; j++) {
-				bondAtomPosition[i][j] = molecule.getAtomNumber(atomsInBond[j]);
-				//System.out.println("atomsInBond[j] = " + atomsInBond[j].toString());
-				//System.out.println("atomsInBond[j].getAtomTypeName() = " + atomsInBond[j].getAtomTypeName());
-				//System.out.println("bondAtomPosition[i][j] = " + bondAtomPosition[i][j]);
-			}
+			bondAtomPosition[i] = new int[2];
+			bondAtomPosition[i][0] = molecule.getAtomNumber(atom0);
+			bondAtomPosition[i][1] = molecule.getAtomNumber(atom1);
+			
+//			for (int j = 0; j < 2; j++) {
+//				bondAtomPosition[i][j] = molecule.getAtomNumber(atomsInBond[j]);
+//				//System.out.println("atomsInBond[j] = " + atomsInBond[j].toString());
+//				//System.out.println("atomsInBond[j].getAtomTypeName() = " + atomsInBond[j].getAtomTypeName());
+//				//System.out.println("bondAtomPosition[i][j] = " + bondAtomPosition[i][j]);
+//			}
 			
 			//System.out.println("atomsInBond[0].getAtomTypeName() = " + atomsInBond[0].getAtomTypeName());
 			//System.out.println("atomsInBond[1].getAtomTypeName() = " + atomsInBond[1].getAtomTypeName());
-			bondData = pc.getBondData(atomsInBond[0].getAtomTypeName(), atomsInBond[1].getAtomTypeName());
+			bondData = pc.getBondData(atom0.getAtomTypeName(), atom1.getAtomTypeName());
 			//System.out.println("bondData : " + bondData);
 			r0[i] = ((Double) bondData.get(0)).doubleValue();
 			k2[i] = ((Double) bondData.get(1)).doubleValue();

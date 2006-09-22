@@ -47,17 +47,15 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 
 	private IBond formerBond;
 
-	private IAtom[] atoms;
-
 	private IChemModel chemModel;
 
 	public BondChangeEdit(IChemModel chemModel, IBond formerBond, IBond newBond) {
 		this.chemModel = chemModel;
 		this.formerBond = formerBond;
 		this.newBond = newBond;
-		atoms = (IAtom[]) newBond.getAtoms();
 		if (formerBond != null) {
-			formerBond.setAtoms(atoms);
+			formerBond.setAtom(newBond.getAtom(0), 0);
+			formerBond.setAtom(newBond.getAtom(1), 1);
 		}
 	}
 

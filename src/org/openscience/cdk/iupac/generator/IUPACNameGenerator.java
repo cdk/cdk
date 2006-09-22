@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This class implements a IUPAC name generator.
@@ -197,9 +198,9 @@ public class IUPACNameGenerator {
             if (a.getProperty(IRule.ATOM_NAMED_FLAG).equals("yes")) {
                 a.setProperty(IRule.ATOM_HAS_VALENCY, "no");
                 // loop over connected atoms
-                org.openscience.cdk.interfaces.IAtom[] connectedAtoms = ac.getConnectedAtoms(a);
-                for (int j = 0; j < connectedAtoms.length; j++) {
-                	org.openscience.cdk.interfaces.IAtom b = connectedAtoms[j];
+                java.util.List connectedAtoms = ac.getConnectedAtomsList(a);
+                for (int j = 0; j < connectedAtoms.size(); j++) {
+                	org.openscience.cdk.interfaces.IAtom b = (IAtom)connectedAtoms.get(j);
                     if (b.getProperty(IRule.ATOM_NAMED_FLAG).equals("yes")) {
                         b.setProperty(IRule.ATOM_HAS_VALENCY, "no");
                     } else {

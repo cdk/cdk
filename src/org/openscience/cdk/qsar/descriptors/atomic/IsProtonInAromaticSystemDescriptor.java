@@ -138,17 +138,18 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		IAtom[] neighboor = mol.getConnectedAtoms(atom);
+		java.util.List neighboor = mol.getConnectedAtomsList(atom);
 		IAtom target = atom;
+		IAtom neighbour0 = (IAtom)neighboor.get(0);
 		if(target.getSymbol().equals("H")) {
 			//System.out.println("aromatic proton");
-			if(neighboor[0].getFlag(CDKConstants.ISAROMATIC)) {
+			if(neighbour0.getFlag(CDKConstants.ISAROMATIC)) {
 				isProtonInAromaticSystem = 1;
 			}
 			else {
-				org.openscience.cdk.interfaces.IAtom[] betaAtoms = ac.getConnectedAtoms(neighboor[0]);
-				for (int i = 0; i < betaAtoms.length; i++) {
-					if(betaAtoms[0].getFlag(CDKConstants.ISAROMATIC)) {
+				java.util.List betaAtoms = ac.getConnectedAtomsList(neighbour0);
+				for (int i = 0; i < betaAtoms.size(); i++) {
+					if(((IAtom)betaAtoms.get(i)).getFlag(CDKConstants.ISAROMATIC)) {
 						isProtonInAromaticSystem = 2;
 					}
 					else {

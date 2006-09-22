@@ -441,9 +441,9 @@ public class MDLReader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                IAtom[] atomsToUpdate = molecule.getAtoms();
-                for (int f = 0; f<atomsToUpdate.length; f++) {
-                    IAtom atomToUpdate = atomsToUpdate[f];
+                java.util.Iterator atomsToUpdate = molecule.atoms();
+                while (atomsToUpdate.hasNext()) {
+                    IAtom atomToUpdate = (IAtom)atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();
                     atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
                     atomToUpdate.setPoint3d(null);
@@ -535,13 +535,14 @@ public class MDLReader extends DefaultChemObjectReader {
 						newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
 					}
 					molecule.addAtom(newPseudoAtom);
-					IBond[] bondsOfAliasAtom = molecule.getConnectedBonds(aliasAtom);
+					java.util.List bondsOfAliasAtom = molecule.getConnectedBondsList(aliasAtom);
 					
-					for (int i = 0; i < bondsOfAliasAtom.length; i++) {
-						IAtom connectedToAliasAtom = bondsOfAliasAtom[i].getConnectedAtom(aliasAtom);
-						IBond newBond = bondsOfAliasAtom[i].getBuilder().newBond(); 
+					for (int i = 0; i < bondsOfAliasAtom.size(); i++) {
+						IBond bondOfAliasAtom = (IBond) bondsOfAliasAtom.get(i);
+						IAtom connectedToAliasAtom = bondOfAliasAtom.getConnectedAtom(aliasAtom);
+						IBond newBond = bondOfAliasAtom.getBuilder().newBond(); 
 						newBond.setAtoms(new IAtom[] {connectedToAliasAtom, newPseudoAtom});
-						newBond.setOrder(bondsOfAliasAtom[i].getOrder());
+						newBond.setOrder(bondOfAliasAtom.getOrder());
 						molecule.addBond(newBond);
 						molecule.removeBond(aliasAtom, connectedToAliasAtom);
 					}

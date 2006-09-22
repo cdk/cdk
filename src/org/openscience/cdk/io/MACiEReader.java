@@ -447,12 +447,13 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
     
     private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
-    	IAtom[] atoms = ReactionManipulator.getAllInOneContainer(currentReaction).getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            if (atoms[i] instanceof EnzymeResidueLocator) {
+    	IAtomContainer ac = ReactionManipulator.getAllInOneContainer(currentReaction);
+        for (int i=0; i<ac.getAtomCount(); i++) {
+        	IAtom atom = ac.getAtom(i);
+            if (atom instanceof EnzymeResidueLocator) {
                 // skip atom
-            } else if (atoms[i] instanceof PseudoAtom) {
-                PseudoAtom pseudo = (PseudoAtom)atoms[i];
+            } else if (atom instanceof PseudoAtom) {
+                PseudoAtom pseudo = (PseudoAtom)atom;
                 logger.debug("pseudo atom label: ", pseudo.getLabel());
                 logger.debug("pseudo class: ", pseudo.getClass().getName());
                 Matcher residueLocatorMatcher = residueLocator.matcher(pseudo.getLabel());
@@ -524,14 +525,14 @@ public class MACiEReader extends DefaultChemObjectReader {
                 residueLocator.matcher(field);
             if (residueLocatorMatcher.matches()) {
                 logger.debug("Found residueLocator: ", field);
-                IAtom[] atoms = ReactionManipulator.getAllInOneContainer(reaction).getAtoms();
+                IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reaction);
                 boolean found = false;
-                logger.debug("Searching for given residueLocator through #atom: ", atoms.length);
+                logger.debug("Searching for given residueLocator through #atom: ", ac.getAtomCount());
                 logger.debug("Taken from reaction ", reaction.getID());
-                for (int i=0; (i<atoms.length && !found); i++) {
-                    if (atoms[i] instanceof PseudoAtom) {
+                for (int i=0; (i<ac.getAtomCount() && !found); i++) {
+                    if (ac.getAtom(i) instanceof PseudoAtom) {
                         // that is what we are looking for
-                        PseudoAtom atom = (PseudoAtom)atoms[i];
+                        PseudoAtom atom = (PseudoAtom)ac.getAtom(i);
                         if (atom.getLabel().equals(field)) {
                             // we have a hit, now mark Atom with dict refs
                             addDictRefedAnnotation(atom, "ResidueRole", value);

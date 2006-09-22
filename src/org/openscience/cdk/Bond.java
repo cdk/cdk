@@ -133,18 +133,38 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
 
 	/**
-	 *  Returns the array of atoms making up this bond.
+	 *  Returns the Iterator to atoms making up this bond.
 	 *
-	 *@return    An array of atoms participating in this bond
+	 *@return    An Iterator to atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public IAtom[] getAtoms()
+	public java.util.Iterator atoms()
 	{
-		IAtom[] returnAtoms = new IAtom[getAtomCount()];
-		System.arraycopy(this.atoms, 0, returnAtoms, 0, returnAtoms.length);
-		return returnAtoms;
+		return new AtomsIterator();
 	}
 
+	/**
+     * The inner Iterator class.
+     *
+     */
+    private class AtomsIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < 2) return true;
+	    return false;
+        }
+
+        public Object next() {
+            ++pointer;
+            return atoms[pointer-1];
+        }
+
+        public void remove() {}
+    	
+    }
+	
 	/**
 	 *  Sets the array of atoms making up this bond.
 	 *
@@ -228,7 +248,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *@param  position  The position in this bond where the atom is to be inserted
 	 *@see              #getAtomAt
 	 */
-	public void setAtomAt(IAtom atom, int position)
+	public void setAtom(IAtom atom, int position)
 	{
 		atoms[position] = atom;
 		notifyChanged();
@@ -415,9 +435,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		resultString.append(this.hashCode());
 		resultString.append(", #O:").append(getOrder());
 		resultString.append(", #S:").append(getStereo());
-		IAtom[] atoms = getAtoms();
 		resultString.append(", #A:").append(atoms.length);
-		for (int i = 0; i < atoms.length; i++)
+		for (int i = 0; i < atomCount; i++)
 		{
 			if (atoms[i] == null)
 			{

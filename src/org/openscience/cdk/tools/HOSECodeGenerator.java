@@ -320,17 +320,17 @@ public class HOSECodeGenerator implements java.io.Serializable
 	{
 		sphere = 0;
 		TreeNode tempNode = null;
-		IAtom[] conAtoms = atomContainer.getConnectedAtoms(root);
+		java.util.List conAtoms = atomContainer.getConnectedAtomsList(root);
 		IAtom atom;
 		org.openscience.cdk.interfaces.IBond bond = null;
 		sphereNodes.removeAllElements();
     sphereNodesWithAtoms.removeAllElements();
-		for (int i = 0; i < conAtoms.length; i++)
+		for (int i = 0; i < conAtoms.size(); i++)
 		{
 
 			try
 			{
-				atom = conAtoms[i];
+				atom = (IAtom)conAtoms.get(i);
 				bond = atomContainer.getBond(root, atom);
 				/*
 				 *  In the first sphere the atoms are labled with
@@ -376,7 +376,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 */
         IAtom node = null;
         IAtom toNode = null;
-        IAtom[] conAtoms = null;
+        java.util.List conAtoms = null;
 		TreeNode treeNode = null;
 		nextSphereNodes = new Vector();
 		org.openscience.cdk.interfaces.IBond bond = null;
@@ -386,15 +386,15 @@ public class HOSECodeGenerator implements java.io.Serializable
 			if (!("&;#:,".indexOf(treeNode.symbol) >= 0))
 			{
 				node = treeNode.atom;
-				conAtoms = atomContainer.getConnectedAtoms(node);
-				if (conAtoms.length == 1)
+				conAtoms = atomContainer.getConnectedAtomsList(node);
+				if (conAtoms.size() == 1)
 				{
           nextSphereNodes.addElement(new TreeNode(",", treeNode, null, 0, 0, treeNode.score));
 				} else
 				{
-					for (int j = 0; j < conAtoms.length; j++)
+					for (int j = 0; j < conAtoms.size(); j++)
 					{
-						toNode = conAtoms[j];
+						toNode = (IAtom)conAtoms.get(j);
 						if (toNode != treeNode.source.atom)
 						{
 							bond = atomContainer.getBond(node, toNode);

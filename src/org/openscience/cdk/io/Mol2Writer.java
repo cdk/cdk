@@ -182,22 +182,22 @@ NO_CHARGES
             // write atom block
             logger.debug("Writing atom block...");
             writer.write("@<TRIPOS>ATOM\n");
-            IAtom[] atoms = mol.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
+            for (int i = 0; i < mol.getAtomCount(); i++) {
+            	IAtom atom = mol.getAtom(i);
                 writer.write(i + " " +
-                             atoms[i].getID() + " ");
-                if (atoms[i].getPoint3d() != null) {
-                    writer.write(atoms[i].getPoint3d().x + " ");
-                    writer.write(atoms[i].getPoint3d().y + " ");
-                    writer.write(atoms[i].getPoint3d().z + " ");
-                } else if (atoms[i].getPoint2d() != null) {
-                    writer.write(atoms[i].getPoint2d().x + " ");
-                    writer.write(atoms[i].getPoint2d().y + " ");
+                             atom.getID() + " ");
+                if (atom.getPoint3d() != null) {
+                    writer.write(atom.getPoint3d().x + " ");
+                    writer.write(atom.getPoint3d().y + " ");
+                    writer.write(atom.getPoint3d().z + " ");
+                } else if (atom.getPoint2d() != null) {
+                    writer.write(atom.getPoint2d().x + " ");
+                    writer.write(atom.getPoint2d().y + " ");
                     writer.write(" 0.000 ");
                 } else {
                     writer.write("0.000 0.000 0.000 ");
                 }
-                writer.write(atoms[i].getSymbol()+ "\n"); // FIXME: should use perceived Mol2 Atom Types!
+                writer.write(atom.getSymbol()+ "\n"); // FIXME: should use perceived Mol2 Atom Types!
             }
 
 /*

@@ -187,8 +187,8 @@ public class DescriptorEngine {
         if (speclist.size() != descriptors.size())
             throw new CDKException("Number of specs and descriptors do not match");
 
-        IAtom[] atoms = molecule.getAtoms();
-        IBond[] bonds = molecule.getBonds();
+        
+        
 
         for (int i = 0; i < descriptors.size(); i++) {
             IDescriptor descriptor = (IDescriptor) descriptors.get(i);
@@ -198,12 +198,15 @@ public class DescriptorEngine {
                     molecule.setProperty(speclist.get(i), value);
                     logger.debug("Calculated molecular descriptors...");
                 } else if (descriptor instanceof IAtomicDescriptor) {
-                    for (int j = 0; j < atoms.length; j++) {
-                        DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atoms[j], molecule);
-                        atoms[j].setProperty(speclist.get(i), value);
+                	java.util.Iterator atoms = molecule.atoms();
+                    while (atoms.hasNext()) {
+                    	IAtom atom = (IAtom)atoms.next();
+                        DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
+                        atom.setProperty(speclist.get(i), value);
                     }
                     logger.debug("Calculated atomic descriptors...");
                 } else if (descriptor instanceof IBondDescriptor) {
+                	IBond[] bonds = molecule.getBonds();
                     for (int j = 0; j < bonds.length; j++) {
                         DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bonds[j], molecule);
                         bonds[j].setProperty(speclist.get(i), value);

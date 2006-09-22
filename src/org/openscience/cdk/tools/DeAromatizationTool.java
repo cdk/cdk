@@ -93,13 +93,12 @@ public class DeAromatizationTool {
 	
 	private static boolean deAromatizePyrolle(IRing ring) {
 		IBond[] bonds = ring.getBonds();
-		IAtom[] atoms = ring.getAtoms();
 		if (bonds.length != 5) return false;
-		for (int i = 0; i<atoms.length; i++) {
-			if(atoms[i].getSymbol().equals("N")){
+		for (int i = 0; i<ring.getAtomCount(); i++) {
+			IAtom atom=ring.getAtom(i);
+			if(atom.getSymbol().equals("N")){
 				int done=0;
 				IBond bond=null;
-				IAtom atom=atoms[i];
 				int count=0;
 				while(done!=2){
 					bond=getNextBond(atom,bond,ring);
@@ -120,10 +119,10 @@ public class DeAromatizationTool {
 	}
 	
 	private static IBond getNextBond(IAtom atom, IBond bond, IRing ring){
-		IBond[] bonds=ring.getConnectedBonds(atom);
-		for(int i=0;i<bonds.length;i++)
-			if(bonds[i]!=bond)
-				return bonds[i];
+		java.util.List bonds=ring.getConnectedBondsList(atom);
+		for(int i=0;i<bonds.size();i++)
+			if((IBond)bonds.get(i)!=bond)
+				return (IBond)bonds.get(i);
 		return null;
 	}
 	

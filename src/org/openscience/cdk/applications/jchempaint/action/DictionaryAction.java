@@ -54,15 +54,13 @@ public class DictionaryAction extends JCPAction {
         // make explicit references
         CDKDictionaryReferences.makeReferencesExplicit(chemModel);
         IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-        org.openscience.cdk.interfaces.IAtom[] atoms = container.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
+        for (int i=0; i<container.getAtomCount(); i++) {
             logger.debug("Making references for atom...");
-            CDKDictionaryReferences.makeReferencesExplicit(atoms[i]);
+            CDKDictionaryReferences.makeReferencesExplicit(container.getAtom(i));
         }
-        org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
-        for (int i=0; i<bonds.length; i++) {
+        for (int i=0; i<container.getBondCount(); i++) {
             logger.debug("Making references for bond...");
-            CDKDictionaryReferences.makeReferencesExplicit(bonds[i]);
+            CDKDictionaryReferences.makeReferencesExplicit(container.getBond(i));
         }
         
         jcpModel.fireChange();

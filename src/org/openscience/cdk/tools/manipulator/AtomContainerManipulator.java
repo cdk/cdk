@@ -87,7 +87,7 @@ public class AtomContainerManipulator {
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {
                             if (atom.equals(bond.getAtom(j))) {
-                                bond.setAtomAt(newAtom, j);
+                                bond.setAtom(newAtom, j);
                             }
                         }
                     }
@@ -164,9 +164,9 @@ public class AtomContainerManipulator {
         Vector idList = new Vector();
         if (mol != null) {
             if (mol.getID() != null) idList.addElement(mol.getID());
-            IAtom[] atoms = mol.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-                IAtom atom = atoms[i];
+            java.util.Iterator atoms = mol.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = (IAtom)atoms.next();
                 if (atom.getID() != null) idList.addElement(atom.getID());
             }
             IBond[] bonds = mol.getBonds();
@@ -228,14 +228,13 @@ public class AtomContainerManipulator {
         {
             // Check bond.
             final IBond bond = atomContainer.getBond(i);
-            IAtom[] atoms = bond.getAtoms();
             boolean removedBond = false;
-            final int length = atoms.length;
+            final int length = bond.getAtomCount();
             for (int k = 0;
                     k < length;
                     k++)
             {
-                if (remove.contains(atoms[k]))
+                if (remove.contains(bond.getAtom(k)))
                 {
                     removedBond = true;
                     break;
@@ -253,7 +252,7 @@ public class AtomContainerManipulator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                clone.setAtoms(new IAtom[]{(IAtom) map.get(atoms[0]), (IAtom) map.get(atoms[1])});
+                clone.setAtoms(new IAtom[]{(IAtom) map.get(bond.getAtom(0)), (IAtom) map.get(bond.getAtom(1))});
                 mol.addBond(clone);
             }
         }
@@ -263,7 +262,7 @@ public class AtomContainerManipulator {
                 i.hasNext();)
         {
             // Process neighbours.
-            for (Iterator n = atomContainer.getConnectedAtomsVector((IAtom) i.next()).iterator();
+            for (Iterator n = atomContainer.getConnectedAtomsList((IAtom) i.next()).iterator();
                     n.hasNext();)
             {
                 final IAtom neighb = (IAtom) map.get(n.next());
@@ -281,9 +280,9 @@ public class AtomContainerManipulator {
      */
     public static void setAtomProperties(IAtomContainer container, Object propKey, Object propVal) {
         if (container != null) {
-            IAtom[] atoms = container.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-                IAtom atom = atoms[i];
+            java.util.Iterator atoms = container.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = (IAtom)atoms.next();
                 atom.setProperty(propKey, propVal);
             }
         }
@@ -354,6 +353,72 @@ public class AtomContainerManipulator {
 			}
 		}
 		return intersection;
+	}
+	
+	/**
+	 * Constructs an array of Atom objects from an AtomContainer.
+	 * @param  container The original AtomContainer.
+	 * @return The array of Atom objects.
+	 */
+	public static IAtom[] getAtomArray(IAtomContainer container) {
+		IAtom[] ret = new IAtom[container.getAtomCount()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = container.getAtom(i);
+		return ret;
+	}
+	
+	/**
+	 * Constructs an array of Atom objects from a List of Atom objects.
+	 * @param  container The original List.
+	 * @return The array of Atom objects.
+	 */
+	public static IAtom[] getAtomArray(java.util.List list) {
+		IAtom[] ret = new IAtom[list.size()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = (IAtom)list.get(i);
+		return ret;
+	}
+	
+	/**
+	 * Constructs an array of Bond objects from an AtomContainer.
+	 * @param  container The original AtomContainer.
+	 * @return The array of Bond objects.
+	 */
+	public static IBond[] getBondArray(IAtomContainer container) {
+		IBond[] ret = new IBond[container.getBondCount()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = container.getBond(i);
+		return ret;
+	}
+	
+	/**
+	 * Constructs an array of Atom objects from a List of Atom objects.
+	 * @param  container The original List.
+	 * @return The array of Atom objects.
+	 */
+	public static IBond[] getBondArray(java.util.List list) {
+		IBond[] ret = new IBond[list.size()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = (IBond)list.get(i);
+		return ret;
+	}
+	
+	/**
+	 * Constructs an array of Bond objects from an AtomContainer.
+	 * @param  container The original AtomContainer.
+	 * @return The array of Bond objects.
+	 */
+	public static IElectronContainer[] getElectronContainerArray(IAtomContainer container) {
+		IElectronContainer[] ret = new IElectronContainer[container.getElectronContainerCount()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = container.getElectronContainer(i);
+		return ret;
+	}
+	
+	/**
+	 * Constructs an array of Atom objects from a List of Atom objects.
+	 * @param  container The original List.
+	 * @return The array of Atom objects.
+	 */
+	public static IElectronContainer[] getElectronContainerArray(java.util.List list) {
+		IElectronContainer[] ret = new IElectronContainer[list.size()];
+		for (int i = 0; i < ret.length; ++i) ret[i] = (IElectronContainer)list.get(i);
+		return ret;
 	}
 	
 }

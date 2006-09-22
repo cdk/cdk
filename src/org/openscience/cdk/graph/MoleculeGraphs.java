@@ -55,13 +55,13 @@ public class MoleculeGraphs {
 	 */
 	static public SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
 		SimpleGraph graph = new SimpleGraph();
-		for (int i=0; i<molecule.getAtomCount(); i++	) {
-			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtoms()[i];
+		for (int i=0; i<molecule.getAtomCount(); i++) {
+			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
 			graph.addVertex(atom);
 		}
 		
 		for (int i=0; i<molecule.getBondCount(); i++	) {
-			org.openscience.cdk.interfaces.IBond bond = molecule.getBonds()[i];
+			org.openscience.cdk.interfaces.IBond bond = molecule.getBond(i);
 			
 			/*
 			int order = (int) bond.getOrder();
@@ -69,7 +69,7 @@ public class MoleculeGraphs {
 				graph.addEdge(bond.getAtoms()[0], bond.getAtoms()[1]);
 			}
 			*/
-			graph.addEdge(bond.getAtoms()[0], bond.getAtoms()[1]);
+			graph.addEdge(bond.getAtom(0), bond.getAtom(1));
 		}
 		return graph;
 	}

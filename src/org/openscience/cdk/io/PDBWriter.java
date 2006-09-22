@@ -153,15 +153,15 @@ public class PDBWriter extends DefaultChemObjectWriter {
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
-           IAtom[] atoms = molecule.getAtoms();
+           java.util.Iterator atoms = molecule.atoms();
            FormatStringBuffer fsb = new FormatStringBuffer("");
-           for (int i = 0; i < atoms.length; i++) {
+           while (atoms.hasNext()) {
                buffer.setLength(0);
                buffer.append(hetatmRecordName);
                fsb.reset(SERIAL_FORMAT).format(atomNumber);
                buffer.append(fsb.toString());
                buffer.append(' ');
-               IAtom atom = atoms[i];
+               IAtom atom = (IAtom)atoms.next();
                fsb.reset(ATOM_NAME_FORMAT).format(atom.getSymbol());
                buffer.append(fsb.toString());
                buffer.append(" MOL          ");
@@ -209,9 +209,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
            writer.newLine();
                                                                                                  
            // before saving the atoms, we need to create cartesian coordinates
-           IAtom[] atoms = crystal.getAtoms();
-            for (int i=0; i<atoms.length; i++) {
-            	IAtom atom = atoms[i];
+           java.util.Iterator atoms = crystal.atoms();
+           while (atoms.hasNext()) {
+            	IAtom atom = (IAtom)atoms.next();
                 Point3d frac = new Point3d(atom.getFractionalPoint3d());
                 Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
                 atom.setPoint3d(cart);

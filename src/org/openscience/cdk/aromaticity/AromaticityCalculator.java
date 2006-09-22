@@ -61,21 +61,21 @@ public class AromaticityCalculator
 	protected static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
 		
-		IAtom[] ringAtoms = ring.getAtoms();
+		java.util.Iterator ringAtoms = ring.atoms();
 		int eCount = 0;
-		IBond[] conectedBonds;
+		java.util.List conectedBonds;
 		int numDoubleBond = 0;
 		boolean allConnectedBondsSingle;
 		
-		for (int i = 0; i < ringAtoms.length; i++)
+		while (ringAtoms.hasNext())
 		{
-			IAtom atom = ringAtoms[i];
+			IAtom atom = (IAtom)ringAtoms.next();
 			numDoubleBond = 0;
 			allConnectedBondsSingle = true;
-			conectedBonds = atomContainer.getConnectedBonds(atom);
-			for (int j = 0; j < conectedBonds.length; j++)
+			conectedBonds = atomContainer.getConnectedBondsList(atom);
+			for (int j = 0; j < conectedBonds.size(); j++)
 			{
-				IBond bond = conectedBonds[j];
+				IBond bond = (IBond)conectedBonds.get(j);
 				if (bond.getOrder() == 2 && ring.contains(bond))
 				{
 					numDoubleBond++;

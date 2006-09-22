@@ -498,15 +498,16 @@ public class PDBReader extends DefaultChemObjectReader {
 //			 configure atoms
 		      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
 		    	  pol.getBuilder());
-		      IAtom[] atoms = pol.getAtoms();
-		      for (int i=0; i<atoms.length; i++) {
+		      java.util.Iterator atoms = pol.atoms();
+		      while (atoms.hasNext()) {
+		    	  IAtom atom = (IAtom)atoms.next();
 		        try {
-		        	IAtomType[] types = factory.getAtomTypes(atoms[i].getSymbol());
+		        	IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
 		        	if (types.length > 0) {
 		        		// just pick the first one
-		        		AtomTypeManipulator.configure(atoms[i], types[0]);
+		        		AtomTypeManipulator.configure(atom, types[0]);
 		        	} else {
-		        		System.out.println("Could not configure atom with symbol: "+ atoms[i].getSymbol());
+		        		System.out.println("Could not configure atom with symbol: "+ atom.getSymbol());
 		        	}
 				} catch (Exception e) {
 					System.out.println("Could not configure atom (but don't care): " + e.getMessage());

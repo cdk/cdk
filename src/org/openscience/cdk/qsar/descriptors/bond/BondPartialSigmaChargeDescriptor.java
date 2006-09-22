@@ -28,6 +28,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -129,7 +130,7 @@ public class BondPartialSigmaChargeDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
-        IAtom[] atoms = mol.getBond(bondPosition).getAtoms();
+        IAtom[] atoms = BondManipulator.getAtomArray(mol.getBond(bondPosition));
         double[] results = new double[2];
         
     	Integer[] params = new Integer[1];

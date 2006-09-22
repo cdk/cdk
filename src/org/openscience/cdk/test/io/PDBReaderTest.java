@@ -114,7 +114,7 @@ public class PDBReaderTest extends TestCase {
             assertEquals(1.0, oAtom.getOccupancy(), 0);
             assertEquals(0.0, oAtom.getTempFactor(), 0);
 
-            nAtom = oMol.getAtoms()[3];
+            nAtom = oMol.getAtom(3);
             assertNotNull(nAtom);
             assertTrue(nAtom instanceof PDBAtom);
             oAtom = (PDBAtom)nAtom;

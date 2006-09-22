@@ -158,7 +158,7 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
             }
 
 
-        	IAtom[] allAtoms = ac.getAtoms();
+        	java.util.Iterator allAtoms = ac.atoms();
             IAtom target = atom;
             double atomicSoftness = 0;
             double radiusTarget = 0;
@@ -177,14 +177,14 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
                 throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
             }
 
-            for (int i = 0; i < allAtoms.length; i++) {
-
-                if (target.getPoint3d() == null || allAtoms[i].getPoint3d() == null) {
-                    throw new CDKException("The target atom or atom "+i+" had no 3D coordinates. These are required");
+            while (allAtoms.hasNext()) {
+            	IAtom curAtom = (IAtom)allAtoms.next();
+                if (target.getPoint3d() == null || curAtom.getPoint3d() == null) {
+                    throw new CDKException("The target atom or current atom had no 3D coordinates. These are required");
                 }
-                if (!target.equals(allAtoms[i])) {
+                if (!target.equals(curAtom)) {
                     partial = 0;
-                    symbol = allAtoms[i].getSymbol();
+                    symbol = curAtom.getSymbol();
                     try {
                         type = factory.getAtomType(symbol);
                     } catch (Exception ex1) {
@@ -195,7 +195,7 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
                     radius = type.getCovalentRadius();
                     partial += radius * radius;
                     partial += (radiusTarget * radiusTarget);
-                    partial = partial / (calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
+                    partial = partial / (calculateSquareDistanceBetweenTwoAtoms(curAtom, target));
                     //System.out.println("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
                     atomicSoftness += partial;
                 }

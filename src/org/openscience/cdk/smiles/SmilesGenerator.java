@@ -143,14 +143,15 @@ public class SmilesGenerator
 	 */
 	public boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond)
 	{
-		org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-		org.openscience.cdk.interfaces.IAtom[] connectedAtoms = container.getConnectedAtoms(atoms[0]);
+		IAtom atom0 = bond.getAtom(0);
+		IAtom atom1 = bond.getAtom(1);
+		java.util.List connectedAtoms = container.getConnectedAtomsList(atom0);
 		org.openscience.cdk.interfaces.IAtom from = null;
-		for (int i = 0; i < connectedAtoms.length; i++)
+		for (int i = 0; i < connectedAtoms.size(); i++)
 		{
-			if (connectedAtoms[i] != atoms[1])
+			if ((IAtom)connectedAtoms.get(i) != atom1)
 			{
-				from = connectedAtoms[i];
+				from = (IAtom)connectedAtoms.get(i);
 			}
 		}
 		boolean[] array = new boolean[container.getBonds().length];
@@ -158,7 +159,7 @@ public class SmilesGenerator
 		{
 			array[i] = true;
 		}
-		if (isStartOfDoubleBond(container, atoms[0], from, array) && isEndOfDoubleBond(container, atoms[1], atoms[0], array) && !bond.getFlag(CDKConstants.ISAROMATIC))
+		if (isStartOfDoubleBond(container, atom0, from, array) && isEndOfDoubleBond(container, atom1, atom0, array) && !bond.getFlag(CDKConstants.ISAROMATIC))
 		{
 			return (true);
 		} else
@@ -356,11 +357,10 @@ public class SmilesGenerator
 		canLabler.canonLabel(molecule);
 		brokenBonds.clear();
 		ringMarker = 0;
-		org.openscience.cdk.interfaces.IAtom[] all = molecule.getAtoms();
 		org.openscience.cdk.interfaces.IAtom start = null;
-		for (int i = 0; i < all.length; i++)
+		for (int i = 0; i < molecule.getAtomCount(); i++)
 		{
-			org.openscience.cdk.interfaces.IAtom atom = all[i];
+			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
 			if (chiral && atom.getPoint2d() == null)
 			{
 				throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
@@ -439,19 +439,22 @@ public class SmilesGenerator
 	 */
 	private org.openscience.cdk.interfaces.IAtom hasWedges(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom a)
 	{
-		org.openscience.cdk.interfaces.IAtom[] atoms = ac.getConnectedAtoms(a);
-		for (int i = 0; i < atoms.length; i++)
+		List atoms = ac.getConnectedAtomsList(a);
+		IAtom atomi = null;
+//		for (int i = 0; i < atoms.size(); i++)
+//		{
+//			atomi = (IAtom)atoms.get(i);
+//			if (ac.getBond(a, atomi).getStereo() != CDKConstants.STEREO_BOND_NONE && !atomi.getSymbol().equals("H"))
+//			{
+//				return (atomi);
+//			}
+//		}
+		for (int i = 0; i < atoms.size(); i++)
 		{
-			if (ac.getBond(a, atoms[i]).getStereo() != CDKConstants.STEREO_BOND_NONE && !atoms[i].getSymbol().equals("H"))
+			atomi = (IAtom)atoms.get(i);
+			if (ac.getBond(a, atomi).getStereo() != CDKConstants.STEREO_BOND_NONE)
 			{
-				return (atoms[i]);
-			}
-		}
-		for (int i = 0; i < atoms.length; i++)
-		{
-			if (ac.getBond(a, atoms[i]).getStereo() != CDKConstants.STEREO_BOND_NONE)
-			{
-				return (atoms[i]);
+				return (atomi);
 			}
 		}
 		return (null);
@@ -475,23 +478,25 @@ public class SmilesGenerator
 		{
 			return false;
 		}
-		int lengthAtom = container.getConnectedAtoms(atom).length + atom.getHydrogenCount();
-		int lengthParent = container.getConnectedAtoms(parent).length + parent.getHydrogenCount();
+		int lengthAtom = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
+		int lengthParent = container.getConnectedAtomsCount(parent) + parent.getHydrogenCount();
 		if (container.getBond(atom, parent) != null)
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
 			{
-				org.openscience.cdk.interfaces.IAtom[] atoms = container.getConnectedAtoms(atom);
+				List atoms = container.getConnectedAtomsList(atom);
 				org.openscience.cdk.interfaces.IAtom one = null;
 				org.openscience.cdk.interfaces.IAtom two = null;
-				for (int i = 0; i < atoms.length; i++)
+				IAtom atomi = null;
+				for (int i = 0; i < atoms.size(); i++)
 				{
-					if (atoms[i] != parent && one == null)
+					atomi = (IAtom)container.getAtom(i);
+					if (atomi != parent && one == null)
 					{
-						one = atoms[i];
-					} else if (atoms[i] != parent && one != null)
+						one = atomi;
+					} else if (atomi != parent && one != null)
 					{
-						two = atoms[i];
+						two = atomi;
 					}
 				}
 				String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
@@ -521,29 +526,31 @@ public class SmilesGenerator
 	 */
 	private boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration)
 	{
-		int lengthAtom = container.getConnectedAtoms(a).length + a.getHydrogenCount();
+		int lengthAtom = container.getConnectedAtomsCount(a) + a.getHydrogenCount();
 		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))
 		{
 			return (false);
 		}
-		org.openscience.cdk.interfaces.IAtom[] atoms = container.getConnectedAtoms(a);
+		List atoms = container.getConnectedAtomsList(a);
 		org.openscience.cdk.interfaces.IAtom one = null;
 		org.openscience.cdk.interfaces.IAtom two = null;
 		boolean doubleBond = false;
 		org.openscience.cdk.interfaces.IAtom nextAtom = null;
-		for (int i = 0; i < atoms.length; i++)
+		IAtom atomi = null;
+		for (int i = 0; i < atoms.size(); i++)
 		{
-			if (atoms[i] != parent && container.getBond(atoms[i], a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atoms[i], a, doubleBondConfiguration))
+			atomi = (IAtom)atoms.get(i);
+			if (atomi != parent && container.getBond(atomi, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atomi, a, doubleBondConfiguration))
 			{
 				doubleBond = true;
-				nextAtom = atoms[i];
+				nextAtom = atomi;
 			}
-			if (atoms[i] != nextAtom && one == null)
+			if (atomi != nextAtom && one == null)
 			{
-				one = atoms[i];
-			} else if (atoms[i] != nextAtom && one != null)
+				one = atomi;
+			} else if (atomi != nextAtom && one != null)
 			{
-				two = atoms[i];
+				two = atomi;
 			}
 		}
 		String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
@@ -637,7 +644,7 @@ public class SmilesGenerator
 	 */
 	private List getCanNeigh(final org.openscience.cdk.interfaces.IAtom a, final IAtomContainer container)
 	{
-		List v = container.getConnectedAtomsVector(a);
+		List v = container.getConnectedAtomsList(a);
 		if (v.size() > 1)
 		{
 			Collections.sort(v,
@@ -846,7 +853,7 @@ public class SmilesGenerator
 				{
 					//System.out.println("in parseChain in isChiral");
 					IAtom[] sorted = null;
-					List chiralNeighbours = container.getConnectedAtomsVector(atom);
+					List chiralNeighbours = container.getConnectedAtomsList(atom);
 					if (BondTools.isTetrahedral(container, atom,false) > 0)
 					{
 						sorted = new IAtom[3];
@@ -1277,7 +1284,7 @@ public class SmilesGenerator
 					}
 					if (BondTools.isTrigonalBipyramidalOrOctahedral(container, atom)!=0)
 					{
-						sorted = new IAtom[container.getConnectedAtoms(atom).length - 1];
+						sorted = new IAtom[container.getConnectedAtomsCount(atom) - 1];
 						TreeMap hm = new TreeMap();
 						if (container.getBond(parent, atom).getStereo() == CDKConstants.STEREO_BOND_UP)
 						{
@@ -1363,7 +1370,7 @@ public class SmilesGenerator
 						int numberOfAtoms = 3;
 						if (BondTools.isTrigonalBipyramidalOrOctahedral(container, atom)!=0)
 						{
-							numberOfAtoms = container.getConnectedAtoms(atom).length - 1;
+							numberOfAtoms = container.getConnectedAtomsCount(atom) - 1;
 						}
 						Object[] omy = new Object[numberOfAtoms];
 						Object[] onew = new Object[numberOfAtoms];

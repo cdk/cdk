@@ -1,4 +1,4 @@
-/*  $Id: $
+/*  $Id$
  *  $Author$
  *  $Date$
  *  $Revision$
@@ -168,7 +168,7 @@ public class SingleStructureRandomGenerator {
 			atom = atomContainer.getAtom(f);
 			if (!satCheck.isSaturated(atom, atomContainer)
 					&& exclusionAtom != atom 
-					&& !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
 			{
 				return atom;
 			}
@@ -178,7 +178,7 @@ public class SingleStructureRandomGenerator {
 			atom = atomContainer.getAtom(f);
 			if (!satCheck.isSaturated(atom, atomContainer) 
 					&& exclusionAtom != atom 
-					&& !atomContainer.getConnectedAtomsVector(exclusionAtom).contains(atom))
+					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
 			{
 				return atom;
 			}

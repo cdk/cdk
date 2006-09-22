@@ -72,9 +72,9 @@ public class RebondTool {
     maxCovalentRadius = 0.0;
     // construct a new binary space partition tree
     bspt = new Bspt(3);
-    IAtom[] atoms = container.getAtoms();
-    for (int i = atoms.length; --i >= 0; ) {
-      IAtom atom = atoms[i];
+    java.util.Iterator atoms = container.atoms();
+    while (atoms.hasNext()) {
+      IAtom atom = (IAtom)atoms.next();
       double myCovalentRadius = atom.getCovalentRadius();
       if (myCovalentRadius == 0.0) {
           throw new CDKException("Atom(s) does not have covalentRadius defined.");
@@ -85,8 +85,9 @@ public class RebondTool {
       bspt.addTuple(tupleAtom);
     }
     // rebond all atoms
-    for (int i = atoms.length; --i >= 0; ) {
-      bondAtom(container, atoms[i]);
+    atoms = container.atoms();
+    while (atoms.hasNext()) {
+      bondAtom(container, (IAtom)atoms.next());
     }
   }
     

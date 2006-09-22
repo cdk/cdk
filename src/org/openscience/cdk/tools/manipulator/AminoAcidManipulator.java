@@ -54,15 +54,15 @@ public class AminoAcidManipulator {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 		
-		IBond[] bonds = acid.getConnectedBonds(acid.getCTerminus());
+		java.util.List bonds = acid.getConnectedBondsList(acid.getCTerminus());
 		// ok, look for the oxygen which is singly bonded
-		for (int i=0; i<bonds.length; i++) {
-			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				IAtom[] atoms = bonds[i].getAtoms();
-				for (int j=0; j<atoms.length; j++) {
-					if (atoms[j].getSymbol().equals("O")) {
+		for (int i=0; i<bonds.size(); i++) {
+			IBond bond = (IBond)bonds.get(i);
+			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+				for (int j=0; j<bond.getAtomCount(); j++) {
+					if (bond.getAtom(j).getSymbol().equals("O")) {
 						// yes, we found a singly bonded oxygen!
-						acid.removeAtomAndConnectedElectronContainers(atoms[j]);
+						acid.removeAtomAndConnectedElectronContainers(bond.getAtom(j));
 					}
 				}
 			}

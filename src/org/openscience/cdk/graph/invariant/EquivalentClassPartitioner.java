@@ -28,6 +28,8 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * An algorithm for topological symmetry.
@@ -65,8 +67,8 @@ public class EquivalentClassPartitioner
 		adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 		apspMatrix = PathTools.computeFloydAPSP(adjaMatrix);
 		layerNumber=1;
-		nodeNumber=atomContainer.getAtoms().length;
-		for(int i=1;i<atomContainer.getAtoms().length;i++)
+		nodeNumber=atomContainer.getAtomCount();
+		for(int i=1;i<atomContainer.getAtomCount();i++)
 			for(int j=0;j<i;j++)
 				if(apspMatrix[i][j]>layerNumber)layerNumber=apspMatrix[i][j];
 		nodeMatrix=new double[nodeNumber][layerNumber+1];
@@ -102,105 +104,110 @@ public class EquivalentClassPartitioner
 	 */
 	public double[] prepareNode(AtomContainer atomContainer)
 	{
-		org.openscience.cdk.interfaces.IAtom[] atoms=atomContainer.getAtoms();
-		 double nodeSequence[]=new double[atoms.length];
-		 for(int i=0;i<atoms.length;i++)
+		java.util.Iterator atoms=atomContainer.atoms();
+		 double nodeSequence[]=new double[atomContainer.getAtomCount()];
+		 int i = 0;
+		 while (atoms.hasNext())
 		 {
-			 org.openscience.cdk.interfaces.IBond[] bonds=atomContainer.getConnectedBonds(atoms[i]);
+			 IAtom atom = (IAtom)atoms.next();
+			 java.util.List bonds=atomContainer.getConnectedBondsList(atom);
 			
-			 if(bonds.length==1)
+			 if(bonds.size()==1)
 			 {
-				 if(atoms[i].getSymbol().equals("C"))
+				 IBond bond0 = (IBond)bonds.get(0);
+				 if(atom.getSymbol().equals("C"))
 				 {
-					if(bonds[0].getOrder()==1.0)nodeSequence[i]=1;//CH3-
-					else if(bonds[0].getOrder()==2.0)nodeSequence[i]=3;//CH2=
-					else if(bonds[0].getOrder()==3.0)nodeSequence[i]=6;//CH#
+					if(bond0.getOrder()==1.0)nodeSequence[i]=1;//CH3-
+					else if(bond0.getOrder()==2.0)nodeSequence[i]=3;//CH2=
+					else if(bond0.getOrder()==3.0)nodeSequence[i]=6;//CH#
 				 }
-				 else if(atoms[i].getSymbol().equals("O"))
+				 else if(atom.getSymbol().equals("O"))
 				 {
-					if(bonds[0].getOrder()==1.0)nodeSequence[i]=14;//HO-
-					else if(bonds[0].getOrder()==2.0)nodeSequence[i]=16;//O=
+					if(bond0.getOrder()==1.0)nodeSequence[i]=14;//HO-
+					else if(bond0.getOrder()==2.0)nodeSequence[i]=16;//O=
 				 }
-				 else if(atoms[i].getSymbol().equals("N"))
+				 else if(atom.getSymbol().equals("N"))
 				 {
-					if(bonds[0].getOrder()==1.0)nodeSequence[i]=18;//NH2-
-					else if(bonds[0].getOrder()==2.0)
+					if(bond0.getOrder()==1.0)nodeSequence[i]=18;//NH2-
+					else if(bond0.getOrder()==2.0)
 					{
-						if(atoms[i].getCharge()==-1.0)nodeSequence[i]=27;//N= contains -1 charge
+						if(atom.getCharge()==-1.0)nodeSequence[i]=27;//N= contains -1 charge
 						else nodeSequence[i]=20;//NH=
 					}
-					else if(bonds[0].getOrder()==3.0)nodeSequence[i]=23;//N#
+					else if(bond0.getOrder()==3.0)nodeSequence[i]=23;//N#
 					
 				 }
-				 else if(atoms[i].getSymbol().equals("S"))
+				 else if(atom.getSymbol().equals("S"))
 				 {
-					if(bonds[0].getOrder()==1.0)nodeSequence[i]=31;//HS-
-					else if(bonds[0].getOrder()==2.0)nodeSequence[i]=33;//S=
+					if(bond0.getOrder()==1.0)nodeSequence[i]=31;//HS-
+					else if(bond0.getOrder()==2.0)nodeSequence[i]=33;//S=
 				 }
-				 else if(atoms[i].getSymbol().equals("P"))nodeSequence[i]=38;//PH2-
-				 else if(atoms[i].getSymbol().equals("F"))nodeSequence[i]=42;//F-
-				 else if(atoms[i].getSymbol().equals("Cl"))nodeSequence[i]=43;//Cl-
-				 else if(atoms[i].getSymbol().equals("Br"))nodeSequence[i]=44;//Br-
-				 else if(atoms[i].getSymbol().equals("I"))nodeSequence[i]=45;//I-
+				 else if(atom.getSymbol().equals("P"))nodeSequence[i]=38;//PH2-
+				 else if(atom.getSymbol().equals("F"))nodeSequence[i]=42;//F-
+				 else if(atom.getSymbol().equals("Cl"))nodeSequence[i]=43;//Cl-
+				 else if(atom.getSymbol().equals("Br"))nodeSequence[i]=44;//Br-
+				 else if(atom.getSymbol().equals("I"))nodeSequence[i]=45;//I-
 				 else
 				 {
 					 logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
-			 else if(bonds.length==2)
+			 else if(bonds.size()==2)
 			 {
-				 if(atoms[i].getSymbol().equals("C"))
+				 IBond bond0 = (IBond)bonds.get(0);
+				 IBond bond1 = (IBond)bonds.get(1);
+				 if(atom.getSymbol().equals("C"))
 				 {
-					 if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0)
+					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
 						 nodeSequence[i]=2;//-CH2-
-					 else if(bonds[0].getOrder()==2.0 && bonds[1].getOrder()==2.0)
+					 else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
 						 nodeSequence[i]=10;//=C=
-					 else if((bonds[0].getOrder()==1.0 || bonds[1].getOrder()==1.0) &&
-						 (bonds[0].getOrder()==2.0 || bonds[1].getOrder()==2.0))
+					 else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
+						 (bond0.getOrder()==2.0 || bond1.getOrder()==2.0))
 						nodeSequence[i]=5;//-CH=
-					 else if((bonds[0].getOrder()==1.0 || bonds[1].getOrder()==3.0) &&
-						 (bonds[0].getOrder()==3.0 || bonds[1].getOrder()==3.0))
+					 else if((bond0.getOrder()==1.0 || bond1.getOrder()==3.0) &&
+						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
 						nodeSequence[i]=9;//-C#
-					else if(bonds[0].getOrder()==1.5 && bonds[1].getOrder()==1.5)
+					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
 						nodeSequence[i]=11;//ArCH
 				}
-				else if(atoms[i].getSymbol().equals("N"))
+				else if(atom.getSymbol().equals("N"))
 				{
-					if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0)
+					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
 						 nodeSequence[i]=19;//-NH-
-					else if(bonds[0].getOrder()==2.0 && bonds[1].getOrder()==2.0)
+					else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
 						nodeSequence[i]=28;//=N= with charge=-1
-					else if((bonds[0].getOrder()==1.0 || bonds[1].getOrder()==1.0) &&
-						 (bonds[0].getOrder()==2.0 || bonds[1].getOrder()==2.0))
+					else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
+						 (bond0.getOrder()==2.0 || bond1.getOrder()==2.0))
 						nodeSequence[i]=22;//-N=
-					else if((bonds[0].getOrder()==2.0 || bonds[1].getOrder()==2.0) &&
-						 (bonds[0].getOrder()==3.0 || bonds[1].getOrder()==3.0))
+					else if((bond0.getOrder()==2.0 || bond1.getOrder()==2.0) &&
+						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
 						nodeSequence[i]=26;//=N#
-					else if((bonds[0].getOrder()==1.0 || bonds[1].getOrder()==1.0) &&
-						 (bonds[0].getOrder()==3.0 || bonds[1].getOrder()==3.0))
+					else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
+						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
 						nodeSequence[i]=29;//-N# with charge=+1
-					else if(bonds[0].getOrder()==1.5 && bonds[1].getOrder()==1.5)
+					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
 						nodeSequence[i]=30;//ArN
 				}
-				else if(atoms[i].getSymbol().equals("O"))
+				else if(atom.getSymbol().equals("O"))
 				{
-					if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0)
+					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
 						 nodeSequence[i]=15;//-O-
-					else if(bonds[0].getOrder()==1.5 && bonds[1].getOrder()==1.5)
+					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
 						nodeSequence[i]=17;//ArO
 				}
-				else if(atoms[i].getSymbol().equals("S"))
+				else if(atom.getSymbol().equals("S"))
 				{
-					if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0)
+					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
 						 nodeSequence[i]=32;//-S-
-					else if(bonds[0].getOrder()==2.0 && bonds[1].getOrder()==2.0)
+					else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
 						 nodeSequence[i]=35;//=S=
-					else if(bonds[0].getOrder()==1.5 && bonds[1].getOrder()==1.5)
+					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
 						nodeSequence[i]=37;//ArS
 				}
-				else if(atoms[i].getSymbol().equals("P"))
+				else if(atom.getSymbol().equals("P"))
 				{
-					if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0)
+					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
 						 nodeSequence[i]=39;//-PH-
 				}
 				else
@@ -208,35 +215,38 @@ public class EquivalentClassPartitioner
 					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				}
 			 }
-			 else if(bonds.length==3)
+			 else if(bonds.size()==3)
 			 {
-				 if(atoms[i].getSymbol().equals("C"))
+				 IBond bond0 = (IBond)bonds.get(0);
+				 IBond bond1 = (IBond)bonds.get(1);
+				 IBond bond2 = (IBond)bonds.get(2);
+				 if(atom.getSymbol().equals("C"))
 				 {
-					 if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0 && bonds[2].getOrder()==1.0)
+					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
 						 nodeSequence[i]=4;//>C-
-					 else if(bonds[0].getOrder()==2.0 || bonds[1].getOrder()==2.0 ||bonds[2].getOrder()==2.0)
+					 else if(bond0.getOrder()==2.0 || bond1.getOrder()==2.0 ||bond2.getOrder()==2.0)
 						 nodeSequence[i]=8;//>C=
-					 else if(bonds[0].getOrder()==1.5 && bonds[1].getOrder()==1.5 && bonds[2].getOrder()==1.5)
+					 else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5 && bond2.getOrder()==1.5)
 						nodeSequence[i]=13;//ArC
-					 else if((bonds[0].getOrder()==1.5 || bonds[1].getOrder()==1.5 || bonds[2].getOrder()==1.5) &&
-						 (bonds[0].getOrder()==1.0 || bonds[1].getOrder()==1.0 || bonds[2].getOrder()==1.0))
+					 else if((bond0.getOrder()==1.5 || bond1.getOrder()==1.5 || bond2.getOrder()==1.5) &&
+						 (bond0.getOrder()==1.0 || bond1.getOrder()==1.0 || bond2.getOrder()==1.0))
 						nodeSequence[i]=12;//ArC-
 				 }
-				 else if(atoms[i].getSymbol().equals("N"))
+				 else if(atom.getSymbol().equals("N"))
 				 {
-					 if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0 && bonds[2].getOrder()==1.0)
+					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
 						 nodeSequence[i]=21;//>N-
-					 else if(bonds[0].getOrder()==1.0 || bonds[1].getOrder()==1.0 || bonds[2].getOrder()==1.0)
+					 else if(bond0.getOrder()==1.0 || bond1.getOrder()==1.0 || bond2.getOrder()==1.0)
 						 nodeSequence[i]=25;//-N(=)=
 				 }
-				 else if(atoms[i].getSymbol().equals("S"))
+				 else if(atom.getSymbol().equals("S"))
 				 {
-					 if(bonds[0].getOrder()==2.0 || bonds[1].getOrder()==2.0 || bonds[2].getOrder()==2.0)
+					 if(bond0.getOrder()==2.0 || bond1.getOrder()==2.0 || bond2.getOrder()==2.0)
 						 nodeSequence[i]=34;//>S=
 				 }
-				 else if(atoms[i].getSymbol().equals("P"))
+				 else if(atom.getSymbol().equals("P"))
 				 {
-					 if(bonds[0].getOrder()==1.0 && bonds[1].getOrder()==1.0 && bonds[2].getOrder()==1.0)
+					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
 						 nodeSequence[i]=40;//>P-
 				 }
 				 else
@@ -244,17 +254,18 @@ public class EquivalentClassPartitioner
 					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
-			 else if(bonds.length==4)
+			 else if(bonds.size()==4)
 			 {
-				 if(atoms[i].getSymbol().equals("C"))nodeSequence[i]=7;//>C<
-				 else if(atoms[i].getSymbol().equals("N"))nodeSequence[i]=24;//>N(=)-
-				 else if(atoms[i].getSymbol().equals("S"))nodeSequence[i]=36;//>S(=)=
-				 else if(atoms[i].getSymbol().equals("P"))nodeSequence[i]=41;//=P<-
+				 if(atom.getSymbol().equals("C"))nodeSequence[i]=7;//>C<
+				 else if(atom.getSymbol().equals("N"))nodeSequence[i]=24;//>N(=)-
+				 else if(atom.getSymbol().equals("S"))nodeSequence[i]=36;//>S(=)=
+				 else if(atom.getSymbol().equals("P"))nodeSequence[i]=41;//=P<-
 				 else
 				 {
 					logger.debug("in case of a new node, please report this bug to cdk-devel@lists.sf.net.");
 				 }
 			 }
+			 i++;
 		 }
 		 return nodeSequence;
 	}

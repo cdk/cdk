@@ -172,13 +172,13 @@ public class InChIGenerator {
     protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
         this.atomContainer = atomContainer;
         
-        IAtom[] atoms = atomContainer.getAtoms();
+        java.util.Iterator atoms = atomContainer.atoms();
         
         // Check for 3d coordinates
         boolean all3d = true;
         boolean all2d = true;
-        for (int i = 0; i < atoms.length; i ++) {
-            IAtom atom = atoms[i];
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom)atoms.next();
             if (atom.getPoint3d() == null) {
                 all3d = false;
             }
@@ -196,8 +196,9 @@ public class InChIGenerator {
         }
         
         Map atomMap = new HashMap();
-        for (int i = 0; i < atoms.length; i ++) {
-            IAtom atom = atoms[i];
+        atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
             
             // Get coordinates
             // Use 3d if possible, otherwise 2d or none
@@ -271,11 +272,10 @@ public class InChIGenerator {
         IBond[] bonds = atomContainer.getBonds();
         for (int i = 0; i < bonds.length; i ++) {
             IBond bond = bonds[i];
-            IAtom[] bondAtoms = bond.getAtoms();
             
             // Assumes 2 centre bond
-            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bondAtoms[0]);
-            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bondAtoms[1]);
+            JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
+            JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getAtom(1));
             
             // Get bond order
             INCHI_BOND_TYPE order;
@@ -329,8 +329,9 @@ public class InChIGenerator {
         }
         
         // Process atom parities (tetrahedral InChI Stereo0D Parities)
-        for (int i = 0; i < atoms.length; i ++) {
-            IAtom atom = atoms[i];
+        atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
             IAtomParity parity = atomContainer.getAtomParity(atom);
             if (parity != null) {
                 IAtom[] surroundingAtoms = parity.getSurroundingAtoms();

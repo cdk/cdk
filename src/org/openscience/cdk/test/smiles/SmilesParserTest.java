@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.smiles;
 
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -34,6 +36,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -735,16 +738,15 @@ public class SmilesParserTest extends CDKTestCase {
 			}
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether all carbons have exact two neighbors
-			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-			for (int i = 0; i < atoms.length; i++)
+			for (int i = 0; i < mol.getAtomCount(); i++)
 			{
-				assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
+				assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(i)));
 			}
 			// and the number of implicit hydrogens
 			int hCount = 0;
-			for (int i = 0; i < atoms.length; i++)
+			for (int i = 0; i < mol.getAtomCount(); i++)
 			{
-				hCount += atoms[i].getHydrogenCount();
+				hCount += mol.getAtom(i).getHydrogenCount();
 			}
 			assertEquals(5, hCount);
 		} catch (Exception e)
@@ -776,8 +778,8 @@ public class SmilesParserTest extends CDKTestCase {
 		    
 		    for(int i=0;i<mol.getAtomCount();i++){
 		    	if(mol.getAtom(i).getSymbol().equals("N")){
-		    		assertEquals(1,mol.getConnectedBonds(mol.getAtom(i))[0].getOrder(),.1);
-		    		assertEquals(1,mol.getConnectedBonds(mol.getAtom(i))[1].getOrder(),.1);
+		    		assertEquals(1,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder(),.1);
+		    		assertEquals(1,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder(),.1);
 		    	}
 		    }
 		} catch (Exception e)
@@ -815,11 +817,11 @@ public class SmilesParserTest extends CDKTestCase {
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
-			bonds = mol.getConnectedBonds(nitrogen);
-			assertEquals(3, bonds.length);
-			for (int i = 0; i < bonds.length; i++)
+			java.util.List bondsList = mol.getConnectedBondsList(nitrogen);
+			assertEquals(3, bondsList.size());
+			for (int i = 0; i < bondsList.size(); i++)
 			{
-				totalBondOrder += bonds[i].getOrder();
+				totalBondOrder += ((IBond)bondsList.get(i)).getOrder();
 			}
 			assertEquals(3.0, totalBondOrder, 0.001);
 		} catch (Exception e)
@@ -842,11 +844,12 @@ public class SmilesParserTest extends CDKTestCase {
 			Molecule mol = sp.parseSmiles(smiles);
 			assertEquals(5, mol.getAtomCount());
 			// each atom should have 1 implicit hydrogen, and two neighbors
-			org.openscience.cdk.interfaces.IAtom[] atoms = mol.getAtoms();
-			for (int i = 0; i < atoms.length; i++)
+			java.util.Iterator atoms = mol.atoms();
+			while (atoms.hasNext())
 			{
-				assertEquals(1, atoms[i].getHydrogenCount());
-				assertEquals(2, mol.getConnectedAtoms(atoms[i]).length);
+				IAtom atomi = (IAtom)atoms.next();
+				assertEquals(1, atomi.getHydrogenCount());
+				assertEquals(2, mol.getConnectedAtomsCount(atomi));
 			}
 			// and the first atom should have a negative charge
 			assertEquals(-1, mol.getAtom(0).getFormalCharge());
@@ -1123,11 +1126,11 @@ public class SmilesParserTest extends CDKTestCase {
 			// the second atom
 			assertEquals("N", nitrogen.getSymbol());
 			totalBondOrder = 0.0;
-			bonds = mol.getConnectedBonds(nitrogen);
-			assertEquals(2, bonds.length);
-			for (int i = 0; i < bonds.length; i++)
+			java.util.List bondsList = mol.getConnectedBondsList(nitrogen);
+			assertEquals(2, bondsList.size());
+			for (int i = 0; i < bondsList.size(); i++)
 			{
-				totalBondOrder += bonds[i].getOrder();
+				totalBondOrder += ((IBond)bondsList.get(i)).getOrder();
 			}
 			assertEquals(3.0, totalBondOrder, 0.001);
 		} catch (Exception exception)

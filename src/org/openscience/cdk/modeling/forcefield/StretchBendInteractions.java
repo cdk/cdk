@@ -7,6 +7,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -91,7 +92,7 @@ public class StretchBendInteractions {
 
 		int l = -1;
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
-			atomConnected = molecule.getConnectedAtoms(molecule.getAtom(j));
+			atomConnected = AtomContainerManipulator.getAtomArray(molecule.getConnectedAtomsList(molecule.getAtom(j)));
 			if (atomConnected.length > 1) {
 				for (int i = 0; i < atomConnected.length; i++) {
 					for (int k = i + 1; k < atomConnected.length; k++) {

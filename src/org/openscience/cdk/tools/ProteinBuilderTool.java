@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.BioPolymer;
@@ -148,9 +149,9 @@ public class ProteinBuilderTool {
     }
     
     private static BioPolymer addAminoAcid(BioPolymer protein, AminoAcid aaToAdd, Strand strand) {
-    	org.openscience.cdk.interfaces.IAtom[] atoms = aaToAdd.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-            protein.addAtom(atoms[i], aaToAdd, strand);
+    	java.util.Iterator atoms = aaToAdd.atoms();
+        while (atoms.hasNext()) {
+            protein.addAtom((IAtom)atoms.next(), aaToAdd, strand);
         }
         org.openscience.cdk.interfaces.IBond[] bonds = aaToAdd.getBonds();
         for (int i=0; i<bonds.length; i++) {

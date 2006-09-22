@@ -86,6 +86,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
@@ -640,14 +641,14 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 				container1.add(container2);
 				som.removeAtomContainer(container2);
 			}
-			bondson2=container1.getConnectedBonds(atom2);
+			bondson2=AtomContainerManipulator.getBondArray(container1.getConnectedBondsList(atom2));
 			undoObject[2] = bondson2;
 			undoredoContainer.add(undoObject);
 			for(int i=0;i<bondson2.length;i++){
 				if(bondson2[i].getAtom(0)==atom2)
-					bondson2[i].setAtomAt(atom1,0);
+					bondson2[i].setAtom(atom1,0);
 				if(bondson2[i].getAtom(1)==atom2)
-					bondson2[i].setAtomAt(atom1,1);
+					bondson2[i].setAtom(atom1,1);
 				if(bondson2[i].getAtom(0)==bondson2[i].getAtom(1)){
 					container1.removeElectronContainer(bondson2[i]);
 				}
@@ -673,10 +674,9 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			IBond bond = (IBond) chemObj;
 			container.addBond(bond);
 			logger.debug("selected one bond in lasso mode");
-			IAtom[] atoms = bond.getAtoms();
-			for (int i = 0; i < atoms.length; i++)
+			for (int i = 0; i < bond.getAtomCount(); i++)
 			{
-				container.addAtom(atoms[i]);
+				container.addAtom(bond.getAtom(i));
 			}
 			r2dm.setSelectedPart(container);
 		}
@@ -935,7 +935,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			}
 		}
 		this.updateMoleculeCoordinates();
-		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), newRing.getAtoms());
+		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), newRing.atoms());
 		undoRedoContainer.add(newRing);
 		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
 		undoRedoHandler.postEdit(edit);
@@ -954,7 +954,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
 			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
-			IElectronContainer[] eContainer = container.getConnectedElectronContainers(highlightedAtom);
+			IElectronContainer[] eContainer = AtomContainerManipulator.getElectronContainerArray(container.getConnectedElectronContainersList(highlightedAtom));
 			for (int i=0; i<eContainer.length; i++) {
 				undoRedoContainer.addBond((IBond) eContainer[i]);
 			}
@@ -968,47 +968,47 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			container = ChemModelManipulator.getAllInOneContainer(chemModel);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
 			// update atoms
-			IAtom[] atoms = container.getConnectedAtoms(highlightedAtom);
-			if (atoms.length > 0)
+			java.util.List atoms = container.getConnectedAtomsList(highlightedAtom);
+			if (atoms.size() > 0)
 			{
-				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-				updateAtoms(atomCon, atoms);
+				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, (IAtom)atoms.get(0));
+				updateAtoms(atomCon, atoms.iterator());
 			}
-		} else if (highlightedBond != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedBond)))
-		{
-			logger.info("User asks to delete a Bond");
-			ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
-			undoRedoContainer.addBond(highlightedBond);
-			if (type == null) {
-				type = "Remove Bond";
-			}
-			else {
+			} else if (highlightedBond != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedBond)))
+			{
+				logger.info("User asks to delete a Bond");
+				ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+				undoRedoContainer.addBond(highlightedBond);
+				if (type == null) {
+					type = "Remove Bond";
+				}
+				else {
+					type = "Remove Substructure";
+				}
+				// update atoms
+				java.util.Iterator atoms = highlightedBond.atoms();
+				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedBond.getAtom(0));
+				updateAtoms(container, atoms);
+			} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
+				logger.info("User asks to delete selected part");
+				for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
+					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
+					undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
+				}
+				for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
+					ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
+					undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
+				}
 				type = "Remove Substructure";
-			}
-			// update atoms
-			IAtom[] atoms = highlightedBond.getAtoms();
-			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-			updateAtoms(container, atoms);
-		} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
-			logger.info("User asks to delete selected part");
-			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
-				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
-				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
-			}
-			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
-				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
-				undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
-			}
-			type = "Remove Substructure";
-			// update atoms
-			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-			IAtom[] atoms = r2dm.getSelectedPart().getAtoms();
-			updateAtoms(container, atoms);
-			
-		}else
-		{
-			logger.warn("Cannot deleted if nothing is highlighted");
-			return;
+				// update atoms
+				IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+				java.util.Iterator atoms = r2dm.getSelectedPart().atoms();
+				updateAtoms(container, atoms);
+
+			}else
+			{
+				logger.warn("Cannot deleted if nothing is highlighted");
+				return;
 		}
 		/*
 		 *  PRESERVE THIS. This notifies the
@@ -1052,9 +1052,8 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 		if (bondInRange != null)
 		{
 //			update atoms
-			IAtom[] atoms = bondInRange.getAtoms();
-			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atoms[0]);
-			updateAtoms(container, atoms);
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, bondInRange.getAtom(0));
+			updateAtoms(container, bondInRange.atoms());
 			HashMap changedBonds = new HashMap();
 			double formerBondOrder = bondInRange.getOrder();
 			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
@@ -1116,7 +1115,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			 */
 			UndoableEdit  edit = new AdjustBondOrdersEdit(changedBonds);
 			undoRedoHandler.postEdit(edit);
-			updateAtoms(container, atoms);
+			updateAtoms(container, bondInRange.atoms());
 		} else
 		{
 			IAtomContainer undoRedoContainer = chemModel.getBuilder().newAtomContainer();
@@ -1212,13 +1211,13 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 				// now create 2D coords for new atom
 				double bondLength = r2dm.getBondLength();
-				IAtom[] connectedAtoms = atomCon.getConnectedAtoms(atomInRange);
-				logger.debug("connectedAtoms.length: " + connectedAtoms.length);
+				java.util.List connectedAtoms = atomCon.getConnectedAtomsList(atomInRange);
+				logger.debug("connectedAtoms.length: " + connectedAtoms.size());
 				IAtomContainer placedAtoms = atomCon.getBuilder().newAtomContainer();
 				//placedAtoms.addAtom(atomInRange);
-				for (int i = 0; i < connectedAtoms.length; i++)
+				for (int i = 0; i < connectedAtoms.size(); i++)
 				{
-					placedAtoms.addAtom(connectedAtoms[i]);
+					placedAtoms.addAtom((IAtom)connectedAtoms.get(i));
 				}
 				IAtomContainer unplacedAtoms = atomCon.getBuilder().newAtomContainer();
 				unplacedAtoms.addAtom(newAtom2);
@@ -1468,10 +1467,10 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 	 */
 	private void makeRingAromatic(IRing ring)
 	{
-		IAtom[] atoms = ring.getAtoms();
-		for (int i = 0; i < atoms.length; i++)
+		java.util.Iterator atoms = ring.atoms();
+		while (atoms.hasNext())
 		{
-			atoms[i].setFlag(CDKConstants.ISAROMATIC, true);
+			((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		}
 		IBond[] bonds = ring.getBonds();
 		for (int i = 0; i < bonds.length; i++)
@@ -1566,11 +1565,11 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atoms       The Atoms to update
 	 */
-	private void updateAtoms(IAtomContainer container, IAtom[] atoms)
+	private void updateAtoms(IAtomContainer container, java.util.Iterator atoms)
 	{
-		for (int i = 0; i < atoms.length; i++)
+		while (atoms.hasNext())
 		{
-			updateAtom(container, atoms[i]);
+			updateAtom(container, (IAtom)atoms.next());
 		}
 	}
 
@@ -1810,17 +1809,17 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 	 Point2d getConnectedAtomsCenter(IAtomContainer sharedAtoms)
 	{
 		IAtom currentAtom;
-		IAtom[] conAtomsArray;
+		//IAtom[] conAtomsArray;
 		IAtomContainer conAtoms = sharedAtoms.getBuilder().newAtomContainer();
 		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
 			currentAtom = sharedAtoms.getAtom(i);
 			conAtoms.addAtom(currentAtom);
-			conAtomsArray = atomCon.getConnectedAtoms(currentAtom);
-			for (int j = 0; j < conAtomsArray.length; j++)
+			java.util.Iterator atoms = atomCon.getConnectedAtomsList(currentAtom).iterator();
+			while (atoms.hasNext())
 			{
-				conAtoms.addAtom(conAtomsArray[j]);
+				conAtoms.addAtom((IAtom)atoms.next());
 			}
 		}
 		return GeometryTools.get2DCenter(conAtoms,r2dm.getRenderingCoordinates());
@@ -2045,10 +2044,10 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 		if (container != null)
 		{
 			// only move selected atoms if count > 0
-			IAtom[] atoms = container.getAtoms();
-			for (int i = 0; i < atoms.length; i++)
+			java.util.Iterator atoms = container.atoms();
+			while (atoms.hasNext())
 			{
-				IAtom atom = atoms[i];
+				IAtom atom = (IAtom)atoms.next();
 				atom.setNotification(false);
 				atom.setX2d(atom.getPoint2d().x + deltaX);
 				atom.setY2d(atom.getPoint2d().y + deltaY);
@@ -2106,10 +2105,10 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 				// in the bond, instead of the bond itself
 				if (bondInRange != null)
 				{
-					IAtom[] atoms = bondInRange.getAtoms();
-					for (int i = 0; i < atoms.length; i++)
+					java.util.Iterator atoms = bondInRange.atoms();
+					while (atoms.hasNext())
 					{
-						selected.addAtom(atoms[i]);
+						selected.addAtom((IAtom)atoms.next());
 					}
 					r2dm.setSelectedPart(selected);
 				}

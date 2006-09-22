@@ -29,7 +29,7 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
@@ -205,9 +205,9 @@ public class AllRingsFinder
 		do
 		{
 			removedSomething = false;
-			for (Enumeration e = ac.atoms(); e.hasMoreElements(); )
+			for (Iterator e = ac.atoms(); e.hasNext(); )
 			{
-				atom = (IAtom) e.nextElement();
+				atom = (IAtom) e.next();
 				if (ac.getBondCount(atom) == 1)
 				{
 					ac.removeAtomAndConnectedElectronContainers(atom);

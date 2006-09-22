@@ -32,6 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * This class is an experimental alternative to the ValencyChecker.
@@ -152,7 +153,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
         logger.debug("isBondUnsaturated?: ", bond);
-        IAtom[] atoms = bond.getAtoms();
+        IAtom[] atoms = BondManipulator.getAtomArray(bond);
         boolean isUnsaturated = true;
         for (int i=0; i<atoms.length && isUnsaturated; i++) {
             isUnsaturated = isUnsaturated && !isSaturated(atoms[i], atomContainer);
@@ -167,7 +168,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
      * @return true if the bond could be increased
      */
     public boolean saturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer, double increment) throws CDKException {
-    	IAtom[] atoms = bond.getAtoms();
+    	IAtom[] atoms = BondManipulator.getAtomArray(bond);
     	IAtom atom = atoms[0];
     	IAtom partner = atoms[1];
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
@@ -202,7 +203,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
         logger.debug("isBondSaturated?: ", bond);
-        IAtom[] atoms = bond.getAtoms();
+        IAtom[] atoms = BondManipulator.getAtomArray(bond);
         boolean isSaturated = true;
         for (int i=0; i<atoms.length; i++) {
             logger.debug("isSaturated(Bond, AC): atom I=", i);
@@ -364,7 +365,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
             container.getMaximumBondOrder(atom),
-            container.getConnectedAtoms(atom).length
+            container.getConnectedAtomsCount(atom)
         );
     }
 

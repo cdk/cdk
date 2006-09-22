@@ -101,13 +101,13 @@ public class IDCreator {
             container.setID("m" + moleculeCount);
         }
         
-        IAtom[] atoms = container.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-        	IAtom atom = atoms[i];
+        java.util.Iterator atoms = container.atoms();
+        while(atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
             if (atom.getID() == null) {
                 atomCount++;
                 while (tabuList.contains("a" + atomCount)) atomCount++;
-                atoms[i].setID("a" + atomCount);
+                atom.setID("a" + atomCount);
             }
         }
         IBond[] bonds = container.getBonds();

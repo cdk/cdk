@@ -32,6 +32,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Calculator of radial distribution functions. The RDF has bins defined around
@@ -130,13 +131,14 @@ public class RDFCalculator {
         int index = 0;
         
         Point3d atomPoint = atom.getPoint3d();
-        org.openscience.cdk.interfaces.IAtom[] atomsInContainer = container.getAtoms();
-        for (int i=0; i<atomsInContainer.length; i++) {
-            distance = atomPoint.distance(atomsInContainer[i].getPoint3d());
+        java.util.Iterator atomsInContainer = container.atoms();
+        while (atomsInContainer.hasNext()) {
+        	IAtom atomInContainer = (IAtom)atomsInContainer.next();
+            distance = atomPoint.distance(atomInContainer.getPoint3d());
             index = (int)((distance-startCutoff)/this.resolution);
             double weight = 1.0;
             if (weightFunction != null) {
-                weight = weightFunction.calculate(atom, atomsInContainer[i]);
+                weight = weightFunction.calculate(atom, atomInContainer);
             }
             rdf[index] += weight; // unweighted
             if (this.peakWidth > 0.0) {

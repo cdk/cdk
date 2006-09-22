@@ -142,16 +142,15 @@ public class Polarizability {
     public double calculateBondPolarizability(IAtomContainer atomContainer, Bond bond) {
         double polarizabilitiy = 0;
         Molecule acH = new Molecule(atomContainer);
-        org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
         try {
             HydrogenAdder hAdder = new HydrogenAdder();
             hAdder.addExplicitHydrogensToSatisfyValency(acH);
         } catch (Exception ex1) {
             logger.debug("Error in hydrogen addition");
         }
-        if (atoms.length == 2) {
-            polarizabilitiy += getKJPolarizabilityFactor(acH, atoms[0]);
-            polarizabilitiy += getKJPolarizabilityFactor(acH, atoms[1]);
+        if (bond.getAtomCount() == 2) {
+            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(0));
+            polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(1));
         }
         return (polarizabilitiy / 2);
     }
@@ -243,11 +242,11 @@ public class Polarizability {
      *@return       The numberOfHydrogen value
      */
     private int getNumberOfHydrogen(IAtomContainer atomContainer, org.openscience.cdk.interfaces.IAtom atom) {
-        org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getConnectedBonds(atom);
+        java.util.List bonds = atomContainer.getConnectedBondsList(atom);
         org.openscience.cdk.interfaces.IAtom connectedAtom;
         int hCounter = 0;
-        for (int i = 0; i < bonds.length; i++) {
-            connectedAtom = bonds[i].getConnectedAtom(atom);
+        for (int i = 0; i < bonds.size(); i++) {
+            connectedAtom = ((org.openscience.cdk.interfaces.IBond)bonds.get(i)).getConnectedAtom(atom);
             if (connectedAtom.getSymbol().equals("H")) {
                 hCounter += 1;
             }

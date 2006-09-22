@@ -329,9 +329,9 @@ public class RingPlacer
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
 		 */ 
-		IBond[] bonds = ring.getConnectedBonds(startAtom);
+		java.util.List bonds = ring.getConnectedBondsList(startAtom);
 		
-		IBond currentBond = bonds[0];
+		IBond currentBond = (IBond)bonds.get(0);
 		
 		Vector atomsToDraw = new Vector();
 		/* 
@@ -545,7 +545,7 @@ public class RingPlacer
 		for (int f = 0; f < sharedAtoms.getAtomCount(); f++)
 		{
 			atom = sharedAtoms.getAtom(f);	
-			if (sharedAtoms.getConnectedAtoms(atom).length == 1)
+			if (sharedAtoms.getConnectedAtomsList(atom).size() == 1)
 			{
 				bridgeAtoms[counter] = atom;
 				counter ++;
@@ -564,16 +564,17 @@ public class RingPlacer
 	 */
 	public void partitionNonRingPartners(IAtom atom, IRing ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms)
 	{
-		IAtom[] atoms = molecule.getConnectedAtoms(atom);
-		for (int i = 0; i < atoms.length; i++)
+		java.util.List atoms = molecule.getConnectedAtomsList(atom);
+		for (int i = 0; i < atoms.size(); i++)
 		{
-			if (!ring.contains(atoms[i]))
+			IAtom curAtom = (IAtom)atoms.get(i);
+			if (!ring.contains(curAtom))
 			{
-				nonRingAtoms.addAtom(atoms[i]);
+				nonRingAtoms.addAtom(curAtom);
 			}
 			else
 			{
-				ringAtoms.addAtom(atoms[i]);
+				ringAtoms.addAtom(curAtom);
 			}
 		}
 	}

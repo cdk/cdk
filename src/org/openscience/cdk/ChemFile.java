@@ -140,12 +140,11 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
         }
 
         public Object next() {
-            ++pointer;
-            return chemSequences[pointer-1];
+            return chemSequences[pointer++];
         }
 
         public void remove() {
-            removeChemSequence(pointer-1);
+            removeChemSequence(--pointer);
         }
     	
     }

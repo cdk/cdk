@@ -166,9 +166,9 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public IAtom[] getAtoms() {
-		logger.debug("Getting atoms: ", super.getAtoms().length);
-		return super.getAtoms();
+	public java.util.Iterator atoms() {
+		logger.debug("Getting atoms iterator");
+		return super.atoms();
 	}
 
 	public void setAtoms(IAtom[] atoms) {
@@ -196,9 +196,9 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.contains(atom);
 	}
 
-	public void setAtomAt(IAtom atom, int position) {
+	public void setAtom(IAtom atom, int position) {
 		logger.debug("Setting atom at position: ", atom);
-		super.setAtomAt(atom, position);
+		super.setAtom(atom, position);
 	}
 
 	public double getOrder() {

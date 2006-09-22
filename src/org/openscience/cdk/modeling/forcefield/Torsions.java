@@ -10,6 +10,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -80,10 +82,10 @@ public class Torsions {
 
 		bond = molecule.getBonds();
 		for (int b=0; b<bond.length; b++) {
-			atomInBond = bond[b].getAtoms();
-			bondConnectedBefore = molecule.getConnectedBonds(atomInBond[0]);
+			atomInBond = BondManipulator.getAtomArray(bond[b]);
+			bondConnectedBefore = AtomContainerManipulator.getBondArray(molecule.getConnectedBondsList(atomInBond[0]));
 			if (bondConnectedBefore.length > 1) {
-				bondConnectedAfter = molecule.getConnectedBonds(atomInBond[1]);
+				bondConnectedAfter = AtomContainerManipulator.getBondArray(molecule.getConnectedBondsList(atomInBond[1]));
 				if (bondConnectedAfter.length > 1) {
 					for (int bb=0; bb<bondConnectedBefore.length; bb++) {
 						if (bondConnectedBefore[bb].compare(bond[b])) {}
@@ -117,10 +119,10 @@ public class Torsions {
 
 		int m = -1;
 		for (int b=0; b<bond.length; b++) {
-			atomInBond = bond[b].getAtoms();
-			bondConnectedBefore = molecule.getConnectedBonds(atomInBond[0]);
+			atomInBond = BondManipulator.getAtomArray(bond[b]);
+			bondConnectedBefore = AtomContainerManipulator.getBondArray(molecule.getConnectedBondsList(atomInBond[0]));
 			if (bondConnectedBefore.length > 1) {
-				bondConnectedAfter = molecule.getConnectedBonds(atomInBond[1]);
+				bondConnectedAfter = AtomContainerManipulator.getBondArray(molecule.getConnectedBondsList(atomInBond[1]));
 				if (bondConnectedAfter.length > 1) {
 					for (int bb=0; bb<bondConnectedBefore.length; bb++) {
 						if (bondConnectedBefore[bb].compare(bond[b])) {}

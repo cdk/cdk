@@ -95,15 +95,16 @@ public class HydrogenPlacer {
 		atomPlacer.setMolecule(atomContainer);
 		//Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
-		IAtom[] connectedAtoms = atomContainer.getConnectedAtoms(atom);
+		java.util.List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
 		IAtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
 		IAtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
 		
-		for (int f = 0; f < connectedAtoms.length; f++) {
-			if (connectedAtoms[f].getSymbol().equals("H") && connectedAtoms[f].getPoint2d()==null) {
-				unplacedAtoms.addAtom(connectedAtoms[f]);
+		for (int f = 0; f < connectedAtoms.size(); f++) {
+			IAtom conAtom = (IAtom)connectedAtoms.get(f);
+			if (conAtom.getSymbol().equals("H") && conAtom.getPoint2d()==null) {
+				unplacedAtoms.addAtom(conAtom);
 			} else {
-				placedAtoms.addAtom(connectedAtoms[f]);
+				placedAtoms.addAtom(conAtom);
 			}
 		}
 		logger.debug("Atom placement before procedure:");

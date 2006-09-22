@@ -164,20 +164,20 @@ public class HydrogenAdder {
     public IAtomContainer addExplicitHydrogensToSatisfyValency(IAtomContainer molecule) throws IOException, ClassNotFoundException, CDKException
     {
     	logger.debug("Start of addExplicitHydrogensToSatisfyValency");
-      IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-      IAtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
-      IAtomContainer intermediateContainer= null;
-      for (int k = 0; k < moleculeSet.getAtomContainerCount(); k++) {
-    	  IMolecule molPart = moleculeSet.getMolecule(k);
-        IAtom[] atoms = molPart.getAtoms();
-         for (int i = 0; i < atoms.length; i++) {
-            intermediateContainer = addHydrogensToSatisfyValency(molPart, atoms[i], molecule);
-            changedAtomsAndBonds.add(intermediateContainer);
-        }
-       
-      }
-      logger.debug("End of addExplicitHydrogensToSatisfyValency");
-      return changedAtomsAndBonds;
+    	IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
+    	IAtomContainer changedAtomsAndBonds = molecule.getBuilder().newAtomContainer();
+    	IAtomContainer intermediateContainer= null;
+    	for (int k = 0; k < moleculeSet.getAtomContainerCount(); k++) {
+    		IMolecule molPart = moleculeSet.getMolecule(k);
+    		java.util.Iterator atoms = molPart.atoms();
+    		while (atoms.hasNext()) {
+    			intermediateContainer = addHydrogensToSatisfyValency(molPart, (IAtom)atoms.next(), molecule);
+    			changedAtomsAndBonds.add(intermediateContainer);
+    		}
+
+    	}
+    	logger.debug("End of addExplicitHydrogensToSatisfyValency");
+    	return changedAtomsAndBonds;
     }
 
     /**
@@ -307,10 +307,11 @@ public class HydrogenAdder {
       HashMap hydrogenAtomMap = new HashMap();
       for (int k = 0; k < moleculeSet.getAtomContainerCount(); k++) {
     	IMolecule molPart = moleculeSet.getMolecule(k);
-        IAtom[] atoms = molPart.getAtoms();
-        for (int f = 0; f < atoms.length; f++) {
-            int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atoms[f]);
-            hydrogenAtomMap.put(atoms[f], hydrogens);
+        java.util.Iterator atoms = molPart.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
+            int[] hydrogens = addImplicitHydrogensToSatisfyValency(molPart, atom);
+            hydrogenAtomMap.put(atom, hydrogens);
         }
       }
       return hydrogenAtomMap;

@@ -28,6 +28,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -76,8 +77,8 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
         );
-        org.openscience.cdk.interfaces.IAtom[] atoms = subject.getAtoms();
-        if (atoms.length == 0) {
+        
+        if (subject.getAtomCount() == 0) {
             report.addError(emptyMolecule);
         } else {
             report.addOK(emptyMolecule);
@@ -85,11 +86,11 @@ public class BasicValidator extends AbstractValidator {
                 "Molecule contains PseudoAtom's. Won't be able to calculate some properties, like molecular mass."
             );
             boolean foundMassCalcProblem = false;
-            for (int i=0; i<atoms.length; i++) {
-                if (atoms[i] instanceof PseudoAtom) {
+            for (int i=0; i<subject.getAtomCount(); i++) {
+                if (subject.getAtom(i) instanceof PseudoAtom) {
                     foundMassCalcProblem = true;
                 } else {
-                    report.addReport(validateBondOrderSum(atoms[i], subject));
+                    report.addReport(validateBondOrderSum(subject.getAtom(i), subject));
                 }
             }
             if (foundMassCalcProblem) {
@@ -376,15 +377,15 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest chargeConservation = new ValidationTest(reaction,
             "Total formal charge is not preserved during the reaction"
         );
-        org.openscience.cdk.interfaces.IAtom[] atoms1 = reactants.getAtoms();
+        java.util.Iterator atoms1 = reactants.atoms();
         int totalCharge1 = 0;
-        for (int i=0;i<atoms1.length; i++) {
-            totalCharge1 =+ atoms1[i].getFormalCharge();
+        while (atoms1.hasNext()) {
+            totalCharge1 =+ ((IAtom)atoms1.next()).getFormalCharge();
         }
-        org.openscience.cdk.interfaces.IAtom[] atoms2 = products.getAtoms();
+        java.util.Iterator atoms2 = products.atoms();
         int totalCharge2 = 0;
-        for (int i=0;i<atoms2.length; i++) {
-            totalCharge2 =+ atoms2[i].getFormalCharge();
+        while (atoms2.hasNext()) {
+            totalCharge2 =+ ((IAtom)atoms2.next()).getFormalCharge();
         }
         if (totalCharge1 != totalCharge2) {
             report.addError(chargeConservation);

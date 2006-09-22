@@ -174,8 +174,8 @@ public class BreakingBondReaction implements IReactionProcess{
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
-				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[0]);
-				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtoms()[1]);
+				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
+				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
 				int bond =  reactants.getMolecule(0).getBondNumber(bonds[i]);
 				
 				/**/
@@ -230,9 +230,9 @@ public class BreakingBondReaction implements IReactionProcess{
 					/* mapping */
 					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[0], reactantCloned.getAtom(atom1));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), reactantCloned.getAtom(atom1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtoms()[1], reactantCloned.getAtom(atom2));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), reactantCloned.getAtom(atom2));
 			        reaction.addMapping(mapping);
 					
 					if(setOfMolecules != null)
@@ -314,13 +314,14 @@ public class BreakingBondReaction implements IReactionProcess{
 		ArrayList atomsVisited = new ArrayList();
 		atomsVisited.add(molecule.getAtom(0));
 		
-		
+		IAtom conAtom = null;
 		for (int i = 0; i < atomsVisited.size(); i++){
-			IAtom[] atomsConnected = molecule.getConnectedAtoms((IAtom)atomsVisited.get(i));
-			for (int j = 0; j < atomsConnected.length; j++){
-				if(atomsConnected[j].getFlag(CDKConstants.VISITED) == false){
-					atomsConnected[j].setFlag(CDKConstants.VISITED, true);
-					atomsVisited.add(atomsConnected[j]);
+			java.util.List atomsConnected = molecule.getConnectedAtomsList((IAtom)atomsVisited.get(i));
+			for (int j = 0; j < atomsConnected.size(); j++){
+				conAtom = (IAtom)atomsConnected.get(j);
+				if(conAtom.getFlag(CDKConstants.VISITED) == false){
+					conAtom.setFlag(CDKConstants.VISITED, true);
+					atomsVisited.add(conAtom);
 				}
 			}
 		}
@@ -372,8 +373,8 @@ public class BreakingBondReaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IBond[] bonds = reactant.getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
-			IAtom atom1 = bonds[i].getAtoms()[0];
-			IAtom atom2 = bonds[i].getAtoms()[1];
+			IAtom atom1 = bonds[i].getAtom(0);
+			IAtom atom2 = bonds[i].getAtom(1);
 			atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);

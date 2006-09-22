@@ -273,9 +273,9 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
             Strand strand = (Strand)clone.getStrand(strands.next().toString()).clone();
             for (Iterator iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
             	IMonomer monomer = strand.getMonomer(iter.next().toString());
-            	IAtom[] atoms = monomer.getAtoms();
-            	for (int i=0; i<atoms.length; i++) {
-                    clone.addAtom(atoms[i], monomer, strand);
+            	java.util.Iterator atoms = monomer.atoms();
+            	while (atoms.hasNext()) {
+                    clone.addAtom((IAtom)atoms.next(), monomer, strand);
                 } 
             }
         }

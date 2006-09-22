@@ -152,7 +152,7 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 		int valency = atomType.getValency();
 		double nLonePair = (valency - ( hcount + bondOrderSum ) - charge) / 2;
 		
-		int hybridization = (int)nLonePair + ( hcount + container.getConnectedAtoms(atom).length );
+		int hybridization = (int)nLonePair + ( hcount + container.getConnectedAtomsList(atom).size() );
 		
 		logger.debug("ATOM : bondOrderSum " + bondOrderSum + ", charge " + charge + ", hcount " + hcount + 
 		             ", valency "  + valency + ", nLonePair " + nLonePair + ", hybridization "  + hybridization);

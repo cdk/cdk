@@ -47,9 +47,8 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createBasicQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        IAtom[] atoms = container.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-            queryContainer.addAtom(new SymbolQueryAtom(atoms[i]));
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
         IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
@@ -78,9 +77,8 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createSymbolAndChargeQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        IAtom[] atoms = container.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-            queryContainer.addAtom(new SymbolAndChargeQueryAtom(atoms[i]));
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            queryContainer.addAtom(new SymbolAndChargeQueryAtom(container.getAtom(i)));
         }
         IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
@@ -101,9 +99,8 @@ public class QueryAtomContainerCreator {
     
     public static QueryAtomContainer createSymbolChargeIDQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        IAtom[] atoms = container.getAtoms();
-        for (int i = 0; i < atoms.length; i++) {
-            queryContainer.addAtom(new SymbolChargeIDQueryAtom(atoms[i]));
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
         IBond[] bonds = container.getBonds();
         for (int i = 0; i < bonds.length; i++) {
@@ -132,10 +129,9 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createAnyAtomContainer(IAtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        IAtom[] atoms = container.getAtoms();
 
-        for (int i = 0; i < atoms.length; i++) {
-        	if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
+        	if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addAtom(new AromaticAtom());
             } else {
                 queryContainer.addAtom(new AnyAtom());
@@ -171,10 +167,9 @@ public class QueryAtomContainerCreator {
      */
     public static QueryAtomContainer createAnyAtomAnyBondContainer(IAtomContainer container, boolean aromaticity) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();
-        IAtom[] atoms = container.getAtoms();
 
-        for (int i = 0; i < atoms.length; i++) {
-            if (aromaticity && atoms[i].getFlag(CDKConstants.ISAROMATIC)) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            if (aromaticity && container.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addAtom(new AromaticAtom());
             } else {
                 queryContainer.addAtom(new AnyAtom());

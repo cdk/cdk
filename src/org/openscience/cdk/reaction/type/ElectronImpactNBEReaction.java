@@ -150,15 +150,17 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 			setActiveCenters(reactants.getMolecule(0));
 		}
 		
-		IAtom[] atoms = reactants.getMolecule(0).getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(atoms[i].getFlag(CDKConstants.REACTIVE_CENTER)){
+		IMolecule reactant0 = reactants.getMolecule(0);
+		IAtom atomi = null;
+		for(int i = 0 ; i < reactant0.getAtomCount() ; i++){
+			atomi = reactant0.getAtom(i);
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)){
 				
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactants.getMolecule(0));
 				IMolecule reactant = reaction.getReactants().getMolecule(0);
 				
-				int posA = reactant.getAtomNumber(atoms[i]);
+				int posA = reactant.getAtomNumber(atomi);
 				
 				IMolecule reactantCloned;
 				try {
@@ -174,7 +176,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 				reactantCloned.getAtom(posA).setFormalCharge(1);
 
 				/* mapping */
-				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atoms[i], reactantCloned.getAtom(posA));
+				IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, reactantCloned.getAtom(posA));
 		        reaction.addMapping(mapping);
 				
 				reaction.addProduct(reactantCloned);
@@ -194,10 +196,9 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IAtom[] atoms = reactant.getAtoms();
-		for(int i = 0 ; i < atoms.length ; i++){
-			if(reactant.getLonePairs(atoms[i]).length > 0){
-				atoms[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
+			if(reactant.getLonePairs(reactant.getAtom(i)).length > 0){
+				reactant.getAtom(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 	}

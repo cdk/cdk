@@ -119,16 +119,17 @@ public class CarbonConnectivityOrderOneDescriptor implements IMolecularDescripto
         double val1 = 0;
         int atomDegree = 0;
         org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
-        IAtom[] atoms = null;
+        org.openscience.cdk.interfaces.IBond bond = null;
         for (int b = 0; b < bonds.length; b++) {
-            atoms = bonds[b].getAtoms();
-            if ((!atoms[0].getSymbol().equals("H")) || (!atoms[1].getSymbol().equals("H"))) {
+            bond = bonds[b];
+            if ((!bond.getAtom(0).getSymbol().equals("H")) || (!bond.getAtom(1).getSymbol().equals("H"))) {
                 degrees.clear();
-                for (int a = 0; a < atoms.length; a++) {
+                java.util.Iterator iter = bond.atoms();
+                while (iter.hasNext()) {
                     atomDegree = 0;
-                    IAtom[] neighboors = atomContainer.getConnectedAtoms(atoms[a]);
-                    for (int n = 0; n < neighboors.length; n++) {
-                        if (!neighboors[n].getSymbol().equals("H")) {
+                    java.util.List neighboors = atomContainer.getConnectedAtomsList((IAtom)iter.next());
+                    for (int n = 0; n < neighboors.size(); n++) {
+                        if (!((IAtom)neighboors.get(n)).getSymbol().equals("H")) {
                             atomDegree += 1;
                         }
                     }
@@ -138,7 +139,7 @@ public class CarbonConnectivityOrderOneDescriptor implements IMolecularDescripto
                 }
                 val0 = ( (Double)degrees.get(0) ).doubleValue();
                 val1 = ( (Double)degrees.get(1) ).doubleValue();
-                if((atoms[0].getSymbol().equals("C")) && (atoms[1].getSymbol().equals("C"))) {
+                if((bond.getAtom(0).getSymbol().equals("C")) && (bond.getAtom(1).getSymbol().equals("C"))) {
                     chi1C += 1/(Math.sqrt(val0 * val1));
                 }
             }

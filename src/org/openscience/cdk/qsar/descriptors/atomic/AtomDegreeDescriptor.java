@@ -93,9 +93,9 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomDegree = 0;
-        IAtom[] neighboors = container.getConnectedAtoms(atom);
-        for (int i =0; i< neighboors.length;i++) {
-            if(!neighboors[i].getSymbol().equals("H")) atomDegree+=1;
+        java.util.List neighboors = container.getConnectedAtomsList(atom);
+        for (int i =0; i< neighboors.size();i++) {
+            if(!((IAtom)neighboors.get(i)).getSymbol().equals("H")) atomDegree+=1;
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomDegree));
     }

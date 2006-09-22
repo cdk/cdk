@@ -25,6 +25,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point3d;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class NumericalSurface {
      * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
      */
     public NumericalSurface(IAtomContainer atomContainer) {
-        this.atoms = atomContainer.getAtoms();
+        this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         logger = new LoggingTool(this);
     }
     /**
@@ -88,7 +89,7 @@ public class NumericalSurface {
      */
     public NumericalSurface(IAtomContainer atomContainer, double solvent_radius, int tesslevel) {
         this.solvent_radius = solvent_radius;
-        this.atoms = atomContainer.getAtoms();
+        this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
         logger = new LoggingTool(this);
     }
@@ -105,7 +106,7 @@ public class NumericalSurface {
      */
     public NumericalSurface(IAtomContainer atomContainer, double solvent_radius, int tesslevel, String vdwRadiusFile) {
         this.solvent_radius = solvent_radius;
-        this.atoms = atomContainer.getAtoms();
+        this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
         this.vdwFile = vdwRadiusFile;
         logger = new LoggingTool(this);

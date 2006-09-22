@@ -325,7 +325,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         int numberOfBonds=0;
         if(upToWhichAtom<container.getAtomCount()){
           for(int i=0;i<container.getBondCount();i++){
-            if(isVisible[container.getAtomNumber(container.getBond(i).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBond(i).getAtoms()[1])])
+            if(isVisible[container.getAtomNumber(container.getBond(i).getAtom(0))] && isVisible[container.getAtomNumber(container.getBond(i).getAtom(1))])
               numberOfBonds++;
           }
         }else{
@@ -336,10 +336,9 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(line);
 
         // write Atom block
-        IAtom[] atoms = container.getAtoms();
-        for (int f = 0; f < atoms.length; f++) {
+        for (int f = 0; f < container.getAtomCount(); f++) {
           if(isVisible[f]){
-        	  IAtom atom = atoms[f];
+        	  IAtom atom = container.getAtom(f);
             line = "";
             if (atom.getPoint3d() != null) {
                 line += formatMDLFloat((float) atom.getPoint3d().x);
@@ -369,9 +368,9 @@ public class MDLWriter extends DefaultChemObjectWriter {
         // write Bond block
         IBond[] bonds = container.getBonds();
         for (int g = 0; g < bonds.length; g++) {
-          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBond(g).getAtoms()[0])] && isVisible[container.getAtomNumber(container.getBond(g).getAtoms()[1])])){
+          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBond(g).getAtom(0))] && isVisible[container.getAtomNumber(container.getBond(g).getAtom(1))])){
         	  IBond bond = bonds[g];
-            if (bond.getAtoms().length != 2) {
+            if (bond.getAtomCount() != 2) {
                 logger.warn("Skipping bond with more/less than two atoms: " + bond);
             } else {
                 if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
@@ -409,8 +408,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write formal atomic charges
-        for (int i = 0; i < atoms.length; i++) {
-        	IAtom atom = atoms[i];
+        for (int i = 0; i < container.getAtomCount(); i++) {
+        	IAtom atom = container.getAtom(i);
             int charge = atom.getFormalCharge();
             if (charge != 0) {
                 writer.write("M  CHG  1 ");
@@ -422,8 +421,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
         
         // write formal isotope information
-        for (int i = 0; i < atoms.length; i++) {
-        	IAtom atom = atoms[i];
+        for (int i = 0; i < container.getAtomCount(); i++) {
+        	IAtom atom = container.getAtom(i);
             if (!(atom instanceof IPseudoAtom)) {
                 int atomicMass = atom.getMassNumber();
                 int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();

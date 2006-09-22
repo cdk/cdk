@@ -29,6 +29,7 @@ import java.util.Enumeration;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
@@ -120,7 +121,7 @@ public class AminoAcids {
         		logger.debug("Adding AA: ", containers[i]);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		org.openscience.cdk.interfaces.IAtom[] atoms = containers[i].getAtoms();
+        		java.util.Iterator atoms = containers[i].atoms();
         		Enumeration props = containers[i].getProperties().keys();
         		while (props.hasMoreElements()) {
         			Object next = props.nextElement();
@@ -141,8 +142,8 @@ public class AminoAcids {
         				}
         			}
         		}
-        		for (int atomCount=0; atomCount<atoms.length; atomCount++) {
-        			org.openscience.cdk.interfaces.IAtom atom = atoms[atomCount];
+        		while (atoms.hasNext()) {
+        			org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
         			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
         			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
         				aminoAcid.addNTerminus(atom);

@@ -140,9 +140,9 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.write("  IMolecule mol = new Molecule();\n");
         IDCreator idCreator = new IDCreator();
         idCreator.createIDs(molecule);
-        IAtom[] atoms = molecule.getAtoms();
-        for (int i=0; i<atoms.length; i++) {
-        	IAtom atom = atoms[i];
+        java.util.Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }

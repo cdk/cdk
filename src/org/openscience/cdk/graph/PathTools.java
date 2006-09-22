@@ -153,21 +153,22 @@ public class PathTools {
      *         target atom was found during this function call
      */
     public static boolean depthFirstTargetSearch(IAtomContainer molecule, IAtom root, IAtom target, IAtomContainer path) throws NoSuchAtomException {
-        IBond[] bonds = molecule.getConnectedBonds(root);
+        java.util.List bonds = molecule.getConnectedBondsList(root);
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
-        for (int f = 0; f < bonds.length; f++) {
-            nextAtom = bonds[f].getConnectedAtom(root);
+        for (int f = 0; f < bonds.size(); f++) {
+        	IBond bond = (IBond)bonds.get(f);
+            nextAtom = bond.getConnectedAtom(root);
             if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                 path.addAtom(nextAtom);
-                path.addBond(bonds[f]);
+                path.addBond(bond);
                 if (nextAtom == target) {
                     return true;
                 } else {
                     if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
                         // we did not find the target
                         path.removeAtom(nextAtom);
-                        path.removeElectronContainer(bonds[f]);
+                        path.removeElectronContainer(bond);
                     } else {
                         return true;
                     }
@@ -213,11 +214,11 @@ public class PathTools {
         Vector v = new Vector();
         v.add(a);
         breadthFirstSearch(ac, v, mol, max);
-        IAtom[] returnValue = new IAtom[mol.getAtoms().length - 1];
+        IAtom[] returnValue = new IAtom[mol.getAtomCount() - 1];
         int k = 0;
-        for (int i = 0; i < mol.getAtoms().length; i++) {
-            if (mol.getAtoms()[i] != a) {
-                returnValue[k] = mol.getAtoms()[i];
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            if (mol.getAtom(i) != a) {
+                returnValue[k] = mol.getAtom(i);
                 k++;
             }
         }
@@ -251,23 +252,24 @@ public class PathTools {
             molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
-            IElectronContainer[] eContainers = ac.getConnectedElectronContainers(atom);
+            java.util.List eContainers = ac.getConnectedElectronContainersList(atom);
             //System.out.println("found #ec's: " + eContainers.length);
-            for (int i = 0; i < eContainers.length; i++) {
-                if (!(eContainers[i] instanceof IBond)) {
+            for (int i = 0; i < eContainers.size(); i++) {
+                if (!(eContainers.get(i) instanceof IBond)) {
                     // ok, no bond, thus LonePair or SingleElectron
                     // System.out.println("adding non bond " + eContainers[i]);
-                    molecule.addElectronContainer(eContainers[i]);
+                    molecule.addElectronContainer((IElectronContainer)eContainers.get(i));
                 }
             }
             // now look at bonds
-            org.openscience.cdk.interfaces.IBond[] bonds = ac.getConnectedBonds(atom);
-            for (int g = 0; g < bonds.length; g++) {
-                if (!bonds[g].getFlag(CDKConstants.VISITED)) {
-                    molecule.addBond(bonds[g]);
-                    bonds[g].setFlag(CDKConstants.VISITED, true);
+            java.util.List bonds = ac.getConnectedBondsList(atom);
+            for (int g = 0; g < bonds.size(); g++) {
+            	IBond bond = (IBond)bonds.get(g);
+                if (!bond.getFlag(CDKConstants.VISITED)) {
+                    molecule.addBond(bond);
+                    bond.setFlag(CDKConstants.VISITED, true);
                 }
-                nextAtom = bonds[g].getConnectedAtom(atom);
+                nextAtom = bond.getConnectedAtom(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
 //					System.out.println("wie oft???");
                     newSphere.addElement(nextAtom);
@@ -311,12 +313,13 @@ public class PathTools {
         Vector newSphere = new Vector();
         for (int f = 0; f < sphere.size(); f++) {
             atom = (IAtom) sphere.elementAt(f);
-            IBond[] bonds = ac.getConnectedBonds(atom);
-            for (int g = 0; g < bonds.length; g++) {
-                if (!bonds[g].getFlag(CDKConstants.VISITED)) {
-                    bonds[g].setFlag(CDKConstants.VISITED, true);
+            java.util.List bonds = ac.getConnectedBondsList(atom);
+            for (int g = 0; g < bonds.size(); g++) {
+            	IBond bond = (IBond)bonds.get(g);
+                if (!bond.getFlag(CDKConstants.VISITED)) {
+                    bond.setFlag(CDKConstants.VISITED, true);
                 }
-                nextAtom = bonds[g].getConnectedAtom(atom);
+                nextAtom = bond.getConnectedAtom(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                     if (nextAtom == target) {
                         return pathLength;
@@ -468,9 +471,9 @@ public class PathTools {
             if (u == endNumber) break;
 
             // relaxation
-            IAtom[] connected = atomContainer.getConnectedAtoms( atomContainer.getAtom(u) );
-            for (int i = 0; i < connected.length; i++) {
-                int anum = atomContainer.getAtomNumber(connected[i]);
+            java.util.List connected = atomContainer.getConnectedAtomsList( atomContainer.getAtom(u) );
+            for (int i = 0; i < connected.size(); i++) {
+                int anum = atomContainer.getAtomNumber((IAtom)connected.get(i));
                 if (d[anum] > d[u] + 1) { // all edges have equals weights
                     d[anum] = d[u] + 1;
                     previous[anum] = u;
@@ -521,7 +524,7 @@ public class PathTools {
         if (path.contains(start))
             return;
         path.add(start);
-        List nbrs = atomContainer.getConnectedAtomsVector(start);
+        List nbrs = atomContainer.getConnectedAtomsList(start);
         for (Iterator i = nbrs.iterator(); i.hasNext();)
             findPathBetween(atomContainer, (IAtom) i.next(), end, path);
         path.remove(path.size() - 1);
@@ -548,7 +551,7 @@ public class PathTools {
             for (int j = 0; j < paths.size(); j++) {
                 curPath = (ArrayList) paths.get(j);
                 IAtom lastVertex = (IAtom) curPath.get(curPath.size() - 1);
-                List neighbors = atomContainer.getConnectedAtomsVector(lastVertex);
+                List neighbors = atomContainer.getConnectedAtomsList(lastVertex);
                 for (int k = 0; k < neighbors.size(); k++) {
                     ArrayList newPath = new ArrayList(curPath);
                     if (newPath.contains(neighbors.get(k))) continue;
