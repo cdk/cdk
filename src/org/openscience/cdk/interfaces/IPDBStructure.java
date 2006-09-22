@@ -24,7 +24,7 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Represents the idea of an chemical atom.
+ * Represents the idea of an chemical structure.
  *
  * @cdk.module  interfaces
  *

@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
@@ -152,6 +153,10 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
     
 	public IPDBStructure newPDBStructure() {
         return new NNPDBStructure();
+	}
+	
+	public IPDBMonomer newPDBMonomer() {
+        return new NNPDBMonomer();
 	}
 	
 	public IBond newBond() {

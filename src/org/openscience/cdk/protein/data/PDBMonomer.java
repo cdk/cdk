@@ -29,16 +29,17 @@
 package org.openscience.cdk.protein.data;
 
 import org.openscience.cdk.Monomer;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 
 /**
  * Represents the idea of an monomer as used in PDB files. It contains extra fields
  * normally associated with atoms in such files.
  *
- * @cdk.module pdb
+ * @cdk.module data
  *
  * @see  PDBAtom
  */
-public class PDBMonomer extends Monomer {
+public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
 
 	private static final long serialVersionUID = -7236625816763776733L;
 

@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
@@ -60,6 +61,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStructure;
 
@@ -255,6 +257,10 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	
 	public IPDBStructure newPDBStructure() {
 		return new PDBStructure();
+	}
+	
+	public IPDBMonomer newPDBMonomer() {
+		return new PDBMonomer();
 	}
 
     public IReaction newReaction() {

@@ -187,11 +187,18 @@ public interface IChemObjectBuilder {
 	/**
      * Constructs an IPDBStructure.
      *
-     * @return IStructure implementation defined for this IChemObjectBuilder
+     * @return IPDBStructure implementation defined for this IChemObjectBuilder
      */
     public IPDBStructure newPDBStructure();
     
 	/**
+     * Constructs an IPDBMonomer.
+     *
+     * @return IPDBMonomer implementation defined for this IChemObjectBuilder
+     */
+    public IPDBMonomer newPDBMonomer();
+
+    /**
 	 * Constructs an empty IBond.
 	 * 
      * @return IBond implementation defined for this IChemObjectBuilder

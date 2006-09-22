@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
@@ -148,6 +149,10 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
     
 	public IPDBPolymer newPDBPolymer(){
 		return new DebugPDBPolymer();
+	}
+	
+	public IPDBMonomer newPDBMonomer(){
+		return new DebugPDBMonomer();
 	}
 	
 	public IPDBStructure newStructure(){
