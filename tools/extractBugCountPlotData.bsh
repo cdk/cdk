@@ -1,0 +1,65 @@
+// !/usr/bin/bsh
+
+import java.io.*;
+import java.util.regex.*;
+
+int startRevision = 6872;
+int endRevision = 7037;
+
+for (int rev = startRevision; rev <= endRevision; rev++) {
+    File results = new File("antlog/ant_r" + rev + ".log");
+    if (results.exists()) {
+    
+        BufferedReader reader = new BufferedReader(new FileReader(results));
+        String line = reader.readLine();
+        String moduleName = "";
+        
+        Pattern junit = Pattern.compile(".*\\[junit\\].*");
+        Pattern module = Pattern.compile(".*test.M(.*)Tests.*");
+        Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.]*)\\ssec.*");
+        Pattern failed = Pattern.compile(".*FAILED.*");
+        
+        int testsRun = 0;
+        int testsFailed = 0;
+        int testsErrors = 0;
+        double testsTime = 0.0;
+        
+        int run = 0;
+        String failedModules = "";
+        int failedModuleCount = 0;
+        while (line != null) {
+        Matcher junitLine = junit.matcher(line);
+        if (junitLine.matches()) {
+            // OK, found junit results
+            Matcher moduleLine = module.matcher(line);
+            Matcher statsLine = stats.matcher(line);
+            if (moduleLine.matches()) {
+            Matcher failedLine = failed.matcher(line);
+            if (failedLine.matches() && run == 0) {
+                failedModules = failedModules + moduleName + " ";
+                failedModuleCount++;
+            } else {
+                moduleName = moduleLine.group(1);
+                run = 0;
+            }
+            } else if (statsLine.matches()) {
+            run = Integer.parseInt(statsLine.group(1));
+            int failed = Integer.parseInt(statsLine.group(2));
+            int error = Integer.parseInt(statsLine.group(3));
+            double time = Double.parseDouble(statsLine.group(4));
+            //System.out.println(moduleName + ": run=" + run +
+            //    " failed=" + failed + " error=" + error +
+            //    " time=" + time + " secs");
+            testsRun += run;
+            testsFailed += failed;
+            testsErrors += error;
+            testsTime += time;
+            }
+        }
+        line = reader.readLine();
+        }
+        
+        System.out.println(rev + " " + testsRun + " " + testsFailed + 
+            " " + testsErrors + " " + testsTime + " " + failedModuleCount);
+    }
+}
