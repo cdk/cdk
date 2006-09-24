@@ -106,7 +106,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * The default value is {@link CDKConstants.UNSET} and serves to provide a check whether the charge has been
          * set or not
          */
-        protected double charge = CDKConstants.UNSET;
+        protected double charge = 0.0;
         
         /**
          * Constructs an completely unset Atom.

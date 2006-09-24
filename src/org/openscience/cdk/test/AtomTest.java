@@ -380,6 +380,6 @@ public class AtomTest extends CDKTestCase {
      */
     public void testDefaultChargeValue() {
         IAtom atom = builder.newAtom("C");
-        assertEquals(CDKConstants.UNSET, atom.getCharge(), 0.00000001);
+        assertEquals(0.0, atom.getCharge(), 0.00000001);
     }
 }
