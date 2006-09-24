@@ -187,7 +187,7 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  Description of the Method
 	 */
-	public void xtestSmiles7()
+	public void testSmiles7()
 	{
 		try
 		{
@@ -204,7 +204,7 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  Description of the Method
 	 */
-	public void xtestSmiles8()
+	public void testSmiles8()
 	{
 		try
 		{
@@ -221,7 +221,7 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  Description of the Method
 	 */
-	public void xtestSmiles9()
+	public void testSmiles9()
 	{
 		try
 		{
@@ -237,7 +237,7 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 * @cdk.bug 1296113
 	 */
-	public void xtestSFBug1296113()
+	public void testSFBug1296113()
 	{
 		try
 		{
