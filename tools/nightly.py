@@ -51,6 +51,7 @@
 # Update 08/01/2006 - Made some error cases more consistent
 # Update 09/18/2006 - Added current time to the title
 # Update 09/20/2006 - Updated to wrap Junit result files in HTML tags
+# Update 09/24/2006 - Updated to include revision info in the title
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -759,6 +760,8 @@ if __name__ == '__main__':
     successPMD = True
     successPMDUnused = True
     successSVN = True
+
+    revision = None
     
     start_dir = os.getcwd()
     os.chdir(nightly_dir)
@@ -804,7 +807,6 @@ if __name__ == '__main__':
             f.close()
             os.chdir(start_dir)
             sys.exit(0)
-
 
         # compile the distro
         successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
@@ -857,13 +859,18 @@ if __name__ == '__main__':
     os.system('rm -rf %s/*' % (nightly_web))
     writeTemporaryPage()
 
+    # get some revision info
+    rev = open(os.path.join(nightly_dir, 'svn.log'),'r').readlines()
+    rev = rev[0].split()[2]
+    rev = rev[:(len(rev)-1)]
+    
     currTime = time.localtime()
     currTime = "%02d:%02d" % (currTime[3], currTime[4])	
     page = """
     <html>
     <head>
       <title>
-      CDK Nightly Build - %s (%s)
+      CDK Nightly Build - %s (%s) [SVN Revision %s]
       </title>
       <style>
       <!--
@@ -874,8 +881,10 @@ if __name__ == '__main__':
     <head>
     <body>
     <center>
-    <h2>CDK Nightly Build - %s (%s)</h2>
-    """ % (todayNice, currTime, todayNice, currTime)
+    <h2>CDK Nightly Build - %s (%s)
+    <i>[<a href=\"https://sourceforge.net/svn/?group_id=20024\">SVN</a>
+    Revision %s]</i></h2>
+    """ % (todayNice, currTime, rev, todayNice, currTime, rev)
 
     resultTable = HTMLTable()
     resultTable.addHeaderCell("")
