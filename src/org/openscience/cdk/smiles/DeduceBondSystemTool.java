@@ -72,6 +72,18 @@ public class DeduceBondSystemTool {
         hAdder = new HydrogenAdder();
     }
 
+    public boolean isOK(IMolecule m) {
+    	boolean StructureOK=this.isStructureOK(m);
+    	IRingSet irs=this.removeExtraRings(m);
+    	int count=this.getBadCount(m,irs);
+
+    	if (StructureOK && count==0) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+
     public IMolecule fixAromaticBondOrders(IMolecule molecule) {
         //System.out.println("here");
 
@@ -508,9 +520,7 @@ public class DeduceBondSystemTool {
                 counter++;
 
                 try {
-                    HydrogenAdder hydrogenAdder = null;
-                    hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-                    hydrogenAdder.addImplicitHydrogensToSatisfyValency(mnew);
+                    hAdder.addImplicitHydrogensToSatisfyValency(mnew);
                 } catch (Exception e) {
                     logger.error("Failed to add hydrogens: ", e.getMessage());
                     logger.debug(e);
@@ -591,7 +601,7 @@ public class DeduceBondSystemTool {
             }
 
 //			Figure out which rings we want to make sure are aromatic:
-            boolean [] Check = this.findRingsToCheck(molecule, ringSet);
+            boolean [] Check = this.findRingsToCheck(ringSet);
 
 //			for (int i=0;i<=Check.length-1;i++) {
 //			System.out.println(i+"\t"+rs.getAtomContainer(i).getAtomCount()+"\t"+Check[i]);
@@ -625,7 +635,7 @@ public class DeduceBondSystemTool {
      * @param m The molecule from which we want to remove rings
      * @return The set of reduced rings
      */
-    IRingSet removeExtraRings(IMolecule m) {
+    private IRingSet removeExtraRings(IMolecule m) {
 
         try {
             AllRingsFinder arf = new AllRingsFinder();
@@ -679,7 +689,7 @@ public class DeduceBondSystemTool {
         }
     }
 
-    private boolean[] findRingsToCheck(IMolecule m, IRingSet rs) {
+    private boolean[] findRingsToCheck(IRingSet rs) {
 
         boolean[] Check = new boolean[rs.getAtomContainerCount()];
 

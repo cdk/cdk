@@ -36,11 +36,13 @@ import java.util.StringTokenizer;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -181,6 +183,63 @@ public class SmilesParser {
 	 *      is invalid
 	 */
 	public org.openscience.cdk.Molecule parseSmiles(String smiles) throws InvalidSmilesException
+	{
+		DeduceBondSystemTool dbst=new DeduceBondSystemTool();
+
+		IMolecule m2=this.parseString(smiles);
+
+		IMolecule m=null;
+
+		try {
+			m=(IMolecule)m2.clone();
+
+		} catch (java.lang.CloneNotSupportedException exception) {
+			logger.debug(exception);
+		}
+
+		// add implicit hydrogens
+		this.addImplicitHydrogens(m);
+
+		// setup missing bond orders
+		this.setupMissingBondOrders(m);
+
+		// conceive aromatic perception
+		this.conceiveAromaticPerception(m);
+
+
+		boolean HaveSP2=false;
+
+		for (int j=0;j<=m.getAtomCount()-1;j++) {
+			if (m.getAtom(j).getHybridization()==2) {
+				HaveSP2=true;
+				break;
+			}
+		}
+
+		if (HaveSP2) {  // have lower case (aromatic) element symbols that may need to be fixed
+			if (!(dbst.isOK(m))) {
+
+				// need to fix it:
+				m=(Molecule)dbst.fixAromaticBondOrders(m2);
+
+				if (!(m instanceof IMolecule)) {
+					throw new InvalidSmilesException("couldn't parse");
+				}
+			} else {
+				//doesnt need to fix aromatic bond orders
+			}
+		}
+
+		return (Molecule)m;
+	}
+
+	/**
+	 * This routine parses the smiles string into a molecule but does not add hydrogens, saturate, or perceive aromaticity
+	 * @param smiles
+	 * @return
+	 * @throws InvalidSmilesException
+	 */
+	private org.openscience.cdk.Molecule parseString(String smiles) throws InvalidSmilesException
 	{
 		logger.debug("parseSmiles()...");
 		Bond bond = null;
@@ -846,6 +905,46 @@ public class SmilesParser {
 			ringbonds[thisRing] = bondStatusForRingClosure;
 		}
 		bondStatusForRingClosure = 1;
+	}
+
+	private void addImplicitHydrogens(IMolecule m) {
+		try {
+			logger.debug("before H-adding: ", m);
+			hAdder.addImplicitHydrogensToSatisfyValency(m);
+			logger.debug("after H-adding: ", m);
+		} catch (Exception exception) {
+			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
+		}
+	}
+
+	private void setupMissingBondOrders(IMolecule m) {
+		try {
+			valencyChecker.saturate(m);
+			logger.debug("after adding missing bond orders: ", m);
+		} catch (Exception exception) {
+			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
+		}
+	}
+
+	private void conceiveAromaticPerception(IMolecule m) {
+		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
+		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
+		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
+			IAtomContainer molecule = moleculeSet.getAtomContainer(i);
+			logger.debug("mol: ", molecule);
+			try {
+				valencyChecker.saturate(molecule);
+				logger.debug(" after saturation: ", molecule);
+				if (HueckelAromaticityDetector
+						.detectAromaticity(molecule)) {
+					logger.debug("Structure is aromatic...");
+				}
+			} catch (Exception exception) {
+				logger.error("Could not perceive aromaticity: ", exception
+						.getMessage());
+				logger.debug(exception);
+			}
+		}
 	}
 
 }
