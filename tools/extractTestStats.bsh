@@ -22,6 +22,8 @@ int testsFailed = 0;
 int testsErrors = 0;
 double testsTime = 0.0;
 
+int run = 0;
+String failedModules = "";
 while (line != null) {
   Matcher junitLine = junit.matcher(line);
   if (junitLine.matches()) {
@@ -29,13 +31,15 @@ while (line != null) {
     Matcher moduleLine = module.matcher(line);
     Matcher statsLine = stats.matcher(line);
     if (moduleLine.matches()) {
-      moduleName = moduleLine.group(1);
       Matcher failedLine = failed.matcher(line);
-      // if (failedLine.matches()) {
-      //   System.out.println(moduleName + " failed");
-      // }
+      if (failedLine.matches() && run == 0) {
+        failedModules = failedModules + moduleName + " ";
+      } else {
+        moduleName = moduleLine.group(1);
+        run = 0;
+      }
     } else if (statsLine.matches()) {
-      int run = Integer.parseInt(statsLine.group(1));
+      run = Integer.parseInt(statsLine.group(1));
       int failed = Integer.parseInt(statsLine.group(2));
       int error = Integer.parseInt(statsLine.group(3));
       double time = Double.parseDouble(statsLine.group(4));
@@ -54,3 +58,4 @@ while (line != null) {
 System.out.println("\ntotal: run=" + testsRun +
   " failed=" + testsFailed + " error=" + testsErrors +
   " time=" + testsTime + " secs");
+System.out.println("failed modules: " + failedModules);
