@@ -1,4 +1,4 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 5855 $ $Author: egonw $ $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
  *
  * Copyright (C) 2005-2006  Egon Willighagen <egonw@users.sf.net>
  *
@@ -27,26 +27,27 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol,
- * formal charge and hybridization state.
+ * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
+ * This atom type matches is not suitable for charged molecules, and requires
+ * bond orders to be given explitly.
  *
- * <p>This class uses the <b>cdk/config/data/hybridization_atomtypes.xml</b> 
+ * <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b> 
  * list. If there is not an atom type defined for the tested atom, then null 
  * is returned.
  *
  * @author         egonw
- * @cdk.created    2005-04-15
+ * @cdk.created    2006-09-22
  * @cdk.module     core
  */
-public class HybridizationMatcher implements IAtomTypeMatcher {
+public class ValencyMatcher implements IAtomTypeMatcher {
 
 	private static AtomTypeFactory factory = null;
     private LoggingTool logger;
     
 	/**
-	 * Constructor for the HybridizationMatcher object.
+	 * Constructor for the StructGenMatcher object.
 	 */
-	public HybridizationMatcher() {
+	public ValencyMatcher() {
 		logger = new LoggingTool(this);
 	}
 
@@ -63,7 +64,7 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
 	public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml",
+                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml",
                           atom.getBuilder());
             } catch (Exception ex1) {
                 logger.error(ex1.getMessage());
@@ -72,20 +73,17 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
             }
         }
 
+		double bondOrderSum = atomContainer.getBondOrderSum(atom);
+		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (int i=0; i<types.length; i++) {
             IAtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
-            int charge = atom.getFormalCharge();
-            if (charge == type.getFormalCharge()) {
-                logger.debug("     formal charge matches...");
-                if (atom.getHybridization() == type.getHybridization()) {
-                    logger.debug("     hybridization is OK... We have a match!");
-                    return type;
-                }
-            } else {
-                logger.debug("     formal charge does NOT match...");
-            }
+			if (bondOrderSum == types[i].getBondOrderSum() && 
+	            maxBondOrder == types[i].getMaxBondOrder()) {
+				return type;
+			}
         }
         logger.debug("    No Match");
         
