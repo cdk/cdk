@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.inchi.InChIToStructure;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
@@ -134,7 +135,8 @@ public class InsertTextPanel extends JPanel implements ActionListener {
                   JOptionPane.showMessageDialog(jChemPaintPanel, "Could not process InChI");
                   return null;
                 }
-                molecule = (IMolecule) inchiToStructure.getAtomContainer();
+                IAtomContainer atomContainer = inchiToStructure.getAtomContainer();
+                molecule = atomContainer.getBuilder().newMolecule(atomContainer);
             } catch (CDKException e2) {
                 JOptionPane.showMessageDialog(jChemPaintPanel, "Could not load InChI subsystem");
                 return null;
