@@ -1286,6 +1286,32 @@ public class SmilesParserTest extends CDKTestCase {
 	}
 
 	/**
+	 * @cdk.bug 1541333
+	 */
+	public void testBug1541333(){
+		SmilesParser p = new SmilesParser();
+		try {
+			//                             01  2 345  67  8 9 0 12 3 4  5 67 89  0  1 2
+			Molecule mol1 = p.parseSmiles("OC(=O)CSC1=NC=2C=C(C=CC2N1C=3C=CC=CC3)N(=O)O");
+			assertNotNull(mol1);
+			assertEquals(23, mol1.getAtomCount());
+			assertEquals(25, mol1.getBondCount());
+			Molecule mol2 = p.parseSmiles("OC(=O)CSc1nc2cc(ccc2n1c3ccccc3)N(=O)O");
+			assertNotNull(mol2);
+			assertEquals(23, mol2.getAtomCount());
+			assertEquals(25, mol2.getBondCount());
+			// do some checking
+			assertEquals(2.0, mol1.getBond(1).getOrder(), 0.0001);
+			assertEquals(2.0, mol2.getBond(1).getOrder(), 0.0001);
+			assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
+			assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+
+	/**
 	 * @cdk.bug 1503541
 	 */
 	public void testBug1503541(){
