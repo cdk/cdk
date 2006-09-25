@@ -26,13 +26,12 @@ package org.openscience.cdk.test.config;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -83,7 +82,7 @@ public class IsotopeFactoryTest extends CDKTestCase
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope isotope = isofac.getMajorIsotope("Te");
         if (standAlone) System.out.println("Isotope: " + isotope);
-		assertEquals(129.906229, isotope.getExactMass(), 0.0001);
+		assertEquals(129.9062244, isotope.getExactMass(), 0.0001);
 	}
     
 	public void testGetMajorIsotope_int() throws Exception {
@@ -113,7 +112,7 @@ public class IsotopeFactoryTest extends CDKTestCase
     public void testGetIsotopes_String() throws Exception {
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes("He");
-		assertEquals(2, list.length);
+		assertEquals(8, list.length);
 	}    
 
     public void testIsElement_String() throws Exception {

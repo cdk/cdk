@@ -23,13 +23,13 @@
  */
 package org.openscience.cdk.config.isotopes;
 
-import java.util.Vector;
-
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.Vector;
 
 /**
  * Reads an isotope list in CML2 format. An example definition is:
@@ -46,7 +46,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *     <scalar dictRef="cdk:atomicNumber">1</scalar>
  *   </isotope>
  * </isotopeList>
- * </pre> 
+ * </pre>
  *
  * @cdk.module core
  */
@@ -59,7 +59,7 @@ public class IsotopeHandler extends DefaultHandler {
     private IIsotope workingIsotope;
     private String currentElement;
     private String dictRef;
-    
+
     private IChemObjectBuilder builder;
 
     /**
@@ -72,7 +72,7 @@ public class IsotopeHandler extends DefaultHandler {
         this.builder = builder;
     }
 
-    /** 
+    /**
      * Returns the isotopes read from the XML file.
      *
      * @return A Vector object with all isotopes
@@ -90,25 +90,19 @@ public class IsotopeHandler extends DefaultHandler {
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
         if ("isotope".equals(local)) {
-            if (workingIsotope != null) 
+            if (workingIsotope != null)
                 isotopes.addElement(workingIsotope);
             workingIsotope = null;
         } else if ("isotopeList".equals(local)) {
             currentElement = null;
-        } else if ("abundance".equals(local)) {
-            try {
-                workingIsotope.setNaturalAbundance(Double.parseDouble(currentChars));
-            } catch (NumberFormatException exception) {
-                logger.error("The abundance value is incorrect: ", currentChars);
-                logger.debug(exception);
-            }
-            
         } else if ("scalar".equals(local)) {
             try {
-                if ("cdk:exactMass".equals(dictRef)) {
+                if ("bo:exactMass".equals(dictRef)) {
                     workingIsotope.setExactMass(Double.parseDouble(currentChars));
-                } else if ("cdk:atomicNumber".equals(dictRef)) {
+                } else if ("bo:atomicNumber".equals(dictRef)) {
                     workingIsotope.setAtomicNumber(Integer.parseInt(currentChars));
+                } else if ("bo:relativeAbundance".equals(dictRef)) {
+                    workingIsotope.setNaturalAbundance(Double.parseDouble(currentChars));
                 }
             } catch (NumberFormatException exception) {
                 logger.error("The ", dictRef, " value is incorrect: ", currentChars);
@@ -117,7 +111,7 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    public void startElement(String uri, String local, 
+    public void startElement(String uri, String local,
                              String raw, Attributes atts) {
         currentChars = "";
         dictRef = "";
@@ -129,8 +123,6 @@ public class IsotopeHandler extends DefaultHandler {
             workingIsotope = createIsotopeOfElement(currentElement, atts);
         } else if ("isotopeList".equals(local)) {
             currentElement = getElementSymbol(atts);
-        } else if ("abundance".equals(local)) {
-            logger.warn("Disregarding dictRef for now...");
         } else if ("scalar".equals(local)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("dictRef".equals(atts.getQName(i))) {
