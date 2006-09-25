@@ -94,7 +94,7 @@ public class TanimotoTest extends CDKTestCase
             if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
         }
 
-    	public void testR00258() throws java.lang.Exception
+    	public void visualTestR00258() throws java.lang.Exception
     	{
     		SmilesParser sp = new SmilesParser();
     		String smiles1 = "O=C(O)CCC(=O)C(=O)O";
@@ -148,7 +148,7 @@ public class TanimotoTest extends CDKTestCase
 			//tt.testTanimoto1();
 			//tt.testTanimoto2();
 			//tt.testTanimoto3();
-			tt.testR00258();
+			tt.visualTestR00258();
 		}
 		catch(Exception exc)
 		{
