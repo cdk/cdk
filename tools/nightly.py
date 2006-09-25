@@ -861,8 +861,10 @@ if __name__ == '__main__':
 
     # get some revision info
     rev = open(os.path.join(nightly_dir, 'svn.log'),'r').readlines()
-    rev = rev[0].split()[2]
-    rev = rev[:(len(rev)-1)]
+    rev = rev[len(rev)-1].split()
+    if rev[0] == 'At': rev = rev[2]
+    else: rev = rev[3]
+    rev = rev[:len(rev)-1]
     
     currTime = time.localtime()
     currTime = "%02d:%02d" % (currTime[3], currTime[4])	
