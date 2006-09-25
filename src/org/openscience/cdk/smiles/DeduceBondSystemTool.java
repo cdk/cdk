@@ -413,7 +413,7 @@ public class DeduceBondSystemTool {
     }
 
 
-    public int getBadCount(IMolecule molecule, IRingSet ringSet) {
+    private int getBadCount(IMolecule molecule, IRingSet ringSet) {
         // finds count of nitrogens in the rings that have 4 bonds
         // to non hydrogen atoms and one to hydrogen
         // or nitrogens with 2 double bonds to atoms in the ringset
@@ -473,7 +473,7 @@ public class DeduceBondSystemTool {
     }
 
 
-    public boolean inRingSet(IAtom atom, IRingSet ringSet) {
+    private boolean inRingSet(IAtom atom, IRingSet ringSet) {
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             Ring ring = (Ring) ringSet.getAtomContainer(i);
             if (ring.contains(atom)) return true;
@@ -558,12 +558,14 @@ public class DeduceBondSystemTool {
 
     }
 
-    public boolean isStructureOK(IMolecule molecule) {
+    private boolean isStructureOK(IMolecule molecule) {
         for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
             //System.out.println(mj.getBondOrderSum(mj.getAtomAt(i)));
             try {
                 // Note: valencyHybridChecker.couldMatchAtomType shouldnt check Hybridization to get it to work for non carbon atoms
                 valencyChecker.isSaturated(molecule.getAtom(i), molecule);
+                if (molecule.getAtom(i).getHydrogenCount()<0) return false;
+                
                 //valencyChecker.allSaturated didnt seem to work so did it this way
             } catch (Exception e) {
                 logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
