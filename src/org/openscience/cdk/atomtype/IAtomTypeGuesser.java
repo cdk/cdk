@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,5 +48,5 @@ public interface IAtomTypeGuesser {
       * @throws           CDKException when something went wrong with going through
       *                   the AtomType's
       */
-    public Iterator possbibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
+    public List possbibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
 }

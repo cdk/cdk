@@ -19,11 +19,14 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -39,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2006-09-22
  * @cdk.module     core
  */
-public class StructGenAtomTypeGuesser implements IAtomTypeMatcher {
+public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 
 	private static AtomTypeFactory factory = null;
     private LoggingTool logger;
@@ -61,7 +64,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeMatcher {
 	 * @exception CDKException Exception thrown if something goed wrong
 	 * @return                 the matching AtomType
 	 */
-	public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+	public List possbibleAtomTypes(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {
                 factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml",
@@ -78,18 +81,19 @@ public class StructGenAtomTypeGuesser implements IAtomTypeMatcher {
 		int charge = atom.getFormalCharge();
 		int hcount = atom.getHydrogenCount();
 
+		List matchingTypes = new ArrayList();
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (int i=0; i<types.length; i++) {
             IAtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
 			if (bondOrderSum - charge + hcount == types[i].getBondOrderSum() && 
 	            maxBondOrder <= types[i].getMaxBondOrder()) {
-				return type;
+				matchingTypes.add(type);
 			}
         }
         logger.debug("    No Match");
         
-        return null;
+        return matchingTypes;
 	}
 }
 
