@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-03-30 02:18:21 +0200 (Thu, 30 Mar 2006) $
- * $Revision: 5867 $
+/* $Revision: 5867 $ $Author: egonw $ $Date: 2006-03-30 02:18:21 +0200 (Thu, 30 Mar 2006) $
  *
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
@@ -21,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
@@ -29,6 +25,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
+import org.openscience.cdk.test.atomtype.StructGenAtomTypeGuesserTest;
+import org.openscience.cdk.test.atomtype.StructGenMatcherTest;
+import org.openscience.cdk.test.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.test.config.AtomTypeFactoryTest;
 import org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.test.config.IsotopeFactoryTest;
@@ -61,8 +60,14 @@ public class McoreTests {
         suite.addTest(CDKConstantsTest.suite());
         suite.addTest(DataFeaturesTest.suite());
 
+        // cdk.atomtype
         suite.addTest(HybridizationStateATMatcherTest.suite());
         suite.addTest(HybridizationMatcherTest.suite());
+        suite.addTest(StructGenMatcherTest.suite());
+        suite.addTest(ValencyMatcherTest.suite());
+        suite.addTest(StructGenAtomTypeGuesserTest.suite());
+
+        // cdk.config
         suite.addTest(IsotopeFactoryTest.suite());
         suite.addTest(AtomTypeFactoryTest.suite());
         suite.addTest(CDKBasedAtomTypeConfiguratorTest.suite());
@@ -71,6 +76,8 @@ public class McoreTests {
         suite.addTest(AtomTypeHandlerTest.suite());
         suite.addTest(IsotopeReaderTest.suite());
         suite.addTest(IsotopeHandlerTest.suite());
+        
+        // other
         suite.addTest(CDKExceptionTest.suite());
         suite.addTest(NoSuchAtomExceptionTest.suite());
         suite.addTest(NoSuchAtomTypeExceptionTest.suite());
