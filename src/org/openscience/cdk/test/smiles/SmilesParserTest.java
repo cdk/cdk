@@ -1260,6 +1260,32 @@ public class SmilesParserTest extends CDKTestCase {
 	}
 	
 	/**
+	 * @cdk.bug 1530926
+	 */
+	public void testBug1530926(){
+		SmilesParser p = new SmilesParser();
+		try {
+			//                             0      12345   6
+			Molecule mol = p.parseSmiles("[n+]%101ccccc1.[O-]%10");
+			assertNotNull(mol);
+			assertEquals(7, mol.getAtomCount());
+			assertEquals(7, mol.getBondCount());
+			for (int i=0; i<7; i++) {
+				IBond bond = mol.getBond(i);
+				if (bond.getAtom(0).getSymbol().equals("O") ||
+					bond.getAtom(1).getSymbol().equals("O")) {
+					assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+				} else {
+					assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+				}
+			}
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+
+	/**
 	 * @cdk.bug 1503541
 	 */
 	public void testBug1503541(){
