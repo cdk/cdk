@@ -1193,6 +1193,33 @@ public class SmilesParserTest extends CDKTestCase {
 	}
 	
 	/**
+	 * @cdk.bug 1365547
+	 */
+	public void testBug1365547_2(){
+		SmilesParser p = new SmilesParser();
+		try {
+			Molecule mol = p.parseSmiles("[H]c1c([H])c(c([H])c2c([H])c([H])n([H])c12)Br");
+			assertNotNull(mol);
+			assertEquals(16, mol.getAtomCount());
+			assertEquals(17, mol.getBondCount());
+			for (int i=0; i<17; i++) {
+				IBond bond = mol.getBond(i);
+				if (bond.getAtom(0).getSymbol().equals("H") ||
+					bond.getAtom(0).getSymbol().equals("Br") ||
+					bond.getAtom(1).getSymbol().equals("H") ||
+					bond.getAtom(1).getSymbol().equals("Br")) {
+					assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+				} else {
+					assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+				}
+			}
+		} catch (CDKException exception) {
+			logger.debug(exception);
+			fail(exception.getMessage());
+		}
+	}
+	
+	/**
 	 * @cdk.bug 1235852
 	 */
 	public void testBug1235852(){
