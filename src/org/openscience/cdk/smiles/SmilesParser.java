@@ -48,8 +48,8 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.SmilesValencyChecker;
-
+//import org.openscience.cdk.tools.SmilesValencyChecker;
+import org.openscience.cdk.tools.ValencyHybridChecker;
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
  * SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
@@ -85,7 +85,9 @@ public class SmilesParser {
 
 	private LoggingTool logger;
 	private HydrogenAdder hAdder;
-	private SmilesValencyChecker valencyChecker;
+//	private SmilesValencyChecker valencyChecker;
+	private ValencyHybridChecker valencyChecker;
+		
 	private int status = 0;
 
 
@@ -97,7 +99,7 @@ public class SmilesParser {
 		logger = new LoggingTool(this);
 		try
 		{
-			valencyChecker = new SmilesValencyChecker();
+			valencyChecker = new ValencyHybridChecker();
 			hAdder = new HydrogenAdder(valencyChecker);
 		} catch (Exception exception)
 		{
