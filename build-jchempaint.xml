@@ -122,6 +122,7 @@
                 <include name="cdk-experimental.jar"/>
                 <include name="cdk-extra.jar"/>
                 <include name="cdk-interfaces.jar"/>
+                <include name="cdk-inchi.jar"/>
                 <include name="cdk-io.jar"/>
                 <include name="cdk-libio-cml.jar"/>
                 <include name="cdk-qsar.jar"/>
