@@ -24,7 +24,6 @@ import net.sf.jniinchi.*;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -70,7 +69,7 @@ protected JniInchiInputInchi input;
     
     protected JniInchiOutputStructure output;
     
-    protected IAtomContainer molecule;
+    protected AtomContainer molecule;
     
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
@@ -247,9 +246,9 @@ protected JniInchiInputInchi input;
     
     /**
      * Returns generated molecule.
-     * @return An IAtomContainer object
+     * @return An AtomContainer object
      */
-    public IAtomContainer getAtomContainer() {
+    public AtomContainer getAtomContainer() {
         return(molecule);
     }
     
