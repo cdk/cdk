@@ -91,15 +91,17 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	boolean showMenuBar = true;
 	boolean showToolBar = true;
 	boolean showStatusBar = true;
+    boolean showInsertTextField = true;
 
     protected CDKPluginManager pluginManager = null;
 	protected EventListenerList changeListeners = null;
-	
-	/**
-	 *  Constructor for the panel
-	 *
-	 */
-	public JChemPaintEditorPanel(){
+
+
+    /**
+     *  Constructor for the panel
+     *
+     */
+    public JChemPaintEditorPanel(){
     this(1, null);
   }
 
@@ -182,8 +184,17 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return showStatusBar;
 	}
 
+    /**
+     * Indicates whether the insert text field is shown.
+     *
+     * @return true is the text field widget is to be shown, false otherwise
+     */
+    public boolean getShowInsertTextField() {
+        return showInsertTextField;
+    }
 
-	/**
+
+    /**
 	 *  Description of the Method
 	 */
 	public void customizeView() {
@@ -350,8 +361,24 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		customizeView();
 	}
 
+    /**
+     * Set to indicate whetehr the insert text field should be used.
+     *
+     * This function is a little kkludgy since we actually have to call the
+     * setShowToolbar() method to update the UI to remove or add the text entry
+     * widget. This is because the text entry widget has to be added between the
+     * toolbar and the drawing panel, but since we are using a BorderLayout we
+     * actually have to put the toolbar *and* the tetx field widget into a
+     * new panel and add that to the NORTH position. Like I said, kludgy :(
+     *
+     * @param showInsertTextField true is the text entry widget is to be shown
+     */
+    public void setShowInsertTextField(boolean showInsertTextField) {
+        this.showInsertTextField = showInsertTextField;
+    }
 
-	/**
+
+    /**
 	 *  Sets the value of showToolbar.
 	 *
 	 *@param  showToolBar  The value to assign showToolbar.
@@ -372,7 +399,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             northPanel.add(textPanel, BorderLayout.SOUTH);
 
 //            mainContainer.add(toolBar, BorderLayout.NORTH);
-            mainContainer.add(northPanel, BorderLayout.NORTH);            
+            mainContainer.add(northPanel, BorderLayout.NORTH);
 			mainContainer.revalidate();
 		} else {
             try {
