@@ -38,9 +38,9 @@ import org.openscience.cdk.applications.jchempaint.dialogs.CreateCoordinatesForF
 import org.openscience.cdk.applications.plugin.ICDKEditBus;
 import org.openscience.cdk.applications.undoredo.ClearAllEdit;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.listener.SwingGUIListener;
@@ -95,10 +95,20 @@ public abstract class JChemPaintPanel
 	 *  Description of the Field
 	 */
 	JPanel mainContainer;
-	StatusBar statusBar;
+
+    /**
+     * Holds the toolbar and insert text widget, goes at the top of mainContainer.
+     */
+    JPanel topContainer;
+
+    /**
+     * The status bar.
+     */
+    StatusBar statusBar;
 	JChemPaintMenuBar menu;
 	JToolBar toolBar;
-	DrawingPanel drawingPanel;
+    InsertTextPanel insertTextPanel = null;
+    DrawingPanel drawingPanel;
 	/**
 	 *  Description of the Field
 	 */
@@ -124,29 +134,31 @@ public abstract class JChemPaintPanel
     //we remember the moveButton since this is special
     protected JButton moveButton=null;
     private JScrollPane scrollPane;
-    
+
 	/**
 	 *  Constructor for the JChemPaintPanel object
 	 */
 	public JChemPaintPanel() {
 		logger = new LoggingTool(this);
-        
+
 //        undoManager = new UndoManager();
 //        undoManager.setLimit(10);
 //        undoSupport = new UndoableEditSupport();
 //        undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
-        
-		setLayout(new BorderLayout());
-		mainContainer = new JPanel();
-		mainContainer.setLayout(new BorderLayout());
-		drawingPanel = new DrawingPanel();
+
+        setLayout(new BorderLayout());
+        mainContainer = new JPanel(new BorderLayout());
+        topContainer = new JPanel(new BorderLayout());
+
+        drawingPanel = new DrawingPanel();
 		drawingPanel.setOpaque(true);
 		drawingPanel.setBackground(Color.white);
 		scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		mainContainer.add(scrollPane, BorderLayout.CENTER);
+        mainContainer.add(topContainer, BorderLayout.NORTH);
 
-		add(mainContainer, BorderLayout.CENTER);
+        add(mainContainer, BorderLayout.CENTER);
 		setSize(new Dimension(900, 400));
 		setPreferredSize(new Dimension(900, 400));
         instances.add(this);

@@ -130,7 +130,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         customizeView();
         super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
-		if (logger == null)
+        setShowInsertTextField(true);
+        if (logger == null)
 		{
 			logger = new LoggingTool(this);
 		}
@@ -364,17 +365,17 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     /**
      * Set to indicate whetehr the insert text field should be used.
      *
-     * This function is a little kkludgy since we actually have to call the
-     * setShowToolbar() method to update the UI to remove or add the text entry
-     * widget. This is because the text entry widget has to be added between the
-     * toolbar and the drawing panel, but since we are using a BorderLayout we
-     * actually have to put the toolbar *and* the tetx field widget into a
-     * new panel and add that to the NORTH position. Like I said, kludgy :(
-     *
      * @param showInsertTextField true is the text entry widget is to be shown
      */
     public void setShowInsertTextField(boolean showInsertTextField) {
         this.showInsertTextField = showInsertTextField;
+        if (showInsertTextField) {
+            if (insertTextPanel == null) insertTextPanel = new InsertTextPanel(this);
+            topContainer.add(insertTextPanel, BorderLayout.SOUTH);
+        } else {
+            topContainer.remove(insertTextPanel);
+        }
+        mainContainer.revalidate();
     }
 
 
@@ -383,27 +384,17 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 *
 	 *@param  showToolBar  The value to assign showToolbar.
 	 */
-	public void setShowToolBar(boolean showToolBar, int lines)
-	{
-		this.showToolBar = showToolBar;
-		if (showToolBar)
-		{
-			if (toolBar == null)
-			{
-    		toolBar = ToolBarMaker.getToolbar(this, lines);
-			}
-
-            InsertTextPanel textPanel = new InsertTextPanel(this);
-            JPanel northPanel = new JPanel(new BorderLayout());
-            northPanel.add(toolBar, BorderLayout.NORTH);
-            northPanel.add(textPanel, BorderLayout.SOUTH);
-
-//            mainContainer.add(toolBar, BorderLayout.NORTH);
-            mainContainer.add(northPanel, BorderLayout.NORTH);
-			mainContainer.revalidate();
-		} else {
+    public void setShowToolBar(boolean showToolBar, int lines) {
+        this.showToolBar = showToolBar;
+        if (showToolBar) {
+            if (toolBar == null) {
+                toolBar = ToolBarMaker.getToolbar(this, lines);
+            }
+            topContainer.add(toolBar, BorderLayout.NORTH);
+            mainContainer.revalidate();
+        } else {
             try {
-                mainContainer.remove(toolBar);
+                topContainer.remove(toolBar);
                 mainContainer.revalidate();
             } catch (Exception exc) {
                 logger.debug("Error in removing tool bar");
