@@ -111,6 +111,7 @@ public class MqsarTests {
         suite.addTest(IPAtomicDescriptorTest.suite());
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
         suite.addTest(MDEDescriptorTest.suite());
+        suite.addTest(LengthOverBreadthDescriptorTest.suite());
 
         // from cdk.test.qsar.model
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());

@@ -2117,21 +2117,7 @@
     </Descriptor>
 
 
-     <Descriptor rdf:ID="mde">
-        <rdfs:label>Molecular Distance Edge</rdfs:label>
-        <dc:contributor rdf:resource="#rguha"/>
-        <dc:date>2006-09-18</dc:date>
-        <definition>
-            Evaluate molecular distance edge descriptors for C, N and O
-        </definition>
-        <description>
-            For a description of the methodology see
-            <bibtex:cite ref="LIU98"/>
-            .
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
+
 
     <Descriptor rdf:ID="zagrebIndex">
         <rdfs:label>Zagreb Index</rdfs:label>
@@ -2257,6 +2243,38 @@
 	    parameters to generate a set of 147 descriptors for a given sequence
         </definition>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+         <Descriptor rdf:ID="mde">
+        <rdfs:label>Molecular Distance Edge</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-09-18</dc:date>
+        <definition>
+            Evaluate molecular distance edge descriptors for C, N and O
+        </definition>
+        <description>
+            For a description of the methodology see
+            <bibtex:cite ref="LIU98"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+          <Descriptor rdf:ID="mde">
+        <rdfs:label>Lenght Over Breadth</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-09-26</dc:date>
+        <definition>
+              Calculates the ratio of length to breadth.
+        </definition>
+        <description>
+          The descriptor has two values
+            indicating the maximum and minimumn value of LoB. Note that this method does not
+            perform any orientation.
+        </description>
+        <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
