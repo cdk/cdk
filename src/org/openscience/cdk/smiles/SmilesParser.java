@@ -461,49 +461,6 @@ public class SmilesParser {
 			logger.debug("Parsing next char");
 		} while (position < smiles.length());
 
-		// add implicit hydrogens
-		try
-		{
-			logger.debug("before H-adding: ", molecule);
-			hAdder.addImplicitHydrogensToSatisfyValency(molecule);
-			logger.debug("after H-adding: ", molecule);
-		} catch (Exception exception)
-		{
-			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
-		}
-
-		// setup missing bond orders
-		try
-		{
-			valencyChecker.saturate(molecule);
-			logger.debug("after adding missing bond orders: ", molecule);
-		} catch (Exception exception)
-		{
-			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
-		}
-
-		// conceive aromatic perception
-		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
-		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
-		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++)
-		{
-			IMolecule mol = moleculeSet.getMolecule(i);
-			logger.debug("mol: ", mol);
-			try
-			{
-				valencyChecker.saturate(mol);
-				logger.debug(" after saturation: ", mol);
-				if (HueckelAromaticityDetector.detectAromaticity(mol))
-				{
-					logger.debug("Structure is aromatic...");
-				}
-			} catch (Exception exception)
-			{
-				logger.error("Could not perceive aromaticity: ", exception.getMessage());
-				logger.debug(exception);
-			}
-		}
-
 		return molecule;
 	}
 
