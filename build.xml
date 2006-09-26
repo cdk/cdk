@@ -474,8 +474,9 @@
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
-		<antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
@@ -509,7 +510,7 @@
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/svg.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
-                	<includesfile name="${metainf}/sdg.libdepends"/>
+                    <includesfile name="${metainf}/sdg.libdepends"/>
 		    <includesfile name="${metainf}/forcefield.libdepends"/>
                     <includesfile name="${metainf}/inchi.libdepends"/>
                 </fileset>
@@ -541,7 +542,7 @@
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smiles.jar"/>
-                	<include name="cdk-sdg.jar"/>
+                    <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
                 </fileset>
             </unjar>
@@ -711,6 +712,7 @@
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
+            <antcall target="test-module"><param name="module" value="inchi"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
