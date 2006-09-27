@@ -56,11 +56,52 @@ public class PDBStructureTest extends CDKTestCase {
         return new TestSuite(PDBStructureTest.class);
     }
     
-	public void testPDBPolymer() {
+	public void testPDBStructure() {
 		PDBStructure structure = new PDBStructure();
 		assertNotNull(structure);
 	}
-    
+	
+	public void testGetEndChainID() {
+    }
+
+    public void testSetEndChainID_char(char endChainID) {
+    }
+
+    public void testGetEndInsertionCode() {
+    }
+
+    public void testSetEndInsertionCode_char(char endInsertionCode) {
+    }
+
+    public void testGetEndSequenceNumber() {
+    }
+
+    public void testSetEndSequenceNumber_int(int endSequenceNumber) {
+    }
+
+    public void testGetStartChainID() {
+    }
+
+    public void testSetStartChainID_char(char startChainID) {
+    }
+
+    public void testGetStartInsertionCode() {
+    }
+
+    public void testSetStartInsertionCode_char(char startInsertionCode) {
+    }
+
+    public void testGetStartSequenceNumber() {
+    }
+
+    public void testSetStartSequenceNumber_int(int startSequenceNumber) {
+    }
+
+    public void testGetStructureType() {
+    }
+
+    public void testSetStructureType_String(String structureType) {
+    }
     /**
      * Method to test wether the class complies with RFC #9.
      */

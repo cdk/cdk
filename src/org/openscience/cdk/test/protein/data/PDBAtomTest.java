@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.test.CDKTestCase;
@@ -58,11 +59,17 @@ public class PDBAtomTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(PDBAtomTest.class);
     }
-
+    
+    public void testPDBAtom_IElement() {
+    	IElement element = builder.newElement();
+        IAtom a = builder.newPDBAtom(element);
+        assertNotNull(a);
+    }
+    
     /**
      * Method to test the Atom(String symbol) method.
      */
-    public void testAtom_String() {
+    public void testPDBAtom_String() {
     	IPDBAtom a = builder.newPDBAtom("C");
         assertEquals("C", a.getSymbol());
         assertNull(a.getPoint2d());
@@ -73,7 +80,7 @@ public class PDBAtomTest extends CDKTestCase {
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    public void testAtom_String_Point3d() {
+    public void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = builder.newPDBAtom("C", point3d);
@@ -229,5 +236,135 @@ public class PDBAtomTest extends CDKTestCase {
     public void testDefaultChargeValue() {
     	IPDBAtom atom = builder.newPDBAtom("C");
         assertEquals(CDKConstants.UNSET, atom.getCharge(), 0.00000001);
+    }
+    
+    public void testGetRecord(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
+        assertTrue(atom.getRecord().equals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N"));
+    }
+    
+    public void testSetRecord_String(){
+    	testGetRecord();
+    }
+    
+    public void testGetTempFactor(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setTempFactor(0.0);
+        assertEquals(atom.getTempFactor(),0.0, 001);
+    }
+    
+    public void testSetTempFactor_double(){
+    	testGetTempFactor();
+    }
+    
+    public void testSetResName_String(){
+    	testGetResName();
+    }
+    
+    public void testGetResName(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setResName("PHE");
+        assertTrue(atom.getResName().equals("PHE"));
+    }
+    
+    public void testSetICode_String(){
+    	testGetICode();
+    }
+    
+    public void testGetICode(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setICode("123");
+        assertTrue(atom.getICode().equals("123"));
+    }
+    
+    public void testSetChainID_String(){
+    	testGetChainID();
+    }
+    
+    public void testGetChainID(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setChainID("123");
+        assertTrue(atom.getChainID().equals("123"));
+    }
+    
+    public void testSetAltLoc_String(){
+    	testGetAltLoc();
+    }
+    
+    public void testGetAltLoc(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setAltLoc("123");
+        assertTrue(atom.getAltLoc().equals("123"));
+    }
+    
+    public void testSetSegID_String(){
+    	testGetSegID();
+    }
+    
+    public void testGetSegID(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setSegID("123");
+        assertTrue(atom.getSegID().equals("123"));
+    }
+    
+    public void testSetSerial_int(){
+    	testGetSerial();
+    }
+    
+    public void testGetSerial(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setSerial(123);
+        assertEquals(atom.getSerial(),123);
+    }
+    
+    public void testSetResSeq_String(){
+    	testGetResSeq();
+    }
+    
+    public void testGetResSeq(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setResSeq("123");
+        assertTrue(atom.getResSeq().equals("123"));
+    }
+    
+    public void testSetOxt_boolean(){
+    	testGetOxt();
+    }
+    
+    public void testGetOxt(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setOxt(true);
+        assertTrue(atom.getOxt());
+    }
+    
+    public void testSetHetAtom_boolean(){
+    	testGetHetAtom();
+    }
+    
+    public void testGetHetAtom(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setHetAtom(true);
+        assertTrue(atom.getHetAtom());
+    }
+    
+    public void testSetOccupancy_double(){
+    	testGetOccupancy();
+    }
+    
+    public void testGetOccupancy(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setOccupancy(1.0);
+        assertEquals(atom.getOccupancy(),1.0,0.01);
+    }
+    
+    public void testGetName(){
+    	IPDBAtom atom = builder.newPDBAtom("C");
+    	atom.setName("123");
+        assertTrue(atom.getName().equals("123"));
+    }
+    
+    public void testSetName_String(){
+    	testGetName();
     }
 }

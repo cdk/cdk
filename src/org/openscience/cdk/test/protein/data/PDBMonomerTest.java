@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -57,11 +58,32 @@ public class PDBMonomerTest extends CDKTestCase {
         return new TestSuite(PDBMonomerTest.class);
     }
     
-	public void testPDBPolymer() {
+	public void testPDBMonomer() {
 		PDBMonomer monomer = new PDBMonomer();
 		assertNotNull(monomer);
 		assertEquals(monomer.getICode(), null);
 		
-	}	
+	}
+	
+	public void testSetICode_String() {
+	}
+	
+	public void testGetICode() {
+	}
+	
+	public void testSetChainID_String() {
+	}
+	
+	public void testGetChainID() {
+	}
+	
+	public void testToString() {
+		IPDBMonomer monomer = builder.newPDBMonomer();
+        String description = monomer.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+	}
 
 }
