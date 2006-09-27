@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
@@ -462,7 +463,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IPolymer);
 	}	
 	
-	public void testnewPDBAtom_IElement() {
+	public void testNewPDBAtom_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newPDBAtom(element);
 		assertNotNull(object);
@@ -471,7 +472,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IPDBAtom);
 	}	
 	
-	public void testnewPDBAtom_String() {
+	public void testNewPDBAtom_String() {
 		Object object = rootObject.getBuilder().newPDBAtom("C");
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
@@ -479,7 +480,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IPDBAtom);
 	}	
 	
-	public void testnewPDBAtom_String_Point3D() {
+	public void testNewPDBAtom_String_Point3D() {
 		Object object = rootObject.getBuilder().newPDBAtom("C", new Point3d(1.0, 2.0, 3.0));
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
@@ -502,6 +503,15 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 		assertTrue(object instanceof IPDBStructure);
 	}
+	
+	public void testNewPDBMonomer() {
+		Object object = rootObject.getBuilder().newPDBMonomer();
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBMonomer);
+	}
+
 	
 	public void testNewPseudoAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom();
