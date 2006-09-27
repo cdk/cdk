@@ -1009,10 +1009,13 @@ public class GeometryTools {
         double atomX;
         double atomY;
 
-        IAtomContainer[] all = ChemModelManipulator.getAllAtomContainers(model);
-        for (int i = 0; i < all.length; i++) {
-            for (int j = 0; j < all[i].getAtomCount(); j++) {
-                currentAtom = all[i].getAtom(j);
+        List atomContainerList = ChemModelManipulator.getAllAtomContainers(model);
+        Iterator iterator = atomContainerList.iterator();
+        while(iterator.hasNext())
+        {
+        	IAtomContainer ac = (IAtomContainer)iterator.next();
+            for (int j = 0; j < ac.getAtomCount(); j++) {
+                currentAtom = ac.getAtom(j);
                 if (renderingCoordinates.get(currentAtom) == null && currentAtom.getPoint2d() != null) {
                     renderingCoordinates.put(currentAtom, new Point2d(currentAtom.getPoint2d().x, currentAtom.getPoint2d().y));
                 }

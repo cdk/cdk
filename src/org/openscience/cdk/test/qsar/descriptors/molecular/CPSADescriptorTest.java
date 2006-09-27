@@ -19,21 +19,23 @@
 */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
 
 
 /**
@@ -56,8 +58,8 @@ public class CPSADescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[0];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         IMolecularDescriptor descriptor = new CPSADescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();

@@ -23,9 +23,13 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -39,8 +43,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -78,8 +80,8 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         IChemFile content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        mol = c[0];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        mol = (IAtomContainer) cList.get(0);
         mol = AtomContainerManipulator.removeHydrogens(mol);
 
         value = descriptor.calculate(mol);
@@ -94,8 +96,8 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new ReaderFactory().createReader(ins);
         content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-        c = ChemFileManipulator.getAllAtomContainers(content);
-        mol = c[0];
+        cList = ChemFileManipulator.getAllAtomContainers(content);
+        mol = (IAtomContainer) cList.get(0);
         mol = AtomContainerManipulator.removeHydrogens(mol);
         value = descriptor.calculate(mol);
         result = (DoubleArrayResult) value.getValue();

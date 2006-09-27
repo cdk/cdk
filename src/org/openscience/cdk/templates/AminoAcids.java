@@ -23,18 +23,20 @@
  */
 package org.openscience.cdk.templates;
 
-import java.util.HashMap;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Tool that provides templates for the (natural) amino acids.
@@ -116,13 +118,17 @@ public class AminoAcids {
         );
         try {
         	list = (IChemFile)reader.read(list);
-        	IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(list);
-        	for (int i=0; i<containers.length; i++) {
-        		logger.debug("Adding AA: ", containers[i]);
+        	List containersList = ChemFileManipulator.getAllAtomContainers(list);
+        	Iterator iterator = containersList.iterator();
+        	int counter = 0;
+        	while(iterator.hasNext())
+        	{
+        		IAtomContainer ac = (IAtomContainer)iterator.next();
+        		logger.debug("Adding AA: ", ac);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		java.util.Iterator atoms = containers[i].atoms();
-        		Enumeration props = containers[i].getProperties().keys();
+        		java.util.Iterator atoms = ac.atoms();
+        		Enumeration props = ac.getProperties().keys();
         		while (props.hasMoreElements()) {
         			Object next = props.nextElement();
         			logger.debug("Prop class: " + next.getClass().getName());
@@ -131,12 +137,12 @@ public class AminoAcids {
         				DictRef dictRef = (DictRef)next;
         				// System.out.println("DictRef type: " + dictRef.getType());
         				if (dictRef.getType().equals("pdb:residueName")) {
-        					aminoAcid.setProperty(RESIDUE_NAME, containers[i].getProperty(dictRef).toString().toUpperCase());
+        					aminoAcid.setProperty(RESIDUE_NAME, ac.getProperty(dictRef).toString().toUpperCase());
         				} else if (dictRef.getType().equals("pdb:oneLetterCode")) {
-        					aminoAcid.setProperty(RESIDUE_NAME_SHORT, containers[i].getProperty(dictRef));
+        					aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
         				} else if (dictRef.getType().equals("pdb:id")) {
-        					aminoAcid.setProperty(ID, containers[i].getProperty(dictRef));
-        					logger.debug("Set AA ID to: ", containers[i].getProperty(dictRef));
+        					aminoAcid.setProperty(ID, ac.getProperty(dictRef));
+        					logger.debug("Set AA ID to: ", ac.getProperty(dictRef));
         				} else {
         					logger.error("Cannot deal with dictRef!");
         				}
@@ -153,18 +159,19 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-        		org.openscience.cdk.interfaces.IBond[] bonds = containers[i].getBonds();
+        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
         		for (int bondCount=0; bondCount<bonds.length; bondCount++) {
         			aminoAcid.addBond(bonds[bondCount]);
         		}
         		AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
                 aminoAcid.setProperty(NO_ATOMS, "" + aminoAcid.getAtomCount());
                 aminoAcid.setProperty(NO_BONDS, "" + aminoAcid.getBondCount());
-                if (i < aminoAcids.length) {
-                	aminoAcids[i] = aminoAcid;
+                if (counter < aminoAcids.length) {
+                	aminoAcids[counter] = aminoAcid;
                 } else {
                 	logger.error("Could not store AminoAcid! Array too short!");
                 }
+                counter++;
         	}
         } catch (Exception exception) {
         	logger.error("Failed reading file: ", exception.getMessage());

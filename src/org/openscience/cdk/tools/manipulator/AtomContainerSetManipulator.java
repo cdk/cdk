@@ -28,16 +28,15 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
@@ -112,7 +111,7 @@ public class AtomContainerSetManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IAtomContainerSet set) {
         IAtomContainer container = set.getBuilder().newAtomContainer();
-        java.util.Iterator acs = set.atomContainers();
+        Iterator acs = set.atomContainers();
         while (acs.hasNext()) {
             container.add((IAtomContainer)acs.next());
         }
@@ -122,10 +121,13 @@ public class AtomContainerSetManipulator {
 	/**
      * Returns all the AtomContainer's of a MoleculeSet.
      */
-    public static IAtomContainer[] getAllAtomContainers(IAtomContainerSet set) {
-    	IAtomContainer[] array = new IAtomContainer[set.getAtomContainerCount()];
-    	for (int i = 0; i < set.getAtomContainerCount(); ++i) array[i] = set.getAtomContainer(i);
-		return array;
+    public static List getAllAtomContainers(IAtomContainerSet set) {
+    	List atomContainerList = new ArrayList();
+    	Iterator acs = set.atomContainers();
+    	while(acs.hasNext()){
+    		atomContainerList.add((IAtomContainer)acs.next());
+    	}
+    	return atomContainerList;
     }
 	
 	/**
@@ -165,10 +167,10 @@ public class AtomContainerSetManipulator {
 		return hCount;
 	}
 	
-    public static Vector getAllIDs(IAtomContainerSet set) {
-        Vector idList = new Vector();
+    public static List getAllIDs(IAtomContainerSet set) {
+        List idList = new ArrayList();
         if (set != null) {
-            if (set.getID() != null) idList.addElement(set.getID());
+            if (set.getID() != null) idList.add(set.getID());
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
                 idList.add(AtomContainerManipulator.getAllIDs(set.getAtomContainer(i)));
             }

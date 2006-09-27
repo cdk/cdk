@@ -30,11 +30,15 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
@@ -120,11 +124,11 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 			);
 		}
 		
-		IAtomContainer[] molecules = null;
+		List moleculesList = null;
 		if(split){
 			try
 			{
-				molecules = AtomContainerSetManipulator.getAllAtomContainers(ConnectivityChecker.partitionIntoMolecules(atomCon));
+				moleculesList = AtomContainerSetManipulator.getAllAtomContainers(ConnectivityChecker.partitionIntoMolecules(atomCon));
 			} catch (Exception exception)
 			{
 				logger.warn("Could not partition molecule: ", exception.getMessage());
@@ -132,11 +136,11 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 				return;
 			}
 		}else {
-			molecules=new IAtomContainer[1];
-			molecules[0]=atomCon;
+			moleculesList = new ArrayList();
+			moleculesList.add(atomCon);
 		}
 		if(redossr){
-			redoSSSR(molecules);
+			redoSSSR(moleculesList);
 		}
         paintBonds(atomCon, ringSet, graphics);
 		paintAtoms(atomCon, graphics);
@@ -149,12 +153,13 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	
 	}
 	
-	public void redoSSSR(IAtomContainer[] molecules){
-			if(ringSet==null && molecules.length > 0)
-				ringSet= molecules[0].getBuilder().newRingSet();
-			for (int i = 0; i < molecules.length; i++)
+	public void redoSSSR(List moleculesList){
+			if(ringSet==null && moleculesList.size() > 0)
+				ringSet= ((IMolecule)moleculesList.get(0)).getBuilder().newRingSet();
+			Iterator iterator = moleculesList.iterator();
+			while(iterator.hasNext())
 			{
-				SSSRFinder sssrf = new SSSRFinder(molecules[i]);
+				SSSRFinder sssrf = new SSSRFinder((IMolecule)iterator.next());
 				ringSet.add(sssrf.findSSSR());
 			}
 	}

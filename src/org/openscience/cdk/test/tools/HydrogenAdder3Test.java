@@ -24,6 +24,7 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -114,21 +115,21 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         try {
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
             
-            assertEquals(10, containers[0].getAtomCount());
-            IAtom sulfur = containers[0].getAtom(1);
+            assertEquals(10, ((IAtomContainer)containersList.get(0)).getAtomCount());
+            IAtom sulfur = ((IAtomContainer)containersList.get(0)).getAtom(1);
             assertEquals("S", sulfur.getSymbol());
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
+            assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
             
             // add explicit hydrogens
-            adder.addExplicitHydrogensToSatisfyValency(containers[0]);
-            assertEquals(21, containers[0].getAtomCount());
+            adder.addExplicitHydrogensToSatisfyValency(((IAtomContainer)containersList.get(0)));
+            assertEquals(21, ((IAtomContainer)containersList.get(0)).getAtomCount());
             
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
+            assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
         } catch (Exception exception) {
         	exception.printStackTrace();
         	fail(exception.getMessage());
@@ -145,21 +146,22 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         try {
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
             
-            assertEquals(10, containers[0].getAtomCount());
-            IAtom sulfur = containers[0].getAtom(1);
+            IAtomContainer atomContainer_0 = (IAtomContainer)containersList.get(0);
+            assertEquals(10, atomContainer_0.getAtomCount());
+            IAtom sulfur = atomContainer_0.getAtom(1);
             assertEquals("S", sulfur.getSymbol());
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
+            assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
             
             // add explicit hydrogens
-            adder.addImplicitHydrogensToSatisfyValency(containers[0]);
-            assertEquals(10, containers[0].getAtomCount());
+            adder.addImplicitHydrogensToSatisfyValency(atomContainer_0);
+            assertEquals(10, atomContainer_0.getAtomCount());
             
             assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, containers[0].getConnectedAtomsCount(sulfur));
+            assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
         } catch (Exception exception) {
         	exception.printStackTrace();
         	fail(exception.getMessage());

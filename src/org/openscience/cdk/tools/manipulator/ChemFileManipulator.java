@@ -28,9 +28,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -101,49 +100,30 @@ public class ChemFileManipulator {
     /**
      * Returns all the AtomContainer's of a ChemFile.
      */
-    public static IAtomContainer[] getAllAtomContainers(IChemFile file) {
-        java.util.Iterator sequences = file.chemSequences();
-        int acCount = 0;
-        Vector acArrays = new Vector();
+    public static List getAllAtomContainers(IChemFile file) {
+        Iterator sequences = file.chemSequences();
+        List acList = new ArrayList();
         while (sequences.hasNext()) {
-            IAtomContainer[] sequenceContainers = ChemSequenceManipulator.
-                getAllAtomContainers((IChemSequence)sequences.next());
-            acArrays.addElement(sequenceContainers);
-            acCount += sequenceContainers.length;
+        	IChemSequence chemseq  = (IChemSequence)sequences.next();
+            acList.addAll(ChemSequenceManipulator.getAllAtomContainers(chemseq));
         }
-        IAtomContainer[] containers = new IAtomContainer[acCount];
-        int arrayOffset = 0;
-        for (Enumeration acArraysElements = acArrays.elements(); 
-             acArraysElements.hasMoreElements(); ) {
-            IAtomContainer[] modelContainers = (IAtomContainer[])acArraysElements.nextElement();
-            System.arraycopy(modelContainers, 0,
-                             containers, arrayOffset,
-                             modelContainers.length);
-            arrayOffset += modelContainers.length;
-        }
-        return containers;
+        return acList;
     }
     
-    public static IChemModel[] getAllChemModels(IChemFile file)
+    public static List getAllChemModels(IChemFile file)
     {
 	    int modelCounter = 0;
 	    int counter = 0;
-	    IChemModel[] tempModels = null;
-	    for (int f = 0; f < file.getChemSequenceCount(); f++)
-	    {
-		    modelCounter += file.getChemSequence(f).getChemModelCount();
-	    }
-	    IChemModel[] models = new IChemModel[modelCounter];
-	    for (int f = 0; f < file.getChemSequenceCount(); f++)
-	    {
+	    List modelsList = new ArrayList();
+
+	    for (int f = 0; f < file.getChemSequenceCount(); f++){
 		    java.util.Iterator iter = file.getChemSequence(f).chemModels();
 		    while (iter.hasNext())
 		    {
-			    models[counter] = (IChemModel)iter.next();
-			    counter ++;
+			    modelsList.add((IChemModel)iter.next());
 		    }
 	    }
-	    return models;
+	    return modelsList;
     }
 }
 

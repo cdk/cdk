@@ -2,6 +2,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -59,13 +60,16 @@ public class CreateInChIAction extends JCPAction
         
         if (factory != null) {
             ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
-            IAtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
+            List containersList = ChemModelManipulator.getAllAtomContainers(model);
             StringBuffer dialogText = new StringBuffer();
             String eol = System.getProperty("line.separator");
             List molecules = new ArrayList();
-            for (int i = 0; i < containers.length; i ++) {
-                if (containers[i].getAtomCount() > 0) {
-                    molecules.add(containers[i]);
+            Iterator iterator = containersList.iterator();
+			while(iterator.hasNext())
+			{
+				IAtomContainer ac = (IAtomContainer)iterator.next();
+				if (ac.getAtomCount() > 0) {
+                    molecules.add(ac);
                 }
             }
             for (int i = 0; i < molecules.size(); i ++) {

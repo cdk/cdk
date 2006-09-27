@@ -23,8 +23,12 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -37,8 +41,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescrip
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -63,15 +65,15 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[0];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         DescriptorValue result = descriptor.calculate(ac);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
         assertEquals(0.5, dar.get(0), 0.00001);
         assertEquals(0.606477, dar.get(1), 0.000001);
 
-        ac = c[1];
+        ac = (IAtomContainer) cList.get(1);
         result = descriptor.calculate(ac) ;
         dar = (DoubleArrayResult)result.getValue();
         assertEquals(0.666666, dar.get(0), 0.000001);

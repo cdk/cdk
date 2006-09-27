@@ -37,8 +37,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
@@ -225,7 +225,7 @@ public class ChemModelManipulator {
     /**
      * Returns all the AtomContainer's of a ChemModel.
      */
-    public static IAtomContainer[] getAllAtomContainers(IChemModel chemModel) {
+    public static List getAllAtomContainers(IChemModel chemModel) {
         IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
         if (chemModel.getMoleculeSet() != null) {
             moleculeSet.add(chemModel.getMoleculeSet());

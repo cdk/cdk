@@ -3,6 +3,8 @@ package org.openscience.cdk.test.io;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -67,14 +69,17 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 			BufferedReader inputReader = new BufferedReader(new InputStreamReader(ins));
 			Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
 			ChemFile chemFile = (ChemFile)g98Reader.read(new ChemFile());
-			IAtomContainer[] atomContainers = ChemFileManipulator.getAllAtomContainers(chemFile);
-			assertNotNull(atomContainers);
-			assertTrue(atomContainers.length == 54);
+			List atomContainersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+			assertNotNull(atomContainersList);
+			assertTrue(atomContainersList.size() == 54);
 			//System.out.println("Found " + atomContainers.length + " atomContainers");
-			for (int f = 0; f < atomContainers.length; f++)
-			{	
+			Iterator iterator = atomContainersList.iterator();
+			int counter = 0;
+			while(iterator.hasNext())
+			{
+				IAtomContainer ac = (IAtomContainer) iterator.next();
 				shieldingCounter = 0;
-				atomContainer = atomContainers[f];
+				atomContainer = ac;
 				for (int g = 0; g <  atomContainer.getAtomCount(); g++)
 				{
 					object = atomContainer.getAtom(g).getProperty(CDKConstants.ISOTROPIC_SHIELDING);
@@ -84,9 +89,10 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 						shieldingCounter ++;
 					}
 				}
-				if (f < 53) assertTrue(shieldingCounter == 0);
-				else assertTrue(shieldingCounter == atomContainers[f].getAtomCount());
+				if (counter < 53) assertTrue(shieldingCounter == 0);
+				else assertTrue(shieldingCounter == ac.getAtomCount());
 				//System.out.println("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
+				counter++;
 			}
 		}catch(Exception exc)
 		{

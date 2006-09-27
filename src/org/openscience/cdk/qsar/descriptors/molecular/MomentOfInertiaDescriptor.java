@@ -19,8 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -32,7 +32,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
-import javax.vecmath.Point3d;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * A descriptor that calculates the moment of inertia and radius of gyration.
@@ -150,7 +151,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         try {
             factory = IsotopeFactory.getInstance(container.getBuilder());
         } catch (Exception e) {
-            throw new CDKException("error in getting the isotope factory");
+            logger.debug(e);
         }
         factory.configureAtoms(container);
 

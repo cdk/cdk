@@ -38,14 +38,13 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -54,6 +53,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -244,14 +245,14 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	}
 	
 	private void writeChemFile(IChemFile file) {
-		IAtomContainer[] molecules = ChemFileManipulator.getAllAtomContainers(file);
-		for (int i=0; i<molecules.length; i++) {
+		List moleculesList = ChemFileManipulator.getAllAtomContainers(file);
+		for (int i=0; i<moleculesList.size(); i++) {
 			try {
-				boolean[] isVisible=new boolean[molecules[i].getAtomCount()];
+				boolean[] isVisible=new boolean[((IAtomContainer)moleculesList.get(i)).getAtomCount()];
 				for(int k=0;k<isVisible.length;k++){
 					isVisible[k]=true;
 				}
-				writeMolecule(file.getBuilder().newMolecule(molecules[i]), isVisible);
+				writeMolecule(file.getBuilder().newMolecule((IAtomContainer)moleculesList.get(i)), isVisible);
 			} catch (Exception exc) {
 			}
 		}

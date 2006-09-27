@@ -28,13 +28,12 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
@@ -76,7 +75,7 @@ public class MoleculeSetManipulator {
     /**
      * Returns all the AtomContainer's of a MoleculeSet.
      */
-    public static IAtomContainer[] getAllAtomContainers(IMoleculeSet set) {
+    public static List getAllAtomContainers(IMoleculeSet set) {
 		return AtomContainerSetManipulator.getAllAtomContainers(set);
     }
     
@@ -101,7 +100,7 @@ public class MoleculeSetManipulator {
 		return AtomContainerSetManipulator.getTotalHydrogenCount(set);
 	}
 	
-    public static Vector getAllIDs(IMoleculeSet set) {
+    public static List getAllIDs(IMoleculeSet set) {
 		return AtomContainerSetManipulator.getAllIDs(set);
 	}
 

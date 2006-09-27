@@ -172,7 +172,7 @@ public class ReactionManipulator {
     /**
      * Returns all the AtomContainer's of a Reaction.
      */
-    public static IAtomContainer[] getAllAtomContainers(IReaction reaction) {
+    public static List getAllAtomContainers(IReaction reaction) {
 		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(reaction)
         );

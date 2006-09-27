@@ -27,10 +27,9 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -84,27 +83,15 @@ public class ChemSequenceManipulator {
     /**
      * Returns all the AtomContainer's of a ChemSequence.
      */
-    public static IAtomContainer[] getAllAtomContainers(IChemSequence sequence) {
-        java.util.Iterator models = sequence.chemModels();
+    public static List getAllAtomContainers(IChemSequence sequence) {
+        Iterator models = sequence.chemModels();
         int acCount = 0;
-        Vector acArrays = new Vector();
+        List acList = new ArrayList();
         while (models.hasNext()) {
-            IAtomContainer[] modelContainers = ChemModelManipulator.
-                getAllAtomContainers((IChemModel)models.next());
-            acArrays.addElement(modelContainers);
-            acCount += modelContainers.length;
+    		IChemModel chemmodel = (IChemModel)models.next();
+            acList.addAll(ChemModelManipulator.getAllAtomContainers(chemmodel));
         }
-        IAtomContainer[] containers = new IAtomContainer[acCount];
-        int arrayOffset = 0;
-        for (Enumeration acArraysElements = acArrays.elements(); 
-             acArraysElements.hasMoreElements(); ) {
-            IAtomContainer[] modelContainers = (IAtomContainer[])acArraysElements.nextElement();
-            System.arraycopy(modelContainers, 0,
-                             containers, arrayOffset,
-                             modelContainers.length);
-            arrayOffset += modelContainers.length;
-        }
-        return containers;
+        return acList;
     }
 
 	public static List getAllChemObjects(IChemSequence sequence) {

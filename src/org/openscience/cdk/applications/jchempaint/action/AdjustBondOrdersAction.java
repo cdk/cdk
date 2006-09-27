@@ -30,13 +30,15 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -68,14 +70,16 @@ public class AdjustBondOrdersAction extends JCPAction
 			{
 				SaturationChecker satChecker = new SaturationChecker();
                 changedBonds = new HashMap();
-				IAtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
-               for (int i = 0; i < containers.length; i++)
+				List containersList = ChemModelManipulator.getAllAtomContainers(model);
+				Iterator iterator = containersList.iterator();
+				while(iterator.hasNext())
 				{
-                    IAtomContainer containerCopy = (IAtomContainer) containers[i].clone();
-					satChecker.unsaturate(containers[i].getBonds());
+					IAtomContainer ac = (IAtomContainer)iterator.next();
+                    IAtomContainer containerCopy = (IAtomContainer) ac.clone();
+					satChecker.unsaturate(ac.getBonds());
                      for (int j=0; j<containerCopy.getBondCount(); j++) {
                     	 org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
-                    	 org.openscience.cdk.interfaces.IBond bond = containers[i].getBond(j);
+                    	 org.openscience.cdk.interfaces.IBond bond = ac.getBond(j);
                             if (bond.getOrder() != bondCopy.getOrder()) {
                                 double[] bondOrders = new double[2];
                                 bondOrders[0] = bond.getOrder();
@@ -98,14 +102,16 @@ public class AdjustBondOrdersAction extends JCPAction
 			{
 				SaturationChecker satChecker = new SaturationChecker();
                 changedBonds = new HashMap();
-				IAtomContainer[] containers = ChemModelManipulator.getAllAtomContainers(model);
-               for (int i = 0; i < containers.length; i++)
+				List containersList = ChemModelManipulator.getAllAtomContainers(model);
+				Iterator iterator = containersList.iterator();
+				while(iterator.hasNext())
 				{
-                   IAtomContainer containerCopy = (IAtomContainer) containers[i].clone();
-					satChecker.saturate(containers[i]);
+					IAtomContainer ac = (IAtomContainer)iterator.next();
+                    IAtomContainer containerCopy = (IAtomContainer) ac.clone();
+					satChecker.saturate(ac);
                     for (int j=0; j<containerCopy.getBondCount(); j++) {
                     	org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
-                    	org.openscience.cdk.interfaces.IBond bond = containers[i].getBond(j);
+                    	org.openscience.cdk.interfaces.IBond bond = ac.getBond(j);
                         if (bond.getOrder() != bondCopy.getOrder()) {
                             double[] bondOrders = new double[2];
                             bondOrders[0] = bond.getOrder();

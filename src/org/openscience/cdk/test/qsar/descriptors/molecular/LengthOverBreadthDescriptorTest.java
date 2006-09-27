@@ -15,6 +15,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -36,8 +37,8 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[0];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
@@ -51,8 +52,8 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[1];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(1);
 
         IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
@@ -66,8 +67,8 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[2];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(2);
 
         IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
@@ -81,8 +82,8 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[3];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(3);
 
         IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();

@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -55,8 +56,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.IChemObjectIO;
@@ -168,13 +169,13 @@ public class FileConvertor {
                 }
 
                 // apply modifications
-                IAtomContainer[] containers = (IAtomContainer[])ChemFileManipulator.getAllAtomContainers(content);
+                List containersList = ChemFileManipulator.getAllAtomContainers(content);
                 AtomTypeFactory factory = AtomTypeFactory.getInstance(
                     "org/openscience/cdk/config/data/jmol_atomtypes.txt",
                     content.getBuilder()
                 );
-                for (int i=0; i<containers.length; i++) {
-                	IAtomContainer container = containers[i];
+                for (int i=0; i<containersList.size(); i++) {
+                	IAtomContainer container = (IAtomContainer)containersList.get(i);
                 	java.util.Iterator atoms = container.atoms();
                     if (applyHAdding || applyHRemoval || apply2DCleanup || apply3DRebonding) {
                         while (atoms.hasNext()) {

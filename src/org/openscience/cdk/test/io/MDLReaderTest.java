@@ -26,6 +26,7 @@ package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -117,10 +118,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -148,10 +149,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -166,10 +167,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -184,10 +185,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -202,10 +203,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -219,10 +220,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -237,10 +238,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -255,10 +256,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -272,10 +273,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -383,10 +384,10 @@ public class MDLReaderTest extends CDKTestCase {
             MDLReader reader = new MDLReader(ins);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             assertNotNull(chemFile);
-            IAtomContainer[] containers = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containers.length);
-            assertTrue(containers[0].getAtomCount() > 0);
-            assertTrue(containers[0].getBondCount() > 0);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
         } catch (Exception e) {
         	e.printStackTrace();
         	fail(e.toString());

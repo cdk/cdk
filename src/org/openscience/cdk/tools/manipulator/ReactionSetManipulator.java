@@ -29,14 +29,13 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
@@ -98,8 +97,8 @@ public class ReactionSetManipulator {
         return moleculeSet;
     }
     
-    public static Vector getAllIDs(IReactionSet set) {
-        Vector IDlist = new Vector();
+    public static List getAllIDs(IReactionSet set) {
+        List IDlist = new ArrayList();
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
             IDlist.addAll(ReactionManipulator.getAllIDs(reaction));
@@ -110,7 +109,7 @@ public class ReactionSetManipulator {
     /**
      * Returns all the AtomContainer's of a Reaction.
      */
-    public static IAtomContainer[] getAllAtomContainers(IReactionSet set) {
+    public static List getAllAtomContainers(IReactionSet set) {
     	
 		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(set)

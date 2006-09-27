@@ -1,7 +1,11 @@
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -11,8 +15,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
 
 /**
  * TestSuite that runs a test for the MDEDescriptor.
@@ -35,8 +37,8 @@ public class MDEDescriptorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new ReaderFactory().createReader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        IAtomContainer[] c = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = c[0];
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         MDEDescriptor desc = new MDEDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) desc.calculate(ac).getValue();
