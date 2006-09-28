@@ -45,7 +45,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         return new TestSuite(StructGenMatcherTest.class);
     }
     
-    public void testValencyMatcher() throws ClassNotFoundException, CDKException {
+    public void testStructGenMatcher() throws ClassNotFoundException, CDKException {
     	StructGenMatcher matcher = new StructGenMatcher();
         assertNotNull(matcher);
     }

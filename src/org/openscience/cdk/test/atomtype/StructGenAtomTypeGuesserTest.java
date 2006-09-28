@@ -48,12 +48,12 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
         return new TestSuite(StructGenAtomTypeGuesserTest.class);
     }
     
-    public void testValencyMatcher() throws ClassNotFoundException, CDKException {
+    public void testStructGenAtomTypeGuesser() throws ClassNotFoundException, CDKException {
     	StructGenAtomTypeGuesser matcher = new StructGenAtomTypeGuesser();
         assertNotNull(matcher);
     }
     
-    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPossbibleAtomTypes_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("N");
