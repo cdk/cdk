@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  * 
@@ -124,6 +121,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
     /** Determines wether implicit hydrogens should be drawn. */
     private boolean showImplicitHydrogens = true;
+
+    /** Determines wether implicit hydrogens should be drawn. */
+    private boolean showExplicitHydrogens = false;
 
     /** Determines wether rings should be drawn with a circle if they are aromatic. */
     private boolean showAromaticity = false;
@@ -458,6 +458,15 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     public void setShowImplicitHydrogens(boolean showThem) {
         this.showImplicitHydrogens = showThem;
+        fireChange();
+    }
+    
+    public boolean getShowExplicitHydrogens() {
+        return this.showExplicitHydrogens;
+    }
+    
+    public void setShowExplicitHydrogens(boolean showThem) {
+        this.showExplicitHydrogens = showThem;
         fireChange();
     }
     
