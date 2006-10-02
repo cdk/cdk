@@ -2264,8 +2264,8 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-          <Descriptor rdf:ID="lob">
-        <rdfs:label>Lenght Over Breadth</rdfs:label>
+          <Descriptor rdf:ID="lengthOverBreadth">
+        <rdfs:label>Length Over Breadth</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-09-26</dc:date>
         <definition>
