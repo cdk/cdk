@@ -2262,7 +2262,7 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-          <Descriptor rdf:ID="mde">
+          <Descriptor rdf:ID="lob">
         <rdfs:label>Lenght Over Breadth</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-09-26</dc:date>
