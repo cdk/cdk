@@ -23,29 +23,9 @@
  */
 package org.openscience.cdk.applications;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Iterator;
-import java.util.List;
-
 import nu.xom.Document;
 import nu.xom.Serializer;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.*;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
@@ -56,14 +36,13 @@ import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.element.CMLMolecule;
+
+import java.io.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Command line utility that calculates QSAR descriptor values.
@@ -309,12 +288,12 @@ public class DescriptorCalculator {
             System.err.println("Unexpected exception: " + exception.toString());
         }
 
+        assert line != null;
         if (line.hasOption("s") || line.hasOption("smiles")) {
             inputIsSMILES = true;
         } 
         if (line.hasOption("t") || line.hasOption("type")) {
-            String optvalue = line.getOptionValue("t");
-            descType = optvalue;
+            descType = line.getOptionValue("t");
         }
         if (line.hasOption("o") || line.hasOption("output")) {
             String optvalue = line.getOptionValue("o");
