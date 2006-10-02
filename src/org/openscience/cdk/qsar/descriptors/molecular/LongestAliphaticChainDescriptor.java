@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -40,6 +38,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+
+import java.util.Vector;
 
 /**
  *  Class that returns the number of atoms in the longest aliphatic chain.
@@ -91,7 +91,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestAliphaticChain",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
