@@ -287,8 +287,7 @@ public class DescriptorCalculator {
         } catch (ParseException exception) {
             System.err.println("Unexpected exception: " + exception.toString());
         }
-
-        assert line != null;
+        
         if (line.hasOption("s") || line.hasOption("smiles")) {
             inputIsSMILES = true;
         } 
