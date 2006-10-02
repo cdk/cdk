@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -109,6 +110,31 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertTrue(ac.getFlag(5));
     }
 
+   public void testAddRemoveHydrogens() {
+
+		SmilesParser parser = new SmilesParser();
+		HydrogenAdder hydrogenAdder = null;
+
+		try {
+
+			Molecule mol = parser.parseSmiles("c1ccccc1");
+
+			hydrogenAdder = new HydrogenAdder(
+					"org.openscience.cdk.tools.ValencyChecker");
+
+			hydrogenAdder.addExplicitHydrogensToSatisfyValency(mol);
+
+			mol = (Molecule) AtomContainerManipulator.removeHydrogens(mol);
+
+			assertEquals(0, mol.getAtom(0).getHydrogenCount());
+			assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+    
     /**
      * Test removeHydrogens for B2H6, which contains two multiply bonded H.
      *
