@@ -110,27 +110,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertTrue(ac.getFlag(5));
     }
 
-   public void testAddRemoveHydrogens() throws Exception {
-
-		SmilesParser parser = new SmilesParser();
-		HydrogenAdder hydrogenAdder = null;
-
-		
-		Molecule mol = parser.parseSmiles("c1ccccc1");
-
-		hydrogenAdder = new HydrogenAdder(
-				"org.openscience.cdk.tools.ValencyChecker");
-
-		hydrogenAdder.addExplicitHydrogensToSatisfyValency(mol);
-
-		mol = (Molecule) AtomContainerManipulator.removeHydrogens(mol);
-
-		assertEquals(0, mol.getAtom(0).getHydrogenCount());
-		assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
-
-
-	}
-    
+       
     /**
      * Test removeHydrogens for B2H6, which contains two multiply bonded H.
      *
