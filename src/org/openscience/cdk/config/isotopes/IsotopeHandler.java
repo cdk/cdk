@@ -138,11 +138,12 @@ public class IsotopeHandler extends DefaultHandler {
 
     private IIsotope createIsotopeOfElement(String currentElement, Attributes atts) {
         IIsotope isotope = builder.newIsotope(currentElement);
-        for (int i = 0; i < atts.getLength(); i++) {
+
+        for (int i = 0; i < atts.getLength(); i++) {            
             try {
                 if ("id".equals(atts.getQName(i))) {
                     isotope.setID(atts.getValue(i));
-                } else if ("isotopeNumber".equals(atts.getQName(i))) {
+                } else if ("number".equals(atts.getQName(i))) {
                     isotope.setMassNumber(Integer.parseInt(atts.getValue(i)));
                 } else if ("elementType".equals(atts.getQName(i))) {
                     isotope.setSymbol(atts.getValue(i));
@@ -152,6 +153,12 @@ public class IsotopeHandler extends DefaultHandler {
                 logger.debug(exception);
             }
         }
+
+        // we set the natural abundance to 0, since the default is -1, but
+        // some isotope entries have no entry for this field, so the values
+        // stays at -1
+        isotope.setNaturalAbundance(0.0);
+
         return isotope;
     }
 
