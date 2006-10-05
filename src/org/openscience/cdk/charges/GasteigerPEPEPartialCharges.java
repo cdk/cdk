@@ -23,19 +23,26 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -115,17 +122,9 @@ public class GasteigerPEPEPartialCharges {
 		IAtomContainerSet iSet = gR.getAllStructures(ac);
 //		System.out.println("iset: "+iSet.getAtomContainerCount());
 		
-		/* detect conjugated Pi systems*/
-//		AtomContainerSet set = ConjugatedPiSystemsDetector.detect(ac);
-		if(iSet.getAtomContainerCount()  < 2 ){
-			/* detect hyperconjugation interactions */
-			setHI = getHyperconjugationInteractions(ac);
-//			System.out.println("setHI: "+setHI.getAtomContainerCount());
-//			if(setHI.getAtomContainerCount() == 0 )
-//				System.out.println("setHI: "+setHI.getAtomContainerCount());
-//				for(int i = 0; i < ac.getAtomCount() ; i++)
-//					ac.getAtom(i).setCharge(0.0);
-		}
+		/* detect hyperconjugation interactions */
+		setHI = getHyperconjugationInteractions(ac, iSet);
+
 		if(setHI != null) 
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
@@ -262,7 +261,8 @@ public class GasteigerPEPEPartialCharges {
 		
 	}
 	/**
-	 * get the possibles structures after a hyperconjugation interactions.
+	 * get the possibles structures after a hyperconjugation interactions for bonds wich
+	 * not belong any resonance structure.
 	 * 
 	 * @param ac IAtomContainer
 	 * @return IAtomContainerSet
@@ -270,70 +270,67 @@ public class GasteigerPEPEPartialCharges {
 	 * @throws ClassNotFoundException 
 	 * @throws IOException 
 	 */
-	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac) throws IOException, ClassNotFoundException, CDKException {
+	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet iSet) throws IOException, ClassNotFoundException, CDKException {
 		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
-//        try {
-            IReactionProcess type = new BreakingBondReaction();
-//    		for(int k = 0; k < ac.getAtomCount(); k++){
-//    			if(ac.getAtom(k).getSymbol().equals("H")){
-//    				ac.removeAtomAndConnectedElectronContainers(ac.getAtom(k));
-//    				k--;
-//    			}
-//    		}
-//    		
-//    		HydrogenAdder adder = new HydrogenAdder();
-//            adder.addImplicitHydrogensToSatisfyValency(ac);
-//    		
-    		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
-    		for(int i = 0 ; i < ac.getBondCount() ; i++){
-    			if(ac.getBond(i).getOrder() > 1){
-    				ac.getBond(i).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    				ac.getBond(i).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    				ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    			}
-    		}
-    			
-    		setOfReactants.addMolecule((IMolecule) ac);
-    		Object[] params = {Boolean.TRUE};
-    		
-			type.setParameters(params);
-			IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-	        for(int i = 0; i < setOfReactions.getReactionCount(); i++){
-	        	type = new HyperconjugationReaction();
-	    		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
-	    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
-//	    		for(int k = 0; k < mol.getAtomCount(); k++){
-//	    			if(mol.getAtom(k).getSymbol().equals("H")){
-//	    				mol.removeAtomAndConnectedElectronContainers(mol.getAtom(k));
-//	    				k--;
-//	    			}
-//	    		}
-	    		for(int k = 0; k < mol.getBondCount(); k++){
-	    			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBond(k).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
-	    		}
-	    		setOfM2.addMolecule((IMolecule) mol);
-	    		Object[] params2 = {Boolean.FALSE};
-				type.setParameters(params2);
-				IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
-				if(setOfReactions2.getReactionCount() > 0){
-					
-//				IMolecule acc = setOfReactions2.getReaction(0).getProducts().getMolecule(0);
-				IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
-				
-//				hAdder.addExplicitHydrogensToSatisfyValency(acc);
-						
-				set.addAtomContainer(react);
+        IReactionProcess type = new BreakingBondReaction();
+
+        boolean found = false; /* control obtained containers */
+		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
+		/* search of reactive center.*/
+		out:
+		for(int i = 0 ; i < ac.getBondCount() ; i++){
+			if(ac.getBond(i).getOrder() > 1 ){
+				for(int j = 0 ; j < iSet.getAtomContainerCount(); j++){
+    				IAtomContainer ati = iSet.getAtomContainer(j);
+    				for(int k = 0; k < ati.getBondCount(); k++){
+    					IAtom a0 = ati.getBond(k).getAtom(0);
+    					IAtom a1 = ati.getBond(k).getAtom(1);
+    					if(!a0.getSymbol().equals("H") || !a1.getSymbol().equals("H"))
+    					if((a0.getID().equals(ac.getBond(i).getAtom(0).getID()) &&
+    							a1.getID().equals(ac.getBond(i).getAtom(1).getID())) ||
+							(a1.getID().equals(ac.getBond(i).getAtom(0).getID()) &&
+	    							a0.getID().equals(ac.getBond(i).getAtom(1).getID()))){
+    						if(a0.getFormalCharge() != 0 || a1.getFormalCharge() != 0)
+    							continue out;
+    					}
+    				}
 				}
-	        }
+				ac.getBond(i).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+				ac.getBond(i).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+				ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    			found = true;
+			}
+		}
+		if(!found)
+			return null;
+		
+		setOfReactants.addMolecule((IMolecule) ac);
+		Object[] params = {Boolean.TRUE};
+		
+		type.setParameters(params);
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        for(int i = 0; i < setOfReactions.getReactionCount(); i++){
+        	type = new HyperconjugationReaction();
+    		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
+    		IMolecule mol= setOfReactions.getReaction(i).getProducts().getMolecule(0);
+    		for(int k = 0; k < mol.getBondCount(); k++){
+    			mol.getBond(k).setFlag(CDKConstants.REACTIVE_CENTER,false);
+    			mol.getBond(k).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,false);
+    			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
+    		}
+    		setOfM2.addMolecule((IMolecule) mol);
+    		Object[] params2 = {Boolean.FALSE};
+			type.setParameters(params2);
+			IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
+			if(setOfReactions2.getReactionCount() > 0){
+				
+			IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
+			
+					
+			set.addAtomContainer(react);
+			}
+        }
 	        
-//		} catch (CDKException e) {
-//			e.printStackTrace();
-//		}
-		
-//		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) ac);
-		
 		return set;
 	}
 	/**

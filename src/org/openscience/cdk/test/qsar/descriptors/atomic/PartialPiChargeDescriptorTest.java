@@ -360,7 +360,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		}
 	}
 	/**
-	 *  A unit test for JUnit with 
+	 *  A unit test for JUnit with FC(=O)CCc1cccc(F)c1(C)
 	 */
 	public void testSousa() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -377,6 +377,26 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.07);
+		}
+	}
+	/**
+	 *  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
+	 */
+	public void testBondNotConjugated() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
+        double[] testResult = {0.0,0.0004,0.0,-0.0004,0.0,0.0,0.0,0.0,0.0277,0.0,-0.0277}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		Object[] object = {new Integer(6),new Boolean(true)};
+		descriptor.setParameters(object);
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			assertEquals(testResult[i],result,0.02);
 		}
 	}
 
