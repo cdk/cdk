@@ -230,7 +230,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			else
 				assertTrue(result != 0.0);
 			/* test value*/
-			assertEquals(testResult[i],result, 0.09);
+//			System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+	        assertEquals(testResult[i],result, 0.09);
 		}
 	}
 	/**
@@ -387,8 +388,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
         double[] testResult = {0.0,0.0004,0.0,-0.0004,0.0,0.0,0.0,0.0,0.0277,0.0,-0.0277}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+//		HydrogenAdder hAdder = new HydrogenAdder();
+//		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -397,6 +398,24 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.02);
+		}
+	}
+	/**
+	 *  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C#[O+]
+	 */
+	public void testBondNotConjugated2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
+        double[] testResult = {0.0,0.0017,0.0,-0.0017,0.0,0.0,0.0,0.0,0.2723,0.0,0.2723}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C#[O+]");
+		Object[] object = {new Integer(6),new Boolean(true)};
+		descriptor.setParameters(object);
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			assertEquals(testResult[i],result,0.16);
 		}
 	}
 

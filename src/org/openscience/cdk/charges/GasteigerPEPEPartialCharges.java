@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -228,21 +229,32 @@ public class GasteigerPEPEPartialCharges {
 				/* total topological*/
 				double W = WE*Wt[k-1]*fS/(iTE);
 //					System.out.println("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
+				
+				/* atom1 */
 				if(iac.getAtom(atom1).getFormalCharge() == 0){
-					if(ac.getAtom(atom1).getFormalCharge() == -1){
+					if(ac.getAtom(atom1).getFormalCharge() < 0){
 						gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
-						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
 					}else{
 						gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = -1*W;
-						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
 					}
-				}else if(iac.getAtom(atom1).getFormalCharge() == 1){
+				}else if(iac.getAtom(atom1).getFormalCharge() > 0){
 					gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
-					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
 				}else{
 					gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = -1*W;
-					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
 				}
+				/* atom2*/
+				if(iac.getAtom(atom2).getFormalCharge() == 0){
+					if(ac.getAtom(atom2).getFormalCharge() < 0){
+						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
+					}else{
+						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
+					}
+				}else if(iac.getAtom(atom2).getFormalCharge() > 0){
+					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
+				}else{
+					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
+				}
+				
 			}
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				for (int i = 0; i < ac.getAtomCount(); i++) 
@@ -282,6 +294,7 @@ public class GasteigerPEPEPartialCharges {
 			if(ac.getBond(i).getOrder() > 1 ){
 				for(int j = 0 ; j < iSet.getAtomContainerCount(); j++){
     				IAtomContainer ati = iSet.getAtomContainer(j);
+    				if(!ati.equals(ac))
     				for(int k = 0; k < ati.getBondCount(); k++){
     					IAtom a0 = ati.getBond(k).getAtom(0);
     					IAtom a1 = ati.getBond(k).getAtom(1);
