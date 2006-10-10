@@ -370,7 +370,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     public void setShowInsertTextField(boolean showInsertTextField) {
         this.showInsertTextField = showInsertTextField;
         if (showInsertTextField) {
-            if (insertTextPanel == null) insertTextPanel = new InsertTextPanel(this);
+            if (insertTextPanel == null) insertTextPanel = new InsertTextPanel(this,null);
             topContainer.add(insertTextPanel, BorderLayout.SOUTH);
         } else {
             topContainer.remove(insertTextPanel);

@@ -28,9 +28,12 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import org.openscience.cdk.applications.jchempaint.dialogs.InsertFromSmiles;
-
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
+import org.openscience.cdk.applications.jchempaint.InsertTextPanel;
 
 
 /**
@@ -52,9 +55,16 @@ public class InsertSmilesAction extends JCPAction
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Gonna show the InsertFromSmiles dialog...");
-		InsertFromSmiles ifs = new InsertFromSmiles(jcpPanel);
+		JFrame frame=new JFrame("Insert SMILES/InChI/CAS");
+		frame.add(new InsertTextPanel(jcpPanel, frame));
+		
+		//InsertFromSmiles ifs = new InsertFromSmiles(jcpPanel);
 		//ifs.pack();
-		ifs.setVisible(true);
+		//ifs.setVisible(true);
+		//frame.pack();
+		frame.setVisible(true);
+		frame.setSize(new Dimension(jcpPanel.getWidth(),50));
+		frame.setPreferredSize(new Dimension(jcpPanel.getWidth(),50));
 		logger.debug("Should be visible now!...");
 	}
 

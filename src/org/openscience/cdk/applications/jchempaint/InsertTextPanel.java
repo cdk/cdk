@@ -66,10 +66,12 @@ public class InsertTextPanel extends JPanel implements ActionListener {
     private JChemPaintPanel jChemPaintPanel;
     private JComboBox textCombo;
     private JTextComponent editor;
+    private JFrame closeafter=null;
 
 
-    public InsertTextPanel(JChemPaintPanel jChemPaintPanel) {
+    public InsertTextPanel(JChemPaintPanel jChemPaintPanel, JFrame closeafter) {
         super();
+        this.closeafter=closeafter;
         setLayout(new GridBagLayout());
 
         Vector oldText = new Vector();
@@ -115,6 +117,8 @@ public class InsertTextPanel extends JPanel implements ActionListener {
             IMolecule molecule = getMolecule();
             if (molecule == null) return;
             generateModel(molecule);
+            if(closeafter!=null)
+            	closeafter.setVisible(false);
         }
     }
 
