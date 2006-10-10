@@ -130,7 +130,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         customizeView();
         super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
-        setShowInsertTextField(true);
+		if(!guiString.equals("applet"))
+			setShowInsertTextField(true);
         if (logger == null)
 		{
 			logger = new LoggingTool(this);
