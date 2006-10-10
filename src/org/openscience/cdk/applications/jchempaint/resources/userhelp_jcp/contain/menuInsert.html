@@ -23,10 +23,12 @@
 
 <h2>The Insert Menu</h2>
 
- <h3>Insert SMILES</h3>
- <p>Can be used in to type a SMILES structure of which the structure is to be drawn.</p>
+ <h3>Insert SMILES/InChI/CAS</h3>
+ <p>Can be used in to type a SMILES/InChI/CAS number of which the structure is to be drawn.</p>
  <p>The SMILES is parsed by CDK's smiles.SmilesParser class and layout into a 2D
     structure using the layout.StructureDiagramGenerator.</p>
+ <p>The CAS number is looked up in the pubchem database. You need to be online to have this working. If the CAS is not in PubChem, it will not work.</p>
+ <p>The InChI is read via the InChI implementation form IUPAC. This is a C++ code, which must be installed separately (see <a href="http://sourceforge.net/projects/jni-inchi">http://sourceforge.net/projects/jni-inchi</a>). Layout is again done via CDK's StructureDiagramGenerator.</p>
 <p>
  Return to <A HREF="../jhugTOC.html">table of contents</A> -->
 <p>
