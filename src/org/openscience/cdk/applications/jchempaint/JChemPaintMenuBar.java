@@ -186,6 +186,8 @@ public class JChemPaintMenuBar extends JMenuBar {
 						);
 				if(itemKeys[i].substring(0, itemKeys[i].length() - 1).equals("addImplHydrogen"))
 					((JCheckBoxMenuItem)mi).setSelected(true);
+				if(itemKeys[i].substring(0, itemKeys[i].length() - 1).equals("insertstructure") && !jcpPanel.guiString.equals("applet"))
+					((JCheckBoxMenuItem)mi).setSelected(true);
 				// default off, because we cannot turn it on anywhere (yet)
 				menu.add(mi);
 			}
