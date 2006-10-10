@@ -32,17 +32,19 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
 import javax.swing.undo.UndoableEdit;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -194,6 +196,18 @@ public class AddHydrogenAction extends JCPAction
                         changedAtomsAndBonds = hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
                         HydrogenPlacer hPlacer = new HydrogenPlacer();
 						hPlacer.placeHydrogens2D(molecule, bondLength, jcpmodel.getRendererModel().getRenderingCoordinates());
+
+						
+					    IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(jcpmodel.getChemModel());
+						for (int k = 0; k < atomCon.getAtomCount(); k++)
+						{
+							IAtom currentAtom = atomCon.getAtom(k);
+							if(jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)!=null){
+								currentAtom.setPoint2d(new Point2d((Point2d)jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)));
+							}
+						}
+						
+						//((PopupController2D)jcpPanel.getDrawingPanel().getMouseListeners()[0]).updateMoleculeCoordinates();
 					} else if (type.equals("allimplicit"))
 					{
 							// remove explicit hydrogen if necessary
