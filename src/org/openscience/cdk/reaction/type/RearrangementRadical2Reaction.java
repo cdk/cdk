@@ -194,7 +194,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 									}
 									
 									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-									acCloned.removeElectronContainer(selectron[0]);
+									acCloned.removeElectronContainer(selectron[selectron.length -1]);
 									
 									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
 

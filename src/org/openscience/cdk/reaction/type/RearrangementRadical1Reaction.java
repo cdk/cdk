@@ -193,7 +193,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
 					        
 							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
-							acCloned.removeElectronContainer(lpelectron[0]);
+							acCloned.removeElectronContainer(lpelectron[selectron.length -1]);
 							
 							double order = acCloned.getBond(bond1P).getOrder();
 							acCloned.getBond(bond1P).setOrder(order+1);

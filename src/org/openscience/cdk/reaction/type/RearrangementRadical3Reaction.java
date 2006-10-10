@@ -27,6 +27,7 @@ package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,8 +35,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -185,7 +186,8 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 							}
 									
 							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-							acCloned.removeElectronContainer(selectron[0]);
+							acCloned.removeElectronContainer(selectron[selectron.length -1]);
+							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
 							
 							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
 

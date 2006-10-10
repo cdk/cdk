@@ -190,8 +190,8 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 								
 								int charge = acCloned.getAtom(atom0P).getFormalCharge();
 								acCloned.getAtom(atom0P).setFormalCharge(charge+1);
-								ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-								acCloned.removeElectronContainer(lpelectron[0]);
+								ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
+								acCloned.removeElectronContainer(selectron[selectron.length -1]);
 								
 								double order = acCloned.getBond(bond1P).getOrder();
 								acCloned.getBond(bond1P).setOrder(order+1);

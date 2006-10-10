@@ -170,7 +170,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 				}
 				
 				ILonePair[] lps = reactantCloned.getLonePairs(reactantCloned.getAtom(posA));
-				reactantCloned.removeElectronContainer(lps[0]);
+				reactantCloned.removeElectronContainer(lps[lps.length - 1]);
 
 				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(posA)));
 				reactantCloned.getAtom(posA).setFormalCharge(1);

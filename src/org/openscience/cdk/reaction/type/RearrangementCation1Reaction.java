@@ -208,7 +208,7 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 							acCloned.getAtom(atom1P).setFormalCharge(charge+1);
 	
 							ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
-							acCloned.removeElectronContainer(selectron[0]);
+							acCloned.removeElectronContainer(selectron[selectron.length -1]);
 							
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
