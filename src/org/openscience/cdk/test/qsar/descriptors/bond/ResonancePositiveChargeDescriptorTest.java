@@ -77,7 +77,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
         DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
         
 		assertEquals(testResult[0],dar.get(0), 0.01);
-		assertEquals(testResult[1],dar.get(1), 1.5);
+		assertEquals(testResult[1],dar.get(1), 1.2);
 		assertFalse(0.0 == dar.get(1));
 
 		params[0] = new Integer(1);
@@ -104,7 +104,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		descriptor = new ResonancePositiveChargeDescriptor();
         descriptor.setParameters(params);
         dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
-		assertEquals(testResult[8],dar.get(0), 1.6);
+		assertEquals(testResult[8],dar.get(0), 1.53);
 		assertFalse(0.0 == dar.get(0));
 		assertEquals(testResult[9],dar.get(1), 0.00001);
 
@@ -146,7 +146,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 			descriptor = new ResonancePositiveChargeDescriptor();
 	        descriptor.setParameters(params);
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
-			assertEquals(testResult[4],dar.get(0), 4.5);
+			assertEquals(testResult[4],dar.get(0), 2.2);
 			assertFalse(0.0 == dar.get(0));
 			/*assertEquals(testResult[5],dar.get(1), 0.0001); <= it should be null*/
 			
@@ -309,6 +309,26 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 			assertEquals(testResult[7],dar.get(1), 4.0);
 
 	        
+	}
+	/**
+	 *  A unit test for JUnit with CCOCCCO
+	 */
+	public void testResonancePositiveCharge_6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+//		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new ResonancePositiveChargeDescriptor();
+		Integer[] params = new Integer[1];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C(=[O+])C([H])([H])C([H])([H])[H]");
+
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for(int i = 0; i < mol.getBondCount(); i++){	
+			params[0] = new Integer(i);
+	        descriptor.setParameters(params);
+	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+		}
 	}
 
 }

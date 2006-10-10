@@ -125,11 +125,14 @@ public class GasteigerPEPEPartialCharges {
 		/* detect hyperconjugation interactions */
 		setHI = getHyperconjugationInteractions(ac, iSet);
 
-		if(setHI != null) 
+		if(setHI != null) {
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
 //		System.out.println("isetTT: "+iSet.getAtomContainerCount());
-
+		}
+		if(iSet.getAtomContainerCount() < 2)
+			return ac;
+		
 		/*2: search whose atoms which don't keep their formal charge and set flags*/
 		double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount( )];
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
@@ -284,7 +287,7 @@ public class GasteigerPEPEPartialCharges {
 	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet iSet) throws IOException, ClassNotFoundException, CDKException {
 		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
         IReactionProcess type = new BreakingBondReaction();
-
+        cleanFlagReactiveCenter(ac);
         boolean found = false; /* control obtained containers */
 		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
 		/* search of reactive center.*/
@@ -310,11 +313,12 @@ public class GasteigerPEPEPartialCharges {
 				ac.getBond(i).getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 				ac.getBond(i).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 				ac.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    			found = true;
+				found = true;
 			}
 		}
 		if(!found)
 			return null;
+		
 		
 		setOfReactants.addMolecule((IMolecule) ac);
 		Object[] params = {Boolean.TRUE};
@@ -337,12 +341,11 @@ public class GasteigerPEPEPartialCharges {
 			if(setOfReactions2.getReactionCount() > 0){
 				
 			IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
-			
-					
+
 			set.addAtomContainer(react);
 			}
         }
-	        
+
 		return set;
 	}
 	/**
@@ -637,6 +640,17 @@ public class GasteigerPEPEPartialCharges {
 		
 
 		return gasteigerFactors;
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagReactiveCenter(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getAtomCount(); j++)
+			ac.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
+		for(int j = 0 ; j < ac.getBondCount(); j++)
+			ac.getBond(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 	}
 }
 

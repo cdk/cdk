@@ -192,17 +192,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	        	if(product.getAtomCount() < 2)
 	        		continue;
 	        	
-//	        	System.out.println("smiles: "+(new SmilesGenerator(ac.getBuilder()).createSMILES((IMolecule) product))+"; "+(new MFAnalyser(product)).getMass());
-//	        	for(int ik = 0 ; ik < product.getAtomCount() ; ik++){
-//	        		if(product.getAtom(ik).getSymbol().equals("H")){
-//	        			product.removeAtomAndConnectedElectronContainers(product.getAtom(ik));
-//	        			--ik;
-//	        		}
-//	        	}
-//	        	HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.SaturationChecker");
-//	        	adder.addImplicitHydrogensToSatisfyValency(product);
-//	        	System.out.println("smilesAfter: "+(new SmilesGenerator(ac.getBuilder()).createSMILES((IMolecule) product))+"; "+(new MFAnalyser(product)).getMass());
-	        	
 	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false);
 	    		IAtomContainerSet setOfResonance = gRI.getAllStructures(product);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
@@ -210,19 +199,11 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    		
     			int positionAC = 0;
     			
-//    			try {
-//					adder.addExplicitHydrogensToSatisfyValency((IMolecule) product);
-//				} catch (IOException e) {
-//				} catch (ClassNotFoundException e) {
-//				} catch (CDKException e) {
-//				}
-//	        	System.out.println("smilesAfter2: "+(new SmilesGenerator(ac.getBuilder()).createSMILES((IMolecule) product))+"; "+(new MFAnalyser(product)).getMass());
-	        	
-    			
-    			if(product.getAtom(atomPos0).getFormalCharge() == 1){
-    				positionAC = atomPos0;}
-    			else
-    				positionAC = atomPos1;
+    			if(product.getAtom(atomPos0) != null && product.getAtom(atomPos0).getFormalCharge() > 0){
+    				positionAC = atomPos0;
+    			}else{
+    	        	positionAC = atomPos1;
+    			}
     			
 //    			System.out.println("setOFReson: "+setOfResonance.getAtomContainerCount());
     			if(setOfResonance.getAtomContainerCount() > 1){
@@ -231,8 +212,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
 //	    				System.out.println("smilesprod: "+(new SmilesGenerator(ac.getBuilder()).createSMILES((IMolecule) prod)));
 	    	        	
-//	    				HydrogenAdder hAdder = new HydrogenAdder();
-//	    				hAdder.addImplicitHydrogensToSatisfyValency((IMolecule) prod);
 	    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
 	    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
 	    					 /*search positive charge*/
