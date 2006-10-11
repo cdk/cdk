@@ -59,26 +59,23 @@ public class JChemPaintMenuBar extends JMenuBar {
     private String guiString = "stable";
 
 	/**
-	 *  The default constructor method. Adds the plugin menu.
+	 *  The default constructor method.
 	 *
 	 * @param  jcpPanel  Description of the Parameter
 	 */
 	public JChemPaintMenuBar(JChemPaintPanel jcpPanel) {
-		this(jcpPanel, true, "stable");
+		this(jcpPanel, "stable");
 	}
 
-    public JChemPaintMenuBar(JChemPaintPanel jcpPanel, String guiString) {
-        this(jcpPanel, true, guiString);
-    }
-
+	
 	/**
 	 *  The more flexible constructor method.
 	 *
 	 * @param  jcpPanel       Description of the Parameter
-	 * @param  addPluginMenu  Description of the Parameter
+	 * @param  guiString      Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String guiString) {
-		this(jcpPanel, addPluginMenu, null, guiString);
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, String guiString) {
+		this(jcpPanel, null, guiString);
 	}
 
 
@@ -86,13 +83,13 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 *  Constructor for the JChemPaintMenuBar object
 	 *
 	 * @param  jcpPanel        Description of the Parameter
-	 * @param  addPluginMenu   Description of the Parameter
+	 * @param  guiString       Description of the Parameter
 	 * @param  menuDefinition  Description of the Parameter
 	 */
-	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, boolean addPluginMenu, String menuDefinition, String guiString) {
+	public JChemPaintMenuBar(JChemPaintPanel jcpPanel, String menuDefinition, String guiString) {
 		logger = new LoggingTool(this);
 		this.guiString = guiString;
-    	createMenubar(jcpPanel, addPluginMenu, menuDefinition);
+    	createMenubar(jcpPanel, menuDefinition);
 	}
 
 
@@ -104,10 +101,9 @@ public class JChemPaintMenuBar extends JMenuBar {
 	 *  org.openscience.cdk.applications.jchempaint.resources.JChemPaint.properties.
 	 *
 	 * @param  jcpPanel        Description of the Parameter
-	 * @param  addPluginMenu   Description of the Parameter
 	 * @param  menuDefinition  Description of the Parameter
 	 */
-	protected void createMenubar(JChemPaintPanel jcpPanel, boolean addPluginMenu, 
+	protected void createMenubar(JChemPaintPanel jcpPanel, 
         String menuDefinition) {
 		addNormalMenuBar(jcpPanel, menuDefinition);
 		this.add(Box.createHorizontalGlue());

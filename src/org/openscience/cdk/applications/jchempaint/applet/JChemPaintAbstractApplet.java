@@ -84,7 +84,10 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			{ "load", "url", "URL of the chemical data" },
 			{ "compact", "true or false", "compact means elements shown as dots, no figures etc. (default false)"},
 			{ "tooltops", "string like 'atomumber|test|atomnumber|text", "the texts will be used as tooltips for the respective atoms (leave out if none required"},
-			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},};
+			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},
+			{ "spectrumRenderer", "string", "name of a spectrum applet (see subproject in NMRShiftDB) where peaks should be highlighted when hovering over atom"},
+			{ "hightlightTable", "true or false", "if true peaks in a table will be highlighted when hovering over atom, ids are assumed to be tableid$atomnumber (default false)"}
+	};
 
 	public String getAppletInfo() {
 		return appletInfo;
@@ -163,6 +166,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			 theModel.getRendererModel().setShowEndCarbons(true);
 			 
 			 HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+			 if(theModel.getChemModel()!=null && theModel.getChemModel().getMoleculeSet()!=null){
 	        	java.util.Iterator mols = theModel.getChemModel().getMoleculeSet().molecules();
 				while (mols.hasNext())
 				{
@@ -177,6 +181,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 						}
 					}
 				}
+			 }
 			 
 		}
 		if(getParameter("tooltips")!=null){

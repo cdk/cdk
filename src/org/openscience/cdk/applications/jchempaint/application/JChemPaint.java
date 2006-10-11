@@ -130,7 +130,6 @@ public class JChemPaint implements SwingConstants
 				System.out.println("  cdk.debug.stdout  [true|false] (false)");
 				System.out.println("  devel.gui         [true|false] (false)");
 				System.out.println("  gui               [stable|experimental] (stable)");
-				System.out.println("  plugin.dir        (unset)");
 				System.out.println("  user.language     [DE|EN|NL|PL] (EN)");
 
 				System.exit(0);

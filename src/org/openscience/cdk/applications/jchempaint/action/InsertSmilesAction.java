@@ -57,11 +57,6 @@ public class InsertSmilesAction extends JCPAction
 		logger.debug("Gonna show the InsertFromSmiles dialog...");
 		JFrame frame=new JFrame("Insert SMILES/InChI/CAS");
 		frame.add(new InsertTextPanel(jcpPanel, frame));
-		
-		//InsertFromSmiles ifs = new InsertFromSmiles(jcpPanel);
-		//ifs.pack();
-		//ifs.setVisible(true);
-		//frame.pack();
 		frame.setVisible(true);
 		frame.setSize(new Dimension(jcpPanel.getWidth(),50));
 		frame.setPreferredSize(new Dimension(jcpPanel.getWidth(),50));

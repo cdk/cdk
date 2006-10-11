@@ -30,12 +30,15 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
+import java.net.URL;
 
+import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
+import org.openscience.cdk.controller.Controller2D;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
-import org.openscience.cdk.controller.Controller2D;
+
+import netscape.javascript.JSObject;
 
 /**
  * The
@@ -51,18 +54,19 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
     private Applet spectrumApplet;
     private Object lastHighlighted=null;
     private Controller2D controller;
+    int oldnumber=-1;
   
-  /* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-    JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100), "applet");
-    setTheJcpp(jcpvop);
-	/*String atomNumbers=getParameter("spectrumRenderer");
-    if(atomNumbers!=null){*/
-      getTheJcpp().getDrawingPanel().addMouseMotionListener(this);
-    //}
-    super.init();
+		JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100), "applet");
+		setTheJcpp(jcpvop);
+		/*String atomNumbers=getParameter("spectrumRenderer");
+    	if(atomNumbers!=null){*/
+			getTheJcpp().getDrawingPanel().addMouseMotionListener(this);
+		//}
+		super.init();
 	}
 	
 	/* (non-Javadoc)
@@ -71,6 +75,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
 	public void start() {
 		super.start();
 	}
+	
 	/* (non-Javadoc)
 	 * @see java.applet.Applet#stop()
 	 */
@@ -104,6 +109,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
    	    ac.addAtom((IAtom)objectInRange);
    	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
         highlightPeakInSpectrum(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
+        highlightPeakInTable(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
         repaint();
         lastHighlighted=objectInRange;
       }
@@ -121,11 +127,34 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
   public void highlightPeakInSpectrum(int atomNumber) throws Exception{
     if(getParameter("spectrumRenderer")==null)
       return;
-		Method highlightMethod = getSpectrumApplet().getClass().getMethod("highlightPeakInSpectrum", new Class[] { Integer.TYPE });
+	Method highlightMethod = getSpectrumApplet().getClass().getMethod("highlightPeakInSpectrum", new Class[] { Integer.TYPE });
     highlightMethod.invoke(getSpectrumApplet(),	new Object[] { new Integer(atomNumber) });
     spectrumApplet.repaint();
   }
 
+  /**
+   * Handles interaction with a peak table
+   * @param atomNumber atom number of peaks highlighted in table
+   */
+  public void highlightPeakInTable(int atomNumber){
+    if(getParameter("highlightTable")==null || getParameter("highlightTable").equals("false"))
+      return;
+    JSObject win = JSObject.getWindow(this);
+    if(oldnumber!=-1){
+    	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+oldnumber+"\")");
+        if((oldnumber+1)%2==0)
+        	tr.setMember("bgColor","#D3D3D3");
+        else
+        	tr.setMember("bgColor","white");
+    }
+	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+atomNumber+"\")");
+    if(tr==null){
+    	oldnumber=-1;
+    }else{
+	    tr.setMember("bgColor","red");
+	    oldnumber=atomNumber;
+    }
+  }
 
   private Applet getSpectrumApplet() {
       if (spectrumApplet == null) {

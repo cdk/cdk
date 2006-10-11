@@ -32,7 +32,6 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
-import org.openscience.cdk.applications.plugin.CDKPluginManager;
 import org.openscience.cdk.applications.undoredo.JCPUndoRedoHandler;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -93,8 +92,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	boolean showStatusBar = true;
     boolean showInsertTextField = true;
 
-    protected CDKPluginManager pluginManager = null;
-	protected EventListenerList changeListeners = null;
+    protected EventListenerList changeListeners = null;
 
 
     /**
@@ -125,8 +123,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		if (isEmbedded == true) {
 		    this.setEmbedded();
 		}
-		setupPluginManager();
-        this.guiString = guiString;
+		this.guiString = guiString;
         customizeView();
         super.setJChemPaintModel(new JChemPaintModel());
 		setShowToolBar(true, lines);
@@ -145,16 +142,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
 		}
-	}
-
-
-	/**
-	 *  Gets the pluginManager attribute of the JChemPaint object
-	 *
-	 *@return    The pluginManager value
-	 */
-	public CDKPluginManager getPluginManager() {
-		return pluginManager;
 	}
 
 
@@ -204,10 +191,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	public void customizeView() {
 		if (showMenuBar) {
 			if (menu == null) {
-				if(guiString.equals("applet"))
-					menu = new JChemPaintMenuBar(this, false,this.guiString);
-				else
-					menu = new JChemPaintMenuBar(this, this.guiString);
+				menu = new JChemPaintMenuBar(this, this.guiString);
 			}
 			add(menu, BorderLayout.NORTH);
 			revalidate();
@@ -286,35 +270,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		//Somehow this registration does not work. If it would, element symbols could be changed via keyboard
 		drawingPanel.addKeyListener(inputAdapter);
 	}
-		
 	
-	/**
-	 *  Sets up the plugin manager.
-	 */
-	private void setupPluginManager() {
-		try {
-			// set up plugin manager
-			JCPPropertyHandler jcph = JCPPropertyHandler.getInstance();
-			pluginManager = new CDKPluginManager(jcph.getJChemPaintDir().toString(), this);
-
-			// load the plugins that come with JCP itself
-			pluginManager.loadPlugin("org.openscience.cdkplugin.dirbrowser.DirBrowserPlugin");
-			pluginManager.loadPlugin("org.openscience.cdkplugin.dadmlbrowser.DadmlBrowserPlugin");
-			pluginManager.loadPlugin("org.openscience.cdkplugin.aatemplate.AminoAcidTemplatesPlugin");
-
-			// load the user plugins
-			pluginManager.loadPlugins(new File(jcph.getJChemPaintDir(), "plugins").toString());
-
-			// load plugins given with -Dplugin.dir=bla
-			if (System.getProperty("plugin.dir") != null) {
-				pluginManager.loadPlugins(System.getProperty("plugin.dir"));
-			}
-		} catch (Exception exc) {
-			//logger.error("Could not initialize Plugin-Manager. I might be in a sandbox.");
-			//logger.debug(exc);
-		}
-	}
-
 
 	/**
 	 *  Returns the value of showToolbar.
@@ -788,11 +744,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             statusBar.setStatus(1, "no model");
           }
         }
-       // send event to plugins
-       if (pluginManager != null)
-       {
-           pluginManager.stateChanged(new ChemObjectChangeEvent(this));
-       }
    }
 
 
