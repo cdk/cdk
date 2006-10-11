@@ -27,6 +27,7 @@ package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * <p>IReactionProcess which participate in movement resonance. 
  * This reaction could be represented as </p>
- * <pre>X-A=B => [X+]=A-[B-]. X represents a donor atomType which contains
+ * <pre>X-A=B => [X+]=A-|[B-]. X represents a donor atomType which contains
  * lone pair electrons</pre>
  * 
  * <pre>
@@ -201,6 +202,7 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 								
 								charge = acCloned.getAtom(atom2P).getFormalCharge();
 								acCloned.getAtom(atom2P).setFormalCharge(charge-1);
+								acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));
 								
 								/* mapping */
 								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));

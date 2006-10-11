@@ -77,7 +77,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
         DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
         
 		assertEquals(testResult[0],dar.get(0), 0.01);
-		assertEquals(testResult[1],dar.get(1), 1.2);
+		assertEquals(testResult[1],dar.get(1), 1.3);
 		assertFalse(0.0 == dar.get(1));
 
 		params[0] = new Integer(1);

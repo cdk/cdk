@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
- * This reaction could be represented as [A-]-B[+] => A=B. Due to 
+ * This reaction could be represented as |[A-]-B[+] => A=B. Due to 
  * deficiency of charge of the atom A, the lone pair electron of the atom A is 
  * desplaced creating a double bond.</p>
  * <p>Make sure that the molecule has the corresponend lone pair electrons

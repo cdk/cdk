@@ -27,14 +27,16 @@ package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -196,6 +198,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								
 								int charge = acCloned.getAtom(atom0P).getFormalCharge();
 								acCloned.getAtom(atom0P).setFormalCharge(charge+1);
+								ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
+								acCloned.removeElectronContainer(selectron[selectron.length -1]);
 								
 								double order = acCloned.getBond(bond1P).getOrder();
 								acCloned.getBond(bond1P).setOrder(order+1);
@@ -205,6 +209,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								
 								charge = acCloned.getAtom(atom2P).getFormalCharge();
 								acCloned.getAtom(atom2P).setFormalCharge(charge-1);
+								acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));	
 								
 								/* mapping */
 								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));

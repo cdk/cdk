@@ -25,6 +25,9 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
@@ -78,6 +81,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RearrangementRadical3Reaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG = 8;
 
 	/**
 	 * Constructor of the RearrangementRadical3Reaction object
@@ -158,23 +162,22 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 		}
 		
 		IAtom atomi = null;
-		IBond bondj = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1  ){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
-				
-				java.util.List bonds = reactant.getConnectedBondsList(atomi);
-				
-				for(int j = 0 ; j < bonds.size() ; j++){
-					bondj = (IBond)bonds.get(j);
+				List bonds = reactant.getConnectedBondsList(atomi);
+				Iterator iterator = bonds.iterator();
+				while(iterator.hasNext()){
+					IBond bondj = (IBond)iterator.next();
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 2.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0){
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
-							int bond1P = reactant.getBondNumber(bondj);
+							int bond1P = 0;/*reactant.getBondNumber(bondj); problems = in clone doesn't occupe the same possition the bons*/
+							bondj.setFlag(BONDTOFLAG, true);
 							int atom1P = reactant.getAtomNumber(atom);
 							
 							/* action */
@@ -188,13 +191,20 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 							acCloned.removeElectronContainer(selectron[selectron.length -1]);
 							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
-							
-							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
+							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
 
-							double order = acCloned.getBond(bond1P).getOrder();
-							acCloned.getBond(bond1P).setOrder(order-1);
+							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
 							
+							for(int l = 0 ; l<acCloned.getBondCount();l++){
+								if(acCloned.getBond(l).getFlag(BONDTOFLAG)){
+									double order = acCloned.getBond(l).getOrder();
+									acCloned.getBond(l).setOrder(order-1);
+									bond1P = acCloned.getBondNumber(acCloned.getBond(l));
+									break;
 							
+								}
+							}
+
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
@@ -202,10 +212,13 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
 					        reaction.addMapping(mapping);
-					        
+
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
+
+							bondj.setFlag(BONDTOFLAG, true);	
 						}
+						
 					}
 				}
 			}

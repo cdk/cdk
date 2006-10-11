@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -75,7 +74,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class RadicalSiteInitiationReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
-
+	private static final int BONDTOFLAG = 8;
+	
 	/**
 	 * Constructor of the RadicalSiteInitiationReaction object
 	 *
@@ -180,7 +180,8 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									
 									/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atomi);
-									int bond1P = reactant.getBondNumber(bondj);
+									int bond1P = 0;/*reactant.getBondNumber(bondj);*/
+									bondj.setFlag(BONDTOFLAG, true);
 									int bond2P = reactant.getBondNumber(bondk);
 									int atom1P = reactant.getAtomNumber(atom);
 									int atom2P = reactant.getAtomNumber(atomConn);
@@ -193,18 +194,27 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									}
 									
 									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-									acCloned.removeElectronContainer(selectron[selectron.length -1]);
+									acCloned.removeElectronContainer(selectron[selectron.length-1]);
+									selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 									
 									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
 									
-									
-									double order = acCloned.getBond(bond1P).getOrder();
-									acCloned.getBond(bond1P).setOrder(order+1);
+									double order = 0;
+									for(int l = 0 ; l < acCloned.getBondCount();l++){
+										if(acCloned.getBond(l).getFlag(BONDTOFLAG)){
+											order = acCloned.getBond(l).getOrder();
+											acCloned.getBond(l).setOrder(order+1);
+											bond1P = acCloned.getBondNumber(acCloned.getBond(l));
+											break;
+										}
+									}
+
+//									double order = acCloned.getBond(bond1P).getOrder();
+//									acCloned.getBond(bond1P).setOrder(order+1);
 
 									acCloned.removeElectronContainer(bond2P);
 									
 									
-
 									/* mapping */
 									IMapping mapping = atom.getBuilder().newMapping(atomi, acCloned.getAtom(atom0P));
 							        reaction.addMapping(mapping);
@@ -219,15 +229,13 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 //							        reaction.addMapping(mapping);
 							        
 									IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(acCloned);
-									for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++)
+									for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++){
 										reaction.addProduct(moleculeSet.getMolecule(z));
-									
-								
-									
+									}
 									
 									setOfReactions.addReaction(reaction);
-									
-									
+
+									bondj.setFlag(BONDTOFLAG, true);
 								}
 							}
 						}

@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -78,6 +79,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
+		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
         Object[] params = {Boolean.FALSE};
@@ -113,6 +115,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
+		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
@@ -149,6 +152,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
+		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/

@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
- * This reaction could be represented as [A-]=B => A=[B-]. Due to 
+ * This reaction could be represented as |[A-]=B => A=|[B-]. Due to 
  * excess of charge of the atom A, the charge is desplaced through the double bond.</p>
  * <p>Make sure that the molecule has the corresponend lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
@@ -191,14 +191,15 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 									
-							ILonePair lp = acCloned.getBuilder().newLonePair(acCloned.getAtom(atom0P));
-							acCloned.addElectronContainer(lp);
-									
-							double charge = acCloned.getAtom(atom0P).getFormalCharge();
-							acCloned.getAtom(atom0P).setFormalCharge((int)charge+1);
-	
+							int charge = acCloned.getAtom(atom0P).getFormalCharge();
+							acCloned.getAtom(atom0P).setFormalCharge(charge+1);
+							ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
+							acCloned.removeElectronContainer(selectron[selectron.length -1]);
+							
 							charge = acCloned.getAtom(atom1P).getFormalCharge();
-							acCloned.getAtom(atom1P).setFormalCharge((int)charge-1);
+							acCloned.getAtom(atom1P).setFormalCharge(charge-1);
+							ILonePair lp = acCloned.getBuilder().newLonePair(acCloned.getAtom(atom1P));
+							acCloned.addElectronContainer(lp);
 							
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));

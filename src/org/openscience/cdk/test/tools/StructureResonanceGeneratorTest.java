@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
@@ -108,7 +109,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false);
 		IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);
 
-		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
+		Assert.assertEquals(9,setOfMolecules.getAtomContainerCount());
 		
 		/*1*/
         Molecule molecule1 = (new SmilesParser()).parseSmiles("C[C+](O)C=O");
@@ -250,13 +251,15 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	 */
 	public void testFlagActiveCenter2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Molecule molecule = (new SmilesParser()).parseSmiles("C-C=C-[C-]");
-
+		molecule.addElectronContainer(new LonePair(molecule.getAtom(3)));
+		
         IAtomContainerSet setOfMolecules = gR.getStructures(molecule);
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
         Molecule molecule2 = (new SmilesParser()).parseSmiles("C=C-[C-]-C");
-        
+        molecule.addElectronContainer(new LonePair(molecule.getAtom(2)));
+		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 	}

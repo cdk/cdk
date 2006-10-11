@@ -27,15 +27,15 @@ package org.openscience.cdk.reaction.type;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * <p>IReactionProcess which participate in movement resonance. 
  * This reaction could be represented as two forms</p>
- * <pre>X=A => [X-]-[A+]. X represents an acceptor atomType. 
+ * <pre>X=A => |[X-]-[A+]. X represents an acceptor atomType. 
  * It is a case specific of the method BreakingBondReaction</pre>
  * <pre>
  *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -185,15 +185,14 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 						
 						if(reactant.getLonePairCount(atom1) > 0){
 							acCloned.getAtom(atom0P).setFormalCharge(-1);
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-							acCloned.addElectronContainer(lpelectron[0]);
+							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));
 							
 							acCloned.getAtom(atom1P).setFormalCharge(1);
 						}else{
 							acCloned.getAtom(atom0P).setFormalCharge(1);
+							
 							acCloned.getAtom(atom1P).setFormalCharge(-1);
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
-							acCloned.addElectronContainer(lpelectron[0]);
+							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom1P)));
 							
 						}
 							

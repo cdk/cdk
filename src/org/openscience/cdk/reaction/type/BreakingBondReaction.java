@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.ValencyChecker;
  * As there are two directions for breaking a bond in a polar manner, 
  * each bond is investigated twice:</p>
  * <pre>A-B => [A+] + |[B-]</pre>
- * <pre>A-B => [A-] + |[B+]</pre>
+ * <pre>A-B => |[A-] + [B+]</pre>
  * <pre> It will not be created structures no possible, for example; C=O => [C-][O+].
  * <pre>
  *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -85,7 +85,7 @@ public class BreakingBondReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
 	private ValencyChecker valChecker;
-
+	private static final int BONDTOFLAG = 8;
 	/**
 	 * Constructor of the BreakingBondReaction object
 	 *
@@ -173,10 +173,13 @@ public class BreakingBondReaction implements IReactionProcess{
 		IAtomContainerSet acSet = reactant.getBuilder().newAtomContainerSet();
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
-			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER)){
+			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER))
+				if(bonds[i].getAtom(0).getFormalCharge() == 0 && bonds[i].getAtom(1).getFormalCharge() == 0){
+				
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
-				int bond =  reactants.getMolecule(0).getBondNumber(bonds[i]);
+				int bond =  0;/*reactants.getMolecule(0).getBondNumber(bonds[i])*/
+				bonds[i].setFlag(BONDTOFLAG, true);
 				
 				/**/
 				for (int j = 0; j < 2; j++){
@@ -190,10 +193,16 @@ public class BreakingBondReaction implements IReactionProcess{
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
-					double order = reactantCloned.getBond(bond).getOrder();
-					
-					reactantCloned.getBond(bond).setOrder(order - 1);
-		
+					double order = 0;
+					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
+						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG)){
+							order = reactantCloned.getBond(l).getOrder();
+							reactantCloned.getBond(l).setOrder(order-1);
+							bond = reactantCloned.getBondNumber(reactantCloned.getBond(l));
+							break;
+						}
+					}
+
 					int charge = 0;
 					IMoleculeSet setOfMolecules = null;
 					if (j == 0){
@@ -205,7 +214,7 @@ public class BreakingBondReaction implements IReactionProcess{
 						
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
-						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom2)));
+						reactantCloned.addElectronContainer(new LonePair(reactantCloned.getAtom(atom2)));
 						/* an acceptor atom cannot be charged positive*/
 						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
 							continue;
@@ -214,12 +223,12 @@ public class BreakingBondReaction implements IReactionProcess{
 						
 					} else{
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
-						reactantCloned.getAtom(atom2).setFormalCharge(1);
+						reactantCloned.getAtom(atom2).setFormalCharge(charge+1);
 						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2), reactantCloned))
 							continue;
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(-1);
-						reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(atom1)));
+						reactantCloned.addElectronContainer(new LonePair(reactantCloned.getAtom(atom1)));
 						/* an acceptor atom cannot be charged positive*/
 						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
 							continue;
@@ -251,6 +260,8 @@ public class BreakingBondReaction implements IReactionProcess{
 					if(reaction.getProductCount() != 0)
 						setOfReactions.addReaction(reaction);
 				}
+				bonds[i].setFlag(BONDTOFLAG, false);
+				
 			}
 				
 		}
@@ -292,7 +303,7 @@ public class BreakingBondReaction implements IReactionProcess{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-//		}
+
 		IMoleculeSet setOfFragments = molecule.getBuilder().newMoleculeSet();
 		IMolecule molecule1,molecule2;
 		try {
@@ -372,7 +383,8 @@ public class BreakingBondReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		IBond[] bonds = reactant.getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
+		for(int i = 0 ; i < bonds.length ; i++)
+			if(bonds[i].getAtom(0).getFormalCharge() == 0 && bonds[i].getAtom(1).getFormalCharge() == 0){
 			IAtom atom1 = bonds[i].getAtom(0);
 			IAtom atom2 = bonds[i].getAtom(1);
 			atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);

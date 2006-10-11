@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -35,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -47,6 +49,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -178,7 +182,6 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
         
-        
         IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
 		setOfReactants.addMolecule((IMolecule) ac);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -222,7 +225,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 	    						 if(product.getAtom(k).getFormalCharge() !=
 	    							 atomsP.getFormalCharge() /*> 0*/)
 	    						 if(atomsP.getFormalCharge()== 1 || product.getAtom(k).getFormalCharge() == 1){
-	    							DoubleResult electroneg = new DoubleResult(0.0); 
+		    						 DoubleResult electroneg = new DoubleResult(0.0); 
 	    						    Integer[] params = new Integer[1];
 	    	    					params[0] = new Integer(6);
 	    	    			    	pielectronegativity = new PiElectronegativityDescriptor();
