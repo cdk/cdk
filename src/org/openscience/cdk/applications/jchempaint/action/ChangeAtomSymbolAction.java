@@ -32,12 +32,14 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.controller.Controller2D;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 
 /**
@@ -87,6 +89,7 @@ public class ChangeAtomSymbolAction extends JCPAction
 				logger.error("Error while configuring atom");
 				logger.debug(exception);
 			}
+			((Controller2D)jcpPanel.getDrawingPanel().getMouseListeners()[0]).updateAtom(MoleculeSetManipulator.getAllInOneContainer(jcpm.getChemModel().getMoleculeSet()), atomInRange);
             UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
             jcpPanel.getUndoSupport().postEdit(edit);
 			jcpm.fireChange();

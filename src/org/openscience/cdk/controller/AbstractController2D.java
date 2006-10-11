@@ -1580,7 +1580,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 	 *@param  container  The AtomContainer to work on
 	 *@param  atom       The Atom to update
 	 */
-	private void updateAtom(IAtomContainer container, IAtom atom)
+	public void updateAtom(IAtomContainer container, IAtom atom)
 	{
 		if (c2dm.getAutoUpdateImplicitHydrogens())
 		{
