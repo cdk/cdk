@@ -30,15 +30,14 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
-import java.net.URL;
+
+//import netscape.javascript.JSObject;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.controller.Controller2D;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
-
-import netscape.javascript.JSObject;
 
 /**
  * The
@@ -139,7 +138,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
   public void highlightPeakInTable(int atomNumber){
     if(getParameter("highlightTable")==null || getParameter("highlightTable").equals("false"))
       return;
-    JSObject win = JSObject.getWindow(this);
+    /*JSObject win = JSObject.getWindow(this);
     if(oldnumber!=-1){
     	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+oldnumber+"\")");
         if((oldnumber+1)%2==0)
@@ -153,7 +152,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
     }else{
 	    tr.setMember("bgColor","red");
 	    oldnumber=atomNumber;
-    }
+    }*/
   }
 
   private Applet getSpectrumApplet() {
