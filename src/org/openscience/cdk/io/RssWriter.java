@@ -16,7 +16,7 @@ import java.util.*;
 
 /**
  * Generatas an rss feed. It the object is a MoleculeSet, the molecules
- * are put in separtly. All other objects a made cml and put in.
+ * are put in separtly. All other objects are made cml and put in.
  *
  * @cdk.module       libio-cml
  * @cdk.builddepends xom-1.0.jar
@@ -37,6 +37,7 @@ public class RssWriter extends DefaultChemObjectWriter {
     private Map datemap=new HashMap();
     private Map titlemap=new HashMap();
     private Map creatormap=new HashMap();
+    private Map inchimap=new HashMap();
     private String creator="";
     private String title="";
     private String link="";
@@ -158,6 +159,12 @@ public class RssWriter extends DefaultChemObjectWriter {
 		      Element creator2Element =new Element("dc:creator",NS_DCELEMENTS);
 		      creator2Element.appendChild(new Text((String)creatormap.get(chemObject)));
 		      itemElement.appendChild(creator2Element);
+		      // add the InChI to the CMLRSS feed
+		      if (inchimap.get(chemObject)!=null) {
+		    	  Element inchiElement = new Element("cml:identifier","http://www.xml-cml.org/schema/cml2/core/");
+		    	  inchiElement.appendChild(new Text((String)inchimap.get(chemObject)));
+		    	  itemElement.appendChild(inchiElement);
+		      }
 		      Element root=null;
 		      Convertor convertor=new Convertor(true,null);
 		      object=(IChemObject)list.get(i);
@@ -331,6 +338,20 @@ public class RssWriter extends DefaultChemObjectWriter {
 	 */
 	public void setTimezone(String timezone) {
 		this.timezone = timezone;
+	}
+
+	/**
+	 * @return inchimap If you put any number of Strings in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+	 */
+	public Map getInchimap() {
+		return inchimap;
+	}
+
+	/**
+	 * @param inchimap If you put any number of Strings in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+	 */
+	public void setInchimap(Map inchimap) {
+		this.inchimap = inchimap;
 	}
 
 }
