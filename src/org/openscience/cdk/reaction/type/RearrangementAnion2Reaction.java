@@ -179,7 +179,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0){
+							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0)
+								if(reactant.getSingleElectronSum(bondk.getConnectedAtom(atom)) == 0){
 								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 								reaction.addReactant(reactant);
 								/* positions atoms and bonds */
@@ -266,7 +267,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0){
+							if(bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0)
+								if(reactant.getSingleElectronSum(bondk.getConnectedAtom(atom)) == 0){
 								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								bondk.getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);

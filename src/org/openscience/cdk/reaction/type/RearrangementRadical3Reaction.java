@@ -164,7 +164,7 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 		IAtom atomi = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1  ){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1 && atomi.getFormalCharge() == 0 ){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				List bonds = reactant.getConnectedBondsList(atomi);
@@ -188,9 +188,12 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 									
+//							int charge = acCloned.getAtom(atom0P).getFormalCharge();
+//							if(charge > 0)
+//								acCloned.getAtom(atom0P).setFormalCharge(charge-1);
+							
 							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 							acCloned.removeElectronContainer(selectron[selectron.length -1]);
-							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
 							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
 
 							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
@@ -246,16 +249,20 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 		IBond bondj = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 ) {
+			if(reactant.getSingleElectron(atomi).length == 1 && atomi.getFormalCharge() == 0) {
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() == 2.0){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() == 0){
-							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
+							if(atom.getSymbol().equals("C") && reactant.getLonePairCount(atom) > 0){}
+							else{
+								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								
+							}
 						}
 					}
 				}

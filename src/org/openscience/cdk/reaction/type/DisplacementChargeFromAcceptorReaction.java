@@ -158,9 +158,9 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2.0){
 				IAtom atom1 = bonds[i].getAtom(0);
 				IAtom atom2 = bonds[i].getAtom(1);
-				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
+				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0 && !atom1.getSymbol().equals("C")))
 						&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
-						|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))
+						|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0 && !atom2.getSymbol().equals("C")))
 						&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
 							
 						/* positions atoms and bonds */
@@ -235,10 +235,10 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 		for(int i = 0 ; i < bonds.length ; i++)
 			if(bonds[i].getOrder() == 2.0){
 				IAtom atom1 = bonds[i].getAtom(0);
-				IAtom atom2 = bonds[i].getAtom(1);
-				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0))
+				IAtom atom2 = bonds[i].getAtom(1);/* TODO - not controll from lone pair electrons*/
+				if((((atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0 && reactant.getLonePairCount(atom1) > 0 && !atom1.getSymbol().equals("C")) )
 					&&(atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0))
-					|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0))
+					|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0 && !atom2.getSymbol().equals("C")))
 					&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
 						atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 						atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);

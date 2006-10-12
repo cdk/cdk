@@ -180,7 +180,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
 						IAtom atom1 = bondj.getConnectedAtom(atomi);
 						ILonePair[] lp = reactant.getLonePairs(atom1);
-						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 ){
+						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 )
+							if(reactant.getSingleElectronSum(atom1) == 0){
 							
 							
 							
@@ -256,7 +257,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 					if(bondj.getOrder() == 1.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						ILonePair[] lp = reactant.getLonePairs(atom);
-						if((lp.length > 0 )&& (atom.getFormalCharge() == 0)){
+						if((lp.length > 0 )&& (atom.getFormalCharge() == 0))
+							if(reactant.getSingleElectronSum(atom) == 0){
 							if(rings.contains(atom))
 								continue;
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);

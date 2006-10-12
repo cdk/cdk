@@ -175,7 +175,8 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() > 1.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
-						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0){
+						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0)
+							if(reactant.getSingleElectronSum(atom) == 0){
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
 							int bond1P = reactant.getBondNumber(bondj);
@@ -243,7 +244,8 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() > 1.0){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
-						if(atom.getFormalCharge() == 0){
+						if(atom.getFormalCharge() == 0)
+							if(reactant.getSingleElectronSum(atom) == 0){
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);

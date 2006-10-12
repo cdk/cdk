@@ -24,15 +24,21 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  *  Pi electronegativity is given by X = a + bq + c(q*q)
@@ -136,12 +142,10 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         try {
         	double q = 0.0;
         	if(maxIterations != -1){
-        		Integer[] params = new Integer[1];
-        		params[0] = new Integer(maxIterations);
+        		Object[] params = {new Integer(6)};
         		descriptor.setParameters(params);
         	}
         	q = ((DoubleResult)descriptor.calculate(atom,ac).getValue()).doubleValue();
-			
     	  IAtomContainerSet iSet = ac.getBuilder().newAtomContainerSet();
     	  iSet.addAtomContainer(ac);/*2 times*/
     	  iSet.addAtomContainer(ac);

@@ -109,7 +109,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false);
 		IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);
 
-		Assert.assertEquals(9,setOfMolecules.getAtomContainerCount());
+		Assert.assertEquals(8,setOfMolecules.getAtomContainerCount());
 		
 		/*1*/
         Molecule molecule1 = (new SmilesParser()).parseSmiles("C[C+](O)C=O");
@@ -160,7 +160,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(1);
         ILonePair[] selectron = molecule.getLonePairs(atom);
-		molecule.removeElectronContainer(selectron[0]);
+		molecule.removeElectronContainer(selectron[selectron.length-1]);
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);

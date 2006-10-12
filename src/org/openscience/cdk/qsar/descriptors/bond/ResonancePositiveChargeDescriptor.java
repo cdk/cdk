@@ -149,6 +149,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer acI) throws CDKException {
+    	DoubleArrayResult dar = new DoubleArrayResult(2);
     	IAtomContainer ac;
 		try {
 			ac = (IMolecule) acI.clone();
@@ -172,6 +173,11 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 //    		}
     	
     	/*break bond*/
+    	if(ac.getSingleElectronSum(atoms[0]) > 0 || ac.getSingleElectronSum(atoms[1]) > 0){
+    		dar.add(0.0);
+    		dar.add(0.0);
+    		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
+    	}
     	BreakingBondReaction type = new BreakingBondReaction();
     	atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
     	int atomPos0 = ac.getAtomNumber(atoms[0]);
@@ -190,7 +196,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
         for(int i = 0 ; i < 2; i++){
         	if(setOfReactions.getReaction(i) == null)
         		continue;
-        	for(int z = 0; z < setOfReactions.getReaction(i).getProducts().getAtomContainerCount(); z++){
+			for(int z = 0; z < setOfReactions.getReaction(i).getProducts().getAtomContainerCount(); z++){
 	        	IAtomContainer product = setOfReactions.getReaction(i).getProducts().getAtomContainer(z);
 	        	if(product.getAtomCount() < 2)
 	        		continue;
@@ -207,14 +213,11 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     			}else{
     	        	positionAC = atomPos1;
     			}
-    			
-//    			System.out.println("setOFReson: "+setOfResonance.getAtomContainerCount());
+
     			if(setOfResonance.getAtomContainerCount() > 1){
     				outRes:
 	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
-//	    				System.out.println("smilesprod: "+(new SmilesGenerator(ac.getBuilder()).createSMILES((IMolecule) prod)));
-	    	        	
 	    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
 	    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
 	    					 /*search positive charge*/
@@ -255,7 +258,7 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     		}
         }
         /*logarithm*/
-        DoubleArrayResult dar = new DoubleArrayResult(2);
+        
         double value = 0.0;
         double sum = 0.0;
         for(int i = 0 ; i < result1.size() ; i++){
