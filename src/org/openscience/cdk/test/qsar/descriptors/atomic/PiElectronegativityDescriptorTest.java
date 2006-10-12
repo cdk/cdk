@@ -79,6 +79,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 4);
+			}
 		}
 	}
 	/**
@@ -103,6 +107,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 2);
+			}
 		}
 	}
 	/**
@@ -127,6 +135,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 1);
+			}
 		}
 	}
 	/**
@@ -151,6 +163,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 2);
+			}
 		}
 	}
 	/**
@@ -175,6 +191,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 5);
+			}
 		}
 	}
 	/**
@@ -199,6 +219,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 2.7);
+			}
 		}
 	}
 	/**
@@ -223,6 +247,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 1);
+			}
 		}
 	}
 
@@ -247,6 +275,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 3.5);
+			}
 		}
 	}
 	/**
@@ -270,6 +302,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //			System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 5);
+			}
 		}
 	}
 	/**
@@ -296,6 +332,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //	        System.out.println("result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 5);
+			}
 		}
 	}
 	/**
@@ -322,6 +362,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //	        System.out.println(mol.getAtomAt(i).getSymbol()+"-result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 3);
+			}
 		}
 	}
 	/**
@@ -348,6 +392,10 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 //	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
 			if(result == 0.0)
 				assertEquals(testResult[i],result, 0.0001);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(testResult[i],result, 5);
+			}
 		}
 	}
 }

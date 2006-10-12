@@ -71,10 +71,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			/* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-	        
-			/* test value*/
+			
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.0001);
 		}
 	}
@@ -96,15 +99,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        /* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 	        
-			if(testResult[i] == 0.0)
+	        
+	        if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-				
-			/* test value*/
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.025);
 		}
 	}
@@ -126,15 +128,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			/* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 
 			if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-			
-			/* test value*/
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.05);
 		}
 	}
@@ -159,15 +159,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			/* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 
 			if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-			
-			
-			/* test value*/
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.01);
 		}
 	}
@@ -192,15 +190,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        /* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 
-			if(testResult[i] == 0.0)
+	        if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-			
-			/* test value*/
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.025);
 		}
 	}
@@ -222,16 +218,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        /* test sign*/
-			assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-	        
-			if(testResult[i] == 0.0)
+
+	        if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-			/* test value*/
-//			System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
-	        assertEquals(testResult[i],result, 0.09);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
+			assertEquals(testResult[i],result, 0.09);
 		}
 	}
 	/**
@@ -261,14 +255,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
 	        
+
 	        if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
-			else
+			else {
 				assertTrue(result != 0.0);
-			
-	        assertEquals(testResult[i],result, 0.02);
-			if(testResult[i] != 0.0)
-				assertFalse(result == 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
+			assertEquals(testResult[i],result, 0.02);
 		}
 	}
 	/**
@@ -290,12 +284,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
-//	        if(testResult[i] == 0.0)
-//				assertTrue(result == 0.0);
-//			else
-//				assertTrue(result != 0.0);
-			
-	        assertEquals(testResult[i],result, 0.03);
+//	        
+	        if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
+			assertEquals(testResult[i],result, 0.03);
 		}
 	}
 	/**
@@ -313,8 +309,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+
 	        if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result, 0.15);
 		}
 	}
@@ -337,7 +338,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
-	        assertEquals(testResult[0],result, 0.0001);
+
+			assertEquals(testResult[0],result, 0.0001);
 		}
 	}
 	/**
@@ -357,6 +359,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result,0.1);
 		}
 	}
@@ -377,6 +386,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result,0.07);
 		}
 	}
@@ -394,7 +410,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result,0.02);
 		}
 	}
@@ -403,7 +426,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testBondNotConjugated2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-        double[] testResult = {0.0,0.0017,0.0,-0.0017,0.0,0.0,0.0,0.0,0.2723,0.0,0.2723}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+        double[] testResult = {0.0,0.0017,0.0,-0.0017,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
 		Object[] object = {new Integer(6),new Boolean(true)};
@@ -412,7 +435,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
 			assertEquals(testResult[i],result,0.16);
 		}
 	}

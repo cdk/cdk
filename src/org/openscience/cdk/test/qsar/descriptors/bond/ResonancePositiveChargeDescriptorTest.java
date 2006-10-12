@@ -27,6 +27,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
@@ -325,6 +326,27 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for(int i = 0; i < mol.getBondCount(); i++){	
+			params[0] = new Integer(i);
+	        descriptor.setParameters(params);
+	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+		}
+	}
+	/**
+	 *  A unit test for JUnit with CCOCCCO
+	 */
+	public void testResonancePositiveCharge_7() throws ClassNotFoundException, CDKException, java.lang.Exception {
+//		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		IMolecularDescriptor descriptor = new ResonancePositiveChargeDescriptor();
+		Integer[] params = new Integer[1];
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("[H]C([H])[C+]([H])C([H])([H])C(=O)C([H])([H])C([H])([H])[H]");
+		mol.addElectronContainer(new SingleElectron(mol.getAtom(1)));
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		for(int i = 6; i < 8; i++){	
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
