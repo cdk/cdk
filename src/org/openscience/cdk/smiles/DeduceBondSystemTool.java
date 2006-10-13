@@ -564,8 +564,7 @@ public class DeduceBondSystemTool {
             try {
                 // Note: valencyHybridChecker.couldMatchAtomType shouldnt check Hybridization to get it to work for non carbon atoms
                 valencyChecker.isSaturated(molecule.getAtom(i), molecule);
-                if (molecule.getAtom(i).getHydrogenCount()<0) return false;
-                
+                                
                 //valencyChecker.allSaturated didnt seem to work so did it this way
             } catch (Exception e) {
                 logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
@@ -577,9 +576,6 @@ public class DeduceBondSystemTool {
         try {
             AllRingsFinder arf = new AllRingsFinder();
             IRingSet ringSet = arf.findAllRings(molecule);
-
-//			IRingSet rs=this.RemoveExtraRings(m);
-
 
             for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
                 molecule.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
@@ -614,6 +610,13 @@ public class DeduceBondSystemTool {
 
                 //System.out.println(k+"\t"+r.getAtomCount()+"\t"+r.getFlag(CDKConstants.ISAROMATIC));
                 if (Check[i]) {
+                	
+                    for (int j = 0; j <= ring.getAtomCount() - 1; j++) {
+                        if (ring.getAtom(j).getHydrogenCount()<0) {
+                        	return false;
+                        }
+                    }
+                	
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
 //						System.out.println(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
                         return false;
