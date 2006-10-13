@@ -177,6 +177,7 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
 							int bond1P = 0;/*reactant.getBondNumber(bondj); problems = in clone doesn't occupe the same possition the bons*/
+							cleanFlagBOND(reactants.getMolecule(0));
 							bondj.setFlag(BONDTOFLAG, true);
 							int atom1P = reactant.getAtomNumber(atom);
 							
@@ -289,5 +290,15 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++)
+			ac.getBond(j).setFlag(BONDTOFLAG, false);
 	}
 }

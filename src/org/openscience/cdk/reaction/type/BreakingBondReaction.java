@@ -27,6 +27,7 @@ package org.openscience.cdk.reaction.type;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -41,13 +42,16 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.ValencyChecker;
 
 /**
@@ -170,6 +174,7 @@ public class BreakingBondReaction implements IReactionProcess{
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
 		}
+		
 		IAtomContainerSet acSet = reactant.getBuilder().newAtomContainerSet();
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
@@ -179,8 +184,8 @@ public class BreakingBondReaction implements IReactionProcess{
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
 				int bond =  0;/*reactants.getMolecule(0).getBondNumber(bonds[i])*/
+				cleanFlagBOND(reactants.getMolecule(0));
 				bonds[i].setFlag(BONDTOFLAG, true);
-				
 				/**/
 				for (int j = 0; j < 2; j++){
 					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
@@ -208,7 +213,6 @@ public class BreakingBondReaction implements IReactionProcess{
 					if (j == 0){
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(charge+1);
-						
 						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1), reactantCloned))
 							continue;
 						
@@ -287,7 +291,6 @@ public class BreakingBondReaction implements IReactionProcess{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("false");
 		return false;
 	}
 	/**
@@ -415,5 +418,15 @@ public class BreakingBondReaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++)
+			ac.getBond(j).setFlag(BONDTOFLAG, false);
 	}
 }

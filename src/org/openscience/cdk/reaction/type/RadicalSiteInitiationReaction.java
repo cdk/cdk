@@ -30,6 +30,7 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -181,6 +182,7 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atomi);
 									int bond1P = 0;/*reactant.getBondNumber(bondj);*/
+									cleanFlagBOND(reactants.getMolecule(0));
 									bondj.setFlag(BONDTOFLAG, true);
 									int bond2P = reactant.getBondNumber(bondk);
 									int atom1P = reactant.getAtomNumber(atom);
@@ -313,5 +315,14 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++)
+			ac.getBond(j).setFlag(BONDTOFLAG, false);
 	}
 }
