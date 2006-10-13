@@ -94,7 +94,7 @@ public class J48WModelTest extends CDKTestCase {
      * @throws QSARModelException
      */
     public void testJ48WModel2() throws CDKException, java.lang.Exception, QSARModelException {
-        J48WModel j48 = new J48WModel("data/arff/Table3.arff");
+        J48WModel j48 = new J48WModel(true, "data/arff/Table3.arff");
         String[] options = new String[1];
         options[0] = "-U";
         j48.setOptions(options);

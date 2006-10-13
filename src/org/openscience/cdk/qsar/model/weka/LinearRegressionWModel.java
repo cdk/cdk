@@ -162,7 +162,7 @@ public class LinearRegressionWModel implements IWekaModel{
 				lr.setOptions(options);
 			
 			if(pathTest != null){
-				weka.setDataset(pathTest, lr);
+				weka.setDatasetCDK(pathTest, lr);
 			}else{
 				String[] attrib = new String[x[0].length+1];
 				int[] typAttrib = new int[x[0].length+1];
@@ -178,15 +178,16 @@ public class LinearRegressionWModel implements IWekaModel{
 			e.printStackTrace();
 		}
 	}
-    /**
-     * Specifies the parameters to predict. In this case will be the independent varibles.
+	/**
+     * Specifies the parameters to predict. In this case will be the dependent varibles.
+     * It's found into cdk.src
      * 
      * @param  path  A String specifying the path of the file, format arff, which contians 
-     * 				 the dependent values with whose to predict.
+     * 				 the dependent values with whose to predict. It's found into cdk.src
      * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
      * 
      */
-    public void setParameters(String path) throws QSARModelException {
+    public void setParametersCDK(String path) throws QSARModelException {
     	this.pathNewX = path;
 	}
 	/**
@@ -208,7 +209,7 @@ public class LinearRegressionWModel implements IWekaModel{
 	public void predict() throws QSARModelException {
 		try{
 			if(pathNewX != null){
-				Object[] object = weka.getPrediction(pathNewX);
+				Object[] object = weka.getPredictionCDK(pathNewX);
 				results = new Double[object.length];
 				for(int i = 0 ; i < object.length; i++){
 					results[i] = (Double)object[i];

@@ -192,7 +192,7 @@ public class IPAtomicDescriptor implements IMolecularDescriptor {
 			}
 		}
 		if(isTarget){
-			J48WModel j48 = new J48WModel(path);
+			J48WModel j48 = new J48WModel(true,path);
     		String[] options = new String[4];
     		options[0] = "-C";
     		options[1] = "0.25";

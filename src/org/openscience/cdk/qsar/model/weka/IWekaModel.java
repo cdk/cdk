@@ -57,14 +57,15 @@ public interface IWekaModel extends IModel {
     
     
     /**
-     * Specifies the parameters to predict. In this case will be the independent varibles.
+     * Specifies the parameters to predict. In this case will be the dependent varibles.
+     * It's found into cdk.src
      * 
      * @param  path  A String specifying the path of the file, format arff, which contians 
-     * 				 the dependent values with whose to predict.
+     * 				 the dependent values with whose to predict. It's found into cdk.src
      * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
      * 
      */
-    abstract public void setParameters(String path) throws QSARModelException;
+    abstract public void setParametersCDK(String path) throws QSARModelException;
     
 
     /**

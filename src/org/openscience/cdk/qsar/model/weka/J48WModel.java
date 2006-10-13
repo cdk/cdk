@@ -120,6 +120,7 @@ public class J48WModel implements IWekaModel{
 	private int[] typAttrib;
 	/**String with the attribut class*/
 	private String[] classAttrib;
+	private boolean cdkResource;
 
 	/**
 	 * Constructor of the J48WModel object from varibles
@@ -136,11 +137,14 @@ public class J48WModel implements IWekaModel{
 		this.x = x;
 	}
 	/**
-	 * Constructor of the J48WModel object from file
+	 * Constructor of the J48WModel object from file. Default the file is found into cdk.src
+	 * 
+	 * @param True, if the file is found into cdk.src resource 
 	 * @param pathTest Path of the dataset file format arff to train
 	 */
-	public J48WModel(String pathTest){
+	public J48WModel(boolean cdkResource, String pathTest){
 		this.pathTest  = pathTest;
+		this.cdkResource = cdkResource;
 	}
 
 	/**
@@ -191,7 +195,10 @@ public class J48WModel implements IWekaModel{
 				j48.setOptions(options);
 			
 			if(pathTest != null){
-				weka.setDataset(pathTest, j48);
+				if(cdkResource)
+					weka.setDatasetCDK(pathTest, j48);
+				else
+					weka.setDataset(pathTest, j48);
 			}else{
 				String[] attrib = new String[x[0].length];
 				for(int i = 0 ; i < x[0].length; i++){
@@ -205,13 +212,14 @@ public class J48WModel implements IWekaModel{
 	}
     /**
      * Specifies the parameters to predict. In this case will be the dependent varibles.
+     * It's found into cdk.src
      * 
      * @param  path  A String specifying the path of the file, format arff, which contians 
-     * 				 the dependent values with whose to predict.
+     * 				 the dependent values with whose to predict. It's found into cdk.src
      * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
      * 
      */
-    public void setParameters(String path) throws QSARModelException {
+    public void setParametersCDK(String path) throws QSARModelException {
     	this.pathNewX = path;
 	}
 	/**
@@ -233,7 +241,7 @@ public class J48WModel implements IWekaModel{
 	public void predict() throws QSARModelException {
 		try{
 			if(pathNewX != null){
-				Object[] object = weka.getPrediction(pathNewX);
+				Object[] object = weka.getPredictionCDK(pathNewX);
 				results = new String[object.length];
 				for(int i = 0 ; i < object.length; i++){
 					results[i] = (String)object[i];

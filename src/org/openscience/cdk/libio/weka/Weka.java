@@ -73,7 +73,28 @@ public class Weka {
     public Weka() {
     }
     /**
-     * Set the file format arff to analize which contains the dataset and the type of classifier
+     * Set the file format arff to analize which contains the dataset and the type of classifier.
+     * The file is found into the src.
+     *  
+     * @param pathTable   Path of the dataset file format arff to train
+     * @param classifier  Type of Classifier
+     * @return            The Instances value
+     * @throws Exception 
+     */
+    public Instances setDatasetCDK(String pathTable, Classifier classifier) throws Exception{
+    	this.classifier = classifier;
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
+    	BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+    	this.classAttrib = extractClass(insr);
+    	
+    	ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
+    	insr = new BufferedReader(new InputStreamReader(ins));
+    	return createInstance(insr);
+        
+    }
+    /**
+     * Set the file format arff to analize which contains the dataset and the type of classifier.
+     * 
      *  
      * @param pathTable   Path of the dataset file format arff to train
      * @param classifier  Type of Classifier
@@ -82,13 +103,15 @@ public class Weka {
      */
     public Instances setDataset(String pathTable, Classifier classifier) throws Exception{
     	this.classifier = classifier;
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
-    	BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+    	BufferedReader insr = new BufferedReader(new FileReader(pathTable));
     	this.classAttrib = extractClass(insr);
     	
-    	ins = this.getClass().getClassLoader().getResourceAsStream(pathTable);
-    	insr = new BufferedReader(new InputStreamReader(ins));
-        instances = new Instances(insr);
+    	insr = new BufferedReader(new FileReader(pathTable));
+    	return createInstance(insr);
+        
+    }
+    private Instances createInstance(BufferedReader insr) throws Exception{
+    	instances = new Instances(insr);
 		instances.setClassIndex(instances.numAttributes() - 1);
 		classifier.buildClassifier(instances);
 		return instances;
@@ -218,16 +241,39 @@ public class Weka {
     	return object;
     }
     /**
-     * Return of the predicted value
+     * Return of the predicted value. The file is found into src.
+     *  
+     * @param pathARFF  path of the file format arff which contians the values with whose to test.
+     * @return	        Result of the prediction.
+     * @throws Exception 
+     */
+    public Object[] getPredictionCDK(String pathARFF) throws Exception{
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathARFF);
+    	Reader insr = new InputStreamReader(ins);
+		return createObjects(new BufferedReader(insr));
+    }
+
+    /**
+     * Return of the predicted value.
      *  
      * @param pathARFF  path of the file format arff which contians the values with whose to test.
      * @return	        Result of the prediction.
      * @throws Exception 
      */
     public Object[] getPrediction(String pathARFF) throws Exception{
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(pathARFF);
-    	Reader insr = new InputStreamReader(ins);
-        Instances test = new Instances(new BufferedReader(insr));
+    	BufferedReader br = new BufferedReader(new FileReader(pathARFF));
+    	
+    	return createObjects(br);
+    }
+    /**
+     * iniziate the object.
+     * 
+     * @param br The BufferedReader
+     * @return An Array of objects: classAttrib and Double
+     * @throws Exception 
+     */
+    private Object[] createObjects(BufferedReader br) throws Exception{
+    	Instances test = new Instances(br);
     	Object[] object = new Object[test.numInstances()];
     	for(int i = 0 ; i < test.numInstances(); i++){
     		double result = classifier.classifyInstance(test.instance(i));
@@ -236,7 +282,7 @@ public class Weka {
     		else
     			object[i] = new Double(result);
     	}
-		return object;
+    	return object;
     }
     /**
      * create a Reader with necessary attributes to iniziate a Instances for weka.

@@ -71,8 +71,8 @@ public class WekaTest extends CDKTestCase {
 		options[3] = "0.00000008"; 
 		lr.setOptions(options);
 		Weka weka = new Weka();
-		weka.setDataset("data/arff/Table1.arff", lr);
-		Object[] result = weka.getPrediction("data/arff/Table2.arff");
+		weka.setDatasetCDK("data/arff/Table1.arff", lr);
+		Object[] result = weka.getPredictionCDK("data/arff/Table2.arff");
 		assertNotNull(result);
     }
 	/**
@@ -88,7 +88,7 @@ public class WekaTest extends CDKTestCase {
 		options[3] = "0.00000008"; 
 		lr.setOptions(options);
 		Weka weka = new Weka();
-		weka.setDataset("data/arff/Table1.arff", lr);
+		weka.setDatasetCDK("data/arff/Table1.arff", lr);
 		Object[][] testX = {{new Double(2),new Double(2)},
 			{new Double(5),new Double(5)}
 		};

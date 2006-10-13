@@ -107,7 +107,7 @@ public class LinearRegressionWModelTest extends CDKTestCase {
         options[3] = "0.00000008";
         lrm.setOptions(options);
         lrm.build();
-        lrm.setParameters("data/arff/Table2.arff");
+        lrm.setParametersCDK("data/arff/Table2.arff");
         lrm.predict();
         Double[] result = (Double[]) lrm.getPredictPredicted();
         assertNotNull(result);
