@@ -82,6 +82,75 @@ public class SmilesParserTest extends CDKTestCase {
 		return new TestSuite(SmilesParserTest.class);
 	}
 
+	
+	public void testPyridine_N_oxideUncharged() throws Exception {
+		String smiles = "O=n1ccccc1";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+	
+	public void testPyridine_N_oxideCharged() throws Exception {
+		String smiles = "[O-][n+]1ccccc1";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+
+	/**
+	 *  This method tests compounds with several conjugated rings
+	 *  These compounds would not fail if the Aromaticity Detection was changed
+	 *  so that a ring is aromatic if all the atoms in a ring have already been flagged
+	 *  as aromatic from the testing of other rings in the system 
+	 * @throws Exception
+	 */
+	public void testUnusualConjugatedRings() throws Exception {
+		
+		//7090-41-7:
+		String smiles = "c1(Cl)cc2c3cc(Cl)c(Cl)cc3c2cc1Cl";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+				
+		//206-44-0:
+		smiles="c(c(ccc1)ccc2)(c1c(c3ccc4)c4)c23";
+		mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+			
+		//207-08-9:
+		smiles="c2ccc1cc3c(cc1c2)c4cccc5cccc3c45";
+		mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+		
+		//2693-46-1:
+		smiles="Nc1c(c23)cccc3c4ccccc4c2cc1";
+		mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+		
+		//205-99-2:
+		smiles="c12ccccc1cc3c4ccccc4c5c3c2ccc5";
+		mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+
+	}
+
+	public void test187_78_0 () throws Exception {
+		// are all 4 rings aromatic? Is smiles correct?
+		String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+	
+
+	public void test41814_78_2 () throws Exception {
+		String smiles = "Cc1cccc2sc3nncn3c12";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+	
+	public void test239_64_5 () throws Exception {
+		String smiles = "c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+	
 	/**
 	 *  A unit test for JUnit
 	 */
