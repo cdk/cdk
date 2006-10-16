@@ -28,6 +28,7 @@
 package org.openscience.cdk.smiles;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -92,12 +93,12 @@ public class DeduceBondSystemTool {
         // TODO remove rings with nonsp2 carbons(?) and rings larger than 7 atoms
         ringSet = removeExtraRings(molecule);
 
-//		System.out.println(rs.getAtomContainerCount());
-
         ArrayList MasterList = new ArrayList();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
-
+        
+        this.FixPyridineNOxides(molecule,ringSet);
+        
 
         for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
 
@@ -162,7 +163,34 @@ public class DeduceBondSystemTool {
         return null;
     }
 
-
+    private void FixPyridineNOxides(IMolecule molecule,IRingSet ringSet) {
+    	
+    	//convert n(=O) to [n+][O-]
+    	
+    	for (int i=0;i<molecule.getAtomCount();i++) {
+    		IAtom ai=molecule.getAtom(i);
+    		
+    		if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0) {
+    			if (inRingSet(ai,ringSet)) {
+    				List ca=molecule.getConnectedAtomsList(ai);
+    				for (int j=0;j<ca.size();j++){
+    					IAtom caj=(IAtom)ca.get(j);
+    					
+    					if (caj.getSymbol().equals("O") && molecule.getBond(ai,caj).getOrder()==2) {
+    						ai.setFormalCharge(1);
+    						caj.setFormalCharge(-1);
+    						molecule.getBond(ai,caj).setOrder(1);
+    					}
+    				}// end for (int j=0;j<ca.size();j++)
+    				
+    			} // end if (inRingSet(ai,ringSet)) {
+    		} // end if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0)
+    		
+    	} // end for (int i=0;i<molecule.getAtomCount();i++)
+    	
+	
+	
+    }
     private void applyBonds(IMolecule m, ArrayList al) {
 
         //System.out.println("");
