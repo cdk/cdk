@@ -237,7 +237,7 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									
 									setOfReactions.addReaction(reaction);
 
-									bondj.setFlag(BONDTOFLAG, true);
+									bondj.setFlag(BONDTOFLAG, false);
 								}
 							}
 						}
