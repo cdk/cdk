@@ -198,7 +198,12 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 							
-							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));	
+							int charge = acCloned.getAtom(atom3P).getFormalCharge();
+							acCloned.getAtom(atom3P).setFormalCharge(charge+1);
+							
+							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));
+							acCloned.getAtom(atom2P).setFormalCharge(-1);
+							
 							acCloned.removeElectronContainer(bondCP);
 							if(bondCP < bondP)
 								bondP--;

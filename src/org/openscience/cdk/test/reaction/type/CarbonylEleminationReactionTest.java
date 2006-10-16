@@ -65,7 +65,7 @@ public class CarbonylEleminationReactionTest extends CDKTestCase {
 		return new TestSuite(CarbonylEleminationReactionTest.class);
 	}
 	/**
-	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C] + |C#[O+]
+	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
 	 * Automatic sarch of the centre active.
 	 *
 	 * @return    The test suite
@@ -89,14 +89,14 @@ public class CarbonylEleminationReactionTest extends CDKTestCase {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=C*/
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("C");
+        Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]");
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
         /*[C*]*/
-		molecule2 = (new SmilesParser()).parseSmiles("C#[O+]");
+		molecule2 = (new SmilesParser()).parseSmiles("[C-]#[O+]");
         		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
