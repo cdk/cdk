@@ -151,6 +151,17 @@ public class SmilesParserTest extends CDKTestCase {
 		assertTrue(mol.getAtomCount() > 0);
 	}
 	
+	/*
+	 * Compounds like Indolizine (274-40-8) with a fused nitrogen as part of a 6 membered ring
+	 * and another ring do not parse
+	 */
+	public void testIndolizine () throws Exception {
+		String smiles = "c2cc1cccn1cc2";
+		Molecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
+	
+	
 	/**
 	 *  A unit test for JUnit
 	 */
