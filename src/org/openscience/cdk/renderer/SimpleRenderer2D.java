@@ -155,11 +155,11 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	
 	public void redoSSSR(List moleculesList){
 			if(ringSet==null && moleculesList.size() > 0)
-				ringSet= ((IMolecule)moleculesList.get(0)).getBuilder().newRingSet();
+				ringSet= ((IAtomContainer)moleculesList.get(0)).getBuilder().newRingSet();
 			Iterator iterator = moleculesList.iterator();
 			while(iterator.hasNext())
 			{
-				SSSRFinder sssrf = new SSSRFinder((IMolecule)iterator.next());
+				SSSRFinder sssrf = new SSSRFinder((IAtomContainer)iterator.next());
 				ringSet.add(sssrf.findSSSR());
 			}
 	}
