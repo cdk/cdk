@@ -29,8 +29,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
