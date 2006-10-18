@@ -108,7 +108,9 @@ public class MqsarTests {
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
         suite.addTest(PartialTChargePEOEDescriptorTest.suite());
+        suite.addTest(IPMolecularDescriptorTest.suite());
         suite.addTest(IPAtomicDescriptorTest.suite());
+        suite.addTest(IPBondDescriptorTest.suite());
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
         suite.addTest(MDEDescriptorTest.suite());
         suite.addTest(LengthOverBreadthDescriptorTest.suite());
