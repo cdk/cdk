@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
-
+import org.openscience.cdk.exception.CDKException;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -73,9 +73,12 @@ public class DeduceBondSystemTool {
         hAdder = new HydrogenAdder();
     }
 
-    public boolean isOK(IMolecule m) {
+    public boolean isOK(IMolecule m) throws CDKException {
     	boolean StructureOK=this.isStructureOK(m);
     	IRingSet irs=this.removeExtraRings(m);
+    	
+    	if (irs==null) throw new CDKException("error in AllRingsFinder.findAllRings");
+    	
     	int count=this.getBadCount(m,irs);
 
     	if (StructureOK && count==0) {
@@ -85,14 +88,16 @@ public class DeduceBondSystemTool {
     	}
     }
 
-    public IMolecule fixAromaticBondOrders(IMolecule molecule) {
+    public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
         //System.out.println("here");
 
         IRingSet ringSet = null;
 
         // TODO remove rings with nonsp2 carbons(?) and rings larger than 7 atoms
         ringSet = removeExtraRings(molecule);
-
+        
+        if (ringSet==null) throw new CDKException("failure in AllRingsFinder.findAllRings");
+        
         ArrayList MasterList = new ArrayList();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
@@ -148,6 +153,9 @@ public class DeduceBondSystemTool {
             IMolecule mol = som.getMolecule(i);
 
             ringSet = removeExtraRings(mol);
+            
+            if (ringSet==null) continue;
+            
             int count = getBadCount(mol, ringSet);
 
             //System.out.println(i + "\t" + count);
@@ -559,21 +567,26 @@ public class DeduceBondSystemTool {
 
                     IRingSet rs = this.removeExtraRings(mnew); // need to redo this since created new molecule (mnew)
 
-                    int count = this.getBadCount(mnew, rs);
-                    //System.out.println("bad count="+count);
+                    if (rs != null) {
 
-                    if (count == 0) {
-//						System.out.println("found match after "+counter+" iterations");
-                        return mnew; // dont worry about adding to set just finish
-                    } else {
-                        som.addMolecule(mnew);
-                    }
+						int count = this.getBadCount(mnew, rs);
+						// System.out.println("bad count="+count);
+
+						if (count == 0) {
+							// System.out.println("found match after "+counter+"
+							// iterations");
+							return mnew; // dont worry about adding to set
+											// just finish
+						} else {
+							som.addMolecule(mnew);
+						}
+					}
                 }
 
             }
 
             if (index + 1 <= MasterList.size() - 1) {
-                //System.out.println("here3="+counter);
+                // System.out.println("here3="+counter);
                 mnew2 = loop(starttime, molecule, index + 1, MasterList, choices, som); //recursive def
             }
 

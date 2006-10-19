@@ -40,6 +40,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -219,16 +220,21 @@ public class SmilesParser {
 		}
 
 		if (HaveSP2) {  // have lower case (aromatic) element symbols that may need to be fixed
-			if (!(dbst.isOK(m))) {
+			try {
+				if (!(dbst.isOK(m))) {
 
-				// need to fix it:
-				m=(Molecule)dbst.fixAromaticBondOrders(m2);
+					// need to fix it:
+					m = (Molecule) dbst.fixAromaticBondOrders(m2);
 
-				if (!(m instanceof IMolecule)) {
-					throw new InvalidSmilesException("couldn't parse");
+					if (!(m instanceof IMolecule)) {
+						throw new InvalidSmilesException("couldn't parse");
+					}
+				} else {
+					// doesnt need to fix aromatic bond orders
 				}
-			} else {
-				//doesnt need to fix aromatic bond orders
+
+			} catch (CDKException ex) {
+				throw new InvalidSmilesException(ex.getMessage());
 			}
 		}
 
