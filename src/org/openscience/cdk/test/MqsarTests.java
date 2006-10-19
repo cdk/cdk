@@ -26,11 +26,14 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.*;
 import org.openscience.cdk.test.qsar.descriptors.bond.*;
 import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
+import org.openscience.cdk.test.qsar.model.R.*;
+import org.openscience.cdk.test.qsar.model.R2.*;
+import org.openscience.cdk.test.qsar.model.weka.*;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -45,81 +48,112 @@ public class MqsarTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
-        // Individual Tests
+        // Individual Tests - Please add correlatively	
 
-        // from cdk.test.qsar
-        suite.addTest(AtomCountDescriptorTest.suite());
-        suite.addTest(BondCountDescriptorTest.suite());
-        suite.addTest(RotatableBondsCountDescriptorTest.suite());
-        suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
-        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
-        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
-        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
-        suite.addTest(BondPartialTChargeDescriptorTest.suite());
-        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
-        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
-        suite.addTest(PiElectronegativityDescriptorTest.suite());
-        suite.addTest(AromaticAtomsCountDescriptorTest.suite());
-        suite.addTest(AromaticBondsCountDescriptorTest.suite());
-        suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
-        suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
-        suite.addTest(EffectiveAtomPolarizabilityDescriptorTest.suite());
-        suite.addTest(HBondAcceptorCountDescriptorTest.suite());
-        suite.addTest(HBondDonorCountDescriptorTest.suite());
-        suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ValenceCarbonConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(ValenceCarbonConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(ConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(CarbonConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(CarbonConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(ZagrebIndexDescriptorTest.suite());
-        suite.addTest(GravitationalIndexDescriptorTest.suite());
-        suite.addTest(BCUTDescriptorTest.suite());
-        suite.addTest(WHIMDescriptorTest.suite());
-        suite.addTest(KappaShapeIndicesDescriptorTest.suite());
-        suite.addTest(WienerNumbersDescriptorTest.suite());
-        suite.addTest(PetitjeanNumberDescriptorTest.suite());
-        suite.addTest(APolDescriptorTest.suite());
-        suite.addTest(BPolDescriptorTest.suite());
-        suite.addTest(TPSADescriptorTest.suite());
-        suite.addTest(XLogPDescriptorTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
-        suite.addTest(RuleOfFiveDescriptorTest.suite());
-        suite.addTest(RDFProtonDescriptorTest.suite());
-        suite.addTest(MomentOfInertiaDescriptorTest.suite());
-        suite.addTest(CovalentRadiusDescriptorTest.suite());
-        suite.addTest(VdWRadiusDescriptorTest.suite());
-        suite.addTest(BondsToAtomDescriptorTest.suite());
-        suite.addTest(DistanceToAtomDescriptorTest.suite());
+        
+        
+        // from cdk.test.qsar.atomic
         suite.addTest(AtomDegreeDescriptorTest.suite());
-        suite.addTest(AtomValenceDescriptorTest.suite());
-        suite.addTest(PeriodicTablePositionDescriptorTest.suite());
         suite.addTest(AtomHybridizationDescriptorTest.suite());
-        suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
-        suite.addTest(WeightDescriptorTest.suite());
+        suite.addTest(AtomHybridizationVSEPRDescriptorTest.suite());
+        suite.addTest(AtomValenceDescriptorTest.suite());
+        suite.addTest(BondsToAtomDescriptorTest.suite());
+        suite.addTest(CovalentRadiusDescriptorTest.suite());
+        suite.addTest(DistanceToAtomDescriptorTest.suite());
+        suite.addTest(EffectiveAtomPolarizabilityDescriptorTest.suite());
         suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
         suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
-        suite.addTest(CPSADescriptorTest.suite());
-        suite.addTest(WeightedPathDescriptorTest.suite());
-        suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
+        suite.addTest(IPAtomicDescriptorTest.suite());
+        suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
+        suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
         suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
         suite.addTest(PartialTChargePEOEDescriptorTest.suite());
-        suite.addTest(IPMolecularDescriptorTest.suite());
-        suite.addTest(IPAtomicDescriptorTest.suite());
-        suite.addTest(IPBondDescriptorTest.suite());
-        suite.addTest(TaeAminoAcidDescriptorTest.suite());
-        suite.addTest(MDEDescriptorTest.suite());
-        suite.addTest(LengthOverBreadthDescriptorTest.suite());
+        suite.addTest(PeriodicTablePositionDescriptorTest.suite());
+        suite.addTest(PiElectronegativityDescriptorTest.suite());
+        suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
+        suite.addTest(RDFProtonDescriptorTest.suite());
+        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(VdWRadiusDescriptorTest.suite());
+        
 
-        // from cdk.test.qsar.model
+        // from cdk.test.qsar.bond
+        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
+        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(BondPartialTChargeDescriptorTest.suite());
+        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(IPBondDescriptorTest.suite());
+        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
+        
+        
+        
+
+        // from cdk.test.qsar.molecular
+        suite.addTest(AminoAcidCountDescriptorTest.suite());
+        suite.addTest(APolDescriptorTest.suite());
+        suite.addTest(AromaticAtomsCountDescriptorTest.suite());
+        suite.addTest(AromaticBondsCountDescriptorTest.suite());
+        suite.addTest(AtomCountDescriptorTest.suite());
+        suite.addTest(BCUTDescriptorTest.suite());
+        suite.addTest(BondCountDescriptorTest.suite());
+        suite.addTest(BPolDescriptorTest.suite());
+        suite.addTest(CarbonConnectivityOrderZeroDescriptorTest.suite());
+        suite.addTest(CarbonConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(ConnectivityOrderZeroDescriptorTest.suite());
+        suite.addTest(ConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(CPSADescriptorTest.suite());
+        suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
+        suite.addTest(GravitationalIndexDescriptorTest.suite());
+        suite.addTest(HBondAcceptorCountDescriptorTest.suite());
+        suite.addTest(HBondDonorCountDescriptorTest.suite());
+        suite.addTest(IPMolecularDescriptorTest.suite());
+        suite.addTest(KappaShapeIndicesDescriptorTest.suite());
+        suite.addTest(LargestChainDescriptorTest.suite());
+        suite.addTest(LargestPiSystemDescriptorTest.suite());
+        suite.addTest(LengthOverBreadthDescriptorTest.suite());
+        suite.addTest(LongestAliphaticChainDescriptorTest.suite());
+        suite.addTest(MDEDescriptorTest.suite());
+        suite.addTest(MomentOfInertiaDescriptorTest.suite());
+        suite.addTest(PetitjeanNumberDescriptorTest.suite());
+        suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
+        suite.addTest(RotatableBondsCountDescriptorTest.suite());
+        suite.addTest(RuleOfFiveDescriptorTest.suite());
+        suite.addTest(TaeAminoAcidDescriptorTest.suite());
+        suite.addTest(TPSADescriptorTest.suite());
+        suite.addTest(ValenceCarbonConnectivityOrderZeroDescriptorTest.suite());
+        suite.addTest(ValenceCarbonConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
+        suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(WeightDescriptorTest.suite());
+        suite.addTest(WeightedPathDescriptorTest.suite());
+        suite.addTest(WHIMDescriptorTest.suite());
+        suite.addTest(WienerNumbersDescriptorTest.suite());
+        suite.addTest(XLogPDescriptorTest.suite());
+        suite.addTest(ZagrebIndexDescriptorTest.suite());
+        
+
+        // from cdk.test.qsar.model.R
+        suite.addTest(CNNClassificationModelTest.suite());
+        suite.addTest(org.openscience.cdk.test.qsar.model.R.CNNRegressionModelTest.suite());
+        suite.addTest(org.openscience.cdk.test.qsar.model.R.LinearRegressionModelTest.suite());
+        suite.addTest(ModelLoadSaveTest.suite());
+        suite.addTest(org.openscience.cdk.test.qsar.model.R.QSARRModelTests.suite());
+        suite.addTest(SJavaEnvironmentTest.suite());
+
+//      from cdk.test.qsar.model.R2
+        suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
+        suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
+        suite.addTest(RJavaEnvironmentTest.suite());
+
+//      from cdk.test.qsar.model.R2
+        suite.addTest(J48WModelTest.suite());
+        suite.addTest(LinearRegressionWModelTest.suite());
         suite.addTest(QSARWekaModelTests.suite());
 
-
+        
         return suite;
     }
 
