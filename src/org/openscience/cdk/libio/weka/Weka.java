@@ -3,7 +3,11 @@
  * $Date: 2006-05-01 10:43:42 +0200 (Mo, 01 Mai 2006) $
  * $Revision: 6095 $
  * 
- * Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 1989, 1991 Free Software Foundation, Inc.  
+ * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ * 
+ * Everyone is permitted to copy and distribute verbatim copies
+ * of this license document, but changing it is not allowed.
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
