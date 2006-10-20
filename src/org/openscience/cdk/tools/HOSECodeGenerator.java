@@ -51,6 +51,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * Generates HOSE codes {@cdk.cite BRE78}.
  *
  * @author     steinbeck
+ * @cdk.keyword    HOSE code, spherical atom search
  * @cdk.created    2002-05-10
  * @cdk.require swing
  */
@@ -162,7 +163,17 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
   
   
-  public Vector[] getSpheres(Molecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
+	/**
+	 *  This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
+	 *  It also creates the HOSE code in HOSECode as a side-effect
+	 *  
+	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides.
+	 *@param  root The root atom for which to produce the spheres.
+	 *@param  noOfSpheres  The number of spheres to look at.
+	 *@paramm ringsize  Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.
+	 *@return An array of Vectors. The vector at i-1 contains the atoms at sphere i as TreeNodes.
+	 **/
+	public Vector[] getSpheres(Molecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
 	{
 		centerCode = "";
 		this.atomContainer = ac;
