@@ -29,11 +29,15 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
+import java.util.Vector;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -457,6 +461,27 @@ public class HOSECodeTest extends CDKTestCase
             fail(exc.getMessage());
 		}
     }
+  	public void testGetAtomsOfSphere(){
+		try
+		{
+			IMolecule molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+			HueckelAromaticityDetector.detectAromaticity(molecule);
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+
+			hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 4, true);
+			Vector atoms = hcg.getNodesInSphere(3);
+
+			assertEquals(1, atoms.size());
+			assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
+
+		} catch (Exception exc)
+		{
+			exc.printStackTrace();
+          fail(exc.getMessage());
+		}
+
+	}
+
   /**
 	 *  The main program for the HOSECodeTest class
 	 *
