@@ -3,6 +3,7 @@ package org.openscience.cdk.test.smiles;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -50,6 +51,8 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             }
         } catch (InvalidSmilesException e) {
             e.printStackTrace();
-        }
+        } catch (CDKException e) {
+			e.printStackTrace();
+		}
     }
 }
