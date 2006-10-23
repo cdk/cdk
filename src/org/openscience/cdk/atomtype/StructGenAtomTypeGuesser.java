@@ -86,7 +86,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
         for (int i=0; i<types.length; i++) {
             IAtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
-			if (bondOrderSum - charge + hcount == types[i].getBondOrderSum() && 
+			if (bondOrderSum - charge + hcount <= types[i].getBondOrderSum() && 
 	            maxBondOrder <= types[i].getMaxBondOrder()) {
 				matchingTypes.add(type);
 			}
