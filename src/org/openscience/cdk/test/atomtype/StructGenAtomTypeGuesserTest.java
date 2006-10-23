@@ -56,10 +56,12 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
     public void testPossbibleAtomTypes_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
+        atom.setHydrogenCount(3);
         Atom atom2 = new Atom("N");
+        atom2.setHydrogenCount(2);
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(new Bond(atom, atom2));
+        mol.addBond(new Bond(atom, atom2, 1));
 
         StructGenAtomTypeGuesser atm = new StructGenAtomTypeGuesser();
         List matched = atm.possbibleAtomTypes(mol, atom);
