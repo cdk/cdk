@@ -1,9 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -143,7 +140,8 @@ abstract public class CoverageTest extends CDKTestCase {
             Method[] methods = coreClass.getDeclaredMethods();
             for (int i=0; i<methods.length; i++) {
                 int modifiers = methods[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
+                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers) &&
+                    !removePackage(methods[i].getName()).startsWith("access")) {
                     String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
                     Class[] paramTypes = methods[i].getParameterTypes();
                     for (int j=0; j<paramTypes.length; j++) {
