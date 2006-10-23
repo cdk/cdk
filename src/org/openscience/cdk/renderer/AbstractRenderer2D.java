@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
@@ -25,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.renderer;
 
@@ -223,6 +218,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
+		if (!r2dm.getShowExplicitHydrogens() && atom.getSymbol().equals("H")) return;
 		logger.debug("Painting atom ");
 		Color atomBackColor = r2dm.getAtomBackgroundColor(atom);
 		if (atom.equals(r2dm.getHighlightedAtom()))
@@ -926,6 +922,11 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				r2dm.getRenderingCoordinate(bond.getAtom(1)) == null)
 		{
 			return;
+		}
+		
+		if (!r2dm.getShowExplicitHydrogens()) {
+			if (bond.getAtom(0).getSymbol().equals("H")) return;
+			if (bond.getAtom(1).getSymbol().equals("H")) return;
 		}
 
 		if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED)
