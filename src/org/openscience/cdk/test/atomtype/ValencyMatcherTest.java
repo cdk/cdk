@@ -53,6 +53,7 @@ public class ValencyMatcherTest extends CDKTestCase {
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
+        atom.setHydrogenCount(4);
         mol.addAtom(atom);
 
         ValencyMatcher atm = new ValencyMatcher();
