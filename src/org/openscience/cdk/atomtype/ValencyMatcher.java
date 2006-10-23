@@ -75,13 +75,15 @@ public class ValencyMatcher implements IAtomTypeMatcher {
 
 		double bondOrderSum = atomContainer.getBondOrderSum(atom);
 		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+		int charge = atom.getFormalCharge();
+		int hcount = atom.getHydrogenCount();
 
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (int i=0; i<types.length; i++) {
             IAtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
-			if (bondOrderSum == types[i].getBondOrderSum() && 
-	            maxBondOrder == types[i].getMaxBondOrder()) {
+			if (bondOrderSum - charge + hcount == types[i].getBondOrderSum() && 
+		            maxBondOrder <= types[i].getMaxBondOrder()) {
 				return type;
 			}
         }
