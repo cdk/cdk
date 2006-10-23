@@ -564,6 +564,14 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IPseudoAtom);
 	}	
 
+	public void testNewPDBAtom_String_Point3d() {
+		Object object = rootObject.getBuilder().newPDBAtom("CA", new Point3d(1.0,2.0,3.0));
+		assertNotNull(object);
+		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		assertTrue(object instanceof IPDBAtom);
+	}	
+
 	public void testNewReaction() {
 		Object object = rootObject.getBuilder().newReaction();
 		assertNotNull(object);
