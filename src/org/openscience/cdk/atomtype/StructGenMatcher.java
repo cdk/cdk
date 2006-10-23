@@ -83,7 +83,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
             IAtomType type = types[i];
             logger.debug("   ... matching atom ", atom, " vs ", type);
 			if (bondOrderSum - charge + hcount == types[i].getBondOrderSum() && 
-	            maxBondOrder == types[i].getMaxBondOrder()) {
+	            maxBondOrder <= types[i].getMaxBondOrder()) {
 				return type;
 			}
         }
