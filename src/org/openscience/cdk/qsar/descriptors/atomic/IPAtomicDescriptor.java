@@ -195,7 +195,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     	        Iterator it = nbe.reactions();
     	        while(it.hasNext()){
     	        	IReaction reaction = (IReaction)it.next();
-    	        	reaction.setProperty("IonizationEnergy", resultD);
+    	        	reaction.setProperty("IonizationEnergy", new Double(resultD));
     	        	reactionSet.addReaction(reaction);
     	        }
     		}
