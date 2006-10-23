@@ -53,6 +53,7 @@ public class StructGenMatcherTest extends CDKTestCase {
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
+        atom.setHydrogenCount(4);
         mol.addAtom(atom);
 
         StructGenMatcher atm = new StructGenMatcher();
@@ -60,5 +61,18 @@ public class StructGenMatcherTest extends CDKTestCase {
         assertNotNull(matched);
         
         assertEquals("C", matched.getSymbol());
+    }
+
+    public void testN3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setHydrogenCount(3);
+        mol.addAtom(atom);
+
+        StructGenMatcher atm = new StructGenMatcher();
+        IAtomType matched = atm.findMatchingAtomType(mol, atom);
+        assertNotNull(matched);
+        
+        assertEquals("N", matched.getSymbol());
     }
 }
