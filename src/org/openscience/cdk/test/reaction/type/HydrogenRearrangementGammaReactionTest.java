@@ -28,13 +28,10 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -42,44 +39,43 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.RadicalSiteInitiationHReaction;
+import org.openscience.cdk.reaction.type.HydrogenRearrangementGammaReaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
- * TestSuite that runs a test for the RadicalSiteInitiationHReactionTest.
- * Generalized Reaction: [A*]-B-H => A=B + [H*].
+ * TestSuite that runs a test for the RearrangementRadical3ReactionTest.
+ * Generalized Reaction: [C*]-C1-C2-C3[H] => C([H])-C1-C2-[C3*].
  *
  * @cdk.module test-reaction
  */
-public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
+public class HydrogenRearrangementGammaReactionTest extends CDKTestCase {
 	
 	private IReactionProcess type;
 	/**
-	 * Constructror of the RadicalSiteInitiationHReactionTest object
+	 * Constructror of the HydrogenRearrangementGammaReactionTest object
 	 *
 	 */
-	public  RadicalSiteInitiationHReactionTest() {
-		type  = new RadicalSiteInitiationHReaction();
+	public  HydrogenRearrangementGammaReactionTest() {
+		type  = new HydrogenRearrangementGammaReaction();
 	}
     
 	public static Test suite() {
-		return new TestSuite(RadicalSiteInitiationHReactionTest.class);
+		return new TestSuite(HydrogenRearrangementGammaReactionTest.class);
 	}
 	/**
-	 * A unit test suite for JUnit. Reaction: [C*]([H])([H])C([H])([H])[H] => C=C +[H*]
+	 * A unit test suite for JUnit. Reaction: [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]
 	 * Automatic sarch of the centre active.
 	 *
 	 * @return    The test suite
 	 */
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         
-		/*[C*]-C-C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]([H])([H])C([H])([H])[H]");
-        IAtom atom =  molecule.getAtom(0);
-        molecule.addElectronContainer(new SingleElectron(atom));
-        atom.setFormalCharge(0);
+		/*[C*]=C-C-C-C*/
+        IMolecule molecule = (new SmilesParser()).parseSmiles("C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[H]");
+        molecule.addElectronContainer(new SingleElectron(molecule.getAtom(0)));
+        
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
 		
@@ -88,35 +84,22 @@ public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
-        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         
-        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-		
-        /*C=C*/
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("C([H])([H])=C([H])[H]");
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
+        
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        /*|C-[C*]-C*/
+        IMolecule molecule2 = (new SmilesParser()).parseSmiles("C([H])([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])C([H])([H])[H]");
+        molecule2.addElectronContainer(new SingleElectron(molecule2.getAtom(12)));
+        
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
-		
-		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-		
-        /*[H*]*/
-		molecule2 = (Molecule) molecule2.getBuilder().newMolecule();
-		molecule2.addAtom(new Atom("H"));
-        molecule2.addElectronContainer(new SingleElectron(molecule2.getAtom(0)));
-        		
-        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
-
-		Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
-		IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(4));
-		assertEquals(mappedProductA1, product2.getAtom(0));
-        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(2));
-        assertEquals(mappedProductB1, product1.getBond(2));
-        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
-        assertEquals(mappedProductA2, product1.getAtom(0));
-        IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(3));
-        assertEquals(mappedProductA3, product1.getAtom(3));
-       
+        
+        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        
+        IAtom mappedProduct = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        assertEquals(mappedProduct, product.getAtom(0));
 	}
+
 }
