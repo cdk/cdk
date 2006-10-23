@@ -462,8 +462,7 @@ public class HOSECodeTest extends CDKTestCase
 		}
     }
   	public void testGetAtomsOfSphere(){
-		try
-		{
+		try{
 			IMolecule molecule = (new SmilesParser()).parseSmiles("CC=CBr");
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -474,8 +473,27 @@ public class HOSECodeTest extends CDKTestCase
 			assertEquals(1, atoms.size());
 			assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
 
-		} catch (Exception exc)
-		{
+		} catch (Exception exc){
+			exc.printStackTrace();
+          fail(exc.getMessage());
+		}
+
+	}
+  	public void testGetAtomsOfSphereWithHydr(){
+		try{
+			IMolecule molecule = (new SmilesParser()).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
+			HueckelAromaticityDetector.detectAromaticity(molecule);
+			HOSECodeGenerator hcg = new HOSECodeGenerator();
+
+			hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 3, true);
+			Vector atoms = hcg.getNodesInSphere(3);
+
+			assertEquals(2, atoms.size());
+			
+			assertEquals("H", ((IAtom)atoms.get(0)).getSymbol());
+			assertEquals("Br", ((IAtom)atoms.get(1)).getSymbol());
+
+		} catch (Exception exc){
 			exc.printStackTrace();
           fail(exc.getMessage());
 		}
