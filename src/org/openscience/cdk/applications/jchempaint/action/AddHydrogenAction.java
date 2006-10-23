@@ -220,6 +220,8 @@ public class AddHydrogenAction extends JCPAction
 								{
 									logger.debug("Atom is a hydrogen");
 									molecule.removeAtomAndConnectedElectronContainers(atom);
+									if(j-1!=molecule.getAtomCount())
+										j--;
 								}
 							}
 							// add implicit hydrogen
