@@ -25,11 +25,18 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
@@ -38,6 +45,8 @@ import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescrip
 import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
 
 /**
  *  This class returns the ionization potential of a bond. It is
@@ -73,7 +82,6 @@ public class IPBondDescriptor implements IBondDescriptor {
 	
 	/** Hash map which contains the classAttribu = value of IP */
 	private HashMap hash = null;
-	
 	private String[] classAttrib = {
 			"05_0","05_1","05_2","05_3","05_4","05_5","05_6","05_7","05_8","05_9",
 			"06_0","06_1","06_2","06_3","06_4","06_5","06_6","06_7","06_8","06_9",
@@ -85,6 +93,10 @@ public class IPBondDescriptor implements IBondDescriptor {
 			"12_0","12_1","12_2","12_3","12_4","12_5","12_6","12_7","12_8","12_9",
 			"13_0","13_1","13_2","13_3","13_4","13_5","13_6","13_7","13_8","13_9",
 			"14_0","14_1","14_2","14_3","14_4","14_5","14_6","14_7","14_8","14_9",};
+
+	/** parameter for inizate IReactionSet*/
+	private boolean setEnergy = false;
+	private IReactionSet reactionSet;
 
 	/**
 	 *  Constructor for the IPBondDescriptor object
@@ -109,6 +121,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 				"$Id: IPBondDescriptor.java 6171 2006-5-22 19:29:58Z egonw $",
 				"The Chemistry Development Kit");
 	}
+
     /**
      * This descriptor does have any parameter.
      */
@@ -126,15 +139,15 @@ public class IPBondDescriptor implements IBondDescriptor {
         return new Object[0];
     }
 	/**
-	 *  This method calculates the ionization potential of an bond.
+	 *  This method calculates the ionization potential of a bond.
 	 *
 	 *@param  container         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException
-	{
-		double resultD = -1.0;
+	public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException{
+		reactionSet = container.getBuilder().newReactionSet();
+    	double resultD = -1.0;
 		boolean isTarget = false;
 		Double[][] resultsH = null;
 		String path = "";
@@ -158,8 +171,38 @@ public class IPBondDescriptor implements IBondDescriptor {
             j48.predict();
     		String[] result = (String[])j48.getPredictPredicted();
     		resultD = ((Double)hash.get(result[0])).doubleValue();
+    		
+    		
+    		/* extract reaction*/
+    		if(setEnergy){
+    			IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
+    			setOfReactants.addMolecule((IMolecule) container);
+    			IReactionProcess type  = new ElectronImpactPDBReaction();
+    			bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	        Object[] params = {Boolean.TRUE};
+    	        type.setParameters(params);
+    	        IReactionSet pbb = type.initiate(setOfReactants, null);
+    	        Iterator it = pbb.reactions();
+    	        while(it.hasNext()){
+    	        	IReaction reaction = (IReaction)it.next();
+    	        	reaction.setProperty("IonizationEnergy", resultD);
+    	        	reactionSet.addReaction(reaction);
+    	        }
+    		}
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD));
+	}
+
+	/**
+	 * This method calculates the ionization potential of a bond and set the ionization
+	 * energy into each reaction as property
+	 * 
+	 * @return The IReactionSet value
+	 */
+	public IReactionSet getReactionSet(IBond bond, IAtomContainer container) throws CDKException{
+		setEnergy = true;
+		calculate(bond,container);
+		return reactionSet;
 	}
 	
 	/**
@@ -210,7 +253,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 */
 	public String[] getParameterNames() {
 		String[] params = new String[1];
-		params[0] = "targetPosition";
+		params[0] = "set";
 		return params;
 	}
 	/**

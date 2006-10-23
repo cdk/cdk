@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -265,6 +266,51 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
          
         
     }
+    /**
+     * A unit test for JUnit with C=CCCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+    	Molecule mol = sp.parseSmiles("C-C-N");
 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		
+		IReactionSet reactionSet = ((IPAtomicDescriptor) descriptor).getReactionSet(mol.getAtom(2),mol);
+        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+        double resultAccordingNIST = 8.9; 
+//      System.out.println(resultAccordingNIST+"="+result);
+        assertEquals(1, reactionSet.getReactionCount());
+        assertEquals(result, resultAccordingNIST, 0.5);
+    }
+    /**
+     * A unit test for JUnit with CCCCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCCCCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		IReactionSet reactionSet = ((IPAtomicDescriptor)descriptor).getReactionSet(mol.getAtom(0),mol);
+        assertEquals(0, reactionSet.getReactionCount());
+    }
 
 }

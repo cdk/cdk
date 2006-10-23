@@ -72,8 +72,6 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 					atom0.getSymbol().equals("C")&&
 					atom1.getSymbol().equals("C")){
 				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atom0.setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		

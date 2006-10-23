@@ -29,6 +29,8 @@ import java.util.Iterator;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -74,6 +76,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class IPMolecularDescriptor implements IMolecularDescriptor {
 
+	/** parameter for inizate IReactionSet*/
+	private boolean setEnergy = false;
+	private IReactionSet reactionSet;
     /**
      *  Constructor for the IPMolecularDescriptor object
      */
@@ -124,24 +129,59 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    	reactionSet = atomContainer.getBuilder().newReactionSet();
     	DoubleArrayResult dar = new DoubleArrayResult();
     	IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
     	Iterator itA = atomContainer.atoms();
     	while(itA.hasNext()){
     		IAtom atom = (IAtom) itA.next();
-    		double result= ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
-    		if(result != -1.0)
-    			dar.add(result);
-            
+    		double result = -1;
+    		if(setEnergy){
+    			IReactionSet irs = descriptorA.getReactionSet(atom,atomContainer);
+    			if(irs.getReactionCount() > 0){
+	    			Iterator iter = irs.reactions();
+	    			while(iter.hasNext()){
+	    				reactionSet.addReaction((IReaction)iter.next());
+	    			}
+    			}
+    			
+    		}else
+    			result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
+    		
+    		if(result != -1)
+    		dar.add(result);
     	}
+            
     	IPBondDescriptor descriptorB = new IPBondDescriptor();
     	for(int i = 0; i < atomContainer.getBondCount(); i++){
-    		double result= ((DoubleResult)descriptorB.calculate(atomContainer.getBond(i),atomContainer).getValue()).doubleValue();
-    		if(result != -1.0)
-    			dar.add(result);
+    		double result = -1;
+    		if(setEnergy){
+    			IReactionSet irs = descriptorB.getReactionSet(atomContainer.getBond(i),atomContainer);
+    			if(irs.getReactionCount() > 0){
+	    			Iterator iter = irs.reactions();
+	    			while(iter.hasNext()){
+	    				reactionSet.addReaction((IReaction)iter.next());
+	    			}
+    			}
+    		}else
+    			result = ((DoubleResult)descriptorB.calculate(atomContainer.getBond(i),atomContainer).getValue()).doubleValue();
+    		
+    		if(result != -1)
+        		dar.add(result);
     	}
     	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), dar);
     }
+    /**
+	 * This method calculates the ionization potential of a molecule and set the ionization
+	 * energy into each reaction as property
+	 * 
+	 * @return The IReactionSet value
+	 */
+	public IReactionSet getReactionSet(IAtomContainer container) throws CDKException{
+		setEnergy = true;
+		calculate(container);
+		return reactionSet;
+	}
 
 
     /**

@@ -25,11 +25,18 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -38,6 +45,8 @@ import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescript
 import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
 
 /**
  *  This class returns the ionization potential of an atom. It is
@@ -86,6 +95,10 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 			"13_0","13_1","13_2","13_3","13_4","13_5","13_6","13_7","13_8","13_9",
 			"14_0","14_1","14_2","14_3","14_4","14_5","14_6","14_7","14_8","14_9",};
 
+	/** parameter for inizate IReactionSet*/
+	private boolean setEnergy = false;
+	private IReactionSet reactionSet;
+	
 	/**
 	 *  Constructor for the IPAtomicDescriptor object
 	 */
@@ -133,9 +146,9 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 *@return                   The ionization potential. Not possible the ionization.
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
-	{
-		double resultD = -1.0;
+	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException{
+		reactionSet = container.getBuilder().newReactionSet();
+    	double resultD = -1.0;
 		boolean isTarget = false;
 		Double[][] resultsH = null;
 		String path = "";
@@ -170,8 +183,36 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
             j48.predict();
     		String[] result = (String[])j48.getPredictPredicted();
     		resultD = ((Double)hash.get(result[0])).doubleValue();
+    		
+    		/* extract reaction*/
+    		if(setEnergy){
+    			IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
+    			setOfReactants.addMolecule((IMolecule) container);
+    			IReactionProcess type  = new ElectronImpactNBEReaction();
+    			atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	        Object[] params = {Boolean.TRUE};
+    	        type.setParameters(params);
+    	        IReactionSet nbe = type.initiate(setOfReactants, null);
+    	        Iterator it = nbe.reactions();
+    	        while(it.hasNext()){
+    	        	IReaction reaction = (IReaction)it.next();
+    	        	reaction.setProperty("IonizationEnergy", resultD);
+    	        	reactionSet.addReaction(reaction);
+    	        }
+    		}
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD));
+	}
+	/**
+	 * This method calculates the ionization potential of an atom and set the ionization
+	 * energy into each reaction as property
+	 * 
+	 * @return The IReactionSet value
+	 */
+	public IReactionSet getReactionSet(IAtom atom, IAtomContainer container) throws CDKException{
+		setEnergy = true;
+		calculate(atom,container);
+		return reactionSet;
 	}
 	/**
 	 * Calculate the necessary descriptors for Heteratom atoms

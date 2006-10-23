@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -118,10 +119,52 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
 
-      System.out.println(dar.get(0)+", "+dar.get(1));
+//		System.out.println(dar.get(0)+", "+dar.get(1));
         double resultAccordingNIST = 9.37; 
         assertEquals(2, dar.size());
         assertEquals(resultAccordingNIST, dar.get(0), 1.4);
+    }
+    /**
+     * A unit test for JUnit with C-Cl
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	Molecule mol = sp.parseSmiles("C-Cl");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet(mol);
+		double resultAccordingNIST = 11.26; 
+//        System.out.println(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+        assertEquals(1, reactionSet.getReactionCount());
+        assertEquals(resultAccordingNIST, result, 2.1);
+    }
+    /**
+     * A unit test for JUnit with CCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	Molecule mol = sp.parseSmiles("CCCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet(mol);
+        assertEquals(0, reactionSet.getReactionCount());
     }
 
 }

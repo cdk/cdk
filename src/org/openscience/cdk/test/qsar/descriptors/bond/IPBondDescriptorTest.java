@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -99,7 +100,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
         assertEquals(result, resultAccordingNIST, 0.7);
     }
     /**
-	 *  A unit test for JUnit with C=CCC(=O)CC
+	 *  A unit test for JUnit with C=CCCCC
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -116,6 +117,52 @@ public class IPBondDescriptorTest extends CDKTestCase {
         double resultAccordingNIST = 9.44; 
 //      System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 2.1);
+    }
+    /**
+     * A unit test for JUnit with C=CCCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=CCCCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet(mol.getBond(0),mol);
+        double resultAccordingNIST = 9.44; 
+//        System.out.println(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+        assertEquals(2, reactionSet.getReactionCount());
+        assertEquals(resultAccordingNIST, result, 2.1);
+    }
+    /**
+     * A unit test for JUnit with CCCCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("CCCCCC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet(mol.getBond(0),mol);
+        assertEquals(0, reactionSet.getReactionCount());
     }
 
 }
