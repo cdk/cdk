@@ -1,29 +1,22 @@
-/* $RCSfile$
- * $Author: egonw $ 
- * $Date: 2006-05-01 10:43:42 +0200 (Mo, 01 Mai 2006) $
- * $Revision: 6095 $
- * 
- * Copyright (C) 1989, 1991 Free Software Foundation, Inc.  
- * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
- * 
- * Everyone is permitted to copy and distribute verbatim copies
- * of this license document, but changing it is not allowed.
+/* $Revision: 6228 $ $Author: egonw $ $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
+ *
+ * Copyright (C) 2006  Miguel Rojas-Cherto <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.libio.weka;
 
@@ -51,11 +44,13 @@ import java.util.Vector;
  *  weka.setDataset(attrib, typAttrib, y, x, lr);
  *  double[] resultY = weka.getPrediction(testX);
  *  </pre>
+ *  
  * @author      Miguel Rojas
  * @cdk.created 2006-05-23
  * @cdk.module  libioweka
- * @cdk.keyword   weka,Machine Learning
- * @cdk.depends   weka.jar
+ * @cdk.keyword weka, machine learning
+ * @cdk.depends weka.jar
+ * @cdk.license GPL
  */
 public class Weka {
 	
