@@ -442,7 +442,6 @@
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
-       	    <antcall target="compile-module"><param name="module" value="libioweka"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-openbabel"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
@@ -450,6 +449,7 @@
             <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
+     	    <antcall target="compile-module"><param name="module" value="qsar-weka"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
