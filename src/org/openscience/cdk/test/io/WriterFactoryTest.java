@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
- * $Revision: 6228 $
+/* $Revision: 6228 $ $Author: egonw $ $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
  *
- * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,13 +21,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 package org.openscience.cdk.test.io;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.WriterFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -39,9 +35,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * TestCase for the reading CML files using a few test files
- * in data/cmltest as found in the Jmol distribution
- * (http://jmol.sf.org/).
+ * TestCase for the writing files.
  *
  * @cdk.module test-io
  */
