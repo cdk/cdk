@@ -30,6 +30,7 @@ package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -101,8 +102,9 @@ public class WriterFactory {
                     String formatName = reader.readLine();
                     formatCount++;
                     try {
-                        IResourceFormat format = (IResourceFormat)this.getClass().getClassLoader().
-                            loadClass(formatName).newInstance();
+                        Class formatClass = this.getClass().getClassLoader().loadClass(formatName);
+                    	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
+                    	IResourceFormat format = (IResourceFormat)getinstanceMethod.invoke(null, new Object[0]);
                         if (format instanceof IChemFormat) {
                         	formats.add(format);
                         	logger.info("Loaded IChemFormat: " + format.getClass().getName());
