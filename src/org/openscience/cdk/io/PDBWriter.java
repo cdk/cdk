@@ -216,9 +216,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
            java.util.Iterator atoms = crystal.atoms();
            while (atoms.hasNext()) {
             	IAtom atom = (IAtom)atoms.next();
-                Point3d frac = new Point3d(atom.getFractionalPoint3d());
-                Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
-                atom.setPoint3d(cart);
+            	System.out.println("PDBWriter: atom -> " + atom);
+            	// if it got 3D coordinates, use that. If not, try fractional coordinates
+            	if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {
+            		Point3d frac = new Point3d(atom.getFractionalPoint3d());
+                	Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
+                    atom.setPoint3d(cart);
+            	}
             }
            writeMolecule(crystal.getBuilder().newMolecule(crystal));
        } catch (IOException exception) {
