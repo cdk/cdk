@@ -30,7 +30,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * to initialize the weka algorithms.
  * Any class that builds models using weka algorithms should be a subclass of this.
  *
- * @author Miguel Rojas
+ * @author     Miguel Rojas
  * @cdk.module qsar
  */
 public interface IWekaModel extends IModel {

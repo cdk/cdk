@@ -1,26 +1,22 @@
-/*
- *  $RCSfile$
- *  $Author: kaihartmann $
- *  $Date: 2006-09-22 17:26:48 +0200 (Fri, 22 Sep 2006) $
- *  $Revision: 7032 $
+/* $Revision: 6228 $ $Author: egonw $ $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
  *
- *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net
  *
- *  Contact: cdk-devel@lists.sourceforge.net
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
@@ -63,13 +59,15 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *   </tr>
  * </table>
  *
- * @author         Miguel Rojas
- * @cdk.created    2006-05-26
- * @cdk.module     qsar
- * @cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:ionizationPotential
- * @cdk.depends weka.jar
+ * @author           Miguel Rojas
+ * @cdk.created      2006-05-26
+ * @cdk.license      GPL
+ * @cdk.module       qsar-weka
+ * @cdk.set          qsar-descriptors
+ * @cdk.dictref      qsar-descriptors:ionizationPotential
+ * @cdk.depends      weka.jar
  * @cdk.builddepends weka.jar
+ * 
  * @see J48WModel
  * @see IPAtomicDescriptor
  * @see IPBondDescriptor
