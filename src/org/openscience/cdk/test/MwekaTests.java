@@ -12,7 +12,7 @@ import org.openscience.cdk.test.libio.weka.WekaTest;
  * @cdk.depends weka.jar
  * @cdk.depends junit.jar
  */
-public class MlibiowekaTests {
+public class MwekaTests {
     
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK weka Tests");

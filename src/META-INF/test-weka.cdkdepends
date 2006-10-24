@@ -1,4 +1,4 @@
 cdk-core.jar
 cdk-data.jar
-cdk-libioweka.jar
+cdk-qsar-weka.jar
 cdk-test-core.jar
