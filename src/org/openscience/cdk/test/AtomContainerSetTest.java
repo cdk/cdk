@@ -88,6 +88,7 @@ public class AtomContainerSetTest extends CDKTestCase {
         }
         assertEquals(0, som.getAtomContainerCount());
         assertEquals(3, count);
+        assertFalse(iter.hasNext());
     }
     
     public void testAdd_IAtomContainerSet() {
