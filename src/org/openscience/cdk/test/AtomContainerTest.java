@@ -799,19 +799,24 @@ public class AtomContainerTest extends CDKTestCase {
         
         java.util.Iterator atomIter = acetone.atoms();
         assertNotNull(atomIter);
+        assertTrue(atomIter.hasNext());
         IAtom next = (IAtom)atomIter.next();
         assertTrue(next instanceof IAtom);
         assertEquals(c1, next);
+        assertTrue(atomIter.hasNext());
         next = (IAtom)atomIter.next();
         assertTrue(next instanceof IAtom);
         assertEquals(c2, next);
+        assertTrue(atomIter.hasNext());
         next = (IAtom)atomIter.next();
         assertTrue(next instanceof IAtom);
         assertEquals(c3, next);
+        assertTrue(atomIter.hasNext());
         next = (IAtom)atomIter.next();
         assertTrue(next instanceof IAtom);
         assertEquals(o, next);
-        //assertNull(atomIter.next());
+        
+        assertFalse(atomIter.hasNext());
     }
 
     public void testContains_IAtom() {
