@@ -76,7 +76,7 @@
   </atomType>
   <atomType id="Oplus">
     <atom elementType="O" formalCharge="1">
-      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">4.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
   </atomType>

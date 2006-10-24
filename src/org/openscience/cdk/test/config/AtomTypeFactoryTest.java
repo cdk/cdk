@@ -163,7 +163,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertEquals("Oplus", atomType.getAtomTypeName());
 		assertEquals(1, atomType.getFormalCharge());
 		assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
-		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
 	}
 
     public void testGetAtomTypeFromHybrid() {
