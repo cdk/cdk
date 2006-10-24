@@ -111,4 +111,50 @@ public class PDBWriterTest extends TestCase {
 		// Crystal structures :(
     }
 
+    public void testRoundTrip_fractionalCoordinates() {
+    	StringWriter sWriter = new StringWriter();
+    	PDBWriter writer = new PDBWriter(sWriter);
+    	
+    	Crystal crystal = new Crystal();
+    	crystal.setA(new Vector3d(0,1,0));
+    	crystal.setB(new Vector3d(1,0,0));
+    	crystal.setC(new Vector3d(0,0,2));
+    	
+    	IAtom atom = new Atom("C");
+    	atom.setFractionalPoint3d(new Point3d(0.1,0.1,0.3));
+    	crystal.addAtom(atom);
+
+    	try {
+			writer.write(crystal);
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Failed to write PDB: " + e.getMessage());
+		}
+    	
+		String output = sWriter.toString();
+		System.out.println(output);
+		assertNotNull(output);
+		assertTrue(output.length() > 0);
+		
+		PDBReader reader = new PDBReader();
+		ChemFile chemFile = null;
+		try {
+			chemFile = (ChemFile)reader.read(new ChemFile());
+			
+		} catch (CDKException e) {
+			e.printStackTrace();
+			fail("Failed to read PDB: " + e.getMessage());
+		}
+		
+		assertNotNull(chemFile);
+		assertEquals(1, chemFile.getChemSequenceCount());
+		IChemSequence sequence = chemFile.getChemSequence(0);
+		assertEquals(1, sequence.getChemModelCount());
+		IChemModel chemModel = sequence.getChemModel(0);
+		assertNotNull(chemModel);
+		
+		// can't do further testing as the PDBReader does not read
+		// Crystal structures :(
+    }
 }
