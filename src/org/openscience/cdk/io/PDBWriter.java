@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -127,9 +128,12 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                        writeMolecule(model.getBuilder().newMolecule(
-                            (IAtomContainer)ChemModelManipulator.getAllInOneContainer(model)
-                        ));
+                    	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+                    	while (containers.hasNext()) {
+                            writeMolecule(model.getBuilder().newMolecule(
+                             	(IAtomContainer)containers.next()
+                            ));
+                    	}
                     }
                 }
             }
