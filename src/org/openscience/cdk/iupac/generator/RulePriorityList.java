@@ -46,11 +46,11 @@ public class RulePriorityList {
     /**
      *  Private constructor for this class.
      */
-    private RulePriorityList(Locale l) {
+    private RulePriorityList() {
     }
 
-    public static RulePriorityList getInstance(Locale l) {
-        return new RulePriorityList(l);
+    public static RulePriorityList getInstance() {
+        return new RulePriorityList();
     }
 
     public double getPriority(IRule r) {

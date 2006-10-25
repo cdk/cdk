@@ -46,20 +46,6 @@ public class Rule2dot2 extends NumberingRule {
 
     public IUPACNamePart apply(AtomContainer m) {
         IUPACNamePart inp = new IUPACNamePart("", this);
-        if (m instanceof Molecule) {
-            if (((((Integer)m.getProperty(ELEMENT_COUNT)).intValue() == 2) &&
-                (((Integer)m.getProperty(CARBON_COUNT)).intValue() > 0) &&
-                (((Integer)m.getProperty(HYDROGEN_COUNT)).intValue() > 0)) ||
-                ((((Integer)m.getProperty(ELEMENT_COUNT)).intValue() == 1) &&
-                (((Integer)m.getProperty(CARBON_COUNT)).intValue() > 0))) {
-                // ok, molecule looks like a carbon chain
-                // thus, now find the two chain end atoms
-                for (int i=0; i < m.getAtomCount(); i++) {
-                	org.openscience.cdk.interfaces.IAtom ai = m.getAtom(i);
-                    // is atom first or last?
-                }
-            }
-        }
         return inp;
     };
 
