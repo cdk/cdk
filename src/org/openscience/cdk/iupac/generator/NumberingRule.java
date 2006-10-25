@@ -39,14 +39,7 @@ public class NumberingRule implements IRule {
     public final static String ATOMNUMBER =
       "org.openscience.cdk.iupac.generator.ATOM_NUMBER";
 
-    private NamingRule namingRule;
-
     public NumberingRule() {
-        namingRule = null;
-    }
-
-    public NumberingRule(NamingRule rule) {
-        namingRule = rule;
     }
 
     public String getName() {

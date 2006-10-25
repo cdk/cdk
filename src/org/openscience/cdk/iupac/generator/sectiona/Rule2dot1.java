@@ -89,7 +89,7 @@ public class Rule2dot1 extends NamingRule {
                 return inp;
             } else {
                 // then, the main chain needs numbering
-                numberingRule = new NumberingRule(this);
+                numberingRule = new NumberingRule();
             }
 
             AtomPlacer ap = new AtomPlacer();
