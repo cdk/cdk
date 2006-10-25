@@ -404,7 +404,7 @@ public class GenerateFragments {
 				try{
 					IMolecule mol=(IMolecule)this.murckoFragments.get(i);
 					if (ConnectivityChecker.isConnected(mol)){
-						sg = new SmilesGenerator(mol.getBuilder());
+						sg = new SmilesGenerator();
 						murckoFragmentsmiles[i]=sg.createSMILES(mol);
 					}else{
 						System.out.println("ERROR in getMurckoFrameworksAsSmileArray due to:Molecule is not connected");
@@ -431,7 +431,7 @@ public class GenerateFragments {
 			for (int i =0;i<this.ringFragments.size();i++){
 				try{
 					IMolecule mol=(IMolecule)this.ringFragments.get(i);
-					sg = new SmilesGenerator(mol.getBuilder());
+					sg = new SmilesGenerator();
 					ringFragmentSmiles[i]=sg.createSMILES(mol);
 				} catch (Exception e){
 					System.out.println("ERROR in smile generation due to:"+e.toString());			
@@ -454,7 +454,7 @@ public class GenerateFragments {
 			for (int i =0;i<this.linkerFragments.size();i++){
 				try{
 					IMolecule mol=(IMolecule)this.linkerFragments.get(i);
-					sg = new SmilesGenerator(mol.getBuilder());
+					sg = new SmilesGenerator();
 					linkerFragmentSmiles[i]=sg.createSMILES(mol);
 				} catch (Exception e){
 					System.out.println("ERROR in smile generation due to:"+e.toString());

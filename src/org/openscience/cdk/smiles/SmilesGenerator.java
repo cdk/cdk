@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) Project
+/*  $Revision$ $Author$ $Date$
+ *  
+ *  Copyright (C) 2002-2006  Oliver Horlacher
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.smiles;
 
@@ -113,26 +108,10 @@ public class SmilesGenerator
 	private final String UP = "up";
 	private final String DOWN = "down";
 
-	//private IChemObjectBuilder builder;
-
 	/**
-	 *  Default constructor
+	 *  Create the SMILES generator.
 	 */
-	public SmilesGenerator(IChemObjectBuilder builder)
-	{
-		//this.builder = builder;
-		try
-		{
-			isotopeFactory = IsotopeFactory.getInstance(builder);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		} catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
+	public SmilesGenerator() {}
 
 	/**
 	 *  Tells if a certain bond is center of a valid double bond configuration.
@@ -1784,6 +1763,8 @@ public class SmilesGenerator
 	 */
 	private String generateMassString(IAtom a)
 	{
+		if (isotopeFactory == null) setupIsotopeFactory(a.getBuilder());
+		
 		IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
 		if (majorIsotope.getMassNumber() == a.getMassNumber())
 		{
@@ -1794,6 +1775,17 @@ public class SmilesGenerator
 		} else
 		{
 			return Integer.toString(a.getMassNumber());
+		}
+	}
+
+
+	private void setupIsotopeFactory(IChemObjectBuilder builder) {
+		try {
+			isotopeFactory = IsotopeFactory.getInstance(builder);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -88,7 +88,7 @@ public class CreateSmilesAction extends JCPAction
 		try
 		{
 			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
-            SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
+            SmilesGenerator generator = new SmilesGenerator();
 			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 			Molecule molecule = new Molecule(container);
 			Molecule moleculewithh=(Molecule)molecule.clone();
@@ -97,7 +97,7 @@ public class CreateSmilesAction extends JCPAction
 		    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 			smiles = generator.createSMILES(molecule);
 			boolean[] bool=new boolean[moleculewithh.getBondCount()];
-		    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
+		    SmilesGenerator sg = new SmilesGenerator();
 			for(int i=0;i<bool.length;i++){
 		      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
 				bool[i]=true;

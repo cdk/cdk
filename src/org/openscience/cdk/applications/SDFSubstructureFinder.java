@@ -67,7 +67,7 @@ public class SDFSubstructureFinder {
         logger.dumpSystemProperties();
 	String ifilename = args[0];
 	Molecule substructure = null;
-	   SmilesGenerator smilesGenerator = new SmilesGenerator(new Molecule().getBuilder());
+	   SmilesGenerator smilesGenerator = new SmilesGenerator();
        try {
 	    File input = new File(ifilename);
 	    if (!input.isDirectory()) {

@@ -161,7 +161,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   molecule  Molecule of which the data is outputted.
      */
     public void writeMolecule(IMolecule molecule) {
-        SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
+        SmilesGenerator sg = new SmilesGenerator();
         String smiles = "";
         try {
             smiles = sg.createSMILES(molecule);

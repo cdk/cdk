@@ -332,7 +332,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   
   public String getSmiles(){
 		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
-        SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
+        SmilesGenerator generator = new SmilesGenerator();
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 		Molecule molecule = new Molecule(container);
 		return generator.createSMILES(molecule);
@@ -341,14 +341,14 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   
   public String getSmilesChiral() throws Exception{
 		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
-        SmilesGenerator generator = new SmilesGenerator(model.getBuilder());
+        SmilesGenerator generator = new SmilesGenerator();
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 		Molecule moleculewithh=new Molecule(container);
 		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
 		double bondLength = GeometryTools.getBondLengthAverage(container);
 	    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 		boolean[] bool=new boolean[moleculewithh.getBondCount()];
-	    SmilesGenerator sg = new SmilesGenerator(model.getBuilder());
+	    SmilesGenerator sg = new SmilesGenerator();
 		for(int i=0;i<bool.length;i++){
 	      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
 			bool[i]=true;

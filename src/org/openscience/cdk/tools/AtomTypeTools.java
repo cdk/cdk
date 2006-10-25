@@ -72,7 +72,7 @@ public class AtomTypeTools {
 	 *@exception  Exception  Description of the Exception
 	 */
 	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
-        SmilesGenerator sg = new SmilesGenerator(molecule.getBuilder());
+        SmilesGenerator sg = new SmilesGenerator();
 
 		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");

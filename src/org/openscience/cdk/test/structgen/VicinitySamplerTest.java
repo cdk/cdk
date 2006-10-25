@@ -80,7 +80,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		for (int f = 0; f < structures.size(); f++)
 		{
 			temp = (Molecule)structures.get(f);
-			sg = new SmilesGenerator(temp.getBuilder());
+			sg = new SmilesGenerator();
 			//System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
 		}
 

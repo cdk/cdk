@@ -197,7 +197,7 @@ public class CopyPasteAction extends JCPAction{
           StringWriter sw = new StringWriter();
           new MDLWriter(sw).writeMolecule(tocopy);
     	  this.mol=sw.toString();
-    	  SmilesGenerator sg=new SmilesGenerator(tocopy.getBuilder());
+    	  SmilesGenerator sg=new SmilesGenerator();
     	  smiles = sg.createSMILES(tocopy);
     	  // SVG output
     	  sw=new StringWriter();
