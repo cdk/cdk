@@ -144,7 +144,6 @@ public class HINWriter extends DefaultChemObjectWriter {
 
             try {
 
-                int natom = mol.getAtomCount();
                 int nbond = mol.getBondCount();
 
                 String molname = "mol " + (molnum + 1) + " " + mol.getProperty(CDKConstants.TITLE);
