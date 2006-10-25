@@ -484,15 +484,15 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C#[O+]");
-		mol.addElectronContainer(new SingleElectron(mol.getAtom(9)));
-		mol.addElectronContainer(new LonePair(mol.getAtom(9)));
+		Molecule mol = sp.parseSmiles("[H]=C=C=O");
+//		mol.addElectronContainer(new SingleElectron(mol.getAtom(0)));
+		mol.addElectronContainer(new LonePair(mol.getAtom(3)));
 		Object[] object = {new Integer(6),new Boolean(false)};
 		descriptor.setParameters(object);
 
-		for (int i = 3 ; i < 4 ; i++){
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-
+			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
 //			if(testResult[i] == 0.0)
 //				assertTrue(result == 0.0);
 //			else {

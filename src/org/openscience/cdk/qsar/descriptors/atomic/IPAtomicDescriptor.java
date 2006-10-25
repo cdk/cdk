@@ -249,9 +249,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(positionC,atomContainer).getValue()).doubleValue());
     		/*2*/
     		BondPartialSigmaChargeDescriptor descriptor3 = new BondPartialSigmaChargeDescriptor();
-    		params[0] = new Integer(atomContainer.getBondNumber(bond));
-    		descriptor3.setParameters(params);
-    		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(atomContainer).getValue()).doubleValue());
+    		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(bond, atomContainer).getValue()).doubleValue());
     		/*3*/
     		SigmaElectronegativityDescriptor descriptor4 = new SigmaElectronegativityDescriptor();
     		results[0][3]= new Double(((DoubleResult)descriptor4.calculate(positionX, atomContainer).getValue()).doubleValue());
@@ -260,9 +258,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     		results[0][4]= new Double(((DoubleResult)descriptor5.calculate(positionX, atomContainer).getValue()).doubleValue());
     		/*5*/
     		ResonancePositiveChargeDescriptor descriptor6 = new ResonancePositiveChargeDescriptor();
-    		params[0] = new Integer(atomContainer.getBondNumber(bond));
-    		descriptor6.setParameters(params);
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(atomContainer).getValue());
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(bond, atomContainer).getValue());
 			double datT = (dar.get(0)+dar.get(1))/2;
 			results[0][5] = new Double(datT);
  
@@ -271,24 +267,24 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		}
 		return results;
 	}
-	/**
-	 *  Gets the parameterNames attribute of the IPAtomicDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
-	}
-	/**
-	 *  Gets the parameterType attribute of the IPAtomicDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Integer(0);
-	}
+	 /**
+     * Gets the parameterNames attribute of the IPAtomicDescriptor object.
+     *
+     * @return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        return new String[0];
+    }
+
+
+    /**
+     * Gets the parameterType attribute of the IPAtomicDescriptor object.
+     *
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
+     */
+    public Object getParameterType(String name) {
+        return null;
+    }
 }
 

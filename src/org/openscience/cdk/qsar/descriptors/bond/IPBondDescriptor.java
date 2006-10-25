@@ -229,9 +229,7 @@ public class IPBondDescriptor implements IBondDescriptor {
     		
     		/*  */
     		ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
-			params[0] = new Integer(atomContainer.getBondNumber(bond));
-			descriptor5.setParameters(params);
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(atomContainer).getValue());
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(bond, atomContainer).getValue());
 			results[0][4] = new Double(dar.get(0));
 			results[0][5] = new Double(dar.get(1));
     		
@@ -241,25 +239,24 @@ public class IPBondDescriptor implements IBondDescriptor {
 		}
 		return results;
 	}
-	
-	/**
-	 *  Gets the parameterNames attribute of the IPBondDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "set";
-		return params;
-	}
-	/**
-	 *  Gets the parameterType attribute of the IPBondDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Integer(0);
-	}
+	 /**
+     * Gets the parameterNames attribute of the IPBondDescriptor object.
+     *
+     * @return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        return new String[0];
+    }
+
+
+    /**
+     * Gets the parameterType attribute of the IPBondDescriptor object.
+     *
+     * @param  name  Description of the Parameter
+     * @return       An Object of class equal to that of the parameter being requested
+     */
+    public Object getParameterType(String name) {
+        return null;
+    }
 }
 

@@ -25,7 +25,6 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -33,26 +32,23 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  <p>The calculation of Resonance stabilization of a positive charge of an heavy 
@@ -79,9 +75,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.dictref qsar-descriptors:resonancePositiveCharge
  * @see GasteigerPEPEPartialCharges
  */
-public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
+public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 
-    private int bondPosition = 0;
     private PiElectronegativityDescriptor pielectronegativity = null;
 
 
@@ -108,33 +103,20 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Sets the parameters attribute of the ResonancePositiveChargeDescriptor
-     *  object
-     *
-     *@param  params            Bond position
-     *@exception  CDKException  Description of the Exception
+     * This descriptor does have any parameter.
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("ResonancePositiveChargeDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer)) {
-            throw new CDKException("The parameter 1 must be of type Integer");
-        }
-        bondPosition = ((Integer) params[0]).intValue();
     }
 
 
     /**
-     *  Gets the parameters attribute of the ResonancePositiveChargeDescriptor object
+     *  Gets the parameters attribute of the VdWRadiusDescriptor object.
      *
      *@return    The parameters value
+     * @see #setParameters
      */
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = new Integer(bondPosition);
-        return params;
+        return new Object[0];
     }
 
 
@@ -148,7 +130,10 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
      *							which belong to the bond.
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer acI) throws CDKException {
+    public DescriptorValue calculate(IBond bond, IAtomContainer acI) throws CDKException {
+    	
+    	cleanFlagReactiveCenter((IMolecule) acI);
+
     	DoubleArrayResult dar = new DoubleArrayResult(2);
     	IAtomContainer ac;
 		try {
@@ -156,42 +141,39 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IAtomContainer!", e);
 		}
-    	ArrayList result1 = new ArrayList();
+
+		ArrayList result1 = new ArrayList();
     	ArrayList distance1 = new ArrayList();
     	ArrayList result2 = new ArrayList();
     	ArrayList distance2 = new ArrayList();
-    	IAtom[] atoms = BondManipulator.getAtomArray(ac.getBond(bondPosition));
     	
+    	
+    	IAtom atom0 = bond.getAtom(0);
+    	int atomPos0 = acI.getAtomNumber(atom0);
+    	IAtom atom1 = bond.getAtom(1);
+    	int atomPos1 = acI.getAtomNumber(atom1);
+    	
+    	ac.getAtom(atomPos0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	ac.getAtom(atomPos1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	ac.getBond(acI.getBondNumber(bond)).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		
 
-        /* RESTRICTION: only possible to break H or doble bonds*/
-//    	if(ac.getBond(bondPosition).getOrder() < 2)
-//    		if(!atoms[0].getSymbol().equals("H") && !atoms[1].getSymbol().equals("H")){
-//				DoubleArrayResult dar = new DoubleArrayResult();
-//				dar.add(0.0);dar.add(0.0);
-//				System.out.println("return 0.0");
-//    			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
-//    		}
-    	
     	/*break bond*/
-    	if(ac.getSingleElectronSum(atoms[0]) > 0 || ac.getSingleElectronSum(atoms[1]) > 0){
+    	if(ac.getSingleElectronSum(atom0) > 0 || ac.getSingleElectronSum(atom1) > 0){
     		dar.add(0.0);
     		dar.add(0.0);
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
     	}
+    	
     	BreakingBondReaction type = new BreakingBondReaction();
-    	atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);
-    	int atomPos0 = ac.getAtomNumber(atoms[0]);
-    	atoms[1].setFlag(CDKConstants.REACTIVE_CENTER,true);
-    	int atomPos1 = ac.getAtomNumber(atoms[1]);
-    	ac.getBond(bondPosition).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+    	
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
         
         IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
 		setOfReactants.addMolecule((IMolecule) ac);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+    	
         /*search resonance for each product obtained. Only 2*/
         for(int i = 0 ; i < 2; i++){
         	if(setOfReactions.getReaction(i) == null)
@@ -302,29 +284,36 @@ public class ResonancePositiveChargeDescriptor implements IMolecularDescriptor {
     }
 
 
-    /**
-     *  Gets the parameterNames attribute of the ResonancePositiveChargeDescriptor
-     *  object
-     *
-     *@return    The parameterNames value
-     */
-    public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "bondPosition";
-        return params;
-    }
+
+	 /**
+    * Gets the parameterNames attribute of the ResonancePositiveChargeDescriptor object.
+    *
+    * @return    The parameterNames value
+    */
+   public String[] getParameterNames() {
+       return new String[0];
+   }
 
 
+   /**
+    * Gets the parameterType attribute of the ResonancePositiveChargeDescriptor object.
+    *
+    * @param  name  Description of the Parameter
+    * @return       An Object of class equal to that of the parameter being requested
+    */
+   public Object getParameterType(String name) {
+       return null;
+   }
     /**
-     *  Gets the parameterType attribute of the ResonancePositiveChargeDescriptor
-     *  object
-     *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
-     */
-    public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0), new Integer(0)};
-        return object;
-    }
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagReactiveCenter(IMolecule molecule){
+		for(int j = 0 ; j < molecule.getAtomCount(); j++)
+			molecule.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
+		for(int j = 0 ; j < molecule.getBondCount(); j++)
+			molecule.getBond(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
+	}
 }
 

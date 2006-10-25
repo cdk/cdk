@@ -25,9 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -42,7 +43,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  
 public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 	
-	private IMolecularDescriptor descriptor;
+	private IBondDescriptor descriptor;
 	/**
 	 *  Constructor for the BondPartialPiChargeDescriptorTest object
 	 *
@@ -65,17 +66,13 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
-		Integer[] params = new Integer[1];
-        
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CF"); 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         
         for (int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
         
@@ -87,18 +84,13 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0022,0.0011,0.0011,0.0011,0.0011,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		Integer[] params = new Integer[1];
-        
-        
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=CCBr");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.03);
 		}
 	}
@@ -109,15 +101,12 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double testResult = 0.0	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		Object[] params = {new Integer(0)};
-        descriptor.setParameters(params);
-        
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+		for (int i = 0 ; i < 6 ; i++){
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult,result,0.001);
 		}
 	}
@@ -127,7 +116,6 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0006,0.0003,0.0003,0.0003,0.0003,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=CCS");
@@ -135,9 +123,7 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 9 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.03);
 		}
 	}

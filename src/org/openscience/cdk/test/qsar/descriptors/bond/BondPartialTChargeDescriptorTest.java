@@ -25,9 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -43,7 +44,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  
 public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	
-	private IMolecularDescriptor descriptor;
+	private IBondDescriptor descriptor;
 	/**
 	 *  Constructor for the BondPartialTChargeDescriptorTest object
 	 *
@@ -65,8 +66,6 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	public void testBondTElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.3323,0.0218	};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
-		Integer[] params = new Integer[1];
-        
         SmilesParser sp = new SmilesParser();
         Molecule mol = sp.parseSmiles("CF"); 
         
@@ -77,9 +76,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
         for (int i = 0 ; i < 2 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
         
@@ -90,8 +87,6 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	public void testBondTElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0243,0.1279,0.1872,0.1553,0.1553,0.1358,0.0013,0.0013}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		Integer[] params = new Integer[1];
-        
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=CCBr");
 		HydrogenAdder hAdder = new HydrogenAdder();
@@ -100,9 +95,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.035);
 		}
 	}
@@ -112,14 +105,11 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	public void testBondTElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = 0.0165	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		Object[] params = {new Integer(0)};
-        descriptor.setParameters(params);
-        
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
 			assertEquals(testResult,result,0.001);
 	}
 	/**
@@ -127,7 +117,6 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testBondTElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0197,0.0924,0.1835,0.1566,0.1566,0.1412,0.0323,0.0323,0.2761}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser();
 		Molecule mol = sp.parseSmiles("C=CCS");
@@ -135,9 +124,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
 		for (int i = 0 ; i < 9 ; i++){
-			params[0] = new Integer(i);
-	        descriptor.setParameters(params);
-			double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.03);
 		}
 	}
