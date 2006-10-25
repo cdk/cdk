@@ -31,7 +31,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Method;
 
-import netscape.javascript.JSObject;
+//import netscape.javascript.JSObject;
 
 import org.openscience.cdk.applications.jchempaint.JChemPaintViewerOnlyPanel;
 import org.openscience.cdk.controller.Controller2D;
@@ -108,7 +108,7 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
    	    ac.addAtom((IAtom)objectInRange);
    	    getTheJcpp().getJChemPaintModel().getRendererModel().setExternalSelectedPart(ac);
         highlightPeakInSpectrum(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
-        highlightPeakInTable(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
+//        highlightPeakInTable(getTheJcpp().getChemModel().getMoleculeSet().getMolecule(0).getAtomNumber((IAtom)objectInRange));
         repaint();
         lastHighlighted=objectInRange;
       }
@@ -131,29 +131,29 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
     spectrumApplet.repaint();
   }
 
-  /**
-   * Handles interaction with a peak table
-   * @param atomNumber atom number of peaks highlighted in table
-   */
-  public void highlightPeakInTable(int atomNumber){
-    if(getParameter("highlightTable")==null || getParameter("highlightTable").equals("false"))
-      return;
-    JSObject win = JSObject.getWindow(this);
-    if(oldnumber!=-1){
-    	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+oldnumber+"\")");
-        if((oldnumber+1)%2==0)
-        	tr.setMember("bgColor","#D3D3D3");
-        else
-        	tr.setMember("bgColor","white");
-    }
-	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+atomNumber+"\")");
-    if(tr==null){
-    	oldnumber=-1;
-    }else{
-	    tr.setMember("bgColor","red");
-	    oldnumber=atomNumber;
-    }
-  }
+//  /**
+//   * Handles interaction with a peak table
+//   * @param atomNumber atom number of peaks highlighted in table
+//   */
+//  public void highlightPeakInTable(int atomNumber){
+//    if(getParameter("highlightTable")==null || getParameter("highlightTable").equals("false"))
+//      return;
+//    JSObject win = JSObject.getWindow(this);
+//    if(oldnumber!=-1){
+//    	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+oldnumber+"\")");
+//        if((oldnumber+1)%2==0)
+//        	tr.setMember("bgColor","#D3D3D3");
+//        else
+//        	tr.setMember("bgColor","white");
+//    }
+//	JSObject tr = (JSObject) win.eval("document.getElementById(\"tableid"+atomNumber+"\")");
+//    if(tr==null){
+//    	oldnumber=-1;
+//    }else{
+//	    tr.setMember("bgColor","red");
+//	    oldnumber=atomNumber;
+//    }
+//  }
 
   private Applet getSpectrumApplet() {
       if (spectrumApplet == null) {
