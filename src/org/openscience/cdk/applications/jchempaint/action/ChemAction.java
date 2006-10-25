@@ -77,6 +77,7 @@ public class ChemAction extends JCPAction
 			if (type.equals("bond"))
 			{
 				c2dm.setDrawMode(Controller2DModel.DRAWBOND);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("select"))
 			{
 				c2dm.setDrawMode(Controller2DModel.SELECT);
@@ -108,30 +109,37 @@ public class ChemAction extends JCPAction
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(3);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("square"))
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(4);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("pentagon"))
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(5);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("hexagon"))
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(6);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("heptagon"))
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(7);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("octagon"))
 			{
 				c2dm.setDrawMode(Controller2DModel.RING);
 				c2dm.setRingSize(8);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("benzene"))
 			{
 				c2dm.setDrawMode(Controller2DModel.BENZENERING);
 				c2dm.setRingSize(6);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("cleanup"))
 			{
 				c2dm.setDrawMode(Controller2DModel.CLEANUP);
@@ -150,9 +158,11 @@ public class ChemAction extends JCPAction
 			} else if (type.equals("up_bond"))
 			{
 				c2dm.setDrawMode(Controller2DModel.UP_BOND);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("down_bond"))
 			{
 				c2dm.setDrawMode(Controller2DModel.DOWN_BOND);
+				c2dm.setDrawElement("C");
 			} else if (type.equals("normalize"))
 			{
 				c2dm.setDrawMode(Controller2DModel.NORMALIZE);
