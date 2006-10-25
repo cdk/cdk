@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
  *
  *@see            org.openscience.cdk.renderer.Renderer2DModel
  */
-public class SimpleRenderer2D extends AbstractRenderer2D
+public class SimpleRenderer2D extends AbstractRenderer2D implements ISimpleRenderer2D
 {
 
 	IRingSet ringSet;
@@ -95,15 +95,12 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 		super(r2dm);
 	}
 
-
-	/**
-	 *  Triggers the methods to make the molecule fit into the frame and to paint
-	 *  it.
-	 *
-	 *@param  atomCon   Description of the Parameter
-	 *@param  graphics  Description of the Parameter
-	 *@param  split     If true the molecule will be partitioned in single molecules before painted. Typically not needed a performance killler
-	 *@param  redossr   If true a new rind detection is done
+	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics) {
+		paintMolecule(atomCon, graphics, true, true);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.ISimpleRenderer#paintMolecule(org.openscience.cdk.interfaces.IAtomContainer, java.awt.Graphics2D, boolean, boolean)
 	 */
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics, boolean split, boolean redossr) {
         logger.debug("inside paintMolecule()");
@@ -153,6 +150,9 @@ public class SimpleRenderer2D extends AbstractRenderer2D
 	
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.ISimpleRenderer#redoSSSR(java.util.List)
+	 */
 	public void redoSSSR(List moleculesList){
 			if(ringSet==null && moleculesList.size() > 0)
 				ringSet= ((IAtomContainer)moleculesList.get(0)).getBuilder().newRingSet();

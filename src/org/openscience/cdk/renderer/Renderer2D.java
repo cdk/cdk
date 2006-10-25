@@ -1,6 +1,6 @@
 /*  $Revision$ $Author$ $Date$
  *  
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2006  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -60,7 +60,7 @@ import java.util.Iterator;
  *@cdk.keyword    viewer, 2D-viewer
  *@see            org.openscience.cdk.renderer.Renderer2DModel
  */
-public class Renderer2D extends SimpleRenderer2D
+public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 {
 	
 	int oldbondcount=0;
@@ -86,11 +86,8 @@ public class Renderer2D extends SimpleRenderer2D
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model     Description of the Parameter
-	 *@param  graphics  Description of the Parameter
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.IRenderer2D#paintChemModel(org.openscience.cdk.interfaces.IChemModel, java.awt.Graphics2D)
 	 */
 	public void paintChemModel(IChemModel model, Graphics2D graphics)
 	{
@@ -132,11 +129,8 @@ public class Renderer2D extends SimpleRenderer2D
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  reactionSet  Description of the Parameter
-	 *@param  graphics     Description of the Parameter
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.IRenderer2D#paintReactionSet(org.openscience.cdk.interfaces.IReactionSet, java.awt.Graphics2D)
 	 */
 	public void paintReactionSet(org.openscience.cdk.interfaces.IReactionSet reactionSet, Graphics2D graphics) {
 		for (java.util.Iterator iter = reactionSet.reactions(); iter.hasNext();)
@@ -145,15 +139,14 @@ public class Renderer2D extends SimpleRenderer2D
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  moleculeSet  Description of the Parameter
-	 *@param  graphics     Description of the Parameter
-	 *@param  split        If true the setOfMolecule will be united and then splitted again in single molecules before painted. Typically not needed a performance killler
+	public void paintMoleculeSet(IMoleculeSet moleculeSet, Graphics2D graphics) {
+		paintMoleculeSet(moleculeSet, graphics, true);		
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.IRenderer2D#paintMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet, java.awt.Graphics2D, boolean)
 	 */
-	public void paintMoleculeSet(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
+	public void paintMoleculeSet(IMoleculeSet moleculeSet, Graphics2D graphics, boolean split) {
 		logger.debug("painting set of molecules");
 		IMoleculeSet molecules = null;
 		if(split){
@@ -202,11 +195,8 @@ public class Renderer2D extends SimpleRenderer2D
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  reaction  Description of the Parameter
-	 *@param  graphics  Description of the Parameter
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.renderer.IRenderer2D#paintReaction(org.openscience.cdk.interfaces.IReaction, java.awt.Graphics2D)
 	 */
 	public void paintReaction(IReaction reaction, Graphics2D graphics) {
 		// paint atom atom mappings
