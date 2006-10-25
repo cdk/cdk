@@ -34,6 +34,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -60,7 +61,6 @@ public class DeduceBondSystemTool {
     private LoggingTool logger;
     private HydrogenAdder hAdder;
     private IValencyChecker valencyChecker;
-	private int status = 0;
 	
 	private int counter = 0;
 
@@ -168,7 +168,7 @@ public class DeduceBondSystemTool {
         }
 
         if (som.getAtomContainerCount() > 0) return som.getMolecule(best);
-        return null;
+        return molecule;
     }
 
     private void FixPyridineNOxides(IMolecule molecule,IRingSet ringSet) {
@@ -731,7 +731,7 @@ public class DeduceBondSystemTool {
             return rs;
 
         } catch (Exception e) {
-            return null;
+            return new RingSet();
         }
     }
 
