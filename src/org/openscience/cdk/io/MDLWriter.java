@@ -105,7 +105,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The Writer to write to
      */
-    public MDLWriter(Writer out) throws Exception {
+    public MDLWriter(Writer out) {
     	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
@@ -124,11 +124,11 @@ public class MDLWriter extends DefaultChemObjectWriter {
      *
      * @param   output  The OutputStream to write to
      */
-    public MDLWriter(OutputStream output) throws Exception {
+    public MDLWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
     
-    public MDLWriter()  throws Exception {
+    public MDLWriter() {
         this(new StringWriter());
     }
 
