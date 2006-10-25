@@ -51,6 +51,20 @@ public class    DescriptorEngineTest extends CDKTestCase {
         assertTrue(engine.getDescriptorClassNames().size() > 0);
     }
 
+    public void testConstructor_Atomic() {
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
+        assertTrue(engine != null);
+        assertTrue(engine.getDescriptorInstances().size() > 0);
+        assertTrue(engine.getDescriptorClassNames().size() > 0);
+    }
+
+    public void testConstructor_Bond() {
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND);
+        assertTrue(engine != null);
+        assertTrue(engine.getDescriptorInstances().size() > 0);
+        assertTrue(engine.getDescriptorClassNames().size() > 0);
+    }
+
     public void testDictionaryType() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
 
