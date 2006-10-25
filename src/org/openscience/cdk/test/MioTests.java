@@ -37,6 +37,7 @@ import org.openscience.cdk.test.io.INChIReaderTest;
 import org.openscience.cdk.test.io.MDLRXNReaderTest;
 import org.openscience.cdk.test.io.MDLRXNWriterTest;
 import org.openscience.cdk.test.io.MDLReaderTest;
+import org.openscience.cdk.test.io.MDLV3000ReaderTest;
 import org.openscience.cdk.test.io.MDLWriterTest;
 import org.openscience.cdk.test.io.Mol2ReaderTest;
 import org.openscience.cdk.test.io.PDBWriterTest;
@@ -69,6 +70,7 @@ public class MioTests {
         suite.addTest(INChIReaderTest.suite());
         suite.addTest(INChIPlainTextReaderTest.suite());
         suite.addTest(MDLReaderTest.suite());
+        suite.addTest(MDLV3000ReaderTest.suite());
           suite.addTest(SDFReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());
