@@ -435,6 +435,16 @@ public class MDLReader extends DefaultChemObjectReader {
                     logger.warn("A few fields are missing. Older MDL MOL file?");
                 }
                 
+                //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
+                if(line.length()>=78){
+                	double shift=Double.parseDouble(line.substring(69,80).trim());
+                	atom.setProperty("first shift",new Double(shift));
+                }
+                if(line.length()>=87){
+                	double shift=Double.parseDouble(line.substring(79,87).trim());
+                	atom.setProperty("second shift",new Double(shift));
+                }
+                
                 molecule.addAtom(atom);
             }
             
@@ -626,6 +636,7 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw exception;
 		} catch (Exception exception) {
+			exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
             logger.debug(exception);
