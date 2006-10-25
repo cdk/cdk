@@ -490,10 +490,10 @@ public class MACiEReader extends DefaultChemObjectReader {
         logger.debug("Annote: ", field, "=", value);
         if (field.equals("RxnAtts") || field.equals("RxnType")) {
             // reaction attributes
-            String dictionary = "macie";
+            /*String dictionary = "macie";
             if (value.equals("Acid") || value.equals("Base")) {
                 dictionary = "chemical";
-            }
+            }*/
             addDictRefedAnnotation(reaction, "Attributes", value);
         } else if (field.equals("ResiduesPresent") ||
                    field.equals("GroupTransferred") ||

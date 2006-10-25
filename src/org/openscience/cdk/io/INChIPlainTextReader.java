@@ -158,10 +158,10 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     final String INChI = line.substring(6);
                     StringTokenizer tokenizer = new StringTokenizer(INChI, "/");
                     // ok, we expect 4 tokens
-                    final String version = tokenizer.nextToken(); // 1.12Beta
+                    tokenizer.nextToken(); // 1.12Beta not stored since never used
                     final String formula = tokenizer.nextToken(); // C6H6
                     final String connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
-                    final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
+                    //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
                     
                     IAtomContainer parsedContent = inchiTool.processFormula(
                     		cf.getBuilder().newAtomContainer(), formula
