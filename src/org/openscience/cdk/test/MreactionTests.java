@@ -28,11 +28,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
+import org.openscience.cdk.test.reaction.type.CarbonylEliminationReactionTest;
+import org.openscience.cdk.test.reaction.type.CleavageBondReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
+import org.openscience.cdk.test.reaction.type.HydrogenRearrangementDeltaReactionTest;
+import org.openscience.cdk.test.reaction.type.HydrogenRearrangementGammaReactionTest;
 import org.openscience.cdk.test.reaction.type.HyperconjugationReactionTest;
+import org.openscience.cdk.test.reaction.type.RadicalSiteInitiationHReactionTest;
+import org.openscience.cdk.test.reaction.type.RadicalSiteInitiationReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;
@@ -59,11 +65,18 @@ public class MreactionTests {
         
         // from cdk.test.reaction
         suite.addTest(BreakingBondReactionTest.suite());
-        suite.addTest(HyperconjugationReactionTest.suite());
+        suite.addTest(CarbonylEliminationReactionTest.suite());
+        suite.addTest(CleavageBondReactionTest.suite());
         suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
         suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
         suite.addTest(ElectronImpactNBEReactionTest.suite());
+        suite.addTest(HydrogenRearrangementDeltaReactionTest.suite());
+        suite.addTest(HydrogenRearrangementGammaReactionTest.suite());
+        suite.addTest(HyperconjugationReactionTest.suite());
+        suite.addTest(RadicalSiteInitiationHReactionTest.suite());
+        suite.addTest(RadicalSiteInitiationReactionTest.suite());
+//      suite.addTest(ReactionBalancerTest.suite());
         suite.addTest(RearrangementAnion1ReactionTest.suite());
         suite.addTest(RearrangementAnion2ReactionTest.suite());
         suite.addTest(RearrangementAnion3ReactionTest.suite());
@@ -73,7 +86,6 @@ public class MreactionTests {
         suite.addTest(RearrangementRadical1ReactionTest.suite());
         suite.addTest(RearrangementRadical2ReactionTest.suite());
         suite.addTest(RearrangementRadical3ReactionTest.suite());
-//        suite.addTest(ReactionBalancerTest.suite());
         
         return suite;
     }
