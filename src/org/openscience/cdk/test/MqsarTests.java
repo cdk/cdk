@@ -53,7 +53,7 @@ public class MqsarTests {
         suite.addTest(DescriptorEngineTest.suite());
         
         
-        // from cdk.test.qsar.atomic
+//      from cdk.test.qsar.atomic
         suite.addTest(AtomDegreeDescriptorTest.suite());
         suite.addTest(AtomHybridizationDescriptorTest.suite());
         suite.addTest(AtomHybridizationVSEPRDescriptorTest.suite());
@@ -64,7 +64,6 @@ public class MqsarTests {
         suite.addTest(EffectiveAtomPolarizabilityDescriptorTest.suite());
         suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
         suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
-        suite.addTest(IPAtomicDescriptorTest.suite());
         suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
         suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
         suite.addTest(PartialPiChargeDescriptorTest.suite());
@@ -84,13 +83,12 @@ public class MqsarTests {
         suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
         suite.addTest(BondPartialTChargeDescriptorTest.suite());
         suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
-        suite.addTest(IPBondDescriptorTest.suite());
         suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
         
         
         
 
-        // from cdk.test.qsar.molecular
+//      from cdk.test.qsar.molecular
         suite.addTest(AminoAcidCountDescriptorTest.suite());
         suite.addTest(APolDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
@@ -108,7 +106,6 @@ public class MqsarTests {
         suite.addTest(GravitationalIndexDescriptorTest.suite());
         suite.addTest(HBondAcceptorCountDescriptorTest.suite());
         suite.addTest(HBondDonorCountDescriptorTest.suite());
-        suite.addTest(IPMolecularDescriptorTest.suite());
         suite.addTest(KappaShapeIndicesDescriptorTest.suite());
         suite.addTest(LargestChainDescriptorTest.suite());
         suite.addTest(LargestPiSystemDescriptorTest.suite());
@@ -134,7 +131,7 @@ public class MqsarTests {
         suite.addTest(ZagrebIndexDescriptorTest.suite());
         
 
-        // from cdk.test.qsar.model.R
+//      from cdk.test.qsar.model.R
         suite.addTest(CNNClassificationModelTest.suite());
         suite.addTest(org.openscience.cdk.test.qsar.model.R.CNNRegressionModelTest.suite());
         suite.addTest(org.openscience.cdk.test.qsar.model.R.LinearRegressionModelTest.suite());

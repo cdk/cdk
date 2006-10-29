@@ -707,10 +707,10 @@
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall>  
-        	<antcall target="test-module"><param name="module" value="libioweka"/></antcall>
             <antcall target="test-module"><param name="module" value="smiles"/></antcall> 
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
         </target>
