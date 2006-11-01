@@ -38,7 +38,7 @@ import org.openscience.cdk.test.qsar.model.weka.*;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarAtomic
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */

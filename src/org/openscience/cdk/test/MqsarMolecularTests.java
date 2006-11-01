@@ -72,7 +72,7 @@ import org.openscience.cdk.test.qsar.descriptors.molecular.ZagrebIndexDescriptor
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarMolecular
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */

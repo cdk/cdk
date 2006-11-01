@@ -37,7 +37,7 @@ import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDes
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarBond
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
