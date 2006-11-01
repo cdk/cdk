@@ -27,7 +27,6 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
@@ -49,8 +48,6 @@ public class MqsarBondTests {
 
         // Individual Tests - Please add correlatively	
 
-        suite.addTest(DescriptorEngineTest.suite());
-        
         // from cdk.test.qsar.bond
         suite.addTest(BondPartialPiChargeDescriptorTest.suite());
         suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());

@@ -27,7 +27,6 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.APolDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
@@ -83,8 +82,6 @@ public class MqsarMolecularTests {
         TestSuite suite = new TestSuite("All QSAR Tests");
 
         // Individual Tests - Please add correlatively	
-
-        suite.addTest(DescriptorEngineTest.suite());
         
 //      from cdk.test.qsar.molecular
         suite.addTest(AminoAcidCountDescriptorTest.suite());

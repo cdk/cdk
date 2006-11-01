@@ -27,13 +27,28 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.DescriptorEngineTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.*;
-import org.openscience.cdk.test.qsar.descriptors.bond.*;
-import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.R.*;
-import org.openscience.cdk.test.qsar.model.R2.*;
-import org.openscience.cdk.test.qsar.model.weka.*;
+import org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.AtomValenceDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -50,9 +65,6 @@ public class MqsarAtomicTests {
 
         // Individual Tests - Please add correlatively	
 
-        suite.addTest(DescriptorEngineTest.suite());
-        
-        
 //      from cdk.test.qsar.atomic
         suite.addTest(AtomDegreeDescriptorTest.suite());
         suite.addTest(AtomHybridizationDescriptorTest.suite());
