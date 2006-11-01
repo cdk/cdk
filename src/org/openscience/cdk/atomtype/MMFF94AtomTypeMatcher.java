@@ -54,10 +54,10 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 	private AtomTypeFactory factory = null;
 	AtomTypeTools atomTypeTools=null;
 	
-	String [] atomTypeIds={"C","Csp2","C=","Csp","CO2M","CNN+","C%","CIM+","CR4R","CR3R","CE4R",
-			"Car","C5A","C5B","C5","HC","HO","HN","HOCO","HN=C","HN2",
-			"HOCC","HOH","HOS","HN+","HO+","HO=+","HP","O","O=","OX",
-			"OM","O+","O=+","OH2","Oar","N","N=C","NC=C","NSP","=N=",
+	String [] atomTypeIds={"C","Csp2","CdoubleBonded","Csp","CO2M","CNNplus","CtripleBonded","CIMplus","CR4R","CR3R","CE4R",
+			"Car","C5A","C5B","C5","HC","HO","HN","HOCO","HNdoubleBondedC","HN2",
+			"HOCC","HOH","HOS","HNplus","HOplus","HOdoubleBondedPlus","HP","O","OdoubleBonded","OX",
+			"OM","Oplus","OdoubleBondedPlus","OH2","Oar","N","N=C","NC=C","NSP","=N=",
 			"NAZT","N+","N2OX","N3OX","NC#N","NO3","N=O","NC=O","NSO","N+=",
 			"NCN+","NGD+","NR%","NM","N5M","NPYD","NPYL","NPD+","N5A","N5B",
 			"NPOX","N5OX","N5+","N5","S","S=C",">SN","SO2","SX","SO2M",
@@ -174,7 +174,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 						ID = atomTypeIds[10];//CE4R					
 					}
 					
-				} else if (atomTypeIds[j].equals("C=")) {
+				} else if (atomTypeIds[j].equals("CdoubleBonded")) {
 					if (atomChemGroupConstant%2==0 && atom.getFlag(CDKConstants.ISAROMATIC)) {
 						ID = atomTypeIds[12];//C5A
 					}
