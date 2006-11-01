@@ -42,7 +42,7 @@ import org.openscience.cdk.test.qsar.model.weka.*;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarTests {
+public class MqsarAtomicTests {
 
     public static Test suite() {
 
@@ -52,25 +52,31 @@ public class MqsarTests {
 
         suite.addTest(DescriptorEngineTest.suite());
         
-//      from cdk.test.qsar.model.R
-        suite.addTest(CNNClassificationModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.LinearRegressionModelTest.suite());
-        suite.addTest(ModelLoadSaveTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.QSARRModelTests.suite());
-        suite.addTest(SJavaEnvironmentTest.suite());
-
-//      from cdk.test.qsar.model.R2
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
-        suite.addTest(RJavaEnvironmentTest.suite());
-
-//      from cdk.test.qsar.model.R2
-        suite.addTest(J48WModelTest.suite());
-        suite.addTest(LinearRegressionWModelTest.suite());
-        suite.addTest(QSARWekaModelTests.suite());
-
+        
+//      from cdk.test.qsar.atomic
+        suite.addTest(AtomDegreeDescriptorTest.suite());
+        suite.addTest(AtomHybridizationDescriptorTest.suite());
+        suite.addTest(AtomHybridizationVSEPRDescriptorTest.suite());
+        suite.addTest(AtomValenceDescriptorTest.suite());
+        suite.addTest(BondsToAtomDescriptorTest.suite());
+        suite.addTest(CovalentRadiusDescriptorTest.suite());
+        suite.addTest(DistanceToAtomDescriptorTest.suite());
+        suite.addTest(EffectiveAtomPolarizabilityDescriptorTest.suite());
+        suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
+        suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
+        suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
+        suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
+        suite.addTest(PartialPiChargeDescriptorTest.suite());
+        suite.addTest(PartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
+        suite.addTest(PartialTChargePEOEDescriptorTest.suite());
+        suite.addTest(PeriodicTablePositionDescriptorTest.suite());
+        suite.addTest(PiElectronegativityDescriptorTest.suite());
+        suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
+        suite.addTest(RDFProtonDescriptorTest.suite());
+        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(VdWRadiusDescriptorTest.suite());
+        
         return suite;
     }
 

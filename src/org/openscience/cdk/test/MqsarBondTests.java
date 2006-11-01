@@ -52,25 +52,13 @@ public class MqsarTests {
 
         suite.addTest(DescriptorEngineTest.suite());
         
-//      from cdk.test.qsar.model.R
-        suite.addTest(CNNClassificationModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.LinearRegressionModelTest.suite());
-        suite.addTest(ModelLoadSaveTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.QSARRModelTests.suite());
-        suite.addTest(SJavaEnvironmentTest.suite());
-
-//      from cdk.test.qsar.model.R2
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
-        suite.addTest(RJavaEnvironmentTest.suite());
-
-//      from cdk.test.qsar.model.R2
-        suite.addTest(J48WModelTest.suite());
-        suite.addTest(LinearRegressionWModelTest.suite());
-        suite.addTest(QSARWekaModelTests.suite());
-
+        // from cdk.test.qsar.bond
+        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
+        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(BondPartialTChargeDescriptorTest.suite());
+        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
+        
         return suite;
     }
 
