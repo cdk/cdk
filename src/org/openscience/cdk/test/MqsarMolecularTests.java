@@ -28,12 +28,46 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.*;
-import org.openscience.cdk.test.qsar.descriptors.bond.*;
-import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.R.*;
-import org.openscience.cdk.test.qsar.model.R2.*;
-import org.openscience.cdk.test.qsar.model.weka.*;
+import org.openscience.cdk.test.qsar.descriptors.molecular.APolDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AromaticBondsCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AtomCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.BCUTDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.BPolDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.BondCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.CPSADescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.CarbonConnectivityOrderOneDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.CarbonConnectivityOrderZeroDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ConnectivityOrderOneDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ConnectivityOrderZeroDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.HBondDonorCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.LargestChainDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.LargestPiSystemDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.MDEDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.MomentOfInertiaDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.RuleOfFiveDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.TPSADescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.TaeAminoAcidDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ValenceCarbonConnectivityOrderOneDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ValenceCarbonConnectivityOrderZeroDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ValenceConnectivityOrderOneDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ValenceConnectivityOrderZeroDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.WHIMDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.WeightDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.WeightedPathDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.WienerNumbersDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.XLogPDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -42,7 +76,7 @@ import org.openscience.cdk.test.qsar.model.weka.*;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarTests {
+public class MqsarMolecularTests {
 
     public static Test suite() {
 

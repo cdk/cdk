@@ -28,12 +28,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.*;
-import org.openscience.cdk.test.qsar.descriptors.bond.*;
-import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.R.*;
-import org.openscience.cdk.test.qsar.model.R2.*;
-import org.openscience.cdk.test.qsar.model.weka.*;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -42,7 +41,7 @@ import org.openscience.cdk.test.qsar.model.weka.*;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarTests {
+public class MqsarBondTests {
 
     public static Test suite() {
 
