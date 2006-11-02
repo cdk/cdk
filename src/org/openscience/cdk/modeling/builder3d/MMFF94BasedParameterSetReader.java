@@ -64,7 +64,7 @@ public class MMFF94BasedParameterSetReader {
 	private StringTokenizer stvdW;
 	private String sidvdW;
 
-	private String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/MMFFDFSB.PAR";
+	private String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/mmffdfsb.par";
 	private InputStream insDFSB;
 	private StringTokenizer stDFSB;
 
@@ -557,7 +557,7 @@ public class MMFF94BasedParameterSetReader {
 			//System.out.println("insDFSB closed");
 		} catch (IOException e) {
 			System.err.println(e.toString());
-			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (MMFFDFSB.PAR)");
+			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
 		}
 	}
 
