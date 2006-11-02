@@ -1,14 +1,14 @@
 <dictionary
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core cmlAll.xsd
                       http://www.w3.org/1998/Math/MathML      mathml2/mathml2.xsd
                       http://bibtexml.sf.net/                 bibtexml.xsd"
-  
+
   xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:bibtex="http://bibtexml.sf.net/"
   xmlns:cvs="https://www.cvshome.org/"
   xmlns:dc="http://dublincore.org/"
-  
+
   xmlns:qsar-descriptors="http://qsar.sourceforge.net/dicts/qsar-descriptors"
   xmlns:qsar-descriptors-metadata="http://qsar.sourceforge.net/dicts/qsar-descriptors-metadata"
   id="qsar-descriptors" title="QSAR.sf.net Descriptor Dictionary">
@@ -70,7 +70,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomCount" term="Element Count">
     <annotation>
       <documentation>
@@ -85,7 +85,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomDegree" term="Atomic Degree">
     <annotation>
       <documentation>
@@ -100,7 +100,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomHybridization" term="Atomic Hybridization">
     <annotation>
       <documentation>
@@ -115,7 +115,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomHybridizationVSEPR" term="Atomic Hybridization VSEPR">
     <annotation>
       <documentation>
@@ -135,8 +135,8 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
-  
+
+
   <entry id="atomValence" term="Atomic Valence">
     <annotation>
       <documentation>
@@ -151,7 +151,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="aromaticAtomsCount" term="Aromatic Atoms Count">
     <annotation>
       <documentation>
@@ -166,7 +166,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="aromaticBondsCount" term="Aromatic Bonds Count">
     <annotation>
       <documentation>
@@ -232,7 +232,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="bondsToAtom" term="Bonds to Atom">
     <annotation>
       <documentation>
@@ -257,7 +257,7 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that calculates the sum of the absolute value of the difference between atomic 
+        Descriptor that calculates the sum of the absolute value of the difference between atomic
 	polarizabilities of all bonded atoms in the molecule (including implicit hydrogens).
     </definition>
     <description>
@@ -267,7 +267,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi0" term="Connectivity index (order 0)">
     <annotation>
       <documentation>
@@ -279,7 +279,7 @@
         Descriptor that calculates atomic connectivity index (order 0).
     </definition>
     <description>
-      	Atomic connectivity is calculated as the sum of 
+      	Atomic connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -301,7 +301,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
- 
+
   <entry id="chi0C" term="Carbon connectivity index (order 0)">
     <annotation>
       <documentation>
@@ -313,7 +313,7 @@
         Descriptor that calculates the carbon connectivity index (order 0).
     </definition>
     <description>
-      	While the atomic connectivity is calculated as the sum of 
+      	While the atomic connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -328,7 +328,7 @@
             </mrow>
           </mfrac>
         </mrow>
-	over all heavy atoms i with degree greather than zero, carbon connectivity index 
+	over all heavy atoms i with degree greather than zero, carbon connectivity index
 	takes into account only carbon atoms with degree greather than zero.
     </description>
     <relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi0"/>
@@ -336,7 +336,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi1" term="Connectivity index (order 1)">
     <annotation>
       <documentation>
@@ -348,7 +348,7 @@
         Descriptor that calculates atomic connectivity index (order 1).
     </definition>
     <description>
-      	Atomic connectivity is calculated as the sum of 
+      	Atomic connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -382,7 +382,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi1C" term="Carbon connectivity index (order 1)">
     <annotation>
       <documentation>
@@ -394,7 +394,7 @@
         Descriptor that calculates carbon connectivity index (order 1).
     </definition>
     <description>
-      	While the atomic connectivity is calculated as the sum of 
+      	While the atomic connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -421,7 +421,7 @@
             </mrow>
           </mfrac>
         </mrow>
-	over all bonds between heavy atoms i and j, the carbon connectivity index 
+	over all bonds between heavy atoms i and j, the carbon connectivity index
 	takes into account only bonds between carbon atoms.
     </description>
     <relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="chi1"/>
@@ -429,7 +429,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="distanceToAtom" term="Distance to Atom">
     <annotation>
       <documentation>
@@ -444,7 +444,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:geometricalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="effectivePolarizability" term="Effective Polarizability">
     <annotation>
       <documentation>
@@ -476,8 +476,8 @@
         Descriptor that calculates the number of hydrogen bond acceptors.
     </definition>
     <description>
-        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor is a heteroatom with no positive charge, note that negatively 
-        charged oxygen or sulphur are included. Excluded are halogens, including F, 
+        As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor is a heteroatom with no positive charge, note that negatively
+        charged oxygen or sulphur are included. Excluded are halogens, including F,
         heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
         Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
     </description>
@@ -498,7 +498,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="hBondDonors" term="Hydrogen Bond Donors">
     <annotation>
       <documentation>
@@ -517,7 +517,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="gravitationalIndex" term="Gravitational Index">
     <annotation>
       <documentation>
@@ -594,7 +594,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:geometricalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomicHardness" term="Inductive atomic hardness">
     <annotation>
       <documentation>
@@ -606,7 +606,7 @@
        This class calculates the atomic hardness of a given atom.
     </definition>
     <description>
-       Inductive atomic hardness of an atom in a polyatomic system can be defined 
+       Inductive atomic hardness of an atom in a polyatomic system can be defined
        as the resistance to a change of the atomic charge.
        This descriptor is described by Cherkasov <bibtex:cite ref="CHER2003"/>.
     </description>
@@ -631,7 +631,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="atomicSoftness" term="Inductive atomic softness">
     <annotation>
       <documentation>
@@ -643,7 +643,7 @@
        This class calculates the atomic softness of a given atom.
     </definition>
     <description>
-       Inductive atomic softness of an atom in a polyatomic system can be defined 
+       Inductive atomic softness of an atom in a polyatomic system can be defined
        as as charge delocalizing ability.
        This descriptor is described by Cherkasov <bibtex:cite ref="CHER2003"/>.
     </description>
@@ -651,7 +651,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="isProtonInAromaticSystem" term="Proton belonging to an aromatic system">
     <annotation>
       <documentation>
@@ -661,14 +661,14 @@
     </annotation>
     <definition>
       This Class contains a method that returns 1 if the protons is directly bonded to an aromatic system,
-      it returns 2 if the distance between aromatic system and proton is 2 bonds, 
+      it returns 2 if the distance between aromatic system and proton is 2 bonds,
       and 0 for other positions.
     </definition>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="isProtonInConjugatedPiSystem" term="Proton belonging to a pi-system">
     <annotation>
       <documentation>
@@ -683,7 +683,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="kierValues" term="Kier and Hall kappa molecular shape indices">
     <annotation>
       <documentation>
@@ -825,8 +825,8 @@
             </mrow>
           </mfrac>
         </mrow>
-	for enev n, 
-	where n denotes the number of atoms in the hydrogen suppressed graph, m is the number of bonds in the hydrogen 
+	for enev n,
+	where n denotes the number of atoms in the hydrogen suppressed graph, m is the number of bonds in the hydrogen
 	suppressed graph. Also, let p2 denote the number of paths of length 2 and let p3 denote the number of paths of length 3
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
@@ -875,7 +875,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:geometricalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="period" term="Period of an atom">
     <annotation>
       <documentation>
@@ -890,7 +890,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="petitjeanNumber" term="Petitjean Number">
     <annotation>
       <documentation>
@@ -902,14 +902,14 @@
         Descriptor that calculates the Petitjean Number of a molecule.
     </definition>
     <description>
-        According to the Petitjean definition, the eccentricity of a vertex corresponds to the 
-	distance from that vertex to the most remote vertex in the graph. The distance 
+        According to the Petitjean definition, the eccentricity of a vertex corresponds to the
+	distance from that vertex to the most remote vertex in the graph. The distance
 	is obtained from the distance matrix as the count of edges between the two vertices.
 	If <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>
-	is the largest matrix entry in row i of the distance matrix D, then the radius 
-	is defined as the smallest of the <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>. 
+	is the largest matrix entry in row i of the distance matrix D, then the radius
+	is defined as the smallest of the <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>.
 	The graph diameter D is defined as the largest vertex eccentricity in the graph.
-	Petitjean Number is the value of 
+	Petitjean Number is the value of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
 	    <mrow>
@@ -927,7 +927,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="piContact" term="Pi-contact of two atoms">
     <annotation>
       <documentation>
@@ -936,14 +936,14 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that check if two atoms have pi-contact (this is true when there is one and 
+        Descriptor that check if two atoms have pi-contact (this is true when there is one and
 	the same conjugated pi-system which contains both atoms, or directly linked neighboors of the atoms).
     </definition>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="protonPartialCharge" term="Proton Total Partial Charge">
     <annotation>
       <documentation>
@@ -961,7 +961,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="partialPiCharge" term="Partial Pi Charge">
     <annotation>
       <documentation>
@@ -996,7 +996,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="partialSigmaCharge" term="Partial Sigma Charge">
     <annotation>
       <documentation>
@@ -1005,7 +1005,7 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that calculates sigma partial 
+        Descriptor that calculates sigma partial
         charges in sigma-bonded systems (PEOE) of an heavy atom.
     </definition>
     <description>
@@ -1018,7 +1018,7 @@
             <bibtex:article>
               <bibtex:author>Gasteiger, J.</bibtex:author>
               <bibtex:author>Marsili, M.</bibtex:author>
-              <bibtex:title>Iterative Partial Equalization of Orbital 
+              <bibtex:title>Iterative Partial Equalization of Orbital
               					Electronegativity- A Rapid Access to Atomic Charges</bibtex:title>
               <bibtex:journal>Tetrahedron</bibtex:journal>
               <bibtex:year>1980</bibtex:year>
@@ -1033,7 +1033,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="PartialTChargePEOEDescriptor" term="Partial Total Charge (PEOE)">
     <annotation>
       <documentation>
@@ -1042,19 +1042,19 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that calculates total partial 
+        Descriptor that calculates total partial
         charges of an heavy atom.
     </definition>
     <description>
-        Calculation is based on Partial Equalization of Orbital Electronegativity method (PEOE) 
-        from Gasteiger. They are obtained by summation of the results of the calculations 
-        on sigma- and pi-charges. 
+        Calculation is based on Partial Equalization of Orbital Electronegativity method (PEOE)
+        from Gasteiger. They are obtained by summation of the results of the calculations
+        on sigma- and pi-charges.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="PartialTChargeMMFF94" term="Partial Total Charge (MMFF94)">
     <annotation>
       <documentation>
@@ -1063,11 +1063,11 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that calculates total partial 
+        Descriptor that calculates total partial
         charges of an heavy atom.
     </definition>
     <description>
-        Calculation is based on MMFF94. 
+        Calculation is based on MMFF94.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
@@ -1129,15 +1129,15 @@
           </apply>
         </apply>
       </mrow>
-      where i denotes an atom up to four not rotatable bonds away from the target proton, 
-      p is the partial atomic charge of the atom i, B is a smoothing parameter, 
+      where i denotes an atom up to four not rotatable bonds away from the target proton,
+      p is the partial atomic charge of the atom i, B is a smoothing parameter,
       <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow> is the
       3D distance between proton and atom i, and r is a running variable.
       The second one is a topological form of the first one, where i is an atom up to the fifth sphere,
       <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow> is the
       partial atomic charge of atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>i</mi></msub></mrow>
       is now the sum of bond length on the shortest path between the proton and atom i.
-      The third one has the form 
+      The third one has the form
       <mrow xmlns="http://www.w3.org/1998/Math/MathML">
         <apply>
           <eq/>
@@ -1187,11 +1187,11 @@
           </apply>
         </apply>
       </mrow>
-      where i denotes a double bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
+      where i denotes a double bond up to the seventh sphere of nonrotatable bonds centered on the target proton,
       and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>D</mi></msub></mrow> and
       <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>D</mi></msub></mrow> are
       geometric variables.
-      The fourth one has the form 
+      The fourth one has the form
       <mrow xmlns="http://www.w3.org/1998/Math/MathML">
         <apply>
           <eq/>
@@ -1241,11 +1241,11 @@
           </apply>
         </apply>
       </mrow>
-      where i denotes a single bond up to the seventh sphere of nonrotatable bonds centered on the target proton, 
+      where i denotes a single bond up to the seventh sphere of nonrotatable bonds centered on the target proton,
       and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>r</mi><mi>S</mi></msub></mrow> and
       <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>S</mi></msub></mrow> are
       geometric variables.
-      The last one has the form 
+      The last one has the form
       <mrow xmlns="http://www.w3.org/1998/Math/MathML">
         <apply>
           <eq/>
@@ -1283,7 +1283,7 @@
           </apply>
         </apply>
       </mrow>
-      where i denotes an atom three nonrotatable bonds away from the target proton and belonging to a 
+      where i denotes an atom three nonrotatable bonds away from the target proton and belonging to a
       six-membered ring, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>a</mi><mi>3</mi></msub></mrow> is
       a dihedral angle in radian units.
       Each values is returned as atom property.
@@ -1312,7 +1312,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="rotatableBondsCount" term="Rotatable Bonds Count">
     <annotation>
       <documentation>
@@ -1330,7 +1330,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="sigmaElectronegativity" term="Sigma Electronegativity">
     <annotation>
       <documentation>
@@ -1369,7 +1369,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="piElectronegativity" term="Pi Electronegativity">
     <annotation>
       <documentation>
@@ -1408,7 +1408,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="tpsa" term="Topological Polar Surface Area">
     <annotation>
       <documentation>
@@ -1418,7 +1418,7 @@
       </documentation>
     </annotation>
     <definition>
-      Calculation of topological polar surface area based on fragment 
+      Calculation of topological polar surface area based on fragment
       contributions <bibtex:cite ref="ERTL2000"/>.
     </definition>
     <annotation>
@@ -1427,8 +1427,8 @@
           <bibtex:entry id="ERTL2000">
             <bibtex:article>
               <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
-              <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of 
-                 Fragment-Based Contributions and Its Application to the Prediction of 
+              <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of
+                 Fragment-Based Contributions and Its Application to the Prediction of
                  Drug Transport Properties</bibtex:title>
               <bibtex:journal>J. Med. Chem.</bibtex:journal>
               <bibtex:year>2000</bibtex:year>
@@ -1446,8 +1446,8 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
-  
+
+
 
   <entry id="weight" term="Molecular Weight">
     <annotation>
@@ -1465,7 +1465,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="WHIM" term="WHIM">
     <annotation>
       <documentation>
@@ -1496,7 +1496,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorType" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="wienerNumbers" term="Wiener Numbers">
     <annotation>
       <documentation>
@@ -1515,7 +1515,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="vAdjMa" term="Vertex adjacency information magnitude">
     <annotation>
       <documentation>
@@ -1528,7 +1528,7 @@
         Descriptor that calculates the vertex adjacency information of a molecule.
     </definition>
     <description>
-      	The values is given by 
+      	The values is given by
         <mrow xmlns="http://www.w3.org/1998/Math/MathML">
           <mn>1</mn>
           <mo>+</mo>
@@ -1537,14 +1537,14 @@
           <mo>*</mo>
           <mn>m</mn>
         </mrow>,
-        where m is the number of heavy-heavy bonds. 
+        where m is the number of heavy-heavy bonds.
 	    If m is zero, then zero is returned.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi0v" term="Valence connectivity index (order 1)">
     <annotation>
       <documentation>
@@ -1556,7 +1556,7 @@
         Descriptor that calculates atomic valence connectivity index (order 1).
     </definition>
     <description>
-      	Let 
+      	Let
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mrow>
             <msub>
@@ -1607,11 +1607,11 @@
 	  </mrow>
         </mrow>,
 	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
+	is the numbers of valence electrons of atom i,
       	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
 	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
 	is the atomic number of atom i.
-      	Valence connectivity is calculated as the sum of 
+      	Valence connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -1644,7 +1644,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi1vC" term="Valence carbon connectivity index (order 1)">
     <annotation>
       <documentation>
@@ -1656,7 +1656,7 @@
         Descriptor that calculates carbon valence connectivity index (order 1).
     </definition>
     <description>
-      	Let 
+      	Let
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mrow>
             <msub>
@@ -1707,11 +1707,11 @@
 	  </mrow>
         </mrow>,
 	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
+	is the numbers of valence electrons of atom i,
       	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
 	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
 	is the atomic number of atom i.
-      	While the valence connectivity is calculated as the sum of 
+      	While the valence connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -1738,14 +1738,14 @@
             </mrow>
           </mfrac>
         </mrow>
-	over all bonds between heavy atoms i and j, the carbon valence 
+	over all bonds between heavy atoms i and j, the carbon valence
 	connectivity index takes into account only bonds between carbon atoms.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi0v" term="Valence connectivity index (order 0)">
     <annotation>
       <documentation>
@@ -1757,7 +1757,7 @@
         Descriptor that calculates atomic valence connectivity index (order 0).
     </definition>
     <description>
-      	Let 
+      	Let
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mrow>
             <msub>
@@ -1808,11 +1808,11 @@
 	  </mrow>
         </mrow>,
 	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
+	is the numbers of valence electrons of atom i,
       	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
 	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
 	is the atomic number of atom i.
-      	Valence connectivity is calculated as the sum of 
+      	Valence connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -1833,14 +1833,14 @@
             </mrow>
           </mfrac>
         </mrow>
-	over all heavy atoms i with 
+	over all heavy atoms i with
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="chi0vC" term="Valence carbon connectivity index (order 0)">
     <annotation>
       <documentation>
@@ -1852,7 +1852,7 @@
         Descriptor that calculates carbon valence connectivity index (order 0).
     </definition>
     <description>
-      	Let 
+      	Let
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mrow>
             <msub>
@@ -1903,11 +1903,11 @@
 	  </mrow>
         </mrow>,
 	where <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>i</mi></msub></mrow>
-	is the numbers of valence electrons of atom i, 
+	is the numbers of valence electrons of atom i,
       	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>h</mi><mi>i</mi></msub></mrow>
 	is the number of hydrogens bonded to atom i, and <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>z</mi><mi>i</mi></msub></mrow>
 	is the atomic number of atom i.
-      	While the atomic valence connectivity is calculated as the sum of 
+      	While the atomic valence connectivity is calculated as the sum of
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
 	  <mfrac>
             <mi>1</mi>
@@ -1928,7 +1928,7 @@
             </mrow>
           </mfrac>
         </mrow>
-	over all heavy atoms i with 
+	over all heavy atoms i with
 	<mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0,
 	the carbon valence connectivity index takes into account only carbon atoms with <mrow xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>v</mi><mi>i</mi></msub></mrow> greather than 0.
     </description>
@@ -1936,7 +1936,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="vdwradius" term="Van der Waals Radius">
     <annotation>
       <documentation>
@@ -1951,7 +1951,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="xlogP" term="XLogP">
     <annotation>
       <documentation>
@@ -1961,7 +1961,7 @@
       </documentation>
     </annotation>
     <definition>
-      Prediction of logP based on the atom-type method called XLogP. 
+      Prediction of logP based on the atom-type method called XLogP.
     </definition>
     <description>
       For a description of the methodology see <bibtex:cite ref="WANG97"/>.
@@ -2003,7 +2003,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="covalentRadius" term="Covalent Radius">
     <annotation>
       <documentation>
@@ -2018,7 +2018,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:molecularDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="bondPartialPiCharge" term="Bond Partial Pi Charge">
     <annotation>
       <documentation>
@@ -2030,14 +2030,14 @@
         Descriptor that calculates bond-pi Partial charge of a bond.
     </definition>
     <description>
-        Calculation is calculated determining the difference the Partial Pi 
+        Calculation is calculated determining the difference the Partial Pi
         Charge on atoms A and B of a bond. Based in Gasteiger Charge.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="bondPartialSigmaCharge" term="Bond Partial Sigma Charge">
     <annotation>
       <documentation>
@@ -2049,14 +2049,14 @@
         Descriptor that calculates bond-sigma Partial charge of a bond.
     </definition>
     <description>
-        Calculation is calculated determining the difference the Partial Sigma 
+        Calculation is calculated determining the difference the Partial Sigma
         Charge on atoms A and B of a bond. Based in Gasteiger Charge.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="bondPartialTCharge" term="Bond Partial Total Charge">
     <annotation>
       <documentation>
@@ -2068,14 +2068,14 @@
         Descriptor that calculates bond-total Partial charge of a bond.
     </definition>
     <description>
-        Calculation is calculated determining the difference the Partial Total 
+        Calculation is calculated determining the difference the Partial Total
         Charge on atoms A and B of a bond. Based in Gasteiger Charge.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="bondSigmaElectronegativity" term="Bond Sigma Electronegativity">
     <annotation>
       <documentation>
@@ -2087,14 +2087,14 @@
         Descriptor that calculates of bond-Polarizability of a bond.
     </definition>
     <description>
-        Calculation is calculated determining the difference the Sigma 
+        Calculation is calculated determining the difference the Sigma
         electronegativity on atoms A and B of a bond.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="aminoAcidsCount" term="Amino Acids Count">
     <annotation>
       <documentation>
@@ -2105,12 +2105,15 @@
     <definition>
         Descriptor that returns the number of amino acids in an atom container.
     </definition>
-    <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
-      <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:constitutionalDescriptor"/>
-    </metadataList>
+      <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+          <metadata dictRef="qsar-descriptors-metadata:descriptorClass"
+                    content="qsar-descriptors-metadata:constitutionalDescriptor"/>
+          <metadata dictRef="qsar-descriptors-metadata:descriptorClass"
+                    content="qsar-descriptors-metadata:proteinDescriptor"/>
+      </metadataList>
   </entry>
-  
-  <entry id="CPSA" term="Charged Partial Surface Area">
+
+    <entry id="CPSA" term="Charged Partial Surface Area">
     <annotation>
       <documentation>
         <metadata name="dc:contributor" content="rg"/>
@@ -2123,7 +2126,7 @@
     <description>
         The CPSA's were developed by Stanton et al. <bibtex:cite ref="CPSA"/> and
 		are related to the Polar Surface Area descriptors.
- 		This implementation uses a numerical algorithm to obtain surface areas 
+ 		This implementation uses a numerical algorithm to obtain surface areas
         and obtains partial charges using the Gasteiger-Marsilli algorithm.
     </description>
     <annotation>
@@ -2149,7 +2152,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:electronicDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="eccentricConnectivityIndex" term="Charged Partial Surface Area">
     <annotation>
       <documentation>
@@ -2158,19 +2161,19 @@
       </documentation>
     </annotation>
     <definition>
-        Descriptor that calculates the eccentric connectivity index for a 
+        Descriptor that calculates the eccentric connectivity index for a
         hydrogen supressed molecular graph.
     </definition>
     <description>
-        Descriptor combining distance and adjacency information. This descriptor is 
-        described by Sharma et al. and has been shown 
+        Descriptor combining distance and adjacency information. This descriptor is
+        described by Sharma et al. and has been shown
         to correlate well with a number of physical properties.
     </description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="largestChain" term="Largest Chain">
     <annotation>
       <documentation>
@@ -2185,7 +2188,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="largestPiSystem" term="Largest Pi System">
     <annotation>
       <documentation>
@@ -2200,7 +2203,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="largestAliphaticChain" term="Largest Aliphatic Chain">
     <annotation>
       <documentation>
@@ -2215,7 +2218,7 @@
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
+
   <entry id="petitjeanShapeIndex" term="Petitjean Shape Indices">
     <annotation>
       <documentation>
@@ -2227,35 +2230,56 @@
         Descriptor that evaluates the Petitjean shape indices.
     </definition>
     <description>
-  		These original Petitjean number was described by Petitjean and considered 
-  		the molecular graph. This class also implements the geometric analog 
+  		These original Petitjean number was described by Petitjean and considered
+  		the molecular graph. This class also implements the geometric analog
   		of the topological shape index described by Bath et al.
-  	</description> 
+  	</description>
     <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
       <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
     </metadataList>
   </entry>
-  
-  <entry id="weightedPath" term="Weighted Path">
-    <annotation>
-      <documentation>
-        <metadata name="dc:contributor" content="rg"/>
-        <metadata name="dc:date" content="2006-01-15"/>
-      </documentation>
-    </annotation>
-    <definition>
-        Descriptor that evaluates the weighted path descriptors.
-    </definition>
-    <description>
-  		 These decsriptors were described  by Randic and characterize molecular 
-  		 branching. Five descriptors are calculated, based on the implementation 
-  		 in the ADAPT software package.
-  	</description> 
-    <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
-      <metadata dictRef="qsar-descriptors-metadata:descriptorClass" content="qsar-descriptors-metadata:topologicalDescriptor"/>
-    </metadataList>
-  </entry>
-  
-  
-  
+
+    <entry id="weightedPath" term="Weighted Path">
+        <annotation>
+            <documentation>
+                <metadata name="dc:contributor" content="rg"/>
+                <metadata name="dc:date" content="2006-01-15"/>
+            </documentation>
+        </annotation>
+        <definition>
+            Descriptor that evaluates the weighted path descriptors.
+        </definition>
+        <description>
+            These decsriptors were described by Randic and characterize molecular
+            branching. Five descriptors are calculated, based on the implementation
+            in the ADAPT software package.
+        </description>
+        <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+            <metadata dictRef="qsar-descriptors-metadata:descriptorClass"
+                      content="qsar-descriptors-metadata:topologicalDescriptor"/>
+        </metadataList>
+    </entry>
+
+    <entry id="taeAminoAcid" term="TAE Amino Acid">
+        <annotation>
+            <documentation>
+                <metadata name="dc:contributor" content="rg"/>
+                <metadata name="dc:date" content="2006-08-23"/>
+            </documentation>
+        </annotation>
+        <definition>
+            The TAE RECON descriptors for amino acid sequences. Uses precalculated quantum mechanical
+            parameters to generate a set of 147 descriptors for a given sequence
+        </definition>
+        <description>
+        </description>
+        <metadataList dictRef="qsar-descriptors-metadata:descriptorClassification">
+            <metadata dictRef="qsar-descriptors-metadata:descriptorClass"
+                      content="qsar-descriptors-metadata:proteinDescriptor"/>
+            <metadata dictRef="qsar-descriptors-metadata:descriptorClass"
+                      content="qsar-descriptors-metadata:electronicDescriptor"/>
+        </metadataList>
+    </entry>
+
+
 </dictionary>

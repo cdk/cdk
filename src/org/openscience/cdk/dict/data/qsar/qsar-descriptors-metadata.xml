@@ -220,4 +220,17 @@
     <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
   </entry>
 
+  <entry id="proteinDescriptor" term="Protein Descriptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="rg"/>
+        <metadata name="dc:date" content="2006-11-02"/>
+      </documentation>
+    </annotation>
+    <definition>
+       descriptor specifically designed for characterizing proteins 
+    </definition>
+    <relatedEntry type="qsar-descriptors-metadata:instanceOf" href="descriptorClass"/>
+  </entry>
+
 </dictionary>

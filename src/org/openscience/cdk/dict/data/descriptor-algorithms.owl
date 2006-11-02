@@ -179,6 +179,16 @@
         <isClassifiedAs rdf:resource="#descriptorCategories"/>
     </Category>
 
+    <Category rdf:ID="proteinDescriptor">
+        <rdfs:label>Proteinl Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#rg"/>
+        <dc:date>2006-11-02</dc:date>
+        <definition>
+            A descriptor specifically designed for characterizing proteins
+        </definition>
+        <isClassifiedAs rdf:resource="#descriptorCategories"/>
+    </Category>
+
     <Category rdf:ID="constitutionalDescriptor">
         <rdfs:label>Constitutional Descriptor</rdfs:label>
         <dc:contributor rdf:resource="#elw"/>
@@ -1306,6 +1316,7 @@
         <description>
         </description>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
     </Descriptor>
 
@@ -2234,7 +2245,6 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-<!--
     <Descriptor rdf:ID="taeAminoAcid">
         <rdfs:label>TAE RECON descriptors for amino acid sequences</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
@@ -2243,10 +2253,10 @@
             The TAE RECON descriptors for amino acid sequences. Uses precalculated quantum mechanical
 	    parameters to generate a set of 147 descriptors for a given sequence
         </definition>
+        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
-    -->
 
          <Descriptor rdf:ID="mde">
         <rdfs:label>Molecular Distance Edge</rdfs:label>
