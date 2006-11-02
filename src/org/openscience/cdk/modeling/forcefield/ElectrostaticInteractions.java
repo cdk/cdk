@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -68,7 +68,7 @@ public class ElectrostaticInteractions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94ElectrostaticParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94ElectrostaticParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
 
 		//distances = wnd.getShortestPathLengthBetweenAtoms((AtomContainer) molecule);
 		

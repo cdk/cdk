@@ -6,9 +6,8 @@ import java.util.Vector;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 //import org.openscience.cdk.tools.LoggingTool;
 
@@ -66,15 +65,14 @@ public class BondStretching {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94BondStretchingParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94BondStretchingParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
 
-		//System.out.println("molecule.getAtomAt(0).getAtomTypeName() = " + molecule.getAtomAt(0).getAtomTypeName());
+		//System.out.println("setMMFF94BondStretchingParameters");
+		
 		IBond[] bonds = molecule.getBonds();
-		bondsNumber = bonds.length;
+		bondsNumber = molecule.getBondCount();
 		//System.out.println("bondsNumber = " + bondsNumber);
-		bondAtomPosition = new int[bondsNumber][];
-		IAtom atom0 = null;
-		IAtom atom1 = null;
+		bondAtomPosition = new int[molecule.getBondCount()][];
 
 		Vector bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -85,34 +83,34 @@ public class BondStretching {
 		k3 = new double[molecule.getBondCount()];
 		k4 = new double[molecule.getBondCount()];
 
-		for (int i = 0; i < bondsNumber; i++) {
-			//System.out.println("bonds[" + i + "]= " + bonds[i].toString());
-			atom0 = bonds[i].getAtom(0);
-			atom1 = bonds[i].getAtom(1);
+		String bondType;
+		
+		for (int i = 0; i < molecule.getBondCount(); i++) {
 			
-			bondAtomPosition[i] = new int[2];
-			bondAtomPosition[i][0] = molecule.getAtomNumber(atom0);
-			bondAtomPosition[i][1] = molecule.getAtomNumber(atom1);
+			//atomsInBond = bonds[i].getatoms();
 			
-//			for (int j = 0; j < 2; j++) {
-//				bondAtomPosition[i][j] = molecule.getAtomNumber(atomsInBond[j]);
-//				//System.out.println("atomsInBond[j] = " + atomsInBond[j].toString());
-//				//System.out.println("atomsInBond[j].getAtomTypeName() = " + atomsInBond[j].getAtomTypeName());
-//				//System.out.println("bondAtomPosition[i][j] = " + bondAtomPosition[i][j]);
-//			}
+			bondType = bonds[i].getProperty("MMFF94 bond type").toString();
+			//System.out.println("bondType " + i + " = " + bondType);
 			
-			//System.out.println("atomsInBond[0].getAtomTypeName() = " + atomsInBond[0].getAtomTypeName());
-			//System.out.println("atomsInBond[1].getAtomTypeName() = " + atomsInBond[1].getAtomTypeName());
-			bondData = pc.getBondData(atom0.getAtomTypeName(), atom1.getAtomTypeName());
+			bondAtomPosition[i] = new int[bonds[i].getAtomCount()];
+			
+			for (int j = 0; j < bonds[i].getAtomCount(); j++) {
+				bondAtomPosition[i][j] = molecule.getAtomNumber(bonds[i].getAtom(j));
+			}
+			
+			/*System.out.println("bond " + i + " : " + bondType + " " + bonds[i].getAtom(0).getAtomTypeName() + "(" + bondAtomPosition[i][0] + "), " + 
+					bonds[i].getAtom(1).getAtomTypeName() + "(" + bondAtomPosition[i][1] + ")");
+			*/		
+			bondData = pc.getBondData(bondType, bonds[i].getAtom(0).getAtomTypeName(), bonds[i].getAtom(1).getAtomTypeName());
 			//System.out.println("bondData : " + bondData);
 			r0[i] = ((Double) bondData.get(0)).doubleValue();
 			k2[i] = ((Double) bondData.get(1)).doubleValue();
 			k3[i] = ((Double) bondData.get(2)).doubleValue();
 			k4[i] = ((Double) bondData.get(3)).doubleValue();
-		}
+			}
 		
-		r = new double[bondsNumber];
-		deltar = new double[bondsNumber];
+		r = new double[molecule.getBondCount()];
+		deltar = new double[molecule.getBondCount()];
 		
 
 	}
@@ -126,7 +124,7 @@ public class BondStretching {
 	public void calculateDeltar(GVector coord3d) {
 
 		//logger.debug("deltar.length = " + deltar.length);
-		for (int i = 0; i < bondsNumber; i++) {
+		for (int i = 0; i < bondAtomPosition.length; i++) {
 			r[i] = ForceFieldTools.distanceBetweenTwoAtomsFrom3xNCoordinates(coord3d, bondAtomPosition[i][0], bondAtomPosition[i][1]);
 			deltar[i] = r[i] - r0[i];
 			//if (deltar[i] > 0) {
@@ -160,6 +158,8 @@ public class BondStretching {
 							+ k3[i] * Math.pow(deltar[i],3) + k4[i] * Math.pow(deltar[i],4);
 		}
 
+		//System.out.println("mmff94SumEB = " + mmff94SumEB);
+		
 		return mmff94SumEB;
 	}
 

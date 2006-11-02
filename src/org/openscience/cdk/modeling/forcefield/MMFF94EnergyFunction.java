@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -42,7 +42,8 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	 *  Constructor for the MMFF94EnergyFunction object
 	 *
 	 */
-	public MMFF94EnergyFunction(AtomContainer molecule, Hashtable mmff94Tables) throws Exception {
+	public MMFF94EnergyFunction(IAtomContainer molecule, Hashtable mmff94Tables) throws Exception {
+		//System.out.println("MMFF94EnergyFunction Constructor");
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables,true);
 		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables,false);
@@ -60,7 +61,7 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	 *@param  molecule  Current molecule.
 	 *@return        MMFF94 energy function value.
 	 */
-	public double energyFunctionOfAMolecule(AtomContainer molecule) {
+	public double energyFunctionOfAMolecule(IAtomContainer molecule) {
 		
 		GVector coords3d = ForceFieldTools.getCoordinates3xNVector(molecule);
 
@@ -95,6 +96,8 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 			+ t.functionMMFF94SumET(coords3d)
 			+ vdwi.getFunctionMMFF94SumEvdW()
 			+ ei.functionMMFF94SumEQ(coords3d);
+		
+		//System.out.println("energy = " + bs.mmff94SumEB + "  " + ab.mmff94SumEA + "  " + sbi.getFunctionMMFF94SumEBA() + "  " + t.mmff94SumET + "  " + vdwi.getFunctionMMFF94SumEvdW() + "  " + ei.mmff94SumEQ);
 		
 		return energy;
 	}

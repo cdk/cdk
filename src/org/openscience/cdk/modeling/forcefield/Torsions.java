@@ -8,7 +8,7 @@ import javax.vecmath.GVector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -78,8 +78,10 @@ public class Torsions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94TorsionsParameters(AtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94TorsionsParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
 
+		//System.out.println("setMMFF94TorsionsParameters");
+		
 		bond = molecule.getBonds();
 		for (int b=0; b<bond.length; b++) {
 			atomInBond = BondManipulator.getAtomArray(bond[b]);
@@ -93,11 +95,14 @@ public class Torsions {
 							for (int ba=0; ba<bondConnectedAfter.length; ba++) {
 								if (bondConnectedAfter[ba].compare(bond[b])) {}
 								else {
-									torsionNumber += 1;
-									//System.out.println("atomi(" + torsionNumber + ") : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
-									//System.out.println("atomj(" + torsionNumber + ") : " + atomInBond[0].getAtomTypeName());
-									//System.out.println("atomk(" + torsionNumber + ") : " + atomInBond[1].getAtomTypeName());
-									//System.out.println("atoml(" + torsionNumber + ") : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
+									if (bondConnectedBefore[bb].isConnectedTo(bondConnectedAfter[ba])) {}
+									else {
+										torsionNumber += 1;
+										//System.out.println("atomi(" + torsionNumber + ") : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
+										//System.out.println("atomj(" + torsionNumber + ") : " + atomInBond[0].getAtomTypeName());
+										//System.out.println("atomk(" + torsionNumber + ") : " + atomInBond[1].getAtomTypeName());
+										//System.out.println("atoml(" + torsionNumber + ") : " + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
+									}	
 								}
 							}
 						}
@@ -105,7 +110,7 @@ public class Torsions {
 				}
 			}
 		}
-		//logger.debug("torsionNumber = " + torsionNumber);
+		//System.out.println("torsionNumber = " + torsionNumber);
 
 		Vector torsionsData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -117,6 +122,7 @@ public class Torsions {
 
 		torsionAtomPosition = new int[torsionNumber][];
 
+		String torsionType;
 		int m = -1;
 		for (int b=0; b<bond.length; b++) {
 			atomInBond = BondManipulator.getAtomArray(bond[b]);
@@ -130,39 +136,48 @@ public class Torsions {
 							for (int ba=0; ba<bondConnectedAfter.length; ba++) {
 								if (bondConnectedAfter[ba].compare(bond[b])) {}
 								else {
-									m += 1;
-									torsionAtomPosition[m] = new int[4];
-									torsionAtomPosition[m][0] = molecule.getAtomNumber(bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]));
-									torsionAtomPosition[m][1] = molecule.getAtomNumber(atomInBond[0]);
-									torsionAtomPosition[m][2] = molecule.getAtomNumber(atomInBond[1]);
-									torsionAtomPosition[m][3] = molecule.getAtomNumber(bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]));
+									if (bondConnectedBefore[bb].isConnectedTo(bondConnectedAfter[ba])) {}
+									else {
+										m += 1;
+										torsionAtomPosition[m] = new int[4];
+										torsionAtomPosition[m][0] = molecule.getAtomNumber(bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]));
+										torsionAtomPosition[m][1] = molecule.getAtomNumber(atomInBond[0]);
+										torsionAtomPosition[m][2] = molecule.getAtomNumber(atomInBond[1]);
+										torsionAtomPosition[m][3] = molecule.getAtomNumber(bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]));
 									
-									/*System.out.println(bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName() + "(" + torsionAtomPosition[m][0] + "), " + 
-											atomInBond[0].getAtomTypeName() + "(" + torsionAtomPosition[m][1] + "), " + atomInBond[1].getAtomTypeName() + "(" + torsionAtomPosition[m][2] + "), " + 
-											bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName() + "(" + torsionAtomPosition[m][3] + ")");
-									*/		
-									
-									//logger.debug("torsionAtomPosition[" + m + "]: " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getSymbol() 
-											//+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
-											//+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
-									
-									torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName() + ";" 
-																+ atomInBond[0].getAtomTypeName() + ";" 
-																+ atomInBond[1].getAtomTypeName() + ";" 
-																+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
-									if (torsionsData == null) {
-										torsionsData = (Vector)parameterSet.get("torsion" + bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName() + ";"
-																+ atomInBond[1].getAtomTypeName() + ";" 
-																+ atomInBond[0].getAtomTypeName() + ";" 
-																+ bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName());
-									}
-									
-									//logger.debug("torsionsData " + m + ": " + torsionsData);
-									v1[m] = ((Double) torsionsData.get(0)).doubleValue();
-									v2[m] = ((Double) torsionsData.get(1)).doubleValue();
-									v3[m] = ((Double) torsionsData.get(2)).doubleValue();
+										/*System.out.println("torsion " + m + " : " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getFlag(CDKConstants.ISINRING) + "(" + torsionAtomPosition[m][0] + "), " + 
+												atomInBond[0].getFlag(CDKConstants.ISINRING) + "(" + torsionAtomPosition[m][1] + "), " + atomInBond[1].getFlag(CDKConstants.ISINRING) + "(" + torsionAtomPosition[m][2] + "), " + 
+												bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getFlag(CDKConstants.ISINRING) + "(" + torsionAtomPosition[m][3] + ")");		
+									    */
+										/*System.out.println("torsionAtomPosition[" + m + "]: " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getSymbol() 
+											+ ", "+ atomInBond[0].getSymbol() + ", " + atomInBond[1].getSymbol() + ", " 
+											+ bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getSymbol());
+									    */
+ 
+										torsionType = "0";
+										if (bond[b].getProperty("MMFF94 bond type").toString() == "1") {
+											torsionType = "1";
+										}
+										else if ((bond[b].getProperty("MMFF94 bond type").toString() == "0") & 
+												((bondConnectedBefore[bb].getProperty("MMFF94 bond type").toString() == "1") |
+												(bondConnectedAfter[ba].getProperty("MMFF94 bond type").toString() == "1"))) {
+											torsionType = "2";
+										}
 
-								}
+										/*System.out.println("torsion " + m + " : " + torsionType + " " + bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName() + "(" + torsionAtomPosition[m][0] + "), " + 
+										atomInBond[0].getAtomTypeName() + "(" + torsionAtomPosition[m][1] + "), " + atomInBond[1].getAtomTypeName() + "(" + torsionAtomPosition[m][2] + "), " + 
+										bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName() + "(" + torsionAtomPosition[m][3] + ")");
+										*/
+										torsionsData = pc.getTorsionData(torsionType, bondConnectedBefore[bb].getConnectedAtom(atomInBond[0]).getAtomTypeName(), 
+												atomInBond[0].getAtomTypeName(), atomInBond[1].getAtomTypeName(), bondConnectedAfter[ba].getConnectedAtom(atomInBond[1]).getAtomTypeName());
+									
+										//System.out.println("torsionsData " + m + ": " + torsionsData);
+										v1[m] = ((Double) torsionsData.get(0)).doubleValue();
+										v2[m] = /*(-1) * */((Double) torsionsData.get(1)).doubleValue();
+										v3[m] = ((Double) torsionsData.get(2)).doubleValue();
+
+									}
+								}	
 							}
 						}
 					}
@@ -238,6 +253,7 @@ public class Torsions {
 		mmff94SumET = 0;
 		double torsionEnergy=0;
 		for (int m = 0; m < torsionNumber; m++) {
+			//System.out.println("phi[" + m + "] = " + Math.round(Math.toDegrees(phi[m])) + ",	cos(phi[" + m + "]) = " + Math.round(Math.cos(phi[m])) + ",	cos(2 * phi[" + m + "]) = " + Math.round(Math.cos(2 * phi[m])) + ",	cos(3 * phi[" + m + "]) = " + Math.round(Math.cos(3 * phi[m]))); 
 			torsionEnergy = v1[m] * (1 + Math.cos(phi[m])) + v2[m] * (1 - Math.cos(2 * phi[m])) + v3[m] * (1 + Math.cos(3 * phi[m]));
 			//logger.debug("phi[" + m + "] = " + Math.toDegrees(phi[m]) + ", cph" + Math.cos(phi[m]) + ", c2ph" + Math.cos(2 * phi[m]) + ", c3ph" + Math.cos(3 * phi[m]) + ", te=" + torsionEnergy);
 			//if (torsionEnergy < 0) {

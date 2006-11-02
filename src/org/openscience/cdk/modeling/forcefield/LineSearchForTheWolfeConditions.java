@@ -167,8 +167,8 @@ public class LineSearchForTheWolfeConditions {
 			
 			if (linearFunctionDerivativeInAlpha[i] >= 0) {		//The interval alpha[i-1] and alpha[i] brackets the desired step lengths.
 				/*System.out.println("zoom(" + alpha[i-1] + ", " + linearFunctionInAlpha[i-1] + ", " + linearFunctionDerivativeInAlpha[i-1] + ", " + dfInAlpha[i-1] + ", " + 
-						alpha[i] + ", " + linearFunctionInAlpha[i] + ")");
-				*/
+						alpha[i] + ", " + linearFunctionInAlpha[i] + ")");*/
+				
 				/*zoom(alpha[i], linearFunctionInAlpha[i], linearFunctionDerivativeInAlpha[i], dfInAlpha[i], 
 						alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i], dfInAlpha[i]);*/
 				zoom(alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i-1], dfInAlpha[i-1], 
@@ -266,8 +266,8 @@ public class LineSearchForTheWolfeConditions {
 			//Interpolation 
 			
 			//alphaj = this.cubicInterpolation(alphaLow, linearFunctionInAlphaLow, linearFunctionDerivativeInAlphaLow, alphaHigh, linearFunctionInAlphaHigh, linearFunctionDerivativeInAlphaHigh, a, b);
-			/*System.out.println("cubicInterpolation(" + alphaLow + ", " + linearFunctionInAlphaLow + ", " + linearFunctionDerivativeInAlphaLow + ", "
-					+ alphaHigh + ", " + linearFunctionInAlphaHigh + ", " + linearFunctionDerivativeInAlphaHigh + ", " + a + ", " + b + ");");*/
+			/*System.out.println("interpolation(" + alphaLow + ", " + linearFunctionInAlphaLow + ", " + linearFunctionDerivativeInAlphaLow + ", "
+					+ alphaHigh + ", " + linearFunctionInAlphaHigh + ");");*/
 
 			alphaj = this.interpolation(alphaLow, linearFunctionInAlphaLow, linearFunctionDerivativeInAlphaLow, alphaHigh, linearFunctionInAlphaHigh);
 			//System.out.println("alphaj = " + alphaj);
@@ -315,12 +315,14 @@ public class LineSearchForTheWolfeConditions {
 
 			if ((functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.000000000001)) {
 				//System.out.println("ZOOM WAS TERMINATE EARLIER");
+				/*System.out.println("functionEvaluationNumber = " + functionEvaluationNumber + 
+						", Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) = " + Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) + 
+						", Math.abs(alphaLow - alphaHigh) = " + Math.abs(alphaLow - alphaHigh));*/
 				this.alphaOptimum = alphaLow;
 				this.linearFunctionInAlphaOptimum = linearFunctionInAlphaLow;
 				this.dfOptimum = dfInAlphaLow;
 				
-				/*System.out.println("(functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) 
-										| (Math.abs(alphaLow - alphaHigh) <= 0.0000001)");*/
+				//System.out.println("(functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.0000001)");
 				//System.out.println("zoom end -> this.alphaOptimum = " + this.alphaOptimum); 
 				//System.out.println("zoom end -> this.linearFunctionInAlphaOptimum = " + this.linearFunctionInAlphaOptimum); 
 				break;
@@ -427,12 +429,19 @@ public class LineSearchForTheWolfeConditions {
 		//System.out.println("The value alpha1 = " + alpha1 + ", is the minimizer of this quadratic function");
 		
 		if ((alpha1 > alphaDiff) | (Math.abs(alpha1 - alphaDiff) < 0.000000001)) {
-			/*System.out.println("We reset alphai = alphaiMinus1 / 2, because alphaInterpolation = " + alphai + " is too close to its predecessor " +
-					"alphaiMinus1 = " + alphaiMinus1); */
-			alpha1 = alphaDiff / 2;
-		} else {if ((alpha1 < 0) & (alpha1 < (alphaDiff - 9 * alphaDiff / 10))) {
-			//System.out.println("We reset alphai = alphaiMinus1 / 2, because alphaInterpolation = " + alphai + " is 	too much smaller than alphaiMinus1 = " + alphaiMinus1); 
-			alpha1 = alphaDiff / 2;
+			if (alpha1 < 1E-7) {}
+			else {
+				/*System.out.println("We reset alpha1 = alphaDiff / 2, because alphaInterpolation = " + alpha1 + " is too close to its predecessor " +
+						"alphaiMinus1 = " + alphaDiff); */
+				alpha1 = alphaDiff / 2;
+			}
+		} else {
+			if ((alpha1 < 0) & (alpha1 < (alphaDiff - 9 * alphaDiff / 10))) {
+				if (alpha1 < 1E-7) {}
+				else {
+					//System.out.println("We reset alphai = alphaiMinus1 / 2, because alphaInterpolation = " + alpha1 + " is 	too much smaller than alphaiMinus1 = " + alphaDiff); 
+					alpha1 = alphaDiff / 2;
+				}
 			}
 		}
 

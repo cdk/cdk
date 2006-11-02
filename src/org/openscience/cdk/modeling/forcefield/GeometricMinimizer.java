@@ -1,7 +1,7 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 
 import javax.vecmath.GMatrix;
@@ -59,7 +59,7 @@ public class GeometricMinimizer {
 	NewtonRaphsonMethod nrm = new NewtonRaphsonMethod();
 	//private LoggingTool logger;
 
-	Molecule molecule;
+	IMolecule molecule;
 
 
 	/**
@@ -70,16 +70,16 @@ public class GeometricMinimizer {
 	}
 
 
-	public void setMolecule(Molecule mol, boolean clone) throws Exception {
+	public void setMolecule(IMolecule mol, boolean clone) throws Exception {
 
 		if (clone) {
-			this.molecule = (Molecule) mol.clone();
+			this.molecule = (IMolecule) mol.clone();
 		} else {
 			this.molecule = mol;
 		}
 	}
 
-    	public Molecule getMolecule() {
+    	public IMolecule getMolecule() {
 		return this.molecule;
 	}
 
@@ -89,12 +89,16 @@ public class GeometricMinimizer {
 	 *  
 	 *@param  molecule  The molecule like an AtomContainer object.
 	 */
-	public void setMMFF94Tables(AtomContainer molecule) throws Exception {
-		
+	public void setMMFF94Tables(IAtomContainer molecule) throws Exception {
+		//System.out.println("Start setMMFF94Tables");
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+		//System.out.println("setForceFieldConfigurator");
 		ffc.setForceFieldConfigurator("mmff94");
-		ffc.assignAtomTyps((Molecule) molecule); // returns non-used RingSet
+		//System.out.println("assignAtomTyps");
+		ffc.assignAtomTyps((IMolecule) molecule); // returns non-used RingSet
+		//System.out.println("PotentialParameterSet");
 		PotentialParameterSet = ffc.getParameterSet();
+		//System.out.println("PotentialParameterSet = " + PotentialParameterSet);
 	}
 	
 	public Hashtable getPotentialParameterSet() {
@@ -391,8 +395,8 @@ public class GeometricMinimizer {
 	 * @param  forceField		The potential function to be used
 	 */
 	public void conjugateGradientMinimization(GVector initialCoordinates, IPotentialFunction forceField) {
-		//logger.debug("");
-		//logger.debug("FORCEFIELDTESTS ConjugatedGradientTest");
+		//System.out.println("");
+		//System.out.println("FORCEFIELDTESTS ConjugatedGradientTest");
 		
 		initializeMinimizationParameters(initialCoordinates);
 		fxk = forceField.energyFunction(initialCoordinates);
@@ -404,7 +408,7 @@ public class GeometricMinimizer {
 
 		double linearFunctionDerivativek =1;
 		
-		double alphaInitialStep = 0.001;
+		double alphaInitialStep = 0.01;
 
 		if (gradientk.equals(g0)) {
 			convergence = true;

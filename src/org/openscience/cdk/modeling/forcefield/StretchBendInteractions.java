@@ -6,9 +6,14 @@ import java.util.Vector;
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
+import org.openscience.cdk.qsar.IAtomicDescriptor;
+import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptor;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -72,11 +77,13 @@ public class StretchBendInteractions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94StretchBendParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag) throws Exception {
+	public void setMMFF94StretchBendParameters(IAtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag) throws Exception {
 
+		//System.out.println("setMMFF94StretchBendParameters");
+		
 		ab.setMMFF94AngleBendingParameters(molecule, parameterSet, angleBendingFlag);
 
-		org.openscience.cdk.interfaces.IAtom[] atomConnected = null;
+		IAtom[] atomConnected = null;
 
 		Vector stretchBendInteractionsData = null;
 		Vector bondData = null;
@@ -90,24 +97,93 @@ public class StretchBendInteractions {
 		kbaIJK = new double[ab.angleNumber];
 		kbaKJI = new double[ab.angleNumber];
 
+		String strbndType;
+		String angleType;
+		String bondIJType;
+		String bondKJType;
+
+		IBond bondIJ = null;
+		IBond bondKJ = null;
+		
+		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
+		int iR = 0;
+		int jR = 0;
+		int kR = 0;
+
+		
 		int l = -1;
 		for (int j = 0; j < molecule.getAtomCount(); j++) {
+			
 			atomConnected = AtomContainerManipulator.getAtomArray(molecule.getConnectedAtomsList(molecule.getAtom(j)));
+			
 			if (atomConnected.length > 1) {
+				
 				for (int i = 0; i < atomConnected.length; i++) {
+					
 					for (int k = i + 1; k < atomConnected.length; k++) {
-						stretchBendInteractionsData = pc.getBondAngleInteractionData(atomConnected[i].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName(), atomConnected[k].getAtomTypeName());
-						//logger.debug("stretchBendInteractionsData : " + stretchBendInteractionsData);
+						
 						l += 1;
+						
+						bondIJ = molecule.getBond(atomConnected[i], molecule.getAtom(j));
+						bondIJType = bondIJ.getProperty("MMFF94 bond type").toString();
+						
+						bondKJ = molecule.getBond(atomConnected[k], molecule.getAtom(j));
+						bondKJType = bondKJ.getProperty("MMFF94 bond type").toString();
+						
+						angleType = "0";
+						if ((bondIJType == "1") | (bondKJType == "1")) {
+							angleType = "1";
+						}  
+						if ((bondIJType == "1") & (bondKJType == "1")) {
+							angleType = "2";
+						}  
+						
+						//System.out.println("bondIJType = " + bondIJType + ", bondKJType = " + bondKJType + ", angleType = " + angleType);
+						
+						strbndType = "0";
+						if ((angleType == "0") & (bondIJType == "0") & (bondKJType == "0")) {strbndType = "0";}
+						else if ((angleType == "1") & (bondIJType == "1") & (bondKJType == "0")) {strbndType = "1";}
+						else if ((angleType == "1") & (bondIJType == "0") & (bondKJType == "1")) {strbndType = "2";}
+						else if ((angleType == "2") & (bondIJType == "1") & (bondKJType == "1")) {strbndType = "3";}
+						else if ((angleType == "4") & (bondIJType == "0") & (bondKJType == "0")) {strbndType = "4";}
+						else if ((angleType == "3") & (bondIJType == "0") & (bondKJType == "0")) {strbndType = "5";}
+						else if ((angleType == "5") & (bondIJType == "1") & (bondKJType == "0")) {strbndType = "6";}
+						else if ((angleType == "5") & (bondIJType == "0") & (bondKJType == "1")) {strbndType = "7";}
+						else if ((angleType == "6") & (bondIJType == "1") & (bondKJType == "1")) {strbndType = "8";}
+						else if ((angleType == "7") & (bondIJType == "1") & (bondKJType == "0")) {strbndType = "9";}
+						else if ((angleType == "7") & (bondIJType == "0") & (bondKJType == "1")) {strbndType = "10";}
+						else if ((angleType == "8") & (bondIJType == "1") & (bondKJType == "1")) {strbndType = "11";}
+						
+						//System.out.println("strbnd: " + strbndType + ", " + atomConnected[i].getAtomTypeName() + "(" + molecule.getAtomNumber(atomConnected[i]) + "), " + molecule.getAtom(j).getAtomTypeName() + "(" + molecule.getAtomNumber(molecule.getAtom(j)) + "), " + ((IAtom)atomConnected.get(k)).getAtomTypeName() + "(" + molecule.getAtomNumber((IAtom)atomConnected.get(k)) + ")");
+						stretchBendInteractionsData = pc.getBondAngleInteractionData(strbndType, atomConnected[i].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName(), atomConnected[k].getAtomTypeName());
+						
+						if (stretchBendInteractionsData == null) {
+							if (angleType == "1") {
+								if (strbndType == "1") {strbndType = "2";}
+								else {strbndType = "1";}
+								//System.out.println("strbnd: " + strbndType + ", " + ((IAtom)atomConnected.get(i)).getAtomTypeName() + "(" + molecule.getAtomNumber((IAtom)atomConnected.get(i)) + "), " + molecule.getAtom(j).getAtomTypeName() + "(" + molecule.getAtomNumber(molecule.getAtom(j)) + "), " + ((IAtom)atomConnected.get(k)).getAtomTypeName() + "(" + molecule.getAtomNumber((IAtom)atomConnected.get(k)) + ")");
+								stretchBendInteractionsData = pc.getBondAngleInteractionData(strbndType, atomConnected[i].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName(), atomConnected[k].getAtomTypeName());
+							}
+						}
+						
+						if (stretchBendInteractionsData == null) {
+							iR = ((IntegerResult)descriptor.calculate(atomConnected[i],molecule).getValue()).intValue();
+							jR = ((IntegerResult)descriptor.calculate(molecule.getAtom(j),molecule).getValue()).intValue();
+							kR = ((IntegerResult)descriptor.calculate(atomConnected[k],molecule).getValue()).intValue();
+							stretchBendInteractionsData = pc.getDefaultStretchBendData(iR, jR, kR);
+						} 
+
+						//System.out.println("stretchBendInteractionsData : " + stretchBendInteractionsData);
 						kbaIJK[l] = ((Double) stretchBendInteractionsData.get(0)).doubleValue();
 						kbaKJI[l] = ((Double) stretchBendInteractionsData.get(1)).doubleValue();
 
-						//logger.debug("kbaIJK[" + l + "] = " + kbaIJK[l]);
-						//logger.debug("kbaKJI[" + l + "] = " + kbaKJI[l]);
+						//System.out.println("kbaIJK[" + l + "] = " + kbaIJK[l]);
+						//System.out.println("kbaKJI[" + l + "] = " + kbaKJI[l]);
 
-						bondData = pc.getBondData(atomConnected[i].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName());
+						
+						bondData = pc.getBondData(bondIJType, atomConnected[i].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName());
 						r0IJ[l] = ((Double) bondData.get(0)).doubleValue();
-						bondData = pc.getBondData(atomConnected[k].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName());
+						bondData = pc.getBondData(bondKJType, atomConnected[k].getAtomTypeName(), molecule.getAtom(j).getAtomTypeName());
 						r0KJ[l] = ((Double) bondData.get(0)).doubleValue();
 						
 						bondijAtomPosition[l] = new int[2];

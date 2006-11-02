@@ -8,10 +8,11 @@ import javax.vecmath.GVector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -80,8 +81,10 @@ public class AngleBending {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94AngleBendingParameters(AtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
+	public void setMMFF94AngleBendingParameters(IAtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
 
+		//System.out.println("setMMFF94AngleBendingParameters");		
+		
 		IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -94,7 +97,7 @@ public class AngleBending {
 				}
 			}
 		}
-		//logger.debug("angleNumber = " + angleNumber);
+		//System.out.println("angleNumber = " + angleNumber);
 
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -107,24 +110,46 @@ public class AngleBending {
 		
 		angleAtomPosition = new int[angleNumber][];
 
+		String angleType;
+		IBond bondIJ = null;
+		IBond bondKJ = null;
+		String bondIJType;
+		String bondKJType;
 		int l = -1;
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			atomConnected = AtomContainerManipulator.getAtomArray(molecule.getConnectedAtomsList(molecule.getAtom(i)));
 			if (atomConnected.length > 1) {
 				for (int j = 0; j < atomConnected.length; j++) {
 					for (int k = j+1; k < atomConnected.length; k++) {
-						angleData = pc.getAngleData(atomConnected[j].getAtomTypeName(), molecule.getAtom(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
-						//logger.debug("angleData : " + angleData);
 						l += 1;
+						bondIJ = molecule.getBond(atomConnected[j], molecule.getAtom(i));
+						bondIJType = bondIJ.getProperty("MMFF94 bond type").toString();
+						//System.out.println("bondIJType = " + bondIJType);
+
+						bondKJ = molecule.getBond(atomConnected[k], molecule.getAtom(i));
+						bondKJType = bondKJ.getProperty("MMFF94 bond type").toString();
+						//System.out.println("bondKJType = " + bondKJType);
+						
+						angleType = "0";
+						if ((bondIJType == "1") | (bondKJType == "1")) {
+							angleType = "1";
+						}  
+						if ((bondIJType == "1") & (bondKJType == "1")) {
+							angleType = "2";
+						}  
+						
+						//System.out.println(angleType + ", " + atomConnected[j].getAtomTypeName() + ", " + molecule.getAtom(i).getAtomTypeName() + ", " + atomConnected[k].getAtomTypeName());
+						angleData = pc.getAngleData(angleType, atomConnected[j].getAtomTypeName(), molecule.getAtom(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
+						//System.out.println("angleData : " + angleData);
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
 						k2[l] = ((Double) angleData.get(1)).doubleValue();
 						k3[l] = ((Double) angleData.get(2)).doubleValue();
 						//k4[l] = ((Double) angleData.get(3)).doubleValue();
 
-						//logger.debug("v0[" + l + "] = " + v0[l]);
-						//logger.debug("k2[" + l + "] = " + k2[l]);
-						//logger.debug("k3[" + l + "] = " + k3[l]);
-						//logger.debug("k4[" + l + "] = " + k4[l]);
+						//System.out.println("v0[" + l + "] = " + v0[l]);
+						//System.out.println("k2[" + l + "] = " + k2[l]);
+						//System.out.println("k3[" + l + "] = " + k3[l]);
+						//System.out.println("k4[" + l + "] = " + k4[l]);
 						
 						angleAtomPosition[l] = new int[3];
 						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
