@@ -175,10 +175,7 @@ public class AtomPlacer
 		//Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
 		Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);
 
-		Vector2d newDirection = new Vector2d(0,1);
-		if (atom.getPoint2d() != null) {
-			newDirection = new Vector2d(atom.getPoint2d());
-		}
+		Vector2d newDirection = new Vector2d(atom.getPoint2d());
 		if(renderingCoordinates!=null && renderingCoordinates.get(atom)!=null)
 			newDirection = new Vector2d((Point2d)renderingCoordinates.get(atom));
 		Vector2d occupiedDirection = new Vector2d(sharedAtomsCenter);
