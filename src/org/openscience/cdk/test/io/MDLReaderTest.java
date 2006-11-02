@@ -393,4 +393,22 @@ public class MDLReaderTest extends CDKTestCase {
         	fail(e.toString());
         }
     }
+
+    public void testBug1587283() {
+        String filename = "data/mdl/bug1587283.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            MDLReader reader = new MDLReader(ins);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(1, containersList.size());
+            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	fail(e.toString());
+        }
+    }
 }
