@@ -23,41 +23,37 @@
  */
 package org.openscience.cdk.test.modeling.forcefield;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.Hashtable;
 
 import javax.vecmath.GVector;
-import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.AtomTools;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
-import org.openscience.cdk.modeling.forcefield.MMFF94EnergyFunction;
 import org.openscience.cdk.modeling.forcefield.AngleBending;
 import org.openscience.cdk.modeling.forcefield.BondStretching;
 import org.openscience.cdk.modeling.forcefield.ElectrostaticInteractions;
+import org.openscience.cdk.modeling.forcefield.ForceField;
 import org.openscience.cdk.modeling.forcefield.ForceFieldTools;
 import org.openscience.cdk.modeling.forcefield.GeometricMinimizer;
+import org.openscience.cdk.modeling.forcefield.MMFF94EnergyFunction;
 import org.openscience.cdk.modeling.forcefield.SmoothingFunctions;
 import org.openscience.cdk.modeling.forcefield.StretchBendInteractions;
 import org.openscience.cdk.modeling.forcefield.Torsions;
 import org.openscience.cdk.modeling.forcefield.VanDerWaalsInteractions;
-import org.openscience.cdk.modeling.forcefield.ForceField;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-
-import org.openscience.cdk.io.*;
-
-import java.io.*;
 
 
 
@@ -70,7 +66,7 @@ import java.io.*;
  */
 public class ForceFieldTests extends CDKTestCase {
 
-	Molecule molecule = null;
+	IMolecule molecule = null;
 	AtomContainer ac = null;
 	GVector moleculeCoordinates = null;
 	GeometricMinimizer gm = new GeometricMinimizer();
