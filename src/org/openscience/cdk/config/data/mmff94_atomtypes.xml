@@ -486,8 +486,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[0-3];[A-Za-z &amp;&amp;[^=%]]{1,3}+.*+</scalar>
   </atomType>
-  <atomType id="N=C">
+  <atomType id="NdoubleBondedC">
     <!-- in imines -->
+    <label value="N=C"/>
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -498,8 +499,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-3];[H]{0,2}+[A-Za-z]*+=[CN].*+</scalar>
   </atomType>
-  <atomType id="NC=C">
+  <atomType id="NCdoubleBondedC">
     <!-- conjugated N-C im e.g. enamine-->
+    <label value="NC=C"/>
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -522,8 +524,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-2][+]?+;%.*+</scalar>
   </atomType>
-  <atomType id="=N=">
+  <atomType id="NdoubleDoubleBonded">
     <!-- central nitrogen for example in C=N=N or N=N=N -->
+    <label value="=N="/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -546,8 +549,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-1[+-]?+;%?+=?+N[+]?+[(]=?+N[-]?+.*+</scalar>
   </atomType> 
- <atomType id="N+">
+ <atomType id="Nplus">
     <!-- for example in ammonium -->
+    <label value="N+"/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -582,8 +586,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-3];[H]{0,2}+[A-Za-z&amp;&amp;[^O]]{0,2}+[O][-]?+[(].*+</scalar>
   </atomType> 
-  <atomType id="NC#N">
+  <atomType id="NCtripleBondedN">
     <!-- N attached to cyano group-->
+    <label value="NC#N"/>
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -606,8 +611,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-3[+];=OCO-.*+</scalar>
   </atomType>      
-  <atomType id="N=O">
+  <atomType id="NdoubleBondedO">
     <!-- for example in nitroso -->
+    <label value="N=O"/>
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -618,8 +624,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-2;[A-Z&amp;&amp;[^O]]{0,1}=O[A-Z&amp;&amp;[^O]]{0,1}[(].*+</scalar>
   </atomType>         
-  <atomType id="NC=O">
+  <atomType id="NCdoubleBondedO">
     <!-- for example in amides -->
+    <label value="NC=O"/>
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -642,8 +649,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-1-2];[CH]{1}+=S[(].*+</scalar>
   </atomType>         
-  <atomType id="N+=">
+  <atomType id="NdoubleBondedPlus">
     <!-- for example in iminium -->
+    <label value="N+="/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -654,8 +662,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[1-3][+];[H]{0,2}+=[A-Za-z]{1,3}+[(].*+</scalar>
   </atomType>              
-  <atomType id="NCN+">
+  <atomType id="NCNplus">
     <!-- N in N+=C-N  -->
+    <label value="NCN+"/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
@@ -665,9 +674,10 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[0-3][+];[H]{0,2}+=C[(][A-Za-z[^=%N]]{0,7}[N]{1}+/.*+</scalar>
   </atomType>                
- <atomType id="NGD+">
+ <atomType id="NGDplus">
     <!-- for example in guanidinium -->
-    <atom elementType="N" formalCharge="0.3">
+    <label value="NGD+"/>
+    <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
@@ -677,8 +687,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">N-[0-3][+];[H]{0,2}+=C[(][N]]{2}+/.*+</scalar>
   </atomType>                
-  <atomType id="NR%">
+  <atomType id="NRpercentage">
     <!-- for example in isonitrile -->
+    <label value="NR%"/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -746,8 +757,9 @@
       <scalar dataType="xsd:integer" dictRef="cdk:aromaticAtom">4</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">4</scalar> 
   </atomType>          
-  <atomType id="NPD+">
+  <atomType id="NPDplus">
     <!-- N in pyridinium  -->
+    <label value="NPD+"/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -820,8 +832,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:ringSize">5</scalar>  
       <scalar dataType="xsd:integer" dictRef="cdk:ringConstant">0</scalar> 
   </atomType>      
-  <atomType id="N5+">
+  <atomType id="N5plus">
     <!-- positive N in aromatic 5-ring, nor alpha,beta -->
+    <label value="N5+"/>
     <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -862,8 +875,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">S-[1-2];[HCNO]{1,2}+[+]?+[(].*+</scalar>
   </atomType>      
-  <atomType id="S=C">
+  <atomType id="SdoubleBondedC">
     <!-- terminal S double bonded to C  -->
+    <label value="S=C"/>
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
@@ -874,8 +888,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">S-[1];[H]{0,2}+=C.*+</scalar>
   </atomType>      
-  <atomType id=">SN">
+  <atomType id="twoSingleBondedSN">
     <!-- S in e.g. sulfonoxide  -->
+    <label value=">SN"/>
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -922,8 +937,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">S-[3];=OO[-]?+[A-Za-z]{1,2}+[-]?+[(].*+</scalar>
   </atomType>        
-  <atomType id="=SO">
+  <atomType id="doubleBondedSO">
     <!-- S in sylfinyl C=S=O  -->
+    <label value="=SO"/>
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -973,8 +989,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">P-[0-3];.*+</scalar>
   </atomType>        
- <atomType id="-P=C">
+ <atomType id="singleBondedPdoubleBondedC">
     <!-- -P=C  -->
+    <label value="-P=C"/>
     <atom elementType="P" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
@@ -1056,8 +1073,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cl[4];.*+</scalar>
   </atomType>         
-  <atomType id="FE+2">
+  <atomType id="FEplus2">
     <!--   -->
+    <label value="FE+2"/>
     <atom elementType="Fe" formalCharge="2">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1067,8 +1085,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">"Fe2[+].*+</scalar>
   </atomType>         
- <atomType id="FE+3">
+ <atomType id="FEplus3">
     <!--   -->
+    <label value="FE+3"/>
     <atom elementType="Fe" formalCharge="3">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1110,8 +1129,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Br-[0-2][-];.*+</scalar>
   </atomType>         
-  <atomType id="LI+">
+  <atomType id="LIplus">
     <!--   -->
+    <label value="LI+"/>
     <atom elementType="Li" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1121,8 +1141,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Li-[0-2][+];.*+</scalar>
   </atomType>         
-  <atomType id="NA+">
+  <atomType id="NAplus">
     <!--   -->
+    <label value="NA+"/>
     <atom elementType="Na" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1132,8 +1153,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Na[+];.*+</scalar>
   </atomType>        
-  <atomType id="K+">
+  <atomType id="Kplus">
     <!--   -->
+    <label value="K+"/>
     <atom elementType="K" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1143,8 +1165,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">K[+];.*+</scalar>
   </atomType>          
-  <atomType id="ZN+2">
+  <atomType id="ZNplus2">
     <!--   -->
+    <label value="ZN+2"/>
     <atom elementType="Zn" formalCharge="2">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1154,8 +1177,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Zn2[+];.*+</scalar>
   </atomType>         
-  <atomType id="CA+2">
+  <atomType id="CAplus2">
     <!--   -->
+    <label value="CA+2"/>
     <atom elementType="Ca" formalCharge="2">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1165,8 +1189,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Ca2[+];.*+</scalar>
   </atomType>          
-  <atomType id="CU+1">
+  <atomType id="CUplus1">
     <!--   -->
+    <label value="CU+1"/>
     <atom elementType="Cu" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1176,8 +1201,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cu[+];.*+</scalar>
   </atomType>          
-  <atomType id="CU+2">
+  <atomType id="CUplus2">
     <!--   -->
+    <label value="CU+2"/>
     <atom elementType="Cu" formalCharge="2">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
@@ -1187,8 +1213,9 @@
       <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">Cu2[+];.*+</scalar>
   </atomType>           
-  <atomType id="MG+2">
+  <atomType id="MGplus2">
     <!--   -->
+    <label value="MG+2"/>
     <atom elementType="Mg" formalCharge="2">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0</scalar>
