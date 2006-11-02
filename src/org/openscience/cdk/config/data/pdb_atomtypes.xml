@@ -1,6 +1,6 @@
-<atomTypeList xmlns="http://www.xml-cml.org/schema/cml2/core"
+<atomTypeList xmlns="http://www.xml-cml.org/schema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd"
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml23.xsd"
   
   xmlns:cvs="https://www.cvshome.org/"
   xmlns:emboss="http://cdk.sf.net/dict/emboss/"
