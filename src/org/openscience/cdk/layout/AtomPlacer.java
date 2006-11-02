@@ -191,7 +191,7 @@ public class AtomPlacer
 		 *    one placed neigbor, the chain placement methods 
 		 *    should be used.
 		 */
-		if (placedNeighbours.getAtomCount() == 1)
+		if (placedNeighbours.getAtomCount() >= 1)
 		{
 			logger.debug("Only one neighbour...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
@@ -235,11 +235,11 @@ public class AtomPlacer
 
 			addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
 			/*
-       * IMPORTANT: At this point we need a calculation of the
+			 * IMPORTANT: At this point we need a calculation of the
 			 * start angle. Not done yet.
 			 */
 			startAngle = 0.0;
-			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength,renderingCoordinates);
 			return;
 		}
 
@@ -530,6 +530,76 @@ public class AtomPlacer
 	}
 
 
+	/**
+	 *  Populates the corners of a polygon with atoms. Used to place atoms in a
+	 *  geometrically regular way around a ring center or another atom. If this is
+	 *  used to place the bonding partner of an atom (and not to draw a ring) we
+	 *  want to place the atoms such that those with highest "weight" are placed
+	 *  farmost away from the rest of the molecules. The "weight" mentioned here is
+	 *  calculated by a modified morgan number algorithm.
+	 *
+	 *@param  atomsToDraw     All the atoms to draw
+	 *@param  startAngle      A start angle, giving the angle of the most clockwise
+	 *      atom which has already been placed
+	 *@param  addAngle        An angle to be added to startAngle for each atom from
+	 *      atomsToDraw
+	 *@param  rotationCenter  The center of a ring, or an atom for which the
+	 *      partners are to be placed
+	 *@param  radius          The radius of the polygon to be populated: bond
+	 *      length or ring radius
+	 */
+	public void populatePolygonCorners(Vector atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius, HashMap renderingCoordinates)
+	{
+		IAtom connectAtom = null;
+		double angle = startAngle;
+		double newX;
+		double newY;
+		double x;
+		double y;
+		logger.debug("populatePolygonCorners->startAngle: ", Math.toDegrees(angle));
+		Vector points = new Vector();
+		//IAtom atom = null;
+
+        logger.debug("  centerX:", rotationCenter.x);
+        logger.debug("  centerY:", rotationCenter.y);
+        logger.debug("  radius :", radius);
+        
+		for (int i = 0; i < atomsToDraw.size(); i++)
+		{
+			angle = angle + addAngle;
+			if (angle >= 2.0 * Math.PI)
+			{
+				angle -= 2.0 * Math.PI;
+			}
+			logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
+			x = Math.cos(angle) * radius;
+			y = Math.sin(angle) * radius;
+			newX = x + rotationCenter.x;
+			newY = y + rotationCenter.y;
+            logger.debug("  newX:", newX);
+            logger.debug("  newY:", newY);
+			points.addElement(new Point2d(newX, newY));
+			
+      if (logger.isDebugEnabled())
+      try
+			{
+				logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1) + " placed at " + connectAtom.getPoint2d());
+			} catch (Exception exc)
+			{
+				//nothing to catch here. This is just for logging
+			}
+		}
+
+		for (int i = 0; i < atomsToDraw.size(); i++)
+		{
+			connectAtom = (IAtom) atomsToDraw.elementAt(i);
+			renderingCoordinates.put(connectAtom, points.elementAt(i));
+			connectAtom.setFlag(CDKConstants.ISPLACED, true);
+		}
+
+	}
+
+	
 	/**
 	 *  Partition the bonding partners of a given atom into placed (coordinates
 	 *  assinged) and not placed.

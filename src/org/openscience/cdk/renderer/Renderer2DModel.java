@@ -1066,4 +1066,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	public void setNotification(boolean notification) {
 		this.notification = notification;
 	}
+
+	public void setRenderingCoordinates(HashMap renderingCoordinates) {
+		this.renderingCoordinates = renderingCoordinates;
+	}
 }

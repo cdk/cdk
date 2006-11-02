@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -76,17 +77,17 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
@@ -139,6 +140,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 	double moveoldY;
 	private IUndoRedoHandler undoRedoHandler;
 	
+	private HashMap funcgroupsmap=new HashMap();
+	
 
 	// Helper classes
 	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
@@ -165,6 +168,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 	AbstractController2D(Renderer2DModel r2dm, Controller2DModel c2dm)
 	{
+		
 		this(c2dm);
 		this.r2dm = r2dm;
 	}
@@ -1298,16 +1302,63 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 		{
 			String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
 			try{
-				if(Character.isLowerCase(x.toCharArray()[0]))
-					x=Character.toUpperCase(x.charAt(0))+x.substring(1);
-				IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
-				IIsotope iso=ifa.getMajorIsotope(x);
-				String formerSymbol=r2dm.getHighlightedAtom().getSymbol();
-				if(iso!=null)
-					r2dm.getHighlightedAtom().setSymbol(x);
-				// update atom
-				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
-				updateAtom(container, atomInRange);
+				IAtomContainer ac=(IAtomContainer)funcgroupsmap.get(x);
+				String formerSymbol="";
+				//this means a functional group was entered
+				//TODO undo-redo
+				if(ac!=null){
+					ac=(IAtomContainer)((IAtomContainer)funcgroupsmap.get(x)).clone();
+					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+					container.add(ac);
+					List connbonds=container.getConnectedBondsList(atomInRange);
+					IAtom lastplaced=null;
+					for(int i=0;i<connbonds.size();i++){
+						IBond bond=(IBond)connbonds.get(i);
+						if(bond.getAtom(0)==atomInRange){
+							bond.setAtom(ac.getAtom(0), 0);
+							lastplaced=bond.getAtom(1);
+						}else{
+							bond.setAtom(ac.getAtom(0), 1);
+							lastplaced=bond.getAtom(0);
+						}
+					}
+					container.removeAtomAndConnectedElectronContainers(atomInRange);
+					AtomPlacer ap=new AtomPlacer();
+					int counter=0;
+					while(lastplaced!=null){
+						IAtomContainer placedNeighbours=container.getBuilder().newAtomContainer();
+						IAtomContainer unplacedNeighbours=container.getBuilder().newAtomContainer();
+						List l=container.getConnectedAtomsList(lastplaced);
+						for(int i=0;i<l.size();i++){
+							if(r2dm.getRenderingCoordinate((IAtom)l.get(i))!=null)
+								placedNeighbours.addAtom((IAtom)l.get(i));
+							else
+								unplacedNeighbours.addAtom((IAtom)l.get(i));
+						}
+						ap.distributePartners(lastplaced, placedNeighbours, GeometryTools.get2DCenter(placedNeighbours,r2dm.getRenderingCoordinates()), unplacedNeighbours, r2dm.getBondLength(), r2dm.getRenderingCoordinates());
+						lastplaced=ac.getAtom(counter);
+						counter++;
+						if(counter==ac.getAtomCount())
+							lastplaced=null;
+					}
+					Iterator it=container.atoms();
+					while(it.hasNext()){
+						IAtom atom=(IAtom)it.next();
+						if(r2dm.getRenderingCoordinate(atom)==null)
+							r2dm.setRenderingCoordinate(atom, atom.getPoint2d());
+					}
+				}else{
+					if(Character.isLowerCase(x.toCharArray()[0]))
+						x=Character.toUpperCase(x.charAt(0))+x.substring(1);
+					IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
+					IIsotope iso=ifa.getMajorIsotope(x);
+					formerSymbol=r2dm.getHighlightedAtom().getSymbol();
+					if(iso!=null)
+						r2dm.getHighlightedAtom().setSymbol(x);
+					// update atom
+					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+					updateAtom(container, atomInRange);
+				}
 				
 				/*
 				 *  PRESERVE THIS. This notifies the
@@ -1325,6 +1376,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 				r2dm.fireChange();
 				fireChange();
 			}catch(Exception ex){
+				ex.printStackTrace();
 				logger.debug(ex.getMessage()+" in SELECTELEMENT");
 			}
 		}
@@ -2228,6 +2280,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 	public void setUndoRedoHandler(IUndoRedoHandler undoRedoHandler) {
 		this.undoRedoHandler = undoRedoHandler;
+	}
+
+	public HashMap getFuncgroupsmap() {
+		return funcgroupsmap;
+	}
+
+	public void setFuncgroupsmap(HashMap funcgroupsmap) {
+		this.funcgroupsmap = funcgroupsmap;
 	}
 }
 

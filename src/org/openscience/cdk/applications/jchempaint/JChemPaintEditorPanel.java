@@ -27,41 +27,62 @@
  */
 package org.openscience.cdk.applications.jchempaint;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.JViewport;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
 import org.openscience.cdk.applications.undoredo.JCPUndoRedoHandler;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.validate.*;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.EventObject;
+import org.openscience.cdk.validate.BasicValidator;
+import org.openscience.cdk.validate.CDKValidator;
+import org.openscience.cdk.validate.DictionaryValidator;
+import org.openscience.cdk.validate.PDBValidator;
+import org.openscience.cdk.validate.ValencyValidator;
+import org.openscience.cdk.validate.ValidatorEngine;
 
 /**
  *  This class implements an editing JChemPaintPanel.
@@ -254,7 +275,39 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	public void registerModel(JChemPaintModel model)
 	{
-		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),model.getControllerModel(), lastAction, this.moveButton);
+        String filename = "org/openscience/cdk/applications/jchempaint/resources/text/funcgroups.txt";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        
+        HashMap funcgroups=new HashMap();
+        SmilesParser sp=new SmilesParser();
+		StringBuffer sb=new StringBuffer();
+		InputStreamReader isr = new InputStreamReader(ins);
+		try{
+			while(true){
+				int i=isr.read();
+				if(i==-1){
+					break;
+				}else if(((char)i)=='\n' || ((char)i)=='\r'){
+					if(!sb.toString().equals("")){
+						StringTokenizer st=new StringTokenizer(sb.toString());
+						funcgroups.put(st.nextElement(), sp.parseSmiles((String)st.nextElement()));
+						sb=new StringBuffer();
+					}
+				}else{
+					sb.append((char)i);
+				}
+			}
+			if(!sb.toString().equals("")){
+				StringTokenizer st=new StringTokenizer(sb.toString());
+				funcgroups.put(st.nextElement(), sp.parseSmiles((String)st.nextElement()));
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			logger.error("cannot instantiate funcgroupsmap",ex.getMessage());
+		}
+
+        
+		PopupController2D inputAdapter = new PopupController2D(model.getChemModel(), model.getRendererModel(),model.getControllerModel(), lastAction, this.moveButton, funcgroups);
 		JCPUndoRedoHandler undoRedoHandler=new JCPUndoRedoHandler(model.getControllerModel());
 		inputAdapter.setUndoRedoHandler(undoRedoHandler);
 		setupPopupMenus(inputAdapter);

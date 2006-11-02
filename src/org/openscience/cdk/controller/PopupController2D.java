@@ -30,6 +30,7 @@
 package org.openscience.cdk.controller;
 
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -57,10 +58,11 @@ public class PopupController2D extends Controller2D {
 
 	private static Hashtable popupMenus = null;
 
-	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, Vector lastAction, JButton moveButton) {
+	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm, Vector lastAction, JButton moveButton, HashMap funcgroups) {
 		this(chemModel,r2dm,c2dm);
 		this.lastAction=lastAction;
 		this.moveButton=moveButton;
+		this.setFuncgroupsmap(funcgroups);
 	}
 	
 	public PopupController2D(IChemModel chemModel, Renderer2DModel r2dm, Controller2DModel c2dm) {

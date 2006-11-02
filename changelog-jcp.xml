@@ -3,7 +3,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://cdk.sf.net/schema/changelog changelog.xsd">
 
-  <release id="2.4.0">
+  <release id="next">
+    <addition contributor="shk3">
+      Added a function to enter functional groups directly
+    </addition>
+  </release>
+  <release id="2.3.1">
     <addition contributor="shk3">
       Changed the system for handling Hs. JCP now traces implicit Hs by default and shows them along element symbols. This means you get OH, CH3 etc, which was often asked for.
     </addition>
