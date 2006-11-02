@@ -55,6 +55,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
@@ -1346,6 +1347,20 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 						IAtom atom=(IAtom)it.next();
 						if(r2dm.getRenderingCoordinate(atom)==null)
 							r2dm.setRenderingCoordinate(atom, atom.getPoint2d());
+					}
+					// now replace the new fragment 'ac' by a FragmentAtom
+					FragmentAtom fragAtom = new FragmentAtom();
+					fragAtom.setLabel(x);
+					container.remove(ac);
+					fragAtom.setFragment(ac);
+					r2dm.setRenderingCoordinate(fragAtom, ac.getAtom(0).getPoint2d());
+					for(int i=0;i<connbonds.size();i++){
+						IBond bond=(IBond)connbonds.get(i);
+						if(bond.getAtom(0)==ac.getAtom(0)){
+							bond.setAtom(fragAtom, 0);
+						}else{
+							bond.setAtom(fragAtom, 1);
+						}
 					}
 				}else{
 					if(Character.isLowerCase(x.toCharArray()[0]))

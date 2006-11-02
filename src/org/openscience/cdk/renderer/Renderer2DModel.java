@@ -72,6 +72,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private double highlightRadius = 10.0;
 
 	private boolean willDrawNumbers = false;
+	
+	private boolean showAtomTypeNames = false;
 
     private boolean showAtomAtomMapping = true;
 
@@ -1065,6 +1067,14 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	public void setNotification(boolean notification) {
 		this.notification = notification;
+	}
+
+	public boolean showAtomTypeNames() {
+		return showAtomTypeNames;
+	}
+
+	public void setShowAtomTypeNames(boolean showAtomTypeNames) {
+		this.showAtomTypeNames = showAtomTypeNames;
 	}
 
 	public void setRenderingCoordinates(HashMap renderingCoordinates) {
