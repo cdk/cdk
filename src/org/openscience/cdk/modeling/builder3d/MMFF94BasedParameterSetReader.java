@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2005-2006  Christian Hoppe <chhoppe@users.sf.net>
+ *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -64,6 +64,9 @@ public class MMFF94BasedParameterSetReader {
 	private StringTokenizer stvdW;
 	private String sidvdW;
 
+	private String configFileDFSB = "org/openscience/cdk/modeling/forcefield/data/MMFFDFSB.PAR";
+	private InputStream insDFSB;
+	private StringTokenizer stDFSB;
 
 	/**
 	 *Constructor for the MM2BasedParameterSetReader object
@@ -217,7 +220,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setBond() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		st.nextToken(); // String scode
+		String scode = st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String slen = st.nextToken();
@@ -227,7 +230,6 @@ public class MMFF94BasedParameterSetReader {
 		String sbci = st.nextToken();
 		
 		try {
-		    //int code=new Integer(scode).intValue();
 			double len = new Double(slen).doubleValue();
 			double k2 = new Double(sk2).doubleValue();
 			double k3 = new Double(sk3).doubleValue();
@@ -242,7 +244,7 @@ public class MMFF94BasedParameterSetReader {
 		} catch (NumberFormatException nfe) {
 			throw new IOException("setBond: Malformed Number due to:"+nfe);
 		}
-		key = "bond" + sid1 + ";" + sid2;
+		key = "bond" + scode + ";" + sid1 + ";" + sid2;
 		parameterSet.put(key, data);
 	}
 	
@@ -254,7 +256,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setAngle() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		st.nextToken(); // String scode
+		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -274,7 +276,7 @@ public class MMFF94BasedParameterSetReader {
 			data.add(new Double(va3));
 			data.add(new Double(va4));
 			
-			key = "angle" + sid1 + ";" + sid2 + ";" + sid3;
+			key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
 			if (parameterSet.containsKey(key)) {
 				data = (Vector) parameterSet.get(key);
 				data.add(new Double(va1));
@@ -298,7 +300,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setStrBnd() throws Exception {
 		Vector data = new Vector();
 		st.nextToken();
-		st.nextToken(); // String scode
+		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -315,7 +317,8 @@ public class MMFF94BasedParameterSetReader {
 		} catch (NumberFormatException nfe) {
 			throw new IOException("setStrBnd: Malformed Number due to:"+nfe);
 		}
-		key = "strbnd" + sid1 + ";" + sid2 + ";" + sid3;
+		key = "strbnd" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
+		//System.out.println("key =" + key);
 		parameterSet.put(key, data);
 	}
 	
@@ -327,7 +330,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setTorsion() throws Exception {
 		Vector data = null;
 		st.nextToken();
-		st.nextToken(); // String scode
+		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
 		String sid3 = st.nextToken();
@@ -339,14 +342,14 @@ public class MMFF94BasedParameterSetReader {
 		String value5 = st.nextToken();
 		
 		try {
-		    //int code=new Integer(scode).intValue();
 			double va1 = new Double(value1).doubleValue();
 			double va2 = new Double(value2).doubleValue();
 			double va3 = new Double(value3).doubleValue();
 			double va4 = new Double(value4).doubleValue();
 			double va5 = new Double(value5).doubleValue();
 
-			key = "torsion" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
+			key = "torsion" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
+			//System.out.println("key = " + key);
 			if (parameterSet.containsKey(key)) {
 				data = (Vector) parameterSet.get(key);
 				data.add(new Double(va1));
@@ -354,6 +357,7 @@ public class MMFF94BasedParameterSetReader {
 				data.add(new Double(va3));
 				data.add(new Double(va4));
 				data.add(new Double(va5));
+				//System.out.println("data = " + data);
 			}
 			else{
 			    data = new Vector();
@@ -362,6 +366,7 @@ public class MMFF94BasedParameterSetReader {
 			    data.add(new Double(va3));
 			    data.add(new Double(va4));
 			    data.add(new Double(va5));
+				//System.out.println("data = " + data);
 			}
 
 			parameterSet.put(key, data);
@@ -402,6 +407,35 @@ public class MMFF94BasedParameterSetReader {
 	
 	
 	/**
+	 *  Sets the Default Stretch-Bend Parameters into the parameter set
+	 *
+	 * @exception  Exception  Description of the Exception
+	 */
+	private void setDefaultStrBnd() throws Exception {
+		//System.out.println("Sets the Default Stretch-Bend Parameters");
+		Vector data = new Vector();
+		stDFSB.nextToken();
+		String sIR = stDFSB.nextToken();
+		String sJR = stDFSB.nextToken();
+		String sKR = stDFSB.nextToken();
+		String skbaIJK = stDFSB.nextToken();
+		String skbaKJI = stDFSB.nextToken();
+
+		try {
+			key = "DFSB" + sIR + ";" + sJR + ";" + sKR;
+			double kbaIJK = new Double(skbaIJK).doubleValue();
+			double kbaKJI = new Double(skbaKJI).doubleValue();
+			data.add(new Double(kbaIJK));
+			data.add(new Double(kbaKJI));
+			parameterSet.put(key, data);
+
+		} catch (NumberFormatException nfe) {
+			throw new IOException("setDFSB: Malformed Number due to:"+nfe);
+		}
+	}
+	
+	
+	/**
 	 * The main method which parses through the force field configuration file
 	 *
 	 * @exception  Exception  Description of the Exception
@@ -433,6 +467,17 @@ public class MMFF94BasedParameterSetReader {
 		BufferedReader rvdW = new BufferedReader(new InputStreamReader(insvdW), 1024);
 		String svdW;
 		int ntvdW;
+				
+		if (insDFSB == null) {
+			insDFSB = this.getClass().getClassLoader().getResourceAsStream(configFileDFSB);
+		}
+		if (insDFSB == null) {
+			throw new IOException("There was a problem getting the default stream: " + configFileDFSB);
+		}
+		
+		BufferedReader rDFSB = new BufferedReader(new InputStreamReader(insDFSB), 1024);
+		String sDFSB;
+		int ntDFSB;
 				
 		try {
 			while (true) {
@@ -484,13 +529,38 @@ public class MMFF94BasedParameterSetReader {
 						}// end while
 				}
 			}// end while
+
 			ins.close();
 			insvdW.close();
 		} catch (IOException e) {
 			System.err.println(e.toString());
 			throw new IOException("There was a problem parsing the mmff94 forcefield");
 		}
+
+		try {
+			//System.out.println("Parses the Default Stretch-Bend Parameters");
+			while (true) {
+				sDFSB = rDFSB.readLine();
+				//System.out.println("sDFSB = " + sDFSB);
+				if (sDFSB == null) {
+					//System.out.println("sDFSB == null, break");
+					break;
+				}
+				stDFSB = new StringTokenizer(sDFSB,"\t; ");
+				ntDFSB = stDFSB.countTokens();
+				//System.out.println("ntDFSB : " + ntDFSB);
+				if (sDFSB.startsWith("DFSB") & ntDFSB == 6) {
+					setDefaultStrBnd();
+				}
+			}
+			insDFSB.close();
+			//System.out.println("insDFSB closed");
+		} catch (IOException e) {
+			System.err.println(e.toString());
+			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (MMFFDFSB.PAR)");
+		}
 	}
+
 }
 
 

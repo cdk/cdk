@@ -1,31 +1,3 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2006  Christian Hoppe <chhoppe@users.sf.net>
- *
- *  Contact: cdk-devel@lists.sourceforge.net
- *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
- *  All we ask is that proper credit is given for our work, which includes
- *  - but is not limited to - adding the above copyright notice to the beginning
- *  of your source code files, and to any copyright notice that you may distribute
- *  with programs based on this work.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- */
 package org.openscience.cdk.modeling.builder3d;
 
 import java.util.Hashtable;
@@ -44,8 +16,9 @@ public class MMFF94ParametersCall {
 	private Hashtable pSet = null;
 	//private final static double DEFAULT_BOND_LENGTH = 1.5;
 	//private final static double DEFAULT_ANGLE = 90;			// Only to test
+	//private final static double DEFAULT_TORSION_ANGLE = 90;
 
-
+	
 	public MMFF94ParametersCall(){}
 
 
@@ -67,16 +40,17 @@ public class MMFF94ParametersCall {
 	 * @return                The distance value from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getBondData(String id1, String id2) throws Exception {
+	public Vector getBondData(String code, String id1, String id2) throws Exception {
 		String dkey = "";
-		if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
-			dkey="bond" + id1 + ";" + id2;
-		}else if (pSet.containsKey(("bond" + id2 + ";" + id1))) {
-			dkey = "bond" + id2 + ";" + id1;
+		if (pSet.containsKey(("bond" + code + ";" + id1 + ";" + id2))) {
+			dkey="bond" + code + ";" + id1 + ";" + id2;
+		}else if (pSet.containsKey(("bond" + code + ";" + id2 + ";" + id1))) {
+			dkey = "bond" + code + ";" + id2 + ";" + id1;
 		} /*else {
-			System.out.println("KEYError:Unknown distance key in pSet: " + id2 + " ;" + id1+" take default bon length:"+DEFAULT_BOND_LENGTH);
+			System.out.println("KEYError:Unknown distance key in pSet: " + code + ";" + id2 + " ;" + id1+" take default bon length:" + DEFAULT_BOND_LENGTH);
 			return DEFAULT_BOND_LENGTH;
-		}*/
+			}*/
+		//System.out.println("dkey = " + dkey);
 		return (Vector) pSet.get(dkey);
 	}
 
@@ -90,16 +64,17 @@ public class MMFF94ParametersCall {
 	 * @return                The angle data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getAngleData(String id1, String id2, String id3) throws Exception {
+	public Vector getAngleData(String angleType, String id1, String id2, String id3) throws Exception {
 		String akey = "";
-		if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
-			akey = "angle" + id1 + ";" + id2 + ";" + id3;
-		} else if (pSet.containsKey(("angle" + id3 + ";" + id2 + ";" + id1))) {
-			akey = "angle" + id3 + ";" + id2 + ";" + id1;
+		if (pSet.containsKey(("angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3))) {
+			akey = "angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3;
+		} else if (pSet.containsKey(("angle" + angleType + ";" + id3 + ";" + id2 + ";" + id1))) {
+			akey = "angle" + angleType + ";" + id3 + ";" + id2 + ";" + id1;
 		} /*else {
-			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
+			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " + angleType + ";" + id1 + " ; " + id2 + " ; " + id3 +" take default angle:" + DEFAULT_ANGLE);
 	   		return (Vector)[DEFAULT_ANGLE,0,0];
-		}*/
+	   		}*/
+		//System.out.println("angle key : " + akey);
 		return (Vector) pSet.get(akey);
 	}
 
@@ -113,19 +88,80 @@ public class MMFF94ParametersCall {
 	 * @return                The bond-angle interaction data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getBondAngleInteractionData(String id1, String id2, String id3) throws Exception {
+	public Vector getBondAngleInteractionData(String strbndType, String id1, String id2, String id3) throws Exception {
 		String akey = "";
-		if (pSet.containsKey(("strbnd" + id1 + ";" + id2 + ";" + id3))) {
-			akey = "strbnd" + id1 + ";" + id2 + ";" + id3;
-		} else if (pSet.containsKey(("strbnd" + id3 + ";" + id2 + ";" + id1))) {
-			akey = "strbnd" + id3 + ";" + id2 + ";" + id1;
+		if (pSet.containsKey(("strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3))) {
+			akey = "strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3;
+		} else if (pSet.containsKey(("strbnd" + strbndType + ";" + id1 + ";" + id3 + ";" + id2))) {
+			akey = "strbnd" + strbndType + ";" + id1 + ";" + id3 + ";" + id2;
+		} else if (pSet.containsKey(("strbnd" + strbndType + ";" + id2 + ";" + id1 + ";" + id3))) {
+			akey = "strbnd" + strbndType + ";" + id2 + ";" + id1 + ";" + id3;
+		} else if (pSet.containsKey(("strbnd" + strbndType + ";" + id2 + ";" + id3 + ";" + id1))) {
+			akey = "strbnd" + strbndType + ";" + id2 + ";" + id3 + ";" + id1;
+		} else if (pSet.containsKey(("strbnd" + strbndType + ";" + id3 + ";" + id1 + ";" + id2))) {
+			akey = "strbnd" + strbndType + ";" + id3 + ";" + id1 + ";" + id2;
+		} else if (pSet.containsKey(("strbnd" + strbndType + ";" + id3 + ";" + id2 + ";" + id1))) {
+			akey = "strbnd" + strbndType + ";" + id3 + ";" + id2 + ";" + id1;
 		} /*else {
-			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
+			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id1 + " ; " + id2 + " ; " + id3+" take default angle:" + DEFAULT_ANGLE);
 			return (Vector)[DEFAULT_ANGLE,0,0];
-		}*/
+			}*/
 		//System.out.println("akey : " + akey);
 		return (Vector) pSet.get(akey);
 	}
+	
+
+	/**
+	 *  Gets the bond-angle interaction parameter set
+	 *
+	 * @param  id1            ID from Atom 1.
+	 * @param  id2            ID from Atom 2.
+	 * @param  id3            ID from Atom 3.
+	 * @return                The bond-angle interaction data from the force field parameter set
+	 * @exception  Exception  Description of the Exception
+	 */
+	public Vector getDefaultStretchBendData(int iR, int jR, int kR) throws Exception {
+		String dfsbkey = "";
+		if (pSet.containsKey(("DFSB" + iR + ";" + jR + ";" + kR))) {
+			dfsbkey = "DFSB" + iR + ";" + jR + ";" + kR;
+		}  /*else {
+			System.out.println("KEYErrorDefaultStretchBend:Unknown default stretch-bend key in pSet: " + iR + " ; " + jR + " ; " + kR);
+			}*/
+		//System.out.println("dfsbkey : " + dfsbkey);
+		return (Vector) pSet.get(dfsbkey);
+	}
+	
+		
+	/**
+	 *  Gets the bond parameter set
+	 *
+	 * @param  id1            atom1 id
+	 * @param  id2            atom2 id
+	 * @return                The distance value from the force field parameter set
+	 * @exception  Exception  Description of the Exception
+	 */
+	public Vector getTorsionData(String code, String id1, String id2, String id3, String id4) throws Exception {
+		String dkey = "";
+		if (pSet.containsKey(("torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4))) {
+			dkey="torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4;
+		}else if (pSet.containsKey(("torsion" + code + ";" + id4 + ";" + id3 + ";" + id2 + ";" + id1))) {
+			dkey = "torsion" + code + ";" + id4 + ";" + id3 + ";" + id2 + ";" + id1;
+		}else if (pSet.containsKey(("torsion" + code + ";*;" + id2 + ";" + id3 + ";*"))) {
+			dkey="torsion" + code + ";*;" + id2 + ";" + id3 + ";*";
+		}else if (pSet.containsKey(("torsion" + code + ";*;" + id3 + ";" + id2 + ";*"))) {
+			dkey = "torsion" + code + ";*;" + id3 + ";" + id2 + ";*";
+		}else if (pSet.containsKey(("torsion" + 0 + ";*;" + id2 + ";" + id3 + ";*"))) {
+			dkey = "torsion" + 0 + ";*;" + id2 + ";" + id3 + ";*";
+		}else if (pSet.containsKey(("torsion" + 0 + ";*;" + id3 + ";" + id2 + ";*"))) {
+			dkey = "torsion" + 0 + ";*;" + id3 + ";" + id2 + ";*";
+		} /*else {
+			System.out.println("KEYError:Unknown distance key in pSet: torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4 + " take default torsion angle:" + DEFAULT_TORSION_ANGLES);
+			return DEFAULT_TORSION_ANGLE;
+			}*/
+		//System.out.println("dkey = " + dkey);
+		return (Vector) pSet.get(dkey);
+	}
+	
 }
 
 

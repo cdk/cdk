@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2005-2006  Christian Hoppe <chhoppe@users.sf.net>
+ *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -41,6 +41,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -253,7 +254,7 @@ public class ForceFieldConfigurator {
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
-//			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -273,26 +274,51 @@ public class ForceFieldConfigurator {
 				isInHeteroRing = false;
 			}
 			atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom)));
+
 			try {
 				hoseCode = hcg.getHOSECode(molecule, atom, 3);
 				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
 			} catch (CDKException ex1) {
-				//System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
+				System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
 				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString(), ex1);
 			}
 			try {
 				configureAtom(atom, hoseCode, isInHeteroRing);
 			} catch (CDKException ex2) {
-//				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
+				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
 				throw new Exception("Could not final configure atom due to problems with force field");
 			}
 		}
+		
+		IBond[] bond = molecule.getBonds();
+		String bondType;
+		for (int i=0; i < bond.length; i++) {
+			//System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
+			bondType = "0";
+			if (bond[i].getOrder() == 1) {
+				if ((bond[i].getAtom(0).getAtomTypeName().equals("Csp2")) & 
+					((bond[i].getAtom(1).getAtomTypeName().equals("Csp2")) | (bond[i].getAtom(1).getAtomTypeName().equals("C=")))) {
+					bondType = "1";
+				}
+					
+				if ((bond[i].getAtom(0).getAtomTypeName().equals("C=")) & 
+					((bond[i].getAtom(1).getAtomTypeName().equals("Csp2")) | (bond[i].getAtom(1).getAtomTypeName().equals("C=")))) {
+					bondType = "1";}
+					
+				if ((bond[i].getAtom(0).getAtomTypeName().equals("Csp")) & 
+					(bond[i].getAtom(1).getAtomTypeName().equals("Csp"))) {
+					bondType = "1";}
+			}
+			molecule.getBond(i).setProperty("MMFF94 bond type", bondType);
+			//System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
+		}
+
 		return ringSetMolecule;
 	}
 	
 
 	/**
-	 *  Returns true if atom is in hetreo ring system
+	 *  Returns true if atom is in hetero ring system
 	 *
 	 *@param  ac  AtomContainer
 	 *@return     true/false
