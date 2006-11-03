@@ -223,7 +223,7 @@ public class AtomPlacer
 			//- (Math.PI / 2.0);
 			logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 
-			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength);
+			populatePolygonCorners(atomsToDraw, new Point2d(renderingCoordinates==null ? atom.getPoint2d() : ((Point2d)renderingCoordinates.get(atom))), startAngle, addAngle, bondLength,renderingCoordinates);
 			return;
 		} else if (placedNeighbours.getAtomCount() == 0)
 		{

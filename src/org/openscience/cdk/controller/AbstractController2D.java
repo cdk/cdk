@@ -1308,9 +1308,16 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				if(ac!=null){
 					ac=(IAtomContainer)((IAtomContainer)funcgroupsmap.get(x)).clone();
 					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
+					IAtom lastplaced=null;
+					int counter=0;
+					if(container.getAtomCount()==1){
+						ac.getAtom(0).setPoint2d(atomInRange.getPoint2d());
+						r2dm.setRenderingCoordinate(ac.getAtom(0), atomInRange.getPoint2d());
+						lastplaced=ac.getAtom(0);
+						counter=1;
+					}
 					container.add(ac);
 					List connbonds=container.getConnectedBondsList(atomInRange);
-					IAtom lastplaced=null;
 					for(int i=0;i<connbonds.size();i++){
 						IBond bond=(IBond)connbonds.get(i);
 						if(bond.getAtom(0)==atomInRange){
@@ -1323,7 +1330,6 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					}
 					container.removeAtomAndConnectedElectronContainers(atomInRange);
 					AtomPlacer ap=new AtomPlacer();
-					int counter=0;
 					while(lastplaced!=null){
 						IAtomContainer placedNeighbours=container.getBuilder().newAtomContainer();
 						IAtomContainer unplacedNeighbours=container.getBuilder().newAtomContainer();
