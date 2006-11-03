@@ -38,8 +38,8 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * @cdk.module standard
@@ -130,15 +130,46 @@ public class ReactionManipulator {
         return container;
     }
     
+    /**
+     * get all molecule of a IReaction. Reactants + Products
+     * 
+     * @param reaction  The IReaction
+     * @return The IMoleculeSet
+     */
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
+        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
+        
+        moleculeSet.add(getAllProducts(reaction));
+        moleculeSet.add(getAllReactants(reaction));
+        
+        return moleculeSet;
+    }
+    /**
+     * get all products of a IReaction
+     * 
+     * @param reaction  The IReaction
+     * @return The IMoleculeSet
+     */
+    public static IMoleculeSet getAllProducts(IReaction reaction) {
+        IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
+        IMoleculeSet products = reaction.getProducts();
+        for (int i=0; i<products.getAtomContainerCount(); i++) {
+            moleculeSet.addMolecule(products.getMolecule(i));
+        }
+        return moleculeSet;
+    }
+
+    /**
+     * get all reactants of a IReaction
+     * 
+     * @param reaction  The IReaction
+     * @return The IMoleculeSet
+     */
+    public static IMoleculeSet getAllReactants(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             moleculeSet.addMolecule(reactants.getMolecule(i));
-        }
-        IMoleculeSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
-            moleculeSet.addMolecule(products.getMolecule(i));
         }
         return moleculeSet;
     }
