@@ -290,7 +290,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				}else if(((char)i)=='\n' || ((char)i)=='\r'){
 					if(!sb.toString().equals("")){
 						StringTokenizer st=new StringTokenizer(sb.toString());
-						funcgroups.put(st.nextElement(), sp.parseSmiles((String)st.nextElement()));
+						String key=(String)st.nextElement();
+						String value=(String)st.nextElement();
+						funcgroups.put(key, sp.parseSmiles(value));
+						funcgroups.put(key.toUpperCase(), sp.parseSmiles(value));
 						sb=new StringBuffer();
 					}
 				}else{
@@ -299,7 +302,10 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			}
 			if(!sb.toString().equals("")){
 				StringTokenizer st=new StringTokenizer(sb.toString());
-				funcgroups.put(st.nextElement(), sp.parseSmiles((String)st.nextElement()));
+				String key=(String)st.nextElement();
+				String value=(String)st.nextElement();
+				funcgroups.put(key, sp.parseSmiles(value));
+				funcgroups.put(key.toUpperCase(), sp.parseSmiles(value));
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

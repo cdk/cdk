@@ -99,7 +99,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
  * @cdk.require    java1.4+
  * @cdk.module     control
  */
- abstract class AbstractController2D implements MouseMotionListener, MouseListener, KeyListener
+abstract class AbstractController2D implements MouseMotionListener, MouseListener, KeyListener
 {
 
 	private final static int DRAG_UNSET = 0;
@@ -1303,7 +1303,6 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 			String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
 			try{
 				IAtomContainer ac=(IAtomContainer)funcgroupsmap.get(x);
-				String formerSymbol="";
 				//this means a functional group was entered
 				//TODO undo-redo
 				if(ac!=null){
@@ -1347,7 +1346,8 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 						if(r2dm.getRenderingCoordinate(atom)==null)
 							r2dm.setRenderingCoordinate(atom, atom.getPoint2d());
 					}
-				}else{
+				}else if(x!=null && x.length()>0){
+					String formerSymbol="";
 					if(Character.isLowerCase(x.toCharArray()[0]))
 						x=Character.toUpperCase(x.charAt(0))+x.substring(1);
 					IsotopeFactory ifa=IsotopeFactory.getInstance(r2dm.getHighlightedAtom().getBuilder());
@@ -1358,23 +1358,22 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 					// update atom
 					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
 					updateAtom(container, atomInRange);
+					/*
+					 *  PRESERVE THIS. This notifies the
+					 *  the listener responsible for
+					 *  undo and redo storage that it
+					 *  should store this change of an atom symbol
+					 */
+					isUndoableChange = true;
+					/*
+					 *  ---
+					 */
+					// undoredo support
+					UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
+					undoRedoHandler.postEdit(edit);
+					r2dm.fireChange();
+					fireChange();
 				}
-				
-				/*
-				 *  PRESERVE THIS. This notifies the
-				 *  the listener responsible for
-				 *  undo and redo storage that it
-				 *  should store this change of an atom symbol
-				 */
-				isUndoableChange = true;
-				/*
-				 *  ---
-				 */
-				// undoredo support
-				UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, x);
-				undoRedoHandler.postEdit(edit);
-				r2dm.fireChange();
-				fireChange();
 			}catch(Exception ex){
 				ex.printStackTrace();
 				logger.debug(ex.getMessage()+" in SELECTELEMENT");

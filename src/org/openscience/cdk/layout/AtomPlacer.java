@@ -191,7 +191,7 @@ public class AtomPlacer
 		 *    one placed neigbor, the chain placement methods 
 		 *    should be used.
 		 */
-		if (placedNeighbours.getAtomCount() >= 1)
+		if (placedNeighbours.getAtomCount() == 1)
 		{
 			logger.debug("Only one neighbour...");
 			for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
@@ -594,6 +594,7 @@ public class AtomPlacer
 		{
 			connectAtom = (IAtom) atomsToDraw.elementAt(i);
 			renderingCoordinates.put(connectAtom, points.elementAt(i));
+			connectAtom.setPoint2d((Point2d)points.elementAt(i));
 			connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
 
