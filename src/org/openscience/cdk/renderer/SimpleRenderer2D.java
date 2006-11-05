@@ -30,6 +30,7 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -93,6 +94,10 @@ public class SimpleRenderer2D extends AbstractRenderer2D implements ISimpleRende
 	public SimpleRenderer2D(Renderer2DModel r2dm)
 	{
 		super(r2dm);
+	}
+
+	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics, Rectangle2D bounds) {
+		paintMolecule(atomCon, graphics, true, true);
 	}
 
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics) {

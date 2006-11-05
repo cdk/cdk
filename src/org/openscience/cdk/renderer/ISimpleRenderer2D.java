@@ -25,6 +25,7 @@
 package org.openscience.cdk.renderer;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -44,4 +45,32 @@ public interface ISimpleRenderer2D {
 	 */
 	public abstract void paintMolecule(IAtomContainer atomCon, Graphics2D graphics);
 
+	/**
+	 * Triggers the methods to make the molecule fit into the frame and to paint
+	 * it.
+	 *
+	 * @param  atomCon   IAtomContainer to draw
+	 * @param  graphics  Graphics2D object to draw too
+	 * @param  bounds    Bounds of the area on which to draw
+	 */
+	public abstract void paintMolecule(
+		IAtomContainer atomCon, 
+		Graphics2D graphics, 
+		Rectangle2D bounds
+	);
+
+	/**
+	 * Sets the renderer setting used for rendering.
+	 * 
+	 * @param model Model with rendering settings
+	 */
+	public abstract void setRenderer2DModel(Renderer2DModel model);
+
+	/**
+	 * The current rendering settings.
+	 * 
+	 * @return Model with rendering settings
+	 */
+	public abstract Renderer2DModel getRenderer2DModel();
+	
 }
