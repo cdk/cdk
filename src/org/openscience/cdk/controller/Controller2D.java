@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.controller;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -83,16 +85,6 @@ public class Controller2D extends SimpleController2D
 		this.chemModel = chemModel;
 	}
 
-	IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom)
-	{
-		return ChemModelManipulator.getRelevantAtomContainer(chemModel, atom);
-	}
-
-	IAtomContainer getAllInOneContainer(IChemModel chemModel)
-	{
-		return ChemModelManipulator.getAllInOneContainer(chemModel);	
-	}
-
 	/**
 	 *  Returns a Reaction if the coordinate is within the reaction 'window'.
 	 *
@@ -109,13 +101,15 @@ public class Controller2D extends SimpleController2D
 			while (reactionIter.hasNext())
 			{
 				IReaction reaction = (IReaction)reactionIter.next();
-				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reaction);
-				double[] minmax = GeometryTools.getMinMax(atomContainer,r2dm.getRenderingCoordinates());
-				if ((X <= minmax[2]) && (X >= minmax[0]) &&
-						(Y <= minmax[3]) && (Y >= minmax[1]))
-				{
-					// cursor in in reaction bounding box
-					return reaction;
+				Iterator atomCons = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+				while (atomCons.hasNext()) {
+					double[] minmax = GeometryTools.getMinMax((IAtomContainer)atomCons.next(),r2dm.getRenderingCoordinates());
+					if ((X <= minmax[2]) && (X >= minmax[0]) &&
+							(Y <= minmax[3]) && (Y >= minmax[1]))
+					{
+						// cursor in in reaction bounding box
+						return reaction;
+					}
 				}
 			}
 		}
