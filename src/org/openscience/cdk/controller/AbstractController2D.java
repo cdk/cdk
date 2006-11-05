@@ -2152,7 +2152,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	 * after a change of the structure (e. g. adding atoms), since we cannot and do not need to preserve original coordinates after this.
 	 */
 	private void updateMoleculeCoordinates(){
-		    IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
+		Iterator atomCons = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (atomCons.hasNext()) {
+			IAtomContainer atomCon = (IAtomContainer)atomCons.next();
 			for (int i = 0; i < atomCon.getAtomCount(); i++)
 			{
 				IAtom currentAtom = atomCon.getAtom(i);
@@ -2160,6 +2162,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					currentAtom.setPoint2d(new Point2d((Point2d)r2dm.getRenderingCoordinate(currentAtom)));
 				}
 			}
+		}
 	 }
 
 
