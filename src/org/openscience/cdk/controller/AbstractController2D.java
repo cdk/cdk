@@ -2221,16 +2221,19 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		 double largestx=Integer.MIN_VALUE;
 		 double smallesty=Integer.MAX_VALUE;
 		 double largesty=Integer.MIN_VALUE;
-		 IAtomContainer allinone=MoleculeSetManipulator.getAllInOneContainer(chemModel.getMoleculeSet());
-		 for(int i=0;i<allinone.getAtomCount();i++){
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x<smallestx)
-				 smallestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y<smallesty)
-				 smallesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x>largestx)
-				 largestx=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).x;
-			 if(((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y>largesty)
-				 largesty=((Point2d)r2dm.getRenderingCoordinate(allinone.getAtom(i))).y;
+		 Iterator atomCons = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		 while (atomCons.hasNext()) {
+			 IAtomContainer atomCon = (IAtomContainer)atomCons.next();
+			 for(int i=0;i<atomCon.getAtomCount();i++){
+				 if(((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).x<smallestx)
+					 smallestx=((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).x;
+				 if(((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).y<smallesty)
+					 smallesty=((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).y;
+				 if(((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).x>largestx)
+					 largestx=((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).x;
+				 if(((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).y>largesty)
+					 largesty=((Point2d)r2dm.getRenderingCoordinate(atomCon.getAtom(i))).y;
+			 }
 		 }
 		 int xstretch=((int)(largestx-smallestx))+20;
 		 int ystretch=((int)(largesty-smallesty))+20;
