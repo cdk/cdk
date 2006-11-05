@@ -989,6 +989,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				updateAtoms(container, atoms);
 			} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
 				logger.info("User asks to delete selected part");
+				IAtomContainer containerToUpdate = ChemModelManipulator.getRelevantAtomContainer(chemModel, r2dm.getSelectedPart().getAtom(0));
 				for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
 					undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
@@ -999,10 +1000,8 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				}
 				type = "Remove Substructure";
 				// update atoms
-				IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 				java.util.Iterator atoms = r2dm.getSelectedPart().atoms();
-				updateAtoms(container, atoms);
-
+				updateAtoms(containerToUpdate, atoms);
 			}else
 			{
 				logger.warn("Cannot deleted if nothing is highlighted");
