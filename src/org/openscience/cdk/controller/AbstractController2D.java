@@ -1896,11 +1896,11 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		IAtom currentAtom;
 		//IAtom[] conAtomsArray;
 		IAtomContainer conAtoms = sharedAtoms.getBuilder().newAtomContainer();
-		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < sharedAtoms.getAtomCount(); i++)
 		{
 			currentAtom = sharedAtoms.getAtom(i);
 			conAtoms.addAtom(currentAtom);
+			IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, currentAtom);
 			java.util.Iterator atoms = atomCon.getConnectedAtomsList(currentAtom).iterator();
 			while (atoms.hasNext())
 			{
