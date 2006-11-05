@@ -1775,6 +1775,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		return closestAtom;
 	}
 
+	private IAtomContainer getBondInRangeTemporaryAtomContainer = null;
 
 	/**
 	 *  Returns a Bond if it is in a certain range of the given point. Used to
@@ -1787,12 +1788,19 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	 *@param  Y  The y world coordinate of the point
 	 *@return    An Atom if it is in a certain range of the given point
 	 */
-	private IBond getBondInRange(int X, int Y)
-	{
+	private IBond getBondInRange(int X, int Y) {
+		if (getBondInRangeTemporaryAtomContainer == null) {
+			getBondInRangeTemporaryAtomContainer = chemModel.getBuilder().newAtomContainer();
+		} else {
+			getBondInRangeTemporaryAtomContainer.removeAllElements();
+		}
         double highlightRadius = r2dm.getHighlightRadius();
-		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
-        if (atomCon.getBondCount() != 0) {
-            IBond closestBond = GeometryTools.getClosestBond(X, Y, atomCon,r2dm.getRenderingCoordinates());
+		Iterator atomCons = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (atomCons.hasNext()) {
+			getBondInRangeTemporaryAtomContainer.add((IAtomContainer)atomCons.next());
+		}
+        if (getBondInRangeTemporaryAtomContainer.getBondCount() != 0) {
+            IBond closestBond = GeometryTools.getClosestBond(X, Y, getBondInRangeTemporaryAtomContainer,r2dm.getRenderingCoordinates());
     		if (closestBond == null)
     		{
     			return null;
