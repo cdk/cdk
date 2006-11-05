@@ -1923,27 +1923,30 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		IAtom currentAtom;
 		IBond currentBond;
 		IAtomContainer selectedPart = chemModel.getBuilder().newAtomContainer();
-		IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
-		for (int i = 0; i < atomCon.getAtomCount(); i++)
-		{
-			currentAtom = atomCon.getAtom(i);
-			logger.debug("Atom: ", currentAtom);
-			if (polygon.contains(new Point((int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).x, (int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).y)))
+		Iterator atomCons = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (atomCons.hasNext()) {
+			IAtomContainer atomCon = (IAtomContainer)atomCons.next();
+			for (int i = 0; i < atomCon.getAtomCount(); i++)
 			{
-				selectedPart.addAtom(currentAtom);
-			}
-		}
-		IBond[] bonds = atomCon.getBonds();
-		for (int i = 0; i < bonds.length; i++)
-		{
-			currentBond = bonds[i];
-			for (int j = 0; j < selectedPart.getAtomCount(); j++)
-			{
-				currentAtom = selectedPart.getAtom(j);
-				if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
+				currentAtom = atomCon.getAtom(i);
+				logger.debug("Atom: ", currentAtom);
+				if (polygon.contains(new Point((int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).x, (int) ((Point2d)r2dm.getRenderingCoordinate(currentAtom)).y)))
 				{
-					selectedPart.addBond(currentBond);
-					break;
+					selectedPart.addAtom(currentAtom);
+				}
+			}
+			IBond[] bonds = atomCon.getBonds();
+			for (int i = 0; i < bonds.length; i++)
+			{
+				currentBond = bonds[i];
+				for (int j = 0; j < selectedPart.getAtomCount(); j++)
+				{
+					currentAtom = selectedPart.getAtom(j);
+					if (selectedPart.contains(currentBond.getConnectedAtom(currentAtom)))
+					{
+						selectedPart.addBond(currentBond);
+						break;
+					}
 				}
 			}
 		}
