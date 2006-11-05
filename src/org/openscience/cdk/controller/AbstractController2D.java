@@ -1140,7 +1140,16 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					int endX = r2dm.getPointerVectorEnd().x;
 					int endY = r2dm.getPointerVectorEnd().y;
 					atomInRange = getAtomInRange(endX, endY);
-					IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(chemModel);
+					// OK, there is some repartitioning done on atomCon later, so put everything in the first AC
+					IAtomContainer atomCon = null;
+					Iterator atomCons = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+					while (atomCons.hasNext()) {
+						if (atomCon == null) { 
+							atomCon = (IAtomContainer)atomCons.next();
+						} else {
+							atomCon.add((IAtomContainer)atomCons.next());							
+						}
+					}
 					if (atomInRange != null)
 					{
 						logger.debug("*** atom in range");
