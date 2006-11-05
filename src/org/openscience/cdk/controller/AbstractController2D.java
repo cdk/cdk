@@ -950,7 +950,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		if (highlightedAtom != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedAtom)))
 		{
 			logger.info("User asks to delete an Atom");
-			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedAtom);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
 			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
 			IElectronContainer[] eContainer = AtomContainerManipulator.getElectronContainerArray(container.getConnectedElectronContainersList(highlightedAtom));
@@ -964,7 +964,6 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			else {
 				type = "Remove Substructure";
 			}
-			container = ChemModelManipulator.getAllInOneContainer(chemModel);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
 			// update atoms
 			java.util.List atoms = container.getConnectedAtomsList(highlightedAtom);
