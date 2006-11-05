@@ -25,7 +25,7 @@
 package org.openscience.cdk.renderer;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.FragmentAtom;
+//import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -243,13 +243,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		if (atom instanceof IPseudoAtom)
 		{
 			drawSymbol = false;
-			if (atom instanceof FragmentAtom) {
-				paintFragmentAtom((FragmentAtom)atom, atomBackColor, graphics,
-						alignment, isRadical);
-			} else {
+//			if (atom instanceof FragmentAtom) {
+//				paintFragmentAtom((FragmentAtom)atom, atomBackColor, graphics,
+//						alignment, isRadical);
+//			} else {
 				paintPseudoAtomLabel((IPseudoAtom) atom, atomBackColor, graphics,
 					alignment, isRadical);
-			}
+//			}
 			return;
 		} else if (!atom.getSymbol().equals("C"))
 		{
@@ -819,20 +819,20 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		graphics.setColor(r2dm.getForeColor());
 	}
 
-	public void paintFragmentAtom(FragmentAtom atom, Color backColor,
-			Graphics2D graphics, int alignment, boolean isRadical) {
-		if (r2dm.getRenderingCoordinate(atom) == null)
-		{
-			logger.warn("Cannot draw atom without 2D coordinate");
-			return;
-		}
-		
-		if (atom.isExpanded()) {
-			paintMolecule(atom.getFragment(), graphics);
-		} else {
-			paintPseudoAtomLabel(atom, backColor, graphics, alignment, isRadical);
-		}
-	}
+//	public void paintFragmentAtom(FragmentAtom atom, Color backColor,
+//			Graphics2D graphics, int alignment, boolean isRadical) {
+//		if (r2dm.getRenderingCoordinate(atom) == null)
+//		{
+//			logger.warn("Cannot draw atom without 2D coordinate");
+//			return;
+//		}
+//		
+//		if (atom.isExpanded()) {
+//			paintMolecule(atom.getFragment(), graphics);
+//		} else {
+//			paintPseudoAtomLabel(atom, backColor, graphics, alignment, isRadical);
+//		}
+//	}
 
 	public abstract void paintMolecule(IAtomContainer fragment, Graphics2D graphics);
 
