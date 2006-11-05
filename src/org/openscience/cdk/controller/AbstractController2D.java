@@ -51,6 +51,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
+import org.openscience.cdk.applications.undoredo.AddFuncGroupEdit;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEdit;
 import org.openscience.cdk.applications.undoredo.ChangeChargeEdit;
@@ -301,7 +302,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			int endY = 0;
 			double angle = 0;
 			double pointerVectorLength = c2dm.getRingPointerLength();
-			Point2d center = GeometryTools.get2DCenter(getHighlighted());
+			Point2d center = GeometryTools.get2DCenter(getHighlighted(),r2dm.getRenderingCoordinates());
 			r2dm.setPointerVectorStart(new Point((int) center.x, (int) center.y));
 			angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
 			endX = (int) center.x - (int) (Math.cos(angle) * pointerVectorLength);
@@ -1229,14 +1230,14 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				unplacedAtoms.addAtom(newAtom2);
 				AtomPlacer atomPlacer = new AtomPlacer();
 				atomPlacer.setMolecule(atomCon.getBuilder().newMolecule(atomCon));
-				Point2d center2D = GeometryTools.get2DCenter(placedAtoms);
+				Point2d center2D = GeometryTools.get2DCenter(placedAtoms,r2dm.getRenderingCoordinates());
 				logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
 				logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
 				if (placedAtoms.getAtomCount() == 1)
 				{
 					Vector2d bondVector = atomPlacer.getNextBondVector(
 							atomInRange, placedAtoms.getAtom(0), 
-							GeometryTools.get2DCenter(atomCon.getBuilder().newMolecule(atomCon)),
+							GeometryTools.get2DCenter(atomCon.getBuilder().newMolecule(atomCon),r2dm.getRenderingCoordinates()),
 							true // FIXME: is this correct? (see SF bug #1367002)
 					);
 					Point2d atomPoint = new Point2d(((Point2d)r2dm.getRenderingCoordinate(atomInRange)));
@@ -1312,22 +1313,24 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
 					IAtom lastplaced=null;
 					int counter=0;
-					if(container.getAtomCount()==1){
-						ac.getAtom(0).setPoint2d(atomInRange.getPoint2d());
-						r2dm.setRenderingCoordinate(ac.getAtom(0), atomInRange.getPoint2d());
-						lastplaced=ac.getAtom(0);
-						counter=1;
-					}
+					//this is the starting point for placing
+					ac.getAtom(0).setPoint2d((Point2d)r2dm.getRenderingCoordinate(atomInRange));
+					r2dm.setRenderingCoordinate(ac.getAtom(0), (Point2d)r2dm.getRenderingCoordinate(atomInRange));
+					lastplaced=ac.getAtom(0);
+					counter=1;
 					container.add(ac);
 					List connbonds=container.getConnectedBondsList(atomInRange);
+					//this is needed for undo redo
+					IAtomContainer undoredocontainer=ac.getBuilder().newAtomContainer();
+					undoredocontainer.addAtom(atomInRange);
 					for(int i=0;i<connbonds.size();i++){
 						IBond bond=(IBond)connbonds.get(i);
 						if(bond.getAtom(0)==atomInRange){
 							bond.setAtom(ac.getAtom(0), 0);
-							lastplaced=bond.getAtom(1);
+							undoredocontainer.addBond(bond);
 						}else{
 							bond.setAtom(ac.getAtom(0), 1);
-							lastplaced=bond.getAtom(0);
+							undoredocontainer.addBond(bond);
 						}
 					}
 					container.removeAtomAndConnectedElectronContainers(atomInRange);
@@ -1354,6 +1357,21 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 						if(r2dm.getRenderingCoordinate(atom)==null)
 							r2dm.setRenderingCoordinate(atom, atom.getPoint2d());
 					}
+					/*
+					 *  PRESERVE THIS. This notifies the
+					 *  the listener responsible for
+					 *  undo and redo storage that it
+					 *  should store this change of an atom symbol
+					 */
+					isUndoableChange = true;
+					/*
+					 *  ---
+					 */
+					// undoredo support
+					UndoableEdit  edit = new AddFuncGroupEdit(chemModel, undoredocontainer ,ac, "add "+x);
+					//undoRedoHandler.postEdit(edit);
+					r2dm.fireChange();
+					fireChange();
 				}else if(x!=null && x.length()>0){
 					String formerSymbol="";
 					if(Character.isLowerCase(x.toCharArray()[0]))

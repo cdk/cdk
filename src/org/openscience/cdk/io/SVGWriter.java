@@ -27,11 +27,20 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.awt.Dimension;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -40,9 +49,6 @@ import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-
-import java.awt.*;
-import java.io.*;
 
 /**
  * Writes the SVG strings to output. This class makes
@@ -171,8 +177,8 @@ public class SVGWriter extends DefaultChemObjectWriter {
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Clone error while creating SVG image! ", e);
 		}
-        GeometryTools.translateAllPositive(container);
-        GeometryTools.center(container, new Dimension(600,400));
+        GeometryToolsInternalCoordinates.translateAllPositive(container);
+        GeometryToolsInternalCoordinates.center(container, new Dimension(600,400));
         r2d.paintMolecule(container, svgGenerator,false,true);
         
         // save to stream

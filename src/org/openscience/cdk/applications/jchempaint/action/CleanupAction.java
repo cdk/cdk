@@ -42,6 +42,7 @@ import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.DrawingPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.CleanUpEdit;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -114,7 +115,7 @@ public class CleanupAction extends JCPAction
                     	for (int j=0; j<molecule.getAtomCount(); j++) {
                     		IAtom atom = molecule.getAtom(j);
                     		IAtom newAtom = cleanedMol.getAtom(j);
-                    		Point2d oldCoord = atom.getPoint2d();
+                    		Point2d oldCoord =  (Point2d)jcpmodel.getRendererModel().getRenderingCoordinate(atom);
                     		Point2d newCoord = newAtom.getPoint2d();
                     		if (!oldCoord.equals(newCoord)) {
                     			Point2d[] coords = new Point2d[2];
@@ -129,6 +130,8 @@ public class CleanupAction extends JCPAction
                 
                 UndoableEdit  edit = new CleanUpEdit(atomCoordsMap);
                 jcpPanel.getUndoSupport().postEdit(edit);
+    			GeometryTools.makeRenderingCoordinates(newsom, jcpmodel.getRendererModel().getRenderingCoordinates());
+
 			}
 			org.openscience.cdk.interfaces.IReactionSet reactionSet = model.getReactionSet();
 			if (reactionSet != null)
@@ -171,7 +174,7 @@ public class CleanupAction extends JCPAction
 		if (molecule != null) {
 			if (molecule.getAtomCount() > 2) {
 				try {
-			    	Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
+			    	Point2d centre = GeometryTools.get2DCentreOfMass(molecule,jcpmodel.getRendererModel().getRenderingCoordinates());
 					// since we will copy the coordinates later anyway, let's use
 					// a NonNotifying data class
 					diagramGenerator.setMolecule(
@@ -185,10 +188,10 @@ public class CleanupAction extends JCPAction
 					 *  See constructor of JCPPanel
 					 */
 					// Thread.sleep(5000);
-					GeometryTools.translateAllPositive(cleanedMol,jcpmodel.getRendererModel().getRenderingCoordinates());
-					double scaleFactor = GeometryTools.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
-					GeometryTools.scaleMolecule(cleanedMol, scaleFactor,jcpmodel.getRendererModel().getRenderingCoordinates());
-					GeometryTools.translate2DCentreOfMassTo(cleanedMol, centre);
+					GeometryToolsInternalCoordinates.translateAllPositive(cleanedMol);
+					double scaleFactor = GeometryToolsInternalCoordinates.getScaleFactor(cleanedMol, jcpmodel.getRendererModel().getBondLength());
+					GeometryToolsInternalCoordinates.scaleMolecule(cleanedMol, scaleFactor);
+					GeometryToolsInternalCoordinates.translate2DCentreOfMassTo(cleanedMol, centre);
 				} catch (Exception exc)
 				{
 					logger.error("Could not generate coordinates for molecule");

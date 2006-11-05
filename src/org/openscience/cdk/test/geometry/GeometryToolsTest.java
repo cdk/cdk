@@ -36,7 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -73,7 +73,7 @@ public class GeometryToolsTest extends CDKTestCase {
         Atom c = new Atom("C", new Point2d(1.0, 0.0));
         Bond bond = new Bond(c,o);
         
-        assertEquals(1.0, GeometryTools.getLength2D(bond), 0.001);
+        assertEquals(1.0, GeometryToolsInternalCoordinates.getLength2D(bond), 0.001);
     }
     
     public void testMapAtomsOfAlignedStructures(){
@@ -101,18 +101,18 @@ public class GeometryToolsTest extends CDKTestCase {
 	    }
 	   
 	    try {
-			mappedAtoms=GeometryTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
+			mappedAtoms=GeometryToolsInternalCoordinates.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
 			//System.out.println("mappedAtoms:"+mappedAtoms.toString());
 			//System.out.println("***** ANGLE VARIATIONS *****");
-			double AngleRMSD=GeometryTools.getAngleRMSD(molOne,molTwo,mappedAtoms);
+			double AngleRMSD=GeometryToolsInternalCoordinates.getAngleRMSD(molOne,molTwo,mappedAtoms);
 			//System.out.println("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
 			//System.out.println("***** ALL ATOMS RMSD *****");
 			assertEquals(0.2, AngleRMSD, 0.1);
-			double AllRMSD=GeometryTools.getAllAtomRMSD(molOne,molTwo,mappedAtoms,true);
+			double AllRMSD=GeometryToolsInternalCoordinates.getAllAtomRMSD(molOne,molTwo,mappedAtoms,true);
 			//System.out.println("The RMSD between the first and the second structure is :"+AllRMSD);
 			assertEquals(0.242, AllRMSD, 0.001);
 			//System.out.println("***** BOND LENGTH RMSD *****");
-			double BondLengthRMSD=GeometryTools.getBondLengthRMSD(molOne,molTwo,mappedAtoms,true);
+			double BondLengthRMSD=GeometryToolsInternalCoordinates.getBondLengthRMSD(molOne,molTwo,mappedAtoms,true);
 			//System.out.println("The Bond length RMSD between the first and the second structure is :"+BondLengthRMSD);
 			assertEquals(0.2, BondLengthRMSD, 0.1);
 	    } catch (CDKException e) {

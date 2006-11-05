@@ -93,7 +93,7 @@ public class CreateSmilesAction extends JCPAction
 			Molecule molecule = new Molecule(container);
 			Molecule moleculewithh=(Molecule)molecule.clone();
 			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
-			double bondLength = GeometryTools.getBondLengthAverage(container);
+			double bondLength = GeometryTools.getBondLengthAverage(container,jcpPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
 		    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 			smiles = generator.createSMILES(molecule);
 			boolean[] bool=new boolean[moleculewithh.getBondCount()];

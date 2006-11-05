@@ -1,9 +1,10 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -12,7 +13,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import javax.vecmath.Point3d;
+import Jama.Matrix;
 
 /**
  * Evaluates length over breadth descriptors.
@@ -114,7 +115,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         }
 
         // get the com
-        Point3d com = GeometryTools.get3DCentreOfMass(atomContainer);
+        Point3d com = GeometryToolsInternalCoordinates.get3DCentreOfMass(atomContainer);
 
         // translate everything to COM
         for (int i = 0; i < coords.length; i++) {

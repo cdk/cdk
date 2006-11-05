@@ -719,14 +719,14 @@ public abstract class JChemPaintPanel
 			String error = "Model does not have 2D coordinates. Cannot open file.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
-			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 			frame.pack();
 			frame.show();
 			return;
 		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
 			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
 			if(result>1){
-				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 				frame.pack();
 				frame.show();
 				return;
@@ -826,7 +826,7 @@ public abstract class JChemPaintPanel
 			String error = "Model does not have coordinates. Will ask for coord generation.";
 			logger.warn(error);
 
-			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog((ChemModel)chemModel);
+			CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog((ChemModel)chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 			frame.pack();
 			frame.show();
 			frame.moveToFront();
@@ -834,7 +834,7 @@ public abstract class JChemPaintPanel
 		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
 			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
 			if(result>1){
-				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel);
+				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());
 				frame.pack();
 				frame.show();
 				return;

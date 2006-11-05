@@ -265,7 +265,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			 *  of the view screen
 			 */
 			GeometryTools.translateAllPositive(ac,rendererModel.getRenderingCoordinates());
-			double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength());
+			double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 			GeometryTools.scaleMolecule(ac, scaleFactor,rendererModel.getRenderingCoordinates());
 			layoutInTable(oneMoleculeDimension, jchemPaintModel.getChemModel(),jchemPaintModel.getRendererModel());
 			// GeometryTools.center(ac, getPreferredSize());
@@ -580,7 +580,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             	return null;
             }
             IAtomContainer ac = MoleculeSetManipulator.getAllInOneContainer(model.getMoleculeSet());
-            Dimension dim = GeometryTools.get2DDimension(ac);
+            Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
             Graphics2D snapGraphics = (Graphics2D) snapImage.getGraphics();

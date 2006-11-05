@@ -345,7 +345,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
 		Molecule moleculewithh=new Molecule(container);
 		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
-		double bondLength = GeometryTools.getBondLengthAverage(container);
+		double bondLength = GeometryTools.getBondLengthAverage(container,theJcpp.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
 	    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 		boolean[] bool=new boolean[moleculewithh.getBondCount()];
 	    SmilesGenerator sg = new SmilesGenerator();

@@ -27,6 +27,10 @@
  *  */
 package org.openscience.cdk.geometry;
 
+import java.util.HashMap;
+
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -43,6 +47,18 @@ public class Projector  {
       if (atom.getPoint3d() != null) {
         atom.setX2d(atom.getPoint3d().x);
         atom.setY2d(atom.getPoint3d().y);
+      } else {
+        // should throw an exception
+      }
+    }
+  }
+  public static void project2D(IAtomContainer container, HashMap renderingCoordinates) {
+    for (int i = 0; i < container.getAtomCount(); i++) {
+      IAtom atom = container.getAtom(i);
+      if (atom.getPoint3d() != null) {
+        atom.setX2d(atom.getPoint3d().x);
+        atom.setY2d(atom.getPoint3d().y);
+        renderingCoordinates.put(atom,new Point2d(atom.getPoint3d().x,atom.getPoint3d().y));
       } else {
         // should throw an exception
       }

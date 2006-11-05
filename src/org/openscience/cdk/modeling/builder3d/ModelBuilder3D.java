@@ -35,14 +35,14 @@ import java.util.Vector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.LoggingTool;
@@ -375,7 +375,7 @@ public class ModelBuilder3D {
 
 		//Rotate Ring so that geometric center is max from placed center
 		//System.out.println("Rotate RINGSYSTEM");
-		Point3d pointRingCenter = GeometryTools.get3DCenter(ac);
+		Point3d pointRingCenter = GeometryToolsInternalCoordinates.get3DCenter(ac);
 		double distance = 0;
 		double rotAngleMax = 0;
 		angle = 1 / 180 * Math.PI;

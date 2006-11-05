@@ -111,7 +111,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D implements ISimpleRende
 		// draw the molecule name
 		if (r2dm.getShowMoleculeTitle() && 
 		    atomCon.getProperty(CDKConstants.TITLE) != null) {
-			double[] minmax = GeometryTools.getMinMax(atomCon);
+			double[] minmax = GeometryTools.getMinMax(atomCon,r2dm.getRenderingCoordinates());
 			int[] ints = new int[4];
 			for (int i=0;i<4;i++) ints[i] = (int)minmax[i];
 			int[] screenCoords = getScreenCoordinates(ints);

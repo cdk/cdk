@@ -24,23 +24,37 @@
  */
 package org.openscience.cdk.renderer;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.CDKConstants;
 //import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -1101,7 +1115,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintSingleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (GeometryTools.has2DCoordinates(bond))
+		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
 		{
 			paintOneBond(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()), bondColor, graphics);
 		}
@@ -1271,7 +1285,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		Vector2d lengthStep = new Vector2d(point2);
 		lengthStep.sub(point1);
 		lengthStep.scale(1.0 / numberOfLines);
-		Vector2d vector2d = GeometryTools.calculatePerpendicularUnitVector(point1, point2);
+		Vector2d vector2d = GeometryToolsInternalCoordinates.calculatePerpendicularUnitVector(point1, point2);
 
 		Point2d currentPoint = new Point2d(point1);
 		Point2d q1 = new Point2d();

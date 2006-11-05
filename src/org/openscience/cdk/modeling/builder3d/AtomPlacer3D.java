@@ -30,11 +30,11 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 
 /**
@@ -471,7 +471,7 @@ public class AtomPlacer3D {
 	 */
 	public Point3d geometricCenterAllPlacedAtoms(IAtomContainer molecule) {
 		IAtomContainer allPlacedAtoms = getAllPlacedAtoms(molecule);
-		return GeometryTools.get3DCenter(allPlacedAtoms);
+		return GeometryToolsInternalCoordinates.get3DCenter(allPlacedAtoms);
 	}
 
 	/**

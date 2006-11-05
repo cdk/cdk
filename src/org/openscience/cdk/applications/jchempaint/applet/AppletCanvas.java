@@ -114,7 +114,7 @@ public class AppletCanvas extends Canvas
 		 *  of the view screen
 		 */
 		GeometryTools.translateAllPositive(container,renderer.getRenderer2DModel().getRenderingCoordinates());
-		double scaleFactor = GeometryTools.getScaleFactor(container, 40.0);
+		double scaleFactor = GeometryTools.getScaleFactor(container, 40.0,renderer.getRenderer2DModel().getRenderingCoordinates());
 		GeometryTools.scaleMolecule(container, scaleFactor,renderer.getRenderer2DModel().getRenderingCoordinates());
 		GeometryTools.center(container, getSize(),renderer.getRenderer2DModel().getRenderingCoordinates());
 

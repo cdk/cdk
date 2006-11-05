@@ -269,14 +269,16 @@ public class InsertTextPanel extends JPanel implements ActionListener {
             sdg.generateCoordinates(new Vector2d(0, 1));
             molecule = sdg.getMolecule();
             double bondLength = renderModel.getBondLength();
-            double scaleFactor = GeometryTools.getScaleFactor(molecule, bondLength);
+            double scaleFactor = GeometryTools.getScaleFactor(molecule, bondLength,jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
             GeometryTools.scaleMolecule(molecule, scaleFactor, renderModel.getRenderingCoordinates());
             //if there are no atoms in the actual chemModel all 2D-coordinates would be set to NaN
             if (ChemModelManipulator.getAllInOneContainer(chemModel).getAtomCount() != 0) {
-                GeometryTools.translate2DCenterTo(molecule,
+                GeometryTools.translate2DCenterTo((IAtomContainer)molecule,
                         GeometryTools.get2DCenter(
-                                ChemModelManipulator.getAllInOneContainer(chemModel)
-                        )
+                                ChemModelManipulator.getAllInOneContainer(chemModel),
+                                jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates()
+                        ),
+                        jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates()
                 );
             }
             GeometryTools.translate2D(molecule, 5 * bondLength, 0, renderModel.getRenderingCoordinates()); // in pixels

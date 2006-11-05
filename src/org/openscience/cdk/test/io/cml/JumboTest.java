@@ -32,7 +32,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -94,8 +94,8 @@ public class JumboTest extends CDKTestCase {
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 24);
             assertEquals(mol.getBondCount(), 28);
-            assertTrue(!GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(!GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
             e.printStackTrace();
@@ -130,8 +130,8 @@ public class JumboTest extends CDKTestCase {
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 15);
             assertEquals(mol.getBondCount(), 16);
-            assertTrue(!GeometryTools.has3DCoordinates(mol));
-            assertTrue(GeometryTools.has2DCoordinates(mol));
+            assertTrue(!GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -166,8 +166,8 @@ public class JumboTest extends CDKTestCase {
             assertNotNull(mol);
             assertEquals("Incorrect number of atoms", 11, mol.getAtomCount());
             assertEquals("Incorrect number of bonds", 12, mol.getBondCount());
-            assertTrue("File does not have 3D coordinates", !GeometryTools.has3DCoordinates(mol));
-            assertTrue("File does not have 2D coordinates", !GeometryTools.has2DCoordinates(mol));
+            assertTrue("File does not have 3D coordinates", !GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+            assertTrue("File does not have 2D coordinates", !GeometryToolsInternalCoordinates.has2DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }

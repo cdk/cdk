@@ -25,6 +25,7 @@ package org.openscience.cdk.test.layout;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.vecmath.Point2d;
 
 import junit.framework.Test;
@@ -37,7 +38,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -131,7 +132,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		    double bondLength = GeometryTools.getBondLengthAverage(mol);
+		    double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(mol);
 		    HydrogenAdder ha = new HydrogenAdder();
 		    logger.debug("Read Reserpine");
 		    logger.debug("Starting addition of H's");

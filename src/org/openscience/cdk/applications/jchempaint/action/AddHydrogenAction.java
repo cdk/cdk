@@ -261,7 +261,7 @@ public class AddHydrogenAction extends JCPAction
 //                changedAtomsAndBonds = hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
 			} else if (type.equals("explicit"))
 			{
-				double bondLength = GeometryTools.getBondLengthAverage(container);
+				double bondLength = GeometryTools.getBondLengthAverage(container, jcpmodel.getRendererModel().getRenderingCoordinates());
 				if (Double.isNaN(bondLength))
 				{
 					logger.warn("Could not determine average bond length from structure!");

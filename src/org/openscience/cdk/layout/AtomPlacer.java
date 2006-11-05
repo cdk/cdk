@@ -38,15 +38,16 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -260,7 +261,10 @@ public class AtomPlacer
 		 *  get the two sharedAtom partners with the smallest distance to the new center
 		 */
 		sortedAtoms = AtomContainerManipulator.getAtomArray(placedNeighbours);
-		GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
+		if(renderingCoordinates!=null)
+			GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure,renderingCoordinates);
+		else
+			GeometryToolsInternalCoordinates.sortBy2DDistance(sortedAtoms, distanceMeasure);
 		Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2d());
 		Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
 		closestPoint1.sub(new Vector2d(atom.getPoint2d()));
@@ -404,9 +408,9 @@ public class AtomPlacer
 				}catch(Exception ex){
 					logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
 				}
-				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
+				bondVector = getNextBondVector(nextAtom, atom, GeometryToolsInternalCoordinates.get2DCenter(molecule),trans);
 			}else{
-				bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),true);
+				bondVector = getNextBondVector(nextAtom, atom, GeometryToolsInternalCoordinates.get2DCenter(molecule),true);
 			}
 		}
 	}

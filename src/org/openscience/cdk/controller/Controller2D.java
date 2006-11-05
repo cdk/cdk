@@ -115,7 +115,7 @@ public class Controller2D extends SimpleController2D
 			{
 				IReaction reaction = (IReaction)reactionIter.next();
 				IAtomContainer atomContainer = ReactionManipulator.getAllInOneContainer(reaction);
-				double[] minmax = GeometryTools.getMinMax(atomContainer);
+				double[] minmax = GeometryTools.getMinMax(atomContainer,r2dm.getRenderingCoordinates());
 				if ((X <= minmax[2]) && (X >= minmax[0]) &&
 						(Y <= minmax[3]) && (Y >= minmax[1]))
 				{

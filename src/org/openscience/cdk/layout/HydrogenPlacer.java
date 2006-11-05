@@ -33,6 +33,7 @@ import java.util.HashMap;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
@@ -75,7 +76,7 @@ public class HydrogenPlacer {
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom)
 	{
-		double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(atomContainer);
 		placeHydrogens2D(atomContainer, atom, bondLength);
 		
 	
@@ -116,7 +117,7 @@ public class HydrogenPlacer {
         Point2d centerPlacedAtoms = null;
         if (placedAtoms.getAtomCount() > 0) {
         	if(renderingCoordinates==null)
-        		centerPlacedAtoms = GeometryTools.get2DCenter(placedAtoms);
+        		centerPlacedAtoms = GeometryToolsInternalCoordinates.get2DCenter(placedAtoms);
         	else
         		centerPlacedAtoms = GeometryTools.get2DCenter(placedAtoms, renderingCoordinates);
         } else {

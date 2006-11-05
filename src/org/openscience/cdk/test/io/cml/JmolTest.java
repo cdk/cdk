@@ -34,7 +34,7 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -93,7 +93,7 @@ public class JmolTest extends CDKTestCase {
             org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
             assertNotNull(crystal);
             assertEquals(4*42, crystal.getAtomCount());
-            assertTrue(GeometryTools.has3DCoordinates(crystal));
+            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(crystal));
             // test the cell axes
             Vector3d a = crystal.getA();
             assertTrue(a.x != 0.0);
@@ -134,7 +134,7 @@ public class JmolTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 25);
-            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -168,7 +168,7 @@ public class JmolTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
-            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }
@@ -202,7 +202,7 @@ public class JmolTest extends CDKTestCase {
             org.openscience.cdk.interfaces.IMolecule mol = som.getMolecule(0);
             assertNotNull(mol);
             assertEquals(mol.getAtomCount(), 6);
-            assertTrue(GeometryTools.has3DCoordinates(mol));
+            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
         } catch (Exception e) {
             fail(e.toString());
         }

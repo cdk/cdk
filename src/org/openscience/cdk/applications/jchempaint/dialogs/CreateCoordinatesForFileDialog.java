@@ -33,6 +33,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -47,14 +48,14 @@ import javax.swing.JRadioButton;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.Reaction;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -71,6 +72,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	private static final long serialVersionUID = 6717348756533287248L;
 	
 	private IChemModel chemModel;
+	private HashMap renderingCoordinates;
 	private JRadioButton generate2DButton;
 	private JRadioButton from3DButton;
 	private LoggingTool logger = null;
@@ -81,11 +83,12 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 	 *
 	 *@param  model  Description of the Parameter
 	 */
-	public CreateCoordinatesForFileDialog(IChemModel model)
+	public CreateCoordinatesForFileDialog(IChemModel model, HashMap renderingCoordinates)
 	{
 		super("Coordinate Creation", true, true, true, true);
 
 		this.chemModel = model;
+		this.renderingCoordinates=renderingCoordinates;
 		this.logger = new LoggingTool(this);
 
 		Container contentPane = getContentPane();
@@ -212,7 +215,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 			if (from3DButton != null && from3DButton.isSelected())
 			{
 				// JOptionPane.showMessageDialog(jchempaint, "Not implemented yet");
-				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel));
+				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel), renderingCoordinates);
 			} else
 			{
 				org.openscience.cdk.interfaces.IMoleculeSet som = chemModel.getMoleculeSet();
@@ -276,7 +279,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 				{
 					try
 					{
-						Point2d centre = GeometryTools.get2DCentreOfMass(molecule);
+						Point2d centre = GeometryTools.get2DCentreOfMass(molecule, renderingCoordinates);
 						diagramGenerator.setMolecule(molecule);
 						diagramGenerator.generateCoordinates(new Vector2d(0, 1));
 
@@ -286,8 +289,8 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 						 *  make the molecule end up somewhere reasonable
 						 *  See constructor of JCPPanel
 						 */
-						GeometryTools.translateAllPositive(cleanedMol);
-						GeometryTools.translate2DCentreOfMassTo(cleanedMol, centre);
+						GeometryTools.translateAllPositive(cleanedMol,renderingCoordinates);
+						GeometryTools.translate2DCentreOfMassTo(cleanedMol, centre,renderingCoordinates);
 
 					} catch (Exception exc)
 					{
