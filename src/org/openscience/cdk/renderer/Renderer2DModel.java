@@ -153,6 +153,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private boolean notification = true;
 	
+	/**
+	 * Area on each of the four margins to keep white.
+	 */
+	private double margin = 0.05;
 	
 	public void setRenderingCoordinate(IAtom atom, Point2d point){
 		this.renderingCoordinates.put(atom,point);
@@ -1079,5 +1083,13 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	public void setRenderingCoordinates(HashMap renderingCoordinates) {
 		this.renderingCoordinates = renderingCoordinates;
+	}
+
+	public double getMargin() {
+		return margin;
+	}
+
+	public void setMargin(double margin) {
+		this.margin = margin;
 	}
 }
