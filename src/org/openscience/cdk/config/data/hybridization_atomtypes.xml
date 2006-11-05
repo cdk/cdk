@@ -197,6 +197,14 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
     </atom>
   </atomType>
+  <atomType id="Splus">
+    <atom elementType="S" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">5.0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>      
   <atomType id="S3">
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
