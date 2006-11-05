@@ -150,7 +150,10 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 		logger.debug("painting set of molecules");
 		IMoleculeSet molecules = null;
 		if(split){
-			org.openscience.cdk.interfaces.IAtomContainer atomContainer = MoleculeSetManipulator.getAllInOneContainer(moleculeSet);
+			// WTF?? why does it need to partition at all?
+			IAtomContainer atomContainer = moleculeSet.getBuilder().newAtomContainer();
+			Iterator atomCons = moleculeSet.atomContainers();
+			while (atomCons.hasNext()) atomContainer.add((IAtomContainer)atomCons.next());
 			try
 			{
 				molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
