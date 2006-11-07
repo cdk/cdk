@@ -591,6 +591,8 @@ public class CML2Test extends CDKTestCase {
             // test the reaction
             IReaction reaction = model.getReactionSet().getReaction(0);
             assertNotNull(reaction);
+            assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
+            assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
             assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
             assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
             
@@ -622,6 +624,8 @@ public class CML2Test extends CDKTestCase {
 
             IMolecule mol = model.getMoleculeSet().getMolecule(0);
             assertNotNull(mol);
+            assertEquals("a",mol.getID());
+            assertEquals("a1",mol.getAtom(0).getID());
             assertEquals(27, mol.getAtomCount());
             assertEquals(32, mol.getBondCount());
             
