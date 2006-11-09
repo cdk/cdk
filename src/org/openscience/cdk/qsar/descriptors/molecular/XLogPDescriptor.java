@@ -57,8 +57,9 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * Prediction of logP based on the atom-type method called XLogP. For
- * description of the methodology see Ref. @cdk.cite{WANG97} and @cdk.cite{WANG00}
+ * <p>Prediction of logP based on the atom-type method called XLogP. <b>Requires
+ * all hydrogens to be explicit</b>.
+ * <p>For description of the methodology see Ref. @cdk.cite{WANG97} and @cdk.cite{WANG00}
  * or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>. 
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
@@ -81,34 +82,34 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *   </tr>
  * </table>
  * 
- * changed 2005-11-03 by chhoppe
- *  -Internal hydrogen bonds are implemented
- * CDK IDescriptor was validated against xlogp2.1
+ * <p>changed 2005-11-03 by chhoppe<br>
+ *  -Internal hydrogen bonds are implemented<br>
+ * CDK IDescriptor was validated against xlogp2.1<br>
  * As mentioned in the xlogP tutorial don't use charges, always draw bonds. To some extend we can support charges
  * but not in every case.
- * CDK follows the program in following points (which is not documented in the paper):
- * 	-Atomtyp 7 is -0.137
- *  -Atomtype 81 is -0.447
- *  -pi system does not consider P or S
- *  -ring system >3
- *  -aromatic ring systems >=6
- *  -N atomtypes: (ring) is always (ring)c
- *  -F 83 is not 0.375, the program uses 0.512 [2005-11-21]
- *  -hydrophobic carbon is 1-3 relationship not 1-4 [2005-11-22]
- *  -Atomtyp C 34/35/36 perception corrected [2005-11-22]; before Atomtyp perception ring perception is done -> slows run time
+ * <p>CDK follows the program in following points (which is not documented in the paper):<br>
+ * 	-Atomtyp 7 is -0.137<br>
+ *  -Atomtype 81 is -0.447<br>
+ *  -pi system does not consider P or S<br>
+ *  -ring system >3<br>
+ *  -aromatic ring systems >=6<br>
+ *  -N atomtypes: (ring) is always (ring)c<br>
+ *  -F 83 is not 0.375, the program uses 0.512 [2005-11-21]<br>
+ *  -hydrophobic carbon is 1-3 relationship not 1-4 [2005-11-22]<br>
+ *  -Atomtyp C 34/35/36 perception corrected [2005-11-22]; before Atomtyp perception ring perception is done -> slows run time<br>
  *  
  *  
  *  
- *  In question: 
- *  	-Correction factor for salicylic acid (in paper, but not used by the program)
- *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)
- *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not 
- *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643
- *		-pi system defintion, the neighbourhood is unclear
+ *  <p>In question:<br> 
+ *  	-Correction factor for salicylic acid (in paper, but not used by the program)<br>
+ *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)<br>
+ *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not<br> 
+ *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643<br>
+ *		-pi system defintion, the neighbourhood is unclear<br>
  * 
- * changed 2005-11-21 by chhoppe
- * 	-added new parameter for the salicyl acid correction factor
- *  -Corrected P and S perception for charges
+ * <p>changed 2005-11-21 by chhoppe<br>
+ * 	-added new parameter for the salicyl acid correction factor<br>
+ *  -Corrected P and S perception for charges<br>
  * 
  * 
  *@author         mfe4, chhoppe
