@@ -617,9 +617,6 @@
                                  includes="*" />
                 </copy>
                 <copy
-                  file="${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties"
-                  tofile="${sourcedist.dir}/${src}/org/openscience/cdk/iupac/generator/data/IUPACNames.properties" />
-                <copy
                   file="${src}/org/openscience/cdk/dict/data/chemical.xml"
                   tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/chemical.xml" />
                 <copy
