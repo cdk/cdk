@@ -105,7 +105,7 @@ public class TanimotoCoefficient {
         	if(bs[0].get(i))
         		all++;
         }
-        System.err.println("Similarity (Tanimoto) = "+((double)matches/(double)all));
+        System.err.println("Similarity (Tanimoto) = "+((double)matches/((double)all-(double)matches)));
     }
 
 }
