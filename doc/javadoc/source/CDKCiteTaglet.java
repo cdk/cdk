@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -114,7 +114,7 @@ public class CDKCiteTaglet implements Taglet {
             StringTokenizer tokenizer = new StringTokenizer(citation, separator);
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/bib/"
+                result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/"
                        + token + "\">" + token + "</a>";
                 if (tokenizer.hasMoreTokens()) {
                     result += ", ";
