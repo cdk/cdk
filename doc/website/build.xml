@@ -6,7 +6,7 @@
   <property name="docbook-xsl" value="docbook-xsl-1.65.1" />
   <property name="website-docbook-xsl" value="website-2.5.0"/>
   
-  <property name="javancsslib" value="javancss21.41"/>
+  <property name="javancsslib" value="javancss28.49"/>
   <property name="javancsslib.dir" value="${javancsslib}"/>
 
   <target id="layout" name="layout" depends="includes">
@@ -137,7 +137,7 @@
   <target name="javancss" depends="check.javancss" unless="javancss.uptodate">
     <java classname="javancss.Main" fork="yes"
       output="javancss-tmp.xml">
-      <arg value="-package"/>
+      <arg value="-all"/>
       <arg value="-xml"/>
       <arg value="-recursive"/>
       <arg value="../../src"/>

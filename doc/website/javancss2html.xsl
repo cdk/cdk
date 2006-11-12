@@ -26,16 +26,20 @@
     <th>Classes</th>
     <th>Functions</th>
     <th>NCSS</th>
+    <th>JavaDoc</th>
+    <th>JavaDoc Lines</th>
   </tr>
   <xsl:for-each select="javancss/packages/package">
     <xsl:sort select="ncss" data-type="number" order="descending"/>
-    <xsl:apply-templates select="self::node()[not(contains(./name, 'test'))]"/>
+    <xsl:apply-templates select="self::node()[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]"/>
   </xsl:for-each>
   <tr>
     <td>Total</td>
-    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/classes)"/></td>
-    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/functions)"/></td>
-    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'test'))]/ncss)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]/classes)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]/functions)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]/ncss)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]/javadocs)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[not(contains(./name, 'net.sf')) and not(contains(./name, 'test'))]/javadoc_lines)"/></td>
   </tr>
 </table>
 </div>
@@ -47,6 +51,8 @@
     <th>Classes</th>
     <th>Functions</th>
     <th>NCSS</th>
+    <th>JavaDoc</th>
+    <th>JavaDoc Lines</th>
   </tr>
   <xsl:for-each select="javancss/packages/package">
     <xsl:sort select="ncss" data-type="number" order="descending"/>
@@ -57,6 +63,8 @@
     <td><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/classes)"/></td>
     <td><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/functions)"/></td>
     <td><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/ncss)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/javadocs)"/></td>
+    <td><xsl:value-of select="sum(javancss/packages/package[contains(./name, 'test')]/javadoc_lines)"/></td>
   </tr>
 </table>
 </div>
@@ -68,6 +76,8 @@
         <td><xsl:value-of select="classes"/></td>
         <td><xsl:value-of select="functions"/></td>
         <td><xsl:value-of select="ncss"/></td>
+        <td><xsl:value-of select="javadocs"/></td>
+        <td><xsl:value-of select="javadoc_lines"/></td>
       </tr>
   </xsl:template>
 
