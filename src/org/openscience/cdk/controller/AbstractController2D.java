@@ -1151,6 +1151,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 							atomCon.add((IAtomContainer)atomCons.next());							
 						}
 					}
+					if (atomCon == null) atomCon = chemModel.getBuilder().newAtomContainer();
 					if (atomInRange != null)
 					{
 						logger.debug("*** atom in range");
