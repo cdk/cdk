@@ -22,7 +22,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
@@ -43,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.List;
 
 /**
- * Evaluates chi cluster descriptors.
+ * Evaluates chi path cluster descriptors.
  * <p/>
  * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
  * It utilizes the graph isomorphism code of the CDK to find fragments matching
@@ -51,38 +50,36 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple cluster, order 3
- * <li>Simple cluster, order 4
- * <li>Simple cluster, order 5
- * <li>Simple cluster, order 6
- * <li>Valence cluster, order 3
- * <li>Valence cluster, order 4
- * <li>Valence cluster, order 5
- * <li>Valence cluster, order 6
+ * <li>Simple path cluster, order 4
+ * <li>Simple path cluster, order 5
+ * <li>Simple path cluster, order 6
+ * <li>Valence path cluster, order 4
+ * <li>Valence path cluster, order 5
+ * <li>Valence path cluster, order 6
  * </ol>
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13
  * @cdk.module qsar
  * @cdk.set qsar-descriptors
- * @cdk.dictref qsar-descriptors:chiCluster
- * @cdk.keyword chi cluster index
+ * @cdk.dictref qsar-descriptors:chiPathCluster
+ * @cdk.keyword chi path cluster index
  * @cdk.keyword descriptor
  */
-public class ChiClusterDescriptor implements IMolecularDescriptor {
+public class ChiPathClusterDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;
 
-    public ChiClusterDescriptor() {
+    public ChiPathClusterDescriptor() {
         logger = new LoggingTool(this);
         sp = new SmilesParser();
     }
 
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
                 this.getClass().getName(),
-                "$Id: ChiClusterDescriptor.java 6906 2006-11-12 14:58:42Z rajarshi $",
+                "$Id: ChiPathClusterDescriptor.java 6906 2006-11-13 14:58:42Z rajarshi $",
                 "The Chemistry Development Kit");
     }
 
@@ -118,28 +115,23 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
             throw new CDKException("Error occured during clone");
         }
 
-        List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
         List subgraph5 = order5(localAtomContainer);
         List subgraph6 = order6(localAtomContainer);
 
-        double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
         double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
         double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
 
-        double order3v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph3);
         double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
         double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
         double order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
 
         DoubleArrayResult retval = new DoubleArrayResult();
-        retval.add(order3s);
         retval.add(order4s);
         retval.add(order5s);
         retval.add(order6s);
 
-        retval.add(order3v);
         retval.add(order4v);
         retval.add(order5v);
         retval.add(order6v);
@@ -148,20 +140,10 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
 
     }
 
-    private List order3(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[1];
-        try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)"), false);
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
-    }
-
     private List order4(IAtomContainer atomContainer) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)(C)"), false);
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CC"), false);
         } catch (InvalidSmilesException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -169,9 +151,11 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
     }
 
     private List order5(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[1];
+        QueryAtomContainer[] queries = new QueryAtomContainer[3];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)"), false);
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CCC"), false);
+            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(C)CC"), false);
+            queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC(C)CC"), false);
         } catch (InvalidSmilesException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -179,14 +163,17 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
     }
 
     private List order6(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[2];
+        QueryAtomContainer[] queries = new QueryAtomContainer[5];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1(C)C(C)C1(C)"), false);
-            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)(C)CCC"), false);
+            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)CC"), false);
+            queries[2] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CC(C)C"), false);
+            queries[3] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)CCCC"), false);
+            queries[4] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC(C)CCC"), false);
         } catch (InvalidSmilesException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
-    }
 
+    }
 }

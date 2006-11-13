@@ -2329,6 +2329,20 @@
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
+    <Descriptor rdf:ID="chiPathCluster">
+        <rdfs:label>Chi Path-Cluster Indices</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-11-13</dc:date>
+        <definition>
+            Evaluates the Kier &amp; Hall Chi path cluster indices of orders 4,5 and 6
+        </definition>
+        <description>
+            Both the simple and valence versions of this descriptor are evaluated
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
 
 
     <!-- The Bibliography -->

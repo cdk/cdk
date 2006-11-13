@@ -57,6 +57,7 @@ public class MqsarMolecularTests {
         suite.addTest(ChiChainDescriptorTest.suite());
         suite.addTest(ChiPathDescriptorTest.suite());
         suite.addTest(ChiClusterDescriptorTest.suite());
+        suite.addTest(ChiPathClusterDescriptorTest.suite());
         suite.addTest(CPSADescriptorTest.suite());
         suite.addTest(EccentricConnectivityIndexDescriptorTest.suite());
         suite.addTest(GravitationalIndexDescriptorTest.suite());
