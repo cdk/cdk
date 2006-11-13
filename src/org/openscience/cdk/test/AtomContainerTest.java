@@ -24,26 +24,14 @@
  */
 package org.openscience.cdk.test;
 
-import java.util.Enumeration;
-
-import javax.vecmath.Point2d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.*;
+
+import javax.vecmath.Point2d;
 
 /**
  * Checks the funcitonality of the AtomContainer.
@@ -817,6 +805,44 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(o, next);
         
         assertFalse(atomIter.hasNext());
+    }
+
+    public void testBonds() {
+        // acetone molecule
+        IMolecule acetone = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+
+        IBond bond1 = builder.newBond(c1,c2,1);
+        IBond bond2 = builder.newBond(c2,o,2);
+        IBond bond3 = builder.newBond(c2,c3,1);
+        acetone.addBond(bond1);
+        acetone.addBond(bond2);
+        acetone.addBond(bond3);
+
+        java.util.Iterator bonds = acetone.bonds();
+        assertNotNull(bonds);
+        assertTrue(bonds.hasNext());
+
+        IBond next =  (IBond) bonds.next();
+        assertTrue(next instanceof IBond);
+        assertEquals(bond1, next);
+
+        next = (IBond) bonds.next();
+        assertTrue(next instanceof IBond);
+        assertEquals(bond2, next);
+
+        next = (IBond) bonds.next();
+        assertTrue(next instanceof IBond);
+        assertEquals(bond3, next);
+
+        assertFalse(bonds.hasNext());
     }
 
     public void testContains_IAtom() {
