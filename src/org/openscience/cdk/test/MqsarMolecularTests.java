@@ -54,8 +54,6 @@ public class MqsarMolecularTests {
         suite.addTest(BPolDescriptorTest.suite());
         suite.addTest(CarbonConnectivityOrderZeroDescriptorTest.suite());
         suite.addTest(CarbonConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(ConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ConnectivityOrderOneDescriptorTest.suite());
         suite.addTest(ChiChainDescriptorTest.suite());
         suite.addTest(ChiPathDescriptorTest.suite());
         suite.addTest(CPSADescriptorTest.suite());
@@ -77,9 +75,7 @@ public class MqsarMolecularTests {
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
         suite.addTest(TPSADescriptorTest.suite());
         suite.addTest(ValenceCarbonConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ValenceCarbonConnectivityOrderOneDescriptorTest.suite());
-        suite.addTest(ValenceConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ValenceConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(ValenceCarbonConnectivityOrderOneDescriptorTest.suite());        
         suite.addTest(WeightDescriptorTest.suite());
         suite.addTest(WeightedPathDescriptorTest.suite());
         suite.addTest(WHIMDescriptorTest.suite());
