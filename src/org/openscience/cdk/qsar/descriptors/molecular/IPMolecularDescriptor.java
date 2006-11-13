@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import java.util.Iterator;
 
 /**
  *  
@@ -90,9 +90,9 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      */
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chi1",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
             this.getClass().getName(),
-            "$Id: ConnectivityOrderOneDescriptor.java 7032 2006-09-22 15:26:48Z kaihartmann $",
+            "$Id: IPMolecularDescriptor.java 7032 2006-09-22 15:26:48Z kaihartmann $",
             "The Chemistry Development Kit");
     }
 
