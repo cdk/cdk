@@ -2308,7 +2308,7 @@
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-11-12</dc:date>
         <definition>
-            Evaluates the Kier &amp; Hall Chi path indices of orders 3,4,5,6 and 7
+            Evaluates the Kier &amp; Hall Chi path indices of orders 0,1,2,3,4,5,6 and 7
         </definition>
         <description>
             Both the simple and valence versions of this descriptor are evaluated
@@ -2316,6 +2316,20 @@
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
+    <Descriptor rdf:ID="chiCluster">
+        <rdfs:label>Chi Cluster Indices</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-11-13</dc:date>
+        <definition>
+            Evaluates the Kier &amp; Hall Chi cluster indices of orders 3,4,5,6 and 7
+        </definition>
+        <description>
+            Both the simple and valence versions of this descriptor are evaluated
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
 
     <!-- The Bibliography -->
 
