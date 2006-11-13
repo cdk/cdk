@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -155,8 +154,14 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public IElectronContainer[] getElectronContainers();
 
-
 	/**
+	 *  Returns an Iterator for looping over all bonds in this container.
+	 *
+	 *@return    An Iterator with the bonds in this container
+	 */
+	public java.util.Iterator bonds();
+
+    /**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *
 	 *@return    The array of Bonds of this AtomContainer
