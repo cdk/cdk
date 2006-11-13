@@ -147,9 +147,7 @@ public class ChiIndexUtils {
                 int zv = getValenceElectronCount(atom);
 
                 int hsupp = atom.getHydrogenCount();
-                double deltav = (double) (zv - hsupp) / (double) (z - zv - 1);
-                
-                System.out.println(atom.getSymbol() + " zv = " + zv + " hsupp = " + hsupp);
+                double deltav = (double) (zv - hsupp) / (double) (z - zv - 1);                               
 
                 prod = prod * deltav;
             }
