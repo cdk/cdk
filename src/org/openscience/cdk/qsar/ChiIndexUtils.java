@@ -20,6 +20,7 @@ import java.util.*;
  * be used to evaluate path, path-cluster, cluster and chain chi indices.
  *
  * @author Rajarshi Guha
+ * @cdk.module qsar
  */
 public class ChiIndexUtils {
 
@@ -91,7 +92,7 @@ public class ChiIndexUtils {
                 int nconnected = atomContainer.getConnectedAtomsCount(atom);
                 prod = prod * nconnected;
             }
-            sum += 1.0 / Math.sqrt(prod);
+            if (prod != 0) sum += 1.0 / Math.sqrt(prod);
         }
         return sum;
     }
@@ -151,7 +152,7 @@ public class ChiIndexUtils {
 
                 prod = prod * deltav;
             }
-            sum += 1.0 / Math.sqrt(prod);
+            if (prod != 0) sum += 1.0 / Math.sqrt(prod);
         }
         return sum;
     }

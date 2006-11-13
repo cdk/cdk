@@ -27,7 +27,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.qsar.ChiIndexUtils;
@@ -40,6 +42,8 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,8 +55,8 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple chain, orders 3 to 7
- * <li>Valence chain, orders 3 to 7
+ * <li>Simple path, orders 0 to 7
+ * <li>Valence path, orders 0 to 7
  * </ol>
  *
  * @author Rajarshi Guha
@@ -100,7 +104,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 
         // make a copy and remove hydrogens
-        IAtomContainer localAtomContainer = null;
+        IAtomContainer localAtomContainer;
         try {
             localAtomContainer = (IAtomContainer) container.clone();
             localAtomContainer = AtomContainerManipulator.removeHydrogens(localAtomContainer);
@@ -111,18 +115,27 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
             throw new CDKException("Error occured during clone");
         }
 
+        List subgraph0 = order0(localAtomContainer);
+        List subgraph1 = order1(localAtomContainer);
+        List subgraph2 = order2(localAtomContainer);
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
         List subgraph5 = order5(localAtomContainer);
         List subgraph6 = order6(localAtomContainer);
         List subgraph7 = order7(localAtomContainer);
 
+        double order0s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph0);
+        double order1s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph1);
+        double order2s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph2);
         double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
         double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
         double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
         double order7s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph7);
 
+        double order0v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph0);
+        double order1v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph1);
+        double order2v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph2);
         double order3v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph3);
         double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
         double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
@@ -130,12 +143,18 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         double order7v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph7);
 
         DoubleArrayResult retval = new DoubleArrayResult();
+        retval.add(order0s);
+        retval.add(order1s);
+        retval.add(order2s);
         retval.add(order3s);
         retval.add(order4s);
         retval.add(order5s);
         retval.add(order6s);
         retval.add(order7s);
 
+        retval.add(order0v);
+        retval.add(order1v);
+        retval.add(order2v);
         retval.add(order3v);
         retval.add(order4v);
         retval.add(order5v);
@@ -144,6 +163,46 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
 
+    }
+
+
+    private List order0(IAtomContainer atomContainer) {
+        List fragments = new ArrayList();
+        Iterator atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            List tmp = new ArrayList();
+            tmp.add( new Integer(atomContainer.getAtomNumber(atom)) );
+            fragments.add(tmp);
+        }
+        return fragments;
+    }
+
+    private List order1(IAtomContainer atomContainer) throws CDKException {
+        List fragments = new ArrayList();
+
+       Iterator bonds = atomContainer.bonds();
+
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            if (bond.getAtomCount() != 2) throw new CDKException("We only consider 2 center bonds");
+            List tmp = new ArrayList();
+            tmp.add( new Integer(atomContainer.getAtomNumber(bond.getAtom(0))) );
+            tmp.add( new Integer(atomContainer.getAtomNumber(bond.getAtom(1))) );
+            fragments.add(tmp);
+        }
+        return fragments;
+    }
+
+
+    private List order2(IAtomContainer atomContainer) {
+        QueryAtomContainer[] queries = new QueryAtomContainer[1];
+        try {
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC"), false);
+        } catch (InvalidSmilesException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return ChiIndexUtils.getFragments(atomContainer, queries);
     }
 
     private List order3(IAtomContainer atomContainer) {
