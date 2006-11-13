@@ -1,9 +1,6 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2006  Christoph Steinbeck <steinbeck@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.io;
 
@@ -257,6 +253,9 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 logger.debug("data line: ", line);
 			    data += line;
+			    // preserve newlines, unless the line is exactly 80 chars; in that case it
+			    // is assumed to continue on the next line. See MDL documentation.
+			    if (line.length() < 80) data += "\n";
 			}
 			if (fieldName != null) {
 			    logger.info("fieldName, data: ", fieldName, ", ", data);
