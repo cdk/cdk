@@ -367,7 +367,7 @@ public class AtomContainer extends ChemObject
     /**
      * Returns an Iterator for looping over all bonds in this container.
      *
-     * @return An Iterator with the atoms in this container
+     * @return An Iterator with the bonds in this container
      */
     public java.util.Iterator bonds() {
         return new BondIterator();
