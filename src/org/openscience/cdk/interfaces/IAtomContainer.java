@@ -62,15 +62,15 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @see    #addAtomParity
      */
     public IAtomParity getAtomParity(IAtom atom);
-    
+
 	/**
 	 * Sets the array of atoms of this AtomContainer.
 	 *
 	 * @param  atoms  The array of atoms to be assigned to this AtomContainer
-	 * @see           #getAtoms
+	 * @see           #atoms
 	 */
 	public void setAtoms(IAtom[] atoms);
-	
+
 	/**
 	 * Sets the array of electronContainers of this AtomContainer.
 	 *
@@ -85,7 +85,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 * @param  number  The position of the atom to be set.
 	 * @param  atom    The atom to be stored at position <code>number</code>
-	 * @see            #getAtomAt
+	 * @see            #getAtom
 	 */
 	public void setAtom(int number, IAtom atom);
 
@@ -94,7 +94,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 * @param  number  The position of the atom to be retrieved.
 	 * @return         The atomAt value
-	 * @see            #setAtomAt
+	 * @see            #setAtom
 	 */
 	public IAtom getAtom(int number);
 
@@ -103,7 +103,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 *@param  number  The position of the bond to be retrieved.
 	 *@return         The bondAt value
-	 *@see            #setElectronContainerAt
+	 *@see            #setElectronContainer
 	 */
 	public IBond getBond(int number);
 
@@ -114,7 +114,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 * @param  number            The position of the ElectronContainer to be set.
 	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
-	 * @see                      #getElectronContainerAt
+	 * @see                      #getElectronContainer
 	 */
 	public void setElectronContainer(int number, IElectronContainer electronContainer);
 
@@ -138,15 +138,21 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 //	public void setAtomCount(int atomCount);
 
 
-	/**
-	 *  Returns an Iterator for looping over all atoms in this container.
-	 *
-	 *@return    An Iterator with the atoms in this container
-	 */
-	public java.util.Iterator atoms();
+    /**
+     * Returns an Iterator for looping over all atoms in this container.
+     *
+     * @return An Iterator with the atoms in this container
+     */
+    public java.util.Iterator atoms();
 
+    /**
+     * Returns an Iterator for looping over all bonds in this container.
+     *
+     * @return An Iterator with the bonds in this container
+     */
+    public java.util.Iterator bonds();
 
-	/**
+    /**
 	 *  Returns the array of electronContainers of this AtomContainer.
 	 *
 	 *@return    The array of electronContainers of this AtomContainer
@@ -154,14 +160,8 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public IElectronContainer[] getElectronContainers();
 
-	/**
-	 *  Returns an Iterator for looping over all bonds in this container.
-	 *
-	 *@return    An Iterator with the bonds in this container
-	 */
-	public java.util.Iterator bonds();
 
-    /**
+	/**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *
 	 *@return    The array of Bonds of this AtomContainer
@@ -245,7 +245,6 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 *@param  number  The position of the ElectronContainer to be returned.
 	 *@return         The ElectronContainer at position <code>number</code>.
-	 *@see            #setElectronContainerAt
 	 */
 	public IElectronContainer getElectronContainer(int number);
 
@@ -325,7 +324,6 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *  Returns the number of Atoms in this Container.
 	 *
 	 *@return    The number of Atoms in this Container
-	 *@see       #setAtomCount
 	 */
 	public int getAtomCount();
 
