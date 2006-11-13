@@ -324,9 +324,10 @@ public class AtomContainer extends ChemObject
         }
     	
     }
+
 	
 
-	/**
+    /**
 	 *  Returns the array of electronContainers of this AtomContainer.
 	 *
 	 *@return    The array of electronContainers of this AtomContainer
@@ -363,8 +364,46 @@ public class AtomContainer extends ChemObject
 		return result;
 	}
 
+    /**
+     * Returns an Iterator for looping over all bonds in this container.
+     *
+     * @return An Iterator with the atoms in this container
+     */
+    public java.util.Iterator bonds() {
+        return new BondIterator();
+    }
 
-	/**
+    /**
+     * The inner BondIterator class.
+     */
+    private class BondIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+
+        public boolean hasNext() {
+            return pointer < getBondCount();
+        }
+
+        public Object next() {
+            IBond value = null;
+            while (pointer < getBondCount()) {
+                IElectronContainer electronContainer = getElectronContainer(pointer++);
+                if (electronContainer instanceof IBond) {
+                    value = (IBond) electronContainer;
+                    break;
+                }
+            }
+            return value;
+        }
+
+        public void remove() {
+            removeElectronContainer(--pointer);
+        }
+
+    }
+
+
+    /**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *
 	 *@return    The array of Bonds of this AtomContainer
