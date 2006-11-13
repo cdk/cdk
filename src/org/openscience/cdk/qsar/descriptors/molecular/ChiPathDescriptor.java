@@ -80,7 +80,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath",
                 this.getClass().getName(),
-                "$Id: GravitationalIndexDescriptor.java 6906 2006-11-12 14:58:42Z rajarshi $",
+                "$Id: ChiPathDescriptor.java 6906 2006-11-12 14:58:42Z rajarshi $",
                 "The Chemistry Development Kit");
     }
 
