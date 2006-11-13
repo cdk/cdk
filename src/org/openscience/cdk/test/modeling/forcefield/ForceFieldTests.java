@@ -1127,7 +1127,7 @@ public class ForceFieldTests extends CDKTestCase {
         	System.out.println(exception);
         }       
 
-		assertEquals(34.01523374975567, forceField.getMinimumFunctionValueCGM(), 0.00001);
+		assertEquals(34.01, forceField.getMinimumFunctionValueCGM(), 0.01);
 
 	}
 
@@ -1260,7 +1260,7 @@ public class ForceFieldTests extends CDKTestCase {
         	System.out.println(exception);
         }       
 
-        if(!standAlone) assertEquals(734.1705383425251, forceField.getMinimumFunctionValueCGM(), 0.00001);
+        if(!standAlone) assertEquals(734.17, forceField.getMinimumFunctionValueCGM(), 0.01);
 
 	}
 
