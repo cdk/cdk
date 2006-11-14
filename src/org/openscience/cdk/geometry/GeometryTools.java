@@ -756,7 +756,7 @@ public class GeometryTools {
 	 *@return    boolean indication that 3D coordinates are available
 	 */
 	public static boolean has3DCoordinates(IAtomContainer ac) {
-		return GeometryTools.has3DCoordinates(ac);
+		return GeometryToolsInternalCoordinates.has3DCoordinates(ac);
 	}
 	
 	/**
