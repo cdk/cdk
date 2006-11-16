@@ -188,7 +188,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		for (int i = 0 ; i < 1/*mol.getAtomCount() */; i++){
+		for (int i = 0 ; i < 4/*mol.getAtomCount() */; i++){
 			params[0] = new Integer(6);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -478,13 +478,13 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 
 
 	/**
-	 *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
+	 *  A unit test for JUnit with [C]=C=C=O
 	 */
 	public void testWithRadical() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]=C=C=O");
+		Molecule mol = sp.parseSmiles("[C]=C=C=O");
 //		mol.addElectronContainer(new SingleElectron(mol.getAtom(0)));
 		mol.addElectronContainer(new LonePair(mol.getAtom(3)));
 		Object[] object = {new Integer(6),new Boolean(false)};
@@ -492,14 +492,14 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
-//			if(testResult[i] == 0.0)
-//				assertTrue(result == 0.0);
-//			else {
-//				assertTrue(result != 0.0);
-//				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
-//			}
-//			assertEquals(testResult[i],result,0.21);
+//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+			if(testResult[i] == 0.0)
+				assertTrue(result == 0.0);
+			else {
+				assertTrue(result != 0.0);
+				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			}
+			assertEquals(testResult[i],result,0.21);
 		}
 	}
 
