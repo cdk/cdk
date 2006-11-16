@@ -26,32 +26,23 @@ package org.openscience.cdk.reaction.type;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.ValencyChecker;
 
 /**
@@ -175,7 +166,6 @@ public class BreakingBondReaction implements IReactionProcess{
 			setActiveCenters(reactant);
 		}
 		
-		IAtomContainerSet acSet = reactant.getBuilder().newAtomContainerSet();
 		IBond[] bonds = reactants.getMolecule(0).getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
 			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER))
@@ -183,7 +173,6 @@ public class BreakingBondReaction implements IReactionProcess{
 				
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
-				int bond =  0;/*reactants.getMolecule(0).getBondNumber(bonds[i])*/
 				cleanFlagBOND(reactants.getMolecule(0));
 				bonds[i].setFlag(BONDTOFLAG, true);
 				/**/
@@ -198,70 +187,71 @@ public class BreakingBondReaction implements IReactionProcess{
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
+					IBond bond = null;
 					double order = 0;
 					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
 						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG)){
 							order = reactantCloned.getBond(l).getOrder();
 							reactantCloned.getBond(l).setOrder(order-1);
-							bond = reactantCloned.getBondNumber(reactantCloned.getBond(l));
+							bond = reactantCloned.getBond(l);
 							break;
 						}
 					}
 
 					int charge = 0;
-					IMoleculeSet setOfMolecules = null;
 					if (j == 0){
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(charge+1);
-						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1), reactantCloned))
-							continue;
+						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
+							if(!valChecker.isSaturated(reactantCloned.getAtom(atom1), reactantCloned))
+								continue;
 						
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
 						reactantCloned.addElectronContainer(new LonePair(reactantCloned.getAtom(atom2)));
 						/* an acceptor atom cannot be charged positive*/
-						if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
-							continue;
+						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
+							if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
+								continue;
 						if(order == 1)/*break molecule*/
-							setOfMolecules = fragmentMolecule(reactantCloned,bond);
+							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
 						
 					} else{
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge+1);
 						
-						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2), reactantCloned))
-							continue;
+						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
+							if(!valChecker.isSaturated(reactantCloned.getAtom(atom2), reactantCloned))
+								continue;
 						
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(-1);
 						reactantCloned.addElectronContainer(new LonePair(reactantCloned.getAtom(atom1)));
 						/* an acceptor atom cannot be charged positive*/
-						if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
-							continue;
+						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
+							if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
+								continue;
 						if(order == 1)/*break molecule*/
-							setOfMolecules = fragmentMolecule(reactantCloned,bond);// TODO- better method
+							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
 					}
 					
 					/* mapping */
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
+					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactants.getMolecule(0).getAtom(atom1), reactantCloned.getAtom(atom1));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), reactantCloned.getAtom(atom1));
+			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactants.getMolecule(0).getAtom(atom2), reactantCloned.getAtom(atom2));
 			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), reactantCloned.getAtom(atom2));
-			        reaction.addMapping(mapping);
-					
-					if(setOfMolecules != null)
-						for(int z = 0 ; z < setOfMolecules.getAtomContainerCount(); z++){
-							IMolecule ac = setOfMolecules.getMolecule(z);
-					        /* the fragmentation of Hydrogens can be produc duplicates*/
-							if(existAC(acSet,ac))
-								continue;
-							reaction.addProduct(ac);
-							acSet.addAtomContainer(ac);
-						}
-					else
+			        if(order != 1){
+						mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], bond);
+						reaction.addMapping(mapping);
+					}
+			        if(order > 1)
 						reaction.addProduct(reactantCloned);
-					
+			        else{
+				        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
+						for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++){
+							reaction.addProduct(moleculeSet.getMolecule(z));
+						}
+			        }
 					/*adding only that contains product*/
 					if(reaction.getProductCount() != 0)
 						setOfReactions.addReaction(reaction);
@@ -274,106 +264,25 @@ public class BreakingBondReaction implements IReactionProcess{
 		
 		return setOfReactions;	
 	}
-	/**
-	 * controll if the new product was already found before
-	 * @param acSet 
-	 * @param fragment
-	 * @return True, if it contains
-	 */
-	private boolean existAC(IAtomContainerSet acSet, IMolecule fragment) {
-		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(fragment);
-		for(int i = 0; i < acSet.getAtomContainerCount(); i++){
-			IAtomContainer ac = acSet.getAtomContainer(i);
-			try {
-				if(UniversalIsomorphismTester.isIsomorph(ac, qAC))
-					return true;
-			} catch (CDKException e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
-	/**
-	 * fragment a molecule in two. It search where don't exist a connection between two atoms
-	 * @param reactantCloned IMolecule to fragment
-	 * @param bond           Bond to remove
-	 * @return               The IMoleculeSet
-	 */
-	private IMoleculeSet fragmentMolecule(IMolecule molecule, int bond) throws CDKException{
-//		if(!GeometryTools.has2DCoordinates(molecule)){
-			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-			sdg.setMolecule(molecule);
-			molecule = sdg.getMolecule();
-			try {
-				sdg.generateCoordinates();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		IMoleculeSet setOfFragments = molecule.getBuilder().newMoleculeSet();
-		IMolecule molecule1,molecule2;
-		try {
-			molecule1 = (IMolecule)molecule.clone();
-			molecule1.removeElectronContainer(bond);
-			molecule2 = (IMolecule)molecule.clone();
-			molecule2.removeElectronContainer(bond);
-			molecule.removeElectronContainer(bond);
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
-		
-		for(int i = 0 ; i < molecule.getAtomCount() ; i++)
-			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
-		
-		
-		
-		molecule.getAtom(0).setFlag(CDKConstants.VISITED, true);
-		ArrayList atomsVisited = new ArrayList();
-		atomsVisited.add(molecule.getAtom(0));
-		
-		IAtom conAtom = null;
-		for (int i = 0; i < atomsVisited.size(); i++){
-			java.util.List atomsConnected = molecule.getConnectedAtomsList((IAtom)atomsVisited.get(i));
-			for (int j = 0; j < atomsConnected.size(); j++){
-				conAtom = (IAtom)atomsConnected.get(j);
-				if(conAtom.getFlag(CDKConstants.VISITED) == false){
-					conAtom.setFlag(CDKConstants.VISITED, true);
-					atomsVisited.add(conAtom);
-				}
-			}
-		}
-		for (int i = 0; i < molecule.getAtomCount(); i++){
-			if(molecule.getAtom(i).getFlag(CDKConstants.VISITED) == true){
-				for (int j = 0; j < molecule1.getAtomCount(); j++){
-					if (compareCoordenates(molecule.getAtom(i),molecule1.getAtom(j))){
-						molecule1.removeAtomAndConnectedElectronContainers(molecule1.getAtom(j));}
-				}
-				
-			} else{
-				for (int j = 0; j < molecule2.getAtomCount(); j++){
-					if (compareCoordenates(molecule.getAtom(i),molecule2.getAtom(j))){
-						molecule2.removeAtomAndConnectedElectronContainers(molecule2.getAtom(j));}
-				}
-				
-			}
-		}
-		if(molecule1.getAtomCount()< molecule.getAtomCount())
-			setOfFragments.addAtomContainer(molecule1);
-		if(molecule2.getAtomCount()< molecule.getAtomCount())
-			setOfFragments.addAtomContainer(molecule2);
-		return setOfFragments;
-	}
-	/**
-	 * Compare two atoms if they have the same coordenates.
-	 * @param atom1 IAtom
-	 * @param atom2 IAtom
-	 * @return True, if they the same coordenates.
-	 */
-	private boolean compareCoordenates(IAtom atom1, IAtom atom2) {
-		if(atom1.getPoint2d().equals(atom2.getPoint2d()))
-			return true;
-		return false;
-	}
+//	/**
+//	 * controll if the new product was already found before
+//	 * @param acSet 
+//	 * @param fragment
+//	 * @return True, if it contains
+//	 */
+//	private boolean existAC(IAtomContainerSet acSet, IMolecule fragment) {
+//		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(fragment);
+//		for(int i = 0; i < acSet.getAtomContainerCount(); i++){
+//			IAtomContainer ac = acSet.getAtomContainer(i);
+//			try {
+//				if(UniversalIsomorphismTester.isIsomorph(ac, qAC))
+//					return true;
+//			} catch (CDKException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return false;
+//	}
 	/**
 	 * set the active center for this molecule. 
 	 * The active center will be those which correspond with A-B. If
@@ -428,5 +337,15 @@ public class BreakingBondReaction implements IReactionProcess{
 	public void cleanFlagBOND(IAtomContainer ac){
 		for(int j = 0 ; j < ac.getBondCount(); j++)
 			ac.getBond(j).setFlag(BONDTOFLAG, false);
+	}/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagReactiveCenter(IMolecule molecule){
+		for(int j = 0 ; j < molecule.getAtomCount(); j++)
+			molecule.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
+		for(int j = 0 ; j < molecule.getBondCount(); j++)
+			molecule.getBond(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 	}
 }
