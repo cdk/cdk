@@ -74,6 +74,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
 
 	/**
 	 * Constructor of the DisplacementChargeFromAcceptorReaction object
@@ -163,9 +164,10 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 						|| (((atom2.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom2) == 0 && reactant.getLonePairCount(atom2) > 0 && !atom2.getSymbol().equals("C")))
 						&&(atom1.getFormalCharge() == 0 && reactant.getSingleElectronSum(atom1) == 0))){
 							
+						cleanFlagBOND(reactants.getMolecule(0));
 						/* positions atoms and bonds */
 						int atom0P = reactant.getAtomNumber(bonds[i].getAtom(0));
-						int bond1P = reactant.getBondNumber(bonds[i]);
+						bonds[i].setFlag(BONDTOFLAG1, true);
 						int atom1P = reactant.getAtomNumber(bonds[i].getAtom(1));
 						
 						/* action */
@@ -176,8 +178,15 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 							throw new CDKException("Could not clone reactant", e);
 						}
 						
-						double order = acCloned.getBond(bond1P).getOrder();
-						acCloned.getBond(bond1P).setOrder(order - 1);
+						IBond bondClon = null;
+						for(int l = 0 ; l<acCloned.getBondCount();l++){
+							if(acCloned.getBond(l).getFlag(BONDTOFLAG1)){
+								double order = acCloned.getBond(l).getOrder();
+								acCloned.getBond(l).setOrder(order - 1);
+								bondClon = acCloned.getBond(l);
+								break;
+							}
+						}
 						
 						IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 						reaction.addReactant(reactant);
@@ -197,7 +206,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 						}
 							
 							/* mapping */
-							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], acCloned.getBond(bond1P));
+							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], bondClon);
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
@@ -207,6 +216,9 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 					        
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
+							
+
+							bonds[i].setFlag(BONDTOFLAG1, false);
 						}
 				}
 		}
@@ -266,5 +278,15 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+		}
 	}
 }

@@ -30,6 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -71,6 +72,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class ElectronImpactPDBReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
 
 	/**
 	 * Constructor of the ElectronImpactPDBReaction object
@@ -160,7 +162,9 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					
 					int posA1 = reactant.getAtomNumber(bonds[i].getAtom(0));
 					int posA2 = reactant.getAtomNumber(bonds[i].getAtom(1));
-					int posB1 = reactant .getBondNumber(bonds[i]);
+					cleanFlagBOND(reactants.getMolecule(0));
+					int posB1 = 0;
+					bonds[i].setFlag(BONDTOFLAG1, true);
 					IMolecule reactantCloned;
 					try {
 						reactantCloned = (IMolecule) reactant.clone();
@@ -168,8 +172,14 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
-					double order = reactantCloned.getBond(posB1).getOrder();
-					reactantCloned.getBond(posB1).setOrder(order - 1);
+					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
+						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG1)){
+							double order = reactantCloned.getBond(l).getOrder();
+							reactantCloned.getBond(l).setOrder(order - 1);
+							posB1 = reactantCloned.getBondNumber(reactantCloned.getBond(l));
+							break;
+						}
+					}
 					
 					if (j == 0){
 						reactantCloned.getAtom(posA1).setFormalCharge(1);
@@ -192,6 +202,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					
 					reaction.addProduct(reactantCloned);
 					setOfReactions.addReaction(reaction);
+					
+					bonds[i].setFlag(BONDTOFLAG1, false);
 				}
 			}
 		}
@@ -241,5 +253,15 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+		}
 	}
 }

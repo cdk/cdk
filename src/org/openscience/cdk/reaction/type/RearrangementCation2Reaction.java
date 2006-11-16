@@ -76,6 +76,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RearrangementCation2Reaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
+	private static final int BONDTOFLAG2 = 9;
 
 	/**
 	 * Constructor of the RearrangementCharge2Reaction object
@@ -167,8 +169,6 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& atomi.getFormalCharge() == 1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -184,13 +184,17 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 								ILonePair[] lp = reactant.getLonePairs(atomConn);
 								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) /*&& lp.length == 0*/ )
 									if(reactant.getSingleElectronSum(atomConn) == 0){
-									/* positions atoms and bonds */
+										IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+										reaction.addReactant(reactant);
+										
+										cleanFlagBOND(reactants.getMolecule(0));
+										/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atomi);
-									int bond1P = reactant.getBondNumber(bondj);
-									int bond2P = reactant.getBondNumber(bondk);
-									int atom1P = reactant.getAtomNumber(atom);
-									int atom2P = reactant.getAtomNumber(bondk.getConnectedAtom(atom));
+									bondj.setFlag(BONDTOFLAG1, true);
+									bondk.setFlag(BONDTOFLAG2, true);
 									
+									int atom1P = reactant.getAtomNumber(atom);
+									int atom2P = reactant.getAtomNumber(atomConn);
 									/* action */
 									IAtomContainer acCloned;
 									try {
@@ -202,29 +206,45 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 									int charge = acCloned.getAtom(atom0P).getFormalCharge();
 									acCloned.getAtom(atom0P).setFormalCharge(charge-1);
 									
-									double order = acCloned.getBond(bond1P).getOrder();
-									acCloned.getBond(bond1P).setOrder(order+1);
-									
-									order = acCloned.getBond(bond2P).getOrder();
-									acCloned.getBond(bond2P).setOrder(order-1);
 									
 									charge = acCloned.getAtom(atom2P).getFormalCharge();
 									acCloned.getAtom(atom2P).setFormalCharge(charge+1);
+									
+									IBond bondjClon = null, bondkClon = null;
+									for(int l = 0 ; l<acCloned.getBondCount();l++){
+										IBond bb = acCloned.getBond(l);
+										if(bb.getFlag(BONDTOFLAG1)){
+											
+											double order = bb.getOrder();
+											bb.setOrder(order+1);
+											bondjClon = bb;
+											
+										}else if(acCloned.getBond(l).getFlag(BONDTOFLAG2)){
+											double order = bb.getOrder();
+											bb.setOrder(order-1);
+											bondkClon = bb;
+											
+										}
+									}
 									
 									/* mapping */
 									IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 							        reaction.addMapping(mapping);
 							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondk.getConnectedAtom(atom), acCloned.getAtom(atom2P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomConn, acCloned.getAtom(atom2P));
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, bondjClon);
 							        reaction.addMapping(mapping);
-							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondk, acCloned.getBond(bond2P));
+									
+							        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondk, bondkClon);
 							        reaction.addMapping(mapping);
 									
 									reaction.addProduct((IMolecule) acCloned);
 									setOfReactions.addReaction(reaction);
+
+									bondj.setFlag(BONDTOFLAG1, false);
+									bondk.setFlag(BONDTOFLAG2, false);
 								}
 							}
 						}
@@ -307,5 +327,16 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+			ac.getBond(j).setFlag(BONDTOFLAG2, false);
+		}
 	}
 }

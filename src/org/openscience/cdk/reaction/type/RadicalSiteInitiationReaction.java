@@ -178,11 +178,10 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									
 									IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 									reaction.addReactant(reactant);
-									
+
+									cleanFlagBOND(reactants.getMolecule(0));
 									/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atomi);
-									int bond1P = 0;/*reactant.getBondNumber(bondj);*/
-									cleanFlagBOND(reactants.getMolecule(0));
 									bondj.setFlag(BONDTOFLAG, true);
 									int bond2P = reactant.getBondNumber(bondk);
 									int atom1P = reactant.getAtomNumber(atom);
@@ -194,28 +193,27 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									} catch (CloneNotSupportedException e) {
 										throw new CDKException("Could not clone IMolecule!", e);
 									}
+
+									acCloned.removeElectronContainer(bond2P);
 									
 									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 									acCloned.removeElectronContainer(selectron[selectron.length-1]);
 									selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 									
 									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
+
 									
 									double order = 0;
+									IBond bondjClon = null;
 									for(int l = 0 ; l < acCloned.getBondCount();l++){
 										if(acCloned.getBond(l).getFlag(BONDTOFLAG)){
 											order = acCloned.getBond(l).getOrder();
 											acCloned.getBond(l).setOrder(order+1);
-											bond1P = acCloned.getBondNumber(acCloned.getBond(l));
+											bondjClon = acCloned.getBond(l);
 											break;
 										}
 									}
 
-//									double order = acCloned.getBond(bond1P).getOrder();
-//									acCloned.getBond(bond1P).setOrder(order+1);
-
-									acCloned.removeElectronContainer(bond2P);
-									
 									
 									/* mapping */
 									IMapping mapping = atom.getBuilder().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -224,7 +222,7 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 							        reaction.addMapping(mapping);
 							        mapping = atom.getBuilder().newMapping(atomConn, acCloned.getAtom(atom2P));
 							        reaction.addMapping(mapping);
-							        mapping = atom.getBuilder().newMapping(bondj, acCloned.getBond(bond1P));
+							        mapping = atom.getBuilder().newMapping(bondj, bondjClon);
 							        reaction.addMapping(mapping);
 							        /*breaked bond*/
 //							        mapping = atom.getBuilder().newMapping(bondk, acCloned.getBond(bond2P));

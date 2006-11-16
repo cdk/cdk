@@ -79,6 +79,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RearrangementRadical1Reaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
 
 	/**
 	 * Constructor of the RearrangementRadical1Reaction object
@@ -163,8 +164,6 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -174,9 +173,13 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 						IAtom atom1 = bondj.getConnectedAtom(atomi);
 						ILonePair[] lp = reactant.getLonePairs(atom1);
 						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 ){
+							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+							reaction.addReactant(reactant);
+
+							cleanFlagBOND(reactants.getMolecule(0));
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
-							int bond1P = reactant.getBondNumber(bondj);
+							bondj.setFlag(BONDTOFLAG1, true);
 							int atom1P = reactant.getAtomNumber(atom1);
 							
 							/* action */
@@ -195,19 +198,27 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
 							acCloned.removeElectronContainer(lpelectron[selectron.length -1]);
 							
-							double order = acCloned.getBond(bond1P).getOrder();
-							acCloned.getBond(bond1P).setOrder(order+1);
-							
+							IBond bondjClon = null;
+							for(int l = 0 ; l<acCloned.getBondCount();l++){
+								IBond bb = acCloned.getBond(l);
+								if(bb.getFlag(BONDTOFLAG1)){
+									double order = bb.getOrder();
+									bb.setOrder(order+1);
+									bondjClon = bb;
+									break;
+								}
+							}
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom1, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, bondjClon);
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
+							bondj.setFlag(BONDTOFLAG1, false);
 						}
 					}
 				}
@@ -274,5 +285,15 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+		}
 	}
 }

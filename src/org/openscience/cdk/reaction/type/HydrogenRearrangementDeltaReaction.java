@@ -172,7 +172,8 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 				for(int j = 0 ; j < atoms.size() ; j++){
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
-					if(atom4.getFormalCharge() == 0 && !atom4.equals("H") && atom4.getFlag(CDKConstants.REACTIVE_CENTER)){
+					if(atom4.getFormalCharge() == 0 && !atom4.equals("H")  && 
+							reactant.getMaximumBondOrder(atom4) == 1 && atom4.getFlag(CDKConstants.REACTIVE_CENTER)){
 						Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
 						while(iterat.hasNext()){
 							IAtom hydrogen = (IAtom) iterat.next();
@@ -193,8 +194,8 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 								
 								ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 								acCloned.removeElectronContainer(selectron[selectron.length -1]);
-								acCloned.removeBond(acCloned.getAtom(atom4P), acCloned.getAtom(atomHP));
 								acCloned.addBond(atom0P,atomHP, 1);
+								acCloned.removeBond(acCloned.getAtom(atom4P), acCloned.getAtom(atomHP));
 	
 								acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom4P)));	
 								
@@ -241,7 +242,8 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 				for(int j = 0 ; j < atoms.size() ; j++){
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
-					if(atom4.getFormalCharge() == 0 && !atom4.equals("H")){
+					if(atom4.getFormalCharge() == 0 && !atom4.equals("H") && 
+							reactant.getMaximumBondOrder(atom4) == 1){
 						Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
 						while(iterat.hasNext()){
 							IAtom hydrogen = (IAtom) iterat.next();

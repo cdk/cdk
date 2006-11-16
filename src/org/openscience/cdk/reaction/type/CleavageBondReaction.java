@@ -30,16 +30,12 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
@@ -162,7 +158,6 @@ public class CleavageBondReaction implements IReactionProcess{
 				
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
-				int bond =  0;/*reactants.getMolecule(0).getBondNumber(bonds[i])*/
 				cleanFlagBOND(reactants.getMolecule(0));
 				bonds[i].setFlag(BONDTOFLAG, true);
 				
@@ -180,6 +175,7 @@ public class CleavageBondReaction implements IReactionProcess{
 				reactantCloned.addElectronContainer(reactant.getBuilder().newSingleElectron(reactantCloned.getAtom(atom2)));
 				
 				double order = 0;
+				IBond bondClon = null;
 				for(int l = 0 ; l<reactantCloned.getBondCount();l++){
 					if(reactantCloned.getBond(l).getFlag(BONDTOFLAG)){
 						IBond bondFlag = reactantCloned.getBond(l);
@@ -189,15 +185,13 @@ public class CleavageBondReaction implements IReactionProcess{
 						}
 						else{
 							reactantCloned.getBond(l).setOrder(order-1);
-							bond = reactantCloned.getBondNumber(reactantCloned.getBond(l));
+							bondClon = reactantCloned.getBond(l);
 						}
 						break;
 					}
 				}
 
 				IMoleculeSet moleculeSet = null;
-				
-				
 				if(order == 1)/*break molecule*/{
 					moleculeSet = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 					for(int z = 0 ; z < moleculeSet.getAtomContainerCount(); z++){
@@ -208,7 +202,7 @@ public class CleavageBondReaction implements IReactionProcess{
 				else{
 					reaction.addProduct(reactantCloned);
 					
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(bond));
+					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], bondClon);
 			        reaction.addMapping(mapping);
 			        
 				}

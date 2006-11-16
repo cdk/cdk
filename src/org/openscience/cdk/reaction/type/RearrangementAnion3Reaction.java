@@ -77,6 +77,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RearrangementAnion3Reaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
 
 	/**
 	 * Constructor of the RearrangementAnion3Reaction object
@@ -167,8 +168,6 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == -1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -177,10 +176,13 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 2.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0){
-
+							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+							reaction.addReactant(reactant);
+							
+							cleanFlagBOND(reactant);
 							/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
-							int bond1P = reactant.getBondNumber(bondj);
+							bondj.setFlag(BONDTOFLAG1, true);
 							int atom1P = reactant.getAtomNumber(atom);
 							
 							/* action */
@@ -200,17 +202,26 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 							acCloned.getAtom(atom1P).setFormalCharge(charge-1);
 							ILonePair lp = acCloned.getBuilder().newLonePair(acCloned.getAtom(atom1P));
 							acCloned.addElectronContainer(lp);
-							
+							IBond bondjClon = null;
+							for(int l = 0 ; l<acCloned.getBondCount();l++){
+								IBond bb = acCloned.getBond(l);
+								if(bb.getFlag(BONDTOFLAG1)){
+									bondjClon = bb;
+									break;
+								}
+							}
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, bondjClon);
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
+							
+							bondj.setFlag(BONDTOFLAG1, false);
 						}
 					}
 				}
@@ -273,5 +284,15 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++)
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
 	}
 }

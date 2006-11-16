@@ -75,7 +75,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class RadicalSiteInitiationHReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
-	private static final int BONDTOFLAG = 8;
+	private static final int BONDTOFLAG1 = 8;
+	private static final int BONDTOFLAG2 = 9;
 	
 	/**
 	 * Constructor of the RadicalSiteInitiationHReaction object
@@ -166,8 +167,8 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() < 3.0 ){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
-						if(atom.getFormalCharge() != 0)
-							continue;
+//						if(atom.getFormalCharge() != 0)
+//							continue;
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
@@ -178,13 +179,12 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 									
 									IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 									reaction.addReactant(reactant);
-									
+
+									cleanFlagBOND(reactants.getMolecule(0));
 									/* positions atoms and bonds */
 									int atom0P = reactant.getAtomNumber(atomi);
-									int bond1P = 0;/*reactant.getBondNumber(bondj);*/
-									cleanFlagBOND(reactants.getMolecule(0));
-									bondj.setFlag(BONDTOFLAG, true);
-									int bond2P = reactant.getBondNumber(bondk);
+									bondj.setFlag(BONDTOFLAG1, true);
+									bondk.setFlag(BONDTOFLAG2, true);
 									int atom1P = reactant.getAtomNumber(atom);
 									int atom2P = reactant.getAtomNumber(atomConn);
 									/* action */
@@ -194,28 +194,27 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 									} catch (CloneNotSupportedException e) {
 										throw new CDKException("Could not clone IMolecule!", e);
 									}
+
+									
+									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));
 									
 									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
 									acCloned.removeElectronContainer(selectron[selectron.length-1]);
-									selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-									
-									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
 									
 									double order = 0;
+									IBond bondjClon = null;
 									for(int l = 0 ; l < acCloned.getBondCount();l++){
-										if(acCloned.getBond(l).getFlag(BONDTOFLAG)){
+										if(acCloned.getBond(l).getFlag(BONDTOFLAG1)){
 											order = acCloned.getBond(l).getOrder();
 											acCloned.getBond(l).setOrder(order+1);
-											bond1P = acCloned.getBondNumber(acCloned.getBond(l));
-											break;
+											bondjClon = acCloned.getBond(l);
+											
+										}
+										if(acCloned.getBond(l).getFlag(BONDTOFLAG2)){
+											acCloned.removeBond(acCloned.getBond(l).getAtom(0), acCloned.getBond(l).getAtom(1));
 										}
 									}
 
-//									double order = acCloned.getBond(bond1P).getOrder();
-//									acCloned.getBond(bond1P).setOrder(order+1);
-
-									acCloned.removeElectronContainer(bond2P);
-									
 									
 									/* mapping */
 									IMapping mapping = atom.getBuilder().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -224,7 +223,7 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 							        reaction.addMapping(mapping);
 							        mapping = atom.getBuilder().newMapping(atomConn, acCloned.getAtom(atom2P));
 							        reaction.addMapping(mapping);
-							        mapping = atom.getBuilder().newMapping(bondj, acCloned.getBond(bond1P));
+							        mapping = atom.getBuilder().newMapping(bondj, bondjClon);
 							        reaction.addMapping(mapping);
 							        /*breaked bond*/
 //							        mapping = atom.getBuilder().newMapping(bondk, acCloned.getBond(bond2P));
@@ -237,7 +236,8 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 									
 									setOfReactions.addReaction(reaction);
 
-									bondj.setFlag(BONDTOFLAG, false);
+									bondj.setFlag(BONDTOFLAG1, false);
+									bondj.setFlag(BONDTOFLAG2, false);
 								}
 							}
 						}
@@ -263,6 +263,7 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
+		cleanFlagReactiveCenter(reactant);
 		IAtom atomi = null;
 		IBond bondj = null;
 		IBond bondk = null;
@@ -274,8 +275,8 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() < 3.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
-						if(atom.getFormalCharge() != 0)
-							continue;
+//						if(atom.getFormalCharge() != 0)
+//							continue;
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
@@ -323,7 +324,20 @@ public class RadicalSiteInitiationHReaction implements IReactionProcess{
 	 * @param mol
 	 */
 	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+			ac.getBond(j).setFlag(BONDTOFLAG2, false);
+		}
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagReactiveCenter(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getAtomCount(); j++)
+			ac.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 		for(int j = 0 ; j < ac.getBondCount(); j++)
-			ac.getBond(j).setFlag(BONDTOFLAG, false);
+			ac.getBond(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 	}
 }

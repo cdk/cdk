@@ -33,6 +33,7 @@ import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -76,6 +77,8 @@ import org.openscience.cdk.tools.LoggingTool;
 public class CarbonylEliminationReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
+	private static final int BONDTOFLAG2 = 9;
 	
 	/**
 	 * Constructor of the CarbonylEliminationReaction object
@@ -181,13 +184,13 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 					
 							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 							reaction.addReactant(reactant);
-							
+
+							cleanFlagBOND(reactants.getMolecule(0));
 							/* positions atoms and bonds */
 							int atom1P = reactant.getAtomNumber(atom1);
-							int bondP = reactant.getBondNumber(bond);
-//									System.out.println("bondP: "+bondP);
+							bond.setFlag(BONDTOFLAG1, true);
 							int atom2P = reactant.getAtomNumber(atom2);
-							int bondCP = reactant.getBondNumber(bondCon);
+							bondCon.setFlag(BONDTOFLAG2, true);
 							int atom3P = reactant.getAtomNumber(atom3);
 
 							/* action */
@@ -204,9 +207,16 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));
 							acCloned.getAtom(atom2P).setFormalCharge(-1);
 							
-							acCloned.removeElectronContainer(bondCP);
-							if(bondCP < bondP)
-								bondP--;
+							IBond bondClon = null;
+							for(int l = 0 ; l<acCloned.getBondCount();l++){
+								if(acCloned.getBond(l).getFlag(BONDTOFLAG1)){
+									IBond bb = acCloned.getBond(l);
+									bondClon = bb;
+								}else if(acCloned.getBond(l).getFlag(BONDTOFLAG2)){
+									IBond bb = acCloned.getBond(l);
+									acCloned.removeBond(bb.getAtom(0), bb.getAtom(1));
+								}
+							}
 							
 							/* mapping */
 							IMapping mapping = atom1.getBuilder().newMapping(atom1, acCloned.getAtom(atom1P));
@@ -215,7 +225,7 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 					        reaction.addMapping(mapping);
 					        mapping = atom1.getBuilder().newMapping(atom3, acCloned.getAtom(atom3P));
 					        reaction.addMapping(mapping);
-					        mapping = atom1.getBuilder().newMapping(bond, acCloned.getBond(bondP));
+					        mapping = atom1.getBuilder().newMapping(bond, bondClon);
 					        reaction.addMapping(mapping);
 					        
 							IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(acCloned);
@@ -224,6 +234,9 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 							}
 							
 							setOfReactions.addReaction(reaction);
+
+							bond.setFlag(BONDTOFLAG1, false);
+							bondCon.setFlag(BONDTOFLAG2, false);
 					 	}
 					}
 				}
@@ -301,5 +314,16 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+			ac.getBond(j).setFlag(BONDTOFLAG2, false);
+		}
 	}
 }

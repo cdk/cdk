@@ -76,6 +76,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class RearrangementCation3Reaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
+	private static final int BONDTOFLAG1 = 8;
 
 	/**
 	 * Constructor of the RearrangementCation3Reaction object
@@ -160,15 +161,13 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 		int posCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)reactant);
 		if(posCharge+Math.abs(negCharge) > 1)
 			return setOfReactions;
-		
+
 		IAtom atomi = null;
 		IBond bondj = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
-			atomi = reactant.getAtom(i);
+;			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 1 ){
-				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-				reaction.addReactant(reactant);
-				
+
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
 				for(int j = 0 ; j < bonds.size() ; j++){
@@ -177,9 +176,14 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0)
 							if(reactant.getSingleElectronSum(atom) == 0){
-							/* positions atoms and bonds */
+								
+								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+								reaction.addReactant(reactant);
+								
+								cleanFlagBOND(reactant);
+								/* positions atoms and bonds */
 							int atom0P = reactant.getAtomNumber(atomi);
-							int bond1P = reactant.getBondNumber(bondj);
+							bondj.setFlag(BONDTOFLAG1, true);
 							int atom1P = reactant.getAtomNumber(atom);
 							
 							/* action */
@@ -193,9 +197,16 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 							ILonePair lp = acCloned.getBuilder().newLonePair(acCloned.getAtom(atom0P));
 							acCloned.addElectronContainer(lp);
 									
-							double order = acCloned.getBond(bond1P).getOrder();
-							acCloned.getBond(bond1P).setOrder(order-1);
-									
+							IBond bondjClon = null;
+							for(int l = 0 ; l<acCloned.getBondCount();l++){
+								IBond bb = acCloned.getBond(l);
+								if(bb.getFlag(BONDTOFLAG1)){
+									double order = bb.getOrder();
+									bb.setOrder(order-1);
+									bondjClon = bb;
+									break;
+								}
+							}
 							double charge = acCloned.getAtom(atom0P).getFormalCharge();
 							acCloned.getAtom(atom0P).setFormalCharge((int)charge-1);
 	
@@ -207,11 +218,13 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 					        reaction.addMapping(mapping);
 					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(atom, acCloned.getAtom(atom1P));
 					        reaction.addMapping(mapping);
-					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, acCloned.getBond(bond1P));
+					        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bondj, bondjClon);
 					        reaction.addMapping(mapping);
 					        
 							reaction.addProduct((IMolecule) acCloned);
 							setOfReactions.addReaction(reaction);
+							
+							bondj.setFlag(BONDTOFLAG1, false);
 						}
 					}
 				}
@@ -234,6 +247,7 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
+		cleanFlagReactiveCenter(reactant);
 		IAtom atomi = null;
 		IBond bondj = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
@@ -243,7 +257,7 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() > 1.0){
-						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
+						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFormalCharge() == 0)
 							if(reactant.getSingleElectronSum(atom) == 0){
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -275,5 +289,26 @@ public class RearrangementCation3Reaction implements IReactionProcess{
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
+	}
+	/**
+     * clean the flags BONDTOFLAG from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagBOND(IAtomContainer ac){
+		for(int j = 0 ; j < ac.getBondCount(); j++){
+			ac.getBond(j).setFlag(BONDTOFLAG1, false);
+		}
+	}
+	/**
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * 
+	 * @param mol
+	 */
+	public void cleanFlagReactiveCenter(IMolecule molecule){
+		for(int j = 0 ; j < molecule.getAtomCount(); j++)
+			molecule.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
+		for(int j = 0 ; j < molecule.getBondCount(); j++)
+			molecule.getBond(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 	}
 }
