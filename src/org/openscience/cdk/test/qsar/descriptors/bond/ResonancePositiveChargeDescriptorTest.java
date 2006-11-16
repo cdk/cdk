@@ -78,8 +78,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
         DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate( mol.getBond(0),mol).getValue());
         
 		assertEquals(testResult[0],dar.get(0), 0.01);
-		assertEquals(testResult[1],dar.get(1), 1.3);
 		assertFalse(0.0 == dar.get(1));
+		assertEquals(testResult[1],dar.get(1), 1.14);
 
 		descriptor = new ResonancePositiveChargeDescriptor();
         dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
@@ -96,8 +96,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		assertEquals(testResult[7],dar.get(1), 0.00001);
 
         dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(4),mol).getValue());
-		assertEquals(testResult[8],dar.get(0), 1.53);
 		assertFalse(0.0 == dar.get(0));
+		assertEquals(testResult[8],dar.get(0), 1.53);
 		assertEquals(testResult[9],dar.get(1), 0.00001);
 
 	        
@@ -120,26 +120,28 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 	        
 			assertEquals(testResult[1],dar.get(0), 0.0001);
-	        assertEquals(testResult[0],dar.get(1), 4.0);
 			assertFalse(0.0 == dar.get(1));
+	        assertEquals(testResult[0],dar.get(1), 4.0);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
 			assertEquals(testResult[2],dar.get(0), 0.0001);
 			assertEquals(testResult[3],dar.get(1), 0.0001);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(2),mol).getValue());
-			assertEquals(testResult[4],dar.get(0), 2.5);
+			
+	        assertFalse(0.0 == dar.get(0));
+	        assertEquals(testResult[4],dar.get(0), 2.5);
 			assertFalse(0.0 == dar.get(0));
 			/*assertEquals(testResult[5],dar.get(1), 0.0001); <= it should be null*/
 			
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(3),mol).getValue());
-			assertEquals(testResult[6],dar.get(0), 1.7);
-			assertFalse(0.0 == dar.get(0));
+	        assertFalse(0.0 == dar.get(0));
+	        assertEquals(testResult[6],dar.get(0), 2.3);
 			assertEquals(testResult[7],dar.get(1), 0.0001);
 			
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(4),mol).getValue());
-			assertEquals(testResult[8],dar.get(0), 2);
-			assertFalse(0.0 == dar.get(0));
+	        assertFalse(0.0 == dar.get(0));
+	        assertEquals(testResult[8],dar.get(0), 2);
 			assertEquals(testResult[9],dar.get(1),  0.0001);
 
 	        
@@ -161,22 +163,23 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 			
 	        assertEquals(testResult[1],dar.get(0), 0.0001);
+	        assertFalse(0.0 == dar.get(1));
 	        assertEquals(testResult[0],dar.get(1), 4.5);
-			assertFalse(0.0 == dar.get(1));
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
 			assertEquals(testResult[2],dar.get(0), 0.0001);
 			assertEquals(testResult[3],dar.get(1), 0.0001);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(2),mol).getValue());
-			assertEquals(testResult[4],dar.get(0), 4.0);
-			assertFalse(0.0 == dar.get(0));
+	        assertFalse(0.0 == dar.get(0));
+	        assertEquals(testResult[4],dar.get(0), 4.0);
 			assertEquals(testResult[5],dar.get(1), 0.00001);
 			
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(3),mol).getValue());
-			
-			assertEquals(testResult[7],dar.get(0), 0.00001);
-			/*assertEquals(testResult[6],dar.get(1), 1.2); <= Expect */
+
+	        assertFalse(0.0 == dar.get(0));
+	        assertEquals(testResult[6],dar.get(0), 1.7); 
+			assertEquals(testResult[7],dar.get(1), 0.00001);
 
 	        
 	}
@@ -197,8 +200,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 			assertEquals(testResult[0],dar.get(0), 0.001);
-			assertEquals(testResult[1],dar.get(1), 1.8);
 			assertFalse(0.0 == dar.get(1));
+			assertEquals(testResult[1],dar.get(1), 1.8);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
 			assertEquals(testResult[2],dar.get(0), 0.0001);
@@ -231,22 +234,27 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 	        assertEquals(testResult[0],dar.get(0), 0.001);
-			assertEquals(testResult[1],dar.get(1), 2.0);
+			assertFalse(0.0 == dar.get(1));
+			assertEquals(testResult[1],dar.get(1), 2.1);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
-//	        System.out.println(dar.get(0)+" ; "+dar.get(1) );
+//	        System.out.println(dar.get(0)+" ; "+dar.get(1));
 			/*assertEquals(testResult[2],dar.get(0), 0.0001); The result should not be null*/
+			assertFalse(0.0 == dar.get(1));
 			assertEquals(testResult[3],dar.get(1), 1.0);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(2),mol).getValue());
 //	        System.out.println(dar.get(0)+" ; "+dar.get(1) );
 	        /*assertEquals(testResult[4],dar.get(0), 0.0001); The result should not be null*/
-			assertEquals(testResult[5],dar.get(1), 8.0);
+			assertFalse(0.0 == dar.get(1));
+			assertEquals(testResult[5],dar.get(1), 1.0);
 			
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(3),mol).getValue());
+			assertFalse(0.0 == dar.get(0));
 //	        System.out.println(dar.get(0)+" ; "+dar.get(1) );
-			assertEquals(testResult[6],dar.get(0), 1.5);
-			assertEquals(testResult[7],dar.get(1), 4.0);
+			assertEquals(testResult[6],dar.get(0), 0.80);
+			assertFalse(0.0 == dar.get(1));
+			assertEquals(testResult[7],dar.get(1), 6.4);
 
 	        
 	}
@@ -257,7 +265,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 //		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C(=[O+])C([H])([H])C([H])([H])[H]");
+//		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C(=[O+])C([H])([H])C([H])([H])[H]");
+		Molecule mol = sp.parseSmiles("C=CCC(=[O+])CC");
 
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);

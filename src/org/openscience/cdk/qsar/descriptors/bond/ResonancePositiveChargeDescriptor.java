@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -180,6 +181,24 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
         		continue;
 			for(int z = 0; z < setOfReactions.getReaction(i).getProducts().getAtomContainerCount(); z++){
 	        	IAtomContainer product = setOfReactions.getReaction(i).getProducts().getAtomContainer(z);
+
+	        	int positionAC = 0;
+    			IMapping mapping = (IMapping)setOfReactions.getReaction(i).getMapping(0);
+    			IAtom mappedProductA1 = (IAtom)mapping.getChemObject(1);
+    			if(!product.contains(mappedProductA1)){
+    				mapping = (IMapping)setOfReactions.getReaction(i).getMapping(1);
+    				mappedProductA1 = (IAtom)mapping.getChemObject(1);
+    			}
+    			if(mappedProductA1.getFormalCharge() > 0){
+    				positionAC = product.getAtomNumber(mappedProductA1);
+    			}else{
+    				if(setOfReactions.getReaction(i).getProducts().getAtomContainerCount() == 1)
+    					positionAC =  product.getAtomNumber((IAtom)((IMapping)setOfReactions.getReaction(i).getMapping(1)).getChemObject(1));
+    				else
+    					continue;
+    			}
+    			
+	        	
 	        	if(product.getAtomCount() < 2)
 	        		continue;
 	        	
@@ -188,16 +207,11 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    		if(setOfResonance.getAtomContainerCount() == 1)
 	    			continue;
 	    		
-    			int positionAC = 0;
     			
-    			if(product.getAtom(atomPos0) != null && product.getAtom(atomPos0).getFormalCharge() > 0){
-    				positionAC = atomPos0;
-    			}else{
-    	        	positionAC = atomPos1;
-    			}
+    			
+    			
 
     			if(setOfResonance.getAtomContainerCount() > 1){
-    				outRes:
 	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
 	    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
