@@ -28,7 +28,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
