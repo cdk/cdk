@@ -56,7 +56,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * </table>
  *
  * Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
- * or <i>ALL</i> if * is specified as a parameter.
+ * or <i>MW</i> if * is specified as a parameter.
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -177,7 +177,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
         }
 
         String name = "w";
-        if (elementName.equals("*")) name += "ALL";
+        if (elementName.equals("*")) name = "MW";
         else name += elementName;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight),
                 new String[] {name});
