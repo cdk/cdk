@@ -217,7 +217,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
                 }
                 else {
                     if(atomsCount % 2 != 0) {
-                        if (triplePaths.size() == 0) kier3 = Double.NaN
+                        if (triplePaths.size() == 0) kier3 = Double.NaN;
                         else kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
                     }
                     else {
