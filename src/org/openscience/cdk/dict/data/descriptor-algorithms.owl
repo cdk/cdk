@@ -143,6 +143,11 @@
         <rdfs:label>Rajarshi Guha</rdfs:label>
     </Contributor>
 
+
+    <Contributor rdf:ID="tm">
+        <rdfs:label>Todd Martin</rdfs:label>
+    </Contributor>
+
     <Contributor rdf:ID="mf">
         <rdfs:label>Matteo Floris</rdfs:label>
     </Contributor>
@@ -2045,6 +2050,20 @@
             For a description of the methodology see
             <bibtex:cite ref="WANG97"/>
             .
+        </description>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+       <Descriptor rdf:ID="AlogP">
+        <rdfs:label>XLogP</rdfs:label>
+        <dc:contributor rdf:resource="#tm"/>
+        <dc:date>2005-01-27</dc:date>
+        <definition>
+            Prediction of logP based on Ghose-Crippen method.
+        </definition>
+        <description>
+
         </description>
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
