@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.LoggingTool;
 import java.util.Hashtable;
 
 
-
 /**
  * Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
  * The descriptors are based on a number of atom weightings. There are 6 different
@@ -52,41 +51,68 @@ import java.util.Hashtable;
  * </ol>
  * Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
  * are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
- *
+ * <p/>
  * <p>For each weighting scheme we can obtain
  * <ul>
  * <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
  * <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
  * </ul>
- *
+ * <p/>
  * <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
  * descriptors are required the current code will return all 11.
- *
+ * <p/>
+ * The descriptor returns 17 values for a given weighting scheme, named as follows:
+ * <ol>
+ * <li>Wlambda1
+ * <li>Wlambda2
+ * <li>wlambda3
+ * <li>Wnu1
+ * <li>Wnu2
+ * <li>Wgamma1
+ * <li>Wgamma2
+ * <li>Wgamma3
+ * <li>Weta1
+ * <li>Weta2
+ * <li>Weta3
+ * <li>WT
+ * <li>WA
+ * <li>WV
+ * <li>WK
+ * <li>WG
+ * <li>WD
+ * </ol>
+ * Each name will have a suffix of the form <i>.X</i> where <i>X</i> indicates
+ * the weighting scheme used. Possible values of <i>X</i> are
+ * <ul>
+ * <li>unity
+ * <li>mass
+ * <li>volume
+ * <li>eneg
+ * <li>polar
+ * </ul>
+ * <p/>
+ * <p/>
  * <p>This descriptor uses these parameters:
  * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td>type</td>
- *     <td>unity</td>
- *     <td>Type of weighting as described above</td>
- *   </tr>
+ * <tr>
+ * <td>Name</td>
+ * <td>Default</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr>
+ * <td>type</td>
+ * <td>unity</td>
+ * <td>Type of weighting as described above</td>
+ * </tr>
  * </table>
  *
- *
- * @author      Rajarshi Guha
- * @cdk.created     2004-12-1
- *
+ * @author Rajarshi Guha
+ * @cdk.created 2004-12-1
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
- *
  * @cdk.module qsar
- * @cdk.set    qsar-descriptors
+ * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:WHIM
- *
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor
  */
@@ -94,7 +120,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
 
     LoggingTool logger;
     String type = "";
-    Hashtable hashatwt,hashvdw,hasheneg,hashpol;
+    Hashtable hashatwt, hashvdw, hasheneg, hashpol;
 
     public WHIMDescriptor() {
         logger = new LoggingTool(this);
@@ -188,22 +214,24 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         this.hashpol.put("I", new Double(3.040));
     }
 
-	public DescriptorSpecification getSpecification() {
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
-		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
-    };
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+    }
+
+    ;
 
     /**
-     *  Sets the parameters attribute of the WHIMDescriptor object.
+     * Sets the parameters attribute of the WHIMDescriptor object.
      *
-     *@param  params            The new parameter values. The Object array should have a single element
-     *                          which should be a String. The possible values of this String are: unity,
-     *                          mass, volume, eneg, polar
-     *@exception  CDKException  if the parameters are of the wrong type
-     *@see #getParameters
+     * @param params The new parameter values. The Object array should have a single element
+     *               which should be a String. The possible values of this String are: unity,
+     *               mass, volume, eneg, polar
+     * @throws CDKException if the parameters are of the wrong type
+     * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
@@ -212,58 +240,59 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         if (!(params[0] instanceof String)) {
             throw new CDKException("Parameters must be of type String");
         }
-        this.type = (String)params[0];
-        if (!this.type.equals("unity") && 
-                !this.type.equals("mass") && 
-                !this.type.equals("volume") && 
-                !this.type.equals("eneg") && 
-                !this.type.equals("polar")) 
+        this.type = (String) params[0];
+        if (!this.type.equals("unity") &&
+                !this.type.equals("mass") &&
+                !this.type.equals("volume") &&
+                !this.type.equals("eneg") &&
+                !this.type.equals("polar"))
             throw new CDKException("Weighting scheme must be one of those specified in the API");
     }
 
     /**
-     *  Gets the parameters attribute of the WHIMDescriptor object.
+     * Gets the parameters attribute of the WHIMDescriptor object.
      *
-     *@return    Two element array of Integer representing number of highest and lowest eigenvalues
-     *           to return respectively
-     *@see #setParameters
+     * @return Two element array of Integer representing number of highest and lowest eigenvalues
+     *         to return respectively
+     * @see #setParameters
      */
     public Object[] getParameters() {
-        Object[] o =new Object[1];
+        Object[] o = new Object[1];
         o[0] = new String(this.type);
-        return(o);
+        return (o);
     }
+
     /**
-     *  Gets the parameterNames attribute of the WHIMDescriptor object.
+     * Gets the parameterNames attribute of the WHIMDescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     public String[] getParameterNames() {
-       String[] pname = new String[1];
-       pname[0] = "type";
-       return(pname);
+        String[] pname = new String[1];
+        pname[0] = "type";
+        return (pname);
     }
 
 
     /**
-     *  Gets the parameterType attribute of the WHIMDescriptor object.
+     * Gets the parameterType attribute of the WHIMDescriptor object.
      *
-     *@param  name  Description of the Parameter 
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     public Object getParameterType(String name) {
         Object o = new String();
-        return(o);
+        return (o);
     }
 
 
-   /**
-     *  Calculates 11 directional and 6 non-directional WHIM descriptors for. 
-     *  the specified weighting scheme
+    /**
+     * Calculates 11 directional and 6 non-directional WHIM descriptors for.
+     * the specified weighting scheme
      *
-     *@param  container  Parameter is the atom container.
-     *@return            An ArrayList containing the descriptors in the order described above. 
-     *@throws CDKException if the principal components decomposition fails
+     * @param container Parameter is the atom container.
+     * @return An ArrayList containing the descriptors in the order described above.
+     * @throws CDKException if the principal components decomposition fails
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double sum = 0.0;
@@ -284,11 +313,11 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         // set up the weight vector
         Hashtable hash = null;
         double[] wt = new double[ac.getAtomCount()];
-        
+
         if (this.type.equals("unity")) {
             for (int i = 0; i < ac.getAtomCount(); i++) wt[i] = 1.0;
         } else {
-            if (this.type.equals("mass")) { 
+            if (this.type.equals("mass")) {
                 hash = this.hashatwt;
             } else if (this.type.equals("volume")) {
                 hash = this.hashvdw;
@@ -299,13 +328,13 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             }
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 String sym = ac.getAtom(i).getSymbol();
-                wt[i] =  ((Double)hash.get(sym)).doubleValue();
+                wt[i] = ((Double) hash.get(sym)).doubleValue();
             }
         }
 
         PCA pcaobject = null;
         try {
-            pcaobject = new PCA(cmat,wt);
+            pcaobject = new PCA(cmat, wt);
         } catch (CDKException cdke) {
             logger.debug(cdke);
         }
@@ -322,20 +351,21 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         double[][] scores = pcaobject.getScores();
         for (int i = 0; i < 3; i++) {
             sum = 0.0;
-            for (int j = 0; j < ac.getAtomCount(); j++) 
+            for (int j = 0; j < ac.getAtomCount(); j++)
                 sum += scores[j][i] * scores[j][i] * scores[j][i] * scores[j][i];
-            sum = sum / (lambda[i]*lambda[i]*ac.getAtomCount());
+            sum = sum / (lambda[i] * lambda[i] * ac.getAtomCount());
             eta[i] = 1.0 / sum;
         }
 
         // look for symmetric & asymmetric atoms for the gamma descriptor
         for (int i = 0; i < 3; i++) {
-            double ns = 0.0; double na = 0.0;
+            double ns = 0.0;
+            double na = 0.0;
             for (int j = 0; j < ac.getAtomCount(); j++) {
                 boolean foundmatch = false;
                 for (int k = 0; k < ac.getAtomCount(); k++) {
                     if (k == j) continue;
-                    if (scores[j][i] == -1*scores[k][i]) {
+                    if (scores[j][i] == -1 * scores[k][i]) {
                         ns++;
                         foundmatch = true;
                         break;
@@ -343,52 +373,59 @@ public class WHIMDescriptor implements IMolecularDescriptor {
                 }
                 if (!foundmatch) na++;
             }
-            double n = (double)ac.getAtomCount();
-            gamma[i] = -1.0 * ( (ns/n)*Math.log(ns/n)/Math.log(2.0) + (na/n)*Math.log(1.0/n)/Math.log(2.0) );
+            double n = (double) ac.getAtomCount();
+            gamma[i] = -1.0 * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
             gamma[i] = 1.0 / (1.0 + gamma[i]);
             //System.out.println("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
         }
-                
-                
+
         // non directional WHIMS's
         double t = lambda[0] + lambda[1] + lambda[2];
-        double a = lambda[0]*lambda[1] + lambda[0]*lambda[2] + lambda[1]*lambda[2];
-        double v = t + a + lambda[0]*lambda[1]*lambda[2];
+        double a = lambda[0] * lambda[1] + lambda[0] * lambda[2] + lambda[1] * lambda[2];
+        double v = t + a + lambda[0] * lambda[1] * lambda[2];
 
         double k = 0.0;
         sum = 0.0;
         for (int i = 0; i < 3; i++) sum += lambda[i];
-        for (int i = 0; i < 3; i++) k = (lambda[i] / sum) - (1.0/3.0);
-        k = k / (4.0/3.0);
+        for (int i = 0; i < 3; i++) k = (lambda[i] / sum) - (1.0 / 3.0);
+        k = k / (4.0 / 3.0);
 
-        double g = Math.pow( gamma[0]*gamma[1]*gamma[2], 1.0/3.0);
+        double g = Math.pow(gamma[0] * gamma[1] * gamma[2], 1.0 / 3.0);
         double d = eta[0] + eta[1] + eta[2];
 
         // return all the stuff we calculated
-        DoubleArrayResult retval = new DoubleArrayResult(11+6);
-        retval.add( lambda[0] );
-        retval.add( lambda[1] );
-        retval.add( lambda[2] );
-                    
-        retval.add( nu[0] );
-        retval.add( nu[1] );
-                    
-        retval.add( gamma[0] );
-        retval.add( gamma[1] );
-        retval.add( gamma[2] );
-                    
-        retval.add( eta[0] );
-        retval.add( eta[1] );
-        retval.add( eta[2] );
-                    
-        retval.add( t );
-        retval.add( a );
-        retval.add( v );
-        retval.add( k );
-        retval.add( g );
-        retval.add( d );
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        DoubleArrayResult retval = new DoubleArrayResult(11 + 6);
+        retval.add(lambda[0]);
+        retval.add(lambda[1]);
+        retval.add(lambda[2]);
+
+        retval.add(nu[0]);
+        retval.add(nu[1]);
+
+        retval.add(gamma[0]);
+        retval.add(gamma[1]);
+        retval.add(gamma[2]);
+
+        retval.add(eta[0]);
+        retval.add(eta[1]);
+        retval.add(eta[2]);
+
+        retval.add(t);
+        retval.add(a);
+        retval.add(v);
+        retval.add(k);
+        retval.add(g);
+        retval.add(d);
+
+        String[] names = {
+                "Wlambda1", "Wlambda2", "Wlambda3",
+                "Wnu1", "Wnu2",
+                "Wgamma1", "Wgamma2", "Wgamma3",
+                "Weta1", "Weta2", "Weta3",
+                "WT", "WA", "WV", "WK", "WG", "WD"
+        };
+        for (int i = 0; i < names.length; i++) names[i] += "." + type;
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
 
 
@@ -399,19 +436,19 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         double[] eval;
 
 
-        public PCA(double[][] cmat, double[] wt) throws CDKException{
+        public PCA(double[][] cmat, double[] wt) throws CDKException {
 
             int ncol = 3;
             int nrow = wt.length;
 
-            if (cmat.length != wt.length ) {
+            if (cmat.length != wt.length) {
                 throw new CDKException("WHIMDescriptor: number of weights should be equal to number of atoms");
             }
 
             // make a copy of the coordinate matrix
             double[][] d = new double[nrow][ncol];
             for (int i = 0; i < nrow; i++) {
-                for (int j = 0; j < ncol; j++) 
+                for (int j = 0; j < ncol; j++)
                     d[i][j] = cmat[i][j];
             }
 
@@ -419,10 +456,10 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             // barymetric centering
             for (int i = 0; i < ncol; i++) {
                 double mean = 0.0;
-                for (int j = 0; j < nrow; j++) 
+                for (int j = 0; j < nrow; j++)
                     mean += d[j][i];
-                mean = mean / (double)nrow;
-                for (int j = 0; j < nrow; j++) 
+                mean = mean / (double) nrow;
+                for (int j = 0; j < nrow; j++)
                     d[j][i] = (d[j][i] - mean);
             }
 
@@ -433,11 +470,11 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < ncol; i++) {
                 double meanx = 0;
                 for (int k = 0; k < nrow; k++) meanx += d[k][i];
-                meanx = meanx / (double)nrow;
+                meanx = meanx / (double) nrow;
                 for (int j = 0; j < ncol; j++) {
                     double meany = 0.0;
                     for (int k = 0; k < nrow; k++) meany += d[k][j];
-                    meany = meany / (double)nrow;
+                    meany = meany / (double) nrow;
 
                     double sum = 0.;
                     for (int k = 0; k < nrow; k++) {
@@ -460,10 +497,11 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         }
 
         double[] getEigenvalues() {
-            return(this.eval);
+            return (this.eval);
         }
+
         double[][] getScores() {
-            return(t.getArray());
+            return (t.getArray());
         }
     }
 

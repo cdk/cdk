@@ -26,8 +26,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -56,7 +56,9 @@ import org.openscience.cdk.tools.LoggingTool;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ * Returns a single value with name <i>apol</i>.
+ *
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
@@ -162,7 +164,8 @@ public class APolDescriptor implements IMolecularDescriptor {
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(apol));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(apol), new String[] {"apol"});
         } catch (Exception ex1) {
             logger.debug(ex1);
             throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);

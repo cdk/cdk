@@ -50,12 +50,12 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple path cluster, order 4
- * <li>Simple path cluster, order 5
- * <li>Simple path cluster, order 6
- * <li>Valence path cluster, order 4
- * <li>Valence path cluster, order 5
- * <li>Valence path cluster, order 6
+ * <li>SPC-4 - Simple path cluster, order 4
+ * <li>SPC-5 - Simple path cluster, order 5
+ * <li>SPC-6 - Simple path cluster, order 6
+ * <li>VPC-4 - Valence path cluster, order 4
+ * <li>VPC-5 - Valence path cluster, order 5
+ * <li>VPC-6 - Valence path cluster, order 6
  * </ol>
  *
  * @author Rajarshi Guha
@@ -136,7 +136,11 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
         retval.add(order5v);
         retval.add(order6v);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = {
+                "SPC-4", "SPC-5",  "SPC-6",
+                "VPC-4", "VPC-5",  "VPC-6"
+        };
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
     }
 

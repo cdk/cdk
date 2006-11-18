@@ -50,7 +50,9 @@ import org.openscience.cdk.tools.MFAnalyser;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ * Returns a single value named <i>vAdjMat</i>.
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -115,7 +117,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vadjMa));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(vadjMa), new String[] {"vAdjMat"});
 	}
 
 

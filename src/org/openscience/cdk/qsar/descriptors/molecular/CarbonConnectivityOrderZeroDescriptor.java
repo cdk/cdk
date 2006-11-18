@@ -25,8 +25,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -126,7 +126,8 @@ public class CarbonConnectivityOrderZeroDescriptor implements IMolecularDescript
                 }
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi0C));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(chi0C), new String[] {"chi0C"});
     }
 
 

@@ -25,8 +25,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -45,7 +45,9 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
  * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
- * 
+ *
+ * Returns a single value named <i>nHBAcc</i>.
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -149,7 +151,8 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
       }
     }
 
-    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondDonors));
+    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+            new IntegerResult(hBondDonors),  new String[] {"nHBDon"});
     }
 
 

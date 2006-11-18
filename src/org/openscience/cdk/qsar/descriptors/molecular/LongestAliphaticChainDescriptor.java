@@ -58,6 +58,7 @@ import java.util.Vector;
  *   </tr>
  * </table>
  *
+ * Returns a single value named <i>nAtomLAC</i>
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
  * @cdk.module  qsar
@@ -193,7 +194,8 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      		}    		
     	}
   
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(longestChainAtomsCount));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(longestChainAtomsCount), new String[] {"nAtomLAC"});
     }
 
     private int getLongestChainPath(int[][] apsp){

@@ -52,6 +52,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  *   </tr>
  * </table>
  *
+ * Returns a single value with name <i>nAromBond</i>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -151,7 +153,8 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
                 aromaticBondsCount += 1;
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(aromaticBondsCount));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(aromaticBondsCount), new String[] {"nAromBond"});
     }
 
 

@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.PathTools;
@@ -31,6 +29,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import javax.vecmath.Point3d;
+
 
 /**
  * Evaluates the Petitjean shape indices,
@@ -39,8 +39,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * and considered the molecular graph. This class also implements the geometric analog
  * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
  * <p/>
- * The descriptor returns a <code>DoubleArrayResult</code> which contains the topological
- * shape index and the geometric shape index in that order.
+ * The descriptor returns a <code>DoubleArrayResult</code> which contains
+ * <ol>
+ * <li>topoShape - topological shape index
+ * <li>geomShape - geometric shape index
+ * </ol>
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -55,7 +58,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ *
  * @author Rajarshi Guha
  * @cdk.created 2006-01-14
  * @cdk.module qsar
@@ -171,7 +175,8 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
             throw new CDKException("Structure must have 3D coordinates");
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                new String[] {"topoShape", "geomShape"});
     }
 }
     

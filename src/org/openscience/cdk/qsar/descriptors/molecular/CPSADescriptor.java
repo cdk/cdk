@@ -31,7 +31,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
  * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
- *
+ * <p/>
  * The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and
  * are related to the Polar Surface Area descriptors. The original
  * implementation was in the ADAPT software package and the the definitions
@@ -98,103 +98,103 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * </tr>
  * </tbody>
  * </table>
- * <p>
+ * <p/>
  * <b>NOTE</b>: The values calculated by this implementation will differ from those
  * calculated by the original ADAPT implementation of the CPSA descriptors. This
- * is becaause the original implementation used an analytical surface area algorithm 
+ * is because the original implementation used an analytical surface area algorithm
  * and used partial charges obtained from MOPAC using the AM1 Hamiltonian.
  * This implementation uses a numerical
  * algorithm to obtain surface areas (see {@link NumericalSurface}) and obtains partial
  * charges using the Gasteiger-Marsilli algorithm (see {@link GasteigerMarsiliPartialCharges}).
- * <p>
+ * <p/>
  * However, a comparison of the values calculated by the two implementations indicates
  * that they are qualitatively the same.
- * 
+ * <p/>
  * <p>This descriptor uses these parameters:
  * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td></td>
- *     <td></td>
- *     <td>no parameters</td>
- *   </tr>
+ * <tr>
+ * <td>Name</td>
+ * <td>Default</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr>
+ * <td></td>
+ * <td></td>
+ * <td>no parameters</td>
+ * </tr>
  * </table>
  *
- * @author      Rajarshi Guha
- * @cdk.created     2005-05-16
- *
- * @cdk.module  qsar
- * @cdk.set     qsar-descriptors
+ * @author Rajarshi Guha
+ * @cdk.created 2005-05-16
+ * @cdk.module qsar
+ * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA
  */
 public class CPSADescriptor implements IMolecularDescriptor {
-    
+
     //private LoggingTool logger;
-    
+
     public CPSADescriptor() {
         //logger = new LoggingTool(this);
     }
 
-	public DescriptorSpecification getSpecification() {
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
-		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
-    };
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+    }
 
     /**
-     *  Sets the parameters attribute of the CPSADescriptor object.
+     * Sets the parameters attribute of the CPSADescriptor object.
      *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
-     *@see #getParameters
+     * @param params The new parameters value
+     * @throws CDKException Description of the Exception
+     * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
 
     /**
-     *  Gets the parameters attribute of the CPSADescriptor object.
+     * Gets the parameters attribute of the CPSADescriptor object.
      *
-     *@return    The parameters value
-     *@see #setParameters
+     * @return The parameters value
+     * @see #setParameters
      */
     public Object[] getParameters() {
         // no parameters to return
-        return(null);
+        return (null);
     }
+
     /**
-     *  Gets the parameterNames attribute of the CPSADescriptor object.
+     * Gets the parameterNames attribute of the CPSADescriptor object.
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     public String[] getParameterNames() {
         // no param names to return
-        return(null);
+        return (null);
     }
 
 
     /**
-     *  Gets the parameterType attribute of the CPSADescriptor object.
+     * Gets the parameterType attribute of the CPSADescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     public Object getParameterType(String name) {
-         return (null);
+        return (null);
     }
 
     /**
      * Evaluates the 29 CPSA descriptors using Gasteiger-Marsilli charges.
      *
-     *@param  container  Parameter is the atom container.
-     *@return            An ArrayList containing 29 elements in the order described above
-     @throws CDKException if the charge calculation fails
+     * @param container Parameter is the atom container.
+     * @return An ArrayList containing 29 elements in the order described above
+     * @throws CDKException if the charge calculation fails
      */
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
@@ -207,7 +207,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
 
         GasteigerMarsiliPartialCharges peoe = null;
         try {
-            peoe= new GasteigerMarsiliPartialCharges();
+            peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
             throw new CDKException("Problem assigning Gasteiger - Marsili partial charges", e);
@@ -259,84 +259,96 @@ public class CPSADescriptor implements IMolecularDescriptor {
         double wnsa3 = pnsa3 * totalSA / 1000;
 
         // hydrophobic and poalr surface area 
-       double phobic = 0.0;
-       double polar = 0.0;
-       for (int i = 0; i < container.getAtomCount(); i++) {
-           if (Math.abs(container.getAtom(i).getCharge()) < 0.2) {
-               phobic += atomSurfaces[i];
-           } else {
-               polar += atomSurfaces[i];
-           }
-       }
-       double thsa = phobic;
-       double tpsa = polar;
-       double rhsa = phobic / totalSA;
-       double rpsa = polar / totalSA;
-       
-       // differential +ve & -ve SA
-       double dpsa1 = ppsa1 - pnsa1;
-       double dpsa2 = ppsa2 - pnsa2;
-       double dpsa3 = ppsa3 - pnsa3;
+        double phobic = 0.0;
+        double polar = 0.0;
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            if (Math.abs(container.getAtom(i).getCharge()) < 0.2) {
+                phobic += atomSurfaces[i];
+            } else {
+                polar += atomSurfaces[i];
+            }
+        }
+        double thsa = phobic;
+        double tpsa = polar;
+        double rhsa = phobic / totalSA;
+        double rpsa = polar / totalSA;
 
-       double maxpcharge = 0.0;
-       double maxncharge = 0.0;
-       int pidx = 0;
-       int nidx = 0;
-       for (int i = 0; i < container.getAtomCount(); i++) {
-           double charge = container.getAtom(i).getCharge();
-           if (charge > maxpcharge) {
-               maxpcharge = charge;
-               pidx = i;
-           }
-           if (charge < maxncharge) {
-               maxncharge = charge;
-               nidx = i;
-           }
-       }
+        // differential +ve & -ve SA
+        double dpsa1 = ppsa1 - pnsa1;
+        double dpsa2 = ppsa2 - pnsa2;
+        double dpsa3 = ppsa3 - pnsa3;
 
-       // relative descriptors
-       double rpcg = maxpcharge / totpcharge;
-       double rncg = maxncharge / totncharge;
-       double rpcs = atomSurfaces[pidx] * rpcg;
-       double rncs = atomSurfaces[nidx] * rncg;
-       
-       // fill in the values
-       retval.add(ppsa1);
-       retval.add(ppsa2);
-       retval.add(ppsa3);
-       retval.add(pnsa1);
-       retval.add(pnsa2);
-       retval.add(pnsa3);
+        double maxpcharge = 0.0;
+        double maxncharge = 0.0;
+        int pidx = 0;
+        int nidx = 0;
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            double charge = container.getAtom(i).getCharge();
+            if (charge > maxpcharge) {
+                maxpcharge = charge;
+                pidx = i;
+            }
+            if (charge < maxncharge) {
+                maxncharge = charge;
+                nidx = i;
+            }
+        }
 
-       retval.add(dpsa1);
-       retval.add(dpsa2);
-       retval.add(dpsa3);
+        // relative descriptors
+        double rpcg = maxpcharge / totpcharge;
+        double rncg = maxncharge / totncharge;
+        double rpcs = atomSurfaces[pidx] * rpcg;
+        double rncs = atomSurfaces[nidx] * rncg;
 
-       retval.add(fpsa1);
-       retval.add(fpsa2);
-       retval.add(fpsa3);
-       retval.add(fnsa1);
-       retval.add(fnsa2);
-       retval.add(fnsa3);
+        // fill in the values
+        retval.add(ppsa1);
+        retval.add(ppsa2);
+        retval.add(ppsa3);
+        retval.add(pnsa1);
+        retval.add(pnsa2);
+        retval.add(pnsa3);
 
-       retval.add(wpsa1);
-       retval.add(wpsa2);
-       retval.add(wpsa3);
-       retval.add(wnsa1);
-       retval.add(wnsa2);
-       retval.add(wnsa3);
+        retval.add(dpsa1);
+        retval.add(dpsa2);
+        retval.add(dpsa3);
 
-       retval.add(rpcg);
-       retval.add(rncg);
-       retval.add(rpcs);
-       retval.add(rncs);
+        retval.add(fpsa1);
+        retval.add(fpsa2);
+        retval.add(fpsa3);
+        retval.add(fnsa1);
+        retval.add(fnsa2);
+        retval.add(fnsa3);
 
-       retval.add(thsa);
-       retval.add(tpsa);
-       retval.add(rhsa);
-       retval.add(rpsa);
+        retval.add(wpsa1);
+        retval.add(wpsa2);
+        retval.add(wpsa3);
+        retval.add(wnsa1);
+        retval.add(wnsa2);
+        retval.add(wnsa3);
 
-       return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        retval.add(rpcg);
+        retval.add(rncg);
+        retval.add(rpcs);
+        retval.add(rncs);
+
+        retval.add(thsa);
+        retval.add(tpsa);
+        retval.add(rhsa);
+        retval.add(rpsa);
+
+        String[] names = {
+                "PPSA-1", "PPSA-2", "PPSA-3",
+                "PNSA-1", "PNSA-2", "PNSA-3",
+                "DPSA-1", "DPSA-2", "DPSA-3",
+                "FPSA-1", "FPSA-2", "FPSA-3",
+                "FNSA-1", "FNSA-2", "FNSA-3",
+                "WPSA-1", "WPSA-2", "WPSA-3",
+                "WNSA-1", "WNSA-2", "WNSA-3",
+                "RPCG", "RNCG", "RPCS", "RNCS",
+                "THSA", "TPSA", "RHSA", "RPSA"
+        };
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
 }
 

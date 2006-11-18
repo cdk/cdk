@@ -23,24 +23,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.lang.reflect.Method;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.atomtype.IAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
+
+import java.lang.reflect.Method;
 
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
@@ -64,6 +59,13 @@ import org.openscience.cdk.tools.AtomicProperties;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
+ *
+ * Returns three values
+ * <ol>
+ * <li>ALogP  - Ghose-Crippen LogKow
+ * <li>ALogP2
+ * <li>AMR  - molar refractivity
+ * </ol>
  * 
  * @author     Todd Martin
  * @cdk.module nocompile
@@ -1918,7 +1920,7 @@ public class ALOGP implements IMolecularDescriptor {
 		results.add(AMR);
 
 		return new DescriptorValue(getSpecification(), getParameterNames(),
-			getParameters(), results);
+			getParameters(), results, new String[] {"ALogP", "ALogP2", "AMR"} );
 	}
 
 

@@ -191,8 +191,18 @@ public class MDEDescriptor implements IMolecularDescriptor {
             retval.add(dedge(local, i));
         }
 
+        String[] names = {
+                "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14",
+                "MDEC-22", "MDEC-23", "MDEC-24",
+                "MDEC-33", "MDEC-34",
+                "MDEC-44",
+                "MDEO-11", "MDEO-12", "MDEO-22" ,
+                "MDEN-11", "MDEN-12", "MDEN-13",
+                "MDEN-22", "MDEN-23",
+                "MDEN-33"
+        };
         return new DescriptorValue(getSpecification(),
-                getParameterNames(), getParameters(), retval);
+                getParameterNames(), getParameters(), retval, names);
     }
 
     private double dedge(IAtomContainer atomContainer, int which) {

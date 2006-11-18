@@ -55,7 +55,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ * Returns a single value named <i>PetitjeanNumber</i>
  * @author         mfe4
  * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
@@ -151,7 +152,8 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
         // System.out.println("diameter: " +diameter);
 
         petitjeanNumber = (diameter - radius)/diameter;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),
+                new String[] {"PetitjeanNumber"});
     }
 
     /**

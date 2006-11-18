@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,9 +34,11 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.templates.AminoAcids;
 
+import java.util.List;
+
 
 /**
- * Class that returns the number of amino acids in an atom container.
+ * Class that returns the number of each amino acid in an atom container.
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -53,7 +53,10 @@ import org.openscience.cdk.templates.AminoAcids;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ * Returns 20 values with names of the form <i>nX</i>, where <i>X</i> is the short versio
+ * of the amino acid name
+ *
  * @author      egonw
  * @cdk.created 2006-01-15
  * @cdk.module  qsar-pdb
@@ -144,9 +147,12 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
             }
         }
 
+        String[] names = new String[substructureSet.getAtomContainerCount()];
+        IAminoAcid[] aas = AminoAcids.createAAs();
+        for (int i = 0; i < aas.length; i++) names[i] = "n"+aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT);
+
         return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), results
-        );
+            getParameters(), results, names);
     }
 
     /**

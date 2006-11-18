@@ -27,7 +27,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -113,7 +112,8 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
             }
             zagreb += (atomDegree * atomDegree);
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(zagreb));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(zagreb), new String[] {"Zagreb"});
     }
 
 

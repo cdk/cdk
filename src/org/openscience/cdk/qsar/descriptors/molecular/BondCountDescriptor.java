@@ -48,6 +48,14 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
+ * Returns a single value with name <i>nBX</i> where <i>X</i> can be
+ * <ul>
+ * <li>s for single bonds
+ * <li>d for double bonds
+ * <li>t for triple bonds
+ * <li>a for aromatic bonds
+ * </ul>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  qsar
@@ -124,7 +132,15 @@ public class BondCountDescriptor implements IMolecularDescriptor {
                 bondCount += 1;
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(bondCount));
+
+        String name = "nB";
+        if (order == 1) name += "s";
+        else if (order == 2) name += "d";
+        else if (order == 3) name += "t";
+        else if (order == 1.5) name += "a";
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(bondCount), new String[] {name});
     }
 
 

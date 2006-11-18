@@ -49,6 +49,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
  * or <b>explicit hydrogens</b>.
+ *
+ * Returns the  following values
+ * <ol>
+ * <li>WPATH - weiner path number
+ * <li>WPOL - weiner polarity number
+ * </ol>
  * 
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -172,7 +178,8 @@ public class WienerNumbersDescriptor implements IMolecularDescriptor {
 
         wienerNumbers.add(wienerPathNumber);
         wienerNumbers.add(wienerPolarityNumber);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), wienerNumbers);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                wienerNumbers, new String[] {"WPATH", "WPOL"});
     }
 
     /**

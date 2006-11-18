@@ -55,8 +55,8 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple path, orders 0 to 7
- * <li>Valence path, orders 0 to 7
+ * <li>SP-0, SP-1, ..., SP-7 - Simple path, orders 0 to 7
+ * <li>VP-0, VP-1, ..., VP-7 - Valence path, orders 0 to 7
  * </ol>
  *
  * @author Rajarshi Guha
@@ -161,7 +161,12 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         retval.add(order6v);
         retval.add(order7v);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = new String[16];
+        for (int i = 0; i <8; i++) {
+            names[i] = "SP-"+i;
+            names[i+8] = "VP"+(i+8);
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
     }
 

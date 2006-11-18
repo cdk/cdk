@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import java.util.ArrayList;
 
 /**
  *  CarbonConnectivity index (order 1):
@@ -144,7 +144,8 @@ public class CarbonConnectivityOrderOneDescriptor implements IMolecularDescripto
                 }
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1C));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi1C),
+                new String[] {"chi1C"});
     }
 
 

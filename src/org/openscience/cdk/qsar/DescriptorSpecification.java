@@ -66,19 +66,19 @@ public class DescriptorSpecification implements IImplementationSpecification {
     
     public String getSpecificationReference() {
         return this.specificationReference;
-    };
+    }
     
     public String getImplementationTitle() {
         return this.implementationTitle;
-    };
+    }
     
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
-    };
+    }
     
     public String getImplementationVendor() {
         return this.implementationVendor;
-    };
+    }
     
 }
 

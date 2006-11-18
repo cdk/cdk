@@ -51,6 +51,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
+ * Returns a single value with name <i>nX</i> where <i>X</i> is the atomic symbol.
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -167,7 +168,8 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
                 }
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomCount));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(atomCount), new String[] { "n"+elementName });
     }
 
 

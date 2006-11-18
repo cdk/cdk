@@ -23,7 +23,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -226,8 +225,10 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         mid += count;
         retval.add(mid);
 
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = {
+                "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"
+        };
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
 
     double[] getPathWeights(List pathList, IAtomContainer atomContainer) {

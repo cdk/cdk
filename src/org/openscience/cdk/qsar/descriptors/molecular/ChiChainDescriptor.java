@@ -52,14 +52,14 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple chain, order 3
- * <li>Simple chain, order 4
- * <li>Simple chain, order 5
- * <li>Simple chain, order 6
- * <li>Valence chain, order 3
- * <li>Valence chain, order 4
- * <li>Valence chain, order 5
- * <li>Valence chain, order 6
+ * <li>SCH-3 - Simple chain, order 3
+ * <li>SCH-4 - Simple chain, order 4
+ * <li>SCH-5 - Simple chain, order 5
+ * <li>SCH-6 - Simple chain, order 6
+ * <li>VCH-3 - Valence chain, order 3
+ * <li>VCH-4 - Valence chain, order 4
+ * <li>VCH-5 - Valence chain, order 5
+ * <li>VCH-6 - Valence chain, order 6
  * </ol>
  *
  * @author Rajarshi Guha
@@ -145,7 +145,10 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
         retval.add(order5v);
         retval.add(order6v);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = {
+                "SCH-3", "SCH-4", "SCH-5", "SCH-6",
+                "VCH-3", "VCH-4", "VCH-5", "VCH-6"};
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
     }
 

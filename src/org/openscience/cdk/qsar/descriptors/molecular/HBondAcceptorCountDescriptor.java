@@ -27,8 +27,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -49,6 +49,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * <li>a nitrogen that is adjacent to an oxygen</li>
  * </ol>
  * </ul>
+ *
+ * Returns a single value named <i>nHBAcc</i>.
  *
  * <p>This descriptor uses these parameters:
  * <table>
@@ -166,7 +168,8 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
       }
         }
 
-    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hBondAcceptors));
+    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+            new IntegerResult(hBondAcceptors), new String[] {"nHBAcc"});
     }
 
     /**

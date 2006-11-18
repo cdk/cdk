@@ -26,9 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -56,6 +54,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *     <td>If *, returns the molecular weight, otherwise the weight for the given element</td>
  *   </tr>
  * </table>
+ *
+ * Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
+ * or <i>ALL</i> if * is specified as a parameter.
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -174,7 +175,12 @@ public class WeightDescriptor implements IMolecularDescriptor {
                 System.out.println(e.toString());
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight));
+
+        String name = "w";
+        if (elementName.equals("*")) name += "ALL";
+        else name += elementName;
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight),
+                new String[] {name});
     }
 
 

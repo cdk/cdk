@@ -23,15 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.HashMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -39,6 +36,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Calculation of topological polar surface area based on fragment 
@@ -61,6 +61,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
  * <b>implicit hydrogens</b>.
  *
+ * Returns a single value named <i>TPSA</i>
  * @author      mfe4
  * @author ulif
  * @cdk.created 2004-11-03
@@ -309,7 +310,8 @@ public class TPSADescriptor implements IMolecularDescriptor {
 		profiles.clear(); // remove all profiles from the profiles-Vector
     //System.out.println("tpsa: " + tpsa);
     
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa),
+                new String[] {"TPSA"});
 	}
 
 	/**

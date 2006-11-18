@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,6 +34,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import java.util.List;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
@@ -54,6 +54,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  *     <td>True if terminal bonds are included</td>
  *   </tr>
  * </table>
+ *
+ * Returns a single value named <i>nRotB</i>
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
@@ -166,7 +168,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 				}
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(rotatableBondsCount));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(rotatableBondsCount),
+                new String[] {"nRotB"});
 	}
 
 

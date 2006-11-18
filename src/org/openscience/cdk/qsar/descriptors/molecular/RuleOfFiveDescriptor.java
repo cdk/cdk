@@ -50,6 +50,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
+ * Returns a single value named <i>LipinskiFailures</i>
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -176,7 +178,9 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
         if(mwvalue > 500.0) { lipinskifailures += 1; }
         if(rotatablebonds > 10.0) { lipinskifailures += 1; }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(lipinskifailures));
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(lipinskifailures),
+                new String[] {"LipinksiFailures"});
     }
 
 

@@ -51,14 +51,14 @@ import java.util.List;
  * <p/>
  * The order of the values returned is
  * <ol>
- * <li>Simple cluster, order 3
- * <li>Simple cluster, order 4
- * <li>Simple cluster, order 5
- * <li>Simple cluster, order 6
- * <li>Valence cluster, order 3
- * <li>Valence cluster, order 4
- * <li>Valence cluster, order 5
- * <li>Valence cluster, order 6
+ * <li>SC-3 - Simple cluster, order 3
+ * <li>SC-4 - Simple cluster, order 4
+ * <li>SC-5 - Simple cluster, order 5
+ * <li>SC-6 - Simple cluster, order 6
+ * <li>VC-3 - Valence cluster, order 3
+ * <li>VC-4 - Valence cluster, order 4
+ * <li>VC-5 - Valence cluster, order 5
+ * <li>VC-6 - Valence cluster, order 6
  * </ol>
  *
  * @author Rajarshi Guha
@@ -144,7 +144,11 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
         retval.add(order5v);
         retval.add(order6v);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = {
+                "SC-3", "SC-4",  "SC-5",  "SC-6",
+                "VC-3", "VC-4",  "VC-5",  "VC-6"
+        };
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
     }
 

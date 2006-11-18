@@ -58,7 +58,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
+ * Returns a single value with name <i>ECCEN</i>
  * @author      Rajarshi Guha
  * @cdk.created     2005-03-19
  * @cdk.module  qsar
@@ -141,7 +142,7 @@ public class EccentricConnectivityIndexDescriptor implements IMolecularDescripto
             eccenindex += max * degree;
         }
         IntegerResult retval = new IntegerResult(eccenindex);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, new String[] {"ECCEN"});
     }
 }
     

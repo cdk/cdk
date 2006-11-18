@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+
+import java.util.ArrayList;
 
 /**
  *  Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
@@ -41,7 +41,13 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  *  In the following description, n denotes the number of atoms in the hydrogen suppressed graph, 
  *  m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2 
  *  and let p3 denote the number of paths of length 3". 
- *  Values kier1, kier2 and kier3 are returned as arrayList of doubles.
+ *
+ * Returns three values in the order
+ * <ol>
+ * <li>Kier1 -  First kappa shape index
+ * <li>Kier2 - Second kappa shape index
+ * <li>Kier3 -  Third kappa (&kappa;) shape index
+ * </ol>
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -221,7 +227,8 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         kierValues.add(kier1);
         kierValues.add(kier2);
         kierValues.add(kier3);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues,
+                new String[] {"Kier1", "Kier2", "Kier3"});
     }
 
 

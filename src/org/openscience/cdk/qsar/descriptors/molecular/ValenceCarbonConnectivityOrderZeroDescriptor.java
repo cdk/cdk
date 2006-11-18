@@ -23,12 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Map;
-
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -36,6 +34,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Map;
 
 
 /**
@@ -179,7 +179,8 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements IMolecularD
                         }
                     }
                 }
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(chi0vC));
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(chi0vC), new String[]{"chi0vC"});
         }
 
 

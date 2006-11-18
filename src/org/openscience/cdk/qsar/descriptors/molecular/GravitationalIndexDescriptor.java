@@ -45,15 +45,15 @@ import java.util.Vector;
  *<p>
  * The descriptor routine generates 9 descriptors:
  * <ul>
- * <li>grav1 -  gravitational index of heavy atoms
- * <li>grav2 -  square root of gravitational index of heavy atoms
- * <li>grav3 -  cube root of gravitational index of heavy atoms
- * <li>gravh1 -  gravitational index - hydrogens included
- * <li>gravh2 -  square root of hydrogen-included gravitational index
- * <li>gravh3 -  cube root of hydrogen-included gravitational index
- * <li>grav4 -  grav1 for all pairs of atoms (not just bonded pairs)
- * <li>grav5 -  grav2 for all pairs of atoms (not just bonded pairs)
- * <li>grav6 -  grav3 for all pairs of atoms (not just bonded pairs)
+ * <li>GRAV-1 -  gravitational index of heavy atoms
+ * <li>GRAV-2 -  square root of gravitational index of heavy atoms
+ * <li>GRAV-3 -  cube root of gravitational index of heavy atoms
+ * <li>GRAVH-1 -  gravitational index - hydrogens included
+ * <li>GRAVH-2 -  square root of hydrogen-included gravitational index
+ * <li>GRAVH-3 -  cube root of hydrogen-included gravitational index
+ * <li>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)
+ * <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
+ * <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
  * </ul>
  *
  * <p>This descriptor uses these parameters:
@@ -271,7 +271,12 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         retval.add( Math.sqrt(allheavysum) );
         retval.add( Math.pow(allheavysum,1.0/3.0) );
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        String[] names = {
+                "GRAV-1", "GRAV-2", "GRAV-3",
+                "GRAVH-1", "GRAVH-2", "GRAVH-3",
+                "GRAV-4", "GRAV-5", "GRAV-6"
+        };
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
 }
     

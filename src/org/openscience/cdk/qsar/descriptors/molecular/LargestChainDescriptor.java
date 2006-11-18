@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -41,55 +39,60 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
+import java.util.Vector;
+
 /**
- *  Class that returns the number of atoms in the largest chain.
- *
+ * Class that returns the number of atoms in the largest chain.
+ * <p/>
  * <p>This descriptor uses these parameters:
  * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td>checkAromaticity</td>
- *     <td>false</td>
- *     <td>True is the aromaticity has to be checked</td>
- *   </tr>
- *   <tr>
- *     <td>checkRingSystem</td>
- *     <td>false</td>
- *     <td>True is the CDKConstant.ISINRING has to be set</td>
- *   </tr>
+ * <tr>
+ * <td>Name</td>
+ * <td>Default</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr>
+ * <td>checkAromaticity</td>
+ * <td>false</td>
+ * <td>True is the aromaticity has to be checked</td>
+ * </tr>
+ * <tr>
+ * <td>checkRingSystem</td>
+ * <td>false</td>
+ * <td>True is the CDKConstant.ISINRING has to be set</td>
+ * </tr>
  * </table>
+ * <p/>
+ * Returns a single value named <i>nAtomLAC</i>
  *
- * @author      chhoppe from EUROSCREEN
+ * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
- * @cdk.module  qsar
- * @cdk.set     qsar-descriptors
+ * @cdk.module qsar
+ * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestChain
  */
 
 public class LargestChainDescriptor implements IMolecularDescriptor {
-	private boolean checkAromaticity = false;
-	private boolean checkRingSystem = false;
+    private boolean checkAromaticity = false;
+    private boolean checkRingSystem = false;
 
 
     /**
-     *  Constructor for the LargestChain object.
+     * Constructor for the LargestChain object.
      */
-    public LargestChainDescriptor() { }
+    public LargestChainDescriptor() {
+    }
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
-     *
+     * is implemented by this class.
+     * <p/>
      * These fields are used in the map:
      * <ul>
      * <li>Specification-Reference: refers to an entry in a unique dictionary
      * <li>Implementation-Title: anything
      * <li>Implementation-Identifier: a unique identifier for this version of
-     *  this class
+     * this class
      * <li>Implementation-Vendor: CDK, JOELib, or anything else
      * </ul>
      *
@@ -105,13 +108,13 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Sets the parameters attribute of the LargestChain object.
-     *
+     * Sets the parameters attribute of the LargestChain object.
+     * <p/>
      * This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
-     * 
-     * @param  params            The new parameters value
-     * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
+     *
+     * @param params The new parameters value
+     * @throws CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
@@ -128,9 +131,9 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameters attribute of the LargestChainDescriptor object.
+     * Gets the parameters attribute of the LargestChainDescriptor object.
      *
-     * @return    The parameters value
+     * @return The parameters value
      * @see #setParameters
      */
     public Object[] getParameters() {
@@ -144,123 +147,127 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
     /**
      * Calculate the count of atoms of the largest chain in the supplied {@link IAtomContainer}.
-     * 
+     * <p/>
      * <p>The method require two parameters:
      * <ol>
-     *  <li>if checkAromaticity is true, the method check the aromaticity,
-     *  <li>if false, means that the aromaticity has already been checked
+     * <li>if checkAromaticity is true, the method check the aromaticity,
+     * <li>if false, means that the aromaticity has already been checked
      * </ol>
-     *	
+     * <p/>
      * <p>Same for checkRingSystem, if true the CDKConstant.ISINRING will be set
      *
-     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
-     *@return                   the number of atoms in the largest chain of this AtomContainer
-     *@throws CDKException if there is a problem in aromaticity detection
-     *@see #setParameters
+     * @param container The {@link AtomContainer} for which this descriptor is to be calculated
+     * @return the number of atoms in the largest chain of this AtomContainer
+     * @throws CDKException if there is a problem in aromaticity detection
+     * @see #setParameters
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-    	//System.out.println("LargestChainDescriptor");
-    	IRingSet rs = null;
-    	
-    	if (checkAromaticity && !checkRingSystem) {
+        //System.out.println("LargestChainDescriptor");
+        IRingSet rs = null;
+
+        if (checkAromaticity && !checkRingSystem) {
             rs = (IRingSet) (new AllRingsFinder()).findAllRings(container);
             HueckelAromaticityDetector.detectAromaticity(container, rs, true);
-        }else if (checkAromaticity && checkRingSystem) {
+        } else if (checkAromaticity && checkRingSystem) {
             rs = (IRingSet) (new AllRingsFinder()).findAllRings(container);
             HueckelAromaticityDetector.detectAromaticity(container, rs, true);
-            for (int i=0;i<container.getAtomCount();i++){
-            	if (rs.contains(container.getAtom(i))){
-            		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
-            	}
+            for (int i = 0; i < container.getAtomCount(); i++) {
+                if (rs.contains(container.getAtom(i))) {
+                    container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
+                }
             }
-        }else if (!checkAromaticity && checkRingSystem) {
-        	rs = (IRingSet) new SSSRFinder(container).findSSSR();
-        	for (int i=0;i<container.getAtomCount();i++){
-            	if (rs.contains(container.getAtom(i))){
-            		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
-            	}
+        } else if (!checkAromaticity && checkRingSystem) {
+            rs = (IRingSet) new SSSRFinder(container).findSSSR();
+            for (int i = 0; i < container.getAtomCount(); i++) {
+                if (rs.contains(container.getAtom(i))) {
+                    container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
+                }
             }
         }
-    	
-        	
-        int largestChainAtomsCount=0;
-    	//IAtom[] atoms = container.getAtoms();
-    	Vector startSphere = null;
-    	Vector path = null;
-    	//Set all VisitedFlags to False
-    	for (int i =0;i<container.getAtomCount();i++){
-    		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
-		}
-    	
-    	//System.out.println("Set all atoms to Visited False");
-    	for (int i =0;i<container.getAtomCount();i++){
-    		IAtom atomi = container.getAtom(i);
-    		// chain sp3
-    		//System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-    		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED)){
-    			//System.out.println("...... -> containercepted");
-    			startSphere = new Vector();
-    			path = new Vector();
-    			startSphere.addElement(atomi);
-     			breadthFirstSearch(container, startSphere, path);
-     			if (path.size() > largestChainAtomsCount){
-    				largestChainAtomsCount=path.size();
-    			}
-    		}
-    		
-    	}
-    	
-    	
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(largestChainAtomsCount));
+
+
+        int largestChainAtomsCount = 0;
+        //IAtom[] atoms = container.getAtoms();
+        Vector startSphere = null;
+        Vector path = null;
+        //Set all VisitedFlags to False
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            container.getAtom(i).setFlag(CDKConstants.VISITED, false);
+        }
+
+        //System.out.println("Set all atoms to Visited False");
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            IAtom atomi = container.getAtom(i);
+            // chain sp3
+            //System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
+            if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED))
+            {
+                //System.out.println("...... -> containercepted");
+                startSphere = new Vector();
+                path = new Vector();
+                startSphere.addElement(atomi);
+                breadthFirstSearch(container, startSphere, path);
+                if (path.size() > largestChainAtomsCount) {
+                    largestChainAtomsCount = path.size();
+                }
+            }
+
+        }
+
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(largestChainAtomsCount), new String[]{"nAtomLC"});
     }
 
-	/**
-	 *  Performs a breadthFirstSearch in an AtomContainer starting with a
-	 *  particular sphere, which usually consists of one start atom, and searches
-	 *  for a pi system. 
-	 *
-	 *@param  container                                              The AtomContainer to
-	 *      be searched
-	 *@param  sphere                                          A sphere of atoms to
-	 *      start the search with
-	 *@param  path                                          A vector which stores the atoms belonging to the pi system
-	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
-	 *      Exception
-	 */
-	public  void breadthFirstSearch(IAtomContainer container, Vector sphere, Vector path) throws org.openscience.cdk.exception.CDKException{
-		IAtom atom = null;
-		IAtom nextAtom = null;
-		Vector newSphere = new Vector();
-		//System.out.println("Start of breadthFirstSearch");
-		for (int i = 0; i < sphere.size(); i++){
-			atom = (IAtom) sphere.elementAt(i);
-			//System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
-			java.util.List bonds = container.getConnectedBondsList(atom);
-			for (int j = 0; j < bonds.size(); j++){
-				nextAtom = ((IBond)bonds.get(j)).getConnectedAtom(atom);
-				if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC)&& !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED)){
-	    			//System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));		
-		    		path.addElement(nextAtom);
-		    		//System.out.println("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-		    		nextAtom.setFlag(CDKConstants.VISITED, true);
-		    		if (container.getBondCount(nextAtom) > 1){
-						newSphere.addElement(nextAtom);
-					}
-				}else{
-					nextAtom.setFlag(CDKConstants.VISITED, true);
-				}
-			}
-		}
-		if (newSphere.size() > 0){
-			breadthFirstSearch(container, newSphere, path);
-		}
-	}
-
-    
     /**
-     *  Gets the parameterNames attribute of the LargestPiSystemDescriptor object.
+     * Performs a breadthFirstSearch in an AtomContainer starting with a
+     * particular sphere, which usually consists of one start atom, and searches
+     * for a pi system.
      *
-     *@return    The parameterNames value
+     * @param container The AtomContainer to
+     *                  be searched
+     * @param sphere    A sphere of atoms to
+     *                  start the search with
+     * @param path      A vector which stores the atoms belonging to the pi system
+     * @throws org.openscience.cdk.exception.CDKException
+     *          Description of the
+     *          Exception
+     */
+    public void breadthFirstSearch(IAtomContainer container, Vector sphere, Vector path) throws org.openscience.cdk.exception.CDKException {
+        IAtom atom = null;
+        IAtom nextAtom = null;
+        Vector newSphere = new Vector();
+        //System.out.println("Start of breadthFirstSearch");
+        for (int i = 0; i < sphere.size(); i++) {
+            atom = (IAtom) sphere.elementAt(i);
+            //System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
+            java.util.List bonds = container.getConnectedBondsList(atom);
+            for (int j = 0; j < bonds.size(); j++) {
+                nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
+                if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED))
+                {
+                    //System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
+                    path.addElement(nextAtom);
+                    //System.out.println("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
+                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    if (container.getBondCount(nextAtom) > 1) {
+                        newSphere.addElement(nextAtom);
+                    }
+                } else {
+                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                }
+            }
+        }
+        if (newSphere.size() > 0) {
+            breadthFirstSearch(container, newSphere, path);
+        }
+    }
+
+
+    /**
+     * Gets the parameterNames attribute of the LargestPiSystemDescriptor object.
+     *
+     * @return The parameterNames value
      */
     public String[] getParameterNames() {
         String[] params = new String[2];
@@ -270,17 +277,16 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     }
 
 
-
     /**
-     *  Gets the parameterType attribute of the LargestChainDescriptor object.
+     * Gets the parameterType attribute of the LargestChainDescriptor object.
      *
-     *@param  name  Description of the Parameter
-     *@return       An Object of class equal to that of the parameter being requested
+     * @param name Description of the Parameter
+     * @return An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
         Object[] paramTypes = new Object[2];
-        paramTypes[0] = new Boolean(true);
-        paramTypes[1] = new Boolean(true);
+        paramTypes[0] = Boolean.TRUE;
+        paramTypes[1] = Boolean.TRUE;
         return paramTypes;
     }
 }
