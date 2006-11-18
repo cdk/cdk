@@ -27,6 +27,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.tools.LoggingTool;
 //import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -132,10 +133,10 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  */
 public class CPSADescriptor implements IMolecularDescriptor {
 
-    //private LoggingTool logger;
+    private LoggingTool logger;
 
     public CPSADescriptor() {
-        //logger = new LoggingTool(this);
+        logger = new LoggingTool(this);
     }
 
     public DescriptorSpecification getSpecification() {
@@ -198,6 +199,19 @@ public class CPSADescriptor implements IMolecularDescriptor {
      */
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        DoubleArrayResult retval = new DoubleArrayResult();
+        String[] names = {
+                "PPSA-1", "PPSA-2", "PPSA-3",
+                "PNSA-1", "PNSA-2", "PNSA-3",
+                "DPSA-1", "DPSA-2", "DPSA-3",
+                "FPSA-1", "FPSA-2", "FPSA-3",
+                "FNSA-1", "FNSA-2", "FNSA-3",
+                "WPSA-1", "WPSA-2", "WPSA-3",
+                "WNSA-1", "WNSA-2", "WNSA-3",
+                "RPCG", "RNCG", "RPCS", "RNCS",
+                "THSA", "TPSA", "RHSA", "RPSA"
+        };
+
 //        IsotopeFactory factory = null;
 //        try {
 //            factory = IsotopeFactory.getInstance(container.getBuilder());
@@ -210,13 +224,23 @@ public class CPSADescriptor implements IMolecularDescriptor {
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
-            throw new CDKException("Problem assigning Gasteiger - Marsili partial charges", e);
+            logger.debug("Error in assigning Gasteiger-Marsilli charges");
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
         }
         //MFAnalyser mfa = new MFAnalyser(container);
-        NumericalSurface surface = new NumericalSurface(container);
-        surface.calculateSurface();
 
-        DoubleArrayResult retval = new DoubleArrayResult(7);
+
+        NumericalSurface surface;
+        try {
+        surface = new NumericalSurface(container);
+        surface.calculateSurface();
+        } catch (NullPointerException npe) {
+            logger.debug("Error in surface area calculation");
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+        }
+        
         //double molecularWeight = mfa.getMass();
         double[] atomSurfaces = surface.getAllSurfaceAreas();
         double totalSA = surface.getTotalSurfaceArea();
@@ -336,17 +360,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
         retval.add(rhsa);
         retval.add(rpsa);
 
-        String[] names = {
-                "PPSA-1", "PPSA-2", "PPSA-3",
-                "PNSA-1", "PNSA-2", "PNSA-3",
-                "DPSA-1", "DPSA-2", "DPSA-3",
-                "FPSA-1", "FPSA-2", "FPSA-3",
-                "FNSA-1", "FNSA-2", "FNSA-3",
-                "WPSA-1", "WPSA-2", "WPSA-3",
-                "WNSA-1", "WNSA-2", "WNSA-3",
-                "RPCG", "RNCG", "RPCS", "RNCS",
-                "THSA", "TPSA", "RHSA", "RPSA"
-        };
+
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
