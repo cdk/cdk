@@ -187,8 +187,6 @@ public class DescriptorEngine {
         if (speclist.size() != descriptors.size())
             throw new CDKException("Number of specs and descriptors do not match");
 
-        
-        
 
         for (int i = 0; i < descriptors.size(); i++) {
             IDescriptor descriptor = (IDescriptor) descriptors.get(i);
@@ -198,15 +196,15 @@ public class DescriptorEngine {
                     molecule.setProperty(speclist.get(i), value);
                     logger.debug("Calculated molecular descriptors...");
                 } else if (descriptor instanceof IAtomicDescriptor) {
-                	java.util.Iterator atoms = molecule.atoms();
+                    java.util.Iterator atoms = molecule.atoms();
                     while (atoms.hasNext()) {
-                    	IAtom atom = (IAtom)atoms.next();
+                        IAtom atom = (IAtom) atoms.next();
                         DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
                         atom.setProperty(speclist.get(i), value);
                     }
                     logger.debug("Calculated atomic descriptors...");
                 } else if (descriptor instanceof IBondDescriptor) {
-                	IBond[] bonds = molecule.getBonds();
+                    IBond[] bonds = molecule.getBonds();
                     for (int j = 0; j < bonds.length; j++) {
                         DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bonds[j], molecule);
                         bonds[j].setProperty(speclist.get(i), value);
@@ -420,6 +418,38 @@ public class DescriptorEngine {
     }
 
     /**
+     * Gets the label (title) of the descriptor.
+     *
+     * @param identifier A String containing either the descriptors fully qualified class name or else the descriptors
+     *                   specification reference
+     * @return The title
+     */
+    public String getDictionaryTitle(String identifier) {
+        Entry[] dictEntries = dict.getEntries();
+        String specRef = getSpecRef(identifier);
+        String title = null;
+
+        for (int j = 0; j < dictEntries.length; j++) {
+            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
+            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
+                title = dictEntries[j].getLabel();
+                break;
+            }
+        }
+        return title;
+    }
+
+    /**
+     *  Gets the label (title) of the descriptor.
+     *
+     * @param descriptorSpecification The specification object
+     * @return  The title
+     */
+    public String getDictionaryTitle(DescriptorSpecification descriptorSpecification) {
+        return getDictionaryTitle(descriptorSpecification.getSpecificationReference());
+    }
+
+    /**
      * Returns the DescriptorSpecification objects for all available descriptors.
      *
      * @return An array of <code>DescriptorSpecification</code> objects. These are the keys
@@ -545,7 +575,7 @@ public class DescriptorEngine {
                         } catch (NoClassDefFoundError ncdfe) {
                             logger.debug(ncdfe);
                         } catch (UnsatisfiedLinkError ule) {
-                            logger.debug(ule);                           
+                            logger.debug(ule);
                         }
                         if (klass == null) continue;
 
