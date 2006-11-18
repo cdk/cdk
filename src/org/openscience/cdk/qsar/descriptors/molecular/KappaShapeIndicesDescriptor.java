@@ -37,10 +37,10 @@ import java.util.ArrayList;
 /**
  *  Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
  *  a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
- *  "they are intended to capture different aspects of molecular shape. 
- *  In the following description, n denotes the number of atoms in the hydrogen suppressed graph, 
- *  m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2 
- *  and let p3 denote the number of paths of length 3". 
+ *  "they are intended to capture different aspects of molecular shape.
+ *  In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
+ *  m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
+ *  and let p3 denote the number of paths of length 3".
  *
  * Returns three values in the order
  * <ol>
@@ -62,13 +62,13 @@ import java.util.ArrayList;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierValues
- * 
+ *
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
@@ -197,6 +197,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
             }
         }
 
+        int denom = 0;
         if(atomsCount == 1) {
             kier1 = 0;
             kier2 = 0;
@@ -209,16 +210,19 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
                 kier3 = 0;
             }
             else {
-                kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
+                if (doublePaths.size() == 0) kier2 = Double.NaN;
+                else kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
                 if(atomsCount == 3) {
                     kier3 = 0;
                 }
                 else {
                     if(atomsCount % 2 != 0) {
-                        kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+                        if (triplePaths.size() == 0) kier3 = Double.NaN
+                        else kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
                     }
                     else {
-                        kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+                        if (triplePaths.size() == 0) kier3 = Double.NaN;
+                        else kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
                     }
                 }
             }
