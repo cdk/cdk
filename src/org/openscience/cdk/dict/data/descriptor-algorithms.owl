@@ -1230,7 +1230,7 @@
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="aminoAcidCount">
+    <Descriptor rdf:ID="aminoAcidsCount">
         <rdfs:label>Amino Acid Count</rdfs:label>
         <annotation>
             <documentation>
@@ -2055,19 +2055,6 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="aminoAcidsCount">
-        <rdfs:label>Amino Acid Counts</rdfs:label>
-        <dc:contributor rdf:resource="#elw"/>
-        <dc:date>2005-01-27</dc:date>
-        <definition>
-             Returns the number of amino acids in an atom container.
-        </definition>
-        <description>
-
-        </description>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
-    </Descriptor>
 
     <Descriptor rdf:ID="ALOGP">
         <rdfs:label>ALogP</rdfs:label>
