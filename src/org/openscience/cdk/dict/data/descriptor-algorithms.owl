@@ -2055,8 +2055,8 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-       <Descriptor rdf:ID="AlogP">
-        <rdfs:label>XLogP</rdfs:label>
+       <Descriptor rdf:ID="ALOGP">
+        <rdfs:label>ALogP</rdfs:label>
         <dc:contributor rdf:resource="#tm"/>
         <dc:date>2005-01-27</dc:date>
         <definition>
