@@ -40,5 +40,8 @@ public class BooleanResult implements IDescriptorResult {
         return this.value;
     }
 
+    public String toString() {
+        return Boolean.toString(value);
+    }
 }
 

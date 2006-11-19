@@ -38,5 +38,8 @@ public class DoubleResult implements IDescriptorResult {
         return this.value;
     }
 
+    public String toString() {
+        return Double.toString(value);
+    }
 }
 

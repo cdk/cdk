@@ -40,5 +40,8 @@ public class IntegerResult implements IDescriptorResult {
         return this.value;
     }
 
+    public String toString() {
+        return Integer.toString(value);
+    }
 }
 

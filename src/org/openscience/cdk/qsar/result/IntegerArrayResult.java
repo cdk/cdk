@@ -24,36 +24,47 @@
 package org.openscience.cdk.qsar.result;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @cdk.module standard
  */
 public class IntegerArrayResult implements IDescriptorResult {
-    
+
     private List array;
-    
+
     public IntegerArrayResult() {
         this.array = new ArrayList();
     }
-    
+
     public IntegerArrayResult(int size) {
         this.array = new ArrayList(size);
     }
-    
+
     public void add(int value) {
         array.add(new Integer(value));
     }
-    
+
     /**
      * The first int is at index = 0;
      */
     public int get(int index) {
         return ((Integer)this.array.get(index)).intValue();
     }
-    
+
     public int size() {
         return this.array.size();
+    }
+
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        for (Iterator iterator = array.iterator(); iterator.hasNext();) {
+            Integer integer = (Integer) iterator.next();
+            buf.append(integer.intValue());
+            if (iterator.hasNext()) buf.append(",");
+        }
+        return buf.toString();
     }
 
 }

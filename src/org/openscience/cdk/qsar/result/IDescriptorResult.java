@@ -31,5 +31,12 @@ package org.openscience.cdk.qsar.result;
  */
 public interface IDescriptorResult {
 
+    /**
+     * String representation of the result.
+     *
+     * @return A string representation.
+     */
+    public String toString();
+
 }
 
