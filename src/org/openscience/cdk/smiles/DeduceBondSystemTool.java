@@ -600,7 +600,7 @@ public class DeduceBondSystemTool {
                 //valencyChecker.allSaturated didnt seem to work so did it this way
             } catch (Exception e) {
                 logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
-                //e.printStackTrace();
+                logger.debug(e.toString());
                 return false;
             }
         }
