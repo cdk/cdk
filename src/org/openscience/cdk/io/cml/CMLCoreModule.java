@@ -25,16 +25,15 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
+
+import javax.vecmath.Vector3d;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * Core CML 1.x and 2.0 elements are parsed by this class.
@@ -325,8 +324,8 @@ public class CMLCoreModule implements ICMLModule {
                 else if (att.equals("isotope")) {
                     isotope.addElement(value);
                 }
-                else if (att.equals("dictRef")) {
-                	System.out.println("ocupaccy: "+value);
+                else if (att.equals("dictRef")) {                	
+                    logger.debug("ocupaccy: "+value)
                     atomDictRefs.addElement(value);
                 } 
                 else if (att.equals("spinMultiplicity")) {
