@@ -27,27 +27,18 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
+import org.openscience.cdk.*;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
-import org.openscience.cdk.exception.CDKException;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -609,7 +600,7 @@ public class DeduceBondSystemTool {
                 //valencyChecker.allSaturated didnt seem to work so did it this way
             } catch (Exception e) {
                 logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
-                e.printStackTrace();
+                //e.printStackTrace();
                 return false;
             }
         }
