@@ -122,7 +122,7 @@ public class CDKCiteTaglet implements Taglet {
             }
         } else {
             citation = citation.trim();
-            result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/bib/"
+            result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/"
                    + citation + "\">" + citation + "</a>";
         }
         return result;
