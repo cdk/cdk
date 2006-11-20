@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ * 
+ * Copyright (C) 2004-2006  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -79,16 +76,25 @@ public class CDKBugTaglet implements Taglet {
 
     public String toString(Tag tag) {
         return "<DT><B>This class is affected by these bug(s): </B><DD>"
-               + "<a href=\"http://sourceforge.net/tracker/index.php?func=detail&group_id=20024&atid=120024&aid="
-               + tag.text() + "\">" + tag.text() + "</a></DD>\n";
+               + expand(tag) + "</DD>\n";
     }
     
     public String toString(Tag[] tags) {
         if (tags.length == 0) {
             return null;
         } else {
-            return toString(tags[0]);
+        	StringBuffer list = new StringBuffer();
+        	list.append("<DT><B>This class is affected by these bug(s): </B><DD>");
+        	for (int i=0; i<tags.length; i++) {
+        		list.append(expand(tags[i])).append(" ");
+        	}
+        	list.append("</DD>\n");
+            return list.toString();
         }
     }
 
+    private String expand(Tag tag) {
+        return "<a href=\"http://sourceforge.net/tracker/index.php?func=detail&group_id=20024&atid=120024&aid="
+               + tag.text() + "\">" + tag.text() + "</a>";
+    }
 }
