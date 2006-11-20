@@ -325,7 +325,7 @@ public class CMLCoreModule implements ICMLModule {
                     isotope.addElement(value);
                 }
                 else if (att.equals("dictRef")) {                	
-                    logger.debug("ocupaccy: "+value)
+                    logger.debug("ocupaccy: "+value);
                     atomDictRefs.addElement(value);
                 } 
                 else if (att.equals("spinMultiplicity")) {
