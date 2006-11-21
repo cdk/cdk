@@ -283,7 +283,8 @@ public class Convertor {
             cmlProduct.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)products.next(), false));
             cmlProducts.addProduct(cmlProduct);
         }
-
+        
+        if (reaction.getID() != null) cmlReaction.setId(reaction.getID());
         cmlReaction.addReactantList(cmlReactants);
         cmlReaction.addProductList(cmlProducts);
         return cmlReaction;
