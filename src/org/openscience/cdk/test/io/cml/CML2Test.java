@@ -601,6 +601,42 @@ public class CML2Test extends CDKTestCase {
             fail(e.toString());
         }
     }
+    /**
+     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLReactionList() {
+        String filename = "data/cml/reactionList.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(1,seq.getChemModelCount());
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(2,model.getReactionSet().getReactionCount());
+            assertEquals("1.3.2",model.getReactionSet().getReaction(0).getID());
+
+            // test the reaction
+            IReaction reaction = model.getReactionSet().getReaction(0);
+            assertNotNull(reaction);
+            assertEquals("actey",reaction.getReactants().getAtomContainer(0).getID());
+            assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
 
     /**
      * @cdk.bug 1560486

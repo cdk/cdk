@@ -2,7 +2,7 @@
 <reactionList>
 <reaction>
 <reactantList>
-<reactant>
+<reactant  id="react">
 <molecule>
 <atomArray>
 <atom id="a14293164" elementType="C" x2="222.99999999999997" y2="934.0" formalCharge="0" hydrogenCount="0"/>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<reactionList>
+<reaction id="1.3.2">
+<reactantList>
+<reactant id="actey">
+<molecule>
+<atomArray>
+<atom id="a14293164" elementType="C" x2="222.99999999999997" y2="934.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a9045316" elementType="C" x2="191.82308546376018" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a23053324" elementType="C" x2="191.8230854637602" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a4199273" elementType="C" x2="223.00000000000003" y2="1006.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a12213211" elementType="C" x2="254.1769145362398" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a14982605" elementType="C" x2="254.1769145362398" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+</atomArray>
+<bondArray><bond id="b17477791" atomRefs2="a14293164 a9045316" order="S"/>
+<bond id="b13748088" atomRefs2="a9045316 a23053324" order="S"/>
+<bond id="b8303462" atomRefs2="a23053324 a4199273" order="S"/>
+<bond id="b3403998" atomRefs2="a4199273 a12213211" order="S"/>
+<bond id="b701508" atomRefs2="a12213211 a14982605" order="S"/>
+<bond id="b12644844" atomRefs2="a14982605 a14293164" order="S"/>
+</bondArray>
+</molecule>
+</reactant>
+<reactant id="agent">
+<molecule>
+<atomArray>
+<atom id="a14293164" elementType="C" x2="222.99999999999997" y2="934.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a9045316" elementType="C" x2="191.82308546376018" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a23053324" elementType="C" x2="191.8230854637602" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a4199273" elementType="C" x2="223.00000000000003" y2="1006.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a12213211" elementType="C" x2="254.1769145362398" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a14982605" elementType="C" x2="254.1769145362398" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+</atomArray>
+<bondArray><bond id="b17477791" atomRefs2="a14293164 a9045316" order="S"/>
+<bond id="b13748088" atomRefs2="a9045316 a23053324" order="S"/>
+<bond id="b8303462" atomRefs2="a23053324 a4199273" order="S"/>
+<bond id="b3403998" atomRefs2="a4199273 a12213211" order="S"/>
+<bond id="b701508" atomRefs2="a12213211 a14982605" order="S"/>
+<bond id="b12644844" atomRefs2="a14982605 a14293164" order="S"/>
+</bondArray>
+</molecule>
+</reactant>
+</reactantList>
+<productList>
+<product id="prdct">
+<molecule>
+<atomArray>
+<atom id="a14222419" elementType="C" x2="416.99999999999994" y2="930.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a27988400" elementType="C" x2="385.8230854637602" y2="948.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a1465214" elementType="C" x2="385.8230854637602" y2="984.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a30462244" elementType="C" x2="417.0" y2="1002.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a5424820" elementType="C" x2="448.1769145362398" y2="984.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a7572744" elementType="C" x2="448.1769145362398" y2="948.0" formalCharge="0" hydrogenCount="0"/>
+</atomArray>
+<bondArray>
+<bond id="b6778431" atomRefs2="a14222419 a27988400" order="S"/>
+<bond id="b7802158" atomRefs2="a27988400 a1465214" order="D"/>
+<bond id="b162178" atomRefs2="a1465214 a30462244" order="S"/>
+<bond id="b7832149" atomRefs2="a30462244 a5424820" order="D"/>
+<bond id="b895244" atomRefs2="a5424820 a7572744" order="S"/>
+<bond id="b14600371" atomRefs2="a7572744 a14222419" order="D"/>
+</bondArray>
+</molecule>
+</product>
+</productList>
+</reaction>
+
+<reaction id="1.1.4">
+<reactantList>
+<reactant id="prdct">
+<molecule>
+<atomArray>
+<atom id="a14293164" elementType="C" x2="222.99999999999997" y2="934.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a9045316" elementType="C" x2="191.82308546376018" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a23053324" elementType="C" x2="191.8230854637602" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a4199273" elementType="C" x2="223.00000000000003" y2="1006.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a12213211" elementType="C" x2="254.1769145362398" y2="988.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a14982605" elementType="C" x2="254.1769145362398" y2="952.0" formalCharge="0" hydrogenCount="0"/>
+</atomArray>
+<bondArray><bond id="b17477791" atomRefs2="a14293164 a9045316" order="S"/>
+<bond id="b13748088" atomRefs2="a9045316 a23053324" order="S"/>
+<bond id="b8303462" atomRefs2="a23053324 a4199273" order="S"/>
+<bond id="b3403998" atomRefs2="a4199273 a12213211" order="S"/>
+<bond id="b701508" atomRefs2="a12213211 a14982605" order="S"/>
+<bond id="b12644844" atomRefs2="a14982605 a14293164" order="S"/>
+</bondArray>
+</molecule>
+</reactant>
+</reactantList>
+<productList>
+<product id="ac34">
+<molecule>
+<atomArray>
+<atom id="a14222419" elementType="C" x2="416.99999999999994" y2="930.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a27988400" elementType="C" x2="385.8230854637602" y2="948.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a1465214" elementType="C" x2="385.8230854637602" y2="984.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a30462244" elementType="C" x2="417.0" y2="1002.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a5424820" elementType="C" x2="448.1769145362398" y2="984.0" formalCharge="0" hydrogenCount="0"/>
+<atom id="a7572744" elementType="C" x2="448.1769145362398" y2="948.0" formalCharge="0" hydrogenCount="0"/>
+</atomArray>
+<bondArray>
+<bond id="b6778431" atomRefs2="a14222419 a27988400" order="S"/>
+<bond id="b7802158" atomRefs2="a27988400 a1465214" order="D"/>
+<bond id="b162178" atomRefs2="a1465214 a30462244" order="S"/>
+<bond id="b7832149" atomRefs2="a30462244 a5424820" order="D"/>
+<bond id="b895244" atomRefs2="a5424820 a7572744" order="S"/>
+<bond id="b14600371" atomRefs2="a7572744 a14222419" order="D"/>
+</bondArray>
+</molecule>
+</product>
+</productList>
+</reaction>
+</reactionList>
