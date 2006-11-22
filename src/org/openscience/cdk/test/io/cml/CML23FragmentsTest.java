@@ -28,11 +28,13 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
+import java.util.Enumeration;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -287,6 +289,21 @@ public class CML23FragmentsTest extends CDKTestCase {
         IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
         assertEquals("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.getProperty(CDKConstants.INCHI));
+    }
+    
+    public void testDictRef() {
+    	String cmlString = "<molecule id=\"alanine\" dictRef=\"pdb:aminoAcid\"><name>alanine</name><name dictRef=\"pdb:residueName\">Ala</name><name dictRef=\"pdb:oneLetterCode\">A</name><scalar dictRef=\"pdb:id\">3</scalar><atomArray><atom id=\"a1\" elementType=\"C\" x2=\"265.0\" y2=\"989.0\"/><atom id=\"a2\" elementType=\"N\" x2=\"234.0\" y2=\"972.0\" dictRef=\"pdb:nTerminus\"/><atom id=\"a3\" elementType=\"C\" x2=\"265.0\" y2=\"1025.0\"/><atom id=\"a4\" elementType=\"C\" x2=\"296.0\" y2=\"971.0\" dictRef=\"pdb:cTerminus\"/><atom id=\"a5\" elementType=\"O\" x2=\"296.0\" y2=\"935.0\"/><atom id=\"a6\" elementType=\"O\" x2=\"327.0\" y2=\"988.0\"/></atomArray><bondArray><bond id=\"b1\" atomRefs2=\"a2 a1\" order=\"S\"/><bond id=\"b2\" atomRefs2=\"a1 a3\" order=\"S\"/><bond id=\"b3\" atomRefs2=\"a1 a4\" order=\"S\"/><bond id=\"b4\" atomRefs2=\"a4 a5\" order=\"D\"/><bond id=\"b5\" atomRefs2=\"a4 a6\" order=\"S\"/></bondArray></molecule>";
+    	
+    	IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        Enumeration props = mol.getProperties().keys();
+        boolean foundDictRefs = false;
+		while (props.hasMoreElements()) {
+			Object next = props.nextElement();
+			if (next instanceof DictRef) foundDictRefs = true;
+		}
+		assertTrue(foundDictRefs);
     }
     
     private IChemFile parseCMLString(String cmlString) {
