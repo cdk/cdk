@@ -50,6 +50,8 @@ public class AminoAcidsTest extends CDKTestCase {
         AminoAcid[] aas = AminoAcids.createAAs();
         assertNotNull(aas);
         assertEquals(20, aas.length);
+        assertNotNull(aas[0]);
+        assertNotNull(aas[19]);
     }
 
     public void testGetHashMapBySingleCharCode() {
