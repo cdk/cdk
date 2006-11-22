@@ -71,6 +71,9 @@ public class MdataTests {
         suite.addTest(SingleElectronTest.suite());
         suite.addTest(StrandTest.suite());
         suite.addTest(ChangeEventPropagationTest.suite());
+
+        suite.addTest(FragmentAtomTest.suite());
+        
         return suite;
     }
 
