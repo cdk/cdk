@@ -58,6 +58,7 @@ import org.openscience.cdk.io.formats.JaguarFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
+import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -167,6 +168,10 @@ public class ReaderFactoryTest extends CDKTestCase {
     	expectReader("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance());
     }
     
+    public void testPubChemCompoundASN() {
+        expectReader("data/pc-asn/cid1.asn", PubChemASNFormat.getInstance());
+    }
+
     private void expectFormat(String filename, IResourceFormat expectedFormat) {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
