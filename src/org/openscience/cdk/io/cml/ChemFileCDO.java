@@ -342,13 +342,12 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           currentMolecule.setProperty(CDKConstants.INCHI, propertyValue);
         } else if (propertyType.equals("dict")) {
             currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-          //Not used anymore in the PDBConvention
-//        } else if (propertyType.equals("pdb:residueName")) {
-//          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-//        } else if (propertyType.equals("pdb:oneLetterCode")) {
-//          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
-//        } else if (propertyType.equals("pdb:id")) {
-//            currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
+        } else if (propertyType.equals("pdb:residueName")) {
+          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
+        } else if (propertyType.equals("pdb:oneLetterCode")) {
+          currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
+        } else if (propertyType.equals("pdb:id")) {
+            currentMolecule.setProperty(new DictRef(propertyType, propertyValue), propertyValue);
         } else {
         	logger.warn("Not adding molecule property!");
         }
