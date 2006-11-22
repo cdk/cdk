@@ -28,7 +28,6 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -44,10 +43,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -129,6 +128,23 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
+    }
+    
+    public void testAtom2DAnd3D() {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        Point2d p2d = new Point2d(1.3, 1.4);
+        atom.setPoint2d(p2d);
+        Point3d p3d = new Point3d(1.3, 1.4, 0.9);
+        atom.setPoint3d(p3d);
+        mol.addAtom(atom);
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        assertEquals(atom.getPoint2d(), roundTrippedAtom.getPoint2d(), 0.00001);
         assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
     
