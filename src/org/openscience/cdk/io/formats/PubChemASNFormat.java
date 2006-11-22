@@ -26,7 +26,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.module io
  * @cdk.set    io-formats
  */
-public class PubChemASNFormat implements IChemFormat {
+public class PubChemASNFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
@@ -68,5 +68,10 @@ public class PubChemASNFormat implements IChemFormat {
 
 	public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;
+	}
+
+	public boolean matches(int lineNumber, String line) {
+		if (lineNumber == 1 && line.startsWith("PC-Compound")) return true;
+		return false;
 	}
 }
