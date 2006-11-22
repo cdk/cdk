@@ -594,14 +594,13 @@ public class AtomPlacer
 			}
 		}
 
-		if (renderingCoordinates != null) {
-			for (int i = 0; i < atomsToDraw.size(); i++)
-			{
-				connectAtom = (IAtom) atomsToDraw.elementAt(i);
+		for (int i = 0; i < atomsToDraw.size(); i++)
+		{
+			connectAtom = (IAtom) atomsToDraw.elementAt(i);
+			if(renderingCoordinates!=null)
 				renderingCoordinates.put(connectAtom, points.elementAt(i));
-				connectAtom.setPoint2d((Point2d)points.elementAt(i));
-				connectAtom.setFlag(CDKConstants.ISPLACED, true);
-			}
+			connectAtom.setPoint2d((Point2d)points.elementAt(i));
+			connectAtom.setFlag(CDKConstants.ISPLACED, true);
 		}
 
 	}
