@@ -30,26 +30,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.StringTokenizer;
 
-import javax.vecmath.Point3d;
-
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
-import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Reads an object from ASN formated input for PubChem Compound entries.
+ * Reads an object from ASN formated input for PubChem Compound entries. The following
+ * bits are supported: atoms.aid.
  *
  * @cdk.module io
  *
@@ -59,6 +55,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
     private LoggingTool logger;
+    
+    IMolecule molecule = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -124,35 +122,100 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
         IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
-        IMolecule molecule = file.getBuilder().newMolecule();
+        molecule = file.getBuilder().newMolecule();
         
         String line = input.readLine();
         while (input.ready() && line != null) {
-        	String command = getCommand(line);
-        	if (command.equals("atoms")) {
-                // parse frame by frame
-        		System.out.println("ASN atoms found");
-        	} else if (command.equals("bonds")) {
-        		// ok, that fine
-        		System.out.println("ASN bonds found");
-        	} else if (command.equals("PC-Compound")) {
-        		// ok, that fine
-        		System.out.println("ASN PC-Compound found");
-            } else {
-            	skipBlock();
-            }
+        	if (line.indexOf("{") != -1) {
+        		processBlock(line);
+        	} else {
+        		System.out.println("Skipping non-block: " + line); 
+        	}
+        	line = input.readLine();
         }
         moleculeSet.addAtomContainer(molecule);
         chemModel.setMoleculeSet(moleculeSet);
+        chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);
         return file;
     }
 
+    
+	private void processBlock(String line) throws IOException {
+    	String command = getCommand(line);
+    	if (command.equals("atoms")) {
+            // parse frame by frame
+    		System.out.println("ASN atoms found");
+    		processAtomBlock();
+    	} else if (command.equals("bonds")) {
+    		// ok, that fine
+    		System.out.println("ASN bonds found");
+    		skipBlock();
+    	} else if (command.equals("PC-Compound ::=")) {
+    		// ok, that fine
+    		System.out.println("ASN PC-Compound found");
+        } else {
+        	System.out.println("Skipping block: " + command);
+        	skipBlock();
+        }
+	}
+
+	private void processAtomBlock() throws IOException {
+		String line = input.readLine();
+        while (input.ready() && line != null) {
+        	if (line.indexOf("{") != -1) {
+        		processAtomBlockBlock(line);
+        	} else if (line.indexOf("}")!= -1) {
+    			return;
+    		} else {
+        		System.out.println("Skipping non-block: " + line); 
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private void processAtomBlockBlock(String line) throws IOException {
+		String command = getCommand(line);
+		if (command.equals("aid")) {
+			// assume this is the first block in the atom block
+			System.out.println("ASN atoms aid found");
+			processAtomAIDs();
+		} else {
+			System.out.println("Skipping atom block block: " + command);
+			skipBlock();
+		}
+	}
+	
+	private void processAtomAIDs() throws IOException {
+		String line = input.readLine();
+        while (input.ready() && line != null) {
+        	if (line.indexOf("}") != -1) {
+        		// done
+        		return;
+        	} else {
+//        		System.out.println("Found an atom ID: " + line);
+        		IAtom atom = molecule.getBuilder().newAtom();
+        		atom.setID(getValue(line));
+        		molecule.addAtom(atom);
+        	}
+        	line = input.readLine();
+        }
+	}
+
 	private void skipBlock() throws IOException {
 		String line = input.readLine();
-		boolean foundEndBracket = false;
+		int openBrackets = 0;
         while (line != null) {
-        	if (line.indexOf('}') != -1) return;
+//    		System.out.println("SkipBlock: line=" + line);
+    		if (line.indexOf('{') != -1) {
+        		openBrackets++;
+        	}
+//    		System.out.println(" #open brackets: " + openBrackets);
+        	if (line.indexOf('}') != -1) {
+        		if (openBrackets == 0) return;
+        		openBrackets--;
+        	}
+        	line = input.readLine();
         }
 	}
 
@@ -162,15 +225,33 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	boolean foundBracket = false;
     	while (i<line.length() && !foundBracket) {
     		char currentChar = line.charAt(i);
-    		if (Character.isWhitespace(line.charAt(i))) {
-    			// skip
-    		} else if (currentChar == '{') {
+    		if (currentChar == '{') {
     			foundBracket = true;
     		} else {
     			buffer.append(currentChar);
     		}
+    		i++;
     	}
-    	return buffer.toString();
+    	return foundBracket ? buffer.toString().trim() : null;
     }
     
+    private String getValue(String line) {
+    	StringBuffer buffer = new StringBuffer();
+    	int i = 0;
+    	boolean foundComma = false;
+    	boolean preWS = true;
+    	while (i<line.length() && !foundComma) {
+    		char currentChar = line.charAt(i);
+    		if (Character.isWhitespace(currentChar) && !preWS) {
+    			buffer.append(currentChar);
+    		} else if (currentChar == ',') {
+    			foundComma = true;
+    		} else {
+    			buffer.append(currentChar);
+    			preWS = false;
+    		}
+    		i++;
+    	}
+    	return foundComma ? buffer.toString() : null;
+    }
 }
