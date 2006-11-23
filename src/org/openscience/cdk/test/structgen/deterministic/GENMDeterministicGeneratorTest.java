@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.structgen.deterministic;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Vector2d;
@@ -33,7 +35,11 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.structgen.deterministic.GENMDeterministicGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -46,6 +52,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	boolean standAlone = false;
 
 	public MoleculeListViewer moleculeListViewer = null;
+	private SmilesGenerator smilesGenerator = new SmilesGenerator();
     
     public GENMDeterministicGeneratorTest(String name) {
         super(name);
@@ -69,21 +76,78 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	/** A complex alkaloid with two separate ring systems to 
 	  * be laid out.
 	  */
-	public void testIt()
-	{
-		try
-		{	
+	public void testIt() throws Exception {
+		if (runSlowTests()) {	
 			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1","");
-			List structures=gdg.getStructures();
-			everythingOk(structures);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+			List structures = gdg.getStructures();
+			assertOK(structures);
+			assertUnique(structures);
 		}
 	}
 
+	public void testEthane() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H6","");
+		List structures = gdg.getStructures();
+		assertEquals(1, structures.size());
+		assertUnique(structures);
+		assertOK(structures);
+	}
 
+	public void testEthanol() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H6O","");
+		List structures = gdg.getStructures();
+		assertEquals(2, structures.size());
+		assertUnique(structures);
+		assertOK(structures);
+	}
+	
+	public void testPropene() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C3H6","");
+		List structures = gdg.getStructures();
+		assertEquals(2, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		assertTrue(uniqueSMILES.contains("C1CC1"));
+		assertTrue(uniqueSMILES.contains("C=CC"));
+	}
+
+	public void testButene() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C4H10","");
+		List structures = gdg.getStructures();
+		assertEquals(2, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		assertTrue(uniqueSMILES.contains("CCCC"));
+		assertTrue(uniqueSMILES.contains("CC(C)C"));
+	}
+
+	private List assertUnique(List structures) {
+		List uniques = new ArrayList();
+		Iterator structs = structures.iterator();
+		while (structs.hasNext()) {
+			IMolecule mol = (IMolecule)structs.next();
+			String SMILES = smilesGenerator.createSMILES(mol);
+			if (uniques.contains(SMILES)) {
+				fail("Duplicate structure generated: " + SMILES);
+			}
+			uniques.add(SMILES);
+		}
+		return uniques;
+	}
+
+	private void assertOK(List structures) throws Exception {
+		IMolecule mol = null;
+		for (int f = 0; f<structures.size(); f++) {
+			mol = (Molecule)structures.get(f);
+			assertNotNull(mol);
+			assertTrue(mol.getAtomCount() > 0);
+			assertTrue(mol.getBondCount() > 0);
+			// make sure the thing is connected
+			IMoleculeSet molSet = ConnectivityChecker.partitionIntoMolecules(mol);
+			assertEquals(1, molSet.getAtomContainerCount());
+		}
+	}
+		
 //	
 //	
 //	 /**  
@@ -147,11 +211,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 //		return true;
 //	}
 	
-	
-	
-	
-	private boolean everythingOk(List structures) throws Exception 
-	{
+	private boolean drawMolecules(List structures) throws Exception {
 		StructureDiagramGenerator sdg = null;
 		MoleculeViewer2D mv = null;
 		Molecule mol = null;
@@ -190,7 +250,11 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	{
 		GENMDeterministicGeneratorTest test = new GENMDeterministicGeneratorTest();
 		test.setStandAlone(true);
-		test.testIt();
+		try {
+			test.testIt();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		//test.testSMILES();
 	}
 }
