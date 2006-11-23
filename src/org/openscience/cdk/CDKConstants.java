@@ -227,6 +227,9 @@ public class CDKConstants {
     * Molecules                             *
     ****************************************/
 
+    /** The Daylight SMILES. */
+	public static final String SMILES = "SMILES";
+    
     /** The IUPAC International Chemical Identifier. */
 	public static final String INCHI = "InChI";
     
