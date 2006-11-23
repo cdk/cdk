@@ -30,9 +30,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -45,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads an object from ASN formated input for PubChem Compound entries. The following
- * bits are supported: atoms.aid.
+ * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2.
  *
  * @cdk.module io
  *
@@ -57,6 +60,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     private LoggingTool logger;
     
     IMolecule molecule = null;
+    Map atomIDs = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -106,6 +110,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		return (IChemObject)readChemFile((IChemFile)object);
         	} catch (IOException e) {
         		throw new CDKException("An IO Exception occured while reading the file.", e);
+        	} catch (CDKException e) {
+        		throw e;
+        	} catch (Exception e) {
+        		throw new CDKException("An error occured.", e);
         	}
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
@@ -118,11 +126,12 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     // private procedures
 
-    private IChemFile readChemFile(IChemFile file) throws IOException {
+    private IChemFile readChemFile(IChemFile file) throws Exception {
         IChemSequence chemSequence = file.getBuilder().newChemSequence();
         IChemModel chemModel = file.getBuilder().newChemModel();
         IMoleculeSet moleculeSet = file.getBuilder().newMoleculeSet();
         molecule = file.getBuilder().newMolecule();
+        atomIDs = new HashMap();
         
         String line = input.readLine();
         while (input.ready() && line != null) {
@@ -141,7 +150,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
     
-	private void processBlock(String line) throws IOException {
+	private void processBlock(String line) throws Exception {
     	String command = getCommand(line);
     	if (command.equals("atoms")) {
             // parse frame by frame
@@ -150,7 +159,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	} else if (command.equals("bonds")) {
     		// ok, that fine
     		System.out.println("ASN bonds found");
-    		skipBlock();
+    		processBondBlock();
     	} else if (command.equals("PC-Compound ::=")) {
     		// ok, that fine
     		System.out.println("ASN PC-Compound found");
@@ -160,7 +169,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
 	}
 
-	private void processAtomBlock() throws IOException {
+	private void processAtomBlock() throws Exception {
 		String line = input.readLine();
         while (input.ready() && line != null) {
         	if (line.indexOf("{") != -1) {
@@ -174,32 +183,130 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
 	}
 
-	private void processAtomBlockBlock(String line) throws IOException {
+	private void processBondBlock() throws Exception {
+		String line = input.readLine();
+        while (input.ready() && line != null) {
+        	if (line.indexOf("{") != -1) {
+        		processBondBlockBlock(line);
+        	} else if (line.indexOf("}")!= -1) {
+    			return;
+    		} else {
+        		System.out.println("Skipping non-block: " + line); 
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private IAtom getAtom(int i) {
+		if (molecule.getAtomCount() <= i) {
+			molecule.addAtom(molecule.getBuilder().newAtom());
+		}
+		return molecule.getAtom(i);
+	}
+	
+	private IBond getBond(int i) {
+		if (molecule.getBondCount() <= i) {
+			molecule.addBond(molecule.getBuilder().newBond());
+		}
+		return molecule.getBond(i);
+	}
+	
+	private void processAtomBlockBlock(String line) throws Exception {
 		String command = getCommand(line);
 		if (command.equals("aid")) {
 			// assume this is the first block in the atom block
 			System.out.println("ASN atoms aid found");
 			processAtomAIDs();
+		} else if (command.equals("element")) {
+			// assume this is the first block in the atom block
+			System.out.println("ASN atoms element found");
+			processAtomElements();
 		} else {
 			System.out.println("Skipping atom block block: " + command);
 			skipBlock();
 		}
 	}
 	
-	private void processAtomAIDs() throws IOException {
+	private void processBondBlockBlock(String line) throws Exception {
+		String command = getCommand(line);
+		if (command.equals("aid1")) {
+			// assume this is the first block in the atom block
+			System.out.println("ASN bonds aid1 found");
+			processBondAtomIDs(0);
+		} else if (command.equals("aid2")) {
+			// assume this is the first block in the atom block
+			System.out.println("ASN bonds aid2 found");
+			processBondAtomIDs(1);
+		} else {
+			System.out.println("Skipping atom block block: " + command);
+			skipBlock();
+		}
+	}
+	
+	private void processAtomAIDs() throws Exception {
 		String line = input.readLine();
+		int atomIndex = 0;
         while (input.ready() && line != null) {
         	if (line.indexOf("}") != -1) {
         		// done
         		return;
         	} else {
 //        		System.out.println("Found an atom ID: " + line);
-        		IAtom atom = molecule.getBuilder().newAtom();
-        		atom.setID(getValue(line));
-        		molecule.addAtom(atom);
+//        		System.out.println("  index: " + atomIndex);
+        		IAtom atom = getAtom(atomIndex);
+        		String id = getValue(line);
+        		atom.setID(id);
+        		atomIDs.put(id, atom);
+        		atomIndex++;
         	}
         	line = input.readLine();
         }
+	}
+
+	private void processBondAtomIDs(int pos) throws Exception {
+		String line = input.readLine();
+		int bondIndex = 0;
+        while (input.ready() && line != null) {
+        	if (line.indexOf("}") != -1) {
+        		// done
+        		return;
+        	} else {
+//        		System.out.println("Found an atom ID: " + line);
+//        		System.out.println("  index: " + atomIndex);
+        		IBond bond = getBond(bondIndex);
+        		String id = getValue(line);
+        		IAtom atom = (IAtom)atomIDs.get(id);
+        		if (atom == null) {
+        			throw new CDKException("File is corrupt: atom ID does not exist " + id);
+        		}
+        		bond.setAtom(atom, pos);
+        		bondIndex++;
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private void processAtomElements() throws Exception {
+		String line = input.readLine();
+		int atomIndex = 0;
+        while (input.ready() && line != null) {
+        	if (line.indexOf("}") != -1) {
+        		// done
+        		return;
+        	} else {
+//        		System.out.println("Found symbol: " + toSymbol(getValue(line)));
+//        		System.out.println("  index: " + atomIndex);
+        		IAtom atom = getAtom(atomIndex);
+        		atom.setSymbol(toSymbol(getValue(line)));
+        		atomIndex++;
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private String toSymbol(String value) {
+		if (value.length() == 1) return value.toUpperCase();
+		return value.substring(0,1).toUpperCase() + value.substring(1);
 	}
 
 	private void skipBlock() throws IOException {
@@ -242,8 +349,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	boolean preWS = true;
     	while (i<line.length() && !foundComma) {
     		char currentChar = line.charAt(i);
-    		if (Character.isWhitespace(currentChar) && !preWS) {
-    			buffer.append(currentChar);
+    		if (Character.isWhitespace(currentChar)) {
+    			if (!preWS) buffer.append(currentChar);
     		} else if (currentChar == ',') {
     			foundComma = true;
     		} else {
@@ -252,6 +359,6 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     		}
     		i++;
     	}
-    	return foundComma ? buffer.toString() : null;
+    	return buffer.toString();
     }
 }

@@ -71,8 +71,21 @@ public class PCCompoundASNReaderTest extends CDKTestCase {
         	assertTrue(containers.get(0) instanceof IMolecule);
         	IMolecule molecule = (IMolecule)containers.get(0);
         	assertNotNull(molecule);
+        	
+        	// check atom stuff
         	assertEquals(31, molecule.getAtomCount());
+        	assertNotNull(molecule.getAtom(3));
+        	assertEquals("O", molecule.getAtom(3).getSymbol());
+        	assertNotNull(molecule.getAtom(4));
+        	assertEquals("N", molecule.getAtom(4).getSymbol());
+        	
+        	// check bond stuff
+        	assertEquals(30, molecule.getBondCount());
+        	assertNotNull(molecule.getBond(3));
+        	assertEquals(molecule.getAtom(2), molecule.getBond(3).getAtom(0));
+        	assertEquals(molecule.getAtom(11), molecule.getBond(3).getAtom(1));
         } catch (Exception e) {
+            e.printStackTrace();
             fail(e.toString());
         }
     }
