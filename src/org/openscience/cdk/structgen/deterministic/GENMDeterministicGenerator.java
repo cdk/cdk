@@ -1,6 +1,6 @@
 /*  $Revision$ $Author$ $Date$    
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Junfeng Hao
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
