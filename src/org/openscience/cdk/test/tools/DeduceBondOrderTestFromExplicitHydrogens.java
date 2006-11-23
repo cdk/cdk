@@ -154,7 +154,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	/**
 	 * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>. 
 	 */
-	public void testButadiene() throws Exception {
+	public void xtestButadiene() throws Exception {
 		IMolecule enol = new NNMolecule();
 		
 		// atom block
@@ -359,7 +359,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	/**
 	 * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>. 
 	 */
-	public void testPyridine() throws Exception {
+	public void xtestPyridine() throws Exception {
 		IMolecule enol = new NNMolecule();
 		
 		// atom block
