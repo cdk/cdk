@@ -30,6 +30,7 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -84,6 +85,12 @@ public class PCCompoundASNReaderTest extends CDKTestCase {
         	assertNotNull(molecule.getBond(3));
         	assertEquals(molecule.getAtom(2), molecule.getBond(3).getAtom(0));
         	assertEquals(molecule.getAtom(11), molecule.getBond(3).getAtom(1));
+        	
+        	// some extracted props
+        	assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
+        		molecule.getProperty(CDKConstants.INCHI));
+        	assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C",
+        		molecule.getProperty(CDKConstants.SMILES));
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.toString());

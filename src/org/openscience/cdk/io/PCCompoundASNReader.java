@@ -33,6 +33,7 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -48,7 +49,8 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads an object from ASN formated input for PubChem Compound entries. The following
- * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2.
+ * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally,
+ * it extracts the InChI and canonical SMILES properties.
  *
  * @cdk.module io
  *
@@ -160,6 +162,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     		// ok, that fine
     		System.out.println("ASN bonds found");
     		processBondBlock();
+    	} else if (command.equals("props")) {
+    		// ok, that fine
+    		System.out.println("ASN props found");
+    		processPropsBlock();
     	} else if (command.equals("PC-Compound ::=")) {
     		// ok, that fine
     		System.out.println("ASN PC-Compound found");
@@ -167,6 +173,68 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	System.out.println("Skipping block: " + command);
         	skipBlock();
         }
+	}
+
+	private void processPropsBlock() throws Exception {
+		String line = input.readLine();
+        while (input.ready() && line != null) {
+        	if (line.indexOf("{") != -1) {
+        		processPropsBlockBlock();
+        	} else if (line.indexOf("}")!= -1) {
+    			return;
+    		} else {
+        		System.out.println("Skipping non-block: " + line); 
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private void processPropsBlockBlock() throws Exception {
+		String line = input.readLine();
+		URN urn = null;
+        while (input.ready() && line != null) {
+        	if (line.indexOf("urn") != -1) {
+        		urn = extractURN();
+        	} else if (line.indexOf("value") != -1) {
+        		System.out.println("Found a prop value line: " + line);
+        		if (line.indexOf(" sval") != -1) {
+        			System.out.println("Label: " + urn.label);
+        			System.out.println("Name: " + urn.name);
+        			if ("InChI".equals(urn.label)) {
+        				String value = getQuotedValue(line.substring(line.indexOf("value sval")+10));
+        				molecule.setProperty(CDKConstants.INCHI, value);
+        			} else if ("SMILES".equals(urn.label) &&
+        					"Canonical".equals(urn.name)) {
+        				String value = getQuotedValue(line.substring(line.indexOf("value sval")+10));
+        				molecule.setProperty(CDKConstants.SMILES, value);
+        			}
+        		}
+        	} else if (line.indexOf("}")!= -1) {
+    			return;
+    		} else {
+        		System.out.println("Skipping non-block: " + line); 
+        	}
+        	line = input.readLine();
+        }
+	}
+
+	private URN extractURN() throws Exception {
+		URN urn = new URN();
+		String line = input.readLine();
+        while (input.ready() && line != null) {
+        	if (line.indexOf("name") != -1) {
+        		urn.name = getQuotedValue(line.substring(line.indexOf("name")+4));
+        	} else if (line.indexOf("label") != -1) {
+        		urn.label = getQuotedValue(line.substring(line.indexOf("label")+4));
+        	} else if (line.indexOf("}")!= -1 && line.indexOf("\"")==-1) {
+        		// ok, don't return if it also has a "
+    			return urn;
+    		} else {
+        		System.out.println("Ignoring URN statement: " + line); 
+        	}
+        	line = input.readLine();
+        }
+        return urn;
 	}
 
 	private void processAtomBlock() throws Exception {
@@ -360,5 +428,35 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     		i++;
     	}
     	return buffer.toString();
+    }
+
+    private String getQuotedValue(String line) throws Exception {
+    	StringBuffer buffer = new StringBuffer();
+    	int i = 0;
+//    	System.out.println("QV line: " + line);
+    	boolean startQuoteFound = false;
+    	while (line != null) {
+    		while (i<line.length()) {
+    			char currentChar = line.charAt(i);
+    			if (currentChar == '"') {
+    				if (startQuoteFound) { 
+    					return buffer.toString();
+    				} else {
+    					startQuoteFound = true;
+    				}
+    			} else if (startQuoteFound){
+    				buffer.append(currentChar);
+    			}
+    			i++;
+    		}
+    		line = input.readLine();
+    		i = 0;
+    	}
+    	return null;
+    }
+    
+    class URN {
+    	String name = null;
+    	String label = null;
     }
 }
