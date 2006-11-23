@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.libio.weka.WekaTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.IPBondDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.IPMolecularDescriptorTest;
 
 /**
@@ -25,7 +26,7 @@ public class MwekaTests {
 
         suite.addTest(IPAtomicDescriptorTest.suite());
         suite.addTest(IPMolecularDescriptorTest.suite());
-        suite.addTest(IPAtomicDescriptorTest.suite());
+        suite.addTest(IPBondDescriptorTest.suite());
 
         return suite;
     }
