@@ -2,9 +2,12 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
+cdk-nonotify.jar
 cdk-qsar.jar
+cdk-charges.jar
 cdk-reaction.jar
 cdk-smiles.jar
 cdk-qsar-weka.jar
 cdk-valencycheck.jar
+cdk-extra.jar
 cdk-test-core.jar
