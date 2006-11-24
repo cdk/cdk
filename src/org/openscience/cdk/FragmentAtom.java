@@ -40,6 +40,7 @@ public class FragmentAtom extends PseudoAtom {
 	
 	public FragmentAtom() {
 		fragment = this.getBuilder().newAtomContainer();
+		isExpanded = false;
 	}
 	
 	public boolean isExpanded() {
