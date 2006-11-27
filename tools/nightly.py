@@ -52,6 +52,7 @@
 # Update 09/18/2006 - Added current time to the title
 # Update 09/20/2006 - Updated to wrap Junit result files in HTML tags
 # Update 09/24/2006 - Updated to include revision info in the title
+# Update 11/27/2006 - Fixed a bug in parsing the Junit log output
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -376,6 +377,10 @@ def parseJunitOutput(summaryFile):
             while True:
                 moduleStats = f.readline()
                 if string.find(moduleStats, '[junit] Tests run:') != -1: break
+                if string.find(moduleStats, 'Exception') != -1:
+                    moduleStats = None
+                    break
+            if not moduleStats: continue
 
             # parse the stats and name of the module
             moduleStats = moduleStats.split()
