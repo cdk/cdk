@@ -24,6 +24,8 @@
 package org.openscience.cdk.test.reaction.type;
 
 
+import java.util.Iterator;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,12 +33,13 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.CleavageBondMultiReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -143,7 +146,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void test3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void test3() throws ClassNotFoundException, Exception, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1cccc(CC)c1N(COC)C(=O)CCl");
@@ -154,13 +157,13 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(6).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(7).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBond(9).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(10).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(11).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(12).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(13).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBond(15).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(14).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(16).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(17).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		setOfReactants.addMolecule(molecule);
 		
 		/*has active center*/
@@ -170,9 +173,9 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
         /* iniciate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        Assert.assertEquals(38, setOfReactions.getReactionCount());
+        Assert.assertEquals(28, setOfReactions.getReactionCount());
         IAtomContainerSet acS = ReactionSetManipulator.getAllMolecules(setOfReactions);
-        Assert.assertEquals(82,acS.getAtomContainerCount());
+        Assert.assertEquals(62,acS.getAtomContainerCount());
         
 		
 	}

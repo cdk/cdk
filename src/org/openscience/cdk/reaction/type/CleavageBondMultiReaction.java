@@ -157,7 +157,6 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 		IReactionSet setOfReactions = reactants.getBuilder().newReactionSet();
 		
 		IMolecule reactant = reactants.getMolecule(0);
-		
 		if(existAC(moleculeSetTOTAL,reactant))
 			return setOfReactions;
 		else
@@ -226,8 +225,9 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 				else{
 					if(existAC(moleculeSetTOTAL,reactantCloned))
 						return setOfReactions;
-					else
+					else{
 						reaction.addProduct(reactantCloned);
+					}
 				}
 					
 				
