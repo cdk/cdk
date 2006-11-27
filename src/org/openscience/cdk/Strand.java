@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2006  Martin Eklund <martin.eklund@farmbio.uu.se>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

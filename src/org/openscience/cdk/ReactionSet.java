@@ -3,7 +3,7 @@
  * $Date: 2006-07-30 22:02:25 +0200 (Sun, 30 Jul 2006) $    
  * $Revision: 6705 $
  * 
- * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
 package org.openscience.cdk;
 
 import java.io.Serializable;
@@ -53,7 +52,6 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @cdk.module data
  *
- * @cdk.keyword reaction
  * @cdk.keyword reaction
  */
 public class ReactionSet extends ChemObject implements Serializable, IReactionSet, IChemObjectListener, Cloneable

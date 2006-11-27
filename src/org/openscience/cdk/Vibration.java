@@ -3,8 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2002-2003  The Jmol Development Team
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) Project
+ * Copyright (C) 2002-2006  Bradley A. Smith <yeldar@home.com>
  *
  * Contact: jmol-developers@lists.sf.net
  *

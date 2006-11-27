@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2000-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2006  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,7 +24,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk;
 
@@ -36,9 +35,9 @@ import org.openscience.cdk.interfaces.IAtomParity;
 /**
  * Represents the concept of an atom parity identifying the stereochemistry
  * around an atom, given four neighbouring atoms.
+ * 
  * @cdk.module data
  *
- * @author      steinbeck
  * @cdk.created 2000-10-02
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry

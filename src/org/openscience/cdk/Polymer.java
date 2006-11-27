@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2001-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2006  Edgar Luttmann <edgar@uni-paderborn.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

@@ -3,7 +3,7 @@
  * $Date: 2005-11-10 16:52:44 +0100 (Thu, 10 Nov 2005) $
  * $Revision: 4255 $
  *
- * Copyright (C) 2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2006  Egon Willighagen <egonw@users.sf.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

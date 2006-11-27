@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-07-30 22:10:12 +0200 (Sun, 30 Jul 2006) $
- *  $Revision: 6706 $
+/*  $Revision: 7037 $ $Author: egonw $ $Date: 2006-09-24 11:13:13 +0200 (Sun, 24 Sep 2006) $
  *
- *  Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2006  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
