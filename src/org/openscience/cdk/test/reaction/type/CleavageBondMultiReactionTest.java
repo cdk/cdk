@@ -24,8 +24,6 @@
 package org.openscience.cdk.test.reaction.type;
 
 
-import java.util.Iterator;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,13 +31,16 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.CleavageBondMultiReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -67,80 +68,79 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 	}
 
 	/**
-//	 * A unit test suite for JUnit. Reaction: 
-//	 * CCc1ccc(C=O)cc1  =>  C+ Cc1ccc(C=O)cc1
-//	 * CCc1ccc(C=O)cc1  =>  CC + c1ccc(C=O)cc1 
-//	 * Automatic sarch of the centre active.
-//	 *
-//	 * @return    The test suite
-//	 */
-//	public void test1() throws ClassNotFoundException, CDKException, java.lang.Exception {
-//		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-//		
-//		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1ccc(C=O)cc1");
-//        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-//		lpcheck.newSaturate(molecule);
-//		
-//		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-//		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-//		molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
-//		setOfReactants.addMolecule(molecule);
-//		
-//		/*has active center*/
-//        Object[] params = {Boolean.TRUE};
-//        type.setParameters(params);
-//        
-//        /* iniciate */
-//        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-//        
-//        Assert.assertEquals(3, setOfReactions.getReactionCount());
-//        IAtomContainerSet acS = ReactionSetManipulator.getAllMolecules(setOfReactions);
-//        Assert.assertEquals(9,acS.getAtomContainerCount());
-//        
-//        
-//	}
-//	/**
-//	 * A unit test suite for JUnit. Reaction: 
-//	 * O=Cc1ccccc1  =>  O=C + c1ccccc1 
-//	 * Automatic sarch of the centre active.
-//	 *
-//	 * @return    The test suite
-//	 */
-//	public void test2() throws ClassNotFoundException, CDKException, java.lang.Exception {
-//		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-//		
-//		Molecule molecule = (new SmilesParser()).parseSmiles("O=Cc1ccccc1");
-//		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-//		lpcheck.newSaturate(molecule);
-//		
-//		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-//		setOfReactants.addMolecule(molecule);
-//		
-//		/*has active center*/
-//        Object[] params = {Boolean.TRUE};
-//        type.setParameters(params);
-//        
-//        /* iniciate */
-//        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-//        
-//        Assert.assertEquals(1, setOfReactions.getReactionCount());
-//        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
-//
-//        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-//		
-//        /*C=O*/
-//		Molecule molecule2 = (new SmilesParser()).parseSmiles("C=O");
-//        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
-//		
-//		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
-//		/*c1ccccc1*/
-//		Molecule molecule3 = (new SmilesParser()).parseSmiles("c1ccccc1");
-//		
-//        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-//		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,qAC));
-//		
-//	}
+	 * A unit test suite for JUnit. Reaction: 
+	 * CCc1ccc(C=O)cc1  =>  C+ Cc1ccc(C=O)cc1
+	 * CCc1ccc(C=O)cc1  =>  CC + c1ccc(C=O)cc1 
+	 * Automatic sarch of the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void test1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
+		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1ccc(C=O)cc1");
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(molecule);
+		
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(5).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		setOfReactants.addMolecule(molecule);
+		
+		/*has active center*/
+        Object[] params = {Boolean.TRUE};
+        type.setParameters(params);
+        
+        /* iniciate */
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(6, setOfReactions.getReactionCount());
+        IAtomContainerSet acS = ReactionSetManipulator.getAllMolecules(setOfReactions);
+        Assert.assertEquals(14,acS.getAtomContainerCount());
+        
+	}
+	/**
+	 * A unit test suite for JUnit. Reaction: 
+	 * O=Cc1ccccc1  =>  O=C + c1ccccc1 
+	 * Automatic sarch of the centre active.
+	 *
+	 * @return    The test suite
+	 */
+	public void test2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
+		Molecule molecule = (new SmilesParser()).parseSmiles("O=Cc1ccccc1");
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(molecule);
+		
+		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		setOfReactants.addMolecule(molecule);
+		
+		/*has active center*/
+        Object[] params = {Boolean.TRUE};
+        type.setParameters(params);
+        
+        /* iniciate */
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
+
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+		
+        /*C=O*/
+		Molecule molecule2 = (new SmilesParser()).parseSmiles("C=O");
+        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
+		
+		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+		/*c1ccccc1*/
+		Molecule molecule3 = (new SmilesParser()).parseSmiles("c1ccccc1");
+		
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,qAC));
+		
+	}
 	/**
 	 * A unit test suite for JUnit. Reaction: 
 	 *
