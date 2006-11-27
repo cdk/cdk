@@ -201,10 +201,6 @@ public class CleavageBondReaction implements IReactionProcess{
 				}
 				else{
 					reaction.addProduct(reactantCloned);
-					
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], bondClon);
-			        reaction.addMapping(mapping);
-			        
 				}
 					
 				
@@ -213,6 +209,10 @@ public class CleavageBondReaction implements IReactionProcess{
 		        reaction.addMapping(mapping);
 		        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), reactantCloned.getAtom(atom2));
 		        reaction.addMapping(mapping);
+				if( order != 1){
+					mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], bondClon);
+			        reaction.addMapping(mapping);
+				}
 				
 				
 				/*adding only that contains product*/
