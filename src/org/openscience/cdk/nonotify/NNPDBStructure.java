@@ -3,9 +3,9 @@
  * $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $    
  * $Revision: 5855 $
  * 
- *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2006  Egon Willighagen <egonw@users.sf.net>
  * 
- *  Contact: cdk-devel@lists.sourceforge.net
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
