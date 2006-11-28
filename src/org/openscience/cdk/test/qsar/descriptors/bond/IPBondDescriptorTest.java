@@ -72,7 +72,6 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(3),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80; 
-//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.05);
     }
     /**
@@ -91,7 +90,6 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(4),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95; 
-//        System.out.println(resultAccordingNIST+"="+result);
         assertEquals(result, resultAccordingNIST, 0.7);
     }
     /**
@@ -110,8 +108,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
-//      System.out.println(resultAccordingNIST+"="+result);
-        assertEquals(result, resultAccordingNIST, 2.1);
+        assertEquals(result, resultAccordingNIST, 0.01);
     }
     /**
      * A unit test for JUnit with C=CCCCC
@@ -135,6 +132,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
         double resultAccordingNIST = 9.44; 
 //        System.out.println(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+
         assertEquals(2, reactionSet.getReactionCount());
         assertEquals(resultAccordingNIST, result, 2.1);
     }
@@ -201,7 +199,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98; 
-        assertEquals(resultAccordingNIST, result, 0.2);
+        assertEquals(resultAccordingNIST, result, 0.1);
     }
     
 

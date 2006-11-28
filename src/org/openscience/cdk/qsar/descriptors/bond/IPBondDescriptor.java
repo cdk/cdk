@@ -147,17 +147,11 @@ public class IPBondDescriptor implements IBondDescriptor {
 		boolean isTarget = false;
 		Double[][] resultsH = null;
 		String path = "";
-		if(bond.getOrder() == 2 && bond.getAtom(0).getSymbol().equals("C") && 
+		if(bond.getOrder() > 1 && bond.getAtom(0).getSymbol().equals("C") && 
 				bond.getAtom(1).getSymbol().equals("C")){
 
 			resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
-			path = "data/arff/PySystWithoutHetero.arff";
-			isTarget = true;
-		}else if(bond.getOrder() == 3 && bond.getAtom(0).getSymbol().equals("C") && 
-				bond.getAtom(1).getSymbol().equals("C")){
-
-			resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
-			path = "data/arff/ActylWithoutHetero.arff";
+			path = "data/arff/Acetyl_EthylWithoutHetero.arff";
 			isTarget = true;
 		}
 
