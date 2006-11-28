@@ -508,6 +508,7 @@
                     <includesfile name="${metainf}/qsar.libdepends"/>
                     <includesfile name="${metainf}/qsar-cml.libdepends"/>
                     <includesfile name="${metainf}/qsar-pdb.libdepends"/>
+                    <includesfile name="${metainf}/qsar-weka.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
