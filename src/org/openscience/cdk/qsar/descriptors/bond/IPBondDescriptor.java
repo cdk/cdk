@@ -44,10 +44,10 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
 
 /**
- *  This class returns the ionization potential of a bond. It is
+ *  This class returns the ionization potential of a bond (double or triple). It is
  *  based in learning machine (in this case J48 see J48WModel) 
- *  from experimental values. Up to now is
- *  only possible predict for double bonds and they are not belong to
+ *  from experimental values (NIST data). Up to now is
+ *  only possible predict for double- or triple bonds and they are not belong to
  *  conjugated system or not adjacent to an heteroatom.
  *
  * <p>This descriptor uses these parameters:
@@ -153,7 +153,14 @@ public class IPBondDescriptor implements IBondDescriptor {
 			resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
 			path = "data/arff/PySystWithoutHetero.arff";
 			isTarget = true;
+		}else if(bond.getOrder() == 3 && bond.getAtom(0).getSymbol().equals("C") && 
+				bond.getAtom(1).getSymbol().equals("C")){
+
+			resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
+			path = "data/arff/ActylWithoutHetero.arff";
+			isTarget = true;
 		}
+
 		if(isTarget){
 			J48WModel j48 = new J48WModel(true,path);
     		String[] options = new String[4];
