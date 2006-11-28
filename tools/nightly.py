@@ -52,7 +52,8 @@
 # Update 09/18/2006 - Added current time to the title
 # Update 09/20/2006 - Updated to wrap Junit result files in HTML tags
 # Update 09/24/2006 - Updated to include revision info in the title
-# Update 11/27/2006 - Fixed a bug in parsing the Junit log output
+# Update 11/27/2006 - Fixed a bug in parsing the Junit log output. Also provides
+#                     visual identification of JUnit crashes
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -305,6 +306,9 @@ def writeJunitSummaryHTML(stats):
     <html>
     <head>
     <title>CDK JUnit Test Summary (%s)</title>
+    <style type="text/css">
+    tr.crash { background-color: #F778A1;}
+    </style>
     </head>
     <body>
     <center>
@@ -329,9 +333,17 @@ def writeJunitSummaryHTML(stats):
     totalError = 0
     
     for entry in stats:
-        totalTest = totalTest + int(entry[1])
-        totalFail = totalFail + int(entry[2])
-        totalError = totalError + int(entry[3])
+
+        if int(entry[1]) != -1:
+            totalTest = totalTest + int(entry[1])
+            totalFail = totalFail + int(entry[2])
+            totalError = totalError + int(entry[3])
+        else:
+            summary = summary + "<tr class='crash'>"
+            summary = summary + "<td align=\"left\"><a href=\"test/result-%s.html\">%s</a> [<b>CRASHED</b>]</td>" % (entry[0], entry[0])
+            summary = summary + "<td></td><td></td><td></td><td></td>"
+            summary = summary + "</tr>"
+            continue
         
         summary = summary + "<tr>"
         summary = summary + "<td align=\"left\"><a href=\"test/result-%s.html\">%s</a></td>" % (entry[0], entry[0])
@@ -380,7 +392,9 @@ def parseJunitOutput(summaryFile):
                 if string.find(moduleStats, 'Exception') != -1:
                     moduleStats = None
                     break
-            if not moduleStats: continue
+            if not moduleStats:
+                stats.append( (moduleName.split()[5], -1, -1, -1) )
+                continue
 
             # parse the stats and name of the module
             moduleStats = moduleStats.split()
