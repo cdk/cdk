@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
 import org.openscience.cdk.test.reaction.type.CarbonylEliminationReactionTest;
+import org.openscience.cdk.test.reaction.type.CleavageBondMultiReactionTest;
 import org.openscience.cdk.test.reaction.type.CleavageBondReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReactionTest;
 import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
@@ -67,6 +68,7 @@ public class MreactionTests {
         suite.addTest(BreakingBondReactionTest.suite());
         suite.addTest(CarbonylEliminationReactionTest.suite());
         suite.addTest(CleavageBondReactionTest.suite());
+        suite.addTest(CleavageBondMultiReactionTest.suite());
         suite.addTest(DisplacementChargeFromAcceptorReactionTest.suite());
         suite.addTest(DisplacementChargeFromDonorReactionTest.suite());
         suite.addTest(ElectronImpactPDBReactionTest.suite());
