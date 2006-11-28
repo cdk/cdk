@@ -573,6 +573,78 @@
             </jar>
         </target>
 
+        <target id="dist-test-large" name="dist-test-large" depends="test-dist-all"
+            description="Builds on big jar file for the CDK test classes.">
+
+            <!-- first unjar the CDK and other jars we need -->
+            <mkdir dir="${appjars.dir}"/>
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${lib}">
+                    <includesfile name="${metainf}/test-core.libdepends"/>
+                    <includesfile name="${metainf}/test-data.libdepends"/>
+                    <includesfile name="${metainf}/test-datadebug.libdepends"/>
+                    <includesfile name="${metainf}/test-experimental.libdepends"/>
+                    <includesfile name="${metainf}/test-extra.libdepends"/>
+                    <includesfile name="${metainf}/test-forcefield.libdepends"/>
+                    <includesfile name="${metainf}/test-inchi.libdepends"/>
+                    <includesfile name="${metainf}/test-io.libdepends"/>
+                    <includesfile name="${metainf}/test-nonotify.libdepends"/>
+                    <includesfile name="${metainf}/test-pdb.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarAtomic.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarBond.libdepends"/>
+                    <includesfile name="${metainf}/test-qsar.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarMolecular.libdepends"/>
+                    <includesfile name="${metainf}/test-reaction.libdepends"/>
+                    <includesfile name="${metainf}/test-smiles.libdepends"/>
+                    <includesfile name="${metainf}/test-standard.libdepends"/>
+                    <includesfile name="${metainf}/test-valencycheck.libdepends"/>
+                    <includesfile name="${metainf}/test-weka.libdepends"/>
+                </fileset>
+                <fileset dir="${dist}/jar">
+                    <include name="cdk-test-core.jar"/>
+                    <include name="cdk-test-data.jar"/>
+                    <include name="cdk-test-datadebug.jar"/>
+                    <include name="cdk-test-experimental.jar"/>
+                    <include name="cdk-test-extra.jar"/>
+                    <include name="cdk-test-forcefield.jar"/>
+                    <include name="cdk-test-inchi.jar"/>
+                    <include name="cdk-test-io.jar"/>
+                    <include name="cdk-test-nonotify.jar"/>
+                    <include name="cdk-test-pdb.jar"/>
+                    <include name="cdk-test-qsarAtomic.jar"/>
+                    <include name="cdk-test-qsarBond.jar"/>
+                    <include name="cdk-test-qsar.jar"/>
+                    <include name="cdk-test-qsarMolecular.jar"/>
+                    <include name="cdk-test-reaction.jar"/>
+                    <include name="cdk-test-smiles.jar"/>
+                    <include name="cdk-test-standard.jar"/>
+                    <include name="cdk-test-valencycheck.jar"/>
+                    <include name="cdk-test-weka.jar"/>
+                </fileset>
+            </unjar>
+
+            <!-- then zip up things -->
+            <tstamp>
+                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
+            </tstamp>
+            <jar jarfile="${dist}/jar/cdk-test-svn-${TODAY_SVN}.jar">
+                <manifest>
+                    <attribute name="Main-Class" value="org.openscience.cdk.test.CDKTests"/>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
+                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+            </jar>
+        </target>
+        
         <target id="sourcedist" name="sourcedist" depends="init, runDoclet"
                 description="Builds the source packages.">
             <tstamp>
