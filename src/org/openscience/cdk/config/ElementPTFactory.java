@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2001-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2005-2006  Miguel Rojas <miguelrojas@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

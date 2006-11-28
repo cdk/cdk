@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2006  Bradley A. Smith <bradley@baysmith.com>
  *
  * Contact: cdk-developers@lists.sourceforge.net
  *

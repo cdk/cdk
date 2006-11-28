@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2001-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2001-2006  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
