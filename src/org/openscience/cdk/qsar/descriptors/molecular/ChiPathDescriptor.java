@@ -164,7 +164,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         String[] names = new String[16];
         for (int i = 0; i <8; i++) {
             names[i] = "SP-"+i;
-            names[i+8] = "VP"+(i+8);
+            names[i+8] = "VP-"+(i+8);
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
