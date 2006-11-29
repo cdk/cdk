@@ -221,6 +221,10 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47; 
         assertEquals(resultAccordingNIST, result, 0.03);
+        
+        result= ((DoubleResult)descriptor.calculate(mol.getBond(2),mol).getValue()).doubleValue();
+        resultAccordingNIST = 8.47; 
+        assertEquals(resultAccordingNIST, result, 0.03);
     }
     
 
