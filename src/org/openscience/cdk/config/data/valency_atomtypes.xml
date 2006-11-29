@@ -98,6 +98,12 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
   </atomType>
+  <atomType id="P3plus">
+    <atom elementType="P" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+    </atom>
+  </atomType>
   <atomType id="P4">
     <atom elementType="P" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">3.0</scalar>
@@ -234,6 +240,12 @@
     <atom elementType="As" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
+    </atom>
+  </atomType>
+  <atomType id="AsPlus">
+    <atom elementType="As" formalCharge="1">
+      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
     </atom>
   </atomType>
 
