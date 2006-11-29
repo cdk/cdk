@@ -200,6 +200,27 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98; 
         assertEquals(resultAccordingNIST, result, 0.1);
+    }/**
+     * A unit test for JUnit with CCCCCC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPConjugatedDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C=C(C=CC)C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.47; 
+        assertEquals(resultAccordingNIST, result, 0.03);
     }
     
 
