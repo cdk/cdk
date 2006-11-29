@@ -86,7 +86,7 @@ nightly_web = '/home/rguha/public_html/code/java/nightly/'
 # required to generate the dependency graph. Should
 # contain the path to the BeanShell and JGraphT jar files
 # if not required set to "" or None
-classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk/trunk/cdk/jar/jgrapht-0.6.0.jar'
+classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar'
 
 # Optional
 # path to the japitools directory for API comparison
@@ -557,10 +557,10 @@ def generateCDKDepGraph():
         print 'dot not found. Skipping dependency graph'
         return None
     
-    os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > /tmp/cdkdep.dot' % (classpath))
-    os.system('dot -Tpng /tmp/cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
-    os.system('dot -Tps /tmp/cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
-    os.unlink('/tmp/cdkdep.dot')
+    os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > cdkdep.dot' % (classpath))
+    os.system('dot -Tpng cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
+    os.system('dot -Tps cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
+    os.unlink('cdkdep.dot')
 
     celltext = []
     celltext.append("Dependency Graph:")
