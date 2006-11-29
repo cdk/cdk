@@ -17,6 +17,9 @@
 # in the classpath variable below. However if specified as "" or None
 # then no dependency graph is generated
 #
+# Code coverage is now measured using Emma. The emma.jar should be
+# specified in the classpath variable below
+#
 # Update 05/01/2006 - Added suggestions from Egon: link to sf.net,
 #                     added a title to the HTML page, links to
 #                     build output, link to a JUnit summary, link
@@ -54,6 +57,7 @@
 # Update 09/24/2006 - Updated to include revision info in the title
 # Update 11/27/2006 - Fixed a bug in parsing the Junit log output. Also provides
 #                     visual identification of JUnit crashes
+# Update 11/29/2006 - Added code coverage with Emma
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -86,7 +90,7 @@ nightly_web = '/home/rguha/public_html/code/java/nightly/'
 # required to generate the dependency graph. Should
 # contain the path to the BeanShell and JGraphT jar files
 # if not required set to "" or None
-classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar'
+classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar:/home/rguha/src/java/emma/lib/emma.jar'
 
 # Optional
 # path to the japitools directory for API comparison
@@ -718,6 +722,79 @@ def transformJunitResultToHTML(filename):
     """  % ( lines ))
     return s.getvalue()
 
+def doCodeCoverage():
+    olddir = os.getcwd()
+    os.chdir(nightly_repo)
+
+    # check that we have emma.jar
+    comps = classpath.split(':')
+    foundEmmaJar = False
+    for i in comps:
+        if i.find('emma.jar') != -1:
+            foundEmmaJar = True
+    if not foundEmmaJar:
+        print '    emma.jar should be in the classpath variable for code coverage'
+        os.chdir(olddir)
+        return None
+
+    # now lets get a list of the test class holders
+    f = glob.glob('src/org/openscience/cdk/test/M*Tests.java')
+    f.sort()
+    f = [x.split('.')[0] for x in [os.path.basename(x) for x in f]]
+
+    if not f:
+        print '    Strange! No test suite classes found.'
+        os.chdir(olddir)
+        return None
+    
+    # lets do all the emma runs
+    os.mkdir('emma')
+    for testsuite in f:
+        if testsuite.find('smiles') != -1: continue
+        print '    Analyzing %s' % (testsuite)
+
+        cmd = """export R_HOME=/usr/local/lib/R && export LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH && java -cp %s emmarun -cp develjar/junit.jar:dist/jar/cdk-svn-%s.jar:dist/jar/cdk-test-svn-%s.jar -ix +org.openscience.cdk.* -r html -sp src junit.textui.TestRunner org.openscience.cdk.test.%s &> tmp.log && cat tmp.log >> ../emma.log""" % (classpath, todayStr, todayStr, testsuite)
+        os.system(cmd)
+        if os.path.exists('coverage'):
+            shutil.copytree('coverage', (os.path.join('emma', testsuite)))
+            os.system('rm -rf coverage')
+
+    os.unlink('tmp.log')
+    
+    # lets move the whole emma directory to the web dir
+    shutil.copytree('emma', os.path.join(nightly_web, 'emma'))                                                 
+    os.system('rm -rf emma')
+    
+    # copy the log file
+    srcFile = os.path.join(nightly_dir, 'emma.log')
+    destFile = os.path.join(nightly_web, 'emma.log')
+    shutil.copyfile(srcFile, destFile)
+    os.unlink(os.path.join(nightly_dir, 'emma.log'))
+    
+    os.chdir(olddir)
+
+    # lets make the links for the web page
+    celltext = []
+    celltext.append("""Code <a href="http://emma.sourceforge.net/">coverage</a>""")
+    f = glob.glob(os.path.join(nightly_web, 'emma', '*'))
+    f.sort()
+
+    tnameregex = re.compile('M(?P<tname>[a-zA-Z]*)Tests')
+    s = ''
+    count = 1
+    for covdir in f:
+        base = os.path.basename(covdir)
+        matches = tnameregex.search(base)
+        tname =  matches.group('tname')
+
+        s = s + '<a href="emma/%s">%s</a> ' % (base, tname)
+        if count % per_line == 0:
+            s = s + "<br>"
+        count += 1
+    celltext.append(s)
+    celltext.append('<a href="emma.log">emma.log</a>')
+    return celltext
+        
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
@@ -772,6 +849,7 @@ if __name__ == '__main__':
 
     successSrc = True
     successDist = True
+    successTestDist = True
     successTest = True
     successJavadoc = True
     successKeyword = True
@@ -830,6 +908,7 @@ if __name__ == '__main__':
         # compile the distro
         successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
+            successTestDist = runAntJob('nice -19 ant dist-test-large', 'testdist.log', 'testdist')
             successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
             successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
             successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
@@ -1048,6 +1127,14 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
 
+    # do the code coverage
+    if successTestDist:
+        print '  Performing code coverage'
+        celltexts = doCodeCoverage()
+        if celltexts:
+            resultTable.addRow()
+            for celltext in celltexts: resultTable.addCell(celltext)        
+    
     # get the results of doccheck
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
