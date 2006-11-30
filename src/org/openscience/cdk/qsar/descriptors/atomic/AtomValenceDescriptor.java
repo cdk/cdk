@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2006  Matteo Floris <mfe4@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -107,6 +107,8 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
             valencesTable.put("Fr", new Integer(1));
             valencesTable.put("Ra", new Integer(2));
             valencesTable.put("Cu", new Integer(2));
+            valencesTable.put("Mn", new Integer(2));
+            valencesTable.put("Co", new Integer(2));
         }
     }
 
