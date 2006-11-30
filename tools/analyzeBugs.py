@@ -34,7 +34,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
         pageCount += 1
         data = getBugPage(pageCount, 'sf')
         if not data:
-            raise IOError, "No data was recived from SF"
+            raise IOError, "No data was received from SF"
         
         bugre = re.compile('func=detail&amp;aid=(?P<aid>[0-9]*)&amp;group_id=(?P<gid>[0-9]*)&amp;atid=(?P<tid>[0-9]*)')
         bugs = re.findall(bugre, data)
@@ -49,7 +49,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
         pageCount += 1
         data = getBugPage(pageCount, 'all')
         if not data:
-            raise IOError, "No data was recived from SF"
+            raise IOError, "No data was received from SF"
         
         bugre = re.compile('func=detail&amp;aid=(?P<aid>[0-9]*)&amp;group_id=(?P<gid>[0-9]*)&amp;atid=(?P<tid>[0-9]*)')        
         bugs = re.findall(bugre, data)
