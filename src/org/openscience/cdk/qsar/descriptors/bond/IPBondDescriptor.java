@@ -304,12 +304,12 @@ public class IPBondDescriptor implements IBondDescriptor {
 			double result1;
 			try {
 				result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				if(result1 > results[0][0])
+				if(result1 > (results[0][0]).doubleValue())
 					results[0][0] = new Double(result1);
 				
 				SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
 				double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				results[0][2] += new Double(result2);
+				results[0][2] = new Double((results[0][2]).doubleValue() + result2);
 				
 			} catch (CDKException e) {
 				e.printStackTrace();
@@ -335,17 +335,17 @@ public class IPBondDescriptor implements IBondDescriptor {
 				if(result12 != 0)
 					resultT = result12/2;
 				
-				results[0][1] += new Double(resultT);
+				results[0][1]  = new Double((results[0][1]).doubleValue() + resultT);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
 			}
 		}
-		if(results[0][1] != 0)
-			results[0][1] = results[0][1]/conjugatedSys.getAtomCount();
+		if((results[0][1]).doubleValue() != 0)
+			results[0][1] = new Double((results[0][1]).doubleValue()/conjugatedSys.getAtomCount());
 		
-		if(results[0][2] != 0)
-			results[0][2] = results[0][2]/conjugatedSys.getAtomCount();
+		if((results[0][2]).doubleValue() != 0)
+			results[0][2] = new Double((results[0][2]).doubleValue()/conjugatedSys.getAtomCount());
 		
 		return results;
 	}
@@ -371,7 +371,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 				if(atomsss.getSymbol().equals("C")){
 					PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
 					double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
-					if(result1 > results[0][0])
+					if(result1 > (results[0][0]).doubleValue())
 						results[0][0] = new Double(result1);
 				}else{
 					
@@ -382,7 +382,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 				
 				SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
 				double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				results[0][3] += new Double(result2);
+				results[0][3] = new Double((results[0][3]).doubleValue() + result2);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
@@ -405,17 +405,17 @@ public class IPBondDescriptor implements IBondDescriptor {
 				if(result12 != 0)
 					resultT = result12/2;
 				
-				results[0][2] += new Double(resultT);
+				results[0][2] = new Double((results[0][2]).doubleValue() + resultT);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
 			}
 		}
-		if(results[0][2] != 0)
-			results[0][2] = results[0][1]/conjugatedSys.getAtomCount();
+		if((results[0][2]).doubleValue() != 0)
+			results[0][2] = new Double((results[0][1]).doubleValue()/conjugatedSys.getAtomCount());
 		
-		if(results[0][3] != 0)
-			results[0][3] = results[0][2]/conjugatedSys.getAtomCount();
+		if((results[0][3]).doubleValue() != 0)
+			results[0][3] = new Double((results[0][2]).doubleValue()/conjugatedSys.getAtomCount());
 		
 		return results;
 	}
