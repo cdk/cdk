@@ -77,7 +77,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
     	
     	//System.out.println("**** START ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
-    	//SmilesParser sp = new SmilesParser();
+    	//SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	Molecule mol=null;
         //HydrogenAdder hAdder = new HydrogenAdder();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();

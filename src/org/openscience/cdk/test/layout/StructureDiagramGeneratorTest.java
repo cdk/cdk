@@ -25,22 +25,24 @@
 package org.openscience.cdk.test.layout;
 
 import java.io.InputStream;
+
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -138,7 +140,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *@param  name      Description of the Parameter
 	 *@return           Description of the Return Value
 	 */
-	private boolean showIt(Molecule molecule, String name)
+	private boolean showIt(IMolecule molecule, String name)
 	{
 		MoleculeViewer2D mv = new MoleculeViewer2D();
 		try
@@ -162,7 +164,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *@return                Description of the Return Value
 	 *@exception  Exception  Description of the Exception
 	 */
-	public IAtomContainer generateCoordinates(Molecule m) throws Exception
+	public IAtomContainer generateCoordinates(IMolecule m) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		sdg.setMolecule(m);
@@ -409,10 +411,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Molecule makeJhao3() throws Exception
+	public IMolecule makeJhao3() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C1C2=CC13(CC23)");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C1C2=CC13(CC23)");
 		return mol;
 	}
 
@@ -421,10 +423,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Molecule makeJhao4() throws Exception
+	public IMolecule makeJhao4() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCC3C1CC23(CC12)");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCC3C1CC23(CC12)");
 		return mol;
 	}
 	
@@ -435,8 +437,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 */
 	public void testBenzene() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("c1ccccc1");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("c1ccccc1");
 		IAtomContainer ac = generateCoordinates(mol);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
@@ -463,8 +465,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 */
 	public void testBug884993() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
 		try{
 			IAtomContainer ac = generateCoordinates(mol);
             assertTrue(GeometryTools.has2DCoordinates(ac));

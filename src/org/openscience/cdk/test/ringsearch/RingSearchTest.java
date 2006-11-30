@@ -28,6 +28,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
@@ -37,7 +38,6 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * This class tests the SSSRFinder class.
@@ -104,7 +104,7 @@ public class RingSearchTest extends CDKTestCase
 	 */
 	public void testBenzene() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule molecule = sp.parseSmiles("c1ccccc1");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(1, ringSet.getAtomContainerCount());
@@ -118,7 +118,7 @@ public class RingSearchTest extends CDKTestCase
 	 */
 	public void testBicyclicCompound() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(2, ringSet.getAtomContainerCount());
@@ -126,7 +126,7 @@ public class RingSearchTest extends CDKTestCase
 
 	public void testSFBug826942() throws Exception
 	{
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		assertEquals(4, ringSet.getAtomContainerCount());

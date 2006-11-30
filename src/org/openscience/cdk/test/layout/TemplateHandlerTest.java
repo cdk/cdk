@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -103,7 +104,7 @@ public class TemplateHandlerTest extends CDKTestCase
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-		Molecule mol = new SmilesParser().parseSmiles(smiles);
+		IMolecule mol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
 		assertTrue(th.mapTemplates(mol));
 	}
 	
@@ -114,7 +115,7 @@ public class TemplateHandlerTest extends CDKTestCase
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		Molecule smilesMol = new SmilesParser().parseSmiles(smiles);
+		IMolecule smilesMol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		assertFalse(itIsInThere);
@@ -132,7 +133,7 @@ public class TemplateHandlerTest extends CDKTestCase
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		Molecule smilesMol = new SmilesParser().parseSmiles(smiles);
+		IMolecule smilesMol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		assertFalse(itIsInThere);
@@ -153,7 +154,7 @@ public class TemplateHandlerTest extends CDKTestCase
 	public void visualLayout() throws Exception
 	{
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-		Molecule mol = new SmilesParser().parseSmiles(smiles);
+		IMolecule mol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
 		MoleculeViewer2D.display(mol, true);
 	}
 

@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -62,7 +61,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 	 */
 	public void test1_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC , set the reactive center*/
-		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
+		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		LonePairElectronChecker lpeCheck = new LonePairElectronChecker();
 		lpeCheck.newSaturate(reactant);
 		
@@ -100,7 +99,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 	 */
 	public void test2_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC, without setting the reactive center*/
-		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
+		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		LonePairElectronChecker lpeCheck = new LonePairElectronChecker();
 		lpeCheck.newSaturate(reactant);
 		

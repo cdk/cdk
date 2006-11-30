@@ -25,11 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -56,13 +58,13 @@ public class TPSADescriptorTest extends CDKTestCase {
         IMolecularDescriptor descriptor = new TPSADescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         //Molecule mol = sp.parseSmiles("O=C(O)CC"); at: 29, 31
         //Molecule mol = sp.parseSmiles("C=NC(CC#N)N(C)C"); // at 1,2,3
         //Molecule mol = sp.parseSmiles("CCCN(=O)=O"); // at 4
         //Molecule mol = sp.parseSmiles("C#N=CC(CNC)N1CC1"); // at 5,6,7
         //Molecule mol = sp.parseSmiles("c1ccncc1");//at:  19
-        Molecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
+        IMolecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         // each test id done for one or more atom types:

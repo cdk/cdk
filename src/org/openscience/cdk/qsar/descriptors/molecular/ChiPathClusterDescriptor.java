@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.List;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,8 +41,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.List;
 
 /**
  * Evaluates chi path cluster descriptors.
@@ -72,7 +73,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
 
     public ChiPathClusterDescriptor() {
         logger = new LoggingTool(this);
-        sp = new SmilesParser();
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     public DescriptorSpecification getSpecification() {

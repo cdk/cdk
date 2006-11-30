@@ -3,6 +3,7 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -28,7 +29,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
 		//assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		System.out.println("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -37,7 +38,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1"); 
 		assertEquals(10, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		//System.out.println("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -46,7 +47,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2"); 
 		//System.out.println("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(8, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -55,7 +56,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC=CNCC"); 
 		//System.out.println("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -64,7 +65,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC"); 
 		//System.out.println("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -73,7 +74,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCNOC"); 
 		//System.out.println("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -82,7 +83,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
 		Object[] params = {new Boolean(false)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O"); 
 		//System.out.println("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());

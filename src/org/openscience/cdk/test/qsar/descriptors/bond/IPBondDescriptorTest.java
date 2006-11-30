@@ -23,8 +23,9 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -61,8 +62,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCCC=CCCCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCCC=CCCCC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -79,8 +80,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CC1CCC=C1");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CC1CCC=C1");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -97,8 +98,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCCCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCCCC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -119,8 +120,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPDescriptorReaction1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCCCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCCCC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -145,8 +146,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCCCCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCCCCC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -166,8 +167,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPTripleDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C#CCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C#CCC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -188,8 +189,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPTripleDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -210,8 +211,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPConjugatedDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C(C=CC)C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C(C=CC)C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -236,8 +237,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPPySystemWithHeteroatomDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C#COC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C#COC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -259,8 +260,8 @@ public class IPBondDescriptorTest extends CDKTestCase {
      */
     public void testIPPySystemWithHeteroatomDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("OC=CC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("OC=CC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);

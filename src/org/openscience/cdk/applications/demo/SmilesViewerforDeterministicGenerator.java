@@ -29,16 +29,27 @@
  */
 package org.openscience.cdk.applications.demo;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.TextField;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+
+import javax.swing.JApplet;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 
 /**
  * @cdk.module  applications
@@ -115,8 +126,8 @@ public class SmilesViewerforDeterministicGenerator extends JApplet implements Ac
 					MoleculeListViewer mlv;
 					mlv = new MoleculeListViewer();
 					mlv.setMolViewDim(new Dimension(400, 600));
-					SmilesParser sp = new SmilesParser();
-					Molecule mol=sp.parseSmiles(smilesString);
+					SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+					IMolecule mol=sp.parseSmiles(smilesString);
 					StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 					MoleculeViewer2D mv = new MoleculeViewer2D();
                     mv.getRenderer2DModel().setDrawNumbers(toggleNumbers.getState());

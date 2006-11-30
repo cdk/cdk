@@ -76,7 +76,7 @@ public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         
 		/*[C*]-C-C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]([H])([H])C([H])([H])[H]");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]([H])([H])C([H])([H])[H]");
         IAtom atom =  molecule.getAtom(0);
         molecule.addElectronContainer(new SingleElectron(atom));
         atom.setFormalCharge(0);
@@ -94,7 +94,7 @@ public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=C*/
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("C([H])([H])=C([H])[H]");
+        IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])=C([H])[H]");
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		

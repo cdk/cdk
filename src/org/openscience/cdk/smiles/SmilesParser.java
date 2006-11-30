@@ -50,8 +50,8 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  * at a time are supported. An example:
  * <pre>
  * try {
- *   SmilesParser sp = new SmilesParser();
- *   Molecule m = sp.parseSmiles("c1ccccc1");
+ *   SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ *   IMolecule m = sp.parseSmiles("c1ccccc1");
  * } catch (InvalidSmilesException ise) {
  * }
  * </pre>

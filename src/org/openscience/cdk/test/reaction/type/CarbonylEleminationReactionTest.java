@@ -29,7 +29,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -73,7 +72,7 @@ public class CarbonylEleminationReactionTest extends CDKTestCase {
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         
 		/*[C*]-C-C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("C-C#[O+]");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C-C#[O+]");
        
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
@@ -89,14 +88,14 @@ public class CarbonylEleminationReactionTest extends CDKTestCase {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=C*/
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]");
+        IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]");
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
         /*[C*]*/
-		molecule2 = (new SmilesParser()).parseSmiles("[C-]#[O+]");
+		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C-]#[O+]");
         		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

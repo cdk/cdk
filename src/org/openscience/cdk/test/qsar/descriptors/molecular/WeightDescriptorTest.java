@@ -25,8 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -52,8 +54,8 @@ public class WeightDescriptorTest extends CDKTestCase {
 		IMolecularDescriptor descriptor  = new WeightDescriptor();
 		Object[] params = {"*"};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
-		AtomContainer mol = sp.parseSmiles("CCC"); 
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IAtomContainer mol = sp.parseSmiles("CCC"); 
 		assertEquals(44.06, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1);
 	}
 

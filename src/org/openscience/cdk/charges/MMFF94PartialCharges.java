@@ -35,8 +35,8 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
  *  for an AtomContainer ac, values are calculated with:
  *  <pre>
  *  HydrogenAdder hAdder = new HydrogenAdder();
- *  SmilesParser sp = new SmilesParser();
- *  AtomContainer ac = sp.parseSmiles("CC");
+ *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ *  IAtomContainer ac = sp.parseSmiles("CC");
  *  hAdder.addExplicitHydrogensToSatisfyValency((Molecule)ac);
  *  MMFF94PartialCharges mmff = new MMFF94PartialCharges();
  *  mmff.assignMMFF94PartialCharges(ac);

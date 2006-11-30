@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -63,8 +64,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("FC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("FC");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
@@ -86,8 +87,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F-C=C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F-C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -111,8 +112,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(=O)O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(=O)O");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -136,8 +137,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("Fc1ccccc1");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("Fc1ccccc1");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -161,8 +162,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C-O-C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C-O-C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -186,8 +187,8 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C-C=C-O-C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C-C=C-O-C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);

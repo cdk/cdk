@@ -30,6 +30,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -62,7 +63,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
     public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
         IMolecularDescriptor descriptor = new WeightedPathDescriptor();
 
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = null;
         DescriptorValue value = null;
         DoubleArrayResult result = null;

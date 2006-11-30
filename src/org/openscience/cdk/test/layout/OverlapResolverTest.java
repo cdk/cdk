@@ -226,7 +226,7 @@ public class OverlapResolverTest extends CDKTestCase
 		logger.debug("Test case with atom clash");
 		try
 		{
-			IAtomContainer atomContainer = new SmilesParser().parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
+			IAtomContainer atomContainer = new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance()).parseSmiles("OC4C(N2C1=C(C(=NC(=N1)SC)SC)C3=C2N=CN=C3N)OC(C4O)CO");
 			StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 			sdg.setMolecule(new Molecule(atomContainer));
 			sdg.generateCoordinates();

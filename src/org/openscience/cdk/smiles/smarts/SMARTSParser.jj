@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>Example code using SMARTS substructure search looks like:
  * <pre>
- * SmilesParser sp = new SmilesParser();
- * AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
  * QueryAtomContainer query = SMARTSParser.parse("C*C");
  * boolean queryMatch = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
  * </pre>

@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -65,8 +66,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("FC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("FC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -93,8 +94,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("ClC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("ClC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -121,8 +122,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("IC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("IC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -149,8 +150,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("BrC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("BrC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -177,8 +178,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("OC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("OC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -205,8 +206,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=O");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -233,8 +234,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		double [] testResult={5.1519,5.1519,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -261,8 +262,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		double [] testResult={4.7796,5.9414,5.0507,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F-C=C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F-C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -288,8 +289,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		double [] testResult={6.8954,7.301,4.8022,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(=O)O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(=O)O");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -316,8 +317,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C-O-C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C-O-C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -346,8 +347,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F[C+][C-]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F[C+][C-]");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -376,8 +377,8 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCOCCCO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCCCO");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);

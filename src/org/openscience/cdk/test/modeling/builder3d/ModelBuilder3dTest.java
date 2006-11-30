@@ -28,6 +28,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -91,7 +92,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 		try{
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles("CF");
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			//mb3d.setTemplateHandler();
@@ -138,7 +139,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		HydrogenAdder hAdder=new HydrogenAdder();
 		String smile="CccccC";
 		try{
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			//mb3d.setTemplateHandler();
@@ -168,7 +169,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     HydrogenAdder hAdder=new HydrogenAdder();
     String smile="c1ccccc1C=0";
 		try {
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			mb3d.setTemplateHandler();
@@ -191,7 +192,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     HydrogenAdder hAdder=new HydrogenAdder();
     String smile="C1CCCCCCC1CC";
 		try {
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			mb3d.setTemplateHandler();

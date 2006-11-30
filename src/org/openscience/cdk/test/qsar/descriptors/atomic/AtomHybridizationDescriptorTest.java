@@ -26,9 +26,10 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -52,8 +53,8 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
 
     public void testAtomHybridizationDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IAtomicDescriptor descriptor  = new AtomHybridizationDescriptor();
-        SmilesParser sp = new SmilesParser();
-        AtomContainer mol = sp.parseSmiles("C#CC=C"); //
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C#CC=C"); //
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency((Molecule)mol);
         assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());

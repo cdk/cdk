@@ -34,7 +34,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -66,7 +67,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
-    private Molecule nextMolecule;
+    private IMolecule nextMolecule;
     
     /**
      * Contructs a new IteratingSMILESReader that can read Molecule from a given Reader.
@@ -76,7 +77,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     public IteratingSMILESReader(Reader in) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
-        sp = new SmilesParser();
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;

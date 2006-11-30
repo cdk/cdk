@@ -26,11 +26,14 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -235,8 +238,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         
     	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
-        SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F-C=C");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F-C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -257,8 +260,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
     	
     	AtomHybridizationVSEPRDescriptor descriptor  = new AtomHybridizationVSEPRDescriptor();
         
-        SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[F+]=C-[C-]");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[F+]=C-[C-]");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addImplicitHydrogensToSatisfyValency(mol);

@@ -29,7 +29,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -76,7 +75,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         
 		/*[C*]-C-C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]-C-C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C-C");
 	    HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         IAtom atom =  molecule.getAtom(0);
@@ -96,7 +95,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=C*/
-        Molecule molecule2 = (new SmilesParser()).parseSmiles("C=C");
+        IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
@@ -104,7 +103,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 		IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		
         /*[C*]*/
-		molecule2 = (new SmilesParser()).parseSmiles("[C+]");
+		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);
         atom =  molecule2.getAtom(0);
         molecule2.addElectronContainer(new SingleElectron(atom));

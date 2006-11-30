@@ -87,7 +87,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 			
 			IFingerprinter printer = new SubstructureFingerprinter(set);
-			IMolecule matchesAll = new SmilesParser().parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
+			IMolecule matchesAll = new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance()).parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
 			bitset = printer.getFingerprint(matchesAll);
 			System.out.println("BitSet: " + bitset);
 		} catch (Exception exception) {

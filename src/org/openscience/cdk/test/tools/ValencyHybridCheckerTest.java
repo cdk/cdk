@@ -29,12 +29,13 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.IValencyChecker;
-import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 
 /**
@@ -105,8 +106,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 	 * @cdk.bug 1365547
 	 */
 	public void testBug1365547() throws Exception{
-		SmilesParser p = new SmilesParser();
-		Molecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
+		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = p.parseSmiles("c2ccc1[nH]ccc1c2");
 		new ValencyHybridChecker().saturate(mol);
 	}
 	
@@ -115,8 +116,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
      * @throws CDKException
      */
     public void test1() throws CDKException {
-    	SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[F+]=C=C");
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[F+]=C=C");
 		
 		assertTrue(satcheck.isSaturated(mol.getAtom(0),mol));
     }

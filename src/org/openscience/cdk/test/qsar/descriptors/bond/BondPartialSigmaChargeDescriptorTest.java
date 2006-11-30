@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -59,8 +60,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.3323,0.0218	};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
         
-        SmilesParser sp = new SmilesParser();
-        Molecule mol = sp.parseSmiles("CF"); 
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("CF"); 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         
@@ -77,8 +78,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.2137,0.0075};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCl");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCl");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 2 ; i++){
@@ -92,8 +93,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0265,0.1268,0.1872,0.1564,0.1564,0.1347,0.0013,0.0013}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCBr");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCBr");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -108,8 +109,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = 0.0165	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -123,8 +124,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0864,0.4262,0.4262,0.0864,0.0662,0.0662,0.0662,0.0104,0.0104}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCOCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -139,8 +140,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.3463,0.0274,0.448,0.448,0.448}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("NCCO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCO");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -155,8 +156,8 @@ public class BondPartialSigmaChargeDescriptorTest extends CDKTestCase {
 	public void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0203,0.0921,0.1835,0.1569,0.3593,8.5917}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCS");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCS");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		

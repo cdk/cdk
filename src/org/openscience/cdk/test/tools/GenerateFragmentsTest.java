@@ -25,8 +25,10 @@ import java.io.InputStreamReader;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -199,9 +201,9 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	}
 	public void testGenerateMurckoFragments7() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	//System.out.println("\nMurckoTesting 7");
-    	SmilesParser sp = new SmilesParser();
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="OC(CC[n+]1c(Nc2ccccc2)scc1c3ccccc3)(P(=O)([O-])[O-])P(=O)([O-])[O-]";//ZINK5
-        Molecule mol = sp.parseSmiles(smile); 
+        IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
     	try {
@@ -222,9 +224,9 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	
 	public void testGenerateMurckoFragments8() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	//System.out.println("\nMurckoTesting 8");
-    	SmilesParser sp = new SmilesParser();
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="c2ccc(Cc1ccccc1)cc2";
-        Molecule mol = sp.parseSmiles(smile); 
+        IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
     	try {
@@ -244,9 +246,9 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	}
 	public void testGenerateMurckoFragments9() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	//System.out.println("\nMurckoTesting 9");
-    	SmilesParser sp = new SmilesParser();
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="c2ccc(c1ccccc1)cc2";
-        Molecule mol = sp.parseSmiles(smile); 
+        IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
     	try {
@@ -267,10 +269,10 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	
 	/*public void testGenerateMurckoFragments10() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	//System.out.println("\nMurckoTesting 10");
-    	SmilesParser sp = new SmilesParser();
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N";//ZINK19
                       
-        Molecule mol = sp.parseSmiles(smile); 
+        IMolecule mol = sp.parseSmiles(smile); 
         
        	GenerateFragments gf=new GenerateFragments();
     	try {
@@ -343,10 +345,10 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	//without add explicit hydrogen thetest fails due to problems with smile generator 
 	public void testGenerateMurckoFragments13() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//System.out.println("\nMurckoTesting 13");
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String smile="Oc1cc2ccccn2c1C(=O)OCCN3CCCCC3";//MDDR 31 
                   
-		Molecule mol = sp.parseSmiles(smile); 
+		IMolecule mol = sp.parseSmiles(smile); 
 		HydrogenAdder ha= new HydrogenAdder();
    
 		ha.addExplicitHydrogensToSatisfyValency(mol);
@@ -374,10 +376,10 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	//same as test 13
 	public void testGenerateMurckoFragments14() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//System.out.println("\nMurckoTesting 14");
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String smile="C(c1ccc(cc1)c2ccccc2)n3cnc4cccnc34";//MDDR 52 
                   
-		Molecule mol = sp.parseSmiles(smile); 
+		IMolecule mol = sp.parseSmiles(smile); 
 		HydrogenAdder ha= new HydrogenAdder();
    
 		ha.addExplicitHydrogensToSatisfyValency(mol);

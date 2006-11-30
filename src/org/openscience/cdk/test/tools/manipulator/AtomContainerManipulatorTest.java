@@ -36,10 +36,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -120,8 +120,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     public void testRemoveHydrogensBorane() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens((IAtomContainer)mol);
 
         // Should be two disconnected Bs with H-count == 4
@@ -139,8 +139,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     public void testgetTotalFormalCharge() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
         int totalCharge = AtomContainerManipulator.getTotalFormalCharge((IAtomContainer)mol);
 
         assertEquals(1,totalCharge);
@@ -154,8 +154,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     public void testgetTotalPositiveFormalCharge() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
         int totalCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)mol);
 
         assertEquals(2,totalCharge);
@@ -169,8 +169,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     public void testgetTotalNegativeFormalCharge() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
         int totalCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)mol);
 
         assertEquals(-1,totalCharge);

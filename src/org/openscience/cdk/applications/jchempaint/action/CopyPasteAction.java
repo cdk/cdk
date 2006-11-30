@@ -41,14 +41,15 @@ import java.lang.reflect.Constructor;
 
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLReader;
@@ -126,7 +127,7 @@ public class CopyPasteAction extends JCPAction{
         		}
         		if(topaste==null && transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
         			try{
-        				SmilesParser sp = new SmilesParser();
+        				SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         				topaste = sp.parseSmiles((String) transfer.getTransferData (DataFlavor.stringFlavor));
         				StructureDiagramGenerator sdg = new StructureDiagramGenerator((Molecule)topaste);
                         sdg.setTemplateHandler(

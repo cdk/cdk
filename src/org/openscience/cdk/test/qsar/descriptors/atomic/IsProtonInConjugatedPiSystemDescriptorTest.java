@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
@@ -54,8 +55,8 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor  = new IsProtonInConjugatedPiSystemDescriptor();
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CNC=CC=C"); 
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CNC=CC=C"); 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		assertTrue(((BooleanResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).booleanValue());

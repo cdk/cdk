@@ -29,7 +29,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -45,8 +44,8 @@ public class VariousTests extends CDKTestCase {
     }
 
 	public void test1456139() throws Exception{
-		SmilesParser p = new SmilesParser();
-		Molecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
+		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
 		assertNotNull(mol2);
 		assertEquals(22, mol2.getAtomCount());

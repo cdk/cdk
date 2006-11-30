@@ -31,7 +31,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -82,7 +81,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*C=O*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
+		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -102,7 +101,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*[C+]-[O-]*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]-[O-]");
+		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-[O-]");
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addBond(0, 2, 1);
@@ -112,7 +111,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		
 		product = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         /*[H-] + [C+](H)=O*/
-		molecule2 = (new SmilesParser()).parseSmiles("C=O");
+		molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 		molecule2.getAtom(0).setFormalCharge(+1);
 		molecule2.addAtom(new Atom("H"));
 	    molecule2.addBond(0, 2, 1);
@@ -121,7 +120,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		
 		product = setOfReactions.getReaction(2).getProducts().getMolecule(0);
         /*[H+] + [C-](H)=O*/
-		molecule2 = (new SmilesParser()).parseSmiles("C=O");
+		molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 		molecule2.getAtom(0).setFormalCharge(-1);
 		molecule2.addAtom(new Atom("H"));
 	    molecule2.addBond(0, 2, 1);
@@ -140,7 +139,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 
 		/*C=O*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
+		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
 	    adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -163,7 +162,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*[C+]-[O-]*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]-[O-]");
+		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-[O-]");
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addBond(0, 2, 1);
@@ -182,7 +181,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 	public void testBB_MappingFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=O*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("C=O");
+		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    HydrogenAdder adder = new HydrogenAdder();
 	    adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -216,7 +215,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 	public void testBB_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*FCC*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("FCC");
+		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("FCC");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -239,7 +238,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         /*[C+]C*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("[C+]C");
+		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]C");
 		molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addBond(0, 2, 1);
@@ -256,7 +255,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*F-]*/
-		molecule2 = (new SmilesParser()).parseSmiles("[F-]");
+		molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[F-]");
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		

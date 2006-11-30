@@ -23,9 +23,14 @@
  */
 package org.openscience.cdk.test.graph;
 
+import java.util.List;
+import java.util.Vector;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.PathTools;
@@ -34,9 +39,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-
-import java.util.List;
-import java.util.Vector;
 
 /**
  * @cdk.module test-standard
@@ -71,7 +73,7 @@ public class PathToolsTest extends CDKTestCase {
         IAtom start = null;
         IAtom end = null;
         List path = null;
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             atomContainer = sp.parseSmiles("CCCC");
             start = atomContainer.getAtom(0);
@@ -103,7 +105,7 @@ public class PathToolsTest extends CDKTestCase {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         List paths = null;
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
             start = atomContainer.getAtom(0);
@@ -121,7 +123,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     public void testGetAllPaths1() {
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
@@ -153,7 +155,7 @@ public class PathToolsTest extends CDKTestCase {
     }
 
     public void testGetNumberOfVertices() {
-        SmilesParser sp = new SmilesParser();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
             Assert.assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));

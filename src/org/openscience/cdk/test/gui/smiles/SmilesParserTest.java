@@ -26,9 +26,11 @@ package org.openscience.cdk.test.gui.smiles;
 
 import java.awt.Dimension;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
@@ -50,7 +52,7 @@ public class SmilesParserTest {
 	 *@param  name  Description of the Parameter
 	 */
 	public SmilesParserTest(String name) {
-		sp = new SmilesParser();
+		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		logger = new LoggingTool(this);
 	}
 
@@ -73,7 +75,7 @@ public class SmilesParserTest {
 		mlv.setMolViewDim(new Dimension(400, 600));
 		for (int f = 0; f < smiles.length; f++) {
 			try {
-				Molecule mol = sp.parseSmiles(smiles[f]);
+				IMolecule mol = sp.parseSmiles(smiles[f]);
 				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 				MoleculeViewer2D mv = new MoleculeViewer2D();
 				//mv.getRenderer2DModel().setDrawNumbers(true);

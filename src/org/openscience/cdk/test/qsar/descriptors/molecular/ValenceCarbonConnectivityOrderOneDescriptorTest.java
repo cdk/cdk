@@ -25,11 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ValenceCarbonConnectivityOrderOneDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -51,8 +53,8 @@ public class ValenceCarbonConnectivityOrderOneDescriptorTest extends CDKTestCase
     public void testValenceCarbonConnectivityOrderOneDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {1.4883912, 1.0606601};
         IMolecularDescriptor descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
-        SmilesParser sp = new SmilesParser();
-        AtomContainer mol = sp.parseSmiles("O=C(O)CC");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
         // chi1v_C
         assertEquals(testResult[1], retval.doubleValue(), 0.0001);

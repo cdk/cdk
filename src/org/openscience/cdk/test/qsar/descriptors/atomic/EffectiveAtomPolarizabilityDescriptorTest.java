@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -55,8 +56,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
         double [] testResult = {4.7253,6.1345,6.763,6.925,5.41,5.41};
         IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-        SmilesParser sp = new SmilesParser();
-        Molecule mol = sp.parseSmiles("NCCN(C)(C)");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
         HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
         
@@ -72,8 +73,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double [] testResult={4.8445,5.824,4.6165};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCCl");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCCl");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 3 ; i++){
@@ -88,8 +89,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double testResult = 6.1745; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCBr");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCBr");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -103,8 +104,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double[] testResult = {8.3585,6.1118,6.1118,9.081,10.526,8.69}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -120,8 +121,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double testResult = 5.207; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCOCC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -135,8 +136,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double [] testResult={4.2552,5.1945,4.883,3.595}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("NCCO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCO");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 4 ; i++){
@@ -151,8 +152,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 		double[] testResult = {5.2995,6.677,7.677,6.2545}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCS");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCS");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 4 ; i++){

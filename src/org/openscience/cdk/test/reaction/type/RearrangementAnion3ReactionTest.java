@@ -180,7 +180,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 	 * @return The IMolecule
 	 */
 	private IMolecule getMolecule1()throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Molecule molecule = (new SmilesParser()).parseSmiles("[C-]=C-C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C-]=C-C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         return molecule;
@@ -191,7 +191,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 	 * @return The IMolecule
 	 */
 	private IMolecule getMolecule2()throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Molecule molecule = (new SmilesParser()).parseSmiles("C=[C-]-C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=[C-]-C");
 		HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         return molecule;

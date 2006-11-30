@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -66,8 +67,8 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
-        SmilesParser sp = new SmilesParser();
-        Molecule mol = sp.parseSmiles("CF"); 
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("CF"); 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         
@@ -84,8 +85,8 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0022,0.0011,0.0011,0.0011,0.0011,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCBr");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCBr");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -101,8 +102,8 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double testResult = 0.0	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(C)(C)CCI");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		for (int i = 0 ; i < 6 ; i++){
@@ -117,8 +118,8 @@ public class BondPartialPiChargeDescriptorTest extends CDKTestCase {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0006,0.0003,0.0003,0.0003,0.0003,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CCS");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCS");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		

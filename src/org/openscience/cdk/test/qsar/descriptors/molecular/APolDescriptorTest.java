@@ -25,11 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -51,8 +53,8 @@ public class APolDescriptorTest extends CDKTestCase {
 
     public void testAPolDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IMolecularDescriptor descriptor = new APolDescriptor();
-        SmilesParser sp = new SmilesParser();
-        Molecule mol = sp.parseSmiles("O=C(O)CC");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("O=C(O)CC");
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         assertEquals(10.88, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);

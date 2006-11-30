@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -62,7 +61,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 	 */
 	public void test1_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		/* ionize >C=C< , set the reactive center*/
-		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
+		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		
 		IBond[] bonds = reactant.getBonds();
 		for(int i = 0 ; i < bonds.length ; i++){
@@ -103,7 +102,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 	 */
 	public void test_Propene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		/* ionize all possible double bonds */
-		Molecule reactant = (new SmilesParser()).parseSmiles("C=CC");
+		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CC");
 		
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -133,7 +132,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 	 */
 	public void test2_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		/* ionize >C=C< , set the reactive center*/
-		Molecule reactant = (new SmilesParser()).parseSmiles("C=CCC(=O)CC");
+		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		
 			
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();

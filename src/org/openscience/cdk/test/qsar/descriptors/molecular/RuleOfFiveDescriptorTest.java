@@ -25,11 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -53,8 +55,8 @@ public class RuleOfFiveDescriptorTest extends CDKTestCase {
         IMolecularDescriptor descriptor = new RuleOfFiveDescriptor();
         Object[] params = { Boolean.TRUE };
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser();
-        Molecule mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 
         HydrogenAdder hAdder = new HydrogenAdder();
         hAdder.addExplicitHydrogensToSatisfyValency(mol);
         assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());

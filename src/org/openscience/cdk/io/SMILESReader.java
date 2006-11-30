@@ -35,13 +35,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -78,7 +79,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     public SMILESReader(Reader input) {
         logger = new LoggingTool(this);
         this.input = new BufferedReader(input);
-        sp = new SmilesParser();
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     public SMILESReader(InputStream input) {

@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -79,7 +78,7 @@ public class CleavageBondReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*C=O*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1ccc(C=O)cc1");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1ccc(C=O)cc1");
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		
@@ -101,26 +100,26 @@ public class CleavageBondReactionTest extends CDKTestCase {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*C*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("C");
+		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C");
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		/*Cc1ccc(C=O)cc1*/
-		Molecule molecule3 = (new SmilesParser()).parseSmiles("Cc1ccc(C=O)cc1");
+		IMolecule molecule3 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("Cc1ccc(C=O)cc1");
 		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,qAC));
 		
 		product = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         /*CC*/
-		molecule2 = (new SmilesParser()).parseSmiles("CC");
+		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC");
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 
 		product = setOfReactions.getReaction(1).getProducts().getMolecule(1);
 		/*c1ccc(C=O)cc1*/
-		molecule3 = (new SmilesParser()).parseSmiles("c1ccc(C=O)cc1");
+		molecule3 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("c1ccc(C=O)cc1");
 		molecule2.addElectronContainer(new SingleElectron(molecule3.getAtom(0)));
 		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);

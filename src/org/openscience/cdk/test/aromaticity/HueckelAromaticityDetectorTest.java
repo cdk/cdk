@@ -30,10 +30,11 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
@@ -97,9 +98,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		//boolean isAromatic = false;
 		try
 		{
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+			IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			
@@ -127,9 +128,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		//boolean isAromatic = false;
 		try
 		{
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			Molecule mol = sp.parseSmiles("c1ccncc1");
+			IMolecule mol = sp.parseSmiles("c1ccncc1");
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 			
@@ -270,9 +271,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		//boolean testResults[] = {true, false, false};
 		try
 		{
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			Molecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+			IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			//System.out.println("rs.size(): " + rs.size());
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
@@ -309,9 +310,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
      */
     public void testSFBug956924() {
 		try {
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			Molecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+			IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
 			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
             assertEquals(7, mol.getAtomCount());
 			for (int f = 0; f < mol.getAtomCount(); f++) {
@@ -328,9 +329,9 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
     public void testSFBug956923() {
 		boolean testResults[] = {false, false, false, false, false, false, false, false};
 		try {
-			SmilesParser sp = new SmilesParser();
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			Molecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+			IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
 			assertFalse(HueckelAromaticityDetector.detectAromaticity(mol));
             assertEquals(testResults.length, mol.getAtomCount());
 			for (int f = 0; f < mol.getAtomCount(); f++) {
@@ -346,7 +347,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	 */
 	public void testPorphyrine()
 	{
-		Molecule molecule = null;
+		IMolecule molecule = null;
 		boolean isAromatic = false;
 		boolean testResults[] = {
 				false,

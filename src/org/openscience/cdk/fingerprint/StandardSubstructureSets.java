@@ -1,5 +1,6 @@
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -21,7 +22,7 @@ public class StandardSubstructureSets {
 		if (functionalGroupSubstructureSet == null) {
 			functionalGroupSubstructureSet = new org.openscience.cdk.AtomContainerSet();
 			
-			SmilesParser parser = new SmilesParser();
+			SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			String[] groups = {
 				"O=CO", // carboxilyc acid 
 				"[H]N[H]", // amine

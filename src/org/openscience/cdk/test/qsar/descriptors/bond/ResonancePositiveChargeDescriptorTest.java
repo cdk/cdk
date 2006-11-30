@@ -26,9 +26,10 @@ package org.openscience.cdk.test.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -66,8 +67,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0, 5.5925,0.0,0.0,0.0,0.0,0.0,0.0,5.5925,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CF");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CF");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -108,8 +109,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.6593,0.0, 0.0,0.0,3.5752,0.0,3.5752,0.0,4.6593,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(=O)C=C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(=O)C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -151,8 +152,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	 */
 	public void testResonancePositiveCharge_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={5.5662, 0.0,0.0,0.0,5.5662,0.0,3.6611,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(=O)O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(=O)O");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -189,8 +190,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_4() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0, 3.9498,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=CC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -223,8 +224,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_5() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0, 3.9498,3.9235,3.5005,3.5212,3.75,3.5149,11.658,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCOCCCO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCCCO");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -264,9 +265,9 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_6() throws ClassNotFoundException, CDKException, java.lang.Exception {
 //		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-//		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C(=[O+])C([H])([H])C([H])([H])[H]");
-		Molecule mol = sp.parseSmiles("C=CCC(=[O+])CC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+//		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C(=[O+])C([H])([H])C([H])([H])[H]");
+		IMolecule mol = sp.parseSmiles("C=CCC(=[O+])CC");
 
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -281,8 +282,8 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	public void testResonancePositiveCharge_7() throws ClassNotFoundException, CDKException, java.lang.Exception {
 //		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([C+]([H])[H])C([H])([H])C(=O)C([H])([H])C([H])([H])[H]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[H]C([C+]([H])[H])C([H])([H])C(=O)C([H])([H])C([H])([H])[H]");
 		mol.addElectronContainer(new SingleElectron(mol.getAtom(1)));
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();

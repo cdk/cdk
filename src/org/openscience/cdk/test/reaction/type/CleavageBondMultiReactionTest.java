@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -78,7 +77,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 	public void test1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1ccc(C=O)cc1");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1ccc(C=O)cc1");
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		
@@ -109,7 +108,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 	public void test2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		Molecule molecule = (new SmilesParser()).parseSmiles("O=Cc1ccccc1");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=Cc1ccccc1");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		
@@ -129,13 +128,13 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 		
         /*C=O*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("C=O");
+		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
 		/*c1ccccc1*/
-		Molecule molecule3 = (new SmilesParser()).parseSmiles("c1ccccc1");
+		IMolecule molecule3 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("c1ccccc1");
 		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,qAC));
@@ -149,7 +148,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 	public void test3() throws ClassNotFoundException, Exception, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
-		Molecule molecule = (new SmilesParser()).parseSmiles("CCc1cccc(CC)c1N(COC)C(=O)CCl");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1cccc(CC)c1N(COC)C(=O)CCl");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		

@@ -2,7 +2,9 @@ package org.openscience.cdk.test.smiles;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,7 +39,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 
     public void testPyrrole() {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
-        SmilesParser smilesParser = new SmilesParser();
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         try {
             IMolecule molecule = smilesParser.parseSmiles(smiles);
             DeduceBondSystemTool dbst = new DeduceBondSystemTool();

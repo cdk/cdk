@@ -44,7 +44,6 @@ import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import javax.swing.JFrame;
@@ -57,7 +56,7 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.dnd.JCPTransferHandler;
@@ -66,7 +65,6 @@ import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -279,7 +277,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         
         HashMap funcgroups=new HashMap();
-        SmilesParser sp=new SmilesParser();
+        SmilesParser sp=new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		StringBuffer sb=new StringBuffer();
 		InputStreamReader isr = new InputStreamReader(ins);
 		try{

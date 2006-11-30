@@ -173,7 +173,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 //	
 //	private boolean displaySMILES(Vector structures)
 //	{
-//		SmilesParser sp = new SmilesParser();
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		StructureDiagramGenerator sdg = null;
 //		MoleculeViewer2D mv = null;
 //		Molecule mol = null;

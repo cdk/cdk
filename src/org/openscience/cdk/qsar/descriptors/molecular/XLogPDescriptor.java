@@ -193,7 +193,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 			HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
 		}
 		double xlogP = 0;
-//		SmilesParser sp = new SmilesParser();
+//		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String symbol = "";
 		int bondCount = 0;
 		int atomCount = ac.getAtomCount();

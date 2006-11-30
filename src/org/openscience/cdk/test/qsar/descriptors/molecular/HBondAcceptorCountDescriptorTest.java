@@ -25,8 +25,10 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.AtomContainer;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -52,8 +54,8 @@ public class HBondAcceptorCountDescriptorTest extends CDKTestCase {
         IMolecularDescriptor descriptor = new HBondAcceptorCountDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser();
-        AtomContainer mol = sp.parseSmiles("O=N(=O)c1cccc2cn[nH]c12"); //
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O=N(=O)c1cccc2cn[nH]c12"); //
         assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }

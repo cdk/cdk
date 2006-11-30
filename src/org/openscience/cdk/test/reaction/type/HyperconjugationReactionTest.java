@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -76,7 +75,7 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*[C+]CC*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("[C+]CC");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]CC");
 		for(int i = 0; i < 7 ; i++)
 			molecule.addAtom(new Atom("H"));
 	    molecule.addBond(0, 3, 1);
@@ -100,7 +99,7 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*C=CC*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("C=CC");
+		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CC");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(molecule2);
 		
@@ -109,7 +108,7 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         /*[H+]*/
-		molecule2 = (new SmilesParser()).parseSmiles("[H+]");
+		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[H+]");
         
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

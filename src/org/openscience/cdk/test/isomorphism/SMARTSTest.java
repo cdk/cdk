@@ -31,6 +31,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,7 +63,7 @@ public class SMARTSTest extends CDKTestCase {
 	}
 
 	public void testStrictSMARTS() throws Exception {
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
         SymbolQueryAtom atom1 = new SymbolQueryAtom();
@@ -77,7 +78,7 @@ public class SMARTSTest extends CDKTestCase {
     }
 	
 	public void testSMARTS() throws Exception {
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
         AnyAtom atom1 = new AnyAtom();

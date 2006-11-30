@@ -26,9 +26,11 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -63,8 +65,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("FC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("FC");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
@@ -89,8 +91,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0299,0.0,-0.0299,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F-C=C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F-C=C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -118,8 +120,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0221,-0.1193,0.0972,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C(=O)O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(=O)O");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -146,8 +148,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0262,0.0,-0.0101,0.0,-0.006,0.0,-0.0101,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[1];
-        SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("Fc1ccccc1");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("Fc1ccccc1");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -178,8 +180,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C-O-C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C-O-C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -208,8 +210,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={-0.0333,0.0,-0.0399,0.0,0.0733,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("C=C-C=C-O-C");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=C-C=C-O-C");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -246,8 +248,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testPartialPiChargeDescriptoCharge_1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0613,-0.0554,0.0,-0.0059,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("F[C+]([H])[C-]([H])[H]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("F[C+]([H])[C-]([H])[H]");
 
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -276,8 +278,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResultMy={-0.1090,0.04283,-0.0139,0.05130,-0.01397,0.042839,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* my */
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("n1ccccc1");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("n1ccccc1");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -304,8 +306,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testPartialPiChargeDescriptoCharge_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.0379,-0.0032,0.0,-0.0078,0.0,0.0488,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -334,8 +336,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		double [] testResult={0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCOCCCO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCCCO");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		
@@ -355,8 +357,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testArticle1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.0216,-0.1644,0.1428,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CC(=O)N");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CC(=O)N");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		Object[] object = {new Integer(6),new Boolean(true)};
@@ -382,8 +384,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testSousa() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0914,0.0193,-0.1107,0.0,0.0,0.0,-0.0063,0.0,-0.0101,0.0,0.0262,-0.0098,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("FC(=O)CCc1cccc(F)c1(C)");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("FC(=O)CCc1cccc(F)c1(C)");
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		Object[] object = {new Integer(6),new Boolean(true)};
@@ -409,8 +411,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testBondNotConjugated() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.0004,0.0,-0.0004,0.0,0.0,0.0,0.0,0.0277,0.0,-0.0277}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -437,8 +439,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testBondNotConjugated1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,-0.0009,0.0,0.0009,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])[H]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])[H]");
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -465,8 +467,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testBondNotConjugated2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -495,8 +497,8 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	public void testWithRadical() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("[C]=C=C=O");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("[C]=C=C=O");
 //		mol.addElectronContainer(new SingleElectron(mol.getAtom(0)));
 		mol.addElectronContainer(new LonePair(mol.getAtom(3)));
 		Object[] object = {new Integer(6),new Boolean(false)};

@@ -28,14 +28,20 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -44,9 +50,6 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -110,9 +113,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	}
 	
 	public void testBasicQueryAtomContainer() throws Exception {
-		SmilesParser sp = new SmilesParser();
-        AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-        AtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+        IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
         QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
         
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
@@ -154,8 +157,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
             reader.read(temp);
             query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
             
-            SmilesParser sp = new SmilesParser();
-            AtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
+            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            IAtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
             
         } catch (Exception ex) {
@@ -259,8 +262,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     
     public void testItself() throws Exception{
     	String smiles="C1CCCCCCC1CC";
-       	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser().parseSmiles(smiles),true);
-    	AtomContainer ac = new SmilesParser().parseSmiles(smiles);
+       	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles),true);
+    	IAtomContainer ac = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
        	if (standAlone)
     	{
     		System.out.println("AtomCount of query: " + query.getAtomCount());
@@ -283,9 +286,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
     
     public void testAnyAtomAnyBondCase() throws Exception {
-        SmilesParser sp = new SmilesParser();
-        AtomContainer target = sp.parseSmiles("O1C=CC=C1");
-        AtomContainer queryac = sp.parseSmiles("C1CCCC1");
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
+        IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
         QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
         
         assertTrue("C1CCCC1 should be a subgraph of O1C=CC=C1", UniversalIsomorphismTester.isSubgraph(target, query));

@@ -26,8 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -61,8 +62,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CO");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CO");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -79,8 +80,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CN");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CN");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -97,8 +98,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.28,-0.56,0.28,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("COC");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("COC");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -115,8 +116,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.23,-0.41,0.0,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CS");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CS");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -133,8 +134,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.29,-0.29,0.0};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("CCl");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCl");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -151,8 +152,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("c1ccccc1");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("c1ccccc1");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -169,8 +170,8 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={-0.86,0.43,0.43};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser();
-		Molecule mol = sp.parseSmiles("o");
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("o");
 
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);

@@ -31,7 +31,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -81,7 +80,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*O-C=C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -101,7 +100,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         
         /*[O+]=C-[C+]*/
-		Molecule molecule2 = (new SmilesParser()).parseSmiles("[O+]=C-[C-]");
+		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[O+]=C-[C-]");
 		for(int i = 0; i < 4; i++)
 			molecule2.addAtom(new Atom("H"));
 		molecule2.addBond(0, 3, 1);
@@ -124,7 +123,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	public void testManuallyPutCentreActiveEthenol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*O-C=C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -157,7 +156,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	public void testMappingEthenol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*O-C=C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("O-C=C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -191,7 +190,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	public void testN() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=N-C=C*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("C=N-C=C");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=N-C=C");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -220,7 +219,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	public void testCON() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*CC(=O)N*/
-		Molecule molecule = (new SmilesParser()).parseSmiles("CC(=O)N");
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)N");
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addExplicitHydrogensToSatisfyValency(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();

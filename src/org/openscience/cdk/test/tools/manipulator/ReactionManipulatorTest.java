@@ -98,8 +98,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 */
     public void testMappingAtoms()throws ClassNotFoundException, CDKException, java.lang.Exception {
     	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-    	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
-    	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
+    	IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C=C");
+    	IMolecule product = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=C");
     	
     	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
@@ -126,8 +126,8 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 */
     public void testMappingBonds()throws ClassNotFoundException, CDKException, java.lang.Exception {
     	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-    	IMolecule reactant = (new SmilesParser()).parseSmiles("[C+]-C=C");
-    	IMolecule product = (new SmilesParser()).parseSmiles("C=C=C");
+    	IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C=C");
+    	IMolecule product = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=C");
     	
     	IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);

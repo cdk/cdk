@@ -25,7 +25,30 @@
 */
 package org.openscience.cdk.applications.jchempaint;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.text.JTextComponent;
+import javax.vecmath.Vector2d;
+
 import net.sf.jniinchi.INCHI_RET;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -39,20 +62,6 @@ import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import javax.swing.*;
-import javax.swing.text.JTextComponent;
-import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A panel containing a text field and button to directly insert SMILES or InChI's
@@ -153,7 +162,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
                 return null;
             }
         } else { // OK, it must be a SMILES
-            SmilesParser smilesParser = new SmilesParser();
+            SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
             try {
                 molecule = smilesParser.parseSmiles(text);
             } catch (InvalidSmilesException e1) {
@@ -228,7 +237,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         if (!found) return null;
 
         // got the canonical SMILES, lets get the molecule
-        SmilesParser smilesParser = new SmilesParser();
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule;
         try {
             molecule = smilesParser.parseSmiles(smiles);

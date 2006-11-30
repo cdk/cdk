@@ -23,20 +23,23 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.io.IOException;
+import java.util.Hashtable;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.MFAnalyser;
-
-import java.io.IOException;
-import java.util.Hashtable;
 
 /**
  * @cdk.module test-standard
@@ -68,7 +71,7 @@ public class MFAnalyserTest extends CDKTestCase {
 	}
 	
 //	public void testGetDBE() throws Exception{
-//        SmilesParser parser = new SmilesParser();
+//        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //        Molecule mol = parser.parseSmiles("C[Zn]C");
 //        MFAnalyser mfa=new MFAnalyser(mol);
 //        float dbes=mfa.getDBE();
@@ -123,8 +126,8 @@ public class MFAnalyserTest extends CDKTestCase {
      */
     public void testRemoveHydrogensPreserveMulitplyBondedBorane() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser();
-        Molecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
         IAtomContainer ac = new MFAnalyser(mol).removeHydrogensPreserveMultiplyBonded();
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.

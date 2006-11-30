@@ -73,7 +73,7 @@ public class HydrogenRearrangementGammaReactionTest extends CDKTestCase {
 	public void testAutomaticSearchCentreActiveExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         
 		/*[C*]=C-C-C-C*/
-        IMolecule molecule = (new SmilesParser()).parseSmiles("C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[H]");
+        IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[H]");
         molecule.addElectronContainer(new SingleElectron(molecule.getAtom(0)));
         
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -90,7 +90,7 @@ public class HydrogenRearrangementGammaReactionTest extends CDKTestCase {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*|C-[C*]-C*/
-        IMolecule molecule2 = (new SmilesParser()).parseSmiles("C([H])([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])C([H])([H])[H]");
+        IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])([H])C([H])([H])C([H])([H])C([H])C([H])([H])[H]");
         molecule2.addElectronContainer(new SingleElectron(molecule2.getAtom(12)));
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);

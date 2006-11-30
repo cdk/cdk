@@ -160,7 +160,7 @@ public class HOSECodeTest extends CDKTestCase
 		
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 			
 
 			//MoleculeViewer2D.display(molecule, true);
@@ -296,7 +296,7 @@ public class HOSECodeTest extends CDKTestCase
 		
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
@@ -337,7 +337,7 @@ public class HOSECodeTest extends CDKTestCase
      "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
 		try
 		{
-			Molecule molecule = (new SmilesParser()).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C1(C=CN2)=C2C=CC=C1");
 			//display(molecule);
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -361,7 +361,7 @@ public class HOSECodeTest extends CDKTestCase
 	
 	public void testBug655169()
 	{
-		Molecule molecule = null;
+		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
 		    "C-4;C(=C/Y/)",
@@ -372,7 +372,7 @@ public class HOSECodeTest extends CDKTestCase
 
 		try
 		{
-			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+			molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			hcg = new HOSECodeGenerator();
 			String s = null;
@@ -427,7 +427,7 @@ public class HOSECodeTest extends CDKTestCase
 
   public void testBug795480()
 	{
-		Molecule molecule = null;
+		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
 		String[] result = {
 		    "C-4-;C(=C/Y'+4'/)",
@@ -438,7 +438,7 @@ public class HOSECodeTest extends CDKTestCase
 
 		try
 		{
-			molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+			molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
             boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
             assertFalse(isAromatic);
 			molecule.getAtom(0).setFormalCharge(-1);
@@ -463,7 +463,7 @@ public class HOSECodeTest extends CDKTestCase
     }
   	public void testGetAtomsOfSphere(){
 		try{
-			IMolecule molecule = (new SmilesParser()).parseSmiles("CC=CBr");
+			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 
@@ -481,7 +481,7 @@ public class HOSECodeTest extends CDKTestCase
 	}
   	public void testGetAtomsOfSphereWithHydr(){
 		try{
-			IMolecule molecule = (new SmilesParser()).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
+			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 

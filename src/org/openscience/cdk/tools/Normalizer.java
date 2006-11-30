@@ -31,9 +31,10 @@ package org.openscience.cdk.tools;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -68,7 +69,7 @@ public class Normalizer {
    */
   public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
     NodeList nl = doc.getElementsByTagName("replace-set");
-    SmilesParser sp = new SmilesParser();
+    SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     boolean change=false;
     for (int i = 0; i < nl.getLength(); i++) {
       Element child = (Element) nl.item(i);
