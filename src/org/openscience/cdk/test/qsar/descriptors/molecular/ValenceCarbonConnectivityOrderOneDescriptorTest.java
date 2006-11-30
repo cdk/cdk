@@ -28,6 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ValenceCarbonConnectivityOrderOneDescriptor;
@@ -58,6 +59,27 @@ public class ValenceCarbonConnectivityOrderOneDescriptorTest extends CDKTestCase
         DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
         // chi1v_C
         assertEquals(testResult[1], retval.doubleValue(), 0.0001);
+    }
+    
+    /**
+     * @cdk.bug 1298108
+     */
+    public void testBug1298108() throws CDKException {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("[Cu]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
+        IMolecularDescriptor descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
+        DoubleResult retval = (DoubleResult) descriptor.calculate(mol).getValue();
+        assertNotNull(retval);
+        
+        mol = sp.parseSmiles("[Mn]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
+        descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
+        retval = (DoubleResult) descriptor.calculate(mol).getValue();
+        assertNotNull(retval);
+        
+        mol = sp.parseSmiles("[Co]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
+        descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
+        retval = (DoubleResult) descriptor.calculate(mol).getValue();
+        assertNotNull(retval);
     }
 }
 
