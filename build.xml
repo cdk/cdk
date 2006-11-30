@@ -539,6 +539,7 @@
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
                     <include name="cdk-qsar-pdb.jar"/>
+                    <include name="cdk-qsar-weka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
