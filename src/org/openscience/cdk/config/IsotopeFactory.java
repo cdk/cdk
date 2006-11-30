@@ -28,7 +28,7 @@ import java.io.InputStream;
 import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.config.isotopes.IsotopeReader;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,7 +68,7 @@ public class IsotopeFactory
 {
 
 	private static IsotopeFactory ifac = null;
-	private Vector isotopes = null;
+	private List isotopes = null;
     private Hashtable majorIsotopes = null;
     private boolean debug = false;
     private LoggingTool logger;
@@ -159,10 +159,10 @@ public class IsotopeFactory
   	ArrayList list = new ArrayList();
 		for (int f = 0; f < isotopes.size(); f++)
 		{
-			if (((IIsotope) isotopes.elementAt(f)).getSymbol().equals(symbol))
+			if (((IIsotope) isotopes.get(f)).getSymbol().equals(symbol))
 			{
 				try {
-					IIsotope clone = (IIsotope) ((IIsotope) isotopes.elementAt(f)).clone();
+					IIsotope clone = (IIsotope) ((IIsotope) isotopes.get(f)).clone();
 					list.add(clone);
 				} catch (CloneNotSupportedException e) {
 					logger.error("Could not clone IIsotope: ", e.getMessage());
@@ -190,7 +190,7 @@ public class IsotopeFactory
     public IIsotope getMajorIsotope(int atomicNumber) {
         IIsotope major = null;
         for (int f = 0; f < isotopes.size(); f++) {
-            IIsotope current = (IIsotope) isotopes.elementAt(f);
+            IIsotope current = (IIsotope) isotopes.get(f);
             if (current.getAtomicNumber() == atomicNumber) {
             	try {
             		if (major == null) {
@@ -232,7 +232,7 @@ public class IsotopeFactory
             major = (IIsotope)majorIsotopes.get(symbol);
         } else {
             for (int f = 0; f < isotopes.size(); f++) {
-                IIsotope current = (IIsotope) isotopes.elementAt(f);
+                IIsotope current = (IIsotope) isotopes.get(f);
                 if (current.getSymbol().equals(symbol)) {
                 	try {
                 		if (major == null) {

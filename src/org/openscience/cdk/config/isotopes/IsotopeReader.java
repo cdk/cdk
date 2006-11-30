@@ -29,7 +29,8 @@ package org.openscience.cdk.config.isotopes;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -123,8 +124,8 @@ public class IsotopeReader {
      * @return a Vector of Isotope's. Returns an empty vector is some reading error
      *         occured.
      */
-    public Vector readIsotopes() {
-        Vector isotopes = new Vector();
+    public List readIsotopes() {
+        List isotopes = new ArrayList();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
