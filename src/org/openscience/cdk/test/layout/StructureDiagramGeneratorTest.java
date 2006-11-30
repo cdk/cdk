@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -466,6 +467,27 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IMolecule cdkMol = parser.parseSmiles(smiles);
 		HueckelAromaticityDetector.detectAromaticity(cdkMol, false);
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
+	}
+	
+	public void testBug1572062() throws Exception {
+		String filename = "data/mdl/sdg_test.mol";
+
+//		set up molecule reader
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		IChemObjectReader molReader = new MDLReader(ins);
+
+//		read molecule
+		IMolecule molecule = (IMolecule) molReader.read(new
+				Molecule());
+
+//		rebuild 2D coordinates
+		StructureDiagramGenerator structureDiagramGenerator = 
+			new StructureDiagramGenerator();
+		for (int i = 0; i < 10; i++) {
+			structureDiagramGenerator.setMolecule(molecule);
+			structureDiagramGenerator.generateCoordinates();
+		}
+
 	}
 	
 	/**
