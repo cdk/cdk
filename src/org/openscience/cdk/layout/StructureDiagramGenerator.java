@@ -760,18 +760,21 @@ public class StructureDiagramGenerator
 		for (int f = 0; f < bonds.length; f++)
 		{
 			bond = bonds[f];
-			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-					!bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-					bond.getAtom(0).getFlag(CDKConstants.ISINRING))
-			{
-				return bond;
-			}
+			if (bond.getAtom(0).getPoint2d() != null &&
+				bond.getAtom(1).getPoint2d() != null) {
+				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+						bond.getAtom(0).getFlag(CDKConstants.ISINRING))
+				{
+					return bond;
+				}
 
-			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-					!bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-					bond.getAtom(1).getFlag(CDKConstants.ISINRING))
-			{
-				return bond;
+				if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+						bond.getAtom(1).getFlag(CDKConstants.ISINRING))
+				{
+					return bond;
+				}
 			}
 		}
 		return null;
