@@ -50,8 +50,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 public class CDKUtilities {
 		
 	public static String fixSmiles(String Smiles) {
-		Smiles=Smiles.replace("CL","Cl");
-		Smiles=Smiles.replace("(H)","([H])");
+		Smiles=Smiles.replaceAll("CL","Cl");
+		Smiles=Smiles.replaceAll("(H)","([H])");
 //		Smiles=Smiles.replace("N=N#N","N=[N+]=[N-]");
 //		Smiles=Smiles.replace("#N=O","#[N+][O-]");
 		Smiles=Smiles.trim();
