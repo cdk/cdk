@@ -163,20 +163,35 @@ public class IPBondDescriptor implements IBondDescriptor {
         		
         		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
                 Iterator acI = conjugatedPi.atomContainers();
-        		boolean contained_ConjugatedPi = false;
+        		boolean isConjugatedPi = false;
+        		boolean isConjugatedPi_withHeteroatom = false;
                 while(acI.hasNext()){
         			IAtomContainer ac = (IAtomContainer) acI.next();
         			if(ac.contains(bond)){
-        				contained_ConjugatedPi = true;
+        				isConjugatedPi = true;
             			isTarget = true;
             			
-            			resultsH = calculateCojugatedPiSystWithoutHeteroDescriptor(bond, container, ac);
-            			path = "data/arff/ConjugatedPiSys.arff";
-            			break;
+            			Iterator atoms = ac.atoms();
+            			while(atoms.hasNext()){
+            				IAtom atomsss = (IAtom) atoms.next();
+            				
+            				if(!atomsss.getSymbol().equals("C")){
+            					isConjugatedPi_withHeteroatom = true;
+            					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
+                    			path = "data/arff/PySystWithHetero.arff";
+                    			break;
+            				}
+            			}
+            			
+            			if(!isConjugatedPi_withHeteroatom){
+	            			resultsH = calculateCojugatedPiSystWithoutHeteroDescriptor(bond, container, ac);
+	            			path = "data/arff/ConjugatedPiSys.arff";
+	            			break;
+            			}
         			}
         		}
         		
-                if(!contained_ConjugatedPi){
+                if(!isConjugatedPi){
 
 					resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
 					path = "data/arff/Acetyl_EthylWithoutHetero.arff";
@@ -278,9 +293,9 @@ public class IPBondDescriptor implements IBondDescriptor {
 	private Double[][] calculateCojugatedPiSystWithoutHeteroDescriptor(IBond bond, IAtomContainer atomContainer, IAtomContainer conjugatedSys) {
 		Double[][] results = new Double[1][3];
 		
-		results[0][0] = 0.0;
-		results[0][1] = 0.0;
-		results[0][2] = 0.0;
+		results[0][0] = new Double(0.0);
+		results[0][1] = new Double(0.0);
+		results[0][2] = new Double(0.0);
 		Iterator atomIt = conjugatedSys.atoms();
 		while(atomIt.hasNext()){
 			IAtom atomsss = (IAtom) atomIt.next();
@@ -331,6 +346,76 @@ public class IPBondDescriptor implements IBondDescriptor {
 		
 		if(results[0][2] != 0)
 			results[0][2] = results[0][2]/conjugatedSys.getAtomCount();
+		
+		return results;
+	}
+	/**
+	 * Calculate the necessary descriptors for pi systems without heteroatom
+	 * 
+	 * @param atomContainer The IAtomContainer
+	 * @return     Array with the values of the descriptors.
+	 */
+	private Double[][] calculateCojugatedPiSystWithHeteroDescriptor(IBond bond, IAtomContainer atomContainer, IAtomContainer conjugatedSys) {
+		Double[][] results = new Double[1][4];
+		
+		results[0][0] = new Double(0.0);
+		results[0][1] = new Double(0.0);
+		results[0][2] = new Double(0.0);
+		results[0][3] = new Double(0.0);
+		Iterator atomIt = conjugatedSys.atoms();
+		while(atomIt.hasNext()){
+			IAtom atomsss = (IAtom) atomIt.next();
+			
+			try {
+			
+				if(atomsss.getSymbol().equals("C")){
+					PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
+					double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+					if(result1 > results[0][0])
+						results[0][0] = result1;
+				}else{
+					
+					PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
+					double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+					results[0][1] = result1;
+				}
+				
+				SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
+				double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
+				results[0][3] += result2;
+			
+			} catch (CDKException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		Iterator bondIt = conjugatedSys.bonds();
+		while(bondIt.hasNext()){
+			IBond bondsss = (IBond) bondIt.next();
+			try {
+				
+				ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
+				DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
+				double result1 = dar.get(0);
+				double resutt2 = dar.get(1);
+				double result12 = (result1+resutt2);
+				
+				double resultT = 0;
+				if(result12 != 0)
+					resultT = result12/2;
+				
+				results[0][2] += resultT;
+			
+			} catch (CDKException e) {
+				e.printStackTrace();
+			}
+		}
+		if(results[0][2] != 0)
+			results[0][2] = results[0][1]/conjugatedSys.getAtomCount();
+		
+		if(results[0][3] != 0)
+			results[0][3] = results[0][2]/conjugatedSys.getAtomCount();
 		
 		return results;
 	}

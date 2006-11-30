@@ -158,7 +158,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
         assertEquals(0, reactionSet.getReactionCount());
     }
     /**
-     * A unit test for JUnit with CCCCCC
+     * A unit test for JUnit with C#CCC
      * 
      * @throws ClassNotFoundException
      * @throws CDKException
@@ -180,7 +180,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
         assertEquals(resultAccordingNIST, result, 0.75);
     }
     /**
-     * A unit test for JUnit with CCCCCC
+     * A unit test for JUnit with (#CC(C)(C)C)C(C)(C)C
      * 
      * @throws ClassNotFoundException
      * @throws CDKException
@@ -200,8 +200,9 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98; 
         assertEquals(resultAccordingNIST, result, 0.1);
-    }/**
-     * A unit test for JUnit with CCCCCC
+    }
+    /**
+     * A unit test for JUnit with C=C(C=CC)C
      * 
      * @throws ClassNotFoundException
      * @throws CDKException
@@ -225,6 +226,52 @@ public class IPBondDescriptorTest extends CDKTestCase {
         result= ((DoubleResult)descriptor.calculate(mol.getBond(2),mol).getValue()).doubleValue();
         resultAccordingNIST = 8.47; 
         assertEquals(resultAccordingNIST, result, 0.03);
+    }
+    /**
+     * A unit test for JUnit with C#COC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemWithHeteroatomDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("C#COC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 9.48; 
+        assertEquals(resultAccordingNIST, result, 0.3);
+        
+    }
+    /**
+     * A unit test for JUnit with OC=CC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemWithHeteroatomDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser();
+		Molecule mol = sp.parseSmiles("OC=CC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getBond(1),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.64; 
+        assertEquals(resultAccordingNIST, result, 0.03);
+        
     }
     
 
