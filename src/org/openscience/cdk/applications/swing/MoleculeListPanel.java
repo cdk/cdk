@@ -32,7 +32,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -56,7 +57,7 @@ public class MoleculeListPanel extends JPanel {
 	/** The dimension of a single MoleculeViewer2D */
 	protected Dimension molViewDim = new Dimension(250, 250);
 
-	protected Vector moleculeViewerPanels = new Vector();
+	protected List moleculeViewerPanels = new ArrayList();
 
 	/**
 	 *  Constructor for the MoleculeListPanel object
@@ -70,6 +71,12 @@ public class MoleculeListPanel extends JPanel {
 		add("Center", scrollPane);
 	}
 
+	public void clear()
+	{
+		moleculeViewerPanels.clear();
+		panel.removeAll();
+	}
+	
 	/**
 	 *  Sets the molViewDim attribute of the MoleculeListViewer object
 	 *
@@ -115,7 +122,7 @@ public class MoleculeListPanel extends JPanel {
 		moleculeViewer.setPreferredSize(molViewDim);
         moleculeViewer.getRenderer2DModel().setBackgroundDimension(molViewDim);
 		moleculeViewer.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), title));
-		moleculeViewerPanels.addElement(moleculeViewer);
+		moleculeViewerPanels.add(moleculeViewer);
 		panel.add(moleculeViewer);
 		panel.revalidate();
 	}

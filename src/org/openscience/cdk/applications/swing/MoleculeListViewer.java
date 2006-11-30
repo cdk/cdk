@@ -68,6 +68,11 @@ public class MoleculeListViewer extends JFrame
 		setVisible(true);
 	}
 
+	public void clear()
+	{
+		panel.clear();
+	}
+	
 	/**
 	 *  Sets the molViewDim attribute of the MoleculeListViewer object
 	 *
