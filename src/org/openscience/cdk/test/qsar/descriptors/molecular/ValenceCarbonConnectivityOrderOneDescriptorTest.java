@@ -72,12 +72,10 @@ public class ValenceCarbonConnectivityOrderOneDescriptorTest extends CDKTestCase
         assertNotNull(retval);
         
         mol = sp.parseSmiles("[Mn]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
-        descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
         retval = (DoubleResult) descriptor.calculate(mol).getValue();
         assertNotNull(retval);
         
         mol = sp.parseSmiles("[Co]12(-O-C(-C(-O-2)=O)=O)(-O-C(-C(-O-1)=O)=O)(-O)-O");
-        descriptor = new ValenceCarbonConnectivityOrderOneDescriptor();
         retval = (DoubleResult) descriptor.calculate(mol).getValue();
         assertNotNull(retval);
     }
