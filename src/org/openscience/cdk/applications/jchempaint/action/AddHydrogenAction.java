@@ -57,7 +57,6 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
- * @cdk.bug    1493651
  */
 public class AddHydrogenAction extends JCPAction
 {
