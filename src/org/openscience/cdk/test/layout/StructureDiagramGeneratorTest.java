@@ -38,6 +38,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -46,6 +47,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -457,6 +459,14 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
+	public void testBug1598409() throws Exception
+	{
+		String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
+		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+		IMolecule cdkMol = parser.parseSmiles(smiles);
+		HueckelAromaticityDetector.detectAromaticity(cdkMol, false);
+		new StructureDiagramGenerator(cdkMol).generateCoordinates();
+	}
 	
 	/**
 	 *  A unit test for JUnit
