@@ -305,11 +305,11 @@ public class IPBondDescriptor implements IBondDescriptor {
 			try {
 				result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
 				if(result1 > results[0][0])
-					results[0][0] = result1;
+					results[0][0] = new Double(result1);
 				
 				SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
 				double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				results[0][2] += result2;
+				results[0][2] += new Double(result2);
 				
 			} catch (CDKException e) {
 				e.printStackTrace();
@@ -335,7 +335,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 				if(result12 != 0)
 					resultT = result12/2;
 				
-				results[0][1] += resultT;
+				results[0][1] += new Double(resultT);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
@@ -372,17 +372,17 @@ public class IPBondDescriptor implements IBondDescriptor {
 					PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
 					double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
 					if(result1 > results[0][0])
-						results[0][0] = result1;
+						results[0][0] = new Double(result1);
 				}else{
 					
 					PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
 					double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
-					results[0][1] = result1;
+					results[0][1] = new Double(result1);
 				}
 				
 				SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
 				double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				results[0][3] += result2;
+				results[0][3] += new Double(result2);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
@@ -405,7 +405,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 				if(result12 != 0)
 					resultT = result12/2;
 				
-				results[0][2] += resultT;
+				results[0][2] += new Double(resultT);
 			
 			} catch (CDKException e) {
 				e.printStackTrace();
