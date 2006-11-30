@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2006  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.smiles;
 
@@ -33,23 +28,21 @@ import java.util.Enumeration;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-//import org.openscience.cdk.tools.SmilesValencyChecker;
 import org.openscience.cdk.tools.ValencyHybridChecker;
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -90,14 +83,28 @@ public class SmilesParser {
 	private ValencyHybridChecker valencyChecker;
 		
 	private int status = 0;
+	private IChemObjectBuilder builder;
 
 
 	/**
-	 *  Constructor for the SmilesParser object
+	 * Constructor for the SmilesParser object.
+	 * 
+	 * @deprecated
 	 */
 	public SmilesParser()
 	{
+		this(DefaultChemObjectBuilder.getInstance());
+	}
+	
+	/**
+	 * Constructor for the SmilesParser object.
+	 * 
+	 * @param builder IChemObjectBuilder used to create the IMolecules from
+	 */
+	public SmilesParser(IChemObjectBuilder builder)
+	{
 		logger = new LoggingTool(this);
+		this.builder = builder;
 		try
 		{
 			valencyChecker = new ValencyHybridChecker();
@@ -110,28 +117,19 @@ public class SmilesParser {
 		}
 	}
 
-
 	int position = -1;
 	int nodeCounter = -1;
 	String smiles = null;
 	double bondStatus = -1;
 	double bondStatusForRingClosure = 1;
     boolean bondIsAromatic = false;
-	Atom[] rings = null;
+	IAtom[] rings = null;
 	double[] ringbonds = null;
 	int thisRing = -1;
 	org.openscience.cdk.Molecule molecule = null;
 	String currentSymbol = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  smiles                      Description of the Parameter
-	 *@return                             Description of the Return Value
-	 *@exception  InvalidSmilesException  Description of the Exception
-	 */
-	public Reaction parseReactionSmiles(String smiles) throws InvalidSmilesException
+	public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException
 	{
 		StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
 		String reactantSmiles = tokenizer.nextToken();
@@ -143,7 +141,7 @@ public class SmilesParser {
 			productSmiles = tokenizer.nextToken();
 		}
 
-		Reaction reaction = new Reaction();
+		IReaction reaction = builder.newReaction();
 
 		// add reactants
 		IMolecule reactantContainer = parseSmiles(reactantSmiles);
@@ -185,7 +183,7 @@ public class SmilesParser {
 	 *@exception  InvalidSmilesException  Exception thrown when the SMILES string
 	 *      is invalid
 	 */
-	public org.openscience.cdk.Molecule parseSmiles(String smiles) throws InvalidSmilesException
+	public IMolecule parseSmiles(String smiles) throws InvalidSmilesException
 	{
 		DeduceBondSystemTool dbst=new DeduceBondSystemTool();
 
@@ -224,7 +222,7 @@ public class SmilesParser {
 				if (!(dbst.isOK(m))) {
 
 					// need to fix it:
-					m = (Molecule) dbst.fixAromaticBondOrders(m2);
+					m = (IMolecule) dbst.fixAromaticBondOrders(m2);
 
 					if (!(m instanceof IMolecule)) {
 						throw new InvalidSmilesException("couldn't parse");
@@ -238,7 +236,7 @@ public class SmilesParser {
 			}
 		}
 
-		return (Molecule)m;
+		return (IMolecule)m;
 	}
 
 	/**
@@ -247,10 +245,10 @@ public class SmilesParser {
 	 * @return
 	 * @throws InvalidSmilesException
 	 */
-	private org.openscience.cdk.Molecule parseString(String smiles) throws InvalidSmilesException
+	private IMolecule parseString(String smiles) throws InvalidSmilesException
 	{
 		logger.debug("parseSmiles()...");
-		Bond bond = null;
+		IBond bond = null;
 		nodeCounter = 0;
 		bondStatus = 0;
         bondIsAromatic = false;
@@ -260,7 +258,7 @@ public class SmilesParser {
 		molecule = new org.openscience.cdk.Molecule();
 		position = 0;
 		// we don't want more than 1024 rings
-		rings = new Atom[1024];
+		rings = new IAtom[1024];
 		ringbonds = new double[1024];
 		for (int f = 0; f < 1024; f++)
 		{
@@ -270,10 +268,10 @@ public class SmilesParser {
 
 		char mychar = 'X';
 		char[] chars = new char[1];
-		Atom lastNode = null;
+		IAtom lastNode = null;
 		Stack atomStack = new Stack();
 		Stack bondStack = new Stack();
-		Atom atom = null;
+		IAtom atom = null;
 		do
 		{
 			try
@@ -295,7 +293,7 @@ public class SmilesParser {
 					if (mychar == '*')
 					{
 						currentSymbol = "*";
-						atom = new PseudoAtom("*");
+						atom = builder.newPseudoAtom("*");
 					} else
 					{
 						currentSymbol = getSymbolForOrganicSubsetElement(smiles, position);
@@ -306,15 +304,15 @@ public class SmilesParser {
 								if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
 								{
 									currentSymbol = currentSymbol.toUpperCase();
-									atom = new Atom(currentSymbol);
+									atom = builder.newAtom(currentSymbol);
 									atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
 								} else
 								{
-									atom = new Atom(currentSymbol);
+									atom = builder.newAtom(currentSymbol);
 								}
 							} else
 							{
-								atom = new Atom(currentSymbol);
+								atom = builder.newAtom(currentSymbol);
 							}
 							logger.debug("Made atom: ", atom);
 						} else
@@ -330,7 +328,7 @@ public class SmilesParser {
 					if ((lastNode != null) && bondExists)
 					{
 						logger.debug("Creating bond between ", atom.getSymbol(), " and ", lastNode.getSymbol());
-						bond = new Bond(atom, lastNode, bondStatus);
+						bond = builder.newBond(atom, lastNode, bondStatus);
 						            if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
@@ -369,7 +367,7 @@ public class SmilesParser {
 					Enumeration ses = atomStack.elements();
 					while (ses.hasMoreElements())
 					{
-						Atom a = (Atom) ses.nextElement();
+						IAtom a = (IAtom) ses.nextElement();
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
@@ -377,12 +375,12 @@ public class SmilesParser {
 					position++;
 				} else if (mychar == ')')
 				{
-					lastNode = (Atom) atomStack.pop();
+					lastNode = (IAtom) atomStack.pop();
 					logger.debug("Stack:");
 					Enumeration ses = atomStack.elements();
 					while (ses.hasMoreElements())
 					{
-						Atom a = (Atom) ses.nextElement();
+						IAtom a = (IAtom) ses.nextElement();
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
@@ -410,7 +408,7 @@ public class SmilesParser {
 					logger.debug("Added atom: ", atom);
 					if (lastNode != null && bondExists)
 					{
-						bond = new Bond(atom, lastNode, bondStatus);
+						bond = builder.newBond(atom, lastNode, bondStatus);
 						            if (bondIsAromatic) {
                             bond.setFlag(CDKConstants.ISAROMATIC, true);
                         }
@@ -691,10 +689,10 @@ public class SmilesParser {
 	 *@return                             Description of the Return Value
 	 *@exception  InvalidSmilesException  Description of the Exception
 	 */
-	private Atom assembleAtom(String s) throws InvalidSmilesException
+	private IAtom assembleAtom(String s) throws InvalidSmilesException
 	{
 		logger.debug("assembleAtom(): Assembling atom from: ", s);
-		Atom atom = null;
+		IAtom atom = null;
 		int position = 0;
 		String currentSymbol = null;
 		StringBuffer isotopicNumber = new StringBuffer();
@@ -723,7 +721,7 @@ public class SmilesParser {
 							if (!(currentSymbol.toUpperCase()).equals(currentSymbol))
 							{
 								currentSymbol = currentSymbol.toUpperCase();
-								atom = new Atom(currentSymbol);
+								atom = builder.newAtom(currentSymbol);
 								atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
 								if (atom.getHydrogenCount() > 0)
 								{
@@ -731,11 +729,11 @@ public class SmilesParser {
 								}
 							} else
 							{
-								atom = new Atom(currentSymbol);
+								atom = builder.newAtom(currentSymbol);
 							}
 						} else
 						{
-							atom = new Atom(currentSymbol);
+							atom = builder.newAtom(currentSymbol);
 						}
 						logger.debug("Made atom: ", atom);
 					}
@@ -747,7 +745,7 @@ public class SmilesParser {
 				} else if (mychar == '*')
 				{
 					currentSymbol = "*";
-					atom = new PseudoAtom(currentSymbol);
+					atom = builder.newPseudoAtom(currentSymbol);
 					logger.debug("Made atom: ", atom);
 					position++;
 					break;
@@ -839,18 +837,18 @@ public class SmilesParser {
 	 *
 	 *@param  atom  Description of the Parameter
 	 */
-	private void handleRing(Atom atom)
+	private void handleRing(IAtom atom)
 	{
 		logger.debug("handleRing():");
 		double bondStat = bondStatusForRingClosure;
-		Bond bond = null;
-		Atom partner = null;
-		Atom thisNode = rings[thisRing];
+		IBond bond = null;
+		IAtom partner = null;
+		IAtom thisNode = rings[thisRing];
 		// lookup
 		if (thisNode != null)
 		{
 			partner = thisNode;
-			bond = new Bond(atom, partner, bondStat);
+			bond = builder.newBond(atom, partner, bondStat);
 			      if (bondIsAromatic) {
             	
                 bond.setFlag(CDKConstants.ISAROMATIC, true);
