@@ -141,7 +141,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 	        
 				for (int i=0; i<ac.getAtomCount(); i++) {
 					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
-//					System.out.println("result: "+mol.getAtom(i).getCharge());
 					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
 				}
 			} catch (Exception e) {

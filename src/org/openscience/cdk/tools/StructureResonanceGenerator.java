@@ -94,16 +94,18 @@ public class StructureResonanceGenerator {
 	private boolean bondR = true;
 	private boolean hasActiveCenter = false;
 	private boolean hyperconjugationR = false;
+	/**-1 means that there is not restrictions how many structures will be obtained*/
+	private int maxStructuresToObtain = -1;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	
 	/**
 	 * Constructor of StructureResonanceGenerator object
 	 *
-	 * Default search: (Radical,Cation,Anion,Bond,hyperconjugation)
+	 * Default search: (Radical,Cation,Anion,Bond,hyperconjugation, no limit resonance structures)
 	 */
 	public StructureResonanceGenerator(){
-		this(true,true,true,true,false,false);
+		this(true,true,true,true,false,false, -1);
 	}
 	/**
 	 * Constructor of StructureResonanceGenerator object
@@ -121,13 +123,15 @@ public class StructureResonanceGenerator {
 			boolean radicalR,
 			boolean bondR,
 			boolean hyperconjugationR,
-			boolean hasActiveCenter){
+			boolean hasActiveCenter,
+			int maxStructuresToObtain){
 		this.cationR = cationR;
 		this.anionR = anionR;
 		this.radicalR = radicalR;
 		this.bondR = bondR;
 		this.hyperconjugationR = hyperconjugationR;
 		this.hasActiveCenter = hasActiveCenter;
+		this.maxStructuresToObtain = maxStructuresToObtain;
 		
 	}
 	/**
@@ -161,7 +165,7 @@ public class StructureResonanceGenerator {
 	 * @return The different resonance structures
 	 */
 	public IAtomContainerSet getAllStructures(IAtomContainer atomContainer){
-//		boolean overLoaded = false;
+		
 		IAtomContainerSet setOfAtomContainer = atomContainer.getBuilder().newAtomContainerSet();
 		setOfAtomContainer.addAtomContainer(atomContainer);
 		Object[] params = new Object[1];
@@ -172,6 +176,7 @@ public class StructureResonanceGenerator {
 
 		try {
 			for(int i = 0 ; i < setOfAtomContainer.getAtomContainerCount() ; i++){
+
 				IMoleculeSet setOfReactants = atomContainer.getBuilder().newMoleculeSet();
 				setOfReactants.addAtomContainer(setOfAtomContainer.getAtomContainer(i));
 				if(cationR){
@@ -206,7 +211,6 @@ public class StructureResonanceGenerator {
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
-		
 					/* RearrangementCation3Reaction*/
 					type  = new RearrangementCation3Reaction();
 			        type.setParameters(params);
@@ -239,7 +243,6 @@ public class StructureResonanceGenerator {
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
-		
 					/* RearrangementAnion2Reaction*/
 			        type  = new RearrangementAnion2Reaction();
 			        type.setParameters(params);
@@ -255,7 +258,6 @@ public class StructureResonanceGenerator {
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
-		
 					/* RearrangementAnion3Reaction*/
 					type  = new RearrangementAnion3Reaction();
 			        type.setParameters(params);
@@ -288,7 +290,6 @@ public class StructureResonanceGenerator {
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
-					
 					/* RearrangementRadical2Reaction*/
 					type  = new RearrangementRadical2Reaction();
 			        type.setParameters(params);
@@ -304,7 +305,6 @@ public class StructureResonanceGenerator {
 							if(!existAC(setOfAtomContainer,set))
 								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
 						}
-	
 					/* RearrangementRadical3Reaction*/
 					type  = new RearrangementRadical3Reaction();
 			        type.setParameters(params);
@@ -372,10 +372,10 @@ public class StructureResonanceGenerator {
 			    }
 
 				/* this makes a limition of the search */
-//				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
-//					overLoaded = true;
-//				if(setOfAtomContainer.getAtomContainerCount() > 40 && overLoaded)
-//					return setOfAtomContainer;
+				if(maxStructuresToObtain != -1)
+					if(setOfAtomContainer.getAtomContainerCount() > maxStructuresToObtain)
+						break;
+				
 				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
 					return setOfAtomContainer;
 			}
