@@ -748,7 +748,7 @@ def doCodeCoverage():
         return None
     
     # lets do all the emma runs
-    os.mkdir('emma')
+    if not os.path.exists('emma'): os.mkdir('emma')
     for testsuite in f:
         if testsuite.find('smiles') != -1: continue
         print '    Analyzing %s' % (testsuite)
@@ -1133,7 +1133,16 @@ if __name__ == '__main__':
         celltexts = doCodeCoverage()
         if celltexts:
             resultTable.addRow()
-            for celltext in celltexts: resultTable.addCell(celltext)        
+            for celltext in celltexts: resultTable.addCell(celltext)
+    else:
+        resultTable.addRow()
+        resultTable.addCell("""Code <a href="http://emma.sourceforge.net/">coverage</a>""")
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
+        if os.path.exists( os.path.join(nightly_dir, 'emma.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'emma.log'),
+                            os.path.join(nightly_web, 'emma.log'))
+            resultTable.addCell("<a href=\"emma.log\">emma.log</a>")
+        
     
     # get the results of doccheck
     resultTable.addRow()
