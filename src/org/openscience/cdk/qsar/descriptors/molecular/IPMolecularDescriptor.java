@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,18 +32,13 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
-import org.openscience.cdk.qsar.model.weka.J48WModel;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 
-import java.util.Iterator;
-
 /**
- *  
- *  This class returns the ionization potential of an atomContainer. It 
- *  search 1, 2 and so.. ionization potential. It is
- *  based in learning machine (in this case J48 see J48WModel) 
- *  from experimental values. Up to now is
+ *  This class returns the ionization potential of a molecule. It is
+ *  based on a decision tree which is extracted from Weka(J48) from 
+ *  experimental values. Up to now is
  *  only possible for atomContainers which contain; see IPAtomicDescriptor and
  *  IPBondDescriptor.
  *
@@ -61,14 +58,10 @@ import java.util.Iterator;
  *
  * @author           Miguel Rojas
  * @cdk.created      2006-05-26
- * @cdk.license      GPL
- * @cdk.module       qsar-weka
+ * @cdk.module       qsar
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:ionizationPotential
- * @cdk.depends      weka.jar
- * @cdk.builddepends weka.jar
  * 
- * @see J48WModel
  * @see IPAtomicDescriptor
  * @see IPBondDescriptor
  */

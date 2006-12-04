@@ -31,6 +31,7 @@ import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescrip
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.IPBondDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDescriptorTest;
 
 /**
@@ -53,6 +54,7 @@ public class MqsarBondTests {
         suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
         suite.addTest(BondPartialTChargeDescriptorTest.suite());
         suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(IPBondDescriptorTest.suite());
         suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
         
         return suite;

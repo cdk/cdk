@@ -4,9 +4,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.libio.weka.WekaTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.IPBondDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.molecular.IPMolecularDescriptorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
@@ -23,11 +20,6 @@ public class MwekaTests {
         // Individual Tests
         
         suite.addTest(WekaTest.suite());
-
-        suite.addTest(IPAtomicDescriptorTest.suite());
-        suite.addTest(IPMolecularDescriptorTest.suite());
-        suite.addTest(IPBondDescriptorTest.suite());
-
         return suite;
     }
     
