@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -202,19 +203,26 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	        	if(product.getAtomCount() < 2)
 	        		continue;
 	        	
-	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false,-1);
-	    		IAtomContainerSet setOfResonance = gRI.getAllStructures(product);
+	        	int maxNumbStruc = 50;
+	        	boolean isAromatic = false;
+	        	if(HueckelAromaticityDetector.detectAromaticity(product)){
+	        		 isAromatic = true;
+	        		maxNumbStruc = 5;
+	        	}
+	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false,maxNumbStruc);
+	        	
+	        	IAtomContainerSet setOfResonance = gRI.getAllStructures(product);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
 	    			continue;
-	    		
-		    	pielectronegativity = new PiElectronegativityDescriptor();
-    			if(setOfResonance.getAtomContainerCount() > 1){
+
+		    	if(setOfResonance.getAtomContainerCount() > 1){
 	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
-	    				 QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
+	    	        	QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
 	    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
-	    					 /*search positive charge*/
-	    					 for(int k = 0; k < prod.getAtomCount(); k++){
+	    			        	/*search positive charge*/
+	    					 pielectronegativity = new PiElectronegativityDescriptor();
+	    		    			for(int k = 0; k < prod.getAtomCount(); k++){
 	    						 if(prod.getAtomCount() < 2)
 	    							 continue;
 	    						 IAtom atomsP = prod.getAtom(k);
@@ -222,8 +230,11 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    							 atomsP.getFormalCharge() /*> 0*/)
 	    						 if(atomsP.getFormalCharge()== 1 || product.getAtom(k).getFormalCharge() == 1){
 		    						 DoubleResult electroneg = new DoubleResult(0.0); 
-	    						    Object[] params = new Integer[1];
+	    						    Object[] params = new Integer[2];
 	    	    					params[0] = new Integer(6);
+	    	    					if(isAromatic)
+		    	    					params[1] = new Integer(10);
+	    	    						
 	    	    					pielectronegativity.setParameters(params);
 	    	    					try{
 	    	    						electroneg = (DoubleResult)pielectronegativity.calculate(atomsP,prod).getValue();

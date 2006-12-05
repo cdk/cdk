@@ -28,7 +28,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -518,6 +517,29 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 			}
 			assertEquals(testResult[i],result,0.21);
+		}
+	}
+	
+	/**
+	 *  A unit test for JUnit with c1ccc(cc1)n3c4ccccc4(c2ccccc23)
+	 */
+	public void testLangCalculation() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
+//        double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		Object[] object = {new Integer(6),new Boolean(false)};
+		descriptor.setParameters(object);
+
+		for (int i = 0 ; i < mol.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+//			System.out.println(mol.getAtom(i).getSymbol()+",result_: "+result);
+			
 		}
 	}
 

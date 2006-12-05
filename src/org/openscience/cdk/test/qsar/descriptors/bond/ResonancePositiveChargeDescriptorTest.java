@@ -293,6 +293,27 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(i),mol).getValue());
 		}
 	}
+	/**
+	 *  A unit test for JUnit with c1ccc(cc1)n3c4ccccc4(c2ccccc23)
+	 */
+	public void testResonancePositiveCharge_8() throws ClassNotFoundException, CDKException, java.lang.Exception {
+//		double [] testResult={0.0, 0.0, 0.0,0.0,0.0,3.5725};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");
+		
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+
+		for(int i = 0; i < mol.getBondCount(); i++){
+			DoubleArrayResult dar;
+			if(mol.getBond(i).getOrder() > 1)
+				dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(i),mol).getValue());
+		}
+	}
 
 }
 

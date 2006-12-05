@@ -68,6 +68,8 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 
 	/**Number of maximum iterations*/
     private int maxIterations = -1;
+	/**Number of maximum of resonance Structures*/
+    private int maxResonStruc = -1;
     private GasteigerPEPEPartialCharges pepe = null;
 	private IAtomicDescriptor  descriptor;
 
@@ -100,17 +102,22 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *  Sets the parameters attribute of the PiElectronegativityDescriptor
      *  object
      *
-     *@param  params            The number of maximum iterations
+     *@param  params            The number of maximum iterations. 1= maxIterations. 2= maxResonStruc.
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("PiElectronegativityDescriptor only expects one parameter");
+        if (params.length > 2) {
+            throw new CDKException("PiElectronegativityDescriptor only expects two parameter");
         }
-        if (!(params[0] instanceof Integer)) {
+        if (!(params[0] instanceof Integer))
             throw new CDKException("The parameter 1 must be of type Integer");
-        }
         maxIterations = ((Integer) params[0]).intValue();
+        
+        if(params.length > 1 && params[1] != null){
+	        if (!(params[1] instanceof Integer)) 
+	            throw new CDKException("The parameter 2 must be of type Integer");
+	        maxResonStruc = ((Integer) params[1]).intValue();
+        }
     }
 
 
@@ -141,8 +148,14 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         double piElectronegativity = 0.0;
         try {
         	double q = 0.0;
-        	if(maxIterations != -1){
-        		Object[] params = {new Integer(6)};
+        	if(maxIterations != -1 && maxResonStruc == -1){
+        		Object[] params = {new Integer(maxIterations)};
+        		descriptor.setParameters(params);
+        	}else if(maxIterations == -1 && maxResonStruc != -1){
+        		Object[] params = {null, null, new Integer(maxResonStruc)};
+        		descriptor.setParameters(params);
+        	}else if(maxIterations != -1 && maxResonStruc != -1){
+        		Object[] params = {new Integer(maxIterations),null, new Integer(maxResonStruc)};
         		descriptor.setParameters(params);
         	}
         	q = ((DoubleResult)descriptor.calculate(atom,ac).getValue()).doubleValue();

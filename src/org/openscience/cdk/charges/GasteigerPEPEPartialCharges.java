@@ -65,6 +65,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class GasteigerPEPEPartialCharges {
 	/** max iterations */
 	private double MX_ITERATIONS = 8;
+	/** max number of resonance structures to be searched*/
+	private int MX_RESON = 50;
 	private int STEP_SIZE = 5;
 	private AtomTypeFactory factory;
 	/** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
@@ -94,6 +96,14 @@ public class GasteigerPEPEPartialCharges {
 	public void setMaxGasteigerIters(double iters) {
 		MX_ITERATIONS = iters;
 	}
+	/**
+	 *  Sets the maximum resonance structures to be searched
+	 *
+	 *@param  numbReson  The number of resonance Structures to be searched
+	 */
+	public void setMaxResoStruc(int numbReson) {
+		MX_RESON = numbReson;
+	}
 	
 	/**
 	 *  Main method which assigns Gasteiger partial pi charges. 
@@ -105,7 +115,7 @@ public class GasteigerPEPEPartialCharges {
 	 *@exception  Exception  Possible Exceptions
 	 */
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-//		System.out.println("smiles1: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) ac));
+//		System.out.println("smiles1: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
 		IAtomContainerSet setHI = null;
 		
 		/*0: remove charge, and possible flag ac*/
@@ -118,7 +128,7 @@ public class GasteigerPEPEPartialCharges {
 		}
 		
 		/*1: detect resonance structure*/
-		StructureResonanceGenerator gR = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
+		StructureResonanceGenerator gR = new StructureResonanceGenerator(true,true,true,true,false,false,MX_RESON);/*according G. should be integrated the breaking bonding*/
 		IAtomContainerSet iSet = gR.getAllStructures(ac);
 //		System.out.println("iset: "+iSet.getAtomContainerCount());
 		

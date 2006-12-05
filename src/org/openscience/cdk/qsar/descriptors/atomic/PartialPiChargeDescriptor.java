@@ -67,6 +67,8 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     private GasteigerPEPEPartialCharges pepe = null;
     /**Number of maximum iterations*/
 	private int maxIterations = -1;
+    /**Number of maximum resonance structures*/
+	private int maxResonStruc = -1;
 	/** make a lone pair electron checker. Default true*/
 	private boolean lpeChecker = true;
 
@@ -98,22 +100,28 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *  Sets the parameters attribute of the PartialPiChargeDescriptor
      *  object
      *
-     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons
+     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons, 3: 
+     *							number of maximum resonance structures to be searched.
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
-            throw new CDKException("PartialPiChargeDescriptor only expects two parameter");
-        }
-        if (!(params[0] instanceof Integer) ){
+        if (params.length > 3) 
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
+        
+        if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
-            }
-    
-        maxIterations = ((Integer) params[0]).intValue();
-        if(params.length == 2){
+	        maxIterations = ((Integer) params[0]).intValue();
+	        
+	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
         	lpeChecker = ((Boolean) params[1]).booleanValue();
+        }
+	    
+	    if(params.length > 2 && params[2] != null){
+        	if (!(params[2] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+        	maxResonStruc = ((Integer) params[2]).intValue();
         }
     }
 
@@ -156,6 +164,8 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     	if (!isCachedAtomContainer(ac)) {
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
+    		if(maxResonStruc != -1)
+    			pepe.setMaxResoStruc(maxResonStruc);
 	    	try {
 	    		for (int i=0; i<ac.getAtomCount(); i++)
 	    			ac.getAtom(i).setCharge(0.0);
