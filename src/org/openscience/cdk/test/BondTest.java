@@ -191,6 +191,9 @@ public class BondTest extends CDKTestCase {
         
         assertEquals(c, b.getConnectedAtom(o));
         assertEquals(o, b.getConnectedAtom(c));
+        
+        // test default return value
+        assertNull(b.getConnectedAtom(builder.newAtom()));
     }
     
     public void testIsConnectedTo_IBond() {
