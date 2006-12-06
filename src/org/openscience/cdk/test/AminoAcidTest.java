@@ -98,11 +98,34 @@ public class AminoAcidTest extends CDKTestCase {
             assertTrue('\n' != description.charAt(i));
             assertTrue('\r' != description.charAt(i));
         }
-    }
+
+        m = builder.newAminoAcid();
+        IAtom cTerminus = builder.newAtom("C");
+        m.addNTerminus(cTerminus);
+        description = m.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue('\n' != description.charAt(i));
+            assertTrue('\r' != description.charAt(i));
+        }
+}
 
     public void testClone() throws Exception {
         IAminoAcid aa = builder.newAminoAcid();
         Object clone = aa.clone();
+        assertTrue(clone instanceof IAminoAcid);
+        assertNotSame(aa, clone);
+        
+        aa = builder.newAminoAcid();
+        IAtom nTerminus = builder.newAtom("N");
+        aa.addNTerminus(nTerminus);
+        clone = aa.clone();
+        assertTrue(clone instanceof IAminoAcid);
+        assertNotSame(aa, clone);
+
+        aa = builder.newAminoAcid();
+        IAtom cTerminus = builder.newAtom("C");
+        aa.addNTerminus(cTerminus);
+        clone = aa.clone();
         assertTrue(clone instanceof IAminoAcid);
         assertNotSame(aa, clone);
     }
