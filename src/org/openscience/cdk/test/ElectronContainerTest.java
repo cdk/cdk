@@ -84,7 +84,7 @@ public class ElectronContainerTest extends CDKTestCase {
      * Method to test wether the class complies with RFC #9.
      */
     public void testToString() {
-        IAtomType at = builder.newAtomType("C");
+        IElectronContainer at = builder.newElectronContainer();
         String description = at.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
