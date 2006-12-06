@@ -74,7 +74,9 @@ public class ReactionSetTest extends CDKTestCase {
 		reactionSet.addReaction(builder.newReaction()); // 2
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
-        assertEquals(4, reactionSet.getReactionCount());
+		reactionSet.addReaction(builder.newReaction()); // 5
+		reactionSet.addReaction(builder.newReaction()); // 6 (force growing)
+        assertEquals(6, reactionSet.getReactionCount());
     }
     
     public void testRemoveAllReactions(){
@@ -127,15 +129,16 @@ public class ReactionSetTest extends CDKTestCase {
     }
    
     public void testRemoveReaction_int() {
-	IReactionSet reactionSet = builder.newReactionSet();
-	reactionSet.addReaction(builder.newReaction()); // 1
-        reactionSet.addReaction(builder.newReaction()); // 2
-	assertEquals(2, reactionSet.getReactionCount());
-	reactionSet.removeReaction(1);
-	assertEquals(1, reactionSet.getReactionCount());
+    	IReactionSet reactionSet = builder.newReactionSet();
+    	reactionSet.addReaction(builder.newReaction()); // 1
+    	reactionSet.addReaction(builder.newReaction()); // 2
+    	reactionSet.addReaction(builder.newReaction()); // 3
+    	assertEquals(3, reactionSet.getReactionCount());
+    	reactionSet.removeReaction(1);
+    	assertEquals(2, reactionSet.getReactionCount());
+    	assertNotNull(reactionSet.getReaction(0));
+    	assertNotNull(reactionSet.getReaction(1));
     }
-    
-
     
     public void testClone_Reaction() throws Exception {
 		IReactionSet reactionSet = builder.newReactionSet();
@@ -161,6 +164,14 @@ public class ReactionSetTest extends CDKTestCase {
     public void testToString() {
         IReactionSet reactionSet = builder.newReactionSet();
         String description = reactionSet.toString();
+        for (int i=0; i< description.length(); i++) {
+            assertTrue(description.charAt(i) != '\n');
+            assertTrue(description.charAt(i) != '\r');
+        }
+        
+        IReaction reaction = builder.newReaction();
+        reactionSet.addReaction(reaction);
+        description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
             assertTrue(description.charAt(i) != '\n');
             assertTrue(description.charAt(i) != '\r');
