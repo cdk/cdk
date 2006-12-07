@@ -32,9 +32,14 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -113,7 +118,77 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
-    public void testBigMoleculeWithIsolatedRings()
+
+	public void showAzulene()
+	{
+		MoleculeListViewer listview = new MoleculeListViewer();
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		if (standAlone) arf.debug = true;
+		try
+		{
+	        String filename = "data/mdl/azulene.mol";
+	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLReader reader = new MDLReader(ins);
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		    listview.addStructure(molecule, "Azulene", false, false);
+			
+			ringSet = arf.findAllRings(molecule);
+			for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
+			{
+				IAtomContainer ac = ringSet.getAtomContainer(i);
+				Molecule newMol = new Molecule(ac);
+				listview.addStructure(newMol, "ring no. " + (i+1), false, false);
+			}
+		
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
+	
+	public void showPorphyrin()
+	{
+		MoleculeListViewer listview = new MoleculeListViewer();
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		arf.setTimeout(10000);
+		if (standAlone) arf.debug = true;
+		try
+		{
+	        String filename = "data/mdl/porphyrin.mol";
+	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLReader reader = new MDLReader(ins);
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+		    listview.addStructure(molecule, "Porphyrin", false, false);
+			
+			ringSet = arf.findAllRings(molecule);
+			for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
+			{
+				IAtomContainer ac = ringSet.getAtomContainer(i);
+				Molecule newMol = new Molecule(ac);
+				String title = "ring no. " + (i + 1);
+				if (HueckelAromaticityDetector.detectAromaticity(newMol)) title += " is aromatic";
+				listview.addStructure(newMol, title , false, false);
+			}
+		
+		}
+		catch(Exception exc)
+		{
+			exc.printStackTrace();
+		}
+	}
+
+	
+	
+	public void testBigMoleculeWithIsolatedRings()
     {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
@@ -179,7 +254,10 @@ public class AllRingsFinderTest extends CDKTestCase
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
 		//arft.testAllRingsFinder();
-		arft.saTestBug777488();
+		//arft.saTestBug777488();
+		//arft.showAzulene();
+		arft.showPorphyrin();
+		
 		//arft.testBigMoleculeWithIsolatedRings();
 	}	
 }
