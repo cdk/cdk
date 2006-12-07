@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.structgen.StructureGenerationListener;
 import org.openscience.cdk.structgen.deterministic.GENMDeterministicGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -79,7 +80,11 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	public void testIt() throws Exception {
 		if (runSlowTests()) {	
 			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H10O1","");
-			List structures = gdg.getStructures();
+			MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+			gdg.addListener(myListener);
+			gdg.generate();
+			List structures = myListener.getStructures();
+			assertTrue(structures.size() > 0);
 			assertOK(structures);
 			assertUnique(structures);
 		}
@@ -87,7 +92,10 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 
 	public void testEthane() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H6","");
-		List structures = gdg.getStructures();
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
 		assertEquals(1, structures.size());
 		assertUnique(structures);
 		assertOK(structures);
@@ -95,7 +103,10 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 
 	public void testEthanol() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H6O","");
-		List structures = gdg.getStructures();
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
 		assertEquals(2, structures.size());
 		assertUnique(structures);
 		assertOK(structures);
@@ -103,7 +114,10 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	
 	public void testPropene() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C3H6","");
-		List structures = gdg.getStructures();
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
 		assertEquals(2, structures.size());
 		assertOK(structures);
 		List uniqueSMILES = assertUnique(structures);
@@ -113,7 +127,10 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 
 	public void testButene() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C4H10","");
-		List structures = gdg.getStructures();
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
 		assertEquals(2, structures.size());
 		assertOK(structures);
 		List uniqueSMILES = assertUnique(structures);
@@ -256,6 +273,24 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 			e.printStackTrace();
 		}
 		//test.testSMILES();
+	}
+	
+	class MyStructureGenerationListener implements StructureGenerationListener {
+
+		private List structures;
+		
+		public MyStructureGenerationListener() {
+			structures = new ArrayList();
+		}
+		
+		public void stateChanged(List list) throws Exception {
+			structures.addAll(list);
+		}
+		
+		public List getStructures() {
+			return structures;
+		}
+		
 	}
 }
 
