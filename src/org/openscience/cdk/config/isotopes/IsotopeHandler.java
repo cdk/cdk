@@ -76,7 +76,7 @@ public class IsotopeHandler extends DefaultHandler {
     /**
      * Returns the isotopes read from the XML file.
      *
-     * @return A Vector object with all isotopes
+     * @return A List object with all isotopes
      */
     public List getIsotopes() {
         return isotopes;

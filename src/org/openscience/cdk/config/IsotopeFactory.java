@@ -107,7 +107,6 @@ public class IsotopeFactory
 		}
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
-        //isotopes = (Vector) in.readObject();
         isotopes = reader.readIsotopes();
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
 		/* for (int f = 0; f < isotopes.size(); f++) {

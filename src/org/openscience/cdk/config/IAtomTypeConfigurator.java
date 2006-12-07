@@ -45,11 +45,11 @@ public interface IAtomTypeConfigurator {
     public void setInputStream(InputStream ins);
 
     /**
-     * Reads a set of configured AtomType's into a Vector.
+     * Reads a set of configured AtomType's into a List.
      *
      * @param builder ChemObjectBuilder used to instantiate the AtomType's.
      *
-     * @return A Vector containing the AtomTypes extracted from the InputStream
+     * @return A List containing the AtomTypes extracted from the InputStream
      * @throws IOException when something went wrong with reading the data
      */
     public List readAtomTypes(IChemObjectBuilder builder) throws IOException;

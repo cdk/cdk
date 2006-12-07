@@ -113,7 +113,7 @@ public class AtomTypeReader {
      * Reads the atom types from the data file.
      *
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
-     * @return         a Vector with atom types. Is empty if some reading error occured.
+     * @return         a List with atom types. Is empty if some reading error occured.
      */
     public List readAtomTypes(IChemObjectBuilder builder) {
     	List isotopes = new ArrayList();

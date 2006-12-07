@@ -121,7 +121,7 @@ public class IsotopeReader {
      * Triggers the XML parsing of the data file and returns the read Isotopes. 
      * It turns of XML validation before parsing.
      *
-     * @return a Vector of Isotope's. Returns an empty vector is some reading error
+     * @return a List of Isotope's. Returns an empty list is some reading error
      *         occured.
      */
     public List readIsotopes() {

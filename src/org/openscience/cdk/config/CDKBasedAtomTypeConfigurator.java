@@ -61,7 +61,7 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * 
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
      * @throws        IOException when a problem occured with reading from the InputStream
-     * @return        A Vector with read IAtomType's.
+     * @return        A List with read IAtomType's.
      */
     public List readAtomTypes(IChemObjectBuilder builder) throws IOException {
         List atomTypes = new ArrayList();

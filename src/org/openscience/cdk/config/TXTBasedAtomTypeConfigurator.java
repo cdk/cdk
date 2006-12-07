@@ -28,8 +28,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -66,10 +67,10 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * 
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
      * @throws        IOException when a problem occured with reading from the InputStream
-     * @return        A Vector with read IAtomType's.
+     * @return        A List with read IAtomType's.
      */
-    public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
-        Vector atomTypes = new Vector();
+    public List readAtomTypes(IChemObjectBuilder builder) throws IOException {
+        List atomTypes = new ArrayList();
 
         if (ins == null) {
             // trying the default
@@ -129,7 +130,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         atomType.setCovalentRadius(covalent);
                         Color color = new Color(colorR, colorG, colorB);
                         atomType.setProperty("org.openscience.cdk.renderer.color", color);
-                        atomTypes.addElement(atomType);
+                        atomTypes.add(atomType);
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 
                         "Wrong Number of fields");
