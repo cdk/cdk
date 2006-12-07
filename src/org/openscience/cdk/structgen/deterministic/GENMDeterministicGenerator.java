@@ -2743,28 +2743,6 @@ public class GENMDeterministicGenerator {
 	 }
 	 
 	 
-	 
-	  /**
-	   * Get the suitable structures.
-	   * 
-	   * @return	List contains suitable structures
-	   */
-	  public List getStructures()
-	  {
-		 return this.structures;
-	  }
-	 
-	  /**
-	   * Get the number of isomers.
-	   * 
-	   * @return	the number of isomers
-	   */
-	 public int getNumberOfStructures()
-	 {
-		return this.numberOfStructures;
-	 }
-	 	 
-
 		/*
 		 *  Listener notification support methods START here
 		 */
