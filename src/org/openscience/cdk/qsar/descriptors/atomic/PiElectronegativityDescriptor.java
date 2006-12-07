@@ -24,21 +24,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  *  Pi electronegativity is given by X = a + bq + c(q*q)
@@ -79,7 +73,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     public PiElectronegativityDescriptor() {
     	pepe = new GasteigerPEPEPartialCharges();
-    	descriptor = new PartialPiChargeDescriptor();
+    	descriptor = new PartialSigmaChargeDescriptor();
     }
 
 
@@ -151,13 +145,14 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         	if(maxIterations != -1 && maxResonStruc == -1){
         		Object[] params = {new Integer(maxIterations)};
         		descriptor.setParameters(params);
-        	}else if(maxIterations == -1 && maxResonStruc != -1){
-        		Object[] params = {null, null, new Integer(maxResonStruc)};
-        		descriptor.setParameters(params);
-        	}else if(maxIterations != -1 && maxResonStruc != -1){
-        		Object[] params = {new Integer(maxIterations),null, new Integer(maxResonStruc)};
-        		descriptor.setParameters(params);
         	}
+//        	else if(maxIterations == -1 && maxResonStruc != -1){
+//        		Object[] params = {null, null, new Integer(maxResonStruc)};
+//        		descriptor.setParameters(params);
+//        	}else if(maxIterations != -1 && maxResonStruc != -1){
+//        		Object[] params = {new Integer(maxIterations),null, new Integer(maxResonStruc)};
+//        		descriptor.setParameters(params);
+//        	}
         	q = ((DoubleResult)descriptor.calculate(atom,ac).getValue()).doubleValue();
     	  IAtomContainerSet iSet = ac.getBuilder().newAtomContainerSet();
     	  iSet.addAtomContainer(ac);/*2 times*/

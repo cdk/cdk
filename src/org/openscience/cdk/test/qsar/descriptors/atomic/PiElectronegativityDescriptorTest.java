@@ -82,7 +82,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 4);
+				assertEquals(testResult[i],result, 0.03);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 2);
+				assertEquals(testResult[i],result, 0.01);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 1);
+				assertEquals(testResult[i],result, 0.01);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 2);
+				assertEquals(testResult[i],result, 0.03);
 			}
 		}
 	}
@@ -194,7 +194,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 5);
+				assertEquals(testResult[i],result, 0.01);
 			}
 		}
 	}
@@ -222,7 +222,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 2.7);
+				assertEquals(testResult[i],result, 0.55);
 			}
 		}
 	}
@@ -250,7 +250,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 1);
+				assertEquals(testResult[i],result, 0.02);
 			}
 		}
 	}
@@ -278,7 +278,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 3.5);
+				assertEquals(testResult[i],result, 0.7);
 			}
 		}
 	}
@@ -305,7 +305,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 5);
+				assertEquals(testResult[i],result,  2);
 			}
 		}
 	}
@@ -335,7 +335,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 5.2);
+				assertEquals(testResult[i],result, 0.5);
 			}
 		}
 	}
@@ -365,7 +365,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 3);
+				assertEquals(testResult[i],result, 1.2);
 			}
 		}
 	}
@@ -395,7 +395,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 				assertEquals(testResult[i],result, 0.0001);
 			else {
 				assertTrue(result != 0.0);
-				assertEquals(testResult[i],result, 5);
+				assertEquals(testResult[i],result, 0.2);
 			}
 		}
 	}
