@@ -805,6 +805,9 @@ public class GENMDeterministicGenerator {
 		 return true;
 	 }
 	 
+	 List setOfBasicFragment = new ArrayList();
+	 int[] storedSymbolOfStructure = null;
+	 private final int STORED_SYMBOL_OF_STRUCTURE_LENGTH = 4000000;
 	 
 	/**
 	 * The thrid step: generate all the possible consititional isomers.
@@ -825,8 +828,12 @@ public class GENMDeterministicGenerator {
 		 //int[] category;
 		 int[] bondAttribute;
 		 int[] parentID;
-		 int[] storedSymbolOfStructure=new int[4000000];
-		 List setOfBasicFragment=new ArrayList();
+		 // reinitialize
+		 if (storedSymbolOfStructure == null) storedSymbolOfStructure = new int[STORED_SYMBOL_OF_STRUCTURE_LENGTH];
+		 for (i=0; i<STORED_SYMBOL_OF_STRUCTURE_LENGTH; i++) {
+			 storedSymbolOfStructure[i] = 0;
+		 }
+		 setOfBasicFragment.clear();
 		 IAtomContainer atomContainer=null;
 		 
 		 /*1. prepare the vector of basic fragment and atomContainer
