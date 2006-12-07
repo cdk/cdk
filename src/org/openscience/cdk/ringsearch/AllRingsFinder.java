@@ -257,7 +257,7 @@ public class AllRingsFinder
 						intersectionSize = path1.getIntersectionSize(path2);
 						if (intersectionSize < 3)
 						{
-							//if (debug) System.out.println("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
+							if (debug) System.out.println("Joining " + path1.toString(originalAc) + " and " + path2.toString(originalAc));
 							union = Path.join(path1, path2, atom);
 							if (intersectionSize == 1)
 							{
@@ -267,7 +267,7 @@ public class AllRingsFinder
 								potentialRings.add(union);
 							}
 							//if (debug) System.out.println("Intersection Size: " + intersectionSize);
-							//if (debug) System.out.println("Union: " + union.toString(originalAc));
+							if (debug) System.out.println("Union: " + union.toString(originalAc));
 							/*
 							 *  Now we know that path1 and
 							 *  path2 share the Atom atom.
@@ -309,6 +309,8 @@ public class AllRingsFinder
 		Path path = null;
 		IRing ring = null;
 		IBond bond = null;
+		int bondNum;
+		IAtom a1 = null, a2 = null;
 		for (int f = 0; f < pathes.size(); f++)
 		{
 			path = (Path) pathes.elementAt(f);
@@ -320,11 +322,28 @@ public class AllRingsFinder
 				}
 				path.removeElementAt(0);
 				ring = ac.getBuilder().newRing();
-				for (int g = 0; g < path.size(); g++)
+				for (int g = 0; g < path.size() - 1; g++)
 				{
-					ring.addAtom((IAtom) path.elementAt(g));
+					a1 = (IAtom) path.elementAt(g);
+					a2 = (IAtom) path.elementAt(g + 1);
+					ring.addAtom(a1);
+					bondNum = ac.getBondNumber(a1, a2);
+					//System.out.println("bondNum " + bondNum);
+					ring.addBond(ac.getBond(bondNum));
 				}
-				IBond[] bonds = ac.getBonds();
+				ring.addAtom(a2);
+				a1 = (IAtom) path.elementAt(0);
+				a2 = (IAtom) path.elementAt(path.size()-1);
+				ring.addAtom(a1);
+				bondNum = ac.getBondNumber(a1, a2);
+				//System.out.println("bondNum " + bondNum);
+				ring.addBond(ac.getBond(bondNum));
+
+				/*
+				 * The following code had a problem when two atom in the ring 
+				 * found are connected the in orignal graph but do not belong
+				 * to this particular ring.
+				 IBond[] bonds = ac.getBonds();
 				for (int g = 0; g < bonds.length; g++)
 				{
 					bond = bonds[g];
@@ -332,7 +351,7 @@ public class AllRingsFinder
 					{
 						ring.addBond(bond);
 					}
-				}
+				}*/
 				ringSet.addAtomContainer(ring);
 			}
 		}
