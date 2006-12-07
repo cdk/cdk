@@ -84,7 +84,7 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
         r2dm.setBackgroundDimension(preferredSize);
         r2dm.addCDKChangeListener(this);
         renderer = new Renderer2D(r2dm);
-        frame = new JFrame();
+        //frame = new JFrame();
     }
 
 

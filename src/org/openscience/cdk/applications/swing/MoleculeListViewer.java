@@ -121,10 +121,24 @@ public class MoleculeListViewer extends JFrame
 	 */
 
 	public void addStructure(IMolecule molecule, String title) {
-		panel.addStructure(MoleculeViewer2D.getViewer(molecule, true, false), title);
+		panel.addStructure(MoleculeViewer2D.getViewer(molecule, false, false), title);
 		panel.revalidate();
 	}
 
+	/**
+	 *  Adds a molecule in a MoleculeViewer2D to this list viewer
+	 *  Convenience method.
+	 *
+	 *@param  molecule The Molecule object for which a display to add
+	 *@param  title Title string to display
+	 */
+
+	public void addStructure(IMolecule molecule, String title, boolean generateCoordinates, boolean drawNumbers) {
+		panel.addStructure(MoleculeViewer2D.getViewer(molecule, generateCoordinates, drawNumbers), title);
+		panel.revalidate();
+	}
+
+	
 	/**
 	 *  Adds a molecule in a MoleculeViewer2D to this list viewer
 	 *  Convenience method.
