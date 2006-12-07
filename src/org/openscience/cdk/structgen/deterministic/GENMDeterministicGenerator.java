@@ -25,8 +25,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -896,7 +894,7 @@ public class GENMDeterministicGenerator {
 			 }
 			 
 		//order the fragments
-		atomContainer=new AtomContainer();
+		atomContainer = builder.newAtomContainer();
 		
 		parentID=new int[setOfBasicFragment.size()];
 		
@@ -2724,7 +2722,7 @@ public class GENMDeterministicGenerator {
 	 public void convertToSMILES(List set,int[][] matrix,List smiles)
 	 {
 		 int i,j;
-		 IMolecule mol=new Molecule();
+		 IMolecule mol= builder.newMolecule();
 		 int size=set.size();
 		 for(i=0;i<size;i++)
 		 {
