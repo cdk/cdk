@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.structgen.StructureGenerationListener;
+import org.openscience.cdk.structgen.IStructureGenerationListener;
 import org.openscience.cdk.structgen.deterministic.GENMDeterministicGenerator;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -275,7 +275,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		//test.testSMILES();
 	}
 	
-	class MyStructureGenerationListener implements StructureGenerationListener {
+	class MyStructureGenerationListener implements IStructureGenerationListener {
 
 		private List structures;
 		
