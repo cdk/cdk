@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OptionalDataException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class IsotopeFactory
 
 	private static IsotopeFactory ifac = null;
 	private List isotopes = null;
-    private Hashtable majorIsotopes = null;
+    private HashMap majorIsotopes = null;
     private boolean debug = false;
     private LoggingTool logger;
 
@@ -113,7 +114,7 @@ public class IsotopeFactory
             Isotope isotope = (Isotope)isotopes.elementAt(f);
 		} What's this loop for?? */
         
-        majorIsotopes = new Hashtable();
+        majorIsotopes = new HashMap();
 	}
 
 
@@ -227,7 +228,8 @@ public class IsotopeFactory
      */
     public IIsotope getMajorIsotope(String symbol) {
         IIsotope major = null;
-        if (majorIsotopes.contains(symbol)) {
+        if (majorIsotopes.containsKey(
+        		symbol)) {
             major = (IIsotope)majorIsotopes.get(symbol);
         } else {
             for (int f = 0; f < isotopes.size(); f++) {
