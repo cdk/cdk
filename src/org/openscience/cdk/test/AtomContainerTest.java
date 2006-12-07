@@ -1056,10 +1056,6 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(b1, bonds[0]);
         assertEquals(b2, bonds[1]);
         assertEquals(b3, bonds[2]);
-        
-        // test readding a bond
-        acetone.addBond(b3);
-        assertEquals(3, acetone.getBondCount());
     }
 
     public void testSetElectronContainers_arrayIElectronContainer() {
