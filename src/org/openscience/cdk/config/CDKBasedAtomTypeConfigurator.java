@@ -26,10 +26,12 @@ package org.openscience.cdk.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -61,8 +63,8 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * @throws        IOException when a problem occured with reading from the InputStream
      * @return        A Vector with read IAtomType's.
      */
-    public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException {
-        Vector atomTypes = new Vector(0);
+    public List readAtomTypes(IChemObjectBuilder builder) throws IOException {
+        List atomTypes = new ArrayList();
         if (ins == null) {
             try {
                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
@@ -87,10 +89,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         AtomTypeReader reader = new AtomTypeReader(new InputStreamReader(ins));
         atomTypes = reader.readAtomTypes(builder);
         for (int f = 0; f < atomTypes.size(); f++) {
-            Object object = atomTypes.elementAt(f);
+            Object object = atomTypes.get(f);
             if (object == null) {
                 System.out.println("Expecting an object but found null!");
-                if (!(object instanceof org.openscience.cdk.interfaces.IAtomType)) {
+                if (!(object instanceof IAtomType)) {
                     System.out.println("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
                 }
             }

@@ -34,8 +34,9 @@ import org.openscience.cdk.tools.LoggingTool;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the
@@ -92,7 +93,7 @@ public class AtomTypeFactory {
     
     private static LoggingTool logger;
     private static Hashtable tables = null;
-    private Vector atomTypes = null;
+    private List atomTypes = null;
 
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
@@ -103,7 +104,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new Vector(100);
+        atomTypes = new ArrayList(100);
         readConfiguration(configFile, builder);
     }
 
@@ -115,7 +116,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new Vector(100);
+        atomTypes = new ArrayList(100);
         readConfiguration(ins, format, builder);
     }
 
@@ -243,7 +244,7 @@ public class AtomTypeFactory {
 		} else
 		{
 			logger.debug("AtomTypeConfigurator was null!");
-			atomTypes = new Vector();
+			atomTypes = new ArrayList();
 		}
 	}
 
@@ -271,7 +272,7 @@ public class AtomTypeFactory {
 		IAtomType atomType;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
-			atomType = (IAtomType) atomTypes.elementAt(f);
+			atomType = (IAtomType) atomTypes.get(f);
 			if (atomType.getAtomTypeName().equals(identifier)) {
 				return atomType;
 			}
@@ -291,26 +292,25 @@ public class AtomTypeFactory {
 	public IAtomType[] getAtomTypes(String symbol)
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
-        Vector atomList = new Vector();
+        List atomList = new ArrayList();
         IAtomType atomType;
         for (int f = 0; f < atomTypes.size(); f++)
         {
-            atomType = (IAtomType) atomTypes.elementAt(f);
+            atomType = (IAtomType) atomTypes.get(f);
             // logger.debug("  does symbol match for: ", atomType);
             if (atomType.getSymbol().equals(symbol)) {
                 // logger.debug("Atom type found for symbol: ", atomType);
             	IAtomType clone;
 				try {
 					clone = (IAtomType)atomType.clone();
-	                atomList.addElement(clone);
+	                atomList.add(clone);
 				} catch (CloneNotSupportedException e) {
 					logger.error("Could not clone IAtomType: ", e.getMessage());
 					logger.debug(e);
 				}
             }
         }
-        IAtomType[] atomTypes = new IAtomType[atomList.size()];
-        atomList.copyInto(atomTypes);
+        IAtomType[] atomTypes = (IAtomType[])atomList.toArray(new IAtomType[atomList.size()]);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
         else
@@ -327,21 +327,19 @@ public class AtomTypeFactory {
 	public IAtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
-		Vector atomtypeList = new Vector();
+		List atomtypeList = new ArrayList();
 		IAtomType atomType;
 		for (int f = 0; f < atomTypes.size(); f++)
 		{
 			try {
-                atomType = (IAtomType) ((IAtomType) atomTypes.elementAt(f)).clone();
-				atomtypeList.addElement(atomType);
+                atomType = (IAtomType) ((IAtomType) atomTypes.get(f)).clone();
+				atomtypeList.add(atomType);
 			} catch (CloneNotSupportedException e) {
 				logger.error("Could not clone IAtomType: ", e.getMessage());
 				logger.debug(e);
 			}
 		}
-		IAtomType[] atomTypes = new IAtomType[atomtypeList.size()];
-		atomtypeList.copyInto(atomTypes);
-		return atomTypes;
+		return (IAtomType[])atomtypeList.toArray(new IAtomType[atomtypeList.size()]);
 	}
 
 

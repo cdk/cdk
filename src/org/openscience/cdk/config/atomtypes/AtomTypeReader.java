@@ -29,7 +29,8 @@ package org.openscience.cdk.config.atomtypes;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -114,8 +115,8 @@ public class AtomTypeReader {
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
      * @return         a Vector with atom types. Is empty if some reading error occured.
      */
-    public Vector readAtomTypes(IChemObjectBuilder builder) {
-    	Vector isotopes = new Vector();
+    public List readAtomTypes(IChemObjectBuilder builder) {
+    	List isotopes = new ArrayList();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

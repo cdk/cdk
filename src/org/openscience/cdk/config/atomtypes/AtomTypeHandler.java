@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -57,7 +58,7 @@ public class AtomTypeHandler extends DefaultHandler {
     
     private LoggingTool logger;
     private String currentChars;
-    private Vector atomTypes;
+    private List atomTypes;
     private int scalarType;
     private IAtomType atomType;
 
@@ -75,11 +76,11 @@ public class AtomTypeHandler extends DefaultHandler {
     }
 
     /**
-     * Returns a Vector with read IAtomType's.
+     * Returns a List with read IAtomType's.
      * 
      * @return The read IAtomType's.
      */
-    public Vector getAtomTypes() {
+    public List getAtomTypes() {
         return atomTypes;
     }
 
@@ -92,7 +93,7 @@ public class AtomTypeHandler extends DefaultHandler {
     } */
 
     public void startDocument() {
-        atomTypes = new Vector();
+        atomTypes = new ArrayList();
         scalarType = SCALAR_UNSET;
         atomType = null;
     }
@@ -104,7 +105,7 @@ public class AtomTypeHandler extends DefaultHandler {
         logger.debug("  raw: ", raw);
         logger.debug("  chars: ", currentChars.trim());
         if ("atomType".equals(local)) {
-            atomTypes.addElement(atomType);
+            atomTypes.add(atomType);
         } else if ("scalar".equals(local)) {
             currentChars.trim();
             try {

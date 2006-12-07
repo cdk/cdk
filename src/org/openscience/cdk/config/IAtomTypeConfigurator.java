@@ -25,7 +25,7 @@ package org.openscience.cdk.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
@@ -52,6 +52,6 @@ public interface IAtomTypeConfigurator {
      * @return A Vector containing the AtomTypes extracted from the InputStream
      * @throws IOException when something went wrong with reading the data
      */
-    public Vector readAtomTypes(IChemObjectBuilder builder) throws IOException;
+    public List readAtomTypes(IChemObjectBuilder builder) throws IOException;
 
 }

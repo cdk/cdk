@@ -24,13 +24,14 @@
 package org.openscience.cdk.test.config.atomtypes;
 
 import java.io.StringReader;
+import java.util.List;
 import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
@@ -84,7 +85,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "</atomTypeList>")
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(2, types.size());
     }
@@ -116,7 +117,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(2, types.size());
     }
@@ -154,11 +155,11 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         assertNotNull(reader);
-        Vector types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List types = reader.readAtomTypes(new ChemObject().getBuilder());
         assertNotNull(types);
         assertEquals(1, types.size());
         
-        Object object = types.elementAt(0);
+        Object object = types.get(0);
         assertNotNull(object);
         assertTrue(object instanceof IAtomType);
         IAtomType atomType = (IAtomType)object;
