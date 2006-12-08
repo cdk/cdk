@@ -64,12 +64,12 @@ public class MDLFormat implements IChemFormatMatcher {
     }
 
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && (line.indexOf("v2000") >= 0 ||
-                                line.indexOf("V2000") >= 0)) {
+        if (lineNumber > 4 && line.startsWith("M  END")) {
             return true;
-        } else if (line.startsWith("M  END")) {
-            return true;
-        } else if (lineNumber == 4 && line.length()>7) {
+        } else if (lineNumber == 4 && line.length()>7 && 
+        		   (line.indexOf("2000") == -1) && // MDL Mol V2000 format 
+        		   (line.indexOf("3000") == -1))    // MDL Mol V3000 format 
+        {
             // possibly a MDL mol file
             try {
                 String atomCountString = line.substring(0, 3).trim();

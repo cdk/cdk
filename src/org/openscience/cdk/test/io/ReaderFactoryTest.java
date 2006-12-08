@@ -56,6 +56,8 @@ import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.JaguarFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLV2000Format;
+import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
@@ -153,7 +155,15 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
     
     public void testMDLMol() {
-        expectReader("data/mdl/methylbenzol.mol", MDLFormat.getInstance());
+        expectReader("data/mdl/bug1014344-1.mol", MDLFormat.getInstance());
+    }
+
+    public void testMDLMolV2000() {
+        expectReader("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance());
+    }
+
+    public void testMDLMolV3000() {
+        expectReader("data/mdl/molV3000.mol", MDLV3000Format.getInstance());
     }
 
     public void testPDB() {
