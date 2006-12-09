@@ -73,6 +73,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * {@link #writeMolecule(IMolecule, boolean[]) that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
  * </ul>
+ * 
  * <p>Thus, to write several molecules to a single SD file you can either use {@link #write(IChemObject)} and pass
  * a {@link org.openscience.cdk.MoleculeSet MoleculeSet} or you can repeatedly call one of the two
  * writeMolecule methods.
@@ -87,7 +88,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @cdk.module  io
  * @cdk.keyword file format, MDL molfile
- * @cdk.bug     1522430
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 
@@ -197,26 +197,23 @@ public class MDLWriter extends DefaultChemObjectWriter {
      * @see org.openscience.cdk.ChemFile
      */
 	public void write(IChemObject object) throws CDKException {
-		if (object instanceof IMoleculeSet) {
-			writeMoleculeSet((IMoleculeSet)object);
-		} else if (object instanceof IChemFile) {
-			writeChemFile((IChemFile)object);
-		} else if (object instanceof IMolecule) {
-			try{
-				boolean[] isVisible=new boolean[((IMolecule)object).getAtomCount()];
-				for(int i=0;i<isVisible.length;i++){
-					isVisible[i]=true;
-				}
-				writeMolecule((IMolecule)object,isVisible);
+		try {
+			if (object instanceof IMoleculeSet) {
+				writeMoleculeSet((IMoleculeSet)object);
+				return;
+			} else if (object instanceof IChemFile) {
+				writeChemFile((IChemFile)object);
+				return;
+			} else if (object instanceof IMolecule) {
+				writeMolecule((IMolecule)object);
+				return;
 			}
-			catch (Exception ex) {
-				logger.error(ex.getMessage());
-				logger.debug(ex);
-				throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
-			}
-		} else {
-			throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
+		} catch (Exception ex) {
+			logger.error(ex.getMessage());
+			logger.debug(ex);
+			throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
 		}
+		throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
 	}
 	
 	/**
@@ -236,7 +233,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 				for(int k=0;k<isVisible.length;k++){
 					isVisible[k]=true;
 				}
-				writeMolecule(mol, isVisible);
+				writeMolecule(mol);
 			}
 			catch (Exception exc)
 			{
@@ -244,17 +241,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		}
 	}
 	
-	private void writeChemFile(IChemFile file) {
+	private void writeChemFile(IChemFile file) throws Exception {
 		List moleculesList = ChemFileManipulator.getAllAtomContainers(file);
 		for (int i=0; i<moleculesList.size(); i++) {
-			try {
-				boolean[] isVisible=new boolean[((IAtomContainer)moleculesList.get(i)).getAtomCount()];
-				for(int k=0;k<isVisible.length;k++){
-					isVisible[k]=true;
-				}
-				writeMolecule(file.getBuilder().newMolecule((IAtomContainer)moleculesList.get(i)), isVisible);
-			} catch (Exception exc) {
-			}
+			writeMolecule(file.getBuilder().newMolecule((IAtomContainer)moleculesList.get(i)));
 		}
 	}
 	
@@ -264,21 +254,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 *
 	 * @param   molecule  Molecule that is written to an OutputStream 
 	 */
-    public void writeMolecule(IMolecule molecule) throws Exception {
-        boolean[] isVisible=new boolean[molecule.getAtomCount()];
-        for(int i=0;i<isVisible.length;i++){
-          isVisible[i]=true;
-        }
-        writeMolecule(molecule, isVisible);
-    }
-    
-	/**
-	 * Writes a Molecule to an OutputStream in MDL sdf format.
-	 *
-	 * @param   container  Molecule that is written to an OutputStream
-     * @param   isVisible Should a certain atom be written to mdl?
-	 */
-    public void writeMolecule(IMolecule container, boolean[] isVisible) throws Exception {
+    public void writeMolecule(IMolecule container) throws Exception {
         String line = "";
         // taking care of the $$$$ signs:
         // we do not write such a sign at the end of the first molecule, thus we have to write on BEFORE the second molecule
@@ -317,95 +293,77 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(comment + "\n");
         
         // write Counts line
-        int upToWhichAtom=0;
-        for(int i=0;i<isVisible.length;i++){
-          if(isVisible[i])
-            upToWhichAtom++;
-        }
-        line += formatMDLInt(upToWhichAtom, 3);
-        int numberOfBonds=0;
-        if(upToWhichAtom<container.getAtomCount()){
-          for(int i=0;i<container.getBondCount();i++){
-            if(isVisible[container.getAtomNumber(container.getBond(i).getAtom(0))] && isVisible[container.getAtomNumber(container.getBond(i).getAtom(1))])
-              numberOfBonds++;
-          }
-        }else{
-          numberOfBonds=container.getBondCount();
-        }
-        line += formatMDLInt(numberOfBonds, 3);
+        line += formatMDLInt(container.getAtomCount(), 3);
+        line += formatMDLInt(container.getBondCount(), 3);
         line += "  0  0  0  0  0  0  0  0999 V2000\n";
         writer.write(line);
 
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
-          if(isVisible[f]){
-        	  IAtom atom = container.getAtom(f);
-            line = "";
-            if (atom.getPoint3d() != null) {
-                line += formatMDLFloat((float) atom.getPoint3d().x);
-                line += formatMDLFloat((float) atom.getPoint3d().y);
-                line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
-            } else if (atom.getPoint2d() != null) {
-                line += formatMDLFloat((float) atom.getPoint2d().x);
-                line += formatMDLFloat((float) atom.getPoint2d().y);
-                line += "    0.0000 ";
-            } else {
-                // if no coordinates available, then output a number
-                // of zeros
-                line += formatMDLFloat((float)0.0);
-                line += formatMDLFloat((float)0.0);
-                line += formatMDLFloat((float)0.0) + " ";
-            }
-            if(container.getAtom(f) instanceof IPseudoAtom)
-		    line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
-	    else
-		    line += formatMDLString(container.getAtom(f).getSymbol(), 3); 
-            line += " 0  0  0  0  0  0  0  0  0  0  0  0";
-            writer.write(line);
-            writer.newLine();
-          }
+        	IAtom atom = container.getAtom(f);
+        	line = "";
+        	if (atom.getPoint3d() != null) {
+        		line += formatMDLFloat((float) atom.getPoint3d().x);
+        		line += formatMDLFloat((float) atom.getPoint3d().y);
+        		line += formatMDLFloat((float) atom.getPoint3d().z) + " ";
+        	} else if (atom.getPoint2d() != null) {
+        		line += formatMDLFloat((float) atom.getPoint2d().x);
+        		line += formatMDLFloat((float) atom.getPoint2d().y);
+        		line += "    0.0000 ";
+        	} else {
+        		// if no coordinates available, then output a number
+        		// of zeros
+        		line += formatMDLFloat((float)0.0);
+        		line += formatMDLFloat((float)0.0);
+        		line += formatMDLFloat((float)0.0) + " ";
+        	}
+        	if(container.getAtom(f) instanceof IPseudoAtom)
+        		line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
+        	else
+        		line += formatMDLString(container.getAtom(f).getSymbol(), 3); 
+        	line += " 0  0  0  0  0  0  0  0  0  0  0  0";
+        	writer.write(line);
+        	writer.newLine();
         }
 
         // write Bond block
         IBond[] bonds = container.getBonds();
         for (int g = 0; g < bonds.length; g++) {
-          if(upToWhichAtom==container.getAtomCount() || (isVisible[container.getAtomNumber(container.getBond(g).getAtom(0))] && isVisible[container.getAtomNumber(container.getBond(g).getAtom(1))])){
-        	  IBond bond = bonds[g];
-            if (bond.getAtomCount() != 2) {
-                logger.warn("Skipping bond with more/less than two atoms: " + bond);
-            } else {
-                if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
-                    bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
-                    // turn around atom coding to correct for inv stereo
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
-                } else {
-                    line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
-                    line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
-                }
-                line += formatMDLInt((int)bond.getOrder(),3);
-                line += "  ";
-                switch(bond.getStereo()){
-                    case CDKConstants.STEREO_BOND_UP:
-                        line += "1";
-                        break;
-                    case CDKConstants.STEREO_BOND_UP_INV:
-                        line += "1";
-                        break;
-                    case CDKConstants.STEREO_BOND_DOWN:
-                        line += "6";
-                        break;
-                    case CDKConstants.STEREO_BOND_DOWN_INV:
-                        line += "6";
-                        break;
-                   default:
-                        line += "0";
-                }
-                line += "  0  0  0 ";
-                writer.write(line);
-                writer.newLine();
-            }
-          }
+        	IBond bond = bonds[g];
+        	if (bond.getAtomCount() != 2) {
+        		logger.warn("Skipping bond with more/less than two atoms: " + bond);
+        	} else {
+        		if (bond.getStereo() == CDKConstants.STEREO_BOND_UP_INV || 
+        				bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV) {
+        			// turn around atom coding to correct for inv stereo
+        			line = formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
+        			line += formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
+        		} else {
+        			line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
+        			line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
+        		}
+        		line += formatMDLInt((int)bond.getOrder(),3);
+        		line += "  ";
+        		switch(bond.getStereo()){
+        		case CDKConstants.STEREO_BOND_UP:
+        			line += "1";
+        			break;
+        		case CDKConstants.STEREO_BOND_UP_INV:
+        			line += "1";
+        			break;
+        		case CDKConstants.STEREO_BOND_DOWN:
+        			line += "6";
+        			break;
+        		case CDKConstants.STEREO_BOND_DOWN_INV:
+        			line += "6";
+        			break;
+        		default:
+        			line += "0";
+        		}
+        		line += "  0  0  0 ";
+        		writer.write(line);
+        		writer.newLine();
+        	}
         }
 
         // write formal atomic charges
