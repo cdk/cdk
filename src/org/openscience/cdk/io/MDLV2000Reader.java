@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
@@ -85,14 +85,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
-public class MDLReader extends DefaultChemObjectReader {
+public class MDLV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
     private LoggingTool logger = null;
 
     private BooleanIOSetting forceReadAs3DCoords;
     
-    public MDLReader() {
+    public MDLV2000Reader() {
         this(new StringReader(""));
     }
     
@@ -101,12 +101,12 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 *@param  in  The InputStream to read from
 	 */
-	public MDLReader(InputStream in) {
+	public MDLV2000Reader(InputStream in) {
 		this(new InputStreamReader(in));
 	}
 
     public IResourceFormat getFormat() {
-        return MDLFormat.getInstance();
+        return MDLV2000Format.getInstance();
     }
 
     public void setReader(Reader input) throws CDKException {
@@ -126,7 +126,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 *
 	 *@param  in  The Reader to read from
 	 */
-	public MDLReader(Reader in) {
+	public MDLV2000Reader(Reader in) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
@@ -501,6 +501,139 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
             }
             
+            // read PROPERTY block
+            logger.info("Reading property block");
+            while (true) {
+                line = input.readLine(); linecount++;
+                if (line == null) {
+                    throw new CDKException("The expected property block is missing!");
+                }
+		if (line.startsWith("M  END")) break;
+                
+                boolean lineRead = false;
+                if (line.startsWith("M  CHG")) {
+                    // FIXME: if this is encountered for the first time, all
+                    // atom charges should be set to zero first!
+                    int infoCount = Integer.parseInt(line.substring(6,9).trim());
+                    StringTokenizer st = new StringTokenizer(line.substring(9));
+                    for (int i=1; i <= infoCount; i++) {
+                        String token = st.nextToken();
+                        int atomNumber = Integer.parseInt(token.trim());
+                        token = st.nextToken();
+                        int charge = Integer.parseInt(token.trim());
+                        molecule.getAtom(atomNumber - 1).setFormalCharge(charge);
+                    }
+                }  else if (line.matches("^A    \\d+")) {
+            		// Reads the pseudo atom property from the mol file
+                	
+                	// The atom number of the to replaced atom
+            		int aliasAtomNumber = Integer.parseInt(line.replaceFirst("^A    ", "")) - RGroupCounter;
+            		line = input.readLine(); linecount++;
+					String[] aliasArray = line.split("\\\\");
+					// name of the alias atom like R1 odr R2 etc. 
+					String alias = "";
+					for (int i = 0; i < aliasArray.length; i++) {
+						alias += aliasArray[i];
+					}
+					IAtom aliasAtom = molecule.getAtom(aliasAtomNumber);
+					IAtom newPseudoAtom = molecule.getBuilder().newPseudoAtom(alias);
+					if(aliasAtom.getPoint2d() != null) {
+						newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
+					}
+					if(aliasAtom.getPoint3d() != null) {
+						newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
+					}
+					molecule.addAtom(newPseudoAtom);
+					java.util.List bondsOfAliasAtom = molecule.getConnectedBondsList(aliasAtom);
+					
+					for (int i = 0; i < bondsOfAliasAtom.size(); i++) {
+						IBond bondOfAliasAtom = (IBond) bondsOfAliasAtom.get(i);
+						IAtom connectedToAliasAtom = bondOfAliasAtom.getConnectedAtom(aliasAtom);
+						IBond newBond = bondOfAliasAtom.getBuilder().newBond(); 
+						newBond.setAtoms(new IAtom[] {connectedToAliasAtom, newPseudoAtom});
+						newBond.setOrder(bondOfAliasAtom.getOrder());
+						molecule.addBond(newBond);
+						molecule.removeBond(aliasAtom, connectedToAliasAtom);
+					}
+					molecule.removeAtom(aliasAtom);
+					RGroupCounter++;
+
+                } else if (line.startsWith("M  ISO")) {
+                    try {
+                        String countString = line.substring(6,9).trim();
+                        int infoCount = Integer.parseInt(countString);
+                        StringTokenizer st = new StringTokenizer(line.substring(9));
+                        for (int i=1; i <= infoCount; i++) {
+                            int atomNumber = Integer.parseInt(st.nextToken().trim());
+                            int absMass = Integer.parseInt(st.nextToken().trim());
+                            if (absMass != 0) { 
+                                IAtom isotope = molecule.getAtom(atomNumber - 1);
+                                isotope.setMassNumber(absMass);
+                            }
+                        }
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.getMessage() + ") while parsing line "
+                                       + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in isotope information on line: " + line, exception);
+                    }
+                } else if (line.startsWith("M  RAD")) {
+                    try {
+                        String countString = line.substring(6,9).trim();
+                        int infoCount = Integer.parseInt(countString);
+                        StringTokenizer st = new StringTokenizer(line.substring(9));
+                        for (int i=1; i <= infoCount; i++) {
+                            int atomNumber = Integer.parseInt(st.nextToken().trim());
+                            int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
+                            if (spinMultiplicity > 1) {
+                                IAtom radical = molecule.getAtom(atomNumber - 1);
+                                for (int j=2; j <= spinMultiplicity; j++) {
+                                    // 2 means doublet -> one unpaired electron
+                                    // 3 means triplet -> two unpaired electron
+                                    molecule.addElectronContainer(molecule.getBuilder().newSingleElectron(radical));
+                                }
+                            }
+                        }
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.getMessage() + ") while parsing line "
+                                       + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in radical information on line: " + line, exception);
+                    }
+                } else if (line.startsWith("G  ")) {
+                    try {
+                        String atomNumberString = line.substring(3,6).trim();
+                        int atomNumber = Integer.parseInt(atomNumberString);
+                        //String whatIsThisString = line.substring(6,9).trim();
+                    
+                        String atomName = input.readLine();
+                        
+                        // convert Atom into a PseudoAtom
+                        IAtom prevAtom = molecule.getAtom(atomNumber - 1);
+                        IPseudoAtom pseudoAtom = molecule.getBuilder().newPseudoAtom(atomName);
+                        if (prevAtom.getPoint2d() != null) {
+                            pseudoAtom.setPoint2d(prevAtom.getPoint2d());
+                        }
+                        if (prevAtom.getPoint3d() != null) {
+                            pseudoAtom.setPoint3d(prevAtom.getPoint3d());
+                        }
+                        AtomContainerManipulator.replaceAtomByAtom(molecule, prevAtom, pseudoAtom);
+                    } catch (NumberFormatException exception) {
+                        String error = "Error (" + exception.toString() + ") while parsing line "
+                        + linecount + ": " + line + " in property block.";
+                        logger.error(error);
+                        throw new CDKException("NumberFormatException in group information on line: " + line, exception);
+                    }
+                }
+                if (!lineRead) {
+                    logger.warn("Skipping line in property block: ", line);
+                }
+            }
+		} catch (CDKException exception) {
+            String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
+            logger.error(error);
+            logger.debug(exception);
+            throw exception;
 		} catch (Exception exception) {
 			exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
