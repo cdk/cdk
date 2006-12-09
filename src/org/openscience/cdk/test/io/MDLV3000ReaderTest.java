@@ -29,11 +29,12 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV3000Reader;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -72,25 +73,19 @@ public class MDLV3000ReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
         	MDLV3000Reader reader = new MDLV3000Reader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            
-            assertNotNull(chemFile);
-            assertEquals(1, chemFile.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1, seq.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-            assertNotNull(som);
-            assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+            IMolecule m = (IMolecule)reader.read(new NNMolecule());
             assertNotNull(m);
             assertEquals(31, m.getAtomCount());
             assertEquals(34, m.getBondCount());
             
+            IAtom atom = m.getAtom(0);
+            assertNotNull(atom);
+            assertNotNull(atom.getPoint2d());
+            assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
+            assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
+            
         } catch (Exception e) {
+        	e.printStackTrace();
             fail(e.toString());
         }
     }
