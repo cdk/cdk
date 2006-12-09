@@ -35,6 +35,9 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
 	
+	// OK, add some state info
+	boolean isRXN = false;
+	
     private MDLRXNV3000Format() {}
     
     public static IResourceFormat getInstance() {
@@ -62,11 +65,11 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
     public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && 
-            (line.indexOf("v3000") >= 0 ||
-             line.indexOf("V3000") >= 0)) {
-            return true;
-        }
+    	if (lineNumber == 1) {
+    		isRXN = (line.indexOf("$RXN") != -1);
+        } else if (lineNumber == 5 && isRXN) {
+        	return true;
+        }	
         return false;
     }
 
