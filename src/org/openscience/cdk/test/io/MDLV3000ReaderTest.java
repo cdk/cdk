@@ -32,7 +32,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
@@ -60,7 +59,7 @@ public class MDLV3000ReaderTest extends CDKTestCase {
     }
 
     public void testAccepts() {
-    	MDLReader reader = new MDLReader();
+    	MDLV3000Reader reader = new MDLV3000Reader();
     	assertTrue(reader.accepts(Molecule.class));
     }
     
