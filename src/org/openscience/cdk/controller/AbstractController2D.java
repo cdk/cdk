@@ -44,12 +44,12 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.applications.jchempaint.dialogs.EnterElementOrGroupDialog;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.applications.undoredo.AddFuncGroupEdit;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
@@ -83,7 +83,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * Class that acts on MouseEvents and KeyEvents.
@@ -1304,7 +1303,16 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		IAtom atomInRange = r2dm.getHighlightedAtom();
 		if (atomInRange != null)
 		{
-			String x=JOptionPane.showInputDialog(null,"Enter new element symbol");
+			String[] funcGroupsKeys=new String[funcgroupsmap.keySet().size()/2+1];
+	        Iterator it=funcgroupsmap.keySet().iterator();
+	        int h=1;
+	        funcGroupsKeys[0]="";
+	        while(it.hasNext()){
+	        	funcGroupsKeys[h]=(String)it.next();
+	        	h++;
+	        	it.next();
+	        }
+			String x=EnterElementOrGroupDialog.showDialog(null,null, "Enter an element symbol or choose/enter a functional group abbrivation:", "Enter element", funcGroupsKeys, "","");
 			try{
 				IAtomContainer ac=(IAtomContainer)funcgroupsmap.get(x);
 				//this means a functional group was entered
@@ -1352,7 +1360,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 						if(counter==ac.getAtomCount())
 							lastplaced=null;
 					}
-					Iterator it=container.atoms();
+					it=container.atoms();
 					while(it.hasNext()){
 						IAtom atom=(IAtom)it.next();
 						if(r2dm.getRenderingCoordinate(atom)==null)
@@ -1370,6 +1378,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					 */
 					// undoredo support
 					UndoableEdit  edit = new AddFuncGroupEdit(chemModel, undoredocontainer ,ac, "add "+x);
+					undoRedoHandler.postEdit(edit);
 					//undoRedoHandler.postEdit(edit);
 					r2dm.fireChange();
 					fireChange();
