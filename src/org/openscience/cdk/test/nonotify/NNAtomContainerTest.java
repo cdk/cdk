@@ -27,6 +27,9 @@ package org.openscience.cdk.test.nonotify;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.AtomContainerTest;
 
@@ -49,4 +52,33 @@ public class NNAtomContainerTest extends AtomContainerTest {
         return new TestSuite(NNAtomContainerTest.class);
     }
 
+    public void testStateChanged_IChemObjectChangeEvent() {
+        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+        IAtomContainer chemObject = builder.newAtomContainer();
+        chemObject.addListener(listener);
+        
+        chemObject.addAtom(builder.newAtom());
+        assertFalse(listener.changed);
+        
+        listener.reset();
+        assertFalse(listener.changed);
+        chemObject.addBond(builder.newBond(builder.newAtom(), builder.newAtom()));
+        assertFalse(listener.changed);
+    }
+
+    private class ChemObjectListenerImpl implements IChemObjectListener {
+        private boolean changed;
+        
+        private ChemObjectListenerImpl() {
+            changed = false;
+        }
+        
+        public void stateChanged(IChemObjectChangeEvent e) {
+            changed = true;
+        }
+        
+        public void reset() {
+            changed = false;
+        }
+    }
 }
