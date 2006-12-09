@@ -31,6 +31,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -55,6 +56,8 @@ public class TemplateHandlerTest extends CDKTestCase
 	public boolean standAlone = false;
 	private LoggingTool logger = null;
 
+	private SmilesParser sp = null;
+	private StructureDiagramGenerator sdg = null;
 
 	/**
 	 *  Constructor for the TemplateHandlerTest object
@@ -74,6 +77,8 @@ public class TemplateHandlerTest extends CDKTestCase
 	{
         super.setUp();
 		logger = new LoggingTool(this);
+		sdg = new StructureDiagramGenerator();
+		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 	}
 
 
@@ -104,7 +109,7 @@ public class TemplateHandlerTest extends CDKTestCase
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-		IMolecule mol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+		IMolecule mol = sp.parseSmiles(smiles);
 		assertTrue(th.mapTemplates(mol));
 	}
 	
@@ -113,9 +118,11 @@ public class TemplateHandlerTest extends CDKTestCase
 		logger.debug("***TestAddMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		IMolecule mol = MoleculeFactory.makeAlphaPinene();
+		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
+
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		IMolecule smilesMol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+		IMolecule smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		assertFalse(itIsInThere);
@@ -131,9 +138,11 @@ public class TemplateHandlerTest extends CDKTestCase
 		logger.debug("***TestRemoveMolecule***");
 		boolean itIsInThere = false;
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		Molecule mol = MoleculeFactory.makeAlphaPinene();
+		IMolecule mol = MoleculeFactory.makeAlphaPinene();
+		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
+		
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
-		IMolecule smilesMol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+		IMolecule smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		assertFalse(itIsInThere);
@@ -154,7 +163,7 @@ public class TemplateHandlerTest extends CDKTestCase
 	public void visualLayout() throws Exception
 	{
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
-		IMolecule mol = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+		IMolecule mol = sp.parseSmiles(smiles);
 		MoleculeViewer2D.display(mol, true);
 	}
 
