@@ -1,24 +1,21 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2006  Egon Willighagen <egonw@sci.kun.nl>
+ * Copyright (C) 2006  Egon Willighagen <egonw@sci.kun.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.io;
@@ -54,20 +51,13 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Class that implements the new MDL rxn format introduced in August 2002.
- * The overall syntax is compatible with the old format, but I consider
- * the format completely different, and thus implemented a separate Reader
- * for it.
- *
- * <p>This Reader should read all information, but it does not (yet). Please
- * report any problem with information not read as a bug. Refer to the method
- * of this class to get more insight in what is read and what is not.
- * In addition, the cdk.log will show the bits that are not interpreted.
+ * Class that implements the MDL mol V3000 format. This reader reads the 
+ * element symbol and 2D or 3D coordinates from the ATOM block.
  *
  * @cdk.module io
  *
- * @author  Egon Willighagen <egonw@sci.kun.nl>
- * @cdk.created 2003-10-05
+ * @author      Egon Willighagen <egonw@users.sf.net>
+ * @cdk.created 2006
  * 
  * @cdk.keyword MDL RXN V3000
  * @cdk.require java1.4+
@@ -135,6 +125,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
         IAtomContainer readData = builder.newAtomContainer();
         boolean foundEND = false;
+        readHeader(readData);
         while (isReady() && !foundEND) {
             String command = readCommand();
             if ("END CTAB".equals(command)) {
@@ -156,7 +147,17 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return readData;
     }
     
-    /**
+    public void readHeader(IAtomContainer readData) throws CDKException {
+		// read four lines
+    	String line1 = readLine();
+    	if (line1.length() > 0) readData.setProperty(CDKConstants.TITLE, line1);
+    	readLine();
+    	String line3 = readLine();
+    	if (line3.length() > 0) readData.setProperty(CDKConstants.COMMENT, line3);
+    	readLine();
+	}
+
+	/**
      * Reads the atoms, coordinates and charges.
      *
      * <p>IMPORTANT: it does not support the atom list and its negation!
@@ -170,12 +171,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 foundEND = true;
             } else {
                 logger.debug("Parsing atom from: " + command);
+                IAtom atom = readData.getBuilder().newAtom();
                 StringTokenizer tokenizer = new StringTokenizer(command);
-                IAtom atom = readData.getBuilder().newAtom("C");
                 // parse the index
                 try {
-                    String indexString = tokenizer.nextToken();
-                    atom.setID(indexString);
+                    atom.setID(tokenizer.nextToken());
                 } catch (Exception exception) {
                     String error = "Error while parsing atom index";
                     logger.error(error);
