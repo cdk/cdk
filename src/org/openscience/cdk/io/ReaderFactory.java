@@ -28,8 +28,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -60,7 +61,7 @@ public class ReaderFactory {
     private int headerLength;
     private LoggingTool logger;
 
-    private static Vector formats = null;
+    private static List formats = null;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -86,16 +87,16 @@ public class ReaderFactory {
      * Registers a format for detection.
      */
     public void registerFormat(IChemFormatMatcher format) {
-        formats.addElement(format);
+        formats.add(format);
     }
     
-    public Vector getFormats(){
+    public List getFormats(){
     	return formats;
     }
 
     private void loadReaders() {
         if (formats == null) {
-            formats = new Vector();
+            formats = new ArrayList();
             try {
                 logger.debug("Starting loading Readers...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -110,7 +111,7 @@ public class ReaderFactory {
                     	Class formatClass = this.getClass().getClassLoader().loadClass(formatName);
                     	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
                     	IChemFormatMatcher format = (IChemFormatMatcher)getinstanceMethod.invoke(null, new Object[0]);
-                        formats.addElement(format);
+                        formats.add(format);
                         logger.info("Loaded IO format: " + format.getClass().getName());
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this ChemObjectReader: ", formatName);
@@ -168,7 +169,7 @@ public class ReaderFactory {
         while ((line = buffer.readLine()) != null) {
             logger.debug(lineNumber + ": ", line);
             for (int i=0; i<formats.size(); i++) {
-                IChemFormatMatcher cfMatcher = (IChemFormatMatcher)formats.elementAt(i);
+                IChemFormatMatcher cfMatcher = (IChemFormatMatcher)formats.get(i);
                 if (cfMatcher.matches(lineNumber, line)) {
                     logger.info("Detected format: ", cfMatcher.getFormatName());
                     return cfMatcher;
