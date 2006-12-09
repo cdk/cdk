@@ -56,6 +56,7 @@ import javax.swing.event.EventListenerList;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
@@ -532,25 +533,25 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	 */
 	public void setupPopupMenus(PopupController2D inputAdapter)
 	{
-    if (inputAdapter.getPopupMenu(new Atom("H")) == null)
+    if (inputAdapter.getPopupMenu(Atom.class) == null)
 		{
-			inputAdapter.setPopupMenu(new Atom("H"), new JChemPaintPopupMenu(this, "atom"));
+			inputAdapter.setPopupMenu(Atom.class, new JChemPaintPopupMenu(this, "atom"));
 		}
-		if (inputAdapter.getPopupMenu(new PseudoAtom("R")) == null)
+		if (inputAdapter.getPopupMenu(PseudoAtom.class) == null)
 		{
-			inputAdapter.setPopupMenu(new PseudoAtom("R"), new JChemPaintPopupMenu(this, "pseudo"));
+			inputAdapter.setPopupMenu(PseudoAtom.class, new JChemPaintPopupMenu(this, "pseudo"));
 		}
-		if (inputAdapter.getPopupMenu(new Bond()) == null)
+		if (inputAdapter.getPopupMenu(Bond.class) == null)
 		{
-			inputAdapter.setPopupMenu(new Bond(), new JChemPaintPopupMenu(this, "bond"));
+			inputAdapter.setPopupMenu(Bond.class, new JChemPaintPopupMenu(this, "bond"));
 		}
-		if (inputAdapter.getPopupMenu(new org.openscience.cdk.ChemModel()) == null)
+		if (inputAdapter.getPopupMenu(ChemModel.class) == null)
 		{
-			inputAdapter.setPopupMenu(new org.openscience.cdk.ChemModel(), new JChemPaintPopupMenu(this, "chemmodel"));
+			inputAdapter.setPopupMenu(ChemModel.class, new JChemPaintPopupMenu(this, "chemmodel"));
 		}
-		if (inputAdapter.getPopupMenu(new Reaction()) == null)
+		if (inputAdapter.getPopupMenu(Reaction.class) == null)
 		{
-			inputAdapter.setPopupMenu(new Reaction(), new JChemPaintPopupMenu(this, "reaction"));
+			inputAdapter.setPopupMenu(Reaction.class, new JChemPaintPopupMenu(this, "reaction"));
 		}
 	}
 

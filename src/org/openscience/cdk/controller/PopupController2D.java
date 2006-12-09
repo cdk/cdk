@@ -111,11 +111,11 @@ public class PopupController2D extends Controller2D {
 	/**
 	 *  Sets the popupMenu attribute of the Controller2D object
 	 *
-	 *@param  chemObject  The new popupMenu value
+	 *@param  someClass  The new popupMenu value
 	 *@param  menu        The new popupMenu value
 	 */
-	public void setPopupMenu(IChemObject chemObject, CDKPopupMenu menu) {
-		PopupController2D.popupMenus.put(chemObject.getClass().getName(), menu);
+	public void setPopupMenu(Class someClass, CDKPopupMenu menu) {
+		PopupController2D.popupMenus.put(someClass.getName(), menu);
 	}
 
 
@@ -123,11 +123,10 @@ public class PopupController2D extends Controller2D {
 	 *  Returns the popup menu for this IChemObject if it is set, and null
 	 *  otherwise.
 	 *
-	 *@param  chemObject  Description of the Parameter
+	 *@param  someClass  Description of the Parameter
 	 *@return             The popupMenu value
 	 */
-	public CDKPopupMenu getPopupMenu(IChemObject chemObject) {
-        Class classSearched = chemObject.getClass();
+	public CDKPopupMenu getPopupMenu(Class classSearched) {
         logger.debug("Searching popup for: ", classSearched.getName());
         while (classSearched.getName().startsWith("org.openscience.cdk")) {
             logger.debug("Searching popup for: ", classSearched.getName());
@@ -151,7 +150,7 @@ public class PopupController2D extends Controller2D {
 	private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event)
 	{
 		IChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);
-		CDKPopupMenu popupMenu = getPopupMenu(objectInRange);
+		CDKPopupMenu popupMenu = getPopupMenu(objectInRange.getClass());
     if (popupMenu != null)
 		{
 			popupMenu.setSource(objectInRange);
