@@ -58,6 +58,10 @@
 # Update 11/27/2006 - Fixed a bug in parsing the Junit log output. Also provides
 #                     visual identification of JUnit crashes
 # Update 11/29/2006 - Added code coverage with Emma
+# Update 12/10/2006 - Added code to allow for sending emails via a SMTP server
+#                     that requires a password/login. Also added a check for
+#                     Gmail server, since they require a TLS setup. Also added
+#                     code to redact the email password and login's if specified
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -108,9 +112,11 @@ per_line = 8
 # variables required for sending mail, if desired.
 # should be self explanatory. Set to "" or None if
 # you dont want to send mail
-smtpServerName = 'smtp.psu.edu'
+smtpServerName = 'smtp.gmail.com'
 fromName = 'nightly.py <rguha@indiana.edu>'
 toName = 'cdk-devel@lists.sourceforge.net'
+smtpLogin = 'rajarshi.guha'
+smtpPassword = 'beeb1e'
 
 #################################################################
 #
@@ -274,6 +280,15 @@ def sendMail(message):
         msg['To'] = toName
 
         server = smtplib.SMTP(smtpServerName)
+
+        if smtpServerName.find('gmail.com') != -1:
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+
+        if smtpLogin and smtpPassword:
+            server.login(smtpLogin, smtpPassword)
+            
         server.sendmail(fromName, toName, msg.as_string())
         server.quit()
         print 'Sent mail to %s' % (toName)
@@ -1264,7 +1279,15 @@ if __name__ == '__main__':
         print rte
     
     # copy this script to the nightly we dir. The script should be in nightly_dir
-    shutil.copy( os.path.join(nightly_dir,'nightly.py'), nightly_web)    
+    # we also want to redact the smtp password/login lines
+    f = open(os.path.join(nightly_dir,'nightly.py'), 'r')
+    script = string.join(f.readlines())
+    f.close()
+    script = re.sub('smtpLogin =\s?\'.*\'', 'smtpLogin = "XXX"', script)
+    script = re.sub('smtpPassword =\s?\'.*\'', 'smtpPassword = "XXX"', script)    
+    f = open(os.path.join(nightly_web, 'nightly.py'), 'w')
+    f.write(script)
+    f.close()
 
     # close up the HTML and write out the web page
     olddir = os.getcwd()
