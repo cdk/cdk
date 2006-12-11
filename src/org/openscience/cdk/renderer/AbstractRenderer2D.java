@@ -304,9 +304,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
             }
 
 		}
-		if (r2dm.drawNumbers())
+		if (r2dm.drawNumbers() && !drawSymbol && !r2dm.getIsCompact())
 		{
-			drawSymbol = true;
+			paintNumberOnly(atom, atomBackColor, graphics, atom.getProperty("OriginalNumber")!=null ? ((Integer)atom.getProperty("OriginalNumber")).intValue()+1 : container.getAtomNumber(atom) + 1);
 		}
 		if (drawSymbol || isRadical)
 		{
@@ -418,10 +418,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		String atomSymbol = atom.getSymbol();
 		if (r2dm.drawNumbers())
 		{
-			if (atomSymbol.equals("C"))
-			{
-				atomSymbol = "" + atomNumber;
-			} else if (atomNumber != 0 && !atomSymbol.equals(""))
+			if (atomNumber != 0 && !atomSymbol.equals(""))
 			{
 				atomSymbol += "-" + atomNumber;
 			}
@@ -710,6 +707,109 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	}
 
 
+	public void paintNumberOnly(IAtom atom, Color backColor, Graphics2D graphics, int atomNumber)
+	{
+		if (r2dm.getRenderingCoordinate(atom) == null)
+		{
+			logger.warn("Cannot draw atom without 2D coordinate");
+			return;
+		}
+
+		// The fonts for calculating geometries
+		Font normalFont = r2dm.getFont();
+		if (normalFont == null)
+		{
+			normalFont = graphics.getFont();
+		}
+		int normalFontSize = normalFont.getSize();
+		// get drawing fonts
+		float normalScreenFontSize = getScreenSize(normalFontSize);
+		Font normalScreenFont = normalFont.deriveFont(normalScreenFontSize);
+
+		// STEP 1: calculate widths and heights for all parts in the label
+
+		// calculate SYMBOL width, height
+		String atomSymbol = atomNumber+"";
+		graphics.setFont(normalFont);
+		FontMetrics fontMetrics = graphics.getFontMetrics();
+		int atomSymbolW = (new Integer(fontMetrics.stringWidth(atomSymbol))).intValue();
+		int atomSymbolFirstCharW = (new Integer(fontMetrics.stringWidth(atomSymbol.substring(0, 1)))).intValue();
+		int atomSymbolH = (new Integer(fontMetrics.getAscent())).intValue();
+		int atomSymbolXOffset = atomSymbolFirstCharW / 2;
+		int atomSymbolYOffset = atomSymbolH / 2;
+
+		// STEP 2: calculate x's and y's for all parts in the label
+
+		int	labelX = (int) (r2dm.getRenderingCoordinate(atom).x - (atomSymbolXOffset));
+		// labelY and labelH are the same for both left/right aligned
+		int labelY = (int) (r2dm.getRenderingCoordinate(atom).y + (atomSymbolYOffset));
+
+		// xy for atom symbol
+		int[] atomSymbolCoords = new int[2];
+			atomSymbolCoords[0] = labelX ;
+		atomSymbolCoords[1] = labelY - atomSymbolH;
+
+
+		// STEP 3: draw empty backgrounds for all parts in the label
+
+		int border = 2;
+		// border for clearing background in pixels
+
+		paintEmptySpace(atomSymbolCoords[0], atomSymbolCoords[1] + atomSymbolH,
+				atomSymbolW, atomSymbolH, border, backColor, graphics);
+
+		// STEP 4: draw all parts in the label
+
+		Color atomColor = r2dm.getAtomColor(atom, r2dm.getForeColor());
+		{
+			// draw SYMBOL
+
+			int[] screenCoords = getScreenCoordinates(atomSymbolCoords);
+			graphics.setColor(atomColor);
+			graphics.setFont(normalScreenFont);
+			graphics.drawString(atomSymbol, screenCoords[0], screenCoords[1]);
+
+			// possibly underline SYMBOL
+			if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null ||
+					atom.getProperty(ProblemMarker.WARNING_MARKER) != null)
+			{
+				// RED for error, ORANGE for warnings
+				if (atom.getProperty(ProblemMarker.ERROR_MARKER) != null)
+				{
+					graphics.setColor(Color.red);
+				} else if (atom.getProperty(ProblemMarker.WARNING_MARKER) != null)
+				{
+					graphics.setColor(Color.orange);
+				}
+				// make zig zag bond
+				int symbolLength = atom.getSymbol().length();
+				int zigzags = 1 + (2 * symbolLength);
+				int spacing = atomSymbolW / zigzags;
+				int width = atomSymbolH / 3;
+				for (int i = -symbolLength; i <= symbolLength; i++)
+				{
+					int[] lineCoords = new int[6];
+					int halfspacing = spacing / 2;
+					lineCoords[0] = atomSymbolCoords[0] + (atomSymbolW / 2) + (i * spacing) - halfspacing;
+					lineCoords[1] = atomSymbolCoords[1] - 1 * width;
+					lineCoords[2] = lineCoords[0] + halfspacing;
+					lineCoords[3] = atomSymbolCoords[1] - 2 * width;
+					lineCoords[4] = lineCoords[2] + halfspacing;
+					lineCoords[5] = lineCoords[1];
+					int[] lineScreenCoords = getScreenCoordinates(lineCoords);
+					graphics.drawLine(lineScreenCoords[0], lineScreenCoords[1],
+							lineScreenCoords[2], lineScreenCoords[3]);
+					graphics.drawLine(lineScreenCoords[2], lineScreenCoords[3],
+							lineScreenCoords[4], lineScreenCoords[5]);
+				}
+			}
+		}
+		// reset old font & color
+		graphics.setFont(normalFont);
+		graphics.setColor(r2dm.getForeColor());
+	}
+
+	
 	/**
 	 *  Makes a clear empty space using the background color.
 	 *
