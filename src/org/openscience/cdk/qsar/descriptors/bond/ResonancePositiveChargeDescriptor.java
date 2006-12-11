@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -50,6 +51,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 
 /**
@@ -205,9 +207,13 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	        	
 	        	int maxNumbStruc = 50;
 	        	boolean isAromatic = false;
-	        	if(HueckelAromaticityDetector.detectAromaticity(product)){
+	        	if(HueckelAromaticityDetector.detectAromaticity(acI)){
 	        		 isAromatic = true;
-	        		maxNumbStruc = 5;
+	        		 IRingSet ringSet = new SSSRFinder(product).findSSSR();
+	        		 if( ringSet.getAtomContainerCount() > 4)
+						maxNumbStruc = 1;
+	        		 else
+	        			 maxNumbStruc = 5;
 	        	}
 	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false,maxNumbStruc);
 	        	
@@ -233,7 +239,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    						    Object[] params = new Integer[2];
 	    	    					params[0] = new Integer(6);
 	    	    					if(isAromatic)
-		    	    					params[1] = new Integer(10);
+		    	    					params[1] = new Integer(maxNumbStruc);
 	    	    						
 	    	    					pielectronegativity.setParameters(params);
 	    	    					try{
