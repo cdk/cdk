@@ -25,7 +25,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.structgen.StructureGenerationListener;
+import org.openscience.cdk.structgen.IStructureGenerationListener;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
@@ -2782,7 +2782,7 @@ public class GENMDeterministicGenerator {
 		 *
 		 * @param  x  The eventlistener to add
 		 */
-		public void addListener(StructureGenerationListener x)
+		public void addListener(IStructureGenerationListener x)
 		{
 			if (listeners == null) listeners = new ArrayList();
 			listeners.add(x);
@@ -2794,7 +2794,7 @@ public class GENMDeterministicGenerator {
 		 *
 		 * @param  x  Description of Parameter
 		 */
-		public void removeChangeListener(StructureGenerationListener x)
+		public void removeChangeListener(IStructureGenerationListener x)
 		{
 			listeners.remove(x);
 		}
@@ -2813,7 +2813,7 @@ public class GENMDeterministicGenerator {
 					list.add(structures.get(f));
 				}
 
-				StructureGenerationListener cl = (StructureGenerationListener) listeners.get(i);
+				IStructureGenerationListener cl = (IStructureGenerationListener) listeners.get(i);
 				
 				try {
 					cl.stateChanged(list);
