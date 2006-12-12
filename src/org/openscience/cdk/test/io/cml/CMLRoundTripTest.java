@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  * 
