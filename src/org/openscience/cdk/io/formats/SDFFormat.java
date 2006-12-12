@@ -57,7 +57,7 @@ public class SDFFormat implements IChemFormatMatcher {
     }
 
     public String getReaderClassName() { 
-      return "org.openscience.cdk.io.MDLReader";
+      return "org.openscience.cdk.io.MDLV2000Reader";
     }
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.MDLWriter";

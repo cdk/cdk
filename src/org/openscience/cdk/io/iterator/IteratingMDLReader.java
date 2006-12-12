@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2003-2006  The Chemistry Development Kit (CDK) project
  *
@@ -37,7 +34,8 @@ import java.util.NoSuchElementException;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -61,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module io
  *
- * @see org.openscience.cdk.io.MDLReader
+ * @see org.openscience.cdk.io.MDLV2000Reader
  * 
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created    2003-10-19
@@ -79,6 +77,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     private boolean hasNext;
     private IChemObjectBuilder builder;
     private IMolecule nextMolecule;
+    private ReaderFactory factory;
     
     /**
      * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
@@ -92,6 +91,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
+        factory = new ReaderFactory();
     }
 
     /**
@@ -132,7 +132,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     buffer.append(currentLine);
                     buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
-                    MDLReader reader = new MDLReader(new StringReader(buffer.toString()));
+                    IChemObjectReader reader = factory.createReader(new StringReader(buffer.toString()));
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
