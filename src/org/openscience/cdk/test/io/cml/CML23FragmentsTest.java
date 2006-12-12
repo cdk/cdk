@@ -306,6 +306,16 @@ public class CML23FragmentsTest extends CDKTestCase {
 		assertTrue(foundDictRefs);
     }
     
+    public void testQSAROutput() {
+    	String cmlString = "<molecule xmlns=\"http://www.xml-cml.org/schema\"><atomArray><atom id=\"a5256233\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a26250401\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a16821027\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a14923925\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a7043360\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /><atom id=\"a31278839\" elementType=\"C\" formalCharge=\"0\" hydrogenCount=\"0\" /></atomArray><bondArray><bond id=\"b6175092\" atomRefs2=\"a5256233 a26250401\" order=\"S\" /><bond id=\"b914691\" atomRefs2=\"a26250401 a16821027\" order=\"D\" /><bond id=\"b5298332\" atomRefs2=\"a16821027 a14923925\" order=\"S\" /><bond id=\"b29167060\" atomRefs2=\"a14923925 a7043360\" order=\"D\" /><bond id=\"b14093690\" atomRefs2=\"a7043360 a31278839\" order=\"S\" /><bond id=\"b11924794\" atomRefs2=\"a31278839 a5256233\" order=\"D\" /></bondArray><propertyList><property xmlns:qsar=\"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/\"><metadataList><metadata dictRef=\"qsar:specificationReference\" content=\"qsar:weight\" /><metadata dictRef=\"qsar:implementationTitle\" content=\"org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor\" /><metadata dictRef=\"qsar:implementationIdentifier\" content=\"$Id$\" /><metadata dictRef=\"qsar:implementationVendor\" content=\"The Chemistry Development Kit\" /><metadataList title=\"qsar:descriptorParameters\"><metadata title=\"elementSymbol\" content=\"*\" /></metadataList></metadataList><scalar dataType=\"xsd:double\" dictRef=\"qsar:weight\">72.0</scalar></property></propertyList></molecule>";
+
+    	IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+        
+        assertNotNull(mol);
+        assertEquals(1, mol.getProperties().size());
+    }
+    
     private IChemFile parseCMLString(String cmlString) {
         IChemFile chemFile = null;
         try {
