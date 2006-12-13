@@ -20,6 +20,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
 
+/**
+ * @cdk.module test-qsar
+ */
 public class RDFProtonDescriptorTest_G3R extends CDKTestCase {
 
 	public RDFProtonDescriptorTest_G3R() {

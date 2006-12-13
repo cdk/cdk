@@ -20,6 +20,9 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR;
 
+/**
+ * @cdk.module test-qsar
+ */
 public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
 
 	public RDFProtonDescriptorTest_GHR() {

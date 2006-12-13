@@ -20,6 +20,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
 
+/**
+ * @cdk.module test-qsar
+ */
 public class RDFProtonDescriptorTest_GHR_topol extends CDKTestCase {
 
 	public RDFProtonDescriptorTest_GHR_topol() {
