@@ -61,7 +61,7 @@ public class DoubleArrayResult implements IDescriptorResult {
         StringBuffer buf = new StringBuffer();
         for (Iterator iterator = array.iterator(); iterator.hasNext();) {
             Double value = (Double) iterator.next();
-            buf.append(value.intValue());
+            buf.append(value.doubleValue());
             if (iterator.hasNext()) buf.append(",");
         }
         return buf.toString();
