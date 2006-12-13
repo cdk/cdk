@@ -20,29 +20,31 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *  This class calculates 5 RDF proton descriptors used in neural networks for H1 NMR shift.
@@ -60,6 +62,7 @@ import java.util.List;
  *     <td>True is the aromaticity has to be checked</td>
  *   </tr>
  * </table>
+ * 
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
@@ -165,8 +168,25 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 	 */
 	public DescriptorValue calculate(IAtom atom, IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
         int atomPosition = ac.getAtomNumber(atom);
-		IntegerArrayResult rdfProtonCalculatedValues = new IntegerArrayResult(5);
-		if(atom.getSymbol().equals("H")) {
+        
+        final int GASTEIGER_GHR_DESCRIPTOR_LENGTH = 15;
+        final int GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH = 15;
+        final int GASTEIGER_GDR_DESCRIPTOR_LENGTH = 7;
+        final int GASTEIGER_GSR_DESCRIPTOR_LENGTH = 7;
+        final int GASTEIGER_G3R_DESCRIPTOR_LENGTH = 13;
+        
+        // gesteigerGHR, gesteigerGHRtopol, gesteigerGDR, gesteigerGSR, gesteigerG3R
+        
+        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
+			GASTEIGER_GHR_DESCRIPTOR_LENGTH +
+			GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH +
+			GASTEIGER_GDR_DESCRIPTOR_LENGTH +
+			GASTEIGER_GSR_DESCRIPTOR_LENGTH +
+			GASTEIGER_G3R_DESCRIPTOR_LENGTH
+        );
+		if(!atom.getSymbol().equals("H")) {
+			throw new CDKException("You tried calculation on a "+atom.getSymbol()+" atom. This is not allowed! Atom must be a H atom.");
+		}
 			
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
 /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
@@ -233,12 +253,12 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			ArrayList bondsInCycloex = new ArrayList(); // list for bonds in cycloexane-like rings
 			
 			// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
-			org.openscience.cdk.interfaces.IBond secondBond; // (remember that first bond is proton bond)
-			org.openscience.cdk.interfaces.IBond thirdBond; //
-			org.openscience.cdk.interfaces.IBond fourthBond; //
-			org.openscience.cdk.interfaces.IBond fifthBond; //
-			org.openscience.cdk.interfaces.IBond sixthBond; //
-			org.openscience.cdk.interfaces.IBond seventhBond; //
+			IBond secondBond; // (remember that first bond is proton bond)
+			IBond thirdBond; //
+			IBond fourthBond; //
+			IBond fifthBond; //
+			IBond sixthBond; //
+			IBond seventhBond; //
 			
 			// definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
 			boolean theBondIsInA6MemberedRing; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
@@ -356,10 +376,10 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			IAtom atom2;
 			
 ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:
-			
+
+			String s=new String();
 			
 			if(atoms.size() > 0) {
-				ArrayList gHr_function = new ArrayList(15);
 				for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
 					sum = 0;
 					for( int at = 0; at < atoms.size(); at++ ) {
@@ -372,13 +392,15 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghr - distance) , 2)));
 						sum += partial;
 					}
-					gHr_function.add(new Double(sum));
-					//System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
+					// gHr_function.add(new Double(sum));
+					rdfProtonCalculatedValues.add(sum);
+					System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
 				}
-				atom.setProperty("gasteigerGHR", new ArrayList(gHr_function));
-				rdfProtonCalculatedValues.add(1);
+				// atom.setProperty("gasteigerGHR", new ArrayList(gHr_function));
 			}
-			else rdfProtonCalculatedValues.add(0);
+			else {
+				for (int i=0; i<GASTEIGER_GHR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			}
 			//System.out.println("----------------------------");
 
 ///////////////////////THE SECOND CALCULATED DESCRIPTOR IS g(H)r TOPOLOGICAL WITH SUM OF BOND LENGTHS
@@ -403,7 +425,7 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 			step = (limitSup - limitInf)/15;
 			
 			if(atoms.size() > 0) {
-				ArrayList gHr_topol_function = new ArrayList(15);
+				//ArrayList gHr_topol_function = new ArrayList(15);
 				for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
 					sum = 0;
 					for( int at = 0; at < atoms.size(); at++ ) {
@@ -423,13 +445,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghrt - distance) , 2)));
 						sum += partial;
 					}
-					gHr_topol_function.add(new Double(sum));
-					//System.out.println("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
+					//gHr_topol_function.add(new Double(sum));
+					rdfProtonCalculatedValues.add(sum);
+					System.out.println("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
 				}
-				atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
-				rdfProtonCalculatedValues.add(1);
+				//atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
+				//rdfProtonCalculatedValues.add(1);
 			}
-			else rdfProtonCalculatedValues.add(0);
+			else {
+				for (int i=0; i<GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			}
                         // System.out.println("TEST PROP: " + ((ArrayList)target.getProperty("gasteigerGHRtopol")).size() );
 			
 			
@@ -486,12 +511,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = ( ( 1 / (Math.pow( values[0], 2 ) ) ) * Math.exp( smooth * (Math.pow( (ghd - angle) , 2) ) ) );
 						sum += partial;
 					}
-					gDr_function.add(new Double(sum));
+					//gDr_function.add(new Double(sum));
+					rdfProtonCalculatedValues.add(sum);
+					System.out.println("GDR added double: " + sum);
 				}
-				atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));
-				rdfProtonCalculatedValues.add(1);
+				//atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));				
+				//rdfProtonCalculatedValues.add(1);
 			}
-			else rdfProtonCalculatedValues.add(0);
+			else {
+				for (int i=0; i<GASTEIGER_GDR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			}
 			
 			//System.out.println("----------------------------");
 			
@@ -539,13 +568,17 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = (1 / (Math.pow( values[0], 2 ))) * Math.exp( smooth * (Math.pow( (ghs - angle) , 2)));
 						sum += partial;
 					}
-					gSr_function.add(new Double(sum));
-					//System.out.println("RDF gSr prob.: " + sum +  " at distance " + ghs);
+					//gSr_function.add(new Double(sum));
+					rdfProtonCalculatedValues.add(sum);
+					System.out.println("RDF gSr prob.: " + sum +  " at distance " + ghs);
 				}
-				atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
-				rdfProtonCalculatedValues.add(1);
+				//atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
+				
+				//rdfProtonCalculatedValues.add(1);
 			}
-			else rdfProtonCalculatedValues.add(0);
+			else {
+				for (int i=0; i<GASTEIGER_GSR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			}
 			
 			//System.out.println("----------------------------");
 			
@@ -603,14 +636,16 @@ public class RDFProtonDescriptor implements IAtomicDescriptor {
 						partial = Math.exp( smooth * (Math.pow( (g3r - angle) , 2) ) );
 						sum += partial;
 					}
-					g3r_function.add(new Double(sum));
-					//System.out.println("RDF g-cycl prob.: "+sum+ " at distance "+g3r);
+					//g3r_function.add(new Double(sum));
+					rdfProtonCalculatedValues.add(sum);
+					System.out.println("RDF g-cycl prob.: "+sum+ " at distance "+g3r);
 				}
-				atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
-				rdfProtonCalculatedValues.add(1);
+				//atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
+				//rdfProtonCalculatedValues.add(1);
 			}
-			else rdfProtonCalculatedValues.add(0);
-		}
+			else {
+				for (int i=0; i<GASTEIGER_G3R_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
 	}
 
