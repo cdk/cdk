@@ -48,7 +48,6 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
- * @cdk.bug     xxxxxx
  */
    
 

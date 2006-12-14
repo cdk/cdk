@@ -48,10 +48,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
- * @cdk.bug     xxxxxx
  */
-   
-
 public class RDFProtonDescriptor_GDR implements IAtomicDescriptor{
   
 	private boolean checkAromaticity = false;
