@@ -29,6 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,8 +48,8 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.HydrogenAdder;
 
@@ -146,6 +147,23 @@ public class OpenAction extends JCPAction {
 				return;
 			}
 
+			//this takes care of files called .mol, but having several, sdf-stylish entried
+			if(cor instanceof MDLReader){
+				try{
+					FileInputStream reader = new FileInputStream(inFile);
+					DataInputStream in = new DataInputStream(reader);
+	                while (in.available() !=0)
+					{
+	                	if(in.readLine().equals("$$$$")){
+	                		JOptionPane.showMessageDialog(jcpPanel, "It seems you opened a mol or sdf file containing several molecules. Only the first one will be shown","sdf-like file", JOptionPane.INFORMATION_MESSAGE);
+	                		break;
+	                	}
+					}
+				}catch(IOException ex){
+					//we do nothing - firstly if IO does not work, we should not get here, secondly, if only this does not work, don't worry
+				}
+			}
+			
 			String error = null;
 			ChemModel chemModel = null;
 			IChemFile chemFile=null;
