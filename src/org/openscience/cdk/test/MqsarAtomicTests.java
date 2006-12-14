@@ -47,7 +47,11 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescri
 import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_G3R;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GDR;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GHR;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GHR_topol;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GSR;
 import org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
@@ -87,7 +91,11 @@ public class MqsarAtomicTests {
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
         suite.addTest(PiElectronegativityDescriptorTest.suite());
         suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
-        suite.addTest(RDFProtonDescriptorTest.suite());
+        suite.addTest(RDFProtonDescriptorTest_G3R.suite());
+        suite.addTest(RDFProtonDescriptorTest_GDR.suite());
+        suite.addTest(RDFProtonDescriptorTest_GHR.suite());
+        suite.addTest(RDFProtonDescriptorTest_GHR_topol.suite());
+        suite.addTest(RDFProtonDescriptorTest_GSR.suite());
         suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(VdWRadiusDescriptorTest.suite());
         
