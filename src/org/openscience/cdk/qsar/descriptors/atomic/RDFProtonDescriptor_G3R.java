@@ -13,7 +13,6 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -23,7 +22,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
@@ -55,8 +53,8 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor{
   
 	private boolean checkAromaticity = false;
 	private IAtomContainer acold=null;
-	private IRingSet rs = null;
-	private AtomContainerSet acSet=null;
+	private IRingSet varRingSet = null;
+	private AtomContainerSet varAtomContainerSet=null;
   
 	/**
 	 *  Constructor for the RDFProtonDescriptor object
@@ -133,11 +131,11 @@ Molecule mol = new Molecule(ac);
 if(ac!=acold){
 acold=ac;
 // DETECTION OF pi SYSTEMS
-acSet = ConjugatedPiSystemsDetector.detect(mol);
+varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
 if(precalculatedringset==null)
-rs = (new AllRingsFinder()).findAllRings(ac);
+varRingSet = (new AllRingsFinder()).findAllRings(ac);
 else
-rs=precalculatedringset;
+varRingSet=precalculatedringset;
 try {
 GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
@@ -146,7 +144,7 @@ throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due t
 }
 }
 if (checkAromaticity) {
-HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+HueckelAromaticityDetector.detectAromaticity(ac, varRingSet, true);
 }
 List rsAtom;
 Ring ring;
@@ -154,7 +152,7 @@ List ringsWithThisBond;
 // SET ISINRING FLAGS FOR BONDS
 org.openscience.cdk.interfaces.IBond[] bondsInContainer = ac.getBonds();		
 for (int z = 0; z < bondsInContainer.length; z++) {
-ringsWithThisBond = rs.getRings(bondsInContainer[z]);
+ringsWithThisBond = varRingSet.getRings(bondsInContainer[z]);
 if (ringsWithThisBond.size() > 0) {
 	bondsInContainer[z].setFlag(CDKConstants.ISINRING, true);
 }
@@ -163,13 +161,13 @@ if (ringsWithThisBond.size() > 0) {
 org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom;
 
 for (int w = 0; w < ac.getAtomCount(); w++) {
-ringsWithThisAtom = rs.getRings(ac.getAtom(w));
+ringsWithThisAtom = varRingSet.getRings(ac.getAtom(w));
 if (ringsWithThisAtom.getAtomContainerCount() > 0) {
 	ac.getAtom(w).setFlag(CDKConstants.ISINRING, true);
 }
 }
 
-IAtomContainer detected = acSet.getAtomContainer(0);			
+IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);			
 
 // neighboors[0] is the atom joined to the target proton:
 java.util.List neighboors = mol.getConnectedAtomsList(atom);
@@ -230,7 +228,7 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 			// the boolean "theBondIsInA6MemberedRing" is set to true
 			if(!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
 				if(!curAtomThird.equals(neighbour0)) {
-					rsAtom = rs.getRings(thirdBond);
+					rsAtom = varRingSet.getRings(thirdBond);
 					for (int f = 0; f < rsAtom.size(); f++) {
 						ring = (Ring)rsAtom.get(f);
 						if (ring.getRingSize() > 4 && ring.contains(thirdBond)) {
