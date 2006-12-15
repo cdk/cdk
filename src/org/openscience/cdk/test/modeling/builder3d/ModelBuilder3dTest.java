@@ -23,20 +23,29 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
+import java.io.InputStream;
+import java.util.List;
+
 import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  *  Description of the Class
  *
@@ -206,6 +215,58 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			}
     	fail(exc.toString());
 		}
+	}
+
+    public void testModelBuilder3D_232() throws Exception{
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+			ModelBuilder3D mb3d=new ModelBuilder3D();
+			HydrogenAdder hAdder=new HydrogenAdder();
+			try{
+		       String filename = "data/mdl/allmol232.mol";
+		        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+	            MDLV2000Reader reader = new MDLV2000Reader(ins);
+	            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+	            IAtomContainer ac=(IAtomContainer)containersList.get(0);
+	            hAdder.addExplicitHydrogensToSatisfyValency(ac);
+	            mb3d.setTemplateHandler();
+	            mb3d.setMolecule(new Molecule(ac),false);
+	            mb3d.generate3DCoordinates();
+			} catch (Exception exc) {
+				System.out.println("Cannot layout molecule 232");
+				if (standAlone)
+				{
+					exc.printStackTrace();
+				}
+				fail(exc.toString());
+			}
+	}
+    
+    public void testModelBuilder3D_231() throws Exception{
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+			ModelBuilder3D mb3d=new ModelBuilder3D();
+			HydrogenAdder hAdder=new HydrogenAdder();
+			try{
+		       String filename = "data/mdl/allmol231.mol";
+		        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+	            MDLV2000Reader reader = new MDLV2000Reader(ins);
+	            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+	            IAtomContainer ac=(IAtomContainer)containersList.get(0);
+	            hAdder.addExplicitHydrogensToSatisfyValency(ac);
+	            mb3d.setTemplateHandler();
+	            mb3d.setMolecule(new Molecule(ac),false);
+	            mb3d.generate3DCoordinates();
+			} catch (Exception exc) {
+				System.out.println("Cannot layout molecule 232");
+				if (standAlone)
+				{
+					exc.printStackTrace();
+				}
+				fail(exc.toString());
+			}
 	}
 
     
