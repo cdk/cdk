@@ -56,6 +56,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Analyses a molecular formula given in String format and builds
  * an AtomContainer with the Atoms in the molecular formula.
+ * 
+ * About implict H handling: By default the methods to calculate formula, natural and canonical mass
+ * use the explicit Hs and only the explicit Hs if there is at least one in the molecule, implicit Hs are 
+ * ignored. If there is no explicit H and only then the implicit Hs are used. If you use the constructor 
+ * MFAnalyser(IAtomContainer ac, boolean useboth) and set useboth to true, all explicit Hs and all implicit Hs are used, 
+ * the implicit ones also on atoms with explicit Hs.
  *
  * @author         seb
  * @cdk.created    13. April 2005
@@ -427,14 +433,24 @@ public class MFAnalyser {
 		}
 		IAtomContainer ac = getAtomContainer();
 		IIsotope h = si.getMajorIsotope("H");
-		for (int f = 0; f < ac.getAtomCount(); f++) {
-			IElement i = si.getElement(ac.getAtom(f).getSymbol());
-			if (i != null) {
-				mass += getNaturalMass(i);
-			} else {
-				return 0;
+		Map symbols=this.getSymolMap(ac);
+		Iterator it = symbols.keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String)it.next();
+			if (key.equals("H")){
+				if(useboth){
+					mass += this.getNaturalMass(h)*HCount;
+				}else{
+					if (symbols.get(key) != null) {
+						mass += getNaturalMass(h)*((Integer)symbols.get(key)).intValue();
+					} else {
+						mass += getNaturalMass(h)*HCount;					
+					}
+				}
+			}else{
+				IElement i = si.getElement(key);
+				mass += getNaturalMass(i)*((Integer)symbols.get(key)).intValue();
 			}
-			mass += ac.getAtom(f).getHydrogenCount() * getNaturalMass(h);
 		}
 		return mass;
 	}
