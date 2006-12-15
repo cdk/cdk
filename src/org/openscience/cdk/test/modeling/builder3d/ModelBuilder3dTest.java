@@ -26,6 +26,7 @@ package org.openscience.cdk.test.modeling.builder3d;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import junit.framework.Test;
@@ -217,6 +218,35 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
+    /*
+     * Bug #1610997 says the modelbulder does not work if 2d coordinates exist before - we test this here
+     */
+    public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
+		String smile="CCCCCCCCCC";
+		try {
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+			IMolecule mol = sp.parseSmiles(smile);
+			for(int i=0;i<mol.getAtomCount();i++){
+				mol.getAtom(i).setPoint2d(new Point2d(1,1));
+			}
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			mb3d.setTemplateHandler();
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
+			assertNotNull(mol.getAtom(0).getPoint3d());
+		} catch (Exception exc) {
+			System.out.println("Cannot layout molecule with SMILE: "+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+    	fail(exc.toString());
+		}
+	}
     public void testModelBuilder3D_232() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
@@ -233,6 +263,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	            mb3d.setTemplateHandler();
 	            mb3d.setMolecule(new Molecule(ac),false);
 	            mb3d.generate3DCoordinates();
+	            assertNotNull(ac.getAtom(0).getPoint3d());
 			} catch (Exception exc) {
 				System.out.println("Cannot layout molecule 232");
 				if (standAlone)
@@ -259,6 +290,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	            mb3d.setTemplateHandler();
 	            mb3d.setMolecule(new Molecule(ac),false);
 	            mb3d.generate3DCoordinates();
+	            assertNotNull(ac.getAtom(0).getPoint3d());
 			} catch (Exception exc) {
 				System.out.println("Cannot layout molecule 232");
 				if (standAlone)
