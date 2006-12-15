@@ -387,14 +387,24 @@ public class MFAnalyser {
 		}
 		IAtomContainer ac = getAtomContainer();
 		IIsotope h = si.getMajorIsotope("H");
-		for (int f = 0; f < ac.getAtomCount(); f++) {
-			IElement i = si.getElement(ac.getAtom(f).getSymbol());
-			if (i != null) {
-				mass += getCanonicalMass(i);
-			} else {
-				return 0;
+		Map symbols=this.getSymolMap(ac);
+		Iterator it = symbols.keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String)it.next();
+			if (key.equals("H")){
+				if(useboth){
+					mass += getCanonicalMass(h)*HCount;
+				}else{
+					if (symbols.get(key) != null) {
+						mass += getCanonicalMass(h)*((Integer)symbols.get(key)).intValue();
+					} else {
+						mass += getCanonicalMass(h)*HCount;					
+					}
+				}
+			}else{
+				IElement i = si.getElement(key);
+				mass += getCanonicalMass(i)*((Integer)symbols.get(key)).intValue();
 			}
-			mass += ac.getAtom(f).getHydrogenCount() * getCanonicalMass(h);
 		}
 		return mass;
 	}
@@ -638,7 +648,39 @@ public class MFAnalyser {
 		return ac;
 	}
 
-
+	
+	/**
+	 * creates a sorted hash map of elementsymbol-count of this ac
+	 * 
+	 * @param ac the atomcontainer to calculate with
+	 * @return the hashmap
+	 */
+	private Map getSymolMap(IAtomContainer ac){
+		String symbol;
+		SortedMap symbols = new TreeMap();
+		IAtom atom = null;
+		HCount=0;
+		for (int f = 0; f < ac.getAtomCount(); f++) {
+			int hs=0;
+			atom = ac.getAtom(f);
+			symbol = atom.getSymbol();
+			if(useboth){
+				
+			}
+			if (atom.getHydrogenCount() > 0) {
+				HCount += atom.getHydrogenCount();
+			}
+			if (symbols.get(symbol) != null) {
+				symbols.put(symbol, new Integer(((Integer) symbols.get(symbol)).intValue() + 1));
+			} else {
+				symbols.put(symbol, new Integer(1));
+			}
+		}
+		if(useboth && symbols.get(H_ELEMENT_SYMBOL)!=null)
+				HCount+=((Integer)symbols.get(H_ELEMENT_SYMBOL)).intValue();
+		return symbols;
+	}
+	
 	/**
 	 * Analyses a set of Nodes that has been changed or recently loaded
 	 * and  returns a molecular formula
@@ -649,25 +691,9 @@ public class MFAnalyser {
 	public String analyseAtomContainer(IAtomContainer ac) {
 		String symbol;
 		String mf = "";
-		SortedMap symbols = new TreeMap();
-		int HCount = 0;
-		IAtom atom = null;
-		for (int f = 0; f < ac.getAtomCount(); f++) {
-			atom = ac.getAtom(f);
-			symbol = atom.getSymbol();
-			if (atom.getHydrogenCount() > 0) {
-				HCount += atom.getHydrogenCount();
-			}
-			if (symbols.get(symbol) != null) {
-				symbols.put(symbol, new Integer(((Integer) symbols.get(symbol)).intValue() + 1));
-			} else {
-				symbols.put(symbol, new Integer(1));
-			}
-		}
+		Map symbols = this.getSymolMap(ac);
 		mf = addSymbolToFormula(symbols, "C", mf);
 		if(useboth){
-			if(symbols.get(H_ELEMENT_SYMBOL)!=null)
-				HCount+=((Integer)symbols.get(H_ELEMENT_SYMBOL)).intValue();
 			if (HCount > 0)
 				mf += H_ELEMENT_SYMBOL;
 			if (HCount > 1) {
@@ -696,7 +722,6 @@ public class MFAnalyser {
 				mf = addSymbolToFormula(symbols, (String) key, mf);
 			}
 		}
-		this.HCount = HCount;
 		return mf;
 	}
 
@@ -709,7 +734,7 @@ public class MFAnalyser {
 	 * @param  formula  The chemical formula
 	 * @return          Description of the Return Value
 	 */
-	private String addSymbolToFormula(SortedMap sm, String symbol, String formula) {
+	private String addSymbolToFormula(Map sm, String symbol, String formula) {
 		if (sm.get(symbol) != null) {
 			formula += symbol;
 			if (!sm.get(symbol).equals(new Integer(1))) {

@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -197,6 +198,17 @@ public class MFAnalyserTest extends CDKTestCase {
 	assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
 	atom.setFormalCharge(atom.getFormalCharge() - 2);
 	assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+    }
+    
+    
+    public void test1595430_2() throws Exception {
+		String smile="CN(CC2=CC=CO2)C1=CC=CC=C1";
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles(smile);
+		HydrogenAdder hAdder=new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		MFAnalyser mfa=new MFAnalyser(mol);
+		assertEquals((float)187.23773 , mfa.getCanonicalMass() ,.001);
     }
 }
 
