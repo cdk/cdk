@@ -209,6 +209,7 @@ public class MFAnalyserTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		MFAnalyser mfa=new MFAnalyser(mol);
 		assertEquals((float)187.23773 , mfa.getCanonicalMass() ,.001);
+		assertEquals("C12H13NO",mfa.getMolecularFormula());
     }
 }
 
