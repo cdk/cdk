@@ -337,10 +337,6 @@ public class HydrogenAdder {
     }
 
     private int calculateNumberOfImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
-    	if (container.getSingleElectronSum(atom) > 0) {
-    		// This method does not deal with radicals yet, so don't add hydrogens as stupid default
-    		return 0;
-    	}
     	return valencyChecker.calculateNumberOfImplicitHydrogens(atom, container);
     }
 }

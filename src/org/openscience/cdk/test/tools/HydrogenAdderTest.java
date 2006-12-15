@@ -510,5 +510,23 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(0, oxygen.getHydrogenCount());
     }
 
+    public void testRadical()
+    {
+    	Molecule mol = new Molecule();
+    	mol.addAtom(new Atom("C"));
+    	mol.addAtom(new Atom("C"));
+    	mol.addElectronContainer(mol.getBuilder().newSingleElectron(mol.getAtom(0)));
+    	mol.addBond(0,1,1);
+    	try {
+    		adder.addImplicitHydrogensToSatisfyValency(mol);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		fail();
+    	}
+    	assertEquals(3, mol.getAtom(1).getHydrogenCount());
+    	assertEquals(2, mol.getAtom(0).getHydrogenCount());
+    	
+    }
+
 }
 

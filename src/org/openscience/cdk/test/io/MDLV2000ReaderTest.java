@@ -39,8 +39,10 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -392,5 +394,30 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         	e.printStackTrace();
         	fail(e.toString());
         }
+    }
+    
+    public void testReadProton() {
+    	String mdl =
+            "proton.mol\n" +
+            "\n" +
+            "\n" +
+            "  1  0  0  0  0                 1 V2000\n" +
+            "   -0.0073   -0.5272    0.9655 H   0  0  0  0  0\n" +
+            "M  CHG  1   1   1\n" +
+            "M  END\n";
+    	try {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdl));
+            Molecule mol = (Molecule)reader.read(new Molecule());
+            assertNotNull(mol);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals(0, mol.getBondCount());
+            assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol));
+            IAtom atom = mol.getAtom(0);
+            assertEquals(1, atom.getFormalCharge());
+        } catch (Throwable problem) {
+            problem.printStackTrace();
+            fail();
+        }
+    	
     }
 }

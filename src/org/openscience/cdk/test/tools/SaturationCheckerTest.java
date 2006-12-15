@@ -29,8 +29,12 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.SaturationChecker;
 
@@ -435,6 +439,37 @@ public class SaturationCheckerTest extends CDKTestCase
       assertTrue(m.getBond(4).getOrder()==1);
       assertTrue(m.getBond(9).getOrder()==2 ^ m.getBond(5).getOrder()==2);
       assertTrue(m.getBond(13).getOrder()==2 ^ m.getBond(3).getOrder()==2);
+    }
+    
+    public void testCalculateNumberOfImplicitHydrogens() throws CDKException {
+    	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    	
+    	IMolecule proton = builder.newMolecule();
+    	IAtom hplus = builder.newAtom("H");
+    	hplus.setFormalCharge(1);
+    	proton.addAtom(hplus);
+    	assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hplus, proton));
+    	
+    	IMolecule hydrogenRadical = builder.newMolecule();
+    	IAtom hradical = builder.newAtom("H");
+    	hydrogenRadical.addAtom(hradical);
+    	hydrogenRadical.addElectronContainer(builder.newSingleElectron(hradical));
+    	assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
+    	
+    	IMolecule hydrogen = builder.newMolecule();
+    	IAtom h = builder.newAtom("H");
+    	hydrogen.addAtom(h);
+    	assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(h, hydrogen));
+    	
+    	IMolecule coRad = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+    	IAtom o = builder.newAtom("O");
+    	IBond bond = builder.newBond(c, o, 2);
+    	coRad.addAtom(c);
+    	coRad.addAtom(o);
+    	coRad.addBond(bond);
+    	coRad.addElectronContainer(builder.newSingleElectron(c));
+    	assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(c, coRad));
     }
     
     /**

@@ -24,6 +24,7 @@
  *  */
 package org.openscience.cdk.test.io;
 
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
@@ -31,12 +32,10 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLReader;
@@ -136,5 +135,27 @@ public class MDLReaderTest extends CDKTestCase {
         	e.printStackTrace();
         	fail(e.toString());
         }
+    }
+    
+    public void testReadProton() {
+    	String mdl =
+            "proton.mol\n" +
+            "\n" +
+            "\n" +
+            "  1  0  0  0  0                 1 V2000\n" +
+            "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
+    	try {
+            MDLReader reader = new MDLReader(new StringReader(mdl));
+            Molecule mol = (Molecule)reader.read(new Molecule());
+            assertNotNull(mol);
+            assertEquals(1, mol.getAtomCount());
+            assertEquals(0, mol.getBondCount());
+            IAtom atom = mol.getAtom(0);
+            assertEquals(1, atom.getFormalCharge());
+        } catch (Throwable problem) {
+            problem.printStackTrace();
+            fail();
+        }
+    	
     }
 }

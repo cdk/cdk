@@ -179,13 +179,14 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
+            container.getSingleElectronSum(atom),
             container.getMaximumBondOrder(atom),
             container.getConnectedAtomsCount(atom)
         );
     }
     
 	public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
-        return this.calculateNumberOfImplicitHydrogens(atom, 0.0, 0.0, 0);
+        return this.calculateNumberOfImplicitHydrogens(atom, 0.0, 0.0, 0.0, 0);
     }
 
     /** 
@@ -193,7 +194,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum, double maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogen = 0;
@@ -215,7 +216,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
             IAtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
-                missingHydrogen = (int) (type.getBondOrderSum() - bondOrderSum);
+                missingHydrogen = (int) (type.getBondOrderSum() - bondOrderSum - singleElectronSum);
                 break;
             }
         }

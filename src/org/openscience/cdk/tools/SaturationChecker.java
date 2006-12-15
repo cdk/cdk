@@ -622,12 +622,13 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     
 	public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
         java.util.List bonds = new java.util.ArrayList();
-        return this.calculateNumberOfImplicitHydrogens(atom, 0, bonds, false);
+        return this.calculateNumberOfImplicitHydrogens(atom, 0, 0, bonds, false);
     }
 
 	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
+            container.getSingleElectronSum(atom),
             container.getConnectedBondsList(atom),
             throwExceptionForUnknowAtom
         );
@@ -644,13 +645,13 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	 * @return           Description of the Return Value
 	 * @see              AtomTypeFactory
 	 */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, java.util.List connectedBonds, boolean throwExceptionForUnknowAtom) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum, java.util.List connectedBonds, boolean throwExceptionForUnknowAtom) 
         throws CDKException {
         int missingHydrogen = 0;
         if (atom instanceof IPseudoAtom) {
             // don't figure it out... it simply does not lack H's
         } else if (atom.getAtomicNumber() == 1 || atom.getSymbol().equals("H")) {
-            missingHydrogen = (int) (1 - bondOrderSum - atom.getFormalCharge());
+            missingHydrogen = (int) (1 - bondOrderSum - singleElectronSum - atom.getFormalCharge());
         } else {
             logger.info("Calculating number of missing hydrogen atoms");
             // get default atom
@@ -662,7 +663,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 IAtomType defaultAtom = atomTypes[0];
                 logger.debug("DefAtom: ", defaultAtom);
                 missingHydrogen = (int) (defaultAtom.getBondOrderSum() -
-                    bondOrderSum + atom.getFormalCharge());
+                    bondOrderSum - singleElectronSum + atom.getFormalCharge());
                 if (atom.getFlag(CDKConstants.ISAROMATIC)){
                     boolean subtractOne=true;
                     for(int i=0;i<connectedBonds.size();i++){
