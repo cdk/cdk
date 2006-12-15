@@ -138,9 +138,9 @@ public class ReactionManipulator {
      */
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
-        
-        moleculeSet.add(getAllProducts(reaction));
+
         moleculeSet.add(getAllReactants(reaction));
+        moleculeSet.add(getAllProducts(reaction));
         
         return moleculeSet;
     }
