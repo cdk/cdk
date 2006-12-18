@@ -179,10 +179,32 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	public Iterator bonds();
 	
 	/**
+	 *  Returns an Iterator for looping over all lone pairs in this container.
+	 *
+	 *@return    An Iterator with the lone pairs in this container
+	 */
+	public Iterator lonePairs();
+	
+	/**
+	 *  Returns an Iterator for looping over all single electrons in this container.
+	 *
+	 *@return    An Iterator with the single electrons in this container
+	 */
+	public Iterator singleElectrons();
+	
+	/**
+	 *  Returns an Iterator for looping over all electron containers in this container.
+	 *
+	 *@return    An Iterator with the electron containers in this container
+	 */
+	public Iterator electronContainers();
+	
+	/**
 	 *  Returns the array of electronContainers of this AtomContainer.
 	 *
 	 *@return    The array of electronContainers of this AtomContainer
 	 *@see       #setElectronContainers
+	 *@deprecated
 	 */
 	public IElectronContainer[] getElectronContainers();
 
@@ -192,6 +214,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 *@return    The array of Bonds of this AtomContainer
 	 *@see       #getElectronContainers
+	 *@deprecated
 	 */
 	public IBond[] getBonds();
 
@@ -202,6 +225,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return    The array of Bonds of this AtomContainer
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
+	 *@deprecated
 	 */
 	public ILonePair[] getLonePairs();
 

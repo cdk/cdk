@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -118,6 +117,21 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 	public java.util.Iterator bonds() {
 		logger.debug("Getting bonds iterator");
 		return super.bonds();
+	}
+	
+	public java.util.Iterator lonePairs() {
+		logger.debug("Getting lone pairs iterator");
+		return super.lonePairs();
+	}
+	
+	public java.util.Iterator singleElectrons() {
+		logger.debug("Getting single electrons iterator");
+		return super.singleElectrons();
+	}
+	
+	public java.util.Iterator electronContainers() {
+		logger.debug("Getting electron containers iterator");
+		return super.electronContainers();
 	}
 	
 	public IElectronContainer[] getElectronContainers() {

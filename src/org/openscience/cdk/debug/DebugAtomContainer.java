@@ -130,6 +130,21 @@ public class DebugAtomContainer extends org.openscience.cdk.AtomContainer
 		return super.bonds();
 	}
 	
+	public java.util.Iterator lonePairs() {
+		logger.debug("Getting lone pairs iterator");
+		return super.lonePairs();
+	}
+	
+	public java.util.Iterator singleElectrons() {
+		logger.debug("Getting single electrons iterator");
+		return super.singleElectrons();
+	}
+	
+	public java.util.Iterator electronContainers() {
+		logger.debug("Getting electron containers iterator");
+		return super.electronContainers();
+	}
+	
 	public IElectronContainer[] getElectronContainers() {
 		logger.debug("Getting electron containers: ", super.getElectronContainers().length);
 		return super.getElectronContainers();

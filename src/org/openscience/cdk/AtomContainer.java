@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -434,12 +435,116 @@ public class AtomContainer extends ChemObject
     	
     }
     
+    /**
+	 *  Returns an Iterator for looping over all lone pairs in this container.
+	 *
+	 *@return    An Iterator with the lone pairs in this container
+	 */
+	public Iterator lonePairs()
+	{
+		return new LonePairIterator();
+	}
+    
+	/**
+     * The inner LonePairIterator class.
+     *
+     */
+    private class LonePairIterator implements java.util.Iterator {
 
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < lonePairCount) return true;
+            return false;
+        }
+
+        public Object next() {
+            return lonePairs[pointer++];
+        }
+
+        public void remove() {
+            removeLonePair(--pointer);
+        }
+    	
+    }
+	
+    /**
+	 *  Returns an Iterator for looping over all single electrons in this container.
+	 *
+	 *@return    An Iterator with the single electrons in this container
+	 */
+	public Iterator singleElectrons()
+	{
+		return new SingleElectronIterator();
+	}
+	
+	/**
+     * The inner SingleElectronIterator class.
+     *
+     */
+    private class SingleElectronIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < singleElectronCount) return true;
+            return false;
+        }
+
+        public Object next() {
+            return singleElectrons[pointer++];
+        }
+
+        public void remove() {
+            removeSingleElectron(--pointer);
+        }
+    	
+    }
+    
+    /**
+	 *  Returns an Iterator for looping over all electron containers in this container.
+	 *
+	 *@return    An Iterator with the electron containers in this container
+	 */
+	public Iterator electronContainers()
+	{
+		return new ElectronContainerIterator();
+	}
+    
+	/**
+     * The inner ElectronContainerIterator class.
+     *
+     */
+    private class ElectronContainerIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < (bondCount+lonePairCount+singleElectronCount) ) return true;
+            return false;
+        }
+
+        public Object next() {
+        	if (pointer < bondCount) return bonds[pointer++];
+        	else if (pointer < bondCount+lonePairCount) return lonePairs[(pointer++)-bondCount];
+        	else if (pointer < bondCount+lonePairCount+singleElectronCount) return singleElectrons[(pointer++)-bondCount-lonePairCount];
+            return null;
+        }
+
+        public void remove() {
+        	if (pointer <= bondCount) removeBond(--pointer);
+        	else if (pointer <= bondCount+lonePairCount) removeLonePair((--pointer)-bondCount);
+        	else if (pointer <= bondCount+lonePairCount+singleElectronCount) removeSingleElectron((--pointer)-bondCount-lonePairCount);
+        }
+    	
+    }
+	
 	/**
 	 *  Returns the array of electronContainers of this AtomContainer.
 	 *
 	 *@return    The array of electronContainers of this AtomContainer
 	 *@see       #setElectronContainers
+	 *@deprecated
 	 */
 	public IElectronContainer[] getElectronContainers()
 	{
@@ -456,6 +561,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    The array of Bonds of this AtomContainer
 	 *@see       #getElectronContainers
+	 *@deprecated
 	 */
 	public IBond[] getBonds()
 	{
@@ -471,6 +577,7 @@ public class AtomContainer extends ChemObject
 	 *@return    The array of Bonds of this AtomContainer
 	 *@see       #getElectronContainers
 	 *@see       #getBonds
+	 *@deprecated
 	 */
 	public ILonePair[] getLonePairs()
 	{

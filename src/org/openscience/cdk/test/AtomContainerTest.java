@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -880,7 +881,134 @@ public class AtomContainerTest extends CDKTestCase {
 
         assertFalse(bonds.hasNext());
     }
+    
+    public void testLonePairs() {
+        // acetone molecule
+        IMolecule acetone = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
 
+        IBond bond1 = builder.newBond(c1,c2,1);
+        IBond bond2 = builder.newBond(c2,o,2);
+        IBond bond3 = builder.newBond(c2,c3,1);
+        acetone.addBond(bond1);
+        acetone.addBond(bond2);
+        acetone.addBond(bond3);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
+
+        java.util.Iterator lonePairs = acetone.lonePairs();
+        assertNotNull(lonePairs);
+        assertTrue(lonePairs.hasNext());
+
+        ILonePair next =  (ILonePair) lonePairs.next();
+        assertTrue(next instanceof ILonePair);
+        assertEquals(lp1, next);
+
+        next =  (ILonePair) lonePairs.next();
+        assertTrue(next instanceof ILonePair);
+        assertEquals(lp2, next);
+
+        assertFalse(lonePairs.hasNext());
+    }
+
+    public void testSingleElectrons() {
+        // acetone molecule
+        IMolecule acetone = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+
+        IBond bond1 = builder.newBond(c1,c2,1);
+        IBond bond2 = builder.newBond(c2,o,2);
+        IBond bond3 = builder.newBond(c2,c3,1);
+        acetone.addBond(bond1);
+        acetone.addBond(bond2);
+        acetone.addBond(bond3);
+        ISingleElectron se1 = builder.newSingleElectron(o);
+        ISingleElectron se2 = builder.newSingleElectron(c1);
+        acetone.addSingleElectron(se1);
+        acetone.addSingleElectron(se2);
+
+        java.util.Iterator singleElectrons = acetone.singleElectrons();
+        assertNotNull(singleElectrons);
+        assertTrue(singleElectrons.hasNext());
+
+        ISingleElectron next =  (ISingleElectron) singleElectrons.next();
+        assertTrue(next instanceof ISingleElectron);
+        assertEquals(se1, next);
+
+        next =  (ISingleElectron) singleElectrons.next();
+        assertTrue(next instanceof ISingleElectron);
+        assertEquals(se2, next);
+
+        assertFalse(singleElectrons.hasNext());
+    }
+    
+    public void testElectronContainers() {
+        // acetone molecule
+        IMolecule acetone = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        IAtom c3 = builder.newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+
+        IBond bond1 = builder.newBond(c1,c2,1);
+        IBond bond2 = builder.newBond(c2,o,2);
+        IBond bond3 = builder.newBond(c2,c3,1);
+        acetone.addBond(bond1);
+        acetone.addBond(bond2);
+        acetone.addBond(bond3);
+        ISingleElectron se1 = builder.newSingleElectron(c1);
+        ISingleElectron se2 = builder.newSingleElectron(c2);
+        acetone.addSingleElectron(se1);
+        acetone.addSingleElectron(se2);
+        ILonePair lp1 = builder.newLonePair(o);
+        ILonePair lp2 = builder.newLonePair(o);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
+
+        java.util.Iterator electronContainers = acetone.electronContainers();
+        assertNotNull(electronContainers);
+        assertTrue(electronContainers.hasNext());
+        electronContainers.next();
+        electronContainers.next();
+        IElectronContainer ec = (IElectronContainer)electronContainers.next();
+        assertTrue(ec instanceof IBond);
+        assertEquals(bond3, ec);
+        electronContainers.next();
+        ILonePair lp = (ILonePair)electronContainers.next();
+        assertTrue(lp instanceof ILonePair);
+        assertEquals(lp2, lp);
+        electronContainers.remove();
+        ISingleElectron se =  (ISingleElectron)electronContainers.next();
+        assertTrue(se instanceof ISingleElectron);
+        assertEquals(se1, se);
+        assertTrue(electronContainers.hasNext());
+        se =  (ISingleElectron)electronContainers.next();
+        assertTrue(se instanceof ISingleElectron);
+        assertEquals(se2, se);
+        
+        assertFalse(electronContainers.hasNext());
+    }
+    
     public void testContains_IAtom() {
         // acetone molecule
         IMolecule acetone = builder.newMolecule();
