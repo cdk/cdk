@@ -63,6 +63,10 @@ import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
+ * The only difference with the default implementation is that the NoNotification 
+ * set does not throw change events. For situations where content is not
+ * modified, or where no listeners are required, using this set might give a
+ * speed up of up to 10%.
  *
  * @author        egonw
  * @cdk.module    nonotify
