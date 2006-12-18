@@ -53,16 +53,6 @@ the documentation using the following command:
 
 cdk/$ firefox doc/api/index.html
 
-2.2 Applying patches
-
-A list of available patches is given by the command
-
-cdk/$ ant info
-
-In brackets the names of the patches are given. To apply a patch when compiling, type:
-
-cdk/$ ant -Ddo.lazy.creation=yes clean dist-all
-
 3. Running tests
 
 After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
@@ -110,6 +100,10 @@ $CDK_HOME/dist/jar. Copy all cdk-*.jars as well as all jars from $CDK_HOME/jar
 to the lib directory of the project for which you intend to have CDK support and
 use them as you would use any other third party jar.
 
+Alternatively, run "ant dist-large" to create a jar cdk-svn-YYYYMMDD.jar in
+$CDK_HOME/dist/jar. This large jar contains all the CDK code and all third
+party libraries that code depends on. 
+
 5. Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
@@ -119,5 +113,5 @@ examples and tutorials:
 * http://www.redbrick.dcu.ie/~noel/CDKJython.html
 
 Further examples can also be found in issues of the CDK News:
-* http://almost.cubic.uni-koeln.de/cdk/cdk_top/cdk_news/
+* http://cdknews.org/
 
