@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -35,8 +37,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -163,7 +165,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 		IBond bondj = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1 ){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1 ){
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -171,8 +173,8 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
 						IAtom atom1 = bondj.getConnectedAtom(atomi);
-						ILonePair[] lp = reactant.getLonePairs(atom1);
-						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 ){
+						List lp = reactant.getConnectedLonePairsList(atom1);
+						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.size() > 0 ){
 							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 							reaction.addReactant(reactant);
 
@@ -190,13 +192,13 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 								throw new CDKException("Could not clone IMolecule!", e);
 							}
 							
-							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-							acCloned.removeElectronContainer(selectron[selectron.length-1]);
+							List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
+							acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
 							
-							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
+							acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom1P)));	
 					        
-							ILonePair[] lpelectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
-							acCloned.removeElectronContainer(lpelectron[selectron.length -1]);
+							List lpelectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom1P));
+							acCloned.removeLonePair((ILonePair)lpelectron.get(selectron.size() -1));
 							
 							IBond bondjClon = null;
 							for(int l = 0 ; l<acCloned.getBondCount();l++){
@@ -248,14 +250,14 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 		IBond bondj = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 ){
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 ){
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() == 1.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
-						ILonePair[] lp = reactant.getLonePairs(atom);
-						if(lp.length > 0 ){
+						int lpCount = reactant.getConnectedLonePairsCount(atom);
+						if(lpCount > 0 ){
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 							bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);

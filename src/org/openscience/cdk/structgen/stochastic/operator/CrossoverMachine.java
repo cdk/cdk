@@ -136,7 +136,7 @@ public class CrossoverMachine
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(redChild[0].getAtom(((Integer)blueAtoms.get(j)).intValue())))
 				{
-					redChild[0].removeElectronContainer(bonds[i]);
+					redChild[0].removeBond(bonds[i]);
 					i--;
 				}
 			}
@@ -149,7 +149,7 @@ public class CrossoverMachine
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(redChild[1].getAtom(((Integer)blueAtoms.get(j)).intValue())))
 				{
-					redChild[1].removeElectronContainer(bonds[i]);
+					redChild[1].removeBond(bonds[i]);
 					i--;
 				}
 			}
@@ -162,7 +162,7 @@ public class CrossoverMachine
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(blueChild[0].getAtom(((Integer)redAtoms.get(j)).intValue())))
 				{
-					blueChild[0].removeElectronContainer(bonds[i]);
+					blueChild[0].removeBond(bonds[i]);
 					i--;
 				}
 			}
@@ -174,7 +174,7 @@ public class CrossoverMachine
 			for (int i = 0; i < bonds.length; i++) {
 				if (bonds[i].contains(blueChild[1].getAtom(((Integer)redAtoms.get(j)).intValue())))
 				{
-					blueChild[1].removeElectronContainer(bonds[i]);
+					blueChild[1].removeBond(bonds[i]);
 					i--;
 				}
 			}

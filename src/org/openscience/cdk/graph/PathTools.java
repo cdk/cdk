@@ -168,7 +168,7 @@ public class PathTools {
                     if (!depthFirstTargetSearch(molecule, nextAtom, target, path)) {
                         // we did not find the target
                         path.removeAtom(nextAtom);
-                        path.removeElectronContainer(bond);
+                        path.removeBond(bond);
                     } else {
                         return true;
                     }
@@ -252,15 +252,11 @@ public class PathTools {
             molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
-            java.util.List eContainers = ac.getConnectedElectronContainersList(atom);
-            //System.out.println("found #ec's: " + eContainers.length);
-            for (int i = 0; i < eContainers.size(); i++) {
-                if (!(eContainers.get(i) instanceof IBond)) {
-                    // ok, no bond, thus LonePair or SingleElectron
-                    // System.out.println("adding non bond " + eContainers[i]);
-                    molecule.addElectronContainer((IElectronContainer)eContainers.get(i));
-                }
-            }
+            java.util.List lonePairs = ac.getConnectedLonePairsList(atom);
+            //System.out.println("found #ec's: " + lonePairs.length);
+            for (int i = 0; i < lonePairs.size(); i++) molecule.addLonePair((ILonePair)lonePairs.get(i));
+            java.util.List singleElectrons = ac.getConnectedSingleElectronsList(atom);
+            for (int i = 0; i < singleElectrons.size(); i++) molecule.addSingleElectron((ISingleElectron)singleElectrons.get(i));
             // now look at bonds
             java.util.List bonds = ac.getConnectedBondsList(atom);
             for (int g = 0; g < bonds.size(); g++) {
@@ -339,8 +335,8 @@ public class PathTools {
         for (int f = 0; f < ac.getAtomCount(); f++) {
             ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
         }
-        for (int f = 0; f < ac.getElectronContainerCount(); f++) {
-            ac.getElectronContainer(f).setFlag(CDKConstants.VISITED, false);
+        for (int f = 0; f < ac.getBondCount(); f++) {
+            ac.getBond(f).setFlag(CDKConstants.VISITED, false);
         }
 
     }

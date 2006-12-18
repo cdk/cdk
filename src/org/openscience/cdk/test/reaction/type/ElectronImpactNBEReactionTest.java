@@ -68,7 +68,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		java.util.Iterator atoms = reactant.atoms();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
-			if(reactant.getLonePairs(atom).length > 0){
+			if(reactant.getConnectedLonePairsCount(atom) > 0){
 				atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
@@ -86,7 +86,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(4)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
         
         Assert.assertTrue(setOfReactions.getReaction(0).mappings().hasNext());
         
@@ -117,7 +117,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(4)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
 		
 	}
 }

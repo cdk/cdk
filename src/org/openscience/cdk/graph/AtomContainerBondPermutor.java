@@ -77,7 +77,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
 			bonds[f] = ((Bond)objects[f]);	
 		}
 		AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
-		ac.setElectronContainers(bonds);
+		ac.setBonds(bonds);
 		AtomContainer clone = null;
 		try {
 			clone = (AtomContainer)ac.clone();

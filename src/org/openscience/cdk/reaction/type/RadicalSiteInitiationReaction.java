@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -158,7 +160,7 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 		IBond bondk;
 		for(int i = 0 ; i < reactant0.getAtomCount() ; i++){
 			atomi = reactant0.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getSingleElectron(atomi).length == 1 ){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedSingleElectronsCount(atomi) == 1 ){
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -194,13 +196,13 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 										throw new CDKException("Could not clone IMolecule!", e);
 									}
 
-									acCloned.removeElectronContainer(bond2P);
+									acCloned.removeBond(bond2P);
 									
-									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-									acCloned.removeElectronContainer(selectron[selectron.length-1]);
-									selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
+									List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
+									acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
+									selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
 									
-									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
+									acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom2P)));	
 
 									
 									double order = 0;
@@ -266,7 +268,7 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 		IBond bondk = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 ){
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 ){
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);

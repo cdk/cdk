@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -33,8 +35,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -169,10 +171,10 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 					throw new CDKException("Could not clone IMolecule!", e);
 				}
 				
-				ILonePair[] lps = reactantCloned.getLonePairs(reactantCloned.getAtom(posA));
-				reactantCloned.removeElectronContainer(lps[lps.length - 1]);
+				List lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posA));
+				reactantCloned.removeLonePair((ILonePair)lps.get(lps.size() - 1));
 
-				reactantCloned.addElectronContainer(new SingleElectron(reactantCloned.getAtom(posA)));
+				reactantCloned.addSingleElectron(new SingleElectron(reactantCloned.getAtom(posA)));
 				reactantCloned.getAtom(posA).setFormalCharge(1);
 
 				/* mapping */
@@ -197,7 +199,7 @@ public class ElectronImpactNBEReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
-			if(reactant.getLonePairs(reactant.getAtom(i)).length > 0){
+			if(reactant.getConnectedLonePairsCount(reactant.getAtom(i)) > 0){
 				reactant.getAtom(i).setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}

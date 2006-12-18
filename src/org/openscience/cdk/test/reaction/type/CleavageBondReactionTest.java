@@ -120,7 +120,7 @@ public class CleavageBondReactionTest extends CDKTestCase {
 		product = setOfReactions.getReaction(1).getProducts().getMolecule(1);
 		/*c1ccc(C=O)cc1*/
 		molecule3 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("c1ccc(C=O)cc1");
-		molecule2.addElectronContainer(new SingleElectron(molecule3.getAtom(0)));
+		molecule2.addSingleElectron(new SingleElectron(molecule3.getAtom(0)));
 		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule3,qAC));

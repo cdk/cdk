@@ -660,7 +660,7 @@ public class AtomPlacer
 		for (int f = 0; f < apsp.length; f++)
 		{
 			atom = molecule.getAtom(f);
-			if (molecule.getBondCount(atom) == 1)
+			if (molecule.getConnectedBondsCount(atom) == 1)
 			{
 				for (int g = 0; g < apsp.length; g++)
 				{
@@ -785,7 +785,7 @@ public class AtomPlacer
 						logger.debug("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
 						pathes[nextAtomNr].addBond(curBond);
 						logger.debug("New path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
-						if (ac.getBondCount(nextAtom) > 1)
+						if (ac.getConnectedBondsCount(nextAtom) > 1)
 						{
 							newSphere.addElement(nextAtom);
 						}
@@ -976,8 +976,8 @@ public class AtomPlacer
 		java.util.List atoms = null;
 		for (int f = 0; f < N; f++)
 		{
-			morganMatrix[f] = atomContainer.getBondCount(f);
-			tempMorganMatrix[f] = atomContainer.getBondCount(f);
+			morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+			tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
 		}
 		for (int e = 0; e < N; e++)
 		{

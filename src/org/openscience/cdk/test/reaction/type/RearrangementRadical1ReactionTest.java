@@ -24,13 +24,14 @@
 package org.openscience.cdk.test.reaction.type;
 
 
+import java.util.List;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -180,7 +181,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         lpcheck.newSaturate(molecule);
         IAtom atom =  molecule.getAtom(0);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setHydrogenCount(2);
         return molecule;
 	}
@@ -198,8 +199,8 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
         IAtom atom1 =  molecule.getAtom(1);
         molecule.addElectronContainer(new SingleElectron(atom1));
         atom1.setHydrogenCount(1);
-        ILonePair[] selectron = molecule.getLonePairs(atom1);
-        molecule.removeElectronContainer(selectron[0]);
+        List selectron = molecule.getConnectedLonePairsList(atom1);
+        molecule.removeLonePair((ILonePair)selectron.get(0));
         return molecule;
 	}
 }

@@ -50,20 +50,16 @@ public class AdjacencyMatrix implements IGraphMatrix {
 	 * @return           A adjacency matrix representating this AtomContainer
 	 */
 	public static int[][] getMatrix(IAtomContainer container) {
-		IElectronContainer electronContainer = null;
+		IBond bond = null;
 		int indexAtom1;
 		int indexAtom2;
 		int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
-		for (int f = 0; f < container.getElectronContainerCount(); f++){
-            electronContainer = container.getElectronContainer(f);
-			if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
-			{
-				IBond bond = (IBond) electronContainer;
-				indexAtom1 = container.getAtomNumber(bond.getAtom(0));
-				indexAtom2 = container.getAtomNumber(bond.getAtom(1));
-				conMat[indexAtom1][indexAtom2] = 1;
-				conMat[indexAtom2][indexAtom1] = 1;
-			}
+		for (int f = 0; f < container.getBondCount(); f++){
+            bond = container.getBond(f);
+            indexAtom1 = container.getAtomNumber(bond.getAtom(0));
+			indexAtom2 = container.getAtomNumber(bond.getAtom(1));
+			conMat[indexAtom1][indexAtom2] = 1;
+			conMat[indexAtom2][indexAtom1] = 1;
 		}
 		return conMat;
 	}

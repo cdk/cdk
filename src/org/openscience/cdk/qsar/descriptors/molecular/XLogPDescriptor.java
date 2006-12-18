@@ -245,7 +245,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 
 			xlogPOld=xlogP;
 			symbol = atomi.getSymbol();
-			bondCount = ac.getBondCount(atomi);
+			bondCount = ac.getConnectedBondsCount(atomi);
 			hsCount = getHydrogenCount(ac, atomi);
 			maxBondOrder = ac.getMaximumBondOrder(atomi);
 			if (!symbol.equals("H")){
@@ -848,7 +848,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 					map = (RMap) list.get(j);
 					atom1 = ac.getAtom(map.getId1());
 					if (atom1.getSymbol().equals("O")&& ac.getMaximumBondOrder(atom1)==1){
-						if (ac.getBondCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
+						if (ac.getConnectedBondsCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
 						}else{
 							xlogP -= 2.166;
 							//System.out.println("XLOGP: alpha amino acid	-2.166");
@@ -1247,7 +1247,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 				IAtom conAtom = (IAtom)first.get(i);
 				if (conAtom.getSymbol().equals("O")) {
 					if(ac.getBond(neighbour0, conAtom).getOrder()==1){
-						if (ac.getBondCount(conAtom)>1 && getHydrogenCount(ac,conAtom)==0){
+						if (ac.getConnectedBondsCount(conAtom)>1 && getHydrogenCount(ac,conAtom)==0){
 							return false;
 						}else{							
 							return true;
@@ -1304,7 +1304,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
 		//int counter = 0;
 		for (int i = 0; i < neighbours.size(); i++) {
 			IAtom neighbour = (IAtom)neighbours.get(i);
-			if (neighbour.getSymbol().equals("S") && getOxygenCount(ac,neighbour)>=2 && ac.getBondCount(neighbour)==4){
+			if (neighbour.getSymbol().equals("S") && getOxygenCount(ac,neighbour)>=2 && ac.getConnectedBondsCount(neighbour)==4){
 				return true;
 			}
 		}

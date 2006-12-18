@@ -150,7 +150,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     			}
      		}
      		
-			if(container.getMaximumBondOrder(atom) > 1 && container.getLonePairCount(atom) > 0){
+			if(container.getMaximumBondOrder(atom) > 1 && container.getConnectedLonePairsCount(atom) > 0){
 				resultsH = calculateCarbonylDescriptor(atom, container);
 				resultD = getTreeDoubleHetero(resultsH);
 				resultD += 0.05;
@@ -165,7 +165,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		if(isTarget){
 			/* extract reaction*/
 			if(setEnergy){
-				if(container.getLonePairCount(atom) > 0){
+				if(container.getConnectedLonePairsCount(atom) > 0){
 					IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
 					setOfReactants.addMolecule((IMolecule) container);
 					IReactionProcess type  = new ElectronImpactNBEReaction();

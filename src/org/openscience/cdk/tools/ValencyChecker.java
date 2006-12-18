@@ -179,7 +179,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
-            container.getSingleElectronSum(atom),
+            container.getConnectedSingleElectronsCount(atom),
             container.getMaximumBondOrder(atom),
             container.getConnectedAtomsCount(atom)
         );

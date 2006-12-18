@@ -1,6 +1,9 @@
-/* $Revision$ $Author$ $Date$
+/*  $RCSfile$
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
- *  Copyright (C) 1997-2006  Christoph Steinbeck <steinbeck@users.sf.net>
+ *  Copyright (C) 1997-2006  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -63,10 +66,20 @@ public class AtomContainer extends ChemObject
 	protected int atomCount;
 
 	/**
-	 *  Number of electronContainers contained by this object.
+	 *  Number of bonds contained by this object.
 	 */
-	protected int electronContainerCount;
+	protected int bondCount;
+	
+	/**
+	 *  Number of lone pairs contained by this object.
+	 */
+	protected int lonePairCount;
 
+	/**
+	 *  Number of single electrons contained by this object.
+	 */
+	protected int singleElectronCount;
+	
 	/**
 	 *  Amount by which the bond and arom arrays grow when elements are added and
 	 *  the arrays are not large enough for that.
@@ -79,9 +92,19 @@ public class AtomContainer extends ChemObject
 	protected IAtom[] atoms;
 
 	/**
-	 *  Internal array of bond.
+	 *  Internal array of bonds.
 	 */
-	protected IElectronContainer[] electronContainers;
+	protected IBond[] bonds;
+	
+	/**
+	 *  Internal array of lone pairs.
+	 */
+	protected ILonePair[] lonePairs;
+	
+	/**
+	 *  Internal array of single electrons.
+	 */
+	protected ISingleElectron[] singleElectrons;
 
 	/**
 	 * Internal list of atom parities.
@@ -93,7 +116,7 @@ public class AtomContainer extends ChemObject
 	 *  Constructs an empty AtomContainer.
 	 */
 	public AtomContainer() {
-        this(10, 10);
+        this(10, 10, 0, 0);
 	}
 
 
@@ -107,18 +130,31 @@ public class AtomContainer extends ChemObject
 	public AtomContainer(IAtomContainer container)
 	{
 		this.atomCount = container.getAtomCount();
-		this.electronContainerCount = container.getElectronContainerCount();
-		atoms = new IAtom[this.atomCount];
-		electronContainers = new IElectronContainer[this.electronContainerCount];
+		this.bondCount = container.getBondCount();
+		this.lonePairCount = container.getLonePairCount();
+		this.singleElectronCount = container.getSingleElectronCount();
+		this.atoms = new IAtom[this.atomCount];
+		this.bonds = new IBond[this.bondCount];
+		this.lonePairs = new ILonePair[this.lonePairCount];
+		this.singleElectrons = new ISingleElectron[this.singleElectronCount];
+		
 		atomParities = new Hashtable(atomCount/2);
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtom(f);
 			container.getAtom(f).addListener(this);
 		}
-		for (int f = 0; f < container.getElectronContainerCount(); f++) {
-			electronContainers[f] = container.getElectronContainer(f);
-			container.getElectronContainer(f).addListener(this);
+		for (int f = 0; f < this.bondCount; f++) {
+			bonds[f] = container.getBond(f);
+			container.getBond(f).addListener(this);
+		}
+		for (int f = 0; f < this.lonePairCount; f++) {
+			lonePairs[f] = container.getLonePair(f);
+			container.getLonePair(f).addListener(this);
+		}
+		for (int f = 0; f < this.singleElectronCount; f++) {
+			singleElectrons[f] = container.getSingleElectron(f);
+			container.getSingleElectron(f).addListener(this);
 		}
 	}
 
@@ -128,16 +164,22 @@ public class AtomContainer extends ChemObject
 	 *  atoms and electronContainers. It will set the starting array lengths to the
 	 *  defined values, but will not create any Atom or ElectronContainer's.
 	 *
-	 *@param  atomCount               Number of atoms to be in this container
-	 *@param  electronContainerCount  Number of electronContainers to be in this
-	 *      container
+	 *@param  atomCount        Number of atoms to be in this container
+	 *@param  bondCount        Number of bonds to be in this container
+	 *@param  lpCount          Number of lone pairs to be in this container
+	 *@param  seCount          Number of single electrons to be in this container
+	 *
 	 */
-	public AtomContainer(int atomCount, int electronContainerCount)
+	public AtomContainer(int atomCount, int bondCount, int lpCount, int seCount)
 	{
 		this.atomCount = 0;
-		this.electronContainerCount = 0;
+		this.bondCount = 0;
+		this.lonePairCount = 0;
+		this.singleElectronCount = 0;
 		atoms = new IAtom[atomCount];
-		electronContainers = new IElectronContainer[electronContainerCount];
+		bonds = new IBond[bondCount];
+		lonePairs = new ILonePair[lpCount];
+		singleElectrons = new ISingleElectron[seCount];
         atomParities = new Hashtable(atomCount/2);
 	}
 
@@ -182,6 +224,21 @@ public class AtomContainer extends ChemObject
 		notifyChanged();
 	}
 
+	/**
+	 * Sets the array of bonds of this AtomContainer.
+	 *
+	 * @param  bonds  The array of bonds to be assigned to
+	 *                             this AtomContainer
+	 * @see  #getBonds
+	 */
+	public void setBonds(IBond[] bonds)
+	{
+		this.bonds = bonds;
+		for (int i = 0; i < bonds.length; ++i) {
+			bonds[i].addListener(this);
+		}
+		this.bondCount = bonds.length;
+	}
 
 	/**
 	 *  Sets the array of electronContainers of this AtomContainer.
@@ -190,16 +247,16 @@ public class AtomContainer extends ChemObject
 	 *      this AtomContainer
 	 *@see  #getElectronContainers
 	 */
-	public void setElectronContainers(IElectronContainer[] electronContainers)
-	{
-		this.electronContainers = electronContainers;
-		for (int f = 0; f < electronContainers.length; f++)
-		{
-			electronContainers[f].addListener(this);	
-		}
-		setElectronContainerCount(electronContainers.length);
-		notifyChanged();
-	}
+//	public void setElectronContainers(IElectronContainer[] electronContainers)
+//	{
+//		this.electronContainers = electronContainers;
+//		for (int f = 0; f < electronContainers.length; f++)
+//		{
+//			electronContainers[f].addListener(this);	
+//		}
+//		setElectronContainerCount(electronContainers.length);
+//		notifyChanged();
+//	}
 
 
 	/**
@@ -242,11 +299,33 @@ public class AtomContainer extends ChemObject
 	 */
 	public IBond getBond(int number)
 	{
-		return getBonds()[number];
+		return bonds[number];
 	}
 
+	/**
+	 *  Get the lone pair at position <code>number</code> in [0,..].
+	 *
+	 *@param  number  The position of the LonePair to be retrieved.
+	 *@return         The lone pair number
+	 *@see            #setElectronContainer
+	 */
+	public ILonePair getLonePair(int number)
+	{
+		return lonePairs[number];
+	}
 
-
+	/**
+	 *  Get the single electron at position <code>number</code> in [0,..].
+	 *
+	 *@param  number  The position of the SingleElectron to be retrieved.
+	 *@return         The single electron number
+	 *@see            #setElectronContainer
+	 */
+	public ISingleElectron getSingleElectron(int number)
+	{
+		return singleElectrons[number];
+	}
+	
 	/**
 	 * Sets the ElectronContainer at position <code>number</code> in [0,..].
 	 *
@@ -254,12 +333,12 @@ public class AtomContainer extends ChemObject
 	 * @param  electronContainer The ElectronContainer to be stored at position <code>number</code>
 	 * @see                      #getElectronContainer(int)
 	 */
-	public void setElectronContainer(int number, IElectronContainer electronContainer)
-	{
-		electronContainer.addListener(this);
-		electronContainers[number] = electronContainer;
-		notifyChanged();
-	}
+//	public void setElectronContainer(int number, IElectronContainer electronContainer)
+//	{
+//		electronContainer.addListener(this);
+//		electronContainers[number] = electronContainer;
+//		notifyChanged();
+//	}
 
 
 	/**
@@ -269,11 +348,11 @@ public class AtomContainer extends ChemObject
 	 *                                 container
 	 * @see                            #getElectronContainerCount
 	 */
-	public void setElectronContainerCount(int electronContainerCount)
-	{
-		this.electronContainerCount = electronContainerCount;
-		notifyChanged();
-	}
+//	public void setElectronContainerCount(int electronContainerCount)
+//	{
+//		this.electronContainerCount = electronContainerCount;
+//		notifyChanged();
+//	}
 
 
 	/**
@@ -321,10 +400,42 @@ public class AtomContainer extends ChemObject
         }
     	
     }
-
 	
-
     /**
+	 *  Returns an Iterator for looping over all bonds in this container.
+	 *
+	 *@return    An Iterator with the bonds in this container
+	 */
+	public java.util.Iterator bonds()
+	{
+		return new BondIterator();
+	}
+
+	/**
+     * The inner BondIterator class.
+     *
+     */
+    private class BondIterator implements java.util.Iterator {
+
+        private int pointer = 0;
+    	
+        public boolean hasNext() {
+            if (pointer < bondCount) return true;
+            return false;
+        }
+
+        public Object next() {
+            return bonds[pointer++];
+        }
+
+        public void remove() {
+            removeBond(--pointer);
+        }
+    	
+    }
+    
+
+	/**
 	 *  Returns the array of electronContainers of this AtomContainer.
 	 *
 	 *@return    The array of electronContainers of this AtomContainer
@@ -332,9 +443,11 @@ public class AtomContainer extends ChemObject
 	 */
 	public IElectronContainer[] getElectronContainers()
 	{
-		IElectronContainer[] returnElectronContainers = new IElectronContainer[getElectronContainerCount()];
-		System.arraycopy(this.electronContainers, 0, returnElectronContainers, 0, returnElectronContainers.length);
-		return returnElectronContainers;
+		IElectronContainer[] result = new IElectronContainer[bondCount+lonePairCount+singleElectronCount];
+		System.arraycopy(this.bonds, 0, result, 0, bondCount);
+		System.arraycopy(this.lonePairs, 0, result, bondCount, lonePairCount);
+		System.arraycopy(this.singleElectrons, 0, result, bondCount + lonePairCount, singleElectronCount);
+		return result;
 	}
 
 
@@ -346,61 +459,13 @@ public class AtomContainer extends ChemObject
 	 */
 	public IBond[] getBonds()
 	{
-		int bondCount = getBondCount();
 		IBond[] result = new IBond[bondCount];
-		int bondCounter = 0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			IElectronContainer electronContainer = getElectronContainer(i);
-			if (electronContainer instanceof IBond)
-			{
-				result[bondCounter] = (Bond) electronContainer;
-				bondCounter++;
-			}
-		}
+		System.arraycopy(this.bonds, 0, result, 0, bondCount);
 		return result;
 	}
 
-    /**
-     * Returns an Iterator for looping over all bonds in this container.
-     *
-     * @return An Iterator with the bonds in this container
-     */
-    public java.util.Iterator bonds() {
-        return new BondIterator();
-    }
 
-    /**
-     * The inner BondIterator class.
-     */
-    private class BondIterator implements java.util.Iterator {
-
-        private int pointer = 0;
-
-        public boolean hasNext() {
-            return pointer < getBondCount();
-        }
-
-        public Object next() {
-            IBond value = null;
-            while (pointer < getBondCount()) {
-                IElectronContainer electronContainer = getElectronContainer(pointer++);
-                if (electronContainer instanceof IBond) {
-                    value = (IBond) electronContainer;
-                    break;
-                }
-            }
-            return value;
-        }
-
-        public void remove() {
-            removeElectronContainer(--pointer);
-        }
-
-    }
-
-
-    /**
+	/**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *
 	 *@return    The array of Bonds of this AtomContainer
@@ -409,49 +474,10 @@ public class AtomContainer extends ChemObject
 	 */
 	public ILonePair[] getLonePairs()
 	{
-		int count = getLonePairCount();
-		ILonePair[] result = new ILonePair[count];
-		int counter = 0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			IElectronContainer electronContainer = getElectronContainer(i);
-			if (electronContainer instanceof ILonePair)
-			{
-				result[counter] = (ILonePair) electronContainer;
-				counter++;
-			}
-		}
+		ILonePair[] result = new ILonePair[lonePairCount];
+		System.arraycopy(this.lonePairs, 0, result, 0, lonePairCount);
 		return result;
 	}
-
-
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 *@param  atom  Description of the Parameter
-	 *@return       The array of Bonds of this AtomContainer
-	 *@see          #getElectronContainers
-	 *@see          #getBonds
-	 */
-	public ILonePair[] getLonePairs(IAtom atom)
-	{
-		List lps = new ArrayList();
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			IElectronContainer electronContainer = getElectronContainer(i);
-			if ((electronContainer instanceof ILonePair) && 
-			    (((ILonePair) electronContainer).contains(atom)))
-			{
-				lps.add(electronContainer);
-			}
-		}
-		ILonePair[] result = new ILonePair[lps.size()];
-		for (int i=0; i<lps.size(); i++) {
-			result[i] = (ILonePair)lps.get(i);
-		}
-		return result;
-	}
-
 
 	/**
 	 *  Returns the atom at position 0 in the container.
@@ -477,19 +503,16 @@ public class AtomContainer extends ChemObject
 
 	/**
 	 *  Returns the position of a given atom in the atoms array. It returns -1 if
-	 *  the atom atom does not exist.
+	 *  the atom does not exist.
 	 *
 	 *@param  atom  The atom to be sought
 	 *@return       The Position of the atom in the atoms array in [0,..].
 	 */
 	public int getAtomNumber(IAtom atom)
 	{
-		for (int f = 0; f < getAtomCount(); f++)
+		for (int f = 0; f < atomCount; f++)
 		{
-			if (getAtom(f) == atom)
-			{
-				return f;
-			}
+			if (atoms[f] == atom) return f;
 		}
 		return -1;
 	}
@@ -519,17 +542,45 @@ public class AtomContainer extends ChemObject
 	 */
 	public int getBondNumber(IBond bond)
 	{
-		for (int f = 0; f < getElectronContainerCount(); f++)
+		for (int f = 0; f < bondCount; f++)
 		{
-			if (getElectronContainer(f) == bond)
-			{
-				return f;
-			}
+			if (bonds[f] == bond) return f;
 		}
 		return -1;
 	}
 
+	/**
+	 *  Returns the position of a given lone pair in the lone pair array. 
+	 *  It returns -1 if the lone pair does not exist.
+	 *
+	 *@param  atom  The lone pair to be sought
+	 *@return       The Position of the lone pair in the array..
+	 */
+	public int getLonePairNumber(ILonePair lonePair)
+	{
+		for (int f = 0; f < lonePairCount; f++)
+		{
+			if (lonePairs[f] == lonePair) return f;
+		}
+		return -1;
+	}
 
+	/**
+	 *  Returns the position of a given single electron in the single electron array. 
+	 *  It returns -1 if the single electron does not exist.
+	 *
+	 *@param  atom  The single electron to be sought
+	 *@return       The Position of the single electron in the array.
+	 */
+	public int getSingleElectronNumber(ISingleElectron singleElectron)
+	{
+		for (int f = 0; f < singleElectronCount; f++)
+		{
+			if (singleElectrons[f] == singleElectron) return f;
+		}
+		return -1;
+	}
+	
 	/**
 	 *  Returns the ElectronContainer at position <code>number</code> in the
 	 *  container.
@@ -541,7 +592,12 @@ public class AtomContainer extends ChemObject
 	 */
 	public IElectronContainer getElectronContainer(int number)
 	{
-		return (ElectronContainer)electronContainers[number];
+		if (number < this.bondCount) return bonds[number];
+		number -= this.bondCount;
+		if (number < this.lonePairCount) return lonePairs[number];
+		number -= this.lonePairCount;
+		if (number < this.singleElectronCount) return singleElectrons[number];
+		return null;
 	}
 
 
@@ -554,116 +610,15 @@ public class AtomContainer extends ChemObject
 	 */
 	public IBond getBond(IAtom atom1, IAtom atom2)
 	{
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < getBondCount(); i++)
 		{
-			if (electronContainers[i] instanceof IBond &&
-			    ((IBond) electronContainers[i]).contains(atom1) &&
-			    ((IBond) electronContainers[i]).getConnectedAtom(atom1) == atom2) {
-				return (IBond) electronContainers[i];
+			if (bonds[i].contains(atom1) &&
+			    bonds[i].getConnectedAtom(atom1) == atom2) {
+				return bonds[i];
 			}
 		}
 		return null;
 	}
-
-	/**
-	 *  Returns a vector of all atoms connected to the given atom.
-	 *
-	 *@param  atom  The atom the bond partners are searched of.
-	 *@return       The list with the size of connected atoms
-	 */
-	public List getConnectedAtomsList(IAtom atom)
-	{
-		List atomsVec = new ArrayList();
-		IElectronContainer electronContainer;
-		for (int i = 0; i < electronContainerCount; i++)
-		{
-			electronContainer = electronContainers[i];
-			if (electronContainer instanceof IBond && ((IBond) electronContainer).contains(atom))
-			{
-				atomsVec.add(((IBond) electronContainer).getConnectedAtom(atom));
-			}
-		}
-		return atomsVec;
-	}
-
-	/**
-	 *  Returns the number of atoms connected to the given atom.
-	 *
-	 *@param  atom  The atom the number of bond partners are searched of.
-	 *@return       The the size of connected atoms
-	 */
-	public int getConnectedAtomsCount(IAtom atom)
-	{
-		int count = 0;
-		IElectronContainer electronContainer;
-		for (int i = 0; i < electronContainerCount; i++)
-		{
-			electronContainer = electronContainers[i];
-			if (electronContainer instanceof IBond && ((IBond) electronContainer).contains(atom))
-			{
-				++count;
-			}
-		}
-		return count;
-	}
-  
-	/**
-	 *  Returns a Vector of all Bonds connected to the given atom.
-	 *
-	 *@param  atom  The atom the connected bonds are searched of
-	 *@return       The list with the size of connected atoms
-	 */
-	public List getConnectedBondsList(IAtom atom)
-	{
-		List bondsVec = new ArrayList();
-		for (int i = 0; i < electronContainerCount; i++)
-		{
-			if (electronContainers[i] instanceof IBond &&
-					((IBond) electronContainers[i]).contains(atom))
-			{
-				bondsVec.add(electronContainers[i]);
-			}
-		}
-		return(bondsVec);
-	}
-
-	/**
-	 *  Returns a List of all electronContainers connected to the given atom.
-	 *
-	 *@param  atom  The atom the connected electronContainers are searched of
-	 *@return       The array with the size of connected atoms
-	 */
-	public List getConnectedElectronContainersList(IAtom atom)
-	{
-		List bondsVec = new ArrayList();
-		for (int i = 0; i < electronContainerCount; i++)
-		{
-			if (electronContainers[i] instanceof IBond &&
-					((IBond) electronContainers[i]).contains(atom)) {
-				bondsVec.add(electronContainers[i]);
-			} else if (electronContainers[i] instanceof ILonePair &&
-                    ((ILonePair) electronContainers[i]).contains(atom)) {
-				bondsVec.add(electronContainers[i]);
-			} else if (electronContainers[i] instanceof ISingleElectron &&
-					((ISingleElectron) electronContainers[i]).contains(atom)) {
-				bondsVec.add(electronContainers[i]);
-			}
-		}
-		return bondsVec;
-	}
-
-
-	/**
-	 *  Returns the number of connected atoms (degree) to the given atom.
-	 *
-	 *@param  atomnumber  The atomnumber the degree is searched for
-	 *@return             The number of connected atoms (degree)
-	 */
-	public int getBondCount(int atomnumber)
-	{
-		return getBondCount(getAtom(atomnumber));
-	}
-
 
 	/**
 	 *  Returns the number of Atoms in this Container.
@@ -674,7 +629,36 @@ public class AtomContainer extends ChemObject
 	{
 		return this.atomCount;
 	}
+	
+	/**
+	 *  Returns the number of Bonds in this Container.
+	 *
+	 *@return    The number of Bonds in this Container
+	 */
+	public int getBondCount()
+	{
+		return this.bondCount;
+	}
 
+	/**
+	 *  Returns the number of LonePairs in this Container.
+	 *
+	 *@return    The number of LonePairs in this Container
+	 */
+	public int getLonePairCount()
+	{
+		return this.lonePairCount;
+	}
+
+	/**
+	 *  Returns the number of the single electrons in this container,
+	 *
+	 *@return       The number of SingleElectron objects of this AtomContainer
+	 */
+	public int getSingleElectronCount()
+	{
+		return this.singleElectronCount;
+	}
 
 	/**
 	 * Returns the number of ElectronContainers in this Container.
@@ -684,47 +668,114 @@ public class AtomContainer extends ChemObject
 	 */
 	public int getElectronContainerCount()
 	{
-		return this.electronContainerCount;
+		return this.bondCount + this.lonePairCount + this.singleElectronCount;
 	}
 
+	/**
+	 *  Returns an ArrayList of all atoms connected to the given atom.
+	 *
+	 *@param  atom  The atom the bond partners are searched of.
+	 *@return       The ArrayList with the connected atoms
+	 */
+	public List getConnectedAtomsList(IAtom atom)
+	{
+		List atomsList = new ArrayList();
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].contains(atom)) atomsList.add(bonds[i].getConnectedAtom(atom));
+		}
+		return atomsList;
+	}
 
 	/**
-	 *  Returns the number of LonePairs in this Container.
+	 *  Returns an ArrayList of all Bonds connected to the given atom.
 	 *
-	 *@return    The number of LonePairs in this Container
+	 *@param  atom  The atom the connected bonds are searched of
+	 *@return       The ArrayList with connected atoms
 	 */
-	public int getLonePairCount()
+	public List getConnectedBondsList(IAtom atom)
+	{
+		List bondsList = new ArrayList();
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].contains(atom)) bondsList.add(bonds[i]);
+		}
+		return bondsList;
+	}
+	
+	/**
+	 *  Returns the array of lone pairs connected to an atom.
+	 *
+	 *@param  atom  The atom for which to get lone pairs
+	 *@return       The array of LonePairs of this AtomContainer
+	 *@see          #getElectronContainers
+	 *@see          #getBonds
+	 */
+	public List getConnectedLonePairsList(IAtom atom)
+	{
+		List lps = new ArrayList();
+		for (int i = 0; i < lonePairCount; i++)
+		{
+			if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
+		}
+		return lps;
+	}
+	
+	/**
+	 *  Returns an array of all SingleElectron connected to the given atom.
+	 *
+	 *@param  atom  The atom on which the single electron is located
+	 *@return       The array of SingleElectron of this AtomContainer
+	 */
+	public List getConnectedSingleElectronsList(IAtom atom)
+	{
+		List lps = new ArrayList();
+		for (int i = 0; i < singleElectronCount; i++)
+		{
+			if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
+		}
+		return lps;
+	}
+	
+	/**
+	 *  Returns an ArrayList of all electronContainers connected to the given atom.
+	 *
+	 *@param  atom  The atom the connected electronContainers are searched of
+	 *@return       The ArrayList with the  connected atoms
+	 */
+	public List getConnectedElectronContainersList(IAtom atom)
+	{
+		List lps = new ArrayList();
+		for (int i = 0; i < bondCount; i++)
+		{
+			if (bonds[i].contains(atom)) lps.add(bonds[i]);
+		}
+		for (int i = 0; i < lonePairCount; i++)
+		{
+			if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
+		}
+		for (int i = 0; i < singleElectronCount; i++)
+		{
+			if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
+		}
+		return lps;
+	}
+	
+	/**
+	 *  Returns the number of atoms connected to the given atom.
+	 *
+	 *@param  atom  The atom the number of bond partners are searched of.
+	 *@return       The the size of connected atoms
+	 */
+	public int getConnectedAtomsCount(IAtom atom)
 	{
 		int count = 0;
-		for (int i = 0; i < electronContainerCount; i++)
+		for (int i = 0; i < bondCount; i++)
 		{
-			if (electronContainers[i] instanceof ILonePair)
-			{
-				count++;
-			}
+			if (bonds[i].contains(atom)) ++count;
 		}
 		return count;
 	}
-
-
-	/**
-	 *  Returns the number of Bonds in this Container.
-	 *
-	 *@return    The number of Bonds in this Container
-	 */
-	public int getBondCount()
-	{
-		int bondCount = 0;
-		for (int i = 0; i < electronContainerCount; i++)
-		{
-			if (electronContainers[i] instanceof IBond)
-			{
-				bondCount++;
-			}
-		}
-		return bondCount;
-	}
-
 
 	/**
 	 *  Returns the number of Bonds for a given Atom.
@@ -732,20 +783,21 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom
 	 *@return       The number of Bonds for this atom
 	 */
-	public int getBondCount(IAtom atom)
+	public int getConnectedBondsCount(IAtom atom)
 	{
-		int count = 0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom))
-			{
-				count++;
-			}
-		}
-		return count;
+		return getConnectedAtomsCount(atom);
 	}
-
+	
+	/**
+	 *  Returns the number of connected atoms (degree) to the given atom.
+	 *
+	 *@param  atomnumber  The atomnumber the degree is searched for
+	 *@return             The number of connected atoms (degree)
+	 */
+	public int getConnectedBondsCount(int atomNumber)
+	{
+		return getConnectedAtomsCount(atoms[atomNumber]);
+	}
 
 	/**
 	 *  Returns the number of LonePairs for a given Atom.
@@ -753,60 +805,33 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom
 	 *@return       The number of LonePairs for this atom
 	 */
-	public int getLonePairCount(IAtom atom)
+	public int getConnectedLonePairsCount(IAtom atom)
 	{
 		int count = 0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < lonePairCount; i++)
 		{
-			if (electronContainers[i] instanceof ILonePair &&
-					((ILonePair) electronContainers[i]).contains(atom))
-			{
-				count++;
-			}
+			if (lonePairs[i].contains(atom)) ++count;
 		}
 		return count;
 	}
-	/**
-	 *  Returns an array of all SingleElectron connected to the given atom.
-	 *
-	 *@param  atom  The atom on which the single electron is located
-	 *@return       The array of SingleElectron of this AtomContainer
-	 */
-	public ISingleElectron[] getSingleElectron(IAtom atom)
-	{
-		List lps = new ArrayList();
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			if ((electronContainers[i] instanceof ISingleElectron) && 
-				(((ISingleElectron) electronContainers[i]).contains(atom)))
-			{
-				lps.add(electronContainers[i]);
-			}
-		}
-		ISingleElectron[] result = new ISingleElectron[lps.size()];
-		for (int i=0; i<lps.size(); i++) {
-			result[i] = (ISingleElectron)lps.get(i);
-		}
-		return result;
-	}
+	
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public int getSingleElectronSum(IAtom atom)
+	public int getConnectedSingleElectronsCount(IAtom atom)
 	{
 		int count = 0;
-		for (int i = 0; i <  getElectronContainerCount(); i++)
-		{if ((electronContainers[i] instanceof ISingleElectron) && 
-			 (((ISingleElectron) electronContainers[i]).contains(atom)))
-			{
-				count++;
-			}
+		for (int i = 0; i < singleElectronCount; i++)
+		{
+			if (singleElectrons[i].contains(atom)) ++count;
 		}
 		return count;
 	}
+	
+
 	/**
 	 * Returns the sum of the bond orders for a given Atom.
 	 *
@@ -816,13 +841,9 @@ public class AtomContainer extends ChemObject
 	public double getBondOrderSum(IAtom atom)
 	{
 		double count = 0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < bondCount; i++)
 		{
-			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom))
-			{
-				count += ((Bond) electronContainers[i]).getOrder();
-			}
+			if (bonds[i].contains(atom)) count += bonds[i].getOrder();
 		}
 		return count;
 	}
@@ -836,13 +857,11 @@ public class AtomContainer extends ChemObject
 	 */
 	public double getMaximumBondOrder(IAtom atom) {
 		double max = 0.0;
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < bondCount; i++)
 		{
-			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom) &&
-					((Bond) electronContainers[i]).getOrder() > max)
+			if (bonds[i].contains(atom) && bonds[i].getOrder() > max)
 			{
-				max = ((Bond) electronContainers[i]).getOrder();
+				max = bonds[i].getOrder();
 			}
 		}
 		return max;
@@ -859,37 +878,15 @@ public class AtomContainer extends ChemObject
 	public double getMinimumBondOrder(IAtom atom)
 	{
 		double min = 6;
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < bondCount; i++)
 		{
-			if (electronContainers[i] instanceof IBond &&
-					((Bond) electronContainers[i]).contains(atom) &&
-					((Bond) electronContainers[i]).getOrder() < min)
+			if (bonds[i].contains(atom) && bonds[i].getOrder() < min)
 			{
-				min = ((Bond) electronContainers[i]).getOrder();
+				min = bonds[i].getOrder();
 			}
 		}
 		return min;
 	}
-
-
-	/**
-	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
-	 *  container.
-	 *
-	 *@param  atomContainer  AtomContainer with the new ElectronContainers
-	 */
-	public void addElectronContainers(IAtomContainer atomContainer)
-	{
-		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
-		{
-			if (!contains(atomContainer.getElectronContainer(f)))
-			{
-				addElectronContainer(atomContainer.getElectronContainer(f));
-			}
-		}
-		notifyChanged();
-	}
-
 
 	/**
 	 *  Adds all atoms and electronContainers of a given atomcontainer to this
@@ -906,16 +903,42 @@ public class AtomContainer extends ChemObject
 				addAtom(atomContainer.getAtom(f));
 			}
 		}
-		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
-			if (!contains(atomContainer.getElectronContainer(f)))
+			if (!contains(atomContainer.getBond(f)))
 			{
-				addElectronContainer(atomContainer.getElectronContainer(f));
+				addBond(atomContainer.getBond(f));
+			}
+		}
+		for (int f = 0; f < atomContainer.getLonePairCount(); f++)
+		{
+			if (!contains(atomContainer.getLonePair(f)))
+			{
+				addLonePair(atomContainer.getLonePair(f));
+			}
+		}
+		for (int f = 0; f < atomContainer.getSingleElectronCount(); f++)
+		{
+			if (!contains(atomContainer.getSingleElectron(f)))
+			{
+				addSingleElectron(atomContainer.getSingleElectron(f));
 			}
 		}
 		notifyChanged();
 	}
 
+	/**
+	 *  Adds the <code>ElectronContainer</code>s found in atomContainer to this
+	 *  container.
+	 *
+	 *@param  atomContainer  AtomContainer with the new ElectronContainers
+	 */
+//	public void addElectronContainers(IAtomContainer atomContainer)
+//	{
+//		
+//		notifyChanged();
+//	}
+	
 
 	/**
 	 *  Adds an atom to this container.
@@ -941,17 +964,44 @@ public class AtomContainer extends ChemObject
 
 
 	/**
-	 *  Wrapper method for adding Bonds to this AtomContainer.
+	 *  Adds a Bond to this AtomContainer.
 	 *
 	 *@param  bond  The bond to added to this container
 	 */
 	public void addBond(IBond bond)
 	{
-		addElectronContainer(bond);
+		if (bondCount >= bonds.length) growBondArray();
+		bonds[bondCount] = bond;
+		++bondCount;
 		notifyChanged();
 	}
 
-
+	/**
+	 *  Adds a lone pair to this AtomContainer.
+	 *
+	 *@param  lonePair  The LonePair to added to this container
+	 */
+	public void addLonePair(ILonePair lonePair)
+	{
+		if (lonePairCount >= lonePairs.length) growLonePairArray();
+		lonePairs[lonePairCount] = lonePair;
+		++lonePairCount;
+		notifyChanged();
+	}
+	
+	/**
+	 *  Adds a single electron to this AtomContainer.
+	 *
+	 *@param  singleElectron  The SingleElectron to added to this container
+	 */
+	public void addSingleElectron(ISingleElectron singleElectron)
+	{
+		if (singleElectronCount >= singleElectrons.length) growSingleElectronArray();
+		singleElectrons[singleElectronCount] = singleElectron;
+		++singleElectronCount;
+		notifyChanged();
+	}
+	
 	/**
 	 *  Adds a ElectronContainer to this AtomContainer.
 	 *
@@ -959,17 +1009,9 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addElectronContainer(IElectronContainer electronContainer)
 	{
-		if (electronContainerCount + 1 >= electronContainers.length)
-		{
-			growElectronContainerArray();
-		}
-		// are we supposed to check if the atoms forming this bond are
-		// already in here and add them if neccessary? No, core classes
-		// must not check parameter input.
-		electronContainer.addListener(this);
-		electronContainers[electronContainerCount] = electronContainer;
-		electronContainerCount++;
-		notifyChanged();
+		if (electronContainer instanceof IBond) this.addBond((IBond)electronContainer);
+		if (electronContainer instanceof ILonePair) this.addLonePair((ILonePair)electronContainer);
+		if (electronContainer instanceof ISingleElectron) this.addSingleElectron((ISingleElectron)electronContainer);
 	}
 
 
@@ -985,71 +1027,19 @@ public class AtomContainer extends ChemObject
 		{
 			removeAtom(atomContainer.getAtom(f));
 		}
-		for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
+		for (int f = 0; f < atomContainer.getBondCount(); f++)
 		{
-			removeElectronContainer(atomContainer.getElectronContainer(f));
+			removeBond(atomContainer.getBond(f));
 		}
-		notifyChanged();
-	}
-
-
-	/**
-	 * Removes the bond at the given position from this container.
-	 *
-	 * @param  position  The position of the bond in the electronContainers array
-	 * @return           Bond that was removed
-	 */
-	public IElectronContainer removeElectronContainer(int position)
-	{
-		IElectronContainer electronContainer = getElectronContainer(position);
-		electronContainer.removeListener(this);
-		for (int i = position; i < electronContainerCount - 1; i++)
+		for (int f = 0; f < atomContainer.getLonePairCount(); f++)
 		{
-			electronContainers[i] = electronContainers[i + 1];
+			removeLonePair(atomContainer.getLonePair(f));
 		}
-		electronContainers[electronContainerCount - 1] = null;
-		electronContainerCount--;
-		notifyChanged();
-		return electronContainer;
-	}
-
-
-	/**
-	 * Removes this ElectronContainer from this container.
-	 *
-	 * @param  electronContainer    The electronContainer to be removed
-	 * @return                      Bond that was removed
-	 */
-	public IElectronContainer removeElectronContainer(IElectronContainer electronContainer)
-	{
-		for (int i = getElectronContainerCount() - 1; i >= 0; i--)
+		for (int f = 0; f < atomContainer.getSingleElectronCount(); f++)
 		{
-			if (electronContainers[i].equals(electronContainer))
-			{
-				/* we don't notifyChanged here because the
-				   method called below does is already  */ 
-				return removeElectronContainer(i);
-			}
+			removeSingleElectron(atomContainer.getSingleElectron(f));
 		}
-		return null;
 	}
-
-
-	/**
-	 * Removes the bond that connects the two given atoms.
-	 *
-	 * @param  atom1  The first atom
-	 * @param  atom2  The second atom
-	 * @return        The bond that connectes the two atoms
-	 */
-	public IBond removeBond(IAtom atom1, IAtom atom2)
-	{
-		IBond bond = getBond(atom1, atom2);
-		if (bond != null) removeElectronContainer(bond);
-		return bond;
-	}
-
-
 
 	/**
 	 *  Removes the atom at the given position from the AtomContainer. Note that
@@ -1069,30 +1059,7 @@ public class AtomContainer extends ChemObject
 		atomCount--;
 		notifyChanged();
 	}
-
-
-	/**
-	 *  Removes the given atom and all connected electronContainers from the
-	 *  AtomContainer.
-	 *
-	 *@param  atom  The atom to be removed
-	 */
-	public void removeAtomAndConnectedElectronContainers(IAtom atom)
-	{
-		int position = getAtomNumber(atom);
-		if (position != -1)
-		{
-			ArrayList electronContainers = (ArrayList)getConnectedElectronContainersList(atom);
-            for (int f = 0; f < electronContainers.size(); f++)
-			{
-				removeElectronContainer((IElectronContainer)electronContainers.get(f));
-			}
-			removeAtom(position);
-		}
-		notifyChanged();
-	}
-
-
+	
 	/**
 	 *  Removes the given atom from the AtomContainer. Note that the
 	 *  electronContainers are unaffected: you also have to take care of removeing
@@ -1107,24 +1074,193 @@ public class AtomContainer extends ChemObject
 		{
 			removeAtom(position);
 		}
-		notifyChanged();
 	}
 
+	/**
+	 *  Removes the bond at the given position from the AtomContainer.
+	 *
+	 *@param  position  The position of the bond to be removed.
+	 */
+	public IBond removeBond(int position)
+	{
+		IBond bond = bonds[position];
+		bond.removeListener(this);
+		for (int i = position; i < bondCount - 1; i++)
+		{
+			bonds[i] = bonds[i + 1];
+		}
+		bonds[bondCount - 1] = null;
+		bondCount--;
+		notifyChanged();
+		return bond;
+	}
+	
+	/**
+	 * Removes the bond that connects the two given atoms.
+	 *
+	 * @param  atom1  The first atom
+	 * @param  atom2  The second atom
+	 * @return        The bond that connectes the two atoms
+	 */
+	public IBond removeBond(IAtom atom1, IAtom atom2)
+	{
+		int pos = getBondNumber(atom1, atom2);
+		IBond bond = null;
+		if (pos != -1) {
+			bond = bonds[pos];
+			removeBond(pos);
+		}
+		return bond;
+	}
+	
+	/**
+	 * Removes the bond from this container.
+	 *
+	 * @param  bond   The bond to be removed.
+	 */
+	public void removeBond(IBond bond)
+	{
+		int pos = getBondNumber(bond);
+		if (pos != -1) removeBond(pos);
+	}
+	
+	/**
+	 *  Removes the lone pair at the given position from the AtomContainer.
+	 *
+	 *@param  position  The position of the LonePair to be removed.
+	 */
+	public ILonePair removeLonePair(int position)
+	{
+		ILonePair lp = lonePairs[position];
+		lp.removeListener(this);
+		for (int i = position; i < lonePairCount - 1; i++)
+		{
+			lonePairs[i] = lonePairs[i + 1];
+		}
+		lonePairs[lonePairCount - 1] = null;
+		lonePairCount--;
+		notifyChanged();
+		return lp;
+	}
+	
+	/**
+	 *  Removes the lone pair from the AtomContainer.
+	 *
+	 *@param  lonePair  The LonePair to be removed.
+	 */
+	public void removeLonePair(ILonePair lonePair)
+	{
+		int pos = getLonePairNumber(lonePair);
+		if (pos != -1) removeLonePair(pos);
+	}
+	
+	/**
+	 *  Removes the single electron at the given position from the AtomContainer.
+	 *
+	 *@param  position  The position of the SingleElectron to be removed.
+	 */
+	public ISingleElectron removeSingleElectron(int position)
+	{
+		ISingleElectron se = singleElectrons[position];
+		se.removeListener(this);
+		for (int i = position; i < singleElectronCount - 1; i++)
+		{
+			singleElectrons[i] = singleElectrons[i + 1];
+		}
+		singleElectrons[singleElectronCount - 1] = null;
+		singleElectronCount--;
+		notifyChanged();
+		return se;
+	}
+	
+	/**
+	 *  Removes the single electron from the AtomContainer.
+	 *
+	 *@param  singleElectron  The SingleElectron to be removed.
+	 */
+	public void removeSingleElectron(ISingleElectron singleElectron)
+	{
+		int pos = getSingleElectronNumber(singleElectron);
+		if (pos != -1) removeSingleElectron(pos);
+	}
+	
+	/**
+	 * Removes the bond at the given position from this container.
+	 *
+	 * @param  position  The position of the bond in the electronContainers array
+	 * @return           Bond that was removed
+	 */
+	public IElectronContainer removeElectronContainer(int number)
+	{
+		if (number < this.bondCount) return removeBond(number);
+		number -= this.bondCount;
+		if (number < this.lonePairCount) return removeLonePair(number);
+		number -= this.lonePairCount;
+		if (number < this.singleElectronCount) return removeSingleElectron(number);
+		return null;
+	}
+
+
+	/**
+	 * Removes this ElectronContainer from this container.
+	 *
+	 * @param  electronContainer    The electronContainer to be removed
+	 * @return                      Bond that was removed
+	 */
+	public void removeElectronContainer(IElectronContainer electronContainer)
+	{
+		if (electronContainer instanceof IBond) removeBond((IBond)electronContainer);
+		else if (electronContainer instanceof ILonePair) removeLonePair((ILonePair)electronContainer);
+		else if (electronContainer instanceof ISingleElectron) removeSingleElectron((ISingleElectron)electronContainer);
+	}
+
+	/**
+	 *  Removes the given atom and all connected electronContainers from the
+	 *  AtomContainer.
+	 *
+	 *@param  atom  The atom to be removed
+	 */
+	public void removeAtomAndConnectedElectronContainers(IAtom atom)
+	{
+		int position = getAtomNumber(atom);
+		if (position != -1)
+		{
+			for (int i = 0; i < bondCount; i++)
+			{
+				if (bonds[i].contains(atom)) {
+					removeBond(i);
+					--i;
+				}
+			}
+			for (int i = 0; i < lonePairCount; i++)
+			{
+				if (lonePairs[i].contains(atom)) {
+					removeLonePair(i);
+					--i;
+				}
+			}
+			for (int i = 0; i < singleElectronCount; i++)
+			{
+				if (singleElectrons[i].contains(atom)) {
+					removeSingleElectron(i);
+					--i;
+				}
+			}
+			removeAtom(position);
+		}
+		notifyChanged();
+	}
 
 	/**
 	 * Removes all atoms and bond from this container.
 	 */
 	public void removeAllElements() {
+		removeAllElectronContainers();
         for (int f = 0; f < getAtomCount(); f++) {
 			getAtom(f).removeListener(this);	
 		}
-		for (int f = 0; f < getElectronContainerCount(); f++) {
-			getElectronContainer(f).removeListener(this);	
-		}
-		atoms = new IAtom[growArraySize];
-		electronContainers = new IElectronContainer[growArraySize];
-		atomCount = 0;
-		electronContainerCount = 0;
+        atoms = new IAtom[growArraySize];
+        atomCount = 0;
 		notifyChanged();
 	}
 
@@ -1134,11 +1270,17 @@ public class AtomContainer extends ChemObject
 	 */
 	public void removeAllElectronContainers()
 	{
-		for (int f = 0; f < getElectronContainerCount(); f++) {
-			getElectronContainer(f).removeListener(this);	
+		removeAllBonds();
+		for (int f = 0; f < getLonePairCount(); f++) {
+			getLonePair(f).removeListener(this);	
 		}
-		electronContainers = new IElectronContainer[growArraySize];
-		electronContainerCount = 0;
+		for (int f = 0; f < getSingleElectronCount(); f++) {
+			getSingleElectron(f).removeListener(this);	
+		}
+		lonePairs = new ILonePair[growArraySize];
+		singleElectrons = new ISingleElectron[growArraySize];
+		lonePairCount = 0;
+		singleElectronCount = 0;
 		notifyChanged();
 	}
 
@@ -1146,11 +1288,12 @@ public class AtomContainer extends ChemObject
      *  Removes all Bonds from this container.
      */
     public void removeAllBonds() {
-    	IBond[] bonds = getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            removeElectronContainer(bonds[i]);
-        }
-	notifyChanged();
+    	for (int f = 0; f < getBondCount(); f++) {
+			getBond(f).removeListener(this);	
+		}
+    	bonds = new IBond[growArraySize];
+    	bondCount = 0;
+    	notifyChanged();
     }
 
 	/**
@@ -1170,9 +1313,9 @@ public class AtomContainer extends ChemObject
 			return;
 		}
 
-		if (electronContainerCount >= electronContainers.length)
+		if (bondCount >= bonds.length)
 		{
-			growElectronContainerArray();
+			growBondArray();
 		}
 		addBond(bond);
 		/* no notifyChanged() here because addBond(bond) does 
@@ -1191,9 +1334,9 @@ public class AtomContainer extends ChemObject
 	{
 		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order);
 
-		if (electronContainerCount >= electronContainers.length)
+		if (bondCount >= bonds.length)
 		{
-			growElectronContainerArray();
+			growBondArray();
 		}
 		addBond(bond);
 		/* no notifyChanged() here because addBond(bond) does 
@@ -1208,32 +1351,26 @@ public class AtomContainer extends ChemObject
 	 */
 	public void addLonePair(int atomID)
 	{
-		IElectronContainer lonePair = getBuilder().newLonePair(atoms[atomID]);
+		ILonePair lonePair = getBuilder().newLonePair(atoms[atomID]);
 		lonePair.addListener(this);
-		addElectronContainer(lonePair);
+		addLonePair(lonePair);
 		/* no notifyChanged() here because addElectronContainer() does 
 		   it already */
 	}
-
-
+	
 	/**
-	 *  True, if the AtomContainer contains the given ElectronContainer object.
+	 *  Adds a LonePair to this Atom.
 	 *
-	 *@param  electronContainer ElectronContainer that is searched for
-	 *@return                   True, if the AtomContainer contains the given bond object
+	 *@param  atomID  The atom number to which the LonePair is added in [0,..]
 	 */
-	public boolean contains(IElectronContainer electronContainer)
+	public void addSingleElectron(int atomID)
 	{
-		for (int i = 0; i < getElectronContainerCount(); i++)
-		{
-			if (electronContainer == electronContainers[i])
-			{
-				return true;
-			}
-		}
-		return false;
+		ISingleElectron singleElectron = getBuilder().newSingleElectron(atoms[atomID]);
+		singleElectron.addListener(this);
+		addSingleElectron(singleElectron);
+		/* no notifyChanged() here because addSingleElectron() does 
+		   it already */
 	}
-
 
 	/**
 	 *  True, if the AtomContainer contains the given atom object.
@@ -1245,11 +1382,67 @@ public class AtomContainer extends ChemObject
 	{
 		for (int i = 0; i < getAtomCount(); i++)
 		{
-			if (atom == atoms[i])
-			{
-				return true;
-			}
+			if (atom == atoms[i]) return true;
 		}
+		return false;
+	}
+	
+	/**
+	 *  True, if the AtomContainer contains the given bond object.
+	 *
+	 *@param  bond  the bond this AtomContainer is searched for
+	 *@return       True, if the AtomContainer contains the given bond object
+	 */
+	public boolean contains(IBond bond)
+	{
+		for (int i = 0; i < getBondCount(); i++)
+		{
+			if (bond == bonds[i]) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 *  True, if the AtomContainer contains the given LonePair object.
+	 *
+	 *@param  lonePair  the LonePair this AtomContainer is searched for
+	 *@return           True, if the AtomContainer contains the given LonePair object
+	 */
+	public boolean contains(ILonePair lonePair)
+	{
+		for (int i = 0; i < getLonePairCount(); i++)
+		{
+			if (lonePair == lonePairs[i]) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 *  True, if the AtomContainer contains the given SingleElectron object.
+	 *
+	 *@param  lonePair  the LonePair this AtomContainer is searched for
+	 *@return           True, if the AtomContainer contains the given LonePair object
+	 */
+	public boolean contains(ISingleElectron singleElectron)
+	{
+		for (int i = 0; i < getSingleElectronCount(); i++)
+		{
+			if (singleElectron == singleElectrons[i]) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 *  True, if the AtomContainer contains the given ElectronContainer object.
+	 *
+	 *@param  electronContainer ElectronContainer that is searched for
+	 *@return                   True, if the AtomContainer contains the given bond object
+	 */
+	public boolean contains(IElectronContainer ec)
+	{
+		if (ec instanceof IBond) return contains((IBond)ec);
+		if (ec instanceof ILonePair) return contains((ILonePair)ec);
+		if (ec instanceof ISingleElectron) return contains((SingleElectron)ec);
 		return false;
 	}
 	
@@ -1261,25 +1454,30 @@ public class AtomContainer extends ChemObject
 	 */
 	public String toString()
 	{
-		IElectronContainer electronContainer;
 		StringBuffer stringContent = new StringBuffer(64);
 		stringContent.append("AtomContainer(");
 		stringContent.append(this.hashCode());
 		stringContent.append(", #A:").append(getAtomCount());
-		stringContent.append(", #EC:").append(getElectronContainerCount()).append(", ");
+		stringContent.append(", #B:").append(getBondCount()).append(", ");
+		stringContent.append(", #LP:").append(getLonePairCount()).append(", ");
+		stringContent.append(", #SE:").append(getSingleElectronCount()).append(", ");
 		for (int i = 0; i < getAtomCount(); i++)
 		{
 			stringContent.append(getAtom(i).toString()).append(", ");
 		}
-		for (int i = 0; i < getElectronContainerCount(); i++)
+		for (int i = 0; i < getBondCount(); i++)
 		{
-			electronContainer = getElectronContainer(i);
-			// this check should be removed!
-			if (electronContainer != null)
-			{
-				stringContent.append(electronContainer.toString()).append(", ");
-			}
+			stringContent.append(getBond(i).toString()).append(", ");
 		}
+		for (int i = 0; i < getLonePairCount(); i++)
+		{
+			stringContent.append(getLonePair(i).toString()).append(", ");
+		}
+		for (int i = 0; i < getSingleElectronCount(); i++)
+		{
+			stringContent.append(getSingleElectron(i).toString()).append(", ");
+		}
+		
         stringContent.append(", AP:[#").append(atomParities.size()).append(", ");
         Enumeration parities = atomParities.elements();
         while (parities.hasMoreElements()) {
@@ -1298,8 +1496,6 @@ public class AtomContainer extends ChemObject
 	 * @see       #shallowCopy
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		IElectronContainer electronContainer;
-		IElectronContainer newEC;
 		IAtom[] newAtoms;
 		IAtomContainer clone = (IAtomContainer) super.clone();
         // start from scratch
@@ -1308,32 +1504,60 @@ public class AtomContainer extends ChemObject
 		for (int f = 0; f < getAtomCount(); f++) {
 			clone.addAtom((Atom) getAtom(f).clone());
 		}
-        // clone the electronContainer
-		for (int f = 0; f < getElectronContainerCount(); f++) {
-			electronContainer = this.getElectronContainer(f);
-			newEC = getBuilder().newElectronContainer();
-			if (electronContainer instanceof IBond) {
-				IBond bond = (IBond) electronContainer;
-				newEC = (IElectronContainer)bond.clone();
-				newAtoms = new IAtom[bond.getAtomCount()];
-				for (int g = 0; g < bond.getAtomCount(); g++) {
-					newAtoms[g] = clone.getAtom(getAtomNumber(bond.getAtom(g)));
-				}
-				((IBond) newEC).setAtoms(newAtoms);
-			} else if (electronContainer instanceof ILonePair) {
-				IAtom atom = ((ILonePair) electronContainer).getAtom();
-				newEC = (ILonePair)electronContainer.clone();
-				((ILonePair) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-            } else if (electronContainer instanceof ISingleElectron) {
-            	IAtom atom = ((ISingleElectron) electronContainer).getAtom();
-                newEC = (ISingleElectron)electronContainer.clone();
-                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
-			} else {
-				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
-				newEC = (IElectronContainer) electronContainer.clone();
+        // clone bonds
+		IBond bond;
+		IBond newBond;
+		for (int i = 0; i < getBondCount(); ++i) {
+			bond = getBond(i);
+			newBond = (IBond)bond.clone();
+			newAtoms = new IAtom[bond.getAtomCount()];
+			for (int j = 0; j < bond.getAtomCount(); ++j) {
+				newAtoms[j] = clone.getAtom(getAtomNumber(bond.getAtom(j)));
 			}
-			clone.addElectronContainer(newEC);
+			newBond.setAtoms(newAtoms);
+			clone.addBond(newBond);
 		}
+		ILonePair lp;
+		ILonePair newLp;
+		for (int i = 0; i < getLonePairCount(); ++i) {
+			lp = getLonePair(i);
+			newLp = (ILonePair)lp.clone();
+			newLp.setAtom(clone.getAtom(getAtomNumber(lp.getAtom())));
+			clone.addLonePair(newLp);
+		}
+		ISingleElectron se;
+		ISingleElectron newSe;
+		for (int i = 0; i < getSingleElectronCount(); ++i) {
+			se = getSingleElectron(i);
+			newSe = (ISingleElectron)se.clone();
+			newSe.setAtom(clone.getAtom(getAtomNumber(se.getAtom())));
+			clone.addSingleElectron(newSe);
+		}
+//		for (int f = 0; f < getElectronContainerCount(); f++) {
+//			electronContainer = this.getElectronContainer(f);
+//			newEC = getBuilder().newElectronContainer();
+//			if (electronContainer instanceof IBond) {
+//				IBond bond = (IBond) electronContainer;
+//				newEC = (IElectronContainer)bond.clone();
+//				newAtoms = new IAtom[bond.getAtomCount()];
+//				for (int g = 0; g < bond.getAtomCount(); g++) {
+//					newAtoms[g] = clone.getAtom(getAtomNumber(bond.getAtom(g)));
+//				}
+//				((IBond) newEC).setAtoms(newAtoms);
+//			} else if (electronContainer instanceof ILonePair) {
+//				IAtom atom = ((ILonePair) electronContainer).getAtom();
+//				newEC = (ILonePair)electronContainer.clone();
+//				((ILonePair) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
+//            } else if (electronContainer instanceof ISingleElectron) {
+//            	IAtom atom = ((ISingleElectron) electronContainer).getAtom();
+//                newEC = (ISingleElectron)electronContainer.clone();
+//                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
+//			} else {
+//				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
+//				newEC = (IElectronContainer) electronContainer.clone();
+//			}
+//			clone.addElectronContainer(newEC);
+//		}
 		return clone;
 	}
 
@@ -1342,13 +1566,13 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@see    #growArraySize
 	 */
-	protected void growElectronContainerArray()
-	{
-		growArraySize = (electronContainers.length < growArraySize) ? growArraySize : electronContainers.length;
-		IElectronContainer[] newelectronContainers = new IElectronContainer[electronContainers.length + growArraySize];
-		System.arraycopy(electronContainers, 0, newelectronContainers, 0, electronContainers.length);
-		electronContainers = newelectronContainers;
-	}
+//	protected void growElectronContainerArray()
+//	{
+//		growArraySize = (electronContainers.length < growArraySize) ? growArraySize : electronContainers.length;
+//		IElectronContainer[] newelectronContainers = new IElectronContainer[electronContainers.length + growArraySize];
+//		System.arraycopy(electronContainers, 0, newelectronContainers, 0, electronContainers.length);
+//		electronContainers = newelectronContainers;
+//	}
 
 
 	/**
@@ -1364,6 +1588,45 @@ public class AtomContainer extends ChemObject
 		atoms = newatoms;
 	}
 	
+	/**
+	 *  Grows the bond array by a given size.
+	 *
+	 *@see    #growArraySize
+	 */
+	protected void growBondArray()
+	{
+		growArraySize = (bonds.length < growArraySize) ? growArraySize : bonds.length;
+		IBond[] newBonds = new IBond[bonds.length + growArraySize];
+		System.arraycopy(bonds, 0, newBonds, 0, bonds.length);
+		bonds = newBonds;
+	}
+	
+	/**
+	 *  Grows the lone pair array by a given size.
+	 *
+	 *@see    #growArraySize
+	 */
+	protected void growLonePairArray()
+	{
+		growArraySize = (lonePairs.length < growArraySize) ? growArraySize : lonePairs.length;
+		ILonePair[] newLonePairs = new ILonePair[lonePairs.length + growArraySize];
+		System.arraycopy(lonePairs, 0, newLonePairs, 0, lonePairs.length);
+		lonePairs = newLonePairs;
+	}
+	
+	/**
+	 *  Grows the single electron array by a given size.
+	 *
+	 *@see    #growArraySize
+	 */
+	protected void growSingleElectronArray()
+	{
+		growArraySize = (singleElectrons.length < growArraySize) ? growArraySize : singleElectrons.length;
+		ISingleElectron[] newSingleElectrons = new ISingleElectron[singleElectrons.length + growArraySize];
+		System.arraycopy(singleElectrons, 0, newSingleElectrons, 0, singleElectrons.length);
+		singleElectrons = newSingleElectrons;
+	}
+	
 	 /**
 	 *  Called by objects to which this object has
 	 *  registered as a listener.
@@ -1376,4 +1639,5 @@ public class AtomContainer extends ChemObject
 	}   
 
 }
+
 

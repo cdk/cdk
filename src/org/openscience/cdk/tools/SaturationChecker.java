@@ -478,7 +478,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 				atomTypes1 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
         if(atomTypes1.length>0){
           logger.debug("first atom type: ", atomTypes1[0]);
-          if (atomContainer.getBondCount(atom) == i)
+          if (atomContainer.getConnectedBondsCount(atom) == i)
           {
             if (atom.getFlag(CDKConstants.ISAROMATIC) && atomContainer.getBondOrderSum(atom) < atomTypes1[0].getBondOrderSum() - atom.getHydrogenCount()){
               partners = atomContainer.getConnectedAtomsList(atom);
@@ -544,7 +544,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 			{
 				atom = ac.getAtom(g);
 				temp[g] = atom.getHydrogenCount();
-				atom.setHydrogenCount(atomContainer.getBondCount(atom) - ac.getBondCount(atom) - temp[g]);
+				atom.setHydrogenCount(atomContainer.getConnectedBondsCount(atom) - ac.getConnectedBondsCount(atom) - temp[g]);
 			}
 			saturate(ac);
 			for (int g = 0; g < ac.getAtomCount(); g++)
@@ -628,7 +628,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container, boolean throwExceptionForUnknowAtom) throws CDKException {
         return this.calculateNumberOfImplicitHydrogens(atom, 
             container.getBondOrderSum(atom),
-            container.getSingleElectronSum(atom),
+            container.getConnectedSingleElectronsCount(atom),
             container.getConnectedBondsList(atom),
             throwExceptionForUnknowAtom
         );

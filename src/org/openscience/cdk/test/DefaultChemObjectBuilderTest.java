@@ -146,8 +146,8 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomContainer_int_int() {
-		Object object = rootObject.getBuilder().newAtomContainer(10,10);
+	public void testNewAtomContainer_int_int_int_int() {
+		Object object = rootObject.getBuilder().newAtomContainer(10,10,0,0);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
@@ -429,8 +429,8 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IMolecule);
 	}	
 
-	public void testNewMolecule_int_int() {
-		Object object = rootObject.getBuilder().newMolecule(5,5);
+	public void testNewMolecule_int_int_int_int() {
+		Object object = rootObject.getBuilder().newMolecule(5,5,1,1);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
 

@@ -662,7 +662,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				if(bondson2[i].getAtom(1)==atom2)
 					bondson2[i].setAtom(atom1,1);
 				if(bondson2[i].getAtom(0)==bondson2[i].getAtom(1)){
-					container1.removeElectronContainer(bondson2[i]);
+					container1.removeBond(bondson2[i]);
 				}
 			}
 			container1.removeAtom(atom2);

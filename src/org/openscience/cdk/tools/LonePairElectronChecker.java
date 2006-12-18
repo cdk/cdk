@@ -141,7 +141,7 @@ public class LonePairElectronChecker {
         } catch (Exception exc) {
             logger.debug(exc);
         }
-        if((double)ac.getLonePairs(atom).length != nLonePair){
+        if((double)ac.getConnectedLonePairsCount(atom) != nLonePair){
         	logger.info("*** Bad ! ***");
         	return false;
         }else{
@@ -168,7 +168,7 @@ public class LonePairElectronChecker {
         logger.info("Saturating atom by adjusting lone pair electrons...");
         boolean isSaturated = isSaturated(atom, ac);
         if (!isSaturated) {
-        	int nLonePairI = ac.getLonePairs(atom).length;
+        	int nLonePairI = ac.getConnectedLonePairsCount(atom);
     		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
             
             double bondOrderSum = ac.getBondOrderSum(atom);
@@ -187,7 +187,7 @@ public class LonePairElectronChecker {
     		ILonePair lp = atom.getBuilder().newLonePair(atom);
 			for (int j = 0; j < nLonePair - nLonePairI; j++)
 			{
-				ac.addElectronContainer(lp);
+				ac.addLonePair(lp);
 			}
             
         }

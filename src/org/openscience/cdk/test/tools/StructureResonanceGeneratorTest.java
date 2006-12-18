@@ -24,6 +24,8 @@
 package org.openscience.cdk.test.tools;
 
 
+import java.util.List;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -101,10 +103,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         lpcheck.newSaturate(molecule);
 		
         IAtom atom =  molecule.getAtom(2);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(1);
-        ILonePair[] selectron = molecule.getLonePairs(atom);
-		molecule.removeElectronContainer(selectron[0]);
+        List selectron = molecule.getConnectedLonePairsList(atom);
+		molecule.removeLonePair((ILonePair)selectron.get(0));
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false,-1);
 		IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);
@@ -121,7 +123,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	    molecule1.addBond(3, 8, 1);
         lpcheck.newSaturate(molecule1);
         IAtom atom1 =  molecule1.getAtom(2);
-        molecule1.addElectronContainer(new SingleElectron(atom1));
+        molecule1.addSingleElectron(new SingleElectron(atom1));
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 		
@@ -157,10 +159,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         lpcheck.newSaturate(molecule);
 		
         IAtom atom =  molecule.getAtom(2);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(1);
-        ILonePair[] selectron = molecule.getLonePairs(atom);
-		molecule.removeElectronContainer(selectron[selectron.length-1]);
+        List selectron = molecule.getConnectedLonePairsList(atom);
+		molecule.removeLonePair((ILonePair)selectron.get(selectron.size()-1));
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
@@ -172,9 +174,9 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		adder.addExplicitHydrogensToSatisfyValency(molecule1);
 		lpcheck.newSaturate(molecule1);
 		IAtom atom1 =  molecule1.getAtom(4);
-		molecule1.addElectronContainer(new SingleElectron(atom1));	
-		selectron = molecule1.getLonePairs(atom1);
-		molecule1.removeElectronContainer(selectron[0]);
+		molecule1.addSingleElectron(new SingleElectron(atom1));	
+		selectron = molecule1.getConnectedLonePairsList(atom1);
+		molecule1.removeLonePair((ILonePair)selectron.get(0));
 		atom1.setFormalCharge(1);
 		
 
@@ -195,10 +197,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         lpcheck.newSaturate(molecule);
         
         IAtom atom =  molecule.getAtom(3);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(1);
-        ILonePair[] selectron = molecule.getLonePairs(atom);
-		molecule.removeElectronContainer(selectron[0]);
+        List selectron = molecule.getConnectedLonePairsList(atom);
+		molecule.removeLonePair((ILonePair)selectron.get(0));
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfMolecules = gRI.getStructures(molecule);
@@ -211,10 +213,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		lpcheck.newSaturate(molecule1);
 
         IAtom atom1 =  molecule1.getAtom(6);
-        molecule1.addElectronContainer(new SingleElectron(atom1));
+        molecule1.addSingleElectron(new SingleElectron(atom1));
         atom1.setFormalCharge(1);
-        selectron = molecule1.getLonePairs(atom1);
-		molecule1.removeElectronContainer(selectron[0]);
+        selectron = molecule.getConnectedLonePairsList(atom);
+		molecule.removeLonePair((ILonePair)selectron.get(0));
 
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
@@ -251,14 +253,14 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	 */
 	public void testFlagActiveCenter2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C-C=C-[C-]");
-		molecule.addElectronContainer(new LonePair(molecule.getAtom(3)));
+		molecule.addLonePair(new LonePair(molecule.getAtom(3)));
 		
         IAtomContainerSet setOfMolecules = gR.getStructures(molecule);
         
 		Assert.assertEquals(2,setOfMolecules.getAtomContainerCount());
 
         IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C-[C-]-C");
-        molecule.addElectronContainer(new LonePair(molecule.getAtom(2)));
+        molecule.addLonePair(new LonePair(molecule.getAtom(2)));
 		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));

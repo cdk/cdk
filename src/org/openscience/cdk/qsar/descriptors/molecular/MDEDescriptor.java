@@ -310,7 +310,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
         int[][] atypes = new int[natom][2];
         for (int i = 0; i < natom; i++) {
             IAtom atom = atomContainer.getAtom(i);
-            int numConnectedBonds = atomContainer.getBondCount(atom);
+            int numConnectedBonds = atomContainer.getConnectedBondsCount(atom);
             atypes[i][1] = i;
             if (atom.getAtomicNumber() == atomicNum) atypes[i][0] = numConnectedBonds;
             else

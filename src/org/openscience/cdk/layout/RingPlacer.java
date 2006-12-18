@@ -209,7 +209,7 @@ public class RingPlacer
 		double xDiff = bondAtom1.getPoint2d().x - bondAtom2.getPoint2d().x;
 		double yDiff = bondAtom1.getPoint2d().y - bondAtom2.getPoint2d().y;
 		
-		double startAngle;;	
+		double startAngle;
 		
 		int direction = 1;
 		// if bond is vertical
@@ -265,10 +265,10 @@ public class RingPlacer
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring
         int k = 0;
-        for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainer(k) instanceof IBond) break;
-        }
-        IBond currentBond = (IBond)sharedAtoms.getElectronContainer(k);
+//        for (k = 0; k < ring.getElectronContainerCount(); k++) {
+//            if (ring.getElectronContainer(k) instanceof IBond) break;
+//        }
+        IBond currentBond = sharedAtoms.getBond(0);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{
@@ -456,11 +456,11 @@ public class RingPlacer
 	
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring
-        int k = 0;
-        for (k = 0; k < ring.getElectronContainerCount(); k++) {
-            if (ring.getElectronContainer(k) instanceof IBond) break;
-        }
-        IBond currentBond = (IBond)sharedAtoms.getElectronContainer(k);
+//        int k = 0;
+//        for (k = 0; k < ring.getElectronContainerCount(); k++) {
+//            if (ring.getElectronContainer(k) instanceof IBond) break;
+//        }
+        IBond currentBond = sharedAtoms.getBond(0);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount() - 2; i++)
 		{

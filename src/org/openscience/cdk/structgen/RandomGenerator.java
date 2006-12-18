@@ -78,7 +78,7 @@ public class RandomGenerator {
 			if(logger.isDebugEnabled()) {
 				String s = "BondCounts:    ";
 				for (int f = 0; f < trial.getAtomCount(); f++) {
-					s += trial.getBondCount(trial.getAtom(f)) + " ";
+					s += trial.getConnectedBondsCount(trial.getAtom(f)) + " ";
 				}
 				logger.debug(s);
 				s = "BondOrderSums: ";
@@ -241,7 +241,7 @@ public class RandomGenerator {
 		}
 		else if (b1 != null)
 		{
-			ac.removeElectronContainer(b1);
+			ac.removeBond(b1);
 		}
 		
 		if (b12 > 0) 
@@ -258,7 +258,7 @@ public class RandomGenerator {
 		}
 		else if (b2 != null)
 		{
-			ac.removeElectronContainer(b2);
+			ac.removeBond(b2);
 		}
 		
 		if (b21 > 0) 
@@ -275,7 +275,7 @@ public class RandomGenerator {
 		}
 		else if (b3 != null)
 		{
-			ac.removeElectronContainer(b3);
+			ac.removeBond(b3);
 		}
 
 		if (b22 > 0) 
@@ -292,7 +292,7 @@ public class RandomGenerator {
 		}
 		else if (b4 != null)
 		{
-			ac.removeElectronContainer(b4);
+			ac.removeBond(b4);
 		}
 		
 		logger.debug("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);

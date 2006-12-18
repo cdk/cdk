@@ -102,7 +102,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(O);
 		for(int i = 0; i < 2 ; i++){
 			LonePair lp = new LonePair(O);
-			m.addElectronContainer(lp);
+			m.addLonePair(lp);
 		}
 		m.addBond(new Bond(c, h1));
 		m.addBond(new Bond(c, h2));
@@ -129,7 +129,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(b1);
 		for(int i = 0; i < 1 ; i++){
 			LonePair lp = new LonePair(s);
-			m.addElectronContainer(lp);
+			m.addLonePair(lp);
 		}
 		
 		assertFalse(lpcheck.allSaturated(m));
@@ -150,8 +150,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(b1);
 		
 		lpcheck.newSaturate(m);
-		assertEquals(3, m.getLonePairCount(cl));
-		assertEquals(0, m.getLonePairCount(c1));
+		assertEquals(3, m.getConnectedLonePairsCount(cl));
+		assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -170,8 +170,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(b1);
 		
 		lpcheck.newSaturate(m);
-		assertEquals(2, m.getLonePairCount(o));
-		assertEquals(0, m.getLonePairCount(c1));
+		assertEquals(2, m.getConnectedLonePairsCount(o));
+		assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -191,8 +191,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(1,5,1);
 		lpcheck.newSaturate(m);
 		
-		assertEquals(2, m.getLonePairCount(m.getAtom(1)));
-		assertEquals(0, m.getLonePairCount(m.getAtom(0)));
+		assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
+		assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -213,7 +213,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		lpcheck.newSaturate(m);
 		
-		assertEquals(1, m.getLonePairCount(o));
+		assertEquals(1, m.getConnectedLonePairsCount(o));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -233,7 +233,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		lpcheck.newSaturate(m);
 		
-		assertEquals(3, m.getLonePairCount(o));
+		assertEquals(3, m.getConnectedLonePairsCount(o));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -248,7 +248,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		lpcheck.newSaturate(m);
 		
-		assertEquals(1, m.getLonePairCount(n));
+		assertEquals(1, m.getConnectedLonePairsCount(n));
 	}
 	/**
 	 *  A unit test for JUnit
@@ -269,7 +269,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		lpcheck.newSaturate(m);
 		
-		assertEquals(0, m.getLonePairCount(n));
+		assertEquals(0, m.getConnectedLonePairsCount(n));
 	}
 	/**
 	 *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
@@ -280,8 +280,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
 		lpcheck.newSaturate(mol);
 		
-		assertEquals(2, mol.getLonePairCount(mol.getAtom(0)));
-		assertEquals(0, mol.getLonePairCount(mol.getAtom(3)));
-		assertEquals(1, mol.getLonePairCount(mol.getAtom(5)));
+		assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
+		assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));
+		assertEquals(1, mol.getConnectedLonePairsCount(mol.getAtom(5)));
 	}
 }

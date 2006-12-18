@@ -132,8 +132,8 @@ public class IPBondDescriptor implements IBondDescriptor {
 		{
 		}
         
-        if(bond.getOrder() > 1 && (container.getLonePairCount(bond.getAtom(0)) == 0) && 
-        		(container.getLonePairCount(bond.getAtom(1)) == 0)){
+        if(bond.getOrder() > 1 && (container.getConnectedLonePairsCount(bond.getAtom(0)) == 0) && 
+        		(container.getConnectedLonePairsCount(bond.getAtom(1)) == 0)){
         		
         		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
                 Iterator acI = conjugatedPi.atomContainers();
@@ -150,7 +150,7 @@ public class IPBondDescriptor implements IBondDescriptor {
             			while(atoms.hasNext()){
             				IAtom atomsss = (IAtom) atoms.next();
             				
-            				if(container.getLonePairCount(atomsss) != 0){
+            				if(container.getConnectedLonePairsCount(atomsss) != 0){
             					isConjugatedPi_withHeteroatom = true;
             					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
                     			resultD = getPySystWithHetero(resultsH);
@@ -945,7 +945,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 		while(atomIt.hasNext()){
 			IAtom atomsss = (IAtom) atomIt.next();
 			
-			if(atomContainer.getLonePairCount(atomsss) == 0){
+			if(atomContainer.getConnectedLonePairsCount(atomsss) == 0){
 				PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
 				double result1;
 					result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();

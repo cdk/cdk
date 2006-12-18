@@ -183,11 +183,11 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 					
 					if (j == 0){
 						reactantCloned.getAtom(posA1).setFormalCharge(1);
-						reactantCloned.addElectronContainer(
+						reactantCloned.addSingleElectron(
 								new SingleElectron(reactantCloned.getAtom(posA2)));
 					} else{
 						reactantCloned.getAtom(posA2).setFormalCharge(1);
-						reactantCloned.addElectronContainer(
+						reactantCloned.addSingleElectron(
 								new SingleElectron(reactantCloned.getAtom(posA1)));
 					}
 					

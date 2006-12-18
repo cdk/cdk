@@ -465,19 +465,19 @@ public class StructureDiagramGenerator
 		// determine first bond in Ring
 		logger.debug("Start of layoutRingSet");
 		int i = 0;
-		for (i = 0; i < ring.getElectronContainerCount(); i++)
-		{
-			if (ring.getElectronContainer(i) instanceof IBond)
-			{
-				break;
-			}
-		}
+//		for (i = 0; i < ring.getElectronContainerCount(); i++)
+//		{
+//			if (ring.getElectronContainer(i) instanceof IBond)
+//			{
+//				break;
+//			}
+//		}
 		/*
 		 *  Place the most complex ring at the origin of the coordinate system
 		 */
 		if (!ring.getFlag(CDKConstants.ISPLACED))
 		{
-			sharedAtoms = placeFirstBond((IBond) ring.getElectronContainer(i), firstBondVector);
+			sharedAtoms = placeFirstBond((IBond) ring.getBond(i), firstBondVector);
 			/*
 			 *  Call the method which lays out the new ring.
 			 */
@@ -725,23 +725,20 @@ public class StructureDiagramGenerator
 	private IAtom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
 		IBond bond = null;
-		for (int f = 0; f < molecule.getElectronContainerCount(); f++)
+		for (int f = 0; f < molecule.getBondCount(); f++)
 		{
-			IElectronContainer ec = molecule.getElectronContainer(f);
-			if (ec instanceof IBond)
+			bond = molecule.getBond(f);
+			
+			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+				!bond.getAtom(0).getFlag(CDKConstants.ISPLACED))
 			{
-				bond = (IBond) ec;
-				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtom(0).getFlag(CDKConstants.ISPLACED))
-				{
-					return bond.getAtom(1);
-				}
+				return bond.getAtom(1);
+			}
 
-				if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtom(1).getFlag(CDKConstants.ISPLACED))
-				{
-					return bond.getAtom(0);
-				}
+			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+				!bond.getAtom(1).getFlag(CDKConstants.ISPLACED))
+			{
+				return bond.getAtom(0);
 			}
 		}
 		return null;

@@ -105,8 +105,8 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
         return new NNAtomContainer();
 	}
     
-	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
-        return new NNAtomContainer(atomCount, electronContainerCount);
+	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+        return new NNAtomContainer(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 	}
     
 	public IAtomContainer newAtomContainer(IAtomContainer container) {
@@ -251,8 +251,8 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
         return new NNMolecule();
 	}
 
-	public IMolecule newMolecule(int atomCount, int electronContainerCount) {
-        return new NNMolecule(atomCount, electronContainerCount);
+	public IMolecule newMolecule(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+        return new NNMolecule(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 	}
 
 	public IMolecule newMolecule(IAtomContainer container) {

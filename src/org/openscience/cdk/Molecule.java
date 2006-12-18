@@ -67,9 +67,9 @@ public class Molecule extends AtomContainer implements Serializable, IMolecule, 
 	 * @param  atomCount  init capacity of Atom array
 	 * @param  bondCount  init capacity of Bond array
 	 */
-	public Molecule(int atomCount, int bondCount)
+	public Molecule(int atomCount, int bondCount, int lonePairCount, int singleElectronCount)
 	{
-		super(atomCount, bondCount);
+		super(atomCount, bondCount, lonePairCount, singleElectronCount);
 	}
 
 	/**

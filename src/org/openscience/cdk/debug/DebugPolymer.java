@@ -52,7 +52,7 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
     
     LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
-	public void addAtomParity(IAtomParity parity) {
+    public void addAtomParity(IAtomParity parity) {
 		logger.debug("Adding atom parity: ", parity);
 		super.addAtomParity(parity);
 	}
@@ -67,10 +67,10 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		super.setAtoms(atoms);
 	}
 
-	public void setElectronContainers(IElectronContainer[] electronContainers) {
-		logger.debug("Setting electron containers: ", electronContainers.length);
-		super.setElectronContainers(electronContainers);
-	}
+//	public void setElectronContainers(IElectronContainer[] electronContainers) {
+//		logger.debug("Setting electron containers: ", electronContainers.length);
+//		super.setElectronContainers(electronContainers);
+//	}
 
 	public void setAtom(int number, IAtom atom) {
 		logger.debug("Setting atom at: pos=" + number, " atom=" + atom);
@@ -87,24 +87,29 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.getBond(number);
 	}
 
-	public void setElectronContainer(int number, IElectronContainer electronContainer) {
-		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
-		super.setElectronContainer(number, electronContainer);
+	public ILonePair getLonePair(int number) {
+		logger.debug("Getting lone pair at: ", number);
+		return super.getLonePair(number);
 	}
+	
+	public ISingleElectron getSingleElectron(int number) {
+		logger.debug("Getting single electron at: ", number);
+		return super.getSingleElectron(number);
+	}
+	
+//	public void setElectronContainer(int number, IElectronContainer electronContainer) {
+//		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
+//		super.setElectronContainer(number, electronContainer);
+//	}
 
-	public void setElectronContainerCount(int electronContainerCount) {
-		logger.debug("Setting electron container count: ", electronContainerCount);
-		super.setElectronContainerCount(electronContainerCount);
-	}
+//	public void setElectronContainerCount(int electronContainerCount) {
+//		logger.debug("Setting electron container count: ", electronContainerCount);
+//		super.setElectronContainerCount(electronContainerCount);
+//	}
 
 //	public void setAtomCount(int atomCount) {
 //		logger.debug("Settting atom count: ", atomCount);
 //		super.setAtomCount(atomCount);
-//	}
-
-//	public IAtom[] getAtoms() {
-//		logger.debug("Getting atoms: ", super.getAtoms().length);
-//		return super.getAtoms();
 //	}
 
 	public java.util.Iterator atoms() {
@@ -112,6 +117,11 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.atoms();
 	}
 
+	public java.util.Iterator bonds() {
+		logger.debug("Getting bonds iterator");
+		return super.bonds();
+	}
+	
 	public IElectronContainer[] getElectronContainers() {
 		logger.debug("Getting electron containers: ", super.getElectronContainers().length);
 		return super.getElectronContainers();
@@ -124,11 +134,6 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 
 	public ILonePair[] getLonePairs() {
 		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
-		return super.getLonePairs();
-	}
-
-	public ILonePair[] getLonePairs(IAtom atom) {
-		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getLonePairs().length);
 		return super.getLonePairs();
 	}
 
@@ -153,10 +158,20 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 	}
 
 	public int getBondNumber(IBond bond) {
-		logger.debug("Getting bond numger: ", bond);
+		logger.debug("Getting bond number: ", bond);
 		return super.getBondNumber(bond);
 	}
 
+	public int getLonePairNumber(ILonePair bond) {
+		logger.debug("Getting lone pair number: ", bond);
+		return super.getLonePairNumber(bond);
+	}
+	
+	public int getSingleElectronNumber(ISingleElectron bond) {
+		logger.debug("Getting single electron number: ", bond);
+		return super.getSingleElectronNumber(bond);
+	}
+	
 	public IElectronContainer getElectronContainer(int number) {
 		logger.debug("Getting electron container at: ", number);
 		return super.getElectronContainer(number);
@@ -166,14 +181,40 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		logger.debug("Getting bond for atoms: atom1=" + atom1, " atom2=" + atom2);
 		return super.getBond(atom1, atom2);
 	}
+	
+	public int getAtomCount() {
+		logger.debug("Getting atom count");
+		return super.getAtomCount();
+	}
 
+	public int getBondCount() {
+		logger.debug("Getting bond count");
+		return super.getBondCount();
+	}
+	
+	public int getLonePairCount() {
+		logger.debug("Getting lone pair count");
+		return super.getLonePairCount();
+	}
+
+	public int getSingleElectronCount() {
+		logger.debug("Getting single electron count");
+		return super.getSingleElectronCount();
+	}
+	
+	public int getElectronContainerCount() {
+		logger.debug("Getting electron container count");
+		return super.getElectronContainerCount();
+	}
+
+	
 //	public IAtom[] getConnectedAtoms(IAtom atom) {
 //		logger.debug("Getting connected atoms for atom: ", atom);
 //		return super.getConnectedAtoms(atom);
 //	}
 
 	public List getConnectedAtomsList(IAtom atom) {
-		logger.debug("Getting connecting atoms list for atom: ", atom);
+		logger.debug("Getting connecting atoms vector for atom: ", atom);
 		return super.getConnectedAtomsList(atom);
 	}
 
@@ -183,60 +224,45 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 //	}
 
 	public List getConnectedBondsList(IAtom atom) {
-		logger.debug("Getting connected bonds list for atom: ", atom);
+		logger.debug("Getting connected bonds vector for atom: ", atom);
 		return super.getConnectedBondsList(atom);
 	}
 
-	public List getConnectedElectronContainersList(IAtom atom) {
-		logger.debug("Getting connected electron containers list for atom: ", atom);
+	public List getConnectedLonePairsList(IAtom atom) {
+		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getConnectedLonePairsCount(atom));
+		return super.getConnectedLonePairsList(atom);
+	}
+	
+	public List getConnectedSingleElectronsList(IAtom atom) {
+		logger.debug("Getting single electrons at atom: atom=" + atom, " single electrons=" + super.getConnectedSingleElectronsCount(atom));
+		return super.getConnectedSingleElectronsList(atom);
+	}
+	
+	public java.util.List getConnectedElectronContainersList(IAtom atom) {
+		logger.debug("Getting connected electron containers for atom: ", atom);
 		return super.getConnectedElectronContainersList(atom);
 	}
 
-	public int getBondCount(int atomnumber) {
-		logger.debug("Getting bond count for atom: ", atomnumber);
-		return super.getBondCount(atomnumber);
+	public int getConnectedAtomsCount(IAtom atom) {
+		logger.debug("Getting connected atoms count for atom: ", atom);
+		return super.getConnectedAtomsCount(atom);
 	}
-
-	public int getAtomCount() {
-		logger.debug("Getting atom count");
-		return super.getAtomCount();
+	
+	public int getConnectedBondsCount(IAtom atom) {
+		logger.debug("Getting connected bonds count for atom: ", atom);
+		return super.getConnectedBondsCount(atom);
 	}
-
-	public int getElectronContainerCount() {
-		logger.debug("Getting electron container count");
-		return super.getElectronContainerCount();
+	
+	public int getConnectedLonePairsCount(IAtom atom) {
+		logger.debug("Getting connected lone pairs count for atom: ", atom);
+		return super.getConnectedLonePairsCount(atom);
 	}
-
-	public int getLonePairCount() {
-		logger.debug("Getting lone pair count");
-		return super.getLonePairCount();
+	
+	public int getConnectedSingleElectronsCount(IAtom atom) {
+		logger.debug("Getting connected single electrons count for atom: ", atom);
+		return super.getConnectedSingleElectronsCount(atom);
 	}
-
-	public int getBondCount() {
-		logger.debug("Getting bond count");
-		return super.getBondCount();
-	}
-
-	public int getBondCount(IAtom atom) {
-		logger.debug("Getting bond count for atom: ", atom);
-		return super.getBondCount(atom);
-	}
-
-	public int getLonePairCount(IAtom atom) {
-		logger.debug("Getting lone pair count for atom: ", atom);
-		return super.getLonePairCount(atom);
-	}
-
-	public ISingleElectron[] getSingleElectron(IAtom atom) {
-		logger.debug("Getting single electrons for atom: ", atom);
-		return super.getSingleElectron(atom);
-	}
-
-	public int getSingleElectronSum(IAtom atom) {
-		logger.debug("Getting single electron sum for atom: ", atom);
-		return super.getSingleElectronSum(atom);
-	}
-
+	
 	public double getBondOrderSum(IAtom atom) {
 		logger.debug("Getting bond order sum for atom: ", atom);
 		return super.getBondOrderSum(atom);
@@ -252,13 +278,13 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.getMinimumBondOrder(atom);
 	}
 
-	public void addElectronContainers(IAtomContainer atomContainer) {
-		logger.debug("Adding electron containers from atom container: ", atomContainer);
-		super.addElectronContainers(atomContainer);
-	}
+//	public void addElectronContainers(IAtomContainer atomContainer) {
+//		logger.debug("Adding electron containers from atom container: ", atomContainer);
+//		super.addElectronContainers(atomContainer);
+//	}
 
 	public void add(IAtomContainer atomContainer) {
-		logger.debug("Adding atom container: " + atomContainer);
+		logger.debug("Adding atom container: ", atomContainer);
 		super.add(atomContainer);
 	}
 
@@ -272,10 +298,19 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		super.addBond(bond);
 	}
 
+	public void addLonePair(ILonePair ec) {
+		logger.debug("Adding lone pair: ", ec);
+		super.addLonePair(ec);
+	}
+	
+	public void addSingleElectron(ISingleElectron ec) {
+		logger.debug("Adding single electron: ", ec);
+		super.addSingleElectron(ec);
+	}
+	
 	public void addElectronContainer(IElectronContainer electronContainer) {
 		logger.debug("Adding electron container: ", electronContainer);
 		super.addElectronContainer(electronContainer);
-		
 	}
 
 	public void remove(IAtomContainer atomContainer) {
@@ -288,14 +323,9 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.removeElectronContainer(position);
 	}
 
-	public IElectronContainer removeElectronContainer(IElectronContainer electronContainer) {
+	public void removeElectronContainer(IElectronContainer electronContainer) {
 		logger.debug("Removing electron container: ", electronContainer);
-		return super.removeElectronContainer(electronContainer);
-	}
-
-	public IBond removeBond(IAtom atom1, IAtom atom2) {
-		logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
-		return super.removeBond(atom1, atom2);
+		super.removeElectronContainer(electronContainer);
 	}
 
 	public void removeAtom(int position) {
@@ -303,16 +333,51 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		super.removeAtom(position);
 	}
 
-	public void removeAtomAndConnectedElectronContainers(IAtom atom) {
-		logger.debug("Removing atom and connected electron containers: ", atom);
-		super.removeAtomAndConnectedElectronContainers(atom);		
-	}
-
 	public void removeAtom(IAtom atom) {
 		logger.debug("Removing atom: ", atom);
 		super.removeAtom(atom);
 	}
 
+	public IBond removeBond(int pos) {
+		logger.debug("Removing bond at " + pos);
+		return super.removeBond(pos);
+	}
+	
+	public IBond removeBond(IAtom atom1, IAtom atom2) {
+		logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
+		return super.removeBond(atom1, atom2);
+	}
+	
+	public void removeBond(IBond bond) {
+		logger.debug("Removing bond=" + bond);
+		super.removeBond(bond);
+	}
+	
+	public ILonePair removeLonePair(int pos) {
+		logger.debug("Removing bond at " + pos);
+		return super.removeLonePair(pos);
+	}
+	
+	public void removeLonePair(ILonePair ec) {
+		logger.debug("Removing bond=" + ec);
+		super.removeLonePair(ec);
+	}
+	
+	public ISingleElectron removeSingleElectron(int pos) {
+		logger.debug("Removing bond at " + pos);
+		return super.removeSingleElectron(pos);
+	}
+	
+	public void removeSingleElectron(ISingleElectron ec) {
+		logger.debug("Removing bond=" + ec);
+		super.removeSingleElectron(ec);
+	}
+	
+	public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+		logger.debug("Removing atom and connected electron containers: ", atom);
+		super.removeAtomAndConnectedElectronContainers(atom);		
+	}
+	
 	public void removeAllElements() {
 		logger.debug("Removing all elements");
 		super.removeAllElements();
@@ -339,18 +404,38 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 	}
 
 	public void addLonePair(int atomID) {
-		logger.debug("Adding long pair: ", atomID);
+		logger.debug("Adding lone pair: ", atomID);
 		super.addLonePair(atomID);
 	}
 
-	public boolean contains(IElectronContainer electronContainer) {
-		logger.debug("Contains electron container: ", electronContainer);
-		return super.contains(electronContainer);
+	public void addSingleElectron(int atomID) {
+		logger.debug("Adding single electron: ", atomID);
+		super.addSingleElectron(atomID);
 	}
-
+	
 	public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
 		return super.contains(atom);
+	}
+
+	public boolean contains(IBond bond) {
+		logger.debug("Contains bond: ", bond);
+		return super.contains(bond);
+	}
+	
+	public boolean contains(ILonePair ec) {
+		logger.debug("Contains lone pair: ", ec);
+		return super.contains(ec);
+	}
+	
+	public boolean contains(ISingleElectron ec) {
+		logger.debug("Contains single electron: ", ec);
+		return super.contains(ec);
+	}
+	
+	public boolean contains(IElectronContainer electronContainer) {
+		logger.debug("Contains electron container: ", electronContainer);
+		return super.contains(electronContainer);
 	}
 
 	public void addListener(IChemObjectListener col) {

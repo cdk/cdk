@@ -157,10 +157,10 @@ public class ConjugatedPiSystemsDetector {
 	            }
 		    if(counterOfPi > 0) check = 0;
         }else { 
-			int se = ac.getSingleElectronSum(currentAtom);
+			int se = ac.getConnectedSingleElectronsCount(currentAtom);
 			if (se == 1) {
 				check = 0;  //// DETECTION of radicals
-			}else if (ac.getLonePairCount(currentAtom) > 0 
+			}else if (ac.getConnectedLonePairsCount(currentAtom) > 0 
 				/*&& (currentAtom.getSymbol().equals("N")*/) {
 				check = 0;  //// DETECTION of  lone pair
 			}else {

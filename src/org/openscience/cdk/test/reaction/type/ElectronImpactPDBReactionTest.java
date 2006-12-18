@@ -86,11 +86,11 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(0)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
 
         molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(1)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
         
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
 		
@@ -118,11 +118,11 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(0)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
 
         molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(1)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
 		
 	}
 	/**
@@ -147,11 +147,11 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(0)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
 
         molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge());
-        Assert.assertEquals(1, molecule.getSingleElectronSum(molecule.getAtom(1)));
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
         
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
 		

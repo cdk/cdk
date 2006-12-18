@@ -40,8 +40,8 @@ public class NNMolecule extends Molecule {
 		super.setNotification(false);
 	}
 
-	public NNMolecule(int atomCount, int bondCount) {
-		super(atomCount, bondCount);
+	public NNMolecule(int atomCount, int bondCount, int lonePairCount, int singleElectronCount) {
+		super(atomCount, bondCount, lonePairCount, singleElectronCount);
 		super.setNotification(false);
 	}
 

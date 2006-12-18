@@ -79,7 +79,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
-		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
+		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
         Object[] params = {Boolean.FALSE};
@@ -115,7 +115,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
-		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
+		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
@@ -152,7 +152,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*[C-]=C-C*/
 		IMolecule molecule = getMolecule1();
-		molecule.addElectronContainer(new LonePair(molecule.getAtom(0)));
+		molecule.addLonePair(new LonePair(molecule.getAtom(0)));
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/

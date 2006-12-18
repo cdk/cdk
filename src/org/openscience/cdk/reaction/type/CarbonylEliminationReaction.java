@@ -204,7 +204,7 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 							int charge = acCloned.getAtom(atom3P).getFormalCharge();
 							acCloned.getAtom(atom3P).setFormalCharge(charge+1);
 							
-							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));
+							acCloned.addLonePair(new LonePair(acCloned.getAtom(atom2P)));
 							acCloned.getAtom(atom2P).setFormalCharge(-1);
 							
 							IBond bondClon = null;

@@ -263,7 +263,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 				if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC)&& !nextAtom.getFlag(CDKConstants.ISINRING)& nextAtom.getSymbol().equals("C")) & !nextAtom.getFlag(CDKConstants.VISITED)){
 	    			path.addElement(nextAtom);
 		    		nextAtom.setFlag(CDKConstants.VISITED, true);
-		    		if (container.getBondCount(nextAtom) > 1){
+		    		if (container.getConnectedBondsCount(nextAtom) > 1){
 						newSphere.addElement(nextAtom);
 					}
 				}else{

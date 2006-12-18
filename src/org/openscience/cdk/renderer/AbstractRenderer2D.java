@@ -252,7 +252,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 		int alignment = GeometryTools.getBestAlignmentForLabel(container, atom, r2dm.getRenderingCoordinates());
 		boolean drawSymbol = false;
-		boolean isRadical = (container.getSingleElectronSum(atom) > 0);
+		boolean isRadical = (container.getConnectedSingleElectronsCount(atom) > 0);
 		if (atom instanceof IPseudoAtom)
 		{
 			drawSymbol = false;

@@ -64,10 +64,10 @@ public class ConvertToRadicalAction extends JCPAction {
                 
                 if(number > 0.0)
                 {
-                	ElectronContainer electronContainer = new SingleElectron(atom);
-                    relevantContainer.addElectronContainer(electronContainer);
+                	SingleElectron singleElectron = new SingleElectron(atom);
+                    relevantContainer.addSingleElectron(singleElectron);
                     UndoableEdit  edit = new ConvertToRadicalEdit(relevantContainer, 
-                            electronContainer);
+                    		singleElectron);
                     jcpPanel.getUndoSupport().postEdit(edit);
                     logger.info("Added single electron to atom");
                     logger.debug("new AC: ", relevantContainer);

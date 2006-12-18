@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -34,8 +36,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -195,13 +197,13 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 									
 							int charge = acCloned.getAtom(atom0P).getFormalCharge();
 							acCloned.getAtom(atom0P).setFormalCharge(charge+1);
-							ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-							acCloned.removeElectronContainer(selectron[selectron.length -1]);
+							List selectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom0P));
+							acCloned.removeLonePair((ILonePair)selectron.get(selectron.size() -1));
 							
 							charge = acCloned.getAtom(atom1P).getFormalCharge();
 							acCloned.getAtom(atom1P).setFormalCharge(charge-1);
 							ILonePair lp = acCloned.getBuilder().newLonePair(acCloned.getAtom(atom1P));
-							acCloned.addElectronContainer(lp);
+							acCloned.addLonePair(lp);
 							IBond bondjClon = null;
 							for(int l = 0 ; l<acCloned.getBondCount();l++){
 								IBond bb = acCloned.getBond(l);

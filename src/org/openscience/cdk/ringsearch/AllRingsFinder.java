@@ -208,7 +208,7 @@ public class AllRingsFinder
 			for (Iterator e = ac.atoms(); e.hasNext(); )
 			{
 				atom = (IAtom) e.next();
-				if (ac.getBondCount(atom) == 1)
+				if (ac.getConnectedBondsCount(atom) == 1)
 				{
 					ac.removeAtomAndConnectedElectronContainers(atom);
 					removedSomething = true;
@@ -400,7 +400,7 @@ public class AllRingsFinder
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtom(f);
-			degree = ac.getBondCount(atom);
+			degree = ac.getConnectedBondsCount(atom);
 
 			if (degree < minDegree)
 			{

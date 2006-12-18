@@ -25,6 +25,8 @@
 package org.openscience.cdk.test;
 
 
+import java.util.List;
+
 import javax.vecmath.Point2d;
 
 import junit.framework.Test;
@@ -39,7 +41,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISingleElectron;
@@ -128,12 +129,13 @@ public class AtomContainerTest extends CDKTestCase {
 		molecule.addBond(1, 2, 1.0); // 2
 		molecule.addBond(2, 3, 1.0); // 3
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
-		assertEquals(molecule.getElectronContainerCount(), clonedMol.getElectronContainerCount());
+		assertNotNull(clonedMol);
+		assertEquals(molecule.getBondCount(), clonedMol.getBondCount());
 		for (int f = 0; f < molecule.getElectronContainerCount(); f++) {
 			for (int g = 0; g < clonedMol.getElectronContainerCount(); g++) {
-				assertNotNull(molecule.getElectronContainer(f));
-				assertNotNull(clonedMol.getElectronContainer(g));
-				assertNotSame(molecule.getElectronContainer(f), clonedMol.getElectronContainer(g));
+				assertNotNull(molecule.getBond(f));
+				assertNotNull(clonedMol.getBond(g));
+				assertNotSame(molecule.getBond(f), clonedMol.getBond(g));
 			}
 		}
 	}
@@ -148,6 +150,7 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test cloning of atoms in bonds
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
+		assertNotNull(clonedMol);
         assertNotSame(atom1, clonedMol.getBond(0).getAtom(0));
         assertNotSame(atom2, clonedMol.getBond(0).getAtom(1));
 	}
@@ -162,6 +165,7 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test that cloned bonds contain atoms from cloned atomcontainer
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
+		assertNotNull(clonedMol);
         assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(0)));
         assertTrue(clonedMol.contains(clonedMol.getBond(0).getAtom(1)));
 	}
@@ -176,7 +180,8 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test that cloned bonds contain atoms from cloned atomcontainer
 		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
-        assertEquals(1, clonedMol.getLonePairCount(clonedMol.getAtom(0)));
+		assertNotNull(clonedMol);
+        assertEquals(1, clonedMol.getConnectedLonePairsCount(clonedMol.getAtom(0)));
 	}
 
     public void testGetConnectedElectronContainersList_IAtom() {
@@ -206,8 +211,8 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
 
         assertEquals(3, acetone.getConnectedElectronContainersList(o).size());
         assertEquals(3, acetone.getConnectedElectronContainersList(c1).size());
@@ -243,8 +248,8 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
 
         assertEquals(1, acetone.getConnectedBondsList(o).size());
         assertEquals(3, acetone.getConnectedBondsList(c1).size());
@@ -288,7 +293,7 @@ public class AtomContainerTest extends CDKTestCase {
 //        assertEquals(1, acetone.getConnectedBondsVector(c3).size());
 //    }
 
-    public void testGetLonePairs_IAtom() {
+    public void testGetConnectedLonePairsList_IAtom() {
         // acetone molecule
         IMolecule acetone = builder.newMolecule();
         
@@ -307,21 +312,21 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        assertEquals(0, acetone.getLonePairs(o).length);
-        assertEquals(0, acetone.getLonePairs(c1).length);
-        assertEquals(0, acetone.getLonePairs(c2).length);
-        assertEquals(0, acetone.getLonePairs(c3).length);
+        assertEquals(0, acetone.getConnectedLonePairsList(o).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c1).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c2).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c3).size());
 
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
 
-        assertEquals(2, acetone.getLonePairs(o).length);
-        assertEquals(0, acetone.getLonePairs(c1).length);
-        assertEquals(0, acetone.getLonePairs(c2).length);
-        assertEquals(0, acetone.getLonePairs(c3).length);
+        assertEquals(2, acetone.getConnectedLonePairsList(o).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c1).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c2).size());
+        assertEquals(0, acetone.getConnectedLonePairsList(c3).size());
 
     }
 
@@ -348,8 +353,8 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         // remove the oxygen
         acetone.removeAtomAndConnectedElectronContainers(o);
@@ -358,42 +363,42 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(0, acetone.getLonePairCount());
     }
 
-    public void testGetElectronContainer_int() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IBond b1 = builder.newBond(c1, c2,1);
-        IBond b2 = builder.newBond(c1, o, 2);
-        IBond b3 = builder.newBond(c1, c3,1);
-        acetone.addBond(b1);
-        acetone.addBond(b2);
-        acetone.addBond(b3);
-        
-        // add lone pairs on oxygen
-        ILonePair lp1 = builder.newLonePair(o);
-        ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
-        
-		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
-            try {
-            	org.openscience.cdk.interfaces.IElectronContainer ec = acetone.getElectronContainer(i);
-                if (ec == null) {
-                    fail("ElectronContainer is unexpectedly null!");
-                }
-            } catch (Exception e) {
-                fail();
-            }
-		}
-    }
+//    public void testGetElectronContainer_int() {
+//        // acetone molecule
+//        IMolecule acetone = builder.newMolecule();
+//        
+//        IAtom c1 = builder.newAtom("C");
+//        IAtom c2 = builder.newAtom("C");
+//        IAtom o = builder.newAtom("O");
+//        IAtom c3 = builder.newAtom("C");
+//        acetone.addAtom(c1);
+//        acetone.addAtom(c2);
+//        acetone.addAtom(c3);
+//        acetone.addAtom(o);
+//        IBond b1 = builder.newBond(c1, c2,1);
+//        IBond b2 = builder.newBond(c1, o, 2);
+//        IBond b3 = builder.newBond(c1, c3,1);
+//        acetone.addBond(b1);
+//        acetone.addBond(b2);
+//        acetone.addBond(b3);
+//        
+//        // add lone pairs on oxygen
+//        ILonePair lp1 = builder.newLonePair(o);
+//        ILonePair lp2 = builder.newLonePair(o);
+//        acetone.addLonePair(lp1);
+//        acetone.addLonePair(lp2);
+//        
+//		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
+//            try {
+//            	org.openscience.cdk.interfaces.IElectronContainer ec = acetone.getElectronContainer(i);
+//                if (ec == null) {
+//                    fail("ElectronContainer is unexpectedly null!");
+//                }
+//            } catch (Exception e) {
+//                fail();
+//            }
+//		}
+//    }
     
     public void testGetAtomCount() {
         // acetone molecule
@@ -435,17 +440,18 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(3, acetone.getBondCount());
     }
     
-    public void testAtomContainer_int_int() {
+    public void testAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
-        IAtomContainer ac = new org.openscience.cdk.AtomContainer(5,6);
+        IAtomContainer ac = new org.openscience.cdk.AtomContainer(5,6,1,2);
         
         assertEquals(0, ac.getAtomCount());
-        assertEquals(0, ac.getElectronContainers().length);
+        assertEquals(0, ac.getElectronContainerCount());
+        
         
         // test wether the ElectronContainer is correctly initialized
         ac.addBond(builder.newBond(builder.newAtom("C"), builder.newAtom("C"), 2));
-        ac.addElectronContainer(builder.newLonePair(builder.newAtom("N")));
+        ac.addLonePair(builder.newLonePair(builder.newAtom("N")));
     }
 
     public void testAtomContainer() {
@@ -457,7 +463,7 @@ public class AtomContainerTest extends CDKTestCase {
         
         // test wether the ElectronContainer is correctly initialized
         container.addBond(builder.newBond(builder.newAtom("C"), builder.newAtom("C"), 2));
-        container.addElectronContainer(builder.newLonePair(builder.newAtom("N")));
+        container.addLonePair(builder.newLonePair(builder.newAtom("N")));
     }
 
     public void testAtomContainer_IAtomContainer() {
@@ -477,7 +483,7 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IAtomContainer container = new org.openscience.cdk.AtomContainer(acetone);
+        IAtomContainer container = builder.newAtomContainer(acetone);
         assertEquals(4, container.getAtomCount());
         assertEquals(3, container.getBondCount());
     }
@@ -658,19 +664,19 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(1.0, acetone.getBond(2).getOrder(), 0.00001);
     }
     
-    public void testSetElectronContainer_int_IElectronContainer() {
-        IAtomContainer container = builder.newAtomContainer();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        container.addAtom(c1);
-        container.addAtom(c2);
-        IBond b = builder.newBond(c1, c2, 3);
-        container.setElectronContainer(3, b);
-        
-        assertTrue(container.getElectronContainer(3) instanceof org.openscience.cdk.interfaces.IBond);
-        IBond bond = (IBond)container.getElectronContainer(3);
-        assertEquals(3.0, bond.getOrder(), 0.00001);
-    }
+//    public void testSetElectronContainer_int_IElectronContainer() {
+//        IAtomContainer container = builder.newAtomContainer();
+//        IAtom c1 = builder.newAtom("C");
+//        IAtom c2 = builder.newAtom("C");
+//        container.addAtom(c1);
+//        container.addAtom(c2);
+//        IBond b = builder.newBond(c1, c2, 3);
+//        container.setElectronContainer(3, b);
+//        
+//        assertTrue(container.getElectronContainer(3) instanceof org.openscience.cdk.interfaces.IBond);
+//        IBond bond = (IBond)container.getElectronContainer(3);
+//        assertEquals(3.0, bond.getOrder(), 0.00001);
+//    }
     
     public void testGetElectronContainerCount() {
         // acetone molecule
@@ -691,8 +697,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertEquals(3, acetone.getBondCount());
         assertEquals(2, acetone.getLonePairCount());
@@ -747,12 +753,12 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(0, acetone.getElectronContainerCount());
     }
     
-    public void testSetElectronContainerCount_int() {
-        IAtomContainer container = builder.newAtomContainer();
-        container.setElectronContainerCount(2);
-        
-        assertEquals(2, container.getElectronContainerCount());
-    }
+//    public void testSetElectronContainerCount_int() {
+//        IAtomContainer container = builder.newAtomContainer();
+//        container.setElectronContainerCount(2);
+//        
+//        assertEquals(2, container.getElectronContainerCount());
+//    }
     
 //    public void testSetAtomCount_int() {
 //        IAtomContainer container = builder.newAtomContainer();
@@ -761,20 +767,20 @@ public class AtomContainerTest extends CDKTestCase {
 //        assertEquals(2, container.getAtomCount());
 //    }
     
-    public void testGetAtoms() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        
-        assertEquals(4, acetone.getAtomCount());
-    }
+//    public void testGetAtoms() {
+//        // acetone molecule
+//        IMolecule acetone = builder.newMolecule();
+//        IAtom c1 = builder.newAtom("C");
+//        IAtom c2 = builder.newAtom("C");
+//        IAtom o = builder.newAtom("O");
+//        IAtom c3 = builder.newAtom("C");
+//        acetone.addAtom(c1);
+//        acetone.addAtom(c2);
+//        acetone.addAtom(c3);
+//        acetone.addAtom(o);
+//        
+//        assertEquals(4, acetone.getAtoms().length);
+//    }
     
     public void testAddAtom_IAtom() {
         // acetone molecule
@@ -991,10 +997,10 @@ public class AtomContainerTest extends CDKTestCase {
         
         assertEquals(3, acetone.getBondCount());
         assertEquals(5, acetone.getElectronContainerCount());
-        acetone.removeElectronContainer(0);
+        acetone.removeElectronContainer(3);
         assertEquals(3, acetone.getBondCount());
         assertEquals(4, acetone.getElectronContainerCount());
-        acetone.removeElectronContainer(1); // first bond now
+        acetone.removeElectronContainer(0); // first bond now
         assertEquals(2, acetone.getBondCount());
         assertEquals(3, acetone.getElectronContainerCount());
     }
@@ -1058,64 +1064,64 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(b3, bonds[2]);
     }
 
-    public void testSetElectronContainers_arrayIElectronContainer() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IElectronContainer[] electronContainers = new IElectronContainer[3];
-        electronContainers[0] = builder.newBond(c1, c2,1);
-        electronContainers[1] = builder.newBond(c1, o, 2);
-        electronContainers[2] = builder.newBond(c1, c3,1);
-        acetone.setElectronContainers(electronContainers);
-        
-        assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            assertNotNull(bonds[i]);
-        }
-        assertEquals(electronContainers[0], bonds[0]);
-        assertEquals(electronContainers[1], bonds[1]);
-        assertEquals(electronContainers[2], bonds[2]);
-    }
+//    public void testSetElectronContainers_arrayIElectronContainer() {
+//        // acetone molecule
+//        IMolecule acetone = builder.newMolecule();
+//        IAtom c1 = builder.newAtom("C");
+//        IAtom c2 = builder.newAtom("C");
+//        IAtom o = builder.newAtom("O");
+//        IAtom c3 = builder.newAtom("C");
+//        acetone.addAtom(c1);
+//        acetone.addAtom(c2);
+//        acetone.addAtom(c3);
+//        acetone.addAtom(o);
+//        IElectronContainer[] electronContainers = new IElectronContainer[3];
+//        electronContainers[0] = builder.newBond(c1, c2,1);
+//        electronContainers[1] = builder.newBond(c1, o, 2);
+//        electronContainers[2] = builder.newBond(c1, c3,1);
+//        acetone.setElectronContainers(electronContainers);
+//        
+//        assertEquals(3, acetone.getBondCount());
+//        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
+//        for (int i=0; i<bonds.length; i++) {
+//            assertNotNull(bonds[i]);
+//        }
+//        assertEquals(electronContainers[0], bonds[0]);
+//        assertEquals(electronContainers[1], bonds[1]);
+//        assertEquals(electronContainers[2], bonds[2]);
+//    }
 
-    public void testAddElectronContainers_IAtomContainer() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IElectronContainer[] electronContainers = new IElectronContainer[3];
-        electronContainers[0] = builder.newBond(c1, c2,1);
-        electronContainers[1] = builder.newBond(c1, o, 2);
-        electronContainers[2] = builder.newBond(c1, c3,1);
-        acetone.setElectronContainers(electronContainers);
-        
-        IAtomContainer tested = builder.newAtomContainer();
-        tested.addBond(builder.newBond(c2, c3));
-        tested.addElectronContainers(acetone);
-        
-        assertEquals(0, tested.getAtomCount());
-        assertEquals(4, tested.getBondCount());
-        org.openscience.cdk.interfaces.IBond[] bonds = tested.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            assertNotNull(bonds[i]);
-        }
-        assertEquals(electronContainers[0], bonds[1]);
-        assertEquals(electronContainers[1], bonds[2]);
-        assertEquals(electronContainers[2], bonds[3]);
-    }
+//    public void testAddElectronContainers_IAtomContainer() {
+//        // acetone molecule
+//        IMolecule acetone = builder.newMolecule();
+//        IAtom c1 = builder.newAtom("C");
+//        IAtom c2 = builder.newAtom("C");
+//        IAtom o = builder.newAtom("O");
+//        IAtom c3 = builder.newAtom("C");
+//        acetone.addAtom(c1);
+//        acetone.addAtom(c2);
+//        acetone.addAtom(c3);
+//        acetone.addAtom(o);
+//        IElectronContainer[] electronContainers = new IElectronContainer[3];
+//        electronContainers[0] = builder.newBond(c1, c2,1);
+//        electronContainers[1] = builder.newBond(c1, o, 2);
+//        electronContainers[2] = builder.newBond(c1, c3,1);
+//        acetone.setElectronContainers(electronContainers);
+//        
+//        IAtomContainer tested = builder.newAtomContainer();
+//        tested.addBond(builder.newBond(c2, c3));
+//        tested.addElectronContainers(acetone);
+//        
+//        assertEquals(0, tested.getAtomCount());
+//        assertEquals(4, tested.getBondCount());
+//        org.openscience.cdk.interfaces.IBond[] bonds = tested.getBonds();
+//        for (int i=0; i<bonds.length; i++) {
+//            assertNotNull(bonds[i]);
+//        }
+//        assertEquals(electronContainers[0], bonds[1]);
+//        assertEquals(electronContainers[1], bonds[2]);
+//        assertEquals(electronContainers[2], bonds[3]);
+//    }
 
     public void testAddElectronContainer_IElectronContainer() {
         // acetone molecule
@@ -1142,13 +1148,13 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c);
         acetone.addAtom(o);
         IBond b1 = builder.newBond(c, o, 2.0);
-        acetone.addElectronContainer(b1);
-        acetone.addElectronContainer(builder.newLonePair(o));
+        acetone.addBond(b1);
+        acetone.addLonePair(builder.newLonePair(o));
         ISingleElectron single = builder.newSingleElectron(c);
-        acetone.addElectronContainer(single);
+        acetone.addSingleElectron(single);
 
-        assertEquals(1, acetone.getSingleElectron(c).length);
-        assertEquals(single, acetone.getSingleElectron(c)[0]);
+        assertEquals(1, acetone.getConnectedSingleElectronsCount(c));
+        assertEquals(single, (ISingleElectron)acetone.getConnectedSingleElectronsList(c).get(0));
     }
 
     public void testRemoveBond_IAtom_IAtom() {
@@ -1260,8 +1266,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertTrue(acetone.contains(b1));
         assertTrue(acetone.contains(b2));
@@ -1289,8 +1295,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertEquals(5, acetone.getElectronContainers().length);
     }
@@ -1314,8 +1320,8 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertNotNull(acetone.getLonePairs());
         assertEquals(2, acetone.getLonePairs().length);
@@ -1547,13 +1553,13 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertEquals(2, acetone.getLonePairCount());
     }
 
-    public void testGetLonePairCount_IAtom() {
+    public void testGetConnectedLonePairsCount_IAtom() {
         IMolecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
@@ -1573,13 +1579,13 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
-        assertEquals(2, acetone.getLonePairCount(o));
-        assertEquals(0, acetone.getLonePairCount(c2));
-        assertEquals(0, acetone.getLonePairCount(c3));
-        assertEquals(0, acetone.getLonePairCount(c1));
+        assertEquals(2, acetone.getConnectedLonePairsCount(o));
+        assertEquals(0, acetone.getConnectedLonePairsCount(c2));
+        assertEquals(0, acetone.getConnectedLonePairsCount(c3));
+        assertEquals(0, acetone.getConnectedLonePairsCount(c1));
     }
 
     public void testGetBondOrderSum_IAtom() {
@@ -1602,8 +1608,8 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
         assertEquals(4.0, acetone.getBondOrderSum(c1), 0.00001);
         assertEquals(1.0, acetone.getBondOrderSum(c2), 0.00001);
@@ -1631,13 +1637,13 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
-        assertEquals(3, acetone.getBondCount(c1));
-        assertEquals(1, acetone.getBondCount(c2));
-        assertEquals(1, acetone.getBondCount(c3));
-        assertEquals(1, acetone.getBondCount(o));
+        assertEquals(3, acetone.getConnectedBondsCount(c1));
+        assertEquals(1, acetone.getConnectedBondsCount(c2));
+        assertEquals(1, acetone.getConnectedBondsCount(c3));
+        assertEquals(1, acetone.getConnectedBondsCount(o));
     }
     
     public void testGetBondCount_int() {
@@ -1660,13 +1666,13 @@ public class AtomContainerTest extends CDKTestCase {
         // add lone pairs on oxygen
         ILonePair lp1 = builder.newLonePair(o);
         ILonePair lp2 = builder.newLonePair(o);
-        acetone.addElectronContainer(lp1);
-        acetone.addElectronContainer(lp2);
+        acetone.addLonePair(lp1);
+        acetone.addLonePair(lp2);
         
-        assertEquals(3, acetone.getBondCount(0));
-        assertEquals(1, acetone.getBondCount(1));
-        assertEquals(1, acetone.getBondCount(2));
-        assertEquals(1, acetone.getBondCount(3));
+        assertEquals(3, acetone.getConnectedBondsCount(0));
+        assertEquals(1, acetone.getConnectedBondsCount(1));
+        assertEquals(1, acetone.getConnectedBondsCount(2));
+        assertEquals(1, acetone.getConnectedBondsCount(3));
     }
     
     public void testGetAtomParity_IAtom() {
@@ -1733,7 +1739,7 @@ public class AtomContainerTest extends CDKTestCase {
         testGetAtomParity_IAtom();
     }
     
-    public void testGetSingleElectronSum_IAtom() {
+    public void testGetConnectedSingleElectronsCount_IAtom() {
         // another rather artifial example
         IMolecule acetone = builder.newMolecule();
         IAtom c = builder.newAtom("C");
@@ -1741,21 +1747,366 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addAtom(c);
         acetone.addAtom(o);
         IBond b1 = builder.newBond(c, o, 2.0);
-        acetone.addElectronContainer(b1);
+        acetone.addBond(b1);
         ISingleElectron single1 = builder.newSingleElectron(c);
         ISingleElectron single2 = builder.newSingleElectron(c);
         ISingleElectron single3 = builder.newSingleElectron(o);
-        acetone.addElectronContainer(single1);
-        acetone.addElectronContainer(single2);
-        acetone.addElectronContainer(single3);
+        acetone.addSingleElectron(single1);
+        acetone.addSingleElectron(single2);
+        acetone.addSingleElectron(single3);
 
-        assertEquals(2, acetone.getSingleElectron(c).length);
-        assertEquals(1, acetone.getSingleElectron(o).length);
-        assertEquals(single1, acetone.getSingleElectron(c)[0]);
-        assertEquals(single2, acetone.getSingleElectron(c)[1]);
-        assertEquals(single3, acetone.getSingleElectron(o)[0]);
+        assertEquals(2, acetone.getConnectedSingleElectronsCount(c));
+        assertEquals(1, acetone.getConnectedSingleElectronsCount(o));
+        assertEquals(single1, (ISingleElectron)acetone.getConnectedSingleElectronsList(c).get(0));
+        assertEquals(single2, (ISingleElectron)acetone.getConnectedSingleElectronsList(c).get(1));
+        assertEquals(single3, (ISingleElectron)acetone.getConnectedSingleElectronsList(o).get(0));
         
-        assertEquals(2, acetone.getSingleElectronSum(c));
-        assertEquals(1, acetone.getSingleElectronSum(o));
+        assertEquals(2, acetone.getConnectedSingleElectronsCount(c));
+        assertEquals(1, acetone.getConnectedSingleElectronsCount(o));
+    }
+    
+    public void testAddLonePair_ILonePair() {
+    	 IMolecule acetone = builder.newMolecule();
+         IAtom c = builder.newAtom("C");
+         IAtom o = builder.newAtom("O");
+         acetone.addAtom(c);
+         acetone.addAtom(o);
+         IBond b1 = builder.newBond(c, o, 2.0);
+         acetone.addBond(b1);
+         ILonePair lp1 = builder.newLonePair(o);
+         ILonePair lp2 = builder.newLonePair(o);
+         acetone.addLonePair(lp1);
+         acetone.addLonePair(lp2);
+         assertEquals(2, acetone.getConnectedLonePairsCount(o));
+         assertEquals(0, acetone.getConnectedLonePairsCount(c));
+    }
+    
+    public void testAddSingleElectron_ISingleElectron() {
+    	IMolecule acetone = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b1 = builder.newBond(c, o, 2.0);
+        acetone.addBond(b1);
+        ISingleElectron single1 = builder.newSingleElectron(c);
+        ISingleElectron single2 = builder.newSingleElectron(c);
+        ISingleElectron single3 = builder.newSingleElectron(o);
+        acetone.addSingleElectron(single1);
+        acetone.addSingleElectron(single2);
+        acetone.addSingleElectron(single3);
+        assertEquals(single1, (ISingleElectron)acetone.getConnectedSingleElectronsList(c).get(0));
+        assertEquals(single2, (ISingleElectron)acetone.getConnectedSingleElectronsList(c).get(1));
+        assertEquals(single3, (ISingleElectron)acetone.getConnectedSingleElectronsList(o).get(0));
+    }
+    
+    public void testRemoveBond_int() {
+    	IMolecule acetone = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b = builder.newBond(c, o, 2.0);
+        acetone.addBond(b);
+        acetone.addAtom(c1);
+        IBond b1 = builder.newBond(c, c1, 1.0);
+        acetone.addBond(b1);
+        acetone.addAtom(c2);
+        IBond b2 = builder.newBond(c, c2, 1.0);
+        acetone.addBond(b2);
+        acetone.removeBond(2);
+        assertEquals(2, acetone.getBondCount());
+        assertEquals(b, acetone.getBond(0));
+        assertEquals(b1, acetone.getBond(1));
+        acetone.removeBond(0);
+        assertEquals(1, acetone.getBondCount());
+        assertEquals(b1, acetone.getBond(0));
+    }
+    
+    public void testContains_IBond() {
+    	IMolecule acetone = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b1 = builder.newBond(c, o, 2.0);
+        acetone.addBond(b1);
+        IBond falseBond = builder.newBond();
+        assertTrue(acetone.contains(b1));
+        assertFalse(acetone.contains(falseBond));
+    }
+    
+    public void testAddSingleElectron_int() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        mol.addSingleElectron(1);
+        assertEquals(2, mol.getSingleElectronCount());
+        assertNotNull(mol.getSingleElectron(1));
+    }
+    
+    public void testGetConnectedSingleElectronsList_IAtom() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        mol.addSingleElectron(1);
+        List list = mol.getConnectedSingleElectronsList(c1);
+        assertEquals(2, list.size());
+    }
+    
+    public void testRemoveBond_IBond() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addBond(0,1,2.0);
+        assertEquals(1, mol.getBondCount());
+        IBond bond = mol.getBond(0);
+        mol.removeBond(bond);
+        assertEquals(0, mol.getBondCount());
+    }
+    
+    public void testGetConnectedBondsCount_IAtom() {
+    	IMolecule acetone = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b = builder.newBond(c, o, 2.0);
+        acetone.addBond(b);
+        acetone.addAtom(c1);
+        IBond b1 = builder.newBond(c, c1, 1.0);
+        acetone.addBond(b1);
+        acetone.addAtom(c2);
+        IBond b2 = builder.newBond(c, c2, 1.0);
+        acetone.addBond(b2);
+        assertEquals(1, acetone.getConnectedBondsCount(o));
+        assertEquals(3, acetone.getConnectedBondsCount(c));
+        assertEquals(1, acetone.getConnectedBondsCount(c1));
+        assertEquals(1, acetone.getConnectedBondsCount(c2));
+    }
+    
+    public void testGetConnectedBondsCount_int() {
+    	IMolecule acetone = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b = builder.newBond(c, o, 2.0);
+        acetone.addBond(b);
+        acetone.addAtom(c1);
+        IBond b1 = builder.newBond(c, c1, 1.0);
+        acetone.addBond(b1);
+        acetone.addAtom(c2);
+        IBond b2 = builder.newBond(c, c2, 1.0);
+        acetone.addBond(b2);
+        assertEquals(1, acetone.getConnectedBondsCount(1));
+        assertEquals(3, acetone.getConnectedBondsCount(0));
+        assertEquals(1, acetone.getConnectedBondsCount(2));
+        assertEquals(1, acetone.getConnectedBondsCount(3));
+    }
+    
+    public void testSetBonds_arrayIBond() {
+    	IMolecule acetone = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b = builder.newBond(c, o, 2.0);
+        //acetone.addBond(b);
+        acetone.addAtom(c1);
+        IBond b1 = builder.newBond(c, c1, 1.0);
+        //acetone.addBond(b1);
+        acetone.addAtom(c2);
+        IBond b2 = builder.newBond(c, c2, 1.0);
+        //acetone.addBond(b2);
+        IBond[] bonds = new IBond[3];
+        bonds[0] = b;
+        bonds[1] = b1;
+        bonds[2] = b2;
+        acetone.setBonds(bonds);
+        assertEquals(3, acetone.getBondCount());
+        assertEquals(acetone.getBond(2), b2);
+    }
+    
+    public void testGetLonePair_int() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addLonePair(1);
+        ILonePair lp = builder.newLonePair(c);
+        mol.addLonePair(lp);
+        assertEquals(lp, mol.getLonePair(1));
+    }
+    
+    public void testGetSingleElectron_int() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        ISingleElectron se = builder.newSingleElectron(c);
+        mol.addSingleElectron(se);
+        assertEquals(se, mol.getSingleElectron(1));
+    }
+    
+    public void testGetLonePairNumber_ILonePair() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addLonePair(1);
+        ILonePair lp = builder.newLonePair(c);
+        mol.addLonePair(lp);
+        assertEquals(1, mol.getLonePairNumber(lp));
+    }
+    
+    public void testGetSingleElectronNumber_ISingleElectron() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        ISingleElectron se = builder.newSingleElectron(c);
+        mol.addSingleElectron(se);
+        assertEquals(1, mol.getSingleElectronNumber(se));
+    }
+    
+    public void testGetElectronContainer_int() {
+    	IMolecule acetone = builder.newMolecule();
+    	IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        IAtom o = builder.newAtom("O");
+        acetone.addAtom(c);
+        acetone.addAtom(o);
+        IBond b = builder.newBond(c, o, 2.0);
+        acetone.addBond(b);
+        acetone.addAtom(c1);
+        IBond b1 = builder.newBond(c, c1, 1.0);
+        acetone.addBond(b1);
+        acetone.addAtom(c2);
+        IBond b2 = builder.newBond(c, c2, 1.0);
+        acetone.addBond(b2);
+        acetone.addLonePair(1);
+        acetone.addLonePair(1);
+        assertTrue(acetone.getElectronContainer(2) instanceof IBond);
+        assertTrue(acetone.getElectronContainer(4) instanceof ILonePair);
+    }
+    
+    public void testGetSingleElectronCount() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        mol.addSingleElectron(1);
+        assertEquals(2, mol.getSingleElectronCount());
+    }
+    
+    public void testRemoveLonePair_int() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addLonePair(1);
+        ILonePair lp = builder.newLonePair(c);
+        mol.addLonePair(lp);
+        mol.removeLonePair(0);
+        assertEquals(1, mol.getLonePairCount());
+        assertEquals(lp, mol.getLonePair(0));
+    }
+    
+    public void testRemoveLonePair_ILonePair() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        ILonePair lp = builder.newLonePair(c1);
+        mol.addLonePair(lp);
+        ILonePair lp1 = builder.newLonePair(c);
+        mol.addLonePair(lp1);
+        mol.removeLonePair(lp);
+        assertEquals(1, mol.getLonePairCount());
+        assertEquals(lp1, mol.getLonePair(0));
+    }
+    
+    public void testRemoveSingleElectron_int() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        mol.addSingleElectron(1);
+        ISingleElectron se = builder.newSingleElectron(c);
+        mol.addSingleElectron(se);
+        mol.removeSingleElectron(0);
+        assertEquals(1, mol.getSingleElectronCount());
+        assertEquals(se, mol.getSingleElectron(0));
+    }
+    
+    public void testRemoveSingleElectron_ISingleElectron() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        ISingleElectron se1 = builder.newSingleElectron(c1);
+        mol.addSingleElectron(se1);
+        ISingleElectron se = builder.newSingleElectron(c);
+        mol.addSingleElectron(se);
+        assertEquals(2, mol.getSingleElectronCount());
+        mol.removeSingleElectron(se);
+        assertEquals(1, mol.getSingleElectronCount());
+        assertEquals(se1,mol.getSingleElectron(0));
+    }
+    
+    public void testContains_ILonePair() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        ILonePair lp = builder.newLonePair(c1);
+        mol.addLonePair(lp);
+        ILonePair lp1 = builder.newLonePair(c);
+        assertTrue(mol.contains(lp));
+        assertFalse(mol.contains(lp1));
+    }
+    
+    public void testContains_ISingleElectron() {
+    	IMolecule mol = builder.newMolecule();
+        IAtom c = builder.newAtom("C");
+        IAtom c1 = builder.newAtom("C");
+        mol.addAtom(c);
+        mol.addAtom(c1);
+        ISingleElectron se = builder.newSingleElectron(c1);
+        mol.addSingleElectron(se);
+        ISingleElectron se1 = builder.newSingleElectron(c1);
+        assertTrue(mol.contains(se));
+        assertFalse(mol.contains(se1));
     }
 }

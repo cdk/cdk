@@ -204,7 +204,7 @@ public class Polarizability {
                 polarizabilitiyFactor = 0.460;
             }
         } else if (AtomSymbol.equals("P")) {
-            if (atomContainer.getBondCount(atom) == 4 && atomContainer.getMaximumBondOrder(atom) == 2) {
+            if (atomContainer.getConnectedBondsCount(atom) == 4 && atomContainer.getMaximumBondOrder(atom) == 2) {
                 polarizabilitiyFactor = 0;
             }
         } else if (AtomSymbol.equals("S")) {

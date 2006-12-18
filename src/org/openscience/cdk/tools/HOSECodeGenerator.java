@@ -187,7 +187,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 		root.setFlag(CDKConstants.VISITED, true);
-		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
+		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getConnectedBondsCount(root), 0);
 		/*
 		 *  All we need to observe is how the ranking of substituents
 		 *  in the subsequent spheres of the root nodes influences the
@@ -259,7 +259,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			ac.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
 		root.setFlag(CDKConstants.VISITED, true);
-		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getBondCount(root), 0);
+		rootNode = new TreeNode(root.getSymbol(), null, root, (double)0, atomContainer.getConnectedBondsCount(root), 0);
 		/*
 		 *  All we need to observe is how the ranking of substituents
 		 *  in the subsequent spheres of the root nodes influences the
@@ -281,7 +281,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private void createCenterCode(IAtom root, IAtomContainer ac, boolean ringsize)
 	{
 		int partnerCount = 0;
-		partnerCount = atomContainer.getBondCount(root) + root.getHydrogenCount(); 
+		partnerCount = atomContainer.getConnectedBondsCount(root) + root.getHydrogenCount(); 
 		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+(ringsize ? getRingcode(root, ac) : "" )+";";
 	}
 	
@@ -352,10 +352,10 @@ public class HOSECodeGenerator implements java.io.Serializable
 				 */
 				if (bond.getFlag(CDKConstants.ISAROMATIC))
 				{
-					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, 4, atomContainer.getBondCount(atom), 0);
+					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, 4, atomContainer.getConnectedBondsCount(atom), 0);
 				} else
 				{
-					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder(), atomContainer.getBondCount(atom), 0);
+					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder(), atomContainer.getConnectedBondsCount(atom), 0);
 				}
 				
 		        sphereNodes.addElement(tempNode);
@@ -417,10 +417,10 @@ public class HOSECodeGenerator implements java.io.Serializable
 							bond = atomContainer.getBond(node, toNode);
 							if (bond.getFlag(CDKConstants.ISAROMATIC))
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getBondCount(toNode), treeNode.score));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getConnectedBondsCount(toNode), treeNode.score));
 							} else
 							{
-								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getBondCount(toNode), treeNode.score));
+								nextSphereNodes.addElement(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getConnectedBondsCount(toNode), treeNode.score));
 							}
 						}
 					}

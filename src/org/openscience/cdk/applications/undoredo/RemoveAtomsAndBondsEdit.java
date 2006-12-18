@@ -67,7 +67,7 @@ public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBond(i);
-			container.removeElectronContainer(bond);
+			container.removeBond(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
 			IAtom atom = undoRedoContainer.getAtom(i);

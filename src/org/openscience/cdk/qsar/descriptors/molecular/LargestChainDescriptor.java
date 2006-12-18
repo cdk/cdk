@@ -250,7 +250,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
                     path.addElement(nextAtom);
                     //System.out.println("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
-                    if (container.getBondCount(nextAtom) > 1) {
+                    if (container.getConnectedBondsCount(nextAtom) > 1) {
                         newSphere.addElement(nextAtom);
                     }
                 } else {

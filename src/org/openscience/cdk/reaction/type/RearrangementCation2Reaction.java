@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -34,8 +36,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -181,9 +183,9 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 							bondk = (IBond)bondsI.get(k);
 							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0){
 								IAtom atomConn = bondk.getConnectedAtom(atom);
-								ILonePair[] lp = reactant.getLonePairs(atomConn);
+								//List lp = reactant.getConnectedLonePairsList(atomConn);
 								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) /*&& lp.length == 0*/ )
-									if(reactant.getSingleElectronSum(atomConn) == 0){
+									if(reactant.getConnectedSingleElectronsCount(atomConn) == 0){
 										IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 										reaction.addReactant(reactant);
 										
@@ -290,9 +292,9 @@ public class RearrangementCation2Reaction implements IReactionProcess{
 								bondk = (IBond)bondsI.get(k);
 								if(bondk.getOrder() == 2.0){
 									IAtom atomConn = bondk.getConnectedAtom(atom);
-									ILonePair[] lp = reactant.getLonePairs(atomConn);
+									//ILonePair[] lp = reactant.getLonePairs(atomConn);
 									if(/*lp.length == 0 &&*/ atomConn.getFormalCharge() == 0)
-									if(reactant.getSingleElectronSum(atomConn) == 0){
+									if(reactant.getConnectedSingleElectronsCount(atomConn) == 0){
 										atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 										atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 										atomConn.setFlag(CDKConstants.REACTIVE_CENTER,true);

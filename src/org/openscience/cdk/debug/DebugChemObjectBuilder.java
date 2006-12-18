@@ -101,8 +101,8 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugAtomContainer();
 	}
     
-	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
-		return new DebugAtomContainer(atomCount, electronContainerCount);
+	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+		return new DebugAtomContainer(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 	}
     
 	public IAtomContainer newAtomContainer(IAtomContainer container) {
@@ -249,8 +249,8 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugMolecule();
 	}
 
-	public IMolecule newMolecule(int atomCount, int electronContainerCount) {
-		return new DebugMolecule(atomCount, electronContainerCount);
+	public IMolecule newMolecule(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+		return new DebugMolecule(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 	}
 
 	public IMolecule newMolecule(IAtomContainer container) {

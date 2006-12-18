@@ -74,13 +74,13 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	public Ring(int ringSize, String elementSymbol) {
 		this(ringSize);
 		super.atomCount = ringSize;
-		super.electronContainerCount = ringSize;
+		super.bondCount = ringSize;
 		atoms[0] = new Atom(elementSymbol);
 		for (int i = 1; i < ringSize; i++) {
 			atoms[i] = new Atom(elementSymbol);
-			super.electronContainers[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
+			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
 		}
-		super.electronContainers[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
+		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
 	}
 	
 		
@@ -91,7 +91,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 */
 
 	public Ring(int ringSize) {
-		super(ringSize, ringSize);
+		super(ringSize, ringSize, 0, 0);
 	}
 	
 
@@ -117,15 +117,10 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	 */
 	public org.openscience.cdk.interfaces.IBond getNextBond(org.openscience.cdk.interfaces.IBond bond, org.openscience.cdk.interfaces.IAtom atom)
 	{
-		Bond tempBond;
-		for (int f = 0; f < getElectronContainerCount(); f++) {
-			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainer(f);
-            if (electronContainer instanceof org.openscience.cdk.interfaces.IBond) {
-                tempBond = (Bond)electronContainer;
-                if (tempBond.contains(atom) && bond != tempBond) {
-                    return tempBond;
-                }
-            }
+		org.openscience.cdk.interfaces.IBond tempBond;
+		for (int f = 0; f < getBondCount(); f++) {
+			tempBond = getBond(f);
+            if (tempBond.contains(atom) && bond != tempBond) return tempBond;
 		}
 		return null;
 	}
@@ -138,14 +133,9 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	public int getBondOrderSum()
 	{
 		int orderSum = 0;
-		Bond tempBond;
-		for (int i = 0; i < getElectronContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IElectronContainer electronContainer = getElectronContainer(i);
-            if (electronContainer instanceof org.openscience.cdk.interfaces.IBond) {
-                tempBond = (Bond)electronContainer;
-                orderSum += tempBond.getOrder();
-            }
- 		}
+		for (int i = 0; i < getBondCount(); i++) {
+            orderSum += getBond(i).getOrder();
+        }
 		return orderSum;
 	}
 	

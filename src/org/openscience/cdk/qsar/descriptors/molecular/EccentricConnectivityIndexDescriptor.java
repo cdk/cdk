@@ -138,7 +138,7 @@ public class EccentricConnectivityIndexDescriptor implements IMolecularDescripto
             for (int j = 0; j < natom; j++) {
                 if (distmat[i][j] > max) max = distmat[i][j];
             }
-            int degree = local.getBondCount(i);
+            int degree = local.getConnectedBondsCount(i);
             eccenindex += max * degree;
         }
         IntegerResult retval = new IntegerResult(eccenindex);

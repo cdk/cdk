@@ -108,8 +108,8 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new AtomContainer();
 	}
     
-	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount) {
-		return new AtomContainer(atomCount, electronContainerCount);
+	public IAtomContainer newAtomContainer(int atomCount, int bondCount, int lonePairCount, int singleElectronCount) {
+		return new AtomContainer(atomCount, bondCount, lonePairCount, singleElectronCount);
 	}
     
 	public IAtomContainer newAtomContainer(IAtomContainer container) {
@@ -223,8 +223,8 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Molecule();
 	}
 
-	public IMolecule newMolecule(int atomCount, int electronContainerCount) {
-		return new Molecule(atomCount, electronContainerCount);
+	public IMolecule newMolecule(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+		return new Molecule(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 	}
 
 	public IMolecule newMolecule(IAtomContainer container) {

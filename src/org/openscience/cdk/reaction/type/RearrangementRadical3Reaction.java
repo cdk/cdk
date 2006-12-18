@@ -164,7 +164,7 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 		IAtom atomi = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getSingleElectron(atomi).length == 1 && atomi.getFormalCharge() == 0 ){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1 && atomi.getFormalCharge() == 0 ){
 				List bonds = reactant.getConnectedBondsList(atomi);
 				Iterator iterator = bonds.iterator();
 				while(iterator.hasNext()){
@@ -193,11 +193,11 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 //							if(charge > 0)
 //								acCloned.getAtom(atom0P).setFormalCharge(charge-1);
 							
-							ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-							acCloned.removeElectronContainer(selectron[selectron.length -1]);
-							acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom0P)));	
+							List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
+							acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
+							acCloned.addLonePair(new LonePair(acCloned.getAtom(atom0P)));	
 
-							acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom1P)));	
+							acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom1P)));	
 							
 							IBond bondjClon = null;
 							for(int l = 0 ; l<acCloned.getBondCount();l++){
@@ -251,14 +251,14 @@ public class RearrangementRadical3Reaction implements IReactionProcess{
 		IBond bondj = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 && atomi.getFormalCharge() == 0) {
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 && atomi.getFormalCharge() == 0) {
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() == 2.0){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() == 0){
-							if(atom.getSymbol().equals("C") && reactant.getLonePairCount(atom) > 0){}
+							if(atom.getSymbol().equals("C") && reactant.getConnectedLonePairsCount(atom) > 0){}
 							else{
 								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);

@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
@@ -164,7 +166,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 		IBond bondk = null;
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getSingleElectron(atomi).length == 1){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedSingleElectronsCount(atomi) == 1){
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -197,10 +199,10 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 										throw new CDKException("Could not clone IMolecule!", e);
 									}
 									
-									ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-									acCloned.removeElectronContainer(selectron[selectron.length -1]);
+									List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
+									acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
 									
-									acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom2P)));	
+									acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom2P)));	
 
 									IBond bondjClon = null, bondkClon = null;
 									for(int l = 0 ; l<acCloned.getBondCount();l++){
@@ -270,7 +272,7 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 		IBond bondk = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 ){
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 ){
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);

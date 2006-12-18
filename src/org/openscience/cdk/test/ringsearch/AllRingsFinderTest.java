@@ -99,15 +99,13 @@ public class AllRingsFinderTest extends CDKTestCase
 			for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
 			{
 				Ring ring = (Ring)ringSet.getAtomContainer(i);
-				for (int j = 0; j < ring.getElectronContainerCount(); j++) 
+				for (int j = 0; j < ring.getBondCount(); j++) 
 				{
-					org.openscience.cdk.interfaces.IElectronContainer ec = ring.getElectronContainer(j);
-					if (ec instanceof org.openscience.cdk.interfaces.IBond)
-					{
-						org.openscience.cdk.interfaces.IAtom atom1 = ((Bond)ec).getAtom(0);
-						org.openscience.cdk.interfaces.IAtom atom2 = ((Bond)ec).getAtom(1);
-						assertTrue(ring.contains(atom1) && ring.contains(atom2));
-					}
+					org.openscience.cdk.interfaces.IBond ec = ring.getBond(j);
+
+					org.openscience.cdk.interfaces.IAtom atom1 = ec.getAtom(0);
+					org.openscience.cdk.interfaces.IAtom atom2 = ec.getAtom(1);
+					assertTrue(ring.contains(atom1) && ring.contains(atom2));
 				}
 			}
 		

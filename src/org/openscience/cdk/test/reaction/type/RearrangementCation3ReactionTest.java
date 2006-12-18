@@ -92,7 +92,7 @@ public class RearrangementCation3ReactionTest extends CDKTestCase {
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, product.getAtom(1).getFormalCharge());
-        Assert.assertEquals(0, product.getLonePairCount(molecule.getAtom(1)));
+        Assert.assertEquals(0, product.getConnectedLonePairsCount(molecule.getAtom(1)));
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		/*C[C+]O|*/

@@ -163,7 +163,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 		
 
     	/*break bond*/
-    	if(ac.getSingleElectronSum(atom0) > 0 || ac.getSingleElectronSum(atom1) > 0){
+    	if(ac.getConnectedSingleElectronsCount(atom0) > 0 || ac.getConnectedSingleElectronsCount(atom1) > 0){
     		dar.add(0.0);
     		dar.add(0.0);
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);

@@ -142,13 +142,13 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Atom atom1 = new Atom("C");
         mol1.addAtom(atom1);
         LonePair lp1 = new LonePair(atom1);
-        mol1.addElectronContainer(lp1);
+        mol1.addLonePair(lp1);
         // mol2
         Molecule mol2 = new Molecule();
         Atom atom2 = new Atom("C");
         mol2.addAtom(atom2);
         SingleElectron se2 = new SingleElectron(atom2);
-        mol2.addElectronContainer(se2);
+        mol2.addSingleElectron(se2);
         
         atomCon.add(mol1);
         atomCon.add(mol2);
@@ -172,10 +172,10 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         assertEquals(1, moleculeSet.getMolecule(1).getAtomCount());
         assertEquals(1, moleculeSet.getMolecule(1).getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        assertTrue(moleculeSet.getMolecule(0).getSingleElectronSum(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
-        		moleculeSet.getMolecule(1).getSingleElectronSum(moleculeSet.getMolecule(1).getAtom(0)) == 0);
-        assertTrue(moleculeSet.getMolecule(0).getLonePairCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
-        		moleculeSet.getMolecule(1).getLonePairCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
+        assertTrue(moleculeSet.getMolecule(0).getConnectedSingleElectronsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        		moleculeSet.getMolecule(1).getConnectedSingleElectronsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
+        assertTrue(moleculeSet.getMolecule(0).getConnectedLonePairsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        		moleculeSet.getMolecule(1).getConnectedLonePairsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
 	}
     
 	/**

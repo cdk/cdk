@@ -78,7 +78,7 @@ public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
 		/*[C*]-C-C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]([H])([H])C([H])([H])[H]");
         IAtom atom =  molecule.getAtom(0);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
@@ -103,7 +103,7 @@ public class RadicalSiteInitiationHReactionTest extends CDKTestCase {
         /*[H*]*/
 		molecule2 = (Molecule) molecule2.getBuilder().newMolecule();
 		molecule2.addAtom(new Atom("H"));
-        molecule2.addElectronContainer(new SingleElectron(molecule2.getAtom(0)));
+        molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
         		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

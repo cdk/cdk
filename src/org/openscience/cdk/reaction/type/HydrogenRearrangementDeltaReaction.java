@@ -26,6 +26,7 @@ package org.openscience.cdk.reaction.type;
 
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
@@ -166,7 +167,7 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 			reaction.addReactant(reactant);
 
 			IAtom  atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1 && atomi.getFlag(CDKConstants.REACTIVE_CENTER)) {
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 && atomi.getFlag(CDKConstants.REACTIVE_CENTER)) {
 				hcg.getSpheres((Molecule) reactant, atomi, 5, true);
 				Vector atoms = hcg.getNodesInSphere(5);
 				for(int j = 0 ; j < atoms.size() ; j++){
@@ -192,12 +193,12 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 								}
 										
 								
-								ISingleElectron[] selectron = acCloned.getSingleElectron(acCloned.getAtom(atom0P));
-								acCloned.removeElectronContainer(selectron[selectron.length -1]);
+								List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
+								acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
 								acCloned.addBond(atom0P,atomHP, 1);
 								acCloned.removeBond(acCloned.getAtom(atom4P), acCloned.getAtom(atomHP));
 	
-								acCloned.addElectronContainer(new SingleElectron(acCloned.getAtom(atom4P)));	
+								acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom4P)));	
 								
 	
 								/* mapping */
@@ -235,7 +236,7 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			IAtom  atomi = reactant.getAtom(i);
-			if(reactant.getSingleElectron(atomi).length == 1) {
+			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				HueckelAromaticityDetector.detectAromaticity(reactant);
 				hcg.getSpheres((Molecule) reactant, atomi, 5, true);
 				Vector atoms = hcg.getNodesInSphere(5);

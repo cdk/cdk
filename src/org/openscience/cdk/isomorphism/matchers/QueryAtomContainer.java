@@ -70,8 +70,14 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
 		for (int i = 0; i < getAtomCount(); i++) {
 			s.append(getAtom(i).toString() + ", ");
 		}
-		for (int i = 0; i < getElectronContainerCount(); i++) {
-			s.append(getElectronContainer(i).toString() + ", ");
+		for (int i = 0; i < getBondCount(); i++) {
+			s.append(getBond(i).toString() + ", ");
+		}
+		for (int i = 0; i < getLonePairCount(); i++) {
+			s.append(getLonePair(i).toString() + ", ");
+		}
+		for (int i = 0; i < getSingleElectronCount(); i++) {
+			s.append(getSingleElectron(i).toString() + ", ");
 		}
 		s.append(")");
 		return s.toString();

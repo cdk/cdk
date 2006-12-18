@@ -217,7 +217,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                             else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_AROMATIC) matrix[i][j] = 0.15;
 
-                            if (local.getBondCount(i) == 1 || local.getBondCount(j) == 1) {
+                            if (local.getConnectedBondsCount(i) == 1 || local.getConnectedBondsCount(j) == 1) {
                                 matrix[i][j] += 0.01;
                             }
                             matrix[j][i] = matrix[i][j];

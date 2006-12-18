@@ -48,13 +48,13 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 					electronContainer);
 			edit.redo();
 		}
-		int singleElectronContainerCount = 0;
-		for (int i = 0; i < mol.getElectronContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IElectronContainer container = mol.getElectronContainer(i);
-			if (container.getClass() == SingleElectron.class) {
-				singleElectronContainerCount += 1;
-			}
-		}
+		int singleElectronContainerCount = mol.getSingleElectronCount();
+//		for (int i = 0; i < mol.getElectronContainerCount(); i++) {
+//			org.openscience.cdk.interfaces.IElectronContainer container = mol.getElectronContainer(i);
+//			if (container.getClass() == SingleElectron.class) {
+//				singleElectronContainerCount += 1;
+//			}
+//		}
 		assertTrue(singleElectronContainerCount == mol.getAtomCount());
 	}
 
@@ -72,14 +72,14 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 					allRadicalsMol, container);
 			edit.undo();
 		}
-		int singleElectronContainerCount = 0;
-		for (int i = 0; i < allRadicalsMol.getElectronContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IElectronContainer container = allRadicalsMol
-					.getElectronContainer(i);
-			if (container instanceof SingleElectron) {
-				singleElectronContainerCount += 1;
-			}
-		}
+		int singleElectronContainerCount = allRadicalsMol.getSingleElectronCount();
+//		for (int i = 0; i < allRadicalsMol.getElectronContainerCount(); i++) {
+//			org.openscience.cdk.interfaces.IElectronContainer container = allRadicalsMol
+//					.getElectronContainer(i);
+//			if (container instanceof SingleElectron) {
+//				singleElectronContainerCount += 1;
+//			}
+//		}
 		assertTrue(singleElectronContainerCount == 0);
 	}
 
@@ -88,9 +88,9 @@ public class ConvertToRadicalEditTest extends CDKTestCase {
 		electronContainerList = new ArrayList();
 		for (int i = 0; i < allRadicalsMol.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.IAtom atom = allRadicalsMol.getAtom(i);
-			ElectronContainer electronContainer = new SingleElectron(atom);
-			allRadicalsMol.addElectronContainer(electronContainer);
-			electronContainerList.add(electronContainer);
+			SingleElectron se = new SingleElectron(atom);
+			allRadicalsMol.addSingleElectron(se);
+			electronContainerList.add(se);
 		}
 		return allRadicalsMol;
 

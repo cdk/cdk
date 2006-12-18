@@ -499,7 +499,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[C]=C=C=O");
 //		mol.addElectronContainer(new SingleElectron(mol.getAtom(0)));
-		mol.addElectronContainer(new LonePair(mol.getAtom(3)));
+		mol.addLonePair(new LonePair(mol.getAtom(3)));
 		Object[] object = {new Integer(6),new Boolean(false)};
 		descriptor.setParameters(object);
 

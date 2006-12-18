@@ -169,13 +169,9 @@ public class HueckelAromaticityDetector
 			{
 				atomContainer.getAtom(f).setFlag(CDKConstants.ISAROMATIC, false);
 			}
-			for (int f = 0; f < atomContainer.getElectronContainerCount(); f++)
+			for (int f = 0; f < atomContainer.getBondCount(); f++)
 			{
-				IElectronContainer electronContainer = atomContainer.getElectronContainer(f);
-				if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
-				{
-					electronContainer.setFlag(CDKConstants.ISAROMATIC, false);
-				}
+				atomContainer.getBond(f).setFlag(CDKConstants.ISAROMATIC, false);
 			}
 			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
@@ -198,13 +194,9 @@ public class HueckelAromaticityDetector
 					ring.getAtom(g).setFlag(CDKConstants.ISAROMATIC, true);
 				}
 
-				for (int g = 0; g < ring.getElectronContainerCount(); g++)
+				for (int g = 0; g < ring.getBondCount(); g++)
 				{
-					IElectronContainer electronContainer = ring.getElectronContainer(g);
-					if (electronContainer instanceof org.openscience.cdk.interfaces.IBond)
-					{
-						electronContainer.setFlag(CDKConstants.ISAROMATIC, true);
-					}
+					ring.getBond(g).setFlag(CDKConstants.ISAROMATIC, true);
 				}
 
 				foundSomething = true;

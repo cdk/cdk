@@ -89,12 +89,15 @@ public interface IChemObjectBuilder {
 	 * defined values, but will not create any IAtom or IElectronContainer's.
 	 *
 	 * @param  atomCount               Number of atoms to be in this container
-	 * @param  electronContainerCount  Number of electronContainers to be in this
+	 * @param  bondCount               Number of bonds to be in this container
+	 * @param  lonePairCount           Number of lone pairs to be in this container
+	 * @param  singleElectronCount     Number of single electrons to be in this
 	 *                                 container
+	 *                                                               
      * @return                         IAtomContainer implementation defined for
      *                                 this IChemObjectBuilder
 	 */
-	public IAtomContainer newAtomContainer(int atomCount, int electronContainerCount);
+	public IAtomContainer newAtomContainer(int atomCount, int bondCount, int lonePairCount, int singleElectronCount);
     
 	/**
 	 * Constructs an IAtomContainer with a copy of the atoms and electronContainers
@@ -416,7 +419,7 @@ public interface IChemObjectBuilder {
 	 * @param  electronContainerCount  init capacity of IElectronContainer array
      * @return                         IMolecule implementation defined for this IChemObjectBuilder
 	 */
-	public IMolecule newMolecule(int atomCount, int electronContainerCount);
+	public IMolecule newMolecule(int atomCount, int bondCount, int lonePairCount, int singleElectronCount);
 
 	/**
 	 * Constructs an IMolecule with

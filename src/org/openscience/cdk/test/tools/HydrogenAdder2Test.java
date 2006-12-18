@@ -82,8 +82,8 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(0, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(0, mol.getBondCount(cl));
-        assertEquals(0, mol.getBondCount(na));
+        assertEquals(0, mol.getConnectedBondsCount(cl));
+        assertEquals(0, mol.getConnectedBondsCount(na));
     }
 
     /**

@@ -255,7 +255,7 @@ public class InChIGenerator {
             }
             
             // Check if radical
-            int count = atomContainer.getSingleElectronSum(atom);
+            int count = atomContainer.getConnectedSingleElectronsCount(atom);
             if (count == 0) {
                 // TODO - how to check whether singlet or undefined multiplicity
             } else if (count == 1) {

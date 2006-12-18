@@ -453,7 +453,7 @@ public class SaturationCheckerTest extends CDKTestCase
     	IMolecule hydrogenRadical = builder.newMolecule();
     	IAtom hradical = builder.newAtom("H");
     	hydrogenRadical.addAtom(hradical);
-    	hydrogenRadical.addElectronContainer(builder.newSingleElectron(hradical));
+    	hydrogenRadical.addSingleElectron(builder.newSingleElectron(hradical));
     	assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
     	
     	IMolecule hydrogen = builder.newMolecule();
@@ -468,7 +468,7 @@ public class SaturationCheckerTest extends CDKTestCase
     	coRad.addAtom(c);
     	coRad.addAtom(o);
     	coRad.addBond(bond);
-    	coRad.addElectronContainer(builder.newSingleElectron(c));
+    	coRad.addSingleElectron(builder.newSingleElectron(c));
     	assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(c, coRad));
     }
     

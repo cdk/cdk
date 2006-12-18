@@ -284,7 +284,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]C([C+]([H])[H])C([H])([H])C(=O)C([H])([H])C([H])([H])[H]");
-		mol.addElectronContainer(new SingleElectron(mol.getAtom(1)));
+		mol.addSingleElectron(new SingleElectron(mol.getAtom(1)));
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);

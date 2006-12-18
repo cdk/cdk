@@ -590,7 +590,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                                 for (int j=2; j <= spinMultiplicity; j++) {
                                     // 2 means doublet -> one unpaired electron
                                     // 3 means triplet -> two unpaired electron
-                                    molecule.addElectronContainer(molecule.getBuilder().newSingleElectron(radical));
+                                    molecule.addSingleElectron(molecule.getBuilder().newSingleElectron(radical));
                                 }
                             }
                         }

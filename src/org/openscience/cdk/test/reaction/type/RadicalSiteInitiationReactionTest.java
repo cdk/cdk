@@ -79,7 +79,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 	    HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         IAtom atom =  molecule.getAtom(0);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
@@ -106,7 +106,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]");
         adder.addImplicitHydrogensToSatisfyValency(molecule2);
         atom =  molecule2.getAtom(0);
-        molecule2.addElectronContainer(new SingleElectron(atom));
+        molecule2.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);
         		
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);

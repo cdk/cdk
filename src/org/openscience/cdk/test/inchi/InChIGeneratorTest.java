@@ -133,7 +133,7 @@ public class InChIGeneratorTest extends CDKTestCase {
         IAtom a = new Atom("C");
         a.setHydrogenCount(3);
         ac.addAtom(a);
-        ac.addElectronContainer(new SingleElectron(a));
+        ac.addSingleElectron(new SingleElectron(a));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
         assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
         assertEquals(gen.getInchi(), "InChI=1/CH3/h1H3");

@@ -36,7 +36,7 @@ public class NNAtomContainer extends AtomContainer {
 	private static final long serialVersionUID = 910663082335344975L;
 
 	public NNAtomContainer() {
-        this(10, 10);
+        this(10, 10, 0, 0);
 	}
 
 	public NNAtomContainer(IAtomContainer container) {
@@ -44,8 +44,8 @@ public class NNAtomContainer extends AtomContainer {
 		setNotification(false);
 	}
 
-	public NNAtomContainer(int atomCount, int electronContainerCount) {
-		super(atomCount, electronContainerCount);
+	public NNAtomContainer(int atomCount, int electronContainerCount, int lonePairCount, int singleElectronCount) {
+		super(atomCount, electronContainerCount, lonePairCount, singleElectronCount);
 		setNotification(false);
 	}
 

@@ -108,7 +108,7 @@ public class FiguerasSSSRFinder {
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(f);
-				degree = molecule.getBondCount(atom);
+				degree = molecule.getConnectedBondsCount(atom);
 				if (degree == 0)
 				{
 					if (!trimSet.contains(atom))

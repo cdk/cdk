@@ -65,8 +65,8 @@ public class MoleculeTest extends CDKTestCase {
         assertTrue(m != null);
     }
 
-    public void testMolecule_int_int() {
-        IMolecule m = builder.newMolecule(5,5);
+    public void testMolecule_int_int_int_int() {
+        IMolecule m = builder.newMolecule(5,5,1,1);
         assertTrue(m != null);
         assertEquals(0, m.getAtomCount());
         assertEquals(0, m.getElectronContainers().length);

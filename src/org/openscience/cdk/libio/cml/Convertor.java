@@ -357,8 +357,8 @@ public class Convertor {
        	for(int i = 0 ; i < monomer.getAtomCount(); i++){
        		IAtom cdkAtom = monomer.getAtom(i);
             CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
-            if (monomer.getSingleElectronSum(cdkAtom) > 0) {
-                cmlAtom.setSpinMultiplicity(monomer.getSingleElectronSum(cdkAtom) + 1);
+            if (monomer.getConnectedSingleElectronsCount(cdkAtom) > 0) {
+                cmlAtom.setSpinMultiplicity(monomer.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
             cmlMolecule.addAtom(cmlAtom, false);
        	}
@@ -398,8 +398,8 @@ public class Convertor {
         for (int i = 0; i < structure.getAtomCount(); i++) {
             IAtom cdkAtom = structure.getAtom(i);
             CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
-            if (structure.getSingleElectronSum(cdkAtom) > 0) {
-                cmlAtom.setSpinMultiplicity(structure.getSingleElectronSum(cdkAtom) + 1);
+            if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
+                cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
             cmlMolecule.addAtom(cmlAtom, false);
         }

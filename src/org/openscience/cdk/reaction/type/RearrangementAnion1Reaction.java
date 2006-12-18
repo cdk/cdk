@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -34,8 +36,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -169,7 +171,7 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == -1
-					&& reactant.getLonePairCount(atomi)  > 0  ){
+					&& reactant.getConnectedLonePairsCount(atomi)  > 0  ){
 				
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				
@@ -212,8 +214,8 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 							charge = acCloned.getAtom(atom1P).getFormalCharge();
 							acCloned.getAtom(atom1P).setFormalCharge(charge-1);
 	
-							ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-							acCloned.removeElectronContainer(selectron[selectron.length -1]);
+							List selectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom0P));
+							acCloned.removeLonePair((ILonePair)selectron.get(selectron.size() -1));
 							
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -253,7 +255,7 @@ public class RearrangementAnion1Reaction implements IReactionProcess{
 		IBond bondj = null;
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			atomi = reactant.getAtom(i);
-			if(atomi.getFormalCharge() == -1 && reactant.getLonePairCount(atomi) > 0 ){
+			if(atomi.getFormalCharge() == -1 && reactant.getConnectedLonePairsCount(atomi) > 0 ){
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);

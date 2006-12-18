@@ -171,8 +171,8 @@ public class CleavageBondReaction implements IReactionProcess{
 					throw new CDKException("Could not clone IMolecule!", e);
 				}
 				
-				reactantCloned.addElectronContainer(reactant.getBuilder().newSingleElectron(reactantCloned.getAtom(atom1)));
-				reactantCloned.addElectronContainer(reactant.getBuilder().newSingleElectron(reactantCloned.getAtom(atom2)));
+				reactantCloned.addSingleElectron(reactant.getBuilder().newSingleElectron(reactantCloned.getAtom(atom1)));
+				reactantCloned.addSingleElectron(reactant.getBuilder().newSingleElectron(reactantCloned.getAtom(atom2)));
 				
 				double order = 0;
 				IBond bondClon = null;

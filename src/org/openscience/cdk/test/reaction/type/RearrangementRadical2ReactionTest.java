@@ -180,7 +180,7 @@ public class RearrangementRadical2ReactionTest extends CDKTestCase {
 	    HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         IAtom atom =  molecule.getAtom(0);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setHydrogenCount(2);
         atom.setFormalCharge(0);
         return molecule;
@@ -195,7 +195,7 @@ public class RearrangementRadical2ReactionTest extends CDKTestCase {
 		HydrogenAdder adder = new HydrogenAdder();
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         IAtom atom =  molecule.getAtom(2);
-        molecule.addElectronContainer(new SingleElectron(atom));
+        molecule.addSingleElectron(new SingleElectron(atom));
         atom.setHydrogenCount(1);
         atom.setFormalCharge(0);
         return molecule;

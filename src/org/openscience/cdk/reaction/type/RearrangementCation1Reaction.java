@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -34,10 +36,10 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -178,9 +180,9 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
 						IAtom atom1 = bondj.getConnectedAtom(atomi);
-						ILonePair[] lp = reactant.getLonePairs(atom1);
-						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.length > 0 )
-							if(reactant.getSingleElectronSum(atom1) == 0){
+						List lp = reactant.getConnectedLonePairsList(atom1);
+						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.size() > 0 )
+							if(reactant.getConnectedSingleElectronsCount(atom1) == 0){
 							
 								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 								reaction.addReactant(reactant);
@@ -217,8 +219,8 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 							charge = acCloned.getAtom(atom1P).getFormalCharge();
 							acCloned.getAtom(atom1P).setFormalCharge(charge+1);
 	
-							ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom1P));
-							acCloned.removeElectronContainer(selectron[selectron.length -1]);
+							List selectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom1P));
+							acCloned.removeLonePair((ILonePair)selectron.get(selectron.size() -1));
 							
 							/* mapping */
 							IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -266,9 +268,9 @@ public class RearrangementCation1Reaction implements IReactionProcess{
 					bondj = (IBond)bonds.get(j);
 					if(bondj.getOrder() == 1.0){
 						IAtom atom = bondj.getConnectedAtom(atomi);
-						ILonePair[] lp = reactant.getLonePairs(atom);
-						if((lp.length > 0 )&& (atom.getFormalCharge() == 0))
-							if(reactant.getSingleElectronSum(atom) == 0){
+						List lp = reactant.getConnectedLonePairsList(atom);
+						if((lp.size() > 0 )&& (atom.getFormalCharge() == 0))
+							if(reactant.getConnectedSingleElectronsCount(atom) == 0){
 							if(rings.contains(atom))
 								continue;
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);

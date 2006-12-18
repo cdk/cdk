@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
@@ -182,7 +184,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
 							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0)
-								if(reactant.getSingleElectronSum(bondk.getConnectedAtom(atom)) == 0){
+								if(reactant.getConnectedSingleElectronsCount(bondk.getConnectedAtom(atom)) == 0){
 								IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 								reaction.addReactant(reactant);
 								
@@ -203,8 +205,8 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								
 								int charge = acCloned.getAtom(atom0P).getFormalCharge();
 								acCloned.getAtom(atom0P).setFormalCharge(charge+1);
-								ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-								acCloned.removeElectronContainer(selectron[selectron.length -1]);
+								List selectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom0P));
+								acCloned.removeLonePair((ILonePair)selectron.get(selectron.size() -1));
 								
 								IBond bondjClon = null, bondkClon = null;
 								for(int l = 0 ; l<acCloned.getBondCount();l++){
@@ -226,7 +228,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 								
 								charge = acCloned.getAtom(atom2P).getFormalCharge();
 								acCloned.getAtom(atom2P).setFormalCharge(charge-1);
-								acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));	
+								acCloned.addLonePair(new LonePair(acCloned.getAtom(atom2P)));	
 								
 								/* mapping */
 								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -286,7 +288,7 @@ public class RearrangementAnion2Reaction implements IReactionProcess{
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
 							if(bondk.getOrder() == 2.0 && bondk.getConnectedAtom(atom).getFormalCharge() >= 0)
-								if(reactant.getSingleElectronSum(bondk.getConnectedAtom(atom)) == 0){
+								if(reactant.getConnectedSingleElectronsCount(bondk.getConnectedAtom(atom)) == 0){
 								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 								bondk.getConnectedAtom(atom).setFlag(CDKConstants.REACTIVE_CENTER,true);

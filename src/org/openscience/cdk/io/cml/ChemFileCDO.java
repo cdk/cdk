@@ -402,7 +402,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         } else if (propertyType.equals("spinMultiplicity")) {
             int unpairedElectrons = new Integer(propertyValue).intValue() -1;
             for (int i=0; i<unpairedElectrons; i++) {
-                currentMolecule.addElectronContainer(currentChemFile.getBuilder().newSingleElectron(currentAtom));
+                currentMolecule.addSingleElectron(currentChemFile.getBuilder().newSingleElectron(currentAtom));
             }
         } else if (propertyType.equals("id")) {
           logger.debug("id: ", propertyValue);

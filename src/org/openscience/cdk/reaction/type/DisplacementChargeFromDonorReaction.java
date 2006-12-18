@@ -25,6 +25,8 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
@@ -35,8 +37,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -162,7 +164,7 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 		IBond bondk = null;
 		for (int i = 0 ; i < reactant.getAtomCount() ; i++){
 			atomi = reactant.getAtom(i);
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getLonePairCount(atomi) > 0){
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedLonePairsCount(atomi) > 0){
 				IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
 				reaction.addReactant(reactant);
 				
@@ -195,8 +197,8 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 								
 								int charge = acCloned.getAtom(atom0P).getFormalCharge();
 								acCloned.getAtom(atom0P).setFormalCharge(charge+1);
-								ILonePair[] selectron = acCloned.getLonePairs(acCloned.getAtom(atom0P));
-								acCloned.removeElectronContainer(selectron[selectron.length -1]);
+								List selectron = acCloned.getConnectedLonePairsList(acCloned.getAtom(atom0P));
+								acCloned.removeLonePair((ILonePair)selectron.get(selectron.size() -1));
 								
 								IBond bondjClon = null, bondkClon = null;
 								for(int l = 0 ; l<acCloned.getBondCount();l++){
@@ -213,7 +215,7 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 								
 								charge = acCloned.getAtom(atom2P).getFormalCharge();
 								acCloned.getAtom(atom2P).setFormalCharge(charge-1);
-								acCloned.addElectronContainer(new LonePair(acCloned.getAtom(atom2P)));
+								acCloned.addLonePair(new LonePair(acCloned.getAtom(atom2P)));
 								
 								/* mapping */
 								IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(atomi, acCloned.getAtom(atom0P));
@@ -264,7 +266,7 @@ public class DisplacementChargeFromDonorReaction implements IReactionProcess{
 		out:
 		for(int i = 0 ; i < reactant.getAtomCount() ; i++) {
 			atomi = reactant.getAtom(i);
-			if(reactant.getLonePairCount(atomi) > 0 ){
+			if(reactant.getConnectedLonePairsCount(atomi) > 0 ){
 				// not possible is the atom-X has already double bond
 				java.util.List bondsSe = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bondsSe.size() ; j++)

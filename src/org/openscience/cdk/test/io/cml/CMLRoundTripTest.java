@@ -402,14 +402,14 @@ public class CMLRoundTripTest extends CDKTestCase {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
-        mol.addElectronContainer(new SingleElectron(atom));
+        mol.addSingleElectron(new SingleElectron(atom));
         
         org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getElectronContainerCount());
         org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
-        assertEquals(1, roundTrippedMol.getSingleElectronSum(roundTrippedAtom));
+        assertEquals(1, roundTrippedMol.getConnectedSingleElectronsCount(roundTrippedAtom));
     }
 
     public void testReaction() {

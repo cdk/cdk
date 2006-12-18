@@ -91,7 +91,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(1, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(0, mol.getBondCount(proton));
+        assertEquals(0, mol.getConnectedBondsCount(proton));
         assertEquals(0, proton.getHydrogenCount());
     }
     
@@ -110,7 +110,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(1, mol.getBondCount(proton));
+        assertEquals(1, mol.getConnectedBondsCount(proton));
         assertEquals(0, proton.getHydrogenCount());
     }
     
@@ -129,7 +129,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(5, mol.getAtomCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(4, mol.getBondCount(carbon));
+        assertEquals(4, mol.getConnectedBondsCount(carbon));
     }
     
     public void testAminomethane()
@@ -173,7 +173,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(3, mol.getBondCount(nitrogen));
+        assertEquals(3, mol.getConnectedBondsCount(nitrogen));
     }
 
     public void testAmmonium() {
@@ -192,7 +192,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(5, mol.getAtomCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(4, mol.getBondCount(nitrogen));
+        assertEquals(4, mol.getConnectedBondsCount(nitrogen));
     }
 
     public void testWater() {
@@ -210,7 +210,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(2, mol.getBondCount(oxygen));
+        assertEquals(2, mol.getConnectedBondsCount(oxygen));
     }
 
     public void testHydroxyl() {
@@ -229,7 +229,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(1, mol.getBondCount(oxygen));
+        assertEquals(1, mol.getConnectedBondsCount(oxygen));
     }
 
     public void testHydroxonium() {
@@ -248,7 +248,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(3, mol.getBondCount(oxygen));
+        assertEquals(3, mol.getConnectedBondsCount(oxygen));
     }
     
     public void testHalogens() {
@@ -273,7 +273,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(1, mol.getBondCount(atom));
+        assertEquals(1, mol.getConnectedBondsCount(atom));
     }
     
     public void testSulphur() {
@@ -291,7 +291,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(2, mol.getBondCount(atom));
+        assertEquals(2, mol.getConnectedBondsCount(atom));
     }
     
     public void testSulfite() {
@@ -322,7 +322,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(3, mol.getBondCount(s));
+        assertEquals(3, mol.getConnectedBondsCount(s));
     }
     
     public void testAceticAcid() {
@@ -353,10 +353,10 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(8, mol.getAtomCount());
         assertEquals(7, mol.getBondCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(1, mol.getBondCount(carbonylOxygen));
-        assertEquals(2, mol.getBondCount(hydroxylOxygen));
-        assertEquals(4, mol.getBondCount(methylCarbon));
-        assertEquals(3, mol.getBondCount(carbonylCarbon));
+        assertEquals(1, mol.getConnectedBondsCount(carbonylOxygen));
+        assertEquals(2, mol.getConnectedBondsCount(hydroxylOxygen));
+        assertEquals(4, mol.getConnectedBondsCount(methylCarbon));
+        assertEquals(3, mol.getConnectedBondsCount(carbonylCarbon));
     }
     
     public void testEthane() {
@@ -379,8 +379,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(8, mol.getAtomCount());
         assertEquals(7, mol.getBondCount());
         assertEquals(6, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(4, mol.getBondCount(carbon1));
-        assertEquals(4, mol.getBondCount(carbon2));
+        assertEquals(4, mol.getConnectedBondsCount(carbon1));
+        assertEquals(4, mol.getConnectedBondsCount(carbon2));
     }
 
     public void testEthene() {
@@ -403,8 +403,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(3, mol.getBondCount(carbon1));
-        assertEquals(3, mol.getBondCount(carbon2));
+        assertEquals(3, mol.getConnectedBondsCount(carbon1));
+        assertEquals(3, mol.getConnectedBondsCount(carbon2));
     }
 
     public void testEthyne() {
@@ -427,8 +427,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, mol.getBondCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
-        assertEquals(2, mol.getBondCount(carbon1));
-        assertEquals(2, mol.getBondCount(carbon2));
+        assertEquals(2, mol.getConnectedBondsCount(carbon1));
+        assertEquals(2, mol.getConnectedBondsCount(carbon2));
     }
 
     public void testAromaticSaturation() {
@@ -515,7 +515,7 @@ public class HydrogenAdderTest extends CDKTestCase {
     	Molecule mol = new Molecule();
     	mol.addAtom(new Atom("C"));
     	mol.addAtom(new Atom("C"));
-    	mol.addElectronContainer(mol.getBuilder().newSingleElectron(mol.getAtom(0)));
+    	mol.addSingleElectron(mol.getBuilder().newSingleElectron(mol.getAtom(0)));
     	mol.addBond(0,1,1);
     	try {
     		adder.addImplicitHydrogensToSatisfyValency(mol);

@@ -1491,7 +1491,7 @@ public class SmilesGenerator
 				boolean brackets = true;
 				Vector result = new Vector();
 				addAtoms((Vector) o, result);
-				if (isRingOpening(parent, result) && container.getBondCount(parent) < 4)
+				if (isRingOpening(parent, result) && container.getConnectedBondsCount(parent) < 4)
 				{
 					brackets = false;
 				}

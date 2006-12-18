@@ -66,7 +66,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	 */
 	public void redo() throws CannotRedoException {
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-		container.removeElectronContainer(formerBond);
+		container.removeBond(formerBond);
 		container.addBond(newBond);
 		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker
@@ -82,7 +82,7 @@ public class BondChangeEdit extends AbstractUndoableEdit {
 	public void undo() throws CannotUndoException {
 		System.out.println("BondChangeEdit undo");
 		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-		container.removeElectronContainer(newBond);
+		container.removeBond(newBond);
 		container.addBond(formerBond);
 		IMolecule molecule = container.getBuilder().newMolecule(container);
 		IMoleculeSet moleculeSet = ConnectivityChecker

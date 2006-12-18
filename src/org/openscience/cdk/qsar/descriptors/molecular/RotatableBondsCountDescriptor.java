@@ -152,8 +152,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((ac.getMaximumBondOrder(atom0) < 3.0) && (ac.getMaximumBondOrder(atom1) < 3.0)) {
 					if (bonds[i].getFlag(CDKConstants.ISINRING) == false) {
-						degree0 = ac.getBondCount(atom0);
-						degree1 = ac.getBondCount(atom1);
+						degree0 = ac.getConnectedBondsCount(atom0);
+						degree1 = ac.getConnectedBondsCount(atom1);
 						if ((degree0 == 1) || (degree1 == 1)) {
 							if (includeTerminals == true) {
 								rotatableBondsCount += 1;
