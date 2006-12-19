@@ -1340,6 +1340,32 @@ public class GeometryToolsInternalCoordinates {
 		return RMSD;
 	}
 
+
+
+	/**
+	 *  An average of all 3D bond length values is produced, using point3ds in atoms.
+	 *  Atom's with no coordinates are disregarded.
+	 *
+	 *@param  ac  The AtomContainer for which the average bond length is to be
+	 *      calculated
+	 *@return     the average bond length
+	 */
+	public static double getBondLengthAverage3D(IAtomContainer ac) {
+		double bondLengthSum = 0;
+		IBond[] bonds = ac.getBonds();
+		int bondCounter = 0;
+		for (int f = 0; f < bonds.length; f++) {
+			IBond bond = bonds[f];
+			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
+			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
+			if (atom1.getPoint3d() != null &&
+					atom2.getPoint3d() != null) {
+				bondCounter++;
+				bondLengthSum += atom1.getPoint3d().distance(atom2.getPoint3d());
+			}
+		}
+		return bondLengthSum / bondCounter;
+	}
 }
 
 
