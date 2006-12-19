@@ -190,7 +190,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
    
    public void writeCrystal(ICrystal crystal) throws CDKException {
        try {
-           writer.write("HEADER created with CDK fileconvertot\n");
+           writer.write("HEADER created with the CDK (http://cdk.sf.net/)\n");
            Vector3d a = crystal.getA();
            Vector3d b = crystal.getB();
            Vector3d c = crystal.getC();
