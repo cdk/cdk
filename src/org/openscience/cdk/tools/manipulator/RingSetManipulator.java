@@ -62,6 +62,17 @@ public class RingSetManipulator {
 		return container;
 	}
 
+	/**
+     * Returns all the AtomContainer's in a RingSet.
+     */
+    public static List getAllAtomContainers(IRingSet set) {
+    	List atomContainerList = new ArrayList();
+    	Iterator acs = set.atomContainers();
+    	while(acs.hasNext()){
+    		atomContainerList.add((IAtomContainer)acs.next());
+    	}
+    	return atomContainerList;
+    }
     /**
      * Sorts the rings in the set by size. The largest ring comes
      * first.
