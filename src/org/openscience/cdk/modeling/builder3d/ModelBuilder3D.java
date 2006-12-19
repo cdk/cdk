@@ -30,6 +30,7 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.vecmath.Point3d;
@@ -223,14 +224,15 @@ public class ModelBuilder3D {
 		if (ringSetMolecule.getAtomContainerCount() > 0) {
 			ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 			largestRingSet = getLargestRingSet(ringSystems);
-			NumberOfRingAtoms = (double) ((IAtomContainer) RingSetManipulator.getAllInOneContainer(largestRingSet)).getAtomCount();
-			templateHandler.mapTemplates(RingSetManipulator.getAllInOneContainer(largestRingSet), NumberOfRingAtoms);
-			if (!checkAllRingAtomsHasCoordinates(RingSetManipulator.getAllInOneContainer(largestRingSet))) {
+			IAtomContainer largestRingSetContainer = getAllInOneContainer(largestRingSet);
+			NumberOfRingAtoms = (double)largestRingSetContainer.getAtomCount();
+			templateHandler.mapTemplates(largestRingSetContainer, NumberOfRingAtoms);
+			if (!checkAllRingAtomsHasCoordinates(largestRingSetContainer)) {
 				throw new IOException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.Sorry");
 			}
 
-			setAtomsToPlace(RingSetManipulator.getAllInOneContainer(largestRingSet));
-			searchAndPlaceBranches(RingSetManipulator.getAllInOneContainer(largestRingSet));
+			setAtomsToPlace(largestRingSetContainer);
+			searchAndPlaceBranches(largestRingSetContainer);
 			largestRingSet = null;
 		} else {
 			//System.out.println("****** Start of handling aliphatic molecule ******");
@@ -297,9 +299,10 @@ public class ModelBuilder3D {
 				//System.out.println("layout RingSystem...");
 				IAtom unplacedAtom = ap3d.getUnplacedRingHeavyAtom(molecule, atom);
 				IRingSet ringSetA = getRingSetOfAtom(ringSetMolecule, unplacedAtom);
-				templateHandler.mapTemplates(RingSetManipulator.getAllInOneContainer(ringSetA), (double) ((IAtomContainer) RingSetManipulator.getAllInOneContainer(ringSetA)).getAtomCount());
+				IAtomContainer ringSetAContainer = getAllInOneContainer(ringSetA);
+				templateHandler.mapTemplates(ringSetAContainer, (double)ringSetAContainer.getAtomCount());
 
-				if (checkAllRingAtomsHasCoordinates(RingSetManipulator.getAllInOneContainer(ringSetA))) {
+				if (checkAllRingAtomsHasCoordinates(ringSetAContainer)) {
 				} else {
 					throw new IOException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.Sorry");
 				}
@@ -309,7 +312,7 @@ public class ModelBuilder3D {
 
 				setBranchAtom(unplacedAtom, atom, ap3d.getPlacedHeavyAtoms(molecule, atom));
 				layoutRingSystem(firstAtomOriginalCoord, unplacedAtom, ringSetA, centerPlacedMolecule, atom);
-				searchAndPlaceBranches(RingSetManipulator.getAllInOneContainer(ringSetA));
+				searchAndPlaceBranches(ringSetAContainer);
 				//System.out.println("Ready layout Ring System");
 				ringSetA = null;
 				unplacedAtom = null;
@@ -341,7 +344,7 @@ public class ModelBuilder3D {
 	 */
 	private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, IRingSet ringSet, Point3d centerPlacedMolecule, IAtom atomB) {
 		//System.out.print("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
-		IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringSet);
+		IAtomContainer ac = getAllInOneContainer(ringSet);
 		Point3d newCoord = placedRingAtom.getPoint3d();
 		Vector3d axis = new Vector3d(atomB.getPoint3d().x - newCoord.x, atomB.getPoint3d().y - newCoord.y, atomB.getPoint3d().z - newCoord.z);
 		translateStructure(originalCoord, newCoord, ac);
@@ -405,6 +408,16 @@ public class ModelBuilder3D {
 				ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
+	}
+
+
+	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
+		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
+		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+		while (containers.hasNext()) {
+			resultContainer.add((IAtomContainer) containers.next());
+		}
+		return resultContainer;
 	}
 
 
@@ -586,7 +599,7 @@ public class ModelBuilder3D {
 		int atomNumber = 0;
 		IAtomContainer container = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
-			container = RingSetManipulator.getAllInOneContainer((IRingSet) ringSystems.get(i));
+			container = getAllInOneContainer((IRingSet) ringSystems.get(i));
 			if (atomNumber < container.getAtomCount()) {
 				atomNumber = container.getAtomCount();
 				largestRingSet = (IRingSet) ringSystems.get(i);

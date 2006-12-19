@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  *  Description of the Class
  *
- * @cdk.module test-extra
+ * @cdk.module test-builder3d
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04

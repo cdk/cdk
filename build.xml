@@ -470,6 +470,7 @@
         <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-weka"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
@@ -586,6 +587,7 @@
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
                     <includesfile name="${metainf}/test-experimental.libdepends"/>
                     <includesfile name="${metainf}/test-extra.libdepends"/>
+                    <includesfile name="${metainf}/test-builder3d.libdepends"/>
                     <includesfile name="${metainf}/test-forcefield.libdepends"/>
                     <includesfile name="${metainf}/test-inchi.libdepends"/>
                     <includesfile name="${metainf}/test-io.libdepends"/>
@@ -607,6 +609,7 @@
                     <include name="cdk-test-datadebug.jar"/>
                     <include name="cdk-test-experimental.jar"/>
                     <include name="cdk-test-extra.jar"/>
+                    <include name="cdk-test-builder3d.jar"/>
                     <include name="cdk-test-forcefield.jar"/>
                     <include name="cdk-test-inchi.jar"/>
                     <include name="cdk-test-io.jar"/>
@@ -777,8 +780,9 @@
         	<antcall target="test-module"><param name="module" value="nonotify"/></antcall>
         	<antcall target="test-module"><param name="module" value="standard"/></antcall>
         	<antcall target="test-module"><param name="module" value="io"/></antcall>
-            <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
+            <antcall target="test-module"><param name="module" value="builder3d"/></antcall> 
+            <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall>  
             <antcall target="test-module"><param name="module" value="smiles"/></antcall> 
