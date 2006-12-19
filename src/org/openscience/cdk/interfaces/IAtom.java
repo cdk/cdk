@@ -165,6 +165,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param   xCoord  the new x coordinate for of the 2D location of this atom
 	 * @see     #getX2d
+	 * @deprecated
 	 */
 	public void setX2d(double xCoord);	
 	

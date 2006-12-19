@@ -34,6 +34,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -447,28 +449,31 @@ public class MACiEReader extends DefaultChemObjectReader {
     }
     
     private void markEnzymeResidueLocatorAtoms(Reaction currentReaction) {
-    	IAtomContainer ac = ReactionManipulator.getAllInOneContainer(currentReaction);
-        for (int i=0; i<ac.getAtomCount(); i++) {
-        	IAtom atom = ac.getAtom(i);
-            if (atom instanceof EnzymeResidueLocator) {
-                // skip atom
-            } else if (atom instanceof PseudoAtom) {
-                PseudoAtom pseudo = (PseudoAtom)atom;
-                logger.debug("pseudo atom label: ", pseudo.getLabel());
-                logger.debug("pseudo class: ", pseudo.getClass().getName());
-                Matcher residueLocatorMatcher = residueLocator.matcher(pseudo.getLabel());
-                if (residueLocatorMatcher.matches()) {
-                    logger.debug("Found residueLocator: ", pseudo.getLabel());
-                    // replace atom with enzymeResidueLocator
-                    IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(
-                        currentReaction, pseudo
-                    );
-                    logger.debug("Replacing the pseudo atom with a ezymeResidueLocator atom");
-                    AtomContainerManipulator.replaceAtomByAtom(container, 
-                        pseudo, new EnzymeResidueLocator(pseudo));
-                }
-            }
-        }
+    	Iterator containers = ReactionManipulator.getAllAtomContainers(currentReaction).iterator();
+    	while (containers.hasNext()) {
+    		IAtomContainer ac = (IAtomContainer) containers.next();
+    		for (int i=0; i<ac.getAtomCount(); i++) {
+    			IAtom atom = ac.getAtom(i);
+    			if (atom instanceof EnzymeResidueLocator) {
+    				// skip atom
+    			} else if (atom instanceof PseudoAtom) {
+    				PseudoAtom pseudo = (PseudoAtom)atom;
+    				logger.debug("pseudo atom label: ", pseudo.getLabel());
+    				logger.debug("pseudo class: ", pseudo.getClass().getName());
+    				Matcher residueLocatorMatcher = residueLocator.matcher(pseudo.getLabel());
+    				if (residueLocatorMatcher.matches()) {
+    					logger.debug("Found residueLocator: ", pseudo.getLabel());
+    					// replace atom with enzymeResidueLocator
+    					IAtomContainer container = ReactionManipulator.getRelevantAtomContainer(
+    							currentReaction, pseudo
+    					);
+    					logger.debug("Replacing the pseudo atom with a ezymeResidueLocator atom");
+    					AtomContainerManipulator.replaceAtomByAtom(container, 
+    							pseudo, new EnzymeResidueLocator(pseudo));
+    				}
+    			}
+    		}
+    	}
     }
     
     private void parseReactionAnnotation(String annotation, Reaction reaction) {
@@ -525,20 +530,23 @@ public class MACiEReader extends DefaultChemObjectReader {
                 residueLocator.matcher(field);
             if (residueLocatorMatcher.matches()) {
                 logger.debug("Found residueLocator: ", field);
-                IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reaction);
-                boolean found = false;
-                logger.debug("Searching for given residueLocator through #atom: ", ac.getAtomCount());
-                logger.debug("Taken from reaction ", reaction.getID());
-                for (int i=0; (i<ac.getAtomCount() && !found); i++) {
-                    if (ac.getAtom(i) instanceof PseudoAtom) {
-                        // that is what we are looking for
-                        PseudoAtom atom = (PseudoAtom)ac.getAtom(i);
-                        if (atom.getLabel().equals(field)) {
-                            // we have a hit, now mark Atom with dict refs
-                            addDictRefedAnnotation(atom, "ResidueRole", value);
-                            found = true;
-                        }
-                    }
+            	boolean found = false;
+                Iterator containers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+                while (containers.hasNext()) {
+                	IAtomContainer ac = (IAtomContainer) containers.next();
+                	logger.debug("Searching for given residueLocator through #atom: ", ac.getAtomCount());
+                	logger.debug("Taken from reaction ", reaction.getID());
+                	for (int i=0; (i<ac.getAtomCount() && !found); i++) {
+                		if (ac.getAtom(i) instanceof PseudoAtom) {
+                			// that is what we are looking for
+                			PseudoAtom atom = (PseudoAtom)ac.getAtom(i);
+                			if (atom.getLabel().equals(field)) {
+                				// we have a hit, now mark Atom with dict refs
+                				addDictRefedAnnotation(atom, "ResidueRole", value);
+                				found = true;
+                			}
+                		}
+                	}
                 }
                 if (!found) {
                     logger.error("MACiE annotation mentions a residue that does not exist: " + field);

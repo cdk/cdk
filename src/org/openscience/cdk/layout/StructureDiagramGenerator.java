@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -631,8 +632,11 @@ public class StructureDiagramGenerator
 			angle1 = GeometryToolsInternalCoordinates.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
 			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
 			ringSystem = tempAc.getBuilder().newAtomContainer();
-			ringSystem.add(RingSetManipulator.getAllInOneContainer(nextRingSystem));
-
+			Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator();
+			while (containers.hasNext()) {
+				ringSystem.add((IAtomContainer) containers.next());
+			}
+			
 			/*
 			 *  Do the layout of the next ring system
 			 */

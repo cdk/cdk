@@ -30,6 +30,7 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.InputStream;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -267,7 +268,11 @@ public class ForceFieldConfigurator {
 				RingSetManipulator.sort(ringSetA);
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
-				isInHeteroRing = isHeteroRingSystem(RingSetManipulator.getAllInOneContainer(ringSetA));
+				isInHeteroRing = false;
+				Iterator containers = RingSetManipulator.getAllAtomContainers(ringSetA).iterator();
+				while (containers.hasNext()) {
+					isInHeteroRing = isInHeteroRing || isHeteroRingSystem((IAtomContainer) containers.next());
+				}
 			} else {
 				atom.setFlag(CDKConstants.ISALIPHATIC, true);
 				atom.setFlag(CDKConstants.ISINRING, false);
