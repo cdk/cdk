@@ -712,6 +712,7 @@ public class AtomPlacer
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
+			molecule.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
 			pathes[f] = molecule.getBuilder().newAtomContainer();
 			pathes[f].addAtom(startAtom);
 
