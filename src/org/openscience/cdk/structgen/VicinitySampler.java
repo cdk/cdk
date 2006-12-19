@@ -42,7 +42,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword structure generator
  */
- 
 public class VicinitySampler {
 	
 	LoggingTool logger = new LoggingTool(VicinitySampler.class);
