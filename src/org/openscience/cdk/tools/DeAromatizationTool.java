@@ -28,12 +28,13 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Hashtable;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
+
+import java.util.Hashtable;
+import java.util.Iterator;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -92,8 +93,7 @@ public class DeAromatizationTool {
 	}
 	
 	private static boolean deAromatizePyrolle(IRing ring) {
-		IBond[] bonds = ring.getBonds();
-		if (bonds.length != 5) return false;
+		if (ring.getBondCount() != 5) return false;
 		for (int i = 0; i<ring.getAtomCount(); i++) {
 			IAtom atom=ring.getAtom(i);
 			if(atom.getSymbol().equals("N")){
@@ -125,18 +125,21 @@ public class DeAromatizationTool {
 				return (IBond)bonds.get(i);
 		return null;
 	}
-	
-	private static boolean deAromatizeBenzene(IRing ring) {
-		IBond[] bonds = ring.getBonds();
-		if (bonds.length != 6) return false;
-		for (int i = 0; i<bonds.length; i++) {
-			if (i%2 == 0) {
-				bonds[i].setOrder(CDKConstants.BONDORDER_SINGLE);
-			} else {
-				bonds[i].setOrder(CDKConstants.BONDORDER_DOUBLE);
-			}
-		}
-		return true;
-	}
-	
+
+    private static boolean deAromatizeBenzene(IRing ring) {
+        if (ring.getBondCount() != 6) return false;
+        Iterator bonds = ring.bonds();
+        int counter = 0;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            if (counter % 2 == 0) {
+                bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+            } else {
+                bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+            }
+            counter++;
+        }
+        return true;
+    }
+
 }

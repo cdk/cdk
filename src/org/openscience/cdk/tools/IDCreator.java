@@ -28,22 +28,13 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
@@ -110,13 +101,14 @@ public class IDCreator {
                 atom.setID("a" + atomCount);
             }
         }
-        IBond[] bonds = container.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-        	IBond bond = bonds[i];
+
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
             if (bond.getID() == null) {
                 bondCount++;
                 while (tabuList.contains("b" + bondCount)) bondCount++;
-                bonds[i].setID("b" + bondCount);
+                bond.setID("b" + bondCount);
             }
         }
     }
