@@ -204,10 +204,11 @@ public class DescriptorEngine {
                     }
                     logger.debug("Calculated atomic descriptors...");
                 } else if (descriptor instanceof IBondDescriptor) {
-                    IBond[] bonds = molecule.getBonds();
-                    for (int j = 0; j < bonds.length; j++) {
-                        DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bonds[j], molecule);
-                        bonds[j].setProperty(speclist.get(i), value);
+                    Iterator bonds = molecule.bonds();
+                    while (bonds.hasNext()) {
+                        IBond bond = (IBond) bonds.next();
+                        DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
+                        bond.setProperty(speclist.get(i), value);
                     }
                     logger.debug("Calculated bond descriptors...");
                 } else {
