@@ -397,7 +397,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		
 		StructureDiagramGenerator str;
 		CMLChemFile resultFile = null;
-		List<CMLChemFile> resultList = new ArrayList<CMLChemFile>();
+		List resultList = new ArrayList();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			CMLChemFile file = (CMLChemFile) iter.next();
 			List moleculeList = ChemFileManipulator.getAllAtomContainers(file);
