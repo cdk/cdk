@@ -552,12 +552,13 @@ public class GeometryTools {
 	public static IBond getClosestBond(int xPosition, int yPosition, IAtomContainer atomCon, HashMap renderingCoordinates) {
 		Point2d bondCenter;
 		IBond closestBond = null;
-		IBond currentBond;
+
 		double smallestMouseDistance = -1;
 		double mouseDistance;
-		IBond[] bonds = atomCon.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			currentBond = bonds[i];
+//		IBond[] bonds = atomCon.getBonds();
+        Iterator bonds = atomCon.bonds();
+        while (bonds.hasNext()) {
+            IBond currentBond = (IBond) bonds.next();                   
 			bondCenter = get2DCenter(currentBond.atoms(),renderingCoordinates);
 			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
