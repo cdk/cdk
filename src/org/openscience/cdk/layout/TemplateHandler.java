@@ -29,26 +29,21 @@
  */
 package org.openscience.cdk.layout;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Helper class for Structure Diagram Generation. Handles templates. This is
@@ -97,20 +92,19 @@ public class TemplateHandler
 		{
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/templates/templates.list");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
-			while (reader.ready())
-			{
-				line = reader.readLine();
-				line = "data/templates/" + line;
+            while (reader.ready()) {
+                line = reader.readLine();
+                line = "data/templates/" + line;
                 logger.debug("Attempting to read template ", line);
-				CMLReader structureReader = new CMLReader(
-                    this.getClass().getClassLoader().getResourceAsStream(line)
+                CMLReader structureReader = new CMLReader(
+                        this.getClass().getClassLoader().getResourceAsStream(line)
                 );
-                IChemFile file = (IChemFile)structureReader.read(builder.newChemFile());
-				templates.addElement(file.getBuilder().newMolecule(
-                    ChemFileManipulator.getAllInOneContainer(file)
-                ));
-				logger.debug("Successfully read template ", line);
-			}
+                IChemFile file = (IChemFile) structureReader.read(builder.newChemFile());
+                List files = ChemFileManipulator.getAllAtomContainers(file);
+                for (int i = 0; i < files.size(); i++)
+                    templates.addElement((IAtomContainer) files.get(i));
+                logger.debug("Successfully read template ", line);
+            }
 		} catch (Exception exc)
 		{
 			logger.debug("Could not read templates");
