@@ -20,20 +20,21 @@
  */
 package org.openscience.cdk.templates;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Tool that provides templates for the (natural) amino acids.
@@ -65,15 +66,18 @@ public class AminoAcids {
         int total = 0;
         for (int aa=0; aa<aminoAcids.length; aa++) {
         	AminoAcid acid = aminoAcids[aa];
-        	org.openscience.cdk.interfaces.IBond[] bonds = acid.getBonds();
-        	logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + bonds.length);
-        	total += bonds.length;
+
+        	logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
+        	total += acid.getBondCount();
         	logger.debug("total #bonds: ", total);
-        	for (int bCounter=0; bCounter<bonds.length; bCounter++) {
+
+            Iterator bonds = acid.bonds();
+            while (bonds.hasNext()) {
+                IBond bond = (IBond) bonds.next();
         		info[counter][0] = counter;
-        		info[counter][1] = acid.getAtomNumber(bonds[bCounter].getAtom(0));
-        		info[counter][2] = acid.getAtomNumber(bonds[bCounter].getAtom(1));
-        		info[counter][3] = (int)bonds[bCounter].getOrder();
+        		info[counter][1] = acid.getAtomNumber(bond.getAtom(0));
+        		info[counter][2] = acid.getAtomNumber(bond.getAtom(1));
+        		info[counter][3] = (int)bond.getOrder();
         		counter++;
         	}
         }
@@ -156,9 +160,11 @@ public class AminoAcids {
         				aminoAcid.addAtom(atom);
         			}
         		}
-        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
-        		for (int bondCount=0; bondCount<bonds.length; bondCount++) {
-        			aminoAcid.addBond(bonds[bondCount]);
+//        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
+                Iterator bonds = ac.bonds();
+                while (bonds.hasNext()) {
+                    IBond bond = (IBond) bonds.next();
+        			aminoAcid.addBond(bond);
         		}
         		AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
                 aminoAcid.setProperty(NO_ATOMS, "" + aminoAcid.getAtomCount());
