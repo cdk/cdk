@@ -1,11 +1,5 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
@@ -23,6 +17,12 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class calculates G3R proton descriptors used in neural networks for H1
@@ -163,12 +163,14 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		Ring ring;
 		List ringsWithThisBond;
 		// SET ISINRING FLAGS FOR BONDS
-		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer
-				.getBonds();
-		for (int z = 0; z < bondsInContainer.length; z++) {
-			ringsWithThisBond = varRingSet.getRings(bondsInContainer[z]);
+//		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();
+
+        Iterator bondsInContainer = varAtomContainer.bonds();
+        while (bondsInContainer.hasNext()) {
+            IBond bond = (IBond) bondsInContainer.next();                    
+			ringsWithThisBond = varRingSet.getRings(bond);
 			if (ringsWithThisBond.size() > 0) {
-				bondsInContainer[z].setFlag(CDKConstants.ISINRING, true);
+				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
 		// SET ISINRING FLAGS FOR ATOMS
