@@ -1,17 +1,17 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
-import java.util.Vector;
-
-import javax.vecmath.GMatrix;
-import javax.vecmath.GVector;
-
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -81,8 +81,17 @@ public class Torsions {
 	public void setMMFF94TorsionsParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
 
 		//System.out.println("setMMFF94TorsionsParameters");
-		
-		bond = molecule.getBonds();
+
+        // looks like we need the bonds in an array for the rest of the class
+        bond = new IBond[molecule.getBondCount()];
+        int counter = 0;
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond aBond = (IBond) bonds.next();
+            bond[counter] = aBond;
+            counter++;
+        }
+                
 		for (int b=0; b<bond.length; b++) {
 			atomInBond = BondManipulator.getAtomArray(bond[b]);
 			bondConnectedBefore = AtomContainerManipulator.getBondArray(molecule.getConnectedBondsList(atomInBond[0]));

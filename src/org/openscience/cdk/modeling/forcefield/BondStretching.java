@@ -1,14 +1,14 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
-import java.util.Vector;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
-
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
 //import org.openscience.cdk.tools.LoggingTool;
 
 
@@ -69,7 +69,6 @@ public class BondStretching {
 
 		//System.out.println("setMMFF94BondStretchingParameters");
 		
-		IBond[] bonds = molecule.getBonds();
 		bondsNumber = molecule.getBondCount();
 		//System.out.println("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[molecule.getBondCount()][];
@@ -83,33 +82,37 @@ public class BondStretching {
 		k3 = new double[molecule.getBondCount()];
 		k4 = new double[molecule.getBondCount()];
 
-		String bondType;
-		
-		for (int i = 0; i < molecule.getBondCount(); i++) {
-			
-			//atomsInBond = bonds[i].getatoms();
-			
-			bondType = bonds[i].getProperty("MMFF94 bond type").toString();
-			//System.out.println("bondType " + i + " = " + bondType);
-			
-			bondAtomPosition[i] = new int[bonds[i].getAtomCount()];
-			
-			for (int j = 0; j < bonds[i].getAtomCount(); j++) {
-				bondAtomPosition[i][j] = molecule.getAtomNumber(bonds[i].getAtom(j));
-			}
-			
-			/*System.out.println("bond " + i + " : " + bondType + " " + bonds[i].getAtom(0).getAtomTypeName() + "(" + bondAtomPosition[i][0] + "), " + 
-					bonds[i].getAtom(1).getAtomTypeName() + "(" + bondAtomPosition[i][1] + ")");
-			*/		
-			bondData = pc.getBondData(bondType, bonds[i].getAtom(0).getAtomTypeName(), bonds[i].getAtom(1).getAtomTypeName());
-			//System.out.println("bondData : " + bondData);
-			r0[i] = ((Double) bondData.get(0)).doubleValue();
-			k2[i] = ((Double) bondData.get(1)).doubleValue();
-			k3[i] = ((Double) bondData.get(2)).doubleValue();
-			k4[i] = ((Double) bondData.get(3)).doubleValue();
-			}
-		
-		r = new double[molecule.getBondCount()];
+        String bondType;
+        Iterator bonds = molecule.bonds();
+        int i = 0;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+
+            //atomsInBond = bonds[i].getatoms();
+
+            bondType = bond.getProperty("MMFF94 bond type").toString();
+            //System.out.println("bondType " + i + " = " + bondType);
+
+            bondAtomPosition[i] = new int[bond.getAtomCount()];
+
+            for (int j = 0; j < bond.getAtomCount(); j++) {
+                bondAtomPosition[i][j] = molecule.getAtomNumber(bond.getAtom(j));
+            }
+
+            /*System.out.println("bond " + i + " : " + bondType + " " + bonds[i].getAtom(0).getAtomTypeName() + "(" + bondAtomPosition[i][0] + "), " +
+                       bonds[i].getAtom(1).getAtomTypeName() + "(" + bondAtomPosition[i][1] + ")");
+               */
+            bondData = pc.getBondData(bondType, bond.getAtom(0).getAtomTypeName(), bond.getAtom(1).getAtomTypeName());
+            //System.out.println("bondData : " + bondData);
+            r0[i] = ((Double) bondData.get(0)).doubleValue();
+            k2[i] = ((Double) bondData.get(1)).doubleValue();
+            k3[i] = ((Double) bondData.get(2)).doubleValue();
+            k4[i] = ((Double) bondData.get(3)).doubleValue();
+
+            i++;
+        }
+
+        r = new double[molecule.getBondCount()];
 		deltar = new double[molecule.getBondCount()];
 		
 
