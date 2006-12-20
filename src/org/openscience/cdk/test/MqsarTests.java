@@ -26,14 +26,11 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.*;
-import org.openscience.cdk.test.qsar.descriptors.bond.*;
-import org.openscience.cdk.test.qsar.descriptors.molecular.*;
-import org.openscience.cdk.test.qsar.model.R.*;
-import org.openscience.cdk.test.qsar.model.R2.*;
-import org.openscience.cdk.test.qsar.model.weka.*;
+import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
+import org.openscience.cdk.test.qsar.model.weka.J48WModelTest;
+import org.openscience.cdk.test.qsar.model.weka.LinearRegressionWModelTest;
+import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -52,14 +49,6 @@ public class MqsarTests {
 
         suite.addTest(DescriptorEngineTest.suite());
         
-//      from cdk.test.qsar.model.R
-        suite.addTest(CNNClassificationModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.LinearRegressionModelTest.suite());
-        suite.addTest(ModelLoadSaveTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R.QSARRModelTests.suite());
-        suite.addTest(SJavaEnvironmentTest.suite());
-
 //      from cdk.test.qsar.model.R2
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
         suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
