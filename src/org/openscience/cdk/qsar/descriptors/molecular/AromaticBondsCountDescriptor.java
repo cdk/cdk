@@ -28,12 +28,15 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import java.util.Iterator;
 
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
@@ -147,9 +150,10 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
             IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
             HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
         }
-        org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            if (ac.getBond(i).getFlag(CDKConstants.ISAROMATIC)) {
+        Iterator bonds = ac.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();                    
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 aromaticBondsCount += 1;
             }
         }

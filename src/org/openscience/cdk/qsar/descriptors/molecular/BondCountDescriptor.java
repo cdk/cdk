@@ -26,10 +26,13 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.Iterator;
 
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
@@ -126,9 +129,10 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer container) {
         int bondCount = 0;
-        org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            if (container.getBond(i).getOrder() == order) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            if (bond.getOrder() == order) {
                 bondCount += 1;
             }
         }
@@ -140,7 +144,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         else if (order == 1.5) name += "a";
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(bondCount), new String[] {name});
+                new IntegerResult(bondCount), new String[]{name});
     }
 
 

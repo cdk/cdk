@@ -27,12 +27,15 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Iterator;
 
 /**
  * Sum of the absolute value of the difference between atomic polarizabilities 
@@ -67,117 +70,118 @@ public class BPolDescriptor implements IMolecularDescriptor {
     private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
-    
+
     /**
      *  Constructor for the APolDescriptor object
      */
     public BPolDescriptor() {
         logger = new LoggingTool(this);
-	// atomic polarizabilities ordered by atomic number from 1 to 102
-	if (polarizabilities == null) {
-            polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 
-		        1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 
-		        43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5, 6.8, 6.1, 7.1, 8.12, 6.07, 
-		        4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6, 8.6, 
-		        4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 
-		        31.4, 30.1, 28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 
-		        13.1, 11.1, 9.7, 8.5, 7.6, 6.5, 5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 
-		        38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23, 22.7, 20.5,19.7,23.8,18.2,17.5};
+    // atomic polarizabilities ordered by atomic number from 1 to 102
+    if (polarizabilities == null) {
+            polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76,
+                1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411,
+                43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5, 6.8, 6.1, 7.1, 8.12, 6.07,
+                4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6, 8.6,
+                4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2,
+                31.4, 30.1, 28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2,
+                13.1, 11.1, 9.7, 8.5, 7.6, 6.5, 5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7,
+                38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23, 22.7, 20.5,19.7,23.8,18.2,17.5};
         }
     }
 
-	public DescriptorSpecification getSpecification() {
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
-		    this.getClass().getName(),
-		    "$Id$",
+            this.getClass().getName(),
+            "$Id$",
             "The Chemistry Development Kit");
     };
-    
-	/**
-	 *  Sets the parameters attribute of the BPolDescriptor object
-	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		// no parameters for this descriptor
-	}
+
+    /**
+     *  Sets the parameters attribute of the BPolDescriptor object
+     *
+     *@param  params            The new parameters value
+     *@exception  CDKException  Description of the Exception
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        // no parameters for this descriptor
+    }
 
 
-	/**
-	 *  Gets the parameters attribute of the BPolDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		// no parameters for this descriptor
-		return (null);
-	}
+    /**
+     *  Gets the parameters attribute of the BPolDescriptor object
+     *
+     *@return    The parameters value
+     */
+    public Object[] getParameters() {
+        // no parameters for this descriptor
+        return (null);
+    }
 
 
-	/**
-	 *  This method calculate the sum of the absolute value of 
-	 *  the difference between atomic polarizabilities of all bonded atoms in the molecule
-	 *
-	 *@param  container  Parameter is the atom container.
-	 *@return            The sum of atomic polarizabilities
-	 */
-	 
+    /**
+     *  This method calculate the sum of the absolute value of
+     *  the difference between atomic polarizabilities of all bonded atoms in the molecule
+     *
+     *@param  container  Parameter is the atom container.
+     *@return            The sum of atomic polarizabilities
+     */
 
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-		
-		double bpol = 0;
-		int atomicNumber0 = 0;
-		int atomicNumber1 = 0;
-		double difference = 0;
-		try {
-			ifac = IsotopeFactory.getInstance(container.getBuilder());			
-			IElement element0 = null;
-			IElement element1 = null;
-			org.openscience.cdk.interfaces.IBond[] bonds = container.getBonds();
-			org.openscience.cdk.interfaces.IBond bond = null;
-			String symbol0 = null;
-			String symbol1 = null;
-			for (int i = 0; i < bonds.length; i++) {
-				bond = container.getBond(i);
-				symbol0 = bond.getAtom(0).getSymbol();
-				symbol1 = bond.getAtom(1).getSymbol();
-				element0 = ifac.getElement(symbol0);
-				element1 = ifac.getElement(symbol1);
-				atomicNumber0 = element0.getAtomicNumber();
-				atomicNumber1 = element1.getAtomicNumber();
-				difference = polarizabilities[atomicNumber0] -polarizabilities[atomicNumber1];
-				bpol += Math.abs(difference);
-			}
-			return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+
+        double bpol = 0;
+        int atomicNumber0 = 0;
+        int atomicNumber1 = 0;
+        double difference = 0;
+        try {
+            ifac = IsotopeFactory.getInstance(container.getBuilder());
+            IElement element0;
+            IElement element1;
+
+            String symbol0;
+            String symbol1;
+            Iterator bonds = container.bonds();
+            while (bonds.hasNext()) {
+                IBond bond = (IBond) bonds.next();
+
+                symbol0 = bond.getAtom(0).getSymbol();
+                symbol1 = bond.getAtom(1).getSymbol();
+                element0 = ifac.getElement(symbol0);
+                element1 = ifac.getElement(symbol1);
+                atomicNumber0 = element0.getAtomicNumber();
+                atomicNumber1 = element1.getAtomicNumber();
+                difference = polarizabilities[atomicNumber0] -polarizabilities[atomicNumber1];
+                bpol += Math.abs(difference);
+            }
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(bpol), new String[] {"bpol"});
-		} catch (Exception ex1) {
+        } catch (Exception ex1) {
                     logger.debug(ex1);
-			throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
-		}
-	}
+            throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
+        }
+    }
 
 
-	/**
-	 *  Gets the parameterNames attribute of the BPolDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		// no param names to return
-		return (null);
-	}
+    /**
+     *  Gets the parameterNames attribute of the BPolDescriptor object
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        // no param names to return
+        return (null);
+    }
 
 
-	/**
-	 *  Gets the parameterType attribute of the BPolDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return (null);
-	}
+    /**
+     *  Gets the parameterType attribute of the BPolDescriptor object
+     *
+     *@param  name  Description of the Parameter
+     *@return       The parameterType value
+     */
+    public Object getParameterType(String name) {
+        return (null);
+    }
 }
 
