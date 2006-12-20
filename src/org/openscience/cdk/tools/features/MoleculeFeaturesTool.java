@@ -33,6 +33,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.DataFeatures;
 
+import java.util.Iterator;
+
 /**
  * Utility that helps determine which data features are present.
  * 
@@ -42,41 +44,43 @@ import org.openscience.cdk.tools.DataFeatures;
  */
 public class MoleculeFeaturesTool {
 
-	public static boolean hasPartialCharges(IMolecule molecule) {
-		java.util.Iterator atoms = molecule.atoms();
-		while (atoms.hasNext()) {
-			if (((IAtom)atoms.next()).getCharge() != 0.0000) return true;
-		}
-		return false;
-	}
-	
-	public static boolean hasFormalCharges(IMolecule molecule) {
-		java.util.Iterator atoms = molecule.atoms();
-		while (atoms.hasNext()) {
-			if (((IAtom)atoms.next()).getFormalCharge() != 0) return true;
-		}
-		return false;
-	}
+    public static boolean hasPartialCharges(IMolecule molecule) {
+        java.util.Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            if (((IAtom)atoms.next()).getCharge() != 0.0000) return true;
+        }
+        return false;
+    }
 
-	public static boolean hasElementSymbols(IMolecule molecule) {
-		java.util.Iterator atoms = molecule.atoms();
-		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
-			if (atom.getSymbol() != null &&
-				atom.getSymbol().length() > 0) return true;
-		}
-		return false;
-	}
+    public static boolean hasFormalCharges(IMolecule molecule) {
+        java.util.Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            if (((IAtom)atoms.next()).getFormalCharge() != 0) return true;
+        }
+        return false;
+    }
 
-	/**
-	 * Checks wether all bonds have exactly two atoms.
-	 */
-	public static boolean hasGraphRepresentation(IMolecule molecule) {
-		IBond[] bonds = molecule.getBonds();
-		for (int i=0; i<bonds.length; i++) {
-			if (bonds[i].getAtomCount() != 2) return false;
-		}
-		return true;
-	}
-	
+    public static boolean hasElementSymbols(IMolecule molecule) {
+        java.util.Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom)atoms.next();
+            if (atom.getSymbol() != null &&
+                atom.getSymbol().length() > 0) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks wether all bonds have exactly two atoms.
+     */
+    public static boolean hasGraphRepresentation(IMolecule molecule) {
+
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();       
+            if (bond.getAtomCount() != 2) return false;
+        }
+        return true;
+    }
+
 }
