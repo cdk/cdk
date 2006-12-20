@@ -23,21 +23,16 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.config.isotopes.IsotopeReader;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
-
-import org.openscience.cdk.config.isotopes.IsotopeReader;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
@@ -81,41 +76,39 @@ public class IsotopeFactory
 	 *      file
 	 *@exception  OptionalDataException   Unexpected data appeared in the isotope
 	 *      ObjectInputStream
-	 *@exception  ClassNotFoundException  A problem instantiating the isotopes
 	 */
-	private IsotopeFactory(IChemObjectBuilder builder) throws IOException, OptionalDataException,
-			ClassNotFoundException
-	{
+	private IsotopeFactory(IChemObjectBuilder builder) throws IOException, OptionalDataException
+    {
         logger = new LoggingTool(this);
         logger.info("Creating new IsotopeFactory");
 
-		InputStream ins = null;
+        InputStream ins;
         // ObjIn in = null;
         String errorMessage = "There was a problem getting org.openscience.cdk." +
                               "config.isotopes.xml as a stream";
-		try {
+        try {
             String configFile = "org/openscience/cdk/config/data/isotopes.xml";
             if (debug) logger.debug("Getting stream for ", configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		} catch (Exception exception) {
+        } catch (Exception exception) {
             logger.error(errorMessage);
             logger.debug(exception);
-			throw new IOException(errorMessage);
-		}
-		if (ins == null) {
+            throw new IOException(errorMessage);
+        }
+        if (ins == null) {
             logger.error(errorMessage);
-			throw new IOException(errorMessage);
-		}
+            throw new IOException(errorMessage);
+        }
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
         isotopes = reader.readIsotopes();
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
-		/* for (int f = 0; f < isotopes.size(); f++) {
-            Isotope isotope = (Isotope)isotopes.elementAt(f);
-		} What's this loop for?? */
-        
+        /* for (int f = 0; f < isotopes.size(); f++) {
+              Isotope isotope = (Isotope)isotopes.elementAt(f);
+          } What's this loop for?? */
+
         majorIsotopes = new HashMap();
-	}
+    }
 
 
 	/**
@@ -125,16 +118,15 @@ public class IsotopeFactory
 	 * @return                             The instance value
 	 * @exception  IOException             Description of the Exception
 	 * @exception  OptionalDataException   Description of the Exception
-	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
 	public static IsotopeFactory getInstance(IChemObjectBuilder builder)
-			 throws IOException, OptionalDataException, ClassNotFoundException
-	{
+			 throws IOException, OptionalDataException
+    {
         if (ifac == null) {
             ifac = new IsotopeFactory(builder);
         }
         return ifac;
-	}
+    }
 
 
 	/**
@@ -265,8 +257,7 @@ public class IsotopeFactory
 	 */
 	public IElement getElement(String symbol)
 	{
-		IIsotope isotope = getMajorIsotope(symbol);
-		return isotope;
+        return getMajorIsotope(symbol);
 	}
 
 
@@ -278,8 +269,7 @@ public class IsotopeFactory
 	 */
 	public IElement getElement(int atomicNumber)
 	{
-		IIsotope isotope = getMajorIsotope(atomicNumber);
-		return isotope;
+        return getMajorIsotope(atomicNumber);
 	}
 
     /**
