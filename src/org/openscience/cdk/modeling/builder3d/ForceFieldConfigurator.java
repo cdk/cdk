@@ -28,27 +28,21 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 
 /**
@@ -295,27 +289,31 @@ public class ForceFieldConfigurator {
 			}
 		}
 		
-		IBond[] bond = molecule.getBonds();
+//		IBond[] bond = molecule.getBonds();
 		String bondType;
-		for (int i=0; i < bond.length; i++) {
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+
 			//System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 			bondType = "0";
-			if (bond[i].getOrder() == 1) {
-				if ((bond[i].getAtom(0).getAtomTypeName().equals("Csp2")) & 
-					((bond[i].getAtom(1).getAtomTypeName().equals("Csp2")) | (bond[i].getAtom(1).getAtomTypeName().equals("C=")))) {
+			if (bond.getOrder() == 1) {
+				if ((bond.getAtom(0).getAtomTypeName().equals("Csp2")) &
+					((bond.getAtom(1).getAtomTypeName().equals("Csp2")) | (bond.getAtom(1).getAtomTypeName().equals("C=")))) {
 					bondType = "1";
 				}
 					
-				if ((bond[i].getAtom(0).getAtomTypeName().equals("C=")) & 
-					((bond[i].getAtom(1).getAtomTypeName().equals("Csp2")) | (bond[i].getAtom(1).getAtomTypeName().equals("C=")))) {
+				if ((bond.getAtom(0).getAtomTypeName().equals("C=")) &
+					((bond.getAtom(1).getAtomTypeName().equals("Csp2")) | (bond.getAtom(1).getAtomTypeName().equals("C=")))) {
 					bondType = "1";}
 					
-				if ((bond[i].getAtom(0).getAtomTypeName().equals("Csp")) & 
-					(bond[i].getAtom(1).getAtomTypeName().equals("Csp"))) {
+				if ((bond.getAtom(0).getAtomTypeName().equals("Csp")) &
+					(bond.getAtom(1).getAtomTypeName().equals("Csp"))) {
 					bondType = "1";}
 			}
-			molecule.getBond(i).setProperty("MMFF94 bond type", bondType);
-			//System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
+//			molecule.getBond(i).setProperty("MMFF94 bond type", bondType);
+            bond.setProperty("MMFF94 bond type", bondType);
+            //System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 		}
 
 		return ringSetMolecule;

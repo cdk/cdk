@@ -23,18 +23,18 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.util.Hashtable;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
 
 
 /**
@@ -356,9 +356,9 @@ public class AtomPlacer3D {
 	 * author:    steinbeck,cho
 	 */
 	public IAtom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			IBond bond = bonds[i];
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) & !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
 				if (bond.getAtom(1).getFlag(CDKConstants.ISALIPHATIC) & !bond.getAtom(1).getSymbol().equals("H")) {
 					return bond.getAtom(1);
@@ -380,9 +380,9 @@ public class AtomPlacer3D {
 	 * author: steinbeck,cho
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			IBond bond = bonds[i];
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (atom0.getFlag(CDKConstants.ISPLACED) & !(atom1.getFlag(CDKConstants.ISPLACED))) {
@@ -405,9 +405,10 @@ public class AtomPlacer3D {
 	 * @return    The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule) {
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			IBond bond = bonds[i];
+//		IBond[] bonds = molecule.getBonds();
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (atom0.getFlag(CDKConstants.ISPLACED) & !(atom1.getFlag(CDKConstants.ISPLACED))) {
