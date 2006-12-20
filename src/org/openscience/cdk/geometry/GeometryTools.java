@@ -29,20 +29,15 @@
  */
 package org.openscience.cdk.geometry;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
-import javax.vecmath.Vector3d;
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -651,10 +646,10 @@ public class GeometryTools {
 	 */
 	public static double getBondLengthAverage(IAtomContainer ac, HashMap renderingCoordinates) {
 		double bondLengthSum = 0;
-		IBond[] bonds = ac.getBonds();
-		int bondCounter = 0;
-		for (int f = 0; f < bonds.length; f++) {
-			IBond bond = bonds[f];
+        Iterator bonds = ac.bonds();
+        int bondCounter = 0;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
 			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 			if (renderingCoordinates.get(atom1) != null &&
@@ -752,7 +747,7 @@ public class GeometryTools {
 	/**
 	 *  Determines if this model contains 3D coordinates
 	 *
-	 *@param  m  Description of the Parameter
+	 *@param  ac  Description of the Parameter
 	 *@return    boolean indication that 3D coordinates are available
 	 */
 	public static boolean has3DCoordinates(IAtomContainer ac) {
@@ -763,7 +758,7 @@ public class GeometryTools {
 	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
-	 *@param  m  Description of the Parameter
+	 *@param  ac  Description of the Parameter
 	 *@return    0 no 2d, 1=some, 2= for each atom
 	 */
 	public static int has2DCoordinatesNew(IAtomContainer ac) {

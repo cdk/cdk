@@ -68,7 +68,7 @@ public class BondTools {
     		from = conAtom;
     	}
     }
-    boolean[] array = new boolean[container.getBonds().length];
+    boolean[] array = new boolean[container.getBondCount()];
     for (int i = 0; i < array.length; i++) {
       array[i] = true;
     }

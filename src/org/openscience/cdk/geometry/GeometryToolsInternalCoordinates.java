@@ -31,11 +31,13 @@ package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -669,12 +671,12 @@ public class GeometryToolsInternalCoordinates {
 	public static IBond getClosestBond(int xPosition, int yPosition, IAtomContainer atomCon) {
 		Point2d bondCenter;
 		IBond closestBond = null;
-		IBond currentBond;
+
 		double smallestMouseDistance = -1;
 		double mouseDistance;
-		IBond[] bonds = atomCon.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			currentBond = bonds[i];
+        Iterator bonds = atomCon.bonds();
+        while (bonds.hasNext()) {
+            IBond currentBond =  (IBond) bonds.next();
 			bondCenter = get2DCenter(currentBond.atoms());
 			mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
 			if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
@@ -749,10 +751,10 @@ public class GeometryToolsInternalCoordinates {
 	 */
 	public static double getBondLengthAverage(IAtomContainer ac) {
 		double bondLengthSum = 0;
-		IBond[] bonds = ac.getBonds();
-		int bondCounter = 0;
-		for (int f = 0; f < bonds.length; f++) {
-			IBond bond = bonds[f];
+        Iterator bonds = ac.bonds();
+        int bondCounter = 0;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
 			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 			if (atom1.getPoint2d() != null &&
@@ -903,7 +905,6 @@ public class GeometryToolsInternalCoordinates {
 	 *@return            The normalizationFactor value
 	 */
 	public static double getNormalizationFactor(IAtomContainer container) {
-		IBond[] bonds = container.getBonds();
 		double bondlength = 0.0;
 		double ratio;
 		/*
@@ -913,12 +914,14 @@ public class GeometryToolsInternalCoordinates {
 		double desiredBondLength = 1.5;
 		// loop over all bonds and determine the mean bond distance
 		int counter = 0;
-		for (int f = 0; f < bonds.length; f++) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			// only consider two atom bonds into account
-			if (bonds[f].getAtomCount() == 2) {
+			if (bond.getAtomCount() == 2) {
 				counter++;
-				org.openscience.cdk.interfaces.IAtom atom1 = bonds[f].getAtom(0);
-				org.openscience.cdk.interfaces.IAtom atom2 = bonds[f].getAtom(1);
+				org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
+				org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 				bondlength += Math.sqrt(Math.pow(atom1.getPoint2d().x - atom2.getPoint2d().x, 2) +
 						Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
 			}
@@ -1352,10 +1355,10 @@ public class GeometryToolsInternalCoordinates {
 	 */
 	public static double getBondLengthAverage3D(IAtomContainer ac) {
 		double bondLengthSum = 0;
-		IBond[] bonds = ac.getBonds();
-		int bondCounter = 0;
-		for (int f = 0; f < bonds.length; f++) {
-			IBond bond = bonds[f];
+        Iterator bonds = ac.bonds();
+        int bondCounter = 0;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 			org.openscience.cdk.interfaces.IAtom atom1 = bond.getAtom(0);
 			org.openscience.cdk.interfaces.IAtom atom2 = bond.getAtom(1);
 			if (atom1.getPoint3d() != null &&
