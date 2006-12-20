@@ -422,7 +422,6 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		}
 
 		// Variables
-		double[] values; // for storage of results of other methods
 		double distance;
 		double sum;
 		double smooth = -20;
@@ -431,7 +430,6 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		double limitInf = 1.4;
 		double limitSup = 4;
 		double step = (limitSup - limitInf) / 15;
-		IAtom atom2;
 
 		// ////////////////////////LAST DESCRIPTOR IS g3(r), FOR PROTONS BONDED
 		// TO LIKE-CYCLOEXANE RINGS:
@@ -440,7 +438,6 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		Vector3d a_b = new Vector3d();
 		Vector3d b_a = new Vector3d();
 		Vector3d b_b = new Vector3d();
-		Point3d middlePoint = new Point3d();
 		double angle = 0;
 
 		if (bondsInCycloex.size() > 0) {
@@ -456,7 +453,6 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			angle = 0;
 			int ya_counter = 0;
 			List connAtoms;
-			ArrayList g3r_function = new ArrayList(13);
 			for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
 				sum = 0;
 				for (int cyc = 0; cyc < bondsInCycloex.size(); cyc++) {

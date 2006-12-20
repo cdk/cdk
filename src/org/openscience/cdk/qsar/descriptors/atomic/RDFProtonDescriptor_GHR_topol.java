@@ -300,7 +300,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 }
 		
 	//Variables	
-	double[] values; // for storage of results of other methods
 	double distance;
 	double sum;
 	double smooth = -20;

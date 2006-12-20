@@ -309,7 +309,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 	double limitInf = 1.4;
 	double limitSup = 4;
 	double step = (limitSup - limitInf)/15;
-	IAtom atom2;
 	
 	
 ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS			
@@ -332,7 +331,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 		limitSup = Math.PI / 2;
 		step = (limitSup - limitInf)/7;
 		smooth = -1.15;
-		ArrayList gSr_function = new ArrayList(7);
 		for(double ghs = 0; ghs < limitSup; ghs = ghs + step) {
 			sum = 0;
 			for( int sing = 0; sing < singles.size(); sing++ ) {
@@ -468,7 +466,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 		double[] values;
 		double distance = 0;
 		IAtom atom0 = bond.getAtom(0);
-		IAtom atom1 = bond.getAtom(1);
 		List bondsAtLeft = mol.getConnectedBondsList(atom0);
 		int partial;
 		for(int i=0; i<bondsAtLeft.size();i++) {

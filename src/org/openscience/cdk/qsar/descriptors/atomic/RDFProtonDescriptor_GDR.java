@@ -298,7 +298,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 		
 	//Variables	
 	double[] values; // for storage of results of other methods
-	double distance;
 	double sum;
 	double smooth = -20;
 	double partial;
@@ -306,7 +305,6 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 	double limitInf = 1.4;
 	double limitSup = 4;
 	double step = (limitSup - limitInf)/15;
-	IAtom atom2;
 	
 	
 ////////////////////////THE THIRD DESCRIPTOR IS gD(r) WITH DISTANCE AND RADIAN ANGLE BTW THE PROTON AND THE MIDDLE POINT OF DOUBLE BOND
