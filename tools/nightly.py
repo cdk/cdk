@@ -62,6 +62,7 @@
 #                     that requires a password/login. Also added a check for
 #                     Gmail server, since they require a TLS setup. Also added
 #                     code to redact the email password and login's if specified
+# Update 12/20/2006 - Fixed the regexes to take into account new modules
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -115,6 +116,9 @@ per_line = 8
 smtpServerName = 'smtp.gmail.com'
 fromName = 'nightly.py <rguha@indiana.edu>'
 toName = 'cdk-devel@lists.sourceforge.net'
+
+# If your server needs authorization, set them here
+# if not, just set them to None
 smtpLogin = 'rajarshi.guha'
 smtpPassword = 'beeb1e'
 
@@ -265,7 +269,7 @@ class HTMLTable:
         table.write("\n</table>\n")
         return table.getvalue()
 
-def sendMail(message):
+def sendMail(message, subject = 'CDK Nightly Build Failed'):
     if fromName == "" or fromName == None \
        or toName == "" or toName == None \
        or smtpServerName == "" or smtpServerName == None:
@@ -274,7 +278,7 @@ def sendMail(message):
     
     try:        
         msg = MIMEText(message)
-        msg['Subject'] = 'CDK Nightly Build Failed %s' % (todayNice)
+        msg['Subject'] = '%s - %s' % (subject,todayNice)
         msg['Message-id'] = email.Utils.make_msgid()
         msg['From'] = fromName
         msg['To'] = toName
@@ -794,7 +798,7 @@ def doCodeCoverage():
     f = glob.glob(os.path.join(nightly_web, 'emma', '*'))
     f.sort()
 
-    tnameregex = re.compile('M(?P<tname>[a-zA-Z]*)Tests')
+    tnameregex = re.compile('M(?P<tname>[a-zA-Z0-9]*)Tests')
     s = ''
     count = 1
     for covdir in f:
@@ -1097,6 +1101,7 @@ if __name__ == '__main__':
     # get the JUnit test results
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://www.junit.org/index.htm\">JUnit</a> results:")
+
     if successTest:
         print '  Generating JUnit section'
         # make the directory for reports
@@ -1141,6 +1146,11 @@ if __name__ == '__main__':
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
+        f = open(os.path.join(nightly_dir, 'test.log'), 'r')
+        lines = f.readlines()
+        f.close()
+        if not noMail: sendMail(string.join(lines[-20:]), 'JUnit test failed')
+
 
     # do the code coverage
     if successTestDist:
