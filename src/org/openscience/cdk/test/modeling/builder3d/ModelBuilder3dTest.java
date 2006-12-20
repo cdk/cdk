@@ -24,6 +24,10 @@
 package org.openscience.cdk.test.modeling.builder3d;
 
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -32,19 +36,31 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
@@ -59,6 +75,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	
 	boolean standAlone = false;
 	private LoggingTool logger;
+	private List inputList = null;
 	
 	/**
 	 *  Constructor for the ModelBuilder3dTest
@@ -247,6 +264,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	fail(exc.toString());
 		}
 	}
+    
+    /*
+     * @cdk.bug 1315823
+     */
     public void testModelBuilder3D_232() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
@@ -264,7 +285,13 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	            mb3d.setMolecule(new Molecule(ac),false);
 	            mb3d.generate3DCoordinates();
 	            assertNotNull(ac.getAtom(0).getPoint3d());
-			} catch (Exception exc) {
+	            double avlength=GeometryToolsInternalCoordinates.getBondLengthAverage3D(ac);
+	            for(int i=0;i<ac.getBondCount();i++){
+	            	double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
+	            	assertFalse(distance < avlength/2);
+	            	assertFalse(distance > avlength*2);
+	            }
+	        } catch (Exception exc) {
 				System.out.println("Cannot layout molecule 232");
 				if (standAlone)
 				{
@@ -304,6 +331,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     
     /**
      * Test for SF bug #1309731.
+     * @cdk.bug 1309731
      */
     public void testModelBuilder3D_keepChemObjectIDs(){
 		ModelBuilder3D mb3d = new ModelBuilder3D();
@@ -341,5 +369,170 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		
 		assertEquals("carbon1", carbon1.getID());
 		assertEquals("oxygen1", oxygen1.getID());
+	}
+	/*
+	 * this is a test contributed by mario baseda / see bug #1610997
+	 *  @cdk.bug 1610997
+	 */
+	public void test_LocalWorkerModel3DBuildersWithMM2ForceField()throws CDKException, Exception{
+		if (!this.runSlowTests()) fail("Slow tests turned of");
+		
+		boolean notCalculatedResults = false;
+		inputList = new ArrayList();
+		
+		////////////////////////////////////////////////////////////////////////////////////////////
+		//generate the input molecules. This are molecules without x, y, z coordinats 
+		
+		String[] smiles = new String[] {"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C","OCC=CCc1ccccc1(C=C)", "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
+		SmilesParser sp = new SmilesParser();
+		IAtomContainer[] atomContainer = new IAtomContainer[smiles.length];
+		for (int i = 0; i < smiles.length; i++) {
+			atomContainer[i] = sp.parseSmiles(smiles[i]);
+			
+			inputList.add(CMLChemFileWrapper.wrapAtomContainerInChemModel(atomContainer[i]));
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////////
+		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
+		
+		StructureDiagramGenerator str;
+		CMLChemFile resultFile = null;
+		List<CMLChemFile> resultList = new ArrayList<CMLChemFile>();
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			CMLChemFile file = (CMLChemFile) iter.next();
+			List moleculeList = ChemFileManipulator.getAllAtomContainers(file);
+			IAtomContainer molecules;
+			for (Iterator iterator = moleculeList.iterator(); iterator.hasNext();){
+				molecules = (IAtomContainer)iterator.next();
+				str = new StructureDiagramGenerator();
+				str.setMolecule((IMolecule)molecules);
+				str.generateCoordinates();
+				resultFile = CMLChemFileWrapper.wrapAtomContainerInChemModel(str.getMolecule());
+				resultList.add(resultFile);
+			}
+		}
+		inputList = resultList;
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		// Delete x and y coordinats
+		
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IChemFile element = (IChemFile) iter.next();
+			List MoleculeList = ChemFileManipulator.getAllAtomContainers(element);
+			IAtomContainer molecules;
+			for (Iterator iterator = MoleculeList.iterator(); iterator.hasNext();){
+				molecules = (IAtomContainer)iterator.next();
+				for (Iterator atom = molecules.atoms(); atom.hasNext();){
+					Atom last = (Atom) atom.next();
+					last.setPoint2d(null);
+				}
+			}
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// Test for the method Model3DBuildersWithMM2ForceField 
+		
+		try {
+			ModelBuilder3D mb3d=new ModelBuilder3D();
+			mb3d.setTemplateHandler();
+			for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+				CMLChemFile file = (CMLChemFile) iter.next();
+				List moleculeList = ChemFileManipulator.getAllAtomContainers(file);
+				IAtomContainer molecules;
+				for (Iterator iterator = moleculeList.iterator(); iterator.hasNext();){
+					molecules = (IAtomContainer)iterator.next();
+					try {
+						IMolecule mol = file.getBuilder().newMolecule(molecules);
+						/*for(int i=0;i<mol.getAtomCount();i++){
+							mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
+							mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
+						} */
+						mb3d.setMolecule(mol,false);
+						mb3d.generate3DCoordinates();
+						System.out.println("Calculation done");
+					} catch (Exception e) {
+						e.printStackTrace();
+						notCalculatedResults = true;
+						System.err.println("Calculation error "+e);
+					}
+				}
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			throw new Exception(exception);
+		}
+		assertEquals(false, notCalculatedResults);
+	}
+
+}
+
+class CMLChemFile extends ChemFile {
+
+	/**
+	 * Constructs an empty ChemFile.
+	 */
+	public CMLChemFile() {
+		super();
+	}
+	
+	/**
+	 * Constructs a ChemFile from a CML String.
+	 * 
+	 * @param CMLString to deserialize the ChemFile from.
+	 * @throws Exception
+	 */
+	public CMLChemFile(String CMLString) throws Exception {
+		CMLReader reader = new CMLReader(
+			new StringReader(CMLString)
+		);
+		reader.read(this);
+	}
+	
+	/**
+	 * Serializes this ChemFile into a CML String.
+	 * 
+	 * @return The CML String serialization.
+	 * @throws Exception
+	 */
+	public String toCML() throws Exception {
+		IDCreator idCreator = new IDCreator();
+		idCreator.createIDs(this);
+		
+		StringWriter stringWriter = new StringWriter();
+		IChemObjectWriter writer = new CMLWriter(stringWriter);
+		writer.write(this);
+		
+		return stringWriter.toString();
+	}
+	
+	private static final long serialVersionUID = -5664142472726700883L;
+	
+}
+
+
+class CMLChemFileWrapper {
+	/**
+	 * Method which converts an atomContainer to a CMLChemFile 
+	 * @param atomContainer
+	 * @return CMLChemFile which contains the information of the atomContainer
+	 */
+	public static CMLChemFile wrapAtomContainerInChemModel(IAtomContainer atomContainer) {
+		CMLChemFile file = new CMLChemFile();
+		IChemModel model = atomContainer.getBuilder().newChemModel();
+		IChemSequence sequence = atomContainer.getBuilder().newChemSequence();
+		IMoleculeSet moleculeSet = atomContainer.getBuilder().newMoleculeSet();
+		moleculeSet.addAtomContainer(atomContainer);
+		model.setMoleculeSet(moleculeSet);
+		sequence.addChemModel(model);
+		file.addChemSequence(sequence);
+		
+		return file;
+	}
+	public static CMLChemFile[] wrapAtomContainerArrayInChemModel(IAtomContainer[] atomContainer) {
+		CMLChemFile[] cmlChemfile = new CMLChemFile[atomContainer.length];
+		for (int i = 0; i < atomContainer.length; i++) {
+			cmlChemfile[i] = wrapAtomContainerInChemModel(atomContainer[i]);
+		}
+		return cmlChemfile;
 	}
 }
