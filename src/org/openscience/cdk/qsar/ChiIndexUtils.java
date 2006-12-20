@@ -114,8 +114,6 @@ public class ChiIndexUtils {
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
             throw new CDKException("IO problem occured when using the CDK atom config");
-        } catch (ClassNotFoundException e) {
-            throw new CDKException("Class not found for CDK atom config");
         }
         double sum = 0;
         for (int i = 0; i < fragList.size(); i++) {

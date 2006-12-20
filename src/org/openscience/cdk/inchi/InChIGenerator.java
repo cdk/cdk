@@ -20,27 +20,7 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
-import net.sf.jniinchi.INCHI_BOND_STEREO;
-import net.sf.jniinchi.INCHI_BOND_TYPE;
-import net.sf.jniinchi.INCHI_PARITY;
-import net.sf.jniinchi.INCHI_RADICAL;
-import net.sf.jniinchi.INCHI_RET;
-import net.sf.jniinchi.INCHI_STEREOTYPE;
-import net.sf.jniinchi.JniInchiAtom;
-import net.sf.jniinchi.JniInchiBond;
-import net.sf.jniinchi.JniInchiException;
-import net.sf.jniinchi.JniInchiInput;
-import net.sf.jniinchi.JniInchiOutput;
-import net.sf.jniinchi.JniInchiStereo0D;
-import net.sf.jniinchi.JniInchiWrapper;
-
+import net.sf.jniinchi.*;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Isotope;
@@ -50,7 +30,13 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IIsotope;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -269,10 +255,10 @@ public class InChIGenerator {
         
         
         // Process bonds
-        IBond[] bonds = atomContainer.getBonds();
-        for (int i = 0; i < bonds.length; i ++) {
-            IBond bond = bonds[i];
-            
+        Iterator bonds =  atomContainer.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+
             // Assumes 2 centre bond
             JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
             JniInchiAtom at1 = (JniInchiAtom) atomMap.get(bond.getAtom(1));
