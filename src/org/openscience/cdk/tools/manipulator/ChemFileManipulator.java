@@ -27,15 +27,11 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  * Class with convenience methods that provide methods from
@@ -74,9 +70,11 @@ public class ChemFileManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IChemFile file) {
         IAtomContainer container = file.getBuilder().newAtomContainer();
-        for (int i=0; i<file.getChemSequenceCount(); i++) {
+        for (int i = 0; i < file.getChemSequenceCount(); i++) {
             IChemSequence sequence = file.getChemSequence(i);
-            container.add(ChemSequenceManipulator.getAllInOneContainer(sequence));
+            List sequences = ChemSequenceManipulator.getAllAtomContainers(sequence);
+            for (int j = 0; j < sequences.size(); j++)
+                container.add((IAtomContainer) sequences.get(j));
         }
         return container;
     }
@@ -112,9 +110,7 @@ public class ChemFileManipulator {
     
     public static List getAllChemModels(IChemFile file)
     {
-	    int modelCounter = 0;
-	    int counter = 0;
-	    List modelsList = new ArrayList();
+        List modelsList = new ArrayList();
 
 	    for (int f = 0; f < file.getChemSequenceCount(); f++){
 		    java.util.Iterator iter = file.getChemSequence(f).chemModels();
