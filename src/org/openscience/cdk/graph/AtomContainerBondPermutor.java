@@ -30,8 +30,9 @@
 package org.openscience.cdk.graph;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-;
+import org.openscience.cdk.interfaces.IBond;
+
+import java.util.Iterator;
 
 
 /**
@@ -50,43 +51,43 @@ import org.openscience.cdk.Bond;
  */
 public class AtomContainerBondPermutor extends AtomContainerPermutor
 {
-	
-	public AtomContainerBondPermutor(AtomContainer ac)
-	{
-		setAtomContainer(ac);
-		N = atomContainer.getBondCount();
-		initBookkeeping();
-		initObjectArray();
-	}
-	
-	public void initObjectArray()
-	{
-		org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
-		objects = new Object[atomContainer.getBondCount()];
-		for (int f = 0; f < N; f++)
-		{
-			objects[f] = bonds[f];	
-		}
-	}
-	
-	AtomContainer makeResult()
-	{
-		Bond[] bonds = new Bond[objects.length];
-		for (int f = 0; f < objects.length; f++)
-		{
-			bonds[f] = ((Bond)objects[f]);	
-		}
-		AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
-		ac.setBonds(bonds);
-		AtomContainer clone = null;
-		try {
-			clone = (AtomContainer)ac.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return clone;
-	}
-	
+
+    public AtomContainerBondPermutor(AtomContainer ac)
+    {
+        setAtomContainer(ac);
+        N = atomContainer.getBondCount();
+        initBookkeeping();
+        initObjectArray();
+    }
+
+    public void initObjectArray() {
+        Iterator bonds = atomContainer.bonds();
+        objects = new Object[atomContainer.getBondCount()];
+        int i = 0;
+        while (bonds.hasNext()) {
+            objects[i] = bonds.next();
+            i++;
+        }
+    }
+
+    AtomContainer makeResult()
+    {
+        IBond[] bonds = new IBond[objects.length];
+        for (int f = 0; f < objects.length; f++)
+        {
+            bonds[f] = ((IBond)objects[f]);
+        }
+        AtomContainer ac = new org.openscience.cdk.AtomContainer(atomContainer);
+        ac.setBonds(bonds);
+        AtomContainer clone = null;
+        try {
+            clone = (AtomContainer)ac.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return clone;
+    }
+
 }
 

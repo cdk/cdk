@@ -24,15 +24,11 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -74,11 +70,12 @@ public class ConnectivityChecker
 			atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atomContainer.getAtom(f));
 		}
-		IBond[] bonds = atomContainer.getBonds();
-		for (int f = 0; f < bonds.length; f++)
-		{
-			bonds[f].setFlag(CDKConstants.VISITED, false);
-			ac.addBond(bonds[f]);
+
+        Iterator bonds = atomContainer.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+			bond.setFlag(CDKConstants.VISITED, false);
+			ac.addBond(bond);
 		}
 		atom = ac.getAtom(0);
 		sphere.addElement(atom);
