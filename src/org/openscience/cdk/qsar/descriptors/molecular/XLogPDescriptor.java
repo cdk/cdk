@@ -52,7 +52,7 @@ import java.util.Vector;
  * <p>Prediction of logP based on the atom-type method called XLogP. <b>Requires
  * all hydrogens to be explicit</b>.
  * <p>For description of the methodology see Ref. @cdk.cite{WANG97} and @cdk.cite{WANG00}
- * or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>. 
+ * or <a href="http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html">http://www.chem.ac.ru/Chemistry/Soft/XLOGP.en.html</a>.
  * Actually one molecular factor is missing (presence of para Hs donor pair).
  *
  * <p>This descriptor uses these parameters:
@@ -73,7 +73,7 @@ import java.util.Vector;
  *     <td>True is to use the salicyl acid correction factor</td>
  *   </tr>
  * </table>
- * 
+ *
  * <p>changed 2005-11-03 by chhoppe<br>
  *  -Internal hydrogen bonds are implemented<br>
  * CDK IDescriptor was validated against xlogp2.1<br>
@@ -89,27 +89,27 @@ import java.util.Vector;
  *  -F 83 is not 0.375, the program uses 0.512 [2005-11-21]<br>
  *  -hydrophobic carbon is 1-3 relationship not 1-4 [2005-11-22]<br>
  *  -Atomtyp C 34/35/36 perception corrected [2005-11-22]; before Atomtyp perception ring perception is done -> slows run time<br>
- *  
- *  
- *  
- *  <p>In question:<br> 
+ *
+ *
+ *
+ *  <p>In question:<br>
  *  	-Correction factor for salicylic acid (in paper, but not used by the program)<br>
  *  	-Amid classification is not consequent (in 6 rings (R2)N-C(R)=0 is eg 46 and in !6 membered rings it is amid)<br>
- *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not<br> 
+ *  		-sometimes O=C(R)-N(R)-C(R)=O is an amid ... sometimes not<br>
  *		-Value for internal H bonds is in paper 0.429 but for no454 it is 0.643<br>
  *		-pi system defintion, the neighbourhood is unclear<br>
- * 
+ *
  * <p>changed 2005-11-21 by chhoppe<br>
  * 	-added new parameter for the salicyl acid correction factor<br>
  *  -Corrected P and S perception for charges<br>
- * 
- * 
+ *
+ *
  *@author         mfe4, chhoppe
  *@cdk.created    2004-11-03
  *@cdk.module     qsar
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:xlogP
- * 
+ *
  * @cdk.keyword XLogP
  * @cdk.keyword descriptor
  */
@@ -835,7 +835,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
                 IBond bond = (IBond) bonds.next();
                 bondAtom0=bond.getAtom(0);
                 bondAtom1=bond.getAtom(1);
-                if ((bondAtom0.getSymbol().equals("C") && bondAtom1.getSymbol().equals("N")) || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))&& bonds[i].getOrder()==1){
+                if ((bondAtom0.getSymbol().equals("C") && bondAtom1.getSymbol().equals("N")) || (bondAtom0.getSymbol().equals("N") && bondAtom1.getSymbol().equals("C"))&& bond.getOrder()==1){
                     aminoAcid.removeBond(bondAtom0,bondAtom1);
                     aminoAcid.addBond(new AnyOrderQueryBond((IQueryAtom)bondAtom0,(IQueryAtom)bondAtom1,1));
                     break;
