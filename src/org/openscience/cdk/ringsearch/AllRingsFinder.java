@@ -29,17 +29,13 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  *  Finds the Set of all Rings. This is an implementation of the algorithm
@@ -367,12 +363,11 @@ public class AllRingsFinder
 	 */
 	private void initPathGraph(IAtomContainer ac, Vector pathes)
 	{
-		IBond bond = null;
 		Path path = null;
-		IBond[] bonds = ac.getBonds();
-		for (int f = 0; f < bonds.length; f++)
-		{
-			bond = bonds[f];
+
+        Iterator bonds = ac.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();                    
 			path = new Path(bond.getAtom(0), bond.getAtom(1));
 			pathes.add(path);
 			if (debug)

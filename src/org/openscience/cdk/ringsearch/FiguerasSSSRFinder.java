@@ -28,17 +28,14 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.Vector;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Ring;
-import org.openscience.cdk.RingSet;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 
@@ -383,28 +380,26 @@ public class FiguerasSSSRFinder {
 	 * @param   atom  The atom one bond is eliminated of
 	 * @param   molecule  The molecule that contains the atom
 	 */
-	private void breakBond(Atom atom, Molecule molecule)
-	{
-		org.openscience.cdk.interfaces.IBond[] bonds = molecule.getBonds();
-		for (int i = 0; i < bonds.length; i++)
-		{
-			if (bonds[i].contains(atom))
-			{
-				molecule.removeElectronContainer(bonds[i]);
-				break;
-			}
-		}
-	}
+    private void breakBond(Atom atom, Molecule molecule) {
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            if (bond.contains(atom)) {
+                molecule.removeElectronContainer(bond);
+                break;
+            }
+        }
+    }
 
 
-	/**
+    /**
 	 * Selects an optimum edge for elimination in structures without N2 nodes.
 	 *
      * <p>This might be severely broken! Would have helped if there was an
      * explanation of how this algorithm worked.
      *
 	 * @param   ring  
-	 * @param   mol  
+	 * @param   molecule  
 	 */
 	private IBond checkEdges(Ring ring, Molecule molecule)
 	{
