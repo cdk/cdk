@@ -1525,7 +1525,7 @@ public class SmilesGenerator
 	private void parseBond(StringBuffer line, IAtom a1, IAtom a2, IAtomContainer atomContainer)
 	{
 		//System.out.println("in parseBond()");
-		if (a1.getFlag(CDKConstants.ISAROMATIC) && a1.getFlag(CDKConstants.ISAROMATIC))
+		if (a1.getFlag(CDKConstants.ISAROMATIC) && a2.getFlag(CDKConstants.ISAROMATIC))
 		{
 			return;
 		}
