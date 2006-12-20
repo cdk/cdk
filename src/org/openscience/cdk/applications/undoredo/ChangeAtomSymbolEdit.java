@@ -23,15 +23,14 @@
  */
 package org.openscience.cdk.applications.undoredo;
 
-import java.io.IOException;
-import java.io.OptionalDataException;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.IAtom;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.config.IsotopeFactory;
+import java.io.IOException;
+import java.io.OptionalDataException;
 
 /**
  * Undo/Redo Edit class for the ChangeAtomSymbolAction, containing the methods
@@ -80,12 +79,9 @@ public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-	}
+    }
 
 	/*
 	 * (non-Javadoc)
@@ -102,12 +98,9 @@ public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-	}
+    }
 
 	/*
 	 * (non-Javadoc)
