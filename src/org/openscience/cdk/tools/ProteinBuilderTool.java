@@ -28,16 +28,14 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Strand;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
-import org.openscience.cdk.tools.LoggingTool;
+
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Class that facilitates building protein structures. Building DNA and RNA
@@ -49,7 +47,7 @@ import java.util.HashMap;
 public class ProteinBuilderTool {
 
     private static LoggingTool logger = new LoggingTool(ProteinBuilderTool.class);
-    
+
     /**
      * Builds a protein by connecting a new amino acid at the N-terminus of the
      * given strand.
@@ -61,7 +59,7 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtNTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
-    	// then add the amino acid
+        // then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if (protein.getMonomerCount() == 0) {
@@ -73,7 +71,7 @@ public class ProteinBuilderTool {
         } // else : no current N-terminus, so nothing special to do
         return protein;
     }
-    
+
     /**
      * Builds a protein by connecting a new amino acid at the C-terminus of the
      * given strand. The acidic oxygen of the added amino acid is removed so that
@@ -87,7 +85,7 @@ public class ProteinBuilderTool {
     public static BioPolymer addAminoAcidAtCTerminus(
         BioPolymer protein, AminoAcid aaToAdd, Strand strand, AminoAcid aaToAddTo)
     {
-    	// then add the amino acid
+        // then add the amino acid
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if ((protein.getMonomerCount() != 0) && (aaToAddTo != null)) {
@@ -99,7 +97,7 @@ public class ProteinBuilderTool {
         } // else : no current C-terminus, so nothing special to do
         return protein;
     }
-    
+
     /**
      * Creates a BioPolymer from a sequence of amino acid as identified by a
      * the sequence of there one letter codes.
@@ -125,10 +123,10 @@ public class ProteinBuilderTool {
                     throw new CDKException("Cannot build sequence! Unknown amino acid: " + aminoAcidCode);
                 }
                 try {
-					aminoAcid = (AminoAcid)aminoAcid.clone();
-				} catch (CloneNotSupportedException e) {
-					throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage());
-				}
+                    aminoAcid = (AminoAcid)aminoAcid.clone();
+                } catch (CloneNotSupportedException e) {
+                    throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage());
+                }
                 aminoAcid.setMonomerName(aminoAcidCode + i);
                 logger.debug("protein: ", protein);
                 logger.debug("strand: ", strand);
@@ -147,15 +145,17 @@ public class ProteinBuilderTool {
         protein.addBond(bond);
         return protein;
     }
-    
+
     private static BioPolymer addAminoAcid(BioPolymer protein, AminoAcid aaToAdd, Strand strand) {
-    	java.util.Iterator atoms = aaToAdd.atoms();
+        java.util.Iterator atoms = aaToAdd.atoms();
         while (atoms.hasNext()) {
             protein.addAtom((IAtom)atoms.next(), aaToAdd, strand);
         }
-        org.openscience.cdk.interfaces.IBond[] bonds = aaToAdd.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            protein.addBond(bonds[i]);
+
+        Iterator bonds = aaToAdd.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            protein.addBond(bond);
         }
         return protein;
     }
