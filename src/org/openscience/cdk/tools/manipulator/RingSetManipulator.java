@@ -27,16 +27,12 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
@@ -196,37 +192,43 @@ public class RingSetManipulator {
 	   * @param   newRing  The ring to be tested if it is already stored
 	   * @return     true if it is already stored
 	   */
-	  public static boolean ringAlreadyInSet(IRing newRing, IRingSet ringSet) {
-		  IRing ring;
-		  IBond[] bonds;
-		  IBond[] newBonds;
-		  IBond bond;
-		  int equalCount;
-		  boolean equals;
-		  for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-		  {
-			  equals = false;
-			  equalCount = 0;
-			  ring = (IRing)ringSet.getAtomContainer(f);
-			  bonds = ring.getBonds();
-			  newBonds = newRing.getBonds();
-			  if (bonds.length == newBonds.length) {
-				  for (int i = 0; i < bonds.length; i++) {
-					  bond = newBonds[i];
-					  for (int n = 0; n < bonds.length; n++) {
-						  if (bond == bonds[n]) {
-							  equals = true;
-							  equalCount++;
-							  break;
-						  }
-					  }
-					  if (!equals) break;
-				  }
-			  }
-			  if (equalCount == bonds.length) {
-				  return true;
-			  }
-		  }
-		  return false;	
-	  }
+      public static boolean ringAlreadyInSet(IRing newRing, IRingSet ringSet) {
+          IRing ring;
+//		  IBond[] bonds;
+//		  IBond[] newBonds;
+//		  IBond bond;
+          int equalCount;
+          boolean equals;
+          for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
+              equals = false;
+              equalCount = 0;
+              ring = (IRing) ringSet.getAtomContainer(f);
+
+//              bonds = ring.getBonds();
+//			  newBonds = newRing.getBonds();
+
+
+              if (ring.getBondCount() == newRing.getBondCount()) {
+                  Iterator bonds = ring.bonds();
+                  Iterator newBonds = newRing.bonds();
+                  while (newBonds.hasNext()) {
+                      IBond newBond = (IBond) newBonds.next();
+                      while (bonds.hasNext()) {
+                          IBond bond = (IBond) bonds.next();
+                          if (newBond == bond) {
+                              equals = true;
+                              equalCount++;
+                              break;
+                          }
+                      }
+                      if (!equals) break;
+                  }
+              }
+
+              if (equalCount == ring.getBondCount()) {
+                  return true;
+              }
+          }
+          return false;
+      }
 }

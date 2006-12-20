@@ -24,26 +24,12 @@
  */
 package org.openscience.cdk.validate;
 
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.LoggingTool;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.tools.LoggingTool;
+import java.util.Iterator;
 
 /**
  * Engine that performs the validation by traversing the IChemObject
@@ -117,9 +103,11 @@ public class ValidatorEngine implements IValidator {
         while (atoms.hasNext()) {
             report.addReport(validateAtom((IAtom)atoms.next()));
         }
-        IBond[] bonds = subject.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            report.addReport(validateBond(bonds[i]));
+
+        Iterator bonds = subject.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            report.addReport(validateBond(bond));
         }
         return report;
     }

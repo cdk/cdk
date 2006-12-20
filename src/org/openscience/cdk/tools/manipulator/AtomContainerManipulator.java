@@ -27,20 +27,10 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.*;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -169,9 +159,10 @@ public class AtomContainerManipulator {
                 IAtom atom = (IAtom)atoms.next();
                 if (atom.getID() != null) idList.addElement(atom.getID());
             }
-            IBond[] bonds = mol.getBonds();
-            for (int i=0; i<bonds.length; i++) {
-                IBond bond = bonds[i];
+
+            Iterator bonds = mol.bonds();
+            while (bonds.hasNext()) {
+                IBond bond = (IBond) bonds.next();                            
                 if (bond.getID() != null) idList.addElement(bond.getID());
             }
         }
