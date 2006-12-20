@@ -23,26 +23,19 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -363,7 +356,7 @@ public class GasteigerPEPEPartialCharges {
 	 *  
 	 * @param ac   The IAtomContainer to study
 	 * @param ds 
-	 * @param atom The position of the IAtom to study
+	 * @param atom1 The position of the IAtom to study
 	 * @return     The sum of electrostatic potential of the neighbours
 	 */
 	private double getElectrostaticPotentialN(IAtomContainer ac, int atom1, double[] ds) {
@@ -426,12 +419,11 @@ public class GasteigerPEPEPartialCharges {
 		
 		int numBond1 = 0;
 		int numBond2 = 0;
-        IBond[] bonds = atomContainer.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            if (atomContainer.getBond(i).getOrder() == 2.0) 
-            	numBond1 += 1;
-            if (ac.getBond(i).getOrder() == 2.0) 
-            	numBond2 += 1;
+        for (int i = 0; i < atomContainer.getBondCount(); i++) {
+            if (atomContainer.getBond(i).getOrder() == 2.0)
+                numBond1 += 1;
+            if (ac.getBond(i).getOrder() == 2.0)
+                numBond2 += 1;
         }
         
         if(numBond1 </*>*/ numBond2)
@@ -654,7 +646,7 @@ public class GasteigerPEPEPartialCharges {
 	/**
      * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
      * 
-	 * @param mol
+	 * @param ac
 	 */
 	public void cleanFlagReactiveCenter(IAtomContainer ac){
 		for(int j = 0 ; j < ac.getAtomCount(); j++)
