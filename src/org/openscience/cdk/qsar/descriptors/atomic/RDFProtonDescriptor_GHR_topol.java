@@ -56,8 +56,8 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor{
   
 	private boolean checkAromaticity = false;
 	private IAtomContainer acold=null;
-	private IRingSet rs = null;
-	private AtomContainerSet acSet=null;
+	private IRingSet varRingSet = null;
+	private AtomContainerSet varAtomContainerSet=null;
   
 	/**
 	 *  Constructor for the RDFProtonDescriptor object
@@ -109,12 +109,12 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor{
 		return params;
 	}
 
-	public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    return(calculate(atom, ac, null));
+	public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) throws CDKException {
+    return(calculate(atom, varAtomContainerSet, null));
   }
 
-	public DescriptorValue calculate(IAtom atom, IAtomContainer ac, IRingSet precalculatedringset) throws CDKException {
-        int atomPosition = ac.getAtomNumber(atom);
+	public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
+        int atomPosition = varAtomContainer.getAtomNumber(atom);
         
         final int GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH = 15;
         
@@ -130,15 +130,15 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor{
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
 /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
 
-Molecule mol = new Molecule(ac);
-if(ac!=acold){
-acold=ac;
+Molecule mol = new Molecule(varAtomContainer);
+if(varAtomContainer!=acold){
+acold=varAtomContainer;
 // DETECTION OF pi SYSTEMS
-acSet = ConjugatedPiSystemsDetector.detect(mol);
+varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
 if(precalculatedringset==null)
-rs = (new AllRingsFinder()).findAllRings(ac);
+varRingSet = (new AllRingsFinder()).findAllRings(varAtomContainer);
 else
-rs=precalculatedringset;
+varRingSet=precalculatedringset;
 try {
 GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
@@ -147,15 +147,15 @@ throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due t
 }
 }
 if (checkAromaticity) {
-HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+HueckelAromaticityDetector.detectAromaticity(varAtomContainer, varRingSet, true);
 }
 List rsAtom;
 Ring ring;
 List ringsWithThisBond;
 // SET ISINRING FLAGS FOR BONDS
-org.openscience.cdk.interfaces.IBond[] bondsInContainer = ac.getBonds();		
+org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();		
 for (int z = 0; z < bondsInContainer.length; z++) {
-ringsWithThisBond = rs.getRings(bondsInContainer[z]);
+ringsWithThisBond = varRingSet.getRings(bondsInContainer[z]);
 if (ringsWithThisBond.size() > 0) {
 	bondsInContainer[z].setFlag(CDKConstants.ISINRING, true);
 }
@@ -163,14 +163,14 @@ if (ringsWithThisBond.size() > 0) {
 // SET ISINRING FLAGS FOR ATOMS
 org.openscience.cdk.interfaces.IRingSet ringsWithThisAtom;
 
-for (int w = 0; w < ac.getAtomCount(); w++) {
-ringsWithThisAtom = rs.getRings(ac.getAtom(w));
+for (int w = 0; w < varAtomContainer.getAtomCount(); w++) {
+ringsWithThisAtom = varRingSet.getRings(varAtomContainer.getAtom(w));
 if (ringsWithThisAtom.getAtomContainerCount() > 0) {
-	ac.getAtom(w).setFlag(CDKConstants.ISINRING, true);
+	varAtomContainer.getAtom(w).setFlag(CDKConstants.ISINRING, true);
 }
 }
 
-IAtomContainer detected = acSet.getAtomContainer(0);			
+IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);			
 
 // neighboors[0] is the atom joined to the target proton:
 java.util.List neighboors = mol.getConnectedAtomsList(atom);
@@ -231,7 +231,7 @@ if(mol.getAtomNumber(curAtomSecond)!=atomPosition && getIfBondIsNotRotatable(mol
 			// the boolean "theBondIsInA6MemberedRing" is set to true
 			if(!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
 				if(!curAtomThird.equals(neighbour0)) {
-					rsAtom = rs.getRings(thirdBond);
+					rsAtom = varRingSet.getRings(thirdBond);
 					for (int f = 0; f < rsAtom.size(); f++) {
 						ring = (Ring)rsAtom.get(f);
 						if (ring.getRingSize() > 4 && ring.contains(thirdBond)) {
