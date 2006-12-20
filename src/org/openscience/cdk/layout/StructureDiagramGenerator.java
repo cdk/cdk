@@ -29,27 +29,20 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -683,7 +676,7 @@ public class StructureDiagramGenerator
 	{
 		IAtomContainer unplacedAtoms = atom.getBuilder().newAtomContainer();
 		java.util.List bonds = molecule.getConnectedBondsList(atom);
-		IAtom connectedAtom = null;
+		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
 		{
 			connectedAtom = ((IBond)bonds.get(f)).getConnectedAtom(atom);
@@ -708,7 +701,7 @@ public class StructureDiagramGenerator
 	{
 		IAtomContainer placedAtoms = atom.getBuilder().newAtomContainer();
 		java.util.List bonds = molecule.getConnectedBondsList(atom);
-		IAtom connectedAtom = null;
+		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
 		{
 			connectedAtom = ((IBond)bonds.get(f)).getConnectedAtom(atom);
@@ -728,7 +721,7 @@ public class StructureDiagramGenerator
 	 */
 	private IAtom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
-		IBond bond = null;
+		IBond bond;
 		for (int f = 0; f < molecule.getBondCount(); f++)
 		{
 			bond = molecule.getBond(f);
@@ -754,32 +747,29 @@ public class StructureDiagramGenerator
 	 *
 	 *@return    the next bond with an unplaced ring atom
 	 */
-	private IBond getNextBondWithUnplacedRingAtom()
-	{
-		IBond bond = null;
-		IBond[] bonds = molecule.getBonds();
-		for (int f = 0; f < bonds.length; f++)
-		{
-			bond = bonds[f];
-			if (bond.getAtom(0).getPoint2d() != null &&
-				bond.getAtom(1).getPoint2d() != null) {
-				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-						bond.getAtom(0).getFlag(CDKConstants.ISINRING))
-				{
-					return bond;
-				}
+    private IBond getNextBondWithUnplacedRingAtom() {
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
 
-				if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-						!bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-						bond.getAtom(1).getFlag(CDKConstants.ISINRING))
-				{
-					return bond;
-				}
-			}
-		}
-		return null;
-	}
+            if (bond.getAtom(0).getPoint2d() != null &&
+                    bond.getAtom(1).getPoint2d() != null) {
+                if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+                        !bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+                        bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
+                    return bond;
+                }
+
+                if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+                        !bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+                        bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
+                    return bond;
+
+                }
+            }
+        }
+        return null;
+    }
 
 
 	/**
