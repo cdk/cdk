@@ -25,25 +25,19 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which a bond that is being broken to generate single electron
@@ -166,16 +160,18 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 		if(!hasActiveCenter){
 			setActiveCenters(reactant);
 		}
-		IBond[] bonds = reactants.getMolecule(0).getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
-			
-			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER))
-				if(bonds[i].getAtom(0).getFormalCharge() == 0 && bonds[i].getAtom(1).getFormalCharge() == 0){
+
+        Iterator bonds = reactants.getMolecule(0).bonds();
+        while (bonds.hasNext()) {
+            IBond aBond = (IBond) bonds.next();
+
+			if(aBond.getFlag(CDKConstants.REACTIVE_CENTER))
+				if(aBond.getAtom(0).getFormalCharge() == 0 && aBond.getAtom(1).getFormalCharge() == 0){
 				
-				int atom1 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(0));
-				int atom2 = reactants.getMolecule(0).getAtomNumber(bonds[i].getAtom(1));
+				int atom1 = reactants.getMolecule(0).getAtomNumber(aBond.getAtom(0));
+				int atom2 = reactants.getMolecule(0).getAtomNumber(aBond.getAtom(1));
 				cleanFlagBOND(reactants.getMolecule(0));
-				bonds[i].setFlag(BONDTOFLAG, true);
+				aBond.setFlag(BONDTOFLAG, true);
 				
 				IReaction reaction = reactants.getBuilder().newReaction();
 				reaction.addReactant(reactants.getMolecule(0));
@@ -207,7 +203,7 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 					}
 				}
 
-				IMoleculeSet moleculeSet = null;
+				IMoleculeSet moleculeSet;
 				if(order == 1)/*break molecule*/{
 					moleculeSet = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 					int exx = 0;
@@ -236,7 +232,7 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 					setOfReactions.addReaction(reaction);
 				
 
-				bonds[i].setFlag(BONDTOFLAG, false);
+				aBond.setFlag(BONDTOFLAG, false);
 				
 				/* fragmentation again with the obtained fragments*/
 				if(reaction.getProductCount() != 0)
@@ -273,12 +269,14 @@ public class CleavageBondMultiReaction implements IReactionProcess{
 	 * @param reactant The molecule to set the activity
 	 * @throws CDKException 
 	 */
-	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IBond[] bonds = reactant.getBonds();
-		for(int i = 0 ; i < bonds.length ; i++)
-			if(bonds[i].getAtom(0).getFormalCharge() == 0 && bonds[i].getAtom(1).getFormalCharge() == 0)
-				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-	}
+    private void setActiveCenters(IMolecule reactant) throws CDKException {
+        Iterator bonds = reactant.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            if (bond.getAtom(0).getFormalCharge() == 0 && bond.getAtom(1).getFormalCharge() == 0)
+                bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
+        }
+    }
 	/**
 	 *  Gets the parameterNames attribute of the CleavageBondMultiReaction object
 	 *

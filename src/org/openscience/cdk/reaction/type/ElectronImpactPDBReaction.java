@@ -29,17 +29,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which make an alectron impact for pi-Bond Dissociation.</p>
@@ -70,198 +65,201 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  **/
 public class ElectronImpactPDBReaction implements IReactionProcess{
-	private LoggingTool logger;
-	private boolean hasActiveCenter;
-	private static final int BONDTOFLAG1 = 8;
+    private LoggingTool logger;
+    private boolean hasActiveCenter;
+    private static final int BONDTOFLAG1 = 8;
 
-	/**
-	 * Constructor of the ElectronImpactPDBReaction object
-	 *
-	 */
-	public ElectronImpactPDBReaction(){
-		logger = new LoggingTool(this);
-	}
-	/**
-	 *  Gets the specification attribute of the ElectronImpactPDBReaction object
-	 *
-	 *@return    The specification value
-	 */
-	public ReactionSpecification getSpecification() {
-		return new ReactionSpecification(
-				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactPDBReaction",
-				this.getClass().getName(),
-				"$Id: ElectronImpactPDBReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
-				"The Chemistry Development Kit");
-	}
-	
-	/**
-	 *  Sets the parameters attribute of the ElectronImpactPDBReaction object
-	 *
-	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
-	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("ElectronImpactPDBReaction only expects one parameter");
-		}
-		if (!(params[0] instanceof Boolean)) {
-			throw new CDKException("The parameter must be of type boolean");
-		}
-		hasActiveCenter = ((Boolean) params[0]).booleanValue();
-	}
+    /**
+     * Constructor of the ElectronImpactPDBReaction object
+     *
+     */
+    public ElectronImpactPDBReaction(){
+        logger = new LoggingTool(this);
+    }
+    /**
+     *  Gets the specification attribute of the ElectronImpactPDBReaction object
+     *
+     *@return    The specification value
+     */
+    public ReactionSpecification getSpecification() {
+        return new ReactionSpecification(
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactPDBReaction",
+                this.getClass().getName(),
+                "$Id: ElectronImpactPDBReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
+                "The Chemistry Development Kit");
+    }
 
-
-	/**
-	 *  Gets the parameters attribute of the ElectronImpactPDBReaction object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Boolean (hasActiveCenter);
-		return params;
-	}
-	
-	/**
-	 *  Initiate process.
-	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
-	 *  from the class tools.HydrogenAdder.
-	 *
-	 *@param  reactants         reactants of the reaction.
-	 *@param  agents            agents of the reaction (Must be in this case null).
-	 *
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
-		
-		logger.debug("initiate reaction: ElectronImpactPDBReaction");
-		
-		if (reactants.getMoleculeCount() != 1) {
-			throw new CDKException("ElectronImpactPDBReaction only expects one reactant");
-		}
-		if (agents != null) {
-			throw new CDKException("ElectronImpactPDBReaction don't expects agents");
-		}
-		
-		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
-		
-		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!hasActiveCenter){
-			setActiveCenters(reactants.getMolecule(0));
-		}
-		
-		IBond[] bonds = reactants.getMolecule(0).getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
-			if(bonds[i].getFlag(CDKConstants.REACTIVE_CENTER) && bonds[i].getOrder() == 2){
-				/**/
-				for (int j = 0; j < 2; j++){
-					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-					reaction.addReactant(reactants.getMolecule(0));
-					IMolecule reactant = reaction.getReactants().getMolecule(0);
-					
-					int posA1 = reactant.getAtomNumber(bonds[i].getAtom(0));
-					int posA2 = reactant.getAtomNumber(bonds[i].getAtom(1));
-					cleanFlagBOND(reactants.getMolecule(0));
-					int posB1 = 0;
-					bonds[i].setFlag(BONDTOFLAG1, true);
-					IMolecule reactantCloned;
-					try {
-						reactantCloned = (IMolecule) reactant.clone();
-					} catch (CloneNotSupportedException e) {
-						throw new CDKException("Could not clone IMolecule!", e);
-					}
-					
-					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
-						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG1)){
-							double order = reactantCloned.getBond(l).getOrder();
-							reactantCloned.getBond(l).setOrder(order - 1);
-							posB1 = reactantCloned.getBondNumber(reactantCloned.getBond(l));
-							break;
-						}
-					}
-					
-					if (j == 0){
-						reactantCloned.getAtom(posA1).setFormalCharge(1);
-						reactantCloned.addSingleElectron(
-								new SingleElectron(reactantCloned.getAtom(posA2)));
-					} else{
-						reactantCloned.getAtom(posA2).setFormalCharge(1);
-						reactantCloned.addSingleElectron(
-								new SingleElectron(reactantCloned.getAtom(posA1)));
-					}
-					
-					/* mapping */
-					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i], reactantCloned.getBond(posB1));
-			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(0), reactantCloned.getAtom(posA1));
-			        reaction.addMapping(mapping);
-			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bonds[i].getAtom(1), reactantCloned.getAtom(posA2));
-			        reaction.addMapping(mapping);
-					
-					
-					reaction.addProduct(reactantCloned);
-					setOfReactions.addReaction(reaction);
-					
-					bonds[i].setFlag(BONDTOFLAG1, false);
-				}
-			}
-		}
-		return setOfReactions;	
-		
-		
-	}
-	/**
-	 * set the active center for this molecule. The active center will be double bonds.
-	 * 
-	 * @param reactant The molecule to set the activity
-	 * @throws CDKException 
-	 */
-	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		IBond[] bonds = reactant.getBonds();
-		IAtom atom0 = null;
-		IAtom atom1 = null;
-		for(int i = 0 ; i < bonds.length ; i++){
-			atom0 = bonds[i].getAtom(0);
-			atom1 = bonds[i].getAtom(1);
-			if(bonds[i].getOrder() == 2&&
-					atom0.getSymbol().equals("C")&&
-					atom1.getSymbol().equals("C")){
-				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atom0.setFlag(CDKConstants.REACTIVE_CENTER,true);
-				atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
-			}
-		}
-	}
-	/**
-	 *  Gets the parameterNames attribute of the ElectronImpactPDBReaction object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "hasActiveCenter";
-		return params;
-	}
+    /**
+     *  Sets the parameters attribute of the ElectronImpactPDBReaction object
+     *
+     *@param  params            The parameter is if the molecule has already fixed the center active or not. It
+     *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
+     *@exception  CDKException  Description of the Exception
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 1) {
+            throw new CDKException("ElectronImpactPDBReaction only expects one parameter");
+        }
+        if (!(params[0] instanceof Boolean)) {
+            throw new CDKException("The parameter must be of type boolean");
+        }
+        hasActiveCenter = ((Boolean) params[0]).booleanValue();
+    }
 
 
-	/**
-	 *  Gets the parameterType attribute of the ElectronImpactPDBReaction object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Boolean(false);
-	}
-	/**
+    /**
+     *  Gets the parameters attribute of the ElectronImpactPDBReaction object
+     *
+     *@return    The parameters value
+     */
+    public Object[] getParameters() {
+        Object[] params = new Object[1];
+        params[0] = new Boolean (hasActiveCenter);
+        return params;
+    }
+
+    /**
+     *  Initiate process.
+     *  It is needed to call the addExplicitHydrogensToSatisfyValency
+     *  from the class tools.HydrogenAdder.
+     *
+     *@param  reactants         reactants of the reaction.
+     *@param  agents            agents of the reaction (Must be in this case null).
+     *
+     *@exception  CDKException  Description of the Exception
+     */
+    public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
+
+        logger.debug("initiate reaction: ElectronImpactPDBReaction");
+
+        if (reactants.getMoleculeCount() != 1) {
+            throw new CDKException("ElectronImpactPDBReaction only expects one reactant");
+        }
+        if (agents != null) {
+            throw new CDKException("ElectronImpactPDBReaction don't expects agents");
+        }
+
+        IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
+
+        /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
+        if(!hasActiveCenter){
+            setActiveCenters(reactants.getMolecule(0));
+        }
+
+        Iterator bonds = reactants.getMolecule(0).bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+
+            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() == 2){
+                /**/
+                for (int j = 0; j < 2; j++){
+                    IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+                    reaction.addReactant(reactants.getMolecule(0));
+                    IMolecule reactant = reaction.getReactants().getMolecule(0);
+
+                    int posA1 = reactant.getAtomNumber(bond.getAtom(0));
+                    int posA2 = reactant.getAtomNumber(bond.getAtom(1));
+                    cleanFlagBOND(reactants.getMolecule(0));
+                    int posB1 = 0;
+                    bond.setFlag(BONDTOFLAG1, true);
+                    IMolecule reactantCloned;
+                    try {
+                        reactantCloned = (IMolecule) reactant.clone();
+                    } catch (CloneNotSupportedException e) {
+                        throw new CDKException("Could not clone IMolecule!", e);
+                    }
+
+                    for(int l = 0 ; l<reactantCloned.getBondCount();l++){
+                        if(reactantCloned.getBond(l).getFlag(BONDTOFLAG1)){
+                            double order = reactantCloned.getBond(l).getOrder();
+                            reactantCloned.getBond(l).setOrder(order - 1);
+                            posB1 = reactantCloned.getBondNumber(reactantCloned.getBond(l));
+                            break;
+                        }
+                    }
+
+                    if (j == 0){
+                        reactantCloned.getAtom(posA1).setFormalCharge(1);
+                        reactantCloned.addSingleElectron(
+                                new SingleElectron(reactantCloned.getAtom(posA2)));
+                    } else{
+                        reactantCloned.getAtom(posA2).setFormalCharge(1);
+                        reactantCloned.addSingleElectron(
+                                new SingleElectron(reactantCloned.getAtom(posA1)));
+                    }
+
+                    /* mapping */
+                    IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, reactantCloned.getBond(posB1));
+                    reaction.addMapping(mapping);
+                    mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond.getAtom(0), reactantCloned.getAtom(posA1));
+                    reaction.addMapping(mapping);
+                    mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond.getAtom(1), reactantCloned.getAtom(posA2));
+                    reaction.addMapping(mapping);
+
+
+                    reaction.addProduct(reactantCloned);
+                    setOfReactions.addReaction(reaction);
+
+                    bond.setFlag(BONDTOFLAG1, false);
+                }
+            }
+        }
+        return setOfReactions;
+
+
+    }
+    /**
+     * set the active center for this molecule. The active center will be double bonds.
+     *
+     * @param reactant The molecule to set the activity
+     * @throws CDKException
+     */
+    private void setActiveCenters(IMolecule reactant) throws CDKException {
+        Iterator bonds = reactant.bonds();
+        IAtom atom0;
+        IAtom atom1;
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            atom0 = bond.getAtom(0);
+            atom1 = bond.getAtom(1);
+            if (bond.getOrder() == 2 &&
+                    atom0.getSymbol().equals("C") &&
+                    atom1.getSymbol().equals("C")) {
+                bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                atom0.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
+            }
+        }
+    }
+    /**
+     *  Gets the parameterNames attribute of the ElectronImpactPDBReaction object
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "hasActiveCenter";
+        return params;
+    }
+
+
+    /**
+     *  Gets the parameterType attribute of the ElectronImpactPDBReaction object
+     *
+     *@param  name  Description of the Parameter
+     *@return       The parameterType value
+     */
+    public Object getParameterType(String name) {
+        return new Boolean(false);
+    }
+    /**
      * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
      * 
-	 * @param mol
-	 */
-	public void cleanFlagBOND(IAtomContainer ac){
-		for(int j = 0 ; j < ac.getBondCount(); j++){
-			ac.getBond(j).setFlag(BONDTOFLAG1, false);
-		}
-	}
+     * @param mol
+     */
+    public void cleanFlagBOND(IAtomContainer ac){
+        for(int j = 0 ; j < ac.getBondCount(); j++){
+            ac.getBond(j).setFlag(BONDTOFLAG1, false);
+        }
+    }
 }
