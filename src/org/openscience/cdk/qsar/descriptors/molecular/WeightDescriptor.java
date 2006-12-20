@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -152,12 +153,13 @@ public class WeightDescriptor implements IMolecularDescriptor {
         }
         else if (elementName.equals("H")) {
             try {
+            	IIsotope h=IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
                         weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                     else {
-                        weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
+                        weight += (container.getAtom(i).getHydrogenCount() * h.getExactMass());
                     }
                 }
             } catch (Exception e) {
