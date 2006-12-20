@@ -34,6 +34,7 @@ package org.openscience.cdk.qsar.model.R;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @deprecated
  */
 
 class V2M {

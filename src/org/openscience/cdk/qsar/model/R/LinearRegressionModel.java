@@ -20,9 +20,9 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import java.util.HashMap;
-
 import org.openscience.cdk.qsar.model.QSARModelException;
+
+import java.util.HashMap;
 
 /** 
  * A modeling class that provides a linear least squares regression model.
@@ -96,6 +96,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @cdk.module qsar
  * 
  * @cdk.keyword regression, linear
+ * @deprecated 
  */
 public class LinearRegressionModel extends RModel {
 

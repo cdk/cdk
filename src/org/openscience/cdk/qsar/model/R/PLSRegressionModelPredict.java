@@ -33,6 +33,7 @@ package org.openscience.cdk.qsar.model.R;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @deprecated 
  */
 public class PLSRegressionModelPredict {
     double[][] preds = null;

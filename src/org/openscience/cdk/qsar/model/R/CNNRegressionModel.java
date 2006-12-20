@@ -20,9 +20,9 @@
 
 package org.openscience.cdk.qsar.model.R;
 
-import java.util.HashMap;
-
 import org.openscience.cdk.qsar.model.QSARModelException;
+
+import java.util.HashMap;
 
 /** 
  * A modeling class that provides a computational neural network regression model.
@@ -111,6 +111,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * 
  * @cdk.keyword neural network
  * @cdk.keyword regression
+ * @deprecated
  */
 public class CNNRegressionModel extends RModel {
     
