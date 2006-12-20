@@ -23,13 +23,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,6 +32,9 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
+import java.util.Iterator;
 
 /**
  * An output Writer that writes molecular data into the
@@ -219,13 +215,17 @@ NO_CHARGES
             // write bond block
             logger.debug("Writing bond block...");
             writer.write("@<TRIPOS>BOND\n");
-            IBond[] bonds = mol.getBonds();
-            for (int i=0; i<bonds.length; i++) {
-                writer.write(i + " " +
-                             mol.getAtomNumber(bonds[i].getAtom(0)) + " " +
-                             mol.getAtomNumber(bonds[i].getAtom(1)) + " " +
-                             ((int)bonds[i].getOrder()) + 
+
+            int counter = 0;
+            Iterator bonds = mol.bonds();
+            while (bonds.hasNext()) {
+                IBond bond = (IBond) bonds.next();
+                writer.write(counter + " " +
+                             mol.getAtomNumber(bond.getAtom(0)) + " " +
+                             mol.getAtomNumber(bond.getAtom(1)) + " " +
+                             ((int)bond.getOrder()) +
                              "\n");
+                counter++;
             } 
 
         } catch (IOException e) {

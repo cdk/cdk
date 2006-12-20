@@ -28,37 +28,19 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.*;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Writes MDL mol files and SD files.
@@ -70,7 +52,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * <li>if {@link #write(IChemObject)} is called with a {@link org.openscience.cdk.MoleculeSet MoleculeSet}
  * as an argument a SD files is written</li>
  * <li>if one of the two writeMolecule methods (either {@link #writeMolecule(IMolecule) this one} or
- * {@link #writeMolecule(IMolecule, boolean[]) that one}) is called the first time, a mol file is written</li>
+ * {@link #writeMolecule(org.openscience.cdk.interfaces.IMolecule)} that one}) is called the first time, a mol file is written</li>
  * <li>if one of the two writeMolecule methods is called more than once the output is a SD file</li>
  * </ul>
  * 
@@ -219,7 +201,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	/**
 	 * Writes an array of Molecules to an OutputStream in MDL sdf format.
 	 *
-	 * @param   molecules  Array of Molecules that is written to an OutputStream 
+	 * @param   som  Array of Molecules that is written to an OutputStream
 	 */
 	private void writeMoleculeSet(IMoleculeSet som)
 	{
@@ -252,7 +234,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	/**
 	 * Writes a Molecule to an OutputStream in MDL sdf format.
 	 *
-	 * @param   molecule  Molecule that is written to an OutputStream 
+	 * @param   container  Molecule that is written to an OutputStream
 	 */
     public void writeMolecule(IMolecule container) throws Exception {
         String line = "";
@@ -327,9 +309,10 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        IBond[] bonds = container.getBonds();
-        for (int g = 0; g < bonds.length; g++) {
-        	IBond bond = bonds[g];
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+
         	if (bond.getAtomCount() != 2) {
         		logger.warn("Skipping bond with more/less than two atoms: " + bond);
         	} else {

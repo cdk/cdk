@@ -24,16 +24,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -44,6 +34,11 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.*;
+import java.util.Iterator;
 
 /**
  * Converts a Molecule into CDK source code that would build the same
@@ -146,9 +141,10 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
-        IBond[] bonds = molecule.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-        	IBond bond = bonds[i];
+
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }
