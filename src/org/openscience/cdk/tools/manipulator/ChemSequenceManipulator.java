@@ -27,14 +27,14 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class with convenience methods that provide methods from
@@ -73,9 +73,12 @@ public class ChemSequenceManipulator {
      */
     public static IAtomContainer getAllInOneContainer(IChemSequence sequence) {
         IAtomContainer container = sequence.getBuilder().newAtomContainer();
-        for (int i=0; i<sequence.getChemModelCount(); i++) {
+        for (int i = 0; i < sequence.getChemModelCount(); i++) {
             IChemModel model = sequence.getChemModel(i);
-            container.add(ChemModelManipulator.getAllInOneContainer(model));
+            List models = ChemModelManipulator.getAllAtomContainers(model);
+            for (int j = 0; j < models.size(); j++)
+                container.add((IAtomContainer) models.get(j));
+
         }
         return container;
     }
@@ -85,7 +88,6 @@ public class ChemSequenceManipulator {
      */
     public static List getAllAtomContainers(IChemSequence sequence) {
         Iterator models = sequence.chemModels();
-        int acCount = 0;
         List acList = new ArrayList();
         while (models.hasNext()) {
     		IChemModel chemmodel = (IChemModel)models.next();
