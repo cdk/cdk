@@ -539,8 +539,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 			ifac.configureAtoms(mol1);
 		} catch (IOException ex)
 		{
-		} catch (ClassNotFoundException ex)
-		{
 		}
 		String smiles1 = null;
 		if (standAlone)
