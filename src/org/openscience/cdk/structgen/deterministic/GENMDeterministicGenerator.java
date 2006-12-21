@@ -20,20 +20,19 @@
  */
 package org.openscience.cdk.structgen.deterministic;
 
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.structgen.IStructureGenerationListener;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.MFAnalyser;
-
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.structgen.IStructureGenerationListener;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.MFAnalyser;
 
 
 /**
@@ -84,7 +83,8 @@ public class GENMDeterministicGenerator {
 	boolean hasMoreStructures = false;
 	int structuresAtATime = 500;
 
-
+	private IChemObjectBuilder builder = null;
+	
 	/**
 	 * Constructor for the GENMDeterministicGenerator.
 	 * Allows for setting the molecular formula for which the
@@ -98,11 +98,12 @@ public class GENMDeterministicGenerator {
 	public GENMDeterministicGenerator(String mf, String path) throws Exception
 	{
 		logger = new LoggingTool(GENMDeterministicGenerator.class);
+		builder = NoNotificationChemObjectBuilder.getInstance();
 
 		numberOfSetFragment=0;
 		numberOfStructures=0;
 		logger.debug(mf);
-		MFAnalyser mfa = new MFAnalyser(mf, new AtomContainer());
+		MFAnalyser mfa = new MFAnalyser(mf, builder.newAtomContainer());
 		molecularFormula=new int[12];
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
@@ -809,8 +810,11 @@ public class GENMDeterministicGenerator {
 		 if(numberOfMiddleTripleBond==0 && numberOfSideTripleBond!=0)return false;
 		 return true;
 	 }
-
-
+	 
+	 List setOfBasicFragment = new ArrayList();
+	 int[] storedSymbolOfStructure = null;
+	 private final int STORED_SYMBOL_OF_STRUCTURE_LENGTH = 4000000;
+	 
 	/**
 	 * The thrid step: generate all the possible consititional isomers.
 	 */
@@ -830,9 +834,13 @@ public class GENMDeterministicGenerator {
 		 //int[] category;
 		 int[] bondAttribute;
 		 int[] parentID;
-		 int[] storedSymbolOfStructure=new int[4000000];
-		 List setOfBasicFragment=new ArrayList();
-		 AtomContainer atomContainer=null;
+		 // reinitialize
+		 if (storedSymbolOfStructure == null) storedSymbolOfStructure = new int[STORED_SYMBOL_OF_STRUCTURE_LENGTH];
+		 for (i=0; i<STORED_SYMBOL_OF_STRUCTURE_LENGTH; i++) {
+			 storedSymbolOfStructure[i] = 0;
+		 }
+		 setOfBasicFragment.clear();
+		 IAtomContainer atomContainer=null;
 
 		 /*1. prepare the vector of basic fragment and atomContainer
 		 * atomContainer put the bond formed, while set of basic fragment
@@ -899,7 +907,7 @@ public class GENMDeterministicGenerator {
 			 }
 
 		//order the fragments
-		atomContainer=new AtomContainer();
+		atomContainer= builder.newAtomContainer();
 
 		parentID=new int[setOfBasicFragment.size()];
 
@@ -921,7 +929,7 @@ public class GENMDeterministicGenerator {
 		for(i=0;i<setOfBasicFragment.size();i++)
 		{
 			atomContainer.addAtom(
-				atomContainer.getBuilder().newAtom(((BasicFragment)(setOfBasicFragment.get(i))).getHeavyAtomSymbol())
+				builder.newAtom(((BasicFragment)(setOfBasicFragment.get(i))).getHeavyAtomSymbol())
 			);
 		}
 
@@ -1465,7 +1473,7 @@ public class GENMDeterministicGenerator {
 	  * @param	ac			atomContainer of the node set, not used now
 	  * @return	a boolean value whether this adjacency matrix pass  the constraint check or not
 	  */
-	 public boolean checkConstraint(int step,List setOfBasicFragment,int[][] adjacencyMatrix,AtomContainer ac)
+	 public boolean checkConstraint(int step,List setOfBasicFragment,int[][] adjacencyMatrix, IAtomContainer ac)
 	 {
 		 int i,j,partialSum,totalSum,decomposedNumber;
 		 //boolean isConnectivity;
@@ -2708,10 +2716,10 @@ public class GENMDeterministicGenerator {
 	 public void convertToMol(List set,int[][] matrix,List structures)
 	 {
 		 int i,j;
-		 IMolecule mol=new Molecule();
+		 IMolecule mol= builder.newMolecule();
 		 int size=set.size();
 		 for(i=0;i<size;i++)
-			 mol.addAtom(mol.getBuilder().newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol()));
+			 mol.addAtom(builder.newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol()));
 		 for(i=0;i<size-1;i++)
 			 for(j=i+1;j<size;j++)
 				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
@@ -2732,11 +2740,11 @@ public class GENMDeterministicGenerator {
 	 public void convertToSMILES(List set,int[][] matrix,List smiles)
 	 {
 		 int i,j;
-		 IMolecule mol=new Molecule();
+		 IMolecule mol= builder.newMolecule();
 		 int size=set.size();
 		 for(i=0;i<size;i++)
 		 {
-			 IAtom atom= mol.getBuilder().newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
+			 IAtom atom= builder.newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
 
 			 atom.setHydrogenCount(((BasicFragment)(set.get(i))).getNumberOfHydrogen());
 
@@ -2746,7 +2754,7 @@ public class GENMDeterministicGenerator {
 			 for(j=i+1;j<size;j++)
 				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
 
-//		 SmilesGenerator sg = new SmilesGenerator(mol.getBuilder());
+//		 SmilesGenerator sg = new SmilesGenerator(builder);
 //		 String smilesString = sg.createSMILES(mol);
 //		 smiles.addElement(smilesString);
 	 }
