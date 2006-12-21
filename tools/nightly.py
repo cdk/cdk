@@ -772,7 +772,7 @@ def doCodeCoverage():
         if testsuite.find('smiles') != -1: continue
         print '    Analyzing %s' % (testsuite)
 
-        cmd = """export R_HOME=/usr/local/lib/R && export LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH && java -cp %s emmarun -cp develjar/junit.jar:dist/jar/cdk-svn-%s.jar:dist/jar/cdk-test-svn-%s.jar -ix +org.openscience.cdk.* -r html -sp src junit.textui.TestRunner org.openscience.cdk.test.%s &> tmp.log && cat tmp.log >> ../emma.log""" % (classpath, todayStr, todayStr, testsuite)
+        cmd = """java -cp %s emmarun -cp develjar/junit.jar:dist/jar/cdk-svn-%s.jar:dist/jar/cdk-test-svn-%s.jar -ix +org.openscience.cdk.* -r html -sp src junit.textui.TestRunner org.openscience.cdk.test.%s &> tmp.log && cat tmp.log >> ../emma.log""" % (classpath, todayStr, todayStr, testsuite)
         os.system(cmd)
         if os.path.exists('coverage'):
             shutil.copytree('coverage', (os.path.join('emma', testsuite)))
@@ -929,7 +929,7 @@ if __name__ == '__main__':
         if successDist: # if we compiled, do the rest of the stuff
             successTestDist = runAntJob('nice -19 ant dist-test-large', 'testdist.log', 'testdist')
             successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
-            successTest = runAntJob('export R_HOME=/usr/local/lib/R && nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
+            successTest = runAntJob('nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
             successJavadoc = runAntJob('nice -n 19 ant -f javadoc.xml', 'javadoc.log', 'javadoc')
             successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
             successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
