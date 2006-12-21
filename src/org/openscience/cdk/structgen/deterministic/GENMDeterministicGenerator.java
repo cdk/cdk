@@ -2727,40 +2727,6 @@ public class GENMDeterministicGenerator {
 		 structures.add(mol);
 	 }
 
-
-	 /**
-	  * A bridge between CDK SMILES format and adjacency matrix.
-	  * It might be a temporary thing, later, all should be done
-	  * according to CDK.
-	  *
-	  * @param	set      basic fragment set
-	  * @param	matrix   adjacency matrix of the corresponding structure
-	  * @param	smiles   List contains all generated structures
-	  */
-	 public void convertToSMILES(List set,int[][] matrix,List smiles)
-	 {
-		 int i,j;
-		 IMolecule mol= builder.newMolecule();
-		 int size=set.size();
-		 for(i=0;i<size;i++)
-		 {
-			 IAtom atom= builder.newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol());
-
-			 atom.setHydrogenCount(((BasicFragment)(set.get(i))).getNumberOfHydrogen());
-
-			 mol.addAtom(atom);
-		 }
-		 for(i=0;i<size-1;i++)
-			 for(j=i+1;j<size;j++)
-				 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
-
-//		 SmilesGenerator sg = new SmilesGenerator(builder);
-//		 String smilesString = sg.createSMILES(mol);
-//		 smiles.addElement(smilesString);
-	 }
-
-
-
 	  /**
 	   * Get the suitable structures.
 	   *
