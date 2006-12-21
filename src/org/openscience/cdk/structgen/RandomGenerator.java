@@ -111,7 +111,7 @@ public class RandomGenerator {
 	 * pattern between them according to rules described 
 	 * in "Faulon, JCICS 1996, 36, 731".
 	 */
-	protected void mutate(IAtomContainer ac)
+	public void mutate(IAtomContainer ac)
 	{
 		logger.debug("RandomGenerator->mutate() Start");
 		int nrOfAtoms = ac.getAtomCount();
