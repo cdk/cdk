@@ -74,10 +74,10 @@ public class MDLMolConvention extends CMLCoreModule {
             stereoGiven = true;
             if (s.trim().equals("W")) {
                 logger.debug("CML W stereo found");
-                bondStereo.addElement("1");
+                bondStereo.add("1");
             } else if (s.trim().equals("H")) {
                 logger.debug("CML H stereo found");
-                bondStereo.addElement("6");
+                bondStereo.add("6");
             }
         } else {
             super.characterData(xpath, ch, start, length);

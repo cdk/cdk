@@ -25,15 +25,17 @@
  */
 package org.openscience.cdk.io.cml;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
-
-import javax.vecmath.Vector3d;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * Core CML 1.x and 2.0 elements are parsed by this class.
@@ -52,34 +54,34 @@ public class CMLCoreModule implements ICMLModule {
     protected IChemicalDocumentObject cdo;
     
     protected int atomCounter;
-    protected Vector elsym;
-    protected Vector eltitles;
-    protected Vector elid;
-    protected Vector formalCharges;
-    protected Vector partialCharges;
-    protected Vector isotope;
-    protected Vector x3;
-    protected Vector y3;
-    protected Vector z3;
-    protected Vector x2;
-    protected Vector y2;
-    protected Vector xfract;
-    protected Vector yfract;
-    protected Vector zfract;
-    protected Vector hCounts;
-    protected Vector atomParities;
-    protected Vector atomDictRefs;
-    protected Vector spinMultiplicities;
-    protected Vector occupancies;
+    protected List elsym;
+    protected List eltitles;
+    protected List elid;
+    protected List formalCharges;
+    protected List partialCharges;
+    protected List isotope;
+    protected List x3;
+    protected List y3;
+    protected List z3;
+    protected List x2;
+    protected List y2;
+    protected List xfract;
+    protected List yfract;
+    protected List zfract;
+    protected List hCounts;
+    protected List atomParities;
+    protected List atomDictRefs;
+    protected List spinMultiplicities;
+    protected List occupancies;
 
     protected int bondCounter;
-    protected Vector bondid;
-    protected Vector bondARef1;
-    protected Vector bondARef2;
-    protected Vector order;
-    protected Vector bondStereo;
-    protected Vector bondDictRefs;
-    protected Vector bondElid;
+    protected List bondid;
+    protected List bondARef1;
+    protected List bondARef2;
+    protected List order;
+    protected List bondStereo;
+    protected List bondDictRefs;
+    protected List bondElid;
     protected boolean stereoGiven;
     protected String inchi;
     protected int curRef;
@@ -173,25 +175,25 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newAtomData() {
         atomCounter = 0;
-        elsym = new Vector();
-        elid = new Vector();
-        eltitles = new Vector();
-        formalCharges = new Vector();
-        partialCharges = new Vector();
-        isotope = new Vector();
-        x3 = new Vector();
-        y3 = new Vector();
-        z3 = new Vector();
-        x2 = new Vector();
-        y2 = new Vector();
-        xfract = new Vector();
-        yfract = new Vector();
-        zfract = new Vector();
-        hCounts = new Vector();
-        atomParities = new Vector();
-        atomDictRefs = new Vector();
-        spinMultiplicities = new Vector();
-        occupancies = new Vector();
+        elsym = new ArrayList();
+        elid = new ArrayList();
+        eltitles = new ArrayList();
+        formalCharges = new ArrayList();
+        partialCharges = new ArrayList();
+        isotope = new ArrayList();
+        x3 = new ArrayList();
+        y3 = new ArrayList();
+        z3 = new ArrayList();
+        x2 = new ArrayList();
+        y2 = new ArrayList();
+        xfract = new ArrayList();
+        yfract = new ArrayList();
+        zfract = new ArrayList();
+        hCounts = new ArrayList();
+        atomParities = new ArrayList();
+        atomDictRefs = new ArrayList();
+        spinMultiplicities = new ArrayList();
+        occupancies = new ArrayList();
     }
 
     /**
@@ -199,13 +201,13 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newBondData() {
         bondCounter = 0;
-        bondid = new Vector();
-        bondARef1 = new Vector();
-        bondARef2 = new Vector();
-        order = new Vector();
-        bondStereo = new Vector();
-        bondDictRefs = new Vector();
-        bondElid = new Vector();
+        bondid = new ArrayList();
+        bondARef1 = new ArrayList();
+        bondARef2 = new ArrayList();
+        order = new ArrayList();
+        bondStereo = new ArrayList();
+        bondDictRefs = new ArrayList();
+        bondElid = new ArrayList();
     }
 
     /**
@@ -266,73 +268,73 @@ public class CMLCoreModule implements ICMLModule {
                 String value = atts.getValue(i);
                 
                 if (att.equals("id")) { // this is supported in CML 1.x
-                    elid.addElement(value);
+                    elid.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("elementType")) {
-                    elsym.addElement(value);
+                    elsym.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("title")) {
-                    eltitles.addElement(value);
+                    eltitles.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("x2")) {
-                    x2.addElement(value);
+                    x2.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("xy2")) {
                     StringTokenizer tokenizer = new StringTokenizer(value);
-                    x2.addElement(tokenizer.nextToken());
-                    y2.addElement(tokenizer.nextToken());
+                    x2.add(tokenizer.nextToken());
+                    y2.add(tokenizer.nextToken());
                 } // this is supported in CML 2.0 
                 else if (att.equals("xyzFract")) {
                     StringTokenizer tokenizer = new StringTokenizer(value);
-                    xfract.addElement(tokenizer.nextToken());
-                    yfract.addElement(tokenizer.nextToken());
-                    zfract.addElement(tokenizer.nextToken());
+                    xfract.add(tokenizer.nextToken());
+                    yfract.add(tokenizer.nextToken());
+                    zfract.add(tokenizer.nextToken());
                 } // this is supported in CML 2.0 
                 else if (att.equals("xyz3")) {
                     StringTokenizer tokenizer = new StringTokenizer(value);
-                    x3.addElement(tokenizer.nextToken());
-                    y3.addElement(tokenizer.nextToken());
-                    z3.addElement(tokenizer.nextToken());
+                    x3.add(tokenizer.nextToken());
+                    y3.add(tokenizer.nextToken());
+                    z3.add(tokenizer.nextToken());
                 } // this is supported in CML 2.0 
                 else if (att.equals("y2")) {
-                    y2.addElement(value);
+                    y2.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("x3")) {
-                    x3.addElement(value);
+                    x3.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("y3")) {
-                    y3.addElement(value);
+                    y3.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("z3")) {
-                    z3.addElement(value);
+                    z3.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("xFract")) {
-                    xfract.addElement(value);
+                    xfract.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("yFract")) {
-                    yfract.addElement(value);
+                    yfract.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("zFract")) {
-                    zfract.addElement(value);
+                    zfract.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("formalCharge")) {
-                    formalCharges.addElement(value);
+                    formalCharges.add(value);
                 } // this is supported in CML 2.0 
                 else if (att.equals("hydrogenCount")) {
-                    hCounts.addElement(value);
+                    hCounts.add(value);
                 }
                 else if (att.equals("isotope")) {
-                    isotope.addElement(value);
+                    isotope.add(value);
                 }
                 else if (att.equals("dictRef")) {                	
                     logger.debug("ocupaccy: "+value);
-                    atomDictRefs.addElement(value);
+                    atomDictRefs.add(value);
                 } 
                 else if (att.equals("spinMultiplicity")) {
-                    spinMultiplicities.addElement(value);
+                    spinMultiplicities.add(value);
                 }
                 else if (att.equals("occupancy")) {
-                    occupancies.addElement(value);
+                    occupancies.add(value);
                 } 
                  
                 else {
@@ -380,7 +382,7 @@ public class CMLCoreModule implements ICMLModule {
                 logger.debug("B2 ", att, "=", atts.getValue(i));
                 
                 if (att.equals("id")) {
-                    bondid.addElement(atts.getValue(i));
+                    bondid.add(atts.getValue(i));
                     logger.debug("B3 ", bondid);
                 } else if (att.equals("atomRefs") || // this is CML 1.x support
                            att.equals("atomRefs2")) { // this is CML 2.0 support
@@ -390,16 +392,16 @@ public class CMLCoreModule implements ICMLModule {
                         StringTokenizer st = new StringTokenizer(
                             atts.getValue(i)
                         );
-                        bondARef1.addElement((String)st.nextElement());
-                        bondARef2.addElement((String)st.nextElement());
+                        bondARef1.add((String)st.nextElement());
+                        bondARef2.add((String)st.nextElement());
                     } catch (Exception e) {
                         logger.error("Error in CML file: ", e.getMessage());
                         logger.debug(e);
                     }
                 } else if (att.equals("order")) { // this is CML 2.0 support
-                    order.addElement(atts.getValue(i).trim());
+                    order.add(atts.getValue(i).trim());
                 } else if (att.equals("dictRef")) {
-                    bondDictRefs.addElement(atts.getValue(i).trim());
+                    bondDictRefs.add(atts.getValue(i).trim());
                 }
             }
             
@@ -435,7 +437,7 @@ public class CMLCoreModule implements ICMLModule {
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("dictRef")) {
                 	if (atts.getValue(i).startsWith("cml:"))
-                	bondStereo.addElement(atts.getValue(i).substring(4));
+                	bondStereo.add(atts.getValue(i).substring(4));
                     stereoGiven=true;
                 }
             }
@@ -486,57 +488,57 @@ public class CMLCoreModule implements ICMLModule {
         String cData = currentChars;
         if ("bond".equals(name)) {
         	if (!stereoGiven)
-                bondStereo.addElement("");
+                bondStereo.add("");
             if (bondStereo.size() > bondDictRefs.size())
-                bondDictRefs.addElement(null);
+                bondDictRefs.add(null);
         } else if ("atom".equals(name)) {
             if (atomCounter > eltitles.size()) {
-                eltitles.addElement(null);
+                eltitles.add(null);
             }
             if (atomCounter > hCounts.size()) {
                 /* while strictly undefined, assume zero 
                 implicit hydrogens when no number is given */
-                hCounts.addElement("0");
+                hCounts.add("0");
             }
             if (atomCounter > atomDictRefs.size()) {
-                atomDictRefs.addElement(null);
+                atomDictRefs.add(null);
             }
             if (atomCounter > isotope.size()) {
-                isotope.addElement(null);
+                isotope.add(null);
             }
             if (atomCounter > spinMultiplicities.size()) {
-                spinMultiplicities.addElement(null);
+                spinMultiplicities.add(null);
             }
             if (atomCounter > occupancies.size()) {
-                occupancies.addElement(null);
+                occupancies.add(null);
             }
             if (atomCounter > formalCharges.size()) {
                 /* while strictly undefined, assume zero 
                 implicit hydrogens when no number is given */
-                formalCharges.addElement("0");
+                formalCharges.add("0");
             }
             /* It may happen that not all atoms have
             associated 2D or 3D coordinates. accept that */
             if (atomCounter > x2.size() && x2.size() != 0) {
                 /* apparently, the previous atoms had atomic
                 coordinates, add 'null' for this atom */
-                x2.addElement(null);
-                y2.addElement(null);
+                x2.add(null);
+                y2.add(null);
             }
             if (atomCounter > x3.size() && x3.size() != 0) {
                 /* apparently, the previous atoms had atomic
                 coordinates, add 'null' for this atom */
-                x3.addElement(null);
-                y3.addElement(null);
-                z3.addElement(null);
+                x3.add(null);
+                y3.add(null);
+                z3.add(null);
             }
             
             if (atomCounter > xfract.size() && xfract.size() != 0) {
                 /* apparently, the previous atoms had atomic
                 coordinates, add 'null' for this atom */
-                xfract.addElement(null);
-                yfract.addElement(null);
-                zfract.addElement(null);
+                xfract.add(null);
+                yfract.add(null);
+                zfract.add(null);
             }
         } else if ("molecule".equals(name)) {
             storeData();
@@ -580,9 +582,9 @@ public class CMLCoreModule implements ICMLModule {
                 try {
                     
                     StringTokenizer st = new StringTokenizer(currentChars);
-                    x3.addElement(st.nextToken());
-                    y3.addElement(st.nextToken());
-                    z3.addElement(st.nextToken());
+                    x3.add(st.nextToken());
+                    y3.add(st.nextToken());
+                    z3.add(st.nextToken());
                     logger.debug("coord3 x3.length: ", x3.size());
                     logger.debug("coord3 y3.length: ", y3.size());
                     logger.debug("coord3 z3.length: ", z3.size());
@@ -597,19 +599,19 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("string".equals(name)) {
             if (BUILTIN.equals("elementType")) {
                 logger.debug("Element: ", cData.trim());
-                elsym.addElement(cData);
+                elsym.add(cData);
             } else if (BUILTIN.equals("atomRef")) {
                 curRef++;
                 logger.debug("Bond: ref #", curRef);
                 
                 if (curRef == 1) {
-                    bondARef1.addElement(cData.trim());
+                    bondARef1.add(cData.trim());
                 } else if (curRef == 2) {
-                    bondARef2.addElement(cData.trim());
+                    bondARef2.add(cData.trim());
                 }
             } else if (BUILTIN.equals("order")) {
                 logger.debug("Bond: order ", cData.trim());
-                order.addElement(cData.trim());
+                order.add(cData.trim());
             } else if (BUILTIN.equals("formalCharge")) {
                 // NOTE: this combination is in violation of the CML DTD!!!
                 logger.warn("formalCharge BUILTIN accepted but violating CML DTD");
@@ -618,28 +620,28 @@ public class CMLCoreModule implements ICMLModule {
                 if (charge.startsWith("+") && charge.length() > 1) {
                     charge = charge.substring(1);
                 }
-                formalCharges.addElement(charge);
+                formalCharges.add(charge);
             }
         } else if ("float".equals(name)) {
             if (BUILTIN.equals("x3")) {
-                x3.addElement(cData.trim());
+                x3.add(cData.trim());
             } else if (BUILTIN.equals("y3")) {
-                y3.addElement(cData.trim());
+                y3.add(cData.trim());
             } else if (BUILTIN.equals("z3")) {
-                z3.addElement(cData.trim());
+                z3.add(cData.trim());
             } else if (BUILTIN.equals("x2")) {
-                x2.addElement(cData.trim());
+                x2.add(cData.trim());
             } else if (BUILTIN.equals("y2")) {
-                y2.addElement(cData.trim());
+                y2.add(cData.trim());
             } else if (BUILTIN.equals("order")) {
                 // NOTE: this combination is in violation of the CML DTD!!!
-                order.addElement(cData.trim());
+                order.add(cData.trim());
             } else if (BUILTIN.equals("charge") || BUILTIN.equals("partialCharge")) {
-                partialCharges.addElement(cData.trim());
+                partialCharges.add(cData.trim());
             }
         } else if ("integer".equals(name)) {
             if (BUILTIN.equals("formalCharge")) {
-                formalCharges.addElement(cData.trim());
+                formalCharges.add(cData.trim());
             }
         } else if ("coordinate2".equals(name)) {
             if (BUILTIN.equals("xy2")) {
@@ -648,8 +650,8 @@ public class CMLCoreModule implements ICMLModule {
                 try {
                     
                     StringTokenizer st = new StringTokenizer(cData);
-                    x2.addElement(st.nextToken());
-                    y2.addElement(st.nextToken());
+                    x2.add(st.nextToken());
+                    y2.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 175, 1);
                 }
@@ -666,7 +668,7 @@ public class CMLCoreModule implements ICMLModule {
                         if (countAtoms) { atomCounter++; }
                         String token = st.nextToken();
                         logger.debug("StringArray (Token): ", token);
-                        elid.addElement(token);
+                        elid.add(token);
                     }
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 186, 1);
@@ -679,7 +681,7 @@ public class CMLCoreModule implements ICMLModule {
                     
                     while (st.hasMoreTokens()) {
                         if (countAtoms) { atomCounter++; }
-                        elsym.addElement(st.nextToken());
+                        elsym.add(st.nextToken());
                     }
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
@@ -698,9 +700,9 @@ public class CMLCoreModule implements ICMLModule {
                         logger.debug("Token: ", token);
                         
                         if (curRef == 1) {
-                            bondARef1.addElement(token);
+                            bondARef1.add(token);
                         } else if (curRef == 2) {
-                            bondARef2.addElement(token);
+                            bondARef2.add(token);
                         }
                     }
                 } catch (Exception e) {
@@ -727,9 +729,9 @@ public class CMLCoreModule implements ICMLModule {
                         logger.debug("Token: ", token);
                         
                         if (curRef == 1) {
-                            bondARef1.addElement(token);
+                            bondARef1.add(token);
                         } else if (curRef == 2) {
-                            bondARef2.addElement(token);
+                            bondARef2.add(token);
                         }
                     }
                 } catch (Exception e) {
@@ -746,7 +748,7 @@ public class CMLCoreModule implements ICMLModule {
                         
                         String token = st.nextToken();
                         logger.debug("Token: ", token);
-                        order.addElement(token);
+                        order.add(token);
                     }
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 194, 1);
@@ -765,7 +767,7 @@ public class CMLCoreModule implements ICMLModule {
                         
                         String token = st.nextToken();
                         logger.debug("Charge added: ", token);
-                        formalCharges.addElement(token);
+                        formalCharges.add(token);
                     }
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
@@ -782,12 +784,12 @@ public class CMLCoreModule implements ICMLModule {
                 }
             } else if (xpath.endsWith("bond", "scalar")) {
                 if (DICTREF.equals("mdl:stereo")) {
-                	bondStereo.addElement(cData.trim());
+                	bondStereo.add(cData.trim());
                     stereoGiven=true;
                 }
             } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
-                    partialCharges.addElement(cData.trim());
+                    partialCharges.add(cData.trim());
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
@@ -804,7 +806,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        x3.addElement(st.nextToken());
+                        x3.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                 }
@@ -815,7 +817,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        y3.addElement(st.nextToken());
+                        y3.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 213, 1);
                 }
@@ -826,7 +828,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        z3.addElement(st.nextToken());
+                        z3.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 221, 1);
                 }
@@ -838,7 +840,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        x2.addElement(st.nextToken());
+                        x2.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 205, 1);
                 }
@@ -850,7 +852,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        y2.addElement(st.nextToken());
+                        y2.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 454, 1);
                 }
@@ -862,7 +864,7 @@ public class CMLCoreModule implements ICMLModule {
                     StringTokenizer st = new StringTokenizer(cData);
                     
                     while (st.hasMoreTokens())
-                        partialCharges.addElement(st.nextToken());
+                        partialCharges.add(st.nextToken());
                 } catch (Exception e) {
                     notify("CMLParsing error: " + e, SYSTEMID, 462, 1);
                 }
@@ -1034,24 +1036,24 @@ public class CMLCoreModule implements ICMLModule {
             logger.info("Storing atom: ", i);
             cdo.startObject("Atom");
             if (hasID) {
-                cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
             }
             if (hasTitles) {
                 if (hasSymbols) {
-                    String symbol = (String)elsym.elementAt(i);
+                    String symbol = (String)elsym.get(i);
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
-                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.elementAt(i));
+                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
                     } else {
-                        cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                        cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
                     }
                 } else {
-                    cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                    cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
                 }
             }
 
             // store optional atom properties
             if (hasSymbols) {
-                String symbol = (String)elsym.elementAt(i);
+                String symbol = (String)elsym.get(i);
                 if (symbol.equals("Du") || symbol.equals("Dummy")) {
                     symbol = "R";
                 }
@@ -1059,54 +1061,54 @@ public class CMLCoreModule implements ICMLModule {
             }
 
             if (has3D) {
-                cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
-                cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
-                cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+                cdo.setObjectProperty("Atom", "x3", (String)x3.get(i));
+                cdo.setObjectProperty("Atom", "y3", (String)y3.get(i));
+                cdo.setObjectProperty("Atom", "z3", (String)z3.get(i));
             }
 
             if (has3Dfract) {
                 // ok, need to convert fractional into eucledian coordinates
-                cdo.setObjectProperty("Atom", "xFract", (String)xfract.elementAt(i));
-                cdo.setObjectProperty("Atom", "yFract", (String)yfract.elementAt(i));
-                cdo.setObjectProperty("Atom", "zFract", (String)zfract.elementAt(i));
+                cdo.setObjectProperty("Atom", "xFract", (String)xfract.get(i));
+                cdo.setObjectProperty("Atom", "yFract", (String)yfract.get(i));
+                cdo.setObjectProperty("Atom", "zFract", (String)zfract.get(i));
             }
 
             if (hasFormalCharge) {
                 cdo.setObjectProperty("Atom", "formalCharge", 
-                                      (String)formalCharges.elementAt(i));
+                                      (String)formalCharges.get(i));
             }
 
             if (hasPartialCharge) {
                 logger.debug("Storing partial atomic charge...");
                 cdo.setObjectProperty("Atom", "partialCharge", 
-                                      (String)partialCharges.elementAt(i));
+                                      (String)partialCharges.get(i));
             }
 
             if (hasHCounts) {
-                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.elementAt(i));
+                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
             }
 
             if (has2D) {
-                if (x2.elementAt(i) != null)
-                    cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
-                if (y2.elementAt(i) != null)
-                    cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
+                if (x2.get(i) != null)
+                    cdo.setObjectProperty("Atom", "x2", (String)x2.get(i));
+                if (y2.get(i) != null)
+                    cdo.setObjectProperty("Atom", "y2", (String)y2.get(i));
             }
             
             if (hasDictRefs) {
-                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
+                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
             }
 
-            if (hasSpinMultiplicities && spinMultiplicities.elementAt(i) != null) {
-                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.elementAt(i));
+            if (hasSpinMultiplicities && spinMultiplicities.get(i) != null) {
+                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
             }
 
-            if (hasOccupancies && occupancies.elementAt(i) != null) {
-                cdo.setObjectProperty("Atom", "occupanciy", (String)occupancies.elementAt(i));
+            if (hasOccupancies && occupancies.get(i) != null) {
+                cdo.setObjectProperty("Atom", "occupanciy", (String)occupancies.get(i));
             }
 
             if (hasIsotopes) {
-                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.elementAt(i));
+                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.get(i));
             }
 
             cdo.endObject("Atom");
@@ -1128,26 +1130,26 @@ public class CMLCoreModule implements ICMLModule {
             (bondARef2.size() == bondCounter)) {
             logger.debug("About to add bond info to ", cdo.getClass().getName());
 
-            Enumeration orders = order.elements();
-            Enumeration ids = bondid.elements();
-            Enumeration bar1s = bondARef1.elements();
-            Enumeration bar2s = bondARef2.elements();
-            Enumeration stereos = bondStereo.elements();
+            Iterator orders = order.iterator();
+            Iterator ids = bondid.iterator();
+            Iterator bar1s = bondARef1.iterator();
+            Iterator bar2s = bondARef2.iterator();
+            Iterator stereos = bondStereo.iterator();
 
-            while (bar1s.hasMoreElements()) {
+            while (bar1s.hasNext()) {
                 cdo.startObject("Bond");
-                if (ids.hasMoreElements()) {
-                    cdo.setObjectProperty("Bond", "id", (String)ids.nextElement());
+                if (ids.hasNext()) {
+                    cdo.setObjectProperty("Bond", "id", (String)ids.next());
                 }
                 cdo.setObjectProperty("Bond", "atom1", 
                                       new Integer(bondElid.indexOf(
-                                                          (String)bar1s.nextElement())).toString());
+                                                          (String)bar1s.next())).toString());
                 cdo.setObjectProperty("Bond", "atom2", 
                                       new Integer(bondElid.indexOf(
-                                                          (String)bar2s.nextElement())).toString());
+                                                          (String)bar2s.next())).toString());
 
-                if (orders.hasMoreElements()) {
-                    String bondOrder = (String)orders.nextElement();
+                if (orders.hasNext()) {
+                    String bondOrder = (String)orders.next();
                     
                     if ("S".equals(bondOrder)) {
                         cdo.setObjectProperty("Bond", "order", "1");
@@ -1162,9 +1164,9 @@ public class CMLCoreModule implements ICMLModule {
                     }
                 }
 
-                if (stereos.hasMoreElements()) {
+                if (stereos.hasNext()) {
                     cdo.setObjectProperty("Bond", "stereo", 
-                                          (String)stereos.nextElement());
+                                          (String)stereos.next());
                 }
 
                 cdo.endObject("Bond");
@@ -1173,11 +1175,11 @@ public class CMLCoreModule implements ICMLModule {
         newBondData();
     }
 
-    protected int addArrayElementsTo(Vector toAddto, String array) {
+    protected int addArrayElementsTo(List toAddto, String array) {
         StringTokenizer tokenizer = new StringTokenizer(array);
         int i = 0;
         while (tokenizer.hasMoreElements()) {
-            toAddto.addElement(tokenizer.nextToken());
+            toAddto.add(tokenizer.nextToken());
             i++;
         }
         return i;

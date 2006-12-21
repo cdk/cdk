@@ -252,7 +252,7 @@ public class PDBConvention extends CMLCoreModule {
         idValue = "";
         
         if (isELSYM) {
-            elsym.addElement(s);
+            elsym.add(s);
         } else if (isBond) {
             logger.debug("CD (bond): " + s);
             if (connect_root.length() > 0) {
@@ -415,24 +415,24 @@ public class PDBConvention extends CMLCoreModule {
             logger.info("Storing atom: ", i);
             cdo.startObject("PDBAtom");
             if (hasID) {
-                cdo.setObjectProperty("Atom", "id", (String)elid.elementAt(i));
+                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
             }
             if (hasTitles) {
                 if (hasSymbols) {
-                    String symbol = (String)elsym.elementAt(i);
+                    String symbol = (String)elsym.get(i);
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
-                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.elementAt(i));
+                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
                     } else {
-                        cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                        cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
                     }
                 } else {
-                    cdo.setObjectProperty("Atom", "title", (String)eltitles.elementAt(i));
+                    cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
                 }
             }
 
             // store optional atom properties
             if (hasSymbols) {
-                String symbol = (String)elsym.elementAt(i);
+                String symbol = (String)elsym.get(i);
                 if (symbol.equals("Du") || symbol.equals("Dummy")) {
                     symbol = "R";
                 }
@@ -440,54 +440,54 @@ public class PDBConvention extends CMLCoreModule {
             }
 
             if (has3D) {
-                cdo.setObjectProperty("Atom", "x3", (String)x3.elementAt(i));
-                cdo.setObjectProperty("Atom", "y3", (String)y3.elementAt(i));
-                cdo.setObjectProperty("Atom", "z3", (String)z3.elementAt(i));
+                cdo.setObjectProperty("Atom", "x3", (String)x3.get(i));
+                cdo.setObjectProperty("Atom", "y3", (String)y3.get(i));
+                cdo.setObjectProperty("Atom", "z3", (String)z3.get(i));
             }
 
             if (has3Dfract) {
                 // ok, need to convert fractional into eucledian coordinates
-                cdo.setObjectProperty("Atom", "xFract", (String)xfract.elementAt(i));
-                cdo.setObjectProperty("Atom", "yFract", (String)yfract.elementAt(i));
-                cdo.setObjectProperty("Atom", "zFract", (String)zfract.elementAt(i));
+                cdo.setObjectProperty("Atom", "xFract", (String)xfract.get(i));
+                cdo.setObjectProperty("Atom", "yFract", (String)yfract.get(i));
+                cdo.setObjectProperty("Atom", "zFract", (String)zfract.get(i));
             }
 
             if (hasFormalCharge) {
                 cdo.setObjectProperty("Atom", "formalCharge", 
-                                      (String)formalCharges.elementAt(i));
+                                      (String)formalCharges.get(i));
             }
 
             if (hasPartialCharge) {
                 logger.debug("Storing partial atomic charge...");
                 cdo.setObjectProperty("Atom", "partialCharge", 
-                                      (String)partialCharges.elementAt(i));
+                                      (String)partialCharges.get(i));
             }
 
             if (hasHCounts) {
-                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.elementAt(i));
+                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
             }
 
             if (has2D) {
-                if (x2.elementAt(i) != null)
-                    cdo.setObjectProperty("Atom", "x2", (String)x2.elementAt(i));
-                if (y2.elementAt(i) != null)
-                    cdo.setObjectProperty("Atom", "y2", (String)y2.elementAt(i));
+                if (x2.get(i) != null)
+                    cdo.setObjectProperty("Atom", "x2", (String)x2.get(i));
+                if (y2.get(i) != null)
+                    cdo.setObjectProperty("Atom", "y2", (String)y2.get(i));
             }
             
             if (hasDictRefs) {
-                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.elementAt(i));
+                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
             }
 
-            if (hasSpinMultiplicities && spinMultiplicities.elementAt(i) != null) {
-                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.elementAt(i));
+            if (hasSpinMultiplicities && spinMultiplicities.get(i) != null) {
+                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
             }
 
-            if (hasOccupancies && occupancies.elementAt(i) != null) {
-                cdo.setObjectProperty("PDBAtom", "occupancy", (String)occupancies.elementAt(i));
+            if (hasOccupancies && occupancies.get(i) != null) {
+                cdo.setObjectProperty("PDBAtom", "occupancy", (String)occupancies.get(i));
             }
 
             if (hasIsotopes) {
-                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.elementAt(i));
+                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.get(i));
             }
             if(hasScalar){
                 cdo.setObjectProperty("PDBAtom", "altLoc", altLocV.get(i).toString());

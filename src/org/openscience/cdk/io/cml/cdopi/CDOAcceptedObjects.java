@@ -25,8 +25,9 @@
  */
 package org.openscience.cdk.io.cml.cdopi;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * List of names (String classes) of objects accepted by CDO.
@@ -37,13 +38,13 @@ import java.util.Vector;
  */
 public class CDOAcceptedObjects {
 
-  private Vector objects;
+  private List objects;
 
   /**
    * Constructor.
    */
   public CDOAcceptedObjects () {
-    objects = new Vector();
+    objects = new ArrayList();
   }
 
   /**
@@ -52,7 +53,7 @@ public class CDOAcceptedObjects {
    * @param object Name of the object
    */
   public void add(String object) {
-    objects.addElement(object);
+    objects.add(object);
   }
 
   /**
@@ -71,7 +72,7 @@ public class CDOAcceptedObjects {
    *
    * @return The names of the accepted objects
    */
-  public Enumeration elements() {
-    return objects.elements();
+  public Iterator elements() {
+    return objects.iterator();
   }
 }
