@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -57,6 +58,7 @@ import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -384,7 +386,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		//generate the input molecules. This are molecules without x, y, z coordinats 
 		
 		String[] smiles = new String[] {"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C","OCC=CCc1ccccc1(C=C)", "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
-		SmilesParser sp = new SmilesParser();
+		SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 		IAtomContainer[] atomContainer = new IAtomContainer[smiles.length];
 		for (int i = 0; i < smiles.length; i++) {
 			atomContainer[i] = sp.parseSmiles(smiles[i]);
