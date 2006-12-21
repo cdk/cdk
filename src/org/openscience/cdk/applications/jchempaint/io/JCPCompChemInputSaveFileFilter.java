@@ -28,7 +28,8 @@
 package org.openscience.cdk.applications.jchempaint.io;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -45,11 +46,11 @@ public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.File
     // only those extensions are given here that are *not* on JCPFileFilter
     public final static String gin = "gin";
 
-    protected Vector types;
+    protected List types;
 
     public JCPCompChemInputSaveFileFilter(String type) {
         super();
-        types = new Vector();
+        types = new ArrayList();
         types.add(type);
     }
 
@@ -64,7 +65,7 @@ public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.File
      * The description of this filter.
      */
     public String getDescription() {
-        String type = (String)types.elementAt(0);
+        String type = (String)types.get(0);
         String result = "Unknown";
         if (type.equals(gin)) {
             result = "Gaussian Input";
@@ -103,7 +104,7 @@ public class JCPCompChemInputSaveFileFilter extends javax.swing.filechooser.File
     }
 
     public String getType() {
-        return (String)types.elementAt(0);
+        return (String)types.get(0);
     }
     
     public void setType(String type) {

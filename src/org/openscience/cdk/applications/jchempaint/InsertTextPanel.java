@@ -34,7 +34,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,10 +84,10 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         this.closeafter=closeafter;
         setLayout(new GridBagLayout());
 
-        Vector oldText = new Vector();
+        List oldText = new ArrayList();
         oldText.add("");
 
-        textCombo = new JComboBox(oldText);
+        textCombo = new JComboBox(oldText.toArray());
         textCombo.setEditable(true);
         textCombo.setToolTipText("Enter a CAS, SMILES or InChI string");
 

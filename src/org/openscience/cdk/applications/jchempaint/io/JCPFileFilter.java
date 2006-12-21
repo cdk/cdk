@@ -29,7 +29,8 @@
 package org.openscience.cdk.applications.jchempaint.io;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -78,7 +79,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	/**
 	 *  Description of the Field
 	 */
-	protected Vector types;
+	protected List types;
 
 
 	/**
@@ -89,7 +90,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	public JCPFileFilter(String type)
 	{
 		super();
-		types = new Vector();
+		types = new ArrayList();
 		types.add(type);
 	}
 
@@ -185,7 +186,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	 */
 	public String getDescription()
 	{
-		String type = (String) types.elementAt(0);
+		String type = (String) types.get(0);
 		if (type.equals(mol))
 		{
 			return "MDL MOL file";
@@ -225,7 +226,7 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 	 */
 	public String getType()
 	{
-		return (String) types.elementAt(0);
+		return (String) types.get(0);
 	}
 
 

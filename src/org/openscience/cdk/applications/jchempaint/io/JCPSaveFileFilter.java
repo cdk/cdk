@@ -63,7 +63,7 @@ public class JCPSaveFileFilter extends JCPFileFilter {
      * The description of this filter.
      */
     public String getDescription() {
-        String type = (String)types.elementAt(0);
+        String type = (String)types.get(0);
         String result = super.getDescription();
         if (result == null) {
             if (type.equals(svg)) {

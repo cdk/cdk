@@ -28,7 +28,8 @@
 package org.openscience.cdk.applications.jchempaint.io;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
@@ -48,11 +49,11 @@ public class JCPExportFileFilter extends javax.swing.filechooser.FileFilter impl
     public final static String jpg = "jpg";
     public final static String svg = "svg";
 
-    protected Vector types;
+    protected List types;
 
     public JCPExportFileFilter(String type) {
 		super();
-		types = new Vector();
+		types = new ArrayList();
         types.add(type);
     }
 
@@ -71,7 +72,7 @@ public class JCPExportFileFilter extends javax.swing.filechooser.FileFilter impl
      * The description of this filter.
      */
     public String getDescription() {
-        String type = (String)types.elementAt(0);
+        String type = (String)types.get(0);
         String result = "Unknown";
         if (type.equals(png)) {
             result = "PNG";
@@ -119,7 +120,7 @@ public class JCPExportFileFilter extends javax.swing.filechooser.FileFilter impl
     }
 
 	public String getType() {
-		return (String)types.elementAt(0);
+		return (String)types.get(0);
 	}
 
 	public void setType(String type) {
