@@ -111,9 +111,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ICrystal) {
-            write((ICrystal)object);
+            writeCrystal((ICrystal)object);
         }   else if (object instanceof IChemSequence) {
-            write((IChemSequence)object);
+            writeChemSequence((IChemSequence)object);
         } else {
             throw new UnsupportedChemObjectException("This object type is not supported.");
         }
@@ -128,11 +128,11 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
     // Private procedures
 
-    private void write(IChemSequence cs) throws UnsupportedChemObjectException {
+    private void writeChemSequence(IChemSequence cs) throws UnsupportedChemObjectException {
         int count = cs.getChemModelCount();
         for (int i=0; i < count; i++) {
             write("frame: " + (i+1) + "\n");
-            write(cs.getChemModel(i).getCrystal());
+            writeCrystal(cs.getChemModel(i).getCrystal());
         }
     }
 
@@ -156,7 +156,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      *
      * @param crystal the Crystal to serialize
      */
-    private void write(ICrystal crystal) {
+    private void writeCrystal(ICrystal crystal) {
 
         String sg = crystal.getSpaceGroup();
         if ("P 2_1 2_1 2_1".equals(sg)) {
