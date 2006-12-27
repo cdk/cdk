@@ -179,7 +179,7 @@ public class ReaderFactoryTest extends CDKTestCase {
     }
     
     public void testPubChemCompoundASN() {
-        expectReader("data/pc-asn/cid1.asn", PubChemASNFormat.getInstance());
+        expectReader("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance());
     }
 
     private void expectFormat(String filename, IResourceFormat expectedFormat) {
