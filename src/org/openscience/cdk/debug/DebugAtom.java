@@ -169,16 +169,6 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setY2d(yCoord);
 	}
 
-	public void setY3d(double yCoord) {
-		logger.debug("Setting Y3d: ", yCoord);
-		super.setY3d(yCoord);
-	}
-
-	public void setZ3d(double zCoord) {
-		logger.debug("Setting Z3d: ", zCoord);
-		super.setZ3d(zCoord);
-	}
-
 	public int getStereoParity() {
 		logger.debug("Getting stereo parity: ", super.getStereoParity());
 		return super.getStereoParity();

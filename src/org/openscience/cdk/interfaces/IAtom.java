@@ -184,28 +184,6 @@ public interface IAtom extends IAtomType {
 	public void setY2d(double yCoord);	
 	
 	/**
-	 * Sets the y coordinate for of the 3D location of this atom.
-	 * You should know your context here. There is no guarantee that point2d and point3d
-	 * contain consistent information. Both are handled independently.
-	 *
-	 * @param   yCoord  the new y coordinate for of the 3D location of this atom
-	 * @see     #getY3d
-	 * @deprecated
-	 */
-	public void setY3d(double yCoord);	
-	
-	/**
-	 * Sets the z coordinate for of the 3D location of this atom.
-	 * You should know your context here. There is no guarantee that point2d and point3d
-	 * contain consistent information. Both are handled independently.
-	 *
-	 * @param   zCoord  the new z coordinate for of the 3d location of this atom
-	 * @see     #getZ3d
-	 * @deprecated
-	 */
-	public void setZ3d(double zCoord);
-	
-	/**
 	 * Returns the stereo parity of this atom. It uses the predefined values
 	 * found in CDKConstants.
 	 *

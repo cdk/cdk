@@ -411,44 +411,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         }
         
         /**
-         * Sets the y coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @param   yCoord  the new y coordinate for of the 3D location of this atom
-         *
-         * @see     #getPoint3d()
-         * @deprecated
-         */
-        public void setY3d(double yCoord) {
-            if (point3d == null) {
-                point3d = new javax.vecmath.Point3d();
-            }
-            point3d.y = yCoord;
-	    notifyChanged();
-        }
-
-
-        /**
-         * Sets the z coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @param   zCoord  the new z coordinate for of the 3d location of this atom
-         *
-         * @see     #getPoint3d()
-         * @deprecated
-         */
-        public void setZ3d(double zCoord) {
-            if (point3d == null) {
-                point3d = new javax.vecmath.Point3d();
-            }
-            point3d.z = zCoord;
-	    notifyChanged();
-        }
-
-
-        /**
          *  Returns the stereo parity of this atom. It uses the predefined values
          *  found in CDKConstants.
          *
