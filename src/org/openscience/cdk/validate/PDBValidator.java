@@ -27,6 +27,7 @@ package org.openscience.cdk.validate;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.openscience.cdk.EnzymeResidueLocator;
@@ -86,43 +87,49 @@ public class PDBValidator extends AbstractValidator {
             
             // ok, now make a hash with all residueLocator in the PDB file
             Vector residues = new Vector();
-            IAtomContainer allPDBAtoms = ChemFileManipulator.getAllInOneContainer(file);
-            java.util.Iterator atoms = allPDBAtoms.atoms();
-            logger.info("Found in PDB file, #atoms: " + allPDBAtoms.getAtomCount());
-            while (atoms.hasNext()) {
-            	IAtom atom = (IAtom)atoms.next();
-                String resName = (String)atom.getProperty("pdb.resName");
-                String resSeq = (String)atom.getProperty("pdb.resSeq");
-                String resLocator = resName + resSeq;
-                if (!residues.contains(resLocator.toLowerCase())) {
-                    logger.debug("Found new residueLocator: " + resLocator);
-                    residues.add(resLocator.toLowerCase());
-                }
+            Iterator containers = ChemFileManipulator.getAllAtomContainers(file).iterator();
+            while (containers.hasNext()) {
+            	IAtomContainer allPDBAtoms = (IAtomContainer) containers.next();
+            	Iterator atoms = allPDBAtoms.atoms();
+            	logger.info("Found in PDB file, #atoms: " + allPDBAtoms.getAtomCount());
+            	while (atoms.hasNext()) {
+            		IAtom atom = (IAtom)atoms.next();
+            		String resName = (String)atom.getProperty("pdb.resName");
+            		String resSeq = (String)atom.getProperty("pdb.resSeq");
+            		String resLocator = resName + resSeq;
+            		if (!residues.contains(resLocator.toLowerCase())) {
+            			logger.debug("Found new residueLocator: " + resLocator);
+            			residues.add(resLocator.toLowerCase());
+            		}
+            	}
             }
             
             // now see if the model undergoing validation has bad locators
-            IAtomContainer allAtoms = ChemModelManipulator.getAllInOneContainer(subject);
-            java.util.Iterator validateAtoms = allAtoms.atoms();
-            while (validateAtoms.hasNext()) {
-            	// only testing PseudoAtom's
-            	IAtom validateAtom = (IAtom)validateAtoms.next();
-                if (validateAtom instanceof EnzymeResidueLocator) {
-                    ValidationTest badResidueLocator = new ValidationTest(validateAtom,
-                        "ResidueLocator does not exist in PDB entry."
-                    );
-                    String label = ((IPseudoAtom)validateAtom).getLabel();
-                    if (residues.contains(label.toLowerCase())) {
-                        // yes, not problem
-                        report.addOK(badResidueLocator);
-                    } else {
-                        badResidueLocator.setDetails(
-                            "Could not find " + label + " in PDB entry for " + PDB
-                        );
-                        report.addError(badResidueLocator);
-                    }
-                } else {
-                    // ok, then don't test
-                }
+            containers = ChemModelManipulator.getAllAtomContainers(subject).iterator();
+            while (containers.hasNext()) {
+            	IAtomContainer allAtoms = (IAtomContainer) containers.next();
+            	Iterator validateAtoms = allAtoms.atoms();
+            	while (validateAtoms.hasNext()) {
+            		// only testing PseudoAtom's
+            		IAtom validateAtom = (IAtom)validateAtoms.next();
+            		if (validateAtom instanceof EnzymeResidueLocator) {
+            			ValidationTest badResidueLocator = new ValidationTest(validateAtom,
+            					"ResidueLocator does not exist in PDB entry."
+            			);
+            			String label = ((IPseudoAtom)validateAtom).getLabel();
+            			if (residues.contains(label.toLowerCase())) {
+            				// yes, not problem
+            				report.addOK(badResidueLocator);
+            			} else {
+            				badResidueLocator.setDetails(
+            						"Could not find " + label + " in PDB entry for " + PDB
+            				);
+            				report.addError(badResidueLocator);
+            			}
+            		} else {
+            			// ok, then don't test
+            		}
+            	}
             }
         }
         return report;
