@@ -164,6 +164,7 @@ public class XYZReader extends DefaultChemObjectReader {
                         comment = comment.toString() + line.substring(1).trim();
                         m.setProperty(CDKConstants.COMMENT, comment);
                     	logger.debug("Found and set comment: ", comment);
+                    	i--; // a comment line does not count as an atom
                     } else {
                         double x = 0.0f, y = 0.0f, z = 0.0f;
                         double charge = 0.0f;
