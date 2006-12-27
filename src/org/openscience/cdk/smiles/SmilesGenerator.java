@@ -354,27 +354,30 @@ public class SmilesGenerator
 			for (int i = 0; i < v.size(); i++)
 			{
 				int counter = 0;
-				IAtomContainer allrings = RingSetManipulator.getAllInOneContainer((IRingSet) v.get(i));
-				for (int k = 0; k < allrings.getAtomCount(); k++)
-				{
-					if (!BondTools.isStereo(molecule, allrings.getAtom(k)) && hasWedges(molecule, allrings.getAtom(k)) != null)
-					{
-						IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
-						if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
-						{
-							allrings.getAtom(k).setProperty(RING_CONFIG, UP);
-						} else
-						{
-							allrings.getAtom(k).setProperty(RING_CONFIG, DOWN);
-						}
-						counter++;
-					}
-				}
-				if (counter == 1)
-				{
+				Iterator containers = RingSetManipulator.getAllAtomContainers((IRingSet) v.get(i)).iterator();
+				while (containers.hasNext()) {
+					IAtomContainer allrings = (IAtomContainer) containers.next();
 					for (int k = 0; k < allrings.getAtomCount(); k++)
 					{
-						allrings.getAtom(k).setProperty(RING_CONFIG, UP);
+						if (!BondTools.isStereo(molecule, allrings.getAtom(k)) && hasWedges(molecule, allrings.getAtom(k)) != null)
+						{
+							IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
+							if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
+							{
+								allrings.getAtom(k).setProperty(RING_CONFIG, UP);
+							} else
+							{
+								allrings.getAtom(k).setProperty(RING_CONFIG, DOWN);
+							}
+							counter++;
+						}
+					}
+					if (counter == 1)
+					{
+						for (int k = 0; k < allrings.getAtomCount(); k++)
+						{
+							allrings.getAtom(k).setProperty(RING_CONFIG, UP);
+						}
 					}
 				}
 			}
