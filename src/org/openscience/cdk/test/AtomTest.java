@@ -175,13 +175,6 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the set[XYZ]3D() methods.
      */
-    public void testSetX3d_double() {
-        IAtom a = builder.newAtom("C");
-        a.setX3d(1.0);
-
-        assertNotNull(a.getPoint3d());
-        assertEquals(1.0, a.getPoint3d().x, 0.001);
-    }
     public void testSetY3d_double() {
         IAtom a = builder.newAtom("C");
         a.setY3d(2.0);
@@ -305,9 +298,6 @@ public class AtomTest extends CDKTestCase {
         IAtom atom = builder.newAtom("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-
-        // test cloning
-        atom.setX3d(5);
         assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 

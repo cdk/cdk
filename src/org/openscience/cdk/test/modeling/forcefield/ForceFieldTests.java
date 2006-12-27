@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.util.Hashtable;
 
 import javax.vecmath.GVector;
+import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -635,23 +636,24 @@ public class ForceFieldTests extends CDKTestCase {
 		logger.debug("Number of pertubated Atoms:" + nPertubatedAtoms);
 		for (int i = 0; i < nPertubatedAtoms; i++) {
 			coord = Math.random();
+			Point3d coordinate =  molecule.getAtom(i).getPoint3d();
 			if (coord <= 0.33) {
 				if (Math.random() <= 0.) {
-					molecule.getAtom(i).setX3d(molecule.getAtom(i).getPoint3d().x + positiveShift);
+					coordinate.x += positiveShift;
 				} else {
-					molecule.getAtom(i).setX3d(molecule.getAtom(i).getPoint3d().x - negativeShift);
+					coordinate.x -= negativeShift;
 				}
 			} else if (coord <= 0.66) {
 				if (Math.random() <= 0.) {
-					molecule.getAtom(i).setY3d(molecule.getAtom(i).getPoint3d().y + positiveShift);
+					coordinate.y += positiveShift;
 				} else {
-					molecule.getAtom(i).setY3d(molecule.getAtom(i).getPoint3d().y - negativeShift);
+					coordinate.y -= negativeShift;
 				}
 			} else {
 				if (Math.random() <= 0.) {
-					molecule.getAtom(i).setZ3d(molecule.getAtom(i).getPoint3d().z + positiveShift);
+					coordinate.z += positiveShift;
 				} else {
-					molecule.getAtom(i).setZ3d(molecule.getAtom(i).getPoint3d().z - negativeShift);
+					coordinate.z -= negativeShift;
 				}
 			}
 		}

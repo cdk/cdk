@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
-import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -485,7 +484,7 @@ class CMLChemFile extends ChemFile {
 	 */
 	public CMLChemFile(String CMLString) throws Exception {
 		CMLReader reader = new CMLReader(
-			new StringReader(CMLString)
+			new ByteArrayInputStream(CMLString.getBytes())
 		);
 		reader.read(this);
 	}

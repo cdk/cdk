@@ -170,9 +170,13 @@ public abstract class ForceFieldTools {
      */
     public static  IAtomContainer assignCoordinatesToMolecule(GVector moleculeCoords, IAtomContainer molecule) {
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            molecule.getAtom(i).setX3d(moleculeCoords.getElement(i * 3));
-            molecule.getAtom(i).setY3d(moleculeCoords.getElement(i * 3 + 1));
-            molecule.getAtom(i).setZ3d(moleculeCoords.getElement(i * 3 + 2));
+            molecule.getAtom(i).setPoint3d(
+            	new Point3d(
+            		moleculeCoords.getElement(i * 3),
+            		moleculeCoords.getElement(i * 3 + 1),
+            		moleculeCoords.getElement(i * 3 + 2)
+            	)
+            );
         }
         return molecule;
     }

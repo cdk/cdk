@@ -37,6 +37,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.exception.CDKException;
@@ -303,9 +304,13 @@ public class PMPReader extends DefaultChemObjectReader {
                                     		line = readLine();
                                     		IAtom a = clone.getBuilder().newAtom();
                                     		StringTokenizer st = new StringTokenizer(line, " ");
-                                    		a.setX3d(Double.parseDouble(st.nextToken()));
-                                    		a.setY3d(Double.parseDouble(st.nextToken()));
-                                    		a.setZ3d(Double.parseDouble(st.nextToken()));
+                                    		a.setPoint3d(
+                                    			new Point3d(
+                                    				Double.parseDouble(st.nextToken()),
+                                    				Double.parseDouble(st.nextToken()),
+                                    				Double.parseDouble(st.nextToken())
+                                    			)
+                                    		);
                                     		a.setCovalentRadius(0.6);
                                     		IAtom modelAtom = modelStructure.getAtom(((Integer)atomids.get(atomGivenIds.get(new Integer(i+1)))).intValue());
                                     		a.setSymbol(modelAtom.getSymbol());

@@ -169,11 +169,6 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setY2d(yCoord);
 	}
 
-	public void setX3d(double xCoord) {
-		logger.debug("Setting X3d: ", xCoord);
-		super.setX3d(xCoord);
-	}
-
 	public void setY3d(double yCoord) {
 		logger.debug("Setting Y3d: ", yCoord);
 		super.setY3d(yCoord);

@@ -205,9 +205,7 @@ public class ModelBuilder3D {
 		}
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
 			System.out.println("Only one Heavy Atom");
-			molecule.getAtom(0).setX3d(0);
-			molecule.getAtom(0).setY3d(0);
-			molecule.getAtom(0).setZ3d(0);
+			molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
 			try {
 				atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
 			} catch (Exception ex3) {
@@ -369,9 +367,13 @@ public class ModelBuilder3D {
 				ringCenter.y = (ac.getAtom(i).getPoint3d()).y - newCoord.y;
 				ringCenter.z = (ac.getAtom(i).getPoint3d()).z - newCoord.z;
 				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, n1, angle);
-				ac.getAtom(i).setX3d((ringCenter.x + newCoord.x));
-				ac.getAtom(i).setY3d((ringCenter.y + newCoord.y));
-				ac.getAtom(i).setZ3d((ringCenter.z + newCoord.z));
+				ac.getAtom(i).setPoint3d(
+					new Point3d(
+						ringCenter.x + newCoord.x,
+						ringCenter.y + newCoord.y,
+						ringCenter.z + newCoord.z
+					)
+				);
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
@@ -402,9 +404,13 @@ public class ModelBuilder3D {
 				ringCenter.y = (ac.getAtom(i).getPoint3d()).y;
 				ringCenter.z = (ac.getAtom(i).getPoint3d()).z;
 				ringCenter = AtomTetrahedralLigandPlacer3D.rotate(ringCenter, axis, rotAngleMax);
-				ac.getAtom(i).setX3d(ringCenter.x);
-				ac.getAtom(i).setY3d(ringCenter.y);
-				ac.getAtom(i).setZ3d(ringCenter.z);
+				ac.getAtom(i).setPoint3d(
+					new Point3d(
+						ringCenter.x,
+						ringCenter.y,
+						ringCenter.z
+					)
+				);
 				ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
@@ -574,14 +580,10 @@ public class ModelBuilder3D {
 	 */
 	public void translateStructure(Point3d originalCoord, Point3d newCoord, IAtomContainer ac) {
 		Point3d transVector = new Point3d(originalCoord);
-		transVector.x = transVector.x - newCoord.x;
-		transVector.y = transVector.y - newCoord.y;
-		transVector.z = transVector.z - newCoord.z;
+		transVector.sub(newCoord);
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			if (!(ac.getAtom(i).getFlag(CDKConstants.ISPLACED))) {
-				ac.getAtom(i).setX3d(ac.getAtom(i).getPoint3d().x - transVector.x);
-				ac.getAtom(i).setY3d(ac.getAtom(i).getPoint3d().y - transVector.y);
-				ac.getAtom(i).setZ3d(ac.getAtom(i).getPoint3d().z - transVector.z);
+				ac.getAtom(i).getPoint3d().sub(transVector);
 				//ac.getAtomAt(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}

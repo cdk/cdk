@@ -30,6 +30,8 @@ package org.openscience.cdk.libio.jmol;
 
 import java.util.Hashtable;
 
+import javax.vecmath.Point3d;
+
 import org.jmol.adapter.smarter.SmarterJmolAdapter;
 import org.jmol.api.JmolAdapter.AtomIterator;
 import org.jmol.api.JmolAdapter.BondIterator;
@@ -74,9 +76,13 @@ public class Convertor {
         AtomIterator atomIterator = adapter.getAtomIterator(model);
         while (atomIterator.hasNext()) {
             IAtom atom = builder.newAtom(atomIterator.getElementSymbol());
-            atom.setX3d(atomIterator.getX());
-            atom.setY3d(atomIterator.getY());
-            atom.setZ3d(atomIterator.getZ());
+            atom.setPoint3d(
+            	new Point3d(
+            		atomIterator.getX(),
+            		atomIterator.getY(),
+            		atomIterator.getZ()
+            	)
+            );
             htMapUidsToAtoms.put(atomIterator.getUniqueID(), atom);
             atomContainer.addAtom(atom);
         }

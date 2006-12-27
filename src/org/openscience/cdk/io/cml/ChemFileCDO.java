@@ -22,6 +22,8 @@ package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
@@ -371,21 +373,45 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
             	logger.warn("Could not configure atom");
             }
         } else if (propertyType.equals("x2")) {
-          currentAtom.setX2d(new Double(propertyValue).doubleValue());
+        	Point2d coord = currentAtom.getPoint2d();
+        	if (coord == null) coord = new Point2d();
+        	coord.x = new Double(propertyValue).doubleValue();
+        	currentAtom.setPoint2d(coord);
         } else if (propertyType.equals("y2")) {
-          currentAtom.setY2d(new Double(propertyValue).doubleValue());
+        	Point2d coord = currentAtom.getPoint2d();
+        	if (coord == null) coord = new Point2d();
+        	coord.y = new Double(propertyValue).doubleValue();
+        	currentAtom.setPoint2d(coord);
         } else if (propertyType.equals("x3")) {
-          currentAtom.setX3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.x = new Double(propertyValue).doubleValue();
+        	currentAtom.setPoint3d(coord);
         } else if (propertyType.equals("y3")) {
-          currentAtom.setY3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.y = new Double(propertyValue).doubleValue();
+        	currentAtom.setPoint3d(coord);
         } else if (propertyType.equals("z3")) {
-          currentAtom.setZ3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.z = new Double(propertyValue).doubleValue();
+        	currentAtom.setPoint3d(coord);
         } else if (propertyType.equals("xFract")) {
-          currentAtom.setFractX3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getFractionalPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.x = new Double(propertyValue).doubleValue();
+        	currentAtom.setFractionalPoint3d(coord);
         } else if (propertyType.equals("yFract")) {
-          currentAtom.setFractY3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getFractionalPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.y = new Double(propertyValue).doubleValue();
+        	currentAtom.setFractionalPoint3d(coord);
         } else if (propertyType.equals("zFract")) {
-          currentAtom.setFractZ3d(new Double(propertyValue).doubleValue());
+        	Point3d coord = currentAtom.getFractionalPoint3d();
+        	if (coord == null) coord = new Point3d();
+        	coord.z = new Double(propertyValue).doubleValue();
+        	currentAtom.setFractionalPoint3d(coord);
         } else if (propertyType.equals("formalCharge")) {
           currentAtom.setFormalCharge(new Integer(propertyValue).intValue());
         } else if (propertyType.equals("charge") ||

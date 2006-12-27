@@ -333,6 +333,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param xFract The x coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractionalPoint3d()
+         * @deprecated
          */
         public void setFractX3d(double xFract) {
             if (fractionalPoint3d == null) {
@@ -347,6 +348,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param yFract The y coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractionalPoint3d()
+         * @deprecated
          */
         public void setFractY3d(double yFract) {
             if (fractionalPoint3d == null) {
@@ -361,7 +363,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param zFract The z coordinate of the fractional coordinate of this atom.
          *
          * @see    #getFractionalPoint3d()
-         */
+         * @deprecated
+        */
         public void setFractZ3d(double zFract) {
             if (fractionalPoint3d == null) {
                 fractionalPoint3d = new Point3d();
@@ -378,6 +381,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   xCoord  the new x coordinate for of the 2D location of this atom
          *
          * @see     #getPoint2d()
+         * @deprecated
          */
         public void setX2d(double xCoord) {
             if (point2d == null) {
@@ -396,6 +400,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   yCoord  the new y coordinate for of the 2D location of this atom
          *
          * @see     #getPoint2d()
+         * @deprecated
          */
         public void setY2d(double yCoord) {
             if (point2d == null) {
@@ -405,25 +410,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
             notifyChanged();
         }
         
-
-        /**
-         * Sets the x coordinate for of the 3D location of this atom.
-         * You should know your context here. There is no guarantee that point2d and point3d
-         * contain consistent information. Both are handled independently.
-         *
-         * @param   xCoord  the new x coordinate for of the 3D location of this atom
-         *
-         * @see     #getPoint3d()
-         */
-        public void setX3d(double xCoord) {
-            if (point3d == null) {
-                point3d = new javax.vecmath.Point3d();
-            }
-            point3d.x = xCoord;
-	    notifyChanged();
-        }
-
-
         /**
          * Sets the y coordinate for of the 3D location of this atom.
          * You should know your context here. There is no guarantee that point2d and point3d
@@ -432,6 +418,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   yCoord  the new y coordinate for of the 3D location of this atom
          *
          * @see     #getPoint3d()
+         * @deprecated
          */
         public void setY3d(double yCoord) {
             if (point3d == null) {
@@ -450,6 +437,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   zCoord  the new z coordinate for of the 3d location of this atom
          *
          * @see     #getPoint3d()
+         * @deprecated
          */
         public void setZ3d(double zCoord) {
             if (point3d == null) {

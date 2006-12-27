@@ -139,6 +139,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param xFract The x coordinate of the fractional coordinate of this atom.
 	 * @see    #getFractX3d
+	 * @deprecated
 	 */
 	public void setFractX3d(double xFract);
 	
@@ -147,6 +148,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param yFract The y coordinate of the fractional coordinate of this atom.
 	 * @see    #getFractY3d
+	 * @deprecated
 	 */
 	public void setFractY3d(double yFract);
 	
@@ -155,6 +157,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param zFract The z coordinate of the fractional coordinate of this atom.
 	 * @see    #getFractZ3d
+	 * @deprecated
 	 */
 	public void setFractZ3d(double zFract);
 	
@@ -176,18 +179,9 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param   yCoord  the new y coordinate for of the 2D location of this atom
 	 * @see     #getY2d
+	 * @deprecated
 	 */
 	public void setY2d(double yCoord);	
-	
-	/**
-	 * Sets the x coordinate for of the 3D location of this atom.
-	 * You should know your context here. There is no guarantee that point2d and point3d
-	 * contain consistent information. Both are handled independently.
-	 *
-	 * @param   xCoord  the new x coordinate for of the 3D location of this atom
-	 * @see     #getX3d
-	 */
-	public void setX3d(double xCoord);	
 	
 	/**
 	 * Sets the y coordinate for of the 3D location of this atom.
@@ -196,6 +190,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param   yCoord  the new y coordinate for of the 3D location of this atom
 	 * @see     #getY3d
+	 * @deprecated
 	 */
 	public void setY3d(double yCoord);	
 	
@@ -206,6 +201,7 @@ public interface IAtom extends IAtomType {
 	 *
 	 * @param   zCoord  the new z coordinate for of the 3d location of this atom
 	 * @see     #getZ3d
+	 * @deprecated
 	 */
 	public void setZ3d(double zCoord);
 	

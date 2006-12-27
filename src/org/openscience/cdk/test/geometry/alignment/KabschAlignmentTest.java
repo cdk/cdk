@@ -3,6 +3,8 @@ package org.openscience.cdk.test.geometry.alignment;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.vecmath.Point3d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -86,13 +88,17 @@ public class KabschAlignmentTest extends CDKTestCase {
         Atom[] a2 = new Atom[10];
         for (int i = 0; i < 10; i++) {
             a1[i] = new Atom("C");
-            a1[i].setX3d( p1[i][0] );
-            a1[i].setY3d( p1[i][1] );
-            a1[i].setZ3d( p1[i][2] );
+            Point3d newCoord = new Point3d();
+            newCoord.x = p1[i][0];
+            newCoord.y = p1[i][1];
+            newCoord.z = p1[i][2];
+            a1[i].setPoint3d(newCoord);
             a2[i] = new Atom("C");
-            a2[i].setX3d( p2[i][0] );
-            a2[i].setY3d( p2[i][1] );
-            a2[i].setZ3d( p2[i][2] );
+            newCoord = new Point3d();
+            newCoord.x = p2[i][0];
+            newCoord.y = p2[i][1];
+            newCoord.z = p2[i][2];
+            a2[i].setPoint3d(newCoord);
         }
         ka = new KabschAlignment(a1,a2);
         ka.align();

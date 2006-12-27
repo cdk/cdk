@@ -27,16 +27,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.openscience.cdk.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.isomorphism.mcss.RMap;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,6 +35,22 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.RingSet;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.mcss.RMap;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -173,9 +179,7 @@ public class TemplateHandler3D {
                         atom1 = ringSystems.getAtom(map.getId1());
                         atom2 = template.getAtom(map.getId2());
                         if (atom1.getFlag(CDKConstants.ISINRING)) {
-                            atom1.setX3d(atom2.getPoint3d().x);
-                            atom1.setY3d(atom2.getPoint3d().y);
-                            atom1.setZ3d(atom2.getPoint3d().z);
+                        	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
                         }
                     }//for j
 
