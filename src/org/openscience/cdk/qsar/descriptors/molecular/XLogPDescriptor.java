@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * <p>Prediction of logP based on the atom-type method called XLogP. <b>Requires
@@ -201,8 +201,8 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         int hsCount = 0;
         double xlogPOld=0;
         double maxBondOrder = 0;
-        Vector hBondAcceptors=new Vector();
-        Vector hBondDonors=new Vector();
+        List hBondAcceptors=new ArrayList();
+        List hBondDonors=new ArrayList();
         int checkAminoAcid=1;//if 0 no check, if >1 check
         IAtom atomi = null;
         for (int i = 0; i < atomCount; i++) {
