@@ -52,7 +52,7 @@ public class PubChemASNFormat implements IChemFormatMatcher {
     }
 
     public String getReaderClassName() { 
-    	return "org.openscience.cdk.io.PubChemASNFormat";
+    	return "org.openscience.cdk.io.PCCompoundASNReader";
     }
     public String getWriterClassName() { 
     	return null;
