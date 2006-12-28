@@ -85,7 +85,7 @@ public class SmilesParser {
 	/**
 	 * Constructor for the SmilesParser object.
 	 * 
-	 * @deprecated
+	 * @deprecated Use SmilesParser(IChemObjectBuilder instead)
 	 */
 	public SmilesParser()
 	{
