@@ -822,8 +822,7 @@ public class GENMDeterministicGenerator {
 	 }
 	 
 	 List setOfBasicFragment = new ArrayList();
-	 int[] storedSymbolOfStructure = null;
-	 private final int STORED_SYMBOL_OF_STRUCTURE_LENGTH = 4000000;
+	 IntArray storedSymbolOfStructure = new IntArray();
 	 
 	/**
 	 * The thrid step: generate all the possible consititional isomers.
@@ -845,10 +844,7 @@ public class GENMDeterministicGenerator {
 		 int[] bondAttribute;
 		 int[] parentID;
 		 // reinitialize
-		 if (storedSymbolOfStructure == null) storedSymbolOfStructure = new int[STORED_SYMBOL_OF_STRUCTURE_LENGTH];
-		 for (i=0; i<STORED_SYMBOL_OF_STRUCTURE_LENGTH; i++) {
-			 storedSymbolOfStructure[i] = 0;
-		 }
+		 storedSymbolOfStructure.clear();
 		 setOfBasicFragment.clear();
 		 IAtomContainer atomContainer=null;
 
@@ -2007,7 +2003,7 @@ public class GENMDeterministicGenerator {
 	   * @param	totalNumberOfThisSet	Number of the structures for this fragment set
 	   * @param	totalNumberOfAtomAndBond	for one fragment, total number of atom and bond
 	   */
-	  public void getFinalStructure(List setOfBasicFragment,int[][] adjacencyMatrix,int[] storedSymbolOfStructure,int[] totalNumberOfThisSet,int totalNumberOfAtomAndBond)
+	  public void getFinalStructure(List setOfBasicFragment,int[][] adjacencyMatrix,IntArray storedSymbolOfStructure,int[] totalNumberOfThisSet,int totalNumberOfAtomAndBond)
 	  {
 		  int i,j,decomposedNumber,row,column,size;
 		  int m;
@@ -2190,13 +2186,13 @@ public class GENMDeterministicGenerator {
 				  k1=kk+size;
 				  for(j=0;j<size;j++)
 				  {
-					  if(storedSymbolOfStructure[kk+j]!=connectivity[j][10])break;
+					  if(storedSymbolOfStructure.get(kk+j)!=connectivity[j][10])break;
 				  }
 
 				  if(j<size)continue;
 				  for(j=1;j<=b[0];j++)
 				  {
-					  if(storedSymbolOfStructure[k1+j-1]!=b[j])break;
+					  if(storedSymbolOfStructure.get(k1+j-1)!=b[j])break;
 				  }
 				  if(j<=b[0])continue;
 				  if(j>b[0])return;
@@ -2206,9 +2202,9 @@ public class GENMDeterministicGenerator {
 		  kk=totalNumberOfThisSet[0]*totalNumberOfAtomAndBond;
 		  k1=kk+size;
 		  for(j=0;j<size;j++)
-			  storedSymbolOfStructure[kk+j]=connectivity[j][10];
+			  storedSymbolOfStructure.set(kk+j, connectivity[j][10]);
 		  for(j=1;j<=b[0];j++)
-			  storedSymbolOfStructure[k1+j-1]=b[j];
+			  storedSymbolOfStructure.set(k1+j-1, b[j]);
 		  totalNumberOfThisSet[0]+=1;
 		  numberOfStructures += 1;
 		  if (decomposedNumber > 0) {
@@ -2895,6 +2891,40 @@ public class GENMDeterministicGenerator {
 		this.structuresAtATime = structuresAtATime;
 	}
 
+	private class IntArray {
+		
+		private int[] array;
+		private int arrayLength = 500000;
+		private final int GROWSIZE = 500000; 
+		
+		IntArray() {
+		     array = new int[arrayLength]; // all is set to 0 by default, which is fine
+		}
+			
+		void clear() {
+			for (int i=0; i<arrayLength; i++) {
+				array[i] = 0;
+			}
+		}
+		
+		int get(int position) {
+			return array[position];
+		}
+		
+		void set(int position, int value) {
+			// grow array if needed
+			if (position > arrayLength) {
+				System.out.println("growing array...");
+				int[] newArray = new int[arrayLength+GROWSIZE];
+				System.arraycopy(array, 0, newArray, 0, arrayLength);
+				array = newArray;
+				arrayLength += GROWSIZE;
+			}
+			array[position] = value;		
+		}
+		
+	}
+	
 }
 
 
