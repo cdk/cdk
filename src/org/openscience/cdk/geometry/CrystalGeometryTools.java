@@ -74,25 +74,6 @@ public class CrystalGeometryTools {
     }
 
     /**
-     * Converts real coordinate (x,y,z) to a fractional coordinates
-     * (xf, yf, zf).
-     *
-     * @deprecated
-     */
-    public static double[] cartesianToFractional(double[] aAxis, double[] bAxis, double[] cAxis,
-                                                 double[] cart) {
-        double[] fractCoords = new double[3];
-        Point3d fract = cartesianToFractional(new Vector3d(aAxis[0], aAxis[1], aAxis[2]),
-                                              new Vector3d(bAxis[0], bAxis[1], bAxis[2]),
-                                              new Vector3d(cAxis[0], cAxis[1], cAxis[2]),
-                                              new Point3d(cart[0], cart[1], cart[2]));
-        fractCoords[0] = fract.x;
-        fractCoords[1] = fract.y;
-        fractCoords[2] = fract.z;
-        return fractCoords;
-    };
-
-    /**
      * @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
      */
     public static Point3d cartesianToFractional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
