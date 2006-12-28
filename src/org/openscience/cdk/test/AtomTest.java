@@ -151,27 +151,6 @@ public class AtomTest extends CDKTestCase {
         testSetFractionalPoint3d_Point3d();
     }
     
-    public void testSetFractX3d_double() {
-        IAtom a = builder.newAtom("C");
-        a.setFractX3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.x, 0.001);
-    }
-
-    public void testSetFractY3d_double() {
-        IAtom a = builder.newAtom("C");
-        a.setFractY3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.y, 0.001);
-    }
-
-    public void testSetFractZ3d_double() {
-        IAtom a = builder.newAtom("C");
-        a.setFractZ3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.z, 0.001);
-    }
-
     public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
@@ -186,27 +165,7 @@ public class AtomTest extends CDKTestCase {
         a.setPoint3d(point3d);
         assertEquals(point3d, a.getPoint3d());
     }
-    
-    /**
-     * Method to test the set[XY]2D() methods.
-     */
-    public void testSetX2d_double() {
-
-        IAtom a = builder.newAtom("C");
-        a.setX2d(1.0);
-
-        assertNotNull(a.getPoint2d());
-        assertEquals(1.0, a.getPoint2d().x, 0.001);
-    }
-    public void testSetY2d_double() {
-
-        IAtom a = builder.newAtom("C");
-        a.setY2d(2.0);
-
-        assertNotNull(a.getPoint2d());
-        assertEquals(2.0, a.getPoint2d().y, 0.001);
-    }
-    
+        
     public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
@@ -267,9 +226,6 @@ public class AtomTest extends CDKTestCase {
         IAtom atom = builder.newAtom("C");
         atom.setPoint2d(new Point2d(2, 3));
         IAtom clone = (IAtom)atom.clone();
-
-        // test cloning
-        atom.setX2d(5);
         assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
@@ -290,9 +246,6 @@ public class AtomTest extends CDKTestCase {
         IAtom atom = builder.newAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-
-        // test cloning
-        atom.setFractX3d(5);
         assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 

@@ -29,6 +29,7 @@ package org.openscience.cdk.test.io.cml;
 
 import java.io.StringWriter;
 
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import junit.framework.Test;
@@ -96,9 +97,9 @@ public class CML2WriterTest extends CDKTestCase {
 		StringWriter writer = new StringWriter();
         Crystal crystal = new Crystal();
         Atom silicon = new Atom("Si");
-        silicon.setFractX3d(0.0);
-        silicon.setFractY3d(0.0);
-        silicon.setFractZ3d(0.0);
+        silicon.setFractionalPoint3d(
+        	new Point3d(0.0, 0.0, 0.0)
+        );
         crystal.addAtom(silicon);
         crystal.setA(new Vector3d(1.5, 0.0, 0.0));
         crystal.setB(new Vector3d(0.0, 2.0, 0.0));

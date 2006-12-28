@@ -2160,8 +2160,8 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			{
 				IAtom atom = (IAtom)atoms.next();
 				atom.setNotification(false);
-				atom.setX2d(atom.getPoint2d().x + deltaX);
-				atom.setY2d(atom.getPoint2d().y + deltaY);
+				atom.getPoint2d().x += deltaX;
+				atom.getPoint2d().y += deltaY;
 				atom.setNotification(true);
 				((Point2d)r2dm.getRenderingCoordinate(atom)).x+=deltaX;
 				((Point2d)r2dm.getRenderingCoordinate(atom)).y+=deltaY;

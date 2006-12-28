@@ -107,27 +107,6 @@ public class PDBAtomTest extends CDKTestCase {
         testSetFractionalPoint3d_Point3d();
     }
     
-    public void testSetFractX3d_double() {
-    	IPDBAtom a = builder.newPDBAtom("C");
-        a.setFractX3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.x, 0.001);
-    }
-
-    public void testSetFractY3d_double() {
-    	IPDBAtom a = builder.newPDBAtom("C");
-        a.setFractY3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.y, 0.001);
-    }
-
-    public void testSetFractZ3d_double() {
-    	IPDBAtom a = builder.newPDBAtom("C");
-        a.setFractZ3d(0.5);
-        Point3d point3d = a.getFractionalPoint3d();
-        assertEquals(0.5, point3d.z, 0.001);
-    }
-
     public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
@@ -183,9 +162,6 @@ public class PDBAtomTest extends CDKTestCase {
     	IPDBAtom atom = builder.newPDBAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-
-        // test cloning
-        atom.setFractX3d(5);
         assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 

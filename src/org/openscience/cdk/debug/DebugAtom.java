@@ -144,31 +144,6 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return point3d;
 	}
 
-	public void setFractX3d(double xFract) {
-		logger.debug("Setting fractional X3d: ", xFract);
-		super.setFractX3d(xFract);
-	}
-
-	public void setFractY3d(double yFract) {
-		logger.debug("Setting fractional Y3d: ", yFract);
-		super.setFractY3d(yFract);
-	}
-
-	public void setFractZ3d(double zFract) {
-		logger.debug("Setting fractional Z3d: ", zFract);
-		super.setFractZ3d(zFract);
-	}
-
-	public void setX2d(double xCoord) {
-		logger.debug("Setting X2d: ", xCoord);
-		super.setX2d(xCoord);
-	}
-
-	public void setY2d(double yCoord) {
-		logger.debug("Setting Y2d: ", yCoord);
-		super.setY2d(yCoord);
-	}
-
 	public int getStereoParity() {
 		logger.debug("Getting stereo parity: ", super.getStereoParity());
 		return super.getStereoParity();

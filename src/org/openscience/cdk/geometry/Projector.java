@@ -45,8 +45,12 @@ public class Projector  {
     for (int i = 0; i < container.getAtomCount(); i++) {
       IAtom atom = container.getAtom(i);
       if (atom.getPoint3d() != null) {
-        atom.setX2d(atom.getPoint3d().x);
-        atom.setY2d(atom.getPoint3d().y);
+    	  atom.setPoint2d(
+    		new Point2d(
+    			atom.getPoint3d().x,
+    			atom.getPoint3d().y
+    		)
+    	  );
       } else {
         // should throw an exception
       }
@@ -56,8 +60,12 @@ public class Projector  {
     for (int i = 0; i < container.getAtomCount(); i++) {
       IAtom atom = container.getAtom(i);
       if (atom.getPoint3d() != null) {
-        atom.setX2d(atom.getPoint3d().x);
-        atom.setY2d(atom.getPoint3d().y);
+    	  atom.setPoint2d(
+    	      new Point2d(
+    	    	  atom.getPoint3d().x,
+    	    	  atom.getPoint3d().y
+    	      )
+    	  );
         renderingCoordinates.put(atom,new Point2d(atom.getPoint3d().x,atom.getPoint3d().y));
       } else {
         // should throw an exception
