@@ -208,17 +208,6 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public IElectronContainer[] getElectronContainers();
 
-
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 *@return    The array of Bonds of this AtomContainer
-	 *@see       #getElectronContainers
-	 *@deprecated
-	 */
-	public IBond[] getBonds();
-
-
 	/**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *

@@ -24,18 +24,20 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-
-import java.util.List;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
@@ -132,26 +134,28 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 */
 	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
 		int rotatableBondsCount = 0;
-		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
+		Iterator bonds = ac.bonds();
 		int degree0 = 0;
 		int degree1 = 0;
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
 		ringSet = arf.findAllRings(ac);
 		List ringsWithThisBond = null;
-		for (int f = 0; f < bonds.length; f++) {
-			ringsWithThisBond = ringSet.getRings(bonds[f]);
+		while (bonds.hasNext()) {
+			IBond bond = (IBond)bonds.next();
+			ringsWithThisBond = ringSet.getRings(bond);
 			if (ringsWithThisBond.size() > 0) {
-				bonds[f].setFlag(CDKConstants.ISINRING, true);
+				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
-		for (int i = 0; i < bonds.length; i++) {
-
-			IAtom atom0 = ac.getBond(i).getAtom(0);
-			IAtom atom1 = ac.getBond(i).getAtom(1);
-			if (bonds[i].getOrder() == CDKConstants.BONDORDER_SINGLE) {
+		bonds = ac.bonds();
+		while (bonds.hasNext()) {
+			IBond bond = (IBond)bonds.next();
+			IAtom atom0 = bond.getAtom(0);
+			IAtom atom1 = bond.getAtom(1);
+			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((ac.getMaximumBondOrder(atom0) < 3.0) && (ac.getMaximumBondOrder(atom1) < 3.0)) {
-					if (bonds[i].getFlag(CDKConstants.ISINRING) == false) {
+					if (bond.getFlag(CDKConstants.ISINRING) == false) {
 						degree0 = ac.getConnectedBondsCount(atom0);
 						degree1 = ac.getConnectedBondsCount(atom1);
 						if ((degree0 == 1) || (degree1 == 1)) {

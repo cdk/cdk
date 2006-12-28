@@ -79,7 +79,9 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             logger.info("Saturating bond orders is needed...");
-            boolean succeeded = saturate(atomContainer.getBonds(), atomContainer);
+            IBond[] bonds = new IBond[atomContainer.getBondCount()];
+        	for (int i=0; i<bonds.length; i++) bonds[i] = atomContainer.getBond(i);
+            boolean succeeded = saturate(bonds, atomContainer);
             if (!succeeded) {
                 throw new CDKException("Could not saturate this atomContainer!");
             }

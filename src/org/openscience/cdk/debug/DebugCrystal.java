@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -150,11 +149,6 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 	public IElectronContainer[] getElectronContainers() {
 		logger.debug("Getting electron containers: ", super.getElectronContainers().length);
 		return super.getElectronContainers();
-	}
-
-	public IBond[] getBonds() {
-		logger.debug("Getting bonds: ", super.getBonds().length);
-		return super.getBonds();
 	}
 
 	public ILonePair[] getLonePairs() {

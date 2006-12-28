@@ -24,8 +24,9 @@
  */
 package org.openscience.cdk.isomorphism.matchers;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
@@ -50,18 +51,19 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
-        IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            int index1 = container.getAtomNumber(bonds[i].getAtom(0));
-            int index2 = container.getAtomNumber(bonds[i].getAtom(1));
-            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
                                       1.5));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bonds[i].getOrder()));
+                                      bond.getOrder()));
             }
         }
         return queryContainer;
@@ -80,18 +82,19 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(container.getAtom(i)));
         }
-        IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            int index1 = container.getAtomNumber(bonds[i].getAtom(0));
-            int index2 = container.getAtomNumber(bonds[i].getAtom(1));
-            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
                                       1.5));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bonds[i].getOrder()));
+                                      bond.getOrder()));
             }
         }
         return queryContainer;
@@ -102,18 +105,19 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
-        IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            int index1 = container.getAtomNumber(bonds[i].getAtom(0));
-            int index2 = container.getAtomNumber(bonds[i].getAtom(1));
-            if (bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
                                       1.5));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      bonds[i].getOrder()));
+                                      bond.getOrder()));
             }
         }
         return queryContainer;
@@ -138,18 +142,19 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            int index1 = container.getAtomNumber(bonds[i].getAtom(0));
-            int index2 = container.getAtomNumber(bonds[i].getAtom(1));
-            if (aromaticity && bonds[i].getFlag(CDKConstants.ISAROMATIC)) {
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            if (aromaticity && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                         (IQueryAtom) queryContainer.getAtom(index2),
                         1.5));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                         (IQueryAtom) queryContainer.getAtom(index2),
-                        bonds[i].getOrder()));
+                        bond.getOrder()));
             }
         }
         return queryContainer;
@@ -176,13 +181,14 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        IBond[] bonds = container.getBonds();
-        for (int i = 0; i < bonds.length; i++) {
-            int index1 = container.getAtomNumber(bonds[i].getAtom(0));
-            int index2 = container.getAtomNumber(bonds[i].getAtom(1));
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
             queryContainer.addBond(new AnyOrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                     (IQueryAtom) queryContainer.getAtom(index2),
-                    bonds[i].getOrder()));
+                    bond.getOrder()));
         }
         return queryContainer;
     }

@@ -29,15 +29,17 @@
 package org.openscience.cdk.tools;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -237,7 +239,9 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             logger.info("Saturating bond orders is needed...");
-            boolean succeeded = saturate(atomContainer.getBonds(), atomContainer);
+            IBond[] bonds = new IBond[atomContainer.getBondCount()];
+        	for (int i=0; i<bonds.length; i++) bonds[i] = atomContainer.getBond(i);
+            boolean succeeded = saturate(bonds, atomContainer);
             if (!succeeded) {
                 throw new CDKException("Could not saturate this atomContainer!");
             }
@@ -393,19 +397,11 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
     }
     
     /**
-     * Resets the bond orders of all atoms to 1.0.
+     * Resets the bond orders of all bonds to 1.0.
      */
     public void unsaturate(IAtomContainer atomContainer) {
-        unsaturate(atomContainer.getBonds());
-    }
-    
-    /**
-     * Resets the bond order of the Bond to 1.0.
-     */
-    public void unsaturate(IBond[] bonds) {
-        for (int i = 1; i < bonds.length; i++) {
-            bonds[i].setOrder(1.0);
-        }
+    	Iterator bonds = atomContainer.bonds();
+        while (bonds.hasNext()) ((IBond)bonds.next()).setOrder(CDKConstants.BONDORDER_SINGLE);
     }
     
     public boolean unsaturateByDecreasingBondOrder(IBond bond, double decrement) {

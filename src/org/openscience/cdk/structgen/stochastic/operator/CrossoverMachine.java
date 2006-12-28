@@ -21,10 +21,12 @@
 package org.openscience.cdk.structgen.stochastic.operator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
 
@@ -132,12 +134,12 @@ public class CrossoverMachine
 		
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			org.openscience.cdk.interfaces.IBond[] bonds = redChild[1].getBonds();
-			for (int i = 0; i < bonds.length; i++) {
-				if (bonds[i].contains(redChild[0].getAtom(((Integer)blueAtoms.get(j)).intValue())))
+			Iterator bonds = redChild[1].bonds();
+			while (bonds.hasNext()) {
+				IBond bond = (IBond)bonds.next();
+				if (bond.contains(redChild[0].getAtom(((Integer)blueAtoms.get(j)).intValue())))
 				{
-					redChild[0].removeBond(bonds[i]);
-					i--;
+					redChild[0].removeBond(bond);
 				}
 			}
 		}
@@ -145,12 +147,12 @@ public class CrossoverMachine
 
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			org.openscience.cdk.interfaces.IBond[] bonds = redChild[1].getBonds();
-			for (int i = 0; i < bonds.length; i++) {
-				if (bonds[i].contains(redChild[1].getAtom(((Integer)blueAtoms.get(j)).intValue())))
+			Iterator bonds = redChild[1].bonds();
+			while (bonds.hasNext()) {
+				IBond bond = (IBond)bonds.next();
+				if (bond.contains(redChild[1].getAtom(((Integer)blueAtoms.get(j)).intValue())))
 				{
-					redChild[1].removeBond(bonds[i]);
-					i--;
+					bonds.remove(); // this removes it from redChild[1] too
 				}
 			}
 		}
@@ -158,24 +160,24 @@ public class CrossoverMachine
 
 		for (int j = 0; j < redAtoms.size(); j++)
 		{
-			org.openscience.cdk.interfaces.IBond[] bonds = blueChild[0].getBonds();
-			for (int i = 0; i < bonds.length; i++) {
-				if (bonds[i].contains(blueChild[0].getAtom(((Integer)redAtoms.get(j)).intValue())))
+			Iterator bonds = blueChild[0].bonds();
+			while (bonds.hasNext()) {
+				IBond bond = (IBond)bonds.next();
+				if (bond.contains(blueChild[0].getAtom(((Integer)redAtoms.get(j)).intValue())))
 				{
-					blueChild[0].removeBond(bonds[i]);
-					i--;
+					bonds.remove();
 				}
 			}
 		}
 
 
 		for (int j = 0; j < redAtoms.size(); j++) {
-			org.openscience.cdk.interfaces.IBond[] bonds = blueChild[1].getBonds();
-			for (int i = 0; i < bonds.length; i++) {
-				if (bonds[i].contains(blueChild[1].getAtom(((Integer)redAtoms.get(j)).intValue())))
+			Iterator bonds = blueChild[1].bonds();
+			while (bonds.hasNext()) {
+				IBond bond = (IBond)bonds.next();
+				if (bond.contains(blueChild[1].getAtom(((Integer)redAtoms.get(j)).intValue())))
 				{
-					blueChild[1].removeBond(bonds[i]);
-					i--;
+					bonds.remove();
 				}
 			}
 		}

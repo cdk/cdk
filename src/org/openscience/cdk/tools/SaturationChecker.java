@@ -302,8 +302,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
         logger.info("Saturating atomContainer by adjusting bond orders...");
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
-            boolean succeeded = newSaturate(atomContainer.getBonds(), atomContainer);
-            IBond[] bonds=atomContainer.getBonds();
+        	IBond[] bonds = new IBond[atomContainer.getBondCount()];
+        	for (int i=0; i<bonds.length; i++) bonds[i] = atomContainer.getBond(i);
+            boolean succeeded = newSaturate(bonds, atomContainer);
             for(int i=0;i<bonds.length;i++){
               if(bonds[i].getOrder()==2 && bonds[i].getFlag(CDKConstants.ISAROMATIC) && (bonds[i].getAtom(0).getSymbol().equals("N") && bonds[i].getAtom(1).getSymbol().equals("N"))){
                 int atomtohandle=0;

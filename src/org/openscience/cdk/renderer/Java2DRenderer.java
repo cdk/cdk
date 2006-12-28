@@ -54,14 +54,15 @@ public class Java2DRenderer implements IRenderer2D {
 			Rectangle2D bounds) {
 		List shapes = new ArrayList();
 		// create the bond shapes
-		IBond[] bonds = atomCon.getBonds();
-		for (int i=0; i<bonds.length; i++) {
+		Iterator bonds = atomCon.bonds();
+		while (bonds.hasNext()) {
+			IBond bond = (IBond)bonds.next();
 			shapes.add(
 				new Line2D.Double(
-					bonds[i].getAtom(0).getPoint2d().x,
-					bonds[i].getAtom(0).getPoint2d().y,
-					bonds[i].getAtom(1).getPoint2d().x,
-					bonds[i].getAtom(1).getPoint2d().y
+					bond.getAtom(0).getPoint2d().x,
+					bond.getAtom(0).getPoint2d().y,
+					bond.getAtom(1).getPoint2d().x,
+					bond.getAtom(1).getPoint2d().y
 				)
 			);
 		}

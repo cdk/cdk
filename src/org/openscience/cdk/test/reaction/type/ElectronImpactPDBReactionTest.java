@@ -24,6 +24,8 @@
 package org.openscience.cdk.test.reaction.type;
 
 
+import java.util.Iterator;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -63,14 +65,15 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 		/* ionize >C=C< , set the reactive center*/
 		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		
-		IBond[] bonds = reactant.getBonds();
-		for(int i = 0 ; i < bonds.length ; i++){
-			IAtom atom0 = bonds[i].getAtom(0);
-			IAtom atom1 = bonds[i].getAtom(1);
-			if(bonds[i].getOrder() == 2 &&
+		Iterator bonds = reactant.bonds();
+		while (bonds.hasNext()){
+			IBond bond = (IBond)bonds.next();
+			IAtom atom0 = bond.getAtom(0);
+			IAtom atom1 = bond.getAtom(1);
+			if(bond.getOrder() == 2 &&
 					atom0.getSymbol().equals("C")&&
 					atom1.getSymbol().equals("C")){
-				bonds[i].setFlag(CDKConstants.REACTIVE_CENTER,true);
+				bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		

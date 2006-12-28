@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,9 +39,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 
 /**
@@ -151,9 +152,9 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 		IElement element = null;
 		IsotopeFactory elfac = null;
 		String symbol = null;
-		org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
-		for (int b = 0; b < bonds.length; b++) {
-			bond = bonds[b];
+		Iterator bonds = atomContainer.bonds();
+		while (bonds.hasNext()) {
+			bond = (IBond)bonds.next();
 			if ((!bond.getAtom(0).getSymbol().equals("H")) && (!bond.getAtom(0).getSymbol().equals("H"))) {
 				val0 = 0;
 				val1 = 0;

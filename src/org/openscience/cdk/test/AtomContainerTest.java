@@ -25,6 +25,7 @@
 package org.openscience.cdk.test;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.vecmath.Point2d;
@@ -1183,13 +1184,11 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(b3);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            assertNotNull(bonds[i]);
-        }
-        assertEquals(b1, bonds[0]);
-        assertEquals(b2, bonds[1]);
-        assertEquals(b3, bonds[2]);
+        Iterator bonds = acetone.bonds();
+        while (bonds.hasNext()) assertNotNull(bonds.next());
+        assertEquals(b1, acetone.getBond(0));
+        assertEquals(b2, acetone.getBond(1));
+        assertEquals(b3, acetone.getBond(2));
     }
 
 //    public void testSetElectronContainers_arrayIElectronContainer() {
@@ -1326,19 +1325,18 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            assertNotNull(bonds[i]);
-        }
-        assertEquals(c1, bonds[0].getAtom(0));
-        assertEquals(c2, bonds[0].getAtom(1));
-        assertEquals(1.0, bonds[0].getOrder(), 0.001);
-        assertEquals(c2, bonds[1].getAtom(0));
-        assertEquals(o, bonds[1].getAtom(1));
-        assertEquals(2.0, bonds[1].getOrder(), 0.001);
-        assertEquals(c2, bonds[2].getAtom(0));
-        assertEquals(c3, bonds[2].getAtom(1));
-        assertEquals(1.0, bonds[2].getOrder(), 0.001);
+        Iterator bonds = acetone.bonds();
+        while (bonds.hasNext()) assertNotNull(bonds.next());
+
+        assertEquals(c1, acetone.getBond(0).getAtom(0));
+        assertEquals(c2, acetone.getBond(0).getAtom(1));
+        assertEquals(1.0, acetone.getBond(0).getOrder(), 0.001);
+        assertEquals(c2, acetone.getBond(1).getAtom(0));
+        assertEquals(o, acetone.getBond(1).getAtom(1));
+        assertEquals(2.0, acetone.getBond(1).getOrder(), 0.001);
+        assertEquals(c2, acetone.getBond(2).getAtom(0));
+        assertEquals(c3, acetone.getBond(2).getAtom(1));
+        assertEquals(1.0, acetone.getBond(2).getOrder(), 0.001);
     }
 
     public void testAddBond_int_int_double_int() {
@@ -1357,22 +1355,21 @@ public class AtomContainerTest extends CDKTestCase {
         acetone.addBond(1, 2, 1, CDKConstants.STEREO_BOND_NONE);
         
         assertEquals(3, acetone.getBondCount());
-        org.openscience.cdk.interfaces.IBond[] bonds = acetone.getBonds();
-        for (int i=0; i<bonds.length; i++) {
-            assertNotNull(bonds[i]);
-        }
-        assertEquals(c1, bonds[0].getAtom(0));
-        assertEquals(c2, bonds[0].getAtom(1));
-        assertEquals(1.0, bonds[0].getOrder(), 0.001);
-        assertEquals(CDKConstants.STEREO_BOND_UP, bonds[0].getStereo());
-        assertEquals(c2, bonds[1].getAtom(0));
-        assertEquals(o, bonds[1].getAtom(1));
-        assertEquals(2.0, bonds[1].getOrder(), 0.001);
-        assertEquals(CDKConstants.STEREO_BOND_DOWN, bonds[1].getStereo());
-        assertEquals(c2, bonds[2].getAtom(0));
-        assertEquals(c3, bonds[2].getAtom(1));
-        assertEquals(1.0, bonds[2].getOrder(), 0.001);
-        assertEquals(CDKConstants.STEREO_BOND_NONE, bonds[2].getStereo());
+        Iterator bonds = acetone.bonds();
+        while (bonds.hasNext()) assertNotNull(bonds.next());
+
+        assertEquals(c1, acetone.getBond(0).getAtom(0));
+        assertEquals(c2, acetone.getBond(0).getAtom(1));
+        assertEquals(1.0, acetone.getBond(0).getOrder(), 0.001);
+        assertEquals(CDKConstants.STEREO_BOND_UP, acetone.getBond(0).getStereo());
+        assertEquals(c2, acetone.getBond(1).getAtom(0));
+        assertEquals(o, acetone.getBond(1).getAtom(1));
+        assertEquals(2.0, acetone.getBond(1).getOrder(), 0.001);
+        assertEquals(CDKConstants.STEREO_BOND_DOWN, acetone.getBond(1).getStereo());
+        assertEquals(c2, acetone.getBond(2).getAtom(0));
+        assertEquals(c3, acetone.getBond(2).getAtom(1));
+        assertEquals(1.0, acetone.getBond(2).getOrder(), 0.001);
+        assertEquals(CDKConstants.STEREO_BOND_NONE, acetone.getBond(2).getStereo());
     }
 
     public void testContains_IElectronContainer() {
@@ -1453,27 +1450,6 @@ public class AtomContainerTest extends CDKTestCase {
         
         assertNotNull(acetone.getLonePairs());
         assertEquals(2, acetone.getLonePairs().length);
-    }
-    
-    public void testGetBonds() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IBond b1 = builder.newBond(c1, c2,1);
-        IBond b2 = builder.newBond(c1, o, 2);
-        IBond b3 = builder.newBond(c1, c3,1);
-        acetone.addBond(b1);
-        acetone.addBond(b2);
-        acetone.addBond(b3);
-        
-        assertEquals(3, acetone.getBonds().length);
     }
     
     public void testGetFirstAtom() {

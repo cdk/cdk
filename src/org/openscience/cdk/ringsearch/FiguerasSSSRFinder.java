@@ -409,10 +409,10 @@ public class FiguerasSSSRFinder {
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);
-		org.openscience.cdk.interfaces.IBond[] bonds = ring.getBonds();
-		for (int i = 0; i < bonds.length; i++)
+		Iterator bonds = ring.bonds();
+		while (bonds.hasNext())
 		{
-			bond = bonds[i];
+			bond = (IBond)bonds.next();
 			molecule.removeElectronContainer(bond);
 			r1 = getRing(bond.getAtom(0),molecule);
 			r2 = getRing(bond.getAtom(1),molecule);

@@ -555,22 +555,6 @@ public class AtomContainer extends ChemObject
 		return result;
 	}
 
-
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 *@return    The array of Bonds of this AtomContainer
-	 *@see       #getElectronContainers
-	 *@deprecated
-	 */
-	public IBond[] getBonds()
-	{
-		IBond[] result = new IBond[bondCount];
-		System.arraycopy(this.bonds, 0, result, 0, bondCount);
-		return result;
-	}
-
-
 	/**
 	 *  Returns the array of Bonds of this AtomContainer.
 	 *

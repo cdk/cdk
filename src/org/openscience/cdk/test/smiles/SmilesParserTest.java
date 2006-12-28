@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.smiles;
 
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -339,10 +341,8 @@ public class SmilesParserTest extends CDKTestCase {
         {
             String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
             IMolecule molecule = sp.parseSmiles(smiles);
-            IBond[] bonds = molecule.getBonds();
-            for (int i=0; i<bonds.length; i++) {
-                assertTrue(bonds[i].getFlag(CDKConstants.ISAROMATIC));
-            }
+            Iterator bonds = molecule.bonds();
+            while (bonds.hasNext()) assertTrue(((IBond)bonds.next()).getFlag(CDKConstants.ISAROMATIC));
         } catch (Exception exception) {
             fail(exception.getMessage());
         }
@@ -811,11 +811,9 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect three double bonds in the phenyl ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
-			for (int i = 0; i < bonds.length; i++)
-			{
-				totalBondOrder += bonds[i].getOrder();
-			}
+            Iterator bonds = mol.bonds();
+            while (bonds.hasNext())
+            	totalBondOrder += ((IBond)bonds.next()).getOrder();
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether all carbons have exact two neighbors
 			for (int i = 0; i < mol.getAtomCount(); i++)
@@ -885,11 +883,9 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
-			for (int i = 0; i < bonds.length; i++)
-			{
-				totalBondOrder += bonds[i].getOrder();
-			}
+            Iterator bonds = mol.bonds();
+            while (bonds.hasNext())
+            	totalBondOrder += ((IBond)bonds.next()).getOrder();
 			assertEquals(8.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded
@@ -1194,11 +1190,9 @@ public class SmilesParserTest extends CDKTestCase {
 			// it's a bit hard to detect two double bonds in the pyrrole ring
 			// but I do can check the total order in the whole molecule
 			double totalBondOrder = 0.0;
-			org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
-			for (int i = 0; i < bonds.length; i++)
-			{
-				totalBondOrder += bonds[i].getOrder();
-			}
+            Iterator bonds = mol.bonds();
+            while (bonds.hasNext())
+            	totalBondOrder += ((IBond)bonds.next()).getOrder();
 			assertEquals(9.0, totalBondOrder, 0.001);
 			// I can also check wether the total neighbor count around the
 			// nitrogen is 3, all single bonded

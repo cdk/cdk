@@ -34,19 +34,20 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
-//import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -961,13 +962,13 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		Color bondColor;
 		IRing ring;
-		org.openscience.cdk.interfaces.IBond[] bonds = atomCon.getBonds();
+		Iterator bonds = atomCon.bonds();
 		ArrayList painted_rings = new ArrayList();
 
 		logger.debug("Painting bonds...");
-		for (int i = 0; i < bonds.length; i++)
+		while (bonds.hasNext())
 		{
-			org.openscience.cdk.interfaces.IBond currentBond = bonds[i];
+			IBond currentBond = (IBond)bonds.next();
 			bondColor = (Color) r2dm.getColorHash().get(currentBond);
 			if (bondColor == null)
 			{
@@ -1035,14 +1036,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		if (!isAromatic)
 		{
 			isAromatic = true;
-			org.openscience.cdk.interfaces.IBond[] bonds = ring.getBonds();
-			for (int i = 0; i < bonds.length; i++)
-			{
-				if (!bonds[i].getFlag(CDKConstants.ISAROMATIC))
-				{
+			Iterator bonds = ring.bonds();
+			while (bonds.hasNext())
+				if (!((IBond)bonds.next()).getFlag(CDKConstants.ISAROMATIC))
 					return false;
-				}
-			}
 		}
 		return isAromatic;
 	}

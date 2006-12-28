@@ -24,19 +24,25 @@
  *  */
 package org.openscience.cdk.renderer;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
-
-import javax.vecmath.Point2d;
-import java.awt.*;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Vector;
 
 /**
  * Model for Renderer2D that contains settings for drawing objects.
@@ -823,9 +829,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			getColorHash().put(selectedPart.getAtom(i), this.getSelectedPartColor());
 		}
-        IBond[] bonds = selectedPart.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			getColorHash().put(bonds[i], getSelectedPartColor());
+        Iterator bonds = selectedPart.bonds();
+		while (bonds.hasNext()) {
+			getColorHash().put(bonds.next(), getSelectedPartColor());
 		}		
         fireChange();
 	}
@@ -1058,9 +1064,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			getColorHash().put(externalSelectedPart.getAtom(i), this.getExternalHighlightColor());
 		}
-        IBond[] bonds = externalSelectedPart.getBonds();
-		for (int i = 0; i < bonds.length; i++) {
-			getColorHash().put(bonds[i], getExternalHighlightColor());
+        Iterator bonds = externalSelectedPart.bonds();
+		while (bonds.hasNext()) {
+			getColorHash().put(bonds.next(), getExternalHighlightColor());
 		}		
         fireChange();
     }

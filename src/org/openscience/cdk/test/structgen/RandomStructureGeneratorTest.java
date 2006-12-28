@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.test.structgen;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.vecmath.Vector2d;
@@ -32,6 +33,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.structgen.RandomGenerator;
@@ -101,10 +103,9 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 					}
 					//System.out.println(s);
 					s = "Bonds: ";
-					org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
-					for (int g = 0; g < bonds.length; g++)
-					{
-						s += bonds[g].getOrder() + " ";
+					Iterator bonds = mol.bonds();
+					while (bonds.hasNext()) {
+						s += ((IBond)bonds.next()).getOrder() + " ";
 					}
 					//System.out.println(s);
 				}

@@ -139,11 +139,6 @@ public class DebugMonomer extends org.openscience.cdk.Monomer
 		return super.getElectronContainers();
 	}
 
-	public IBond[] getBonds() {
-		logger.debug("Getting bonds: ", super.getBonds().length);
-		return super.getBonds();
-	}
-
 	public ILonePair[] getLonePairs() {
 		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
 		return super.getLonePairs();

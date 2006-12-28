@@ -24,15 +24,17 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-
-import java.util.ArrayList;
 
 /**
  *  CarbonConnectivity index (order 1):
@@ -118,13 +120,13 @@ public class CarbonConnectivityOrderOneDescriptor implements IMolecularDescripto
         double val0 = 0;
         double val1 = 0;
         int atomDegree = 0;
-        org.openscience.cdk.interfaces.IBond[] bonds = atomContainer.getBonds();
-        org.openscience.cdk.interfaces.IBond bond = null;
-        for (int b = 0; b < bonds.length; b++) {
-            bond = bonds[b];
+        Iterator bonds = atomContainer.bonds();
+        IBond bond = null;
+        while (bonds.hasNext()) {
+            bond = (IBond)bonds.next();
             if ((!bond.getAtom(0).getSymbol().equals("H")) || (!bond.getAtom(1).getSymbol().equals("H"))) {
                 degrees.clear();
-                java.util.Iterator iter = bond.atoms();
+                Iterator iter = bond.atoms();
                 while (iter.hasNext()) {
                     atomDegree = 0;
                     java.util.List neighboors = atomContainer.getConnectedAtomsList((IAtom)iter.next());
