@@ -111,9 +111,9 @@ public class ConnectivityChecker
 			atom.setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atom);
 		}
-		IElectronContainer[] eContainers = atomContainer.getElectronContainers();
-		for (int f = 0; f < eContainers.length; f++){
-			eContainer = eContainers[f];
+		Iterator eContainers = atomContainer.electronContainers();
+		while (eContainers.hasNext()){
+			eContainer = (IElectronContainer)eContainers.next();
 			eContainer.setFlag(CDKConstants.VISITED, false);
 			ac.addElectronContainer(eContainer);
 		}

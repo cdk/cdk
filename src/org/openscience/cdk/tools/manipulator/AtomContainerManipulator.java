@@ -70,10 +70,11 @@ public class AtomContainerManipulator {
 	    return false;
         } else {
             container.setAtom(container.getAtomNumber(atom), newAtom);
-            IElectronContainer[] electronContainers = container.getElectronContainers();
-            for (int i=0; i<electronContainers.length; i++) {
-                if (electronContainers[i] instanceof IBond) {
-                    IBond bond = (IBond)electronContainers[i];
+            Iterator eContainers = container.electronContainers();
+    		while (eContainers.hasNext()){
+    			IElectronContainer eContainer = (IElectronContainer)eContainers.next();
+                if (eContainer instanceof IBond) {
+                    IBond bond = (IBond)eContainer;
                     if (bond.contains(atom)) {
                         for (int j=0; j<bond.getAtomCount(); j++) {
                             if (atom.equals(bond.getAtom(j))) {
@@ -81,8 +82,8 @@ public class AtomContainerManipulator {
                             }
                         }
                     }
-                } else if (electronContainers[i] instanceof ILonePair) {
-                    ILonePair lonePair = (ILonePair)electronContainers[i];
+                } else if (eContainer instanceof ILonePair) {
+                    ILonePair lonePair = (ILonePair)eContainer;
                     if (atom.equals(lonePair.getAtom())) {
                         lonePair.setAtom(newAtom);
                     }

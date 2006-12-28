@@ -540,37 +540,6 @@ public class AtomContainer extends ChemObject
     }
 	
 	/**
-	 *  Returns the array of electronContainers of this AtomContainer.
-	 *
-	 *@return    The array of electronContainers of this AtomContainer
-	 *@see       #setElectronContainers
-	 *@deprecated
-	 */
-	public IElectronContainer[] getElectronContainers()
-	{
-		IElectronContainer[] result = new IElectronContainer[bondCount+lonePairCount+singleElectronCount];
-		System.arraycopy(this.bonds, 0, result, 0, bondCount);
-		System.arraycopy(this.lonePairs, 0, result, bondCount, lonePairCount);
-		System.arraycopy(this.singleElectrons, 0, result, bondCount + lonePairCount, singleElectronCount);
-		return result;
-	}
-
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 *@return    The array of Bonds of this AtomContainer
-	 *@see       #getElectronContainers
-	 *@see       #getBonds
-	 *@deprecated
-	 */
-	public ILonePair[] getLonePairs()
-	{
-		ILonePair[] result = new ILonePair[lonePairCount];
-		System.arraycopy(this.lonePairs, 0, result, 0, lonePairCount);
-		return result;
-	}
-
-	/**
 	 *  Returns the atom at position 0 in the container.
 	 *
 	 *@return    The atom at position 0 .

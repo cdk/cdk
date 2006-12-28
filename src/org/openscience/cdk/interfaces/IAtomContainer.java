@@ -200,26 +200,6 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	public Iterator electronContainers();
 	
 	/**
-	 *  Returns the array of electronContainers of this AtomContainer.
-	 *
-	 *@return    The array of electronContainers of this AtomContainer
-	 *@see       #setElectronContainers
-	 *@deprecated
-	 */
-	public IElectronContainer[] getElectronContainers();
-
-	/**
-	 *  Returns the array of Bonds of this AtomContainer.
-	 *
-	 *@return    The array of Bonds of this AtomContainer
-	 *@see       #getElectronContainers
-	 *@see       #getBonds
-	 *@deprecated
-	 */
-	public ILonePair[] getLonePairs();
-
-
-	/**
 	 *  Returns the atom at position 0 in the container.
 	 *
 	 *@return    The atom at position 0 .

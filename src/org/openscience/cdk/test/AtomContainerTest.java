@@ -461,7 +461,7 @@ public class AtomContainerTest extends CDKTestCase {
         IAtomContainer container = builder.newAtomContainer();
         
         assertEquals(0, container.getAtomCount());
-        assertEquals(0, container.getElectronContainers().length);
+        assertEquals(0, container.getBondCount());
         
         // test wether the ElectronContainer is correctly initialized
         container.addBond(builder.newBond(builder.newAtom("C"), builder.newAtom("C"), 2));
@@ -1399,57 +1399,6 @@ public class AtomContainerTest extends CDKTestCase {
         assertTrue(acetone.contains(b3));
         assertTrue(acetone.contains(lp1));
         assertTrue(acetone.contains(lp2));
-    }
-
-    public void testGetElectronContainers() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IBond b1 = builder.newBond(c1, c2,1);
-        IBond b2 = builder.newBond(c1, o, 2);
-        IBond b3 = builder.newBond(c1, c3,1);
-        acetone.addBond(b1);
-        acetone.addBond(b2);
-        acetone.addBond(b3);
-        ILonePair lp1 = builder.newLonePair(o);
-        ILonePair lp2 = builder.newLonePair(o);
-        acetone.addLonePair(lp1);
-        acetone.addLonePair(lp2);
-        
-        assertEquals(5, acetone.getElectronContainers().length);
-    }
-    
-    public void testGetLonePairs() {
-        // acetone molecule
-        IMolecule acetone = builder.newMolecule();
-        IAtom c1 = builder.newAtom("C");
-        IAtom c2 = builder.newAtom("C");
-        IAtom o = builder.newAtom("O");
-        IAtom c3 = builder.newAtom("C");
-        acetone.addAtom(c1);
-        acetone.addAtom(c2);
-        acetone.addAtom(c3);
-        acetone.addAtom(o);
-        IBond b1 = builder.newBond(c1, c2,1);
-        IBond b2 = builder.newBond(c1, o, 2);
-        IBond b3 = builder.newBond(c1, c3,1);
-        acetone.addBond(b1);
-        acetone.addBond(b2);
-        acetone.addBond(b3);
-        ILonePair lp1 = builder.newLonePair(o);
-        ILonePair lp2 = builder.newLonePair(o);
-        acetone.addLonePair(lp1);
-        acetone.addLonePair(lp2);
-        
-        assertNotNull(acetone.getLonePairs());
-        assertEquals(2, acetone.getLonePairs().length);
     }
     
     public void testGetFirstAtom() {

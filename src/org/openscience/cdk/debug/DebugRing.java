@@ -159,16 +159,6 @@ public class DebugRing extends org.openscience.cdk.Ring
 		return super.electronContainers();
 	}
 	
-	public IElectronContainer[] getElectronContainers() {
-		logger.debug("Getting electron containers: ", super.getElectronContainers().length);
-		return super.getElectronContainers();
-	}
-
-	public ILonePair[] getLonePairs() {
-		logger.debug("Getting lone pairs: ", super.getLonePairs().length);
-		return super.getLonePairs();
-	}
-
 	public IAtom getFirstAtom() {
 		logger.debug("Getting first atom: ", super.getFirstAtom());
 		return super.getFirstAtom();

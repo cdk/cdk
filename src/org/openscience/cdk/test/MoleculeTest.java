@@ -69,7 +69,9 @@ public class MoleculeTest extends CDKTestCase {
         IMolecule m = builder.newMolecule(5,5,1,1);
         assertTrue(m != null);
         assertEquals(0, m.getAtomCount());
-        assertEquals(0, m.getElectronContainers().length);
+        assertEquals(0, m.getBondCount());
+        assertEquals(0, m.getLonePairCount());
+        assertEquals(0, m.getSingleElectronCount());
     }
 
     public void testMolecule_IAtomContainer() {
