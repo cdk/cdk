@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -54,19 +56,27 @@ public class DeAromatizationToolTest extends CDKTestCase {
 
 	public void testBezene() {
 		Ring benzene = new Ring(6, "C");
-		IBond[] bond = benzene.getBonds();
-		for (int i=0; i<bond.length; i++) bond[i].setFlag(CDKConstants.ISAROMATIC, true);
+		Iterator bonds = benzene.bonds();
+		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(benzene);
 		assertTrue(success);
+		double bondOrderSum = 0.0;
+		bonds = benzene.bonds();
+		while (bonds.hasNext()) bondOrderSum += ((IBond)bonds.next()).getOrder();
+		assertEquals(9.0, bondOrderSum, 0.00001);
 	}
 	
 	public void testPyridine() {
 		Ring pyridine = new Ring(6, "C");
 		pyridine.getAtom(0).setSymbol("N");
-		IBond[] bond = pyridine.getBonds();
-		for (int i=0; i<bond.length; i++) bond[i].setFlag(CDKConstants.ISAROMATIC, true);
+		Iterator bonds = pyridine.bonds();
+		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);
 		assertTrue(success);
+		double bondOrderSum = 0.0;
+		bonds = pyridine.bonds();
+		while (bonds.hasNext()) bondOrderSum += ((IBond)bonds.next()).getOrder();
+		assertEquals(9.0, bondOrderSum, 0.00001);
 	}
 	
 	public void test() {
