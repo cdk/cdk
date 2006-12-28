@@ -78,7 +78,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	  * be laid out.
 	  */
 	public void testIt() throws Exception {
-		if (runSlowTests()) {	
+		if (runSlowTests()) {
 			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C6H10O1","");
 			MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
 			gdg.addListener(myListener);
@@ -87,6 +87,15 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 			assertEquals(747, structures.size());
 			assertOK(structures);
 			assertUnique(structures);
+		}
+	}
+	
+	public void testAnotherOne() throws Exception {
+		if (runSlowTests()) {	
+			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C6H13O2N1","");
+			MyStructureGenerationListener myListener = new MyStructureGenerationListener();
+			gdg.generate();
+			assertEquals(23946, gdg.getNumberOfStructures());
 		}
 	}
 
