@@ -140,7 +140,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	if (line.indexOf("{") != -1) {
         		processBlock(line);
         	} else {
-        		System.out.println("Skipping non-block: " + line); 
+        		logger.warn("Skipping non-block: " + line); 
         	}
         	line = input.readLine();
         }
@@ -156,21 +156,21 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	String command = getCommand(line);
     	if (command.equals("atoms")) {
             // parse frame by frame
-    		System.out.println("ASN atoms found");
+    		logger.debug("ASN atoms found");
     		processAtomBlock();
     	} else if (command.equals("bonds")) {
     		// ok, that fine
-    		System.out.println("ASN bonds found");
+    		logger.debug("ASN bonds found");
     		processBondBlock();
     	} else if (command.equals("props")) {
     		// ok, that fine
-    		System.out.println("ASN props found");
+    		logger.debug("ASN props found");
     		processPropsBlock();
     	} else if (command.equals("PC-Compound ::=")) {
     		// ok, that fine
-    		System.out.println("ASN PC-Compound found");
+    		logger.debug("ASN PC-Compound found");
         } else {
-        	System.out.println("Skipping block: " + command);
+        	logger.warn("Skipping block: " + command);
         	skipBlock();
         }
 	}
@@ -183,7 +183,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf("}")!= -1) {
     			return;
     		} else {
-        		System.out.println("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line); 
         	}
         	line = input.readLine();
         }
@@ -196,10 +196,10 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	if (line.indexOf("urn") != -1) {
         		urn = extractURN();
         	} else if (line.indexOf("value") != -1) {
-        		System.out.println("Found a prop value line: " + line);
+        		logger.debug("Found a prop value line: " + line);
         		if (line.indexOf(" sval") != -1) {
-        			System.out.println("Label: " + urn.label);
-        			System.out.println("Name: " + urn.name);
+        			logger.debug("Label: " + urn.label);
+        			logger.debug("Name: " + urn.name);
         			if ("InChI".equals(urn.label)) {
         				String value = getQuotedValue(line.substring(line.indexOf("value sval")+10));
         				molecule.setProperty(CDKConstants.INCHI, value);
@@ -212,7 +212,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf("}")!= -1) {
     			return;
     		} else {
-        		System.out.println("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line); 
         	}
         	line = input.readLine();
         }
@@ -230,7 +230,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		// ok, don't return if it also has a "
     			return urn;
     		} else {
-        		System.out.println("Ignoring URN statement: " + line); 
+    			logger.warn("Ignoring URN statement: " + line); 
         	}
         	line = input.readLine();
         }
@@ -245,7 +245,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf("}")!= -1) {
     			return;
     		} else {
-        		System.out.println("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line); 
         	}
         	line = input.readLine();
         }
@@ -259,7 +259,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf("}")!= -1) {
     			return;
     		} else {
-        		System.out.println("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line); 
         	}
         	line = input.readLine();
         }
@@ -283,14 +283,14 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 		String command = getCommand(line);
 		if (command.equals("aid")) {
 			// assume this is the first block in the atom block
-			System.out.println("ASN atoms aid found");
+			logger.debug("ASN atoms aid found");
 			processAtomAIDs();
 		} else if (command.equals("element")) {
 			// assume this is the first block in the atom block
-			System.out.println("ASN atoms element found");
+			logger.debug("ASN atoms element found");
 			processAtomElements();
 		} else {
-			System.out.println("Skipping atom block block: " + command);
+			logger.warn("Skipping atom block block: " + command);
 			skipBlock();
 		}
 	}
@@ -299,14 +299,14 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 		String command = getCommand(line);
 		if (command.equals("aid1")) {
 			// assume this is the first block in the atom block
-			System.out.println("ASN bonds aid1 found");
+			logger.debug("ASN bonds aid1 found");
 			processBondAtomIDs(0);
 		} else if (command.equals("aid2")) {
 			// assume this is the first block in the atom block
-			System.out.println("ASN bonds aid2 found");
+			logger.debug("ASN bonds aid2 found");
 			processBondAtomIDs(1);
 		} else {
-			System.out.println("Skipping atom block block: " + command);
+			logger.warn("Skipping atom block block: " + command);
 			skipBlock();
 		}
 	}
@@ -319,8 +319,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		// done
         		return;
         	} else {
-//        		System.out.println("Found an atom ID: " + line);
-//        		System.out.println("  index: " + atomIndex);
+//        		logger.debug("Found an atom ID: " + line);
+//        		logger.debug("  index: " + atomIndex);
         		IAtom atom = getAtom(atomIndex);
         		String id = getValue(line);
         		atom.setID(id);
@@ -339,8 +339,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		// done
         		return;
         	} else {
-//        		System.out.println("Found an atom ID: " + line);
-//        		System.out.println("  index: " + atomIndex);
+//        		logger.debug("Found an atom ID: " + line);
+//        		logger.debug("  index: " + atomIndex);
         		IBond bond = getBond(bondIndex);
         		String id = getValue(line);
         		IAtom atom = (IAtom)atomIDs.get(id);
@@ -362,8 +362,8 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		// done
         		return;
         	} else {
-//        		System.out.println("Found symbol: " + toSymbol(getValue(line)));
-//        		System.out.println("  index: " + atomIndex);
+//        		logger.debug("Found symbol: " + toSymbol(getValue(line)));
+//        		logger.debug("  index: " + atomIndex);
         		IAtom atom = getAtom(atomIndex);
         		atom.setSymbol(toSymbol(getValue(line)));
         		atomIndex++;
@@ -381,11 +381,11 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 		String line = input.readLine();
 		int openBrackets = 0;
         while (line != null) {
-//    		System.out.println("SkipBlock: line=" + line);
+//    		logger.debug("SkipBlock: line=" + line);
     		if (line.indexOf('{') != -1) {
         		openBrackets++;
         	}
-//    		System.out.println(" #open brackets: " + openBrackets);
+//    		logger.debug(" #open brackets: " + openBrackets);
         	if (line.indexOf('}') != -1) {
         		if (openBrackets == 0) return;
         		openBrackets--;
@@ -433,7 +433,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     private String getQuotedValue(String line) throws Exception {
     	StringBuffer buffer = new StringBuffer();
     	int i = 0;
-//    	System.out.println("QV line: " + line);
+//    	logger.debug("QV line: " + line);
     	boolean startQuoteFound = false;
     	while (line != null) {
     		while (i<line.length()) {
