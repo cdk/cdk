@@ -23,6 +23,9 @@ public class PerfDetermStructGen {
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time consumed (ms): " + (endTime - startTime));
 		System.out.println("Structures found: " + gdg.getNumberOfStructures());
+        System.out.println("struct/s: " + 
+            (int)(1000.0*(double)gdg.getNumberOfStructures()/(endTime - startTime))
+        );
 	}
 	
 	public static void main(String[] args) throws Exception {
