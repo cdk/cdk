@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
@@ -275,18 +276,20 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      * Resets the bond orders of all atoms to 1.0.
      */
     public void unsaturate(IAtomContainer atomContainer) {
-        unsaturate(atomContainer.getBonds());
+    	Iterator bonds = atomContainer.bonds();
+    	while (bonds.hasNext()) {
+    		((IBond)bonds.next()).setOrder(CDKConstants.BONDORDER_SINGLE);
+    	}
     }
     
     /**
      * Resets the bond order of the Bond to 1.0.
      */
-    public void unsaturate(IBond[] bonds) {
-        for (int i = 1; i < bonds.length; i++) {
-            bonds[i].setOrder(1.0);
-        }
+    public void unsaturateBonds(IAtomContainer container) {
+    	Iterator bonds = container.bonds();
+        while (bonds.hasNext()) ((IBond)bonds.next()).setOrder(1.0);
     }
-    
+
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
 	 * This method is known to fail, especially on pyrolle-like compounts.

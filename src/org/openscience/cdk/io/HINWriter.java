@@ -23,16 +23,26 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.io.*;
-//import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Writer that outputs in the HIN format.
@@ -143,9 +153,6 @@ public class HINWriter extends DefaultChemObjectWriter {
             IMolecule mol = som.getMolecule(molnum);
 
             try {
-
-                int nbond = mol.getBondCount();
-
                 String molname = "mol " + (molnum + 1) + " " + mol.getProperty(CDKConstants.TITLE);
 
                 writer.write(molname, 0, molname.length());
@@ -154,7 +161,6 @@ public class HINWriter extends DefaultChemObjectWriter {
                 // Loop through the atoms and write them out:
                 java.util.Iterator atoms = mol.atoms();
                 
-                IBond[] bonds = mol.getBonds();
                 int i = 0;
                 while (atoms.hasNext()) {
                 	IAtom atom = (IAtom)atoms.next();
@@ -172,8 +178,9 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                     String buf = "";
                     int ncon = 0;
-                    for (int j = 0; j < nbond; j++) {
-                        IBond bond = bonds[j];
+                    Iterator bonds = mol.bonds();
+                    while (bonds.hasNext()) {
+                        IBond bond = (IBond)bonds.next();
                         if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
                             IAtom connectedAtom = bond.getConnectedAtom(atom);

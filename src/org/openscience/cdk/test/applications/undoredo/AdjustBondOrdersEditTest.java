@@ -113,7 +113,7 @@ public class AdjustBondOrdersEditTest extends CDKTestCase {
 		HashMap changedBonds = new HashMap();
 		clearMol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer containerCopy = (AtomContainer) clearMol.clone();
-		satChecker.unsaturate(clearMol.getBonds());
+		satChecker.unsaturateBonds(clearMol);
 		for (int j = 0; j < containerCopy.getBondCount(); j++) {
 			org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
 			org.openscience.cdk.interfaces.IBond bond = clearMol.getBond(j);

@@ -1,16 +1,19 @@
 package org.openscience.cdk.test.applications.undoredo;
 
+import java.util.Iterator;
+
 import javax.swing.undo.UndoableEdit;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -68,13 +71,13 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
-		java.util.Iterator atoms = mol.atoms();
-		org.openscience.cdk.interfaces.IBond[] bonds = mol.getBonds();
+		Iterator atoms = mol.atoms();
 		while (atoms.hasNext()) {
 			undoCont.addAtom((IAtom)atoms.next());
 		}
-		for (int i = 0; i < bonds.length; i++) {
-			undoCont.addBond(bonds[i]);
+		Iterator bonds = mol.bonds();
+		while (bonds.hasNext()) {
+			undoCont.addBond((IBond)bonds.next());
 		}
 		mol.removeAllElements();
 		ChemModel model = new ChemModel();

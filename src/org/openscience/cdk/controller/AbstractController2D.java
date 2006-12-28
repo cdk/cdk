@@ -773,10 +773,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
 				// make newRing a benzene ring
-				IBond[] bonds = newRing.getBonds();
-				bonds[0].setOrder(2.0);
-				bonds[2].setOrder(2.0);
-				bonds[4].setOrder(2.0);
+				newRing.getBond(0).setOrder(2.0);
+				newRing.getBond(2).setOrder(2.0);
+				newRing.getBond(4).setOrder(2.0);
 				makeRingAromatic(newRing);
 			}
 			bondLength = r2dm.getBondLength();
@@ -799,10 +798,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			if (c2dm.getDrawMode() == Controller2DModel.BENZENERING)
 			{
 				// make newRing a benzene ring
-				IBond[] bonds = newRing.getBonds();
-				bonds[0].setOrder(2.0);
-				bonds[2].setOrder(2.0);
-				bonds[4].setOrder(2.0);
+				newRing.getBond(0).setOrder(2.0);
+				newRing.getBond(2).setOrder(2.0);
+				newRing.getBond(4).setOrder(2.0);
 				makeRingAromatic(newRing);
 			}
 			bondLength = r2dm.getBondLength();
@@ -889,24 +887,22 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				{
 					// make newRing a benzene ring
 					IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
-					IBond[] bonds = newRing.getBonds();
-
 					if (existingBond.getOrder() == 1.0)
 					{
 						if (existingBond.getFlag(CDKConstants.ISAROMATIC))
 						{
-							bonds[2].setOrder(2.0);
-							bonds[4].setOrder(2.0);
+							newRing.getBond(2).setOrder(2.0);
+							newRing.getBond(2).setOrder(2.0);
 						} else
 						{
-							bonds[1].setOrder(2.0);
-							bonds[3].setOrder(2.0);
-							bonds[5].setOrder(2.0);
+							newRing.getBond(1).setOrder(2.0);
+							newRing.getBond(3).setOrder(2.0);
+							newRing.getBond(5).setOrder(2.0);
 						}
 					} else
 					{
-						bonds[2].setOrder(2.0);
-						bonds[4].setOrder(2.0);
+						newRing.getBond(2).setOrder(2.0);
+						newRing.getBond(4).setOrder(2.0);
 					}
 					makeRingAromatic(newRing);
 				}
@@ -1567,15 +1563,13 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	 */
 	private void makeRingAromatic(IRing ring)
 	{
-		java.util.Iterator atoms = ring.atoms();
-		while (atoms.hasNext())
-		{
+		Iterator atoms = ring.atoms();
+		while (atoms.hasNext()) {
 			((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		}
-		IBond[] bonds = ring.getBonds();
-		for (int i = 0; i < bonds.length; i++)
-		{
-			bonds[i].setFlag(CDKConstants.ISAROMATIC, true);
+		Iterator bonds = ring.bonds();
+		while (bonds.hasNext()) {
+			((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		}
 	}
 
@@ -1892,10 +1886,10 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		{
 			ringAtoms[i] = sharedAtoms.getBuilder().newAtom(symbol);
 		}
-		IBond[] bonds = sharedAtoms.getBonds();
-		for (int i = 0; i < bonds.length; i++)
+		Iterator bonds = sharedAtoms.bonds();
+		while (bonds.hasNext())
 		{
-			newRing.addBond(bonds[i]);
+			newRing.addBond((IBond)bonds.next());
 		}
 		for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
 		{
@@ -1958,10 +1952,10 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					selectedPart.addAtom(currentAtom);
 				}
 			}
-			IBond[] bonds = atomCon.getBonds();
-			for (int i = 0; i < bonds.length; i++)
+			Iterator bonds = atomCon.bonds();
+			while (bonds.hasNext())
 			{
-				currentBond = bonds[i];
+				currentBond = (IBond)bonds.next();
 				for (int j = 0; j < selectedPart.getAtomCount(); j++)
 				{
 					currentAtom = selectedPart.getAtom(j);
