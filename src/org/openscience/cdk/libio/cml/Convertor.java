@@ -54,7 +54,6 @@ import java.util.*;
  * @cdk.keyword      class convertor
  * @cdk.builddepends jumbo52.jar
  * @cdk.require      java1.5+
- * @cdk.bug          1085912
  */
 public class Convertor {
 

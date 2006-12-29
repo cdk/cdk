@@ -68,6 +68,7 @@ import java.util.Vector;
  *@cdk.keyword Coordinate generation, 2D
  *@cdk.dictref blue-obelisk:layoutMolecule
  *@cdk.module  sdg
+ *@cdk.bug     1610997
  */
 public class StructureDiagramGenerator
 {

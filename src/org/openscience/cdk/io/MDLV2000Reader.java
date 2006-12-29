@@ -84,6 +84,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2000-10-02
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
+ * @cdk.bug        1587283
  */
 public class MDLV2000Reader extends DefaultChemObjectReader {
 

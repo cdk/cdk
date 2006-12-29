@@ -68,7 +68,6 @@ import java.util.Map;
  * @cdk.module	qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:chi0vC
- * @cdk.bug     1298108
  */
 public class ValenceCarbonConnectivityOrderZeroDescriptor implements IMolecularDescriptor {
 

@@ -70,6 +70,12 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  * @cdk.bug        1274464
  * @cdk.bug        1363882
  * @cdk.bug        1503541
+ * @cdk.bug        1541333
+ * @cdk.bug        1579230
+ * @cdk.bug        1579231
+ * @cdk.bug        1579235
+ * @cdk.bug        1579537
+ * @cdk.bug        1579244
  */
 public class SmilesParser {
 

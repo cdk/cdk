@@ -43,7 +43,6 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.created 2001-08-06
  * @cdk.keyword polymer
- * @cdk.bug     1117765
  */
 public class Polymer extends Molecule implements java.io.Serializable, org.openscience.cdk.interfaces.IPolymer
 { 
