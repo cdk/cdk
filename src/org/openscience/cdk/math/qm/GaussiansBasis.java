@@ -95,7 +95,7 @@ public class GaussiansBasis implements IBasis
     //count_atoms = molecule.getSize();
     count_atoms = atoms.length;
     
-    System.out.println("Count of atoms: "+count_atoms);
+//    logger.debug("Count of atoms: "+count_atoms);
     
     this.rN = new Vector[count_atoms];
     this.oz = new int[count_atoms];
@@ -103,15 +103,15 @@ public class GaussiansBasis implements IBasis
     { 
       this.rN[i] = (new Vector(atoms[i].getPoint3d())).mul(1.8897);
       this.oz[i] = atoms[i].getAtomicNumber();
-      System.out.println((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3d()))+"[angstrom]");
+//      logger.debug((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3d()))+"[angstrom]");
     }
-    System.out.println();
+//    logger.debug();
 
     count = Math.min(nx.length,
             Math.min(ny.length,
             Math.min(nz.length,alpha.length)));
 
-    System.out.println("Count of bases: "+count);
+//    logger.debug("Count of bases: "+count);
 
     this.nx = new int[count];
     this.ny = new int[count];
@@ -138,8 +138,8 @@ public class GaussiansBasis implements IBasis
       else
         norm[i] = 1/norm[i];
 
-      System.out.println((i+1)+".Base nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
-              alpha[i]+" r="+r[i]+" norm="+norm[i]);
+//      logger.debug((i+1)+".Base nx="+nx[i]+" ny="+ny[i]+" nz="+nz[i]+" alpha="+
+//              alpha[i]+" r="+r[i]+" norm="+norm[i]);
 
       if (i>0)
       {
@@ -159,7 +159,7 @@ public class GaussiansBasis implements IBasis
     miny -= 2; maxy += 2;
     minz -= 2; maxz += 2;
 
-    System.out.println();
+//    logger.debug();
   }
 
   /**
@@ -368,7 +368,7 @@ public class GaussiansBasis implements IBasis
 
   public double calcS(int i, int j)
   {
-    //System.out.println("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
+    //logger.debug("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
     return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j]) * 
            calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0]) *
            calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1]) * 
@@ -537,7 +537,7 @@ public class GaussiansBasis implements IBasis
     double result = 0d;
     for(int k=0; k<count_atoms; k++)
     { 
-      //System.out.println("k="+k+" r="+r[k]);
+      //logger.debug("k="+k+" r="+r[k]);
       result += calcV(i,j, rN[k], oz[k]);
     }
     return -result; // Vorsicht negatives Vorzeichen
@@ -551,7 +551,7 @@ public class GaussiansBasis implements IBasis
   {
     if ((n<0) || (m<0))
     {
-      System.out.println("Error(CalcG):Bad parameter n="+n+" m="+m);
+//      logger.debug("Error(CalcG):Bad parameter n="+n+" m="+m);
       return Double.NaN;
     }
 
@@ -628,7 +628,7 @@ public class GaussiansBasis implements IBasis
     if ((nj==0) && (nl==0))
       return calcG(ni,nk,u,alphai,alphaj,alphak,alphal,xi,xj,xk,xl);
 
-    System.out.println("Error(CalcI):Bad parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
+//    logger.debug("Error(CalcI):Bad parameter ni="+ni+" nj="+nj+" nk="+nk+" nl="+nl);
     return Double.NaN;
   }
 

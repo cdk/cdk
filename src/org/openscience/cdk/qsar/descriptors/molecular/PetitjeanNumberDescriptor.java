@@ -147,9 +147,9 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
                         radius = radius;
                     }*/
             }
-            // System.out.println("row " + i + ", radius: " +radius + ", diameter: " +diameter);
+            // logger.debug("row " + i + ", radius: " +radius + ", diameter: " +diameter);
         }
-        // System.out.println("diameter: " +diameter);
+        // logger.debug("diameter: " +diameter);
 
         petitjeanNumber = (diameter - radius)/diameter;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),

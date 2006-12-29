@@ -79,7 +79,7 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
 		mmff.assignMMFF94PartialCharges(ac);
 		for (int i = 0; i < ac.getAtomCount(); i++) {
 			assertEquals(testResult[i], ((Double)ac.getAtom(i).getProperty("MMFF94charge")).doubleValue(), 0.05);
-			//System.out.println("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+			//logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
 		}
 	}
 }

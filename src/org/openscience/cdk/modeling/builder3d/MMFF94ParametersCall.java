@@ -50,7 +50,7 @@ public class MMFF94ParametersCall {
 			System.out.println("KEYError:Unknown distance key in pSet: " + code + ";" + id2 + " ;" + id1+" take default bon length:" + DEFAULT_BOND_LENGTH);
 			return DEFAULT_BOND_LENGTH;
 			}*/
-		//System.out.println("dkey = " + dkey);
+		//logger.debug("dkey = " + dkey);
 		return (Vector) pSet.get(dkey);
 	}
 
@@ -74,7 +74,7 @@ public class MMFF94ParametersCall {
 			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " + angleType + ";" + id1 + " ; " + id2 + " ; " + id3 +" take default angle:" + DEFAULT_ANGLE);
 	   		return (Vector)[DEFAULT_ANGLE,0,0];
 	   		}*/
-		//System.out.println("angle key : " + akey);
+		//logger.debug("angle key : " + akey);
 		return (Vector) pSet.get(akey);
 	}
 
@@ -106,7 +106,7 @@ public class MMFF94ParametersCall {
 			System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id1 + " ; " + id2 + " ; " + id3+" take default angle:" + DEFAULT_ANGLE);
 			return (Vector)[DEFAULT_ANGLE,0,0];
 			}*/
-		//System.out.println("akey : " + akey);
+		//logger.debug("akey : " + akey);
 		return (Vector) pSet.get(akey);
 	}
 	
@@ -127,7 +127,7 @@ public class MMFF94ParametersCall {
 		}  /*else {
 			System.out.println("KEYErrorDefaultStretchBend:Unknown default stretch-bend key in pSet: " + iR + " ; " + jR + " ; " + kR);
 			}*/
-		//System.out.println("dfsbkey : " + dfsbkey);
+		//logger.debug("dfsbkey : " + dfsbkey);
 		return (Vector) pSet.get(dfsbkey);
 	}
 	
@@ -158,7 +158,7 @@ public class MMFF94ParametersCall {
 			System.out.println("KEYError:Unknown distance key in pSet: torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4 + " take default torsion angle:" + DEFAULT_TORSION_ANGLES);
 			return DEFAULT_TORSION_ANGLE;
 			}*/
-		//System.out.println("dkey = " + dkey);
+		//logger.debug("dkey = " + dkey);
 		return (Vector) pSet.get(dkey);
 	}
 	

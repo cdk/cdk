@@ -376,7 +376,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             double n = (double) ac.getAtomCount();
             gamma[i] = -1.0 * ((ns / n) * Math.log(ns / n) / Math.log(2.0) + (na / n) * Math.log(1.0 / n) / Math.log(2.0));
             gamma[i] = 1.0 / (1.0 + gamma[i]);
-            //System.out.println("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
+            //logger.debug("ns = "+ns+" na = "+na+"  gamma = "+gamma[i]);
         }
 
         // non directional WHIMS's
@@ -479,10 +479,10 @@ public class WHIMDescriptor implements IMolecularDescriptor {
                     double sum = 0.;
                     for (int k = 0; k < nrow; k++) {
                         //double dd =  wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
-                        //System.out.println("("+i+","+j+") "+wts[k] + " * " + d[k][i] + "-" + meanx + " * " + d[k][j] + "-" + meany + "==" + dd);
+                        //logger.debug("("+i+","+j+") "+wts[k] + " * " + d[k][i] + "-" + meanx + " * " + d[k][j] + "-" + meany + "==" + dd);
                         sum += wt[k] * (d[k][i] - meanx) * (d[k][j] - meany);
                     }
-                    //System.out.println(sum+" / "+sumwt+"="+sum/sumwt);
+                    //logger.debug(sum+" / "+sumwt+"="+sum/sumwt);
                     covmat[i][j] = sum / sumwt;
                 }
             }

@@ -162,7 +162,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @see #setParameters
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        //System.out.println("LargestChainDescriptor");
+        //logger.debug("LargestChainDescriptor");
         IRingSet rs = null;
 
         if (checkAromaticity && !checkRingSystem) {
@@ -195,14 +195,14 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
         }
 
-        //System.out.println("Set all atoms to Visited False");
+        //logger.debug("Set all atoms to Visited False");
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atomi = container.getAtom(i);
             // chain sp3
-            //System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
+            //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
             if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED))
             {
-                //System.out.println("...... -> containercepted");
+                //logger.debug("...... -> containercepted");
                 startSphere = new Vector();
                 path = new Vector();
                 startSphere.addElement(atomi);
@@ -237,18 +237,18 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
         IAtom atom = null;
         IAtom nextAtom = null;
         Vector newSphere = new Vector();
-        //System.out.println("Start of breadthFirstSearch");
+        //logger.debug("Start of breadthFirstSearch");
         for (int i = 0; i < sphere.size(); i++) {
             atom = (IAtom) sphere.elementAt(i);
-            //System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
+            //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
             java.util.List bonds = container.getConnectedBondsList(atom);
             for (int j = 0; j < bonds.size(); j++) {
                 nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
                 if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED))
                 {
-                    //System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
+                    //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.addElement(nextAtom);
-                    //System.out.println("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
+                    //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
                         newSphere.addElement(nextAtom);

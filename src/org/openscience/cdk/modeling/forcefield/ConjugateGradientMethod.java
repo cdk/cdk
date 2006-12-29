@@ -67,7 +67,7 @@ public class ConjugateGradientMethod {
 		diffgk_gkminus1.sub(gkminus1);
 		uk_PolankRibiere = Math.max(0, diffgk_gkminus1.dot(gk) / gkminus1.dot(gkminus1));
 		if (uk_PolankRibiere == 0) {
-			//System.out.println("uk_PolankRibiere == 0");
+			//logger.debug("uk_PolankRibiere == 0");
 		}
 		return;
 	}
@@ -80,11 +80,11 @@ public class ConjugateGradientMethod {
 	 * @param  pk  		Conjugate Gradient direction at coordinates Xk
 	 */
 	private void checkingOrthogonality(GVector pkminus1, GVector pk) {
-		//System.out.println("Math.abs(pk.dot(pkminus1)) / Math.pow(pk.norm(),2) = " + Math.abs(pk.dot(pkminus1)) / Math.pow(pk.norm(),2));
-		//System.out.println("Math.abs(pk.dot(pkminus1)) / Math.pow(pk.normSquared(),2) = " + Math.abs(pk.dot(pkminus1)) / Math.pow(pk.normSquared(),2));
+		//logger.debug("Math.abs(pk.dot(pkminus1)) / Math.pow(pk.norm(),2) = " + Math.abs(pk.dot(pkminus1)) / Math.pow(pk.norm(),2));
+		//logger.debug("Math.abs(pk.dot(pkminus1)) / Math.pow(pk.normSquared(),2) = " + Math.abs(pk.dot(pkminus1)) / Math.pow(pk.normSquared(),2));
 		if (Math.abs(pk.dot(pkminus1)) / Math.pow(pk.normSquared(),2) >= 0.1) {
 			orthogonalDirectionsProperty = false;
-			//System.out.println("orthogonalDirectionsProperty = false");
+			//logger.debug("orthogonalDirectionsProperty = false");
 		} else {orthogonalDirectionsProperty = true;}
 	}
 

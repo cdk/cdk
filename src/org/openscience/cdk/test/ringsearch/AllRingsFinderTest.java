@@ -200,10 +200,10 @@ public class AllRingsFinderTest extends CDKTestCase
 		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		    org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		    //System.out.println("Constructed Molecule");
-		    //System.out.println("Starting AllRingsFinder");
+		    //logger.debug("Constructed Molecule");
+		    //logger.debug("Starting AllRingsFinder");
 		    ringSet = new AllRingsFinder().findAllRings(mol);
-		    //System.out.println("Finished AllRingsFinder");
+		    //logger.debug("Finished AllRingsFinder");
             assertEquals(24, ringSet.getAtomContainerCount());
 		    //display(mol);
 		

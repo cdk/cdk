@@ -209,7 +209,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             String object = objHeaderMatcher.group(2);
                             constructObject(chemFile.getBuilder(), object);
                             int id = Integer.parseInt(objHeaderMatcher.group(1));
-                            // System.out.println(object + " id: " + id);
+                            // logger.debug(object + " id: " + id);
                             line = readLine();
                             while (input.ready() && line != null && !(line.trim().equals(")"))) {
                                 // parse object command (or new object header)
@@ -242,7 +242,7 @@ public class PMPReader extends DefaultChemObjectReader {
                             } else {
                                 logger.error("chemObject is not initialized or of bad class type");
                             }
-                            // System.out.println(molecule.toString());
+                            // logger.debug(molecule.toString());
                         }
                         line = readLine();
                     }

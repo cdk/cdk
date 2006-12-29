@@ -294,7 +294,7 @@ public class CDKUtilities {
 			
 			jloop:
 			for (int j=0;j<=rs.getAtomContainerCount()-1;j++) {
-				//System.out.println(i+"\t"+j);
+				//logger.debug(i+"\t"+j);
 				IRing r=(IRing)rs.getAtomContainer(j);
 				if (!r.getFlag(CDKConstants.ISAROMATIC)) {
 					continue jloop;
@@ -302,7 +302,7 @@ public class CDKUtilities {
 				
 				boolean haveatom=r.contains(m.getAtom(i));
 
-				//System.out.println("haveatom="+haveatom);
+				//logger.debug("haveatom="+haveatom);
 				
 				if (haveatom && r.getAtomCount()==6) {
 					m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,true);
@@ -318,7 +318,7 @@ public class CDKUtilities {
 	
 	public static void fixSulphurH(IMolecule m) {
 		// removes extra H's attached to sulphurs
-		//System.out.println("EnterFixSulphur");
+		//logger.debug("EnterFixSulphur");
 		
 		for (int i = 0; i <= m.getAtomCount()-1; i++)
 		{

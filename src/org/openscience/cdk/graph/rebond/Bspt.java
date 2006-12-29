@@ -104,7 +104,7 @@ public final class Bspt {
     if (! eleRoot.addTuple(tuple)) {
       eleRoot = new Node(0, dimMax, (Leaf) eleRoot);
       if (! eleRoot.addTuple(tuple))
-        System.out.println("Bspt.addTuple() failed");
+        throw new Error("Bspt.addTuple() failed");
     }
   }
 
@@ -133,7 +133,7 @@ public final class Bspt {
       while (ele instanceof Node) {
         Node node = (Node) ele;
         if (sp == stackDepth)
-          System.out.println("Bspt.EnumerateAll tree stack overflow");
+        	throw new Error("Bspt.EnumerateAll tree stack overflow");
         stack[sp++] = node;
         ele = node.eleLE;
       }
@@ -147,7 +147,7 @@ public final class Bspt {
 
     public Object nextElement() {
       if (i == leaf.count) {
-        //        System.out.println("-->" + stack[sp-1].splitValue);
+        //        logger.debug("-->" + stack[sp-1].splitValue);
         Element ele = stack[--sp].eleGE;
         while (ele instanceof Node) {
           Node node = (Node) ele;
@@ -184,7 +184,7 @@ public final class Bspt {
         Node node = (Node) ele;
         if (center.getDimValue(node.dim) - distance <= node.splitValue) {
           if (sp == stackDepth)
-            System.out.println("Bspt.EnumerateNear tree stack overflow");
+        	  throw new Error("Bspt.EnumerateNear tree stack overflow");
           stack[sp++] = node;
           ele = node.eleLE;
         } else {
@@ -264,7 +264,7 @@ public final class Bspt {
         Node node = (Node) ele;
         if (center.getDimValue(node.dim) - distance <= node.splitValue) {
           if (sp == stackDepth)
-            System.out.println("Bspt.EnumerateSphere tree stack overflow");
+        	  throw new Error("Bspt.EnumerateSphere tree stack overflow");
           stack[sp++] = node;
           ele = node.eleLE;
         } else {

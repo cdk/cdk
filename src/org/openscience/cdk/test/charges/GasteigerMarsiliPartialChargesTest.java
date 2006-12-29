@@ -86,7 +86,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
 			peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
 			for (int i=0;i<mol.getAtomCount();i++){
-				//System.out.println("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
+				//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
 				assertEquals(testResult[i],mol.getAtom(i).getCharge(),0.01);
 			}
 			

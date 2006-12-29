@@ -73,7 +73,7 @@ public class MorganNumberToolsTest extends CDKTestCase
 		assertTrue(morganNumbers.length == reference.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
-			//System.out.println(morganNumbers[f]);
+			//logger.debug(morganNumbers[f]);
 			assertTrue(reference[f] == morganNumbers[f]);
 		}
 	}

@@ -497,7 +497,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 
 					angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 
-					// System.out.println("gcycr ANGLE: " + angle + " "
+					// logger.debug("gcycr ANGLE: " + angle + " "
 					// +mol.getAtomNumber(cycloexBondAtom0) + "
 					// "+mol.getAtomNumber(cycloexBondAtom1));
 
@@ -506,8 +506,8 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 				}
 				// g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
-				System.out.println("RDF g-cycl prob.: " + sum + " at distance "
-						+ g3r);
+//				logger.debug("RDF g-cycl prob.: " + sum + " at distance "
+//						+ g3r);
 			}
 			// atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
 			// rdfProtonCalculatedValues.add(1);

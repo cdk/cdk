@@ -93,7 +93,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.29; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 2.2);
     }
     /**
@@ -111,7 +111,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.27;
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.1);
     }
     /**
@@ -129,7 +129,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 10.48;
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.55);
     }/**
 	 *  A unit test for JUnit with N1(C)CCC(C)(C)CC1
@@ -146,7 +146,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77;
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.03);
     }
     /**
@@ -164,7 +164,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(1),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.24; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 2.5);
     }
     /**
@@ -182,7 +182,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.9; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.5);
     }
     /**
@@ -200,7 +200,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.5; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.4);
     }
 
@@ -219,7 +219,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.3; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.051);
     }
     /**
@@ -237,7 +237,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.01; 
-//        System.out.println(resultAccordingNIST+"="+result);
+//        logger.debug(resultAccordingNIST+"="+result);
         assertEquals(resultAccordingNIST, result, 0.3);
     }
 
@@ -255,10 +255,10 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-//        System.out.println("result: "+result);
+//        logger.debug("result: "+result);
         
         result= ((DoubleResult)descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
-//        System.out.println("result: "+result);
+//        logger.debug("result: "+result);
          
         
     }
@@ -283,7 +283,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		IReactionSet reactionSet = ((IPAtomicDescriptor) descriptor).getReactionSet(mol.getAtom(2),mol);
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
         double resultAccordingNIST = 8.9; 
-//      System.out.println(resultAccordingNIST+"="+result);
+//      logger.debug(resultAccordingNIST+"="+result);
         assertEquals(1, reactionSet.getReactionCount());
         assertEquals(resultAccordingNIST, result, 0.5);
     }

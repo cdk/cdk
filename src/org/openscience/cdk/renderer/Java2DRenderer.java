@@ -89,11 +89,11 @@ public class Java2DRenderer implements IRenderer2D {
 	    double scaleY = factor * rendererBounds.getHeight() / contextBounds.getHeight();
 
 	    if (scaleX > scaleY) {
-	    	System.out.println("Scaled by Y: " + scaleY);
+//	    	logger.debug("Scaled by Y: " + scaleY);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
 	    	graphics.scale(scaleY, -scaleY);
 	    } else {
-	    	System.out.println("Scaled by X: " + scaleX);
+//	    	logger.debug("Scaled by X: " + scaleX);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
 	    	graphics.scale(scaleX, -scaleX);
 	    }

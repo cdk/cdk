@@ -652,7 +652,7 @@ public class StructureDiagramGenerator
 			transVec.sub(new Vector2d(newPoint1));
 			logger.debug("Finished computing rotation of new ringset to fit old attachment bond orientation...");
 			GeometryToolsInternalCoordinates.translate2D(ringSystem, transVec);
-			//System.out.println(ringSystem.getAtomCount());
+			//logger.debug(ringSystem.getAtomCount());
 			logger.debug("oldPoint1 again: " + oldPoint1);
 			logger.debug("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));
 			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (0.5 * Math.PI) + (angle1 - angle2));

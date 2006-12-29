@@ -148,7 +148,7 @@ public class ValidateFrame extends JFrame  {
 
     public void validate(IChemObject object) {
         ValidationReport report  = null;
-        // System.out.println("Validating class: " + object.getClass().getName());
+        // logger.debug("Validating class: " + object.getClass().getName());
         if (object instanceof ChemModel) {
             report = JChemPaintEditorPanel.getValidatorEngine().validateChemModel((ChemModel)object);
         } else if (object instanceof Atom) {
@@ -161,10 +161,10 @@ public class ValidateFrame extends JFrame  {
             System.err.println("Cannot validate this object: " + object.getClass().getName());
             return;
         }
-        // System.out.println("#errors: " + report.getErrorCount());
-        // System.out.println("#warnings: " + report.getWarningCount());
-        // System.out.println("#cdk errors: " + report.getCDKErrorCount());
-        // System.out.println("#oks: " + report.getOKCount());
+        // logger.debug("#errors: " + report.getErrorCount());
+        // logger.debug("#warnings: " + report.getWarningCount());
+        // logger.debug("#cdk errors: " + report.getCDKErrorCount());
+        // logger.debug("#oks: " + report.getOKCount());
         DefaultMutableTreeNode errorsNode = new DefaultMutableTreeNode("errors");
         putErrorsInJTree(errorsNode, report);
         addJTree(new JTree(errorsNode), errorTreePanel);

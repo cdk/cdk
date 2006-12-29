@@ -72,7 +72,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 			List atomContainersList = ChemFileManipulator.getAllAtomContainers(chemFile);
 			assertNotNull(atomContainersList);
 			assertTrue(atomContainersList.size() == 54);
-			//System.out.println("Found " + atomContainers.length + " atomContainers");
+			//logger.debug("Found " + atomContainers.length + " atomContainers");
 			Iterator iterator = atomContainersList.iterator();
 			int counter = 0;
 			while(iterator.hasNext())
@@ -91,7 +91,7 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 				}
 				if (counter < 53) assertTrue(shieldingCounter == 0);
 				else assertTrue(shieldingCounter == ac.getAtomCount());
-				//System.out.println("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
+				//logger.debug("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
 				counter++;
 			}
 		}catch(Exception exc)

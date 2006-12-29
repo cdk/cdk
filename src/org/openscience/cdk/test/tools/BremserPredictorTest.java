@@ -151,7 +151,7 @@ public class BremserPredictorTest extends CDKTestCase
 			for (int f = 0; f < data.length; f++)
 			{
 				prediction = bp.predict(data[f]);
-				//System.out.println("\"" + prediction + "\",");
+				//logger.debug("\"" + prediction + "\",");
 				assertTrue(prediction == result[f]);	
 			}
 		}catch(org.openscience.cdk.exception.CDKException exc)
@@ -223,18 +223,18 @@ double[] result = {
 			HOSECodeGenerator hcg = new HOSECodeGenerator();
 			String s = null;
 			removeHydrogens(molecule);
-			//System.out.println("Molecule has " + molecule.getAtomCount() + " atoms.");
+			//logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
 				prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
-				//System.out.println("\"" + prediction + "\",");
+				//logger.debug("\"" + prediction + "\",");
 				assertTrue(prediction == result[f]);	
 			}
 		}
 		catch (Exception exc)
 		{
-			//System.out.println("failure");
+			//logger.debug("failure");
 			fail("CDKException thrown when trying to predict Shift with BremserOneSphereHOSECodePredictor");	
 		}
 		

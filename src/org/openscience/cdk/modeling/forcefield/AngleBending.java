@@ -83,7 +83,7 @@ public class AngleBending {
 	 */
 	public void setMMFF94AngleBendingParameters(IAtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
 
-		//System.out.println("setMMFF94AngleBendingParameters");		
+		//logger.debug("setMMFF94AngleBendingParameters");		
 		
 		IAtom[] atomConnected = null;
 		angleBending=angleBendingFlag;
@@ -97,7 +97,7 @@ public class AngleBending {
 				}
 			}
 		}
-		//System.out.println("angleNumber = " + angleNumber);
+		//logger.debug("angleNumber = " + angleNumber);
 
 		Vector angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
@@ -124,11 +124,11 @@ public class AngleBending {
 						l += 1;
 						bondIJ = molecule.getBond(atomConnected[j], molecule.getAtom(i));
 						bondIJType = bondIJ.getProperty("MMFF94 bond type").toString();
-						//System.out.println("bondIJType = " + bondIJType);
+						//logger.debug("bondIJType = " + bondIJType);
 
 						bondKJ = molecule.getBond(atomConnected[k], molecule.getAtom(i));
 						bondKJType = bondKJ.getProperty("MMFF94 bond type").toString();
-						//System.out.println("bondKJType = " + bondKJType);
+						//logger.debug("bondKJType = " + bondKJType);
 						
 						angleType = "0";
 						if ((bondIJType == "1") | (bondKJType == "1")) {
@@ -138,18 +138,18 @@ public class AngleBending {
 							angleType = "2";
 						}  
 						
-						//System.out.println(angleType + ", " + atomConnected[j].getAtomTypeName() + ", " + molecule.getAtom(i).getAtomTypeName() + ", " + atomConnected[k].getAtomTypeName());
+						//logger.debug(angleType + ", " + atomConnected[j].getAtomTypeName() + ", " + molecule.getAtom(i).getAtomTypeName() + ", " + atomConnected[k].getAtomTypeName());
 						angleData = pc.getAngleData(angleType, atomConnected[j].getAtomTypeName(), molecule.getAtom(i).getAtomTypeName(), atomConnected[k].getAtomTypeName());
-						//System.out.println("angleData : " + angleData);
+						//logger.debug("angleData : " + angleData);
 						v0[l] = ((Double) angleData.get(0)).doubleValue();
 						k2[l] = ((Double) angleData.get(1)).doubleValue();
 						k3[l] = ((Double) angleData.get(2)).doubleValue();
 						//k4[l] = ((Double) angleData.get(3)).doubleValue();
 
-						//System.out.println("v0[" + l + "] = " + v0[l]);
-						//System.out.println("k2[" + l + "] = " + k2[l]);
-						//System.out.println("k3[" + l + "] = " + k3[l]);
-						//System.out.println("k4[" + l + "] = " + k4[l]);
+						//logger.debug("v0[" + l + "] = " + v0[l]);
+						//logger.debug("k2[" + l + "] = " + k2[l]);
+						//logger.debug("k3[" + l + "] = " + k3[l]);
+						//logger.debug("k4[" + l + "] = " + k4[l]);
 						
 						angleAtomPosition[l] = new int[3];
 						angleAtomPosition[l][0] = molecule.getAtomNumber(atomConnected[j]);
@@ -184,17 +184,17 @@ public class AngleBending {
 	 */
 	public void setDeltav(GVector coord3d) {
 		changedCoordinates = 0;
-		//System.out.println("Setting Deltav");
+		//logger.debug("Setting Deltav");
 		for (int i=0; i < changeAtomCoordinates.length; i++) {
 			this.changeAtomCoordinates[i] = false;
 		}
 		this.moleculeCurrentCoordinates.sub(coord3d);
 		for (int i = 0; i < this.moleculeCurrentCoordinates.getSize(); i++) {
-			//System.out.println("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
+			//logger.debug("this.moleculeCurrentCoordinates.getElement(i) = " + this.moleculeCurrentCoordinates.getElement(i));
 			if (Math.abs(this.moleculeCurrentCoordinates.getElement(i)) > 0) {
 				changeAtomCoordinates[i/3] = true;
 				changedCoordinates = changedCoordinates + 1;
-				//System.out.println("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
+				//logger.debug("changeAtomCoordinates[" + i/3 + "] = " + changeAtomCoordinates[i/3]);
 				i = i + (2 - i % 3);
 			}
 		}
@@ -206,7 +206,7 @@ public class AngleBending {
 				(changeAtomCoordinates[angleAtomPosition[i][2]] == true))		{
 				
 				v[i] = ForceFieldTools.angleBetweenTwoBondsFrom3xNCoordinates(coord3d,angleAtomPosition[i][0],angleAtomPosition[i][1],angleAtomPosition[i][2]);
-				//System.out.println("currentCoordinates_v[" + i + "] = " + currentCoordinates_v[i]);
+				//logger.debug("currentCoordinates_v[" + i + "] = " + currentCoordinates_v[i]);
 				//logger.debug("v0[" + i + "] = " + v0[i]);
 				deltav[i] = v[i] - v0[i];
 				if (deltav[i] > 0 & angleBending) {
@@ -1102,7 +1102,7 @@ public class AngleBending {
 		
 		order2ndErrorApproximateHessianMMFF94SumEA = new GMatrix(coord3d.getSize(), coord3d.getSize());
 		order2ndErrorApproximateHessianMMFF94SumEA.set(forOrder2ndErrorApproximateHessian);
-		//System.out.println("order2ndErrorApproximateHessianMMFF94SumEA : " + order2ndErrorApproximateHessianMMFF94SumEA);
+		//logger.debug("order2ndErrorApproximateHessianMMFF94SumEA : " + order2ndErrorApproximateHessianMMFF94SumEA);
 	}
 
 

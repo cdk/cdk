@@ -258,7 +258,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         try {
             hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            throw new CDKException("Could not add hydrogens: " + e.getMessage(),e);
         }
 
         // do aromaticity detecttion for calculating polarizability later on
@@ -288,7 +288,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                 counter++;
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            throw new CDKException("Could not calculate weight: " + e.getMessage(), e);
         }
         double[][]  burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
         Matrix matrix = new Matrix(burdenMatrix);
@@ -301,7 +301,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            throw new CDKException("Could not calculate partial charges: " + e.getMessage(), e);
         }
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {

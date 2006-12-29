@@ -131,7 +131,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
 		IReactionSet reactionSet = descriptor.getReactionSet(mol.getBond(0),mol);
         double resultAccordingNIST = 9.44; 
-//        System.out.println(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+//        logger.debug(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
 
         assertEquals(2, reactionSet.getReactionCount());

@@ -330,9 +330,9 @@ public class ValencyCheckerTest extends CDKTestCase
 //        assertEquals(9.0, totalBondOrder, 0.0001);
 //        // test for each atom, total bond order is 3.0
 //        java.util.Iterator atoms = benzene.atoms();
-//        System.out.println("KAI:entering loop");
+//        logger.debug("KAI:entering loop");
 //        while (atoms.hasNext()) {
-//        	System.out.println("KAI");
+//        	logger.debug("KAI");
 //        	org.openscience.cdk.interfaces.IAtom carbon = (IAtom)atoms.next();
 //            totalBondOrder = 0.0;
 //            java.util.List bondsList = benzene.getConnectedBondsList(carbon);

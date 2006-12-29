@@ -101,7 +101,7 @@ public class MDLWriterTest extends CDKTestCase {
         }
         
         String output = writer.toString();
-        //System.out.println("MDL output for testBug1212219: " + output);
+        //logger.debug("MDL output for testBug1212219: " + output);
         assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
     }
 }

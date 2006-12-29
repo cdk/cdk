@@ -138,17 +138,17 @@ public class WeightDescriptor implements IMolecularDescriptor {
      *@return The total weight of atoms of the specified element type
      */
 
-    public DescriptorValue calculate(IAtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double weight = 0;
         if (elementName.equals("*")) {
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
-                    //System.out.println("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
+                    //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
                     weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
             }
         }
         else if (elementName.equals("H")) {
@@ -163,7 +163,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+            	throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
             }
         }
         else {
@@ -174,7 +174,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+            	throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
             }
         }
 

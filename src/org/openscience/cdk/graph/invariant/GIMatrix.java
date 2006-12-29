@@ -718,26 +718,7 @@ public class GIMatrix {
 		if (testedTable[i][j].width() != currentWidth) throw new BadMatrixFormatException();
 	}
     } // method verifyTableFormat(Matrix[][])
-	
-	public void printOut(){
-		for (int i=0; i<array.length; i++) {
-			for (int j=0; j<array[0].length; j++) {
-				try
-				{
-				System.out.print(getValueAt(i,j)+"\t");
-				}
-				catch (IndexOutOfBoundsException e)
-				{
-				};
-			} // end of inner for
-			System.out.println();
-		} // end of outer for
-		
-		System.out.println();
-	}
-	
-	
-    
+	    
 } // class Matrix
 
 

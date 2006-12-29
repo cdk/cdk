@@ -140,7 +140,7 @@ public class Path extends Vector
 		}
 		catch(Exception exc)
 		{
-			System.out.println(exc);
+//			logger.error(exc);
 			s += "Could not create a string representaion of this path";	
 		}
 		return s;

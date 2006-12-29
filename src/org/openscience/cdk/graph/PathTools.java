@@ -80,7 +80,7 @@ public class PathTools {
         int k;
         int n = C.length;
         int[][] A = new int[n][n];
-        //System.out.println("Matrix size: " + n);
+        //logger.debug("Matrix size: " + n);
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
                 if (C[i][j] == 0) {
@@ -117,7 +117,7 @@ public class PathTools {
         int j;
         int n = C.length;
         int[][] A = new int[n][n];
-        //System.out.println("Matrix size: " + n);
+        //logger.debug("Matrix size: " + n);
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
                 if (C[i][j] == 0) {
@@ -195,7 +195,7 @@ public class PathTools {
      *                 that are found during search
      */
     public static void breadthFirstSearch(IAtomContainer ac, Vector sphere, IMolecule molecule) {
-        // System.out.println("Staring partitioning with this ac: " + ac);
+        // logger.debug("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(ac, sphere, molecule, -1);
     }
 
@@ -247,13 +247,13 @@ public class PathTools {
         Vector newSphere = new Vector();
         for (int f = 0; f < sphere.size(); f++) {
             atom = (IAtom) sphere.elementAt(f);
-            //System.out.println("atoms  "+ atom + f);
-            //System.out.println("sphere size  "+ sphere.size());
+            //logger.debug("atoms  "+ atom + f);
+            //logger.debug("sphere size  "+ sphere.size());
             molecule.addAtom(atom);
             // first copy LonePair's and SingleElectron's of this Atom as they need
             // to be copied too
             java.util.List lonePairs = ac.getConnectedLonePairsList(atom);
-            //System.out.println("found #ec's: " + lonePairs.length);
+            //logger.debug("found #ec's: " + lonePairs.length);
             for (int i = 0; i < lonePairs.size(); i++) molecule.addLonePair((ILonePair)lonePairs.get(i));
             java.util.List singleElectrons = ac.getConnectedSingleElectronsList(atom);
             for (int i = 0; i < singleElectrons.size(); i++) molecule.addSingleElectron((ISingleElectron)singleElectrons.get(i));
@@ -267,7 +267,7 @@ public class PathTools {
                 }
                 nextAtom = bond.getConnectedAtom(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
-//					System.out.println("wie oft???");
+//					logger.debug("wie oft???");
                     newSphere.addElement(nextAtom);
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                 }

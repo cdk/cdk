@@ -229,7 +229,7 @@ public class MinimalPathIterator implements Iterator {
 				Iterator edgeIterator = (Iterator) edgeIteratorStack.peek();
 				Object currentVertex = vertexStack.peek();
 				
-				//System.out.println(currentVertex);
+				//logger.debug(currentVertex);
 				
 				if (edgeIterator.hasNext()) {
 					Edge edge = (Edge)edgeIterator.next();

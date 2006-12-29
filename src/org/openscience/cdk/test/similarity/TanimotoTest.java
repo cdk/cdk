@@ -122,12 +122,12 @@ public class TanimotoTest extends CDKTestCase
     		float tanimoto4 = Tanimoto.calculate(bs2, bs3);
     		float tanimoto5 = Tanimoto.calculate(bs2, bs4);
     		float tanimoto6 = Tanimoto.calculate(bs3, bs4);
-    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles2 + ": " + tanimoto1);
-    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles3 + ": " + tanimoto2);
-    		//System.out.println("Similarity " + smiles1 + " vs. " + smiles4 + ": " + tanimoto3);
-    		//System.out.println("Similarity " + smiles2 + " vs. " + smiles3 + ": " + tanimoto4);
-    		//System.out.println("Similarity " + smiles2 + " vs. " + smiles4 + ": " + tanimoto5);
-    		//System.out.println("Similarity " + smiles3 + " vs. " + smiles4 + ": " + tanimoto6);
+    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles2 + ": " + tanimoto1);
+    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles3 + ": " + tanimoto2);
+    		//logger.debug("Similarity " + smiles1 + " vs. " + smiles4 + ": " + tanimoto3);
+    		//logger.debug("Similarity " + smiles2 + " vs. " + smiles3 + ": " + tanimoto4);
+    		//logger.debug("Similarity " + smiles2 + " vs. " + smiles4 + ": " + tanimoto5);
+    		//logger.debug("Similarity " + smiles3 + " vs. " + smiles4 + ": " + tanimoto6);
     		System.out.println("Similarity 1 vs. 2: " + tanimoto1);
     		System.out.println("Similarity 1 vs. 3: " + tanimoto2);
     		System.out.println("Similarity 1 vs. 4: " + tanimoto3);

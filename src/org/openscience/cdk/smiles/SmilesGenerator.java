@@ -329,7 +329,7 @@ public class SmilesGenerator
 			{
 				throw new CDKException("Atom number " + i + " has no 2D coordinates, but 2D coordinates are needed for creating chiral smiles");
 			}
-			//System.out.println("Setting all VISITED flags to false");
+			//logger.debug("Setting all VISITED flags to false");
 			atom.setFlag(CDKConstants.VISITED, false);
 			if (((Long) atom.getProperty("CanonicalLable")).longValue() == 1)
 			{
@@ -350,7 +350,7 @@ public class SmilesGenerator
 		if (chiral && rings.getAtomContainerCount() > 0)
 		{
 			Vector v = RingPartitioner.partitionRings(rings);
-			//System.out.println("RingSystems: " + v.size());
+			//logger.debug("RingSystems: " + v.size());
 			for (int i = 0; i < v.size(); i++)
 			{
 				int counter = 0;
@@ -719,7 +719,7 @@ public class SmilesGenerator
 	{
 		Vector tree = new Vector();
 		createDFSTree(a, tree, null, atomContainer);
-		//System.out.println("Done with tree");
+		//logger.debug("Done with tree");
 		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector());
 	}
 
@@ -740,8 +740,8 @@ public class SmilesGenerator
 		neighbours.remove(parent);
 		IAtom next;
 		a.setFlag(CDKConstants.VISITED, true);
-		//System.out.println("Starting with DFSTree and AtomContainer of size " + container.getAtomCount());
-		//System.out.println("Current Atom has " + neighbours.size() + " neighbours");
+		//logger.debug("Starting with DFSTree and AtomContainer of size " + container.getAtomCount());
+		//logger.debug("Current Atom has " + neighbours.size() + " neighbours");
 		Iterator iter = neighbours.iterator();
 		while (iter.hasNext()) {
 			next = (IAtom)iter.next();
@@ -755,13 +755,13 @@ public class SmilesGenerator
 				{
 					Vector branch = new Vector();
 					tree.add(branch);
-					//System.out.println("adding branch");
+					//logger.debug("adding branch");
 					createDFSTree(next, branch, a, container);
 				}
 			} else
 			{
 				//Found ring closure between next and a
-				//System.out.println("found ringclosure in DFTTreeCreation");
+				//logger.debug("found ringclosure in DFTTreeCreation");
 				ringMarker++;
 				BrokenBond bond = new BrokenBond(a, next, ringMarker);
 				if (!brokenBonds.contains(bond))
@@ -791,7 +791,7 @@ public class SmilesGenerator
 	{
 		int positionInVector = 0;
 		IAtom atom;
-		//System.out.println("in parse chain. Size of tree: " + v.size());
+		//logger.debug("in parse chain. Size of tree: " + v.size());
 		for (int h = 0; h < v.size(); h++)
 		{
 			Object o = v.get(h);
@@ -809,7 +809,7 @@ public class SmilesGenerator
 					}
 				}
 				parseAtom(atom, buffer, container, chiral, doubleBondConfiguration, parent, atomsInOrderOfSmiles, v);
-				//System.out.println("in parseChain after parseAtom()");
+				//logger.debug("in parseChain after parseAtom()");
 				/*
 				 *  The principle of making chiral smiles is quite simple, although the code is
 				 *  pretty uggly. The Atoms connected to the chiral center are put in sorted[] in the
@@ -818,7 +818,7 @@ public class SmilesGenerator
 				 */
 				if (chiral && BondTools.isStereo(container, atom) && container.getBond(parent, atom) != null)
 				{
-					//System.out.println("in parseChain in isChiral");
+					//logger.debug("in parseChain in isChiral");
 					IAtom[] sorted = null;
 					List chiralNeighbours = container.getConnectedAtomsList(atom);
 					if (BondTools.isTetrahedral(container, atom,false) > 0)
@@ -1476,7 +1476,7 @@ public class SmilesGenerator
 			} else
 			{
 				//Have Vector
-				//System.out.println("in parseChain after else");
+				//logger.debug("in parseChain after else");
 				boolean brackets = true;
 				Vector result = new Vector();
 				addAtoms((Vector) o, result);
@@ -1496,7 +1496,7 @@ public class SmilesGenerator
 			}
 
 			positionInVector++;
-			//System.out.println("in parseChain after positionVector++");
+			//logger.debug("in parseChain after positionVector++");
 		}
 	}
 
@@ -1513,7 +1513,7 @@ public class SmilesGenerator
 	 */
 	private void parseBond(StringBuffer line, IAtom a1, IAtom a2, IAtomContainer atomContainer)
 	{
-		//System.out.println("in parseBond()");
+		//logger.debug("in parseBond()");
 		if (a1.getFlag(CDKConstants.ISAROMATIC) && a2.getFlag(CDKConstants.ISAROMATIC))
 		{
 			return;
@@ -1535,7 +1535,7 @@ public class SmilesGenerator
 			line.append("#");
 		} else
 		{
-			// //System.out.println("Unknown bond type");
+			// //logger.debug("Unknown bond type");
 		}
 	}
 
@@ -1560,7 +1560,7 @@ public class SmilesGenerator
 		boolean stereo = BondTools.isStereo(container, a);
 		boolean brackets = symbol.equals("B") || symbol.equals("C") || symbol.equals("N") || symbol.equals("O") || symbol.equals("P") || symbol.equals("S") || symbol.equals("F") || symbol.equals("Br") || symbol.equals("I") || symbol.equals("Cl");
 		brackets = !brackets;
-		//System.out.println("in parseAtom()");
+		//logger.debug("in parseAtom()");
 		//Deal with the start of a double bond configuration
 		if (isStartOfDoubleBond(container, a, parent, doubleBondConfiguration))
 		{
@@ -1622,7 +1622,7 @@ public class SmilesGenerator
 				buffer.append(']');
 			}
 		}
-		//System.out.println("in parseAtom() after dealing with Pseudoatom or not");
+		//logger.debug("in parseAtom() after dealing with Pseudoatom or not");
 		//Deal with the end of a double bond configuration
 		if (isEndOfDoubleBond(container, a, parent, doubleBondConfiguration))
 		{
@@ -1687,7 +1687,7 @@ public class SmilesGenerator
 		Vector v = new Vector();
 		Iterator it = getRingOpenings(a, v).iterator();
 		Iterator it2 = v.iterator();
-		//System.out.println("in parseAtom() after checking for Ring openings");
+		//logger.debug("in parseAtom() after checking for Ring openings");
 		while (it.hasNext())
 		{
 			Integer integer = (Integer) it.next();
@@ -1703,7 +1703,7 @@ public class SmilesGenerator
 			buffer.append(integer);
 		}
 		atomsInOrderOfSmiles.add(a);
-		//System.out.println("End of parseAtom()");
+		//logger.debug("End of parseAtom()");
 	}
 
 

@@ -196,7 +196,7 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
                     partial += radius * radius;
                     partial += (radiusTarget * radiusTarget);
                     partial = partial / (calculateSquareDistanceBetweenTwoAtoms(curAtom, target));
-                    //System.out.println("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
+                    //logger.debug("SOFT: atom "+symbol+", radius "+radius+", distance "+calculateSquareDistanceBetweenTwoAtoms(allAtoms[i], target));
                     atomicSoftness += partial;
                 }
             }

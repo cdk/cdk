@@ -352,7 +352,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
                     goodAtom0 = goodBond.getAtom(0);
                     goodAtom1 = goodBond.getAtom(1);
 
-                    //System.out.println("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
+                    //logger.debug("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
 
                     middlePoint = theDoubleBond.get3DCenter();
                     values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond);
@@ -372,7 +372,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
                 }
                 //gDr_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                System.out.println("GDR added double: " + sum);
+//                logger.debug("GDR added double: " + sum);
             }
             //atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));
             //rdfProtonCalculatedValues.add(1);

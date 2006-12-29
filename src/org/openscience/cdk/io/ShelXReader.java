@@ -312,7 +312,7 @@ public class ShelXReader extends DefaultChemObjectReader {
 
             /* All other is atom */
             } else {
-                //System.out.println("Assumed to contain an atom: " + line);
+                //logger.debug("Assumed to contain an atom: " + line);
                 /* this line gives an atom, because all lines not starting with
                    a ShelX command is an atom (that sucks!) */
                 StringTokenizer st = new StringTokenizer(line);

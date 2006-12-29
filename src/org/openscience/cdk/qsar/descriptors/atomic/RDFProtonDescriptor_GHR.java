@@ -340,7 +340,7 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
                     sum += partial;
                 }
                 rdfProtonCalculatedValues.add(sum);
-                System.out.println("RDF gr distance prob.: " + sum + " at distance " + ghr);
+//                logger.debug("RDF gr distance prob.: " + sum + " at distance " + ghr);
             }
         } else {
             for (int i = 0; i < GASTEIGER_GHR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);

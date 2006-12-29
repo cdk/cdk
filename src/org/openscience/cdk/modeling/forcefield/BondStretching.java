@@ -67,10 +67,10 @@ public class BondStretching {
 	 */
 	public void setMMFF94BondStretchingParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
 
-		//System.out.println("setMMFF94BondStretchingParameters");
+		//logger.debug("setMMFF94BondStretchingParameters");
 		
 		bondsNumber = molecule.getBondCount();
-		//System.out.println("bondsNumber = " + bondsNumber);
+		//logger.debug("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[molecule.getBondCount()][];
 
 		Vector bondData = null;
@@ -91,7 +91,7 @@ public class BondStretching {
             //atomsInBond = bonds[i].getatoms();
 
             bondType = bond.getProperty("MMFF94 bond type").toString();
-            //System.out.println("bondType " + i + " = " + bondType);
+            //logger.debug("bondType " + i + " = " + bondType);
 
             bondAtomPosition[i] = new int[bond.getAtomCount()];
 
@@ -103,7 +103,7 @@ public class BondStretching {
                        bonds[i].getAtom(1).getAtomTypeName() + "(" + bondAtomPosition[i][1] + ")");
                */
             bondData = pc.getBondData(bondType, bond.getAtom(0).getAtomTypeName(), bond.getAtom(1).getAtomTypeName());
-            //System.out.println("bondData : " + bondData);
+            //logger.debug("bondData : " + bondData);
             r0[i] = ((Double) bondData.get(0)).doubleValue();
             k2[i] = ((Double) bondData.get(1)).doubleValue();
             k3[i] = ((Double) bondData.get(2)).doubleValue();
@@ -161,7 +161,7 @@ public class BondStretching {
 							+ k3[i] * Math.pow(deltar[i],3) + k4[i] * Math.pow(deltar[i],4);
 		}
 
-		//System.out.println("mmff94SumEB = " + mmff94SumEB);
+		//logger.debug("mmff94SumEB = " + mmff94SumEB);
 		
 		return mmff94SumEB;
 	}

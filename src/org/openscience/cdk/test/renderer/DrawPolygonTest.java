@@ -65,7 +65,7 @@ public class DrawPolygonTest
 			rotangle = Math.PI * 2 / segments * f;
 			bondVector = new Vector2d(Math.cos(rotangle), Math.sin(rotangle));
 			nextMolecule(bondVector);
-			//System.out.println(rotangle);
+			//logger.debug(rotangle);
 //		}
 
 	}

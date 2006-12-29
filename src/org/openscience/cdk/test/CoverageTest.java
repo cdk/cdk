@@ -97,7 +97,7 @@ abstract public class CoverageTest extends CDKTestCase {
     }
     
     private int checkClass(String className) {
-        // System.out.println("Checking : " + className);
+        // logger.debug("Checking : " + className);
         
         // load both classes
         Class coreClass = loadClass(getClassName(className));

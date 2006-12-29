@@ -91,9 +91,9 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         for (int f = 0; f < atomTypes.size(); f++) {
             Object object = atomTypes.get(f);
             if (object == null) {
-                System.out.println("Expecting an object but found null!");
+                logger.debug("Expecting an object but found null!");
                 if (!(object instanceof IAtomType)) {
-                    System.out.println("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
+                    logger.warn("Expecting cdk.AtomType class, but got: " + object.getClass().getName());
                 }
             }
         }

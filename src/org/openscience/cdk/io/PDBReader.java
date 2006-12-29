@@ -507,10 +507,10 @@ public class PDBReader extends DefaultChemObjectReader {
 		        		// just pick the first one
 		        		AtomTypeManipulator.configure(atom, types[0]);
 		        	} else {
-		        		System.out.println("Could not configure atom with symbol: "+ atom.getSymbol());
+		        		logger.warn("Could not configure atom with symbol: "+ atom.getSymbol());
 		        	}
 				} catch (Exception e) {
-					System.out.println("Could not configure atom (but don't care): " + e.getMessage());
+					logger.warn("Could not configure atom (but don't care): " + e.getMessage());
 					logger.debug(e);
 				}
 		      }
@@ -553,7 +553,7 @@ public class PDBReader extends DefaultChemObjectReader {
 			IAtomType type = pdbFactory.getAtomType(resName+"."+rawAtomName);
 			elementSymbol = type.getSymbol();
 		} catch (NoSuchAtomTypeException e) {
-			System.out.println("Did not recognize PDB atom type: " + resName+"."+rawAtomName);
+			logger.error("Did not recognize PDB atom type: " + resName+"."+rawAtomName);
 		}
 		PDBAtom oAtom = new PDBAtom(elementSymbol, 
 			new Point3d(Double.parseDouble(cLine.substring(30, 38)),

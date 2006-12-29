@@ -93,7 +93,7 @@ public class SDFSubstructureFinder {
                         while (reader.hasNext()) {
                             molecule = (Molecule)reader.next();
                             if (molecule != null) {
-				//System.out.print(".");
+				//logger.debug(".");
                                 boolean matches = UniversalIsomorphismTester.isSubgraph(molecule, substructure);
                                 if (matches) {
                                     System.out.println("Query matches molecule with title: " + molecule.getProperty(CDKConstants.TITLE));

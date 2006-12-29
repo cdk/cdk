@@ -142,7 +142,7 @@ public class SimpleBasisSet extends GaussiansBasis
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
       }
     }
-    System.out.println("j="+j+" size="+size);
+//    logger.debug("j="+j+" size="+size);
 
     setBasis(nx, ny, nz, alpha, r, atoms);
   }

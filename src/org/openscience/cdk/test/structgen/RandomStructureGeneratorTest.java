@@ -77,7 +77,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		IMolecule mol = null;
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		listviewer = new MoleculeListViewer();
-		//System.out.println(molecule);
+		//logger.debug(molecule);
 		RandomGenerator rg = new RandomGenerator(molecule);
 	
 		for (int f = 0; f < 20; f++)
@@ -95,19 +95,19 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 					{
 						s += mol.getConnectedBondsCount(mol.getAtom(g)) + " ";
 					}
-					//System.out.println(s);
+					//logger.debug(s);
 					s = "BondOrderSums: ";
 					for (int g = 0; g < mol.getAtomCount(); g++)
 					{
 						s += mol.getBondOrderSum(mol.getAtom(g)) + " ";
 					}
-					//System.out.println(s);
+					//logger.debug(s);
 					s = "Bonds: ";
 					Iterator bonds = mol.bonds();
 					while (bonds.hasNext()) {
 						s += ((IBond)bonds.next()).getOrder() + " ";
 					}
-					//System.out.println(s);
+					//logger.debug(s);
 				}
 			}
 			rg.acceptStructure();

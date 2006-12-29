@@ -255,7 +255,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < 6; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-//	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+//	        logger.debug(mol.getAtom(i).getSymbol()+"-result: "+result);
 	        
 	        if(i == 3)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -288,7 +288,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-//	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+//	        logger.debug(mol.getAtom(i).getSymbol()+"-result: "+result);
 	        
 	        if(testResultMy[i] == 0.0)
 				assertTrue(result == 0.0);
@@ -313,7 +313,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-//	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+//	        logger.debug(mol.getAtom(i).getSymbol()+"-result: "+result);
 
 	        if(i == 0 || i == 1 || i == 3)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -345,7 +345,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-//	        System.out.println(mol.getAtom(i).getSymbol()+"-result: "+result);
+//	        logger.debug(mol.getAtom(i).getSymbol()+"-result: "+result);
 
 			assertEquals(testResult[0],result, 0.0001);
 		}
@@ -366,7 +366,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 
 			if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
@@ -393,7 +393,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 
 			if(testResult[i] == 0.0)
 				assertTrue(result == 0.0);
@@ -418,7 +418,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			
 	        if(i == 1 || i == 3)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -446,7 +446,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 
 	        if(i == 8)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -474,7 +474,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 
 	        if(i == 5)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -505,7 +505,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			
 	        if(i == 1 || i == 2 || i == 3)/*not get same signus like Gasteiger*/
 	        	continue;
@@ -538,7 +538,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result_: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result_: "+result);
 			
 		}
 	}

@@ -293,7 +293,7 @@ public class MoleculeBuilder
             }
             catch (Exception exc)
             {
-//                System.out.println("No atom detected");
+//                logger.debug("No atom detected");
             }
             currentMolecule.add(benzene);
             
@@ -386,7 +386,7 @@ public class MoleculeBuilder
         }
         else
         {
-//            System.out.println("Encountered unknown group: " + funGroupToken + " at " + addPos +
+//            logger.debug("Encountered unknown group: " + funGroupToken + " at " + addPos +
 //            "\nThe parser thinks this is valid but the molecule builder has no logic for it");
         }
     }

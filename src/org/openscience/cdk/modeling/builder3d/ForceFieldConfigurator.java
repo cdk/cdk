@@ -106,7 +106,7 @@ public class ForceFieldConfigurator {
 			} 
 		}
 		if (!check) {
-//			System.out.println("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
+//			logger.debug("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
 			return false;
 		}
 		return true;
@@ -126,21 +126,21 @@ public class ForceFieldConfigurator {
 			check=this.checkForceFieldType(ffname);
 			ffName=ffname;
 			if (ffName.equals("mm2")) {
-				//System.out.println("ForceFieldConfigurator: open Force Field mm2");
+				//logger.debug("ForceFieldConfigurator: open Force Field mm2");
 				//f = new File(mm2File);
 				//readFile(f);
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mm2.prm");
-				//System.out.println("ForceFieldConfigurator: open Force Field mm2 ... READY");
+				//logger.debug("ForceFieldConfigurator: open Force Field mm2 ... READY");
 				mm2 = new MM2BasedParameterSetReader();
 				mm2.setInputStream(ins);
-				//System.out.println("ForceFieldConfigurator: mm2 set input stream ... READY");
+				//logger.debug("ForceFieldConfigurator: mm2 set input stream ... READY");
 				try{
 					this.setMM2Parameters();
 				}catch (Exception ex1){
 					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);	
 				}
 			}else if (ffName.equals("mmff94") || !check) {
-				//System.out.println("ForceFieldConfigurator: open Force Field mmff94");
+				//logger.debug("ForceFieldConfigurator: open Force Field mmff94");
 				//f = new File(mmff94File);
 				//readFile(f);
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mmff94.prm");
@@ -276,7 +276,7 @@ public class ForceFieldConfigurator {
 
 			try {
 				hoseCode = hcg.getHOSECode(molecule, atom, 3);
-				//System.out.print("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
+				//logger.debug("HOSECODE GENERATION: ATOM "+i+" HoseCode: "+hoseCode+" ");
 			} catch (CDKException ex1) {
 				System.out.println("Could not build HOSECode from atom " + i + " due to " + ex1.toString());
 				throw new CDKException("Could not build HOSECode from atom "+ i + " due to " + ex1.toString(), ex1);
@@ -295,7 +295,7 @@ public class ForceFieldConfigurator {
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 
-			//System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
+			//logger.debug("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 			bondType = "0";
 			if (bond.getOrder() == 1) {
 				if ((bond.getAtom(0).getAtomTypeName().equals("Csp2")) &
@@ -313,7 +313,7 @@ public class ForceFieldConfigurator {
 			}
 //			molecule.getBond(i).setProperty("MMFF94 bond type", bondType);
             bond.setProperty("MMFF94 bond type", bondType);
-            //System.out.println("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
+            //logger.debug("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 		}
 
 		return ringSetMolecule;
@@ -398,7 +398,7 @@ public class ForceFieldConfigurator {
 	 * @exception  CDKException  Description of the Exception
 	 */
 	public org.openscience.cdk.interfaces.IAtom configureMM2BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode,boolean hetRing) throws Exception {
-		//System.out.println("CONFIGURE MM2 ATOM");
+		//logger.debug("CONFIGURE MM2 ATOM");
 		Vector atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
@@ -525,7 +525,7 @@ public class ForceFieldConfigurator {
 				} 
 
 				atomTypeFlag = true;
-				//System.out.println("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
+				//logger.debug("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
 				break;
 			}//IF
 		}//for end
@@ -556,7 +556,7 @@ public class ForceFieldConfigurator {
 	 * @exception  CDKException  Description of the Exception
 	 */
 	public org.openscience.cdk.interfaces.IAtom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
-		//System.out.println("****** Configure MMFF94 AtomType ******");
+		//logger.debug("****** Configure MMFF94 AtomType ******");
 		Vector atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
@@ -743,7 +743,7 @@ public class ForceFieldConfigurator {
 				}
 				
 				atomTypeFlag = true;
-				//System.out.println("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
+				//logger.debug("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
 				break;
 			}//IF
 		}//for end

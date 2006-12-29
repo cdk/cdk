@@ -71,11 +71,11 @@ public class JChemPaintTest extends CDKTestCase {
             // test the resulting ChemFile content
             assertNotNull(chemFile);
             assertEquals(1, chemFile.getChemSequenceCount());
-            //System.out.println("NO sequences: " + chemFile.getChemSequenceCount());
+            //logger.debug("NO sequences: " + chemFile.getChemSequenceCount());
             org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
             assertNotNull(seq);
             assertEquals(1, seq.getChemModelCount());
-            //System.out.println("NO models: " + seq.getChemModelCount());
+            //logger.debug("NO models: " + seq.getChemModelCount());
             org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
             assertNotNull(model);
             assertEquals(1, model.getMoleculeSet().getMoleculeCount());

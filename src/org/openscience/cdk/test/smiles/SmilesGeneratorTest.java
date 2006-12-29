@@ -504,7 +504,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		while (acap.hasNext())
 		{
 			smiles = sg.createSMILES(new Molecule((AtomContainer) acap.next()));
-			//System.out.println(smiles);
+			//logger.debug(smiles);
 			assertEquals(oldSmiles, smiles);
 		}
 
@@ -535,7 +535,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		while (acbp.hasNext())
 		{
 			smiles = sg.createSMILES(new Molecule((AtomContainer) acbp.next()));
-			//System.out.println(smiles);
+			//logger.debug(smiles);
 			assertEquals(oldSmiles, smiles);
 		}
 
@@ -598,7 +598,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles = sg.createSMILES(reaction);
-		//System.out.println("Generated SMILES: " + smiles);
+		//logger.debug("Generated SMILES: " + smiles);
 		assertEquals("C>[*]>[Au]", smiles);
 	}
 
@@ -698,7 +698,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
-		//System.out.println(filename + " -> " + moleculeSmile);
+		//logger.debug(filename + " -> " + moleculeSmile);
 		assertEquals(moleculeSmile, "C1CCC=2CCCC=2(C1)");
 	}
 
@@ -712,7 +712,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
-		//System.out.println(filename + " -> " + moleculeSmile);
+		//logger.debug(filename + " -> " + moleculeSmile);
 		assertEquals(moleculeSmile, "C=1CCC=CCCC=1");
 	}
 	
@@ -757,9 +757,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		
 		String moleculeSmile1 = sg.createSMILES(mol1);
-//		System.out.println(filename_cml + " -> " + moleculeSmile1);
+//		logger.debug(filename_cml + " -> " + moleculeSmile1);
 		String moleculeSmile2 = sg.createSMILES(mol2);
-//		System.out.println(filename_mol + " -> " + moleculeSmile2);
+//		logger.debug(filename_mol + " -> " + moleculeSmile2);
 		assertEquals(moleculeSmile1, moleculeSmile2);
 	}
 

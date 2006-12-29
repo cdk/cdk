@@ -115,7 +115,7 @@ public class AtomPlacer3D {
 	 * @exception  Exception  Description of the Exception
 	 */
 	public void placeAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain) throws Exception {
-		//System.out.println("******** Place aliphatic Chain *********");
+		//logger.debug("******** Place aliphatic Chain *********");
 		int[] first = new int[2];
 		int counter = 1;
 		int nextAtomNr = 0;
@@ -135,12 +135,12 @@ public class AtomPlacer3D {
 		for (int i = 0; i < chain.getAtomCount(); i++) {
 			if (!(chain.getAtom(i).getSymbol()).equals("H") &
 					!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
-				//System.out.print("Counter:" + counter);
+				//logger.debug("Counter:" + counter);
 				nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
 				ID2 = molecule.getAtom(first_atoms[counter - 1]).getAtomTypeName();
 				ID1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
 				distances[counter] = getBondLengthValue(ID1, ID2);
-				//System.out.print(" Distance:" + distances[counter]);
+				//logger.debug(" Distance:" + distances[counter]);
 				first_atoms[counter] = nextAtomNr;
 				second_atoms[counter] = first_atoms[counter - 1];
 				if (counter > 1) {
@@ -158,7 +158,7 @@ public class AtomPlacer3D {
 						}
 					}
 					third_atoms[counter] = first_atoms[counter - 2];
-					//System.out.println(" Angle:" + angles[counter]);
+					//logger.debug(" Angle:" + angles[counter]);
 				} else {
 					angles[counter] = -1;
 					third_atoms[counter] = -1;
@@ -342,7 +342,7 @@ public class AtomPlacer3D {
 		} else if (pSet.containsKey(("angle" + id2 + ";" + id3 + ";" + id1))) {
 			akey = "angle" + id2 + ";" + id3 + ";" + id1;
 		} else {
-			//System.out.println("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
+			//logger.debug("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
 			return -1;
 		}
 		return ((Double) (((Vector) pSet.get(akey)).get(0))).doubleValue();

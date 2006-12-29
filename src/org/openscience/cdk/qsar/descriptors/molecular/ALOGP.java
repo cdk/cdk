@@ -428,7 +428,7 @@ public class ALOGP implements IMolecularDescriptor {
 			int CarbonCount = 0;
 			int HeteroCount = 0;
 
-			// System.out.println("here");
+			// logger.debug("here");
 			for (int j = 0; j < ca.size(); j++) {
 				if (((IAtom)ca.get(j)).getSymbol().equals("C"))
 					CarbonCount++;
@@ -460,7 +460,7 @@ public class ALOGP implements IMolecularDescriptor {
 			int CarbonCount = 0;
 			int HeteroCount = 0;
 
-			// System.out.println("here");
+			// logger.debug("here");
 			for (int j = 0; j <= ca.size() - 1; j++) {
 				if (((IAtom)ca.get(j)).getSymbol().equals("C"))
 					CarbonCount++;
@@ -496,7 +496,7 @@ public class ALOGP implements IMolecularDescriptor {
 			int CarbonCount = 0;
 			int HeteroCount = 0;
 
-			// System.out.println("here");
+			// logger.debug("here");
 			for (int j = 0; j <= ca.size() - 1; j++) {
 				if (((IAtom)ca.get(j)).getSymbol().equals("C"))
 					CarbonCount++;
@@ -718,7 +718,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 		if (!fragment[i].equals("SaaCH"))
 			return;
-		// System.out.println("here");
+		// logger.debug("here");
 
 		IAtom ai = atomContainer.getAtom(i);
 		java.util.List ca = atomContainer.getConnectedAtomsList(atomContainer.getAtom(i));
@@ -1029,7 +1029,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 		}// end j loop
 
-//		 System.out.println((i+1)+"\t"+Fragment[i]+"\t"+hybrid+"\t"+XCount+"\t"+OxNum);
+//		 logger.debug((i+1)+"\t"+Fragment[i]+"\t"+hybrid+"\t"+XCount+"\t"+OxNum);
 
 		if (OxNum == 0) {
 			if (hybrid.equals("sp3")) {
@@ -1049,7 +1049,7 @@ public class ALOGP implements IMolecularDescriptor {
 			}
 		} else if (OxNum == 1 && hybrid.equals("sp3")) {
 			frags[47] += ai.getHydrogenCount();
-			// System.out.println(f+"\t"+ai.getHydrogenCount());
+			// logger.debug(f+"\t"+ai.getHydrogenCount());
 		} else if ((OxNum == 2 && hybrid.equals("sp3"))
 				|| (OxNum == 1 && hybrid.equals("sp2"))
 				|| (OxNum == 0 && hybrid.equals("sp"))) {
@@ -1337,7 +1337,7 @@ public class ALOGP implements IMolecularDescriptor {
 					frags[78]++;
 					alogpfrag[i] = 78;
 				} else {
-					//System.out.println("missing group: R-N=X");
+					//logger.debug("missing group: R-N=X");
 				}
 
 			}

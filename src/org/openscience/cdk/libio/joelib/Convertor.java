@@ -152,7 +152,7 @@ public class Convertor {
                 // try to give the atom its atomic number
                 convertedAtom.setAtomicNumber(atom.getAtomicNum());
             } catch (java.lang.Exception exception) {
-                // System.out.println("AtomicNumber failed");
+                // logger.debug("AtomicNumber failed");
                 logger.debug("Error in setting atomic number");
             }
             return convertedAtom;

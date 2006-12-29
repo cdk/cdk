@@ -230,7 +230,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.003);
 		}
 	}
@@ -245,7 +245,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.2);
 		}
 	}
@@ -259,7 +259,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.2);
 		}
 	}
@@ -274,7 +274,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.003);
 		}
 	}
@@ -289,7 +289,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.03);
 		}
 	}
@@ -304,7 +304,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.3);
 		}
 	}
@@ -319,7 +319,7 @@ public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			System.out.println(mol.getAtom(i).getSymbol()+",result: "+result);
+//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.05);
 		}
 	}

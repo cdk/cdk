@@ -137,7 +137,7 @@ public class Primes {
    */
   public static int getPrimeAt(int index) {
     if(index < 0 || index > PRIMES.length -1)
-      System.out.println("out of range " + index);
+      throw new ArrayIndexOutOfBoundsException("out of range " + index);
     return PRIMES[index];
   }
 }

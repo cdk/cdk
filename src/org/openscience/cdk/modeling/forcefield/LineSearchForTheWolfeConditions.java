@@ -77,10 +77,10 @@ public class LineSearchForTheWolfeConditions {
 		this.x = xUser;
 		this.linearFunctionInAlpha0 = fxUser;
 		this.dfx = dfxUser;
-		//System.out.println("derivativeSmallEnough = " + this.derivativeSmallEnough);
+		//logger.debug("derivativeSmallEnough = " + this.derivativeSmallEnough);
 		this.direction = directionUser;
 		this.linearFunctionDerivativeInAlpha0 = linearFunctionDerivativeUser;
-		//System.out.println("linearFunctionDerivativeInAlpha0 = " + linearFunctionDerivativeInAlpha0);
+		//logger.debug("linearFunctionDerivativeInAlpha0 = " + linearFunctionDerivativeInAlpha0);
 		this.alphaOptimum = 0;
 		this.linearFunctionInAlphaOptimum = linearFunctionInAlpha0;
 		dfOptimum = this.dfx;
@@ -100,7 +100,7 @@ public class LineSearchForTheWolfeConditions {
 	 */
 	public void lineSearchAlgorithm (double alphaMax) {
 		
-		//System.out.println("Line search for the strong wolfe conditions");
+		//logger.debug("Line search for the strong wolfe conditions");
 
 		alpha[0] = 0.0;
 		linearFunctionInAlpha[0] = linearFunctionInAlpha0; 
@@ -109,7 +109,7 @@ public class LineSearchForTheWolfeConditions {
 		
 		alpha[1] = this.alphaInitialStep;
 		
-		//System.out.println("alpha[1] = this.alphaInitialStep = " + alpha[1]);
+		//logger.debug("alpha[1] = this.alphaInitialStep = " + alpha[1]);
 		
 		brentStep[0] = alpha[0];
 		brentStep[1] = alpha[1];
@@ -120,7 +120,7 @@ public class LineSearchForTheWolfeConditions {
 
 		if (alpha[1] > alphaMax) {
 			alpha[1] = alphaMax;
-			//System.out.println("line search algorithm error: alphaInitialStep > alphaMax");
+			//logger.debug("line search algorithm error: alphaInitialStep > alphaMax");
 		}
 		//	alpha[1] = alphaMax/2;
 		//}
@@ -133,13 +133,13 @@ public class LineSearchForTheWolfeConditions {
 				break;
 			}
 			
-			//System.out.println("alpha[" + i + "] = " + alpha[i]);
+			//logger.debug("alpha[" + i + "] = " + alpha[i]);
 			linearFunctionInAlpha[i] = evaluateEnergyFunction(alpha[i]);
-			//System.out.println("linearFunctionInAlpha[" + i + "] = " + linearFunctionInAlpha[i]);
+			//logger.debug("linearFunctionInAlpha[" + i + "] = " + linearFunctionInAlpha[i]);
 			
 			if ((linearFunctionInAlpha[i] > linearFunctionInAlpha[0] + c1 * alpha[i] * linearFunctionDerivativeInAlpha[0]) | 
 					((linearFunctionInAlpha[i] >= linearFunctionInAlpha[i-1]) & (i>1))) {			//The interval alpha[i-1] and alpha[i] brackets the desired step lengths.
-				//System.out.println("zoom(" + alpha[i-1] + ", " + linearFunctionInAlpha[i-1] + ", " + linearFunctionDerivativeInAlpha[i-1] + ", " + dfInAlpha[i-1] + ", " + alpha[i] + ", " + linearFunctionInAlpha[i] + ")");
+				//logger.debug("zoom(" + alpha[i-1] + ", " + linearFunctionInAlpha[i-1] + ", " + linearFunctionDerivativeInAlpha[i-1] + ", " + dfInAlpha[i-1] + ", " + alpha[i] + ", " + linearFunctionInAlpha[i] + ")");
 				//dfInAlpha[i] = evaluateEnergyFunctionDerivative(alpha[i]);
 				//linearFunctionDerivativeInAlpha[i] = dfInAlpha[i].dot(direction);
 				//zoom(alpha[i-1], linearFunctionInAlpha[i-1], linearFunctionDerivativeInAlpha[i-1], dfInAlpha[i-1], alpha[i], linearFunctionInAlpha[i], linearFunctionDerivativeInAlpha[i], dfInAlpha[i]);
@@ -149,18 +149,18 @@ public class LineSearchForTheWolfeConditions {
 
 			//The first strong Wolfe condition is satisfied for alpha[i].
 			dfInAlpha[i] = evaluateEnergyFunctionDerivative(alpha[i]);
-			//System.out.println("dfOptimum = " + dfOptimum);
+			//logger.debug("dfOptimum = " + dfOptimum);
 			linearFunctionDerivativeInAlpha[i] = dfInAlpha[i].dot(direction);
-			//System.out.println("linearFunctionDerivativeInAlpha[" + i + "] = " + linearFunctionDerivativeInAlpha[i]);
+			//logger.debug("linearFunctionDerivativeInAlpha[" + i + "] = " + linearFunctionDerivativeInAlpha[i]);
 			
 			if (Math.abs(linearFunctionDerivativeInAlpha[i]) <= -c2 * linearFunctionDerivativeInAlpha[0]) { //The second strong Wolfe condition is also satisfied for alpha[i]
-				//System.out.println("The second strong Wolfe condition is also satisfied for " + alpha[i]);
+				//logger.debug("The second strong Wolfe condition is also satisfied for " + alpha[i]);
 				alphaOptimum = alpha[i];
 				linearFunctionInAlphaOptimum = linearFunctionInAlpha[i];
 				dfOptimum = dfInAlpha[i];
-				//System.out.println("alphaOptimun = " + alphaOptimum);
-				//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
-				//System.out.println("dfOptimum = " + dfOptimum);
+				//logger.debug("alphaOptimun = " + alphaOptimum);
+				//logger.debug("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
+				//logger.debug("dfOptimum = " + dfOptimum);
 				this.derivativeSmallEnough = true;
 				break;
 			}
@@ -177,25 +177,25 @@ public class LineSearchForTheWolfeConditions {
 			}
 		
 			if (alpha[i] == alphaMax) {	
-				//System.out.println("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE alpha[i] == alphaMax");
+				//logger.debug("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE alpha[i] == alphaMax");
 				alphaOptimum = alpha[i];
 				linearFunctionInAlphaOptimum = linearFunctionInAlpha[i];
 				dfOptimum = dfInAlpha[i];
-				//System.out.println("alphaOptimun = " + alphaOptimum);
-				//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
-				//System.out.println("dfOptimum = " + dfOptimum);
+				//logger.debug("alphaOptimun = " + alphaOptimum);
+				//logger.debug("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
+				//logger.debug("dfOptimum = " + dfOptimum);
 				break;
 			}
 			
 			functionEvaluationNumber = functionEvaluationNumber + 1;
 			if (functionEvaluationNumber == 10) {
-				//System.out.println("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE functionEvaluationNumber == 10");
+				//logger.debug("LINE SEARCH ALGORITHM WAS TERMINATE EARLIER BECAUSE functionEvaluationNumber == 10");
 				alphaOptimum = alpha[i];
 				linearFunctionInAlphaOptimum = linearFunctionInAlpha[i];
 				dfOptimum = dfInAlpha[i];
-				//System.out.println("alphaOptimun = " + alphaOptimum);
-				//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
-				//System.out.println("dfOptimum = " + dfOptimum);
+				//logger.debug("alphaOptimun = " + alphaOptimum);
+				//logger.debug("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
+				//logger.debug("dfOptimum = " + dfOptimum);
 				break;
 			}
 			
@@ -210,7 +210,7 @@ public class LineSearchForTheWolfeConditions {
 			} 
 			
 			brentStep[2] = brentStep[1] + 1.618 * (brentStep[1]-brentStep[0]);
-			//System.out.println("brentStep[2] = " + brentStep[2]);
+			//logger.debug("brentStep[2] = " + brentStep[2]);
 
 			if (brentStep[2] > alphaMax) {brentStep[2] = alphaMax;}
 			/*linearFunctionInBrentStep = this.evaluateEnergyFunction(brentStep[2]);
@@ -252,7 +252,7 @@ public class LineSearchForTheWolfeConditions {
 	private void zoom (double alphaLow, double linearFunctionInAlphaLow, double linearFunctionDerivativeInAlphaLow, GVector dfInAlphaLow, 
 			double alphaHigh, double linearFunctionInAlphaHigh) {
 		
-		//System.out.println("zoom");
+		//logger.debug("zoom");
 		
 		functionEvaluationNumber = 0;
 		
@@ -270,14 +270,14 @@ public class LineSearchForTheWolfeConditions {
 					+ alphaHigh + ", " + linearFunctionInAlphaHigh + ");");*/
 
 			alphaj = this.interpolation(alphaLow, linearFunctionInAlphaLow, linearFunctionDerivativeInAlphaLow, alphaHigh, linearFunctionInAlphaHigh);
-			//System.out.println("alphaj = " + alphaj);
+			//logger.debug("alphaj = " + alphaj);
 			linearFunctionInAlphaj = this.linearFunctionAlphaInterpolation;
-			//System.out.println("linearFunctionInAlphaj = " + linearFunctionInAlphaj);
+			//logger.debug("linearFunctionInAlphaj = " + linearFunctionInAlphaj);
 			
 			if ((linearFunctionInAlphaj > linearFunctionInAlpha0 + c1 * alphaj * linearFunctionDerivativeInAlpha0) | //The interval 0 and alphaj brackets the desired step lengths.
 					(linearFunctionInAlphaj >= linearFunctionInAlphaLow)) {			
 
-				//System.out.println("The minimum is between alpha1 and alphaj");
+				//logger.debug("The minimum is between alpha1 and alphaj");
 				alphaHigh = alphaj;
 				linearFunctionInAlphaHigh = linearFunctionInAlphaj;
 				//dfInAlphaHigh = this.evaluateEnergyFunctionDerivative(alphaHigh); 
@@ -286,15 +286,15 @@ public class LineSearchForTheWolfeConditions {
 			else {
 				dfInAlphaj = evaluateEnergyFunctionDerivative(alphaj);
 				linearFunctionDerivativeInAlphaj = dfInAlphaj.dot(direction);
-				//System.out.println("linearFunctionDerivativeInAlphaj = " + linearFunctionDerivativeInAlphaj);
+				//logger.debug("linearFunctionDerivativeInAlphaj = " + linearFunctionDerivativeInAlphaj);
 				if (Math.abs(linearFunctionDerivativeInAlphaj) <= -c2 * linearFunctionDerivativeInAlpha0) { //alphaj satisfied the second strong Wolfe condition.
-					//System.out.println("Derivative small enough : " + Math.abs(linearFunctionDerivativeInAlphaj) + " <= " + (-c2 * linearFunctionDerivativeInAlpha0));
+					//logger.debug("Derivative small enough : " + Math.abs(linearFunctionDerivativeInAlphaj) + " <= " + (-c2 * linearFunctionDerivativeInAlpha0));
 					this.derivativeSmallEnough = true;
 					alphaOptimum = alphaj;
 					linearFunctionInAlphaOptimum = linearFunctionInAlphaj;
 					dfOptimum = dfInAlphaj;
-					//System.out.println("alphaOptimun = " + alphaOptimum);
-					//System.out.println("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
+					//logger.debug("alphaOptimun = " + alphaOptimum);
+					//logger.debug("linearFunctionInAlphaOptimun = " + linearFunctionInAlphaOptimum);
 					break;
 				}
 				if (linearFunctionDerivativeInAlphaj * (alphaHigh-alphaLow) >= 0) {		
@@ -308,13 +308,13 @@ public class LineSearchForTheWolfeConditions {
 				dfInAlphaLow = dfInAlphaj;
 			}
 			
-			//System.out.println("AlphaLow = " + alphaLow + ", AlphaHigh = " + alphaHigh);
-			//System.out.println("linearFunctionInAlphaLow = " + linearFunctionInAlphaLow + ", linearFunctionInAlphaHigh = " + linearFunctionInAlphaHigh);
+			//logger.debug("AlphaLow = " + alphaLow + ", AlphaHigh = " + alphaHigh);
+			//logger.debug("linearFunctionInAlphaLow = " + linearFunctionInAlphaLow + ", linearFunctionInAlphaHigh = " + linearFunctionInAlphaHigh);
 			functionEvaluationNumber = functionEvaluationNumber + 1;
-			//System.out.println("functionEvaluationNumber = " + functionEvaluationNumber);
+			//logger.debug("functionEvaluationNumber = " + functionEvaluationNumber);
 
 			if ((functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.000000000001)) {
-				//System.out.println("ZOOM WAS TERMINATE EARLIER");
+				//logger.debug("ZOOM WAS TERMINATE EARLIER");
 				/*System.out.println("functionEvaluationNumber = " + functionEvaluationNumber + 
 						", Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) = " + Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) + 
 						", Math.abs(alphaLow - alphaHigh) = " + Math.abs(alphaLow - alphaHigh));*/
@@ -322,9 +322,9 @@ public class LineSearchForTheWolfeConditions {
 				this.linearFunctionInAlphaOptimum = linearFunctionInAlphaLow;
 				this.dfOptimum = dfInAlphaLow;
 				
-				//System.out.println("(functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.0000001)");
-				//System.out.println("zoom end -> this.alphaOptimum = " + this.alphaOptimum); 
-				//System.out.println("zoom end -> this.linearFunctionInAlphaOptimum = " + this.linearFunctionInAlphaOptimum); 
+				//logger.debug("(functionEvaluationNumber == 10) | (Math.abs(linearFunctionInAlphaHigh - linearFunctionInAlphaLow) <= 0.000001) | (Math.abs(alphaLow - alphaHigh) <= 0.0000001)");
+				//logger.debug("zoom end -> this.alphaOptimum = " + this.alphaOptimum); 
+				//logger.debug("zoom end -> this.linearFunctionInAlphaOptimum = " + this.linearFunctionInAlphaOptimum); 
 				break;
 			}
 
@@ -333,7 +333,7 @@ public class LineSearchForTheWolfeConditions {
 					& (functionEvaluationNumber < 10) 
 					& (Math.abs(alphaLow - alphaHigh) > 0.000000000001));
 		
-		//System.out.println("zoom end");
+		//logger.debug("zoom end");
 		return;
 	}
 
@@ -357,7 +357,7 @@ public class LineSearchForTheWolfeConditions {
 									double alphaiMinus1, double linearFunctionInAlphaiMinus1, double linearFunctionDerivativeInAlphaiMinus1, 
 									double a, double b) {
 		
-		//System.out.println("The interval [" + a + ", " + b + "] contains acceptable step lengths.");
+		//logger.debug("The interval [" + a + ", " + b + "] contains acceptable step lengths.");
 		
 		if (alphai < alphaiMinus1) {
 			this.alphaTemporal = alphai;
@@ -372,29 +372,29 @@ public class LineSearchForTheWolfeConditions {
 		}
 		
 		this.d1 = linearFunctionDerivativeInAlphaiMinus1 + linearFunctionDerivativeInAlphai - 3 * ((linearFunctionInAlphaiMinus1 - linearFunctionInAlphai)/(alphaiMinus1 - alphai));
-		//System.out.println("d1 = " + d1);
+		//logger.debug("d1 = " + d1);
 		
-		//System.out.println("linearFunctionDerivativeInAlphaiMinus1 = " + linearFunctionDerivativeInAlphaiMinus1);
-		//System.out.println("linearFunctionDerivativeInAlphai = " + linearFunctionDerivativeInAlphai);
+		//logger.debug("linearFunctionDerivativeInAlphaiMinus1 = " + linearFunctionDerivativeInAlphaiMinus1);
+		//logger.debug("linearFunctionDerivativeInAlphai = " + linearFunctionDerivativeInAlphai);
 		
 		this.d2 = Math.sqrt(Math.abs(Math.pow(d1,2) - linearFunctionDerivativeInAlphaiMinus1 * linearFunctionDerivativeInAlphai));
-		//System.out.println("d2 = " + d2);
+		//logger.debug("d2 = " + d2);
 		
 		this.alphaiplus1 = alphai-(alphai-alphaiMinus1) * ((linearFunctionDerivativeInAlphai + d2 - d1) / (linearFunctionDerivativeInAlphai - linearFunctionDerivativeInAlphaiMinus1 + 2 * d2));
 		
-		//System.out.println("alphaiplus1 = " + alphaiplus1);
+		//logger.debug("alphaiplus1 = " + alphaiplus1);
 		
 		if (alphaiplus1 < a) {alphaiplus1 = a;}
 		if (alphaiplus1 > b) {alphaiplus1 = b;}
 		
-		//System.out.println("alphaiplus1 = " + alphaiplus1);
+		//logger.debug("alphaiplus1 = " + alphaiplus1);
 		
 		if (Math.abs(alphaiplus1 - alphai) < 0.000000001) {
 			/*System.out.println("We reset alphaiplus1 = (alphaiMinus1 + alphai) / 2, because alphaiplus1 = " + alphaiplus1 + " is too close to its predecessor " +
 					"alphaiMinus1 = " + alphaiMinus1); */
 			alphaiplus1 = (alphaiMinus1 + alphai) / 2;
 		} else {if (alphaiplus1 < (alphai - 9 * (alphai-alphaiMinus1) / 10)) {
-			//System.out.println("We reset alphaiplus1 = (alphaiMinus1 + alphai) / 2, because alphaiplus1 = " + alphaiplus1 + " is 	too much smaller than alphai = " + alphai); 
+			//logger.debug("We reset alphaiplus1 = (alphaiMinus1 + alphai) / 2, because alphaiplus1 = " + alphaiplus1 + " is 	too much smaller than alphai = " + alphai); 
 			alphaiplus1 = (alphaiMinus1 + alphai) / 2;;
 			}
 		}
@@ -423,10 +423,10 @@ public class LineSearchForTheWolfeConditions {
 		double alphaDiff = Math.abs(alphaHigh - alphaLow);
 		double alphaInterpolation;
 
-		//System.out.println("We form a quadratic approximation to the linear function");
+		//logger.debug("We form a quadratic approximation to the linear function");
 		double alpha1 = -1 * ((linearFunctionDerivativeInAlphaLow * Math.pow(alphaDiff,2)) / (2 * (linearFunctionInAlphaHigh - linearFunctionInAlphaLow - linearFunctionDerivativeInAlphaLow * alphaDiff)));
 		
-		//System.out.println("The value alpha1 = " + alpha1 + ", is the minimizer of this quadratic function");
+		//logger.debug("The value alpha1 = " + alpha1 + ", is the minimizer of this quadratic function");
 		
 		if ((alpha1 > alphaDiff) | (Math.abs(alpha1 - alphaDiff) < 0.000000001)) {
 			if (alpha1 < 1E-7) {}
@@ -439,20 +439,20 @@ public class LineSearchForTheWolfeConditions {
 			if ((alpha1 < 0) & (alpha1 < (alphaDiff - 9 * alphaDiff / 10))) {
 				if (alpha1 < 1E-7) {}
 				else {
-					//System.out.println("We reset alphai = alphaiMinus1 / 2, because alphaInterpolation = " + alpha1 + " is 	too much smaller than alphaiMinus1 = " + alphaDiff); 
+					//logger.debug("We reset alphai = alphaiMinus1 / 2, because alphaInterpolation = " + alpha1 + " is 	too much smaller than alphaiMinus1 = " + alphaDiff); 
 					alpha1 = alphaDiff / 2;
 				}
 			}
 		}
 
-		//System.out.println("alpha1 = " + alpha1);
+		//logger.debug("alpha1 = " + alpha1);
 
 		alphaInterpolation = minAlpha + alpha1;
 		this.linearFunctionAlphaInterpolation = this.evaluateEnergyFunction(alphaInterpolation);
-		//System.out.println("alphaInterpolation = " + alphaInterpolation);
-		//System.out.println("linearFunctionAlphaInterpolation = " + this.linearFunctionAlphaInterpolation);
+		//logger.debug("alphaInterpolation = " + alphaInterpolation);
+		//logger.debug("linearFunctionAlphaInterpolation = " + this.linearFunctionAlphaInterpolation);
 		if (this.linearFunctionAlphaInterpolation <= this.linearFunctionInAlpha0 + this.c1 * (alphaInterpolation) * this.linearFunctionDerivativeInAlpha0) {
-			//System.out.println("The sufficient decrease condition is satisfied at alpha1 and we termine the interpolation");
+			//logger.debug("The sufficient decrease condition is satisfied at alpha1 and we termine the interpolation");
 		}
 		else {
 			//double alphaiMinus2;
@@ -468,7 +468,7 @@ public class LineSearchForTheWolfeConditions {
 				//linearFunctionInAlphaiMinus2 = linearFunctionInAlphaiMinus1;
 				//linearFunctionInAlphaiMinus1 = linearFunctionInAlphai;
 					
-				//System.out.println("We construct a cubic function that interpolates the fours pieces of information");	
+				//logger.debug("We construct a cubic function that interpolates the fours pieces of information");	
 				a = 1/(Math.pow(alphaDiff,2) * Math.pow(alpha1, 2) * (alpha1-alphaDiff));
 				b = a;
 				a = a * (Math.pow(alphaDiff,2) * (this.linearFunctionAlphaInterpolation - linearFunctionInAlphaLow - linearFunctionDerivativeInAlphaLow * alpha1) 
@@ -476,26 +476,26 @@ public class LineSearchForTheWolfeConditions {
 				b = b * (- Math.pow(alphaDiff,3) * (this.linearFunctionAlphaInterpolation - linearFunctionInAlphaLow - linearFunctionDerivativeInAlphaLow * alpha1) 
 						+ Math.pow(alpha1,3) * (linearFunctionInAlphaHigh - linearFunctionInAlphaLow - linearFunctionDerivativeInAlphaLow * alphaDiff));
 				
-				//System.out.println("a = " + a);
-				//System.out.println("b = " + b);
+				//logger.debug("a = " + a);
+				//logger.debug("b = " + b);
 				
 				alphai = (-b + Math.sqrt(Math.pow(b,2) - 3 * a * linearFunctionDerivativeInAlphaLow)) / (3 * a);
-				//System.out.println("alphai = " + alphai);
+				//logger.debug("alphai = " + alphai);
 				
 				if (Math.abs(alphai - alpha1) < 0.000000001) {
 					/*System.out.println("We reset alphai = alpha1 / 2, because alphaInterpolation = " + alphai + " is too close to its predecessor " +
 							"alpha1 = " + alpha1); */
 					alphai = alpha1 / 2;
 				} else {if (alphai < (alpha1 - 9 * alpha1 / 10)) {
-					//System.out.println("We reset alphai = alpha1 / 2, because alphaInterpolation = " + alphai + " is 	too much smaller than alpha1 = " + alpha1); 
+					//logger.debug("We reset alphai = alpha1 / 2, because alphaInterpolation = " + alphai + " is 	too much smaller than alpha1 = " + alpha1); 
 					alphai = alpha1 / 2;
 					}
 				}
 			
 				alphaInterpolation = minAlpha + alphai;
 				this.linearFunctionAlphaInterpolation = this.evaluateEnergyFunction(alphaInterpolation);
-				//System.out.println("alphaInterpolation = " + alphaInterpolation);
-				//System.out.println("linearFunctionAlphaInterpolation = " + this.linearFunctionAlphaInterpolation);
+				//logger.debug("alphaInterpolation = " + alphaInterpolation);
+				//logger.debug("linearFunctionAlphaInterpolation = " + this.linearFunctionAlphaInterpolation);
 				//functionEvaluationNumber = functionEvaluationNumber + 1;
 				
 			/*} while (((linearFunctionInAlphai > linearFunctionInAlphaLow + this.c1 * (alphaLow + alphai) * linearFunctionDerivativeInAlphaLow) & (functionEvaluationNumber < 5)) 
@@ -560,7 +560,7 @@ public class LineSearchForTheWolfeConditions {
 	 */
 	/*private double goldenSectionMethod(double lambdaMin, double flambdaMin, double lambdaMax, double flambdaMax) {
 
-		//System.out.println("Golden Section Search");
+		//logger.debug("Golden Section Search");
 		double goldenLambda;
 		
 		double lambda1 = lambdaMin;
@@ -573,10 +573,10 @@ public class LineSearchForTheWolfeConditions {
 		double flambda3 = evaluateEnergyFunction(lambda3);
 		//double flambda4 = flambdaMax;
 		
-		//System.out.println("lambda1 = " + lambda1 + ", flambda1 = " + flambda1);
-		//System.out.println("lambda2 = " + lambda2 + ", flambda2 = " + flambda2);
-		//System.out.println("lambda3 = " + lambda3 + ", flambda3 = " + flambda3);
-		//System.out.println("lambda4 = " + lambda4 + ", flambda4 = " + flambda4);
+		//logger.debug("lambda1 = " + lambda1 + ", flambda1 = " + flambda1);
+		//logger.debug("lambda2 = " + lambda2 + ", flambda2 = " + flambda2);
+		//logger.debug("lambda3 = " + lambda3 + ", flambda3 = " + flambda3);
+		//logger.debug("lambda4 = " + lambda4 + ", flambda4 = " + flambda4);
 
 		if (flambda2 < flambda3) {		//we can bracket the minimum by the interval [lambda1, lambda3]
 			goldenLambda = lambda2;

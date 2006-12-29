@@ -293,7 +293,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         String profile = atom.getSymbol() +"+"+ maxBondOrder +"+"+ bondOrderSum +"+"+ 
             numberOfNeighbours +"+"+ hCount +"+"+ formalCharge +"+"+ aromaticBondCount +"+"+
             isIn3MemberRing +"+"+ singleBondCount +"+"+ doubleBondCount +"+"+ tripleBondCount;
-				//System.out.println("tpsa profile: "+ profile);
+				//logger.debug("tpsa profile: "+ profile);
 				profiles.add(profile);
 			}
 		}
@@ -304,11 +304,11 @@ public class TPSADescriptor implements IMolecularDescriptor {
     {
 			if(map.containsKey(profiles.elementAt(profileIndex))) {
 				tpsa += ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue();
-				//System.out.println("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
+				//logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
 			}
 		}
 		profiles.clear(); // remove all profiles from the profiles-Vector
-    //System.out.println("tpsa: " + tpsa);
+    //logger.debug("tpsa: " + tpsa);
     
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa),
                 new String[] {"TPSA"});

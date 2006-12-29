@@ -31,7 +31,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCCc1ccccc1"); // benzol
-		//System.out.println("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -40,7 +40,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1"); 
-		//System.out.println("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -49,7 +49,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C(CCC1CC1C(C)C(C)C)C(C)CC2CCCC2"); 
-		//System.out.println("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -58,7 +58,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCCNCC"); 
-		//System.out.println("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -67,7 +67,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC(C)(C)c1ccccc1"); 
-		//System.out.println("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	
@@ -77,7 +77,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC(C)(C)c2ccc(OCCCC(=O)Nc1nccs1)cc2"); 
-		//System.out.println("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -86,7 +86,7 @@ public class LongestAliphaticChainDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC(=O)N1CCN(CC1)c2ccc(NC(=O)COc3ccc(cc3)C(C)(C)C)cc2"); 
-		//System.out.println("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }

@@ -152,7 +152,7 @@ public class SpanningTree {
 			if (fastfind(v1,v2,true)) {
 				bondsInTree[b] = true;
 				sptSize++;
-				//System.out.println("ST : includes bond between atoms "+v1+","+v2);
+				//logger.debug("ST : includes bond between atoms "+v1+","+v2);
 			}
 			if (sptSize>=(V-1)) break;
 			
@@ -256,7 +256,7 @@ public class SpanningTree {
 	public IRingSet getAllRings() throws NoSuchAtomException {
 		IRingSet ringset = getBasicRings();
 		IRing newring = null;
-		//System.out.println("Rings "+ringset.size());
+		//logger.debug("Rings "+ringset.size());
 		
 		int nBasicRings = ringset.getAtomContainerCount();
 		for (int i = 0; i < nBasicRings; i++) 
@@ -266,7 +266,7 @@ public class SpanningTree {
 		
 		for (int i= 0; i < nBasicRings; i++) {
 			for (int j= i+1; j < nBasicRings; j++) {
-				//System.out.println("combining rings "+(i+1)+","+(j+1));
+				//logger.debug("combining rings "+(i+1)+","+(j+1));
 				newring = combineRings(ringset, i, j);				
 				//newring = combineRings((Ring)ringset.get(i),(Ring)ringset.get(j));
 				if (newring != null) ringset.addAtomContainer(newring);
@@ -278,10 +278,7 @@ public class SpanningTree {
 	public int getSpanningTreeSize() {
 		return sptSize;
 	}
-	public void printAtoms(IAtomContainer ac) {
-		for (int i = 0; i < ac.getAtomCount(); i++)
-			System.out.print(ac.getAtom(i).getProperty("ST_ATOMNO").toString() + ",");
-	}
+
 	private IRing combineRings(IRingSet ringset, int i, int j) {
 		int c = 0;
 		for (int b= 0; b < cb[i].length; b++) {

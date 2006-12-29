@@ -64,7 +64,7 @@ public class PathToolsTest extends CDKTestCase {
         Vector sphere = new Vector();
         sphere.addElement(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
-        //System.out.println("PathLengthTest->length: " + length);
+        //logger.debug("PathLengthTest->length: " + length);
         assertEquals(3, length);
     }
 

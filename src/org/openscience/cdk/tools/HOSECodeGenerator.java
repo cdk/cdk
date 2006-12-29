@@ -60,6 +60,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 public class HOSECodeGenerator implements java.io.Serializable
 {
 
+	private LoggingTool logger;
+	
     private static final long serialVersionUID = -4353471818831864513L;
     
     /**
@@ -158,6 +160,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	public HOSECodeGenerator()
 	{
+		logger = new LoggingTool(this);
+		
 		sphereNodes = new Vector();
     sphereNodesWithAtoms = new Vector();
 		nextSphereNodes = new Vector();
@@ -199,10 +203,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		breadthFirstSearch(root, false);
 		createCode();
 		fillUpSphereDelimiters();
-		if (debug)
-		{
-			System.out.println("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
-		}
+		logger.debug("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
 		return spheresWithAtoms;
 	}
 
@@ -271,10 +272,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		breadthFirstSearch(root,true);
 		createCode();
 		fillUpSphereDelimiters();
-		if (debug)
-		{
-			System.out.println("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
-		}
+		logger.debug("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
 		return HOSECode.toString();
 	}
 
@@ -698,7 +696,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	private void fillUpSphereDelimiters()
 	{
-		if (debug) System.out.println("Sphere: " + sphere);
+		logger.debug("Sphere: " + sphere);
 		for (int f = sphere; f < 4; f++)
 		{
 			HOSECode.append(sphereDelimiters[f]);

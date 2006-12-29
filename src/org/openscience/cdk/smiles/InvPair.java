@@ -78,7 +78,7 @@ public class InvPair implements java.io.Serializable{
   public boolean equals(Object e){
     if(e instanceof InvPair){
       InvPair o = (InvPair)e;
-//      System.out.println("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
+//      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
       return (last == o.getLast() && curr == o.getCurr());
     }
     else {

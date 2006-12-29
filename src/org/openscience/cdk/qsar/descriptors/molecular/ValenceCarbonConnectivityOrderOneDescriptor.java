@@ -189,7 +189,7 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 					atomValue = (valence - hcount) / (atomicNumber - valence - 1);
 					//if(atomValue > 0) {
 						chiAtom.add(new Double(atomValue));
-						//System.out.println(symbol+"= atomvalue: "+atomValue+",val: "+valence);
+						//logger.debug(symbol+"= atomvalue: "+atomValue+",val: "+valence);
 					//}
 				}
 				val0 = ( (Double)chiAtom.get(0) ).doubleValue();

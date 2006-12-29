@@ -135,7 +135,7 @@ public class GasteigerMarsiliPartialCharges {
                 q_old[j] = q;
 
                 gasteigerFactors[STEP_SIZE * j + j + 4] = gasteigerFactors[STEP_SIZE * j + j + 2] * q * q + gasteigerFactors[STEP_SIZE * j + j + 1] * q + gasteigerFactors[STEP_SIZE * j + j];
-//				System.out.println("g4: "+gasteigerFactors[STEP_SIZE * j + j + 4]);
+//				logger.debug("g4: "+gasteigerFactors[STEP_SIZE * j + j + 4]);
             }
             if(!isDifferent)/* automatically break the maximum iterations*/
                 break out;
@@ -163,7 +163,7 @@ public class GasteigerMarsiliPartialCharges {
                 }
 
                 q = (gasteigerFactors[STEP_SIZE * atom1 + atom1 + 4] - gasteigerFactors[STEP_SIZE * atom2 + atom2 + 4]) / deoc;
-//				System.out.println("qq: "+q);
+//				logger.debug("qq: "+q);
                 gasteigerFactors[STEP_SIZE * atom1 + atom1 + 5] -= (q*alpha);
                 gasteigerFactors[STEP_SIZE * atom2 + atom2 + 5] += (q*alpha);
             }

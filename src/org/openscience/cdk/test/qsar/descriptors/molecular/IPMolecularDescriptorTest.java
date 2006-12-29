@@ -75,7 +75,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
         double resultAccordingNIST = 11.26; 
-//        System.out.println(resultAccordingNIST+"="+dar.get(0));
+//        logger.debug(resultAccordingNIST+"="+dar.get(0));
 
         assertEquals(1, dar.size());
         assertEquals(resultAccordingNIST, dar.get(0), 2.2);
@@ -114,7 +114,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
 
-//		System.out.println(dar.get(0)+", "+dar.get(1));
+//		logger.debug(dar.get(0)+", "+dar.get(1));
         double resultAccordingNIST = 9.37; 
         assertEquals(2, dar.size());
         assertEquals(resultAccordingNIST, dar.get(0), 1.4);
@@ -137,7 +137,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
 		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet(mol);
 		double resultAccordingNIST = 11.26; 
-//        System.out.println(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+//        logger.debug(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
         assertEquals(1, reactionSet.getReactionCount());
         assertEquals(resultAccordingNIST, result, 2.2);

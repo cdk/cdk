@@ -148,7 +148,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
     	
-    	//System.out.println("LongestAliphaticChainDescriptor");
+    	//logger.debug("LongestAliphaticChainDescriptor");
     	IRingSet rs = null;
     	if (checkRingSystem) {
         	rs = new SSSRFinder(container).findSSSR();
@@ -168,25 +168,25 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     	for (int i =0;i<container.getAtomCount();i++){
     		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
-    	//System.out.println("Set all atoms to Visited False");
+    	//logger.debug("Set all atoms to Visited False");
     	for (int i =0;i<container.getAtomCount();i++){
     		IAtom atomi = container.getAtom(i);
-    		//System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
+    		//logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
     		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
-    			//System.out.println("...... -> Accepted");
+    			//logger.debug("...... -> Accepted");
     			startSphere = new Vector();
     			path = new Vector();
     			startSphere.addElement(atomi);
      			breadthFirstSearch(container, startSphere, path);
      			//create Atomcontainer
-     			//System.out.println("Create new Atom Container");
+     			//logger.debug("Create new Atom Container");
      			AtomContainer aliphaticChain =createAtomContainerFromPath(container,path);
      			if (aliphaticChain.getAtomCount()>1){
      				double[][] conMat = ConnectionMatrix.getMatrix(aliphaticChain);
-     				//System.out.print("Computing all-pairs-shortest-pathes ");
+     				//logger.debug("Computing all-pairs-shortest-pathes ");
      				int[][] apsp = PathTools.computeFloydAPSP(conMat);
      				tmpLongestChainAtomCount=getLongestChainPath(apsp);
-     				//System.out.println(" lengthPath:"+tmpLongestChainAtomCount+" allLength:"+longestChainAtomsCount);
+     				//logger.debug(" lengthPath:"+tmpLongestChainAtomCount+" allLength:"+longestChainAtomsCount);
      				if (tmpLongestChainAtomCount>longestChainAtomsCount){
      					longestChainAtomsCount=tmpLongestChainAtomCount;
      				}
@@ -229,9 +229,9 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     	}
     	
     	//for (int i=0;i<aliphaticChain.getAtomCount();i++){
-    	//	System.out.println("container-->atom:"+i+" Nr: "+container.getAtomNumber(aliphaticChain.getAtomAt(i))+" maxBondOrder:"+aliphaticChain.getMaximumBondOrder(aliphaticChain.getAtomAt(i))+" Aromatic:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)+" Ring:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISINRING)+" FormalCharge:"+aliphaticChain.getAtomAt(i).getFormalCharge()+" Charge:"+aliphaticChain.getAtomAt(i).getCharge()+" Flag:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.VISITED));
+    	//	logger.debug("container-->atom:"+i+" Nr: "+container.getAtomNumber(aliphaticChain.getAtomAt(i))+" maxBondOrder:"+aliphaticChain.getMaximumBondOrder(aliphaticChain.getAtomAt(i))+" Aromatic:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)+" Ring:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISINRING)+" FormalCharge:"+aliphaticChain.getAtomAt(i).getFormalCharge()+" Charge:"+aliphaticChain.getAtomAt(i).getCharge()+" Flag:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.VISITED));
     	//}
-    	//System.out.println("BondCount:"+aliphaticChain.getBondCount());
+    	//logger.debug("BondCount:"+aliphaticChain.getBondCount());
     	if (aliphaticChain.getBondCount()==0){
     		aliphaticChain.removeAllElements();
     	}

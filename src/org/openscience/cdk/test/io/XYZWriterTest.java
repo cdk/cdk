@@ -81,7 +81,7 @@ public class XYZWriterTest extends CDKTestCase {
         writer.close();
         
         String output = writer.toString();
-//        System.out.println(output);
+//        logger.debug(output);
         // count lines
         int lineCount = 0;
         BufferedReader reader = new BufferedReader(

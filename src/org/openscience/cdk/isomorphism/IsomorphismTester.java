@@ -135,24 +135,6 @@ public class IsomorphismTester implements java.io.Serializable
 		return true;
 	}
 
-	public void report()
-	{
-		String s = "";
-		for (int f = 0; f < sortedBaseTable.length; f++)
-		{
-			s += sortedBaseTable[f] + " ";
-		}
-		System.out.println(s);
-		s = "";
-		for (int f = 0; f < sortedCompareTable.length; f++)
-		{
-			s += sortedCompareTable[f] + " ";
-		}
-		System.out.println(s);
-
-	}
-
-
 	/**
 	 *  Sets the BaseTable attribute of the IsomorphismTester object
 	 *

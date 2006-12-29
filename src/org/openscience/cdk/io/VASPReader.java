@@ -155,14 +155,14 @@ public class VASPReader extends DefaultChemObjectReader {
         // Get the info line (first token of the first line)
         inputBuffer.mark(255);
         info = nextVASPToken(false);
-        //System.out.println(info);
+        //logger.debug(info);
         inputBuffer.reset(); 
         
         // Get the number of different atom "NCLASS=X"
         inputBuffer.mark(255);
         nextVASPTokenFollowing("NCLASS");
         ntype = Integer.parseInt(fieldVal);
-        //System.out.println("NCLASS= " + ntype);
+        //logger.debug("NCLASS= " + ntype);
         inputBuffer.reset(); 
         
         // Get the different atom names

@@ -108,7 +108,7 @@ public class GasteigerPEPEPartialCharges {
 	 *@exception  Exception  Possible Exceptions
 	 */
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-//		System.out.println("smiles1: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
+//		logger.debug("smiles1: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
 		IAtomContainerSet setHI = null;
 		
 		/*0: remove charge, and possible flag ac*/
@@ -123,7 +123,7 @@ public class GasteigerPEPEPartialCharges {
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR = new StructureResonanceGenerator(true,true,true,true,false,false,MX_RESON);/*according G. should be integrated the breaking bonding*/
 		IAtomContainerSet iSet = gR.getAllStructures(ac);
-//		System.out.println("iset: "+iSet.getAtomContainerCount());
+//		logger.debug("iset: "+iSet.getAtomContainerCount());
 		
 		/* detect hyperconjugation interactions */
 		setHI = getHyperconjugationInteractions(ac, iSet);
@@ -131,7 +131,7 @@ public class GasteigerPEPEPartialCharges {
 		if(setHI != null) {
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
-//		System.out.println("isetTT: "+iSet.getAtomContainerCount());
+//		logger.debug("isetTT: "+iSet.getAtomContainerCount());
 		}
 		if(iSet.getAtomContainerCount() < 2)
 			return ac;
@@ -168,10 +168,10 @@ public class GasteigerPEPEPartialCharges {
 		double[] Wt = new double[iSet.getAtomContainerCount()-1];
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			Wt[i-1]= getTopologicalFactors(iSet.getAtomContainer(i),ac);
-//			System.out.println(", W:"+Wt[i-1]);
+//			logger.debug(", W:"+Wt[i-1]);
 			try {
 				acCloned = (IAtomContainer)iSet.getAtomContainer(i).clone();
-//				System.out.println("smilesClo: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) acCloned));
+//				logger.debug("smilesClo: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) acCloned));
 				acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
 				for(int j = 0 ; j<acCloned.getAtomCount(); j++)
 					if(iSet.getAtomContainer(i).getAtom(j).getFlag(ISCHANGEDFC)){
@@ -187,7 +187,7 @@ public class GasteigerPEPEPartialCharges {
 		for (int iter = 0; iter < MX_ITERATIONS; iter++) {
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				IAtomContainer iac = iSet.getAtomContainer(k);
-//				System.out.println("smilesITERa: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) iac));
+//				logger.debug("smilesITERa: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) iac));
 				double[] electronegativity = new double[2];
 				int count = 0;
 				int atom1 = 0;
@@ -196,7 +196,7 @@ public class GasteigerPEPEPartialCharges {
 					if(count == 2)/* TODO- not limited*/
 						break;
 					if(iac.getAtom(j).getFlag(ISCHANGEDFC)){
-//						System.out.println("Atom: "+j+", S:"+iac.getAtom(j).getSymbol()+", C:"+iac.getAtom(j).getFormalCharge());
+//						logger.debug("Atom: "+j+", S:"+iac.getAtom(j).getSymbol()+", C:"+iac.getAtom(j).getFormalCharge());
 						if(count == 0)
 							atom1 = j;
 						else 
@@ -204,12 +204,12 @@ public class GasteigerPEPEPartialCharges {
 						
 						double q1 = gasteigerFactors[k][STEP_SIZE * j + j + 5];
 						electronegativity[count] = gasteigerFactors[k][STEP_SIZE * j + j + 2] * q1 * q1 + gasteigerFactors[k][STEP_SIZE * j + j + 1] * q1 + gasteigerFactors[k][STEP_SIZE * j + j];
-//						System.out.println("e:"+electronegativity[count] +",q1: "+q1+", c:"+gasteigerFactors[k][STEP_SIZE * j + j + 2] +", b:"+gasteigerFactors[k][STEP_SIZE * j + j + 1]  + ", a:"+gasteigerFactors[k][STEP_SIZE * j + j]);
+//						logger.debug("e:"+electronegativity[count] +",q1: "+q1+", c:"+gasteigerFactors[k][STEP_SIZE * j + j + 2] +", b:"+gasteigerFactors[k][STEP_SIZE * j + j + 1]  + ", a:"+gasteigerFactors[k][STEP_SIZE * j + j]);
 						count++;
 					}
 					
 				}
-//				System.out.println("Atom1:"+atom1+",Atom2:"+atom2);
+//				logger.debug("Atom1:"+atom1+",Atom2:"+atom2);
 				/*diferency of electronegativity 1 lower*/
 				double max1 = Math.max(electronegativity[0], electronegativity[1]);
 				double min1 = Math.min(electronegativity[0], electronegativity[1]);
@@ -220,20 +220,20 @@ public class GasteigerPEPEPartialCharges {
 					DX = gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 3];
 					
 				double Dq = (max1-min1)/DX;
-//					System.out.println("Dq : "+Dq+ " = ("+ max1+"-"+min1+")/"+DX);
+//					logger.debug("Dq : "+Dq+ " = ("+ max1+"-"+min1+")/"+DX);
 				double epN1 = getElectrostaticPotentialN(iac,atom1,gasteigerFactors[k]);
 				double epN2 = getElectrostaticPotentialN(iac,atom2,gasteigerFactors[k]);
 				double SumQN = Math.abs(epN1 - epN2);
-//					System.out.println("sum("+SumQN+") = ("+epN1+") - ("+epN2+")");
+//					logger.debug("sum("+SumQN+") = ("+epN1+") - ("+epN2+")");
 				
 				/* electronic weight*/
 				double WE = Dq + fE*SumQN;
-//					System.out.println("WE : "+WE+" = Dq("+Dq+")+fE("+fE+")*SumQN("+SumQN);
+//					logger.debug("WE : "+WE+" = Dq("+Dq+")+fE("+fE+")*SumQN("+SumQN);
 				int iTE = iter+1;
 				
 				/* total topological*/
 				double W = WE*Wt[k-1]*fS/(iTE);
-//					System.out.println("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
+//					logger.debug("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
 				
 				/* atom1 */
 				if(iac.getAtom(atom1).getFormalCharge() == 0){
@@ -267,7 +267,7 @@ public class GasteigerPEPEPartialCharges {
 						double charge = ac.getAtom(i).getCharge();
 						double chargeT = 0.0;
 						chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
-//						System.out.println("i<|"+chargeT+"=c:" +charge + "+g: "+gasteigerFactors[k][STEP_SIZE * i + i + 5]);
+//						logger.debug("i<|"+chargeT+"=c:" +charge + "+g: "+gasteigerFactors[k][STEP_SIZE * i + i + 5]);
 						ac.getAtom(i).setCharge(chargeT);
 					}
 			}
@@ -380,7 +380,7 @@ public class GasteigerPEPEPartialCharges {
 
 	            double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
 				double sumI = CoulombForceConstant*charge/(covalentradius*covalentradius);
-//				System.out.println("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
+//				logger.debug("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
 				sum += sumI;
 			}
 		} catch (CDKException e) {
@@ -443,7 +443,7 @@ public class GasteigerPEPEPartialCharges {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("return "+fQ*fB*fPlus*fA+"= sp:"+fQ+", dc:"+fB+", fPlus:"+fPlus+", fA:"+fA);
+//		logger.debug("return "+fQ*fB*fPlus*fA+"= sp:"+fQ+", dc:"+fB+", fPlus:"+fPlus+", fA:"+fA);
 		
 		return fQ*fB*fPlus*fA;
 	}

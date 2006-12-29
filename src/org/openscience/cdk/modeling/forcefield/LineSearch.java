@@ -656,7 +656,7 @@ public class LineSearch {
 		if (lambdaa < lambdab & lambdab < lambdac & fxb < fxa & fxb < fxc) {
 			brentsMethod();
 			if (wolfeConditions(lineSearchLambda)) {}
-			else {//System.out.println("The Wolfe Conditions are not satisfy");
+			else {//logger.debug("The Wolfe Conditions are not satisfy");
 			}
 		} else {
 			lineSearchLambda = 0;

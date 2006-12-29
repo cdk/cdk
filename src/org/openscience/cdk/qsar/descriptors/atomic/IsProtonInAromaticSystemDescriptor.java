@@ -142,7 +142,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 		IAtom target = atom;
 		IAtom neighbour0 = (IAtom)neighboor.get(0);
 		if(target.getSymbol().equals("H")) {
-			//System.out.println("aromatic proton");
+			//logger.debug("aromatic proton");
 			if(neighbour0.getFlag(CDKConstants.ISAROMATIC)) {
 				isProtonInAromaticSystem = 1;
 			}

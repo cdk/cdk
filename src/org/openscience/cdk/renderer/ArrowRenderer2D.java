@@ -125,8 +125,8 @@ public class ArrowRenderer2D {
 		vector3.normalize();
 		vector3.scale(20);
 		center.add(vector3);
-		System.out.println("rotAngle: " + rotAngle * 360 / (Math.PI * 2));
-		System.out.println("offsetAngle: " + offsetAngle * 360 / (Math.PI * 2));
+		logger.debug("rotAngle: ", rotAngle * 360 / (Math.PI * 2));
+		logger.debug("offsetAngle: ", offsetAngle * 360 / (Math.PI * 2));
 		arc.setArcByCenter(center.x, ss.height - center.y, point1.distance(point2)/2,(rotAngle* 360 / (Math.PI * 2)),180,Arc2D.OPEN );
 		return arc;
 	

@@ -75,9 +75,7 @@ public class RingPartitioner {
             IRingSet newRs = ring.getBuilder().newRingSet();
             newRs.addAtomContainer(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
-            if (debug) {
-                System.out.println("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
-            }
+//            logger.debug("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
             ringSets.addElement(walkRingSystem(rs, ring, newRs));
 
         } while (rs.getAtomContainerCount() > 0);
@@ -126,9 +124,7 @@ public class RingPartitioner {
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
         List tempRings = rs.getConnectedRings(ring);
-        if (debug) {
-            System.out.println("walkRingSystem -> tempRings.size(): " + tempRings.size());
-        }
+//        logger.debug("walkRingSystem -> tempRings.size(): " + tempRings.size());
         rs.removeAtomContainer(ring);
         Iterator iter = tempRings.iterator();
         while (iter.hasNext()) {

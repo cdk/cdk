@@ -98,7 +98,7 @@ public class InductivePartialCharges {
 		double[] startEE = getPaulingElectronegativities(ac, true);
 		for (int e = 0; e < atoms.length; e++) {
 			ElEn[e] = startEE[e];
-			////System.out.println("INDU: initial EE "+startEE[e]);
+			//logger.debug("INDU: initial EE "+startEE[e]);
 		}
 		//double tmp1 = 0;
 		//double tmp2 = 0;
@@ -113,7 +113,7 @@ public class InductivePartialCharges {
 				}
 				//tmp1 = pCh[a + (s * atoms.length)];
 				//tmp2 = ElEn[a + (s * atoms.length)];
-				//System.out.println("DONE step " + s + ", atom " + atoms[a].getSymbol() + ", ch " + tmp1 + ", ee " + tmp2);
+				//logger.debug("DONE step " + s + ", atom " + atoms[a].getSymbol() + ", ch " + tmp1 + ", ee " + tmp2);
 			}
 		}
 		return ac;
@@ -269,7 +269,7 @@ public class InductivePartialCharges {
 		double incrementedCharge = 0;
 		double radiusTarget = 0;
 		target = ac.getAtom(atomPosition);
-		////System.out.println("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
+		//logger.debug("ATOM "+target.getSymbol()+" AT POSITION "+atomPosition);
 		allAtoms = AtomContainerManipulator.getAtomArray(ac);
 		double tmp = 0;
 		double radius = 0;
@@ -308,11 +308,11 @@ public class InductivePartialCharges {
 				tmp = tmp / (calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
 				incrementedCharge += tmp;
 				//if(actualStep==1)
-				////System.out.println("INDU: particular atom "+symbol+ ", radii: "+ radius+ " - " + radiusTarget+", dist: "+calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
+				//logger.debug("INDU: particular atom "+symbol+ ", radii: "+ radius+ " - " + radiusTarget+", dist: "+calculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
 			}
 		}
 		incrementedCharge = 0.172 * incrementedCharge;
-		////System.out.println("Increment: " +incrementedCharge);
+		//logger.debug("Increment: " +incrementedCharge);
 		return incrementedCharge;
 	}
 

@@ -43,7 +43,7 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	 *
 	 */
 	public MMFF94EnergyFunction(IAtomContainer molecule, Hashtable mmff94Tables) throws Exception {
-		//System.out.println("MMFF94EnergyFunction Constructor");
+		//logger.debug("MMFF94EnergyFunction Constructor");
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables,true);
 		sbi.setMMFF94StretchBendParameters(molecule, mmff94Tables,false);
@@ -97,7 +97,7 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 			+ vdwi.getFunctionMMFF94SumEvdW()
 			+ ei.functionMMFF94SumEQ(coords3d);
 		
-		//System.out.println("energy = " + bs.mmff94SumEB + "  " + ab.mmff94SumEA + "  " + sbi.getFunctionMMFF94SumEBA() + "  " + t.mmff94SumET + "  " + vdwi.getFunctionMMFF94SumEvdW() + "  " + ei.mmff94SumEQ);
+		//logger.debug("energy = " + bs.mmff94SumEB + "  " + ab.mmff94SumEA + "  " + sbi.getFunctionMMFF94SumEBA() + "  " + t.mmff94SumET + "  " + vdwi.getFunctionMMFF94SumEvdW() + "  " + ei.mmff94SumEQ);
 		
 		return energy;
 	}

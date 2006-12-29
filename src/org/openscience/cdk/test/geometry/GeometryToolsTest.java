@@ -102,18 +102,18 @@ public class GeometryToolsTest extends CDKTestCase {
 	   
 	    try {
 			mappedAtoms=GeometryToolsInternalCoordinates.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
-			//System.out.println("mappedAtoms:"+mappedAtoms.toString());
-			//System.out.println("***** ANGLE VARIATIONS *****");
+			//logger.debug("mappedAtoms:"+mappedAtoms.toString());
+			//logger.debug("***** ANGLE VARIATIONS *****");
 			double AngleRMSD=GeometryToolsInternalCoordinates.getAngleRMSD(molOne,molTwo,mappedAtoms);
-			//System.out.println("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
-			//System.out.println("***** ALL ATOMS RMSD *****");
+			//logger.debug("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
+			//logger.debug("***** ALL ATOMS RMSD *****");
 			assertEquals(0.2, AngleRMSD, 0.1);
 			double AllRMSD=GeometryToolsInternalCoordinates.getAllAtomRMSD(molOne,molTwo,mappedAtoms,true);
-			//System.out.println("The RMSD between the first and the second structure is :"+AllRMSD);
+			//logger.debug("The RMSD between the first and the second structure is :"+AllRMSD);
 			assertEquals(0.242, AllRMSD, 0.001);
-			//System.out.println("***** BOND LENGTH RMSD *****");
+			//logger.debug("***** BOND LENGTH RMSD *****");
 			double BondLengthRMSD=GeometryToolsInternalCoordinates.getBondLengthRMSD(molOne,molTwo,mappedAtoms,true);
-			//System.out.println("The Bond length RMSD between the first and the second structure is :"+BondLengthRMSD);
+			//logger.debug("The Bond length RMSD between the first and the second structure is :"+BondLengthRMSD);
 			assertEquals(0.2, BondLengthRMSD, 0.1);
 	    } catch (CDKException e) {
 			// TODO Auto-generated catch block

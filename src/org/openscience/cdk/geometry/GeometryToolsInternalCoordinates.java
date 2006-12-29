@@ -559,8 +559,8 @@ public class GeometryToolsInternalCoordinates {
 	 */
 	public static double getAngle(double xDiff, double yDiff) {
 		double angle = 0;
-//		System.out.println("getAngle->xDiff: " + xDiff);
-//		System.out.println("getAngle->yDiff: " + yDiff);
+//		logger.debug("getAngle->xDiff: " + xDiff);
+//		logger.debug("getAngle->yDiff: " + yDiff);
 		if (xDiff >= 0 && yDiff >= 0) {
 			angle = Math.atan(yDiff / xDiff);
 		} else if (xDiff < 0 && yDiff >= 0) {
@@ -1008,31 +1008,31 @@ public class GeometryToolsInternalCoordinates {
 	 */
 	public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, double searchRadius, Map mappedAtoms)throws CDKException {
 		//to return the mapping setProperty("MappedAtom",AtomNumber)
-		//System.out.println("**** MAP ATOMS ****");
+		//logger.debug("**** MAP ATOMS ****");
 		getLargestAtomContainer(firstAtomContainer,secondAtomContainer);
 		double[][] distanceMatrix=new double[firstAtomContainer.getAtomCount()][secondAtomContainer.getAtomCount()];
 		for (int i=0;i<firstAtomContainer.getAtomCount();i++){
 			Point3d firstAtomPoint=firstAtomContainer.getAtom(i).getPoint3d();
-			//System.out.println("Closest atoms of "+firstAtomContainer.getAtoms()[i].getSymbol()+" :");
+			//logger.debug("Closest atoms of "+firstAtomContainer.getAtoms()[i].getSymbol()+" :");
 			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
 				distanceMatrix[i][j]=firstAtomPoint.distance(secondAtomContainer.getAtom(j).getPoint3d());
-				//System.out.println("Distance "+i+" "+j+":"+distanceMatrix[i][j]);
+				//logger.debug("Distance "+i+" "+j+":"+distanceMatrix[i][j]);
 			}
-			//System.out.println(" Atoms from the secondAtomContainer");
+			//logger.debug(" Atoms from the secondAtomContainer");
 		}
 		
-		//System.out.println();
-		//System.out.print("\t");
+		//logger.debug();
+		//logger.debug("\t");
 		//for (int j=0;j<secondAtomContainer.getAtomCount();j++){
-			//System.out.print(j+" "+secondAtomContainer.getAtomAt(j).getSymbol()+"\t");
+			//logger.debug(j+" "+secondAtomContainer.getAtomAt(j).getSymbol()+"\t");
 		//}
 		//DEBUGG
 		/*double tmp=0;
 		for(int i=0;i<firstAtomContainer.getAtomCount();i++){
-			//System.out.print(i+" "+firstAtomContainer.getAtomAt(i).getSymbol()+"\t");
+			//logger.debug(i+" "+firstAtomContainer.getAtomAt(i).getSymbol()+"\t");
 			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
 				tmp=Math.floor(distanceMatrix[i][j]*10);
-				//System.out.println(tmp/10+"\t");
+				//logger.debug(tmp/10+"\t");
 			}			
 		}*/
 		
@@ -1041,14 +1041,14 @@ public class GeometryToolsInternalCoordinates {
             minimumDistance=searchRadius;
             for (int j=0;j<secondAtomContainer.getAtomCount();j++){
                 if(distanceMatrix[i][j]< searchRadius && distanceMatrix[i][j]< minimumDistance){
-                    //System.out.println("Distance OK "+i+" "+j+":"+distanceMatrix[i][j]+" AtomCheck:"+checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j));
+                    //logger.debug("Distance OK "+i+" "+j+":"+distanceMatrix[i][j]+" AtomCheck:"+checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j));
                     //check atom properties
                     if (checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j)){
                         minimumDistance=distanceMatrix[i][j];
                         mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(firstAtomContainer.getAtom(i))),new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtom(j))));
                         //firstAtomContainer.getAtomAt(i).setProperty("MappedAtom",new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtomAt(j))));
-                        //System.out.println("#:"+countMappedAtoms+" Atom:"+i+" is mapped to Atom"+j);
-                        //System.out.println(firstAtomContainer.getConnectedAtoms(firstAtomContainer.getAtomAt(i)).length);
+                        //logger.debug("#:"+countMappedAtoms+" Atom:"+i+" is mapped to Atom"+j);
+                        //logger.debug(firstAtomContainer.getConnectedAtoms(firstAtomContainer.getAtomAt(i)).length);
                     }
                 }
             }
@@ -1068,7 +1068,7 @@ public class GeometryToolsInternalCoordinates {
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
      */
     public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) throws CDKException {
-        //System.out.println("**** GT MAP ATOMS ****");
+        //logger.debug("**** GT MAP ATOMS ****");
         //Map atoms onto each other
         if (firstAtomContainer.getAtomCount() < 1 & secondAtomContainer.getAtomCount() < 1) {
             return mappedAtoms;
@@ -1079,7 +1079,7 @@ public class GeometryToolsInternalCoordinates {
         List list;
         try {
             list = UniversalIsomorphismTester.getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
-            //System.out.println("ListSize:"+list.size());
+            //logger.debug("ListSize:"+list.size());
             for (int i = 0; i < list.size(); i++) {
                 map = (RMap) list.get(i);
                 atom1 = firstAtomContainer.getAtom(map.getId1());
@@ -1087,9 +1087,9 @@ public class GeometryToolsInternalCoordinates {
                 if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2)))
                 {
                     mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)), new Integer(secondAtomContainer.getAtomNumber(atom2)));
-                    //System.out.println("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
+                    //logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
                 } else {
-                    System.out.println("Error: Atoms are not similar !!");
+                    logger.error("Error: Atoms are not similar !!");
                 }
             }
         } catch (CDKException e) {
@@ -1144,7 +1144,7 @@ public class GeometryToolsInternalCoordinates {
 	 *
 	 **/
 	public static double getBondLengthRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,Map mappedAtoms, boolean Coords3d) {
-        //System.out.println("**** GT getBondLengthRMSD ****");
+        //logger.debug("**** GT getBondLengthRMSD ****");
         Iterator firstAtoms=mappedAtoms.keySet().iterator();
         IAtom centerAtomFirstMolecule;
         IAtom centerAtomSecondMolecule;
@@ -1192,9 +1192,9 @@ public class GeometryToolsInternalCoordinates {
 	 *
 	 **/
 	public static double getAngleRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) {
-        //System.out.println("**** GT getAngleRMSD ****");
+        //logger.debug("**** GT getAngleRMSD ****");
         Iterator firstAtoms=mappedAtoms.keySet().iterator();
-        //System.out.println("mappedAtoms:"+mappedAtoms.toString());
+        //logger.debug("mappedAtoms:"+mappedAtoms.toString());
         IAtom firstAtomfirstAC;
         IAtom centerAtomfirstAC;
         IAtom firstAtomsecondAC;
@@ -1209,7 +1209,7 @@ public class GeometryToolsInternalCoordinates {
             centerAtomfirstAC=firstAtomContainer.getAtom(firstAtomNumber);
             java.util.List connectedAtoms=firstAtomContainer.getConnectedAtomsList(centerAtomfirstAC);
             if (connectedAtoms.size() >1){
-                //System.out.println("If "+centerAtomfirstAC.getSymbol()+" is the center atom :");
+                //logger.debug("If "+centerAtomfirstAC.getSymbol()+" is the center atom :");
                 for (int i=0; i < connectedAtoms.size()-1;i++){
                     firstAtomfirstAC=(IAtom)connectedAtoms.get(i);
                     for (int j=i+1; j < connectedAtoms.size();j++){
@@ -1220,7 +1220,7 @@ public class GeometryToolsInternalCoordinates {
                         angleSecondMolecule=getAngle(centerAtomsecondAC,firstAtomsecondAC,secondAtomsecondAC);
                         sum=sum+Math.pow(angleFirstMolecule-angleSecondMolecule,2);
                         n++;
-                        //System.out.println("Error for the "+firstAtomfirstAC.getSymbol().toLowerCase()+"-"+centerAtomfirstAC.getSymbol()+"-"+connectedAtoms[j].getSymbol().toLowerCase()+" Angle :"+deltaAngle+" degrees");
+                        //logger.debug("Error for the "+firstAtomfirstAC.getSymbol().toLowerCase()+"-"+centerAtomfirstAC.getSymbol()+"-"+connectedAtoms[j].getSymbol().toLowerCase()+" Angle :"+deltaAngle+" degrees");
                     }
                 }
             }//if
@@ -1263,7 +1263,7 @@ public class GeometryToolsInternalCoordinates {
 	 *
 	 **/
 	public static double getAllAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean Coords3d)throws CDKException {
-		//System.out.println("**** GT getAllAtomRMSD ****");
+		//logger.debug("**** GT getAllAtomRMSD ****");
 		double sum=0;
 		double RMSD;
 		Iterator firstAtoms=mappedAtoms.keySet().iterator();
@@ -1303,7 +1303,7 @@ public class GeometryToolsInternalCoordinates {
 	 *
 	 **/
 	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms, boolean hetAtomOnly ,boolean Coords3d)throws CDKException {
-		//System.out.println("**** GT getAllAtomRMSD ****");
+		//logger.debug("**** GT getAllAtomRMSD ****");
 		double sum=0;
 		double RMSD=0;
 		Iterator firstAtoms=mappedAtoms.keySet().iterator();

@@ -176,8 +176,8 @@ public class ClosedShellJob
     Matrix D = new Matrix(size,size);
     log.debug("D:occ="+occ+" locc="+locc);
 
-    if (locc!=0)
-      System.out.println("This class work only correct for closed shells");
+//    if (locc!=0)
+//      logger.debug("This class work only correct for closed shells");
 
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)

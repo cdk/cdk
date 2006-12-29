@@ -62,7 +62,7 @@ public class EccentricConnectivityIndexDescriptorTest extends CDKTestCase {
 
         IMolecularDescriptor descriptor = new EccentricConnectivityIndexDescriptor();
         IntegerResult retval = (IntegerResult) descriptor.calculate(ac).getValue();
-        //System.out.println(retval.intValue());
+        //logger.debug(retval.intValue());
 
         assertEquals(254, retval.intValue(), 0);
     }

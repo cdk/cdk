@@ -200,7 +200,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
                 // TODO: is this the same as the VDW radius?
                 double radius = atom.getCovalentRadius();
-                //System.out.println("radius = " + radius);
+                //logger.debug("radius = " + radius);
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);

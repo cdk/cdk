@@ -41,7 +41,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1"); 
 		assertEquals(10, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		//System.out.println("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test3LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMolecularDescriptor descriptor = new LargestPiSystemDescriptor();
@@ -49,7 +49,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2"); 
-		//System.out.println("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		//logger.debug("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		assertEquals(8, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test4LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -58,7 +58,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC=CNCC"); 
-		//System.out.println("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
+		//logger.debug("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test5LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -67,7 +67,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC"); 
-		//System.out.println("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
+		//logger.debug("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test6LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -76,7 +76,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCNOC"); 
-		//System.out.println("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
+		//logger.debug("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	public void test7LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -85,7 +85,7 @@ public class LargestPiSystemDescriptorTest extends CDKTestCase{
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O"); 
-		//System.out.println("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
+		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());		
 		assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 }

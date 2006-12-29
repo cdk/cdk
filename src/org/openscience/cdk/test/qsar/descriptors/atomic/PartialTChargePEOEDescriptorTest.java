@@ -200,7 +200,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-//	        System.out.println(mol.getAtomAt(i).getSymbol()+" = "+result);
+//	        logger.debug(mol.getAtomAt(i).getSymbol()+" = "+result);
 	        assertEquals(testResult[i],result, 0.09);
 		}
 	}

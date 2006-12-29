@@ -30,6 +30,7 @@ import org.openscience.cdk.graph.invariant.exception.BadMatrixFormatException;
 import org.openscience.cdk.graph.invariant.exception.IndexOutOfBoundsException;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.tools.LoggingTool;
 
 import java.util.Iterator;
 
@@ -39,6 +40,8 @@ import java.util.Iterator;
  */
 public class HuLuIndexTool
 {
+	private final static LoggingTool logger = new LoggingTool(HuLuIndexTool.class);
+	
     /**
    * Calculates the extended adjacency matrix index.
    * An implementation of the algorithm published in {@cdk.cite HU96}.
@@ -66,16 +69,9 @@ public class HuLuIndexTool
         }
         double eaid = matrix.trace();
 
-        if (debug)
-        {
-            System.out.println();
-            System.out.println("final matrix - the sum of the powers of EA matrix: ");
-            System.out.println();
-            displayMatrix(matrix.getArrayValue());
-            System.out.println();
-            System.out.println("eaid number: "+ eaid);
-            System.out.println();
-        }
+        logger.debug("final matrix - the sum of the powers of EA matrix: ");
+        displayMatrix(matrix.getArrayValue());
+        logger.debug("eaid number: "+ eaid);
 
         return eaid;
     }
@@ -86,13 +82,9 @@ public class HuLuIndexTool
     {
         boolean debug = false;
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
-        if (debug)
-        {
-            System.out.println("adjacency matrix: ");
-            System.out.println();
-            displayMatrix(adjaMatrix);
-            System.out.println();
-        }
+
+        logger.debug("adjacency matrix: ");
+        displayMatrix(adjaMatrix);
 
         double[] atomWeights = getAtomWeights(atomContainer);
 
@@ -119,13 +111,9 @@ public class HuLuIndexTool
             }
         }
 
-        if (debug)
-        {
-            System.out.println("extended adjacency matrix: ");
-            System.out.println();
-            displayMatrix(adjaMatrix);
-            System.out.println();
-        }
+        logger.debug("extended adjacency matrix: ");
+        displayMatrix(adjaMatrix);
+
         return adjaMatrix;
     }
 
@@ -145,20 +133,12 @@ public class HuLuIndexTool
         int[] valenceSum;
         int[] interLayerBondSum;
 
-        if (debug)
-        {
-            System.out.println("adjacency matrix: ");
-            System.out.println();
-            displayMatrix(adjaMatrix);
-            System.out.println();
-            System.out.println("all-pairs-shortest-path matrix: ");
-            System.out.println();
-            displayMatrix(apspMatrix);
-            System.out.println();
-            System.out.println("atom layers: ");
-            displayArray(atomLayers);
-            System.out.println();
-        }
+        logger.debug("adjacency matrix: ");
+        displayMatrix(adjaMatrix);
+        logger.debug("all-pairs-shortest-path matrix: ");
+        displayMatrix(apspMatrix);
+        logger.debug("atom layers: ");
+        displayArray(atomLayers);
 
         for (int i = 0; i < atomContainer.getAtomCount(); i++)
         {
@@ -220,24 +200,15 @@ public class HuLuIndexTool
                 weightArray[i] += interLayerBondSum[j] * valenceSum[j+1] * Math.pow(10, -(j+1));
             }
 
-            if (debug)
-            {
-                System.out.println("valence sum: ");
-                displayArray(valenceSum);
-                System.out.println();
-                System.out.println("inter-layer bond sum: ");
-                displayArray(interLayerBondSum);
-                System.out.println();
-            }
+            logger.debug("valence sum: ");
+            displayArray(valenceSum);
+            logger.debug("inter-layer bond sum: ");
+            displayArray(interLayerBondSum);
         }
 
-        if (debug)
-        {
-            System.out.println("weight array: ");
-            System.out.println();
-            displayArray(weightArray);
-            System.out.println();
-        }
+        logger.debug("weight array: ");
+        displayArray(weightArray);
+
         return weightArray;
     }
 
@@ -267,7 +238,7 @@ public class HuLuIndexTool
             {
                 line += matrix[g][f] + " | ";
             }
-            System.out.println(line);
+            logger.debug(line);
         }
     }
 
@@ -281,7 +252,7 @@ public class HuLuIndexTool
             {
                 line += matrix[g][f] + " | ";
             }
-            System.out.println(line);
+            logger.debug(line);
         }
     }
 
@@ -292,7 +263,7 @@ public class HuLuIndexTool
         {
             line += array[f] + " | ";
         }
-        System.out.println(line);
+        logger.debug(line);
     }
 
     /** Lists a 1D array to the System console */
@@ -302,7 +273,7 @@ public class HuLuIndexTool
         {
             line += array[f] + " | ";
         }
-        System.out.println(line);
+        logger.debug(line);
     }
 
 }  

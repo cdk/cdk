@@ -100,7 +100,7 @@ public class JCPAction extends AbstractAction
 	public JCPAction(JChemPaintPanel jcpPanel, String type, boolean isPopupAction)
 	{
 		super();
-		//System.out.println("JCPAction->type: " + type);
+		//logger.debug("JCPAction->type: " + type);
 		if (JCPAction.logger == null)
 		{
 			JCPAction.logger = new LoggingTool(this);

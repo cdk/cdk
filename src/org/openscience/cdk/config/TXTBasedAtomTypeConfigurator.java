@@ -74,7 +74,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
         if (ins == null) {
             // trying the default
-            //System.out.println("readAtomTypes getResourceAsStream:"
+            //logger.debug("readAtomTypes getResourceAsStream:"
             //                   + configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         }

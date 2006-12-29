@@ -30,9 +30,13 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-
+/**
+ * @cdk.bug 1624341
+ */
 public class AtomicProperties {
 
+	private LoggingTool logger;
+	
 	private static AtomicProperties ap=null;
 	
 	private Hashtable htMass=new Hashtable();
@@ -42,6 +46,8 @@ public class AtomicProperties {
 	
 	
 	private AtomicProperties() throws IOException {
+		
+		logger = new LoggingTool(this);
 		
 	    String configFile = "src/org/openscience/cdk/config/data/whim_weights.txt";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
@@ -103,7 +109,8 @@ public class AtomicProperties {
 		try {
 			VdWVolume=Double.parseDouble(strVdWVolume);
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error while parsing the Vanderwaals volume: " + e.getMessage());
+			logger.debug(e);
 		}
 		
 		
@@ -128,7 +135,8 @@ public class AtomicProperties {
 		try {
 		Electronegativity=Double.parseDouble(strElectronegativity);
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error while parsing the electronegativity: " + e.getMessage());
+			logger.debug(e);
 		}
 		
 		
@@ -152,7 +160,8 @@ public class AtomicProperties {
 		try {
 		Polarizability=Double.parseDouble(strPolarizability);
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error while parsing the polarizability: " + e.getMessage());
+			logger.debug(e);
 		}
 		
 		
@@ -177,7 +186,8 @@ public class AtomicProperties {
 		mass=Double.parseDouble(strMass);
 		
 		} catch (Exception e) {
-			System.out.println("AtomicProperties--GetMass:"+symbol);
+			logger.error("Error while parsing the mass: " + e.getMessage());
+			logger.debug(e);
 		}
 		
 		

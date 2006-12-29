@@ -186,7 +186,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 //			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H12","");
 //			Vector smiles=gdg.getSMILES();
 //			//for(int i=0;i<smiles.size();i++)
-//			//	System.out.println(smiles.get(i));
+//			//	logger.debug(smiles.get(i));
 //			//everythingOk(structures);
 ////			displaySMILES(smiles);
 //		}
@@ -205,15 +205,15 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 //		Molecule mol = null;
 //		for (int f = 0; f<structures.size(); f++)
 //		{
-//		//	System.out.println(structures.get(f));
+//		//	logger.debug(structures.get(f));
 //			try
 //			{
 //				mol=sp.parseSmiles((String)(structures.get(f)));
 //				sdg = new StructureDiagramGenerator();
 //
 //			//mol = (Molecule)structures.elementAt(f);
-//			//System.out.println(mol.getAtomCount());
-//			//System.out.println(mol.getBondCount());
+//			//logger.debug(mol.getAtomCount());
+//			//logger.debug(mol.getBondCount());
 //				sdg.setMolecule((Molecule)mol.clone());
 //			//sdg.setMolecule(mol);
 //			
@@ -246,8 +246,8 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 			sdg = new StructureDiagramGenerator();
 
 			mol = (Molecule)structures.get(f);
-			//System.out.println(mol.getAtomCount());
-			//System.out.println(mol.getBondCount());
+			//logger.debug(mol.getAtomCount());
+			//logger.debug(mol.getBondCount());
 			sdg.setMolecule((Molecule)mol.clone());
 			//sdg.setMolecule(mol);
 			try

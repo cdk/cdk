@@ -41,16 +41,16 @@ public abstract class ForceFieldTools {
      */
     public static  GVector getCoordinates3xNVector(IAtomContainer molecule) {
 
-        //System.out.println("molecule: " + molecule.toString());
-        //System.out.println("Atoms number = " + molecule.getAtomCount());
+        //logger.debug("molecule: " + molecule.toString());
+        //logger.debug("Atoms number = " + molecule.getAtomCount());
         GVector coords3d_0 = new GVector(3 * (molecule.getAtomCount()));
-        //System.out.println("coords3d_0 = " + coords3d_0);
+        //logger.debug("coords3d_0 = " + coords3d_0);
 
         int j;
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            //System.out.println("thisAtom = " + thisAtom);
-            //System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
+            //logger.debug("thisAtom = " + thisAtom);
+            //logger.debug("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
             j = 3 * i;
             coords3d_0.setElement(j, molecule.getAtom(i).getPoint3d().x);
@@ -58,7 +58,7 @@ public abstract class ForceFieldTools {
             coords3d_0.setElement(j + 2, molecule.getAtom(i).getPoint3d().z);
         }
 
-        //System.out.println("Atoms coordinates vector: " + coords3d_0);
+        //logger.debug("Atoms coordinates vector: " + coords3d_0);
 
         return coords3d_0;
     }
@@ -73,20 +73,20 @@ public abstract class ForceFieldTools {
      */
     public static  Vector getPoint3dCoordinates(IAtomContainer molecule) {
 
-        //System.out.println("molecule: " + molecule.toString());
-        //System.out.println("Atoms number = " + molecule.getAtomCount());
+        //logger.debug("molecule: " + molecule.toString());
+        //logger.debug("Atoms number = " + molecule.getAtomCount());
         Vector point3dCoordinates = new Vector();
 
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            //System.out.println("thisAtom = " + thisAtom);
-            //System.out.println("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
+            //logger.debug("thisAtom = " + thisAtom);
+            //logger.debug("thisAtom.getPoint3d() = " + thisAtom.getPoint3d());
 
             point3dCoordinates.add(new Point3d(molecule.getAtom(i).getPoint3d()));
             //Point3d ia = (Point3d)point3dCoordinates.get(i);
-            //System.out.println(i + "a = " + ia);
+            //logger.debug(i + "a = " + ia);
         }
 
-        //System.out.println("Atoms 3d coordinates : " + point3dCoordinates);
+        //logger.debug("Atoms 3d coordinates : " + point3dCoordinates);
 
         return point3dCoordinates;
     }
@@ -155,7 +155,7 @@ public abstract class ForceFieldTools {
 
         double atomsDistance;
         atomsDistance = atom13dCoord.distance(atom23dCoord);
-        //System.out.println("atomsDistance = " + atomsDistance);
+        //logger.debug("atomsDistance = " + atomsDistance);
 
         return atomsDistance;
     }
@@ -202,7 +202,7 @@ public abstract class ForceFieldTools {
             atomsDistance = atomsDistance + difference;
         }
         atomsDistance = Math.sqrt(atomsDistance);
-        //System.out.println("atomsDistance = " + atomsDistance);
+        //logger.debug("atomsDistance = " + atomsDistance);
         return atomsDistance;
     }
 
@@ -335,7 +335,7 @@ public abstract class ForceFieldTools {
         double absDot=Math.abs(dot);
         torsion = (dot/absDot > 0) ? torsion : (2 * Math.PI - torsion);
 
-        //System.out.println("torsion" + torsion);
+        //logger.debug("torsion" + torsion);
 
         return torsion;
     }

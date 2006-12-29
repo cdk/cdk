@@ -26,6 +26,7 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point3d;
@@ -51,6 +52,8 @@ import java.util.Vector;
  * @cdk.keyword    pocket
  */
 public class ProteinPocketFinder {
+	
+	private final LoggingTool logger = new LoggingTool(ProteinPocketFinder.class);
 
 	int solvantValue = 0;
 	int proteinInterior = -1;
@@ -122,8 +125,9 @@ public class ProteinPocketFinder {
 			IMoleculeSet setOfMolecules = chemModel.getMoleculeSet();
 			protein = (IBioPolymer) setOfMolecules.getMolecule(0);
 		} catch (Exception exc) {
-			System.out.println("Could not read BioPolymer from file>"
+			logger.error("Could not read BioPolymer from file>"
 					+ biopolymerFile + " due to: " + exc.getMessage());
+			logger.debug(exc);
 		}
 	}
 
@@ -166,7 +170,7 @@ public class ProteinPocketFinder {
 	 * Method creates a cubic grid with the grid generator class.
 	 */
 	public void createCubicGrid() {
-//		System.out.println("	CREATE CUBIC GRID");
+//		logger.debug("	CREATE CUBIC GRID");
 		gridGenerator.setDimension(findGridBoundaries(), true);
 		gridGenerator.generateGrid();
 		this.grid = gridGenerator.getGrid();
@@ -182,7 +186,7 @@ public class ProteinPocketFinder {
 	 * @throws Exception
 	 */
 	public void assignProteinToGrid() throws Exception {
-//		System.out.print("	ASSIGN PROTEIN TO GRID");
+//		logger.debug.print("	ASSIGN PROTEIN TO GRID");
 		// 1. Step: Set all grid points to solvent accessible
 		this.grid = gridGenerator.initializeGrid(this.grid, 0);
 		// 2. Step Grid points inaccessible to solvent are assigend a value of -1
@@ -229,12 +233,12 @@ public class ProteinPocketFinder {
 			}
 		}// for atoms.length
 
-//		System.out.println("- checkGridPoints>" + checkGridPoints
+//		logger.debug("- checkGridPoints>" + checkGridPoints
 //				+ " ProteinGridPoints>" + proteinAtomCount);
 	}
 
 	public void debuggCheckPSPEvent() {
-		System.out.print("	debugg_checkPSPEvent");
+		logger.debug("	debugg_checkPSPEvent");
 		int[] dim = gridGenerator.getDim();
 		// int pspMin=0;
 		int[] pspEvents = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -276,10 +280,10 @@ public class ProteinPocketFinder {
 			if (i >= minPSPocket) {
 				sum = sum + pspEvents[i];
 			}
-			System.out.print(" " + i + ":" + pspEvents[i]);
+			logger.debug(" " + i + ":" + pspEvents[i]);
 		}
-		System.out.println(" pspAll>" + sum);
-		// System.out.println(" PSPAll:"+pspAll+" minPSP:"+minPSP+"
+		logger.debug(" pspAll>" + sum);
+		// logger.debug(" PSPAll:"+pspAll+" minPSP:"+minPSP+"
 		// #pspMin:"+pspMin+" psp7:"+psp7+" proteinGridPoints:"+proteinGrid
 		// +" solventGridPoints:"+solventGrid);
 	}
@@ -290,17 +294,17 @@ public class ProteinPocketFinder {
 	 *
 	 */
 	public void sitefinder() {
-		//System.out.println("SITEFINDER");
+		//logger.debug("SITEFINDER");
 		try {
 			assignProteinToGrid();
 		} catch (Exception ex1) {
-			System.out.println("Problems with assignProteinToGrid due to:"
+			logger.error("Problems with assignProteinToGrid due to:"
 					+ ex1.toString());
 		}
 		// 3. Step scan allong x,y,z axis and the diagonals, if PSP event add +1
 		// to grid cell
 		int[] dim = gridGenerator.getDim();
-//		System.out.println("	SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
+//		logger.debug("	SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
 //				+ this.grid[0].length + " grid point sum:" + this.grid.length
 //				* this.grid[0].length * this.grid[0][0].length);
 		axisScanX(dim[2], dim[1], dim[0]);// x-Axis
@@ -324,7 +328,7 @@ public class ProteinPocketFinder {
 	 *
 	 */
 	private void sortPockets() {
-//		System.out.println("	SORT POCKETS Start#:" + pockets.size());
+//		logger.debug("	SORT POCKETS Start#:" + pockets.size());
 		Hashtable hashPockets = new Hashtable();
 		Vector pocket;
 		Vector sortPockets = new Vector(pockets.size());
@@ -346,14 +350,14 @@ public class ProteinPocketFinder {
 		Collections.sort(keys);
 		for (int i = keys.size() - 1; i >= 0; i--) {
 			Vector value = (Vector) hashPockets.get(keys.get(i));
-//			System.out.println("key:" + i + " Value" + keys.get(i)
+//			logger.debug("key:" + i + " Value" + keys.get(i)
 //					+ " #Pockets:" + value.size());
 			for (int j = 0; j < value.size(); j++) {
 				sortPockets.add(pockets
 						.get(((Integer) value.get(j)).intValue()));
 			}
 		}
-//		System.out.println("	SORT POCKETS End#:" + sortPockets.size());
+//		logger.debug("	SORT POCKETS End#:" + sortPockets.size());
 		pockets = sortPockets;
 	}
 
@@ -364,7 +368,7 @@ public class ProteinPocketFinder {
 	 */
 	private void findPockets() {
 		int[] dim = gridGenerator.getDim();
-//		System.out.println("	FIND POCKETS>dimx:" + dim[0] + " dimy:" + dim[1]
+//		logger.debug("	FIND POCKETS>dimx:" + dim[0] + " dimy:" + dim[1]
 //				+ " dimz:" + dim[2] + " linkageRadius>" + linkageRadius
 //				+ " latticeConstant>" + latticeConstant + " pocketSize:"
 //				+ pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
@@ -374,21 +378,21 @@ public class ProteinPocketFinder {
 		for (int x = 0; x < dim[0]; x++) {
 			for (int y = 0; y < dim[1]; y++) {
 				for (int z = 0; z < dim[2]; z++) {
-					// System.out.print(" x:"+x+" y:"+y+" z:"+z);
+					// logger.debug.print(" x:"+x+" y:"+y+" z:"+z);
 					Point3d start = new Point3d(x, y, z);
 					//pointsVisited++;
 					if (this.grid[x][y][z] >= minPSPocket
 							& !visited.containsKey(x + "." + y + "."+ z)) {
 						Vector subPocket = new Vector();
-						// System.out.print("new Point: "+grid[x][y][z]);
+						// logger.debug.print("new Point: "+grid[x][y][z]);
 						//significantPointsVisited++;
-						// System.out.println("visited:"+pointsVisited);
+						// logger.debug("visited:"+pointsVisited);
 						subPocket = this
 								.clusterPSPPocket(start, subPocket, dim);
 						if (subPocket != null && subPocket.size() >= pocketSize) {
 							pockets.add((Vector) subPocket);
 						}
-						// System.out.println(" Points visited:"+pointsVisited+"
+						// logger.debug(" Points visited:"+pointsVisited+"
 						// subPocketSize:"+subPocket.size()+"
 						// pocketsSize:"+pockets.size()
 						// +" hashtable:"+visited.size());
@@ -399,12 +403,12 @@ public class ProteinPocketFinder {
 
 		}
 //		try {
-//			System.out.println("	->>>> #pockets:" + pockets.size()
+//			logger.debug("	->>>> #pockets:" + pockets.size()
 //					+ " significantPointsVisited:" + significantPointsVisited
 //					+ " keys:" + visited.size() + " PointsVisited:"
 //					+ pointsVisited);
 //		} catch (Exception ex1) {
-//			System.out
+//			logger.debug
 //					.println("Problem in System.out due to " + ex1.toString());
 //		}
 
@@ -414,7 +418,7 @@ public class ProteinPocketFinder {
 	 * Method performs the clustering, is called by findPockets().
 	 */
 	public Vector clusterPSPPocket(Point3d root, Vector sub_Pocket, int[] dim) {
-		// System.out.println(" ****** New Root ******:"+root.x+" "+root.y+"
+		// logger.debug(" ****** New Root ******:"+root.x+" "+root.y+"
 		// "+root.z);
 		visited.put((int) root.x + "." + (int) root.y + "."
                 + (int) root.z, new Integer(1));
@@ -426,20 +430,20 @@ public class ProteinPocketFinder {
 		minMax[4] = (int) (root.z - linkageRadius);
 		minMax[5] = (int) (root.z + linkageRadius);
 		minMax = checkBoundaries(minMax, dim);
-		// System.out.println("cluster:"+minMax[0]+" "+minMax[1]+" "+minMax[2]+"
+		// logger.debug("cluster:"+minMax[0]+" "+minMax[1]+" "+minMax[2]+"
 		// "+minMax[3]+" "+minMax[4]+" "+minMax[5]+" ");
 		for (int k = minMax[0]; k <= minMax[1]; k++) {
 			for (int m = minMax[2]; m <= minMax[3]; m++) {
 				for (int l = minMax[4]; l <= minMax[5]; l++) {
 					Point3d node = new Point3d(k, m, l);
-					// System.out.println(" clusterPSPPocket:"+root.x+"
+					// logger.debug(" clusterPSPPocket:"+root.x+"
 					// "+root.y+" "+root.z+" ->"+k+" "+m+" "+l+"
 					// #>"+this.grid[k][m][l]+" key:"+visited.containsKey(new
 					// String(k+"."+m+"."+l)));
 					if (this.grid[k][m][l] >= minPSCluster
 							&& !visited.containsKey(k + "." + m
                             + "." + l)) {
-						// System.out.println(" ---->FOUND");
+						// logger.debug(" ---->FOUND");
 						sub_Pocket.add(node);
 						this.clusterPSPPocket(node, sub_Pocket, dim);
 					}
@@ -501,7 +505,7 @@ public class ProteinPocketFinder {
 	 */
 	public void diagonalAxisScanXZY(int dimK, int dimL, int dimM) {
 		// x min ->x max;left upper corner z+y max->min//1
-		//System.out.print("	diagonalAxisScanXZY");
+		//logger.debug("	diagonalAxisScanXZY");
 		if (dimM < dimL) {
 			dimL = dimM;
 		}
@@ -538,7 +542,7 @@ public class ProteinPocketFinder {
 			}
 			dimL = j;
 		}
-		//System.out.println(" #gridPoints>" + gridPoints);
+		//logger.debug(" #gridPoints>" + gridPoints);
 	}
 
 	/**
@@ -550,7 +554,7 @@ public class ProteinPocketFinder {
 	 */
 	public void diagonalAxisScanYZX(int dimK, int dimL, int dimM) {
 		// y min -> y max; right lower corner zmax->zmin, xmax ->min//4
-		// System.out.print(" diagonalAxisScanYZX");
+		// logger.debug.print(" diagonalAxisScanYZX");
 		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
@@ -587,7 +591,7 @@ public class ProteinPocketFinder {
 			}
 			dimL = j;
 		}
-		// System.out.println(" #gridPoints>"+gridPoints);
+		// logger.debug(" #gridPoints>"+gridPoints);
 	}
 
 	/**
@@ -599,7 +603,7 @@ public class ProteinPocketFinder {
 	 */
 	public void diagonalAxisScanYXZ(int dimK, int dimL, int dimM) {
 		// y min -> y max; left lower corner z max->min, x min->max//2
-		// System.out.print(" diagonalAxisScanYXZ");
+		// logger.debug.print(" diagonalAxisScanYXZ");
 		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
@@ -638,7 +642,7 @@ public class ProteinPocketFinder {
 			}// for k;y
 			dimM = j;
 		}
-		// System.out.println(" #gridPoints>"+gridPoints);
+		// logger.debug(" #gridPoints>"+gridPoints);
 	}
 
 	/**
@@ -650,7 +654,7 @@ public class ProteinPocketFinder {
 	 */
 	public void diagonalAxisScanXYZ(int dimK, int dimL, int dimM) {
 		// x min -> xmax;left lower corner z max->min, y min->max//3
-		// System.out.print(" diagonalAxisScanXYZ");
+		// logger.debug.print(" diagonalAxisScanXYZ");
 		//int gridPoints = 0;//Debugging
 		if (dimM < dimL) {
 			dimL = dimM;
@@ -689,7 +693,7 @@ public class ProteinPocketFinder {
 			}// for k;x
 			dimM = j;
 		}
-		// System.out.println(" #gridPoints>"+gridPoints);
+		// logger.debug(" #gridPoints>"+gridPoints);
 	}
 
 	/**
@@ -701,7 +705,7 @@ public class ProteinPocketFinder {
 	 */
 	public void axisScanX(int dimK, int dimL, int dimM) {
 		// z,y,x
-//		System.out.print("	diagonalAxisScanX");
+//		logger.debug.print("	diagonalAxisScanX");
 		//int gridPoints = 0;//Debugging
 		Vector line = new Vector();
 		int pspEvent = 0;
@@ -731,7 +735,7 @@ public class ProteinPocketFinder {
 				}
 			}
 		}
-//		System.out.println(" #gridPoints>" + gridPoints);
+//		logger.debug(" #gridPoints>" + gridPoints);
 	}
 
 	/**
@@ -833,7 +837,7 @@ public class ProteinPocketFinder {
 			try {
 				atf.configure(atoms[i]);
 			} catch (Exception ex2) {
-				System.out.println("Problem with atf.configure due to:"
+				logger.error("Problem with atf.configure due to:"
 						+ ex2.toString());
 			}
 		}
@@ -847,8 +851,7 @@ public class ProteinPocketFinder {
 		try {
 			gridGenerator.writeGridInPmeshFormat(outPutFileName);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 
@@ -859,8 +862,7 @@ public class ProteinPocketFinder {
 		try {
 			gridGenerator.writeGridInPmeshFormat(outPutFileName, minPSPocket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 
@@ -871,8 +873,7 @@ public class ProteinPocketFinder {
 		try {
 			gridGenerator.writeGridInPmeshFormat(outPutFileName, -1);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 
@@ -900,8 +901,7 @@ public class ProteinPocketFinder {
 				writer.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 

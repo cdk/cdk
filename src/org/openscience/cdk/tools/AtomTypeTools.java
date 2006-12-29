@@ -74,7 +74,7 @@ public class AtomTypeTools {
 	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
         SmilesGenerator sg = new SmilesGenerator();
 
-		//System.out.println("assignAtomTypePropertiesToAtom Start ...");
+		//logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		String hoseCode = "";
 		org.openscience.cdk.interfaces.IRingSet ringSetA = null;
@@ -84,7 +84,7 @@ public class AtomTypeTools {
 		try {
 			HueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
-			//System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+			//logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 			logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 		}
 

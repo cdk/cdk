@@ -153,7 +153,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @see #setParameters
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        //System.out.println("LargestPiSystemDescriptor");
+        //logger.debug("LargestPiSystemDescriptor");
         if (checkAromaticity) {
             IRingSet rs = (new AllRingsFinder()).findAllRings(container);
             HueckelAromaticityDetector.detectAromaticity(container, rs, true);
@@ -165,13 +165,13 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
         for (int i = 0; i < container.getAtomCount(); i++) {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
         }
-        //System.out.println("Set all atoms to Visited False");
+        //logger.debug("Set all atoms to Visited False");
         for (int i = 0; i < container.getAtomCount(); i++) {
             //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
-            //System.out.println("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
+            //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
             if ((container.getMaximumBondOrder(container.getAtom(i)) > 1 || Math.abs(container.getAtom(i).getFormalCharge()) >= 1 || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC) || container.getAtom(i).getSymbol().equals("N") || container.getAtom(i).getSymbol().equals("O")) & !container.getAtom(i).getFlag(CDKConstants.VISITED))
             {
-                //System.out.println("...... -> Accepted");
+                //logger.debug("...... -> Accepted");
                 startSphere = new Vector();
                 path = new Vector();
                 startSphere.addElement(container.getAtom(i));
@@ -206,18 +206,18 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
         IAtom atom = null;
         IAtom nextAtom = null;
         Vector newSphere = new Vector();
-        //System.out.println("Start of breadthFirstSearch");
+        //logger.debug("Start of breadthFirstSearch");
         for (int i = 0; i < sphere.size(); i++) {
             atom = (IAtom) sphere.elementAt(i);
-            //System.out.println("BreadthFirstSearch around atom " + (atomNr + 1));
+            //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
             java.util.List bonds = container.getConnectedBondsList(atom);
             for (int j = 0; j < bonds.size(); j++) {
                 nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
                 if ((container.getMaximumBondOrder(nextAtom) > 1 || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(CDKConstants.ISAROMATIC) || nextAtom.getSymbol().equals("N") || nextAtom.getSymbol().equals("O")) & !nextAtom.getFlag(CDKConstants.VISITED))
                 {
-                    //System.out.println("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
+                    //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.addElement(nextAtom);
-                    //System.out.println("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
+                    //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
                         newSphere.addElement(nextAtom);

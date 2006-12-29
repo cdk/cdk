@@ -387,33 +387,7 @@ public class SimpleCycleBasis {
 		return u;
 	}
 	
-	
-	public void printIncidenceMatrix() {
 		
-		/*
-		 for (int j=0; j<edgeList.size(); j++) {
-		 System.out.print(((Edge) edgeList.get(j)).getSource());
-		 }
-		 System.out.println();
-		 for (int j=0; j<edgeList.size(); j++) {
-		 System.out.print(((Edge) edgeList.get(j)).getTarget());
-		 }
-		 System.out.println();
-		 for (int j=0; j<edgeList.size(); j++) {
-		 System.out.print('-');
-		 }
-		 System.out.println();
-		 */
-		
-		boolean[][] incidMatr = getCycleEdgeIncidenceMatrix();
-		for (int i=0; i<incidMatr.length; i++) {
-			for (int j=0; j<incidMatr[i].length; j++) {
-				System.out.print(incidMatr[i][j]?1:0);
-			}
-			System.out.println();
-		}
-	}
-	
 	public int[] weightVector() {
 		
 		int[] result = new int[cycles.size()];

@@ -83,7 +83,7 @@ public class TemplateHandler3D {
      * Template file is a mdl file. Creates a Object Set of Molecules
      */
     public void loadTemplates() throws CDKException {
-        //System.out.println("TEMPLATE START");
+        //logger.debug("TEMPLATE START");
         IteratingMDLReader imdl;
         InputStream ins;
         BufferedReader fin;
@@ -106,7 +106,7 @@ public class TemplateHandler3D {
         } catch (Exception exc2) {
             System.out.println("Could not close Reader due to: " + exc2.getMessage());
         }
-        //System.out.println("TEMPLATE Finger");
+        //logger.debug("TEMPLATE Finger");
         try {
 
             ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz");
@@ -127,7 +127,7 @@ public class TemplateHandler3D {
             }
             fingerprintData.add((BitSet) getBitSetFromFile(new StringTokenizer(s, "\t ;{, }")));
         }
-        //System.out.println("Fingerprints are read in:"+fingerprintData.size());
+        //logger.debug("Fingerprints are read in:"+fingerprintData.size());
     }
 
     private BitSet getBitSetFromFile(StringTokenizer st) {
@@ -152,7 +152,7 @@ public class TemplateHandler3D {
      * @param NumberOfRingAtoms double
      */
     public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception {
-        //System.out.println("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
+        //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer template;
         QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(ringSystems, false);
         QueryAtomContainer query;

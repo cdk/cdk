@@ -157,54 +157,6 @@ public class CycleBasis {
 	}
 	
 	
-		
-
-/*	
-	public void minimize() {
-		if (isMinimized) 
-			return;
-		
-		for (Iterator it = subgraphBases.iterator(); it.hasNext();) {
-			SimpleCycleBasis basis = (SimpleCycleBasis) it.next();
-			basis.minimize();
-		}
-
-		isMinimized = true;
-	}
-	
-*/	
-	
-	/**
-	 * Prints the cycle-edge incidence matrix of the cycle basis.
-	 */
-	public void printIncidenceMatrix() {
-		SimpleCycleBasis basis = simpleBasis();
-		
-		/*
-		Collection edgeList = basis.edges();
-		for (int j=0; j<edgeList.size(); j++) {
-			System.out.print(((Edge) edgeList.get(j)).getSource());
-		}
-		System.out.println();
-		for (int j=0; j<edgeList.size(); j++) {
-			System.out.print(((Edge) edgeList.get(j)).getTarget());
-		}
-		System.out.println();
-		for (int j=0; j<edgeList.size(); j++) {
-			System.out.print('-');
-		}
-		System.out.println();
-		*/
-		
-        boolean[][] incidMatr = basis.getCycleEdgeIncidenceMatrix();
-		for (int i=0; i<incidMatr.length; i++) {
-			for (int j=0; j<incidMatr[i].length; j++) {
-				System.out.print(incidMatr[i][j]?1:0);
-			}
-			System.out.println();
-		}
-	}
-
 	public int[] weightVector() {
 		SimpleCycleBasis basis = simpleBasis();
 		List cycles = basis.cycles();

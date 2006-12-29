@@ -71,7 +71,7 @@ public class RandomGenerator {
 			try {
 				trial = (IMolecule)molecule.clone();
 			} catch (CloneNotSupportedException e) {
-				System.out.println("Could not clone IAtomContainer!" + e.getMessage());
+				logger.error("Could not clone IAtomContainer!" + e.getMessage());
 				trial = null;
 			}
 			mutate(trial);

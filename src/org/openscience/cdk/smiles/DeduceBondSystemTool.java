@@ -80,7 +80,7 @@ public class DeduceBondSystemTool {
     }
 
     public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
-        //System.out.println("here");
+        //logger.debug("here");
 
         IRingSet ringSet = null;
 
@@ -118,7 +118,7 @@ public class DeduceBondSystemTool {
 //		ArrayList ringlist=(ArrayList)MasterList.get(ii);
 //		number*=ringlist.size();
 //		}
-//		System.out.println("number= "+number);			
+//		logger.debug("number= "+number);			
 
 
         int [] choices = null;
@@ -149,7 +149,7 @@ public class DeduceBondSystemTool {
             
             int count = getBadCount(mol, ringSet);
 
-            //System.out.println(i + "\t" + count);
+            //logger.debug(i + "\t" + count);
 
             if (count < mincount) {
                 mincount = count;
@@ -192,7 +192,7 @@ public class DeduceBondSystemTool {
     }
     private void applyBonds(IMolecule m, ArrayList al) {
 
-        //System.out.println("");
+        //logger.debug("");
 
         for (int i = 0; i <= al.size() - 1; i++) {
 
@@ -203,7 +203,7 @@ public class DeduceBondSystemTool {
             int i1 = Integer.parseInt(s1);
             int i2 = Integer.parseInt(s2);
 
-            //System.out.println(s1+"\t"+s2);
+            //logger.debug(s1+"\t"+s2);
 
             IBond b = m.getBond(m.getAtom(i1), m.getAtom(i2));
             b.setOrder(2);
@@ -221,7 +221,7 @@ public class DeduceBondSystemTool {
 
         for (int j = 0; j <= 4; j++) {
             num[j] = m.getAtomNumber(r.getAtom(j));
-            //System.out.println(num[j]);
+            //logger.debug(num[j]);
         }
 
         java.util.ArrayList al1 = new java.util.ArrayList();
@@ -453,14 +453,14 @@ public class DeduceBondSystemTool {
         for (int j = 0; j <= molecule.getAtomCount() - 1; j++) {
             IAtom atom = molecule.getAtom(j);
 
-            //System.out.println(mol.getBondOrderSum(a));
+            //logger.debug(mol.getBondOrderSum(a));
 
             if (inRingSet(atom, ringSet)) {
-                //System.out.println("in ring set");
+                //logger.debug("in ring set");
 
                 if (atom.getSymbol().equals("N")) {
                     if (atom.getFormalCharge() == 0) {
-//						System.out.println(mol.getBondOrderSum(a));
+//						logger.debug(mol.getBondOrderSum(a));
                         if (molecule.getBondOrderSum(atom) == 4) {
                             count++; //
                         } else if (molecule.getBondOrderSum(atom) == 5) {
@@ -494,7 +494,7 @@ public class DeduceBondSystemTool {
                 }
             }
         }
-        //System.out.println("here bad count = " + count);
+        //logger.debug("here bad count = " + count);
 
         return count;
     }
@@ -510,7 +510,7 @@ public class DeduceBondSystemTool {
 
     private IMolecule loop(long starttime, IMolecule molecule, int index, ArrayList MasterList, int [] choices, IMoleculeSet som) {
 
-        //System.out.println(System.currentTimeMillis());
+        //logger.debug(System.currentTimeMillis());
 
         long time = System.currentTimeMillis();
 
@@ -527,7 +527,7 @@ public class DeduceBondSystemTool {
             choices[index] = i;
 
             if (index == MasterList.size() - 1) {
-                //System.out.println(choices[0]+"\t"+choices[1]);
+                //logger.debug(choices[0]+"\t"+choices[1]);
 
                 IMolecule mnew = null;
                 try {
@@ -540,10 +540,10 @@ public class DeduceBondSystemTool {
                 for (int j = 0; j <= MasterList.size() - 1; j++) {
                     ArrayList ringlist2 = (ArrayList) MasterList.get(j);
                     ArrayList bondlist = (ArrayList) ringlist2.get(choices[j]);
-//					System.out.println(j+"\t"+choices[j]);
+//					logger.debug(j+"\t"+choices[j]);
                     applyBonds(mnew, bondlist);
                 }
-//				System.out.println("");
+//				logger.debug("");
                 counter++;
 
                 try {
@@ -561,10 +561,10 @@ public class DeduceBondSystemTool {
                     if (rs != null) {
 
 						int count = this.getBadCount(mnew, rs);
-						// System.out.println("bad count="+count);
+						// logger.debug("bad count="+count);
 
 						if (count == 0) {
-							// System.out.println("found match after "+counter+"
+							// logger.debug("found match after "+counter+"
 							// iterations");
 							return mnew; // dont worry about adding to set
 											// just finish
@@ -577,7 +577,7 @@ public class DeduceBondSystemTool {
             }
 
             if (index + 1 <= MasterList.size() - 1) {
-                // System.out.println("here3="+counter);
+                // logger.debug("here3="+counter);
                 mnew2 = loop(starttime, molecule, index + 1, MasterList, choices, som); //recursive def
             }
 
@@ -592,7 +592,7 @@ public class DeduceBondSystemTool {
 
     private boolean isStructureOK(IMolecule molecule) {
         for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
-            //System.out.println(mj.getBondOrderSum(mj.getAtomAt(i)));
+            //logger.debug(mj.getBondOrderSum(mj.getAtomAt(i)));
             try {
                 // Note: valencyHybridChecker.couldMatchAtomType shouldnt check Hybridization to get it to work for non carbon atoms
                 valencyChecker.isSaturated(molecule.getAtom(i), molecule);
@@ -618,7 +618,7 @@ public class DeduceBondSystemTool {
                 r.setFlag(CDKConstants.ISAROMATIC, false);
             }
 
-            //System.out.println("Rs size= "+rs.size());
+            //logger.debug("Rs size= "+rs.size());
 
             // do it multiple times to catch all the aromatic rings
             // this problem is that the aromaticity detector relies on
@@ -634,13 +634,13 @@ public class DeduceBondSystemTool {
             boolean [] Check = this.findRingsToCheck(ringSet);
 
 //			for (int i=0;i<=Check.length-1;i++) {
-//			System.out.println(i+"\t"+rs.getAtomContainer(i).getAtomCount()+"\t"+Check[i]);
+//			logger.debug(i+"\t"+rs.getAtomContainer(i).getAtomCount()+"\t"+Check[i]);
 //			}
 
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
                 Ring ring = (Ring) ringSet.getAtomContainer(i);
 
-                //System.out.println(k+"\t"+r.getAtomCount()+"\t"+r.getFlag(CDKConstants.ISAROMATIC));
+                //logger.debug(k+"\t"+r.getAtomCount()+"\t"+r.getFlag(CDKConstants.ISAROMATIC));
                 if (Check[i]) {
                 	
                     for (int j = 0; j <= ring.getAtomCount() - 1; j++) {
@@ -650,7 +650,7 @@ public class DeduceBondSystemTool {
                     }
                 	
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
-//						System.out.println(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
+//						logger.debug(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
                         return false;
                     }
                 }
@@ -680,7 +680,7 @@ public class DeduceBondSystemTool {
 
             //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
 
-            //System.out.println("numrings="+rs.size());
+            //logger.debug("numrings="+rs.size());
 
             iloop:
             for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
@@ -700,7 +700,7 @@ public class DeduceBondSystemTool {
 
                 for (int j = 0; j <= r.getAtomCount() - 1; j++) {
 
-                    //System.out.println(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
+                    //logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
                     if (r.getAtom(j).getHybridization() != 2) {
                         NonSP2Count++;
@@ -751,7 +751,7 @@ public class DeduceBondSystemTool {
 
             for (int j = 0; j <= r.getAtomCount() - 1; j++) {
 
-                // System.out.println(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
+                // logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
                 if (r.getAtom(j).getHybridization() != 2) {
                     NonSP2Count++;

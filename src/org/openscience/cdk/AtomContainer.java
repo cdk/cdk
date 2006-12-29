@@ -1613,7 +1613,7 @@ public class AtomContainer extends ChemObject
 //                newEC = (ISingleElectron)electronContainer.clone();
 //                ((ISingleElectron) newEC).setAtom(clone.getAtom(getAtomNumber(atom)));
 //			} else {
-//				//System.out.println("Expecting EC, got: " + electronContainer.getClass().getName());
+//				//logger.debug("Expecting EC, got: " + electronContainer.getClass().getName());
 //				newEC = (IElectronContainer) electronContainer.clone();
 //			}
 //			clone.addElectronContainer(newEC);

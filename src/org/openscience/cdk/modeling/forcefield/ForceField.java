@@ -56,31 +56,31 @@ public class ForceField extends GeometricMinimizer{
 		GVector moleculeCoords = new GVector(3);
 		MMFF94EnergyFunction mmff94PF=null;
 		if (potentialFunction=="mmff94"){
-		    //System.out.println("SET POTENTIAL FUNCTION TO MMFF94");
+		    //logger.debug("SET POTENTIAL FUNCTION TO MMFF94");
 		    setMMFF94Tables(molecule);
 		    mmff94PF=new MMFF94EnergyFunction((AtomContainer)molecule,getPotentialParameterSet());
-			//System.out.println("PotentialFunction set:"+potentialFunction+", Hashtable:" +getPotentialParameterSet().size());
+			//logger.debug("PotentialFunction set:"+potentialFunction+", Hashtable:" +getPotentialParameterSet().size());
 		}
 		moleculeCoords.setSize(molecule.getAtomCount() * 3);
 		moleculeCoords.set(ForceFieldTools.getCoordinates3xNVector((AtomContainer)molecule));
 		
-		//System.out.println("PotentialFunction set:"+potentialFunction+" Molecule Coords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
+		//logger.debug("PotentialFunction set:"+potentialFunction+" Molecule Coords set:"+moleculeCoords.getSize()+" Hashtable:"+getPotentialParameterSet().size());
 		//logger.debug(moleculeCoords.toString());
 		start = System.currentTimeMillis();
-		//System.out.println("Starting minmization at " + start);
+		//logger.debug("Starting minmization at " + start);
 		if (sdm_flag) steepestDescentsMinimization(moleculeCoords,mmff94PF);
 
 		if (cgm_flag)conjugateGradientMinimization(moleculeCoords, mmff94PF);
 		//conjugateGradientMinimization(moleculeCoords, tpf);
 		stop = System.currentTimeMillis();
-		//System.out.println("Finished minmization at " + stop);
+		//logger.debug("Finished minmization at " + stop);
 		//if ((stop - start)/1000 < 60) {
-			//System.out.println("Time for minimization: " + (stop - start)/1000 + " sec");
+			//logger.debug("Time for minimization: " + (stop - start)/1000 + " sec");
 		//}
-		//	System.out.println("Time for minimization: " + (stop - start)/60000 + " min");
+		//	logger.debug("Time for minimization: " + (stop - start)/60000 + " min");
 
 		//}
-		//System.out.println("Minimization READY");
+		//logger.debug("Minimization READY");
 		//ForceFieldTools.assignCoordinatesToMolecule(moleculeCoords, (AtomContainer) molecule); 
 	}
 			

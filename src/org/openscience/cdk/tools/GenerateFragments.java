@@ -72,6 +72,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  **/
 public class GenerateFragments {
 	
+	private LoggingTool logger;
+	
 	private List murckoFragments =null;
 	private List ringFragments=null;
 	private List linkerFragments=null;
@@ -81,6 +83,7 @@ public class GenerateFragments {
 	//private IChemObjectBuilder builder;
 	
 	public GenerateFragments() {
+		logger = new LoggingTool(this);
     }
 	
 	/**
@@ -106,7 +109,7 @@ public class GenerateFragments {
 	 * return	void
 	 */
 	public void generateMurckoFragments(IMolecule molecule, boolean sidechainHetatoms,boolean exocyclicDoubleBonds, int minimumRingSize) throws org.openscience.cdk.exception.CDKException{
-		//System.out.println("****** generatemurckoFragments *******");
+		//logger.debug("****** generatemurckoFragments *******");
 		//VARIABLES
 		this.murckoFragments =new Vector();
 		this.linkerFragments=new Vector();
@@ -131,7 +134,7 @@ public class GenerateFragments {
 			molecule.getAtom(i).setFlag(CDKConstants.ISINRING, false);
 		}
 				
-		//System.out.println("Number of RingSystems:"+this.ringFragments.size());
+		//logger.debug("Number of RingSystems:"+this.ringFragments.size());
 		for (int f = 0; f < this.ringFragments.size(); f++) {
 			firstRingAtomContainer = RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(f));
 			
@@ -145,7 +148,7 @@ public class GenerateFragments {
 		}
 
 //		START
-		//System.out.println("Number of RingSystems:"+tmpRingFragments.size());
+		//logger.debug("Number of RingSystems:"+tmpRingFragments.size());
 		if (tmpRingFragments.size() > 1) {
 			//go through all ringsystems
 			//for (int f = 0; f < this.ringFragments.size()-1; f++) {
@@ -162,19 +165,19 @@ public class GenerateFragments {
 						if (firstRingSubstituents.getAtomCount()>0){
 							//go through substituents of first ring
 							for (int i = 0; i < firstRingSubstituents.getAtomCount(); i++){
-//								System.out.println("First Ring Sub is in RING");
+//								logger.debug("First Ring Sub is in RING");
 //								//check for ring-ring system
 								if (firstRingSubstituents.getAtom(i).getFlag(CDKConstants.ISINRING) && secondRingAtomContainer.contains(firstRingSubstituents.getAtom(i))){
-									//System.out.println("\tFound a ring-ring System");
+									//logger.debug("\tFound a ring-ring System");
 									murckoFragment=new Molecule();
 									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
 									murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 									murckoFragment=addFragmentBonds(murckoFragment,molecule);
 									
 									this.murckoFragments.add(murckoFragment);
-									//System.out.println("MFragment:"+murckoFragment.getAtomCount()+" CC:"+ConnectivityChecker.isConnected(murckoFragment));
-									//System.out.println(murckoFragment.toString());
-									//System.out.println("\tADD MURCKOFRAGMENT");
+									//logger.debug("MFragment:"+murckoFragment.getAtomCount()+" CC:"+ConnectivityChecker.isConnected(murckoFragment));
+									//logger.debug(murckoFragment.toString());
+									//logger.debug("\tADD MURCKOFRAGMENT");
 									break;
 								}
 //								compare to substituents of second ring
@@ -185,22 +188,22 @@ public class GenerateFragments {
 										//go through substituents of second ring
 										for (int k = 0; k < secondRingSubstituents.getAtomCount(); k++){//For-k
 											
-											//System.out.println("First Ring Size:"+firstRingAtomContainer.getAtomCount()+" 2.Ring Size:"+secondRingAtomContainer.getAtomCount());
-											//System.out.println(f+".ringSub:"+molecule.getAtomNumber(firstRingSubstituents.getAtomAt(i))+" Sym:"+firstRingSubstituents.getAtomAt(i).getSymbol()+" "+g+".ringSub:"+molecule.getAtomNumber(secondRingSubstituents.getAtomAt(k)));
+											//logger.debug("First Ring Size:"+firstRingAtomContainer.getAtomCount()+" 2.Ring Size:"+secondRingAtomContainer.getAtomCount());
+											//logger.debug(f+".ringSub:"+molecule.getAtomNumber(firstRingSubstituents.getAtomAt(i))+" Sym:"+firstRingSubstituents.getAtomAt(i).getSymbol()+" "+g+".ringSub:"+molecule.getAtomNumber(secondRingSubstituents.getAtomAt(k)));
 											path=new AtomContainer();
 											try {
 												resetFlags(molecule);
 												PathTools.depthFirstTargetSearch(molecule,firstRingSubstituents.getAtom(i),secondRingSubstituents.getAtom(k),path);
-												/*System.out.print("\tPATHSIZE:"+path.getAtomCount());
-												System.out.print("\tFIRST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(0)));
+												/*logger.debug("\tPATHSIZE:"+path.getAtomCount());
+												logger.debug("\tFIRST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(0)));
 												try{
-													System.out.println("\tLAST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(path.getAtomCount()-1)));
+													logger.debug("\tLAST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(path.getAtomCount()-1)));
 												}catch(Exception eS){
-													System.out.println("\tNO LAST PATHATOM");
+													logger.debug("\tNO LAST PATHATOM");
 												}*/
 												
 												if (firstRingSubstituents.getAtom(i)==secondRingSubstituents.getAtom(k)){
-													//System.out.println("\tSubstituents are equal");
+													//logger.debug("\tSubstituents are equal");
 													path.addAtom(firstRingSubstituents.getAtom(i));
 												}
 												
@@ -224,9 +227,9 @@ public class GenerateFragments {
 																																					
 													this.linkerFragments.add(linkerFragment);
 													this.murckoFragments.add(murckoFragment);
-													//System.out.println("\tADD MURCKOFRAGMENT");
+													//logger.debug("\tADD MURCKOFRAGMENT");
 												}else{
-													//System.out.println("\tEND PATH");
+													//logger.debug("\tEND PATH");
 												}
 												
 												
@@ -243,7 +246,7 @@ public class GenerateFragments {
 				}//For-g				
 			}//For-f				
 		}else if (tmpRingFragments.size() ==1){
-			//System.out.println("Number of RingSystems is 1");
+			//logger.debug("Number of RingSystems is 1");
 			murckoFragment=new Molecule();
 			murckoFragment=addFragments(RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(0)),murckoFragment,molecule);
 			murckoFragment=addFragmentBonds(murckoFragment,molecule);
@@ -284,13 +287,13 @@ public class GenerateFragments {
 				targetMolecule.addAtom(addAtomContainer.getAtom(i));	
 				for (int j = 0; j < atoms.size(); j++) {
 					IAtom atom = (IAtom)atoms.get(j);
-					//System.out.println("HETATOM:"+atoms[j].getSymbol());
+					//logger.debug("HETATOM:"+atoms[j].getSymbol());
 					if (this.sidechainHetatoms && !addAtomContainer.getAtom(i).getFlag(CDKConstants.ISINRING) && !(atom.getSymbol()).equals("C") && !(atom.getSymbol()).equals("H") && !targetMolecule.contains(atom)){
-						//System.out.println("HETATOM TRUE");
+						//logger.debug("HETATOM TRUE");
 						targetMolecule.addAtom(atom);
 					}
 					if (this.exocyclicDoubleBonds && mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder()>1 && !targetMolecule.contains(atom)){
-						//System.out.println("EXOCYCLIC DB TRUE");
+						//logger.debug("EXOCYCLIC DB TRUE");
 						targetMolecule.addAtom(atom);
 					}	
 				}
@@ -363,7 +366,7 @@ public class GenerateFragments {
 	 * @return	boolean			true if path is reasonable
 	 */
 	private boolean checkPath(IAtom firstRingAtom, IAtom secondRingAtom, IAtomContainer path){
-		//System.out.println("CHECK PATH");
+		//logger.debug("CHECK PATH");
 		if (path.contains(firstRingAtom) || path.contains(secondRingAtom)){
 			return false;
 		}
@@ -398,8 +401,8 @@ public class GenerateFragments {
 		String[] murckoFragmentsmiles={};
 		if (this.murckoFragments !=null){
 			murckoFragmentsmiles=new String[this.murckoFragments.size()];
-			//System.out.println("SIZE OF MURCKO VECTOR:"+this.murckoFragments.size());
-			//System.out.println("SIZE OF SMILES[]:"+murckoFragmentsmiles.length);
+			//logger.debug("SIZE OF MURCKO VECTOR:"+this.murckoFragments.size());
+			//logger.debug("SIZE OF SMILES[]:"+murckoFragmentsmiles.length);
 			for (int i =0;i<this.murckoFragments.size();i++){
 				try{
 					IMolecule mol=(IMolecule)this.murckoFragments.get(i);
@@ -407,11 +410,11 @@ public class GenerateFragments {
 						sg = new SmilesGenerator();
 						murckoFragmentsmiles[i]=sg.createSMILES(mol);
 					}else{
-						System.out.println("ERROR in getMurckoFrameworksAsSmileArray due to:Molecule is not connected");
+						logger.debug("ERROR in getMurckoFrameworksAsSmileArray due to:Molecule is not connected");
 					}
 				} catch (Exception e){
-					System.out.println("ERROR in getMurckoFrameworksAsSmileArray due to:"+e.toString());
-					//e.printStackTrace();
+					logger.error("ERROR in getMurckoFrameworksAsSmileArray due to:"+e.toString());
+					logger.debug(e);
 				}		
 			}	
 		}
@@ -426,15 +429,15 @@ public class GenerateFragments {
 		String[] ringFragmentSmiles={};
 		if (this.ringFragments !=null){
 			ringFragmentSmiles=new String[this.ringFragments.size()];
-			//System.out.println("SIZE OF MURCKO VECTOR:"+this.ringFragments.size());
-			//System.out.println("SIZE OF SMILES[]:"+ringFragmentSmiles.length);
+			//logger.debug("SIZE OF MURCKO VECTOR:"+this.ringFragments.size());
+			//logger.debug("SIZE OF SMILES[]:"+ringFragmentSmiles.length);
 			for (int i =0;i<this.ringFragments.size();i++){
 				try{
 					IMolecule mol=(IMolecule)this.ringFragments.get(i);
 					sg = new SmilesGenerator();
 					ringFragmentSmiles[i]=sg.createSMILES(mol);
 				} catch (Exception e){
-					System.out.println("ERROR in smile generation due to:"+e.toString());			
+					logger.error("ERROR in smile generation due to:"+e.toString());			
 				}		
 			}	
 		}
@@ -449,15 +452,15 @@ public class GenerateFragments {
 		String[] linkerFragmentSmiles={};
 		if (this.linkerFragments !=null){
 			linkerFragmentSmiles=new String[this.linkerFragments.size()];
-			//System.out.println("SIZE OF MURCKO VECTOR:"+this.ringFragments.size());
-			//System.out.println("SIZE OF SMILES[]:"+ringFragmentSmiles.length);
+			//logger.debug("SIZE OF MURCKO VECTOR:"+this.ringFragments.size());
+			//logger.debug("SIZE OF SMILES[]:"+ringFragmentSmiles.length);
 			for (int i =0;i<this.linkerFragments.size();i++){
 				try{
 					IMolecule mol=(IMolecule)this.linkerFragments.get(i);
 					sg = new SmilesGenerator();
 					linkerFragmentSmiles[i]=sg.createSMILES(mol);
 				} catch (Exception e){
-					System.out.println("ERROR in smile generation due to:"+e.toString());
+					logger.error("ERROR in smile generation due to:"+e.toString());
 				}		
 			}	
 		}

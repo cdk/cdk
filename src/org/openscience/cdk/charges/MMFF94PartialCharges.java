@@ -89,7 +89,7 @@ public class MMFF94PartialCharges {
 		Vector dataNeigh = null;
 		java.util.Iterator atoms = ac.atoms();
 		while(atoms.hasNext()) {
-			//System.out.println("ATOM "+i+ " " +atoms[i].getSymbol());
+			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = (org.openscience.cdk.interfaces.IAtom)atoms.next();
 			data = (Vector) parameterSet.get("data"+thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtomsList(thisAtom);
@@ -122,7 +122,7 @@ public class MMFF94PartialCharges {
 			charge += sumOfFormalCharges * theta;
 			charge += sumOfBondIncrements;
 			thisAtom.setProperty("MMFF94charge", new Double(charge));
-			//System.out.println( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
+			//logger.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
 		}
 		return ac;
 	}

@@ -75,7 +75,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
-    	//System.out.println("**** START ATOMTYPE TEST ******");
+    	//logger.debug("**** START ATOMTYPE TEST ******");
     	AtomTypeTools att=new AtomTypeTools();
     	//SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	Molecule mol=null;
@@ -102,7 +102,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         }
         
         logger.debug("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
-        //System.out.println("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
+        //logger.debug("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
         
         assertEquals("Sthi",mol.getAtom(0).getAtomTypeName());
         assertEquals("Csp2",mol.getAtom(7).getAtomTypeName());
@@ -111,6 +111,6 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         assertEquals("Oar",mol.getAtom(198).getAtomTypeName());
         assertEquals("N2OX",mol.getAtom(233).getAtomTypeName());
         assertEquals("NAZT",mol.getAtom(256).getAtomTypeName());
-        //System.out.println("**** END OF ATOMTYPE TEST ******");
+        //logger.debug("**** END OF ATOMTYPE TEST ******");
     }
 }

@@ -367,14 +367,14 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
                     values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond);
 
                     angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
-                    //System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
+                    //logger.debug("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
 
                     partial = (1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghs - angle), 2)));
                     sum += partial;
                 }
                 //gSr_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                System.out.println("RDF gSr prob.: " + sum + " at distance " + ghs);
+//                logger.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
             }
             //atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
 

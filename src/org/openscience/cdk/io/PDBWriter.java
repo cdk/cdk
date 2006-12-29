@@ -216,7 +216,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            java.util.Iterator atoms = crystal.atoms();
            while (atoms.hasNext()) {
             	IAtom atom = (IAtom)atoms.next();
-            	System.out.println("PDBWriter: atom -> " + atom);
+//            	logger.debug("PDBWriter: atom -> " + atom);
             	// if it got 3D coordinates, use that. If not, try fractional coordinates
             	if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {
             		Point3d frac = new Point3d(atom.getFractionalPoint3d());

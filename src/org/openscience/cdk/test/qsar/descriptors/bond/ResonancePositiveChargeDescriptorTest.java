@@ -239,20 +239,20 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 			assertEquals(testResult[1],dar.get(1), 2.1);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(1),mol).getValue());
-//	        System.out.println(dar.get(0)+" ; "+dar.get(1));
+//	        logger.debug(dar.get(0)+" ; "+dar.get(1));
 			/*assertEquals(testResult[2],dar.get(0), 0.0001); The result should not be null*/
 			assertFalse(0.0 == dar.get(1));
 			assertEquals(testResult[3],dar.get(1), 2.0);
 
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(2),mol).getValue());
-//	        System.out.println(dar.get(0)+" ; "+dar.get(1) );
+//	        logger.debug(dar.get(0)+" ; "+dar.get(1) );
 	        /*assertEquals(testResult[4],dar.get(0), 0.0001); The result should not be null*/
 			assertFalse(0.0 == dar.get(1));
 			assertEquals(testResult[5],dar.get(1), 4.3);
 			
 	        dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(3),mol).getValue());
 			assertFalse(0.0 == dar.get(0));
-//	        System.out.println(dar.get(0)+" ; "+dar.get(1) );
+//	        logger.debug(dar.get(0)+" ; "+dar.get(1) );
 			assertEquals(testResult[6],dar.get(0), 2.2);
 			assertFalse(0.0 == dar.get(1));
 			assertEquals(testResult[7],dar.get(1), 7.4);

@@ -271,7 +271,7 @@ public class HueckelAromaticityDetector
 	 *  Atom atom = null;
 	 *  Bond bond = null;
 	 *  int aromaCounter = 0;
-	 *  if (debug) System.out.println("isAromatic() -> ring.size(): " + ring.getAtomCount());
+	 *  logger.debug("isAromatic() -> ring.size(): " + ring.getAtomCount());
 	 *  for (int g = 0; g < ring.getAtomCount(); g++)
 	 *  {
 	 *  atom = ring.getAtomAt(g);
@@ -295,12 +295,12 @@ public class HueckelAromaticityDetector
 	 *  }
 	 *  for (int f = 0; f < ((ring.getAtomCount() - 2)/4) + 2; f ++)
 	 *  {
-	 *  if (debug) System.out.println("isAromatic() -> freeElectronPairCount: " + freeElectronPairCount);
-	 *  if (debug) System.out.println("isAromatic() -> piElectronCount: " + piElectronCount);
-	 *  if (debug) System.out.println("isAromatic() -> f: " + f);
-	 *  if (debug) System.out.println("isAromatic() -> (4 * f) + 2: " + ((4 * f) + 2));
-	 *  if (debug) System.out.println("isAromatic() -> ring.size(): " + ring.getAtomCount());
-	 *  if (debug) System.out.println("isAromatic() -> aromaCounter: " + aromaCounter);
+	 *  logger.debug("isAromatic() -> freeElectronPairCount: " + freeElectronPairCount);
+	 *  logger.debug("isAromatic() -> piElectronCount: " + piElectronCount);
+	 *  logger.debug("isAromatic() -> f: " + f);
+	 *  logger.debug("isAromatic() -> (4 * f) + 2: " + ((4 * f) + 2));
+	 *  logger.debug("isAromatic() -> ring.size(): " + ring.getAtomCount());
+	 *  logger.debug("isAromatic() -> aromaCounter: " + aromaCounter);
 	 *  if (aromaCounter == ring.getAtomCount()) return true;
 	 *  else if ((piElectronCount == ring.getAtomCount())&&((4 * f) + 2 == piElectronCount)) return true;
 	 *  else if ((4 * f) + 2 == piElectronCount + (freeElectronPairCount * 2) && ring.getAtomCount() < piElectronCount + (freeElectronPairCount * 2)) return true;

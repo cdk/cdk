@@ -25,7 +25,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -423,7 +422,7 @@ public class GENMDeterministicGenerator {
 					 if(numberOfBasicUnit[i]!=0)
 					 {
 						// logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
-						//System.out.println("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
+						//logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
 					 }
 				 }
 
@@ -2914,7 +2913,7 @@ public class GENMDeterministicGenerator {
 		void set(int position, int value) {
 			// grow array if needed
 			if (position > arrayLength) {
-				System.out.println("growing array...");
+//				logger.debug("growing array...");
 				int[] newArray = new int[arrayLength+GROWSIZE];
 				System.arraycopy(array, 0, newArray, 0, arrayLength);
 				array = newArray;

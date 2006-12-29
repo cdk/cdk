@@ -24,6 +24,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 
@@ -90,6 +91,8 @@ import Jama.Matrix;
  */ 
 public class KabschAlignment {
 
+	private LoggingTool logger = new LoggingTool(KabschAlignment.class);
+	
     private double[][] U;
     private double rmsd = -1.0;
     private Point3d[] p1,p2,rp; // rp are the rotated coordinates
@@ -120,7 +123,9 @@ public class KabschAlignment {
         try {
             factory = IsotopeFactory.getInstance(a[0].getBuilder());
         } catch (Exception e) {
-            System.out.println(e.toString());
+        	logger.error("Error while instantiating the isotope factory: ",
+        		e.getMessage());
+            logger.debug(e);
         }
 
         for (int i = 0; i < a.length; i++) {
@@ -135,7 +140,9 @@ public class KabschAlignment {
         try {
             factory = IsotopeFactory.getInstance(ac.getAtom(0).getBuilder());
         } catch (Exception e) {
-            System.out.println(e.toString());
+        	logger.error("Error while instantiating the isotope factory: ",
+            	e.getMessage());
+        	logger.debug(e);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {

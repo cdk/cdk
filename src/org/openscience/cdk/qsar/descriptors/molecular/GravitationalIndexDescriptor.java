@@ -151,7 +151,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      *@return            An ArrayList containing 9 elements in the order described above
      */
 
-    public DescriptorValue calculate(IAtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         IsotopeFactory factory = null;
         double mass1 = 0;
         double mass2 = 0;
@@ -166,8 +166,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         	org.openscience.cdk.interfaces.IBond bond = container.getBond(i);
 
             if (bond.getAtomCount() != 2) {
-                System.out.println("GravitationalIndex: Only handles 2 center bonds");
-                return(null);
+                throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
             }
 
             mass1 = factory.getMajorIsotope( bond.getAtom(0).getSymbol() ).getMassNumber();
@@ -190,8 +189,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         	org.openscience.cdk.interfaces.IBond b = container.getBond(i);
 
             if (b.getAtomCount() != 2) {
-                System.out.println("GravitationalIndex: Only handles 2 center bonds");
-                return(null);
+                throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
             }
 
             if (b.getAtom(0).getSymbol().equals("H") || 

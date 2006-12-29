@@ -408,7 +408,7 @@ public class HOSECodeTest extends CDKTestCase
 			mv.setAtomContainer(sdg.getMolecule());
 		} catch (Exception exc)
 		{
-			//System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
+			//logger.debug("*** Exit due to an unexpected error during coordinate generation ***");
 			exc.printStackTrace();
 		}
 		

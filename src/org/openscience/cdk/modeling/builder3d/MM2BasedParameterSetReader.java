@@ -38,6 +38,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * AtomType list configurator that uses the ParameterSet originally
@@ -51,6 +52,8 @@ import org.openscience.cdk.AtomType;
  */
 public class MM2BasedParameterSetReader {
 
+//	private final LoggingTool logger = new LoggingTool(MM2BasedParameterSetReader.class);
+	
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private InputStream ins = null;
 	private Hashtable parameterSet;
@@ -103,7 +106,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -113,7 +116,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -123,7 +126,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -133,7 +136,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -143,7 +146,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -153,7 +156,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -163,7 +166,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -171,28 +174,28 @@ public class MM2BasedParameterSetReader {
 			}
 		} else if (sid.equals(">vdwtype")) {
 			key = sid.substring(1);
-			//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+			//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 			parameterSet.put(key, svalue);
 		} else if (sid.equals(">radiusrule")) {
 			key = sid.substring(1);
-			//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+			//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 			parameterSet.put(key, svalue);
 		} else if (sid.equals(">radiustype")) {
 			key = sid.substring(1);
-			//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+			//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 			parameterSet.put(key, svalue);
 		} else if (sid.equals(">radiussize")) {
 			key = sid.substring(1);
-			//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+			//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 			parameterSet.put(key, svalue);
 		} else if (sid.equals(">epsilonrule")) {
 			key = sid.substring(1);
-			//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+			//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 			parameterSet.put(key, svalue);
 		} else if (sid.equals(">a-expterm")) {
 			try {
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, svalue);
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -201,7 +204,7 @@ public class MM2BasedParameterSetReader {
 		} else if (sid.equals("b-expterm")) {
 			try {
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, svalue);
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -211,7 +214,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -221,7 +224,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -231,7 +234,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -241,7 +244,7 @@ public class MM2BasedParameterSetReader {
 			try {
 				double value1 = new Double(svalue).doubleValue();
 				key = sid.substring(1);
-				//if (parameterSet.containsKey(key)){System.out.println("KeyError: hasKey "+key);}
+				//if (parameterSet.containsKey(key)){logger.debug("KeyError: hasKey "+key);}
 				parameterSet.put(key, new Double(value1));
 			} catch (NumberFormatException nfe) {
 				throw new IOException("VdWaalsTable.ReadvdWaals: " +
@@ -570,7 +573,7 @@ public class MM2BasedParameterSetReader {
 			data.add(new Double(va1));
 			key = "opbend" + sid1 + ";" + sid2;
 			if (parameterSet.containsKey(key)) {
-				//System.out.println("KeyError: hasKey "+key);
+				//logger.debug("KeyError: hasKey "+key);
 				data = (Vector) parameterSet.get(key);
 				data.add(new Double(va1));
 			}
@@ -803,7 +806,7 @@ public class MM2BasedParameterSetReader {
 		//vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
 		//strbond,opbend,torsion,torsion4,charge,dipole,
 		//dipole3,piatom,pibond,dipole3
-		//System.out.println("------ ReadParameterSets ------");
+		//logger.debug("------ ReadParameterSets ------");
 
 		if (ins == null) {
 			ins = getClass().getResourceAsStream(configFile);

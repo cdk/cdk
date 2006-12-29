@@ -367,7 +367,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
                 }
                 //gHr_topol_function.add(new Double(sum));
                 rdfProtonCalculatedValues.add(sum);
-                System.out.println("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
+//                logger.debug("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
             }
             //atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
             //rdfProtonCalculatedValues.add(1);

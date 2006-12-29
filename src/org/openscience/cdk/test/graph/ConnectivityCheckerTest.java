@@ -66,7 +66,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	 * This test tests the function of the partitionIntoMolecule() method.
 	 */
 	public void testPartitionIntoMolecules() {
-		//System.out.println(atomCon);
+		//logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
@@ -112,7 +112,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
      * partitionIntoMolecules().
 	 */
 	public void testPartitionIntoMolecules_IsConnected_Consistency() {
-		//System.out.println(atomCon);
+		//logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());

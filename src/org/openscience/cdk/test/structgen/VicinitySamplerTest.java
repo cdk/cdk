@@ -70,7 +70,7 @@ public class VicinitySamplerTest extends CDKTestCase
 		configureAtoms(mol);
 		fixCarbonHCount(mol);
 		
-		//System.out.println("Initial Molecule: \n" + mol);
+		//logger.debug("Initial Molecule: \n" + mol);
 		VicinitySampler vs = new VicinitySampler(mol);
 
 		SmilesGenerator sg = null;
@@ -81,10 +81,10 @@ public class VicinitySamplerTest extends CDKTestCase
 		{
 			temp = (Molecule)structures.get(f);
 			sg = new SmilesGenerator();
-			//System.out.println(sg.createSMILES(temp) + " Structure " + (f + 1));
+			//logger.debug(sg.createSMILES(temp) + " Structure " + (f + 1));
 		}
 
-		//System.out.println("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
+		//logger.debug("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
 		display(structures);
         fail(); // Method does not test anything
 	}

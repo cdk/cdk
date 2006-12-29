@@ -166,7 +166,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 					ac.getMaximumBondOrder(ac.getAtom(atomPosition)) >1 ||
 					ac.getAtom(atomPosition).getFormalCharge() != 0)
 	    	  piElectronegativity = ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
-//	      System.out.println(ac.getAtomAt(atomPosition).getSymbol()+" - "+piElectronegativity+"="+q+" a("+gasteigerFactors[1][start]+")+b("+gasteigerFactors[1][start+1]+")+c"+gasteigerFactors[1][start+2]+")");
+//	      logger.debug(ac.getAtomAt(atomPosition).getSymbol()+" - "+piElectronegativity+"="+q+" a("+gasteigerFactors[1][start]+")+b("+gasteigerFactors[1][start+1]+")+c"+gasteigerFactors[1][start+2]+")");
 	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(piElectronegativity));
         } catch (Exception ex1) {
         	ex1.printStackTrace();

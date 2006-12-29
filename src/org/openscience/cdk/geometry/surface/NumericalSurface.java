@@ -152,10 +152,10 @@ public class NumericalSurface {
         /*
            for (int i = 0; i < atoms.length; i++) {
            int[] nlist = nbrlist.getNeighbors(i);
-           System.out.print("Atom "+i+": ");
+           logger.debug("Atom "+i+": ");
            for (int j = 0; j < nlist.length; j++)
-           System.out.print(j+" ");
-           System.out.println("");
+           logger.debug(j+" ");
+           logger.debug("");
            }
            */
 
@@ -346,7 +346,8 @@ public class NumericalSurface {
                 factory.configure(atoms[i]);
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+        	logger.error("Error while instantiating the atom type factory: " + e.getMessage());
+        	logger.debug(e);
         }
     }
 

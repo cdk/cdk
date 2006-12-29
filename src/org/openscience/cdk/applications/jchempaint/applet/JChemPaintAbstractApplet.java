@@ -117,7 +117,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 //			try {
 //				return Integer.parseInt(stringValue);
 //			} catch (NumberFormatException ex) {
-//				System.out.println(propertyName + ":" + stringValue
+//				logger.debug(propertyName + ":" + stringValue
 //						+ " is not an integer");
 //			}
 //		return defaultValue;
@@ -129,7 +129,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 //			try {
 //				return (new Double(stringValue)).doubleValue();
 //			} catch (NumberFormatException ex) {
-//				System.out.println(propertyName + ":" + stringValue
+//				logger.debug(propertyName + ":" + stringValue
 //						+ " is not a floating point number");
 //			}
 //		return defaultValue;

@@ -136,7 +136,7 @@ public class AminoAcids {
         			logger.debug("Prop: " + next.toString());
         			if (next instanceof DictRef) {
         				DictRef dictRef = (DictRef)next;
-        				// System.out.println("DictRef type: " + dictRef.getType());
+        				// logger.debug("DictRef type: " + dictRef.getType());
         				if (dictRef.getType().equals("pdb:residueName")) {
         					aminoAcid.setProperty(RESIDUE_NAME, ac.getProperty(dictRef).toString().toUpperCase());
         				} else if (dictRef.getType().equals("pdb:oneLetterCode")) {
