@@ -29,7 +29,7 @@ import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * Checks the funcitonality of the TopologicalEquivalentClass
+ * Checks the functionality of the TopologicalEquivalentClass.
  *
  * @cdk.module test-extra
  */

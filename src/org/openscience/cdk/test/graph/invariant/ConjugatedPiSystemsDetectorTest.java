@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
- * Checks the funcitonality of the ConjugatedPiSystemsCalculator
+ * Checks the functionality of the ConjugatedPiSystemsCalculator.
  *
  * @cdk.module test-extra
  */
