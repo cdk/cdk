@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
  *
  * @cdk.module jchempaint
  * @author     steinbeck
+ * @cdk.bug    1524599
  */
 public class UndoAction extends JCPAction
 {

@@ -70,7 +70,9 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  * @cdk.bug        1274464
  * @cdk.bug        1363882
  * @cdk.bug        1503541
+ * @cdk.bug        1535587
  * @cdk.bug        1541333
+ * @cdk.bug        1579229
  * @cdk.bug        1579230
  * @cdk.bug        1579231
  * @cdk.bug        1579235

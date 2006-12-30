@@ -58,6 +58,7 @@ import java.util.*;
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
  * @cdk.bug        1257438
+ * @cdk.bug        1535055
  */
 public class SmilesGenerator
 {

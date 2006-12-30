@@ -69,6 +69,7 @@ import java.util.Vector;
  *@cdk.dictref blue-obelisk:layoutMolecule
  *@cdk.module  sdg
  *@cdk.bug     1610997
+ *@cdk.bug     1536561
  */
 public class StructureDiagramGenerator
 {

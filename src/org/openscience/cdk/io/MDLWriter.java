@@ -70,6 +70,7 @@ import java.util.*;
  *
  * @cdk.module  io
  * @cdk.keyword file format, MDL molfile
+ * @cdk.bug     1524466
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 

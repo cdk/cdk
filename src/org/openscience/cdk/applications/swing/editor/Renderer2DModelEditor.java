@@ -41,6 +41,7 @@ import com.ozten.font.JFontChooser;
  * @cdk.module applications
  * @cdk.builddepends jfontchooser.jar
  * @cdk.require swing
+ * @cdk.bug          1525961
  */
 public class Renderer2DModelEditor extends FieldTablePanel implements ActionListener {
     

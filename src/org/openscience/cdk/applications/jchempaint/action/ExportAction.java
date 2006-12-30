@@ -50,6 +50,7 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
  * @cdk.module  jchempaint
  * @author      Egon Willighagen
  * @cdk.require jai
+ * @cdk.bug     1586156
  */
 public class ExportAction extends SaveAsAction {
 

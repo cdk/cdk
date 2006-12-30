@@ -92,7 +92,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.builddepends xom-1.0.jar
  * @cdk.depends      jumbo50.jar
  * @cdk.require      java1.5+
- * @cdk.bug          905062
+ * @cdk.bug          1565563
  *
  * @see java.io.FileWriter
  * @see java.io.StringWriter

@@ -80,6 +80,7 @@ import java.util.HashMap;
  *
  * @cdk.keyword    hydrogen, adding
  * @cdk.module     valencycheck
+ * @cdk.bug        1575269
  */
 public class HydrogenAdder {
 
