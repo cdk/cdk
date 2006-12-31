@@ -37,7 +37,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the CanonicalLabeler.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class CanonicalLabelerTest extends CDKTestCase {
 	
