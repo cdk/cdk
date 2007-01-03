@@ -63,7 +63,7 @@ public class AtomicProperties {
 				break;
 			}
 			
-			LinkedList l = Parse(Line,"\t");
+			LinkedList l = parseStringIntoList(Line,"\t");
 			
 			String symbol=(String)l.get(0);
 			htMass.put(symbol,l.get(1));
@@ -76,7 +76,7 @@ public class AtomicProperties {
 		br.close();
 	}
 
-	public static LinkedList Parse(String Line, String Delimiter) {
+	public static LinkedList parseStringIntoList(String Line, String Delimiter) {
 		// parses a delimited string into a list
 		
 		LinkedList myList = new LinkedList();
@@ -101,7 +101,7 @@ public class AtomicProperties {
 		
 	}
 
-	public double GetVdWVolume(String symbol) {
+	public double getVdWVolume(String symbol) {
 		double VdWVolume=-99;
 		
 		String strVdWVolume=(String)htVdWVolume.get(symbol);
@@ -118,16 +118,16 @@ public class AtomicProperties {
 		
 	}
 	
-	public double GetNormalizedVdWVolume(String symbol) {
+	public double getNormalizedVdWVolume(String symbol) {
 		double VdWVolume=-99;
 		
-		VdWVolume=this.GetVdWVolume(symbol)/this.GetVdWVolume("C");
+		VdWVolume=this.getVdWVolume(symbol)/this.getVdWVolume("C");
 				
 		return VdWVolume;
 		
 	}
 	
-	public double GetElectronegativity(String symbol) {
+	public double getElectronegativity(String symbol) {
 		double Electronegativity=-99;
 		
 		String strElectronegativity=(String)htElectronegativity.get(symbol);
@@ -144,15 +144,15 @@ public class AtomicProperties {
 		
 	}
 	
-	public double GetNormalizedElectronegativity(String symbol) {
+	public double getNormalizedElectronegativity(String symbol) {
 		double Electronegativity=-99;
 		
-		Electronegativity=this.GetElectronegativity(symbol)/this.GetElectronegativity("C");
+		Electronegativity=this.getElectronegativity(symbol)/this.getElectronegativity("C");
 				
 		return Electronegativity;
 		
 	}
-	public double GetPolarizability(String symbol) {
+	public double getPolarizability(String symbol) {
 		double Polarizability=-99;
 		
 		String strPolarizability=(String)htPolarizability.get(symbol);
@@ -169,15 +169,15 @@ public class AtomicProperties {
 		
 	}
 	
-	public double GetNormalizedPolarizability(String symbol) {
+	public double getNormalizedPolarizability(String symbol) {
 		double Polarizability=-99;
 		
-		Polarizability=this.GetPolarizability(symbol)/this.GetPolarizability("C");
+		Polarizability=this.getPolarizability(symbol)/this.getPolarizability("C");
 				
 		return Polarizability;
 		
 	}
-	public double GetMass(String symbol) {
+	public double getMass(String symbol) {
 		double mass=-99;
 		
 		String strMass=(String)htMass.get(symbol);
@@ -195,10 +195,10 @@ public class AtomicProperties {
 		
 	}
 	
-	public double GetNormalizedMass(String symbol) {
+	public double getNormalizedMass(String symbol) {
 		double mass=-99;
 		
-		mass=this.GetMass(symbol)/this.GetMass("C");
+		mass=this.getMass(symbol)/this.getMass("C");
 				
 		return mass;
 		
