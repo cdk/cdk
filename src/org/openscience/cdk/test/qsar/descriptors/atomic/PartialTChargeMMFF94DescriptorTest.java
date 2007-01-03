@@ -26,8 +26,14 @@ package org.openscience.cdk.test.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
@@ -42,11 +48,17 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * @cdk.module test-qsar
  */
 public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
+	
+	private final double METHOD_ERROR = 0.1;
+	
+	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+	
 	/**
 	 *  Constructor for the PartialTChargeMMFF94DescriptorTest object
 	 *
 	 */
 	public  PartialTChargeMMFF94DescriptorTest() {}
+	
 	/**
 	 *  A unit test suite for JUnit
 	 *
@@ -62,15 +74,19 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CO");
+		IMolecule mol = builder.newMolecule();
+		IAtom carbon = builder.newAtom(Elements.CARBON);
+		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
+		// making sure the order matches the test results
+		mol.addAtom(carbon); 
+		mol.addAtom(oxygen);
+		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
+		addHydrogens(mol, carbon, 3);
+		addHydrogens(mol, oxygen, 1);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.011);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -80,33 +96,45 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CN");
+		IMolecule mol = builder.newMolecule();
+		IAtom carbon = builder.newAtom(Elements.CARBON);
+		IAtom nitrogen = builder.newAtom(Elements.NITROGEN);
+		// making sure the order matches the test results
+		mol.addAtom(carbon); 
+		mol.addAtom(nitrogen);
+		mol.addBond(builder.newBond(carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
+		addHydrogens(mol, carbon, 3);
+		addHydrogens(mol, nitrogen, 1);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
 		for (int i = 0 ; i < 6 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.02);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
-	 *  A unit test for JUnit with Methane
+	 *  A unit test for JUnit with ethoxyethane
 	 */
-	public void testPartialTotalChargeDescriptor_Methane() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testPartialTotalChargeDescriptor_Ethoxyethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.28,-0.56,0.28,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("COC");
-
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+//		IMolecule mol = sp.parseSmiles("COC");
+		IMolecule mol = builder.newMolecule();
+		IAtom carbon = builder.newAtom(Elements.CARBON);
+		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
+		IAtom carbon2 = builder.newAtom(Elements.CARBON);
+		// making sure the order matches the test results
+		mol.addAtom(carbon); 
+		mol.addAtom(oxygen);
+		mol.addAtom(carbon2); 
+		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
+		mol.addBond(builder.newBond(carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
+		addHydrogens(mol, carbon, 3);
+		addHydrogens(mol, carbon2, 1);
 		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.021);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -116,15 +144,19 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.23,-0.41,0.0,};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CS");
+		IMolecule mol = builder.newMolecule();
+		IAtom carbon = builder.newAtom(Elements.CARBON);
+		IAtom sulfur = builder.newAtom(Elements.SULFUR);
+		// making sure the order matches the test results
+		mol.addAtom(carbon); 
+		mol.addAtom(sulfur);
+		mol.addBond(builder.newBond(carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
+		addHydrogens(mol, carbon, 3);
+		addHydrogens(mol, sulfur, 1);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.04);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -134,33 +166,59 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={0.29,-0.29,0.0};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCl");
+//		IMolecule mol = sp.parseSmiles("CCl");
+		IMolecule mol = builder.newMolecule();
+		IAtom carbon = builder.newAtom(Elements.CARBON);
+		IAtom chlorine = builder.newAtom(Elements.CHLORINE);
+		// making sure the order matches the test results
+		mol.addAtom(carbon); 
+		mol.addAtom(chlorine);
+		mol.addBond(builder.newBond(carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
+		addHydrogens(mol, carbon, 3);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Benzene
 	 */
 	public void testPartialTotalChargeDescriptor_Benzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
+		double [] testResult={-0.15,0.15,-0.15,0.15,-0.15,0.15,-0.15,0.15,-0.15, 0.15,-0.15, 0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("c1ccccc1");
+//		IMolecule mol = sp.parseSmiles("c1ccccc1");
+		IMolecule mol = builder.newMolecule();
+		for (int i=0; i<6; i++) {
+			IAtom carbon = builder.newAtom(Elements.CARBON);
+			carbon.setFlag(CDKConstants.ISAROMATIC, true);
+			// making sure the order matches the test results
+			mol.addAtom(carbon);
+			addHydrogens(mol, carbon, 1);
+		}
+		IBond ringBond = builder.newBond(mol.getAtom(0), mol.getAtom(1), CDKConstants.BONDORDER_DOUBLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
+		ringBond = builder.newBond(mol.getAtom(1), mol.getAtom(2), CDKConstants.BONDORDER_SINGLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
+		ringBond = builder.newBond(mol.getAtom(2), mol.getAtom(3), CDKConstants.BONDORDER_DOUBLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
+		ringBond = builder.newBond(mol.getAtom(3), mol.getAtom(4), CDKConstants.BONDORDER_SINGLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
+		ringBond = builder.newBond(mol.getAtom(4), mol.getAtom(5), CDKConstants.BONDORDER_DOUBLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
+		ringBond = builder.newBond(mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
+		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+		mol.addBond(ringBond);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
-		for (int i = 0 ; i < 9 ; i++){
+		for (int i = 0 ; i < 12 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -170,15 +228,25 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		double [] testResult={-0.86,0.43,0.43};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("o");
+		IMolecule mol = builder.newMolecule();
+		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
+		// making sure the order matches the test results
+		mol.addAtom(oxygen);
+		addHydrogens(mol, oxygen, 2);
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
-		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.06);
+			assertEquals(testResult[i],result,METHOD_ERROR);
+		}
+	}
+	
+	private void addHydrogens(IAtomContainer container, IAtom atom, int count) {
+		for (int i=0; i<count; i++) {
+			IAtom newH = builder.newAtom(Elements.HYDROGEN);
+			container.addAtom(newH);
+			container.addBond(
+				builder.newBond(atom, newH, CDKConstants.BONDORDER_SINGLE)
+			);
 		}
 	}
 }
