@@ -26,11 +26,10 @@ import java.util.Iterator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -49,7 +48,7 @@ public class CanonicalLabelerTest extends CDKTestCase {
 	}
 	
 	public void setUp() {
-		parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+		parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		labeler = new CanonicalLabeler();
 	}
 
