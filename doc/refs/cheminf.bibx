@@ -390,6 +390,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Nilakantan06">
+    <bibtex:article>
+      <bibtex:author>Nilakantan, R. and Nunn, D.S. and Greenblatt, L. and Walker, G. and Haraki, K. and Mobilio, D.</bibtex:author>
+      <bibtex:title>A family of ring system-based structural fragments for use in structure-activity studies: database mining and recursive partitioning.</bibtex:title>
+      <bibtex:journal>Journal of chemical information and modeling</bibtex:journal>
+      <bibtex:year>2006</bibtex:year>
+      <bibtex:volume>46</bibtex:volume>
+      <bibtex:number>3</bibtex:number>
+      <bibtex:pages>1069-1077</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="OS">
     <bibtex:book>
       <bibtex:editor>Csaszar, F.</bibtex:editor>
