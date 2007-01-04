@@ -112,11 +112,11 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
         int atomPosition = varAtomContainer.getAtomNumber(atom);
 
-        final int GASTEIGER_GDR_DESCRIPTOR_LENGTH = 7;
+        final int gdr_desc_length = 7;
 
 
         DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-                GASTEIGER_GDR_DESCRIPTOR_LENGTH
+        		gdr_desc_length
         );
         if (!atom.getSymbol().equals("H")) {
             throw new CDKException("You tried calculation on a " + atom.getSymbol() + " atom. This is not allowed! Atom must be a H atom.");
@@ -319,69 +319,72 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
         double step = (limitSup - limitInf) / 15;
 
 ////////////////////////THE THIRD DESCRIPTOR IS gD(r) WITH DISTANCE AND RADIAN ANGLE BTW THE PROTON AND THE MIDDLE POINT OF DOUBLE BOND
-
-        Vector3d a_a = new Vector3d();
-        Vector3d a_b = new Vector3d();
-        Vector3d b_a = new Vector3d();
-        Vector3d b_b = new Vector3d();
-        Point3d middlePoint = new Point3d();
-        double angle = 0;
-
-        if (doubles.size() > 0) {
-            IAtom goodAtom0;
-            IAtom goodAtom1;
-            limitInf = 0;
-            limitSup = Math.PI / 2;
-            step = (limitSup - limitInf) / 7;
-            position = 0;
-            partial = 0;
-            org.openscience.cdk.interfaces.IBond theDoubleBond;
-            smooth = -1.15;
-            int goodPosition = 0;
-            org.openscience.cdk.interfaces.IBond goodBond;
-            ArrayList gDr_function = new ArrayList(7);
-            for (double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
-                sum = 0;
-                for (int dou = 0; dou < doubles.size(); dou++) {
-                    partial = 0;
-                    Integer thisDoubleBond = (Integer) doubles.get(dou);
-                    position = thisDoubleBond.intValue();
-                    theDoubleBond = mol.getBond(position);
-                    goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
-                    goodBond = mol.getBond(goodPosition);
-                    goodAtom0 = goodBond.getAtom(0);
-                    goodAtom1 = goodBond.getAtom(1);
-
-                    //logger.debug("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
-
-                    middlePoint = theDoubleBond.get3DCenter();
-                    values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond);
-
-                    if (theDoubleBond.contains(goodAtom0)) {
-                        a_a.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
-                        a_b.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
-                    } else {
-                        a_a.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
-                        a_b.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
-                    }
-                    b_b.set(middlePoint.x, middlePoint.y, middlePoint.z);
-                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
-                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
-                    partial = ((1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghd - angle), 2))));
-                    sum += partial;
-                }
-                //gDr_function.add(new Double(sum));
-                rdfProtonCalculatedValues.add(sum);
-//                logger.debug("GDR added double: " + sum);
-            }
-            //atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));
-            //rdfProtonCalculatedValues.add(1);
-        } else {
-            for (int i = 0; i < GASTEIGER_GDR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
-        }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
-
-    }
+	
+	Vector3d a_a = new Vector3d();
+	Vector3d a_b = new Vector3d();
+	Vector3d b_a = new Vector3d();
+	Vector3d b_b = new Vector3d();
+	Point3d middlePoint = new Point3d();
+	double angle = 0;			
+	
+	if(doubles.size() > 0) {
+		IAtom goodAtom0;
+		IAtom goodAtom1;
+		limitInf = 0;
+		limitSup = Math.PI / 2;
+		step = (limitSup - limitInf)/7;
+		position = 0;
+		partial = 0;
+		org.openscience.cdk.interfaces.IBond theDoubleBond;
+		smooth = -1.15;
+		int goodPosition = 0;
+		org.openscience.cdk.interfaces.IBond goodBond;
+		ArrayList gDr_function = new ArrayList(7);
+		for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
+			sum = 0;
+			for( int dou = 0; dou < doubles.size(); dou++ ) {
+				partial = 0;
+				Integer thisDoubleBond = (Integer)doubles.get(dou);
+				position = thisDoubleBond.intValue();
+				theDoubleBond = mol.getBond(position);
+				goodPosition = getNearestBondtoAGivenAtom(mol, atom, theDoubleBond);
+				goodBond = mol.getBond(goodPosition);
+				goodAtom0 = goodBond.getAtom(0);
+				goodAtom1 = goodBond.getAtom(1);
+				
+				//System.out.println("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
+				
+				middlePoint = theDoubleBond.get3DCenter();
+				values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond );
+				
+				if(theDoubleBond.contains(goodAtom0)) {						
+					a_a.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
+					a_b.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
+				}
+				else {
+					a_a.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
+					a_b.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
+				}
+				b_b.set(middlePoint.x, middlePoint.y, middlePoint.z);
+				b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+				angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+				partial = ( ( 1 / (Math.pow( values[0], 2 ) ) ) * Math.exp( smooth * (Math.pow( (ghd - angle) , 2) ) ) );
+				sum += partial;
+			}
+			//gDr_function.add(new Double(sum));
+			rdfProtonCalculatedValues.add(sum);
+			System.out.println("GDR added double: " + sum);
+		}
+		//atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));				
+		//rdfProtonCalculatedValues.add(1);
+	}
+	else {
+		for (int i=0; i<gdr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+	}
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
+	
+	}
+	
 
 //Others definitions
 
