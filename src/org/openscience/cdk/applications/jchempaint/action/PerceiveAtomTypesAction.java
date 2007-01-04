@@ -1,6 +1,6 @@
 /*  $Revision: 7032 $ $Author: kaihartmann $ $Date: 2006-09-22 17:26:48 +0200 (Fri, 22 Sep 2006) $
  *  
- *  Copyright (C) 2006  Egon Willighagen <ewilligh@uni-koeln.de>
+ *  Copyright (C) 2006-2007  Egon Willighagen <ewilligh@uni-koeln.de>
  *
  *  Contact: cdk-devel@lists.sf.net
  *

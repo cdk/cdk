@@ -1,6 +1,6 @@
 /*
  *
-* Copyright (C) 2001-2006  Rajarshi Guha <rajarshi@users.sourceforge.net>
+* Copyright (C) 2001-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
 *
 * Contact: cdk-devel@lists.sourceforge.net
 *

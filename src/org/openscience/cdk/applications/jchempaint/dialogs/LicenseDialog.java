@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  * 
- * Copyright (C) 1997-2006  The JChemPaint project
+ * Copyright (C) 1997-2007  The JChemPaint project
  *
  * Contact: jchempaint-devel@lists.sf.net
  *
@@ -67,7 +67,7 @@ public class LicenseDialog extends JFrame {
             "See 'http://jchempaint.sourceforge.net' for further information " +
             "about the license you accept when using this software.\n\n";
         String s2 =
-            "Copyright (C) 1997-2006  The JChemPaint project\n" +
+            "Copyright (C) 1997-2007  The JChemPaint project\n" +
             "\n" +
             "Contact: jchempaint-devel@lists.sf.net\n" +
             "\n" +

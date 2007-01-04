@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2006  The JChemPaint project
+ *  Copyright (C) 1997-2007  The JChemPaint project
  *
  *  Contact: jchempaint-devel@lists.sourceforge.net
  *
