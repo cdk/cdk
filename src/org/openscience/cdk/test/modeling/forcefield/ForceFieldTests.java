@@ -3,7 +3,7 @@
  *  $Author$
  *  $Date$
  *  *
- *  Copyright (C) 2005-2006  Violeta Labarta Beceiro (vlabarta@yahoo.com)
+ *  Copyright (C) 2005-2007  Violeta Labarta Beceiro (vlabarta@yahoo.com)
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

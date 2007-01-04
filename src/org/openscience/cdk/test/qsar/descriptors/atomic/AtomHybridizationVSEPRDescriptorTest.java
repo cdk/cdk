@@ -4,7 +4,7 @@
  * $Revision: 1.0
  $
  * 
- *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

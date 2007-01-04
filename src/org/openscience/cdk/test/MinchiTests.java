@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2006  Sam Adams <sea36@users.sf.net>
+ * Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
