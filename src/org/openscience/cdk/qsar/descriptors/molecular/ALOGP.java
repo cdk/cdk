@@ -3,7 +3,7 @@
  * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
  * $Revision: 6171 $
  *
- * Copyright (C) 2006  Todd Martin (Environmental Protection Agency)
+ * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -999,7 +999,7 @@ public class ALOGP implements IMolecularDescriptor {
 			// if (s.equals("F") || s.equals("O") || s.equals("Cl")
 			// || s.equals("Br") || s.equals("N") || s.equals("S"))
 
-			if (ap.GetNormalizedElectronegativity(((IAtom)ca.get(j)).getSymbol()) > 1) {
+			if (ap.getNormalizedElectronegativity(((IAtom)ca.get(j)).getSymbol()) > 1) {
 				java.util.List bonds2 = atomContainer.getConnectedBondsList(((IAtom)ca.get(j)));
 
 				boolean HaveDouble = false;
@@ -1401,7 +1401,7 @@ public class ALOGP implements IMolecularDescriptor {
 			// if (s.equals("F") || s.equals("O") || s.equals("Cl")
 			// || s.equals("Br") || s.equals("N") || s.equals("S"))
 
-			if (ap.GetNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
+			if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
 				OxNum += atomContainer.getBond(ca0, ca2j).getOrder();
 			}
 
@@ -1475,7 +1475,7 @@ public class ALOGP implements IMolecularDescriptor {
 			// if (s.equals("F") || s.equals("O") || s.equals("Cl")
 			// || s.equals("Br") || s.equals("N") || s.equals("S"))
 
-			if (ap.GetNormalizedElectronegativity(s) > 1) {
+			if (ap.getNormalizedElectronegativity(s) > 1) {
 				// // F,O,Cl,Br,N
 				OxNum += atomContainer.getBond(ca0, ca2j).getOrder();
 			}
@@ -1551,7 +1551,7 @@ public class ALOGP implements IMolecularDescriptor {
 			// if (s.equals("F") || s.equals("O") || s.equals("Cl")
 			// || s.equals("Br") || s.equals("N") || s.equals("S"))
 
-			if (ap.GetNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
+			if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
 				OxNum += atomContainer.getBond(ca0, ca2j).getOrder();
 			}
 
@@ -1627,7 +1627,7 @@ public class ALOGP implements IMolecularDescriptor {
 			// if (s.equals("F") || s.equals("O") || s.equals("Cl")
 			// || s.equals("Br") || s.equals("N") || s.equals("S"))
 
-			if (ap.GetNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
+			if (ap.getNormalizedElectronegativity(ca2j.getSymbol()) > 1) {
 				OxNum += atomContainer.getBond(ca0, ca2j).getOrder();
 			}
 
