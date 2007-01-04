@@ -353,6 +353,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         } else {
         	logger.warn("Not adding molecule property!");
         }
+      } else if (objectType.equals("MolecularProperty")) {
+    	  currentMolecule.setProperty(propertyType, propertyValue);
       } else if (objectType.equals("PseudoAtom")) {
         if (propertyType.equals("label")) {
             if (!(currentAtom instanceof IPseudoAtom)) {

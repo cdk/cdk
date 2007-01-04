@@ -798,6 +798,8 @@ public class CMLCoreModule implements ICMLModule {
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
                 	cdo.setObjectProperty("Molecule", DICTREF, cData); 
+                } else if (DICTREF.equals("cdk:molecularProperty")) {
+                	cdo.setObjectProperty("MolecularProperty", elementTitle, cData);
                 }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);

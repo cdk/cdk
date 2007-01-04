@@ -307,7 +307,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         org.openscience.cdk.interfaces.IMolecule roundTrippedMol = null;
         try {
-            logger.debug("CML string: " + cmlString);
+            System.out.println("CML string: " + cmlString);
             CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             
             IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());

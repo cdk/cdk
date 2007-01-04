@@ -374,6 +374,27 @@ public class Convertor {
             CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
             cmlMolecule.addBond(cmlBond, true);
         }
+        
+        // ok, output molecular properties, but not TITLE, INCHI, or DictRef's
+        Map props = structure.getProperties();
+        Iterator keys = props.keySet().iterator();
+        while (keys.hasNext()) {
+        	Object key = keys.next();
+        	// but only if a String
+        	if (key instanceof String && props.get(key) instanceof String) {
+        		Object value = props.get(key);
+        		if (!key.toString().equals(CDKConstants.TITLE) &&
+        			!key.toString().equals(CDKConstants.INCHI)) {
+        			// ok, should output this
+        			CMLScalar scalar = new CMLScalar();
+                    this.checkPrefix(scalar);
+                    scalar.setDictRef("cdk:molecularProperty");
+                    scalar.setTitle(key.toString());
+                    scalar.setValue(value.toString());
+                    cmlMolecule.addScalar(scalar);
+        		}
+        	}
+        }
 
         Iterator elements = customizers.iterator();
         while (elements.hasNext()) {
