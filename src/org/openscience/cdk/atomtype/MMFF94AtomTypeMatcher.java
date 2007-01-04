@@ -108,7 +108,8 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		//logger.debug("****** Configure MMFF94 AtomType via findMatching ******");
 		//logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getSphericalMatcher() + " ");
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getProperty(CDKConstants.SPHERICAL_MATCHER) + " ");
-					
+		//System.out.print("IN MMFF94AtomTypeMatcher Symbol:" + atom.getSymbol() +" HoseCode>" + atom.getProperty(CDKConstants.SPHERICAL_MATCHER) + " ");
+				
 		if (atom instanceof PseudoAtom) {
 				return factory.getAtomTypes("DU")[0];
 		}
@@ -278,8 +279,6 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 						ID = atomTypeIds[58];//npd+
 					}
 				
-								
-					
 				}else if (atomTypeIds[j].equals("O")){
 					if (atomChemGroupConstant==6){
 							ID = atomTypeIds[35];//Oar
@@ -308,8 +307,8 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 						ID = atomTypeIds[72];//Sthiophen
 					}
 				}else if (atomTypeIds[j].equals("HC")){
-					p1 = Pattern.compile(getSphericalMatcher("HP"));
-					mat1 = p1.matcher(atomSphericalMatcher);
+					p1 =Pattern.compile(getSphericalMatcher("HP"));
+					mat1 = p1.matcher((String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
 					if (mat1.matches()){
 						ID = "HP";
 					}
@@ -322,6 +321,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		}//for end
 		if (atomTypeFlag) {
 			atomTypeFlag = false;
+			//System.out.println(" "+ID);
 			return factory.getAtomType(ID);
 		} else {
 			return factory.getAtomType("DU");
