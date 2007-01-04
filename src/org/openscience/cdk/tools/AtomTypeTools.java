@@ -57,6 +57,11 @@ public class AtomTypeTools {
 		hcg = new HOSECodeGenerator();
 	}
 	
+	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
+		return assignAtomTypePropertiesToAtom(molecule, true);
+	}
+	
+		
 	/**
 	 *  Method assigns certain properties to an atom. Necessary for the atom type matching 
 	 *  Properties:
@@ -67,11 +72,12 @@ public class AtomTypeTools {
 	 *	 <li>Ring/Group, ringSize, aromaticity
 	 *	 <li>SphericalMatcher (HoSe Code)
 	 *  </ul>
-	 *
+	 *  
+	 *@param aromaticity booelan true/false true if aromaticity should be calculated
 	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
 	 */
-	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule) throws Exception{
+	public IRingSet assignAtomTypePropertiesToAtom(IMolecule molecule, boolean aromaticity) throws Exception{
         SmilesGenerator sg = new SmilesGenerator();
 
 		//logger.debug("assignAtomTypePropertiesToAtom Start ...");
@@ -81,11 +87,13 @@ public class AtomTypeTools {
 		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		logger.debug(ringSetMolecule);
 		
-		try {
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-		} catch (Exception cdk1) {
-			//logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
-			logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+		if (aromaticity){
+			try {
+				HueckelAromaticityDetector.detectAromaticity(molecule);
+			} catch (Exception cdk1) {
+				//logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+				logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+			}
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -131,7 +139,7 @@ public class AtomTypeTools {
 	 *@return     chemicalRingConstant
 	 */
 	private int ringSystemClassifier(IRing ring, String smile) {
-		
+		/*System.out.println("IN AtomTypeTools Smile:"+smile);*/
 		logger.debug("Comparing ring systems: SMILES=", smile);
 		
 		if (smile.equals("c1ccnc1"))return 4;
