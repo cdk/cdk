@@ -187,6 +187,16 @@ public class AtomTypeHandler extends DefaultHandler {
                     }
                 }
             }
+        } else if ("label".equals(local)) {
+        	// assume xpath atomType/label
+        	for (int i = 0; i < atts.getLength(); i++) {
+                if ("value".equals(atts.getQName(i))) {
+                	if (atomType.getAtomTypeName() != null) {
+                		atomType.setID(atomType.getAtomTypeName());
+                	}
+                	atomType.setAtomTypeName(atts.getValue(i));
+                }
+        	}
         } else if ("scalar".equals(local)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("dictRef".equals(atts.getQName(i))) {

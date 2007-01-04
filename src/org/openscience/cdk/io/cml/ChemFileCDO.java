@@ -423,6 +423,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
             currentAtom.setProperty("org.openscience.cdk.dict", propertyValue);
         } else if (propertyType.equals("atomicNumber")) {
             currentAtom.setAtomicNumber(Integer.parseInt(propertyValue));
+        } else if (propertyType.equals("atomTypeLabel")) {
+            currentAtom.setAtomTypeName(propertyValue);
         } else if (propertyType.equals("massNumber")) {
             currentAtom.setMassNumber((new Double(propertyValue)).intValue());
         } else if (propertyType.equals("spinMultiplicity")) {

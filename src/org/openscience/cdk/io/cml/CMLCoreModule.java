@@ -477,6 +477,10 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("scalar".equals(name)) {
             if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
+        } else if ("label".equals(name)) {
+            if (xpath.endsWith("atomType", "label")) {
+            	cdo.setObjectProperty("Atom", "atomTypeLabel", atts.getValue("value"));
+            }
         } else if ("list".equals(name)) {
             cdo.startObject("MoleculeSet");
         }
