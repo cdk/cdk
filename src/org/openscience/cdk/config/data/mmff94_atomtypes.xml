@@ -457,7 +457,7 @@
     </atom>
       <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
       <scalar dataType="xsd:string" dictRef="cdk:DA">A</scalar>
-      <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-[1-2];[H]{0,2}+</scalar>
+      <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">O-[1-2];[H]{0,2}.*+</scalar>
   </atomType>  
   <atomType id="Oar">
     <!-- for example in furan -->
