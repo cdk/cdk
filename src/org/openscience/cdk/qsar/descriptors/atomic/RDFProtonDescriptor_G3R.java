@@ -121,10 +121,10 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			throws CDKException {
 		int atomPosition = varAtomContainer.getAtomNumber(atom);
 
-		final int GASTEIGER_G3R_DESCRIPTOR_LENGTH = 13;
+		final int g3r_desc_length = 13;
 
 		DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-				GASTEIGER_G3R_DESCRIPTOR_LENGTH);
+				g3r_desc_length);
 		if (!atom.getSymbol().equals("H")) {
 			throw new CDKException("You tried calculation on a "
 					+ atom.getSymbol()
@@ -512,7 +512,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			// atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
 			// rdfProtonCalculatedValues.add(1);
 		} else {
-			for (int i = 0; i < GASTEIGER_G3R_DESCRIPTOR_LENGTH; i++)
+			for (int i = 0; i < g3r_desc_length; i++)
 				rdfProtonCalculatedValues.add(Double.NaN);
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(),
