@@ -32,7 +32,6 @@ package org.openscience.cdk;
  *
  * @cdk.module  data
  * @cdk.keyword ring
- * @cdk.bug     1117765
  */
 public class Ring extends AtomContainer implements java.io.Serializable, org.openscience.cdk.interfaces.IRing
 {
