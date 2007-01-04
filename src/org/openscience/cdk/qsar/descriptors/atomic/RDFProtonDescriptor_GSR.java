@@ -115,11 +115,11 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
         int atomPosition = varAtomContainer.getAtomNumber(atom);
 
-        final int GASTEIGER_GSR_DESCRIPTOR_LENGTH = 7;
+        final int gsr_desc_length = 7;
 
 
         DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-                GASTEIGER_GSR_DESCRIPTOR_LENGTH
+        		gsr_desc_length
         );
         if (!atom.getSymbol().equals("H")) {
             throw new CDKException("You tried calculation on a " + atom.getSymbol() + " atom. This is not allowed! Atom must be a H atom.");
@@ -323,67 +323,68 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
         double step = (limitSup - limitInf) / 15;
 
 ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS			
-        Vector3d a_a = new Vector3d();
-        Vector3d a_b = new Vector3d();
-        Vector3d b_a = new Vector3d();
-        Vector3d b_b = new Vector3d();
-        Point3d middlePoint = new Point3d();
-        double angle = 0;
 
-        if (singles.size() > 0) {
-            double dist0;
-            double dist1;
-            IAtom singleBondAtom0;
-            IAtom singleBondAtom1;
-            distance = 0;
-            position = 0;
-            org.openscience.cdk.interfaces.IBond theSingleBond = null;
-            limitInf = 0;
-            limitSup = Math.PI / 2;
-            step = (limitSup - limitInf) / 7;
-            smooth = -1.15;
-            for (double ghs = 0; ghs < limitSup; ghs = ghs + step) {
-                sum = 0;
-                for (int sing = 0; sing < singles.size(); sing++) {
-                    angle = 0;
-                    partial = 0;
-                    Integer thisSingleBond = (Integer) singles.get(sing);
-                    position = thisSingleBond.intValue();
-                    theSingleBond = mol.getBond(position);
-                    middlePoint = theSingleBond.get3DCenter();
-                    singleBondAtom0 = theSingleBond.getAtom(0);
-                    singleBondAtom1 = theSingleBond.getAtom(1);
-                    dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
-                    dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
-
-                    a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-                    if (dist1 > dist0)
-                        a_b.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y, singleBondAtom0.getPoint3d().z);
-                    else
-                        a_b.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y, singleBondAtom1.getPoint3d().z);
-                    b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
-
-                    values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond);
-
-                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
-                    //logger.debug("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
-
-                    partial = (1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghs - angle), 2)));
-                    sum += partial;
-                }
-                //gSr_function.add(new Double(sum));
-                rdfProtonCalculatedValues.add(sum);
-//                logger.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
-            }
-            //atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
-
-            //rdfProtonCalculatedValues.add(1);
-        } else {
-            for (int i = 0; i < GASTEIGER_GSR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
-        }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
-    }
+	Vector3d a_a = new Vector3d();
+	Vector3d a_b = new Vector3d();
+	Vector3d b_a = new Vector3d();
+	Vector3d b_b = new Vector3d();
+	Point3d middlePoint = new Point3d();
+	double angle = 0;		
+	
+	if(singles.size() > 0) {
+		double dist0;
+		double dist1;
+		IAtom singleBondAtom0;
+		IAtom singleBondAtom1;
+		distance = 0;
+		position = 0;
+		org.openscience.cdk.interfaces.IBond theSingleBond = null;
+		limitInf = 0;
+		limitSup = Math.PI / 2;
+		step = (limitSup - limitInf)/7;
+		smooth = -1.15;
+		for(double ghs = 0; ghs < limitSup; ghs = ghs + step) {
+			sum = 0;
+			for( int sing = 0; sing < singles.size(); sing++ ) {
+				angle = 0;
+				partial = 0;
+				Integer thisSingleBond = (Integer)singles.get(sing);
+				position = thisSingleBond.intValue();
+				theSingleBond = mol.getBond(position);
+				middlePoint = theSingleBond.get3DCenter();
+				singleBondAtom0 = theSingleBond.getAtom(0);
+				singleBondAtom1 = theSingleBond.getAtom(1);
+				dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
+				dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
+					
+				a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
+				if(dist1 > dist0) a_b.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y, singleBondAtom0.getPoint3d().z);
+				else a_b.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y, singleBondAtom1.getPoint3d().z);
+				b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
+				b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+				
+				values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond );
+				
+				angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+					//System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
+					
+				partial = (1 / (Math.pow( values[0], 2 ))) * Math.exp( smooth * (Math.pow( (ghs - angle) , 2)));
+				sum += partial;
+			}
+			//gSr_function.add(new Double(sum));
+			rdfProtonCalculatedValues.add(sum);
+			System.out.println("RDF gSr prob.: " + sum +  " at distance " + ghs);
+		}
+		//atom.setProperty("gasteigerGSR", new ArrayList(gSr_function));
+		
+		//rdfProtonCalculatedValues.add(1);
+	}
+	else {
+		for (int i=0; i<gsr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+	}
+	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
+	}
+	
 
 //Others definitions
 

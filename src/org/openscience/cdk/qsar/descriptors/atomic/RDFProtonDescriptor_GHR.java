@@ -115,11 +115,11 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
         int atomPosition = varAtomContainer.getAtomNumber(atom);
 
-        final int GASTEIGER_GHR_DESCRIPTOR_LENGTH = 15;
+        final int ghr_desc_length = 15;
 
 
         DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-                GASTEIGER_GHR_DESCRIPTOR_LENGTH
+        		ghr_desc_length
         );
         if (!atom.getSymbol().equals("H")) {
             throw new CDKException("You tried calculation on a " + atom.getSymbol() + " atom. This is not allowed! Atom must be a H atom.");
@@ -322,31 +322,31 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
         double step = (limitSup - limitInf) / 15;
         IAtom atom2;
 
-///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:
-
-        String s = new String();
-
-        if (atoms.size() > 0) {
-            for (double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
-                sum = 0;
-                for (int at = 0; at < atoms.size(); at++) {
-                    distance = 0;
-                    partial = 0;
-                    Integer thisAtom = (Integer) atoms.get(at);
-                    position = thisAtom.intValue();
-                    atom2 = mol.getAtom(position);
-                    distance = calculateDistanceBetweenTwoAtoms(atom, atom2);
-                    partial = atom2.getCharge() * Math.exp(smooth * (Math.pow((ghr - distance), 2)));
-                    sum += partial;
-                }
-                rdfProtonCalculatedValues.add(sum);
-//                logger.debug("RDF gr distance prob.: " + sum + " at distance " + ghr);
-            }
-        } else {
-            for (int i = 0; i < GASTEIGER_GHR_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
-        }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
-    }
+///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:		
+	String s=new String();
+	
+		if(atoms.size() > 0) {
+			for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
+				sum = 0;
+				for( int at = 0; at < atoms.size(); at++ ) {
+					distance = 0;
+					partial = 0;
+					Integer thisAtom = (Integer)atoms.get(at);
+					position = thisAtom.intValue();
+					atom2 = mol.getAtom(position);
+					distance = calculateDistanceBetweenTwoAtoms(atom, atom2 );
+					partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghr - distance) , 2)));
+					sum += partial;
+				}
+				rdfProtonCalculatedValues.add(sum);
+				System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
+			}
+		}
+		else {
+			for (int i=0; i<ghr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+		}
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
+	}
 
 //Others definitions
 

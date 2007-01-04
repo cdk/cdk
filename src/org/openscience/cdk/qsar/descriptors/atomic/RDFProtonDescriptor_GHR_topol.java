@@ -116,11 +116,11 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
         int atomPosition = varAtomContainer.getAtomNumber(atom);
 
-        final int GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH = 15;
+        final int ghr_topol_desc_length = 15;
 
 
         DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-                GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH
+        		ghr_topol_desc_length
         );
         if (!atom.getSymbol().equals("H")) {
             throw new CDKException("You tried calculation on a " + atom.getSymbol() + " atom. This is not allowed! Atom must be a H atom.");
@@ -325,57 +325,60 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 
 ///////////////////////THE SECOND CALCULATED DESCRIPTOR IS g(H)r TOPOLOGICAL WITH SUM OF BOND LENGTHS
 
+    distance = 0;
+	sum = 0;
+	smooth = -20;
+	position = 0;
+	atom2 = null;
+	org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(mol);
+	Object startVertex = atom;
+	Object endVertex;
+	org._3pq.jgrapht.Edge edg;
+	java.util.List mylist;
+	IAtom atomTarget;
+	IAtom atomSource;
+	Integer thisAtom;
+	partial = 0;
+	limitInf = 1.4;
+	limitSup = 4;
+	step = (limitSup - limitInf)/15;
+	
+	if(atoms.size() > 0) {
+		//ArrayList gHr_topol_function = new ArrayList(15);
+		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
+			sum = 0;
+			for( int at = 0; at < atoms.size(); at++ ) {
+				partial = 0;
+				distance = 0;
+				thisAtom = (Integer)atoms.get(at);
+				position = thisAtom.intValue();
+				endVertex = mol.getAtom(position);
+				atom2 = mol.getAtom(position);
+				mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
+				for (int u = 0; u < mylist.size(); u++) {
+					edg = (org._3pq.jgrapht.Edge)mylist.get(u);
+					atomTarget = (IAtom)edg.getTarget();
+					atomSource = (IAtom)edg.getSource();
+					distance += calculateDistanceBetweenTwoAtoms(atomTarget, atomSource);
+				}
+				partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghrt - distance) , 2)));
+				sum += partial;
+			}
+			//gHr_topol_function.add(new Double(sum));
+			rdfProtonCalculatedValues.add(sum);
+			System.out.println("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
+		}
+		//atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
+		//rdfProtonCalculatedValues.add(1);
+	}
+	else {
+		for (int i=0; i<ghr_topol_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+	}
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
+	}
+	
+    
 
-        distance = 0;
-        sum = 0;
-        smooth = -20;
-        position = 0;
-        atom2 = null;
-        org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(mol);
-        Object startVertex = atom;
-        Object endVertex;
-        org._3pq.jgrapht.Edge edg;
-        java.util.List mylist;
-        IAtom atomTarget;
-        IAtom atomSource;
-        Integer thisAtom;
-        partial = 0;
-        limitInf = 1.4;
-        limitSup = 4;
-        step = (limitSup - limitInf) / 15;
-
-        if (atoms.size() > 0) {
-            //ArrayList gHr_topol_function = new ArrayList(15);
-            for (double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {
-                sum = 0;
-                for (int at = 0; at < atoms.size(); at++) {
-                    partial = 0;
-                    distance = 0;
-                    thisAtom = (Integer) atoms.get(at);
-                    position = thisAtom.intValue();
-                    endVertex = mol.getAtom(position);
-                    atom2 = mol.getAtom(position);
-                    mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph, startVertex, endVertex);
-                    for (int u = 0; u < mylist.size(); u++) {
-                        edg = (org._3pq.jgrapht.Edge) mylist.get(u);
-                        atomTarget = (IAtom) edg.getTarget();
-                        atomSource = (IAtom) edg.getSource();
-                        distance += calculateDistanceBetweenTwoAtoms(atomTarget, atomSource);
-                    }
-                    partial = atom2.getCharge() * Math.exp(smooth * (Math.pow((ghrt - distance), 2)));
-                    sum += partial;
-                }
-                //gHr_topol_function.add(new Double(sum));
-                rdfProtonCalculatedValues.add(sum);
-//                logger.debug("RDF gr-topol distance prob.: " + sum + " at distance " + ghrt);
-            }
-            //atom.setProperty("gasteigerGHRtopol", new ArrayList(gHr_topol_function));
-            //rdfProtonCalculatedValues.add(1);
-        } else {
-            for (int i = 0; i < GASTEIGER_GHR_TOPOL_DESCRIPTOR_LENGTH; i++) rdfProtonCalculatedValues.add(Double.NaN);
-        }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
-    }
 
 //Others definitions
 
