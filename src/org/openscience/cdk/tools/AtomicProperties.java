@@ -30,9 +30,6 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-/**
- * @cdk.bug 1624341
- */
 public class AtomicProperties {
 
 	private LoggingTool logger;
