@@ -115,7 +115,7 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         assertEquals("Sthi",mol.getAtom(0).getAtomTypeName());
         assertEquals("Csp2",mol.getAtom(7).getAtomTypeName());
         assertEquals("Csp",mol.getAtom(51).getAtomTypeName());
-        assertEquals("NdoubleBondedO",mol.getAtom(148).getAtomTypeName());
+        assertEquals("N=O",mol.getAtom(148).getAtomTypeName());
         assertEquals("Oar",mol.getAtom(198).getAtomTypeName());
         assertEquals("N2OX",mol.getAtom(233).getAtomTypeName());
         assertEquals("NAZT",mol.getAtom(256).getAtomTypeName());
