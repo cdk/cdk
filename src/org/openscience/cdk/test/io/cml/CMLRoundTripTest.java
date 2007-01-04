@@ -430,7 +430,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(1, roundTrippedReactant.getAtomCount());
     }
 
-    public void testDescriptorValue() {
+    public void testDescriptorValue_QSAR() {
     	Molecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
@@ -445,6 +445,19 @@ public class CMLRoundTripTest extends CDKTestCase {
         IMolecule roundTrippedMol = roundTripMolecule(molecule);
 
         assertNotNull(roundTrippedMol.getProperty(descriptor.getSpecification()));
+    }
+
+    public void testDescriptorValue() {
+    	Molecule molecule = MoleculeFactory.makeBenzene();
+
+    	String propertyName = "testKey";
+    	String propertyValue = "testValue";
+    	
+    	molecule.setProperty(propertyName, propertyValue);
+        IMolecule roundTrippedMol = roundTripMolecule(molecule);
+
+        assertNotNull(roundTrippedMol.getProperty(propertyName));
+        assertEquals(propertyValue, roundTrippedMol.getProperty(propertyName));
     }
 }
 
