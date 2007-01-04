@@ -3,7 +3,7 @@
  * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
  * $Revision: 6171 $
  *
- * Copyright (C) 2006  Todd Martin (Environmental Protection Agency)
+ * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

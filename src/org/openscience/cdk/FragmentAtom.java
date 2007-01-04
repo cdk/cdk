@@ -1,6 +1,6 @@
 /* $Revision: 6963 $ $Author: egonw $$Date: 2006-09-20 12:48:23 +0200 (Wed, 20 Sep 2006) $
  *
- * Copyright (C) 2006  Egon Willighagen <ewilligh@uni-koeln.de>
+ * Copyright (C) 2006-2007  Egon Willighagen <ewilligh@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

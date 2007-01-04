@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2006  Alexander Krassavine <akrassavine@users.sf.net>
+ * Copyright (C) 2004-2007  Alexander Krassavine <akrassavine@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

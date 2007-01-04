@@ -3,7 +3,7 @@
  * $Date$    
  * $Revision$
  *
- * Copyright (C) 1997-2006  Bradley A. Smith <bradley@baysmith.com>
+ * Copyright (C) 1997-2007  Bradley A. Smith <bradley@baysmith.com>
  *
  * Contact: cdk-developers@lists.sourceforge.net
  *

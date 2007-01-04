@@ -1,6 +1,6 @@
 /* $Revision: 6714 $ $Author: egonw $ $Date: 2006-07-31 21:58:20 +0200 (Mon, 31 Jul 2006) $
  *
- * Copyright (C) 2006  Sam Adams <sea36@users.sf.net>
+ * Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

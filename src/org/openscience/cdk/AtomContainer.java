@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 1997-2006  Christoph Steinbeck
+ *  Copyright (C) 1997-2007  Christoph Steinbeck
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

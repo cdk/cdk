@@ -3,7 +3,7 @@
  * $Date: 2006-08-03 07:41:59 -0400 (Thu, 03 Aug 2006) $
  * $Revision: 6733 $
  *
- * Copyright (C) 2006  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

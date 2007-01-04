@@ -4,7 +4,7 @@
 *  $Date: 2006-11-12 10:58:42 -0400 (Mon, 18 Sep 2006) $
 *  $Revision: 6906 $
 *
-*  Copyright (C) 2004-2006  Rajarshi Guha <rajarshi@users.sourceforge.net>
+*  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
 *
 *  Contact: cdk-devel@lists.sourceforge.net
 *

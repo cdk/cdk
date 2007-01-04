@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 1997-2006  Chris Pudney
+ * Copyright (C) 1997-2007  Chris Pudney
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

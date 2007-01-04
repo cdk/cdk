@@ -1,6 +1,6 @@
 /*  $Revision: 7037 $ $Author: egonw $ $Date: 2006-09-24 11:13:13 +0200 (Sun, 24 Sep 2006) $
  *
- *  Copyright (C) 2003-2006  Christoph Steinbeck <steinbeck@users.sf.net>
+ *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

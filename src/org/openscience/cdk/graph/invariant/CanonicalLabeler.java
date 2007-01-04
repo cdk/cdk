@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2006  Oliver Horlacher <oliver.horlacher@therastrat.com>
+ * Copyright (C) 2001-2007  Oliver Horlacher <oliver.horlacher@therastrat.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

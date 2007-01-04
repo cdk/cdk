@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2005-2006  Matteo Floris <mfe4@users.sf.net>
+ * Copyright (C) 2005-2007  Matteo Floris <mfe4@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

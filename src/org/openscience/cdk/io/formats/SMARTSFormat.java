@@ -3,7 +3,7 @@
  * $Date: 2006-04-20 19:35:08 +0200 (Do, 20 Apr 2006) $
  * $Revision: 6056 $
  *
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

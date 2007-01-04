@@ -1,6 +1,6 @@
 /* $Revision: 6228 $ $Author: egonw $ $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
  *
- * Copyright (C) 2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *

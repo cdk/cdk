@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2005-2006  Martin Eklund <martin.eklund@farmbio.uu.se>
+ * Copyright (C) 2005-2007  Martin Eklund <martin.eklund@farmbio.uu.se>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

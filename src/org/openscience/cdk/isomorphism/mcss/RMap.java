@@ -3,7 +3,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
  *
  *  This code has been kindly provided by Stephane Werner
  *  and Thierry Hanser from IXELIS mail@ixelis.net

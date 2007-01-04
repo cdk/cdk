@@ -3,7 +3,7 @@
  *  $Date: 2006-05-11 10:17:36 +0200 (Do, 11 Mai 2006) $
  *  $Revision: 6217 $
  *
- *  Copyright (C) 2004-2006  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

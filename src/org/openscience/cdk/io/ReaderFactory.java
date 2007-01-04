@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2001-2006  Bradley A. Smith <bradley@baysmith.com>
+ * Copyright (C) 2001-2007  Bradley A. Smith <bradley@baysmith.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

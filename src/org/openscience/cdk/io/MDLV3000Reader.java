@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2006  Egon Willighagen <egonw@sci.kun.nl>
+ * Copyright (C) 2006-2007  Egon Willighagen <egonw@sci.kun.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

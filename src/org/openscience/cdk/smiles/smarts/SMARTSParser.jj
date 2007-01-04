@@ -7,7 +7,7 @@ FORCE_LA_CHECK=true;
 PARSER_BEGIN(SMARTSParser)
 /* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 2004-2006  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
