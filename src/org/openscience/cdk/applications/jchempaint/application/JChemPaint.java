@@ -34,7 +34,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.LoggingTool;
 
 import javax.swing.*;
@@ -150,7 +150,7 @@ public class JChemPaint implements SwingConstants
 				}
 				// ok, file exists
 				contentToOpen = new FileReader(file);
-				IChemObjectReader cor = new MDLReader(contentToOpen);
+				IChemObjectReader cor = new MDLV2000Reader(contentToOpen);
 				model = (ChemModel) cor.read((ChemObject) new ChemModel());
 				model.setID(file.getName());
 			}

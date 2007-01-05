@@ -52,7 +52,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SVGWriter;
@@ -104,7 +104,7 @@ public class CopyPasteAction extends JCPAction{
 	        	if (transfer!=null && (transfer.isDataFlavorSupported (molFlavor))) {
 	        		String mol = (String) transfer.getTransferData (molFlavor);
 	        		logger.debug("Dataflavor molFlavor found");
-		        	reader = new MDLReader(new StringReader(mol));
+		        	reader = new MDLV2000Reader(new StringReader(mol));
 	        	} else if(transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {
 	        		// otherwise, try to use the ReaderFactory...
 	        		logger.debug("Dataflavor stringFlavor found");
