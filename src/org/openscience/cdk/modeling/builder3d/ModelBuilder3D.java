@@ -222,6 +222,9 @@ public class ModelBuilder3D {
 		double NumberOfRingAtoms = 0;
 
 		if (ringSetMolecule.getAtomContainerCount() > 0) {
+			if(templateHandler==null){
+				throw new CDKException("You are trying to generate coordinates for a molecule with rings, but you have no template handler set. Please do setTemplateHandler() before generation!");
+			}
 			ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 			largestRingSet = getLargestRingSet(ringSystems);
 			IAtomContainer largestRingSetContainer = getAllInOneContainer(largestRingSet);
