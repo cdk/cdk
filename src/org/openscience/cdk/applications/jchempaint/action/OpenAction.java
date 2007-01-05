@@ -50,7 +50,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.INChIReader;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
@@ -128,10 +128,10 @@ public class OpenAction extends JCPAction {
 						cor = new CMLReader(reader);
 					}
 					else if (type.equals(JCPFileFilter.sdf)) {
-						cor = new MDLReader(reader);
+						cor = new MDLV2000Reader(reader);
 					}
 					else if (type.equals(JCPFileFilter.mol)) {
-						cor = new MDLReader(reader);
+						cor = new MDLV2000Reader(reader);
 					}
 					else if (type.equals(JCPFileFilter.inchi)) {
 						cor = new INChIReader(reader);
@@ -148,7 +148,7 @@ public class OpenAction extends JCPAction {
 			}
 
 			//this takes care of files called .mol, but having several, sdf-stylish entried
-			if(cor instanceof MDLReader){
+			if(cor instanceof MDLV2000Reader){
 				try{
 					FileInputStream reader = new FileInputStream(inFile);
 					DataInputStream in = new DataInputStream(reader);
