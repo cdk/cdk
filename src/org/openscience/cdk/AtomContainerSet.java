@@ -42,7 +42,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
 	 */
-	private static final long serialVersionUID = -521290297592768395L;
+	private static final long serialVersionUID = -521290255592768395L;
 
 	/**  Array of AtomContainers. */
 	protected org.openscience.cdk.interfaces.IAtomContainer[] atomContainers;
@@ -126,6 +126,20 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		notifyChanged();
 	}
 
+	/**
+	 * Replace the AtomContainer at a specific position (array has to be large enough).
+	 * 
+	 * @param position   position in array for AtomContainer
+	 * @param container  the replacement AtomContainer
+	 */
+	public void replaceAtomContainer(int position, IAtomContainer container) {
+		IAtomContainer old = atomContainers[position];
+		old.removeListener(this);
+		atomContainers[position] = container;
+		container.addListener(this);
+		notifyChanged();
+	}
+	
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *

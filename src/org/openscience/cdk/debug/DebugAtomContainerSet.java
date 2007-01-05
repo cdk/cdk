@@ -157,6 +157,11 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.removeAtomContainer(pos);
 	}
 
+	public void replaceAtomContainer(int position, IAtomContainer container) {
+		logger.debug("Replacing atom container at pos: ", position);
+		super.replaceAtomContainer(position, container);
+	}
+	
 	public boolean setMultiplier(IAtomContainer container, double multiplier) {
 		logger.debug("Setting multiplier for atomcontainer: ", container, ""+multiplier);
 		return super.setMultiplier(container, multiplier);

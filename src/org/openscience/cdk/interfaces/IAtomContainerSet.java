@@ -59,6 +59,14 @@ public interface IAtomContainerSet extends IChemObject {
 	public void removeAtomContainer(int pos);
 	
 	/**
+	 * Replace the AtomContainer at a specific position (array has to be large enough).
+	 * 
+	 * @param position   position in array for AtomContainer
+	 * @param container  the replacement AtomContainer
+	 */
+	public void replaceAtomContainer(int position, IAtomContainer container);
+	
+	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *
 	 * @param  container   The AtomContainer for which the multiplier is set
