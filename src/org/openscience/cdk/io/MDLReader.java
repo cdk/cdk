@@ -56,14 +56,10 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
+ * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
  * is read into a ChemSequence of ChemModel's. Each ChemModel will contain one
- * Molecule.
- *
- * <p>From the Atom block it reads atomic coordinates, element types and
- * formal charges. From the Bond block it reads the bonds and the orders.
- * Additionally, it reads 'M  CHG', 'G  ', 'M  RAD' and 'M  ISO' lines from the
- * property block.
+ * Molecule. If the MDL molfile contains a property block, the MDLV2000Reader should be
+ * use.
  *
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
  * 2D, otherwise the coordinates are read as 3D.
@@ -73,10 +69,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   molecule.getProperty(CDKConstants.TITLE);
  * </pre>
  *
- * RGroups which are saved in the mdl file as R#, are renamed according to their appearance,
- * e.g. the first R# is named R1. With PseudAtom.getLabel() "R1" is returned (instead of R#).
- * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.  
- *
  * @cdk.module io
  *
  * @author     steinbeck
@@ -84,6 +76,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2000-10-02
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
+ *
+ * @see        org.openscience.cdk.io.MDLV2000Reader 
  */
 public class MDLReader extends DefaultChemObjectReader {
 
