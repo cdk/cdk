@@ -38,6 +38,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.ABINITFormat;
@@ -239,5 +241,21 @@ public class ReaderFactoryTest extends CDKTestCase {
             logger.debug(exception);
             fail(exception.getMessage());
         }
+    }
+    
+        
+        
+    /*
+     * the V2000 files were detected as old version files and charges in property block not read
+     */
+    public void testDetection() throws Exception{
+        String filename = "data/mdl/withcharges.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ReaderFactory factory = new ReaderFactory();
+		IChemObjectReader coReader = factory.createReader(ins);
+		IChemFile chemFile = (IChemFile) coReader.read((IChemObject) new org.openscience.cdk.ChemFile());
+		assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge());
+		assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge());
     }
 }
