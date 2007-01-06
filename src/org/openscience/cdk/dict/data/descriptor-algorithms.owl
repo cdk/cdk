@@ -229,6 +229,24 @@
 
     <!-- the facts: Algorithms -->
 
+    <Descriptor rdf:ID="aminoAcidsCount">
+        <rdfs:label>Amino Acid Count</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#elw"/>
+                <dc:date>2006-01-15</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of amino acids found in the system
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="apol">
         <rdfs:label>Atomic Polarizabilities</rdfs:label>
         <dc:contributor rdf:resource="#mf"/>
@@ -324,6 +342,48 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="atomicHardness">
+        <rdfs:label>Inductive atomic hardness</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-04-21</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This class calculates the atomic hardness of a given atom.
+        </definition>
+        <description>
+            Inductive atomic hardness of an atom in a polyatomic system can be defined
+            as the resistance to a change of the atomic charge.
+            This descriptor is described by Cherkasov
+            <bibtex:cite ref="CHER2003"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="atomicSoftness">
+        <rdfs:label>Inductive atomic softness</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resourrce="#mf"/>
+                <dc:date>2005-04-21</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            This class calculates the atomic softness of a given atom.
+        </definition>
+        <description>
+            Inductive atomic softness of an atom in a polyatomic system can be defined
+            as as charge delocalizing ability.
+            This descriptor is described by Cherkasov
+            <bibtex:cite ref="CHER2003"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="BCUT">
         <rdfs:label>BCUT</rdfs:label>
         <dc:contributor rdf:resourrce="#rguha"/>
@@ -376,6 +436,474 @@
             Polarizabilities derive from periodic tables.
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi1v">
+        <rdfs:label>Valence connectivity index (order 1)</rdfs:label>
+        <dc:contributor rdf:resource="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates atomic valence connectivity index (order 1).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            Valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
+    <Descriptor rdf:ID="chi1vC">
+        <rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
+        <dc:contributor rdf:resource="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates carbon valence connectivity index (order 1).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            While the valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>j</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all bonds between heavy atoms i and j, the carbon valence
+            connectivity index takes into account only bonds between carbon atoms.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0v">
+        <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
+        <dc:contributor rdf:resource="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates atomic valence connectivity index (order 0).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            Valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="chi0vC">
+        <rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
+        <dc:contributor rdf:resource="#mf"/>
+        <dc:date>2004-11-26</dc:date>
+        <definition>
+            Descriptor that calculates carbon valence connectivity index (order 0).
+        </definition>
+        <description>
+            Let
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msub>
+                        <mi>v</mi>
+                        <mi>i</mi>
+                    </msub>
+                </mrow>
+                <mo>=</mo>
+                <mrow>
+                    <mfrac>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>v</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mo>(</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>z</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mrow>
+                                <msub>
+                                    <mi>h</mi>
+                                    <mi>i</mi>
+                                </msub>
+                            </mrow>
+                            <mo>-</mo>
+                            <mi>1</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfrac>
+                </mrow>
+            </mrow>
+            ,
+            where
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>p</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the numbers of valence electrons of atom i,
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>h</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the number of hydrogens bonded to atom i, and
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>z</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            is the atomic number of atom i.
+            While the atomic valence connectivity is calculated as the sum of
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mi>1</mi>
+                    <mrow>
+                        <msup>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>v</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mi>0.5</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+            </mrow>
+            over all heavy atoms i with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0,
+            the carbon valence connectivity index takes into account only carbon atoms with
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <msub>
+                    <mi>v</mi>
+                    <mi>i</mi>
+                </msub>
+            </mrow>
+            greather than 0.
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
@@ -494,51 +1022,6 @@
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="hBondacceptors">
-        <rdfs:label>Hydrogen Bond Acceptors</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resourrce="#mf"/>
-                <dc:contributor rdf:resourrce="#elw"/>
-                <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Descriptor that calculates the number of hydrogen bond acceptors.
-        </definition>
-        <description>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor is a heteroatom with no positive charge, note that negatively
-            charged oxygen or sulphur are included. Excluded are halogens, including F,
-            heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
-            Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
-        </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="hBondDonors">
-        <rdfs:label>Hydrogen Bond Donors</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resourrce="#mf"/>
-                <dc:date>2004-11-26</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Descriptor that calculates the number of hydrogen bond donors.
-        </definition>
-        <description>
-            As defined by Daylight website,
-            <bibtex:cite ref="DAY01"/>
-            , a H-bond acceptor
-            must have an N-H bond, an O-H bond, or a F-H bond
-        </description>
-        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
     <Descriptor rdf:ID="gravitationalIndex">
         <rdfs:label>Gravitational Index</rdfs:label>
         <annotation>
@@ -583,46 +1066,49 @@
         <!-- relatedEntry type="qsar-descriptors-metadata:isAModificationOf" href="gravitationalIndex" / -->
     </Descriptor>
 
-    <Descriptor rdf:ID="atomicHardness">
-        <rdfs:label>Inductive atomic hardness</rdfs:label>
+    <Descriptor rdf:ID="hBondacceptors">
+        <rdfs:label>Hydrogen Bond Acceptors</rdfs:label>
         <annotation>
             <documentation>
                 <dc:contributor rdf:resourrce="#mf"/>
-                <dc:date>2005-04-21</dc:date>
+                <dc:contributor rdf:resourrce="#elw"/>
+                <dc:date>2004-11-26</dc:date>
             </documentation>
         </annotation>
         <definition>
-            This class calculates the atomic hardness of a given atom.
+            Descriptor that calculates the number of hydrogen bond acceptors.
         </definition>
         <description>
-            Inductive atomic hardness of an atom in a polyatomic system can be defined
-            as the resistance to a change of the atomic charge.
-            This descriptor is described by Cherkasov
-            <bibtex:cite ref="CHER2003"/>
-            .
+            As defined by Daylight website,
+            <bibtex:cite ref="DAY01"/>
+            , a H-bond acceptor is a heteroatom with no positive charge, note that negatively
+            charged oxygen or sulphur are included. Excluded are halogens, including F,
+            heteroaromatic oxygen, sulphur and pyrrole N. Higher oxidation levels of N,P,S are excluded.
+            Note P(III) is currently included. Zeneca's work would imply that (O=S=O) shoud also be excluded.
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="atomicSoftness">
-        <rdfs:label>Inductive atomic softness</rdfs:label>
+    <Descriptor rdf:ID="hBondDonors">
+        <rdfs:label>Hydrogen Bond Donors</rdfs:label>
         <annotation>
             <documentation>
                 <dc:contributor rdf:resourrce="#mf"/>
-                <dc:date>2005-04-21</dc:date>
+                <dc:date>2004-11-26</dc:date>
             </documentation>
         </annotation>
         <definition>
-            This class calculates the atomic softness of a given atom.
+            Descriptor that calculates the number of hydrogen bond donors.
         </definition>
         <description>
-            Inductive atomic softness of an atom in a polyatomic system can be defined
-            as as charge delocalizing ability.
-            This descriptor is described by Cherkasov
-            <bibtex:cite ref="CHER2003"/>
-            .
+            As defined by Daylight website,
+            <bibtex:cite ref="DAY01"/>
+            , a H-bond acceptor
+            must have an N-H bond, an O-H bond, or a F-H bond
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="isProtonInAromaticSystem">
@@ -809,6 +1295,41 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="largestChain">
+        <rdfs:label>Largest Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the largest chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
+
+    <Descriptor rdf:ID="largestPiSystem">
+        <rdfs:label>Largest Pi Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the largest pi chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+    </Descriptor>
+
     <Descriptor rdf:ID="lipinskifailures">
         <rdfs:label>Lipinski's Rule of Five</rdfs:label>
         <annotation>
@@ -835,6 +1356,23 @@
         </description>
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="longestAliphaticChain">
+        <rdfs:label>Longest Aliphatic Chain</rdfs:label>
+        <annotation>
+            <documentation>
+                <dc:contributor rdf:resource="#chhoppe"/>
+                <dc:date>2005-02-07</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+            Returns the number of atoms in the longest aliphatic chain
+        </definition>
+        <description>
+        </description>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="momentOfInertia">
@@ -1313,76 +1851,6 @@
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="aminoAcidsCount">
-        <rdfs:label>Amino Acid Count</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#elw"/>
-                <dc:date>2006-01-15</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Returns the number of amino acids found in the system
-        </definition>
-        <description>
-        </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#proteinDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="longestAliphaticChain">
-        <rdfs:label>Longest Aliphatic Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
-                <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Returns the number of atoms in the longest aliphatic chain
-        </definition>
-        <description>
-        </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="largestChain">
-        <rdfs:label>Largest Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
-                <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Returns the number of atoms in the largest chain
-        </definition>
-        <description>
-        </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
-
-
-    <Descriptor rdf:ID="largestPiSystem">
-        <rdfs:label>Largest Pi Chain</rdfs:label>
-        <annotation>
-            <documentation>
-                <dc:contributor rdf:resource="#chhoppe"/>
-                <dc:date>2005-02-07</dc:date>
-            </documentation>
-        </annotation>
-        <definition>
-            Returns the number of atoms in the largest pi chain
-        </definition>
-        <description>
-        </description>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
-    </Descriptor>
-
     <Descriptor rdf:ID="sigmaElectronegativity">
         <rdfs:label>Sigma Electronegativity</rdfs:label>
         <annotation>
@@ -1523,589 +1991,6 @@
             ,
             where m is the number of heavy-heavy bonds.
             If m is zero, then zero is returned.
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="chi0v">
-        <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-        <definition>
-            Descriptor that calculates atomic valence connectivity index (order 0).
-        </definition>
-        <description>
-            Let
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mrow>
-                    <msub>
-                        <mi>v</mi>
-                        <mi>i</mi>
-                    </msub>
-                </mrow>
-                <mo>=</mo>
-                <mrow>
-                    <mfrac>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>v</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>)</mo>
-                        </mrow>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>z</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mi>1</mi>
-                            <mo>)</mo>
-                        </mrow>
-                    </mfrac>
-                </mrow>
-            </mrow>
-            ,
-            where
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>p</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the numbers of valence electrons of atom i,
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the number of hydrogens bonded to atom i, and
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the atomic number of atom i.
-            Valence connectivity is calculated as the sum of
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mi>1</mi>
-                    <mrow>
-                        <msup>
-                            <mrow>
-                                <mo>(</mo>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>i</mi>
-                                    </msub>
-                                </mrow>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>j</mi>
-                                    </msub>
-                                </mrow>
-                                <mo>)</mo>
-                            </mrow>
-                            <mi>0.5</mi>
-                        </msup>
-                    </mrow>
-                </mfrac>
-            </mrow>
-            over all bonds between heavy atoms i and j.
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-
-    <Descriptor rdf:ID="chi1v">
-        <rdfs:label>Valence connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-        <definition>
-            Descriptor that calculates atomic valence connectivity index (order 1).
-        </definition>
-        <description>
-            Let
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mrow>
-                    <msub>
-                        <mi>v</mi>
-                        <mi>i</mi>
-                    </msub>
-                </mrow>
-                <mo>=</mo>
-                <mrow>
-                    <mfrac>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>v</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>)</mo>
-                        </mrow>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>z</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mi>1</mi>
-                            <mo>)</mo>
-                        </mrow>
-                    </mfrac>
-                </mrow>
-            </mrow>
-            ,
-            where
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>p</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the numbers of valence electrons of atom i,
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the number of hydrogens bonded to atom i, and
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the atomic number of atom i.
-            Valence connectivity is calculated as the sum of
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mi>1</mi>
-                    <mrow>
-                        <msup>
-                            <mrow>
-                                <mo>(</mo>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>i</mi>
-                                    </msub>
-                                </mrow>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>j</mi>
-                                    </msub>
-                                </mrow>
-                                <mo>)</mo>
-                            </mrow>
-                            <mi>0.5</mi>
-                        </msup>
-                    </mrow>
-                </mfrac>
-            </mrow>
-            over all bonds between heavy atoms i and j.
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-
-    <Descriptor rdf:ID="chi1vC">
-        <rdfs:label>Valence carbon connectivity index (order 1)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-        <definition>
-            Descriptor that calculates carbon valence connectivity index (order 1).
-        </definition>
-        <description>
-            Let
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mrow>
-                    <msub>
-                        <mi>v</mi>
-                        <mi>i</mi>
-                    </msub>
-                </mrow>
-                <mo>=</mo>
-                <mrow>
-                    <mfrac>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>v</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>)</mo>
-                        </mrow>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>z</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mi>1</mi>
-                            <mo>)</mo>
-                        </mrow>
-                    </mfrac>
-                </mrow>
-            </mrow>
-            ,
-            where
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>p</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the numbers of valence electrons of atom i,
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the number of hydrogens bonded to atom i, and
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the atomic number of atom i.
-            While the valence connectivity is calculated as the sum of
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mi>1</mi>
-                    <mrow>
-                        <msup>
-                            <mrow>
-                                <mo>(</mo>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>i</mi>
-                                    </msub>
-                                </mrow>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>j</mi>
-                                    </msub>
-                                </mrow>
-                                <mo>)</mo>
-                            </mrow>
-                            <mi>0.5</mi>
-                        </msup>
-                    </mrow>
-                </mfrac>
-            </mrow>
-            over all bonds between heavy atoms i and j, the carbon valence
-            connectivity index takes into account only bonds between carbon atoms.
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="chi0v">
-        <rdfs:label>Valence connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-        <definition>
-            Descriptor that calculates atomic valence connectivity index (order 0).
-        </definition>
-        <description>
-            Let
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mrow>
-                    <msub>
-                        <mi>v</mi>
-                        <mi>i</mi>
-                    </msub>
-                </mrow>
-                <mo>=</mo>
-                <mrow>
-                    <mfrac>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>v</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>)</mo>
-                        </mrow>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>z</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mi>1</mi>
-                            <mo>)</mo>
-                        </mrow>
-                    </mfrac>
-                </mrow>
-            </mrow>
-            ,
-            where
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>p</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the numbers of valence electrons of atom i,
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the number of hydrogens bonded to atom i, and
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the atomic number of atom i.
-            Valence connectivity is calculated as the sum of
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mi>1</mi>
-                    <mrow>
-                        <msup>
-                            <mrow>
-                                <mo>(</mo>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>i</mi>
-                                    </msub>
-                                </mrow>
-                                <mo>)</mo>
-                            </mrow>
-                            <mi>0.5</mi>
-                        </msup>
-                    </mrow>
-                </mfrac>
-            </mrow>
-            over all heavy atoms i with
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            greather than 0.
-        </description>
-        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-    </Descriptor>
-
-    <Descriptor rdf:ID="chi0vC">
-        <rdfs:label>Valence carbon connectivity index (order 0)</rdfs:label>
-        <dc:contributor rdf:resource="#mf"/>
-        <dc:date>2004-11-26</dc:date>
-        <definition>
-            Descriptor that calculates carbon valence connectivity index (order 0).
-        </definition>
-        <description>
-            Let
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mrow>
-                    <msub>
-                        <mi>v</mi>
-                        <mi>i</mi>
-                    </msub>
-                </mrow>
-                <mo>=</mo>
-                <mrow>
-                    <mfrac>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>v</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>)</mo>
-                        </mrow>
-                        <mrow>
-                            <mo>(</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>z</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mrow>
-                                <msub>
-                                    <mi>h</mi>
-                                    <mi>i</mi>
-                                </msub>
-                            </mrow>
-                            <mo>-</mo>
-                            <mi>1</mi>
-                            <mo>)</mo>
-                        </mrow>
-                    </mfrac>
-                </mrow>
-            </mrow>
-            ,
-            where
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>p</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the numbers of valence electrons of atom i,
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>h</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the number of hydrogens bonded to atom i, and
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>z</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            is the atomic number of atom i.
-            While the atomic valence connectivity is calculated as the sum of
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mi>1</mi>
-                    <mrow>
-                        <msup>
-                            <mrow>
-                                <mo>(</mo>
-                                <mrow>
-                                    <msub>
-                                        <mi>v</mi>
-                                        <mi>i</mi>
-                                    </msub>
-                                </mrow>
-                                <mo>)</mo>
-                            </mrow>
-                            <mi>0.5</mi>
-                        </msup>
-                    </mrow>
-                </mfrac>
-            </mrow>
-            over all heavy atoms i with
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            greather than 0,
-            the carbon valence connectivity index takes into account only carbon atoms with
-            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
-                <msub>
-                    <mi>v</mi>
-                    <mi>i</mi>
-                </msub>
-            </mrow>
-            greather than 0.
         </description>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
