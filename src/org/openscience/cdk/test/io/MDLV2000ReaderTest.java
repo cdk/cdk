@@ -37,9 +37,11 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -74,6 +76,9 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(Molecule.class));
     }
     
+    /**
+     * @cdk.bug 682233
+     */
     public void testBug682233() {
         String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);
@@ -299,7 +304,7 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     }
 
     /** 
-     * Problem was filed as bug #835571
+     * @cdk.bug 835571
      */
     public void testReadFromStringReader () {
         String mdl =
@@ -378,6 +383,9 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         }
     }
 
+    /**
+     * @cdk.bug 1587283
+     */
     public void testBug1587283() {
         String filename = "data/mdl/bug1587283.mol";
         logger.info("Testing: " + filename);
@@ -420,4 +428,15 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         }
     	
     }
+
+    public void testReadingCharges() throws CDKException {
+    	String filename = "data/mdl/withcharges.mol";
+    	logger.info("Testing: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	IChemFile chemFile = (IChemFile) reader.read((IChemObject) new org.openscience.cdk.ChemFile());
+    	assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge());
+    	assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge());
+    }
+
 }
