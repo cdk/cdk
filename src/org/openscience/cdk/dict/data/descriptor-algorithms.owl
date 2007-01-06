@@ -2460,28 +2460,17 @@
 
     <!-- The Bibliography -->
 
-    <Reference rdf:ID="TRI92">
-        <bibtex:entry>
-            <bibtex:book>
-                <bibtex:author>Trinijastic, N.</bibtex:author>
-                <bibtex:title>Chemical Graph Theory</bibtex:title>
-                <bibtex:publisher>CRC Press</bibtex:publisher>
-                <bibtex:year>1992</bibtex:year>
-                <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
-            </bibtex:book>
-        </bibtex:entry>
-    </Reference>
-
-    <Reference rdf:ID="PEA99">
+    <Reference rdf:ID="BAT95">
         <bibtex:entry>
             <bibtex:article>
-                <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
-                <bibtex:title>Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
-                <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
-                <bibtex:year>1999</bibtex:year>
-                <bibtex:volume>39</bibtex:volume>
-                <bibtex:number>1</bibtex:number>
-                <bibtex:pages>28-35</bibtex:pages>
+                <bibtex:author>Bath, P.A. and Poirette, A.R. and Willet, P. and Allen, F.H.
+                </bibtex:author>
+                <bibtex:title>The Extent of the Relationship between the Graph-Theoretical and the Geometrical Shape
+                    Coefficients of Chemical Compounds</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+                <bibtex:year>1995</bibtex:year>
+                <bibtex:volume>35</bibtex:volume>
+                <bibtex:pages>714-716</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
@@ -2508,32 +2497,6 @@
                 <bibtex:title>SMILES on-line tutorial</bibtex:title>
                 <bibtex:url>http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html</bibtex:url>
             </bibtex:misc>
-        </bibtex:entry>
-    </Reference>
-
-    <Reference rdf:ID="WANG97">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
-                <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
-                <bibtex:journal>Journal of Chemical Information and Computer
-                    Sciences</bibtex:journal>
-                <bibtex:year>1997</bibtex:year>
-                <bibtex:volume>37</bibtex:volume>
-                <bibtex:pages>615-621</bibtex:pages>
-            </bibtex:article>
-        </bibtex:entry>
-    </Reference>
-
-    <Reference rdf:ID="TOD98">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
-                <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
-                <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
-                <bibtex:year>1998</bibtex:year>
-                <bibtex:pages>355-380</bibtex:pages>
-            </bibtex:article>
         </bibtex:entry>
     </Reference>
 
@@ -2569,22 +2532,6 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="WES98">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
-                </bibtex:author>
-                <bibtex:title>Prediction of Human Intestinal Absorption of Drug Compounds
-                    From Molecular Structure</bibtex:title>
-                <bibtex:journal>Journal of Chemical Information and Computer
-                    Sciences</bibtex:journal>
-                <bibtex:year>1998</bibtex:year>
-                <bibtex:volume>38</bibtex:volume>
-                <bibtex:pages>726-735</bibtex:pages>
-            </bibtex:article>
-        </bibtex:entry>
-    </Reference>
-
     <Reference rdf:ID="KAT96">
         <bibtex:entry>
             <bibtex:article>
@@ -2595,52 +2542,6 @@
                 <bibtex:year>1996</bibtex:year>
                 <bibtex:volume>100</bibtex:volume>
                 <bibtex:pages>10400-10407</bibtex:pages>
-            </bibtex:article>
-        </bibtex:entry>
-    </Reference>
-
-    <Reference rdf:ID="PET92">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Petitjean, M.
-                </bibtex:author>
-                <bibtex:title>Applications of the radius-diameter diagram to the classification of topological and
-                    geometrical shapes of chemical compounds</bibtex:title>
-                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
-                <bibtex:year>1992</bibtex:year>
-                <bibtex:volume>32</bibtex:volume>
-                <bibtex:pages>331-337</bibtex:pages>
-            </bibtex:article>
-        </bibtex:entry>
-
-    </Reference>
-
-    <Reference rdf:ID="BAT95">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Bath, P.A. and Poirette, A.R. and Willet, P. and Allen, F.H.
-                </bibtex:author>
-                <bibtex:title>The Extent of the Relationship between the Graph-Theoretical and the Geometrical Shape
-                    Coefficients of Chemical Compounds</bibtex:title>
-                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
-                <bibtex:year>1995</bibtex:year>
-                <bibtex:volume>35</bibtex:volume>
-                <bibtex:pages>714-716</bibtex:pages>
-            </bibtex:article>
-        </bibtex:entry>
-
-    </Reference>
-
-    <Reference rdf:ID="RAN84">
-        <bibtex:entry>
-            <bibtex:article>
-                <bibtex:author>Randic, M.
-                </bibtex:author>
-                <bibtex:title>On molecular identification numbers</bibtex:title>
-                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
-                <bibtex:year>1984</bibtex:year>
-                <bibtex:volume>24</bibtex:volume>
-                <bibtex:pages>164-175</bibtex:pages>
             </bibtex:article>
         </bibtex:entry>
     </Reference>
@@ -2661,6 +2562,67 @@
         </bibtex:entry>
     </Reference>
     
+    <Reference rdf:ID="MARSILI">
+        <bibtex:entry>
+        	<bibtex:article>
+        		<bibtex:author>Gasteiger, J.</bibtex:author>
+        		<bibtex:author>Marsili, M.</bibtex:author>
+        		<bibtex:title>
+        			Iterative Partial Equalization of Orbital
+        			Electronegativity- A Rapid Access to Atomic Charges
+        		</bibtex:title>
+        		<bibtex:journal>Tetrahedron</bibtex:journal>
+        		<bibtex:year>1980</bibtex:year>
+        		<bibtex:volume>36</bibtex:volume>
+        		<bibtex:pages>3219-3228</bibtex:pages>
+        	</bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="PEA99">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Pearlman, R.S. and Smith, K.M.</bibtex:author>
+                <bibtex:title>Metric Validation and the Receptor-Relevant Subspace Concept</bibtex:title>
+                <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
+                <bibtex:year>1999</bibtex:year>
+                <bibtex:volume>39</bibtex:volume>
+                <bibtex:number>1</bibtex:number>
+                <bibtex:pages>28-35</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="PET92">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Petitjean, M.
+                </bibtex:author>
+                <bibtex:title>Applications of the radius-diameter diagram to the classification of topological and
+                    geometrical shapes of chemical compounds</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+                <bibtex:year>1992</bibtex:year>
+                <bibtex:volume>32</bibtex:volume>
+                <bibtex:pages>331-337</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+
+    </Reference>
+
+    <Reference rdf:ID="RAN84">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Randic, M.
+                </bibtex:author>
+                <bibtex:title>On molecular identification numbers</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+                <bibtex:year>1984</bibtex:year>
+                <bibtex:volume>24</bibtex:volume>
+                <bibtex:pages>164-175</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
     <Reference rdf:ID="SALLER">
         <bibtex:entry>
         	<bibtex:article>
@@ -2679,20 +2641,57 @@
         </bibtex:entry>
     </Reference>
 
-    <Reference rdf:ID="MARSILI">
+    <Reference rdf:ID="TOD98">
         <bibtex:entry>
-        	<bibtex:article>
-        		<bibtex:author>Gasteiger, J.</bibtex:author>
-        		<bibtex:author>Marsili, M.</bibtex:author>
-        		<bibtex:title>
-        			Iterative Partial Equalization of Orbital
-        			Electronegativity- A Rapid Access to Atomic Charges
-        		</bibtex:title>
-        		<bibtex:journal>Tetrahedron</bibtex:journal>
-        		<bibtex:year>1980</bibtex:year>
-        		<bibtex:volume>36</bibtex:volume>
-        		<bibtex:pages>3219-3228</bibtex:pages>
-        	</bibtex:article>
+            <bibtex:article>
+                <bibtex:author>Todeschini, R. and Gramatica, P.</bibtex:author>
+                <bibtex:title>New 3D Molecular Descriptors: The WHIM theory and QAR Applications</bibtex:title>
+                <bibtex:journal>Persepectives in Drug Discovery and Design</bibtex:journal>
+                <bibtex:year>1998</bibtex:year>
+                <bibtex:pages>355-380</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="TRI92">
+        <bibtex:entry>
+            <bibtex:book>
+                <bibtex:author>Trinijastic, N.</bibtex:author>
+                <bibtex:title>Chemical Graph Theory</bibtex:title>
+                <bibtex:publisher>CRC Press</bibtex:publisher>
+                <bibtex:year>1992</bibtex:year>
+                <bibtex:isbn>0-8493-4256-2</bibtex:isbn>
+            </bibtex:book>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="WANG97">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
+                <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer
+                    Sciences</bibtex:journal>
+                <bibtex:year>1997</bibtex:year>
+                <bibtex:volume>37</bibtex:volume>
+                <bibtex:pages>615-621</bibtex:pages>
+            </bibtex:article>
+        </bibtex:entry>
+    </Reference>
+
+    <Reference rdf:ID="WES98">
+        <bibtex:entry>
+            <bibtex:article>
+                <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
+                </bibtex:author>
+                <bibtex:title>Prediction of Human Intestinal Absorption of Drug Compounds
+                    From Molecular Structure</bibtex:title>
+                <bibtex:journal>Journal of Chemical Information and Computer
+                    Sciences</bibtex:journal>
+                <bibtex:year>1998</bibtex:year>
+                <bibtex:volume>38</bibtex:volume>
+                <bibtex:pages>726-735</bibtex:pages>
+            </bibtex:article>
         </bibtex:entry>
     </Reference>
 
