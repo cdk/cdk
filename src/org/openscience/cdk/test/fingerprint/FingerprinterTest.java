@@ -1,10 +1,6 @@
-/*
- * $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CKD) project
+ * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -25,9 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test.fingerprint;
 
 import java.io.InputStream;
@@ -66,6 +60,9 @@ public class FingerprinterTest extends CDKTestCase
 		return new TestSuite(FingerprinterTest.class);
 	}
 
+	/**
+	 * @cdk.bug 706786
+	 */
 	public void testBug706786() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
@@ -102,6 +99,9 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(isSubset);
 	}
 	
+	/**
+	 * @cdk.bug 853254
+	 */
 	public void testBug853254() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
@@ -143,7 +143,11 @@ public class FingerprinterTest extends CDKTestCase
 	
 	
 	
-	/** This is a test for bug [ 771485 ] Problems with different aromaticity concepts */
+	/**
+	 * Problems with different aromaticity concepts.
+	 * 
+	 * @cdk.bug 771485
+	 */
 	public void testBug771485() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
@@ -182,7 +186,11 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(isSubset);
 	}
 
-	/** This is a test for bug [ 934819 ] Fingerprint not subset */
+	/**
+	 * Fingerprint not subset.
+	 * 
+	 * @cdk.bug 934819
+	 */
 	public void testBug934819() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
@@ -222,7 +230,12 @@ public class FingerprinterTest extends CDKTestCase
 	}
 
 
-	/** This is a test for bug [ 934819 ] "Fingerprinter gives different fingerprints for same molecule" */
+	/**
+	 * Fingerprinter gives different fingerprints for same molecule.
+	 * 
+	 * @cdk.bug 931608
+	 * @cdk.bug 934819
+	 */
 	public void testBug931608() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
