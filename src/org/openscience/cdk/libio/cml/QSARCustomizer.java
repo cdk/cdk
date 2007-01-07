@@ -143,6 +143,7 @@ public class QSARCustomizer implements ICMLCustomizer {
                 // setup up the metadata list
                 Element metadataList = new CMLMetadataList();
                 metadataList.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
+                property.addAttribute(new Attribute("convention", QSAR_NAMESPACE + ":" + "DescriptorValue"));
                 String specsRef = specs.getSpecificationReference();
                 if (specsRef.startsWith(QSAR_URI)) {
                     specsRef = QSAR_NAMESPACE + ":" + specsRef.substring(QSAR_URI.length()+1);

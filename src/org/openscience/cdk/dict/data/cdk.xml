@@ -3,7 +3,8 @@
   xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml23.xsd"
 
   xmlns:cvs="https://www.cvshome.org/"
-
+  
+  namespace="http://cdk.sf.net/dict"
   id="cdk" title="The Chemistry Development Kit Dictionary">
 
   <annotation>

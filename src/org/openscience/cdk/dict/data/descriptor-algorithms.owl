@@ -55,6 +55,12 @@
 
     <owl:Class rdf:ID="Implementation"/>
 
+    <owl:Class rdf:ID="DescriptorValue">
+        <rdfs:label>Descriptor Value</rdfs:label>
+        <rdfs:comment>One or more output values calculated by an Implementation
+          of a certain Algorithm for a certain molecule.</rdfs:comment>
+    </owl:Class>
+
     <owl:ObjectProperty rdf:ID="isA">
         <rdfs:label>Is A</rdfs:label>
         <rdf:domain rdf:resource="&owl;Thing"/>

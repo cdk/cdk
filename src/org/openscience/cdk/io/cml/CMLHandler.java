@@ -145,6 +145,8 @@ public class CMLHandler extends DefaultHandler {
                         conv = new MDLMolConvention(conv);
                     } else if (convName.equals("JMOL-ANIMATION")) {
                         conv = new JMOLANIMATIONConvention(conv);
+                    } else if (convName.equals("qsar:DescriptorValue")) {
+                        conv = new QSARConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
                             //unknown convention. userConvention?
                             ICMLConvention newconv = (ICMLConvention)userConventions.get(convName);

@@ -51,6 +51,10 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -76,6 +80,13 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private IMonomer currentMonomer;
     private Hashtable atomEnumeration;
 
+    private String currentDescriptorAlgorithmSpecification;
+    private String currentDescriptorImplementationTitel;
+    private String currentDescriptorImplementationVendor;
+    private String currentDescriptorImplementationIdentifier;
+    private String currentDescriptorDataType;
+    private String currentDescriptorResult;
+    
     private int numberOfAtoms = 0;
 
     private int bond_a1;
@@ -89,6 +100,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private double crystal_axis_z;
     
     protected LoggingTool logger;
+
+	private DescriptorSpecification currentDescriptorSpecification;
 
     /**
      * Basic contructor
@@ -309,10 +322,32 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         		  ((IPDBAtom)currentAtom),currentMonomer,currentStrand);
       } else if (objectType.equals("PDBMonomer")) {
     	  
+      } else if (objectType.equals("MolecularDescriptor")) {
+    	  DescriptorSpecification descriptorSpecification = new DescriptorSpecification(
+    		  currentDescriptorAlgorithmSpecification,
+    		  currentDescriptorImplementationTitel,
+    		  currentDescriptorImplementationIdentifier,
+    		  currentDescriptorImplementationVendor
+    	  );
+    	  currentMolecule.setProperty(descriptorSpecification, 
+    		  new DescriptorValue(
+    		      descriptorSpecification,
+    		      new String[0], new Object[0],
+    		      newDescriptorResult(currentDescriptorResult),
+    		      new String[0]
+    		  )
+    	  );
       } 
     }
 
-    /**
+    private IDescriptorResult newDescriptorResult(String descriptorValue) {
+    	if ("xsd:double".equals(currentDescriptorDataType)) {
+    		return new DoubleResult(Double.parseDouble(descriptorValue));    		
+    	}
+		return null;
+	}
+
+	/**
      * Procedure required by the CDOInterface. This function is only
      * supposed to be called by the JCFL library
      */
@@ -551,6 +586,20 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
               logger.warn("Cannot add crystal cell parameters to a non " +
                            "Crystal class!");
           }
+      } else if (objectType.equals("MolecularDescriptor")) {
+    	  if (propertyType.equals("SpecificationReference")) {
+    		  currentDescriptorAlgorithmSpecification = propertyValue;
+    	  } else if (propertyType.equals("ImplementationTitle")) {
+    		  currentDescriptorImplementationTitel = propertyValue;
+    	  } else if (propertyType.equals("ImplementationIdentifier")) {
+    		  currentDescriptorImplementationIdentifier = propertyValue;
+    	  } else if (propertyType.equals("ImplementationVendor")) {
+    		  currentDescriptorImplementationVendor = propertyValue;
+    	  } else if (propertyType.equals("DescriptorDataType")) {
+    		  currentDescriptorDataType = propertyValue;
+    	  } else if (propertyType.equals("DescriptorValue")) {
+    		  currentDescriptorResult = propertyValue;
+    	  } 
       }
       logger.debug("Object property set...");
     }
@@ -576,6 +625,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         objects.add("Reactions");
         objects.add("Reactant");
         objects.add("Product");
+        objects.add("MolecularDescriptor");
       return objects;
     }
 

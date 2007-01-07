@@ -96,7 +96,8 @@
       <bond id="b6" atomRefs2="a6 a1" order="D"/>
     </bondArray>
     <propertyList>
-      <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/">
+      <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        convention="qsar:DescriptorValue">
         <metadataList>
           <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
           <metadata dictRef="qsar:implementationTitle" content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
