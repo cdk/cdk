@@ -21,6 +21,8 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -53,8 +55,12 @@ import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -86,6 +92,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     private String currentDescriptorImplementationIdentifier;
     private String currentDescriptorDataType;
     private String currentDescriptorResult;
+    private boolean currentDescriptorDataIsArray;
     
     private int numberOfAtoms = 0;
 
@@ -223,6 +230,14 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           currentMolecule = currentChemFile.getBuilder().newPDBPolymer();
       } else if (objectType.equals("PDBMonomer")) {
     	  currentMonomer = currentChemFile.getBuilder().newPDBMonomer();
+      } else if (objectType.equals("MolecularDescriptor")) {
+    	  currentDescriptorDataIsArray = false;
+    	  currentDescriptorAlgorithmSpecification = "";
+    	  currentDescriptorImplementationTitel = "";
+    	  currentDescriptorImplementationVendor = "";
+    	  currentDescriptorImplementationIdentifier = "";
+    	  currentDescriptorDataType = "";
+    	  currentDescriptorResult = "";
       }
     }
 
@@ -333,7 +348,9 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     		  new DescriptorValue(
     		      descriptorSpecification,
     		      new String[0], new Object[0],
-    		      newDescriptorResult(currentDescriptorResult),
+    		      currentDescriptorDataIsArray ?
+    		          newDescriptorResultArray(currentDescriptorResult) :
+    		          newDescriptorResult(currentDescriptorResult),
     		      new String[0]
     		  )
     	  );
@@ -341,10 +358,33 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     }
 
     private IDescriptorResult newDescriptorResult(String descriptorValue) {
+    	IDescriptorResult result = null;
     	if ("xsd:double".equals(currentDescriptorDataType)) {
-    		return new DoubleResult(Double.parseDouble(descriptorValue));    		
+    		result = new DoubleResult(Double.parseDouble(descriptorValue));    		
+    	} else if ("xsd:integer".equals(currentDescriptorDataType)) {
+    		result = new IntegerResult(Integer.parseInt(descriptorValue));
+    	} else if ("xsd:boolean".equals(currentDescriptorDataType)) {
+    		result = new BooleanResult(Boolean.parseBoolean(descriptorValue));
     	}
-		return null;
+		return result;
+	}
+
+    private IDescriptorResult newDescriptorResultArray(String descriptorValue) {
+    	IDescriptorResult result = null;
+    	if ("xsd:double".equals(currentDescriptorDataType)) {
+    		result = new DoubleArrayResult();
+    		StringTokenizer tokenizer = new StringTokenizer(descriptorValue);
+            while (tokenizer.hasMoreElements()) {
+                ((DoubleArrayResult)result).add(Double.parseDouble(tokenizer.nextToken()));
+            }
+    	} else if ("xsd:integer".equals(currentDescriptorDataType)) {
+    		result = new IntegerArrayResult();
+    		StringTokenizer tokenizer = new StringTokenizer(descriptorValue);
+            while (tokenizer.hasMoreElements()) {
+                ((IntegerArrayResult)result).add(Integer.parseInt(tokenizer.nextToken()));
+            }
+    	}
+		return result;
 	}
 
 	/**
@@ -595,8 +635,10 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
     		  currentDescriptorImplementationIdentifier = propertyValue;
     	  } else if (propertyType.equals("ImplementationVendor")) {
     		  currentDescriptorImplementationVendor = propertyValue;
-    	  } else if (propertyType.equals("DescriptorDataType")) {
+    	  } else if (propertyType.equals("DataType")) {
     		  currentDescriptorDataType = propertyValue;
+    	  } else if (propertyType.equals("DataIsArray")) {
+    		  currentDescriptorDataIsArray = true;
     	  } else if (propertyType.equals("DescriptorValue")) {
     		  currentDescriptorResult = propertyValue;
     	  } 

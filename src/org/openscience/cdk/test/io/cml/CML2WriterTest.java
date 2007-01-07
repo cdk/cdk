@@ -141,8 +141,9 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<property xmlns:qsar") != -1);
-        assertTrue(cmlContent.indexOf("content=\"qsar:weight\"") != -1);
+        assertTrue(cmlContent.indexOf("<property") != -1 &&
+        		   cmlContent.indexOf("xmlns:qsar") != -1);
+        assertTrue(cmlContent.indexOf("#weight\"") != -1);
     }
     
     public void testPDBAtomCustomization() {

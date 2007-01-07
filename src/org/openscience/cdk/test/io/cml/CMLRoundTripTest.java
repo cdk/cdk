@@ -45,9 +45,11 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -307,7 +309,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         org.openscience.cdk.interfaces.IMolecule roundTrippedMol = null;
         try {
-            System.out.println("CML string: " + cmlString);
+        	logger.debug("CML string: ", cmlString);
             CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
             
             IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
@@ -434,9 +436,10 @@ public class CMLRoundTripTest extends CDKTestCase {
     	Molecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
+        DescriptorValue originalValue = null;
         try {
-            DescriptorValue value = descriptor.calculate(molecule);
-            molecule.setProperty(value.getSpecification(), value);
+            originalValue = descriptor.calculate(molecule);
+            molecule.setProperty(originalValue.getSpecification(), originalValue);
         } catch (Exception exception) {
             logger.error("Error while creating an CML2 file: ", exception.getMessage());
             logger.debug(exception);
@@ -444,7 +447,27 @@ public class CMLRoundTripTest extends CDKTestCase {
         }
         IMolecule roundTrippedMol = roundTripMolecule(molecule);
 
-        assertNotNull(roundTrippedMol.getProperty(descriptor.getSpecification()));
+        assertEquals(1, roundTrippedMol.getProperties().size());
+        Object object = roundTrippedMol.getProperties().keySet().toArray()[0];
+        assertTrue(object instanceof DescriptorSpecification);
+        DescriptorSpecification spec = (DescriptorSpecification)object;
+        assertEquals(descriptor.getSpecification().getSpecificationReference(),
+        		     spec.getSpecificationReference());
+        assertEquals(descriptor.getSpecification().getImplementationIdentifier(),
+   		     spec.getImplementationIdentifier());
+        assertEquals(descriptor.getSpecification().getImplementationTitle(),
+   		     spec.getImplementationTitle());
+        assertEquals(descriptor.getSpecification().getImplementationVendor(),
+   		     spec.getImplementationVendor());
+        
+        Object value = roundTrippedMol.getProperty(spec);
+        assertNotNull(value);
+        assertTrue(value instanceof DescriptorValue);
+        DescriptorValue descriptorResult = (DescriptorValue)value;
+        assertEquals(originalValue.getClass().getName(),
+        	descriptorResult.getClass().getName());
+        assertEquals(originalValue.getValue().toString(),
+            	descriptorResult.getValue().toString());
     }
 
     public void testDescriptorValue() {

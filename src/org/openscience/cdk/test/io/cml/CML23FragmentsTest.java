@@ -42,6 +42,9 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -345,6 +348,14 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals(implementationTitle, spec.getImplementationTitle());
         assertEquals(implementationIdentifier, spec.getImplementationIdentifier());
         assertEquals(implementationVendor, spec.getImplementationVendor());
+        
+        assertNotNull(mol.getProperty(key));
+        assertTrue(mol.getProperty(key) instanceof DescriptorValue);
+        DescriptorValue value = (DescriptorValue)mol.getProperty(key);
+        IDescriptorResult result = value.getValue();
+        assertNotNull(result);
+        assertTrue(result instanceof DoubleResult);
+        assertEquals(72.0, ((DoubleResult)result).doubleValue(), 0.001);
     }
     
     private IChemFile parseCMLString(String cmlString) {

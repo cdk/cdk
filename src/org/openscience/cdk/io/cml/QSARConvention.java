@@ -74,8 +74,8 @@ public class QSARConvention extends CMLCoreModule {
         
     	if (xpath.endsWith("molecule", "propertyList", "property")) {
     		cdo.startObject("MolecularDescriptor");
-    	} else if (xpath.endsWith("molecule", "metadataList", "metadata")) {
-//        	DICTREF
+    	} else if (xpath.endsWith("property", "metadataList", "metadata")) {
+    		super.startElement(xpath, uri, local, raw, atts);
     		if (DICTREF.equals("qsar:specificationReference")) {
     			cdo.setObjectProperty("MolecularDescriptor", "SpecificationReference", atts.getValue("content"));
     		} else if (DICTREF.equals("qsar:implementationTitle")) {
@@ -85,7 +85,7 @@ public class QSARConvention extends CMLCoreModule {
     		} else if (DICTREF.equals("qsar:implementationVendor")) {
     			cdo.setObjectProperty("MolecularDescriptor", "ImplementationVendor", atts.getValue("content"));
     		}
-    	} else if (xpath.endsWith("molecule", "property", "scalar")) {
+    	} else if (xpath.endsWith("propertyList", "property", "scalar")) {
     		cdo.setObjectProperty("MolecularDescriptor", "DataType", atts.getValue("dataType"));
     		super.startElement(xpath, uri, local, raw, atts);
         } else {
@@ -97,6 +97,7 @@ public class QSARConvention extends CMLCoreModule {
     	if (xpath.endsWith("molecule", "propertyList", "property")) {
     		cdo.endObject("MolecularDescriptor");
     	} else if (xpath.endsWith("property", "scalar")) {
+    		System.out.println("touch1");
     		cdo.setObjectProperty("MolecularDescriptor", "DescriptorValue", currentChars);
     	} else {
     		super.endElement(xpath, uri, local, raw);

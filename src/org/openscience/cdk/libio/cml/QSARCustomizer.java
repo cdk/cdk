@@ -146,7 +146,6 @@ public class QSARCustomizer implements ICMLCustomizer {
                 property.addAttribute(new Attribute("convention", QSAR_NAMESPACE + ":" + "DescriptorValue"));
                 String specsRef = specs.getSpecificationReference();
                 if (specsRef.startsWith(QSAR_URI)) {
-                    specsRef = QSAR_NAMESPACE + ":" + specsRef.substring(QSAR_URI.length()+1);
                     property.addNamespaceDeclaration(QSAR_NAMESPACE, QSAR_URI);
                 }
                 CMLMetadata metaData = new CMLMetadata();
