@@ -83,7 +83,7 @@ public class CrossoverMachine
      * @exception IllegalArgumentException if some of the crosspoints defined are
      * greater than the size of the corresponding chromosome.
      */
-    protected List doCrossover(IAtomContainer dad, IAtomContainer mom) throws CDKException
+    public List doCrossover(IAtomContainer dad, IAtomContainer mom) throws CDKException
     {
 		int dim = dad.getAtomCount();
 		
