@@ -134,8 +134,8 @@ public class PartialFilledStructureMerger {
 			{
 				structureFound = true;
 			}
-		} while (!structureFound && iteration < 20);
-		logger.debug("Structure found after " + iteration + " iterations.");	
+		} while (!structureFound && iteration < 300);
+		System.out.println("Structure found after " + iteration + " iterations.");	
 		return atomContainer;
 	}
 
