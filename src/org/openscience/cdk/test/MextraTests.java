@@ -45,7 +45,6 @@ import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.dict.DictDBTest;
-import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.test.index.CASNumberTest;
@@ -90,8 +89,6 @@ public class MextraTests {
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
         suite.addTest(MMFF94PartialChargesTest.suite());
         suite.addTest(InductivePartialChargesTest.suite());
-        // from cdk.test.fingerprint
-        suite.addTest(FingerprinterTest.suite());
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align

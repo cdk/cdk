@@ -30,6 +30,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.dict.DictRefTest;
+import org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest;
+import org.openscience.cdk.test.fingerprint.FingerprinterTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
 import org.openscience.cdk.test.graph.ConnectivityCheckerTest;
@@ -95,7 +97,10 @@ public class MstandardTests {
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(RebondToolTest.suite());
         suite.addTest(CanonicalLabelerTest.suite());
-        
+        // from cdk.test.fingerprint
+        suite.addTest(FingerprinterTest.suite());
+        suite.addTest(ExtendedFingerprinterTest.suite());
+
         return suite;
     }
     
