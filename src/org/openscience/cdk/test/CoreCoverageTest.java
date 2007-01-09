@@ -1,9 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -27,7 +24,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that runs all the sample tests.
+ * TestSuite that uses tests wether all public methods in the core
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
  *
  * @cdk.module test-core
  */
