@@ -46,13 +46,13 @@ import org.openscience.cdk.test.tools.FormatStringBufferTest;
 import org.openscience.cdk.test.tools.IDCreatorTest;
 import org.openscience.cdk.test.tools.MFAnalyserTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest;
-import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
-import org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.MoleculeSetManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest;
 
 /**
- * TestSuite that runs all the tests for the CDK core module.
+ * TestSuite that runs all the tests for the CDK standard module.
  *
  * @cdk.module  test-standard
  * @cdk.depends log4j.jar
@@ -63,6 +63,8 @@ public class MstandardTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK standard Tests");
 
+        suite.addTest(StandardCoverageTest.suite());
+        
         // make sure to check it agains src/test-standard.files
         // before each release!
         suite.addTest(APIVersionTesterTest.suite());
