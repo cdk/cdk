@@ -1,31 +1,26 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2007  Christoph Steinbeck
  *
- *  Contact: cdk-devel@lists.sourceforge.net
+ * Contact: cdk-devel@lists.sourceforge.net
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
- *  All we ask is that proper credit is given for our work, which includes
- *  - but is not limited to - adding the above copyright notice to the beginning
- *  of your source code files, and to any copyright notice that you may distribute
- *  with programs based on this work.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -45,6 +40,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
+
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -77,10 +73,11 @@ import org.openscience.cdk.tools.MFAnalyser;
  *  that you get the same fingerprint for different molecules is high. </font>
  *  </p>
  *
- *@author         steinbeck
- *@cdk.created    2002-02-24
- *@cdk.keyword    fingerprint
- *@cdk.keyword    similarity
+ * @author         steinbeck
+ * @cdk.created    2002-02-24
+ * @cdk.keyword    fingerprint
+ * @cdk.keyword    similarity
+ * @cdk.module     standard
  */
 public class Fingerprinter implements IFingerprinter {
 	
