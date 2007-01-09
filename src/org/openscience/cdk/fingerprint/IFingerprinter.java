@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author         egonw
  * @cdk.keyword    fingerprint
+ * @cdk.module     interfaces
  */
 public interface IFingerprinter {
 
