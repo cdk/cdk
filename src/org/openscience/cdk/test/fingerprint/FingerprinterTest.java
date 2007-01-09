@@ -49,7 +49,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
 public class FingerprinterTest extends CDKTestCase
 {
@@ -297,17 +297,6 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 	
-	public void testExtendedFingerprinter() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter();
-		
-		Molecule mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getExtendedFingerprint(mol);
-		Molecule frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getExtendedFingerprint(frag1);
-		assertTrue(Fingerprinter.isSubset(bs, bs1));
-	}
-	
 	public void testFingerprinterArguments() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
@@ -354,35 +343,6 @@ public class FingerprinterTest extends CDKTestCase
 
     	// Match OK
     	logger.debug("Subset (with fingerprint) does match");
-    }
-
-	/**
-	 * This basic test case show that some molecules will not be considered
-	 * as subset of each other by Fingerprint.isSubset(), for the getFingerprint(),
-	 * despite they are sub graph of each other according to
-	 * UniversalIsomorphismTester.isSubgraph().
-	 *
-	 * @author  Hugo Lafayette <hugo.lafayette@laposte.net>
-	 *
-	 * @throws  CloneNotSupportedException
-	 * @throws  Exception
-	 * 
-	 * @cdk.bug 1626894
-	 * 
-	 * @see testFingerPrint()
-	 */
-    public static void testExtendedFingerPrint() throws CloneNotSupportedException, Exception {
-    	Fingerprinter fp = new Fingerprinter();
-
-    	Molecule mol1 = createMolecule(molecule_test_2);
-    	Molecule mol2 = createMolecule(ethanolamine);
-    	assertTrue("SubGraph does NOT match", UniversalIsomorphismTester.isSubgraph(mol1, mol2));
-
-    	BitSet bs3 = fp.getExtendedFingerprint((IAtomContainer) mol1.clone());
-    	BitSet bs4 = fp.getExtendedFingerprint((IAtomContainer) mol2.clone());
-
-    	assertTrue("Subset (with extended fingerprint) does NOT match", Fingerprinter.isSubset(bs3, bs4));
-
     }
 
     private static Molecule createMolecule(String molecule) throws IOException, CDKException {
