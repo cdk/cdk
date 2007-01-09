@@ -29,9 +29,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -353,9 +353,9 @@ public class Fingerprinter implements IFingerprinter {
 		String newPathString = "";
 		for (int f = 0; f < newPath.size(); f++)
 		{
-			if ((newPath.elementAt(f)) instanceof org.openscience.cdk.Atom)
+			if ((newPath.elementAt(f)) instanceof IAtom)
 			{
-				newPathString += convertSymbol(((Atom) newPath.elementAt(f)).getSymbol());
+				newPathString += convertSymbol(((IAtom) newPath.elementAt(f)).getSymbol());
 			} else
 			{
 				newPathString += (String) newPath.elementAt(f);
