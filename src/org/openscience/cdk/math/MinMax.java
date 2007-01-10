@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2000-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2000-2007  Yongquan Han
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -33,7 +33,7 @@ package org.openscience.cdk.math;
 public class MinMax {
 
 	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints
+	 * Analog of Math.max that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the largest value among them
 	 * @return   the largest value among a set of given values  
@@ -48,7 +48,7 @@ public class MinMax {
 	}
 
 	/**
-	 * Analog of Math.min that returns the largest int value in an array of ints
+	 * Analog of Math.min that returns the largest int value in an array of ints.
 	 *
 	 * @param   values  the values to be searched for the smallest value among them
 	 * @return   the smallest value among a set of given values  
