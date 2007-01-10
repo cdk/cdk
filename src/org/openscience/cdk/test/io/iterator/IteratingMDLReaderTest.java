@@ -164,17 +164,18 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         }
     }
 
-    public void testCorruptSDF() {
-        // 'M  END' is missing from the prop block
-        String filename = "data/mdl/corruptfile_bothcap.sd";
+    public void testPreV2000() {
+        String filename = "data/mdl/prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-            
-            //int molCount = 0;
-            assertFalse(reader.hasNext());
-            // the expected CDKException is catched by the Iterator 
+
+            // two compounds
+            assertTrue(reader.hasNext());
+            assertNotNull(reader.next()); 
+            assertTrue(reader.hasNext());
+            assertNotNull(reader.next()); 
         } catch (Exception exception) {
             fail(exception.getMessage());
         }

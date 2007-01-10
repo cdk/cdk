@@ -24,7 +24,6 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
@@ -155,7 +154,29 @@ public class MDLReaderTest extends CDKTestCase {
         } catch (Throwable problem) {
             problem.printStackTrace();
             fail();
-        }
-    	
+        }	
     }
+    
+    /**
+     * The corrupt file is really ok; it is just not V2000 material.
+     */
+    public void testSDF() {
+        String filename = "data/mdl/prev2000.sd";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+        	MDLReader reader = new MDLReader(ins);
+            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+            assertNotNull(chemFile);
+            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+            assertEquals(2, containersList.size());
+            assertEquals(39, ((IAtomContainer)containersList.get(0)).getAtomCount());
+            assertEquals(41, ((IAtomContainer)containersList.get(0)).getBondCount());
+            assertEquals(29, ((IAtomContainer)containersList.get(1)).getAtomCount());
+            assertEquals(28, ((IAtomContainer)containersList.get(1)).getBondCount());
+        } catch (Exception exception) {
+            fail(exception.getMessage());
+        }
+    }
+    
 }
