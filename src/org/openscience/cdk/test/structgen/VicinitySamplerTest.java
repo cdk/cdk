@@ -37,6 +37,9 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -45,8 +48,9 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  * @cdk.module test-extra
  */
-public class VicinitySamplerTest extends CDKTestCase
-{
+public class VicinitySamplerTest extends CDKTestCase {
+	
+	private static SmilesParser parser;
 	
 	public VicinitySamplerTest(String name)
 	{
@@ -55,6 +59,10 @@ public class VicinitySamplerTest extends CDKTestCase
 
 	public static Test suite() {
 		return new TestSuite(VicinitySamplerTest.class);
+	}
+	
+	public void setUp() {
+		parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 	}
 
 	public  void testVicinitySampler_sample() throws Exception {
@@ -75,4 +83,24 @@ public class VicinitySamplerTest extends CDKTestCase
 
 	}
 	
+	/**
+	 * @cdk.bug 1632610
+	 */
+	public  void testCycloButene() throws Exception {
+		IMolecule mol = parser.parseSmiles("C=CC=C");
+		
+		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		
+		IMolecule temp = null;
+		List structures = VicinitySampler.sample(mol);
+        assertEquals(1, structures.size());
+		for (int f = 0; f < structures.size(); f++) {
+			temp = (Molecule)structures.get(f);
+			assertNotNull(temp);
+			assertTrue(ConnectivityChecker.isConnected(temp));
+			assertEquals(mol.getAtomCount(), temp.getAtomCount());
+		}
+
+	}
 }
