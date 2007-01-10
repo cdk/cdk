@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.math.MinMax;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -155,8 +156,8 @@ public class VicinitySampler {
 							cmin[1] = a11 + a12;
 							cmin[2] = a11 + a21;
 							cmin[3] = a11 - a22 + 3;
-							lowerborder = max(cmax);
-							upperborder = min(cmin);
+							lowerborder = MinMax.max(cmax);
+							upperborder = MinMax.min(cmin);
 							for (b11 = lowerborder; b11 <= upperborder; b11++)
 							{
 								if (b11 != a11)
@@ -189,44 +190,6 @@ public class VicinitySampler {
 			}
 		}
 		return structures;
-	}
-
-	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints.
-	 *
-	 * @param   values  the values to be searched for the largest value among them
-	 * @return   the largest value among a set of given values  
-	 */
-	protected double max(double[] values)
-	{
-		double max = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] > max)
-			{
-				max = values[f];
-			}
-		}
-		return max;
-	}
-
-	/**
-	 * Analog of Math.min that returns the largest int value in an array of ints.
-	 *
-	 * @param   values  the values to be searched for the smallest value among them
-	 * @return   the smallest value among a set of given values  
-	 */
-	protected double min(double[] values)
-	{
-		double min = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] < min)
-			{
-				min = values[f];
-			}
-		}
-		return min;
 	}
 
 	private IAtomContainer change(IAtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
