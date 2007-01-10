@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -65,6 +66,17 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	public static Test suite()
 	{
 		return new TestSuite(RandomStructureGeneratorTest.class);
+	}
+	
+	public void testTwentyRandomStructures() {
+		Molecule molecule = MoleculeFactory.makeAlphaPinene();
+		RandomGenerator rg = new RandomGenerator(molecule);
+		IMolecule result = null;
+		for (int f = 0; f < 50; f++) {
+			result = rg.proposeStructure();
+			assertEquals(molecule.getAtomCount(), result.getAtomCount());
+			assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
+		}
 	}
 
 	/** A complex alkaloid with two separate ring systems to 
