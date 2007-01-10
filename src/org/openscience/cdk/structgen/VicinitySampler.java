@@ -36,37 +36,25 @@ import org.openscience.cdk.math.MinMax;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
+ * The VicinitySampler is a generator of Constitutional Isomers. It needs to be 
  * provided with a starting constitution and it makes random moves in 
- * constitutional space from there. 
- * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
+ * constitutional space from there. This generator was first suggested by 
+ * Faulon {@cdk.cite FAU96}.
  *
  * @cdk.keyword structure generator
  */
 public class VicinitySampler {
 	
-	LoggingTool logger = new LoggingTool(VicinitySampler.class);
+	private final static LoggingTool logger = new LoggingTool(VicinitySampler.class);
 	
-	private IMolecule molecule = null;
 	int molCounter = 0;
-
-	/**
-	 * Constructs a RandomGenerator with a given starting structure.
-	 *
-	 * @param   molecule  The starting structure
-	 */
-	public VicinitySampler(IMolecule molecule)
-	{
-		setMolecule(molecule);
-	}
 
 	/**
 	 * Choose any possible quadruple of the set of atoms 
 	 * in ac and establish all of the possible bonding schemes according to 
 	 * Faulon's equations.
 	 */
-	public List sample(IAtomContainer ac)
-	{
+	public static List sample(IMolecule ac) {
 		logger.debug("RandomGenerator->mutate() Start");
 		List structures = new ArrayList();
 		
@@ -192,22 +180,16 @@ public class VicinitySampler {
 		return structures;
 	}
 
-	private IAtomContainer change(IAtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
+	private static IAtomContainer change(IAtomContainer ac, int x1, int y1, int x2, int y2, double b11, double b12, double b21, double b22)
 	{
 		IAtom ax1 = null, ax2 = null, ay1 = null, ay2 = null;
 		IBond b1 = null, b2 = null, b3 = null, b4 = null;
-		logger.debug("About to make modification ", molCounter);
-		molCounter ++;
-		logger.debug("Changes for molecule no. ", molCounter);
-		try
-		{
+		try {
 			ax1 = ac.getAtom(x1);
 			ax2 = ac.getAtom(x2);
 			ay1 = ac.getAtom(y1);
 			ay2 = ac.getAtom(y2);
-		}
-		catch(Exception exc)
-		{
+		} catch(Exception exc) {
 			logger.debug(exc);	
 		}
 		b1 = ac.getBond(ax1, ay1);
@@ -294,29 +276,6 @@ public class VicinitySampler {
 			logger.debug("removing bond " + x2 + "-" + y2);
 		}
 		return ac;
-	}
-	
-	
-	/**
-	 * Assigns a starting structure to this generator.
-	 *
-	 * @param   molecule  a starting structure for this generator
-	 */
-	public void setMolecule(IMolecule molecule)
-	{
-		this.molecule = molecule;	
-	}
-
-
-	/**
-	 * Returns the molecule which reflects the current state of this
-	 * stochastic structure generator.
-	 *
-	 * @return The molecule    
-	 */
-	public IMolecule getMolecule()
-	{
-		return this.molecule;
 	}
 	
 }

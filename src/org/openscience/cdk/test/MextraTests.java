@@ -56,6 +56,7 @@ import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
+import org.openscience.cdk.test.structgen.VicinitySamplerTest;
 import org.openscience.cdk.test.structgen.deterministic.GENMDeterministicGeneratorTest;
 
 /**
@@ -110,6 +111,7 @@ public class MextraTests {
         suite.addTest(TanimotoTest.suite());
         // from cdk.test.structgen
         suite.addTest(RandomStructureGeneratorTest.suite());
+        suite.addTest(VicinitySamplerTest.suite());
         // from cdk.test.structgen.deterministic
         suite.addTest(GENMDeterministicGeneratorTest.suite());
 

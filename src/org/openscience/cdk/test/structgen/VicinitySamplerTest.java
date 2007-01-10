@@ -26,27 +26,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test.structgen;
 
 import java.util.List;
 
-import javax.swing.JFrame;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-
+import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * @cdk.module test-extra
@@ -59,106 +53,26 @@ public class VicinitySamplerTest extends CDKTestCase
 		super(name);
 	}
 
-	
 	public static Test suite() {
 		return new TestSuite(VicinitySamplerTest.class);
 	}
 
-	public  void testVicinitySampler() throws Exception 
-	{
+	public  void testVicinitySampler_sample() throws Exception {
 		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
-		configureAtoms(mol);
-		fixCarbonHCount(mol);
 		
-		//logger.debug("Initial Molecule: \n" + mol);
-		VicinitySampler vs = new VicinitySampler(mol);
-
-		SmilesGenerator sg = null;
-		Molecule temp = null;
-		List structures = vs.sample((AtomContainer) mol);
-		structures.add(mol);
-		for (int f = 0; f < structures.size(); f++)
-		{
+		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		
+		IMolecule temp = null;
+		List structures = VicinitySampler.sample(mol);
+        assertEquals(37, structures.size());
+		for (int f = 0; f < structures.size(); f++) {
 			temp = (Molecule)structures.get(f);
-			sg = new SmilesGenerator();
-			//logger.debug(sg.createSMILES(temp) + " Structure " + (f + 1));
+			assertNotNull(temp);
+			assertTrue(ConnectivityChecker.isConnected(temp));
+			assertEquals(mol.getAtomCount(), temp.getAtomCount());
 		}
 
-		//logger.debug("There are " + structures.size() + " structures in Faulon-Distance 1 for EthylPropylPhenantren"); 
-		display(structures);
-        fail(); // Method does not test anything
 	}
 	
-	private static void configureAtoms(Molecule mol)
-	{
-		try
-		{
-			IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
-	}
-
-	
-	private void fixCarbonHCount(Molecule mol)
-	{	
-		/* the following line are just a quick fix for this
-		   particluar carbon-only molecule until we have a proper 
-		   hydrogen count configurator
-		 */
-		double bondCount = 0;
-		org.openscience.cdk.interfaces.IAtom atom;
-		 for (int f = 0; f < mol.getAtomCount(); f++)
-		{
-			atom = mol.getAtom(f);
-			bondCount =  mol.getBondOrderSum(atom);
-			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
-			atom.setHydrogenCount(4 - (int)bondCount - (int)atom.getCharge());
-		}
-	}
-
-	
-	private void display(List structures) throws Exception 
-	{
-		MoleculeListViewer moleculeListViewer = new MoleculeListViewer();
-		moleculeListViewer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		StructureDiagramGenerator sdg = null;
-		MoleculeViewer2D mv = null;
-		Molecule mol = null;
-		for (int f = 0; f < structures.size(); f++)
-		{
-			sdg = new StructureDiagramGenerator();
-			mv = new MoleculeViewer2D();
-			mv.getRenderer2DModel().setDrawNumbers(true);
-			mol = (Molecule)structures.get(f);
-			sdg.setMolecule((Molecule)mol.clone());
-
-			try
-			{
-				sdg.generateCoordinates();
-				mv.setAtomContainer(sdg.getMolecule());
-				moleculeListViewer.addStructure(mv, "no. " + (f + 1));
-
-			}
-			catch(Exception exc)
-			{
-				
-				exc.printStackTrace();
-			}
-		}
-	}
-
-	
-	public static void main(String[] args)
-	{
-		VicinitySamplerTest vst = new VicinitySamplerTest("VicinitySamplerTest");
-		try {
-			vst.testVicinitySampler();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
