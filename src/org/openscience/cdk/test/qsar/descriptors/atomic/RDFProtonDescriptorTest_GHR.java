@@ -32,9 +32,12 @@ public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
 		return new TestSuite(RDFProtonDescriptorTest_GHR.class);
 	}
     
+	/**
+	 *  @cdk.bug 1632419
+	 */
 	public void testExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//firstly read file to molecule		
-		String filename = "data/mdl/zinctest.mol";
+		String filename = "data/mdl/hydroxyamino.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             MDLReader reader = new MDLReader(ins);
@@ -44,14 +47,20 @@ public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
             IMoleculeSet som = model.getMoleculeSet();
             IMolecule mol = som.getMolecule(0);
 
+            RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
             for (int i=0; i < mol.getAtomCount(); i++) {
             	System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+            	System.out.println("  charge: " + mol.getAtom(i).getCharge());
         		if(mol.getAtom(i).getSymbol().equals("H")){
-            	//secondly perform calculation on it.
-                RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
-        		DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
-        		IDescriptorResult result = dv.getValue();
-        		System.out.println("array: " + result.toString());
+        			//secondly perform calculation on it.
+        			DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
+        			IDescriptorResult result = dv.getValue();
+        			System.out.println("array: " + result.toString());
+        			assertTrue(result instanceof DoubleArrayResult);
+        			DoubleArrayResult daResult = (DoubleArrayResult)result;
+        			double daSum = 0.0;
+        			for (int j=0; j<daResult.size(); j++)  daSum += Math.abs(daResult.get(j));
+        			assertTrue(daSum > 0.1);
         		}		
 
             }
