@@ -58,7 +58,7 @@ public class AromaticityCalculator
 	 * @param  atomContainer  the AtomContainer the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	protected static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
+	public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
 		
 		java.util.Iterator ringAtoms = ring.atoms();
