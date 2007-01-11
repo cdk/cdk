@@ -24,6 +24,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.Random;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 /**
  * Specialized version of the Fingerprinter which does not take bond orders
  * into account.
@@ -65,5 +71,13 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 		return "";
 	}
 
+	protected BitSet getFingerprint(IAtomContainer ac, int size) throws Exception {
+		findPathes(ac, super.getSearchDepth());
+		BitSet bs = new BitSet(size);
+		for (Iterator e = pathes.values().iterator(); e.hasNext(); ) {
+			bs.set(new Random(((String)e.next()).hashCode()).nextInt(size));
+		}
+		return bs;
+	}
 }
 
