@@ -33,17 +33,17 @@ import java.util.Random;
  * Class supplying useful methods to generate random numbers.
  * This class isn't supposed to be instantiated. You should use it by calling
  * its static methods.
+ * 
+ * @cdk.module  standard
  */
-public class RandomNumbersTool extends Random
-{
+public class RandomNumbersTool extends Random {
     
     private static final long serialVersionUID = -8238833473383641882L;
     
     private static java.util.Random random;
     private static long randomSeed;
 
-    static
-    {
+    static {
         randomSeed=System.currentTimeMillis();
         random=new java.util.Random(randomSeed);
     }
