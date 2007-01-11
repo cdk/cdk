@@ -1,8 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
+/* $Revision$ $Author$ $Date$
+ * 
  * Copyright (C) 2000-2007  Yongquan Han
  * 
  * Contact: cdk-devel@lists.sourceforge.net
@@ -28,7 +25,8 @@
 package org.openscience.cdk.math;
 
 /**
- * @author     Yongquan Han 
+ * @author     Yongquan Han
+ * @cdk.module standard
  */
 public class MinMax {
 
