@@ -145,6 +145,7 @@ public class Fingerprinter implements IFingerprinter {
 			path = (String) e.nextElement();
 			position = new java.util.Random(path.hashCode()).nextInt(size);
 			logger.debug("Setting bit " + position + " for " + path);
+			System.out.println(position + " <- " + path);
 			bs.set(position);
 		}
 		return bs;
@@ -202,7 +203,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  ac           The AtomContainer which is to be searched.
 	 *@param  searchDepth  Description of the Parameter
 	 */
-	static void findPathes(IAtomContainer ac, int searchDepth)
+	private void findPathes(IAtomContainer ac, int searchDepth)
 	{
 		pathes = new Hashtable();
 		Vector currentPath = new Vector();
@@ -228,7 +229,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	static void depthFirstSearch(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom root, Vector currentPath, int currentDepth, int searchDepth)
+	private void depthFirstSearch(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom root, Vector currentPath, int currentDepth, int searchDepth)
 	{
 		java.util.List bonds = ac.getConnectedBondsList(root);
 
@@ -270,7 +271,7 @@ public class Fingerprinter implements IFingerprinter {
 			if (!currentPath.contains(nextAtom))
 			{
 				newPath = new Vector(currentPath);
-				bondSymbol = getBondSymbol(bond);
+				bondSymbol = this.getBondSymbol(bond);
 				newPath.addElement(bondSymbol);
 				//logger.debug("Bond has symbol " + bondSymbol);
 				newPath.addElement(nextAtom);
@@ -294,7 +295,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *
 	 *@param  newPath  Description of the Parameter
 	 */
-	private static void checkAndStore(Vector newPath)
+	private void checkAndStore(Vector newPath)
 	{
 		String newPathString = "";
 		for (int f = 0; f < newPath.size(); f++)
@@ -344,7 +345,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  symbol  Description of the Parameter
 	 *@return         Description of the Return Value
 	 */
-	private static String convertSymbol(String symbol)
+	private String convertSymbol(String symbol)
 	{
 		String returnSymbol = symbol;
 		if (symbol.equals("Cl"))
@@ -367,7 +368,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  bond  Description of the Parameter
 	 *@return       The bondSymbol value
 	 */
-	private static String getBondSymbol(org.openscience.cdk.interfaces.IBond bond)
+	protected String getBondSymbol(org.openscience.cdk.interfaces.IBond bond)
 	{
 		String bondSymbol = "";
 		if (bond.getFlag(CDKConstants.ISAROMATIC))
