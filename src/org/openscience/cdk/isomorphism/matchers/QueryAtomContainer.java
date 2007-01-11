@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module extra
  */
-public class QueryAtomContainer extends org.openscience.cdk.AtomContainer {
+public class QueryAtomContainer extends org.openscience.cdk.AtomContainer implements IQueryAtomContainer {
 
     private static final long serialVersionUID = -1876912362585898476L;
 

@@ -36,19 +36,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -69,12 +66,12 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
  *  
  *  <p>With the <code>isSubgraph()</code> method, the second, and only the second
- *  argument <b>may</b> be a QueryAtomContainer, which allows one to do MQL like queries.
- *  The first IAtomContainer must never be an QueryAtomContainer. An example:<pre>
+ *  argument <b>may</b> be a IQueryAtomContainer, which allows one to do MQL like queries.
+ *  The first IAtomContainer must never be an IQueryAtomContainer. An example:<pre>
  *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
  *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
- *  QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
+ *  IQueryAtomContainer query = IQueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
  *  boolean isSubstructure = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
  *  </pre>
  *
@@ -121,14 +118,14 @@ public class UniversalIsomorphismTester {
   /**
    * Tests if g1 and g2 are isomorph.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     true if the 2 molecule are isomorph
    */
   public static boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-	  if (g1 instanceof QueryAtomContainer)
+	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
 	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
@@ -154,14 +151,14 @@ public class UniversalIsomorphismTester {
   /**
    * Returns the first isomorph mapping found or null.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.
    */
   public static List getIsomorphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-	  if (g1 instanceof QueryAtomContainer)
+	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
     List result = null;
@@ -180,14 +177,14 @@ public class UniversalIsomorphismTester {
   /**
    * Returns the first isomorph 'atom mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the first isomorph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
-	  if (g1 instanceof QueryAtomContainer)
+	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
       ArrayList list = checkSingleAtomCases(g1, g2);
@@ -205,8 +202,8 @@ public class UniversalIsomorphismTester {
    * Returns all the isomorph 'mappings' found between two
    * atom containers.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the list of all the 'mappings'
    */
   public static List getIsomorphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
@@ -222,8 +219,8 @@ public class UniversalIsomorphismTester {
    * Returns all the subgraph 'bond mappings' found for g2 in g1.
    * This is an ArrayList of ArrayLists of RMap objects.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the list of all the 'mappings' found projected of g1
    */
   public static List getSubgraphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
@@ -234,8 +231,8 @@ public class UniversalIsomorphismTester {
   /**
    * Returns the first subgraph 'bond mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the first subgraph bond mapping found projected on g1. This is a List of RMap objects containing Ids of matching bonds.
    */
   public static List getSubgraphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
@@ -255,8 +252,8 @@ public class UniversalIsomorphismTester {
    * Returns all subgraph 'atom mappings' found for g2 in g1.
    * This is an ArrayList of ArrayLists of RMap objects.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2) throws CDKException {
@@ -271,8 +268,8 @@ public class UniversalIsomorphismTester {
   /**
    * Returns the first subgraph 'atom mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the first subgraph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2) throws CDKException {
@@ -289,14 +286,14 @@ public class UniversalIsomorphismTester {
   /**
    * Tests if g2 a subgraph of g1.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     true if g2 a subgraph on g1
    */
   public static boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
-	  if (g1 instanceof QueryAtomContainer)
+	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
@@ -328,8 +325,8 @@ public class UniversalIsomorphismTester {
   /**
    * Returns all the maximal common substructure between 2 atom containers.
    *
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the list of all the maximal common substructure
    *             found projected of g1 (list of AtomContainer )
    */
@@ -395,8 +392,8 @@ public class UniversalIsomorphismTester {
    * This method is the entry point for the recursive search
    * adapted to the atom container input.
    *
-   * @param  g1                first molecule. Must not be an QueryAtomContainer.
-   * @param  g2                second molecule. May be an QueryAtomContainer.
+   * @param  g1                first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2                second molecule. May be an IQueryAtomContainer.
    * @param  c1                initial condition ( bonds from g1 that
    *                           must be contains in the solution )
    * @param  c2                initial condition ( bonds from g2 that
@@ -540,14 +537,14 @@ public class UniversalIsomorphismTester {
   /**
    *  Checks for single atom cases before doing subgraph/isomorphism search
    *
-   * @param  g1  AtomContainer to match on. Must not be an QueryAtomContainer.
-   * @param  g2  AtomContainer as query. May be an QueryAtomContainer.
+   * @param  g1  AtomContainer to match on. Must not be an IQueryAtomContainer.
+   * @param  g2  AtomContainer as query. May be an IQueryAtomContainer.
    * @return     List of List of RMap objects for the Atoms (not Bonds!), null if no single atom case
   */
   public static ArrayList checkSingleAtomCases(IAtomContainer g1, IAtomContainer g2) throws CDKException {
-	  if (g1 instanceof QueryAtomContainer)
+	  if (g1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
 	  if (g2.getAtomCount() == 1) {
@@ -591,7 +588,7 @@ public class UniversalIsomorphismTester {
    *  This makes maps of matching atoms out of a maps of matching bonds as produced by the get(Subgraph|Ismorphism)Maps methods.
    *
    * @param  l   The list produced by the getMap method.
-   * @param  g1  The first atom container. Must not be a QueryAtomContainer.
+   * @param  g1  The first atom container. Must not be a IQueryAtomContainer.
    * @param  g2  The second one (first and second as in getMap). May be an QueryAtomContaienr.
    * @return     A Vector of Vectors of RMap objects of matching Atoms.
    */
@@ -611,8 +608,8 @@ public class UniversalIsomorphismTester {
    *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
    *
    * @param  l   The list produced by the getMap method.
-   * @param  g1  first molecule. Must not be an QueryAtomContainer.
-   * @param  g2  second molecule. May be an QueryAtomContainer.
+   * @param  g1  first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     The mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List makeAtomsMapOfBondsMap(List l, IAtomContainer g1, IAtomContainer g2) {
@@ -671,13 +668,13 @@ public class UniversalIsomorphismTester {
    *  two atom containers (description of the two molecules to compare)
    *
    * @param  gr   the target RGraph
-   * @param  g1   first molecule. Must not be an QueryAtomContainer.
-   * @param  g2   second molecule. May be an QueryAtomContainer.
+   * @param  g1   first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2   second molecule. May be an IQueryAtomContainer.
    */
   private static void nodeConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
-	  if (ac1 instanceof QueryAtomContainer)
+	  if (ac1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
     // resets the target graph.
@@ -746,8 +743,8 @@ public class UniversalIsomorphismTester {
    *  relationships between RGraph nodes.
    *
    * @param  gr   the rGraph
-   * @param  g1   first molecule. Must not be an QueryAtomContainer.
-   * @param  g2   second molecule. May be an QueryAtomContainer.
+   * @param  g1   first molecule. Must not be an IQueryAtomContainer.
+   * @param  g2   second molecule. May be an IQueryAtomContainer.
    */
   private static void arcConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException{
     // each node is incompatible with himself
@@ -874,15 +871,15 @@ public class UniversalIsomorphismTester {
    *  number of nitrogen atoms in the query is larger than that of the supergraph
    *  it cannot be part of it.
    *
-   * @param  ac1  the supergraph to be checked. Must not be an QueryAtomContainer.
-   * @param  ac2  the subgraph to be tested for. May be an QueryAtomContainer.
+   * @param  ac1  the supergraph to be checked. Must not be an IQueryAtomContainer.
+   * @param  ac2  the subgraph to be tested for. May be an IQueryAtomContainer.
    * @return    true if the subgraph ac2 has a chance to be a subgraph of ac1
    */
   private static boolean testSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
   	throws CDKException {
-	  if (ac1 instanceof QueryAtomContainer)
+	  if (ac1 instanceof IQueryAtomContainer)
 		  throw new CDKException(
-		      "The first IAtomContainer must not be an QueryAtomContainer"
+		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
 	  
 	  int ac1SingleBondCount = 0;
