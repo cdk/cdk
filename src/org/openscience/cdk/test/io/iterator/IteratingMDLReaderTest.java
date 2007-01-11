@@ -170,13 +170,14 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-
+            
             // two compounds
             assertTrue(reader.hasNext());
             assertNotNull(reader.next()); 
             assertTrue(reader.hasNext());
             assertNotNull(reader.next()); 
         } catch (Exception exception) {
+        	exception.printStackTrace();
             fail(exception.getMessage());
         }
     }

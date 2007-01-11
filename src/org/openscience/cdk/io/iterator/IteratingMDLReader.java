@@ -36,8 +36,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -72,6 +73,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     private BufferedReader input;
     private LoggingTool logger;
     private String currentLine;
+    private IResourceFormat currentFormat;
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
@@ -92,6 +94,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         nextAvailableIsKnown = false;
         hasNext = false;
         factory = new ReaderFactory();
+        currentFormat = MDLV2000Format.getInstance();
     }
 
     /**
@@ -104,7 +107,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     }
 
     public IResourceFormat getFormat() {
-        return MDLFormat.getInstance();
+        return currentFormat;
     }
 
     /**
@@ -133,6 +136,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
                     IChemObjectReader reader = factory.createReader(new StringReader(buffer.toString()));
+                    currentFormat = reader.getFormat();
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
