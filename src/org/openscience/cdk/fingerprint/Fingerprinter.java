@@ -145,7 +145,6 @@ public class Fingerprinter implements IFingerprinter {
 			path = (String) e.nextElement();
 			position = new java.util.Random(path.hashCode()).nextInt(size);
 			logger.debug("Setting bit " + position + " for " + path);
-			System.out.println(position + " <- " + path);
 			bs.set(position);
 		}
 		return bs;
