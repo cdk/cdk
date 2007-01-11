@@ -31,6 +31,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author      steinbeck
  * @cdk.created 2000-10-02
+ * 
+ * @cdk.module  structgen
  */
 public class Graph extends ArrayList
 {

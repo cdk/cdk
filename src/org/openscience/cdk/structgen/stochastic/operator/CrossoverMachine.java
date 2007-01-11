@@ -33,7 +33,9 @@ import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
 /**
  * Modified molecular structures by applying crossover operator on a pair of parent structures 
  * and generate a pair of offspring structures. Each of the two offspring structures inherits 
- * a certain fragments from both of its parents. 
+ * a certain fragments from both of its parents.
+ * 
+ * @cdk.module structgen
  */
 public class CrossoverMachine  
 {

@@ -27,6 +27,7 @@ package org.openscience.cdk.structgen;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.math.MinMax;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -35,6 +36,11 @@ import org.openscience.cdk.tools.LoggingTool;
  * constitutional space from there. 
  * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
  *
+ * <p>Unlike the VicinitySampler, this methods does not sample
+ * the full Faulon vicinity.
+ * 
+ * @see         org.openscience.cdk.structgen.VicinitySampler
+ * 
  * @cdk.keyword structure generator
  */
 public class RandomGenerator {
@@ -197,8 +203,8 @@ public class RandomGenerator {
 			/* Compute the range for b11 (see Faulons formulae for details) */
 			double[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
 			double[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
-			lowerborder = max(cmax);
-			upperborder = min(cmin);
+			lowerborder = MinMax.max(cmax);
+			upperborder = MinMax.min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
 			logger.debug("*** New Try ***");
 			logger.debug("a11 = ", a11);
@@ -297,45 +303,6 @@ public class RandomGenerator {
 		
 		logger.debug("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
 		logger.debug("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
-	}
-
-
-	/**
-	 * Analog of <code>Math.max</code> that returns the largest int value in an array of ints.
-	 *
-	 * @param   values  the values to be searched for the largest value among them
-	 * @return   the largest value among a set of given values  
-	 */
-	protected double max(double[] values)
-	{
-		double max = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] > max)
-			{
-				max = values[f];
-			}
-		}
-		return max;
-	}
-
-	/**
-	 * Analog of <code>Math.min</code> that returns the largest int value in an array of ints.
-	 *
-	 * @param   values  the values to be searched for the smallest value among them
-	 * @return   the smallest value among a set of given values  
-	 */
-	protected double min(double[] values)
-	{
-		double min = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] < min)
-			{
-				min = values[f];
-			}
-		}
-		return min;
 	}
 
 	

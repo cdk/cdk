@@ -41,7 +41,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * constitutional space from there. This generator was first suggested by 
  * Faulon {@cdk.cite FAU96}.
  *
- * @cdk.keyword structure generator
+ * @cdk.keyword  structure generator
+ * @cdk.module   structgen
  */
 public class VicinitySampler {
 	

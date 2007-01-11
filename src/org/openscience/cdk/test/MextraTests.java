@@ -109,11 +109,6 @@ public class MextraTests {
         suite.addTest(RingSearchTest.suite());
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
-        // from cdk.test.structgen
-        suite.addTest(RandomStructureGeneratorTest.suite());
-        suite.addTest(VicinitySamplerTest.suite());
-        // from cdk.test.structgen.deterministic
-        suite.addTest(GENMDeterministicGeneratorTest.suite());
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).

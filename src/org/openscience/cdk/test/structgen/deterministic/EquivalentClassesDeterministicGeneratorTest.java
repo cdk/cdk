@@ -32,7 +32,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-structgen
  */
 public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 {

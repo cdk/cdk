@@ -32,6 +32,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author      steinbeck
  * @cdk.created 2000-10-02
+ * @cdk.module  structgen
  */
 public class EquivalentClassesDeterministicGenerator {
 	

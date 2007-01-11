@@ -1,0 +1,9 @@
+cdk-interfaces.jar
+cdk-core.jar
+cdk-data.jar
+cdk-nonotify.jar
+cdk-standard.jar
+cdk-structgen.jar
+cdk-smiles.jar
+cdk-extra.jar
+cdk-test-core.jar

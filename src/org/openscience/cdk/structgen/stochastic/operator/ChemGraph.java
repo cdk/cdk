@@ -31,6 +31,9 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.RandomNumbersTool;
 
+/**
+ * @cdk.module     structgen
+ */
 public class ChemGraph
 {
 	/*Number of atoms in this structure*/

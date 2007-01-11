@@ -71,6 +71,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @author      Junfeng Hao
  * @author      Christoph Steinbeck
  * @cdk.created 2004-02-16
+ * @cdk.module  structgen
  */
 public class GENMDeterministicGenerator {
 
@@ -136,7 +137,7 @@ public class GENMDeterministicGenerator {
 	{
 		numberOfStructures = 0;
 		generateBasicUnits();
-		logger.debug("numberofstructure is="+numberOfStructures);
+		logger.debug("numberofstructure is=", numberOfStructures);
 		fireChange();
 
 	}
@@ -417,12 +418,12 @@ public class GENMDeterministicGenerator {
 				 /* for F,Cl,Br,I */
 				 for(i=19;i<=22;i++)
 					 if(molecularFormula[i-11]!=0)numberOfBasicUnit[i]=molecularFormula[i-11];
-				 for(i=0;i<=22;i++)
-				 {
-					 if(numberOfBasicUnit[i]!=0)
-					 {
-						// logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
-						//logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
+				 if (logger.isDebugEnabled()) {
+					 for(i=0;i<=22;i++) {
+						 if(numberOfBasicUnit[i]!=0) {
+							 logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
+							 logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
+						 }
 					 }
 				 }
 
@@ -575,8 +576,7 @@ public class GENMDeterministicGenerator {
 		 boolean flag;
 		 int[] maxNumberOfBasicFragment=new int[34];
 		 /*initialization for the variables*/
-		 for(i=0;i<=22;i++)
-			 if(numberOfBasicUnit[i]!=0)logger.debug("numberOfBasicUnit["+i+"]="+numberOfBasicUnit[i]);
+		 if (logger.isDebugEnabled()) for(i=0;i<=22;i++) if(numberOfBasicUnit[i]!=0)logger.debug("numberOfBasicUnit["+i+"]=", numberOfBasicUnit[i]);
 		 for(i=1;i<34;i++)numberOfBasicFragment[i]=0;
 
 		 /* maximum number of basic fragments*/
@@ -655,10 +655,11 @@ public class GENMDeterministicGenerator {
 				 if(flag)
 				 {
 					 numberOfSetFragment+=1;
-					 logger.debug("Fragment Set	"+numberOfSetFragment);
-					 for(i=1;i<34;i++)
-					 {
-						 if(numberOfBasicFragment[i]!=0)logger.debug(((BasicFragment)(basicFragment.get(i-1))).getBasicFragment()+"		"+numberOfBasicFragment[i]);
+					 logger.debug("Fragment Set	", numberOfSetFragment);
+					 if (logger.isDebugEnabled()) {
+						 for(i=1;i<34;i++) {
+							 if(numberOfBasicFragment[i]!=0)logger.debug(((BasicFragment)(basicFragment.get(i-1))).getBasicFragment()+"		"+numberOfBasicFragment[i]);
+						 }
 					 }
 					generateIsomers();
 				}
@@ -679,62 +680,62 @@ public class GENMDeterministicGenerator {
 					 if(k>numberOfBasicUnit[6])continue;
 					 else break;
 				 }
-				 if(iter1==3)
+				 else if(iter1==3)
 				 {
 					 k=numberOfBasicFragment[1]+numberOfBasicFragment[2]+numberOfBasicFragment[3];
 					 if(k>numberOfBasicUnit[6])continue;
 					 else break;
 				 }
-				 if(iter1==4)
+				 else if(iter1==4)
 				 {
 					 k=numberOfBasicFragment[1]+numberOfBasicFragment[2]+numberOfBasicFragment[3]+numberOfBasicFragment[4];
 					 if(k>numberOfBasicUnit[6])continue;
 					 else break;
 				 }
-				 if(iter1==6)
+				 else if(iter1==6)
 				 {
 					 k=numberOfBasicFragment[5]+numberOfBasicFragment[6];
 					 if(k>numberOfBasicUnit[18])continue;
 					 else break;
 				 }
-				 if(iter1==7)
+				 else if(iter1==7)
 				 {
 					 k=numberOfBasicFragment[5]+numberOfBasicFragment[6]+numberOfBasicFragment[7];
 					 if(k>numberOfBasicUnit[18])continue;
 					 else break;
 				 }
 
-				 if(iter1==9)
+				 else if(iter1==9)
 				 {
 					 k=numberOfBasicFragment[8]+numberOfBasicFragment[9];
 					 if(k>numberOfBasicUnit[4])continue;
 					 else break;
 				 }
-				 if(iter1==10)
+				 else if(iter1==10)
 				 {
 					 k=numberOfBasicFragment[8]+numberOfBasicFragment[9]+numberOfBasicFragment[10];
 					 if(k>numberOfBasicUnit[4])continue;
 					 else break;
 				 }
-				 if(iter1==12)
+				 else if(iter1==12)
 				 {
 					 k=numberOfBasicFragment[11]+numberOfBasicFragment[12];
 					 if(k>numberOfBasicUnit[17])continue;
 					 else break;
 				 }
-				 if(iter1==14)
+				 else if(iter1==14)
 				 {
 					 k=numberOfBasicFragment[13]+numberOfBasicFragment[14];
 					 if(k>numberOfBasicUnit[14])continue;
 					 else break;
 				 }
-				 if(iter1==16)
+				 else if(iter1==16)
 				 {
 					 k=numberOfBasicFragment[15]+numberOfBasicFragment[16];
 					 if(k>numberOfBasicUnit[5])continue;
 					 else break;
 				 }
-				 if(iter1==18)
+				 else if(iter1==18)
 				 {
 					 k=numberOfBasicFragment[17]+numberOfBasicFragment[18];
 					 if(k>numberOfBasicUnit[3])continue;

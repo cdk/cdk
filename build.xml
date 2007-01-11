@@ -438,6 +438,7 @@
             <antcall target="compile-module"><param name="module" value="control"/></antcall>
             <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
             <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
+            <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
@@ -466,6 +467,7 @@
         <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-nonotify"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-io"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-structgen"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-weka"/></antcall>
@@ -784,8 +786,8 @@
             <antcall target="test-module"><param name="module" value="builder3d"/></antcall> 
             <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="reaction"/></antcall>  
-            <antcall target="test-module"><param name="module" value="smiles"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="reaction"/></antcall>
+        	<antcall target="test-module"><param name="module" value="smiles"/></antcall> 
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsarAtomic"/></antcall>
@@ -794,6 +796,7 @@
                 <antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
+            <antcall target="test-module"><param name="module" value="structgen"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
