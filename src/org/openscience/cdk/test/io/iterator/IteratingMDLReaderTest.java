@@ -35,7 +35,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -169,22 +168,4 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         }
     }
 
-    public void testPreV2000() {
-        String filename = "data/mdl/prev2000.sd";
-        logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-            
-            // two compounds
-            assertTrue(reader.hasNext());
-            assertNotNull(reader.next()); 
-            assertEquals(MDLFormat.getInstance(), reader.getFormat());
-            assertTrue(reader.hasNext());
-            assertNotNull(reader.next()); 
-        } catch (Exception exception) {
-        	exception.printStackTrace();
-            fail(exception.getMessage());
-        }
-    }
 }

@@ -36,7 +36,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.tools.LoggingTool;
@@ -45,7 +44,9 @@ import org.openscience.cdk.tools.LoggingTool;
  * Iterating MDL SDF reader. It allows to iterate over all molecules
  * in the SD file, without reading them into memory first. Suitable
  * for (very) large SDF files. For parsing the molecules in the
- * SD file, it uses the <code>MDLReader</code>.
+ * SD file, it uses the <code>MDLV2000Reader</code> or 
+ * <code>MDLV2000Reader</code> reader; it does <b>not</b> work
+ * for SDF files with MDL formats prior to the V2000 format.
  * 
  * <p>Example use:
  * <pre>
@@ -120,9 +121,9 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
             // now try to parse the next Molecule
             try {
                 if (input.ready()) {
-                    currentLine = input.readLine();
+                    currentLine = input.readLine().trim();
                     StringBuffer buffer = new StringBuffer();
-                    while (currentLine != null && !currentLine.equals("M  END")) {
+                    while (currentLine != null && !currentLine.equals("$$$$")) {
                         // still in a molecule
                         buffer.append(currentLine);
                         buffer.append("\n");
@@ -132,20 +133,19 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                             currentLine = null;
                         }
                     }
-                    buffer.append(currentLine);
-                    buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
+                    System.out.println("MDL file part read: "+ buffer);
+                    System.out.println("====================");
                     IChemObjectReader reader = factory.createReader(new StringReader(buffer.toString()));
+                    System.out.println("created reader");
                     currentFormat = reader.getFormat();
+                    System.out.println("  found format: " + currentFormat);
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
                     } else {
                         hasNext = false;
                     }
-                    // now read the data part
-                    currentLine = input.readLine();
-                    readDataBlockInto(nextMolecule);
                 } else {
                     hasNext = false;
                 }
@@ -153,51 +153,13 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                 logger.error("Error while reading next molecule: " +
                              exception.getMessage());
                 logger.debug(exception);
+                exception.printStackTrace();
                 hasNext = false;
             }
             if (!hasNext) nextMolecule = null;
             nextAvailableIsKnown = true;
         }
         return hasNext;
-    }
-
-    private void readDataBlockInto(IMolecule m) throws IOException {
-        String fieldName = null;
-        while (currentLine != null && !(currentLine.trim().equals("$$$$"))) {
-            logger.debug("looking for data header: ", currentLine);
-            String str = new String(currentLine);
-            if (str.startsWith("> ")) {
-                // ok, should extract the field name
-                int index = str.indexOf("<");
-                if (index != -1) {
-                    int index2 = str.substring(index).indexOf(">");
-                    if (index2 != -1) {
-                        fieldName = str.substring(
-                        index+1,
-                        index+index2
-                        );
-                    }
-                }
-                // end skip all other lines
-                while (str.startsWith("> ")) {
-                    logger.debug("data header line: ", currentLine);
-                    currentLine = input.readLine();
-                    str = new String(currentLine);
-                }
-                String data = "";
-                while (str.trim().length() > 0) {
-                    logger.debug("data line: ", currentLine);
-                    data += str;
-                    currentLine = input.readLine();
-                    str = new String(currentLine).trim();
-                }
-                if (fieldName != null) {
-                    logger.info("fieldName, data: ", fieldName, ", ", data);
-                    m.setProperty(fieldName, data);
-                }
-            }
-            currentLine = input.readLine();
-        }
     }
     
     /**
