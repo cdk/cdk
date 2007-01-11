@@ -203,7 +203,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  ac           The AtomContainer which is to be searched.
 	 *@param  searchDepth  Description of the Parameter
 	 */
-	private void findPathes(IAtomContainer ac, int searchDepth)
+	protected void findPathes(IAtomContainer ac, int searchDepth)
 	{
 		pathes = new HashMap();
 		List currentPath = new ArrayList();
@@ -404,6 +404,10 @@ public class Fingerprinter implements IFingerprinter {
 				logger.debug("Bit " + f + " not set in bs1");
 			}
 		}
+	}
+
+	public int getSearchDepth() {
+		return searchDepth;
 	}
 
 }
