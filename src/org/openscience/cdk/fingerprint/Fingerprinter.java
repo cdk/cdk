@@ -24,10 +24,11 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -84,7 +85,7 @@ public class Fingerprinter implements IFingerprinter {
 	private int searchDepth;
 	private AllRingsFinder ringFinder;
 	
-	static Hashtable pathes;
+	static HashMap pathes;
 	final static boolean debug = true;
 	static int debugCounter = 0;
 
@@ -140,9 +141,9 @@ public class Fingerprinter implements IFingerprinter {
 		logger.debug("Finished Aromaticity Detection");
 		findPathes(ac, searchDepth);
 		BitSet bs = new BitSet(size);
-		for (Enumeration e = pathes.elements(); e.hasMoreElements(); )
+		for (Iterator e = pathes.values().iterator(); e.hasNext(); )
 		{
-			path = (String) e.nextElement();
+			path = (String)e.next();
 			position = new java.util.Random(path.hashCode()).nextInt(size);
 			logger.debug("Setting bit " + position + " for " + path);
 			bs.set(position);
@@ -204,13 +205,13 @@ public class Fingerprinter implements IFingerprinter {
 	 */
 	private void findPathes(IAtomContainer ac, int searchDepth)
 	{
-		pathes = new Hashtable();
-		Vector currentPath = new Vector();
+		pathes = new HashMap();
+		List currentPath = new ArrayList();
 		debugCounter = 0;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
-			currentPath.removeAllElements();
-			currentPath.addElement(ac.getAtom(f));
+			currentPath.clear();
+			currentPath.add(ac.getAtom(f));
 			checkAndStore(currentPath);
 			logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtom(f).getSymbol());
 			depthFirstSearch(ac, ac.getAtom(f), currentPath, 0, searchDepth);
@@ -228,9 +229,9 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	private void depthFirstSearch(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom root, Vector currentPath, int currentDepth, int searchDepth)
+	private void depthFirstSearch(IAtomContainer ac, IAtom root, List currentPath, int currentDepth, int searchDepth)
 	{
-		java.util.List bonds = ac.getConnectedBondsList(root);
+		List bonds = ac.getConnectedBondsList(root);
 
 		/*
 		 *  try
@@ -249,7 +250,7 @@ public class Fingerprinter implements IFingerprinter {
 		 *  catch(Exception exc){}
 		 */
 		//Atom tempAtom = null;
-		Vector newPath = null;
+		List newPath = null;
 		//String symbol = null;
 		String bondSymbol = null;
 		currentDepth++;
@@ -269,11 +270,11 @@ public class Fingerprinter implements IFingerprinter {
 			 */
 			if (!currentPath.contains(nextAtom))
 			{
-				newPath = new Vector(currentPath);
+				newPath = new ArrayList(currentPath);
 				bondSymbol = this.getBondSymbol(bond);
-				newPath.addElement(bondSymbol);
+				newPath.add(bondSymbol);
 				//logger.debug("Bond has symbol " + bondSymbol);
-				newPath.addElement(nextAtom);
+				newPath.add(nextAtom);
 				checkAndStore(newPath);
 
 				if (currentDepth < searchDepth)
@@ -294,17 +295,17 @@ public class Fingerprinter implements IFingerprinter {
 	 *
 	 *@param  newPath  Description of the Parameter
 	 */
-	private void checkAndStore(Vector newPath)
+	private void checkAndStore(List newPath)
 	{
 		String newPathString = "";
 		for (int f = 0; f < newPath.size(); f++)
 		{
-			if ((newPath.elementAt(f)) instanceof IAtom)
+			if ((newPath.get(f)) instanceof IAtom)
 			{
-				newPathString += convertSymbol(((IAtom) newPath.elementAt(f)).getSymbol());
+				newPathString += convertSymbol(((IAtom) newPath.get(f)).getSymbol());
 			} else
 			{
-				newPathString += (String) newPath.elementAt(f);
+				newPathString += (String) newPath.get(f);
 			}
 		}
 		//logger.debug("Checking for existence of Path " +  newPathString);
