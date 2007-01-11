@@ -36,15 +36,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.isomorphism.mcss.RNode;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -63,23 +67,32 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  *  <p>This algorithm derives from the algorithm described in
  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
+ *  
+ *  <p>With the <code>isSubgraph()</code> method, the second, and only the second
+ *  argument <b>may</b> be a QueryAtomContainer, which allows one to do MQL like queries.
+ *  The first IAtomContainer must never be an QueryAtomContainer. An example:<pre>
+ *  SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ *  IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+ *  IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
+ *  QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
+ *  boolean isSubstructure = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
+ *  </pre>
  *
- *  <p><font color="#FF0000">
- *     warning :  As a result of the adjacency perception used in this algorithm
- *                there is a single limitation : cyclopropane and isobutane are seen as isomorph
- *                This is due to the fact that these two compounds are the only ones where
- *                each bond is connected two each other bond (bonds are fully conected)
- *                with the same number of bonds and still they have different structures
- *                The algotihm could be easily enhanced with a simple atom mapping manager
- *                to provide an atom level overlap definition that would reveal this case.
- *                We decided not to penalize the whole procedure because of one single
- *                exception query. Furthermore isomorphism may be discarded since  the number of atoms are
- *                not the same (3 != 4) and in most case this will be already
- *                screened out by a fingerprint based filtering.
- *                It is possible to add a special treatment for this special query.
- *                Be reminded that this algorithm matches bonds only.
- *   </font>
- *
+ *  <p><font color="#FF0000">WARNING</font>:
+ *    As a result of the adjacency perception used in this algorithm
+ *    there is a single limitation : cyclopropane and isobutane are seen as isomorph
+ *    This is due to the fact that these two compounds are the only ones where
+ *    each bond is connected two each other bond (bonds are fully conected)
+ *    with the same number of bonds and still they have different structures
+ *    The algotihm could be easily enhanced with a simple atom mapping manager
+ *    to provide an atom level overlap definition that would reveal this case.
+ *    We decided not to penalize the whole procedure because of one single
+ *    exception query. Furthermore isomorphism may be discarded since  the number of atoms are
+ *    not the same (3 != 4) and in most case this will be already
+ *    screened out by a fingerprint based filtering.
+ *    It is possible to add a special treatment for this special query.
+ *    Be reminded that this algorithm matches bonds only.
+ * </p>
  *
  * @author      Stephane Werner from IXELIS mail@ixelis.net
  * @cdk.created 2002-07-17
@@ -106,13 +119,18 @@ public class UniversalIsomorphismTester {
   // Isomorphism search
 
   /**
-   *  Tests if  g1 and g2 are isomorph
+   * Tests if g1 and g2 are isomorph.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     true if the 2 molecule are isomorph
    */
   public static boolean isIsomorph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+	  if (g1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
 	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
       // check single atom case
       if (g2.getAtomCount() == 1) {
@@ -134,13 +152,18 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns the first isomorph mapping found or null
+   * Returns the first isomorph mapping found or null.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.
    */
   public static List getIsomorphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+	  if (g1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
     List result = null;
 
     List rMapsList = search(g1, g2, getBitSet(g1),
@@ -155,13 +178,18 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns the first isomorph 'atom mapping' found for g2 in g1.
+   * Returns the first isomorph 'atom mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the first isomorph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
+	  if (g1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
       ArrayList list = checkSingleAtomCases(g1, g2);
       if (list == null) {
           return (makeAtomsMapOfBondsMap(UniversalIsomorphismTester.getIsomorphMap(g1, g2), g1, g2));
@@ -174,11 +202,11 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns all the isomorph 'mappings' found between two
-   *  atom containers.
+   * Returns all the isomorph 'mappings' found between two
+   * atom containers.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the list of all the 'mappings'
    */
   public static List getIsomorphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
@@ -191,13 +219,12 @@ public class UniversalIsomorphismTester {
   // Subgraph search
 
   /**
-   *  Returns all the subgraph 'bond mappings' found for g2 in g1.
-   *  This is an ArrayList of ArrayLists of RMap objects.
+   * Returns all the subgraph 'bond mappings' found for g2 in g1.
+   * This is an ArrayList of ArrayLists of RMap objects.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the list of all the 'mappings' found projected of g1
-   *
    */
   public static List getSubgraphMaps(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
     return search(g1, g2, new BitSet(), getBitSet(g2), true, true);
@@ -205,10 +232,10 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns the first subgraph 'bond mapping' found for g2 in g1.
+   * Returns the first subgraph 'bond mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the first subgraph bond mapping found projected on g1. This is a List of RMap objects containing Ids of matching bonds.
    */
   public static List getSubgraphMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
@@ -225,11 +252,11 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Returns all subgraph 'atom mappings' found for g2 in g1.
-   *  This is an ArrayList of ArrayLists of RMap objects.
+   * Returns all subgraph 'atom mappings' found for g2 in g1.
+   * This is an ArrayList of ArrayLists of RMap objects.
    *
-   * @param  g1  first AtomContainer
-   * @param  g2  second AtomContainer
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     all subgraph atom mappings found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2) throws CDKException {
@@ -242,10 +269,10 @@ public class UniversalIsomorphismTester {
   }
 
   /**
-   *  Returns the first subgraph 'atom mapping' found for g2 in g1.
+   * Returns the first subgraph 'atom mapping' found for g2 in g1.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the first subgraph atom mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List getSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2) throws CDKException {
@@ -259,15 +286,19 @@ public class UniversalIsomorphismTester {
       }
   }
 
-
   /**
-   *  Tests if g2 a subgraph of g1
+   * Tests if g2 a subgraph of g1.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     true if g2 a subgraph on g1
    */
   public static boolean isSubgraph(IAtomContainer g1, IAtomContainer g2)  throws CDKException{
+	  if (g1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
       // test for single atom case
       if (g2.getAtomCount() == 1) {
@@ -295,10 +326,10 @@ public class UniversalIsomorphismTester {
   // Maximum common substructure search
 
   /**
-   *  Returns all the maximal common substructure between 2 atom containers
+   * Returns all the maximal common substructure between 2 atom containers.
    *
-   * @param  g1  first molecule
-   * @param  g2  second molecule
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     the list of all the maximal common substructure
    *             found projected of g1 (list of AtomContainer )
    */
@@ -317,8 +348,8 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Transforms an AtomContainer into a BitSet (which's size = number of bond
-   *  in the atomContainer, all the bit are set to true)
+   * Transforms an AtomContainer into a BitSet (which's size = number of bond
+   * in the atomContainer, all the bit are set to true).
    *
    * @param  ac  AtomContainer to transform
    * @return     The bitSet
@@ -342,7 +373,7 @@ public class UniversalIsomorphismTester {
   //          Internal methods
 
   /**
-   *  Builds the RGraph ( resolution graph ), from two atomContainer
+   * Builds the RGraph ( resolution graph ), from two atomContainer
    * (description of the two molecules to compare)
    * This is the interface point between the CDK model and
    * the generic MCSS algorithm based on the RGRaph.
@@ -360,12 +391,12 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  General Rgraph parsing method (usually not used directly)
-   *  This method is the entry point for the recursive search
-   *  adapted to the atom container input.
+   * General Rgraph parsing method (usually not used directly)
+   * This method is the entry point for the recursive search
+   * adapted to the atom container input.
    *
-   * @param  g1                first molecule
-   * @param  g2                second molecule
+   * @param  g1                first molecule. Must not be an QueryAtomContainer.
+   * @param  g2                second molecule. May be an QueryAtomContainer.
    * @param  c1                initial condition ( bonds from g1 that
    *                           must be contains in the solution )
    * @param  c2                initial condition ( bonds from g2 that
@@ -400,7 +431,7 @@ public class UniversalIsomorphismTester {
   //    Manipulation tools
 
   /**
-   *  Projects a list of RMap on a molecule
+   * Projects a list of RMap on a molecule.
    *
    * @param  rMapList  the list to project
    * @param  g         the molecule on which project
@@ -461,7 +492,7 @@ public class UniversalIsomorphismTester {
 
 
   /**
-   *  Project a list of RMapsList on a molecule
+   * Projects a list of RMapsList on a molecule.
    *
    * @param  rMapsList  list of RMapsList to project
    * @param  g          the molecule on which project
@@ -480,7 +511,7 @@ public class UniversalIsomorphismTester {
   }
 
   /**
-   *  remove all redundant solution
+   * Removes all redundant solution.
    *
    * @param  graphList  the list of structure to clean
    * @return            the list cleaned
@@ -509,12 +540,16 @@ public class UniversalIsomorphismTester {
   /**
    *  Checks for single atom cases before doing subgraph/isomorphism search
    *
-   * @param  g1  AtomContainer to match on
-   * @param  g2  AtomContainer as query
+   * @param  g1  AtomContainer to match on. Must not be an QueryAtomContainer.
+   * @param  g2  AtomContainer as query. May be an QueryAtomContainer.
    * @return     List of List of RMap objects for the Atoms (not Bonds!), null if no single atom case
   */
-  public static ArrayList checkSingleAtomCases(IAtomContainer g1, IAtomContainer g2) {
-
+  public static ArrayList checkSingleAtomCases(IAtomContainer g1, IAtomContainer g2) throws CDKException {
+	  if (g1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
 	  if (g2.getAtomCount() == 1) {
 		  ArrayList arrayList = new ArrayList();
 		  IAtom atom = g2.getAtom(0);
@@ -556,8 +591,8 @@ public class UniversalIsomorphismTester {
    *  This makes maps of matching atoms out of a maps of matching bonds as produced by the get(Subgraph|Ismorphism)Maps methods.
    *
    * @param  l   The list produced by the getMap method.
-   * @param  g1  The first atom container.
-   * @param  g2  The second one (first and second as in getMap)
+   * @param  g1  The first atom container. Must not be a QueryAtomContainer.
+   * @param  g2  The second one (first and second as in getMap). May be an QueryAtomContaienr.
    * @return     A Vector of Vectors of RMap objects of matching Atoms.
    */
    public static List makeAtomsMapsOfBondsMaps(List l, IAtomContainer g1, IAtomContainer g2) {
@@ -576,8 +611,8 @@ public class UniversalIsomorphismTester {
    *  This makes a map of matching atoms out of a map of matching bonds as produced by the get(Subgraph|Ismorphism)Map methods.
    *
    * @param  l   The list produced by the getMap method.
-   * @param  g1  The first atom container.
-   * @param  g2  The second one (first and second as in getMap)
+   * @param  g1  first molecule. Must not be an QueryAtomContainer.
+   * @param  g2  second molecule. May be an QueryAtomContainer.
    * @return     The mapping found projected on g1. This is a List of RMap objects containing Ids of matching atoms.
    */
   public static List makeAtomsMapOfBondsMap(List l, IAtomContainer g1, IAtomContainer g2) {
@@ -636,10 +671,15 @@ public class UniversalIsomorphismTester {
    *  two atom containers (description of the two molecules to compare)
    *
    * @param  gr   the target RGraph
-   * @param  ac1  description of the first molecule
-   * @param  ac2  description of the second molecule
+   * @param  g1   first molecule. Must not be an QueryAtomContainer.
+   * @param  g2   second molecule. May be an QueryAtomContainer.
    */
-  private static void nodeConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2)  throws CDKException{
+  private static void nodeConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException {
+	  if (ac1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
     // resets the target graph.
     gr.clear();
 
@@ -706,8 +746,8 @@ public class UniversalIsomorphismTester {
    *  relationships between RGraph nodes.
    *
    * @param  gr   the rGraph
-   * @param  ac1  Description of the first molecule
-   * @param  ac2  Description of the second molecule
+   * @param  g1   first molecule. Must not be an QueryAtomContainer.
+   * @param  g2   second molecule. May be an QueryAtomContainer.
    */
   private static void arcConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2) throws CDKException{
     // each node is incompatible with himself
@@ -764,8 +804,8 @@ public class UniversalIsomorphismTester {
   }
 
 
-    /**
-   *  Determines if 2 bond have 1 atom in common
+  /**
+   * Determines if two bonds have at least one atom in common.
    *
    * @param  a  first bond
    * @param  b  second bond
@@ -773,14 +813,7 @@ public class UniversalIsomorphismTester {
    *            the 2 bonds have no common atom
    */
   private static boolean hasCommonAtom(IBond a, IBond b) {
-
-    if (a.contains(b.getAtom(0))) {
-      return true;
-    } else if (a.contains(b.getAtom(1))) {
-      return true;
-    }
-
-    return false;
+    return a.contains(b.getAtom(0)) || a.contains(b.getAtom(1));
   }
 
   /**
@@ -829,6 +862,7 @@ public class UniversalIsomorphismTester {
       }
 
       if (atom1 != null && atom2 != null){
+    	  // well, this looks fishy: the atom2 is not always a IQueryAtom !
           return ((IQueryAtom)atom2).matches(atom1);
       } else return atom1 == null && atom2 == null;
 
@@ -840,14 +874,17 @@ public class UniversalIsomorphismTester {
    *  number of nitrogen atoms in the query is larger than that of the supergraph
    *  it cannot be part of it.
    *
-   * @param  ac1  the supergraph to be checked
-   * @param  ac2  the subgraph to be tested for
+   * @param  ac1  the supergraph to be checked. Must not be an QueryAtomContainer.
+   * @param  ac2  the subgraph to be tested for. May be an QueryAtomContainer.
    * @return    true if the subgraph ac2 has a chance to be a subgraph of ac1
-   *
    */
-
   private static boolean testSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
-  {
+  	throws CDKException {
+	  if (ac1 instanceof QueryAtomContainer)
+		  throw new CDKException(
+		      "The first IAtomContainer must not be an QueryAtomContainer"
+		  );
+	  
 	  int ac1SingleBondCount = 0;
 	  int ac1DoubleBondCount = 0;
 	  int ac1TripleBondCount = 0;

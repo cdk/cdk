@@ -295,6 +295,23 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertTrue("C1CCCC1 should be a isomorph of O1C=CC=C1", UniversalIsomorphismTester.isIsomorph(target, query));
     }
     
+    /**
+     * @cdk.bug 1633201
+     */
+    public void testFirstArgumentMustNotBeAnQueryAtomContainer() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
+        IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
+        
+        try {
+        	UniversalIsomorphismTester.isSubgraph(query, target);
+        	fail("The UniversalIsomorphism should check when the first arguments is a QueryAtomContainer");
+        } catch (Exception e) {
+			// OK, it must fail!
+		}
+    }
+    
 	public static void main(String[] args)
 	{
 		try{
