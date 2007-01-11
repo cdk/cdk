@@ -28,12 +28,15 @@
 package org.openscience.cdk.test.io.iterator;
 
 import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -73,6 +76,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
                 molCount++;
             }
             
+            assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
             assertEquals(6, molCount);
         } catch (Exception e) {
             logger.debug(e);
@@ -93,6 +97,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             assertNotNull(object);
             assertTrue(object instanceof Molecule);
             assertEquals("2-methylbenzo-1,4-quinone", ((Molecule)object).getProperty(CDKConstants.TITLE));
+            assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
         } catch (Exception e) {
             logger.debug(e);
             fail(e.getMessage());
@@ -174,6 +179,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             // two compounds
             assertTrue(reader.hasNext());
             assertNotNull(reader.next()); 
+            assertEquals(MDLFormat.getInstance(), reader.getFormat());
             assertTrue(reader.hasNext());
             assertNotNull(reader.next()); 
         } catch (Exception exception) {
