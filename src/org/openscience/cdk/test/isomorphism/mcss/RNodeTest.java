@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-structgen
+ * @cdk.module test-standard
  */
 public class RNodeTest extends CDKTestCase {
     
