@@ -518,7 +518,7 @@
                     <includesfile name="${metainf}/svg.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                     <includesfile name="${metainf}/sdg.libdepends"/>
-		    <includesfile name="${metainf}/forcefield.libdepends"/>
+                    <includesfile name="${metainf}/forcefield.libdepends"/>
                     <includesfile name="${metainf}/inchi.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
@@ -546,6 +546,7 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
+                    <include name="cdk-structgen.jar"/>
                     <include name="cdk-svg.jar"/>
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
@@ -602,6 +603,7 @@
                     <includesfile name="${metainf}/test-reaction.libdepends"/>
                     <includesfile name="${metainf}/test-smiles.libdepends"/>
                     <includesfile name="${metainf}/test-standard.libdepends"/>
+                    <includesfile name="${metainf}/test-structgen.libdepends"/>
                     <includesfile name="${metainf}/test-valencycheck.libdepends"/>
                     <includesfile name="${metainf}/test-weka.libdepends"/>
                 </fileset>
@@ -624,6 +626,7 @@
                     <include name="cdk-test-reaction.jar"/>
                     <include name="cdk-test-smiles.jar"/>
                     <include name="cdk-test-standard.jar"/>
+                    <include name="cdk-test-structgen.jar"/>
                     <include name="cdk-test-valencycheck.jar"/>
                     <include name="cdk-test-weka.jar"/>
                 </fileset>
