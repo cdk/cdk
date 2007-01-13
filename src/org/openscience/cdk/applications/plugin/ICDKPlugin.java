@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * using an <code>CDKEditBus</code> object. Check its API to see how to
  * interact with the application.
  *
- * @cdk.module standard
+ * @cdk.module applications
  *
  * @version $Revision$
  *
