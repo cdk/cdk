@@ -29,19 +29,26 @@
 package org.openscience.cdk.test.graph;
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.MinimalPathIterator;
 import org.openscience.cdk.test.CDKTestCase;
+
 /**
  * This class tests the MinimalPathIteratorTest class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
-
 public class MinimalPathIteratorTest extends CDKTestCase {
 	
+	public static Test suite() {
+		return new TestSuite(MinimalPathIteratorTest.class);
+	}
+
 	public void testMinimalPathIterator() {
 		 SimpleGraph g    = new SimpleGraph(  );
 		 

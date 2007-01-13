@@ -29,6 +29,9 @@
 package org.openscience.cdk.test.ringsearch.cyclebasis;
 import java.util.Arrays;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasis;
@@ -37,11 +40,15 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * This class tests the SimpleCycleBasis class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 public class SimpleCycleBasisTest extends CDKTestCase {
+
+	public static Test suite() {
+		return new TestSuite(SimpleCycleBasisTest.class);
+	}
 
 	SimpleGraph g;
 	SimpleCycleBasis basis;

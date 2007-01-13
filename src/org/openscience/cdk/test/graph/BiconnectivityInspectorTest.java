@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,6 +29,9 @@
 package org.openscience.cdk.test.graph;
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.graph.BiconnectivityInspector;
 import org.openscience.cdk.test.CDKTestCase;
@@ -36,13 +39,16 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * This class tests the BiconnectivityInspector class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
-
 public class BiconnectivityInspectorTest extends CDKTestCase {
-		
+	
+	public static Test suite() {
+		return new TestSuite(BiconnectivityInspectorTest.class);
+	}
+	
 	public void testBiconnectedSets() {
 		SimpleGraph g = new SimpleGraph(  );
 		

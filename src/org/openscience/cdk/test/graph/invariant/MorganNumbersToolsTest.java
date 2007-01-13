@@ -36,13 +36,13 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the MorganNumberTools.
  *
- * @cdk.module test-extra
+ * @cdk.module test-standard
  */
-public class MorganNumberToolsTest extends CDKTestCase
+public class MorganNumbersToolsTest extends CDKTestCase
 {
 	// This is an array with the expected Morgan Numbers for a-pinene
 	int[] reference = {28776,17899,23549,34598,31846,36393,9847,45904,15669,15669};
-	public MorganNumberToolsTest(String name)
+	public MorganNumbersToolsTest(String name)
 	{
 		super(name);
 	}
@@ -53,7 +53,7 @@ public class MorganNumberToolsTest extends CDKTestCase
 	}
 
 	public static Test suite() {
-		return new TestSuite(MorganNumberToolsTest.class);
+		return new TestSuite(MorganNumbersToolsTest.class);
 	}
 
 	public void testMorganNumbers()
@@ -80,6 +80,6 @@ public class MorganNumberToolsTest extends CDKTestCase
 
 	public static void main(String[] args)
 	{
-		new MorganNumberToolsTest("MorganNumberToolsTest").testMorganNumbers();
+		new MorganNumbersToolsTest("MorganNumberToolsTest").testMorganNumbers();
 	}
 }
