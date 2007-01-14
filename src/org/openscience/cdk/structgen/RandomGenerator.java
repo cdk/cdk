@@ -27,7 +27,7 @@ package org.openscience.cdk.structgen;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.math.MinMax;
+import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -203,8 +203,8 @@ public class RandomGenerator {
 			/* Compute the range for b11 (see Faulons formulae for details) */
 			double[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
 			double[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
-			lowerborder = MinMax.max(cmax);
-			upperborder = MinMax.min(cmin);
+			lowerborder = MathTools.max(cmax);
+			upperborder = MathTools.min(cmin);
 			/* Randomly choose b11 != a11 in the range max > r > min */
 			logger.debug("*** New Try ***");
 			logger.debug("a11 = ", a11);

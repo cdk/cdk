@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.math.MinMax;
+import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -145,8 +145,8 @@ public class VicinitySampler {
 							cmin[1] = a11 + a12;
 							cmin[2] = a11 + a21;
 							cmin[3] = a11 - a22 + 3;
-							lowerborder = MinMax.max(cmax);
-							upperborder = MinMax.min(cmin);
+							lowerborder = MathTools.max(cmax);
+							upperborder = MathTools.min(cmin);
 							for (b11 = lowerborder; b11 <= upperborder; b11++)
 							{
 								if (b11 != a11)

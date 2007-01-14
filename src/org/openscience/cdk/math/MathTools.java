@@ -29,6 +29,37 @@ package org.openscience.cdk.math;
  * @cdk.module standard
  */
 public class MathTools {
+	
+	/**
+	 * Analog of Math.max that returns the largest double value in an array of dpubles.
+	 *
+	 * @param   values  the values to be searched for the largest value among them
+	 * @return   the largest value among a set of given values  
+	 */
+	public static double max(double[] values)
+	{
+		double max = values[0];
+		for (int f = 0; f < values.length; f++)
+			if (values[f] > max)
+				max = values[f];
+			return max;
+	}
+
+	/**
+	 * Analog of Math.min that returns the largest double value in an array of double.
+	 *
+	 * @param   values  the values to be searched for the smallest value among them
+	 * @return   the smallest value among a set of given values  
+	 */
+	public static double min(double[] values)
+	{
+		double min = values[0];
+		for (int f = 0; f < values.length; f++)
+			if (values[f] < min)
+				min = values[f];
+			return min;
+	}
+	
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints
 	 **/

@@ -175,7 +175,7 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 			atomcount+=mol.getAtomCount();
 		}
 		boolean redossr=false;
-		if(bondcount!=oldbondcount || atomcount!=oldatomcount)
+		if(bondcount!=oldbondcount || atomcount!=oldatomcount) // some kind of heuristic?
 			redossr=true;
 		for (int i = 0; i < molecules.getAtomContainerCount(); i++)
 		{
@@ -204,11 +204,10 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 	public void paintReaction(IReaction reaction, Graphics2D graphics) {
 		// paint atom atom mappings
 		IAtom highlighted = r2dm.getHighlightedAtom();
-		if (r2dm.getShowAtomAtomMapping() && highlighted != null && 
-		    reaction instanceof IReaction)
+		if (r2dm.getShowAtomAtomMapping() && highlighted != null)
 		{
 			logger.debug("Showing atom-atom mapping");
-			java.util.Iterator mappings = ((IReaction)reaction).mappings();
+			java.util.Iterator mappings = reaction.mappings();
 			//logger.debug(" #mappings: ", mappings.length);
 			while (mappings.hasNext())
 			{
