@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -108,35 +109,16 @@ abstract public class CoverageTest extends CDKTestCase {
             int missingTestsCount = 0;
 
             // make map of methods in the test class
-            Vector testMethodNames = new Vector();
+            ArrayList testMethodNames = new ArrayList();
             Method[] testMethods = testClass.getMethods();
             for (int i=0; i<testMethods.length; i++) {
                 testMethodNames.add(testMethods[i].getName());
             }
             
-            // now process the methods of the class to be tested
-            // first the constructors
-            Constructor[] constructors = coreClass.getDeclaredConstructors();
-            for (int i=0; i<constructors.length; i++) {
-                int modifiers = constructors[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
-                    String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
-                    Class[] paramTypes = constructors[i].getParameterTypes();
-                    for (int j=0; j<paramTypes.length; j++) {
-                        if (paramTypes[j].isArray()) {
-                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
-                        } else {
-                            testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-                        }
-                    }
-                    if (!testMethodNames.contains(testMethod)) {
-                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                        missingTestsCount++;
-                    }
-                }
-            }
             
+            // now process the methods of the class to be tested
             // now the methods.
+            boolean nonstaticMethods = false;
             Method[] methods = coreClass.getDeclaredMethods();
             for (int i=0; i<methods.length; i++) {
                 int modifiers = methods[i].getModifiers();
@@ -155,7 +137,33 @@ abstract public class CoverageTest extends CDKTestCase {
                         System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
                         missingTestsCount++;
                     }
+                    if (!Modifier.isStatic(modifiers)) nonstaticMethods = true;
                 }
+            }
+            
+            // second the constructors
+            // only test if public nonstatic methods are present in the class
+            if (nonstaticMethods) {
+            	
+            	Constructor[] constructors = coreClass.getDeclaredConstructors();
+            	for (int i=0; i<constructors.length; i++) {
+            		int modifiers = constructors[i].getModifiers();
+            		if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
+            			String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
+            			Class[] paramTypes = constructors[i].getParameterTypes();
+            			for (int j=0; j<paramTypes.length; j++) {
+            				if (paramTypes[j].isArray()) {
+            					testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+            				} else {
+            					testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+            				}
+            			}
+            			if (!testMethodNames.contains(testMethod)) {
+            				System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
+            				missingTestsCount++;
+            			}
+            		}
+            	}
             }
             
             return missingTestsCount;

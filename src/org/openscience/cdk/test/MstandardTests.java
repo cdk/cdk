@@ -63,7 +63,6 @@ import org.openscience.cdk.test.isomorphism.mcss.RMapTest;
 import org.openscience.cdk.test.isomorphism.mcss.RNodeTest;
 import org.openscience.cdk.test.math.FortranFormatTest;
 import org.openscience.cdk.test.math.MathToolsTest;
-import org.openscience.cdk.test.math.MinMaxTest;
 import org.openscience.cdk.test.math.PrimesTest;
 import org.openscience.cdk.test.math.RandomNumbersToolTest;
 import org.openscience.cdk.test.qsar.DescriptorSpecificationTest;
@@ -190,7 +189,6 @@ public class MstandardTests {
         suite.addTest(DescriptorValueTest.suite());
         suite.addTest(DescriptorSpecificationTest.suite());
         suite.addTest(FortranFormatTest.suite());
-        suite.addTest(MinMaxTest.suite());
         suite.addTest(PrimesTest.suite());
         suite.addTest(RandomNumbersToolTest.suite());
 
