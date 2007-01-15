@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the APIVersionTester.
  *
- * @cdk.module test-standard
+ * @cdk.module test-extra
  */
 public class APIVersionTesterTest extends CDKTestCase {
 

@@ -27,7 +27,6 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.applications.APIVersionTesterTest;
 import org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.config.SymbolsTest;
@@ -116,7 +115,6 @@ public class MstandardTests {
         
         // make sure to check it agains src/test-standard.files
         // before each release!
-        suite.addTest(APIVersionTesterTest.suite());
         suite.addTest(AromaticityCalculatorTest.suite());
         suite.addTest(HueckelAromaticityDetectorTest.suite());
         suite.addTest(DictRefTest.suite());
