@@ -23,6 +23,7 @@ package org.openscience.cdk.test.math;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.math.Primes;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,24 @@ public class PrimesTest extends CDKTestCase {
 		return new TestSuite(PrimesTest.class);
 	}
 
+	public void testGetPrimeAt_int() {
+		assertEquals(2, Primes.getPrimeAt(0));
+		
+		try {
+			Primes.getPrimeAt(1229);
+			fail("Should fail her, because it contains only X primes.");
+		} catch (ArrayIndexOutOfBoundsException exception) {
+			// ok, that should happen
+		}
+
+		try {
+			Primes.getPrimeAt(-1);
+			fail("Should fail her, because only positive integers are accepted");
+		} catch (ArrayIndexOutOfBoundsException exception) {
+			// ok, that should happen
+		}
+}
+	
 }
 
 
