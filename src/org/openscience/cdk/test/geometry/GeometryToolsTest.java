@@ -68,7 +68,7 @@ public class GeometryToolsTest extends CDKTestCase {
         return suite;
     }
     
-    public void testGetLength() {
+    public void testGetLength2D_IBond() {
         Atom o = new Atom("O", new Point2d(0.0, 0.0));
         Atom c = new Atom("C", new Point2d(1.0, 0.0));
         Bond bond = new Bond(c,o);

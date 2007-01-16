@@ -68,7 +68,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * <code>CrystalGeometryTools.notionalToCartesian()</code> methods
      * places the a axis on the x axis and the b axis in the xy plane.
      */
-    public void testNotionalToCartesian() {
+    public void testNotionalToCartesian_double_double_double_double_double_double() {
         Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(
             1.0, 2.0, 3.0, 90.0, 90.0, 90.0
         );
@@ -90,7 +90,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the conversion of cartesian coordinates to 
      * notional coordinates.
      */
-    public void testCartesianToNotional() {
+    public void testCartesianToNotional_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -109,7 +109,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the conversion of atomic fractional coordinates to
      * cartesian coordinates.
      */
-    public void testFractionalToCartesian() {
+    public void testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -150,7 +150,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests the conversion of atomic cartesian coordinates to
      * fractional coordinates.
      */
-    public void testCartesianToFractional() {
+    public void testCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d() {
         Vector3d a = new Vector3d(1.0, 0.0, 0.0);
         Vector3d b = new Vector3d(0.0, 2.0, 0.0);
         Vector3d c = new Vector3d(0.0, 0.0, 3.0);
@@ -244,7 +244,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
      * This method tests wether two times inversion of the axes
      * gives back the original axes.
      */
-    public void testCalcInvertedAxes() {
+    public void testCalcInvertedAxes_Vector3d_Vector3d_Vector3d() {
         Vector3d a = new Vector3d(3.4, 7.6, 5.5);
         Vector3d b = new Vector3d(2.8, 4.0, 6.3);
         Vector3d c = new Vector3d(1.9, 3.9, 9.1);
