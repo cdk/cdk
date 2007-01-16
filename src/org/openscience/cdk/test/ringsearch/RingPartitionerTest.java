@@ -84,7 +84,7 @@ public class RingPartitionerTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testConvertToAtomContainer()
+	public void testConvertToAtomContainer_IRingSet()
 	{
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
 		SSSRFinder sssrf = new SSSRFinder(molecule);
@@ -106,7 +106,7 @@ public class RingPartitionerTest extends CDKTestCase
 		standAlone = true;
         try {
             rpt.setUp();
-            rpt.testConvertToAtomContainer();
+            rpt.testConvertToAtomContainer_IRingSet();
         } catch(Exception exc) {
             System.err.println("Could setup the TestCase");
         }
