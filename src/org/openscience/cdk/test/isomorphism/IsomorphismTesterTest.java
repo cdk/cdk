@@ -118,26 +118,31 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_non.addBond(2, 7, 1); // 9
 		pinene_non.addBond(4, 5, 2); // 10
 		pinene_non.addBond(7, 9, 1); // 11
-		
-		
 	}
 	
 	public static Test suite() {
 		return new TestSuite(IsomorphismTesterTest.class);
 	}
 
-	public void testIsomorphism()
-	{
-		try
-		{
-			IsomorphismTester it = new IsomorphismTester(pinene_1);
-			assertTrue(it.isIsomorphic(pinene_2));
-			assertTrue(!it.isIsomorphic(pinene_non));
-		}
-		catch(Exception exc)
-		{
-			System.err.println("An Exception");
-			fail();
-		}
+	public void testIsomorphismTester_IMolecule() throws Exception {
+		IsomorphismTester it = new IsomorphismTester(pinene_1);
+		assertNotNull(it);
+	}
+	
+	public void testIsomorphismTester() throws Exception {
+		IsomorphismTester it = new IsomorphismTester();
+		assertNotNull(it);
+	}
+	
+	public void testIsIsomorphic_IMolecule() throws Exception {
+		IsomorphismTester it = new IsomorphismTester(pinene_1);
+		assertTrue(it.isIsomorphic(pinene_2));
+		assertFalse(it.isIsomorphic(pinene_non));
+	}
+
+	public void testIsIsomorphic_IMolecule_IMolecule() throws Exception {
+		IsomorphismTester it = new IsomorphismTester();
+		assertTrue(it.isIsomorphic(pinene_2, pinene_1));
+		assertFalse(it.isIsomorphic(pinene_2, pinene_non));
 	}
 }
