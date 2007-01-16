@@ -70,7 +70,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		return new TestSuite(UniversalIsomorphismTesterTest.class);
 	}
 
-	public void test1() throws java.lang.Exception
+	public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
@@ -121,7 +121,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
-	public void testGetSubgraphAtomsMaps() throws java.lang.Exception
+	public void testGetSubgraphAtomsMaps_IAtomContainer_IAtomContainer() throws java.lang.Exception
 	{
 		int[] result1 = {6, 5, 7, 8, 0};
 		int[] result2 = {3, 4, 2, 1, 0};
@@ -139,7 +139,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
 	}
 	
-    public void testQueryAtomContainer() throws CDKException
+    public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws CDKException
     {
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
@@ -173,7 +173,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
     }
     
-    public void testSFBug1110537()  throws CDKException{
+    /**
+     * @cdk.bug 1110537
+     */
+    public void testGetOverlaps_IAtomContainer_IAtomContainer()  throws CDKException{
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         Molecule mol1 = new Molecule();
@@ -198,6 +201,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
     }
     
+    /**
+     * @cdk.bug 1208740
+     */
     public void testSFBug1208740() throws CDKException {
         String file1 = "data/mdl/bug1208740_1.mol";
         String file2 = "data/mdl/bug1208740_2.mol";
@@ -234,6 +240,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertEquals(8, list.size());
     }
     
+    /**
+     * @cdk.bug 999330
+     */
     public void testSFBug999330() throws CDKException {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
@@ -276,7 +285,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
        	if (!standAlone) assertTrue(matched);
     }
     
-    public void testSingleAtomCases() throws Exception {
+    public void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
         AtomContainer ac1 = new AtomContainer();
         ac1.addAtom(new Atom("C"));
         AtomContainer ac2 = new AtomContainer();
