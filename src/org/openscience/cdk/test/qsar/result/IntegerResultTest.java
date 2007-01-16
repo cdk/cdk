@@ -23,6 +23,7 @@ package org.openscience.cdk.test.qsar.result;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,20 @@ public class IntegerResultTest extends CDKTestCase {
 		return new TestSuite(IntegerResultTest.class);
 	}
 
+	public void testIntegerResult_int() {
+		IntegerResult result = new IntegerResult(5);
+		assertNotNull(result);
+	}
+	
+	public void testToString() {
+		IntegerResult result = new IntegerResult(5);
+		assertEquals("5", result.toString());
+	}
+	
+	public void testIntValue() {
+		IntegerResult result = new IntegerResult(5);
+		assertEquals(5, result.intValue());
+	}
 }
 
 

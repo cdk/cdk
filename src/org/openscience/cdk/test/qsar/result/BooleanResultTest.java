@@ -23,6 +23,7 @@ package org.openscience.cdk.test.qsar.result;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,23 @@ public class BooleanResultTest extends CDKTestCase {
 		return new TestSuite(BooleanResultTest.class);
 	}
 
+	// well, these tests are not shocking...
+	
+	public void testBooleanResult_boolean() {
+		BooleanResult result = new BooleanResult(true);
+		assertNotNull(result);
+	}
+	
+	public void testBooleanValue() {
+		assertTrue(new BooleanResult(true).booleanValue());
+		assertFalse(new BooleanResult(false).booleanValue());
+	}
+	
+	public void testToString() {
+		assertEquals("true", new BooleanResult(true).toString());
+		assertEquals("false", new BooleanResult(false).toString());
+	}
+	
 }
 
 

@@ -23,6 +23,7 @@ package org.openscience.cdk.test.qsar.result;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,53 @@ public class IntegerArrayResultTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(IntegerArrayResultTest.class);
+	}
+
+	public void testIntegerArrayResult_int() {
+		IntegerArrayResult result = new IntegerArrayResult(5);
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+	
+	public void testIntegerArrayResult() {
+		IntegerArrayResult result = new IntegerArrayResult();
+		assertNotNull(result);
+		assertEquals(0, result.size());
+	}
+	
+	public void testSize() {
+		IntegerArrayResult result = new IntegerArrayResult();
+		assertNotNull(result);
+		assertEquals(0, result.size());
+		result.add(5);
+		assertEquals(1, result.size());
+	}
+
+	public void testToString() {
+		IntegerArrayResult result = new IntegerArrayResult();
+		assertNotNull(result);
+		assertEquals("", result.toString());
+		result.add(5);
+		assertEquals("5", result.toString());
+		result.add(2);
+		assertEquals("5,2", result.toString());
+		result.add(-3);
+		assertEquals("5,2,-3", result.toString());
+	}
+
+	public void testGet_int() {
+		IntegerArrayResult result = new IntegerArrayResult();
+		assertNotNull(result);
+		assertEquals("", result.toString());
+		result.add(5);
+		assertEquals(5, result.get(0));
+		result.add(2);
+		assertEquals(5, result.get(0));
+		assertEquals(2, result.get(1));
+		result.add(-1);
+		assertEquals(5, result.get(0));
+		assertEquals(2, result.get(1));
+		assertEquals(-1, result.get(2));
 	}
 
 }
