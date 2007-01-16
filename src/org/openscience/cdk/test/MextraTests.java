@@ -53,11 +53,7 @@ import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
-import org.openscience.cdk.test.ringsearch.RingSearchTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
-import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
-import org.openscience.cdk.test.structgen.VicinitySamplerTest;
-import org.openscience.cdk.test.structgen.deterministic.GENMDeterministicGeneratorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -105,8 +101,6 @@ public class MextraTests {
         // from cdk.test.libio.openbabel
         suite.addTest(OpenBabelConvertTest.suite());
         // from cdk.test.math
-        // from cdk.test.ringsearch
-        suite.addTest(RingSearchTest.suite());
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
 
