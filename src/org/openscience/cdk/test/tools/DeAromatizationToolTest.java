@@ -79,7 +79,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
 		assertEquals(9.0, bondOrderSum, 0.00001);
 	}
 	
-	public void test() {
+	public void testDeAromatize_IRing() {
 		Ring butadiene = new Ring(4, "C");
 		boolean success = DeAromatizationTool.deAromatize(butadiene);
 		assertFalse(success);

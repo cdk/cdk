@@ -52,8 +52,8 @@ public class FormatStringBufferTest extends CDKTestCase {
 	public void setUp() {
 		fsb = new FormatStringBuffer("[%s]");
 	}
-
-	public void testString() {
+	
+	public void testFormat_String() {
 		fsb.reset("[%s]").format("test");
 		assertEquals("[test]", fsb.toString());
 		
@@ -70,7 +70,7 @@ public class FormatStringBufferTest extends CDKTestCase {
 		assertEquals("[te   ]", fsb.toString());
 	}
 	
-	public void testChar() {
+	public void testFormat_char() {
 		fsb.reset("[%c]").format('A');
 		assertEquals("[A]", fsb.toString());
 		
@@ -81,7 +81,7 @@ public class FormatStringBufferTest extends CDKTestCase {
 		assertEquals("[A ]", fsb.toString());
 	}
 	
-	public void testFloat() {
+	public void testFormat_float() {
 		fsb.reset("[%f]").format(3.1415);
 		assertEquals("[3.1415]", fsb.toString());
 		
@@ -119,7 +119,7 @@ public class FormatStringBufferTest extends CDKTestCase {
 		assertEquals("[3.1415E00]", fsb.toString());		
 	}
 	
-	public void testDecimal() {
+	public void testFormat_int() {
 		fsb.reset("[%d]").format(600);
 		assertEquals("[600]", fsb.toString());
 		

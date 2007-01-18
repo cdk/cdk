@@ -37,17 +37,21 @@ import org.openscience.cdk.tools.IDCreator;
  */
 public class IDCreatorTest extends CDKTestCase {
 	
+	private IDCreator idCreator;
+	
 	public IDCreatorTest(String name) {
 		super(name);
 	}
 
-	public void setUp() {};
+	public void setUp() {
+		idCreator = new IDCreator();
+	};
 
 	public static Test suite() {
 		return new TestSuite(IDCreatorTest.class);
 	}
 
-	public void testStartID() {
+	public void testCreateIDs_IAtomContainer() {
 		Molecule mol = new Molecule();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
@@ -56,7 +60,6 @@ public class IDCreatorTest extends CDKTestCase {
         Bond bond = new Bond(atom1, atom2);
         mol.addBond(bond);
         
-        IDCreator idCreator = new IDCreator();
         idCreator.createIDs(mol);
         
         assertEquals("a1", atom1.getID());
@@ -69,7 +72,6 @@ public class IDCreatorTest extends CDKTestCase {
         atom.setID("atom1");
         mol.addAtom(atom);
         
-        IDCreator idCreator = new IDCreator();
         idCreator.createIDs(mol);
         
         assertEquals("atom1", atom.getID());
@@ -84,7 +86,6 @@ public class IDCreatorTest extends CDKTestCase {
         mol.addAtom(atom2);
         mol.addAtom(atom1);
         
-        IDCreator idCreator = new IDCreator();
         idCreator.createIDs(mol);
         
         assertEquals("a2", atom2.getID());
