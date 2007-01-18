@@ -34,7 +34,7 @@ public class RDFProtonDescriptorTest_GHR_topol extends CDKTestCase {
     
 	public void testExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//firstly read file to molecule		
-		String filename = "data/mdl/zinctest.mol";
+		String filename = "data/mdl/hydroxyamino.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
             MDLReader reader = new MDLReader(ins);
