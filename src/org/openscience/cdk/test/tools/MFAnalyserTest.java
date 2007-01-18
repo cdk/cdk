@@ -63,7 +63,7 @@ public class MFAnalyserTest extends CDKTestCase {
 		return new TestSuite(MFAnalyserTest.class);
 	}
 
-	public void testAnalyseMF()	{
+	public void testGetMolecularFormula()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
 		IAtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
@@ -71,13 +71,19 @@ public class MFAnalyserTest extends CDKTestCase {
 		assertEquals("C10H16", mf);
 	}
 	
-//	public void testGetDBE() throws Exception{
-//        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-//        Molecule mol = parser.parseSmiles("C[Zn]C");
-//        MFAnalyser mfa=new MFAnalyser(mol);
-//        float dbes=mfa.getDBE();
-//		System.err.println(dbes+"");
-//	}
+	public void testGetDBE() throws Exception{
+        MFAnalyser mfa = new MFAnalyser("C10H22", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(0, (int)mfa.getDBE());
+
+        mfa = new MFAnalyser("C10H16", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(3, (int)mfa.getDBE());
+
+        mfa = new MFAnalyser("C10H16O", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(3, (int)mfa.getDBE());
+
+        mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(2, (int)mfa.getDBE());
+	}
 	
     public void testGetAtomContainer() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
@@ -125,7 +131,7 @@ public class MFAnalyserTest extends CDKTestCase {
      * @throws ClassNotFoundException
      * @throws CDKException
      */
-    public void testRemoveHydrogensPreserveMulitplyBondedBorane() throws IOException, ClassNotFoundException, CDKException
+    public void testRemoveHydrogensPreserveMultiplyBonded() throws IOException, ClassNotFoundException, CDKException
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
@@ -169,13 +175,13 @@ public class MFAnalyserTest extends CDKTestCase {
 	assertEquals(10, ((Integer)formula.get("C")).intValue());
     }
     
-    public void testMasses() throws Exception{
+    public void testGetMass() throws Exception{
         MFAnalyser mfa = new MFAnalyser(molecule);
         assertEquals((float)120, mfa.getMass(), .1);
         assertEquals((float)120.11038, mfa.getNaturalMass(), .1);
     }
     
-    public void testGetNaturalMass_ELement() throws Exception {
+    public void testGetNaturalMass_IElement() throws Exception {
         MFAnalyser mfa = new MFAnalyser("CH4", new org.openscience.cdk.AtomContainer());
         assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
     }
@@ -200,7 +206,9 @@ public class MFAnalyserTest extends CDKTestCase {
 	assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
     }
     
-    
+    /**
+     * @cdk.bug 1595430
+     */
     public void test1595430_2() throws Exception {
 		String smile="CN(CC2=CC=CO2)C1=CC=CC=C1";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
