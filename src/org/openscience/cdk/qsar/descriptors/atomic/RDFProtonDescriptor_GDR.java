@@ -314,9 +314,9 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
         double smooth = -20;
         double partial;
         int position;
-        double limitInf = 1.4;
-        double limitSup = 4;
-        double step = (limitSup - limitInf) / 15;
+        double limitInf;
+        double limitSup;
+        double step;
 
 ////////////////////////THE THIRD DESCRIPTOR IS gD(r) WITH DISTANCE AND RADIAN ANGLE BTW THE PROTON AND THE MIDDLE POINT OF DOUBLE BOND
 	
@@ -327,7 +327,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 	Point3d middlePoint = new Point3d();
 	double angle = 0;			
 	
-	if(doubles.size() > 0) {
+	if(doubles.size() > -0.0001) {
 		IAtom goodAtom0;
 		IAtom goodAtom1;
 		limitInf = 0;
@@ -373,7 +373,8 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 			}
 			//gDr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
-			System.out.println("GDR added double: " + sum);
+			System.out.println("GDR prob dist.: " + sum + " at distance " + ghd);
+
 		}
 		//atom.setProperty("gasteigerGDR", new ArrayList(gDr_function));				
 		//rdfProtonCalculatedValues.add(1);

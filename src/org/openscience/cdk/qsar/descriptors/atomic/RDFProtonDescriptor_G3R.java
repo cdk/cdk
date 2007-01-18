@@ -429,9 +429,9 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		double smooth = -20;
 		double partial;
 		int position;
-		double limitInf = 1.4;
-		double limitSup = 4;
-		double step = (limitSup - limitInf) / 15;
+		double limitInf;
+		double limitSup;
+		double step;
 
 		// ////////////////////////LAST DESCRIPTOR IS g3(r), FOR PROTONS BONDED
 		// TO LIKE-CYCLOEXANE RINGS:
@@ -506,6 +506,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 				}
 				// g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
+				System.out.println("RDF g3r prob.: "+sum+ " at distance "+g3r);
 //				logger.debug("RDF g-cycl prob.: " + sum + " at distance "
 //						+ g3r);
 			}

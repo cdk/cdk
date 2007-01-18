@@ -318,9 +318,9 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
         double smooth = -20;
         double partial;
         int position;
-        double limitInf = 1.4;
-        double limitSup = 4;
-        double step = (limitSup - limitInf) / 15;
+        double limitInf;
+        double limitSup;
+        double step;
 
 ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS			
 
