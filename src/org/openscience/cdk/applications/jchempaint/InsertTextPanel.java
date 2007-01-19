@@ -259,7 +259,7 @@ public class InsertTextPanel extends JPanel implements ActionListener {
         return data;
     }
 
-    private void generateModel(IMolecule molecule) {
+    public void generateModel(IMolecule molecule) {
         if (molecule == null) return;
 
         // ok, get relevent bits from active model

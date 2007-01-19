@@ -11,13 +11,14 @@ The JChemPaint Applet
 <applet code="org.openscience.cdk.applications.jchempaint.applet.JChemPaintEditorApplet" archive="dist/jar/jchempaint-applet-core.jar"
 		name="Editor"
         width="600" height="500">
-<param name="load" value="src/data/mdl/a-pinene.mol">
+<param name="load" value="src/data/mdl/withcharges.mol">
 <param name="impliciths" value="true">
 </applet>
 <a href="javascript:alert(document.Editor.getMolFile())">show mol file</a>
 <a href="javascript:alert(document.Editor.getSmiles())">show smiles</a>
 <a href="javascript:alert(document.Editor.getSmilesChiral())">show stereo smiles</a>
 <a href="javascript:document.Editor.clear()">clear</a>
+<a href="javascript:document.Editor.addMolFileWithReplace('\n  CDK    1/19/07,10:3\n\n  2  1  0  0  0  0  0  0  0  0999 V2000 \n  252.0000 1022.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  227.0000 1047.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  2  1  1  0  0  0  0 \nM  END')">insert CC</a>
 <blockquote>
 <hr>
 

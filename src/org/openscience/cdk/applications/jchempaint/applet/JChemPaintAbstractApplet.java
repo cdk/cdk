@@ -41,8 +41,10 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.applications.jchempaint.InsertTextPanel;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
@@ -52,13 +54,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
@@ -356,7 +359,34 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		return generator.createChiralSMILES(moleculewithh,bool);
 
   }
+
   /**
+   * This method sets a structure in the editor and leaves the old one.
+   * This method replaces all \n characters with the system line separator. This can be used when setting a mol file in an applet
+   * without knowing which platform the applet is running on.
+   * 
+   * @param mol The mol file to set (V2000)
+   * @throws Exception
+   */
+  public void addMolFileWithReplace(String mol) throws Exception{
+	StringBuffer newmol=new StringBuffer();
+    int s = 0;
+    int e = 0;
+    while ((e = mol.indexOf("\\n", s)) >= 0) {
+      newmol.append(mol.substring(s, e));
+      newmol.append(System.getProperty("file.separator"));
+      s = e + 1;
+    }
+    newmol.append(mol.substring(s));
+    MDLV2000Reader reader=new MDLV2000Reader(new StringReader(newmol.toString()));
+    IMolecule cdkmol=(IMolecule)reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+    new InsertTextPanel(theJcpp,null).generateModel(cdkmol);
+    repaint();
+  }
+
+
+  /**
+   * This method sets a new structure in the editor and removes the old one.
    * This method replaces all \n characters with the system line separator. This can be used when setting a mol file in an applet
    * without knowing which platform the applet is running on.
    * 
