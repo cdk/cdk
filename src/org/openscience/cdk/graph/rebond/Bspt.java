@@ -95,12 +95,12 @@ public final class Bspt {
   }
   */
 
-  protected Bspt(int dimMax) {
+  public Bspt(int dimMax) {
     this.dimMax = dimMax;
     this.eleRoot = new Leaf();
   }
 
-  protected  void addTuple(Tuple tuple) {
+  public  void addTuple(Tuple tuple) {
     if (! eleRoot.addTuple(tuple)) {
       eleRoot = new Node(0, dimMax, (Leaf) eleRoot);
       if (! eleRoot.addTuple(tuple))
