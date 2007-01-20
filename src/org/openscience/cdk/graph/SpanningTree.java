@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  *
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Nina Jeliazkova
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,10 +21,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.graph;
-
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.exception.NoSuchAtomException;
-
 
 /**
  * Spanning tree of a molecule.
