@@ -23,6 +23,10 @@ package org.openscience.cdk.test.graph.matrix;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -30,12 +34,21 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class AdjacencyMatrixTest extends CDKTestCase {
     
+	private final static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+	
     public AdjacencyMatrixTest(String name) {
         super(name);
     }
     
 	public static Test suite() {
 		return new TestSuite(AdjacencyMatrixTest.class);
+	}
+	
+	public void testGetMatrix_IAtomContainer() throws Exception {
+		IMolecule container = sp.parseSmiles("C1CC1");
+		int[][] matrix = AdjacencyMatrix.getMatrix(container);
+		assertEquals(3,matrix.length);
+		assertEquals(3,matrix[0].length);
 	}
 
 }

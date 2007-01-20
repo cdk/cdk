@@ -23,19 +23,32 @@ package org.openscience.cdk.test.graph.matrix;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
 public class ConnectionMatrixTest extends CDKTestCase {
-    
+
+	private final static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+
     public ConnectionMatrixTest(String name) {
         super(name);
     }
     
 	public static Test suite() {
 		return new TestSuite(ConnectionMatrixTest.class);
+	}
+
+	public void testGetMatrix_IAtomContainer() throws Exception {
+		IMolecule container = sp.parseSmiles("C1CC1");
+		double[][] matrix = ConnectionMatrix.getMatrix(container);
+		assertEquals(3,matrix.length);
+		assertEquals(3,matrix[0].length);
 	}
 
 }

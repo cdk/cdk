@@ -23,7 +23,7 @@ package org.openscience.cdk.graph.rebond;
 import java.util.Enumeration;
 
 /**
- *  BSP-Tree stands for Binary Space Partitioning Tree
+ *  BSP-Tree stands for Binary Space Partitioning Tree.
  *  The tree partitions n-dimensional space (in our case 3) into little
  *  boxes, facilitating searches for things which are *nearby*.
  *  For some useful background info, search the web for "bsp tree faq".
@@ -95,12 +95,12 @@ public final class Bspt {
   }
   */
 
-  Bspt(int dimMax) {
+  protected Bspt(int dimMax) {
     this.dimMax = dimMax;
     this.eleRoot = new Leaf();
   }
 
-  public void addTuple(Tuple tuple) {
+  protected  void addTuple(Tuple tuple) {
     if (! eleRoot.addTuple(tuple)) {
       eleRoot = new Node(0, dimMax, (Leaf) eleRoot);
       if (! eleRoot.addTuple(tuple))
@@ -112,11 +112,11 @@ public final class Bspt {
     return eleRoot.toString();
   }
 
-  public void dump() {
+  protected  void dump() {
     eleRoot.dump(0);
   }
 
-  public Enumeration enumeration() {
+  protected  Enumeration enumeration() {
     return new EnumerateAll();
   }
 
@@ -161,7 +161,7 @@ public final class Bspt {
     }
   }
 
-  public Enumeration enumNear(Tuple center, double distance) {
+  protected  Enumeration enumNear(Tuple center, double distance) {
     return new EnumerateNear(center, distance);
   }
 
@@ -226,11 +226,11 @@ public final class Bspt {
     }
   }
 
-  public EnumerateSphere enumSphere(Tuple center, double distance) {
+  protected  EnumerateSphere enumSphere(Tuple center, double distance) {
     return new EnumerateSphere(center, distance, false);
   }
 
-  public EnumerateSphere enumHemiSphere(Tuple center, double distance) {
+  protected  EnumerateSphere enumHemiSphere(Tuple center, double distance) {
     return new EnumerateSphere(center, distance, true);
   }
 
@@ -335,7 +335,7 @@ public final class Bspt {
   }
 
   public interface Tuple {
-    public double getDimValue(int dim);
+	 public double getDimValue(int dim);
   }
 
   interface Element {

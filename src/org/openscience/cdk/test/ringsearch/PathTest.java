@@ -23,6 +23,7 @@ package org.openscience.cdk.test.ringsearch;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ringsearch.Path;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,11 @@ public class PathTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(PathTest.class);
+	}
+	
+	public void testPath() {
+		Path path = new Path();
+		assertNotNull(path);
 	}
 
 }

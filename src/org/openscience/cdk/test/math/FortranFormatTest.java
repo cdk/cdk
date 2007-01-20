@@ -23,6 +23,7 @@ package org.openscience.cdk.test.math;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,12 @@ public class FortranFormatTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(FortranFormatTest.class);
+	}
+	
+	public void testAtof_String() {
+		assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
+		
+		// FIXME: need to add something here with a 'd'
 	}
 
 }

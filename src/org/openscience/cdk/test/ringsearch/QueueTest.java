@@ -23,6 +23,7 @@ package org.openscience.cdk.test.ringsearch;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ringsearch.Queue;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,11 @@ public class QueueTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(QueueTest.class);
+	}
+
+	public void testQueue() {
+		Queue queue = new Queue();
+		assertNotNull(queue);
 	}
 
 }

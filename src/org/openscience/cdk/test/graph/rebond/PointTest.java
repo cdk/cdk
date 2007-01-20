@@ -23,6 +23,7 @@ package org.openscience.cdk.test.graph.rebond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,23 @@ public class PointTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(PointTest.class);
+	}
+	
+	public void testPoint_double_double_double() {
+		Point point = new Point(0.1, 0.2, 0.3);
+		assertNotNull(point);
+	}
+	
+	public void testGetDimValue_int() {
+		Point point = new Point(0.1, 0.2, 0.3);
+		assertEquals(0.1, point.getDimValue(0), 0.0001);
+		assertEquals(0.2, point.getDimValue(1), 0.0001);
+		assertEquals(0.3, point.getDimValue(2), 0.0001);
+	}
+	
+	public void testToString() {
+		Point point = new Point(0.1, 0.2, 0.3);
+		assertEquals("<0.1,0.2,0.3>", point.toString());
 	}
 
 }

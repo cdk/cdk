@@ -23,6 +23,9 @@ package org.openscience.cdk.test.qsar;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +41,34 @@ public class DescriptorValueTest extends CDKTestCase {
 		return new TestSuite(DescriptorValueTest.class);
 	}
 
+	private final static String DESC_REF = "bla"; 
+	private final static String DESC_IMPL_TITLE = "bla2"; 
+	private final static String DESC_IMPL_VENDOR = "bla3"; 
+	private final static String DESC_IMPL_ID = "bla4"; 
+
+	public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			new DoubleResult(0.7), 
+			new String[]{ "bla" }
+		);
+		assertNotNull(value);
+	}
+	
+	public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			new DoubleResult(0.7)
+		);
+		assertNotNull(value);
+	}
+	
 }
 
 

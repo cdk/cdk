@@ -23,6 +23,7 @@ package org.openscience.cdk.test.math;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,26 @@ public class RandomNumbersToolTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(RandomNumbersToolTest.class);
+	}
+	
+	public void testGetRandomSeed() {
+		testSetRandomSeed_long();
+	}
+	public void testSetRandomSeed_long() {
+		long seed = System.currentTimeMillis();
+		RandomNumbersTool.setRandomSeed(seed);
+		assertEquals(seed, RandomNumbersTool.getRandomSeed());
+	}
+
+	public void testRandomInt() {
+		int random = RandomNumbersTool.randomInt();
+		assertTrue(random == 0 || random == 1);
+	}
+	
+	public void testRandomInt_int_int() {
+		int random = RandomNumbersTool.randomInt(0,5);
+		assertTrue(random == 0 || random == 1 || random == 2 ||
+				   random == 3 || random == 4 || random == 5);
 	}
 
 }
