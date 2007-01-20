@@ -43,11 +43,11 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  * Used to discover the number of cyclic bonds in order to prevent the 
  * inefficient AllRingsFinder to run for too long.
  *
- * @author   Nina Jeliazkova
- * @cdk.todo junit test of this
- *
+ * @author      Nina Jeliazkova
  * @cdk.module  standard
  * @cdk.dictref blue-obelisk:graphSpanningTree
+ * @cdk.keyword spanning tree
+ * @cdk.keyword ring finding
  */
 public class SpanningTree {
 	private int[] parent = null;
@@ -75,9 +75,6 @@ public class SpanningTree {
 		buildSpanningTree(atomContainer);
 	}
 	
-	public SpanningTree() {
-		super();
-	}
 	public void clear() {
 		molecule = null;
 		cb = null;
@@ -125,7 +122,7 @@ public class SpanningTree {
 	 * Kruskal algorithm
 	 * @param atomContainer
 	 */
-	public void buildSpanningTree(IAtomContainer atomContainer){
+	private void buildSpanningTree(IAtomContainer atomContainer){
 		disconnected = false;
 		molecule = atomContainer;
 		
