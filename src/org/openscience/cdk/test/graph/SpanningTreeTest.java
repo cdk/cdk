@@ -23,6 +23,8 @@ package org.openscience.cdk.test.graph;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +38,11 @@ public class SpanningTreeTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(SpanningTreeTest.class);
+	}
+	
+	public void testSpanningTree_IAtomContainer() {
+		SpanningTree sTree = new SpanningTree(new AtomContainer());
+		assertNotNull(sTree);
 	}
 
 }

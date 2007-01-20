@@ -23,6 +23,7 @@ package org.openscience.cdk.test.config;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,18 @@ public class SymbolsTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(SymbolsTest.class);
+	}
+
+	public void testCarbon() {
+		assertEquals("C", Symbols.byAtomicNumber[6]);
+	}
+
+	public void testDummy() {
+		assertEquals("Xx", Symbols.byAtomicNumber[0]);
+	}
+	
+	public void testLastEntry() {
+		assertEquals("Uuh", Symbols.byAtomicNumber[116]);
 	}
 
 }

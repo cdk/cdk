@@ -23,6 +23,7 @@ package org.openscience.cdk.test.exception;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,12 @@ public class UnsupportedChemObjectExceptionTest extends CDKTestCase {
 		return new TestSuite(UnsupportedChemObjectExceptionTest.class);
 	}
 
+	public void testUnsupportedChemObjectException_String() {
+        final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
+        UnsupportedChemObjectException exception = new UnsupportedChemObjectException(EXPLANATION);
+        assertNotNull(exception);
+        assertEquals(EXPLANATION, exception.getMessage());
+    }
 }
 
 
