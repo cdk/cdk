@@ -59,6 +59,16 @@ public class DoubleArrayResultTest extends CDKTestCase {
 		assertEquals(1, result.size());
 	}
 
+	public void testAdd_double() {
+		DoubleArrayResult result = new DoubleArrayResult();
+		assertNotNull(result);
+		assertEquals("", result.toString());
+		result.add(5);
+		result.add(2);
+		result.add(-3);
+		assertEquals(3, result.size());
+	}
+
 	public void testToString() {
 		DoubleArrayResult result = new DoubleArrayResult();
 		assertNotNull(result);
