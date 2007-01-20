@@ -52,7 +52,12 @@ public class RebondToolTest extends CDKTestCase {
     return new TestSuite(RebondToolTest.class);
   }
 
-  public void testRebond() {
+  public void testRebondTool_double_double_double() {
+	    RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+	    assertNotNull(rebonder);
+  }
+  
+  public void testRebond_IAtomContainer() {
     RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
     Molecule methane = new Molecule();
     methane.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));

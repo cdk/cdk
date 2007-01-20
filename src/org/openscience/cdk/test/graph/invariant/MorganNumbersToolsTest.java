@@ -56,7 +56,7 @@ public class MorganNumbersToolsTest extends CDKTestCase
 		return new TestSuite(MorganNumbersToolsTest.class);
 	}
 
-	public void testMorganNumbers()
+	public void testGetMorganNumbers_IAtomContainer()
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		int[] morganNumbers = null;
@@ -80,6 +80,6 @@ public class MorganNumbersToolsTest extends CDKTestCase
 
 	public static void main(String[] args)
 	{
-		new MorganNumbersToolsTest("MorganNumberToolsTest").testMorganNumbers();
+		new MorganNumbersToolsTest("MorganNumberToolsTest").testGetMorganNumbers_IAtomContainer();
 	}
 }

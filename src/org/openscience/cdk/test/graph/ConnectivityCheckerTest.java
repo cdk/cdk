@@ -65,7 +65,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	/**
 	 * This test tests the function of the partitionIntoMolecule() method.
 	 */
-	public void testPartitionIntoMolecules() {
+	public void testPartitionIntoMolecules_IAtomContainer() {
 		//logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
@@ -181,7 +181,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 	/**
 	 * This test tests the algorithm behind isConnected().
 	 */
-	public void testIsConnected() {
+	public void testIsConnected_IAtomContainer() {
         Molecule spiro = MoleculeFactory.makeSpiroRings();
         assertTrue(ConnectivityChecker.isConnected(spiro));
 	}

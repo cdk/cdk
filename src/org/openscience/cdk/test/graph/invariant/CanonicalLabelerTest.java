@@ -56,7 +56,12 @@ public class CanonicalLabelerTest extends CDKTestCase {
 		return new TestSuite(CanonicalLabelerTest.class);
 	}
 	
-	public void testSomeMolecule() throws Exception {
+	public void testCanonicalLabeler() {
+		// assume setup worked
+		assertNotNull(labeler);
+	}
+	
+	public void testCanonLabel_IAtomContainer() throws Exception {
 		IMolecule molecule = parser.parseSmiles("CC(=O)CBr");
 		labeler.canonLabel(molecule);
 		Iterator atoms = molecule.atoms();

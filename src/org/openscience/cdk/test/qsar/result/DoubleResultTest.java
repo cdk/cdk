@@ -39,7 +39,7 @@ public class DoubleResultTest extends CDKTestCase {
 		return new TestSuite(DoubleResultTest.class);
 	}
 
-	public void testIntegerResult_int() {
+	public void testDoubleResult_int() {
 		DoubleResult result = new DoubleResult(5.0);
 		assertNotNull(result);
 	}
@@ -49,7 +49,7 @@ public class DoubleResultTest extends CDKTestCase {
 		assertEquals("5.0", result.toString());
 	}
 	
-	public void testIntValue() {
+	public void testDoubleValue() {
 		DoubleResult result = new DoubleResult(5);
 		assertEquals(5.0, result.doubleValue(), 0.000001);
 	}
