@@ -38,12 +38,6 @@ public class DescriptorSpecificationTest extends CDKTestCase {
 	public static Test suite() {
 		return new TestSuite(DescriptorSpecificationTest.class);
 	}
-
-//	 DescriptorSpecification: missing the expected test method: testGetImplementationTitle
-//	 DescriptorSpecification: missing the expected test method: testGetImplementationVendor
-//	 DescriptorSpecification: missing the expected test method: testGetSpecificationReference
-//	 DescriptorSpecification: missing the expected test method: testGetImplementationIdentifier
-//	 DescriptorSpecification: missing the expected test method: 
 	
 	private final static String DESC_REF = "bla"; 
 	private final static String DESC_IMPL_TITLE = "bla2"; 
