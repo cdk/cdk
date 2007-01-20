@@ -59,7 +59,9 @@ public class FormatStringBufferTest extends CDKTestCase {
 		
 		fsb.reset("[%5s]").format("test");
 		assertEquals("[ test]", fsb.toString());
-		
+	}
+	
+	public void testToString() {
 		fsb.reset("[%-5s]").format("test");
 		assertEquals("[test ]", fsb.toString());
 		
@@ -81,44 +83,44 @@ public class FormatStringBufferTest extends CDKTestCase {
 		assertEquals("[A ]", fsb.toString());
 	}
 	
-	public void testFormat_float() {
-		fsb.reset("[%f]").format(3.1415);
+	public void testFormat_double() {
+		fsb.reset("[%f]").format((double)3.1415);
 		assertEquals("[3.1415]", fsb.toString());
 		
-		fsb.reset("[%g]").format(3.1415);
+		fsb.reset("[%g]").format((double)3.1415);
 		assertEquals("[3.1415]", fsb.toString());
 		
-		fsb.reset("[%+f]").format(3.1415);
+		fsb.reset("[%+f]").format((double)3.1415);
 		assertEquals("[+3.1415]", fsb.toString());
 		
-		fsb.reset("[%+10f]").format(3.1415);
+		fsb.reset("[%+10f]").format((double)3.1415);
 		assertEquals("[   +3.1415]", fsb.toString());
 		
-		fsb.reset("[%-+10f]").format(3.1415);
+		fsb.reset("[%-+10f]").format((double)3.1415);
 		assertEquals("[+3.1415   ]", fsb.toString());
 		
-		fsb.reset("[%.3f]").format(3.1415);
+		fsb.reset("[%.3f]").format((double)3.1415);
 		assertEquals("[3.142]", fsb.toString());
 		
-		fsb.reset("[%e]").format(3.1415);
+		fsb.reset("[%e]").format((double)3.1415);
 		assertEquals("[3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%+e]").format(3.1415);
+		fsb.reset("[%+e]").format((double)3.1415);
 		assertEquals("[+3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%+11e]").format(3.1415);
+		fsb.reset("[%+11e]").format((double)3.1415);
 		assertEquals("[ +3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%-+11e]").format(3.1415);
+		fsb.reset("[%-+11e]").format((double)3.1415);
 		assertEquals("[+3.1415e00 ]", fsb.toString());
 		
-		fsb.reset("[%.3e]").format(3.1415);
+		fsb.reset("[%.3e]").format((double)3.1415);
 		assertEquals("[3.142e00]", fsb.toString());
 		
-		fsb.reset("[%E]").format(3.1415);
+		fsb.reset("[%E]").format((double)3.1415);
 		assertEquals("[3.1415E00]", fsb.toString());		
 	}
-	
+
 	public void testFormat_int() {
 		fsb.reset("[%d]").format(600);
 		assertEquals("[600]", fsb.toString());
@@ -159,6 +161,58 @@ public class FormatStringBufferTest extends CDKTestCase {
 		fsb.reset("[%#04o]").format(10);
 		assertEquals("[0012]", fsb.toString());
 		
+		fsb.reset();
+		assertEquals("[%#04o]", fsb.toString());		
+	}
+
+	public void testFormat_long() {
+		fsb.reset("[%d]").format((long)600);
+		assertEquals("[600]", fsb.toString());
+		
+		fsb.reset("[%5d]").format((long)600);
+		assertEquals("[  600]", fsb.toString());
+		
+		fsb.reset("[%5d]").format((long)-600);
+		assertEquals("[ -600]", fsb.toString());
+		
+		fsb.reset("[%05d]").format((long)600);
+		assertEquals("[00600]", fsb.toString());
+		
+		fsb.reset("[%05d]").format((long)-600);
+		assertEquals("[-0600]", fsb.toString());
+		
+		fsb.reset("[%x]").format((long)10);
+		assertEquals("[a]", fsb.toString());
+		
+		fsb.reset("[%X]").format((long)10);
+		assertEquals("[A]", fsb.toString());
+		
+		fsb.reset("[%o]").format((long)10);
+		assertEquals("[12]", fsb.toString());
+		
+		fsb.reset("[%4X]").format((long)10);
+		assertEquals("[   A]", fsb.toString());
+		
+		fsb.reset("[%#4x]").format((long)10);
+		assertEquals("[ 0xa]", fsb.toString());
+		
+		fsb.reset("[%#4o]").format((long)10);
+		assertEquals("[ 012]", fsb.toString());
+		
+		fsb.reset("[%#04x]").format((long)10);
+		assertEquals("[0x0a]", fsb.toString());
+		
+		fsb.reset("[%#04o]").format((long)10);
+		assertEquals("[0012]", fsb.toString());
+	}
+	
+	public void testReset() {
+		fsb.reset();
+		assertEquals("[%s]", fsb.toString());
+	}
+	
+	public void testReset_String() {
+		fsb.reset("[%#04o]").format((long)10);
 		fsb.reset();
 		assertEquals("[%#04o]", fsb.toString());		
 	}
