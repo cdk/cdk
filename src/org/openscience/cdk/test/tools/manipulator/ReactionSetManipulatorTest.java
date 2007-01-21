@@ -23,21 +23,39 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 /**
  * @cdk.module test-standard
  */
 public class ReactionSetManipulatorTest extends CDKTestCase {
     
+    private IChemObjectBuilder builder;
+    
     public ReactionSetManipulatorTest(String name) {
         super(name);
     }
     
-	public static Test suite() {
+    public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
+
+    public static Test suite() {
 		return new TestSuite(ReactionSetManipulatorTest.class);
 	}
 
+	public void testGetAllMolecules_IReactionSet() {
+		IReactionSet reactionSet = builder.newReactionSet();
+		reactionSet.addReaction(builder.newReaction()); // 1
+		reactionSet.addReaction(builder.newReaction()); // 2
+		assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getMoleculeCount());
+		// FIXME: should test something with actual molecules in it
+	}
+	
 }
 
 

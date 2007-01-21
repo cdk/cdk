@@ -23,7 +23,9 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.RingSizeComparator;
 
 /**
  * @cdk.module test-standard
@@ -36,6 +38,11 @@ public class RingSizeComparatorTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(RingSizeComparatorTest.class);
+	}
+	
+	public void testRingSizeComparator_int() {
+		RingSizeComparator comp = new RingSizeComparator(RingSet.LARGE_FIRST);
+		assertNotNull(comp);
 	}
 
 }

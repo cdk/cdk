@@ -23,7 +23,10 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemSequenceManipulator;
 
 /**
  * @cdk.module test-standard
@@ -36,6 +39,15 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(ChemSequenceManipulatorTest.class);
+	}
+
+	public void testGetAtomCount_IChemSequence() {
+		ChemSequence cs = new ChemSequence();
+		cs.addChemModel(new ChemModel());
+		cs.addChemModel(new ChemModel());
+		cs.addChemModel(new ChemModel());
+		assertEquals(0, ChemSequenceManipulator.getAtomCount(cs));
+		// FIXME: should test something with actual atoms in it
 	}
 
 }
