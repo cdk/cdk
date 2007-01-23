@@ -1087,6 +1087,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			} else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE)
 			{
 				paintTripleBond(bond, bondColor, graphics);
+			} else if (bond.getOrder() == 8.)
+			{
+				paintAnyBond(bond, bondColor, graphics);
 			} else
 			{
 				// paint all other bonds as single bonds
@@ -1218,6 +1221,44 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	}
 
 
+	/**
+	 *  Paints the given single bond.
+	 *
+	 *@param  bond       The single bond to be drawn
+	 *@param  bondColor  Description of the Parameter
+	 *@param  graphics   Description of the Parameter
+	 */
+	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
+	{
+		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		{
+			int[] screencoords=getScreenCoordinates(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()));
+			int dashlength=4;
+			int spacelength=4;
+            if ((screencoords[0] == screencoords[2]) && (screencoords[1] == screencoords[3]))
+            {
+                    graphics.drawLine(screencoords[0], screencoords[1], screencoords[2], screencoords[3]);
+                    return;
+            }
+            double linelength = Math.sqrt((screencoords[2] - screencoords[0]) * (screencoords[2] - screencoords[0]) + (screencoords[3] - screencoords[1]) * (screencoords[3] - screencoords[1]));
+            double xincdashspace = (screencoords[2] - screencoords[0]) / (linelength / (dashlength + spacelength));
+            double yincdashspace = (screencoords[3] - screencoords[1]) / (linelength / (dashlength + spacelength));
+            double xincdash = (screencoords[2] - screencoords[0]) / (linelength / (dashlength));
+            double yincdash = (screencoords[3] - screencoords[1]) / (linelength / (dashlength));
+            int counter = 0;
+            for (double i = 0; i < linelength - dashlength; i += dashlength + spacelength)
+            {
+                    graphics.drawLine((int) (screencoords[0] + xincdashspace * counter), (int) (screencoords[1] + yincdashspace * counter), (int) (screencoords[0] + xincdashspace * counter + xincdash), (int) (screencoords[1] + yincdashspace * counter + yincdash));
+                    counter++;
+            }
+            if ((dashlength + spacelength) * counter <= linelength)
+            {
+                    graphics.drawLine((int) (screencoords[0] + xincdashspace * counter), (int) (screencoords[1] + yincdashspace * counter), screencoords[2], screencoords[3]);
+            }
+		}
+	}
+
+	
 	/**
 	 *  Paints The given double bond.
 	 *
