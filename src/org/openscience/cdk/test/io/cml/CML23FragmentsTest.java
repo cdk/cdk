@@ -40,6 +40,8 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -415,5 +417,53 @@ public class CML23FragmentsTest extends CDKTestCase {
 //        
 //        return crystal;
 //    }
+    
+    public void testReaction() {
+        String cmlString = "<reaction>"+
+        "<reactantList><reactant><molecule id='react'/></reactant></reactantList>"+
+		"<productList><product><molecule id='product'/></product></productList>"+
+        "<substanceList><substance><molecule id='water'/></substance></substanceList>"+
+        "</reaction>";
+        
+        IChemFile chemFile = parseCMLString(cmlString);
+        IReaction reaction = checkForSingleReactionFile(chemFile);
+
+        assertEquals(1, reaction.getReactantCount());
+        assertEquals(1, reaction.getProductCount());
+        assertEquals(1, reaction.getAgents().getMoleculeCount());
+        assertEquals("react", reaction.getReactants().getMolecule(0).getID());
+        assertEquals("product", reaction.getProducts().getMolecule(0).getID());
+        assertEquals("water", reaction.getAgents().getMolecule(0).getID());
+    }
+    
+    /**
+     * Tests wether the file is indeed a single reaction file
+     */
+    private IReaction checkForSingleReactionFile(IChemFile chemFile) {
+        return checkForXReactionFile(chemFile, 1);
+    }
+    
+    private IReaction checkForXReactionFile(IChemFile chemFile, int numberOfReactions) {
+        assertNotNull(chemFile);
+        
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        IReactionSet reactionSet = model.getReactionSet();
+        assertNotNull(reactionSet);
+        
+        assertEquals(reactionSet.getReactionCount(), numberOfReactions);
+        IReaction reaction = null;
+        for (int i=0; i<numberOfReactions; i++) {
+            reaction = reactionSet.getReaction(i);
+            assertNotNull(reaction);
+        }
+        return reaction;
+    }
 
 }

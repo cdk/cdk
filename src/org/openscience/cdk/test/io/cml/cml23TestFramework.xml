@@ -160,4 +160,23 @@
     <bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef="cml:H"/></bond></bondArray>
   </molecule>
   
+  <!-- CML23FragmentsTest.testReaction() -->
+	<reaction>
+		<reactantList>
+			<reactant>
+				<molecule id='react'/>
+			</reactant>
+		</reactantList>
+		<productList>
+			<product>
+				<molecule id='product'/>
+			</product>
+		</productList>
+		<substanceList>
+			<substance>
+				<molecule id='water'/>
+			</substance>
+		</substanceList>
+	</reaction>
+	
 </cml>
