@@ -27,7 +27,6 @@ package org.openscience.cdk.io.cml;
 
 import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.xml.sax.Attributes;
-import org.openscience.cdk.io.cml.ChemFileCDO;
 
 /**
  * @author Egon Willighagen <elw38@cam.ac.uk>
@@ -82,7 +81,7 @@ public class CMLReactionModule extends CMLCoreModule {
             String id = atts.getValue("id");
             if(id != null)
             	cdo.setObjectProperty("Product", "id", id);
-        } else if ("agent".equals(local)) {
+        } else if ("substance".equals(local)) {
             cdo.startObject("Agent");
             objectType = "Agent";
             String id = atts.getValue("id");
@@ -109,7 +108,7 @@ public class CMLReactionModule extends CMLCoreModule {
             cdo.endObject("Reactant");
         } else if ("product".equals(local)) {
             cdo.endObject("Product");
-        } else if ("agent".equals(local)) {
+        } else if ("substance".equals(local)) {
             cdo.endObject("Agent");
         } else if ("molecule".equals(local)) {
             logger.debug("Storing Molecule");

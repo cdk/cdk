@@ -43,13 +43,14 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -335,7 +336,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedMol;
     }
     
-    private org.openscience.cdk.interfaces.IReaction roundTripReaction(Reaction reaction) {
+    private org.openscience.cdk.interfaces.IReaction roundTripReaction(IReaction reaction) {
         String cmlString = "<!-- failed -->";
         try {
             Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
@@ -416,20 +417,51 @@ public class CMLRoundTripTest extends CDKTestCase {
 
     public void testReaction() {
     	logger.debug("********** TEST REACTION **********");
-        Reaction reaction = new Reaction();
-        Molecule reactant = new Molecule();
-        Atom atom = new Atom("C");
+        IReaction reaction = new Reaction();
+        reaction.setID("reaction.1");
+        IMolecule reactant = reaction.getBuilder().newMolecule();
+        reactant.setID("react");
+        IAtom atom = reaction.getBuilder().newAtom("C");
         reactant.addAtom(atom);
         reaction.addReactant(reactant);
         
-        org.openscience.cdk.interfaces.IReaction roundTrippedReaction = roundTripReaction(reaction);
+        IMolecule product = reaction.getBuilder().newMolecule();
+        product.setID("product");
+        atom = reaction.getBuilder().newAtom("X");
+        product.addAtom(atom);
+        reaction.addProduct(product);
+        
+        IMolecule agent = reaction.getBuilder().newMolecule();
+        agent.setID("water");
+        atom = reaction.getBuilder().newAtom("H");
+        agent.addAtom(atom);
+        reaction.addAgent(agent);
+        
+        IReaction roundTrippedReaction = roundTripReaction(reaction);
+        assertNotNull(roundTrippedReaction);
+        assertEquals("reaction.1", roundTrippedReaction.getID());
         
         assertNotNull(roundTrippedReaction);
-        org.openscience.cdk.interfaces.IMoleculeSet reactants = roundTrippedReaction.getReactants();
+        IMoleculeSet reactants = roundTrippedReaction.getReactants();
         assertNotNull(reactants);
         assertEquals(1, reactants.getMoleculeCount());
-        org.openscience.cdk.interfaces.IMolecule roundTrippedReactant = reactants.getMolecule(0);
+        IMolecule roundTrippedReactant = reactants.getMolecule(0);
+        assertEquals("react", roundTrippedReactant.getID());
         assertEquals(1, roundTrippedReactant.getAtomCount());
+        
+        IMoleculeSet products = roundTrippedReaction.getProducts();
+        assertNotNull(products);
+        assertEquals(1, products.getMoleculeCount());
+        IMolecule roundTrippedProduct = products.getMolecule(0);
+        assertEquals("product", roundTrippedProduct.getID());
+        assertEquals(1, roundTrippedProduct.getAtomCount());
+        
+        IMoleculeSet agents = roundTrippedReaction.getAgents();
+        assertNotNull(agents);
+        assertEquals(1, agents.getMoleculeCount());
+        IMolecule roundTrippedAgent = agents.getMolecule(0);
+        assertEquals("water", roundTrippedAgent.getID());
+        assertEquals(1, roundTrippedAgent.getAtomCount());
     }
 
     public void testDescriptorValue_QSAR() {

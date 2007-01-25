@@ -571,7 +571,7 @@ public class CML2Test extends CDKTestCase {
      * of a CML file, while extracting the reaction.
      */
     public void testCMLReaction() {
-        String filename = "data/cml/reaction.1.cml";
+        String filename = "data/cml/reaction.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         try {
@@ -594,6 +594,43 @@ public class CML2Test extends CDKTestCase {
             assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
             assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
             assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+    }
+    /**
+     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLReactionWithAgents() {
+        String filename = "data/cml/reaction.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        try {
+            CMLReader reader = new CMLReader(ins);
+            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            // test the resulting ChemFile content
+            assertNotNull(chemFile);
+            assertEquals(chemFile.getChemSequenceCount(), 1);
+            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+            assertNotNull(seq);
+            assertEquals(seq.getChemModelCount(), 1);
+            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+            assertNotNull(model);
+            assertEquals(model.getReactionSet().getReactionCount(), 1);
+
+            // test the reaction
+            IReaction reaction = model.getReactionSet().getReaction(0);
+            assertNotNull(reaction);
+            assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
+            assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
+            assertEquals("water",reaction.getAgents().getAtomContainer(0).getID());
+            assertEquals("H+",reaction.getAgents().getAtomContainer(1).getID());
             assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
             assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
             

@@ -44,13 +44,5 @@
 </molecule>
 </product>
 </productList>
-<substanceList>
-	<substance>
-		<molecule id="water"/>
-	</substance>
-	<substance>
-		<molecule id="H+"/>
-	</substance>
-</substanceList>
 </reaction>
 </reactionList>

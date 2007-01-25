@@ -38,7 +38,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -144,6 +147,39 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<property") != -1 &&
         		   cmlContent.indexOf("xmlns:qsar") != -1);
         assertTrue(cmlContent.indexOf("#weight\"") != -1);
+    }
+    
+    public void testReactionCustomization() {
+    	StringWriter writer = new StringWriter();
+        IReaction reaction = new Reaction();
+        reaction.setID("reaction1");
+        IMolecule reactant = reaction.getBuilder().newMolecule();
+        reactant.setID("react");
+        IMolecule product = reaction.getBuilder().newMolecule();
+        product.setID("product");
+        IMolecule agent = reaction.getBuilder().newMolecule();
+        agent.setID("agent");
+        
+        reaction.addReactant(reactant);
+        reaction.addProduct(product);
+        reaction.addAgent(agent);
+        
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        try {
+            cmlWriter.write(reaction);
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<reaction id=\"reaction1") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"react") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"product") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
     }
     
     public void testPDBAtomCustomization() {

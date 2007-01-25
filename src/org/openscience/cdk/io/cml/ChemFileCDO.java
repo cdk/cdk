@@ -21,7 +21,6 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
@@ -220,6 +219,9 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
       } else if (objectType.equals("Product")) {
           if (currentReaction == null) startObject("Reaction");
           currentMolecule = currentChemFile.getBuilder().newMolecule();
+      } else if (objectType.equals("Agent")) {
+          if (currentReaction == null) startObject("Reaction");
+          currentMolecule = currentChemFile.getBuilder().newMolecule();
       } else if (objectType.equals("PDBAtom")) {
           currentAtom = currentChemFile.getBuilder().newPDBAtom("H");
           logger.debug("Atom # " + numberOfAtoms);
@@ -325,6 +327,8 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           currentReaction.addReactant((IMolecule)currentMolecule);
       } else if (objectType.equals("Product")) {
           currentReaction.addProduct((IMolecule)currentMolecule);
+      } else if (objectType.equals("Agent")) {
+          currentReaction.addAgent((IMolecule)currentMolecule);
       } else if (objectType.equals("Crystal")) {
           logger.debug("Crystal: " + currentMolecule);
       } else if (objectType.equals("PDBAtom")) {
@@ -590,6 +594,10 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
           if (propertyType.equals("id")) {
               currentMolecule.setID(propertyValue);
           }
+      } else if (objectType.equals("Agent")) {
+          if (propertyType.equals("id")) {
+              currentMolecule.setID(propertyValue);
+          }
       } else if (objectType.equals("Crystal")) {
           // set these variables
           if (currentMolecule instanceof ICrystal) {
@@ -667,6 +675,7 @@ public class ChemFileCDO implements IChemFile, IChemicalDocumentObject {
         objects.add("Reactions");
         objects.add("Reactant");
         objects.add("Product");
+        objects.add("Agent");
         objects.add("MolecularDescriptor");
       return objects;
     }

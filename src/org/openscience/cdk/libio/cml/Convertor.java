@@ -27,6 +27,17 @@
  */
 package org.openscience.cdk.libio.cml;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OptionalDataException;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
@@ -34,19 +45,42 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;
-import org.xmlcml.cml.element.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OptionalDataException;
-import java.util.*;
+import org.xmlcml.cml.element.CMLAtom;
+import org.xmlcml.cml.element.CMLBond;
+import org.xmlcml.cml.element.CMLBondStereo;
+import org.xmlcml.cml.element.CMLCml;
+import org.xmlcml.cml.element.CMLCrystal;
+import org.xmlcml.cml.element.CMLIdentifier;
+import org.xmlcml.cml.element.CMLList;
+import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLProduct;
+import org.xmlcml.cml.element.CMLProductList;
+import org.xmlcml.cml.element.CMLReactant;
+import org.xmlcml.cml.element.CMLReactantList;
+import org.xmlcml.cml.element.CMLReaction;
+import org.xmlcml.cml.element.CMLReactionList;
+import org.xmlcml.cml.element.CMLScalar;
+import org.xmlcml.cml.element.CMLSubstance;
+import org.xmlcml.cml.element.CMLSubstanceList;
 
 /**
  * @cdk.module       libio-cml
@@ -240,6 +274,7 @@ public class Convertor {
             CMLReactant cmlReactant = new CMLReactant();
             cmlReactant.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)reactants.next(), false));
             cmlReactants.addReactant(cmlReactant);
+            
         }
 
         // products
@@ -251,9 +286,19 @@ public class Convertor {
             cmlProducts.addProduct(cmlProduct);
         }
         
+//      substance
+        CMLSubstanceList cmlSubstances = new CMLSubstanceList();
+        java.util.Iterator substance = reaction.getAgents().molecules();
+        while (substance.hasNext()) {
+            CMLSubstance cmlSubstance = new CMLSubstance();
+            cmlSubstance.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)substance.next(), false));
+            cmlSubstances.addSubstance(cmlSubstance);
+        }
+        
         if (reaction.getID() != null) cmlReaction.setId(reaction.getID());
         cmlReaction.addReactantList(cmlReactants);
         cmlReaction.addProductList(cmlProducts);
+        cmlReaction.addSubstanceList(cmlSubstances);
         return cmlReaction;
     }
 
