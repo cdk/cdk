@@ -24,7 +24,7 @@
 </reactantList>
 <productList>
 <product>
-<molecule>
+<molecule id="product">
 <atomArray>
 <atom id="a14222419" elementType="C" x2="416.99999999999994" y2="930.0" formalCharge="0" hydrogenCount="0"/>
 <atom id="a27988400" elementType="C" x2="385.8230854637602" y2="948.0" formalCharge="0" hydrogenCount="0"/>
