@@ -65,7 +65,9 @@ public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
 
             }
         }
-        
+        /**
+         * catch
+         */
         catch (Exception e) {
         	e.printStackTrace();
             fail(e.toString());
