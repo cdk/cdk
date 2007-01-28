@@ -76,403 +76,364 @@ public class PDBReaderTest extends TestCase {
     	assertTrue(reader.accepts(ChemFile.class));
     }
 
-	public void testPDBFileCoffein() {
+	public void testPDBFileCoffein() throws Exception {
         String filename = "data/pdb/coffeine.pdb";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		try {
-            IChemObjectReader oReader = new PDBReader(ins);
-            assertNotNull(oReader);
 
-            IChemFile oChemFile = (IChemFile)oReader.read(new NNChemFile());
-            assertNotNull(oChemFile);
-            assertEquals(oChemFile.getChemSequenceCount(), 1);
+        IChemObjectReader oReader = new PDBReader(ins);
+        assertNotNull(oReader);
 
-            IChemSequence oSeq = oChemFile.getChemSequence(0);
-            assertNotNull(oSeq);			
-            assertEquals(oSeq.getChemModelCount(), 1);
+        IChemFile oChemFile = (IChemFile)oReader.read(new NNChemFile());
+        assertNotNull(oChemFile);
+        assertEquals(oChemFile.getChemSequenceCount(), 1);
 
-            IChemModel oModel = oSeq.getChemModel(0);
-            assertNotNull(oModel);
-            assertEquals(1, oModel.getMoleculeSet().getMoleculeCount());
+        IChemSequence oSeq = oChemFile.getChemSequence(0);
+        assertNotNull(oSeq);			
+        assertEquals(oSeq.getChemModelCount(), 1);
 
-            IAtomContainer container = oModel.getMoleculeSet().getMolecule(0);
-            assertFalse(container instanceof IBioPolymer);
-            assertTrue(container instanceof IAtomContainer);
-            IAtomContainer oMol = (IAtomContainer)container;
-            assertNotNull(oMol);
-            assertEquals(oMol.getAtomCount(), 14);
+        IChemModel oModel = oSeq.getChemModel(0);
+        assertNotNull(oModel);
+        assertEquals(1, oModel.getMoleculeSet().getMoleculeCount());
 
-            IAtom nAtom = oMol.getFirstAtom();
-            assertNotNull(nAtom);
-            assertTrue(nAtom instanceof PDBAtom);
-            PDBAtom oAtom = (PDBAtom)nAtom;
-            assertEquals(new String("C"), oAtom.getSymbol());
-            assertEquals(1, oAtom.getSerial());
-            assertEquals("C1", oAtom.getName());
-            assertEquals("MOL", oAtom.getResName());
-            assertEquals("1", oAtom.getResSeq());
-            assertEquals(1.0, oAtom.getOccupancy(), 0);
-            assertEquals(0.0, oAtom.getTempFactor(), 0);
+        IAtomContainer container = oModel.getMoleculeSet().getMolecule(0);
+        assertFalse(container instanceof IBioPolymer);
+        assertTrue(container instanceof IAtomContainer);
+        IAtomContainer oMol = (IAtomContainer)container;
+        assertNotNull(oMol);
+        assertEquals(oMol.getAtomCount(), 14);
 
-            nAtom = oMol.getAtom(3);
-            assertNotNull(nAtom);
-            assertTrue(nAtom instanceof PDBAtom);
-            oAtom = (PDBAtom)nAtom;
-            assertEquals("O", oAtom.getSymbol());
-            assertEquals(4, oAtom.getSerial());
-            assertEquals("O4", oAtom.getName());
-            assertEquals("MOL", oAtom.getResName());
-            assertEquals("1", oAtom.getResSeq());
-            assertEquals(1.0, oAtom.getOccupancy(), 0);
-            assertEquals(0.0, oAtom.getTempFactor(), 0);
+        IAtom nAtom = oMol.getFirstAtom();
+        assertNotNull(nAtom);
+        assertTrue(nAtom instanceof PDBAtom);
+        PDBAtom oAtom = (PDBAtom)nAtom;
+        assertEquals(new String("C"), oAtom.getSymbol());
+        assertEquals(1, oAtom.getSerial());
+        assertEquals("C1", oAtom.getName());
+        assertEquals("MOL", oAtom.getResName());
+        assertEquals("1", oAtom.getResSeq());
+        assertEquals(1.0, oAtom.getOccupancy(), 0);
+        assertEquals(0.0, oAtom.getTempFactor(), 0);
 
-            nAtom = oMol.getLastAtom();
-            assertNotNull(nAtom);
-            assertTrue(nAtom instanceof PDBAtom);
-            oAtom = (PDBAtom)nAtom;
-            assertEquals("N", oAtom.getSymbol());
-            assertEquals(14, oAtom.getSerial());
-            assertEquals("N14", oAtom.getName());
-            assertEquals("MOL", oAtom.getResName());
-            assertEquals("1", oAtom.getResSeq());
-            assertEquals(1.0, oAtom.getOccupancy(), 0);
-            assertEquals(0.0, oAtom.getTempFactor(), 0);
-		} catch (Exception e) {
-			fail(e.toString());
-		}
+        nAtom = oMol.getAtom(3);
+        assertNotNull(nAtom);
+        assertTrue(nAtom instanceof PDBAtom);
+        oAtom = (PDBAtom)nAtom;
+        assertEquals("O", oAtom.getSymbol());
+        assertEquals(4, oAtom.getSerial());
+        assertEquals("O4", oAtom.getName());
+        assertEquals("MOL", oAtom.getResName());
+        assertEquals("1", oAtom.getResSeq());
+        assertEquals(1.0, oAtom.getOccupancy(), 0);
+        assertEquals(0.0, oAtom.getTempFactor(), 0);
+
+        nAtom = oMol.getLastAtom();
+        assertNotNull(nAtom);
+        assertTrue(nAtom instanceof PDBAtom);
+        oAtom = (PDBAtom)nAtom;
+        assertEquals("N", oAtom.getSymbol());
+        assertEquals(14, oAtom.getSerial());
+        assertEquals("N14", oAtom.getName());
+        assertEquals("MOL", oAtom.getResName());
+        assertEquals("1", oAtom.getResSeq());
+        assertEquals(1.0, oAtom.getOccupancy(), 0);
+        assertEquals(0.0, oAtom.getTempFactor(), 0);
 	}
 
-  /**
-   * Tests reading a protein PDB file.
-   */
-  public void testProtein() {
-    String filename = "data/pdb/Test-1crn.pdb";
-    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+	/**
+	 * Tests reading a protein PDB file.
+	 */
+	public void testProtein() throws Exception {
+		String filename = "data/pdb/Test-1crn.pdb";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-    try {
-      IChemObjectReader reader = new PDBReader(ins);
-      assertNotNull(reader);
+		IChemObjectReader reader = new PDBReader(ins);
+		assertNotNull(reader);
 
-      ChemFile chemFile = (ChemFile) reader.read(new NNChemFile());
-      assertNotNull(chemFile);
-      assertEquals(1, chemFile.getChemSequenceCount());
+		ChemFile chemFile = (ChemFile) reader.read(new NNChemFile());
+		assertNotNull(chemFile);
+		assertEquals(1, chemFile.getChemSequenceCount());
 
-      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-      assertNotNull(seq);
-      assertEquals(1, seq.getChemModelCount());
-      
-      IChemModel model = seq.getChemModel(0);
-      assertNotNull(model);
-      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+		org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		assertNotNull(seq);
+		assertEquals(1, seq.getChemModelCount());
 
-      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-      assertTrue(container instanceof IBioPolymer);
-      IBioPolymer mol = (IBioPolymer)container;
-      assertNotNull(mol);
-      assertEquals(327, mol.getAtomCount());
-      assertEquals(46, mol.getMonomerCount());
-      assertNotNull(mol.getMonomer("THRA1", "A"));
-      assertEquals(7, mol.getMonomer("THRA1", "A").getAtomCount());
-      assertNotNull(mol.getMonomer("ILEA7", "A"));
-      assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
-      
-      IAtom nAtom = mol.getAtom(94);
-      assertNotNull(nAtom);
-      assertTrue(nAtom instanceof PDBAtom);
-      PDBAtom atom = (PDBAtom)nAtom;
-      assertEquals("C", atom.getSymbol());
-      assertEquals(95, atom.getSerial());
-      assertEquals("CZ", atom.getName());
-      assertEquals("PHE", atom.getResName());
-      assertEquals("13", atom.getResSeq());
-      assertEquals(1.0, atom.getOccupancy(), 0.001);
-      assertEquals(6.84, atom.getTempFactor(), 0.001);
-      
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      fail(ex.toString());
-    }
-  }
+		IChemModel model = seq.getChemModel(0);
+		assertNotNull(model);
+		assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+
+		IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+		assertTrue(container instanceof IBioPolymer);
+		IBioPolymer mol = (IBioPolymer)container;
+		assertNotNull(mol);
+		assertEquals(327, mol.getAtomCount());
+		assertEquals(46, mol.getMonomerCount());
+		assertNotNull(mol.getMonomer("THRA1", "A"));
+		assertEquals(7, mol.getMonomer("THRA1", "A").getAtomCount());
+		assertNotNull(mol.getMonomer("ILEA7", "A"));
+		assertEquals(8, mol.getMonomer("ILEA7", "A").getAtomCount());
+
+		IAtom nAtom = mol.getAtom(94);
+		assertNotNull(nAtom);
+		assertTrue(nAtom instanceof PDBAtom);
+		PDBAtom atom = (PDBAtom)nAtom;
+		assertEquals("C", atom.getSymbol());
+		assertEquals(95, atom.getSerial());
+		assertEquals("CZ", atom.getName());
+		assertEquals("PHE", atom.getResName());
+		assertEquals("13", atom.getResSeq());
+		assertEquals(1.0, atom.getOccupancy(), 0.001);
+		assertEquals(6.84, atom.getTempFactor(), 0.001);
+
+	}
   
-    public void test114D() {
+    public void test114D() throws Exception {
 	    String filename = "data/pdb/114D.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(2, polymer.getStrandCount());
+	    assertEquals(24, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(0, pdb.getStructures().size());
 	      
-	      // chemical validation
-	      assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(2, polymer.getStrandCount());
-	      assertEquals(24, polymer.getMonomerCount());
-	      
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
-	      
-	      // PDB validation
-	      assertEquals(0, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
     }
   
-    public void test1SPX() {
+    public void test1SPX() throws Exception {
 	    String filename = "data/pdb/1SPX.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(1904, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(1, polymer.getStrandCount());
-	      assertEquals(237, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(1904, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(1, polymer.getStrandCount());
+	    assertEquals(237, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(19, pdb.getStructures().size());
 	      
-	      // PDB validation
-	      assertEquals(19, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
     }
 
-    public void test1XKQ() {
+    public void test1XKQ() throws Exception {
 	    String filename = "data/pdb/1XKQ.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(8955, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(4, polymer.getStrandCount());
-	      assertEquals(1085, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(8955, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(4, polymer.getStrandCount());
+	    assertEquals(1085, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(90, pdb.getStructures().size());
 	      
-	      // PDB validation
-	      assertEquals(90, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
     }
 
-    public void test1A00() {
+    public void test1A00() throws Exception {
 	    String filename = "data/pdb/1A00.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(4770, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(4, polymer.getStrandCount());
-	      assertEquals(574, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(4770, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(4, polymer.getStrandCount());
+	    assertEquals(574, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(35, pdb.getStructures().size());
 	      
-	      // PDB validation
-	      assertEquals(35, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
     }
 
 
-    public void test1BOQ() {
+    public void test1BOQ() throws Exception {
 	    String filename = "data/pdb/1BOQ.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(1538, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(1, polymer.getStrandCount());
-	      assertEquals(198, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(1538, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(1, polymer.getStrandCount());
+	    assertEquals(198, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(21, pdb.getStructures().size());
 	      
-	      // PDB validation
-	      assertEquals(21, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
     }
 
-    public void test1TOH() {
+    public void test1TOH() throws Exception {
 	    String filename = "data/pdb/1TOH.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(1, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(2804, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(1, polymer.getStrandCount());
-	      assertEquals(325, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
-	      
-	      // PDB validation
-	      assertEquals(23, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(2804, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(1, polymer.getStrandCount());
+	    assertEquals(325, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(23, pdb.getStructures().size());
     }
     
-    public void test1CKV() {
+    public void test1CKV() throws Exception {
 	    String filename = "data/pdb/1CKV.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    try {
-	      IChemObjectReader reader = new PDBReader(ins);
-	      assertNotNull(reader);
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
 
-	      IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
-	      assertNotNull(chemFile);
-	      assertEquals(1, chemFile.getChemSequenceCount());
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
 
-	      org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-	      assertNotNull(seq);
-	      assertEquals(14, seq.getChemModelCount());
-	      
-	      IChemModel model = seq.getChemModel(0);
-	      assertNotNull(model);
-	      assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(14, seq.getChemModelCount());
 
-	      IAtomContainer container = model.getMoleculeSet().getMolecule(0);
-	      assertTrue(container instanceof IBioPolymer);
-	      IBioPolymer polymer = (IBioPolymer)container;
-	      
-	      // chemical validation
-	      assertEquals(31066, ChemFileManipulator.getAtomCount(chemFile));
-	      assertEquals(1, polymer.getStrandCount());
-	      // TODO: get the next tests going
-	      assertEquals(141, polymer.getMonomerCount());
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
 
-	      assertTrue(polymer instanceof PDBPolymer);
-	      PDBPolymer pdb = (PDBPolymer)polymer;
-	      
-	      // PDB validation
-	      assertEquals(9, pdb.getStructures().size());
-	      
-	    } catch (Exception ex) {
-	      fail(ex.toString());
-	    }
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    // chemical validation
+	    assertEquals(31066, ChemFileManipulator.getAtomCount(chemFile));
+	    assertEquals(1, polymer.getStrandCount());
+	    assertEquals(141, polymer.getMonomerCount());
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    // PDB validation
+	    assertEquals(9, pdb.getStructures().size());
     }
 }
