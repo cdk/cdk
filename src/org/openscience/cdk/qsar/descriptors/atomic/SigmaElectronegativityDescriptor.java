@@ -92,7 +92,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *  Sets the parameters attribute of the SigmaElectronegativityDescriptor
      *  object
      *
-     *@param  params            1: Atom position and 2: max iterations
+     *@param  params            1: max iterations (optional, defaults to 20)
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
@@ -102,6 +102,8 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
         if (!(params[0] instanceof Integer) ){
             throw new CDKException("The parameter must be of type Integer");
         }
+        if(params.length==0)
+        	return;
         maxIterations = ((Integer) params[0]).intValue();
     }
 
