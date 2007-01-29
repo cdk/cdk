@@ -23,7 +23,14 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNBond;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * @cdk.module test-standard
@@ -38,6 +45,16 @@ public class BondManipulatorTest extends CDKTestCase {
 		return new TestSuite(BondManipulatorTest.class);
 	}
 
+	public void testGetAtomArray_IBond() {
+		IAtom atom1 = new NNAtom(Elements.CARBON);
+		IAtom atom2 = new NNAtom(Elements.CARBON);
+		IBond bond = new NNBond(atom1, atom2, CDKConstants.BONDORDER_TRIPLE);
+		IAtom[] atoms = BondManipulator.getAtomArray(bond);
+		assertEquals(2, atoms.length);
+		assertEquals(atom1, atoms[0]);
+		assertEquals(atom2, atoms[1]);
+	}
+	
 }
 
 

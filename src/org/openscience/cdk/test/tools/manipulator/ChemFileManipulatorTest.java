@@ -20,16 +20,26 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * @cdk.module test-standard
  */
 public class ChemFileManipulatorTest extends CDKTestCase {
     
+	private final static LoggingTool logger = new LoggingTool(ChemFileManipulatorTest.class);
+	
     public ChemFileManipulatorTest(String name) {
         super(name);
     }
@@ -37,6 +47,18 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 	public static Test suite() {
 		return new TestSuite(ChemFileManipulatorTest.class);
 	}
+
+    public void testGetAllAtomContainers_IChemFile() throws Exception {
+        String filename = "data/mdl/prev2000.sd";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+        MDLReader reader = new MDLReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(2, containersList.size());
+    }
 
 }
 

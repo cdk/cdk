@@ -23,6 +23,12 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +44,16 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 		return new TestSuite(AtomTypeManipulatorTest.class);
 	}
 
+	public void testConfigure_IAtom_IAtomType() {
+		IAtom atom = new NNAtom(Elements.CARBON);
+		IAtomType atomType = new NNAtomType(Elements.CARBON);
+		atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+		assertEquals(
+			atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
+			atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR)
+		);
+	}
+	
 }
 
 

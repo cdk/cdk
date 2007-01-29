@@ -23,13 +23,20 @@ package org.openscience.cdk.test.tools.manipulator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 /**
  * @cdk.module test-standard
  */
 public class AminoAcidManipulatorTest extends CDKTestCase {
     
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	
     public AminoAcidManipulatorTest(String name) {
         super(name);
     }
@@ -38,6 +45,28 @@ public class AminoAcidManipulatorTest extends CDKTestCase {
 		return new TestSuite(AminoAcidManipulatorTest.class);
 	}
 
+	public void testRemoveAcidicOxygen_IAminoAcid() throws Exception {
+		IAminoAcid glycine = builder.newAminoAcid();
+		glycine.add(new SmilesParser(builder).parseSmiles("C(C(=O)O)N"));
+		assertEquals(5, glycine.getAtomCount());
+		glycine.addCTerminus(glycine.getAtom(1));
+		AminoAcidManipulator.removeAcidicOxygen(glycine);
+		assertEquals(4, glycine.getAtomCount());
+	}
+	
+	/**
+	 * @cdk.bug 1646861
+	 */
+	public void testAddAcidicOxygen_IAminoAcid() throws Exception {
+		// FIXME: I think this is the proper test, but it currently fails
+		IAminoAcid glycine = builder.newAminoAcid();
+		glycine.add(new SmilesParser(builder).parseSmiles("C(C=O)N"));
+		assertEquals(4, glycine.getAtomCount());
+		glycine.addCTerminus(glycine.getAtom(1));
+		AminoAcidManipulator.addAcidicOxygen(glycine);
+		assertEquals(5, glycine.getAtomCount());
+	}
+	
 }
 
 

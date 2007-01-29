@@ -20,17 +20,28 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module test-standard
  */
 public class ChemModelManipulatorTest extends CDKTestCase {
     
-    public ChemModelManipulatorTest(String name) {
+	private final static LoggingTool logger = new LoggingTool(ChemModelManipulatorTest.class);
+	
+	public ChemModelManipulatorTest(String name) {
         super(name);
     }
     
@@ -38,6 +49,17 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		return new TestSuite(ChemModelManipulatorTest.class);
 	}
 
+    public void testGetAllAtomContainers_IChemModel() throws Exception {
+        String filename = "data/mdl/a-pinene.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemModel chemFile = (ChemModel)reader.read((ChemObject)new ChemModel());
+        assertNotNull(chemFile);
+        List containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+    }
 }
 
 

@@ -31,7 +31,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
 		return new TestSuite(RingSetManipulatorTest.class);
 	}
 	
-    public void testIsSameRing_IAtom_IAtom() {
+    public void testIsSameRing_IRingSet_IAtom_IAtom() {
     	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IRingSet ringset = builder.newRingSet();
 
