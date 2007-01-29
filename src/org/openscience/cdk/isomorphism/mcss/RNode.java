@@ -1,34 +1,29 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
+ *  
+ * This code has been kindly provided by Stephane Werner 
+ * and Thierry Hanser from IXELIS mail@ixelis.net.
+ *  
+ * IXELIS sarl - Semantic Information Systems
+ *               17 rue des C?dres 67200 Strasbourg, France
+ *               Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
  *
- *  This code has been kindly provided by Stephane Werner
- *  and Thierry Hanser from IXELIS mail@ixelis.net
+ * CDK Contact: cdk-devel@lists.sf.net
  *
- *  IXELIS sarl - Semantic Information Systems
- *  17 rue des C?dres 67200 Strasbourg, France
- *  Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
  *
- *  CDK Contact: cdk-devel@lists.sf.net
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.isomorphism.mcss;
 
