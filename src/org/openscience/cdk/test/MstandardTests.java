@@ -40,7 +40,6 @@ import org.openscience.cdk.test.geometry.BondToolsTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.test.geometry.GeometryToolsInternalCoordinatesTest;
 import org.openscience.cdk.test.geometry.GeometryToolsTest;
-import org.openscience.cdk.test.geometry.ZMatrixToolsTest;
 import org.openscience.cdk.test.graph.BFSShortestPathTest;
 import org.openscience.cdk.test.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.test.graph.ConnectivityCheckerTest;
@@ -153,7 +152,6 @@ public class MstandardTests {
         suite.addTest(ExtendedFingerprinterTest.suite());
         suite.addTest(ProblemMarkerTest.suite());
         suite.addTest(SymbolsTest.suite());
-        suite.addTest(ZMatrixToolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
         suite.addTest(BondToolsTest.suite());
         suite.addTest(UnsupportedChemObjectExceptionTest.suite());

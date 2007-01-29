@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-io
  */
 public class ZMatrixToolsTest extends CDKTestCase {
     
