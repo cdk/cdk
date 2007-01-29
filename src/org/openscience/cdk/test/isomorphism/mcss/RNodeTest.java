@@ -23,6 +23,7 @@ package org.openscience.cdk.test.isomorphism.mcss;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.isomorphism.mcss.RNode;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,13 @@ public class RNodeTest extends CDKTestCase {
 		return new TestSuite(RNodeTest.class);
 	}
 
+	public void testRNode_int_int() {
+		RNode node = new RNode(1,2);
+		assertNotNull(node);
+		assertNotNull(node.getExtension());
+		assertNotNull(node.getForbidden());
+	}
+	
 }
 
 

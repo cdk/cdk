@@ -20,9 +20,17 @@
  */
 package org.openscience.cdk.test.geometry;
 
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +46,16 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
 		return new TestSuite(GeometryToolsInternalCoordinatesTest.class);
 	}
 
+	public void testTranslateAllPositive_IAtomContainer() {
+		IAtomContainer container = new NNAtomContainer();
+		IAtom atom = new NNAtom(Elements.CARBON);
+		atom.setPoint2d(new Point2d(-3, -2));
+		container.addAtom(atom);
+		GeometryToolsInternalCoordinates.translateAllPositive(container);
+		assertTrue(0 <= atom.getPoint2d().x);
+		assertTrue(0 <= atom.getPoint2d().y);
+	}
+	
 }
 
 

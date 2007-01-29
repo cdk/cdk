@@ -23,7 +23,10 @@ package org.openscience.cdk.test.validate;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * @cdk.module test-standard
@@ -38,6 +41,20 @@ public class ProblemMarkerTest extends CDKTestCase {
 		return new TestSuite(ProblemMarkerTest.class);
 	}
 
+	public void testMarkWithError_IChemObject() {
+		IChemObject object = new ChemObject();
+		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.markWithError(object);
+		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+	}
+	
+	public void testMarkWithWarning_IChemObject() {
+		IChemObject object = new ChemObject();
+		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		ProblemMarker.markWithWarning(object);
+		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+	}
+	
 }
 
 

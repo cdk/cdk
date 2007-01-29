@@ -23,6 +23,7 @@ package org.openscience.cdk.test.isomorphism.mcss;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,13 @@ public class RMapTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(RMapTest.class);
+	}
+
+	public void testRMap_int_int() {
+		RMap node = new RMap(1,2);
+		assertNotNull(node);
+		assertEquals(1, node.getId1());
+		assertEquals(2, node.getId2());
 	}
 
 }

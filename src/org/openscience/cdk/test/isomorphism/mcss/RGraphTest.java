@@ -23,6 +23,7 @@ package org.openscience.cdk.test.isomorphism.mcss;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.isomorphism.mcss.RGraph;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +37,11 @@ public class RGraphTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(RGraphTest.class);
+	}
+	
+	public void testRGraph() {
+		RGraph graph = new RGraph();
+		assertNotNull(graph);
 	}
 
 }
