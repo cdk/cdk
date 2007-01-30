@@ -2212,6 +2212,17 @@
         <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
+    
+    <Descriptor rdf:ID="NilaComplexity">
+        <rdfs:label>Fragment Complexity</rdfs:label>
+        <dc:contributor rdf:resource="#chhoppe"/>
+        <dc:date>2006-8-22</dc:date>
+        <definition>
+            Class that returns the complexity of a system. The complexity is defined as @cdk.cite{Nilakantan06}
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
 
     <Descriptor rdf:ID="weightedPath">
         <rdfs:label>Weighted path descriptors</rdfs:label>
