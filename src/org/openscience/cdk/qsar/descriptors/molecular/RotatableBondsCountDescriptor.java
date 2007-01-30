@@ -173,7 +173,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 			}
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(rotatableBondsCount),
-                new String[] {"nRotB"});
+                new String[] { includeTerminals ? "nRotBt" : "nRotB"});
 	}
 
 
