@@ -151,20 +151,20 @@ public class AtomContainerManipulator {
         return hCount;
     }
 
-    public static Vector getAllIDs(IAtomContainer mol) {
-        Vector idList = new Vector();
+    public static List getAllIDs(IAtomContainer mol) {
+    	List idList = new ArrayList();
         if (mol != null) {
-            if (mol.getID() != null) idList.addElement(mol.getID());
+            if (mol.getID() != null) idList.add(mol.getID());
             java.util.Iterator atoms = mol.atoms();
             while (atoms.hasNext()) {
                 IAtom atom = (IAtom)atoms.next();
-                if (atom.getID() != null) idList.addElement(atom.getID());
+                if (atom.getID() != null) idList.add(atom.getID());
             }
 
             Iterator bonds = mol.bonds();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();                            
-                if (bond.getID() != null) idList.addElement(bond.getID());
+                if (bond.getID() != null) idList.add(bond.getID());
             }
         }
         return idList;

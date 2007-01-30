@@ -172,7 +172,7 @@ public class AtomContainerSetManipulator {
         if (set != null) {
             if (set.getID() != null) idList.add(set.getID());
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
-                idList.add(AtomContainerManipulator.getAllIDs(set.getAtomContainer(i)));
+                idList.addAll(AtomContainerManipulator.getAllIDs(set.getAtomContainer(i)));
             }
         }
         return idList;
