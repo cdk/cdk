@@ -130,7 +130,8 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
     	int B=container.getBondCount();
     	double C=Math.abs(B*B-A*A+A)+(H/100);
     	//System.out.println("A:"+A+" B:"+B+" H:"+H+"H/100:"+H/100+" C:"+C);
-    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(C));
+    	return new DescriptorValue(getSpecification(), getParameterNames(), 
+    		getParameters(), new DoubleResult(C), new String[] { "fragC" });
     }
 
    
