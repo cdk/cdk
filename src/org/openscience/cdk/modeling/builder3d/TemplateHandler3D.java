@@ -119,14 +119,14 @@ public class TemplateHandler3D {
             ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateFingerprints.txt.gz");
             fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
         } catch (Exception exc3) {
-            System.out.println("Could not read Fingerprints from FingerprintFile due to: " + exc3.getMessage());
+            throw new CDKException("Could not read Fingerprints from FingerprintFile due to: " + exc3.getMessage(), exc3);
         }
         String s = null;
         while (true) {
             try {
                 s = fin.readLine();
             } catch (Exception exc4) {
-                exc4.printStackTrace();
+                throw new CDKException("Error while reading the fingerprints: " + exc4.getMessage(), exc4);
             }
 
             if (s == null) {
