@@ -180,10 +180,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotNull(smiles1);
 		assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
+		
+		//by setting additional stereo descriptors, we should get another smiles
 		mol1.getBond(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
 		mol1.getBond(2).setStereo(CDKConstants.STEREO_BOND_UP);
-		
-		// what is tested below?
 		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotNull(smiles1);
 		assertEquals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]", smiles1);
