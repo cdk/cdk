@@ -194,9 +194,6 @@ public class AllRingsFinderTest extends CDKTestCase
 		    org.openscience.cdk.interfaces.IMolecule molecule = model.getMoleculeSet().getMolecule(0);
 			
 			ringSet = arf.findAllRings(molecule);
-			for (int i = 0; i < ringSet.getAtomContainerCount(); ++i) {
-				System.out.println(ringSet.getAtomContainer(i).getAtomCount());
-			}
 			assertEquals(14, ringSet.getAtomContainerCount());
 		
 		}
