@@ -209,7 +209,7 @@ public class AtomContainer extends ChemObject
 	 *  Sets the array of atoms of this AtomContainer.
 	 *
 	 *@param  atoms  The array of atoms to be assigned to this AtomContainer
-	 *@see           #getAtoms
+	 *@see           #getAtom
 	 */
 	public void setAtoms(IAtom[] atoms)
 	{
@@ -227,7 +227,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 * @param  bonds  The array of bonds to be assigned to
 	 *                             this AtomContainer
-	 * @see  #getBonds
+	 * @see  #getBond
 	 */
 	public void setBonds(IBond[] bonds)
 	{
@@ -385,8 +385,7 @@ public class AtomContainer extends ChemObject
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < atomCount) return true;
-            return false;
+            return pointer < atomCount;
         }
 
         public Object next() {
@@ -418,8 +417,7 @@ public class AtomContainer extends ChemObject
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < bondCount) return true;
-            return false;
+            return pointer < bondCount;
         }
 
         public Object next() {
@@ -451,8 +449,7 @@ public class AtomContainer extends ChemObject
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < lonePairCount) return true;
-            return false;
+            return pointer < lonePairCount;
         }
 
         public Object next() {
@@ -484,8 +481,7 @@ public class AtomContainer extends ChemObject
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < singleElectronCount) return true;
-            return false;
+            return pointer < singleElectronCount;
         }
 
         public Object next() {
@@ -517,8 +513,7 @@ public class AtomContainer extends ChemObject
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < (bondCount+lonePairCount+singleElectronCount) ) return true;
-            return false;
+            return pointer < (bondCount + lonePairCount + singleElectronCount);
         }
 
         public Object next() {
@@ -610,7 +605,7 @@ public class AtomContainer extends ChemObject
 	 *  Returns the position of a given lone pair in the lone pair array. 
 	 *  It returns -1 if the lone pair does not exist.
 	 *
-	 *@param  atom  The lone pair to be sought
+	 *@param  lonePair  The lone pair to be sought
 	 *@return       The Position of the lone pair in the array..
 	 */
 	public int getLonePairNumber(ILonePair lonePair)
@@ -759,24 +754,23 @@ public class AtomContainer extends ChemObject
 		}
 		return bondsList;
 	}
-	
-	/**
-	 *  Returns the array of lone pairs connected to an atom.
-	 *
-	 *@param  atom  The atom for which to get lone pairs
-	 *@return       The array of LonePairs of this AtomContainer
-	 *@see          #getElectronContainers
-	 *@see          #getBonds
-	 */
-	public List getConnectedLonePairsList(IAtom atom)
-	{
-		List lps = new ArrayList();
-		for (int i = 0; i < lonePairCount; i++)
-		{
-			if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
-		}
-		return lps;
-	}
+
+    /**
+     * Returns the array of lone pairs connected to an atom.
+     *
+     * @param atom The atom for which to get lone pairs
+     * @return The array of LonePairs of this AtomContainer
+     * @see #getElectronContainer
+     * @see #electronContainers()
+     * @see #getBond
+     */
+    public List getConnectedLonePairsList(IAtom atom) {
+        List lps = new ArrayList();
+        for (int i = 0; i < lonePairCount; i++) {
+            if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
+        }
+        return lps;
+    }
 	
 	/**
 	 *  Returns an array of all SingleElectron connected to the given atom.
@@ -848,7 +842,7 @@ public class AtomContainer extends ChemObject
 	/**
 	 *  Returns the number of connected atoms (degree) to the given atom.
 	 *
-	 *@param  atomnumber  The atomnumber the degree is searched for
+	 *@param  atomNumber  The atomnumber the degree is searched for
 	 *@return             The number of connected atoms (degree)
 	 */
 	public int getConnectedBondsCount(int atomNumber)
@@ -1244,7 +1238,7 @@ public class AtomContainer extends ChemObject
 	/**
 	 * Removes the bond at the given position from this container.
 	 *
-	 * @param  position  The position of the bond in the electronContainers array
+	 * @param  number  The position of the bond in the electronContainers array
 	 * @return           Bond that was removed
 	 */
 	public IElectronContainer removeElectronContainer(int number)
@@ -1258,17 +1252,16 @@ public class AtomContainer extends ChemObject
 	}
 
 
-	/**
-	 * Removes this ElectronContainer from this container.
-	 *
-	 * @param  electronContainer    The electronContainer to be removed
-	 * @return                      Bond that was removed
-	 */
-	public void removeElectronContainer(IElectronContainer electronContainer)
-	{
-		if (electronContainer instanceof IBond) removeBond((IBond)electronContainer);
-		else if (electronContainer instanceof ILonePair) removeLonePair((ILonePair)electronContainer);
-		else if (electronContainer instanceof ISingleElectron) removeSingleElectron((ISingleElectron)electronContainer);
+    /**
+     * Removes this ElectronContainer from this container.
+     *
+     * @param electronContainer The electronContainer to be removed
+     */
+    public void removeElectronContainer(IElectronContainer electronContainer) {
+        if (electronContainer instanceof IBond) removeBond((IBond) electronContainer);
+        else if (electronContainer instanceof ILonePair) removeLonePair((ILonePair) electronContainer);
+        else
+        if (electronContainer instanceof ISingleElectron) removeSingleElectron((ISingleElectron) electronContainer);
 	}
 
 	/**
@@ -1477,7 +1470,7 @@ public class AtomContainer extends ChemObject
 	/**
 	 *  True, if the AtomContainer contains the given SingleElectron object.
 	 *
-	 *@param  lonePair  the LonePair this AtomContainer is searched for
+	 *@param  singleElectron  the LonePair this AtomContainer is searched for
 	 *@return           True, if the AtomContainer contains the given LonePair object
 	 */
 	public boolean contains(ISingleElectron singleElectron)
@@ -1495,11 +1488,11 @@ public class AtomContainer extends ChemObject
 	 *@param  electronContainer ElectronContainer that is searched for
 	 *@return                   True, if the AtomContainer contains the given bond object
 	 */
-	public boolean contains(IElectronContainer ec)
+	public boolean contains(IElectronContainer electronContainer)
 	{
-		if (ec instanceof IBond) return contains((IBond)ec);
-		if (ec instanceof ILonePair) return contains((ILonePair)ec);
-		if (ec instanceof ISingleElectron) return contains((SingleElectron)ec);
+		if (electronContainer instanceof IBond) return contains((IBond)electronContainer);
+		if (electronContainer instanceof ILonePair) return contains((ILonePair)electronContainer);
+		if (electronContainer instanceof ISingleElectron) return contains((SingleElectron)electronContainer);
 		return false;
 	}
 	
