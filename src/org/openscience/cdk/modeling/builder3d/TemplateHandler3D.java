@@ -30,10 +30,10 @@ package org.openscience.cdk.modeling.builder3d;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import javax.vecmath.Point3d;
@@ -65,16 +65,16 @@ public class TemplateHandler3D {
     Molecule molecule;
     RingSet sssr;
     MoleculeSet templates = null;
-    Vector fingerprintData = null;
-    Vector ringTemplates = null;
+    List fingerprintData = null;
+    List ringTemplates = null;
 
     /**
      * The empty constructor.
      */
     public TemplateHandler3D() {
         templates = new MoleculeSet();
-        fingerprintData = new Vector();
-        ringTemplates = new Vector(75);
+        fingerprintData = new ArrayList();
+        ringTemplates = new ArrayList(75);
     }
 
 
