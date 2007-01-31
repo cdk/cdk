@@ -50,7 +50,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *   </tr>
  * </table>
  *
- * Returns a single value named <i>LipinskiFailures</i>
+ * Returns a single value named <i>LipinskiFailures</i>.
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
