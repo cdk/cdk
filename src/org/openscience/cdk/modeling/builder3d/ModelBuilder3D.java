@@ -90,7 +90,6 @@ public class ModelBuilder3D {
 	private Hashtable parameterSet = null;
 
 	private final ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-	private final AtomPlacer atomPlacer = new AtomPlacer();
 
 	String forceFieldName = "mm2";
 	
@@ -140,8 +139,9 @@ public class ModelBuilder3D {
 	 *  Sets the forceField attribute of the ModelBuilder3D object
 	 *
 	 *@param  ffname  forceField name
+	 * @throws CDKException 
 	 */
-	private void setForceField(String ffname) {
+	private void setForceField(String ffname) throws CDKException {
 		if (ffname == null) {
 			ffname = "mm2";
 		}
@@ -152,6 +152,7 @@ public class ModelBuilder3D {
 		} catch (Exception ex1) {
 			logger.error("Problem with ForceField configuration due to>" + ex1.getMessage());
 			logger.debug(ex1);
+			throw new CDKException("Problem with ForceField configuration due to>" + ex1.getMessage(), ex1);
 		}
 	}
 
@@ -168,6 +169,7 @@ public class ModelBuilder3D {
 		}
 		
 		// setup helper classes
+		AtomPlacer atomPlacer = new AtomPlacer();
 		AtomPlacer3D ap3d = new AtomPlacer3D();
 		AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
 		ap3d.initilize(parameterSet);
@@ -184,6 +186,7 @@ public class ModelBuilder3D {
 			} catch (Exception ex3) {
 				logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 				logger.debug(ex3);
+				throw new CDKException("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
 			}
 			return molecule;
 		}
@@ -203,11 +206,11 @@ public class ModelBuilder3D {
 			NumberOfRingAtoms = (double)largestRingSetContainer.getAtomCount();
 			templateHandler.mapTemplates(largestRingSetContainer, NumberOfRingAtoms);
 			if (!checkAllRingAtomsHasCoordinates(largestRingSetContainer)) {
-				throw new IOException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.Sorry");
+				throw new CDKException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.");
 			}
 
 			setAtomsToPlace(largestRingSetContainer);
-			searchAndPlaceBranches(molecule, largestRingSetContainer, ap3d, atlp3d);
+			searchAndPlaceBranches(molecule, largestRingSetContainer, ap3d, atlp3d, atomPlacer);
 			largestRingSet = null;
 		} else {
 			//logger.debug("****** Start of handling aliphatic molecule ******");
@@ -219,9 +222,9 @@ public class ModelBuilder3D {
 			ap3d.placeAliphaticHeavyChain(molecule, ac);
 			//ZMatrixApproach
 			ap3d.zmatrixChainToCartesian(molecule, false);
-			searchAndPlaceBranches(molecule, ac, ap3d, atlp3d);
+			searchAndPlaceBranches(molecule, ac, ap3d, atlp3d, atomPlacer);
 		}
-		layoutMolecule(ringSystems, molecule, ap3d, atlp3d);
+		layoutMolecule(ringSystems, molecule, ap3d, atlp3d, atomPlacer);
 		//logger.debug("******* PLACE SUBSTITUENTS ******");
 		try {
 			atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
@@ -257,9 +260,10 @@ public class ModelBuilder3D {
 	 *
 	 *@param  ringSetMolecule  ringSystems of the molecule
 	 * @param atlp3d 
+	 * @param atomPlacer 
 	 *@exception  Exception    Description of the Exception
 	 */
-	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
+	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
 		//logger.debug("****** LAYOUT MOLECULE MAIN *******");
 		IAtomContainer ac = null;
 		int safetyCounter = 0;
@@ -285,7 +289,7 @@ public class ModelBuilder3D {
 
 				setBranchAtom(molecule, unplacedAtom, atom, ap3d.getPlacedHeavyAtoms(molecule, atom), ap3d, atlp3d);
 				layoutRingSystem(firstAtomOriginalCoord, unplacedAtom, ringSetA, centerPlacedMolecule, atom, ap3d);
-				searchAndPlaceBranches(molecule, ringSetAContainer, ap3d, atlp3d);
+				searchAndPlaceBranches(molecule, ringSetAContainer, ap3d, atlp3d, atomPlacer);
 				//logger.debug("Ready layout Ring System");
 				ringSetA = null;
 				unplacedAtom = null;
@@ -298,7 +302,7 @@ public class ModelBuilder3D {
 				if (atom != null) {
 					ac = new org.openscience.cdk.AtomContainer();
 					ac.addAtom(atom);
-					searchAndPlaceBranches(molecule, ac, ap3d, atlp3d);
+					searchAndPlaceBranches(molecule, ac, ap3d, atlp3d, atomPlacer);
 					ac = null;
 				}
 			}
@@ -468,9 +472,10 @@ public class ModelBuilder3D {
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
 	 * @param ap3d 
 	 * @param atlp3d 
+	 * @param atomPlacer 
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
+	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
 		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
@@ -502,7 +507,7 @@ public class ModelBuilder3D {
 			}
 
 		}//for ac.getAtomCount
-		placeLinearChains3D(molecule, branchAtoms, ap3d, atlp3d);
+		placeLinearChains3D(molecule, branchAtoms, ap3d, atlp3d, atomPlacer);
 	}
 
 
@@ -512,9 +517,10 @@ public class ModelBuilder3D {
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
 	 * @param ap3d 
 	 * @param atlp3d 
+	 * @param atomPlacer 
 	 *@exception  Exception  Description of the Exception
 	 */
-	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
+	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;
@@ -543,7 +549,7 @@ public class ModelBuilder3D {
 					//logger.debug("LongestUnchainLength:"+longestUnplacedChain.getAtomCount());
 					ap3d.placeAliphaticHeavyChain(molecule, longestUnplacedChain);
 					ap3d.zmatrixChainToCartesian(molecule, true);
-					searchAndPlaceBranches(molecule, longestUnplacedChain, ap3d, atlp3d);
+					searchAndPlaceBranches(molecule, longestUnplacedChain, ap3d, atlp3d, atomPlacer);
 				}
 				longestUnplacedChain.removeAllElements();
 			}//for
