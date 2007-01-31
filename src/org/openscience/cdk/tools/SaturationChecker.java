@@ -30,7 +30,7 @@ package org.openscience.cdk.tools;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -534,13 +534,13 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	public void saturateRingSystems(IAtomContainer atomContainer) throws CDKException
 	{
 		IRingSet rs = new SSSRFinder(atomContainer.getBuilder().newMolecule(atomContainer)).findSSSR();
-		Vector ringSets = RingPartitioner.partitionRings(rs);
+		List ringSets = RingPartitioner.partitionRings(rs);
 		IAtomContainer ac = null;
 		IAtom atom = null;
 		int temp[];
 		for (int f = 0; f < ringSets.size(); f++)
 		{
-			rs = (IRingSet)ringSets.elementAt(f);
+			rs = (IRingSet)ringSets.get(f);
 			ac = RingSetManipulator.getAllInOneContainer(rs);
 			temp = new int[ac.getAtomCount()];
 			for (int g = 0; g < ac.getAtomCount(); g++)

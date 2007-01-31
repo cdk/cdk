@@ -31,6 +31,7 @@ package org.openscience.cdk.modeling.builder3d;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point3d;
@@ -217,7 +218,7 @@ public class ModelBuilder3D {
 		}
 		//Assing Atoms to Rings,Aliphatic and Atomtype
 		org.openscience.cdk.interfaces.IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
-		Vector ringSystems = null;
+		List ringSystems = null;
 		IRingSet largestRingSet = null;
 		double NumberOfRingAtoms = 0;
 
@@ -273,7 +274,7 @@ public class ModelBuilder3D {
 	 *@param  atom         Description of the Parameter
 	 *@return              The ringSetOfAtom value
 	 */
-	public IRingSet getRingSetOfAtom(Vector ringSystems, IAtom atom) {
+	public IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
 		IRingSet ringSetOfAtom = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
 			if (((IRingSet) ringSystems.get(i)).contains(atom)) {
@@ -290,7 +291,7 @@ public class ModelBuilder3D {
 	 *@param  ringSetMolecule  ringSystems of the molecule
 	 *@exception  Exception    Description of the Exception
 	 */
-	public void layoutMolecule(Vector ringSetMolecule) throws Exception {
+	public void layoutMolecule(List ringSetMolecule) throws Exception {
 		//logger.debug("****** LAYOUT MOLECULE MAIN *******");
 		IAtomContainer ac = null;
 		int safetyCounter = 0;
@@ -602,7 +603,7 @@ public class ModelBuilder3D {
 	 *@param  ringSystems  RingSystems of a molecule 
 	 *@return              The largestRingSet 
 	 */
-	private IRingSet getLargestRingSet(Vector ringSystems) {
+	private IRingSet getLargestRingSet(List ringSystems) {
 		IRingSet largestRingSet = null;
 		int atomNumber = 0;
 		IAtomContainer container = null;

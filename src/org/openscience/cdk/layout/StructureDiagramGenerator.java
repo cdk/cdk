@@ -29,20 +29,27 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * Generates 2D coordinates for a molecule for which only connectivity is known
@@ -84,7 +91,7 @@ public class StructureDiagramGenerator
 	Vector2d firstBondVector;
 	RingPlacer ringPlacer = new RingPlacer();
 	AtomPlacer atomPlacer = new AtomPlacer();
-	Vector ringSystems = null;
+	List ringSystems = null;
 	final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
 	private TemplateHandler templateHandler = null;
 	boolean useTemplates = true;
@@ -358,26 +365,26 @@ public class StructureDiagramGenerator
 			 *  Do the layout for the first connected ring system ...
 			 */
 			int largest = 0;
-			int largestSize = ((IRingSet) ringSystems.elementAt(0)).getAtomContainerCount();
+			int largestSize = ((IRingSet) ringSystems.get(0)).getAtomContainerCount();
 			logger.debug("We have " + ringSystems.size() + " ring system(s).");
 			for (int f = 0; f < ringSystems.size(); f++)
 			{
-				logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount());
-				if (((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount() > largestSize)
+				logger.debug("RingSet " + f + " has size " + ((IRingSet) ringSystems.get(f)).getAtomContainerCount());
+				if (((IRingSet) ringSystems.get(f)).getAtomContainerCount() > largestSize)
 				{
-					largestSize = ((IRingSet) ringSystems.elementAt(f)).getAtomContainerCount();
+					largestSize = ((IRingSet) ringSystems.get(f)).getAtomContainerCount();
 					largest = f;
 				}
 			}
 			logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
 			logger.debug("Size of Largest RingSystem: " + largestSize);
 
-			layoutRingSet(firstBondVector, (IRingSet) ringSystems.elementAt(largest));
+			layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
 			logger.debug("First RingSet placed");
 			/*
 			 *  and to the placement of all the directly connected atoms of this ringsystem
 			 */
-			ringPlacer.placeRingSubstituents((IRingSet) ringSystems.elementAt(largest), bondLength);
+			ringPlacer.placeRingSubstituents((IRingSet) ringSystems.get(largest), bondLength);
 
 		} else
 		{
@@ -921,12 +928,12 @@ public class StructureDiagramGenerator
 	 *@param  ringAtom     The ring atom to be search in the ring system.
 	 *@return              the ring system of which the given atom is part of
 	 */
-	private IRingSet getRingSystemOfAtom(Vector ringSystems, IAtom ringAtom)
+	private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom)
 	{
 		IRingSet ringSet = null;
 		for (int f = 0; f < ringSystems.size(); f++)
 		{
-			ringSet = (IRingSet) ringSystems.elementAt(f);
+			ringSet = (IRingSet) ringSystems.get(f);
 			if (ringSet.contains(ringAtom))
 			{
 				return ringSet;

@@ -28,9 +28,9 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
@@ -58,10 +58,10 @@ public class RingPartitioner {
      *  the RingSet are considered connected.
      *
      *@param  ringSet  The RingSet to be partitioned
-     *@return          A Vector of connected RingSets
+     *@return          A List of connected RingSets
      */
-    public static Vector partitionRings(IRingSet ringSet) {
-        Vector ringSets = new Vector();
+    public static List partitionRings(IRingSet ringSet) {
+        List ringSets = new ArrayList();
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
         IRingSet tempRingSet = null;
         IRing ring = (IRing)ringSet.getAtomContainer(0);
@@ -76,7 +76,7 @@ public class RingPartitioner {
             newRs.addAtomContainer(ring);
             tempRingSet = walkRingSystem(rs, ring, newRs);
 //            logger.debug("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
-            ringSets.addElement(walkRingSystem(rs, ring, newRs));
+            ringSets.add(walkRingSystem(rs, ring, newRs));
 
         } while (rs.getAtomContainerCount() > 0);
 

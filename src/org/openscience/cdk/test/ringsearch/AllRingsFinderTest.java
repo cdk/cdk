@@ -29,14 +29,13 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
@@ -66,6 +65,12 @@ public class AllRingsFinderTest extends CDKTestCase
 	}
 	
 	public void testAllRingsFinder()
+	{
+		AllRingsFinder arf = new AllRingsFinder();
+		assertNotNull(arf);
+	}
+	
+	public void testFindAllRings_IAtomContainer()
 	{
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
@@ -116,7 +121,91 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
-
+	public void testFindAllRings_IAtomContainer_boolean()
+	{
+		fail("Test not implemented yet - it is depending on new implementation of AllRingsFinder.");
+	}
+	
+	public void testSetTimeout_long()
+	{
+		AllRingsFinder arf = new AllRingsFinder();
+		arf.setTimeout(0);
+		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
+		//display(molecule);
+		try {
+			arf.findAllRings(molecule);
+		} catch (CDKException ex) {
+			assertEquals("Timeout for AllringsFinder exceeded", ex.getMessage());
+			return;
+		}
+		fail("Timeout did not throw CDKException.");
+	}
+	
+	public void testCheckTimeout()
+	{
+		fail("Not implemented.");		
+	}
+	
+	public void testGetTimeout()
+	{
+		AllRingsFinder arf = new AllRingsFinder();
+		arf.setTimeout(3);
+		assertEquals(3, arf.getTimeout(), 0.01);
+	}
+	
+	public void testPorphyrine()
+	{
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		if (standAlone) arf.debug = true;
+		try
+		{
+	        String filename = "data/mdl/porphyrin.mol";
+	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLReader reader = new MDLReader(ins);
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+			
+			ringSet = arf.findAllRings(molecule);
+			assertEquals(20, ringSet.getAtomContainerCount());
+		
+		}
+		catch(Exception exc)
+		{
+			fail(exc.getMessage());
+		}
+	}
+	
+	public void testCholoylCoA()
+	{
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		if (standAlone) arf.debug = true;
+		try
+		{
+	        String filename = "data/mdl/choloylcoa.mol";
+	        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLReader reader = new MDLReader(ins);
+			IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+		    org.openscience.cdk.interfaces.IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+			
+			ringSet = arf.findAllRings(molecule);
+			for (int i = 0; i < ringSet.getAtomContainerCount(); ++i) {
+				System.out.println(ringSet.getAtomContainer(i).getAtomCount());
+			}
+			assertEquals(14, ringSet.getAtomContainerCount());
+		
+		}
+		catch(Exception exc)
+		{
+			fail(exc.getMessage());
+		}
+	}
+	
 	public void showAzulene()
 	{
 		MoleculeListViewer listview = new MoleculeListViewer();
@@ -245,7 +334,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		    e.printStackTrace();
 		    fail(e.toString());
 		}
-	}	
+	}
 	
 	public static void main(String[] args)
 	{

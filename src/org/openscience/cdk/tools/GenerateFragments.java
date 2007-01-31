@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -92,7 +93,7 @@ public class GenerateFragments {
 	 * void
 	 */
 	public void generateRingFragments(IMolecule molecule){
-		this.ringFragments=new Vector();
+		this.ringFragments= new ArrayList();
 		this.ringSetsMolecule = new SSSRFinder(molecule).findSSSR();
 		if (this.ringSetsMolecule.getAtomContainerCount() > 0) {
 			this.ringFragments=RingPartitioner.partitionRings(ringSetsMolecule);

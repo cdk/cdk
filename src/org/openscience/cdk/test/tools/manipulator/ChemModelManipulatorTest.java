@@ -21,6 +21,7 @@
 package org.openscience.cdk.test.tools.manipulator;
 
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
@@ -46,7 +47,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -240,7 +240,8 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     	int molSetCount = 0;
     	int reactionCount = 0;
     	int reactionSetCount = 0;
-    	for (Object o : list) {
+    	for (Iterator iter = list.iterator(); iter.hasNext();) {
+    		Object o = iter.next();
     		//if (o instanceof IAtom) ++atomCount;
     		//if (o instanceof IBond) ++bondCount;
     		if (o instanceof IMolecule) ++molCount;

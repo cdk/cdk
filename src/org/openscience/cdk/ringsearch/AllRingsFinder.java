@@ -29,14 +29,19 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.Iterator;
-import java.util.Vector;
 
 /**
  *  Finds the Set of all Rings. This is an implementation of the algorithm
@@ -126,7 +131,7 @@ public class AllRingsFinder
 		{
 			SSSRFinder sssrf = new SSSRFinder(atomContainer);
 			IRingSet sssr = sssrf.findSSSR();
-			Vector ringSets = RingPartitioner.partitionRings(sssr);
+			List ringSets = RingPartitioner.partitionRings(sssr);
 
 			for (int r = 0; r < ringSets.size(); r++)
 			{
