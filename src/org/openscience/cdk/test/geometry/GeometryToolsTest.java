@@ -115,10 +115,10 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom2);
     	HashMap map=makeCoordsMap(ac);
     	double [] minmax=GeometryTools.getMinMax(ac,map);
-    	assertEquals(minmax[0],1d);
-    	assertEquals(minmax[1],0d);
-    	assertEquals(minmax[2],1d);
-    	assertEquals(minmax[3],1d);
+    	assertEquals(minmax[0],1d,.1);
+    	assertEquals(minmax[1],0d,.1);
+    	assertEquals(minmax[2],1d,.1);
+    	assertEquals(minmax[3],1d,.1);
     }
 }
 

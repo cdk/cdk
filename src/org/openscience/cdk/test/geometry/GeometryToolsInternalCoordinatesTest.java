@@ -150,10 +150,10 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	double [] minmax=GeometryToolsInternalCoordinates.getMinMax(ac);
-    	assertEquals(minmax[0],1d);
-    	assertEquals(minmax[1],0d);
-    	assertEquals(minmax[2],1d);
-    	assertEquals(minmax[3],1d);
+    	assertEquals(minmax[0],1d,.1);
+    	assertEquals(minmax[1],0d,.1);
+    	assertEquals(minmax[2],1d,.1);
+    	assertEquals(minmax[3],1d,.1);
     }
 }
 
