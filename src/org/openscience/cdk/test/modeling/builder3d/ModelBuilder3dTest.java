@@ -204,6 +204,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mb3d.setMolecule(mol,false);
 			mb3d.generate3DCoordinates();
 		} catch (Exception exc) {
+			exc.printStackTrace();
 			System.out.println("Cannot layout molecule with SMILE: "+smile);
 			if (standAlone)
 			{
@@ -213,6 +214,52 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
+    public void testModelBuilder3D_Konstanz() throws Exception{
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
+		String smile="C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
+		try {
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+			IMolecule mol = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			mb3d.setTemplateHandler();
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
+		} catch (Exception exc) {
+			System.out.println("Cannot layout molecule with SMILE: "+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+
+    public void testModelBuilder3D_Konstanz2() throws Exception{
+    	if (!this.runSlowTests()) fail("Slow tests turned of");
+    	
+		ModelBuilder3D mb3d=new ModelBuilder3D();
+		HydrogenAdder hAdder=new HydrogenAdder();
+		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
+		try {
+			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+			IMolecule mol = sp.parseSmiles(smile);
+			hAdder.addExplicitHydrogensToSatisfyValency(mol);
+			mb3d.setTemplateHandler();
+			mb3d.setMolecule(mol,false);
+			mb3d.generate3DCoordinates();
+		} catch (Exception exc) {
+			System.out.println("Cannot layout molecule with SMILE: "+smile);
+			if (standAlone)
+			{
+				exc.printStackTrace();
+			}
+			fail(exc.toString());
+		}
+	}
+    
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
