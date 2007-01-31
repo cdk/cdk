@@ -39,7 +39,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
     /**
-     * Constructor for the PetitjeanNumberDescriptor object
+     * Constructor for the LengthOverBreadthDescriptor object.
      */
     public LengthOverBreadthDescriptor() {
         logger = new LoggingTool(this);
