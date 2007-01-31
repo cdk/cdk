@@ -86,16 +86,12 @@ public class ModelBuilder3D {
 	private static Map memyselfandi = new HashMap();
 	
 	private TemplateHandler3D templateHandler = null;
-	
-	private final static AtomPlacer atomPlacer = new AtomPlacer();
-	private final static AtomPlacer3D ap3d = new AtomPlacer3D();
-	private final static AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
-	
-	boolean useTemplates = true;
+		
 	private Hashtable parameterSet = null;
-	private IMolecule molecule;
 
-	ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+	private final ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+	private final AtomPlacer atomPlacer = new AtomPlacer();
+
 	String forceFieldName = "mm2";
 	
 	private LoggingTool logger = new LoggingTool(ModelBuilder3D.class);
@@ -131,15 +127,6 @@ public class ModelBuilder3D {
 	}
 
 	/**
-	 *  Initilize classes needed by ModelBuilder 3d
-	 */
-	private void initilizeClassesForModelBuilder3D() {
-		ap3d.initilize(parameterSet);
-		atlp3d.setParameterSet(parameterSet);
-	}
-  
-  
-	/**
 	 *  gives a list of possible force field types
 	 *
 	 *@return                the list
@@ -147,28 +134,6 @@ public class ModelBuilder3D {
   public String[] getFfTypes(){
     return ffc.getFfTypes();
   }
-
-
-	/**
-	 *  Clone molecule? 
-	 *
-	 *@param  mol    Molecule
-	 *@param  clone  boolean
-	 */
-	public void setMolecule(IMolecule mol, boolean clone) {
-
-		if (clone) {
-			try {
-				this.molecule = (IMolecule) mol.clone();
-			} catch (CloneNotSupportedException e) {
-				logger.error("Should clone, but exception occured: ", e.getMessage());
-				logger.debug(e);
-			}
-		} else {
-			this.molecule = mol;
-		}
-		atomPlacer.setMolecule(molecule);
-	}
 
 
 	/**
@@ -184,8 +149,6 @@ public class ModelBuilder3D {
 			forceFieldName = ffname;
 			ffc.setForceFieldConfigurator(ffname);
 			parameterSet = ffc.getParameterSet();
-			//ReadForceField
-			initilizeClassesForModelBuilder3D();
 		} catch (Exception ex1) {
 			logger.error("Problem with ForceField configuration due to>" + ex1.getMessage());
 			logger.debug(ex1);
@@ -194,18 +157,25 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  generate 3D coordinates with force field information
-	 *
-	 *@return                int
-	 *@exception  Exception  Description of the Exception
+	 * Generate 3D coordinates with force field information.
 	 */
-	public int generate3DCoordinates() throws Exception {
-		//logger.debug("******** GENERATE COORDINATES ********");
+	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone) throws Exception {
+		logger.debug("******** GENERATE COORDINATES ********");
 		//CHECK FOR CONNECTIVITY!
-		//logger.debug("#atoms>"+molecule.getAtomCount());
+		logger.debug("#atoms>"+molecule.getAtomCount());
 		if (!ConnectivityChecker.isConnected(molecule)) {
-			throw new Exception("CDKError: Molecule is NOT connected,could not layout.");
+			throw new CDKException("Molecule is NOT connected, could not layout.");
 		}
+		
+		// setup helper classes
+		AtomPlacer3D ap3d = new AtomPlacer3D();
+		AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
+		ap3d.initilize(parameterSet);
+		atlp3d.setParameterSet(parameterSet);
+		
+		if (clone) molecule = (IMolecule)molecule.clone();
+		atomPlacer.setMolecule(molecule);
+		
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
 			logger.debug("Only one Heavy Atom");
 			molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
@@ -215,10 +185,10 @@ public class ModelBuilder3D {
 				logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 				logger.debug(ex3);
 			}
-			return 1;
+			return molecule;
 		}
 		//Assing Atoms to Rings,Aliphatic and Atomtype
-		org.openscience.cdk.interfaces.IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
+		IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
 		List ringSystems = null;
 		IRingSet largestRingSet = null;
 		double NumberOfRingAtoms = 0;
@@ -237,25 +207,21 @@ public class ModelBuilder3D {
 			}
 
 			setAtomsToPlace(largestRingSetContainer);
-			searchAndPlaceBranches(largestRingSetContainer);
+			searchAndPlaceBranches(molecule, largestRingSetContainer, ap3d, atlp3d);
 			largestRingSet = null;
 		} else {
 			//logger.debug("****** Start of handling aliphatic molecule ******");
 			IAtomContainer ac = null;
 
-			try {
-				ac = atomPlacer.getInitialLongestChain(molecule);
-				setAtomsToUnVisited();
-				setAtomsToUnPlaced();
-				ap3d.placeAliphaticHeavyChain(molecule, ac);
-				//ZMatrixApproach
-				ap3d.zmatrixChainToCartesian(molecule, false);
-				searchAndPlaceBranches(ac);
-			} catch (Exception ex1) {
-				throw new IOException("AliphaticChainError: Problem with finding longest chain");
-			}
+			ac = atomPlacer.getInitialLongestChain(molecule);
+			setAtomsToUnVisited(molecule);
+			setAtomsToUnPlaced(molecule);
+			ap3d.placeAliphaticHeavyChain(molecule, ac);
+			//ZMatrixApproach
+			ap3d.zmatrixChainToCartesian(molecule, false);
+			searchAndPlaceBranches(molecule, ac, ap3d, atlp3d);
 		}
-		layoutMolecule(ringSystems);
+		layoutMolecule(ringSystems, molecule, ap3d, atlp3d);
 		//logger.debug("******* PLACE SUBSTITUENTS ******");
 		try {
 			atlp3d.add3DCoordinatesForSinglyBondedLigands(molecule);
@@ -263,7 +229,7 @@ public class ModelBuilder3D {
 			logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 			logger.debug(ex3);
 		}
-		return 1;
+		return molecule;
 	}
 
 
@@ -275,7 +241,7 @@ public class ModelBuilder3D {
 	 *@param  atom         Description of the Parameter
 	 *@return              The ringSetOfAtom value
 	 */
-	public IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
+	private IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
 		IRingSet ringSetOfAtom = null;
 		for (int i = 0; i < ringSystems.size(); i++) {
 			if (((IRingSet) ringSystems.get(i)).contains(atom)) {
@@ -290,9 +256,10 @@ public class ModelBuilder3D {
 	 *  Layout the molecule, starts with ring systems and than aliphatic chains
 	 *
 	 *@param  ringSetMolecule  ringSystems of the molecule
+	 * @param atlp3d 
 	 *@exception  Exception    Description of the Exception
 	 */
-	public void layoutMolecule(List ringSetMolecule) throws Exception {
+	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
 		//logger.debug("****** LAYOUT MOLECULE MAIN *******");
 		IAtomContainer ac = null;
 		int safetyCounter = 0;
@@ -316,9 +283,9 @@ public class ModelBuilder3D {
 				Point3d firstAtomOriginalCoord = unplacedAtom.getPoint3d();
 				Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
 
-				setBranchAtom(unplacedAtom, atom, ap3d.getPlacedHeavyAtoms(molecule, atom));
-				layoutRingSystem(firstAtomOriginalCoord, unplacedAtom, ringSetA, centerPlacedMolecule, atom);
-				searchAndPlaceBranches(ringSetAContainer);
+				setBranchAtom(molecule, unplacedAtom, atom, ap3d.getPlacedHeavyAtoms(molecule, atom), ap3d, atlp3d);
+				layoutRingSystem(firstAtomOriginalCoord, unplacedAtom, ringSetA, centerPlacedMolecule, atom, ap3d);
+				searchAndPlaceBranches(molecule, ringSetAContainer, ap3d, atlp3d);
 				//logger.debug("Ready layout Ring System");
 				ringSetA = null;
 				unplacedAtom = null;
@@ -326,12 +293,12 @@ public class ModelBuilder3D {
 				centerPlacedMolecule = null;
 			} else {
 				//logger.debug("layout chains...");
-				setAtomsToUnVisited();
+				setAtomsToUnVisited(molecule);
 				atom = ap3d.getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(molecule);
 				if (atom != null) {
 					ac = new org.openscience.cdk.AtomContainer();
 					ac.addAtom(atom);
-					searchAndPlaceBranches(ac);
+					searchAndPlaceBranches(molecule, ac, ap3d, atlp3d);
 					ac = null;
 				}
 			}
@@ -347,8 +314,9 @@ public class ModelBuilder3D {
 	 *@param  ringSet               ring system which placedRingAtom is part of
 	 *@param  centerPlacedMolecule  the geometric center of the already placed molecule
 	 *@param  atomB                 placed neighbour atom of  placedRingAtom
+	 * @param ap3d 
 	 */
-	private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, IRingSet ringSet, Point3d centerPlacedMolecule, IAtom atomB) {
+	private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, IRingSet ringSet, Point3d centerPlacedMolecule, IAtom atomB, AtomPlacer3D ap3d) {
 		//logger.debug("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
 		IAtomContainer ac = getAllInOneContainer(ringSet);
 		Point3d newCoord = placedRingAtom.getPoint3d();
@@ -441,9 +409,11 @@ public class ModelBuilder3D {
 	 *@param  unplacedAtom    The new branchAtom 
 	 *@param  atomA           placed atom to which the unplaced satom is connected
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
+	 * @param ap3d 
+	 * @param atlp3d 
 	 *@exception  Exception   Description of the Exception
 	 */
-	public void setBranchAtom(IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours) throws Exception {
+	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
 		//logger.debug("****** SET Branch Atom ****** >"+molecule.getAtomNumber(unplacedAtom));
 		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
 		noCoords.addAtom(unplacedAtom);
@@ -496,9 +466,11 @@ public class ModelBuilder3D {
 	 *  Search and place branches of a chain or ring
 	 *
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
+	 * @param ap3d 
+	 * @param atlp3d 
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void searchAndPlaceBranches(IAtomContainer chain) throws Exception {
+	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
 		java.util.List atoms = null;
 		IAtomContainer branchAtoms = new org.openscience.cdk.AtomContainer();
@@ -519,7 +491,7 @@ public class ModelBuilder3D {
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find connected placed atoms");
 					}
 					try {
-						setBranchAtom(atom, chain.getAtom(i), connectedAtoms);
+						setBranchAtom(molecule, atom, chain.getAtom(i), connectedAtoms, ap3d, atlp3d);
 					} catch (Exception ex2) {
 						logger.error("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to" + ex2.toString());
 						throw new IOException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms");
@@ -530,7 +502,7 @@ public class ModelBuilder3D {
 			}
 
 		}//for ac.getAtomCount
-		placeLinearChains3D(branchAtoms);
+		placeLinearChains3D(molecule, branchAtoms, ap3d, atlp3d);
 	}
 
 
@@ -538,9 +510,11 @@ public class ModelBuilder3D {
 	 *  Layout all aliphatic chains with ZMatrix
 	 *
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
+	 * @param ap3d 
+	 * @param atlp3d 
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void placeLinearChains3D(IAtomContainer startAtoms) throws Exception {
+	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
 		//logger.debug("****** PLACE LINEAR CHAINS ******");
 		IAtom dihPlacedAtom = null;
 		IAtom thirdPlacedAtom = null;
@@ -559,7 +533,7 @@ public class ModelBuilder3D {
 				longestUnplacedChain.addAtom(startAtoms.getAtom(i));
 
 				longestUnplacedChain.add(atomPlacer.getLongestUnplacedChain(molecule, startAtoms.getAtom(i)));
-				setAtomsToUnVisited();
+				setAtomsToUnVisited(molecule);
 				
 				if (longestUnplacedChain.getAtomCount() < 4) {
 					//di,third,sec
@@ -569,7 +543,7 @@ public class ModelBuilder3D {
 					//logger.debug("LongestUnchainLength:"+longestUnplacedChain.getAtomCount());
 					ap3d.placeAliphaticHeavyChain(molecule, longestUnplacedChain);
 					ap3d.zmatrixChainToCartesian(molecule, true);
-					searchAndPlaceBranches(longestUnplacedChain);
+					searchAndPlaceBranches(molecule, longestUnplacedChain, ap3d, atlp3d);
 				}
 				longestUnplacedChain.removeAllElements();
 			}//for
@@ -586,7 +560,7 @@ public class ModelBuilder3D {
 	 *@param  newCoord       new coordinates from branch placement
 	 *@param  ac             AtomContainer contains atoms of ring system 
 	 */
-	public void translateStructure(Point3d originalCoord, Point3d newCoord, IAtomContainer ac) {
+	private void translateStructure(Point3d originalCoord, Point3d newCoord, IAtomContainer ac) {
 		Point3d transVector = new Point3d(originalCoord);
 		transVector.sub(newCoord);
 		for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -652,7 +626,7 @@ public class ModelBuilder3D {
 	/**
 	 *  Sets the atomsToUnPlaced attribute of the ModelBuilder3D object
 	 */
-	private void setAtomsToUnPlaced() {
+	private void setAtomsToUnPlaced(IMolecule molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			molecule.getAtom(i).setFlag(CDKConstants.ISPLACED, false);
 		}
@@ -662,30 +636,10 @@ public class ModelBuilder3D {
 	/**
 	 *  Sets the atomsToUnVisited attribute of the ModelBuilder3D object
 	 */
-	private void setAtomsToUnVisited() {
+	private void setAtomsToUnVisited(IMolecule molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			molecule.getAtom(i).setFlag(CDKConstants.VISITED, false);
 		}
-	}
-
-
-	/**
-	 *  Sets the useTemplates attribute of the ModelBuilder3D object
-	 *
-	 *@param  useTemplates  The new useTemplates value
-	 */
-	public void setUseTemplates(boolean useTemplates) {
-		this.useTemplates = useTemplates;
-	}
-
-
-	/**
-	 *  Gets the useTemplates attribute of the ModelBuilder3D object
-	 *
-	 *@return    The useTemplates value
-	 */
-	public boolean getUseTemplates() {
-		return useTemplates;
 	}
 
 	/**
@@ -699,23 +653,5 @@ public class ModelBuilder3D {
 		this.templateHandler = templateHandler;
 	}
 
-	/**
-	 *  Sets the molecule attribute of the ModelBuilder3D object
-	 *
-	 *@param  molecule  The new molecule value
-	 */
-	public void setMolecule(IMolecule molecule) {
-		setMolecule(molecule, true);
-	}
-
-
-	/**
-	 *  Gets the molecule attribute of the ModelBuilder3D object
-	 *
-	 *@return    The molecule value
-	 */
-	public IMolecule getMolecule() {
-		return this.molecule;
-	}
 }
 

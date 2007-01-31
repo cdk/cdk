@@ -57,6 +57,7 @@ import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -111,7 +112,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with methylenfluoride
 	 */
-	public void testModelBuilder3D_CF() throws CDKException {
+	public void testModelBuilder3D_CF() throws Exception {
 		ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
 		HydrogenAdder hAdder=new HydrogenAdder();
 		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
@@ -119,46 +120,36 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("CF");
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			//mb3d.setTemplateHandler();
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
-			mol = mb3d.getMolecule();
-			for (int i=0;i<mol.getAtomCount();i++){
-				if (i==0){
-					assertEquals(c_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-					assertEquals(c_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-					assertEquals(c_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-				}else if(i==1){
-					assertEquals(f_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-					assertEquals(f_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-					assertEquals(f_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-				}else if(i==2){
-					assertEquals(h1_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-					assertEquals(h1_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-					assertEquals(h1_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-				}else if(i==3){
-					assertEquals(h2_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-					assertEquals(h2_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-					assertEquals(h2_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-				}else if(i==4){
-					assertEquals(h3_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-					assertEquals(h3_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-					assertEquals(h3_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-				}
+
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CF");
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		//mb3d.setTemplateHandler();
+		mol = mb3d.generate3DCoordinates(mol, false);
+		for (int i=0;i<mol.getAtomCount();i++){
+			if (i==0){
+				assertEquals(c_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+				assertEquals(c_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+				assertEquals(c_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
+			}else if(i==1){
+				assertEquals(f_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+				assertEquals(f_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+				assertEquals(f_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
+			}else if(i==2){
+				assertEquals(h1_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+				assertEquals(h1_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+				assertEquals(h1_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
+			}else if(i==3){
+				assertEquals(h2_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+				assertEquals(h2_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+				assertEquals(h2_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
+			}else if(i==4){
+				assertEquals(h3_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
+				assertEquals(h3_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
+				assertEquals(h3_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
 			}
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
 		}
+
     }
     
     public void testModelBuilder3D_CccccC() throws CDKException {
@@ -169,10 +160,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			//mb3d.setTemplateHandler();
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
-			mol = mb3d.getMolecule();
+			mol = mb3d.generate3DCoordinates(mol, false);
 			for (int i=0;i<mol.getAtomCount();i++){
 				assertNotNull(mol.getAtom(i).getPoint3d());
 			}
@@ -198,8 +186,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
+			mb3d.generate3DCoordinates(mol, false);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			System.out.println("Cannot layout molecule with SMILE: "+smile);
@@ -211,7 +198,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
-    public void testModelBuilder3D_Konstanz() throws Exception{
+    public void xtestModelBuilder3D_Konstanz() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
@@ -221,8 +208,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
+			mol = mb3d.generate3DCoordinates(mol, false);
 		} catch (Exception exc) {
 			System.out.println("Cannot layout molecule with SMILE: "+smile);
 			if (standAlone)
@@ -233,26 +219,16 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 	}
 
-    public void testModelBuilder3D_Konstanz2() throws Exception{
+    public void xtestModelBuilder3D_Konstanz2() throws Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		HydrogenAdder hAdder=new HydrogenAdder();
 		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
-		try {
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles(smile);
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
-		} catch (Exception exc) {
-			System.out.println("Cannot layout molecule with SMILE: "+smile);
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles(smile);
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		mol = mb3d.generate3DCoordinates(mol, false);
 	}
     
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
@@ -265,8 +241,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 			IMolecule mol = sp.parseSmiles(smile);
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
+			mol = mb3d.generate3DCoordinates(mol, false);
 		} catch (Exception exc) {
 			System.out.println("Cannot layout molecule with SMILE: "+smile);
 			if (standAlone)
@@ -293,8 +268,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 				mol.getAtom(i).setPoint2d(new Point2d(1,1));
 			}
 			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			mb3d.setMolecule(mol,false);
-			mb3d.generate3DCoordinates();
+			mol = mb3d.generate3DCoordinates(mol, false);
 			assertNotNull(mol.getAtom(0).getPoint3d());
 		} catch (Exception exc) {
 			System.out.println("Cannot layout molecule with SMILE: "+smile);
@@ -320,10 +294,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	            MDLV2000Reader reader = new MDLV2000Reader(ins);
 	            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 	            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-	            IAtomContainer ac=(IAtomContainer)containersList.get(0);
+	            IMolecule ac = new NNMolecule((IAtomContainer)containersList.get(0));
 	            hAdder.addExplicitHydrogensToSatisfyValency(ac);
-	            mb3d.setMolecule(new Molecule(ac),false);
-	            mb3d.generate3DCoordinates();
+				ac = mb3d.generate3DCoordinates(ac, false);
 	            assertNotNull(ac.getAtom(0).getPoint3d());
 	            double avlength=GeometryToolsInternalCoordinates.getBondLengthAverage3D(ac);
 	            for(int i=0;i<ac.getBondCount();i++){
@@ -352,10 +325,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	            MDLV2000Reader reader = new MDLV2000Reader(ins);
 	            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 	            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-	            IAtomContainer ac=(IAtomContainer)containersList.get(0);
+	            IMolecule ac= new NNMolecule((IAtomContainer)containersList.get(0));
 	            hAdder.addExplicitHydrogensToSatisfyValency(ac);
-	            mb3d.setMolecule(new Molecule(ac),false);
-	            mb3d.generate3DCoordinates();
+				ac = mb3d.generate3DCoordinates(ac, false);
 	            assertNotNull(ac.getAtom(0).getPoint3d());
 			} catch (Exception exc) {
 				System.out.println("Cannot layout molecule 232");
@@ -398,8 +370,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		assertEquals(5, methanol.getBondCount());
 
 		try {
-			mb3d.setMolecule(methanol,false);
-			mb3d.generate3DCoordinates();
+			mb3d.generate3DCoordinates(methanol, false);
 		} catch (Exception exc) {
 			logger.error("Cannot layout molecule: ", exc.getMessage());
 			logger.debug(exc);
@@ -485,8 +456,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 							mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
 							mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
 						} */
-						mb3d.setMolecule(mol,false);
-						mb3d.generate3DCoordinates();
+						mol = mb3d.generate3DCoordinates(mol, false);
 						System.out.println("Calculation done");
 					} catch (Exception e) {
 						e.printStackTrace();
