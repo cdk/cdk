@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -116,6 +117,44 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
 			e.printStackTrace();
 	    }
    }
+
+    /*
+     * @cdk.bug        1649007
+     */
+    public void testRotate_IAtomContainer_Point2d_double(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	GeometryToolsInternalCoordinates.rotate(ac, new Point2d(0,0),Math.PI);
+    	assertEquals(atom1.getPoint2d().x,-1,.2);
+    	assertEquals(atom1.getPoint2d().y,1,.2);
+    	assertEquals(atom2.getPoint2d().x,0,.2);
+    	assertEquals(atom2.getPoint2d().y,1,.2);
+    	atom2.setPoint2d(new Point2d(0,0));
+    	GeometryToolsInternalCoordinates.rotate(ac, new Point2d(0,0),Math.PI);
+    	assertFalse(Double.isNaN(atom2.getPoint2d().x));
+    	assertFalse(Double.isNaN(atom2.getPoint2d().y));
+    }
+    
+    
+    public void testGetMinMax_IAtomContainer(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	double [] minmax=GeometryToolsInternalCoordinates.getMinMax(ac);
+    	assertEquals(minmax[0],1d);
+    	assertEquals(minmax[1],0d);
+    	assertEquals(minmax[2],1d);
+    	assertEquals(minmax[3],1d);
+    }
 }
 
 

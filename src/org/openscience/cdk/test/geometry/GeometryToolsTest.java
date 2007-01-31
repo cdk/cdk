@@ -23,10 +23,8 @@
  */
 package org.openscience.cdk.test.geometry;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.vecmath.Point2d;
 
@@ -36,14 +34,11 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -108,6 +103,22 @@ public class GeometryToolsTest extends CDKTestCase {
     		map.put(atom, atom.getPoint2d());
     	}
     	return map;
+    }
+    
+    public void testGetMinMax_IAtomContainer(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	HashMap map=makeCoordsMap(ac);
+    	double [] minmax=GeometryTools.getMinMax(ac,map);
+    	assertEquals(minmax[0],1d);
+    	assertEquals(minmax[1],0d);
+    	assertEquals(minmax[2],1d);
+    	assertEquals(minmax[3],1d);
     }
 }
 
