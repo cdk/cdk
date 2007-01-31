@@ -1,10 +1,13 @@
 package org.openscience.cdk.test.tools.manipulator;
 
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
@@ -72,7 +75,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
         assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
     }
 
-    public void testRingAlreadyInSet_IRing() {
+    public void testRingAlreadyInSet_IRing_IRingSet() {
         IRing r1 = builder.newRing(5, "C");
         IRing r2 = builder.newRing(3, "C");
         
@@ -89,6 +92,45 @@ public class RingSetManipulatorTest extends CDKTestCase {
         assertTrue(RingSetManipulator.ringAlreadyInSet(r2, rs));
     }
     
-	
+    public void testGetAllAtomContainers_IRingSet()
+    {
+    	IRingSet rs = builder.newRingSet();
+    	rs.addAtomContainer(builder.newAtomContainer());
+    	rs.addAtomContainer(builder.newAtomContainer());
+    	List list = RingSetManipulator.getAllAtomContainers(rs);
+    	assertEquals(2, list.size());
+    }
+    
+    public void testGetAllInOneContainer_IRingSet()
+    {
+    	IRingSet rs = builder.newRingSet();
+    	IAtomContainer ac1 = builder.newAtomContainer();
+    	ac1.addAtom(builder.newAtom("O"));
+    	rs.addAtomContainer(ac1);
+    	IAtomContainer ac2 = builder.newAtomContainer();
+    	ac2.addAtom(builder.newAtom("C"));
+    	ac2.addAtom(builder.newAtom("C"));
+    	ac2.addBond(0, 1, 2);
+    	rs.addAtomContainer(ac2);
+    	IAtomContainer ac = RingSetManipulator.getAllInOneContainer(rs);
+    	assertEquals(3, ac.getAtomCount());
+    	assertEquals(1, ac.getBondCount());
+    }
+    
+    public void testGetHeaviestRing_IRingSet_IBond()
+    {
+    	fail();
+    }
+    
+    public void testGetMostComplexRing_IRingSet()
+    {
+    	fail();
+    }
+    
+    public void testSort_IRingSet()
+    {
+    	fail();
+    }
+    
 	
 }
