@@ -26,27 +26,24 @@ package org.openscience.cdk;
 import org.openscience.cdk.interfaces.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
  *  ElectronContainers. <p>
  *
  *  Looping over all Bonds in the AtomContainer is typically done like: <pre>
- *  Bond[] bonds = atomContainer.getBonds();
- *  for (int i = 0; i < bonds.length; i++) {
- *      Bond b = bonds[i];
- *  }
+ * Iterator iter = atomContainer.bonds();
+ * while (iter.hasNext()) {
+ *   IBond aBond = (IBond) iter.next();
+ * }
+ *
  *  </pre>
  *
  * @cdk.module data
  *
- * @author     steinbeck
- * @cdk.created    2000-10-02
+ * @author steinbeck
+ * @cdk.created 2000-10-02
  */
 public class AtomContainer extends ChemObject 
   implements IAtomContainer, IChemObjectListener, Serializable, Cloneable {
