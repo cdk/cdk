@@ -46,6 +46,12 @@ import java.util.List;
  */
 public class ChemSequenceManipulator {
 
+	/**
+	 * Get the total number of atoms inside an IChemSequence.
+	 * 
+	 * @param sequence   The IChemSequence object.
+	 * @return           The number of Atom objects inside.
+	 */
     public static int getAtomCount(IChemSequence sequence) {
     	int count = 0;
         for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -54,6 +60,12 @@ public class ChemSequenceManipulator {
         return count;
     }
 
+    /**
+	 * Get the total number of bonds inside an IChemSequence.
+	 * 
+	 * @param sequence   The IChemSequence object.
+	 * @return           The number of Bond objects inside.
+	 */
     public static int getBondCount(IChemSequence sequence) {
     	int count = 0;
         for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -96,14 +108,22 @@ public class ChemSequenceManipulator {
         return acList;
     }
 
+    /**
+     * Returns a List of all IChemObject inside a ChemSequence.
+     *
+     * @return  A List of all ChemObjects.
+     */
 	public static List getAllChemObjects(IChemSequence sequence) {
 		ArrayList list = new ArrayList();
         // list.add(sequence);
         for (int i=0; i<sequence.getChemModelCount(); i++) {
         	list.add(sequence.getChemModel(i));
-            list.addAll(ChemModelManipulator.getAllChemObjects(
-            	sequence.getChemModel(i)
-            ));
+        	List current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
+            for (Iterator iter = current.iterator(); iter.hasNext();) {
+            	Object o = iter.next();
+            	if (!list.contains(o)) list.add(o);
+            }
+            
         }
 		return list;
 	}
