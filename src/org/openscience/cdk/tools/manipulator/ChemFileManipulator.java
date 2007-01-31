@@ -43,6 +43,12 @@ import java.util.List;
  */
 public class ChemFileManipulator {
 
+	/**
+	 * Get the total number of atoms inside an IChemFile.
+	 * 
+	 * @param file       The IChemFile object.
+	 * @return           The number of Atom object inside.
+	 */
     public static int getAtomCount(IChemFile file) {
     	int count = 0;
         for (int i=0; i<file.getChemSequenceCount(); i++) {
@@ -51,6 +57,12 @@ public class ChemFileManipulator {
         return count;
     }
 
+    /**
+	 * Get the total number of bonds inside an IChemFile.
+	 * 
+	 * @param file       The IChemFile object.
+	 * @return           The number of Bond object inside.
+	 */
     public static int getBondCount(IChemFile file) {
     	int count = 0;
         for (int i=0; i<file.getChemSequenceCount(); i++) {
@@ -80,14 +92,15 @@ public class ChemFileManipulator {
     }
 
     /**
-     * Returns a List of all IChemObject in this ChemFile.
+     * Returns a List of all IChemObject inside a ChemFile.
      *
      * @return  A list of all ChemObjects
      */
     public static List getAllChemObjects(IChemFile file) {
     	ArrayList list = new ArrayList();
-    	list.add(file);
+    	//list.add(file); // should not add the original file
         for (int i=0; i<file.getChemSequenceCount(); i++) {
+        	list.add(file.getChemSequence(i));
             list.addAll(ChemSequenceManipulator.getAllChemObjects(
                 file.getChemSequence(i)
             ));
@@ -108,6 +121,12 @@ public class ChemFileManipulator {
         return acList;
     }
     
+    /**
+     * Get a list of all ChemModels inside an IChemFile.
+     * 
+     * @param file  The IChemFile object.
+     * @return      The List of IChemModel objects inside.
+     */
     public static List getAllChemModels(IChemFile file)
     {
         List modelsList = new ArrayList();

@@ -98,8 +98,9 @@ public class ChemSequenceManipulator {
 
 	public static List getAllChemObjects(IChemSequence sequence) {
 		ArrayList list = new ArrayList();
-        list.add(sequence);
+        // list.add(sequence);
         for (int i=0; i<sequence.getChemModelCount(); i++) {
+        	list.add(sequence.getChemModel(i));
             list.addAll(ChemModelManipulator.getAllChemObjects(
             	sequence.getChemModel(i)
             ));

@@ -248,7 +248,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     		else if (o instanceof IMoleculeSet) ++molSetCount;
     		else if (o instanceof IReaction) ++reactionCount;
     		else if (o instanceof IReactionSet) ++reactionSetCount;
-    		else System.out.println(o.getClass());
+    		else fail("Unexpected Object of type " + o.getClass());
     	}
     	//assertEquals(3, atomCount);
     	//assertEquals(1, bondCount);

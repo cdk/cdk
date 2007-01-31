@@ -109,7 +109,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
     	assertEquals(0, AtomContainerSetManipulator.getBondCount(ms));
     }
     
-    public void testRemoveAtomAndConnnectedElectronContainers_IAtomContainerSet_IAtom()
+    public void testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom()
     {
     	IAtomContainerSet ms = new AtomContainerSet();
     	IAtomContainer mol = new AtomContainer();
@@ -158,14 +158,14 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 		assertEquals(2, list.size());
 	}
 	
-	public void testGetAllInOneAtomContainer_IAtomContainerSet()
+	public void testGetAllInOneContainer_IAtomContainerSet()
 	{
 		IAtomContainer ac = AtomContainerSetManipulator.getAllInOneContainer(som);
 		assertTrue(ac.contains(atomInMol1));
 		assertTrue(ac.contains(atomInMol2));
 	}
 	
-	public void testSetAtomProperties_IAtomContainerSet_IObject_IObject()
+	public void testSetAtomProperties_IAtomContainerSet_Object_Object()
 	{
 		String key = "key";
 		String value = "value";
