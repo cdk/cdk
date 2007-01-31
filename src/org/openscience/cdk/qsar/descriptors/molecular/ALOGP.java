@@ -1900,7 +1900,7 @@ public class ALOGP implements IMolecularDescriptor {
 			AllRingsFinder arf = new AllRingsFinder();
 			rs = arf.findAllRings(container);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new CDKException("Could not find all rings: " + e.getMessage(), e);
 		}
 		fragment = new String[container.getAtomCount()];
 		IAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
