@@ -198,7 +198,7 @@ public class TemplateHandler3D {
             }//if fingerprint
         }//for i
         if (!flagMaxSubstructure) {
-            System.out.println("WARNING:Maybe RingTemplateError");
+            System.out.println("WARNING: Maybe RingTemplateError!");
         }
     }
 
