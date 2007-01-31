@@ -39,18 +39,19 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -62,9 +63,12 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
  * @cdk.bug     1300920
  */
 public class TemplateHandler3D {
-    Molecule molecule;
-    RingSet sssr;
-    MoleculeSet templates = null;
+	
+	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	
+    IMolecule molecule;
+    IRingSet sssr;
+    IMoleculeSet templates = null;
     List fingerprintData = null;
     List ringTemplates = null;
 
@@ -72,7 +76,7 @@ public class TemplateHandler3D {
      * The empty constructor.
      */
     public TemplateHandler3D() {
-        templates = new MoleculeSet();
+        templates = builder.newMoleculeSet();
         fingerprintData = new ArrayList();
         ringTemplates = new ArrayList(75);
     }
@@ -91,13 +95,13 @@ public class TemplateHandler3D {
         try {
             ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
             fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
-            imdl = new IteratingMDLReader(fin, DefaultChemObjectBuilder.getInstance());
+            imdl = new IteratingMDLReader(fin, builder);
         } catch (Exception exc1) {
             throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
         }
-        Molecule molecule;
+        IMolecule molecule;
         while (imdl.hasNext()) {
-            molecule = (Molecule) imdl.next();
+            molecule = (IMolecule) imdl.next();
             templates.addMolecule(molecule);
         }
         molecule = null;
