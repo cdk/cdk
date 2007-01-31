@@ -113,6 +113,9 @@ public class BondToolsTest extends CDKTestCase {
 	}
 
 
+	/*
+	 * shk3 I do not know what this method is supposed to do, so the test fails.
+	 */
 	public void testCloseEnoughToBond_IAtom_IAtom_double(){
 		try{
 			String filename = "data/mdl/testdoublebondconfig.mol";
@@ -227,6 +230,49 @@ public class BondToolsTest extends CDKTestCase {
 	        chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 	        mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
 	        assertTrue(BondTools.stereosAreOpposite(mol,mol.getAtom(0)));
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			fail(exc.getMessage());
+		}		
+	}
+
+	public void testMakeUpDownBonds_IAtomContainer(){
+		try{
+			String filename = "data/mdl/tetrahedral_2_lazy.mol";
+		    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLV2000Reader reader = new MDLV2000Reader(ins);
+	        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	        IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+	        BondTools.makeUpDownBonds(mol);
+	        assertEquals(-1,mol.getBond(3).getStereo());
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			fail(exc.getMessage());
+		}		
+	}
+
+	public void testGiveAngle_IAtom_IAtom_IAtom(){
+		try{
+			String filename = "data/mdl/testdoublebondconfig.mol";
+		    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLV2000Reader reader = new MDLV2000Reader(ins);
+	        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	        IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+	        assertEquals(2.0943946986086157,BondTools.giveAngle(mol.getAtom(0),mol.getAtom(2),mol.getAtom(3)),0.2);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			fail(exc.getMessage());
+		}		
+	}
+
+	public void testGiveAngleFromMiddle_IAtom_IAtom_IAtom(){
+		try{
+			String filename = "data/mdl/testdoublebondconfig.mol";
+		    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		    MDLV2000Reader reader = new MDLV2000Reader(ins);
+	        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+	        IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+	        assertEquals(2.0943946986086157,BondTools.giveAngleFromMiddle(mol.getAtom(0),mol.getAtom(2),mol.getAtom(3)),0.2);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 			fail(exc.getMessage());
