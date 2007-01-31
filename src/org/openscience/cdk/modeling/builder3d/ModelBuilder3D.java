@@ -29,10 +29,11 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.List;
-import java.util.Vector;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -82,14 +83,18 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class ModelBuilder3D {
 
-	private static TemplateHandler3D DEFAULT_TEMPLATE_HANDLER = new TemplateHandler3D();
+	private static Map memyselfandi = new HashMap();
+	
 	private TemplateHandler3D templateHandler = null;
+	
+	private final static AtomPlacer atomPlacer = new AtomPlacer();
+	private final static AtomPlacer3D ap3d = new AtomPlacer3D();
+	private final static AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
+	
 	boolean useTemplates = true;
 	private Hashtable parameterSet = null;
 	private IMolecule molecule;
-	private AtomPlacer atomPlacer = new AtomPlacer();
-	private AtomPlacer3D ap3d = new AtomPlacer3D();
-	private AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
+
 	ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 	String forceFieldName = "mm2";
 	
@@ -97,37 +102,33 @@ public class ModelBuilder3D {
 	
 	/**
 	 *  Constructor for the ModelBuilder3D object
-	 */
-	public ModelBuilder3D() {
-    setForceField(null);
-  }
-
-
-	/**
-	 *  Constructor for the ModelBuilder3D object
 	 *
 	 *@param  molecule         Molecule
 	 *@param  templateHandler  templateHandler Object
 	 *@param  ffname           name of force field
 	 */
-	public ModelBuilder3D(IMolecule molecule, TemplateHandler3D templateHandler, String ffname)  throws CDKException{
-		setMolecule(molecule, false);
+	private ModelBuilder3D(TemplateHandler3D templateHandler, String ffname) throws CDKException {
 		setTemplateHandler(templateHandler);
 		setForceField(ffname);
 	}
 
-
-	/**
-	 *  Creates an instance of this class while assigning a molecule to be layed
-	 *  out.
-	 *
-	 *@param  molecule  The molecule to be layed out.
-	 */
-	public ModelBuilder3D(IMolecule molecule) {
-		setMolecule(molecule, false);
-    setForceField(null);
+	public static ModelBuilder3D getInstance(TemplateHandler3D templateHandler, String ffname) throws CDKException {
+		if (ffname == null || ffname.length() == 0) throw new CDKException("The given ffname is null or empty!");
+		if (templateHandler == null) throw new CDKException("The given template handler is null!");
+		
+		String builderCode = templateHandler.getClass().getName()+ "#" + ffname;
+		if (!memyselfandi.containsKey(builderCode)) {
+			ModelBuilder3D builder = new ModelBuilder3D(
+				templateHandler, ffname
+			);
+			return builder;
+		}
+		return (ModelBuilder3D)memyselfandi.get(builderCode);
 	}
 
+	public static ModelBuilder3D getInstance() throws CDKException {
+		return getInstance(TemplateHandler3D.getInstance(), "mm2");
+	}
 
 	/**
 	 *  Initilize classes needed by ModelBuilder 3d
@@ -175,7 +176,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  ffname  forceField name
 	 */
-	public void setForceField(String ffname) {
+	private void setForceField(String ffname) {
 		if (ffname == null) {
 			ffname = "mm2";
 		}
@@ -687,26 +688,16 @@ public class ModelBuilder3D {
 		return useTemplates;
 	}
 
-
 	/**
 	 *  Sets the templateHandler attribute of the ModelBuilder3D object
 	 *
 	 *@param  templateHandler  The new templateHandler value
 	 */
-	public void setTemplateHandler(TemplateHandler3D templateHandler) throws CDKException{
+	private void setTemplateHandler(TemplateHandler3D templateHandler) throws CDKException {
+		if (templateHandler == null) throw new NullPointerException("The given template handler is null!");
+		
 		this.templateHandler = templateHandler;
-		this.templateHandler.loadTemplates();
 	}
-
-
-	/**
-	 *  Sets the templateHandler attribute of the ModelBuilder3D object
-	 */
-	public void setTemplateHandler() throws CDKException{
-		this.templateHandler = DEFAULT_TEMPLATE_HANDLER;
-		this.templateHandler.loadTemplates();
-	}
-
 
 	/**
 	 *  Sets the molecule attribute of the ModelBuilder3D object

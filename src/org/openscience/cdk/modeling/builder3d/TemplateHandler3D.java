@@ -72,15 +72,18 @@ public class TemplateHandler3D {
     List fingerprintData = null;
     List ringTemplates = null;
 
-    /**
-     * The empty constructor.
-     */
-    public TemplateHandler3D() {
+    private static TemplateHandler3D self = null;
+    
+    private TemplateHandler3D() {
         templates = builder.newMoleculeSet();
         fingerprintData = new ArrayList();
         ringTemplates = new ArrayList(75);
     }
 
+    public static TemplateHandler3D getInstance() {
+    	if (self == null) self = new TemplateHandler3D();
+    	return self;
+    }
 
     /**
      * Loads all existing templates into memory To add templates to be used in
