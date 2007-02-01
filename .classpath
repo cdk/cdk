@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="org/openscience/cdk/libio/joelib/Convertor.java|org/openscience/cdk/test/libio/joelib/JOELibIOTest.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="perf"/>
 	<classpathentry kind="lib" path="develjar/ant_doxygen.jar"/>
 	<classpathentry kind="lib" path="develjar/dbdoclet.jar"/>
-	<classpathentry kind="lib" path="develjar/jakarta-oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="develjar/jaxen-1.1-beta-7.jar"/>
 	<classpathentry kind="lib" path="develjar/junit.jar"/>
-	<classpathentry kind="lib" path="develjar/pmd-3.6.jar"/>
-	<classpathentry kind="lib" path="develjar/saxpath-1.0-fcs.jar"/>
 	<classpathentry kind="lib" path="doc/jar/jabref.jar"/>
 	<classpathentry kind="lib" path="jar/antlr.jar"/>
 	<classpathentry kind="lib" path="jar/batik-awt-util.jar"/>
@@ -37,8 +34,6 @@
 	<classpathentry kind="lib" path="jar/sjava-0.68.jar"/>
 	<classpathentry kind="lib" path="jar/vecmath1.2-1.14.jar"/>
 	<classpathentry kind="lib" path="jar/weka.jar"/>
-	<classpathentry kind="lib" path="jar/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="jar/xercesSamples.jar"/>
 	<classpathentry kind="lib" path="jar/xindice.jar"/>
 	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
 	<classpathentry kind="lib" path="jar/xmldb.jar"/>

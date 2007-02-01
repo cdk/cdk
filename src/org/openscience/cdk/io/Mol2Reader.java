@@ -37,17 +37,18 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
@@ -254,27 +255,30 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         try {
                             int atom1 = Integer.parseInt(atom1Str);
                             int atom2 = Integer.parseInt(atom2Str);
-                            double order = 0;
-                            if ("1".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_AROMATIC;
-                            } else if ("2".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_DOUBLE;
-                            } else if ("3".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_TRIPLE;
-                            } else if ("am".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_SINGLE;
-                            } else if ("ar".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_AROMATIC;
-                            } else if ("du".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_SINGLE;
-                            } else if ("un".equals(orderStr)) {
-                                order = CDKConstants.BONDORDER_SINGLE;
-                            } else if ("nc".equals(orderStr)) {
-                                // not connected
-                                order = 0;
-                            }
-                            if (order != 0) {
-                                molecule.addBond(atom1-1, atom2-1, order);
+                            if ("nc".equals(orderStr)) {
+                            	// do not connect the atoms
+                            } else {
+                        		IBond bond = molecule.getBuilder().newBond(
+                        			molecule.getAtom(atom1-1),
+                        			molecule.getAtom(atom2-1)
+                        		);
+                            	if ("1".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                            	} else if ("2".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
+                            	} else if ("3".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_TRIPLE);
+                            	} else if ("am".equals(orderStr) || "ar".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                            		bond.setFlag(CDKConstants.ISAROMATIC, true);
+                            		bond.getAtom(0).setFlag(CDKConstants.ISAROMATIC, true);
+                            		bond.getAtom(1).setFlag(CDKConstants.ISAROMATIC, true);
+                            	} else if ("du".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                            	} else if ("un".equals(orderStr)) {
+                            		bond.setOrder(CDKConstants.BONDORDER_SINGLE);
+                            	}
+                            	molecule.addBond(bond);
                             }
                         } catch (NumberFormatException nfExc) {
                             String error = "Error while reading bond information";
