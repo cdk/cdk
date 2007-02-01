@@ -20,11 +20,20 @@
  */
 package org.openscience.cdk.test.graph;
 
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -32,8 +41,24 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class SpanningTreeTest extends CDKTestCase {
     
+	private SpanningTree azulene;
+	
     public SpanningTreeTest(String name) {
         super(name);
+    }
+    
+    public void setUp() throws Exception {
+    	// load azulene
+		String filename = "data/mdl/azulene.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+		IChemSequence seq = chemFile.getChemSequence(0);
+		IChemModel model = seq.getChemModel(0);
+		IMolecule azulene = model.getMoleculeSet().getMolecule(0);
+		assertEquals(10, azulene.getAtomCount());
+		assertEquals(11, azulene.getBondCount());
+		this.azulene = new SpanningTree(azulene);
     }
     
 	public static Test suite() {
@@ -43,6 +68,20 @@ public class SpanningTreeTest extends CDKTestCase {
 	public void testSpanningTree_IAtomContainer() {
 		SpanningTree sTree = new SpanningTree(new AtomContainer());
 		assertNotNull(sTree);
+	}
+	
+	public void testGetCyclicFragmentsContainer() throws Exception {
+		IAtomContainer ringSystems = this.azulene.getCyclicFragmentsContainer();
+		assertEquals(10, ringSystems.getAtomCount());
+		assertEquals(11, ringSystems.getBondCount());
+	}
+
+	public void testGetBondsCyclicCount() throws Exception {
+		assertEquals(11, this.azulene.getBondsCyclicCount());
+	}
+
+	public void testGetBondsAcyclicCount() throws Exception {
+		assertEquals(0, this.azulene.getBondsAcyclicCount());
 	}
 
 }
