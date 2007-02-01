@@ -38,6 +38,7 @@
       <antcall target="test-module"><param name="module" value="io-jmol"/></antcall>
       <antcall target="test-module"><param name="module" value="extra"/></antcall>
       <antcall target="test-module"><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-joelib"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
@@ -47,6 +48,7 @@
       <antcall target="test-module"><param name="module" value="qsar"/></antcall>
       <antcall target="test-module"><param name="module" value="experimental"/></antcall>
       <antcall target="test-module"><param name="module" value="svg"/></antcall>
+      <antcall target="test-module"><param name="module" value="structgen"/></antcall>
       <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
