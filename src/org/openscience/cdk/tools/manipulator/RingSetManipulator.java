@@ -70,7 +70,7 @@ public class RingSetManipulator {
     	return atomContainerList;
     }
     /**
-     * Sorts the rings in the set by size. The largest ring comes
+     * Sorts the rings in the set by size. The smallest ring comes
      * first.
      */
 	public static void sort(IRingSet ringSet) {
@@ -79,7 +79,7 @@ public class RingSetManipulator {
 		while (rings.hasNext()) {
 			ringList.add(rings.next());
 		}
-		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.LARGE_FIRST));
+		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
 		ringSet.removeAllAtomContainers();
 		Iterator iter = ringList.iterator();
 		while (iter.hasNext()) ringSet.addAtomContainer((IRing)iter.next());

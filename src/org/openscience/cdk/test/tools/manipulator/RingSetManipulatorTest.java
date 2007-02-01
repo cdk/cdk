@@ -22,36 +22,46 @@ public class RingSetManipulatorTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
+	private IRingSet ringset = null;
+	private IAtom ring1Atom1 = null;
+	private IAtom ring1Atom3 = null;
+	private IAtom ring2Atom3 = null;
+	private IBond bondRing2Ring3 = null;
+	private IRing ring2 = null;
+	private IRing ring3 = null;
+	
 	public RingSetManipulatorTest(String name) {
         super(name);
     }
 	
 	public void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
-    }
-	
-	public static Test suite() {
-		return new TestSuite(RingSetManipulatorTest.class);
-	}
-	
-    public void testIsSameRing_IRingSet_IAtom_IAtom() {
-    	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IRingSet ringset = builder.newRingSet();
-
-        IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
+       	ringset = builder.newRingSet();
+       	ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
         IAtom ring1Atom2 = builder.newAtom("C");
-        IAtom ring1Atom3 = builder.newAtom("C");
+        ring1Atom3 = builder.newAtom("C");
         IAtom ring2Atom1 = builder.newAtom("C");
         IAtom ring2Atom2 = builder.newAtom("C");
-        IAtom ring2Atom3 = builder.newAtom("C");
+        ring2Atom3 = builder.newAtom("C");
+        IAtom ring3Atom3 = builder.newAtom("C");
+        IAtom ring3Atom4 = builder.newAtom("C");
+        
+        IAtom ring4Atom1 = builder.newAtom("C");
+        IAtom ring4Atom2 = builder.newAtom("C");
+        
         IBond ring1Bond1 = builder.newBond(ring1Atom1, ring1Atom2);
         IBond ring1Bond2 = builder.newBond(ring1Atom2, ring1Atom3);
         IBond ring1Bond3 = builder.newBond(ring1Atom3, ring1Atom1);
-        
-        IBond ring2Bond1 = builder.newBond(ring2Atom1, ring2Atom2);
+        bondRing2Ring3 = builder.newBond(ring2Atom1, ring2Atom2);
         IBond ring2Bond2 = builder.newBond(ring2Atom2, ring2Atom3);
-        IBond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1);
-
+        IBond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1, 2.0);
+        IBond ring3Bond2 = builder.newBond(ring2Atom2, ring3Atom3);
+        IBond bondRing3Ring4 = builder.newBond(ring3Atom3, ring3Atom4);
+        IBond ring3Bond4 = builder.newBond(ring3Atom4, ring2Atom1);
+        IBond ring4Bond1 = builder.newBond(ring4Atom1, ring4Atom2);
+        IBond ring4Bond2 = builder.newBond(ring4Atom2, ring3Atom3);
+        IBond ring4Bond3 = builder.newBond(ring3Atom4, ring4Atom1);
+        
         IRing ring1 = builder.newRing();
         ring1.addAtom(ring1Atom1);
         ring1.addAtom(ring1Atom2);
@@ -60,17 +70,45 @@ public class RingSetManipulatorTest extends CDKTestCase {
         ring1.addBond(ring1Bond2);
         ring1.addBond(ring1Bond3);
 
-        IRing ring2 = builder.newRing();
+        ring2 = builder.newRing();
         ring2.addAtom(ring2Atom1);
         ring2.addAtom(ring2Atom2);
         ring2.addAtom(ring2Atom3);
-        ring2.addBond(ring2Bond1);
+        ring2.addBond(bondRing2Ring3);
         ring2.addBond(ring2Bond2);
         ring2.addBond(ring2Bond3);
         
+        ring3 = builder.newRing();
+        ring3.addAtom(ring2Atom1);
+        ring3.addAtom(ring2Atom2);
+        ring3.addAtom(ring3Atom3);
+        ring3.addAtom(ring3Atom4);
+        ring3.addBond(bondRing2Ring3);
+        ring3.addBond(ring3Bond2);
+        ring3.addBond(bondRing3Ring4);
+        ring3.addBond(ring3Bond4);
+        
+        IRing ring4 = builder.newRing();
+        ring4.addAtom(ring4Atom1);
+        ring4.addAtom(ring4Atom2);
+        ring4.addAtom(ring3Atom3);
+        ring4.addAtom(ring3Atom4);
+        ring4.addBond(bondRing3Ring4);
+        ring4.addBond(ring4Bond1);
+        ring4.addBond(ring4Bond2);
+        ring4.addBond(ring4Bond3);
+        
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
-        
+        ringset.addAtomContainer(ring3);
+        ringset.addAtomContainer(ring4);
+    }
+	
+	public static Test suite() {
+		return new TestSuite(RingSetManipulatorTest.class);
+	}
+	
+    public void testIsSameRing_IRingSet_IAtom_IAtom() {
         assertTrue(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring1Atom3));
         assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
     }
@@ -95,8 +133,8 @@ public class RingSetManipulatorTest extends CDKTestCase {
     public void testGetAllAtomContainers_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
-    	rs.addAtomContainer(builder.newAtomContainer());
-    	rs.addAtomContainer(builder.newAtomContainer());
+    	rs.addAtomContainer(builder.newRing());
+    	rs.addAtomContainer(builder.newRing());
     	List list = RingSetManipulator.getAllAtomContainers(rs);
     	assertEquals(2, list.size());
     }
@@ -104,10 +142,10 @@ public class RingSetManipulatorTest extends CDKTestCase {
     public void testGetAllInOneContainer_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
-    	IAtomContainer ac1 = builder.newAtomContainer();
+    	IAtomContainer ac1 = builder.newRing();
     	ac1.addAtom(builder.newAtom("O"));
     	rs.addAtomContainer(ac1);
-    	IAtomContainer ac2 = builder.newAtomContainer();
+    	IAtomContainer ac2 = builder.newRing();
     	ac2.addAtom(builder.newAtom("C"));
     	ac2.addAtom(builder.newAtom("C"));
     	ac2.addBond(0, 1, 2);
@@ -119,17 +157,25 @@ public class RingSetManipulatorTest extends CDKTestCase {
     
     public void testGetHeaviestRing_IRingSet_IBond()
     {
-    	fail();
+    	IRing ring = RingSetManipulator.getHeaviestRing(ringset, bondRing2Ring3);
+    	assertEquals(ring2, ring);
     }
     
     public void testGetMostComplexRing_IRingSet()
     {
-    	fail();
+    	IRing ring = RingSetManipulator.getMostComplexRing(ringset);
+    	assertEquals(ring3, ring);
     }
     
     public void testSort_IRingSet()
     {
-    	fail();
+    	RingSetManipulator.sort(ringset);
+    	assertEquals(4, ringset.getAtomContainerCount());
+    	int currentSize = ringset.getAtomContainer(0).getAtomCount();
+    	for (int i = 1; i < ringset.getAtomContainerCount(); ++i) {
+    		assertTrue(ringset.getAtomContainer(i).getAtomCount() >= currentSize);
+    		currentSize = ringset.getAtomContainer(i).getAtomCount();
+    	}
     }
     
 	

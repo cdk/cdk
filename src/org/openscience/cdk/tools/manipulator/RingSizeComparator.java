@@ -34,9 +34,9 @@ import org.openscience.cdk.interfaces.IRing;
  */
 public class RingSizeComparator implements java.util.Comparator {
     
-    /** Flag to denote that the set is order with the largest ring first? */
+    /** Flag to denote that the set is order with the largest ring first */
     public final static int LARGE_FIRST = 1;
-    /** Flag to denote that the set is order with the smallest ring first? */
+    /** Flag to denote that the set is order with the smallest ring first */
     public final static int SMALL_FIRST = 2;
     
     int sortOrder = SMALL_FIRST;
@@ -56,16 +56,16 @@ public class RingSizeComparator implements java.util.Comparator {
         int size1 = ((IRing)object1).getAtomCount();
         int size2 = ((IRing)object2).getAtomCount();
         if (size1 == size2) return 0;
-        if (size2 > size1 && sortOrder == SMALL_FIRST) {
+        if (size1 > size2 && sortOrder == SMALL_FIRST) {
             return 1;
         }
-        if (size2 > size1 && sortOrder == LARGE_FIRST) {
+        if (size1 > size2 && sortOrder == LARGE_FIRST) {
             return -1;
         }
-        if (size2 < size1 && sortOrder == SMALL_FIRST) {
+        if (size1 < size2 && sortOrder == SMALL_FIRST) {
             return -1;
         }
-        if (size2 < size1 && sortOrder == LARGE_FIRST) {
+        if (size1 < size2 && sortOrder == LARGE_FIRST) {
             return 1;
         }
         return 0;
