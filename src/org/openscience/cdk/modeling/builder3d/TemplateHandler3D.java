@@ -80,8 +80,11 @@ public class TemplateHandler3D {
         ringTemplates = new ArrayList(75);
     }
 
-    public static TemplateHandler3D getInstance() {
-    	if (self == null) self = new TemplateHandler3D();
+    public static TemplateHandler3D getInstance() throws CDKException {
+    	if (self == null) {
+    		self = new TemplateHandler3D();
+    		self.loadTemplates();
+    	}
     	return self;
     }
 
@@ -89,7 +92,7 @@ public class TemplateHandler3D {
      * Loads all existing templates into memory To add templates to be used in
      * Template file is a mdl file. Creates a Object Set of Molecules
      */
-    public void loadTemplates() throws CDKException {
+    private void loadTemplates() throws CDKException {
         //logger.debug("TEMPLATE START");
         IteratingMDLReader imdl;
         InputStream ins;
