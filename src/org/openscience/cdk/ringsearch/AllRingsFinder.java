@@ -1,31 +1,26 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
- *  Contact: cdk-devel@lists.sourceforge.net
+ * Contact: cdk-devel@lists.sourceforge.net
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public License
- *  as published by the Free Software Foundation; either version 2.1
- *  of the License, or (at your option) any later version.
- *  All we ask is that proper credit is given for our work, which includes
- *  - but is not limited to - adding the above copyright notice to the beginning
- *  of your source code files, and to any copyright notice that you may distribute
- *  with programs based on this work.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.ringsearch;
 
@@ -45,23 +40,23 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  Finds the Set of all Rings. This is an implementation of the algorithm
- *  published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
- *  fragments listed in this article. The concept is that a regular molecular
- *  graph is converted into a path graph first, i.e. a graph where the edges are
- *  actually paths, i.e. can list several nodes that are implicitly connecting
- *  the two nodes between the path is formed. The paths that join one endnode
- *  are step by step fused and the joined nodes deleted from the pathgraph. What
- *  remains is a graph of paths that have the same start and endpoint and are
- *  thus rings.
+ * Finds the Set of all Rings. This is an implementation of the algorithm
+ * published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
+ * fragments listed in this article. The concept is that a regular molecular
+ * graph is converted into a path graph first, i.e. a graph where the edges are
+ * actually paths, i.e. can list several nodes that are implicitly connecting
+ * the two nodes between the path is formed. The paths that join one endnode
+ * are step by step fused and the joined nodes deleted from the pathgraph. What
+ * remains is a graph of paths that have the same start and endpoint and are
+ * thus rings.
  *
- *  <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it aborts
- *  its ringsearch. The timeout value can be customized by the setTimeout()
- *  method of this class.  
+ * <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it aborts
+ * its ringsearch. The timeout value can be customized by the setTimeout()
+ * method of this class.  
  *
- *@author        steinbeck
- *@cdk.created       3. Juni 2005
- *@cdk.module    standard
+ * @author        steinbeck
+ * @cdk.created   2002-06-23
+ * @cdk.module    standard
  */
 public class AllRingsFinder
 {
