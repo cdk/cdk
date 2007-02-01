@@ -31,6 +31,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  *  Class that returns the complexity of a system. The complexity is defined as @cdk.cite{Nilakantan06}:
@@ -103,7 +104,7 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-		return null;
+        return null;
         // return the parameters as used for the descriptor calculation
     }
 
@@ -111,37 +112,52 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
     /**
      * Calculate the complexity in the supplied {@link AtomContainer}.
      * 
-     *@param  ac  The {@link AtomContainer} for which this descriptor is to be calculated
+     *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   the complexity
      *@see #setParameters
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-    	//System.out.println("FragmentComplexityDescriptor");
-    	int A=0;
-    	double H=0;
-    	for (int i=0; i<container.getAtomCount();i++){
-    		if (!container.getAtom(i).getSymbol().equals("H")){
-    			A++;    			
-    		}
-    		if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")){
-    			H++;
-    		}
-    	}
-    	int B=container.getBondCount();
-    	double C=Math.abs(B*B-A*A+A)+(H/100);
-    	//System.out.println("A:"+A+" B:"+B+" H:"+H+"H/100:"+H/100+" C:"+C);
-    	return new DescriptorValue(getSpecification(), getParameterNames(), 
-    		getParameters(), new DoubleResult(C), new String[] { "fragC" });
+        //System.out.println("FragmentComplexityDescriptor");
+        int A=0;
+        double H=0;
+        for (int i=0; i<container.getAtomCount();i++){
+            if (!container.getAtom(i).getSymbol().equals("H")){
+                A++;
+            }
+            if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")){
+                H++;
+            }
+        }
+        int B=container.getBondCount();
+        double C=Math.abs(B*B-A*A+A)+(H/100);
+        //System.out.println("A:"+A+" B:"+B+" H:"+H+"H/100:"+H/100+" C:"+C);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+            getParameters(), new DoubleResult(C), new String[] { "fragC" });
     }
 
-   
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleResult(0.0);
+    }
+
+
     /**
      *  Gets the parameterNames attribute of the FragmentComplexityDescriptor object.
      *
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-    	return null;
+        return null;
     }
 
 

@@ -23,10 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,7 +34,12 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -204,17 +205,32 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
                 new DoubleResult(chi1vC), new String[] {"chi1vC"});
 	}
 
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleResult(0.0);
+    }
 
-	/**
-	 *  Gets the parameterNames attribute of the
-	 *  ValenceCarbonConnectivityOrderOneDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		// no param names to return
-		return (null);
-	}
+
+    /**
+     *  Gets the parameterNames attribute of the
+     *  ValenceCarbonConnectivityOrderOneDescriptor object
+     *
+     *@return    The parameterNames value
+     */
+    public String[] getParameterNames() {
+        // no param names to return
+        return (null);
+    }
 
 
 

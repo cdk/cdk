@@ -31,44 +31,44 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 import java.util.ArrayList;
 
 /**
- *  Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
- *  a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
- *  "they are intended to capture different aspects of molecular shape.
- *  In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
- *  m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
- *  and let p3 denote the number of paths of length 3".
- *
+ * Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
+ * a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
+ * "they are intended to capture different aspects of molecular shape.
+ * In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
+ * m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
+ * and let p3 denote the number of paths of length 3".
+ * <p/>
  * Returns three values in the order
  * <ol>
  * <li>Kier1 -  First kappa shape index
  * <li>Kier2 - Second kappa shape index
  * <li>Kier3 -  Third kappa (&kappa;) shape index
  * </ol>
- *
+ * <p/>
  * <p>This descriptor uses these parameters:
  * <table border="1">
- *   <tr>
- *     <td>Name</td>
- *     <td>Default</td>
- *     <td>Description</td>
- *   </tr>
- *   <tr>
- *     <td></td>
- *     <td></td>
- *     <td>no parameters</td>
- *   </tr>
+ * <tr>
+ * <td>Name</td>
+ * <td>Default</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr>
+ * <td></td>
+ * <td></td>
+ * <td>no parameters</td>
+ * </tr>
  * </table>
  *
- * @author      mfe4
+ * @author mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsar
- * @cdk.set     qsar-descriptors
+ * @cdk.module qsar
+ * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierValues
- *
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
@@ -77,33 +77,35 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
     private ArrayList singlePaths = null;
     private ArrayList doublePaths = null;
     private ArrayList triplePaths = null;
-    /**
-     *  Constructor for the KappaShapeIndicesDescriptor object
-     */
-    public KappaShapeIndicesDescriptor() { }
-
 
     /**
-     *  Gets the specification attribute of the
-     *  KappaShapeIndicesDescriptor object
-     *
-     *@return    The specification value
+     * Constructor for the KappaShapeIndicesDescriptor object
      */
-    public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
-            this.getClass().getName(),
-            "$Id$",
-            "The Chemistry Development Kit");
+    public KappaShapeIndicesDescriptor() {
     }
 
 
     /**
-     *  Sets the parameters attribute of the
-     *  KappaShapeIndicesDescriptor object
+     * Gets the specification attribute of the
+     * KappaShapeIndicesDescriptor object
      *
-     *@param  params            The new parameters value
-     *@exception  CDKException  Description of the Exception
+     * @return The specification value
+     */
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
+                this.getClass().getName(),
+                "$Id$",
+                "The Chemistry Development Kit");
+    }
+
+
+    /**
+     * Sets the parameters attribute of the
+     * KappaShapeIndicesDescriptor object
+     *
+     * @param params The new parameters value
+     * @throws CDKException Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
@@ -111,10 +113,10 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Gets the parameters attribute of the
-     *  KappaShapeIndicesDescriptor object
+     * Gets the parameters attribute of the
+     * KappaShapeIndicesDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     public Object[] getParameters() {
         // no parameters to return
@@ -123,11 +125,11 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  calculates the kier shape indices for an atom container
+     * calculates the kier shape indices for an atom container
      *
-     *@param  atomContainer                AtomContainer
-     *@return                   kier1, kier2 and kier3 are returned as arrayList of doubles
-     *@exception  CDKException  Possible Exceptions
+     * @param atomContainer AtomContainer
+     * @return kier1, kier2 and kier3 are returned as arrayList of doubles
+     * @throws CDKException Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
 
@@ -155,15 +157,15 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
             bond1 = 0;
             firstAtomNeighboors = atomContainer.getConnectedAtomsList(atomContainer.getAtom(a1));
             for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2 ++) {
-                bond1 = atomContainer.getBondNumber( atomContainer.getAtom(a1), (IAtom)firstAtomNeighboors.get(a2) );
-                if(!singlePaths.contains(new Double(bond1))) {
+                bond1 = atomContainer.getBondNumber(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2));
+                if (!singlePaths.contains(new Double(bond1))) {
                     singlePaths.add(new Double(bond1));
                     java.util.Collections.sort(singlePaths);
                 }
-                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom)firstAtomNeighboors.get(a2));
+                secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
                 for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3 ++) {
-                    bond2 = atomContainer.getBondNumber( (IAtom)firstAtomNeighboors.get(a2), (IAtom)secondAtomNeighboors.get(a3) );
-                    if(!singlePaths.contains(new Double(bond2))) {
+                    bond2 = atomContainer.getBondNumber((IAtom) firstAtomNeighboors.get(a2), (IAtom) secondAtomNeighboors.get(a3));
+                    if (!singlePaths.contains(new Double(bond2))) {
                         singlePaths.add(new Double(bond2));
                     }
                     sorterFirst[0] = bond1;
@@ -172,13 +174,13 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
 
                     tmpbond2 = sorterFirst[0] + "+" + sorterFirst[1];
 
-                    if(!doublePaths.contains(tmpbond2) && (bond1 != bond2)) {
+                    if (!doublePaths.contains(tmpbond2) && (bond1 != bond2)) {
                         doublePaths.add(tmpbond2);
                     }
-                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom)secondAtomNeighboors.get(a3));
+                    thirdAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) secondAtomNeighboors.get(a3));
                     for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4 ++) {
-                        bond3 = atomContainer.getBondNumber( (IAtom)secondAtomNeighboors.get(a3), (IAtom)thirdAtomNeighboors.get(a4) );
-                        if(!singlePaths.contains(new Double(bond3))) {
+                        bond3 = atomContainer.getBondNumber((IAtom) secondAtomNeighboors.get(a3), (IAtom) thirdAtomNeighboors.get(a4));
+                        if (!singlePaths.contains(new Double(bond3))) {
                             singlePaths.add(new Double(bond3));
                         }
                         sorterSecond[0] = bond1;
@@ -187,8 +189,8 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
                         java.util.Arrays.sort(sorterSecond);
 
                         tmpbond3 = sorterSecond[0] + "+" + sorterSecond[1] + "+" + sorterSecond[2];
-                        if(!triplePaths.contains(tmpbond3)) {
-                            if((bond1 != bond2) && (bond1 != bond3) && (bond2 != bond3)) {
+                        if (!triplePaths.contains(tmpbond3)) {
+                            if ((bond1 != bond2) && (bond1 != bond3) && (bond2 != bond3)) {
                                 triplePaths.add(tmpbond3);
                             }
                         }
@@ -197,31 +199,30 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
             }
         }
 
-        if(atomsCount == 1) {
+        if (atomsCount == 1) {
             kier1 = 0;
             kier2 = 0;
             kier3 = 0;
-        }
-        else {
-            kier1 = ( ( (atomsCount) * ( (atomsCount - 1) * (atomsCount - 1) ) ) / ( singlePaths.size() * singlePaths.size() ) );
-            if(atomsCount == 2) {
+        } else {
+            kier1 = (((atomsCount) * ((atomsCount - 1) * (atomsCount - 1))) / (singlePaths.size() * singlePaths.size()));
+            if (atomsCount == 2) {
                 kier2 = 0;
                 kier3 = 0;
-            }
-            else {
+            } else {
                 if (doublePaths.size() == 0) kier2 = Double.NaN;
-                else kier2 = ( ( (atomsCount - 1) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( doublePaths.size() * doublePaths.size() ) );
-                if(atomsCount == 3) {
+                else
+                    kier2 = (((atomsCount - 1) * ((atomsCount - 2) * (atomsCount - 2))) / (doublePaths.size() * doublePaths.size()));
+                if (atomsCount == 3) {
                     kier3 = 0;
-                }
-                else {
-                    if(atomsCount % 2 != 0) {
+                } else {
+                    if (atomsCount % 2 != 0) {
                         if (triplePaths.size() == 0) kier3 = Double.NaN;
-                        else kier3 = ( ( (atomsCount - 1) * ( (atomsCount - 3) * (atomsCount - 3) ) ) / ( triplePaths.size() * triplePaths.size() ) );
-                    }
-                    else {
+                        else
+                            kier3 = (((atomsCount - 1) * ((atomsCount - 3) * (atomsCount - 3))) / (triplePaths.size() * triplePaths.size()));
+                    } else {
                         if (triplePaths.size() == 0) kier3 = Double.NaN;
-                        else kier3 = ( ( (atomsCount - 3) * ( (atomsCount - 2) * (atomsCount - 2) ) ) / ( triplePaths.size() * triplePaths.size() ) );
+                        else
+                            kier3 = (((atomsCount - 3) * ((atomsCount - 2) * (atomsCount - 2))) / (triplePaths.size() * triplePaths.size()));
                     }
                 }
             }
@@ -231,15 +232,30 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         kierValues.add(kier2);
         kierValues.add(kier3);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues,
-                new String[] {"Kier1", "Kier2", "Kier3"});
+                new String[]{"Kier1", "Kier2", "Kier3"});
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleArrayResult();
     }
 
 
     /**
-     *  Gets the parameterNames attribute of the
-     *  KappaShapeIndicesDescriptor object
+     * Gets the parameterNames attribute of the
+     * KappaShapeIndicesDescriptor object
      *
-     *@return    The parameterNames value
+     * @return The parameterNames value
      */
     public String[] getParameterNames() {
         // no param names to return
@@ -247,13 +263,12 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
     }
 
 
-
     /**
-     *  Gets the parameterType attribute of the
-     *  KappaShapeIndicesDescriptor object
+     * Gets the parameterType attribute of the
+     * KappaShapeIndicesDescriptor object
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param name Description of the Parameter
+     * @return The parameterType value
      */
     public Object getParameterType(String name) {
         return (null);

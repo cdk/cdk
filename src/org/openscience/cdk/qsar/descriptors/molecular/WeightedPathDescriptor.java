@@ -27,6 +27,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
@@ -229,6 +230,21 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
                 "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"
         };
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleArrayResult();
     }
 
     double[] getPathWeights(List pathList, IAtomContainer atomContainer) {

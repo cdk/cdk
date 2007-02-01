@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
@@ -128,7 +129,7 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
     atomloop:
     for(int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++)
     {
-    	IAtom atom = (IAtom)ac.getAtom(atomIndex);
+        IAtom atom = (IAtom)ac.getAtom(atomIndex);
       // checking for O and N atoms where the formal charge is >= 0
       if((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0)
       {
@@ -153,6 +154,21 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
 
     return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
             new IntegerResult(hBondDonors),  new String[] {"nHBDon"});
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new IntegerResult(1);
     }
 
 

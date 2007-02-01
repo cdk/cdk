@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
 
@@ -1923,14 +1924,29 @@ public class ALOGP implements IMolecularDescriptor {
 			getParameters(), results, new String[] {"ALogP", "ALogP2", "AMR"} );
 	}
 
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleArrayResult();
+    }
 
-	public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://www.epa.gov/toddmartin/#ALOGP",
-				this.getClass().getName(),
-				"$Id: AminoAcidCountDescriptor.java 6171 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) egonw $",
+
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.epa.gov/toddmartin/#ALOGP",
+                this.getClass().getName(),
+                "$Id: AminoAcidCountDescriptor.java 6171 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) egonw $",
                 "The Chemistry Development Kit");
-	}
+    }
 
 
 	public String[] getParameterNames() {

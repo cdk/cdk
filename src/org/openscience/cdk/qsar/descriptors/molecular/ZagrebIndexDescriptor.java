@@ -31,6 +31,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
@@ -102,7 +103,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
         //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
         IAtom atomi = null;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-        	atomi = atomContainer.getAtom(i);
+            atomi = atomContainer.getAtom(i);
             int atomDegree = 0;
             java.util.List neighbours = atomContainer.getConnectedAtomsList(atomi);
             for (int a = 0; a < neighbours.size(); a++) {
@@ -114,6 +115,21 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(zagreb), new String[] {"Zagreb"});
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleResult(0.0);
     }
 
 

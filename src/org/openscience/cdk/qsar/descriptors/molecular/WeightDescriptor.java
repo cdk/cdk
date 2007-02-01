@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  *  IDescriptor based on the weight of atoms of a certain element type. 
@@ -153,7 +154,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
         }
         else if (elementName.equals("H")) {
             try {
-            	IIsotope h=IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
+                IIsotope h=IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
                         weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
@@ -163,7 +164,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-            	throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
+                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
             }
         }
         else {
@@ -174,7 +175,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-            	throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
+                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
             }
         }
 
@@ -183,6 +184,21 @@ public class WeightDescriptor implements IMolecularDescriptor {
         else name += elementName;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight),
                 new String[] {name});
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleResult(0.0);
     }
 
 

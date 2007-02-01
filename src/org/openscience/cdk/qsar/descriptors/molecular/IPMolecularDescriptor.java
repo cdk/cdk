@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +32,9 @@ import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. It is
@@ -67,9 +68,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class IPMolecularDescriptor implements IMolecularDescriptor {
 
-	/** parameter for inizate IReactionSet*/
-	private boolean setEnergy = false;
-	private IReactionSet reactionSet;
+    /** parameter for inizate IReactionSet*/
+    private boolean setEnergy = false;
+    private IReactionSet reactionSet;
     /**
      *  Constructor for the IPMolecularDescriptor object
      */
@@ -120,59 +121,75 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-    	reactionSet = atomContainer.getBuilder().newReactionSet();
-    	DoubleArrayResult dar = new DoubleArrayResult();
-    	IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
-    	Iterator itA = atomContainer.atoms();
-    	while(itA.hasNext()){
-    		IAtom atom = (IAtom) itA.next();
-    		double result = -1;
-    		if(setEnergy){
-    			IReactionSet irs = descriptorA.getReactionSet(atom,atomContainer);
-    			if(irs.getReactionCount() > 0){
-	    			Iterator iter = irs.reactions();
-	    			while(iter.hasNext()){
-	    				reactionSet.addReaction((IReaction)iter.next());
-	    			}
-    			}
-    			
-    		}else
-    			result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
-    		
-    		if(result != -1)
-    		dar.add(result);
-    	}
-            
-    	IPBondDescriptor descriptorB = new IPBondDescriptor();
-    	for(int i = 0; i < atomContainer.getBondCount(); i++){
-    		double result = -1;
-    		if(setEnergy){
-    			IReactionSet irs = descriptorB.getReactionSet(atomContainer.getBond(i),atomContainer);
-    			if(irs.getReactionCount() > 0){
-	    			Iterator iter = irs.reactions();
-	    			while(iter.hasNext()){
-	    				reactionSet.addReaction((IReaction)iter.next());
-	    			}
-    			}
-    		}else
-    			result = ((DoubleResult)descriptorB.calculate(atomContainer.getBond(i),atomContainer).getValue()).doubleValue();
-    		
-    		if(result != -1)
-        		dar.add(result);
-    	}
-    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), dar);
+        reactionSet = atomContainer.getBuilder().newReactionSet();
+        DoubleArrayResult dar = new DoubleArrayResult();
+        IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
+        Iterator itA = atomContainer.atoms();
+        while(itA.hasNext()){
+            IAtom atom = (IAtom) itA.next();
+            double result = -1;
+            if(setEnergy){
+                IReactionSet irs = descriptorA.getReactionSet(atom,atomContainer);
+                if(irs.getReactionCount() > 0){
+                    Iterator iter = irs.reactions();
+                    while(iter.hasNext()){
+                        reactionSet.addReaction((IReaction)iter.next());
+                    }
+                }
+
+            }else
+                result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
+
+            if(result != -1)
+            dar.add(result);
+        }
+
+        IPBondDescriptor descriptorB = new IPBondDescriptor();
+        for(int i = 0; i < atomContainer.getBondCount(); i++){
+            double result = -1;
+            if(setEnergy){
+                IReactionSet irs = descriptorB.getReactionSet(atomContainer.getBond(i),atomContainer);
+                if(irs.getReactionCount() > 0){
+                    Iterator iter = irs.reactions();
+                    while(iter.hasNext()){
+                        reactionSet.addReaction((IReaction)iter.next());
+                    }
+                }
+            }else
+                result = ((DoubleResult)descriptorB.calculate(atomContainer.getBond(i),atomContainer).getValue()).doubleValue();
+
+            if(result != -1)
+                dar.add(result);
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), dar);
     }
+
     /**
-	 * This method calculates the ionization potential of a molecule and set the ionization
-	 * energy into each reaction as property
-	 * 
-	 * @return The IReactionSet value
-	 */
-	public IReactionSet getReactionSet(IAtomContainer container) throws CDKException{
-		setEnergy = true;
-		calculate(container);
-		return reactionSet;
-	}
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new DoubleArrayResult();
+    }
+
+    /**
+     * This method calculates the ionization potential of a molecule and set the ionization
+     * energy into each reaction as property
+     *
+     * @return The IReactionSet value
+     */
+    public IReactionSet getReactionSet(IAtomContainer container) throws CDKException{
+        setEnergy = true;
+        calculate(container);
+        return reactionSet;
+    }
 
 
     /**

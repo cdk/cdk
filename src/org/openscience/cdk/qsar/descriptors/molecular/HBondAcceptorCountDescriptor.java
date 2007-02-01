@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
@@ -159,7 +160,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
       if(ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0)
       {
         //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-    	  java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+          java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
         for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
           if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("N") ||
               (((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("C") && ((IAtom)neighbours.get(neighbourIndex)).getFlag(CDKConstants.ISAROMATIC)))
@@ -170,6 +171,21 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
 
     return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
             new IntegerResult(hBondAcceptors), new String[] {"nHBAcc"});
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new IntegerResult(1);
     }
 
     /**
