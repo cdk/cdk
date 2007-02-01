@@ -10,12 +10,14 @@ def getBugPage(pageNum, which = 'sf'):
     offset = (pageNum - 1) * 50
     if which == 'sf':
         url = 'http://sourceforge.net/tracker/index.php?func=browse&group_id=20024&atid=120024&set=custom&_assigned_to=0&_status=1&_category=100&_group=100&order=artifact_id&sort=DESC&offset=%d' % (offset)
-        msg = 'Getting SF bugs %d to %d ...' % (offset, offset+49)
+        msg = 'Getting SF bugs %d to %d ...\r' % (offset, offset+49)
     else:
         url = 'http://sourceforge.net/tracker/index.php?func=browse&group_id=20024&atid=120024&set=custom&_assigned_to=0&_status=100&_category=100&_group=100&order=artifact_id&sort=DESC&offset=%d' % (offset)
-        msg = 'Getting all bugs %d to %d ...' % (offset, offset+49)
+        msg = 'Getting all bugs %d to %d ...\r' % (offset, offset+49)
         
-    print msg
+    sys.stdout.write(msg)
+    sys.stdout.flush() 
+
     data = urllib.urlopen(url)
     return data.read()
 
@@ -90,7 +92,7 @@ def analyzeBugs(outputFile, cdkSrcDir):
             for result in results:
                 markedBugs[result] = filename
 
-    print '\n'
+    print '                                                          \r'
 
     print 'Found bugs on SF = %d' % (len(allBugs.keys()))
     print ' of which %d are open\n' % (len(openBugs.keys()))
