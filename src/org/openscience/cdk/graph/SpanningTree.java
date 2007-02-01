@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,6 +46,9 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.keyword ring finding
  */
 public class SpanningTree {
+	
+	private final static String ATOM_NUMBER = "ST_ATOMNO";
+	
 	private int[] parent = null;
 	private int[][] cb = null; // what is cb??? cyclic bonds?
 	
@@ -125,7 +130,7 @@ public class SpanningTree {
 		sptSize = 0;edrSize = 0; 		
 		fastFindInit(totalVertexCount);
 		for (int i = 0; i < totalVertexCount; i++) {
-			(atomContainer.getAtom(i)).setProperty("ST_ATOMNO", Integer.toString(i+1));
+			(atomContainer.getAtom(i)).setProperty(ATOM_NUMBER, Integer.toString(i+1));
 		}
 		IBond bond;
 		int v1,v2;
@@ -134,8 +139,8 @@ public class SpanningTree {
 		for (int b=0; b < totalEdgeCount; b++ ) {
 			bondsInTree[b] = false;			
 			bond = atomContainer.getBond(b);
-			v1 = Integer.parseInt((bond.getAtom(0)).getProperty("ST_ATOMNO").toString());
-			v2 = Integer.parseInt((bond.getAtom(1)).getProperty("ST_ATOMNO").toString());
+			v1 = Integer.parseInt((bond.getAtom(0)).getProperty(ATOM_NUMBER).toString());
+			v2 = Integer.parseInt((bond.getAtom(1)).getProperty(ATOM_NUMBER).toString());
 			//this below is a little bit  slower
 			//v1 = atomContainer.getAtomNumber(bond.getAtomAt(0))+1; 
 			//v2 = atomContainer.getAtomNumber(bond.getAtomAt(1))+1;
@@ -160,6 +165,9 @@ public class SpanningTree {
 			for (int a = 0; a < totalEdgeCount; a++) 
 				cb[i][a] = 0;
 		
+		// remove ATOM_NUMBER props again
+		Iterator atoms = atomContainer.atoms();
+		while (atoms.hasNext()) ((IAtom)atoms.next()).removeProperty(ATOM_NUMBER);
 	}
 	
 	public IAtomContainer getSpanningTree() {
