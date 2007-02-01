@@ -27,18 +27,27 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
-
-import java.util.ArrayList;
-import java.util.List;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -194,7 +203,7 @@ public class DeduceBondSystemTool {
 
         //logger.debug("");
 
-        for (int i = 0; i <= al.size() - 1; i++) {
+        for (int i = 0; i < al.size(); i++) {
 
             String s = (String) al.get(i);
             String s1 = s.substring(0, s.indexOf("-"));
@@ -722,6 +731,7 @@ public class DeduceBondSystemTool {
             return rs;
 
         } catch (Exception e) {
+        	logger.error("Error while removing rings I don't deal with: " + e.getMessage());
             return new RingSet();
         }
     }
