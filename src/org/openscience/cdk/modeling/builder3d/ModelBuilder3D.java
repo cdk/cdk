@@ -500,7 +500,7 @@ public class ModelBuilder3D {
 						setBranchAtom(molecule, atom, chain.getAtom(i), connectedAtoms, ap3d, atlp3d);
 					} catch (Exception ex2) {
 						logger.error("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to" + ex2.toString());
-						throw new IOException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms");
+						throw new CDKException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms: " + ex2.getMessage(), ex2);
 					}
 					branchAtoms.addAtom(atom);
 					connectedAtoms.removeAllElements();
