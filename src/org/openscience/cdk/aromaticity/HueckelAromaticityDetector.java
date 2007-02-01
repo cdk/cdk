@@ -180,7 +180,7 @@ public class HueckelAromaticityDetector
 		}
 
 		IRing ring = null;
-		RingSetManipulator.sort(ringSet);
+		//RingSetManipulator.sort(ringSet);
 		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
 			ring = (IRing) ringSet.getAtomContainer(f);

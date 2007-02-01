@@ -148,7 +148,7 @@ public class AllRingsFinder
 		{
 			doSearch(ac, pathes, ringSet);
 		}
-		atomContainer.setProperty(CDKConstants.ALL_RINGS, ringSet);
+//		atomContainer.setProperty(CDKConstants.ALL_RINGS, ringSet);
 		return ringSet;
 	}
 

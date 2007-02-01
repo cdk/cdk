@@ -96,7 +96,7 @@ public class SSSRFinder {
 			return null;
 		}
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
-		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
+//		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
 		return toRingSet(atomContainer, cycleBasis().cycles());	  
 
 	}
@@ -113,7 +113,7 @@ public class SSSRFinder {
 			return null;
 		}
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
-		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
+//		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
 		
 		return toRingSet(atomContainer, cycleBasis().essentialCycles());	  
 
@@ -132,7 +132,7 @@ public class SSSRFinder {
 		}
 		
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
-		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
+//		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
 
 		return toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());	  
 

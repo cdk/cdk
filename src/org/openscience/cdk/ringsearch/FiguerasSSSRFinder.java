@@ -189,7 +189,7 @@ public class FiguerasSSSRFinder {
 		logger.debug("fullSet.size(): " + fullSet.size());				
 		logger.debug("trimSet.size(): " + trimSet.size());		
 		logger.debug("trimCounter: " + trimCounter);
-		molecule.setProperty(CDKConstants.SMALLEST_RINGS, sssr);
+//		molecule.setProperty(CDKConstants.SMALLEST_RINGS, sssr);
 	return sssr;	  
 	}
 
