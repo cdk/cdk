@@ -116,6 +116,7 @@ public class ModelBuilder3D {
 			ModelBuilder3D builder = new ModelBuilder3D(
 				templateHandler, ffname
 			);
+			memyselfandi.put(builderCode, builder);
 			return builder;
 		}
 		return (ModelBuilder3D)memyselfandi.get(builderCode);
