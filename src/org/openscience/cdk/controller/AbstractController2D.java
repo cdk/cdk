@@ -962,11 +962,13 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			logger.info("User asks to delete an Atom");
 			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedAtom);
 			logger.debug("Atoms before delete: ", container.getAtomCount());
+			Iterator atoms = container.getConnectedAtomsList(highlightedAtom).iterator();
 			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
 			IElectronContainer[] eContainer = AtomContainerManipulator.getElectronContainerArray(container.getConnectedElectronContainersList(highlightedAtom));
 			for (int i=0; i<eContainer.length; i++) {
 				undoRedoContainer.addBond((IBond) eContainer[i]);
 			}
+			updateAtoms(container, atoms);
 			undoRedoContainer.addAtom(highlightedAtom);
 			if (type == null) {
 				type = "Remove Atom";
@@ -975,47 +977,37 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				type = "Remove Substructure";
 			}
 			logger.debug("Atoms before delete: ", container.getAtomCount());
-			// update atoms
-			java.util.List atoms = container.getConnectedAtomsList(highlightedAtom);
-			if (atoms.size() > 0)
-			{
-				IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, (IAtom)atoms.get(0));
-				updateAtoms(atomCon, atoms.iterator());
+		} else if (highlightedBond != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedBond))){
+			logger.info("User asks to delete a Bond");
+			ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
+			undoRedoContainer.addBond(highlightedBond);
+			if (type == null) {
+				type = "Remove Bond";
 			}
-			} else if (highlightedBond != null && (r2dm.getSelectedPart()==null || !r2dm.getSelectedPart().contains(highlightedBond)))
-			{
-				logger.info("User asks to delete a Bond");
-				ChemModelManipulator.removeElectronContainer(chemModel, highlightedBond);
-				undoRedoContainer.addBond(highlightedBond);
-				if (type == null) {
-					type = "Remove Bond";
-				}
-				else {
-					type = "Remove Substructure";
-				}
-				// update atoms
-				java.util.Iterator atoms = highlightedBond.atoms();
-				IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedBond.getAtom(0));
-				updateAtoms(container, atoms);
-			} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
-				logger.info("User asks to delete selected part");
-				IAtomContainer containerToUpdate = ChemModelManipulator.getRelevantAtomContainer(chemModel, r2dm.getSelectedPart().getAtom(0));
-				for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
-					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
-					undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
-				}
-				for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
-					ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
-					undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
-				}
+			else {
 				type = "Remove Substructure";
-				// update atoms
-				java.util.Iterator atoms = r2dm.getSelectedPart().atoms();
-				updateAtoms(containerToUpdate, atoms);
-			}else
-			{
-				logger.warn("Cannot deleted if nothing is highlighted");
-				return;
+			}
+			// update atoms
+			java.util.Iterator atoms = highlightedBond.atoms();
+			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedBond.getAtom(0));
+			updateAtoms(container, atoms);
+		} else if(r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().getAtomCount()>0 || r2dm.getSelectedPart().getBondCount()>0)){
+			logger.info("User asks to delete selected part");
+			IAtomContainer containerToUpdate = ChemModelManipulator.getRelevantAtomContainer(chemModel, r2dm.getSelectedPart().getAtom(0));
+			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
+				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
+				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
+			}
+			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
+				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
+				undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
+			}
+			type = "Remove Substructure";
+			// update atoms
+			updateAtoms(containerToUpdate, containerToUpdate.atoms());
+		}else{
+			logger.warn("Cannot deleted if nothing is highlighted");
+			return;
 		}
 		/*
 		 *  PRESERVE THIS. This notifies the
