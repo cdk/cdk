@@ -242,7 +242,7 @@ public class HueckelAromaticityDetector
 	}
 
 
-	/**
+	/*
 	 *  Sets the current AllRingsFinder instance Use this if you want to customize
 	 *  the timeout for the AllRingsFinder. AllRingsFinder is stopping its quest to
 	 *  find all rings after a default of 5 seconds.
@@ -250,11 +250,16 @@ public class HueckelAromaticityDetector
 	 *@param  ringFinder  The value to assign ringFinder.
 	 *@see                org.openscience.cdk.ringsearch.AllRingsFinder
 	 */
-	public void setRingFinder(AllRingsFinder ringFinder)
-	{
-		this.ringFinder = ringFinder;
-	}
+//	public void setRingFinder(AllRingsFinder ringFinder)
+//	{
+//		this.ringFinder = ringFinder;
+//	}
 
+	/**
+	 * Sets the timeout for the AllRingsFinder. The default is 5000ms.
+	 * 
+	 * @param timeout  The timeout for the AllRingsFinder.
+	 */
 	public static void setTimeout(long timeout) {
 		HueckelAromaticityDetector.timeout = timeout;
 	}
