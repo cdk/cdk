@@ -73,9 +73,10 @@ public class IteratingMDLReaderTest extends CDKTestCase {
                 assertNotNull(object);
                 assertTrue(object instanceof Molecule);
                 molCount++;
+                assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
+                    	MDLV2000Format.getInstance(), reader.getFormat());
             }
             
-            assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
             assertEquals(6, molCount);
         } catch (Exception e) {
             logger.debug(e);
