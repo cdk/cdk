@@ -40,7 +40,7 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 	 */
 	public void testRedo() {
 		ChemModel model = createMol();
-		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "");
+		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "",null);
 		edit.undo();
 		edit.redo();
 		int newAtomCount = model.getMoleculeSet().getMolecule(0)
@@ -57,7 +57,7 @@ public class AddAtomsAndBondsEditTest extends CDKTestCase {
 	 */
 	public void testUndo() {
 		ChemModel model = createMol();
-		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "");
+		UndoableEdit edit = new AddAtomsAndBondsEdit(model, undoCont, "",null);
 		edit.undo();
 		int newAtomCount = model.getMoleculeSet().getMolecule(0)
 				.getAtomCount();
