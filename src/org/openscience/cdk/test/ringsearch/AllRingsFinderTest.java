@@ -230,6 +230,22 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
+	public void testAzulene() throws Exception {
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		
+		String filename = "data/mdl/azulene.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
+		IChemSequence seq = chemFile.getChemSequence(0);
+		IChemModel model = seq.getChemModel(0);
+		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+
+		ringSet = arf.findAllRings(molecule);
+		assertEquals(3, ringSet.getAtomContainerCount());
+	}
+
 	public void testBigMoleculeWithIsolatedRings() throws Exception {
         IRingSet ringSet = null;
         AllRingsFinder arf = new AllRingsFinder();
