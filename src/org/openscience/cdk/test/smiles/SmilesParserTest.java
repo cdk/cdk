@@ -140,6 +140,12 @@ public class SmilesParserTest extends CDKTestCase {
 		assertTrue(mol.getAtomCount() > 0);
 	}
 	
+	public void test187_78_0_PubChem() throws Exception {
+		// are all 4 rings aromatic? Is smiles correct?
+		String smiles = "C1=CC2=C3C(=CC=C4C3=C1C=C4)C=C2";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertTrue(mol.getAtomCount() > 0);
+	}
 
 	public void test41814_78_2 () throws Exception {
 		String smiles = "Cc1cccc2sc3nncn3c12";
