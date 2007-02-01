@@ -28,6 +28,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.test.modeling.builder3d.TemplateHandler3DTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -37,9 +38,10 @@ import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
 public class Mbuilder3dTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The CDK force field module Tests");
+        TestSuite suite = new TestSuite("The CDK builder3d module Tests");
         
         suite.addTest(ModelBuilder3dTest.suite());
+        suite.addTest(TemplateHandler3DTest.suite());
         
         return suite;
     }
