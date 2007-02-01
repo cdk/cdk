@@ -944,7 +944,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), sharedAtoms.atoms());
 		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), newRing.atoms());
 		undoRedoContainer.add(newRing);
-		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
+		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring",c2dm);
 		undoRedoHandler.postEdit(edit);
 		r2dm.fireChange();
 		fireChange();
@@ -1271,7 +1271,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				updateAtom(atomCon, atomInRange);
 				updateAtom(atomCon, newAtom2);
 			}
-			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond");
+			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Bond",c2dm);
 			undoRedoHandler.postEdit(edit);
 		}
 		r2dm.fireChange();
@@ -1490,7 +1490,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			//FIXME undoredo
 			IAtomContainer undoRedoContainer= chemModel.getBuilder().newAtomContainer();
 			undoRedoContainer.addAtom(newAtom1);
-			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Atom");
+			UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Add Atom",c2dm);
 			undoRedoHandler.postEdit(edit);
 			this.updateMoleculeCoordinates();
 			r2dm.fireChange();
