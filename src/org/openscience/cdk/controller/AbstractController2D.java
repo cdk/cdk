@@ -791,8 +791,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
 			atomCon.add(newRing);
 			undoRedoContainer.add(newRing);
-		} else if (sharedAtoms.getAtomCount() == 1)
-		{
+		} else if (sharedAtoms.getAtomCount() == 1)	{
 			spiroAtom = sharedAtoms.getAtom(0);
 			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
@@ -828,8 +827,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			IAtomContainer atomCon = ChemModelManipulator.getRelevantAtomContainer(chemModel, spiroAtom);
 			atomCon.add(newRing);
 			undoRedoContainer.add(newRing);
-		} else if (sharedAtoms.getAtomCount() == 2)
-		{
+		} else if (sharedAtoms.getAtomCount() == 2)	{
 			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 
 			// calculate two points that are perpendicular to the highlighted bond
@@ -853,8 +851,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				distance2 = -1 * (Math.sqrt(Math.pow(newPoint2.x - pointerMarkX, 2) + Math.pow(newPoint2.y - pointerMarkY, 2)));
 				r2dm.setPointerVectorStart(null);
 				r2dm.setPointerVectorEnd(null);
-			} else
-			{
+			} else {
 				// check which one of the two points is nearest to the center of the
 				// connected atoms to make the ringCenterVector point into the right direction.
 				conAtomsCenter = getConnectedAtomsCenter(sharedAtoms);
