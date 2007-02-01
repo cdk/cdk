@@ -44,11 +44,8 @@ import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.IChemObjectWriter;
@@ -429,33 +426,4 @@ class CMLChemFile extends ChemFile {
 	
 	private static final long serialVersionUID = -5664142472726700883L;
 	
-}
-
-
-class CMLChemFileWrapper {
-	/**
-	 * Method which converts an atomContainer to a CMLChemFile 
-	 * @param atomContainer
-	 * @return CMLChemFile which contains the information of the atomContainer
-	 */
-	public static CMLChemFile wrapAtomContainerInChemModel(IAtomContainer atomContainer) {
-		CMLChemFile file = new CMLChemFile();
-		IChemModel model = atomContainer.getBuilder().newChemModel();
-		IChemSequence sequence = atomContainer.getBuilder().newChemSequence();
-		IMoleculeSet moleculeSet = atomContainer.getBuilder().newMoleculeSet();
-		moleculeSet.addAtomContainer(atomContainer);
-		model.setMoleculeSet(moleculeSet);
-		sequence.addChemModel(model);
-		file.addChemSequence(sequence);
-		
-		return file;
-	}
-	
-	public static CMLChemFile[] wrapAtomContainerArrayInChemModel(IAtomContainer[] atomContainer) {
-		CMLChemFile[] cmlChemfile = new CMLChemFile[atomContainer.length];
-		for (int i = 0; i < atomContainer.length; i++) {
-			cmlChemfile[i] = wrapAtomContainerInChemModel(atomContainer[i]);
-		}
-		return cmlChemfile;
-	}
 }
