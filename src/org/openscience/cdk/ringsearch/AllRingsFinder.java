@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
@@ -50,10 +49,10 @@ import org.openscience.cdk.tools.LoggingTool;
  *  published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
  *  fragments listed in this article. The concept is that a regular molecular
  *  graph is converted into a path graph first, i.e. a graph where the edges are
- *  actually pathes, i.e. can list several nodes that are implicitly connecting
- *  the two nodes between the path is formed. The pathes that join one endnode
+ *  actually paths, i.e. can list several nodes that are implicitly connecting
+ *  the two nodes between the path is formed. The paths that join one endnode
  *  are step by step fused and the joined nodes deleted from the pathgraph. What
- *  remains is a graph of pathes that have the same start and endpoint and are
+ *  remains is a graph of paths that have the same start and endpoint and are
  *  thus rings.
  *
  *  <p><b>WARNING</b>: This class has now a timeout of 5 seconds, after which it aborts
@@ -77,9 +76,9 @@ public class AllRingsFinder
 	 *  reference purposes (printing)
 	 */
 	IAtomContainer originalAc = null;
-	Vector newPathes = new Vector();
+	Vector newPaths = new Vector();
 	Vector potentialRings = new Vector();
-	Vector removePathes = new Vector();
+	Vector removePaths = new Vector();
 
 
 	/**
@@ -122,7 +121,7 @@ public class AllRingsFinder
 		{
 			startTime = System.currentTimeMillis();
 		}
-		Vector pathes = new Vector();
+		Vector paths = new Vector();
 		IRingSet ringSet = atomContainer.getBuilder().newRingSet();
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
@@ -141,12 +140,12 @@ public class AllRingsFinder
 				IAtomContainer tempAC
 						 = RingPartitioner.convertToAtomContainer((IRingSet) ringSets.get(r));
 
-				doSearch(tempAC, pathes, ringSet);
+				doSearch(tempAC, paths, ringSet);
 
 			}
 		} else
 		{
-			doSearch(ac, pathes, ringSet);
+			doSearch(ac, paths, ringSet);
 		}
 //		atomContainer.setProperty(CDKConstants.ALL_RINGS, ringSet);
 		return ringSet;
@@ -157,29 +156,29 @@ public class AllRingsFinder
 	 *  Description of the Method
 	 *
 	 *@param  ac                The AtomContainer to be searched
-	 *@param  pathes            A vectoring storing all the pathes
+	 *@param  paths            A vectoring storing all the paths
 	 *@param  ringSet           A ringset to be extended while we search
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void doSearch(IAtomContainer ac, Vector pathes, IRingSet ringSet) throws CDKException
+	private void doSearch(IAtomContainer ac, Vector paths, IRingSet ringSet) throws CDKException
 	{
 		IAtom atom = null;
 		/*
 		 *  First we convert the molecular graph into a a path graph by
-		 *  creating a set of two membered pathes from all the bonds in the molecule
+		 *  creating a set of two membered paths from all the bonds in the molecule
 		 */
-		initPathGraph(ac, pathes);
+		initPathGraph(ac, paths);
 		logger.debug("BondCount: ", ac.getBondCount());
-		logger.debug("PathCount: ", pathes.size());
+		logger.debug("PathCount: ", paths.size());
 		do
 		{
 			atom = selectAtom(ac);
 			if (atom != null)
 			{
-				remove(atom, ac, pathes, ringSet);
+				remove(atom, ac, paths, ringSet);
 			}
-		} while (pathes.size() > 0 && atom != null);
-		logger.debug("pathes.size(): ", pathes.size());
+		} while (paths.size() > 0 && atom != null);
+		logger.debug("paths.size(): ", paths.size());
 		logger.debug("ringSet.size(): ", ringSet.getAtomContainerCount());
 	}
 
@@ -218,30 +217,30 @@ public class AllRingsFinder
 	 *
 	 *@param  atom              The atom to be removed
 	 *@param  ac                The AtomContainer to work on
-	 *@param  pathes            The pathes to manipulate
+	 *@param  paths            The paths to manipulate
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(IAtom atom, IAtomContainer ac, Vector pathes, IRingSet rings) throws CDKException
+	private void remove(IAtom atom, IAtomContainer ac, Vector paths, IRingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
 		Path union = null;
 		int intersectionSize = 0;
-		newPathes.removeAllElements();
-		removePathes.removeAllElements();
+		newPaths.removeAllElements();
+		removePaths.removeAllElements();
 		potentialRings.removeAllElements();
 		logger.debug("*** Removing atom " + originalAc.getAtomNumber(atom) + " ***");
 
-		for (int i = 0; i < pathes.size(); i++)
+		for (int i = 0; i < paths.size(); i++)
 		{
-			path1 = (Path) pathes.elementAt(i);
+			path1 = (Path) paths.elementAt(i);
 			if (path1.firstElement() == atom || path1.lastElement() == atom)
 			{
-				for (int j = i + 1; j < pathes.size(); j++)
+				for (int j = i + 1; j < paths.size(); j++)
 				{
 					//logger.debug(".");
-					path2 = (Path) pathes.elementAt(j);
+					path2 = (Path) paths.elementAt(j);
 					if (path2.firstElement() == atom || path2.lastElement() == atom)
 					{
 						intersectionSize = path1.getIntersectionSize(path2);
@@ -251,7 +250,7 @@ public class AllRingsFinder
 							union = Path.join(path1, path2, atom);
 							if (intersectionSize == 1)
 							{
-								newPathes.addElement(union);
+								newPaths.addElement(union);
 							} else
 							{
 								potentialRings.add(union);
@@ -262,45 +261,44 @@ public class AllRingsFinder
 							 *  Now we know that path1 and
 							 *  path2 share the Atom atom.
 							 */
-							removePathes.addElement(path1);
-							removePathes.addElement(path2);
+							removePaths.addElement(path1);
+							removePaths.addElement(path2);
 						}
 					}
 					checkTimeout();
 				}
 			}
 		}
-		for (int f = 0; f < removePathes.size(); f++)
+		for (int f = 0; f < removePaths.size(); f++)
 		{
-			pathes.remove(removePathes.elementAt(f));
+			paths.remove(removePaths.elementAt(f));
 		}
-		for (int f = 0; f < newPathes.size(); f++)
+		for (int f = 0; f < newPaths.size(); f++)
 		{
-			pathes.addElement(newPathes.elementAt(f));
+			paths.addElement(newPaths.elementAt(f));
 		}
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);
-		logger.debug("\n" + pathes.size() + " pathes and " + ac.getAtomCount() + " atoms left.");
+		logger.debug("\n" + paths.size() + " paths and " + ac.getAtomCount() + " atoms left.");
 	}
 
 
 	/**
-	 *  Checks the pathes if a ring has been found
+	 *  Checks the paths if a ring has been found
 	 *
-	 *@param  pathes   The pathes to check for rings
+	 *@param  paths   The paths to check for rings
 	 *@param  ringSet  The ringset to add the detected rings to
 	 *@param  ac       The AtomContainer with the original structure
 	 */
-	private void detectRings(Vector pathes, IRingSet ringSet, IAtomContainer ac)
+	private void detectRings(Vector paths, IRingSet ringSet, IAtomContainer ac)
 	{
 		Path path = null;
 		IRing ring = null;
-		IBond bond = null;
 		int bondNum;
 		IAtom a1 = null, a2 = null;
-		for (int f = 0; f < pathes.size(); f++)
+		for (int f = 0; f < paths.size(); f++)
 		{
-			path = (Path) pathes.elementAt(f);
+			path = (Path) paths.elementAt(f);
 			if (path.size() > 3 && path.lastElement() == path.firstElement())
 			{
 				logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
@@ -347,9 +345,9 @@ public class AllRingsFinder
 	 *  See {@cdk.cite HAN96} for details
 	 *
 	 *@param  ac      The AtomContainer with the original structure
-	 *@param  pathes  The pathes to initialize
+	 *@param  paths  The paths to initialize
 	 */
-	private void initPathGraph(IAtomContainer ac, Vector pathes)
+	private void initPathGraph(IAtomContainer ac, Vector paths)
 	{
 		Path path = null;
 
@@ -357,7 +355,7 @@ public class AllRingsFinder
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();                    
 			path = new Path(bond.getAtom(0), bond.getAtom(1));
-			pathes.add(path);
+			paths.add(path);
 			logger.debug("initPathGraph: " + path.toString(originalAc));
 		}
 	}
