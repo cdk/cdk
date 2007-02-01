@@ -92,12 +92,7 @@ public class AllRingsFinder
 	public IRingSet findAllRings(IAtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
-		SpanningTree spanningTree;
-		try {
-			spanningTree = new SpanningTree((IAtomContainer) atomContainer.clone());
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IAtomContainer!", e);
-		}
+		SpanningTree spanningTree = new SpanningTree(atomContainer);
 		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
 		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules();
 		IRingSet resultSet = atomContainer.getBuilder().newRingSet();
