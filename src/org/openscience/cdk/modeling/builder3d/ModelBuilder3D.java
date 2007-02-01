@@ -660,5 +660,15 @@ public class ModelBuilder3D {
 		this.templateHandler = templateHandler;
 	}
 
+	/**
+	 * Returns the number of loaded templates. Note that it may return 0 because
+	 * templates are lazy loaded, that is upon the first ring being layed out.
+	 * 
+	 * @returns 0, if not templates are loaded
+	 */
+	public int getTemplateCount() {
+		return this.templateHandler.getTemplateCount();
+	}
+	
 }
 
