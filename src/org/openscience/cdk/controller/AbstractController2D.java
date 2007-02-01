@@ -941,6 +941,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			}
 		}
 		this.updateMoleculeCoordinates();
+		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), sharedAtoms.atoms());
 		this.updateAtoms(ChemModelManipulator.getRelevantAtomContainer(chemModel, newRing.getAtom(0)), newRing.atoms());
 		undoRedoContainer.add(newRing);
 		UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, undoRedoContainer, "Added Ring");
