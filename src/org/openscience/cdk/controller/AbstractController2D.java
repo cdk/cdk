@@ -1064,19 +1064,20 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			HashMap changedBonds = new HashMap();
 			double formerBondOrder = bondInRange.getOrder();
 			if (c2dm.getDrawMode() == Controller2DModel.DRAWBOND){
-				// increase Bond order
-				double order = bondInRange.getOrder();
-				if (order >= CDKConstants.BONDORDER_TRIPLE)
-				{
-					bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
-				} else {
-					bondInRange.setOrder(order + 1.0);
-					// this is tricky as it depends on the fact that the
-					// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
+				if(bondInRange.getStereo()!=CDKConstants.STEREO_BOND_NONE){
+					bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
+				}else{
+					// increase Bond order
+					double order = bondInRange.getOrder();
+					if (order >= CDKConstants.BONDORDER_TRIPLE)
+					{
+						bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
+					} else {
+						bondInRange.setOrder(order + 1.0);
+						// this is tricky as it depends on the fact that the
+						// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
+					}
 				}
-				;
-				
-				
 			}else if(c2dm.getDrawMode() == Controller2DModel.DOWN_BOND){
 	            // toggle bond stereo
 	            double stereo = bondInRange.getStereo();
@@ -1090,6 +1091,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	            {
 	              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
 	            }
+	            bondInRange.setOrder(1);
 			}else{
 	            // toggle bond stereo
 	            double stereo = bondInRange.getStereo();
@@ -1103,6 +1105,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	            {
 	              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
 	            }
+	            bondInRange.setOrder(1);
 			}           
 			/*
 			 *  PRESERVE THIS. This notifies the
