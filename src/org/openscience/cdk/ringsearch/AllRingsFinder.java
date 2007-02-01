@@ -31,7 +31,7 @@ package org.openscience.cdk.ringsearch;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -76,9 +76,9 @@ public class AllRingsFinder
 	 *  reference purposes (printing)
 	 */
 	IAtomContainer originalAc = null;
-	Vector newPaths = new Vector();
-	Vector potentialRings = new Vector();
-	Vector removePaths = new Vector();
+	List newPaths = new ArrayList();
+	List potentialRings = new ArrayList();
+	List removePaths = new ArrayList();
 
 
 	/**
@@ -121,7 +121,7 @@ public class AllRingsFinder
 		{
 			startTime = System.currentTimeMillis();
 		}
-		Vector paths = new Vector();
+		List paths = new ArrayList();
 		IRingSet ringSet = atomContainer.getBuilder().newRingSet();
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
@@ -160,7 +160,7 @@ public class AllRingsFinder
 	 *@param  ringSet           A ringset to be extended while we search
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void doSearch(IAtomContainer ac, Vector paths, IRingSet ringSet) throws CDKException
+	private void doSearch(IAtomContainer ac, List paths, IRingSet ringSet) throws CDKException
 	{
 		IAtom atom = null;
 		/*
@@ -221,26 +221,26 @@ public class AllRingsFinder
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(IAtom atom, IAtomContainer ac, Vector paths, IRingSet rings) throws CDKException
+	private void remove(IAtom atom, IAtomContainer ac, List paths, IRingSet rings) throws CDKException
 	{
 		Path path1 = null;
 		Path path2 = null;
 		Path union = null;
 		int intersectionSize = 0;
-		newPaths.removeAllElements();
-		removePaths.removeAllElements();
-		potentialRings.removeAllElements();
+		newPaths.clear();
+		removePaths.clear();
+		potentialRings.clear();
 		logger.debug("*** Removing atom " + originalAc.getAtomNumber(atom) + " ***");
 
 		for (int i = 0; i < paths.size(); i++)
 		{
-			path1 = (Path) paths.elementAt(i);
+			path1 = (Path) paths.get(i);
 			if (path1.firstElement() == atom || path1.lastElement() == atom)
 			{
 				for (int j = i + 1; j < paths.size(); j++)
 				{
 					//logger.debug(".");
-					path2 = (Path) paths.elementAt(j);
+					path2 = (Path) paths.get(j);
 					if (path2.firstElement() == atom || path2.lastElement() == atom)
 					{
 						intersectionSize = path1.getIntersectionSize(path2);
@@ -250,7 +250,7 @@ public class AllRingsFinder
 							union = Path.join(path1, path2, atom);
 							if (intersectionSize == 1)
 							{
-								newPaths.addElement(union);
+								newPaths.add(union);
 							} else
 							{
 								potentialRings.add(union);
@@ -261,8 +261,8 @@ public class AllRingsFinder
 							 *  Now we know that path1 and
 							 *  path2 share the Atom atom.
 							 */
-							removePaths.addElement(path1);
-							removePaths.addElement(path2);
+							removePaths.add(path1);
+							removePaths.add(path2);
 						}
 					}
 					checkTimeout();
@@ -271,11 +271,11 @@ public class AllRingsFinder
 		}
 		for (int f = 0; f < removePaths.size(); f++)
 		{
-			paths.remove(removePaths.elementAt(f));
+			paths.remove(removePaths.get(f));
 		}
 		for (int f = 0; f < newPaths.size(); f++)
 		{
-			paths.addElement(newPaths.elementAt(f));
+			paths.add(newPaths.get(f));
 		}
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);
@@ -290,7 +290,7 @@ public class AllRingsFinder
 	 *@param  ringSet  The ringset to add the detected rings to
 	 *@param  ac       The AtomContainer with the original structure
 	 */
-	private void detectRings(Vector paths, IRingSet ringSet, IAtomContainer ac)
+	private void detectRings(List paths, IRingSet ringSet, IAtomContainer ac)
 	{
 		Path path = null;
 		IRing ring = null;
@@ -298,7 +298,7 @@ public class AllRingsFinder
 		IAtom a1 = null, a2 = null;
 		for (int f = 0; f < paths.size(); f++)
 		{
-			path = (Path) paths.elementAt(f);
+			path = (Path) paths.get(f);
 			if (path.size() > 3 && path.lastElement() == path.firstElement())
 			{
 				logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
@@ -347,7 +347,7 @@ public class AllRingsFinder
 	 *@param  ac      The AtomContainer with the original structure
 	 *@param  paths  The paths to initialize
 	 */
-	private void initPathGraph(IAtomContainer ac, Vector paths)
+	private void initPathGraph(IAtomContainer ac, List paths)
 	{
 		Path path = null;
 
