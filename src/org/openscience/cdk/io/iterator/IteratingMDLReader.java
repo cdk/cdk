@@ -36,8 +36,11 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
+import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -74,13 +77,13 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     private BufferedReader input;
     private LoggingTool logger;
     private String currentLine;
-    private IResourceFormat currentFormat;
+    private IChemFormat currentFormat;
+    private final ReaderFactory factory = new ReaderFactory();
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IChemObjectBuilder builder;
     private IMolecule nextMolecule;
-    private ReaderFactory factory;
     
     /**
      * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
@@ -94,8 +97,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
-        factory = new ReaderFactory();
-        currentFormat = MDLV2000Format.getInstance();
+        currentFormat = (IChemFormat)MDLV2000Format.getInstance();
     }
 
     /**
@@ -121,6 +123,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
             // now try to parse the next Molecule
             try {
                 if (input.ready()) {
+                	currentFormat = (IChemFormat)MDLFormat.getInstance();
                     currentLine = input.readLine();
                     StringBuffer buffer = new StringBuffer();
                     while (currentLine != null && !currentLine.equals("M  END")) {
@@ -132,12 +135,18 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                         } else {
                             currentLine = null;
                         }
+                        // do MDL molfile version checking
+                        if (currentLine.contains("V2000") | currentLine.contains("v2000")) {
+                        	currentFormat = (IChemFormat)MDLV2000Format.getInstance();
+                        } else if (currentLine.contains("V3000") | currentLine.contains("v3000")) {
+                        	currentFormat = (IChemFormat)MDLV3000Format.getInstance();
+                        }
                     }
                     buffer.append(currentLine);
                     buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
-                    IChemObjectReader reader = factory.createReader(new StringReader(buffer.toString()));
-                    currentFormat = reader.getFormat();
+                    IChemObjectReader reader = factory.createReader(currentFormat);
+                    reader.setReader(new StringReader(buffer.toString()));
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
