@@ -156,7 +156,7 @@ public class CopyPasteAction extends JCPAction{
 	                //make the pasted structure selected
 	                renderModel.setSelectedPart(topaste);
 	                //handle undo/redo
-	                UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, topaste, "Pasted something");
+	                UndoableEdit  edit = new AddAtomsAndBondsEdit(chemModel, topaste, "Pasted something",jcpModel.getControllerModel());
 	                jcpPanel.getUndoSupport().postEdit(edit);
 	            }
         	}
