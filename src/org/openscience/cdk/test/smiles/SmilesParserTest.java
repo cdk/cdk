@@ -95,42 +95,47 @@ public class SmilesParserTest extends CDKTestCase {
 		assertEquals(7, mol.getAtomCount());
 	}
 
-	/**
-	 *  This method tests compounds with several conjugated rings
-	 *  These compounds would not fail if the Aromaticity Detection was changed
-	 *  so that a ring is aromatic if all the atoms in a ring have already been flagged
-	 *  as aromatic from the testing of other rings in the system 
-	 * @throws Exception
+	/*
+	 * The next methods tests compounds with several conjugated rings
+	 * These compounds would not fail if the Aromaticity Detection was changed
+	 * so that a ring is aromatic if all the atoms in a ring have already been flagged
+	 * as aromatic from the testing of other rings in the system.
 	 */
-	public void testUnusualConjugatedRings() throws Exception {
-		
+	public void testUnusualConjugatedRings() throws Exception {		
 		//7090-41-7:
 		String smiles = "c1(Cl)cc2c3cc(Cl)c(Cl)cc3c2cc1Cl";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(16, mol.getAtomCount());
-				
-		//206-44-0:
-		smiles="c(c(ccc1)ccc2)(c1c(c3ccc4)c4)c23";
-		mol = sp.parseSmiles(smiles);
-		assertEquals(16, mol.getAtomCount());
-			
-		//207-08-9:
-		smiles="c2ccc1cc3c(cc1c2)c4cccc5cccc3c45";
-		mol = sp.parseSmiles(smiles);
-		assertEquals(20, mol.getAtomCount());
-		
-		//2693-46-1:
-		smiles="Nc1c(c23)cccc3c4ccccc4c2cc1";
-		mol = sp.parseSmiles(smiles);
-		assertEquals(17, mol.getAtomCount());
-		
-		//205-99-2:
-		smiles="c12ccccc1cc3c4ccccc4c5c3c2ccc5";
-		mol = sp.parseSmiles(smiles);
-		assertEquals(20, mol.getAtomCount());
-
 	}
-
+	
+	public void testUnusualConjugatedRings_2() throws Exception {
+		//206-44-0:
+		String smiles = "c(c(ccc1)ccc2)(c1c(c3ccc4)c4)c23";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertEquals(16, mol.getAtomCount());
+	}
+	
+	public void testUnusualConjugatedRings_3() throws Exception {			
+		//207-08-9:
+		String smiles = "c2ccc1cc3c(cc1c2)c4cccc5cccc3c45";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertEquals(20, mol.getAtomCount());
+	}
+	
+	public void testUnusualConjugatedRings_4() throws Exception {
+		//2693-46-1:
+		String smiles = "Nc1c(c23)cccc3c4ccccc4c2cc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertEquals(17, mol.getAtomCount());
+	}
+	
+	public void testUnusualConjugatedRings_5() throws Exception {
+		//205-99-2:
+		String smiles = "c12ccccc1cc3c4ccccc4c5c3c2ccc5";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertEquals(20, mol.getAtomCount());
+	}
+	
 	public void test187_78_0 () throws Exception {
 		// are all 4 rings aromatic? Is smiles correct?
 		String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
