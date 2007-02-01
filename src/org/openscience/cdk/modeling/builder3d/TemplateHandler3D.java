@@ -52,6 +52,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -65,12 +66,14 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 public class TemplateHandler3D {
 	
 	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private static final LoggingTool logger = new LoggingTool(TemplateHandler3D.class);
 	
     IMolecule molecule;
     IRingSet sssr;
     IMoleculeSet templates = null;
     List fingerprintData = null;
     List ringTemplates = null;
+    private boolean templatesLoaded = false;
 
     private static TemplateHandler3D self = null;
     
@@ -83,7 +86,6 @@ public class TemplateHandler3D {
     public static TemplateHandler3D getInstance() throws CDKException {
     	if (self == null) {
     		self = new TemplateHandler3D();
-    		self.loadTemplates();
     	}
     	return self;
     }
@@ -93,7 +95,7 @@ public class TemplateHandler3D {
      * Template file is a mdl file. Creates a Object Set of Molecules
      */
     private void loadTemplates() throws CDKException {
-        //logger.debug("TEMPLATE START");
+        logger.debug("Loading templates...");
         IteratingMDLReader imdl;
         InputStream ins;
         BufferedReader fin;
@@ -138,6 +140,7 @@ public class TemplateHandler3D {
             fingerprintData.add((BitSet) getBitSetFromFile(new StringTokenizer(s, "\t ;{, }")));
         }
         //logger.debug("Fingerprints are read in:"+fingerprintData.size());
+        templatesLoaded = true;
     }
 
     private BitSet getBitSetFromFile(StringTokenizer st) {
@@ -162,6 +165,8 @@ public class TemplateHandler3D {
      * @param NumberOfRingAtoms double
      */
     public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception {
+		if (!templatesLoaded) self.loadTemplates();
+
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer template;
         QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(ringSystems, false);
