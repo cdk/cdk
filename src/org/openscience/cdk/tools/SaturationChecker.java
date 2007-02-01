@@ -292,7 +292,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
 	 * This method is known to fail, especially on pyrolle-like compounts.
-	 * Consider using import org.openscience.cdk.DeduceBondSystemTool, which should work better
+	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
 	 *
 	 * @cdk.keyword bond order, calculation
      * @cdk.created 2003-10-03
@@ -329,7 +329,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     /**
      * Saturates a set of Bonds in an AtomContainer.
 	 * This method is known to fail, especially on pyrolle-like compounts.
-	 * Consider using import org.openscience.cdk.DeduceBondSystemTool, which should work better
+	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      */
     public boolean newSaturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: " + bonds.length);
@@ -401,7 +401,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     /**
      * Saturate atom by adjusting its bond orders.
 	 * This method is known to fail, especially on pyrolle-like compounts.
-	 * Consider using import org.openscience.cdk.DeduceBondSystemTool, which should work better
+	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      */
     public boolean newSaturate(IBond bond, IAtomContainer atomContainer) throws CDKException {
     	IAtom[] atoms = BondManipulator.getAtomArray(bond);
@@ -458,7 +458,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      * The method is known to fail for certain compounds. For more information, see
      * cdk.test.limitations package.
 	 * This method is known to fail, especially on pyrolle-like compounts.
-	 * Consider using import org.openscience.cdk.DeduceBondSystemTool, which should work better
+	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      *
      */
     public void saturate(IAtomContainer atomContainer) throws CDKException {
