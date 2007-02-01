@@ -719,8 +719,14 @@ public class SmilesGenerator
 	private void createSMILES(org.openscience.cdk.interfaces.IAtom a, StringBuffer line, IAtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration)
 	{
 		Vector tree = new Vector();
+		
+		// set all ISVISITED labels to FALSE
+		Iterator atoms = atomContainer.atoms();
+		while (atoms.hasNext()) ((IAtom)atoms.next()).setFlag(CDKConstants.VISITED, false);
+		
 		createDFSTree(a, tree, null, atomContainer);
 		//logger.debug("Done with tree");
+		
 		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector());
 	}
 
