@@ -35,10 +35,12 @@ import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
@@ -96,12 +98,18 @@ public class AllRingsFinder
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IAtomContainer!", e);
 		}
-		spanningTree.identifyBonds();
-		if (spanningTree.getBondsCyclicCount() < 37)
-		{
-			return findAllRings(atomContainer, false);
+		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
+		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules();
+		IRingSet resultSet = atomContainer.getBuilder().newRingSet();
+		while (separateRingSystem.hasNext()) {
+			IMolecule singleRingSystem = (IMolecule)separateRingSystem.next();
+			if (singleRingSystem.getBondCount() < 37) {
+				resultSet.add(findAllRings(singleRingSystem, false));
+			} else { 
+				resultSet.add(findAllRings(singleRingSystem, true));
+			}
 		}
-		return findAllRings(atomContainer, true);
+		return resultSet;
 	}
 
 
