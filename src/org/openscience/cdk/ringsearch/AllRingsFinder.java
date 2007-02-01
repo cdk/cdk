@@ -99,7 +99,7 @@ public class AllRingsFinder
 		spanningTree.identifyBonds();
 		if (spanningTree.getBondsCyclicCount() < 37)
 		{
-			findAllRings(atomContainer, false);
+			return findAllRings(atomContainer, false);
 		}
 		return findAllRings(atomContainer, true);
 	}
