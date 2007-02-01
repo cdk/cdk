@@ -45,7 +45,6 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -58,7 +57,6 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class SmilesParserTest extends CDKTestCase {
 	
-	private LoggingTool logger;
 	private SmilesParser sp;
 
 	/**
@@ -72,7 +70,6 @@ public class SmilesParserTest extends CDKTestCase {
 
 	public void setUp() {
 		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		logger = new LoggingTool(this);
 	}
 
 	/**
