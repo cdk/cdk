@@ -25,12 +25,12 @@
 package org.openscience.cdk.graph;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.exception.NoSuchAtomException;
 
 /**
  * Spanning tree of a molecule.
@@ -45,7 +45,7 @@ import org.openscience.cdk.exception.NoSuchAtomException;
  */
 public class SpanningTree {
 	private int[] parent = null;
-	private int[][] cb = null;
+	private int[][] cb = null; // what is cb??? cyclic bonds?
 	
 	protected boolean[] bondsInTree;
 	
@@ -55,17 +55,16 @@ public class SpanningTree {
 	private int bondsAcyclicCount = 0,bondsCyclicCount = 0;
 	
 	private IAtomContainer molecule = null;
-	private int E=0,V=0;
+	private int totalEdgeCount=0, totalVertexCount=0;
 	private boolean disconnected;
+	private boolean identifiedBonds;
 	
 	public boolean isDisconnected() {
 		return disconnected;
 	}
-	/**
-	 * 
-	 */
+
 	public SpanningTree(IAtomContainer atomContainer) {
-		super();
+		identifiedBonds = false;
 		buildSpanningTree(atomContainer);
 	}
 	
@@ -78,11 +77,12 @@ public class SpanningTree {
 		bondsAcyclicCount = 0;
 		bondsCyclicCount = 0;
 		bondsInTree = null;
-		E=0;
-		V=0;
+		totalEdgeCount=0;
+		totalVertexCount=0;
 		disconnected = false;
 	}
-		private boolean fastfind(int v1,int v2, boolean union) {
+	
+	private boolean fastfind(int v1,int v2, boolean union) {
 		int i = v1;	while (parent[i] > 0) i = parent[i];
 		int j = v2;	while (parent[j] > 0) j = parent[j];
 		int t ;
@@ -111,7 +111,6 @@ public class SpanningTree {
 		}
 	}
 	
-	
 	/**
 	 * Kruskal algorithm
 	 * @param atomContainer
@@ -120,19 +119,19 @@ public class SpanningTree {
 		disconnected = false;
 		molecule = atomContainer;
 		
-		V = atomContainer.getAtomCount();
-		E = atomContainer.getBondCount();
+		totalVertexCount = atomContainer.getAtomCount();
+		totalEdgeCount = atomContainer.getBondCount();
 		
 		sptSize = 0;edrSize = 0; 		
-		fastFindInit(V);
-		for (int i = 0; i < V; i++) {
+		fastFindInit(totalVertexCount);
+		for (int i = 0; i < totalVertexCount; i++) {
 			(atomContainer.getAtom(i)).setProperty("ST_ATOMNO", Integer.toString(i+1));
 		}
 		IBond bond;
 		int v1,v2;
-		bondsInTree = new boolean[E];
+		bondsInTree = new boolean[totalEdgeCount];
 		
-		for (int b=0; b < E; b++ ) {
+		for (int b=0; b < totalEdgeCount; b++ ) {
 			bondsInTree[b] = false;			
 			bond = atomContainer.getBond(b);
 			v1 = Integer.parseInt((bond.getAtom(0)).getProperty("ST_ATOMNO").toString());
@@ -145,51 +144,49 @@ public class SpanningTree {
 				sptSize++;
 				//logger.debug("ST : includes bond between atoms "+v1+","+v2);
 			}
-			if (sptSize>=(V-1)) break;
+			if (sptSize>=(totalVertexCount-1)) break;
 			
 		}
 		// if atomcontainer is connected then the number of bonds in the spanning tree = (No atoms-1)
 		//i.e.  edgesRings = new Bond[E-V+1];
 		//but to hold all bonds if atomContainer was disconnected then  edgesRings = new Bond[E-sptSize]; 
-		if (sptSize != (V-1)) disconnected = true;
-		for (int b=0; b < E; b++ ) if (!bondsInTree[b]){
+		if (sptSize != (totalVertexCount-1)) disconnected = true;
+		for (int b=0; b < totalEdgeCount; b++ ) if (!bondsInTree[b]){
 //			edgesRings[edrSize] = atomContainer.getBondAt(b);
 			edrSize++;
 		}
-		cb = new int[edrSize][E];
+		cb = new int[edrSize][totalEdgeCount];
 		for (int i = 0; i < edrSize; i++) 
-			for (int a = 0; a < E; a++) 
+			for (int a = 0; a < totalEdgeCount; a++) 
 				cb[i][a] = 0;
 		
 	}
+	
 	public IAtomContainer getSpanningTree() {
 		IAtomContainer ac = molecule.getBuilder().newAtomContainer();
-		for (int a=0 ; a < V; a++) ac.addAtom(molecule.getAtom(a));
-		for (int b=0; b < E; b++ ) if (bondsInTree[b])
+		for (int a=0 ; a < totalVertexCount; a++) ac.addAtom(molecule.getAtom(a));
+		for (int b=0; b < totalEdgeCount; b++ ) if (bondsInTree[b])
 			ac.addBond(molecule.getBond(b));
 		return ac;
 	}
 	
-	public static void resetFlags(IAtomContainer ac)
-	{
-		for (int f = 0; f < ac.getAtomCount(); f++)
-		{
+	public static void resetFlags(IAtomContainer ac) {
+		for (int f = 0; f < ac.getAtomCount(); f++) {
 			ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
 		}
-		for (int f = 0; f < ac.getElectronContainerCount(); f++)
-		{
+		for (int f = 0; f < ac.getElectronContainerCount(); f++) {
 			ac.getElectronContainer(f).setFlag(CDKConstants.VISITED, false);
 		}
-		
 	}	
+
 	public IAtomContainer getPath(IAtomContainer spt,IAtom a1, IAtom a2) throws NoSuchAtomException {
-		
 		IAtomContainer path = spt.getBuilder().newAtomContainer();
 		PathTools.resetFlags(spt);
 		path.addAtom(a1);
 		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
 		return path;
 	}
+
 	private IRing getRing(IAtomContainer spt, IBond bond) throws NoSuchAtomException {
 		IRing ring = spt.getBuilder().newRing();
 		PathTools.resetFlags(spt);
@@ -198,6 +195,7 @@ public class SpanningTree {
 		ring.addBond(bond);
 		return ring;
 	}
+	
 	private void getBondsInRing(IAtomContainer mol, IRing ring, int[] bonds) {
 		for (int i=0; i < ring.getBondCount(); i++ ) {
 			int m = mol.getBondNumber(ring.getBond(i));
@@ -208,42 +206,77 @@ public class SpanningTree {
 	public IRingSet getBasicRings() throws NoSuchAtomException {
 		IRingSet ringset = molecule.getBuilder().newRingSet();
 		IAtomContainer spt = getSpanningTree();
-		for (int i = 0; i < E; i++) if (!bondsInTree[i])  
+		for (int i = 0; i < totalEdgeCount; i++) if (!bondsInTree[i])  
 			ringset.addAtomContainer(getRing(spt,molecule.getBond(i)));
 		spt = null;	
 		return ringset;
 	}
-	public void identifyBonds()  throws NoSuchAtomException {
+
+	/**
+	 * Returns an IAtomContainer which contains all the atoms and bonds which
+	 * are involved in ring systems.
+	 * 
+	 * @throws NoSuchAtomException
+	 * 
+	 * @see getRings()
+	 * @see getBasicRings()
+	 */
+	public IAtomContainer getCyclicFragmentsContainer() throws NoSuchAtomException {
+		IAtomContainer fragContainer = this.molecule.getBuilder().newAtomContainer();
+		IAtomContainer spt = getSpanningTree();
+		
+		for (int i = 0; i < totalEdgeCount; i++) if (!bondsInTree[i]) {  
+			IRing ring = getRing(spt,molecule.getBond(i));
+			for (int b=0; b < ring.getBondCount(); b++ ) {
+				IBond ringBond = ring.getBond(b);
+				if (!fragContainer.contains(ringBond)) {
+					fragContainer.addBond(ringBond);
+					for (int atomCount=0;atomCount<ringBond.getAtomCount(); atomCount++) {
+						IAtom atom = ringBond.getAtom(atomCount);
+						if (!fragContainer.contains(atom)) fragContainer.addAtom(atom);
+					}
+				}
+			}
+	    }
+		return fragContainer;
+	}
+	
+	/**
+	 * Identifies wether bonds are cyclic or not. It is used by several other methods.
+	 * 
+	 * @throws NoSuchAtomException
+	 */
+	private void identifyBonds() throws NoSuchAtomException {
 		IAtomContainer spt = getSpanningTree();
 		IRing ring;
 		int nBasicRings = 0;
-		for (int i = 0; i < E; i++) if (!bondsInTree[i]) {  
-			ring = getRing(spt,molecule.getBond(i));
-			for (int b=0; b < ring.getBondCount(); b++ ) {
-				int m = molecule.getBondNumber(ring.getBond(b));
-				cb[nBasicRings][m] = 1;
+		for (int i = 0; i < totalEdgeCount; i++) {
+			if (!bondsInTree[i]) {  
+				ring = getRing(spt,molecule.getBond(i));
+				for (int b=0; b < ring.getBondCount(); b++ ) {
+					int m = molecule.getBondNumber(ring.getBond(b));
+					cb[nBasicRings][m] = 1;
+				}
+				nBasicRings++;
 			}
-			nBasicRings++;
-	    }
+		}
 		spt = null; ring = null;
 		bondsAcyclicCount = 0; bondsCyclicCount = 0;
-		for (int i = 0; i < E; i++) {
+		for (int i = 0; i < totalEdgeCount; i++) {
 			int s = 0;
-			for (int j = 0; j < nBasicRings; j++) s+= cb[j][i];
+			for (int j = 0; j < nBasicRings; j++) {
+				s+= cb[j][i];
+			}
 			switch(s) {
-			//acyclic bond
-			case(0): { bondsAcyclicCount++; break;}
-			case(1): {bondsCyclicCount ++; break;
-			}
-			default: {
-				bondsCyclicCount ++;
-				
-			}
-			}
-				
+				case(0): { bondsAcyclicCount++; break; }
+				case(1): { bondsCyclicCount ++; break; }
+				default: { bondsCyclicCount ++; }
+			}				
 		}
-	
+		identifiedBonds = true;
 	}
+
+	
 	public IRingSet getAllRings() throws NoSuchAtomException {
 		IRingSet ringset = getBasicRings();
 		IRing newring = null;
@@ -252,8 +285,6 @@ public class SpanningTree {
 		int nBasicRings = ringset.getAtomContainerCount();
 		for (int i = 0; i < nBasicRings; i++) 
 			getBondsInRing(molecule,(IRing) ringset.getAtomContainer(i), cb[i]);
-		
-		
 		
 		for (int i= 0; i < nBasicRings; i++) {
 			for (int j= i+1; j < nBasicRings; j++) {
@@ -266,6 +297,7 @@ public class SpanningTree {
 			
 		return ringset;
 	}	
+
 	public int getSpanningTreeSize() {
 		return sptSize;
 	}
@@ -297,13 +329,16 @@ public class SpanningTree {
 	/**
 	 * @return Returns the bondsAcyclicCount.
 	 */
-	public int getBondsAcyclicCount() {
+	public int getBondsAcyclicCount() throws NoSuchAtomException {
+		if (!identifiedBonds) identifyBonds();
 		return bondsAcyclicCount;
 	}
+
 	/**
 	 * @return Returns the bondsCyclicCount.
 	 */
-	public int getBondsCyclicCount() {
+	public int getBondsCyclicCount() throws NoSuchAtomException {
+		if (!identifiedBonds) identifyBonds();
 		return bondsCyclicCount;
 	}
 }
