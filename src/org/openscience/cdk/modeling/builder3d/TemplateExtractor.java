@@ -43,7 +43,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.applications.FingerPrinter;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -61,6 +60,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 
 public class TemplateExtractor{
+	
+	static final String usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";
 	
 	public TemplateExtractor(){}
 	
@@ -548,9 +549,15 @@ public class TemplateExtractor{
 	
 	public static void main(String[] args)
 	{
+		if (args.length < 4)
+		{
+			System.out.println(usage);
+		
+		}
 		try {
-			new TemplateExtractor().makeFingerprintFromRingSystems(args[0], args[1], false, false);
+			new TemplateExtractor().makeFingerprintFromRingSystems(args[0], args[1], new Boolean(args[2]).booleanValue(), new Boolean(args[3]).booleanValue());
 		} catch (Exception e) {
+			System.out.println(usage);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
