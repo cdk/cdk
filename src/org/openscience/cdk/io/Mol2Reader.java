@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Reads a molecule from an Mol2 file, such as written by Sybyl.
@@ -221,15 +222,26 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String yStr = tokenizer.nextToken();
                         String zStr = tokenizer.nextToken();
                         String atomTypeStr = tokenizer.nextToken();
-                        IAtomType atomType = atFactory.getAtomType(atomTypeStr);
-                        if (atomType == null) {
-                            atomType = atFactory.getAtomType("X");
-                            logger.error("Could not find specified atom type: ", atomTypeStr);
-                        }
+                        
+                    	// fix OpenBabel atom type codes to SYBYL specification
+                    	if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";  
+                    	if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
+
                         IAtom atom = molecule.getBuilder().newAtom("X");
+                        IAtomType atomType = atFactory.getAtomType(atomTypeStr);
+                        // Maybe it is just an element
+                        if (atomType == null && isElementSymbol(atomTypeStr)) {
+                        	atom.setSymbol(atomTypeStr);
+                        } else {                        	
+                            if (atomType == null) {
+                            	atomType = atFactory.getAtomType("X");
+                            	logger.error("Could not find specified atom type: ", atomTypeStr);
+                            }
+                            AtomTypeManipulator.configure(atom, atomType);
+                        }
+
                         atom.setID(nameStr);
                         atom.setAtomTypeName(atomTypeStr);
-                        atFactory.configure(atom);
                         try {
                             double x = Double.parseDouble(xStr);
                             double y = Double.parseDouble(yStr);
@@ -299,7 +311,12 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return molecule;
     }
     
-    public void close() throws IOException {
+    private boolean isElementSymbol(String atomTypeStr) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void close() throws IOException {
         input.close();
     }
 }
