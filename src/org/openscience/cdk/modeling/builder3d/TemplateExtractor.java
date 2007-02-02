@@ -545,4 +545,16 @@ public class TemplateExtractor{
 		return ac;
 	}
     
+	
+	public static void main(String[] args)
+	{
+		try {
+			new TemplateExtractor().makeFingerprintFromRingSystems(args[0], args[1], false, false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
