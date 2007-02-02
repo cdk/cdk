@@ -58,7 +58,12 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
-
+/**
+ * Helper class that help setup a template library of CDK's Builder3D. 
+ * 
+ * @author     egonw
+ * @cdk.module builder3dtools
+ */
 public class TemplateExtractor{
 	
 	static final String usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";

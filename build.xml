@@ -453,6 +453,7 @@
      	    <antcall target="compile-module"><param name="module" value="qsar-weka"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
+            <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
@@ -494,6 +495,7 @@
                 <fileset dir="${lib}">
                     <includesfile name="${metainf}/applications.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
+                    <includesfile name="${metainf}/builder3dtools.libdepends"/>
                     <includesfile name="${metainf}/charges.libdepends"/>
                     <includesfile name="${metainf}/core.libdepends"/>
                     <includesfile name="${metainf}/control.libdepends"/>
@@ -524,6 +526,7 @@
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
                     <include name="cdk-builder3d.jar"/>
+                    <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
                     <include name="cdk-control.jar"/>
