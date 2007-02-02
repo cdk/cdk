@@ -27,18 +27,28 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
-
-import java.util.ArrayList;
-import java.util.List;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -49,6 +59,7 @@ import java.util.List;
  */
 public class DeduceBondSystemTool {
 
+	private AllRingsFinder allRingsFinder;
     private LoggingTool logger;
     private HydrogenAdder hAdder;
     private IValencyChecker valencyChecker;
@@ -59,6 +70,7 @@ public class DeduceBondSystemTool {
      * Constructor for the DeduceBondSystemTool object.
      */
     public DeduceBondSystemTool() {
+    	allRingsFinder = new AllRingsFinder();
         logger = new LoggingTool(this);
         valencyChecker = new SmilesValencyChecker();
         hAdder = new HydrogenAdder();
@@ -104,9 +116,12 @@ public class DeduceBondSystemTool {
                 fiveMemberedRingPossibilities(molecule, ring, MasterList);
             } else if (ring.getAtomCount() == 6) {
                 sixMemberedRingPossibilities(molecule, ring, MasterList);
-            } else {
+            } else if (ring.getAtomCount() == 7){
                 sevenMemberedRingPossibilities(molecule, ring, MasterList);
                 //TODO- add code for all 7 membered aromatic ring possibilities not just 3 bonds
+            } else {
+            	//TODO: what about other rings systems?
+            	logger.debug("Found ring of size: " + ring.getAtomCount());
             }
         }
 
@@ -606,8 +621,7 @@ public class DeduceBondSystemTool {
         }
 
         try {
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet ringSet = arf.findAllRings(molecule);
+            IRingSet ringSet = allRingsFinder.findAllRings(molecule);
 
             for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
                 molecule.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
@@ -675,8 +689,8 @@ public class DeduceBondSystemTool {
     private IRingSet removeExtraRings(IMolecule m) {
 
         try {
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet rs = arf.findAllRings(m);
+            SSSRFinder arf = new SSSRFinder(m);
+            IRingSet rs = arf.findSSSR();
 
             //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
 
@@ -775,6 +789,8 @@ public class DeduceBondSystemTool {
         return Check;
     }
 
+
+    
 }
 
 
