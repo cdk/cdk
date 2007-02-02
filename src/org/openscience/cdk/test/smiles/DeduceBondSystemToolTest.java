@@ -67,7 +67,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
             molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
             for (int i = 0; i < molecule.getBondCount(); i++) {
                 IBond bond = molecule.getBond(i);
-                assertTrue(bond.getOrder() == CDKConstants.BONDORDER_AROMATIC);
+                assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
             }
         } catch (InvalidSmilesException e) {
             e.printStackTrace();
