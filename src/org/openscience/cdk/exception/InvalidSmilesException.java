@@ -36,6 +36,10 @@ public class InvalidSmilesException extends CDKException {
     private static final long serialVersionUID = 1932255464874201495L;
 
     public InvalidSmilesException(String message) {
-        super( message );
+        super(message);
+    }
+
+    public InvalidSmilesException(String message, Exception exception) {
+        super(message, exception);
     }
 }
