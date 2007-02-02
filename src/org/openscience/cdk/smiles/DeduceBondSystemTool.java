@@ -49,7 +49,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -66,9 +65,9 @@ public class DeduceBondSystemTool {
     private IValencyChecker valencyChecker;
 	
     private List listOfRings = null;
-    private IMolecule correspondingMolecule = null;
     
 	private int counter = 0;
+	private boolean interrupted;
 
     /**
      * Constructor for the DeduceBondSystemTool object.
@@ -259,8 +258,6 @@ public class DeduceBondSystemTool {
         java.util.ArrayList al8 = new java.util.ArrayList();
         java.util.ArrayList al9 = new java.util.ArrayList();
         java.util.ArrayList al10 = new java.util.ArrayList();
-
-		java.util.ArrayList al11=new java.util.ArrayList(); // no bonds
 
         al1.add(num[1] + "-" + num[2]);
         al1.add(num[3] + "-" + num[4]);
@@ -532,7 +529,8 @@ public class DeduceBondSystemTool {
         return false;
     }
 
-    private IMolecule loop(long starttime, IMolecule molecule, int index, ArrayList MasterList, int [] choices, IMoleculeSet som) {
+    private IMolecule loop(long starttime, IMolecule molecule, int index, 
+    		               ArrayList MasterList, int [] choices, IMoleculeSet som) throws CDKException {
 
         //logger.debug(System.currentTimeMillis());
 
@@ -540,7 +538,12 @@ public class DeduceBondSystemTool {
 
         long diff = time - starttime;
 
-        if (diff > 100000) return null; //time out after 100 seconds
+        if (diff > 100000) { 
+        	//time out after 100 seconds
+        	throw new CDKException("Timed out after 100 seconds.");
+        } else if (this.interrupted) {
+        	throw new CDKException("Process was interrupted.");
+        }
 
         ArrayList ringlist = (ArrayList) MasterList.get(index);
 
@@ -838,9 +841,13 @@ public class DeduceBondSystemTool {
     	}
     	return ringSet;
     }
+
+	public void setInterrupted(boolean interrupted) {
+		this.interrupted = interrupted;
+	}
+
+	public boolean isInterrupted() {
+		return this.interrupted;
+	}
+
 }
-
-
-
-
-

@@ -113,7 +113,9 @@ public class SmilesParserTest extends CDKTestCase {
 		assertEquals(16, mol.getAtomCount());
 	}
 	
-	public void testUnusualConjugatedRings_3() throws Exception {			
+	public void testUnusualConjugatedRings_3() throws Exception {	
+		if (!super.runSlowTests()) fail("Skipped time consuming test.");
+		
 		//207-08-9:
 		String smiles = "c2ccc1cc3c(cc1c2)c4cccc5cccc3c45";
 		IMolecule mol = sp.parseSmiles(smiles);

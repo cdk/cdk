@@ -25,9 +25,11 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.test.io.SMILESReaderTest;
 import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
 import org.openscience.cdk.test.smiles.DeduceBondSystemToolTest;
+import org.openscience.cdk.test.smiles.InterruptableSmilesParserTest;
 import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
 import org.openscience.cdk.test.smiles.SmilesParserTest;
 import org.openscience.cdk.test.tools.NormalizerTest;
@@ -49,6 +51,7 @@ public class MsmilesTests {
         suite.addTest(DeduceBondSystemToolTest.suite());
         suite.addTest(SmilesGeneratorTest.suite());
         suite.addTest(SmilesParserTest.suite());
+        suite.addTest(InterruptableSmilesParserTest.suite());
         // from cdk.tools
         suite.addTest(NormalizerTest.suite());
 

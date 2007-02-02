@@ -51,6 +51,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module   valencycheck
  */
 public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTool {
+	
+	protected boolean interrupted = false;
 
 	private String atomTypeList = null;
 	protected AtomTypeFactory structgenATF;
@@ -93,6 +95,11 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
     public boolean saturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
         logger.debug("Saturating bond set of size: ", bonds.length);
         boolean bondsAreFullySaturated = false;
+        
+        if (this.interrupted) {
+        	throw new CDKException("Process was interrupted.");
+        }
+        
         if (bonds.length > 0) {
         	IBond bond = bonds[0];
 
@@ -390,6 +397,14 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         double maxBondOrder = container.getMaximumBondOrder(atom);
         return couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
     }
+
+	public void setInterrupted(boolean interrupted) {
+		this.interrupted = interrupted;
+	}
+
+	public boolean isInterrupted() {
+		return this.interrupted;
+	}
 
 }
 

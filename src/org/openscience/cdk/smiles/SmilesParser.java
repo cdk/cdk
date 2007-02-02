@@ -78,6 +78,8 @@ import org.openscience.cdk.tools.ValencyHybridChecker;
  * @cdk.bug        1579235
  * @cdk.bug        1579537
  * @cdk.bug        1579244
+ * 
+ * @see            org.openscience.cdk.smiles.InterruptableSmilesParser
  */
 public class SmilesParser {
 
@@ -87,7 +89,7 @@ public class SmilesParser {
 	private ValencyHybridChecker valencyChecker;
 		
 	private int status = 0;
-	private IChemObjectBuilder builder;
+	protected IChemObjectBuilder builder;
 
 
 	/**
@@ -187,8 +189,9 @@ public class SmilesParser {
 	 *@exception  InvalidSmilesException  Exception thrown when the SMILES string
 	 *      is invalid
 	 */
-	public IMolecule parseSmiles(String smiles) throws InvalidSmilesException
-	{
+	public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
+		setInterrupted(false);
+		
 		DeduceBondSystemTool dbst=new DeduceBondSystemTool();
 
 		IMolecule m2=this.parseString(smiles);
@@ -211,7 +214,6 @@ public class SmilesParser {
 		// conceive aromatic perception
 		this.conceiveAromaticPerception(m);
 
-
 		boolean HaveSP2=false;
 
 		for (int j=0;j<=m.getAtomCount()-1;j++) {
@@ -223,20 +225,21 @@ public class SmilesParser {
 
 		if (HaveSP2) {  // have lower case (aromatic) element symbols that may need to be fixed
 			try {
+				dbst.setInterrupted(isInterrupted());
 				if (!(dbst.isOK(m))) {
 
 					// need to fix it:
 					m = (IMolecule) dbst.fixAromaticBondOrders(m2);
 
 					if (!(m instanceof IMolecule)) {
-						throw new InvalidSmilesException("couldn't parse");
+						throw new InvalidSmilesException("Could not deduce aromatic bond orders.");
 					}
 				} else {
 					// doesnt need to fix aromatic bond orders
 				}
 
 			} catch (CDKException ex) {
-				throw new InvalidSmilesException(ex.getMessage());
+				throw new InvalidSmilesException(ex.getMessage(), ex);
 			}
 		}
 
@@ -464,7 +467,7 @@ public class SmilesParser {
 			{
 				logger.error("Error while parsing char: " + mychar);
 				logger.debug(exception);
-				throw new InvalidSmilesException("Error while parsing char: " + mychar);
+				throw new InvalidSmilesException("Error while parsing char: " + mychar, exception);
 			}
 			logger.debug("Parsing next char");
 		} while (position < smiles.length());
@@ -504,7 +507,7 @@ public class SmilesParser {
 			message += "Invalid SMILES string was: " + smiles;
 			logger.error(message);
 			logger.debug(exception);
-			throw new InvalidSmilesException(message);
+			throw new InvalidSmilesException(message, exception);
 		}
 		return atomString.toString();
 	}
@@ -766,7 +769,7 @@ public class SmilesParser {
 			{
 				logger.error("Could not parse atom string: ", s);
 				logger.debug(exception);
-				throw new InvalidSmilesException("Could not parse atom string: " + s);
+				throw new InvalidSmilesException("Could not parse atom string: " + s, exception);
 			}
 		} while (position < s.length());
 		if (isotopicNumber.toString().length() > 0)
@@ -829,7 +832,7 @@ public class SmilesParser {
 			{
 				logger.error("Could not parse atom string: ", s);
 				logger.debug(exception);
-				throw new InvalidSmilesException("Could not parse atom string: " + s);
+				throw new InvalidSmilesException("Could not parse atom string: " + s, exception);
 			}
 		}
 		return atom;
@@ -913,6 +916,14 @@ public class SmilesParser {
 			}
 		}
 	}
+	
+	public boolean isInterrupted() {
+		return valencyChecker.isInterrupted();
+	}
 
+	public void setInterrupted(boolean interrupted) {
+		valencyChecker.setInterrupted(interrupted);
+	}
+	
 }
 
