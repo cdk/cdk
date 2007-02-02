@@ -798,6 +798,13 @@ public class DeduceBondSystemTool {
         return Check;
     }
 
+    /**
+     * Stores an IRingSet corresponding to a molecule using the bond numbers.
+     * 
+     * @param mol      The IMolecule for which to store the IRingSet.
+     * @param ringSet  The IRingSet to store
+     * @see recoverRingSystem
+     */
     private void storeRingSystem(IMolecule mol, IRingSet ringSet) {
     	listOfRings = new ArrayList(); // this is a list of int arrays
     	for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
@@ -809,6 +816,13 @@ public class DeduceBondSystemTool {
     	}
     }
     
+    /**
+     * Recovers a RingSet corresponding to a molecule that has been
+     * stored by storeRingSystem().
+     * 
+     * @param mol      The IMolecule for which to recover the IRingSet.
+     * @see storeRingSystem
+     */
     private IRingSet recoverRingSystem(IMolecule mol) {
     	IRingSet ringSet = mol.getBuilder().newRingSet();
     	for (int r = 0; r < listOfRings.size(); ++r) {
