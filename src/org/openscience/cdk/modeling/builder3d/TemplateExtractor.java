@@ -53,6 +53,7 @@ import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -362,9 +363,9 @@ public class TemplateExtractor{
     public void makeFingerprintFromRingSystems(String dataFileIn, String dataFileOut, boolean anyAtom, boolean anyAtomAnyBond) throws Exception
     {
 		System.out.println("Start make fingerprint from file:"+dataFileIn+" ...");
-		//AllRingsFinder allRingsFinder=new AllRingsFinder();
-		//allRingsFinder.setTimeout(-1);
-		Fingerprinter fingerPrinter = new Fingerprinter();
+		AllRingsFinder allRingsFinder=new AllRingsFinder();
+		allRingsFinder.setTimeout(500000);
+		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.defaultSize, Fingerprinter.defaultSearchDepth, allRingsFinder);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
