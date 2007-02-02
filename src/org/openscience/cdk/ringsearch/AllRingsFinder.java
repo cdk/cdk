@@ -260,7 +260,7 @@ public class AllRingsFinder
 							removePaths.add(path2);
 						}
 					}
-					checkTimeout();
+					if (timeout > 0) checkTimeout();
 				}
 			}
 		}

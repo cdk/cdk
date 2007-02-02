@@ -364,7 +364,7 @@ public class TemplateExtractor{
     {
 		System.out.println("Start make fingerprint from file:"+dataFileIn+" ...");
 		AllRingsFinder allRingsFinder=new AllRingsFinder();
-		allRingsFinder.setTimeout(500000);
+		allRingsFinder.setTimeout(-1);
 		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.defaultSize, Fingerprinter.defaultSearchDepth, allRingsFinder);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
@@ -475,6 +475,7 @@ public class TemplateExtractor{
 					System.out.println("QueryFingerprintError: from molecule:"+moleculeCounter+" due to:"+exc2.toString());
 				}	
 			}
+			if (fingerprintCounter%1000 == 0) System.out.print(fingerprintCounter + "; ");
 			
 		}//while
 		try{
