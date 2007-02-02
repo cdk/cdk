@@ -78,8 +78,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class Fingerprinter implements IFingerprinter {
 	
-	protected final static int defaultSize = 1024;
-	protected final static int defaultSearchDepth = 8;
+	public final static int defaultSize = 1024;
+	public final static int defaultSearchDepth = 8;
 	
 	protected int size;
 	private int searchDepth;
