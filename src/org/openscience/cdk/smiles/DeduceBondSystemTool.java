@@ -49,6 +49,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -64,6 +65,9 @@ public class DeduceBondSystemTool {
     private HydrogenAdder hAdder;
     private IValencyChecker valencyChecker;
 	
+    private List listOfRings = null;
+    private IMolecule correspondingMolecule = null;
+    
 	private int counter = 0;
 
     /**
@@ -77,6 +81,8 @@ public class DeduceBondSystemTool {
     }
 
     public boolean isOK(IMolecule m) throws CDKException {
+    	IRingSet rs = allRingsFinder.findAllRings(m);
+    	storeRingSystem(m, rs);
     	boolean StructureOK=this.isStructureOK(m);
     	IRingSet irs=this.removeExtraRings(m);
     	
@@ -93,7 +99,10 @@ public class DeduceBondSystemTool {
 
     public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
         //logger.debug("here");
-
+    	
+    	IRingSet rs = allRingsFinder.findAllRings(molecule);
+    	storeRingSystem(molecule, rs);
+    	
         IRingSet ringSet = null;
 
         // TODO remove rings with nonsp2 carbons(?) and rings larger than 7 atoms
@@ -621,7 +630,7 @@ public class DeduceBondSystemTool {
         }
 
         try {
-            IRingSet ringSet = allRingsFinder.findAllRings(molecule);
+            IRingSet ringSet = recoverRingSystem(molecule);
 
             for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
                 molecule.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
@@ -681,7 +690,7 @@ public class DeduceBondSystemTool {
      * Remove rings.
      * <p/>
      * Removes rings which do not have all sp2 aromatic atoms and also gets rid of rings that have more than
-     * 7 atoms in them.
+     * 7 or less than 5 atoms in them.
      *
      * @param m The molecule from which we want to remove rings
      * @return The set of reduced rings
@@ -704,7 +713,7 @@ public class DeduceBondSystemTool {
                 IRing r = (Ring) rs.getAtomContainer(i);
 
 
-                if (r.getAtomCount() > 7) {
+                if (r.getAtomCount() > 7 || r.getAtomCount() < 5) {
                     rs.removeAtomContainer(i);
                     i--; // go back to first one
                     continue iloop;
@@ -789,8 +798,32 @@ public class DeduceBondSystemTool {
         return Check;
     }
 
-
+    private void storeRingSystem(IMolecule mol, IRingSet ringSet) {
+    	listOfRings = new ArrayList(); // this is a list of int arrays
+    	for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
+    		IRing ring = (IRing)ringSet.getAtomContainer(r);
+    		int[] bondNumbers = new int[ring.getBondCount()];
+    		for (int i = 0; i < ring.getBondCount(); ++i)
+    			bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
+    		listOfRings.add(bondNumbers);
+    	}
+    }
     
+    private IRingSet recoverRingSystem(IMolecule mol) {
+    	IRingSet ringSet = mol.getBuilder().newRingSet();
+    	for (int r = 0; r < listOfRings.size(); ++r) {
+    		int[] bondNumbers = (int[])listOfRings.get(r);
+    		IRing ring = mol.getBuilder().newRing(bondNumbers.length);
+    		for (int i = 0; i < bondNumbers.length; ++i) {
+    			IBond bond = mol.getBond(bondNumbers[i]);
+    			ring.addBond(bond);
+    			if (!ring.contains(bond.getAtom(0))) ring.addAtom(bond.getAtom(0));
+    			if (!ring.contains(bond.getAtom(1))) ring.addAtom(bond.getAtom(1));
+    		}
+    		ringSet.addAtomContainer(ring);
+    	}
+    	return ringSet;
+    }
 }
 
 
