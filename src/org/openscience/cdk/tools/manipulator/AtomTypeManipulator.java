@@ -50,6 +50,7 @@ public class AtomTypeManipulator {
 	 * @param  atomType    AtomType
 	 */
 	public static void configure(IAtom atom, IAtomType atomType) {
+		atom.setSymbol(atomType.getSymbol());
 		atom.setAtomTypeName(atomType.getAtomTypeName());
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
         atom.setBondOrderSum(atomType.getBondOrderSum());
