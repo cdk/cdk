@@ -364,11 +364,13 @@ public class MFAnalyser {
 		IIsotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
+		double getNaturalMass = 0;
 		for (int i = 0; i < isotopes.length; i++) {
 			summedAbundances += isotopes[i].getNaturalAbundance();
 			summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
+			getNaturalMass = summedWeightedAbundances / summedAbundances;
 		}
-		return summedWeightedAbundances / summedAbundances;
+		return getNaturalMass;
 	}
 
 
