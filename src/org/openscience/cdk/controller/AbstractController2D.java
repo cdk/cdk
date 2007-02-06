@@ -890,7 +890,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 						if (existingBond.getFlag(CDKConstants.ISAROMATIC))
 						{
 							newRing.getBond(2).setOrder(2.0);
-							newRing.getBond(2).setOrder(2.0);
+							newRing.getBond(4).setOrder(2.0);
 						} else
 						{
 							newRing.getBond(1).setOrder(2.0);
