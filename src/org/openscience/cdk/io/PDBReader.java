@@ -77,6 +77,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author      Edgar Luttmann
  * @author      Bradley Smith <bradley@baysmith.com>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
  * @cdk.created 2001-08-06
  * @cdk.keyword file format, PDB
  */
@@ -254,8 +255,10 @@ public class PDBReader extends DefaultChemObjectReader {
 							// search for an existing strand or create a new one.
 							oStrand = oBP.getStrand(String.valueOf(chain));
 							if (oStrand == null) {
+								String strandName=oAtom.getChainID();
 								oStrand = new PDBStrand();
-								oStrand.setStrandName(String.valueOf(chain));
+								oStrand.setStrandName(String.valueOf(strandName));
+								oStrand.setStrandID(String.valueOf(chain));
 							}
 
 							// search for an existing monomer or create a new one.

@@ -214,6 +214,11 @@ public class PDBReaderTest extends TestCase {
 	    assertEquals(2, polymer.getStrandCount());
 	    assertEquals(24, polymer.getMonomerCount());
 
+	      assertTrue(polymer.getStrandNames().contains("A"));
+	      assertTrue(polymer.getStrandNames().contains("B"));
+	      assertFalse(polymer.getStrandNames().contains("C"));
+	      assertEquals(24, polymer.getMonomerCount());
+	      
 	    assertTrue(polymer instanceof PDBPolymer);
 	    PDBPolymer pdb = (PDBPolymer)polymer;
 

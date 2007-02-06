@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.module  data
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+ * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
  */
 public class Strand extends AtomContainer implements java.io.Serializable, IStrand
 {
@@ -61,6 +62,8 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	private String strandName;
 	/** The type of this strand (e.g. PEPTIDE, DNA, RNA). */
 	private String strandType;
+	/** As names in a PDB are not unique, store name and other info in a strandID */
+	private String strandID;
 	
 	/**
 	 * Contructs a new Strand.
@@ -116,6 +119,14 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 		strandType = cStrandType;
 	}
 	
+	public String getStrandID() {
+		return strandID;
+	}
+
+	public void setStrandID(String strandID) {
+		this.strandID = strandID;
+	}
+
 	/**
 	 *
 	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the

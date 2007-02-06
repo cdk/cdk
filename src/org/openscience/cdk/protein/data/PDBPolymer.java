@@ -54,7 +54,7 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 	private static final long serialVersionUID = 4173552834313952358L;
 
 	List sequentialListOfMonomers;
-	List secundairyStructures;
+	List secondaryStructures;
 	
 	/**
 	 * Contructs a new Polymer to store the Monomers.
@@ -62,16 +62,16 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 	public PDBPolymer() {
 		super();
 		sequentialListOfMonomers = new ArrayList();
-		secundairyStructures = new ArrayList();
+		secondaryStructures = new ArrayList();
 	}
 	
 	public void addStructure(IPDBStructure structure) {
-		secundairyStructures.add(structure);
+		secondaryStructures.add(structure);
 	}
 	
 	public Collection getStructures() {
 //		don't return the original
-		return new ArrayList(secundairyStructures);
+		return new ArrayList(secondaryStructures);
 	}
 	/**
 	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
