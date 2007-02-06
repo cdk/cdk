@@ -77,53 +77,12 @@ public class MFAnalyser {
 	private String MF;
 	private IAtomContainer atomContainer;
 	private int HCount = 0;
-	HashMap massMap=new HashMap();
+	static HashMap massMap=new HashMap();
 	private boolean useboth=false;
 	
 	private LoggingTool logger = new LoggingTool(MFAnalyser.class);
-
-	/**
-	 * Construct an instance of MFAnalyser, initialized with a molecular
-	 * formula string. The string is immediatly analysed and a set of Nodes
-	 * is built based on this analysis
-	 *
-	 * @param  MF  Description of the Parameter
-	 * @param target TODO
-	 */
-	public MFAnalyser(String MF, IAtomContainer target) {
-		this.MF = MF;
-		this.atomContainer = analyseMF(MF, target);
-		initMassMap();
-	}
-
-
-	/**
-	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
-	 * The set is analysed and a molecular formular is constructed
-	 *  based on this analysis
-	 *
-	 * @param  ac  Description of the Parameter
-	 */
-	public MFAnalyser(IAtomContainer ac) {
-		this(ac,false);
-	}
 	
-	/**
-	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
-	 * The set is analysed and a molecular formular is constructed
-	 *  based on this analysis
-	 *
-	 * @param  ac  Description of the Parameter
-	 * @param  useboth true=implicit and explicit hs will be used, false=explicit used, implicit only if no explicit
-	 */
-	public MFAnalyser(IAtomContainer ac, boolean useboth) {
-		this.useboth=useboth;
-		this.atomContainer = ac;
-		this.MF = analyseAtomContainer(ac);
-		initMassMap();
-	}
-	
-	private void initMassMap(){
+	static{
 		massMap.put("1","1.00794");
 		massMap.put("2","4.002602");
 		massMap.put("3","6.941");
@@ -242,6 +201,45 @@ public class MFAnalyser {
 		massMap.put("116","292");		
 	}
 
+	/**
+	 * Construct an instance of MFAnalyser, initialized with a molecular
+	 * formula string. The string is immediatly analysed and a set of Nodes
+	 * is built based on this analysis
+	 *
+	 * @param  MF  Description of the Parameter
+	 * @param target TODO
+	 */
+	public MFAnalyser(String MF, IAtomContainer target) {
+		this.MF = MF;
+		this.atomContainer = analyseMF(MF, target);
+	}
+
+
+	/**
+	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
+	 * The set is analysed and a molecular formular is constructed
+	 *  based on this analysis
+	 *
+	 * @param  ac  Description of the Parameter
+	 */
+	public MFAnalyser(IAtomContainer ac) {
+		this(ac,false);
+	}
+	
+	/**
+	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
+	 * The set is analysed and a molecular formular is constructed
+	 *  based on this analysis
+	 *
+	 * @param  ac  Description of the Parameter
+	 * @param  useboth true=implicit and explicit hs will be used, false=explicit used, implicit only if no explicit
+	 */
+	public MFAnalyser(IAtomContainer ac, boolean useboth) {
+		this.useboth=useboth;
+		this.atomContainer = ac;
+		this.MF = analyseAtomContainer(ac);
+	}
+	
 
 	/**
 	 * returns the complete set of Nodes, as implied by the molecular
@@ -360,8 +358,8 @@ public class MFAnalyser {
 	 * @exception  java.io.IOException     Description of the Exception
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
-		IIsotope[] isotopes = IsotopeFactory.getInstance(getAtomContainer().getBuilder()).getIsotopes(element.getSymbol());
+	public static double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
+		IIsotope[] isotopes = IsotopeFactory.getInstance(element.getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
 		double getNaturalMass = 0;
@@ -374,7 +372,7 @@ public class MFAnalyser {
 	}
 
 
-	public double getCanonicalMass(IElement element){
+	public static double getCanonicalMass(IElement element){
 		return Double.parseDouble((String)massMap.get(element.getAtomicNumber()+""));
 	}
 	
