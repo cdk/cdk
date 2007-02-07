@@ -121,7 +121,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	public void testSetTimeout_long()
 	{
 		AllRingsFinder arf = new AllRingsFinder();
-		arf.setTimeout(0);
+		arf.setTimeout(1);
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
 		//display(molecule);
 		try {
