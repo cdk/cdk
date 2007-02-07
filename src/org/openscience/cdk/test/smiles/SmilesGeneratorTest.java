@@ -56,7 +56,6 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -111,7 +110,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
 		assertNotNull(smiles1);
-		assertEquals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC", smiles1);
+		assertEquals("C=2C=C1C=3C=CC(=CC=3(C=CC1=C(C=2)CC))CCC", smiles1);
 	}
 
 	
