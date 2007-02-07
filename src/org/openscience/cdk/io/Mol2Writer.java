@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -43,7 +40,7 @@ import java.util.Iterator;
  *
  * @cdk.module io
  *
- * @author  Egon Willighagen
+ * @author     Egon Willighagen
  */
 public class Mol2Writer extends DefaultChemObjectWriter {
 

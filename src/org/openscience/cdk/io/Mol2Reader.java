@@ -1,10 +1,7 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- *
+ * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
@@ -39,6 +36,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -60,7 +58,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module io
  *
- * @author     Egon Willighagen
+ * @author         Egon Willighagen
  * @cdk.created    2003-08-21
  *
  * @cdk.keyword    file format, Mol2
@@ -228,7 +226,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     	if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
 
                         IAtom atom = molecule.getBuilder().newAtom("X");
-                        IAtomType atomType = atFactory.getAtomType(atomTypeStr);
+                        IAtomType atomType = null;
+                        try {
+                        	atFactory.getAtomType(atomTypeStr);
+                        } catch (Exception exception) {
+                        	// ok, *not* an mol2 atom type
+                        	atomType = null;
+                        }
                         // Maybe it is just an element
                         if (atomType == null && isElementSymbol(atomTypeStr)) {
                         	atom.setSymbol(atomTypeStr);
@@ -312,7 +316,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
     }
     
     private boolean isElementSymbol(String atomTypeStr) {
-		// TODO Auto-generated method stub
+    	for (int i=1; i<Symbols.KNOWN_ELEMENTS; i++) {
+    		if (Symbols.byAtomicNumber[i].equals(atomTypeStr)) return true;
+    	}
 		return false;
 	}
 
