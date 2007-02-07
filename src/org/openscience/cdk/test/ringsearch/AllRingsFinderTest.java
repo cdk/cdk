@@ -113,9 +113,10 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
-	public void testFindAllRings_IAtomContainer_boolean()
-	{
-		fail("Test not implemented yet - it is depending on new implementation of AllRingsFinder.");
+	public void testFindAllRings_IAtomContainer_boolean() throws CDKException {
+		AllRingsFinder arf = new AllRingsFinder();
+		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
+		arf.findAllRings(molecule, true);
 	}
 	
 	public void testSetTimeout_long()
