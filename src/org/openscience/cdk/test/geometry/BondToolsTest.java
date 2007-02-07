@@ -21,17 +21,20 @@
 package org.openscience.cdk.test.geometry;
 
 import java.io.InputStream;
-
-import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.geometry.BondTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -113,25 +116,25 @@ public class BondToolsTest extends CDKTestCase {
 	}
 
 
-	/*
-	 * shk3 I do not know what this method is supposed to do, so the test fails.
+	/**
+	 * Make sure the the rebonding is working.
 	 */
-	public void testCloseEnoughToBond_IAtom_IAtom_double(){
-		try{
-			String filename = "data/mdl/testdoublebondconfig.mol";
-		    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		    MDLV2000Reader reader = new MDLV2000Reader(ins);
-	        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-	        IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
-	        mol.getAtom(0).setPoint3d(new Point3d(mol.getAtom(0).getPoint2d().x,mol.getAtom(0).getPoint2d().y,0));
-	        mol.getAtom(1).setPoint3d(new Point3d(mol.getAtom(1).getPoint2d().x,mol.getAtom(1).getPoint2d().y,0));
-	        mol.getAtom(8).setPoint3d(new Point3d(mol.getAtom(8).getPoint2d().x,mol.getAtom(8).getPoint2d().y,0));
-	        assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(1),1));
-	        assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(8),1));
-		} catch (Exception exc) {
-			exc.printStackTrace();
-			fail(exc.getMessage());
-		}		
+	public void testCloseEnoughToBond_IAtom_IAtom_double() throws Exception {
+		String filename = "data/xyz/viagra.xyz";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		XYZReader reader = new XYZReader(ins);
+		AtomTypeFactory atf = AtomTypeFactory.getInstance(
+				 "org/openscience/cdk/config/data/jmol_atomtypes.txt",
+			     NoNotificationChemObjectBuilder.getInstance()
+		);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
+		Iterator atoms = mol.atoms();
+		while (atoms.hasNext()) {
+			atf.configure((IAtom)atoms.next());
+		}
+		assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(1),1));
+		assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(8),1));
 	}
 
 	public void testGiveAngleBothMethods_Point2d_Point2d_Point2d_boolean(){
