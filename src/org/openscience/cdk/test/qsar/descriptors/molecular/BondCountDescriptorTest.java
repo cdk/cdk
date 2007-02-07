@@ -82,6 +82,7 @@ public class BondCountDescriptorTest extends CDKTestCase {
      * @cdk.bug 1651263
      */
     public void testDefaultSetting() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    	IMolecularDescriptor descriptor  = new BondCountDescriptor();
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
