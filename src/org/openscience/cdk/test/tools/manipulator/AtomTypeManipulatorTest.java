@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * @cdk.module test-standard
@@ -48,6 +49,7 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 		IAtom atom = new NNAtom(Elements.CARBON);
 		IAtomType atomType = new NNAtomType(Elements.CARBON);
 		atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+		AtomTypeManipulator.configure(atom, atomType);
 		assertEquals(
 			atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
 			atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR)
