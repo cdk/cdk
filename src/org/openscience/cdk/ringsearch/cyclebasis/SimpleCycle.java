@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,10 +21,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.ringsearch.cyclebasis;
+
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
@@ -35,12 +31,10 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
 import java.util.*;
 
 /**
- * A cycle in a graph.
  * A cycle in a graph G is a subgraph in which every vertex has even degree.
  *
  * @author Ulrich Bauer <baueru@cs.tum.edu>
  * 
- *
  * @cdk.module standard
  *
  * @cdk.keyword smallest-set-of-rings
