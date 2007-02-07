@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -47,7 +43,7 @@ import java.util.Iterator;
  *   </tr>
  *   <tr>
  *     <td>order</td>
- *     <td>1.0</td>
+ *     <td>any</td>
  *     <td>The bond order</td>
  *   </tr>
  * </table>
@@ -58,6 +54,7 @@ import java.util.Iterator;
  * <li>d for double bonds
  * <li>t for triple bonds
  * <li>a for aromatic bonds
+ * <li>"" for all bonds
  * </ul>
  *
  * @author      mfe4
@@ -68,8 +65,8 @@ import java.util.Iterator;
  */
 public class BondCountDescriptor implements IMolecularDescriptor {
 
-    private double order = 1.0;
-
+	/** defaults to -1.0, which means: count all bonds **/
+    private double order = -1.0;
 
     /**
      *  Constructor for the BondCountDescriptor object
@@ -129,6 +126,12 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return            The number of bonds of a certain type.
      */
     public DescriptorValue calculate(IAtomContainer container) {
+    	if (order < 0) {
+    		// the special case: just count them all
+    		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult(container.getBondCount()), new String[]{"nB"});
+    	}
+    	
         int bondCount = 0;
         Iterator bonds = container.bonds();
         while (bonds.hasNext()) {
