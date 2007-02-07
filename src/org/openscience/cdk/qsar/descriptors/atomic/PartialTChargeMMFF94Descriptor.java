@@ -97,7 +97,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 
 

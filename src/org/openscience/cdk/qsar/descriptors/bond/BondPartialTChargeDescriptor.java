@@ -102,7 +102,7 @@ public class BondPartialTChargeDescriptor implements IBondDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
     /**
      *  The method calculates the bond total Partial charge of a given bond

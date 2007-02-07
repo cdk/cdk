@@ -114,7 +114,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 	/**
 	 *  This method calculates the ionization potential of an atom.

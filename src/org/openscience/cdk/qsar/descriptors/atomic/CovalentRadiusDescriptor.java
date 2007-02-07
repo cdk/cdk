@@ -115,7 +115,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 
 

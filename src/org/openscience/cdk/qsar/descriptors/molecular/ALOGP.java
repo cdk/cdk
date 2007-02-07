@@ -1965,7 +1965,7 @@ public class ALOGP implements IMolecularDescriptor {
 
 
 	public Object[] getParameters() {
-		return new Object[0];
+		return null;
 	}	
 	
 }// end class

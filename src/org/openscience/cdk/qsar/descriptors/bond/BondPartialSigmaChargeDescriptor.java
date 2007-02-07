@@ -103,7 +103,7 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 
 

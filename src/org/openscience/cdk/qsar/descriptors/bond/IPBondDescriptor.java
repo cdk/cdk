@@ -111,7 +111,7 @@ public class IPBondDescriptor implements IBondDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 	/**
 	 *  This method calculates the ionization potential of a bond.

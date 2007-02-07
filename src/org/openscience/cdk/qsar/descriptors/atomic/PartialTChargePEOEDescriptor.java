@@ -107,7 +107,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      *@see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 
 

@@ -122,7 +122,7 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
 
 
@@ -187,7 +187,7 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Object[0];
+        return null;
     }
 }
 

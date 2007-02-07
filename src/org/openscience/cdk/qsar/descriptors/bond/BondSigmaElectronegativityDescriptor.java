@@ -101,7 +101,7 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
      * @see #setParameters
      */
     public Object[] getParameters() {
-        return new Object[0];
+        return null;
     }
     /**
      *  The method calculates the sigma electronegativity of a given bond
