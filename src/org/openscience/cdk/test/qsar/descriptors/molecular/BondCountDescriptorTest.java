@@ -26,9 +26,9 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -43,6 +43,9 @@ import org.openscience.cdk.test.CDKTestCase;
 
 public class BondCountDescriptorTest extends CDKTestCase {
 
+	private static final SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+	private static final IMolecularDescriptor descriptor  = new BondCountDescriptor();
+	
     public  BondCountDescriptorTest() {}
 
     public static Test suite() {
@@ -50,11 +53,42 @@ public class BondCountDescriptorTest extends CDKTestCase {
     }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor  = new BondCountDescriptor();
         Object[] params = {new Double(1.0)};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        mol = sp.parseSmiles("C=C=C");
+        assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Double(2.0)};
+        descriptor.setParameters(params);
+
+        IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
+        assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        mol = sp.parseSmiles("C=C=C");
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    /**
+     * The default setting should be to count *all* bonds.
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     * 
+     * @cdk.bug 1651263
+     */
+    public void testDefaultSetting() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        mol = sp.parseSmiles("C=C=C");
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        mol = sp.parseSmiles("CC=O");
+        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        mol = sp.parseSmiles("CC#N");
         assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
     }
 }
