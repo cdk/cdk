@@ -90,10 +90,15 @@ public class CycleBasisTest extends CDKTestCase {
 		basis = new CycleBasis(g);
 	}
 	
-	public void testCycleBasis() {
-		assertTrue(basis.cycles().size() == 
-			g.edgeSet().size() - g.vertexSet().size() 
-			+ new ConnectivityInspector(g).connectedSets().size());
+	public void testCycleBasis_UndirectedGraph() {
+		this.setUp(); // just run it once more
+		assertNotNull(basis);
+	}
+	
+	public void testCycles() {
+		int trueCycleCount = g.edgeSet().size() - g.vertexSet().size() 
+			+ new ConnectivityInspector(g).connectedSets().size(); 
+		assertEquals(trueCycleCount, basis.cycles().size());
 	}
 		
 	public void testWeightVector() {
@@ -101,15 +106,15 @@ public class CycleBasisTest extends CDKTestCase {
 	}
 	
 	public void testEssentialCycles() {
-		assertTrue(basis.essentialCycles().size() == 4);
+		assertEquals(4, basis.essentialCycles().size());
 	}
 	
 	public void testRelevantCycles() {
-		assertTrue(basis.relevantCycles().size() == 4);
+		assertEquals(4, basis.relevantCycles().size());
 	}
 	
 	public void testEquivalenceClasses() {
-		assertTrue(basis.equivalenceClasses().size() == 4);
+		assertEquals(4, basis.equivalenceClasses().size());
 	}
 	
 }
