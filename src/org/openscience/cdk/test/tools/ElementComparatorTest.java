@@ -50,11 +50,11 @@ public class ElementComparatorTest extends CDKTestCase {
 	public void testCompare_Object_Object() {
 		ElementComparator comp = new ElementComparator();
 		
-		assertTrue(comp.compare("C", "H") > 0);
-		assertTrue(comp.compare("H", "O") > 0);
-		assertTrue(comp.compare("N", "O") > 0);
+		assertTrue(comp.compare("C", "H") < 0);
+		assertTrue(comp.compare("H", "O") < 0);
+		assertTrue(comp.compare("N", "O") < 0);
 		assertEquals(0, comp.compare("Cl", "Cl"));
-		assertTrue(comp.compare("Cl", "C") < 0);
+		assertTrue(comp.compare("Cl", "C") > 0);
 	}
 
 }

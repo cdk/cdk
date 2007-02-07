@@ -44,25 +44,27 @@ public class ElementComparator implements Comparator {
     private static final String C_ELEMENT_SYMBOL = "C";
     
     /**
-     * Returns a positive if o1 comes before o2 in a molecular formula.
+     * Returns a negative if o1 comes before o2 in a molecular formula,
+     * returns zero if they are identical, and positive if o1 comes
+     * after o2 in the formula.
      */
     public int compare(Object o1, Object o2) {
-        if (o1.equals(C_ELEMENT_SYMBOL)) {
-            if (o2.equals(C_ELEMENT_SYMBOL)) {
+        if (C_ELEMENT_SYMBOL.equals(o1)) {
+            if (C_ELEMENT_SYMBOL.equals(o2)) {
                 return 0;
             } else {
                 return -1;
             }
-        } else if (o1.equals(H_ELEMENT_SYMBOL)) {
-            if (o2.equals(C_ELEMENT_SYMBOL)) {
+        } else if (H_ELEMENT_SYMBOL.equals(o1)) {
+            if (C_ELEMENT_SYMBOL.equals(o2)) {
                 return 1;
-            } else if (o2.equals(H_ELEMENT_SYMBOL)) {
+            } else if (H_ELEMENT_SYMBOL.equals(o2)) {
                 return 0;
             } else {
                 return -1;
             }
         } else {
-            if (o2.equals(C_ELEMENT_SYMBOL) || o2.equals(H_ELEMENT_SYMBOL)) {
+            if (C_ELEMENT_SYMBOL.equals(o2) || H_ELEMENT_SYMBOL.equals(o2)) {
                 return 1;
             } else {
                 return ((String)o1).compareTo((String)o2);
