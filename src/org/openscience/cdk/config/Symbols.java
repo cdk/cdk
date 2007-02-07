@@ -154,4 +154,6 @@ public class Symbols {
 		"Uuh" // 116
 	};
 	
+	public final static int KNOWN_ELEMENTS = 116;
+	
 }
