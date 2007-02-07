@@ -29,7 +29,6 @@ import java.util.BitSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.MFAnalyser;
 
@@ -46,37 +45,35 @@ import org.openscience.cdk.tools.MFAnalyser;
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-public class ExtendedFingerprinter extends Fingerprinter {
+public class ExtendedFingerprinter implements IFingerprinter {
+
+	private final int RESERVED_BITS = 25;
 	
+	private Fingerprinter fingerprinter = null;
+
 	/**
 	 * Creates a fingerprint generator of length <code>defaultSize</code>
 	 * and with a search depth of <code>defaultSearchDepth</code>.
 	 */
 	public ExtendedFingerprinter() {
-		this(defaultSize, 
-		     defaultSearchDepth, null);
+		this(Fingerprinter.defaultSize, 
+			 Fingerprinter.defaultSearchDepth);
 	}
 	
 	public ExtendedFingerprinter(int size) {
-		this(size, defaultSearchDepth, null);
-	}
-	
-	public ExtendedFingerprinter(int size, int searchDepth) {
-		this(size, searchDepth, null);
+		this(size, Fingerprinter.defaultSearchDepth);
 	}
 	
 	/**
 	 * Constructs a fingerprint generator that creates fingerprints of
 	 * the given size, using a generation algorithm with the given search
-	 * depth, and which uses the given AllRingsFinder to reuse previous
-	 * results.
+	 * depth.
 	 *
 	 * @param  size        The desired size of the fingerprint
 	 * @param  searchDepth The desired depth of search
-	 * @param  ringFinder  The AllRingsFinder to be used by the aromaticity detection
 	 */
-    public ExtendedFingerprinter(int size, int searchDepth, AllRingsFinder ringFinder) {
-    	super(size, searchDepth);
+	public ExtendedFingerprinter(int size, int searchDepth) {
+    	this.fingerprinter = new Fingerprinter(size-RESERVED_BITS, searchDepth);
 	}
 	
 	/**
@@ -102,19 +99,20 @@ public class ExtendedFingerprinter extends Fingerprinter {
 	 *@exception Exception  Description of the Exception
 	 */
 	public BitSet getFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
-		BitSet bs= super.getFingerprint(ac, size-25);
+		BitSet bs = fingerprinter.getFingerprint(ac);
+		int size = fingerprinter.getSize();
 		MFAnalyser mfa=new MFAnalyser(ac);
 		float weight=mfa.getCanonicalMass();
 		for(int i=1;i<11;i++){
 			if(weight>(100*i))
-				bs.set(size-26+i);
+				bs.set(size-26+i); // 26 := RESERVED_BITS+1
 		}
 		if(rs==null){
 			rs=new SSSRFinder(ac).findSSSR();
 		}
 		for(int i=0;i<7;i++){
 			if(rs.getAtomContainerCount()>i)
-				bs.set(size-15+i);
+				bs.set(size-15+i); // 15 := RESERVED_BITS+1+10 mass bits
 		}
 		for(int i=0;i<rs.getAtomContainerCount();i++){
 			for(int k=3;k<11;k++){
@@ -125,6 +123,10 @@ public class ExtendedFingerprinter extends Fingerprinter {
 			}
 		}
 		return bs;
+	}
+
+	public int getSize() {
+		return fingerprinter.getSize()+RESERVED_BITS;
 	}
 
 }

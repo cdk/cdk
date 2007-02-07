@@ -26,6 +26,7 @@ package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,15 +50,15 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 	 * and with a search depth of <code>defaultSearchDepth</code>.
 	 */
 	public GraphOnlyFingerprinter() {
-		super(defaultSize, defaultSearchDepth, null);
+		super(defaultSize, defaultSearchDepth);
 	}
 	
 	public GraphOnlyFingerprinter(int size) {
-		super(size, defaultSearchDepth, null);
+		super(size, defaultSearchDepth);
 	}
 	
 	public GraphOnlyFingerprinter(int size, int searchDepth) {
-		super(size, searchDepth, null);
+		super(size, searchDepth);
 	}
 
 	/**
@@ -72,9 +73,9 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 	}
 
 	protected BitSet getFingerprint(IAtomContainer ac, int size) throws Exception {
-		findPathes(ac, super.getSearchDepth());
+		Map paths = findPathes(ac, super.getSearchDepth());
 		BitSet bs = new BitSet(size);
-		for (Iterator e = pathes.values().iterator(); e.hasNext(); ) {
+		for (Iterator e = paths.values().iterator(); e.hasNext(); ) {
 			bs.set(new Random(((String)e.next()).hashCode()).nextInt(size));
 		}
 		return bs;

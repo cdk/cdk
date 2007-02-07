@@ -29,6 +29,7 @@ import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -37,7 +38,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
-
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
- *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);s
+ *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);
  * </pre> <p>
  *
  *  The FingerPrinter assumes that hydrogens are explicitely given! <p>
@@ -81,11 +81,9 @@ public class Fingerprinter implements IFingerprinter {
 	public final static int defaultSize = 1024;
 	public final static int defaultSearchDepth = 8;
 	
-	protected int size;
+	private int size;
 	private int searchDepth;
-	private AllRingsFinder ringFinder;
-	
-	static HashMap pathes;
+
 	final static boolean debug = true;
 	static int debugCounter = 0;
 
@@ -96,31 +94,24 @@ public class Fingerprinter implements IFingerprinter {
 	 * and with a search depth of <code>defaultSearchDepth</code>.
 	 */
 	public Fingerprinter() {
-		this(defaultSize, defaultSearchDepth, null);
+		this(defaultSize, defaultSearchDepth);
 	}
 	
 	public Fingerprinter(int size) {
-		this(size, defaultSearchDepth, null);
-	}
-	
-	public Fingerprinter(int size, int searchDepth) {
-		this(size, searchDepth, null);
+		this(size, defaultSearchDepth);
 	}
 	
 	/**
 	 * Constructs a fingerprint generator that creates fingerprints of
 	 * the given size, using a generation algorithm with the given search
-	 * depth, and which uses the given AllRingsFinder to reuse previous
-	 * results.
+	 * depth.
 	 *
 	 * @param  size        The desired size of the fingerprint
 	 * @param  searchDepth The desired depth of search
-	 * @param  ringFinder  The AllRingsFinder to be used by the aromaticity detection
 	 */
-    public Fingerprinter(int size, int searchDepth, AllRingsFinder ringFinder) {
+	public Fingerprinter(int size, int searchDepth) {
 		this.size = size;
 		this.searchDepth = searchDepth;
-		this.ringFinder = ringFinder;
 	}
 	
 	/**
@@ -129,7 +120,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	protected BitSet getFingerprint(IAtomContainer ac, int size) throws Exception {
+	public BitSet getFingerprint(IAtomContainer ac, AllRingsFinder ringFinder) throws Exception {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
@@ -139,9 +130,9 @@ public class Fingerprinter implements IFingerprinter {
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");
-		findPathes(ac, searchDepth);
+		Map paths = findPathes(ac, searchDepth);
 		BitSet bs = new BitSet(size);
-		for (Iterator e = pathes.values().iterator(); e.hasNext(); )
+		for (Iterator e = paths.values().iterator(); e.hasNext(); )
 		{
 			path = (String)e.next();
 			position = new java.util.Random(path.hashCode()).nextInt(size);
@@ -159,7 +150,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@exception Exception  Description of the Exception
 	 */
 	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
-		return getFingerprint(ac,size);
+		return getFingerprint(ac, null);
 	}
 	
 	/**
@@ -203,20 +194,20 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  ac           The AtomContainer which is to be searched.
 	 *@param  searchDepth  Description of the Parameter
 	 */
-	protected void findPathes(IAtomContainer ac, int searchDepth)
+	protected Map findPathes(IAtomContainer ac, int searchDepth)
 	{
-		pathes = new HashMap();
+		Map paths = new HashMap();
 		List currentPath = new ArrayList();
 		debugCounter = 0;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			currentPath.clear();
 			currentPath.add(ac.getAtom(f));
-			checkAndStore(currentPath);
+			checkAndStore(currentPath, paths);
 			logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtom(f).getSymbol());
-			depthFirstSearch(ac, ac.getAtom(f), currentPath, 0, searchDepth);
-
+			depthFirstSearch(ac, ac.getAtom(f), paths, currentPath, 0, searchDepth);
 		}
+		return paths;
 	}
 
 
@@ -229,7 +220,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	private void depthFirstSearch(IAtomContainer ac, IAtom root, List currentPath, int currentDepth, int searchDepth)
+	private void depthFirstSearch(IAtomContainer ac, IAtom root, Map paths, List currentPath, int currentDepth, int searchDepth)
 	{
 		List bonds = ac.getConnectedBondsList(root);
 
@@ -275,11 +266,11 @@ public class Fingerprinter implements IFingerprinter {
 				newPath.add(bondSymbol);
 				//logger.debug("Bond has symbol " + bondSymbol);
 				newPath.add(nextAtom);
-				checkAndStore(newPath);
+				checkAndStore(newPath, paths);
 
 				if (currentDepth < searchDepth)
 				{
-					depthFirstSearch(ac, nextAtom, newPath, currentDepth, searchDepth);
+					depthFirstSearch(ac, nextAtom, paths, newPath, currentDepth, searchDepth);
 					//logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
 				}
 			} else
@@ -295,7 +286,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *
 	 *@param  newPath  Description of the Parameter
 	 */
-	private void checkAndStore(List newPath)
+	private void checkAndStore(List newPath, Map paths)
 	{
 		String newPathString = "";
 		for (int f = 0; f < newPath.size(); f++)
@@ -324,9 +315,9 @@ public class Fingerprinter implements IFingerprinter {
 			 */
 			storePath = reversePath;
 		}
-		if (!pathes.containsKey(storePath))
+		if (!paths.containsKey(storePath))
 		{
-			pathes.put(storePath, storePath);
+			paths.put(storePath, storePath);
 			if (debug)
 			{
 				debugCounter++;
@@ -408,6 +399,10 @@ public class Fingerprinter implements IFingerprinter {
 
 	public int getSearchDepth() {
 		return searchDepth;
+	}
+
+	public int getSize() {
+		return size;
 	}
 
 }

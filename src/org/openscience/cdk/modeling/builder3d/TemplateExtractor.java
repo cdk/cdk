@@ -365,7 +365,7 @@ public class TemplateExtractor{
 		System.out.println("Start make fingerprint from file:"+dataFileIn+" ...");
 		AllRingsFinder allRingsFinder=new AllRingsFinder();
 		allRingsFinder.setTimeout(-1);
-		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.defaultSize, Fingerprinter.defaultSearchDepth, allRingsFinder);
+		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.defaultSize, Fingerprinter.defaultSearchDepth);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;
@@ -459,7 +459,7 @@ public class TemplateExtractor{
 			if (anyAtom || anyAtomAnyBond){
 				try{
 					System.out.println("Make Fingerprint Query");
-					data.add((BitSet)fingerPrinter.getFingerprint((IAtomContainer) query));
+					data.add((BitSet)fingerPrinter.getFingerprint((IAtomContainer) query, allRingsFinder));
 					fingerprintCounter=fingerprintCounter+1;
 				}catch(Exception exc1){
 					exc1.printStackTrace();

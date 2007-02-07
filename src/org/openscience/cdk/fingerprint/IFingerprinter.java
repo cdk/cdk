@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public interface IFingerprinter {
 
 	public BitSet getFingerprint(IAtomContainer ac) throws Exception;
+	public int getSize();
 
 }
 
