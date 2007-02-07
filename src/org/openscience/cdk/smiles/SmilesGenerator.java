@@ -1521,10 +1521,6 @@ public class SmilesGenerator
 	private void parseBond(StringBuffer line, IAtom a1, IAtom a2, IAtomContainer atomContainer)
 	{
 		//logger.debug("in parseBond()");
-		if (a1.getFlag(CDKConstants.ISAROMATIC) && a2.getFlag(CDKConstants.ISAROMATIC))
-		{
-			return;
-		}
 		if (atomContainer.getBond(a1, a2) == null)
 		{
 			return;
@@ -1594,11 +1590,7 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if (a.getFlag(CDKConstants.ISAROMATIC))
-			{
-				// Strictly speaking, this is wrong. Lower case is only used for sp2 atoms!
-				buffer.append(a.getSymbol().toLowerCase());
-			} else if (a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2)
+			if (a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2)
 			{
 				buffer.append(a.getSymbol().toLowerCase());
 			} else
@@ -1700,11 +1692,9 @@ public class SmilesGenerator
 			Integer integer = (Integer) it.next();
 			IBond b = container.getBond((IAtom) it2.next(), a);
 			int type = (int) b.getOrder();
-			if (type == 2 && !b.getFlag(CDKConstants.ISAROMATIC))
-			{
+			if (type == 2) {
 				buffer.append("=");
-			} else if (type == 3 && !b.getFlag(CDKConstants.ISAROMATIC))
-			{
+			} else if (type == 3) {
 				buffer.append("#");
 			}
 			buffer.append(integer);
