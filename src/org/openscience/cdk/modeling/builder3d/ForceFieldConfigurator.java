@@ -1,9 +1,6 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.modeling.builder3d;
 
@@ -43,7 +39,6 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 /**
  *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
@@ -264,8 +259,8 @@ public class ForceFieldConfigurator {
 				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
 				isInHeteroRing = false;
 				Iterator containers = RingSetManipulator.getAllAtomContainers(ringSetA).iterator();
-				while (containers.hasNext()) {
-					isInHeteroRing = isInHeteroRing || isHeteroRingSystem((IAtomContainer) containers.next());
+				while (!isInHeteroRing && containers.hasNext()) {
+					isInHeteroRing = isHeteroRingSystem((IAtomContainer) containers.next());
 				}
 			} else {
 				atom.setFlag(CDKConstants.ISALIPHATIC, true);
