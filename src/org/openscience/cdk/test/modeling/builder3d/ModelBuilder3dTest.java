@@ -170,7 +170,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	mb3d.generate3DCoordinates(mol, false);
     }
 
-    public void xtestModelBuilder3D_Konstanz() throws Exception {
+    public void testModelBuilder3D_Konstanz() throws Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
@@ -206,8 +206,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	mol = mb3d.generate3DCoordinates(mol, false);
     }
 
-    /*
+    /**
      * Bug #1610997 says the modelbulder does not work if 2d coordinates exist before - we test this here
+     * 
+     * @cdk.bug 1610997
      */
     public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
@@ -225,7 +227,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		assertNotNull(mol.getAtom(0).getPoint3d());
 	}
     
-    /*
+    /**
      * @cdk.bug 1315823
      */
     public void testModelBuilder3D_232() throws Exception{
@@ -245,8 +247,8 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	double avlength=GeometryToolsInternalCoordinates.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
     		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
-    		assertFalse(distance < avlength/2);
-    		assertFalse(distance > avlength*2);
+    		assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, 
+    			distance >= avlength/2 && distance <= avlength*2);
     	}
     }
     
