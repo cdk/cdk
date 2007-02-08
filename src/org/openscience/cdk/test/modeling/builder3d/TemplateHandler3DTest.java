@@ -23,62 +23,30 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
+import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
 /**
- *  Description of the Class
- *
  * @cdk.module test-builder3d
  *
- *@author     chhoppe
- *@author     Christoph Steinbeck
- *@cdk.created    2004-11-04
+ *@author      chhoppe
+ *@author      Christoph Steinbeck
+ *@cdk.created 2004-11-04
  */
 public class TemplateHandler3DTest extends CDKTestCase {
 	
-	boolean standAlone = false;
-	private List inputList = null;
-	
-
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
+	public static Test suite() {
 		return new TestSuite(TemplateHandler3DTest.class);
 	}
 	
-	/**
-	 *  Sets the standAlone attribute 
-	 *
-	 *@param  standAlone  The new standAlone value
-	 */
-	public void setStandAlone(boolean standAlone)
-	{
-		this.standAlone = standAlone;
-	}
-	
-	public void testGetInstance()
-	{
-		TemplateHandler3D th3d = null;
-		try
-		{
-			  th3d = TemplateHandler3D.getInstance();
-		}
-		catch(CDKException exc)
-		{
-			fail();
-		}
-		//System.out.println("TemplateCount = " + th3d.getTemplateCount());
-		assertEquals(th3d.getTemplateCount(), 10751);
+	public void testGetInstance() throws Exception {
+		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
+		// need to trigger a load of the templates
+		th3d.mapTemplates(new NNAtomContainer(), 0);
+		assertEquals(10751, th3d.getTemplateCount());
 	
 	}
 }
