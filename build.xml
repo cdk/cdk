@@ -487,7 +487,7 @@
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
-            description="Builds on big jar file for the CDK, including experimental classes.">
+            description="Builds one big jar file for the CDK, including experimental classes and third-party libraries.">
 
             <!-- first unjar the CDK and other jars we need -->
             <mkdir dir="${appjars.dir}"/>
@@ -581,6 +581,70 @@
             </jar>
         </target>
 
+        <target id="dist-pure" name="dist-pure" depends="dist-all"
+            description="Builds one big jar file for the CDK, including experimental classes, but excluding third party libraries.">
+
+            <!-- first unjar the CDK and other jars we need -->
+            <mkdir dir="${appjars.dir}"/>
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${dist}/jar">
+                    <include name="cdk-applications.jar"/>
+                    <include name="cdk-builder3d.jar"/>
+                    <include name="cdk-builder3dtools.jar"/>
+                    <include name="cdk-charges.jar"/>
+                    <include name="cdk-core.jar"/>
+                    <include name="cdk-control.jar"/>
+                    <include name="cdk-datadebug.jar"/>
+                    <include name="cdk-data.jar"/>
+                    <include name="cdk-experimental.jar"/>
+                    <include name="cdk-extra.jar"/>
+                    <include name="cdk-interfaces.jar"/>
+                    <include name="cdk-io.jar"/>
+                    <include name="cdk-io-jmol.jar"/>
+                    <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-libioweka.jar"/>
+                    <include name="cdk-nonotify.jar"/>
+                    <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-pdb.jar"/>
+                    <include name="cdk-qsar.jar"/>
+                    <include name="cdk-qsar-cml.jar"/>
+                    <include name="cdk-qsar-pdb.jar"/>
+                    <include name="cdk-qsar-weka.jar"/>
+                    <include name="cdk-reaction.jar"/>
+                    <include name="cdk-render.jar"/>
+                    <include name="cdk-standard.jar"/>
+                    <include name="cdk-structgen.jar"/>
+                    <include name="cdk-svg.jar"/>
+                    <include name="cdk-valencycheck.jar"/>
+                    <include name="cdk-forcefield.jar"/>
+                    <include name="cdk-smiles.jar"/>
+                    <include name="cdk-sdg.jar"/>
+                    <include name="cdk-inchi.jar"/>
+                </fileset>
+            </unjar>
+
+            <!-- then zip up things -->
+            <tstamp>
+                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
+            </tstamp>
+            <jar jarfile="${dist}/jar/cdk-pure-svn-${TODAY_SVN}.jar">
+                <manifest>
+                    <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
+                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+            </jar>
+        </target>
+
         <target id="dist-test-large" name="dist-test-large" depends="test-dist-all"
             description="Builds on big jar file for the CDK test classes.">
 
@@ -656,7 +720,7 @@
                 </fileset>
             </jar>
         </target>
-        
+
         <target id="sourcedist" name="sourcedist" depends="init, runDoclet"
                 description="Builds the source packages.">
             <tstamp>
@@ -731,6 +795,69 @@
                 <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
                 <delete file="${package}.tar" />
                 <zip zipfile="${package}.zip" basedir="${sourcedist}/" includes="${package}/**" />
+        </target>
+
+        <target id="puredist" name="puredist" depends="init, runDoclet"
+                description="Builds the source packages without third-party libaries.">
+            <tstamp>
+                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
+            </tstamp>
+                <property name="package" value="cdk-pure-source-${TODAY_SVN}"/>
+                <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
+                <copy todir="${sourcedist.dir}/${src}">
+                        <fileset dir="${build}" includes="*.javafiles" />
+                        <fileset dir="${build}" includes="*.classes" />
+                        <fileset dir="${build}" includes="*.set" />
+                        <fileset dir="${src}" includes="**/*.java" />
+                        <fileset dir="${src}" includes="**/*.jj" />
+                        <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
+                </copy>
+                <copy todir="${sourcedist.dir}">
+                        <fileset dir="." includes="build.props" />
+                        <fileset dir="." includes="build.xml" />
+                        <fileset dir="." includes="javadoc.xml" />
+                        <fileset dir="." includes="README" />
+                        <fileset dir="." includes="changelog*" />
+                </copy>
+                <copy todir="${sourcedist.dir}/src/data">
+                        <fileset dir="src/data" />
+                </copy>
+                <copy todir="${sourcedist.dir}/src/META-INF">
+                    <fileset dir="src/META-INF" />
+               </copy>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
+                        <fileset dir="${src}/org/openscience/cdk/config/data/"
+                                 includes="*" />
+                </copy>
+                <copy
+                  file="${src}/org/openscience/cdk/dict/data/chemical.xml"
+                  tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/chemical.xml" />
+                <copy
+                  file="${src}/org/openscience/cdk/dict/data/elements.xml"
+                  tofile="${sourcedist.dir}/${src}/org/openscience/cdk/dict/data/elements.xml" />
+                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/">
+                    <fileset dir="${src}/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
+                </copy>
+                <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/"/>
+                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/forcefield/data/">
+                    <fileset dir="${src}/org/openscience/cdk/modeling/forcefield/data/" includes="*.prm"/>
+                </copy>
+            <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/builder3d/data/"/>
+            <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/modeling/builder3d/data/">
+                <fileset dir="${src}/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
+            </copy>
+                <copy todir="${sourcedist.dir}/${src}/">
+                    <fileset dir="${src}/" includes="*.manifest" />
+                </copy>
+                <mkdir dir="${sourcedist.dir}/doc/" />
+                <copy todir="${sourcedist.dir}/doc/">
+                    <fileset dir="doc/" includes="lgpl.license" />
+                </copy>
+                <mkdir dir="${sourcedist.dir}/doc/javadoc" />
+                <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
+                <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
+                <delete file="${package}.tar" />
         </target>
 
         <target id="noJunit" name="noJunit" depends="check" unless="junit.present">
