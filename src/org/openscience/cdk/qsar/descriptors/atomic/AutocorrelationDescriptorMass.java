@@ -51,15 +51,15 @@ public class AutocorrelationDescriptorMass {
 	 * @throws java.io.IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static ArrayList<Double> ListFormat(IAtomContainer container)
+	public static ArrayList ListFormat(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException {
 		int natom = container.getAtomCount();
 		int i = 0;
 
-		ArrayList<Double> scalated = new ArrayList<Double>();
+		ArrayList scalated = new ArrayList();
 
 		for (i = 0; i < natom; i++) {
-			scalated.add(ScaledAtomicMasses(container.getAtom(i)));
+			scalated.add(new Double(ScaledAtomicMasses(container.getAtom(i))));
 		}
 		return scalated;
 	}
@@ -85,15 +85,16 @@ public class AutocorrelationDescriptorMass {
 		int j = 0;
 		double[] massSum = new double[5];
 
-		ArrayList<Double> list1 = ListFormat(container);
-		ArrayList<Double> list2 = ListFormat(container);
+		ArrayList list1 = ListFormat(container);
+		ArrayList list2 = ListFormat(container);
 
 		for (k = 0; k < 5; k++) {
 			for (i = 0; i < natom; i++) {
 				for (j = 0; j < natom; j++) {
 
 					if (distancematrix[i][j] == k)
-						massSum[k] += 1 * (list1.get(i) * list2.get(j));
+						massSum[k] += ((Double)list1.get(i)).doubleValue() * 
+						              ((Double)list2.get(j)).doubleValue();
 
 				}
 			}
