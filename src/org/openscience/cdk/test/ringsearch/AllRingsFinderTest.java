@@ -1,8 +1,4 @@
-/*
- * $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -43,7 +39,8 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -152,7 +149,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
 		String filename = "data/mdl/porphyrin.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
@@ -162,6 +159,26 @@ public class AllRingsFinderTest extends CDKTestCase
 		assertEquals(20, ringSet.getAtomContainerCount());
 	}
 	
+	public void testBigRingSystem() throws Exception {
+		if (!runSlowTests()) fail("Not running slow tests: this should find 1976 rings");
+		
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
+		arf.setTimeout(120000); // 2 min should do, took 37 secs on my system
+
+		String filename = "data/mdl/ring_03419.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+		IChemSequence seq = chemFile.getChemSequence(0);
+		IChemModel model = seq.getChemModel(0);
+		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
+
+		ringSet = arf.findAllRings(molecule);
+		// the 1976 value was empirically derived, and might not be accurate
+		assertEquals(1976, ringSet.getAtomContainerCount());
+	}
+	
 	public void testCholoylCoA() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
@@ -169,7 +186,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
 		String filename = "data/mdl/choloylcoa.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
@@ -187,7 +204,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		
 		String filename = "data/mdl/azulene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
@@ -213,7 +230,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		
 		String filename = "data/mdl/porphyrin.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
@@ -237,7 +254,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		
 		String filename = "data/mdl/azulene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
