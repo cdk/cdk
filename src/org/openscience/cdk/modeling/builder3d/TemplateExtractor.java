@@ -377,7 +377,7 @@ public class TemplateExtractor {
 		System.out.println("Start make fingerprint from file:" + dataFileIn
 				+ " ...");
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
-		allRingsFinder.setTimeout(-1);
+		allRingsFinder.setTimeout(10000); // 10 seconds
 
 		Map timings = new HashMap();
 		
