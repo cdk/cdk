@@ -41,6 +41,7 @@ import java.util.Vector;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -368,7 +369,7 @@ public class Convertor {
        	
        	for(int i = 0 ; i < monomer.getAtomCount(); i++){
        		IAtom cdkAtom = monomer.getAtom(i);
-            CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
+            CMLAtom cmlAtom = cdkAtomToCMLAtom(monomer, cdkAtom);
             if (monomer.getConnectedSingleElectronsCount(cdkAtom) > 0) {
                 cmlAtom.setSpinMultiplicity(monomer.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
@@ -409,7 +410,7 @@ public class Convertor {
         }
         for (int i = 0; i < structure.getAtomCount(); i++) {
             IAtom cdkAtom = structure.getAtom(i);
-            CMLAtom cmlAtom = cdkAtomToCMLAtom(cdkAtom);
+            CMLAtom cmlAtom = cdkAtomToCMLAtom(structure, cdkAtom);
             if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
                 cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
@@ -481,7 +482,7 @@ public class Convertor {
         return true;
     }
 
-    public CMLAtom cdkAtomToCMLAtom(IAtom cdkAtom) {
+    public CMLAtom cdkAtomToCMLAtom(IAtomContainer container, IAtom cdkAtom) {
         CMLAtom cmlAtom = new CMLAtom();
         this.checkPrefix(cmlAtom);
         addAtomID(cdkAtom, cmlAtom);
@@ -496,7 +497,19 @@ public class Convertor {
         map3DCoordsToCML(cmlAtom, cdkAtom);
         mapFractionalCoordsToCML(cmlAtom, cdkAtom);
         cmlAtom.setFormalCharge(cdkAtom.getFormalCharge());
-        cmlAtom.setHydrogenCount(cdkAtom.getHydrogenCount());
+        // CML's hydrogen count consists of the sum of implicit and explicit
+        // hydrogens (see bug #1655045).
+        int totalHydrogen = cdkAtom.getHydrogenCount();
+        if (container != null) {
+        	Iterator bonds = container.getConnectedBondsList(cdkAtom).iterator();
+        	while (bonds.hasNext()) {
+        		Iterator atoms = ((IBond)bonds.next()).atoms();
+        		while (atoms.hasNext()) {
+        			if (Elements.HYDROGEN.getSymbol().equals(((IAtom)atoms.next()).getSymbol())) totalHydrogen++;
+        		}
+        	}
+        } // else: it is the implicit hydrogen count
+        cmlAtom.setHydrogenCount(totalHydrogen);
 
         int massNumber = cdkAtom.getMassNumber();
         if (!(cdkAtom instanceof IPseudoAtom)) {

@@ -36,13 +36,16 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -94,6 +97,46 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug(writer.toString());
 		logger.debug("******************************");
         assertTrue(writer.toString().indexOf("</molecule>") != -1);
+	}
+	
+	/**
+	 * Test example with one explicit carbon, and four implicit hydrogens.
+	 * 
+	 * @cdk.bug 1655045
+	 */
+	public void testHydrogenCount() throws Exception {
+		StringWriter writer = new StringWriter();
+		IMolecule molecule = new NNMolecule(); // methane
+		molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
+		molecule.getAtom(0).setHydrogenCount(4);
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        
+        cmlWriter.write(molecule);
+		logger.debug("****************************** testHydrogenCount()");
+        logger.debug(writer.toString());
+		logger.debug("******************************");
+        assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
+	}
+	
+	/**
+	 * Test example with one explicit carbon, and one implicit hydrogen, and three implicit hydrogens.
+	 * 
+	 * @cdk.bug 1655045
+	 */
+	public void testHydrogenCount_2() throws Exception {
+		StringWriter writer = new StringWriter();
+		IMolecule molecule = new NNMolecule(); // methane
+		molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
+		molecule.addAtom(molecule.getBuilder().newAtom(Elements.HYDROGEN));
+		molecule.getAtom(0).setHydrogenCount(3);
+		molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        
+        cmlWriter.write(molecule);
+		logger.debug("****************************** testHydrogenCount_2()");
+        logger.debug(writer.toString());
+		logger.debug("******************************");
+        assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
 	
 	public void testCMLCrystal() {

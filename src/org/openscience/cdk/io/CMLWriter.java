@@ -222,7 +222,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof ICrystal) {
         	root = convertor.cdkCrystalToCMLMolecule((ICrystal)object);
         } else if (object instanceof IAtom) {
-        	root = convertor.cdkAtomToCMLAtom((IAtom)object);
+        	root = convertor.cdkAtomToCMLAtom(null, (IAtom)object);
         } else if (object instanceof IBond) {
         	root = convertor.cdkBondToCMLBond((IBond)object);
         } else if (object instanceof IReaction) {

@@ -80,7 +80,7 @@ public class ShowChemObjectDumpAction extends JCPAction
 			if (object instanceof IMolecule) {
 				cmlDOM = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
 			} else if (object instanceof IAtom) {
-				cmlDOM = convertor.cdkAtomToCMLAtom((IAtom)object);
+				cmlDOM = convertor.cdkAtomToCMLAtom(null, (IAtom)object);
 			} else if (object instanceof IBond) {
 				cmlDOM = convertor.cdkBondToCMLBond((IBond)object);
 			}
