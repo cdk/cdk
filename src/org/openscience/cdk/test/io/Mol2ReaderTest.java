@@ -27,7 +27,12 @@
  *  */
 package org.openscience.cdk.test.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.zip.GZIPInputStream;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,7 +40,11 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -102,4 +111,39 @@ public class Mol2ReaderTest extends CDKTestCase {
         }
     }
 
+    
+    /**
+     * Tests the Mol2Reader with about 30% of the NCI molecules.
+     * 
+     * @throws IOException if an I/O error occurs
+     * @throws CDKException if an CDK error occurs
+     */
+    public void testNCIfeb03_2D() throws IOException, CDKException {
+        String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
+        InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        StringBuilder buf = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.startsWith("@<TRIPOS>MOLECULE") && (buf.length() > 0)) {
+                checkMol(buf);
+                buf.delete(0, buf.length() - 1);
+            }
+            buf.append(line).append('\n');
+        }
+        if (buf.length() > 0) {
+            checkMol(buf);
+        }
+    }
+    
+    
+    private void checkMol(StringBuilder buf) throws CDKException {
+        StringReader sr = new StringReader(buf.toString());
+        Mol2Reader reader = new Mol2Reader(sr);
+        IChemFile mol = (IChemFile)reader.read(NoNotificationChemObjectBuilder.getInstance().newChemFile());
+        assertTrue(mol.getChemSequenceCount() > 0);
+        assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
+        assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
+        assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);        
+    }
 }
