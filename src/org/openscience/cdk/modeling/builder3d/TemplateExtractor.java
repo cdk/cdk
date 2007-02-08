@@ -445,9 +445,19 @@ public class TemplateExtractor {
 					timings.put(bin, new Integer(1));
 				}
 			}catch(Exception exc1){
-				exc1.printStackTrace();
+//				exc1.printStackTrace();
 				System.out.println("QueryFingerprintError: from molecule:"
-						+ moleculeCounter + " due to:" + exc1.toString());
+						+ moleculeCounter + " due to:" + exc1.getMessage());
+				
+				// OK, just adds a fingerprint with all ones, so that any
+				// structure will match this template, and leave it up
+				// to substructure match to figure things out
+				BitSet allOnesFingerprint = new BitSet(fingerPrinter.getSize());
+				for (int i=0; i<fingerPrinter.getSize(); i++) {
+					allOnesFingerprint.set(i, true);
+				}
+				data.add(allOnesFingerprint);
+				fingerprintCounter = fingerprintCounter + 1;
 			}
 			
 			if (fingerprintCounter % 2 == 0)
