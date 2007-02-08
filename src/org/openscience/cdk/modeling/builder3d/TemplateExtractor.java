@@ -428,7 +428,7 @@ public class TemplateExtractor {
 			try {
 				long time = -System.currentTimeMillis();
 				if (anyAtom || anyAtomAnyBond){
-					System.out.println("Make Fingerprint Query");
+//					System.out.println("Make Fingerprint Query");
 					data.add((BitSet)fingerPrinter.getFingerprint((IAtomContainer) query, allRingsFinder));
 					fingerprintCounter=fingerprintCounter+1;
 				} else {
