@@ -23,17 +23,12 @@ public class RJavaEnvironmentTest extends CDKTestCase {
         return new TestSuite(RJavaEnvironmentTest.class);
     }
 
-    public void testRJavaEnvironment() {
-        try {
-            NoneModel noneModel = new NoneModel();
-            assertNotNull(noneModel);
+    public void testRJavaEnvironment() throws Exception {
+    	NoneModel noneModel = new NoneModel();
+    	assertNotNull(noneModel);
 
-            // stop the R process
-            noneModel.getRengine().end();
-
-        } catch (QSARModelException e) {
-            e.printStackTrace();
-        }
+    	// stop the R process
+    	noneModel.getRengine().end();
 
     }
 

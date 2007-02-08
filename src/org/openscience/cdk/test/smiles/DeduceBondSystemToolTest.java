@@ -55,24 +55,18 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
         return new TestSuite(DeduceBondSystemToolTest.class);
     }
 
-    public void testPyrrole() {
+    public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        try {
-            IMolecule molecule = smilesParser.parseSmiles(smiles);
-            DeduceBondSystemTool dbst = new DeduceBondSystemTool();
-            molecule = dbst.fixAromaticBondOrders(molecule);
-            assertNotNull(molecule);
+        IMolecule molecule = smilesParser.parseSmiles(smiles);
+        DeduceBondSystemTool dbst = new DeduceBondSystemTool();
+        molecule = dbst.fixAromaticBondOrders(molecule);
+        assertNotNull(molecule);
 
-            molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
-            for (int i = 0; i < molecule.getBondCount(); i++) {
-                IBond bond = molecule.getBond(i);
-                assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
-            }
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        } catch (CDKException e) {
-			e.printStackTrace();
-		}
+        molecule = (IMolecule) AtomContainerManipulator.removeHydrogens(molecule);
+        for (int i = 0; i < molecule.getBondCount(); i++) {
+        	IBond bond = molecule.getBond(i);
+        	assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        }
     }
 }

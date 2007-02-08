@@ -36,7 +36,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -69,93 +68,76 @@ public class MDLRXNReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(Reaction.class));
     }
 
-    public void testReadReactions1() {
+    public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/reaction-1.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
-        try {
-            MDLRXNReader reader1 = new MDLRXNReader(ins1);
-            Reaction reaction1 = new Reaction();
-			reaction1 = (Reaction)reader1.read(reaction1);
-			reader1.close();
-			
-			assertNotNull(reaction1);
-			assertEquals(2, reaction1.getReactantCount());
-			assertEquals(1, reaction1.getProductCount());
-			
-			IMoleculeSet educts = reaction1.getReactants();
-			// Check Atom symbols of first educt
-			String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
-			for (int i = 0; i < educts.getMolecule(0).getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfEduct1[i], educts.getMolecule(0).getAtom(i).getSymbol());
-			}
-			
-			// Check Atom symbols of second educt
-			for (int i = 0; i < educts.getMolecule(1).getAtomCount(); i++) {
-				assertEquals("C", educts.getMolecule(1).getAtom(i).getSymbol());
-			}
-			
-			// Check Atom symbols of first product
-			IMoleculeSet products = reaction1.getProducts();
-			String[] atomSymbolsOfProduct1 = { 
-				"C",
-				"C",
-				"C",
-				"C",
-				"C",
-				"C",
-				"C",
-				"O",
-				"C"
-			};
-			for (int i = 0; i < products.getMolecule(0).getAtomCount(); i++) {
-				assertEquals(atomSymbolsOfProduct1[i], products.getMolecule(0).getAtom(i).getSymbol());
-			}
-			
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
+        MDLRXNReader reader1 = new MDLRXNReader(ins1);
+        Reaction reaction1 = new Reaction();
+        reaction1 = (Reaction)reader1.read(reaction1);
+        reader1.close();
+
+        assertNotNull(reaction1);
+        assertEquals(2, reaction1.getReactantCount());
+        assertEquals(1, reaction1.getProductCount());
+
+        IMoleculeSet educts = reaction1.getReactants();
+        // Check Atom symbols of first educt
+        String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
+        for (int i = 0; i < educts.getMolecule(0).getAtomCount(); i++) {
+        	assertEquals(atomSymbolsOfEduct1[i], educts.getMolecule(0).getAtom(i).getSymbol());
+        }
+
+        // Check Atom symbols of second educt
+        for (int i = 0; i < educts.getMolecule(1).getAtomCount(); i++) {
+        	assertEquals("C", educts.getMolecule(1).getAtom(i).getSymbol());
+        }
+
+        // Check Atom symbols of first product
+        IMoleculeSet products = reaction1.getProducts();
+        String[] atomSymbolsOfProduct1 = { 
+        		"C",
+        		"C",
+        		"C",
+        		"C",
+        		"C",
+        		"C",
+        		"C",
+        		"O",
+        		"C"
+        };
+        for (int i = 0; i < products.getMolecule(0).getAtomCount(); i++) {
+        	assertEquals(atomSymbolsOfProduct1[i], products.getMolecule(0).getAtom(i).getSymbol());
         }
     }
 
-    public void testReadReactions2() {
+    public void testReadReactions2() throws Exception {
 		String filename2 = "data/mdl/reaction-2.rxn";
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
-        try {
-			MDLRXNReader reader2 = new MDLRXNReader(ins2);
-			Reaction reaction2 = new Reaction();
-			reaction2 = (Reaction)reader2.read(reaction2);
-			reader2.close();
-			
-			assertNotNull(reaction2);
-			assertEquals(2, reaction2.getReactantCount());
-			assertEquals(2, reaction2.getProductCount());
-			
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        }
+		MDLRXNReader reader2 = new MDLRXNReader(ins2);
+		Reaction reaction2 = new Reaction();
+		reaction2 = (Reaction)reader2.read(reaction2);
+		reader2.close();
+
+		assertNotNull(reaction2);
+		assertEquals(2, reaction2.getReactantCount());
+		assertEquals(2, reaction2.getProductCount());
     }
     
-    public void testReadMapping() {
+    public void testReadMapping() throws Exception {
 		String filename2 = "data/mdl/mappingTest.rxn";
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
-        try {
-			MDLRXNReader reader2 = new MDLRXNReader(ins2);
-			Reaction reaction2 = new Reaction();
-			reaction2 = (Reaction)reader2.read(reaction2);
-			reader2.close();
-			
-			assertNotNull(reaction2);
-            java.util.Iterator maps = reaction2.mappings();
-            maps.next();
-			assertTrue(maps.hasNext());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        }
+		MDLRXNReader reader2 = new MDLRXNReader(ins2);
+		Reaction reaction2 = new Reaction();
+		reaction2 = (Reaction)reader2.read(reaction2);
+		reader2.close();
+
+		assertNotNull(reaction2);
+		java.util.Iterator maps = reaction2.mappings();
+		maps.next();
+		assertTrue(maps.hasNext());
     }
     
 }

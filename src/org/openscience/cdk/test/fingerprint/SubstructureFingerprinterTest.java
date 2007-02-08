@@ -58,19 +58,14 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 		return new TestSuite(SubstructureFingerprinterTest.class);
 	}
 
-	public void testFunctionalGroups() {
+	public void testFunctionalGroups() throws Exception {
 		BitSet bitset = null;
 		IAtomContainerSet set = null;
-		try {
-			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
-			
-			IFingerprinter printer = new SubstructureFingerprinter(set);
-			IMolecule pinene = MoleculeFactory.makeAlphaPinene();
-			bitset = printer.getFingerprint(pinene);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			fail(exception.getMessage());
-		}
+		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
+
+		IFingerprinter printer = new SubstructureFingerprinter(set);
+		IMolecule pinene = MoleculeFactory.makeAlphaPinene();
+		bitset = printer.getFingerprint(pinene);
 		
 		assertNotNull(set);
 		assertNotNull(bitset);
@@ -80,20 +75,15 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 		}
 	}
 	
-	public void testFunctionalGroups_matchAll() {
+	public void testFunctionalGroups_matchAll() throws Exception {
 		BitSet bitset = null;
 		IAtomContainerSet set = null;
-		try {
-			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
-			
-			IFingerprinter printer = new SubstructureFingerprinter(set);
-			IMolecule matchesAll = new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance()).parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
-			bitset = printer.getFingerprint(matchesAll);
-			System.out.println("BitSet: " + bitset);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			fail(exception.getMessage());
-		}
+		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
+
+		IFingerprinter printer = new SubstructureFingerprinter(set);
+		IMolecule matchesAll = new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance()).parseSmiles("C(C(=O)O)C(N([H])[H])C(O[H])C(COC)C(C(=O)[H])C(S(=O)(=O)O)C(P(=O)(=O)O)");
+		bitset = printer.getFingerprint(matchesAll);
+		System.out.println("BitSet: " + bitset);
 		
 		assertNotNull(set);
 		assertNotNull(bitset);
@@ -101,38 +91,32 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 		assertEquals(set.getAtomContainerCount(), bitset.cardinality());
 	}
 	
-	public void testAminoAcids() {
+	public void testAminoAcids() throws Exception {
 		BitSet bitset = null;
 		IAtomContainerSet set = null;
-		try {
-			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
-				
-		    IAminoAcid[] aas = AminoAcids.createAAs();
-			IFingerprinter printer = new SubstructureFingerprinter(set);
+		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 
-			assertNotNull(set);
+		IAminoAcid[] aas = AminoAcids.createAAs();
+		IFingerprinter printer = new SubstructureFingerprinter(set);
 
-			// test wether all molecules have an amine and carboxylic acid group
-			for (int i=0; i<aas.length; i++) {
-				AminoAcidManipulator.addAcidicOxygen(aas[i]);
-				IMolecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);
-				HydrogenAdder hAdder = new HydrogenAdder();
-				hAdder.addExplicitHydrogensToSatisfyValency(aminoAcid);
-				
-				assertNotNull(aminoAcid);
-				bitset = printer.getFingerprint(aminoAcid);
-				assertNotNull(bitset);
-				System.out.println("AA: " + aas[i].getProperty(AminoAcids.RESIDUE_NAME));
-				System.out.println(" -> " + bitset);
-				assertTrue(bitset.get(0)); // carboxylic acid group
-				if (!aas[i].getProperty(AminoAcids.RESIDUE_NAME).equals("PRO"))
-					assertTrue(bitset.get(1)); // amine group
-			}			
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			fail(exception.getMessage());
-		}
-		
+		assertNotNull(set);
+
+		// test wether all molecules have an amine and carboxylic acid group
+		for (int i=0; i<aas.length; i++) {
+			AminoAcidManipulator.addAcidicOxygen(aas[i]);
+			IMolecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);
+			HydrogenAdder hAdder = new HydrogenAdder();
+			hAdder.addExplicitHydrogensToSatisfyValency(aminoAcid);
+
+			assertNotNull(aminoAcid);
+			bitset = printer.getFingerprint(aminoAcid);
+			assertNotNull(bitset);
+			System.out.println("AA: " + aas[i].getProperty(AminoAcids.RESIDUE_NAME));
+			System.out.println(" -> " + bitset);
+			assertTrue(bitset.get(0)); // carboxylic acid group
+			if (!aas[i].getProperty(AminoAcids.RESIDUE_NAME).equals("PRO"))
+				assertTrue(bitset.get(1)); // amine group
+		}			
 	}
 }
 

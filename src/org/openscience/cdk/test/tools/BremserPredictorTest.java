@@ -91,7 +91,7 @@ public class BremserPredictorTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testPrediction()
+	public void testPrediction() throws Exception
 	{
 		String[] data = { 
      "=C(//)",
@@ -145,18 +145,13 @@ public class BremserPredictorTest extends CDKTestCase
      40.1
 		};
 		
-		try{
-			double prediction;
-			BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-			for (int f = 0; f < data.length; f++)
-			{
-				prediction = bp.predict(data[f]);
-				//logger.debug("\"" + prediction + "\",");
-				assertTrue(prediction == result[f]);	
-			}
-		}catch(org.openscience.cdk.exception.CDKException exc)
+		double prediction;
+		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+		for (int f = 0; f < data.length; f++)
 		{
-			fail("CDKException thrown when trying to predict Shift with BremserOneSphereHOSECodePredictor");	
+			prediction = bp.predict(data[f]);
+			//logger.debug("\"" + prediction + "\",");
+			assertEquals(result[f], prediction, 0.001);	
 		}
 		
 	}
@@ -166,7 +161,7 @@ public class BremserPredictorTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testGetConfidenceLimit()
+	public void testGetConfidenceLimit() throws Exception
 	{
 double[] result = { 
      28.5,
@@ -212,30 +207,22 @@ double[] result = {
      13.3
 		};
 		Molecule molecule = null;
-		try
+		String filename = "data/mdl/BremserPredictionTest.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		molecule = (Molecule)reader.read((ChemObject)new Molecule());
+		double prediction;
+		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		String s = null;
+		removeHydrogens(molecule);
+		//logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			String filename = "data/mdl/BremserPredictionTest.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(ins);
-			molecule = (Molecule)reader.read((ChemObject)new Molecule());
-			double prediction;
-			BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			String s = null;
-			removeHydrogens(molecule);
-			//logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
-				prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
-				//logger.debug("\"" + prediction + "\",");
-				assertTrue(prediction == result[f]);	
-			}
-		}
-		catch (Exception exc)
-		{
-			//logger.debug("failure");
-			fail("CDKException thrown when trying to predict Shift with BremserOneSphereHOSECodePredictor");	
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
+			prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
+			//logger.debug("\"" + prediction + "\",");
+			assertEquals(result[f], prediction, 0.001);	
 		}
 		
 	}

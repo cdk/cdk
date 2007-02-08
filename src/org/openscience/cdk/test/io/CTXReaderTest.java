@@ -69,40 +69,33 @@ public class CTXReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(ChemFile.class));
     }
     
-    public void testMethanol() {
+    public void testMethanol() throws Exception {
         String filename = "data/ctx/methanol_with_descriptors.ctx";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CTXReader reader = new CTXReader(ins);
-            IChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            
-            assertNotNull(chemFile);
-            assertEquals(1, chemFile.getChemSequenceCount());
-            IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1, seq.getChemModelCount());
-            IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            
-            IMoleculeSet moleculeSet = model.getMoleculeSet();
-            assertNotNull(moleculeSet);
-            assertEquals(1, moleculeSet.getAtomContainerCount());
-            
-            IAtomContainer container = moleculeSet.getAtomContainer(0);
-            assertNotNull(container);
-            assertEquals("Incorrect atom count.", 6, container.getAtomCount());
-            assertEquals(5, container.getBondCount());
-            
-            assertEquals("Petra", container.getID());
+        CTXReader reader = new CTXReader(ins);
+        IChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-            assertNotNull(container.getProperty(CDKConstants.TITLE));
-            assertEquals("CH4O", container.getProperty(CDKConstants.TITLE));
-            
-        } catch (Exception exception) {
-            System.out.println("Error while reading file: " + exception.getMessage());
-            exception.printStackTrace();
-            fail(exception.toString());
-        }
+        assertNotNull(chemFile);
+        assertEquals(1, chemFile.getChemSequenceCount());
+        IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1, seq.getChemModelCount());
+        IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+
+        IMoleculeSet moleculeSet = model.getMoleculeSet();
+        assertNotNull(moleculeSet);
+        assertEquals(1, moleculeSet.getAtomContainerCount());
+
+        IAtomContainer container = moleculeSet.getAtomContainer(0);
+        assertNotNull(container);
+        assertEquals("Incorrect atom count.", 6, container.getAtomCount());
+        assertEquals(5, container.getBondCount());
+
+        assertEquals("Petra", container.getID());
+
+        assertNotNull(container.getProperty(CDKConstants.TITLE));
+        assertEquals("CH4O", container.getProperty(CDKConstants.TITLE));
     }
 }

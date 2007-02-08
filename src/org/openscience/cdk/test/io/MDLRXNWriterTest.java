@@ -41,7 +41,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the writer MDL rxn files using one test file.
@@ -52,12 +51,10 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLRXNWriterTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
     private IChemObjectBuilder builder;
 
     public MDLRXNWriterTest(String name) {
         super(name);
-        logger = new LoggingTool(this);
     }
 
     public void setUp() {
@@ -73,7 +70,7 @@ public class MDLRXNWriterTest extends CDKTestCase {
     	assertTrue(reader.accepts(Reaction.class));
     }
 
-    public void testRoundtrip() {
+    public void testRoundtrip() throws Exception {
         IReaction reaction = builder.newReaction();
         IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
@@ -88,32 +85,18 @@ public class MDLRXNWriterTest extends CDKTestCase {
         // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
         String file = "";
-        try {
-            MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
-            mdlWriter.write(reaction);
-            mdlWriter.close();
-            file = writer.toString();
-        } catch (Exception exception) {
-            logger.error("Error while creating an MDL rxn file");
-            logger.debug(exception);
-            fail("Error in MDLRXNWriterTest: " + exception.getMessage());
-        }
+        MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
+        mdlWriter.write(reaction);
+        mdlWriter.close();
+        file = writer.toString();
         
         assertTrue(file.length() > 0);
         
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newReaction();
-        try {
-        	MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        	reaction2 = (IReaction)reader.read(reaction2);
-            reader.close();
-        } catch (Exception ex) {
-            logger.error("Error while reading an MDL file");
-            logger.debug(ex);
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            fail(ex.getMessage());
-        }
+        MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
+        reaction2 = (IReaction)reader.read(reaction2);
+        reader.close();
         
         assertEquals(2, reaction2.getReactantCount());
         assertEquals(1, reaction2.getProductCount());

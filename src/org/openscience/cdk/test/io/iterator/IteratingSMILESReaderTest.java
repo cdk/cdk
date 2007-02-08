@@ -57,47 +57,37 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         return new TestSuite(IteratingSMILESReaderTest.class);
     }
 
-    public void testSMILESFileWithNames() {
+    public void testSMILESFileWithNames() throws Exception {
         String filename = "data/smiles/test.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins);
-            
-            int molCount = 0;
-            while (reader.hasNext()) {
-                Object object = reader.next();
-                assertNotNull(object);
-                assertTrue(object instanceof Molecule);
-                molCount++;
-            }
-            
-            assertEquals(5, molCount);
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+        	Object object = reader.next();
+        	assertNotNull(object);
+        	assertTrue(object instanceof Molecule);
+        	molCount++;
         }
+
+        assertEquals(5, molCount);
     }
 
     public void testSMILESFile() {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins);
-            
-            int molCount = 0;
-            while (reader.hasNext()) {
-                Object object = reader.next();
-                assertNotNull(object);
-                assertTrue(object instanceof Molecule);
-                molCount++;
-            }
-            
-            assertEquals(5, molCount);
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+        	Object object = reader.next();
+        	assertNotNull(object);
+        	assertTrue(object instanceof Molecule);
+        	molCount++;
         }
+
+        assertEquals(5, molCount);
     }
 }

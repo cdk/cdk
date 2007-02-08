@@ -71,12 +71,8 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
     /**
     *  The JUnit setup method
     */
-    public void setUp() {
-        try {
-        	gR = new StructureResonanceGenerator();
-        } catch (Exception e) {
-            fail();
-        }
+    public void setUp() throws Exception {
+    	gR = new StructureResonanceGenerator();
     }
 
 	/**

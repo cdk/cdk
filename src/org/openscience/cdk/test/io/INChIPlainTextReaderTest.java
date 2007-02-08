@@ -68,34 +68,27 @@ public class INChIPlainTextReaderTest extends CDKTestCase {
      * Test a INChI 1.12Beta file containing the two tautomers
      * of guanine.
      */
-    public void testGuanine() {
+    public void testGuanine() throws Exception {
         String filename = "data/inchi/guanine.inchi";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            INChIPlainTextReader reader = new INChIPlainTextReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            
-            assertNotNull(chemFile);
-            assertEquals(1, chemFile.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1, seq.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
-            assertNotNull(moleculeSet);
-            org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
-            assertNotNull(molecule);
-            
-            assertEquals(11, molecule.getAtomCount());
-            assertEquals(12, molecule.getBondCount());
+        INChIPlainTextReader reader = new INChIPlainTextReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        } catch (Exception e) {
-            logger.error("Exception during test: ", e.getMessage());
-            logger.debug(e);
-            fail(e.toString());
-        }
+        assertNotNull(chemFile);
+        assertEquals(1, chemFile.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1, seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
+        assertNotNull(moleculeSet);
+        org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
+        assertNotNull(molecule);
+
+        assertEquals(11, molecule.getAtomCount());
+        assertEquals(12, molecule.getBondCount());
     }
     
 }

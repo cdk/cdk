@@ -35,6 +35,7 @@ import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.controller.PopupController2D;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
@@ -51,7 +52,7 @@ public class ControllerTest
 	org.openscience.cdk.interfaces.IMolecule molecule;
 	PopupController2D inputAdapter;
 	
-	public ControllerTest()
+	public ControllerTest() throws Exception
 	{
 //		molecule = buildFusedRings();
 //		molecule = buildMolecule4x3();
@@ -65,16 +66,7 @@ public class ControllerTest
 //
 //		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 //		sdg.setMolecule(molecule);
-//		try
-//		{
-//			sdg.generateCoordinates(new Vector2d(0,1));
-//		}
-//		catch(Exception exc)
-//		{
-//			logger.debug("*** Exit due to an unexpected error during coordinate generation ***");
-//			exc.printStackTrace();
-//			System.exit(1);
-//		}
+//		sdg.generateCoordinates(new Vector2d(0,1));
 //		molecule = sdg.getMolecule();
 //
 
@@ -100,7 +92,7 @@ public class ControllerTest
 	 *
 	 * @param   args    The Arguments from the commandline
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		new ControllerTest();
 	}
@@ -264,23 +256,16 @@ public class ControllerTest
 	
 
 	
-	org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
+	IMolecule loadMolecule(String inFile) throws Exception
 	{
-		try
-		{
-			FileInputStream fis = new FileInputStream(inFile);
-			mr = new MDLReader(fis);
-			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
-			fis.close();
-			chemSequence = chemFile.getChemSequence(0);
-			chemModel = chemSequence.getChemModel(0);
-			setOfMolecules = chemModel.getMoleculeSet();
-			molecule = setOfMolecules.getMolecule(0);
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();		
-		}
+		FileInputStream fis = new FileInputStream(inFile);
+		mr = new MDLReader(fis);
+		chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
+		fis.close();
+		chemSequence = chemFile.getChemSequence(0);
+		chemModel = chemSequence.getChemModel(0);
+		setOfMolecules = chemModel.getMoleculeSet();
+		molecule = setOfMolecules.getMolecule(0);
 //		for (int i = 0; i < molecule.getAtomCount(); i++)
 //		{
 //			molecule.getAtomAt(i).setPoint2d(null);

@@ -39,14 +39,8 @@ public class ProteinBuilderToolTest extends CDKTestCase {
         return new TestSuite(ProteinBuilderToolTest.class);
     }
 
-    public void testCreateProtein() {
-        BioPolymer protein = null;
-        try {
-            protein = ProteinBuilderTool.createProtein("GAGA");
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            fail(exception.getMessage());
-        }
+    public void testCreateProtein() throws Exception {
+        BioPolymer protein = ProteinBuilderTool.createProtein("GAGA");
         assertNotNull(protein);
         assertEquals(4, protein.getMonomerCount());
         assertEquals(1, protein.getStrandCount());

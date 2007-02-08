@@ -61,28 +61,24 @@ public class ShelXReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(Crystal.class));
     }
 
-    public void testReading() {
+    public void testReading() throws Exception {
         String filename = "data/shelx/frame_1.res";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            ShelXReader reader = new ShelXReader(ins);
-            Crystal crystal = (Crystal)reader.read(new Crystal());
-            assertNotNull(crystal);
-            assertEquals(42, crystal.getAtomCount());
-            double notional[] = CrystalGeometryTools.cartesianToNotional(
-                crystal.getA(),
-                crystal.getB(),
-                crystal.getC()
-            );
-            assertEquals(7.97103, notional[0], 0.001);
-            assertEquals(18.77220, notional[1], 0.001);
-            assertEquals(10.26222, notional[2], 0.001);
-            assertEquals(90.0000, notional[3], 0.001);
-            assertEquals(90.0000, notional[4], 0.001);
-            assertEquals(90.0000, notional[5], 0.001);
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        ShelXReader reader = new ShelXReader(ins);
+        Crystal crystal = (Crystal)reader.read(new Crystal());
+        assertNotNull(crystal);
+        assertEquals(42, crystal.getAtomCount());
+        double notional[] = CrystalGeometryTools.cartesianToNotional(
+        		crystal.getA(),
+        		crystal.getB(),
+        		crystal.getC()
+        );
+        assertEquals(7.97103, notional[0], 0.001);
+        assertEquals(18.77220, notional[1], 0.001);
+        assertEquals(10.26222, notional[2], 0.001);
+        assertEquals(90.0000, notional[3], 0.001);
+        assertEquals(90.0000, notional[4], 0.001);
+        assertEquals(90.0000, notional[5], 0.001);
     }
 }

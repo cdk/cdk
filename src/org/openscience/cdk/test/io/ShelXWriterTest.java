@@ -36,31 +36,26 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Crystal;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.ShelXReader;
 import org.openscience.cdk.io.ShelXWriter;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io
  */
 public class ShelXWriterTest extends CDKTestCase {
 
-    private LoggingTool logger;
-
     public ShelXWriterTest(String name) {
         super(name);
-        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
         return new TestSuite(ShelXWriterTest.class);
     }
 
-    public void testRoundTrip() {
+    public void testRoundTrip() throws Exception {
         Crystal crystal = new Crystal();
         double a = 3.0;
         double b = 5.0;
@@ -76,24 +71,13 @@ public class ShelXWriterTest extends CDKTestCase {
         // serialazing
         StringWriter sWriter = new StringWriter();
         ShelXWriter resWriter = new ShelXWriter(sWriter);
-        try {
-			resWriter.write(crystal);
-	        resWriter.close();
-		} catch (Exception e) {
-			logger.debug(e);
-			fail(e.getMessage());
-		}
+        resWriter.write(crystal);
+        resWriter.close();
         String resContent = sWriter.toString();
         
         // deserialazing
         ShelXReader resReader = new ShelXReader(new StringReader(resContent));
-        ICrystal rCrystal = null;
-        try {
-			rCrystal = (ICrystal)resReader.read(new Crystal());
-		} catch (CDKException e) {
-			logger.debug(e);
-			fail(e.getMessage());
-		}
+        ICrystal rCrystal = (ICrystal)resReader.read(new Crystal());
 		
 		// OK, do checking
 		assertNotNull(rCrystal);

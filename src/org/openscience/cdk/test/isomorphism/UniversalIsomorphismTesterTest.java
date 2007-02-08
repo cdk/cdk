@@ -148,22 +148,17 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         QueryAtomContainer query1 = null;
         QueryAtomContainer query2 = null;
         
-        try {
-        	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
-            MDLReader reader = new MDLReader(ins);
-            reader.read(mol);
-        	ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
-            reader = new MDLReader(ins);
-            reader.read(temp);
-            query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
-            
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            IAtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
-            query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
-            
-        } catch (Exception ex) {
-            System.err.println("testQueryAtomContainer: " + ex.getMessage());
-        }
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
+        MDLReader reader = new MDLReader(ins);
+        reader.read(mol);
+        ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
+        reader = new MDLReader(ins);
+        reader.read(temp);
+        query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
+
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
+        query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
         
         List list = UniversalIsomorphismTester.getSubgraphMap(mol, query1);
         assertEquals(11, list.size());
@@ -182,15 +177,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol1 = new Molecule();
         Molecule mol2 = new Molecule();
         
-        try {
-        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-            new MDLReader(ins1).read(mol1);
-            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-            new MDLReader(ins2).read(mol2);
-        } catch (Exception ex) {
-            System.err.println("testQueryAtomContainer: " + ex.getMessage());
-            fail(ex.getMessage());
-        }
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+        new MDLReader(ins1).read(mol1);
+        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+        new MDLReader(ins2).read(mol2);
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(1, list.size());
@@ -210,15 +200,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol1 = new Molecule();
         Molecule mol2 = new Molecule();
         
-        try {
-        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-            new MDLReader(ins1).read(mol1);
-            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-            new MDLReader(ins2).read(mol2);
-        } catch (Exception ex) {
-            System.err.println("testSFBug1208740: " + ex.getMessage());
-            fail(ex.getMessage());
-        }
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+        new MDLReader(ins1).read(mol1);
+        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+        new MDLReader(ins2).read(mol2);
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(5, list.size());
@@ -227,13 +212,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
         // now apply aromaticity detection, then 8 overlaps should be found
         // see cdk-user@list.sf.net on 2005-06-16
-        try {
-            HueckelAromaticityDetector.detectAromaticity(mol1, true);
-            HueckelAromaticityDetector.detectAromaticity(mol2, true);
-        } catch (Exception ex) {
-            System.err.println("Problem detecting aromaticity in testSFBug1208740: " + ex.getMessage());
-            fail(ex.getMessage());
-        }
+        HueckelAromaticityDetector.detectAromaticity(mol1, true);
+        HueckelAromaticityDetector.detectAromaticity(mol2, true);
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(8, list.size());
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
@@ -249,15 +229,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol1 = new Molecule();
         Molecule mol2 = new Molecule();
         
-        try {
-        	InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-            new MDLReader(ins1).read(mol1);
-            InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-            new MDLReader(ins2).read(mol2);
-        } catch (Exception ex) {
-            System.err.println("testQueryAtomContainer: " + ex.getMessage());
-            fail(ex.getMessage());
-        }
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
+        new MDLReader(ins1).read(mol1);
+        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
+        new MDLReader(ins2).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
         mol2 = new Molecule((AtomContainer)permutor.next());
         
@@ -321,18 +296,12 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
     }
     
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try{
-			UniversalIsomorphismTesterTest uitt = new UniversalIsomorphismTesterTest("UniversalIsomorphismTesterTest");
-			uitt.standAlone = true;
-			uitt.testItself();
-            //uitt.testAnyAtomAnyBondCase();
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
+		UniversalIsomorphismTesterTest uitt = new UniversalIsomorphismTesterTest("UniversalIsomorphismTesterTest");
+		uitt.standAlone = true;
+		uitt.testItself();
+		//uitt.testAnyAtomAnyBondCase();
 	}
     
 }

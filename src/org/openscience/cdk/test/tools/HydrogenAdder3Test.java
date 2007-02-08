@@ -63,13 +63,9 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
     /**
      * The JUnit setup method
      */
-    public void setUp() {
-        try {
-            ValencyHybridChecker checker = new ValencyHybridChecker();
-            adder = new HydrogenAdder(checker);
-        } catch (Exception exception) {
-            fail("Could not setup HydrogenAdder3Test: " + exception.getMessage());
-        }
+    public void setUp() throws Exception {
+    	ValencyHybridChecker checker = new ValencyHybridChecker();
+    	adder = new HydrogenAdder(checker);
     }
 
     /**
@@ -82,7 +78,7 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         return suite;
     }
 
-    public void testNaCl() {
+    public void testNaCl() throws Exception {
         Molecule mol = new Molecule();
         Atom cl = new Atom("Cl");
         cl.setFormalCharge(-1);
@@ -91,13 +87,7 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         na.setFormalCharge(+1);
         mol.addAtom(na);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(0, new MFAnalyser(mol).getAtomCount("H"));
@@ -108,64 +98,54 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
     /**
      * @cdk.bug 1244612
      */
-    public void testSulfurCompound() {
+    public void testSulfurCompound() throws Exception {
         String filename = "data/mdl/sulfurCompound.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
-            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containersList.size());
-            
-            assertEquals(10, ((IAtomContainer)containersList.get(0)).getAtomCount());
-            IAtom sulfur = ((IAtomContainer)containersList.get(0)).getAtom(1);
-            assertEquals("S", sulfur.getSymbol());
-            assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
-            
-            // add explicit hydrogens
-            adder.addExplicitHydrogensToSatisfyValency(((IAtomContainer)containersList.get(0)));
-            assertEquals(21, ((IAtomContainer)containersList.get(0)).getAtomCount());
-            
-            assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
-        } catch (Exception exception) {
-        	exception.printStackTrace();
-        	fail(exception.getMessage());
-        }
+        MDLReader reader = new MDLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+
+        assertEquals(10, ((IAtomContainer)containersList.get(0)).getAtomCount());
+        IAtom sulfur = ((IAtomContainer)containersList.get(0)).getAtom(1);
+        assertEquals("S", sulfur.getSymbol());
+        assertEquals(0, sulfur.getHydrogenCount());
+        assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
+
+        // add explicit hydrogens
+        adder.addExplicitHydrogensToSatisfyValency(((IAtomContainer)containersList.get(0)));
+        assertEquals(21, ((IAtomContainer)containersList.get(0)).getAtomCount());
+
+        assertEquals(0, sulfur.getHydrogenCount());
+        assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
     }
 
     /**
      * @cdk.bug 1244612
      */
-    public void testSulfurCompound_ImplicitHydrogens() {
+    public void testSulfurCompound_ImplicitHydrogens() throws Exception {
         String filename = "data/mdl/sulfurCompound.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
-            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containersList.size());
-            
-            IAtomContainer atomContainer_0 = (IAtomContainer)containersList.get(0);
-            assertEquals(10, atomContainer_0.getAtomCount());
-            IAtom sulfur = atomContainer_0.getAtom(1);
-            assertEquals("S", sulfur.getSymbol());
-            assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
-            
-            // add explicit hydrogens
-            adder.addImplicitHydrogensToSatisfyValency(atomContainer_0);
-            assertEquals(10, atomContainer_0.getAtomCount());
-            
-            assertEquals(0, sulfur.getHydrogenCount());
-            assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
-        } catch (Exception exception) {
-        	exception.printStackTrace();
-        	fail(exception.getMessage());
-        }
+        MDLReader reader = new MDLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+
+        IAtomContainer atomContainer_0 = (IAtomContainer)containersList.get(0);
+        assertEquals(10, atomContainer_0.getAtomCount());
+        IAtom sulfur = atomContainer_0.getAtom(1);
+        assertEquals("S", sulfur.getSymbol());
+        assertEquals(0, sulfur.getHydrogenCount());
+        assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+
+        // add explicit hydrogens
+        adder.addImplicitHydrogensToSatisfyValency(atomContainer_0);
+        assertEquals(10, atomContainer_0.getAtomCount());
+
+        assertEquals(0, sulfur.getHydrogenCount());
+        assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
     }
 }
 

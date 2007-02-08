@@ -68,101 +68,80 @@ public class PathToolsTest extends CDKTestCase {
         assertEquals(3, length);
     }
 
-    public void testGetShortestPath() {
+    public void testGetShortestPath() throws Exception {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         IAtom end = null;
         List path = null;
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        try {
-            atomContainer = sp.parseSmiles("CCCC");
-            start = atomContainer.getAtom(0);
-            end = atomContainer.getAtom(3);
-            path = PathTools.getShortestPath(atomContainer, start, end);
-            Assert.assertEquals(4, path.size());
+        atomContainer = sp.parseSmiles("CCCC");
+        start = atomContainer.getAtom(0);
+        end = atomContainer.getAtom(3);
+        path = PathTools.getShortestPath(atomContainer, start, end);
+        assertEquals(4, path.size());
 
-            atomContainer = sp.parseSmiles("CC(N)CC");
-            start = atomContainer.getAtom(0);
-            end = atomContainer.getAtom(2);
-            path = PathTools.getShortestPath(atomContainer, start, end);
-            Assert.assertEquals(3, path.size());
+        atomContainer = sp.parseSmiles("CC(N)CC");
+        start = atomContainer.getAtom(0);
+        end = atomContainer.getAtom(2);
+        path = PathTools.getShortestPath(atomContainer, start, end);
+        assertEquals(3, path.size());
 
-            atomContainer = sp.parseSmiles("C1C(N)CC1");
-            start = atomContainer.getAtom(0);
-            end = atomContainer.getAtom(2);
-            path = PathTools.getShortestPath(atomContainer, start, end);
-            Assert.assertEquals(3, path.size());
-            
-            
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        }
+        atomContainer = sp.parseSmiles("C1C(N)CC1");
+        start = atomContainer.getAtom(0);
+        end = atomContainer.getAtom(2);
+        path = PathTools.getShortestPath(atomContainer, start, end);
+        assertEquals(3, path.size());
     }
 
         
 
-    public void testGetPath() {
+    public void testGetPath() throws Exception {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         List paths = null;
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        try {
-            atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
-            start = atomContainer.getAtom(0);
-            paths = PathTools.getPathsOfLength(atomContainer, start, 1);
-            Assert.assertEquals(2, paths.size());
+        atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
+        start = atomContainer.getAtom(0);
+        paths = PathTools.getPathsOfLength(atomContainer, start, 1);
+        assertEquals(2, paths.size());
 
-            atomContainer = sp.parseSmiles("Cc1cc2ccccc2cc1");
-            start = atomContainer.getAtom(0);
-            paths = PathTools.getPathsOfLength(atomContainer, start, 1);
-            Assert.assertEquals(1, paths.size());
-
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        }
+        atomContainer = sp.parseSmiles("Cc1cc2ccccc2cc1");
+        start = atomContainer.getAtom(0);
+        paths = PathTools.getPathsOfLength(atomContainer, start, 1);
+        assertEquals(1, paths.size());
     }
 
-    public void testGetAllPaths1() {
+    public void testGetAllPaths1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        try {
-            IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+        IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
-            IAtom start = atomContainer.getAtom(0);
-            IAtom end = atomContainer.getAtom(2);
-            List paths = PathTools.getAllPaths(atomContainer, start, end);
+        IAtom start = atomContainer.getAtom(0);
+        IAtom end = atomContainer.getAtom(2);
+        List paths = PathTools.getAllPaths(atomContainer, start, end);
 
-            Assert.assertEquals(3, paths.size());
+        assertEquals(3, paths.size());
 
-            List path1 = (List) paths.get(0);
-            List path2 = (List) paths.get(1);
-            List path3 = (List) paths.get(2);
+        List path1 = (List) paths.get(0);
+        List path2 = (List) paths.get(1);
+        List path3 = (List) paths.get(2);
 
-            Assert.assertEquals(start, path1.get(0));
-            Assert.assertEquals(atomContainer.getAtom(1), path1.get(1));
-            Assert.assertEquals(end, path1.get(2));
+        assertEquals(start, path1.get(0));
+        assertEquals(atomContainer.getAtom(1), path1.get(1));
+        assertEquals(end, path1.get(2));
 
-            Assert.assertEquals(start, path2.get(0));
-            Assert.assertEquals(atomContainer.getAtom(5), path2.get(1));
-            Assert.assertEquals(atomContainer.getAtom(4), path2.get(2));
-            Assert.assertEquals(atomContainer.getAtom(3), path2.get(3));
-            Assert.assertEquals(end, path2.get(4));
-            Assert.assertNotNull(path3);
-
-
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        }
+        assertEquals(start, path2.get(0));
+        assertEquals(atomContainer.getAtom(5), path2.get(1));
+        assertEquals(atomContainer.getAtom(4), path2.get(2));
+        assertEquals(atomContainer.getAtom(3), path2.get(3));
+        assertEquals(end, path2.get(4));
+        assertNotNull(path3);
     }
 
-    public void testGetNumberOfVertices() {
+    public void testGetNumberOfVertices() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        try {
-            IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
-            Assert.assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
-            Assert.assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        }
+        IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+        assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
+        assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
     }
 
 }

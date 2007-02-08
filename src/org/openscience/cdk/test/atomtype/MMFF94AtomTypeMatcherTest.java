@@ -90,16 +90,11 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
         //HydrogenAdder hAdder = new HydrogenAdder();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
         BufferedReader fin =null;
-        InputStream ins=null;
-		try{
-			ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
-			fin = new BufferedReader(new InputStreamReader(ins));
-			//fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
-			MDLReader mdl=new MDLReader(fin);
-			mol=(Molecule)mdl.read(new Molecule());
-		}catch (Exception exc1){
-			fail("Problems loading file due to "+exc1.toString());
-		}
+        InputStream ins=this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
+        fin = new BufferedReader(new InputStreamReader(ins));
+        //fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
+        MDLReader mdl=new MDLReader(fin);
+        mol=(Molecule)mdl.read(new Molecule());
        
         att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){

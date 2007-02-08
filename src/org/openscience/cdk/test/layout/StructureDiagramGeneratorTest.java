@@ -100,7 +100,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	/**
 	 *  Description of the Method
 	 */
-	public void runVisualTests()
+	public void runVisualTests() throws Exception
 	{
 		moleculeListViewer = new MoleculeListViewer();
 		//MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
@@ -123,16 +123,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		//showIt(makeBug891021(), "Bug 891021");
 		showIt(makeJhao1(), "Bug jhao1");
 		showIt(makeJhao2(), "Bug jhao2");
-		try
-		{
-			showIt(makeJhao3(), "Bug jhao3");
-			showIt(makeJhao4(), "Bug jhao4");
-		}catch(Exception exc)
-		{
-			System.out.println("test jhao3 and 4 failed");	
-			exc.printStackTrace();
-		}
-		
+		showIt(makeJhao3(), "Bug jhao3");
+		showIt(makeJhao4(), "Bug jhao4");
 	}
 
 
@@ -143,19 +135,11 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *@param  name      Description of the Parameter
 	 *@return           Description of the Return Value
 	 */
-	private boolean showIt(IMolecule molecule, String name)
+	private boolean showIt(IMolecule molecule, String name) throws Exception
 	{
 		MoleculeViewer2D mv = new MoleculeViewer2D();
-		try
-		{
-			mv.setAtomContainer(generateCoordinates(molecule));
-			moleculeListViewer.addStructure(mv, name);
-		} catch (Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-			return false;
-		}
+		mv.setAtomContainer(generateCoordinates(molecule));
+		moleculeListViewer.addStructure(mv, name);
 		return true;
 	}
 
@@ -181,99 +165,63 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try
-		{
-			StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-			sdg.runVisualTests();
-			//sdg.bug736137();
-			//sdg.testSpiroRings();
-			//sdg.visualBugPMR();
-			//sdg.testBranchedAliphatic();
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
+		StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
+		sdg.runVisualTests();
+		//sdg.bug736137();
+		//sdg.testSpiroRings();
+		//sdg.visualBugPMR();
+		//sdg.testBranchedAliphatic();
 	}
 
 
 	/**
-	 *  Description of the Method
-	 *
-	 *@exception  java.lang.Exception  Description of the Exception
+	 * @cdk.bug 736137
 	 */
-	public Molecule makeBug736137()
+	public Molecule makeBug736137() throws Exception
 	{
 		//String filename = "data/mdl/bug736137.mol";
-		Molecule molecule = null;
-		try
-		{
-			String filename = "data/r.cml";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			CMLReader reader = new CMLReader(ins);
-			ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-			IChemSequence chemSequence = chemFile.getChemSequence(0);
-		    IChemModel chemModel = chemSequence.getChemModel(0);
-		    IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-	
-			molecule = new Molecule(atomContainer);
-		}
-		catch(Exception exc)
-		{
-			fail(exc.toString());	
-		}
-		return molecule;
+		String filename = "data/r.cml";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		CMLReader reader = new CMLReader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IChemSequence chemSequence = chemFile.getChemSequence(0);
+		IChemModel chemModel = chemSequence.getChemModel(0);
+		IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
 
+		return new Molecule(atomContainer);
 	}
 
 	/**
-	 *  Description of the Method
-	 *
-	 *@exception  java.lang.Exception  Description of the Exception
+	 * @cdk.bug 891021
 	 */
-	public Molecule makeBug891021()
+	public Molecule makeBug891021() throws Exception
 	{
 		String filename = "data/mdl/bug891021.mol";
-		Molecule molecule = null;
-		try
-		{
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(ins);
-			ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-			IChemSequence chemSequence = chemFile.getChemSequence(0);
-			IChemModel chemModel = chemSequence.getChemModel(0);
-			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-	
-			molecule = new Molecule(atomContainer);
-		}
-		catch(Exception exc)
-		{
-			fail(exc.toString());	
-		}
-		return molecule;
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IChemSequence chemSequence = chemFile.getChemSequence(0);
+		IChemModel chemModel = chemSequence.getChemModel(0);
+		IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
 
+		return new Molecule(atomContainer);
 	}	
 	
 	
 	
-	public void visualBugPMR()
+	public void visualBugPMR() throws Exception
 	{
                 String filename = "data/SL0016a.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		try {
-		    CMLReader reader = new CMLReader(ins);
-		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		    IChemSequence seq = chemFile.getChemSequence(0);
-		    IChemModel model = seq.getChemModel(0);
-		    IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		    MoleculeViewer2D.display(mol, true);
-		    //logger.debug(new SmilesGenerator().createSMILES(mol));
-		} catch (Exception e) 
-		{
-		    e.printStackTrace();
-		    fail(e.toString());
-		}
+		CMLReader reader = new CMLReader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IChemSequence seq = chemFile.getChemSequence(0);
+		IChemModel model = seq.getChemModel(0);
+		IMolecule mol = model.getMoleculeSet().getMolecule(0);
+		MoleculeViewer2D.display(mol, true);
+		//logger.debug(new SmilesGenerator().createSMILES(mol));
 	}
 	
 	
@@ -448,9 +396,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 
 	/**
-	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
+	 * @cdk.bug 780545
 	 */
 	public void testBug780545() throws Exception
 	{
@@ -460,6 +406,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
+	/**
+	 * @cdk.bug 1598409
+	 */
 	public void testBug1598409() throws Exception
 	{
 		String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
@@ -469,6 +418,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
 	}
 	
+	/**
+	 * @cdk.bug 1572062
+	 */
 	public void testBug1572062() throws Exception {
 		String filename = "data/mdl/sdg_test.mol";
 
@@ -491,9 +443,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	}
 	
 	/**
-	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
+	 * @cdk.bug 884993
 	 */
 	public void testBug884993() throws Exception
 	{
@@ -502,9 +452,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		try{
 			IAtomContainer ac = generateCoordinates(mol);
             assertTrue(GeometryTools.has2DCoordinates(ac));
-		}
-		catch(Exception exc)
-		{
+            fail("This should have thrown a 'Molecule not connected' exception.");
+		} catch(Exception exc) {
+			// OK, an exception should have been thrown
 			if (!(exc.toString().indexOf("Molecule not connected")>= 0)) fail();
 		}
 	}

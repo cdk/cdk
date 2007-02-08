@@ -365,43 +365,6 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(0, acetone.getLonePairCount());
     }
 
-//    public void testGetElectronContainer_int() {
-//        // acetone molecule
-//        IMolecule acetone = builder.newMolecule();
-//        
-//        IAtom c1 = builder.newAtom("C");
-//        IAtom c2 = builder.newAtom("C");
-//        IAtom o = builder.newAtom("O");
-//        IAtom c3 = builder.newAtom("C");
-//        acetone.addAtom(c1);
-//        acetone.addAtom(c2);
-//        acetone.addAtom(c3);
-//        acetone.addAtom(o);
-//        IBond b1 = builder.newBond(c1, c2,1);
-//        IBond b2 = builder.newBond(c1, o, 2);
-//        IBond b3 = builder.newBond(c1, c3,1);
-//        acetone.addBond(b1);
-//        acetone.addBond(b2);
-//        acetone.addBond(b3);
-//        
-//        // add lone pairs on oxygen
-//        ILonePair lp1 = builder.newLonePair(o);
-//        ILonePair lp2 = builder.newLonePair(o);
-//        acetone.addLonePair(lp1);
-//        acetone.addLonePair(lp2);
-//        
-//		for (int i = 0; i < acetone.getElectronContainerCount(); i++) {
-//            try {
-//            	org.openscience.cdk.interfaces.IElectronContainer ec = acetone.getElectronContainer(i);
-//                if (ec == null) {
-//                    fail("ElectronContainer is unexpectedly null!");
-//                }
-//            } catch (Exception e) {
-//                fail();
-//            }
-//		}
-//    }
-    
     public void testGetAtomCount() {
         // acetone molecule
         IMolecule acetone = builder.newMolecule();

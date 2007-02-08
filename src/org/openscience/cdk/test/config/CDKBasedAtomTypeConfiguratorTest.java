@@ -66,12 +66,8 @@ public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
         );
     }
     
-    public void testSetInputStream_InputStream() {
-    	try {
-    		testReadAtomTypes_IChemObjectBuilder();
-    	} catch (Exception exception) {
-    		fail(exception.getMessage());
-    	}
+    public void testSetInputStream_InputStream() throws Exception {
+    	testReadAtomTypes_IChemObjectBuilder();
     }
     
 }

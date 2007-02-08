@@ -63,7 +63,7 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
         return suite;
     }
 
-    public void testNaCl() {
+    public void testNaCl() throws Exception {
         Molecule mol = new Molecule();
         Atom cl = new Atom("Cl");
         cl.setFormalCharge(-1);
@@ -72,13 +72,7 @@ public class HydrogenAdder2Test extends HydrogenAdderTest {
         na.setFormalCharge(+1);
         mol.addAtom(na);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(0, new MFAnalyser(mol).getAtomCount("H"));

@@ -76,159 +76,101 @@ public class PolarizabilityTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit with n,n-dimethyl ethylendiamine
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability(){
+	public void testcalculateGHEffectiveAtomPolarizability() throws Exception {
 		double [] testResult={4.73,6.92};
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
-			assertEquals(testResult[0],result,0.01);
-			result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
-			assertEquals(testResult[1],result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
+		assertEquals(testResult[0],result,0.01);
+		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		assertEquals(testResult[1],result,0.01);
 	}
 	
 	
 	/**
 	 *  A unit test for JUnit with methane
 	 */
-	public void testCalculateKJMeanMolecularPolarizability(){
+	public void testCalculateKJMeanMolecularPolarizability() throws Exception {
 		double testResult=2.61;
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("C");
-			double result=pol.calculateKJMeanMolecularPolarizability(mol);
-			assertEquals(testResult,result,0.01);
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C");
+		double result=pol.calculateKJMeanMolecularPolarizability(mol);
+		assertEquals(testResult,result,0.01);
 	}
 
 	/**
 	 *  A unit test for JUnit with Ethyl chloride
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride(){
+	public void testcalculateGHEffectiveAtomPolarizability_Ethyl_chloride() throws Exception {
 		double testResult = 4.62; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("CCCl");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
-			assertEquals(testResult,result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCCl");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
+		assertEquals(testResult,result,0.01);
 	}
+	
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide(){
+	public void testcalculateGHEffectiveAtomPolarizability_Allyl_bromide() throws Exception {
 		double testResult = 6.17; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("C=CCBr");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
-			assertEquals(testResult,result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCBr");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		assertEquals(testResult,result,0.01);
 	}
+	
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide(){
+	public void testcalculateGHEffectiveAtomPolarizability_Isopentyl_iodide() throws Exception {
 		double testResult = 8.69; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(5),100);
-			assertEquals(testResult,result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(5),100);
+		assertEquals(testResult,result,0.01);
 	}
+	
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane(){
+	public void testcalculateGHEffectiveAtomPolarizability_Ethoxy_ethane() throws Exception {
 		double testResult = 5.21; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("CCOCC");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
-			assertEquals(testResult,result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CCOCC");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
+		assertEquals(testResult,result,0.01);
 	}
+	
 	/**
 	 *  A unit test for JUnit with Ethanolamine
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Ethanolamine(){
+	public void testcalculateGHEffectiveAtomPolarizability_Ethanolamine() throws Exception {
 		double [] testResult={4.26,3.60}; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("NCCO");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
-			assertEquals(testResult[1],result,0.01);
-			result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
-			assertEquals(testResult[0],result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("NCCO");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		assertEquals(testResult[1],result,0.01);
+		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
+		assertEquals(testResult[0],result,0.01);
 	}
+
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
-	public void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan(){
+	public void testcalculateGHEffectiveAtomPolarizability_Allyl_mercaptan() throws Exception {
 		double testResult = 6.25; /* from thesis Wolfgang Hanebeck, TUM*/
 		Polarizability pol=new Polarizability();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("C=CCS");
-			double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
- 			assertEquals(testResult,result,0.01);
-			
-		} catch (Exception exc){
-			if (standAlone)	{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CCS");
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		assertEquals(testResult,result,0.01);
 	}
 }

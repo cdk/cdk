@@ -71,12 +71,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        IMoleculeSet moleculeSet = null;
-		try {
-			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exc) {
-            fail(exc.toString());
-		}
+        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         assertNotNull(moleculeSet);
 		assertEquals(3, moleculeSet.getMoleculeCount());
 	}
@@ -92,12 +87,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atom2.setID("atom2");
         atomCon.addAtom(atom1);
         atomCon.addAtom(atom2);
-        IMoleculeSet moleculeSet = null;
-		try {
-			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exc) {
-            fail(exc.toString());
-		}
+        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
 		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtom(0);
@@ -117,12 +107,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
-        IMoleculeSet moleculeSet = null;
-		try {
-			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exc) {
-            fail(exc.toString());
-		}
+        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         assertNotNull(moleculeSet);
 		assertEquals(3, moleculeSet.getMoleculeCount());
         
@@ -154,12 +139,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atomCon.add(mol2);
         
         // now partition
-        IMoleculeSet moleculeSet = null;
-		try {
-			moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-		} catch (Exception exc) {
-            fail(exc.toString());
-		}
+        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         assertNotNull(moleculeSet);
 		assertEquals(2, moleculeSet.getMoleculeCount());
         

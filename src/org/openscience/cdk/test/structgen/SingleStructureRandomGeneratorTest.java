@@ -64,23 +64,14 @@ public class SingleStructureRandomGeneratorTest
 	}
 
 
-	private boolean showIt(Molecule molecule, String name)
+	private boolean showIt(Molecule molecule, String name) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 		MoleculeViewer2D mv = new MoleculeViewer2D();
-		try
-		{
-			sdg.setMolecule((Molecule)molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0,1));
-			mv.setAtomContainer(sdg.getMolecule());
-			testViewer.addStructure(mv, name);
-		}
-		catch(Exception exc)
-		{
-			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-			return false;
-		}
+		sdg.setMolecule((Molecule)molecule.clone());
+		sdg.generateCoordinates(new Vector2d(0,1));
+		mv.setAtomContainer(sdg.getMolecule());
+		testViewer.addStructure(mv, name);
 		return true;
 	}
 
@@ -109,18 +100,10 @@ public class SingleStructureRandomGeneratorTest
 		}
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		System.out.println("Yes!");
-		try
-		{
-			new SingleStructureRandomGeneratorTest();
-		}
-		catch(Exception exc)
-		{
-			System.out.println("SingleStructureRandomGeneratorTest failed: ");
-			exc.printStackTrace();
-		}
+		new SingleStructureRandomGeneratorTest();
 		System.out.println("Done");
 		
 	}
@@ -150,13 +133,13 @@ public class SingleStructureRandomGeneratorTest
         private static final long serialVersionUID = -7405706755621468840L;
 
         public void actionPerformed(ActionEvent e)
-		{
-      try{
-        IAtomContainer ac = ssrg.generate();
-        showIt((Molecule)ac, "Randomly generated for " + mf);
-      }
-      catch(CDKException ex){System.err.println(ex.getMessage());}
-		}
+        {
+        	try{
+        		IAtomContainer ac = ssrg.generate();
+        		showIt((Molecule)ac, "Randomly generated for " + mf);
+        	}
+        	catch(Exception ex){System.err.println(ex.getMessage());}
+        }
 	}
 }
 

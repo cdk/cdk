@@ -50,18 +50,12 @@ public class StandardSubstructureSetsTest extends CDKTestCase {
 		return new TestSuite(StandardSubstructureSetsTest.class);
 	}
 
-	public void testGetFunctionalGroupSubstructureSet() {
+	public void testGetFunctionalGroupSubstructureSet() throws Exception {
 		IAtomContainerSet set = null;
-		try {
-			set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
+		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 
-			assertNotNull(set);
-			assertEquals(8, set.getAtomContainerCount());
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			fail(exception.getMessage());
-		}
-
+		assertNotNull(set);
+		assertEquals(8, set.getAtomContainerCount());
 	}
 	
 }

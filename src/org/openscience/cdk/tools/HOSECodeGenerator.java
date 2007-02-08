@@ -272,7 +272,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		breadthFirstSearch(root,true);
 		createCode();
 		fillUpSphereDelimiters();
-		logger.debug("HOSECodeGenerator -> HOSECode: " + HOSECode.toString());
+		logger.debug("HOSECodeGenerator -> HOSECode: ", HOSECode);
 		return HOSECode.toString();
 	}
 

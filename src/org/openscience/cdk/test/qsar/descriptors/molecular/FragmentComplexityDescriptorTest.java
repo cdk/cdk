@@ -31,7 +31,7 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
 		return new TestSuite(FragmentComplexityDescriptorTest.class);
 	}
 	   
-	public void test1FragmentComplexityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void test1FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest1.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);
@@ -39,7 +39,6 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
     	GenerateFragments gf=new GenerateFragments();
     	double Complexity=0;
     	HydrogenAdder hAdder = new HydrogenAdder();
-        try {
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,false,false,4);
@@ -49,14 +48,10 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
         		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
         		//System.out.println("Complexity:"+Complexity);
         	}
-    	 }catch (Exception e){
-	        	System.out.println("Error in test1FragmentComplexityDescriptor:");
-	        	e.printStackTrace();
-	        }
     	 assertEquals(659.00,Complexity , 0.01);
 	}
 	
-	public void test2FragmentComplexityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void test2FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest10.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);
@@ -64,21 +59,16 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
     	GenerateFragments gf=new GenerateFragments();
     	double Complexity=0;
     	HydrogenAdder hAdder = new HydrogenAdder();
-        try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,false,false,4);
-        	List setOfFragments=gf.getMurckoFrameworks();
-        	for (int i=0;i<setOfFragments.size();i++){
-        		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) setOfFragments.get(i));
-        		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
-        		//System.out.println("Complexity:"+Complexity);
-        	}
-    	 }catch (Exception e){
-	        	System.out.println("Error in test1FragmentComplexityDescriptor:");
-	        	e.printStackTrace();
-	        }
-    	 assertEquals(544.01,Complexity , 0.01);
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,false,false,4);
+    	List setOfFragments=gf.getMurckoFrameworks();
+    	for (int i=0;i<setOfFragments.size();i++){
+    		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) setOfFragments.get(i));
+    		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
+    		//System.out.println("Complexity:"+Complexity);
+    	}
+    	assertEquals(544.01,Complexity , 0.01);
 	}
 	
 	

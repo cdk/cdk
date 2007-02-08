@@ -43,8 +43,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
  */
 public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 	
-	boolean standAlone = false;
-	
 	/**
 	 *  Constructor for the GasteigerMarsiliPartialChargesTest
 	 *@param  name  Description of the Parameter
@@ -63,40 +61,19 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 	}
 	
 	/**
-	 *  Sets the standAlone attribute 
-	 *
-	 *@param  standAlone  The new standAlone value
-	 */
-	public void setStandAlone(boolean standAlone)
-	{
-		this.standAlone = standAlone;
-	}
-	
-	
-	/**
 	 *  A unit test for JUnit with methylenfluoride
 	 */
-	public void testAssignGasteigerMarsiliPartialCharges(){
+	public void testAssignGasteigerMarsiliPartialCharges() throws Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};
 		GasteigerMarsiliPartialCharges peoe=new GasteigerMarsiliPartialCharges();
 		HydrogenAdder hAdder = new HydrogenAdder();
-		try{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-			IMolecule mol = sp.parseSmiles("CF");
-			hAdder.addExplicitHydrogensToSatisfyValency(mol);
-			peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-			for (int i=0;i<mol.getAtomCount();i++){
-				//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-				assertEquals(testResult[i],mol.getAtom(i).getCharge(),0.01);
-			}
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CF");
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+		for (int i=0;i<mol.getAtomCount();i++){
+			//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
+			assertEquals(testResult[i],mol.getAtom(i).getCharge(),0.01);
 		}
 	}
 }

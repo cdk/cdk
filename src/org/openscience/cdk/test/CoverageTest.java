@@ -50,7 +50,7 @@ abstract public class CoverageTest extends CDKTestCase {
         classesToTest = null;
     }
 
-    protected void setUp() {
+    protected void setUp() throws Exception {
         classLoader = this.getClass().getClassLoader();
     }
 

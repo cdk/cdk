@@ -165,16 +165,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 5
 		mol1.addBond(4, 6, 2);
 		// 6
-		try
-		{
-			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
-			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
-			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
-			ifac.configureAtoms(mol1);
-		} catch (Exception ex)
-		{
-			fail();
-		}
+		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+		ifac.configureAtoms(mol1);
 
 		String smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		assertNotNull(smiles1);

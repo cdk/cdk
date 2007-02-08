@@ -49,225 +49,181 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	      return new TestSuite(GenerateFragmentsTest.class);
 	}
 
-	public void testGenerateMurckoFragments1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments1() throws Exception {
 	    	String filename = "data/mdl/murckoTest1.mol";
 	    	//logger.debug("\nMurckoTesting: " + filename);
 	    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 	    	GenerateFragments gf=new GenerateFragments();
-	    	try {
-	        	MDLReader reader = new MDLReader(ins);
-	        	Molecule mol = (Molecule)reader.read(new Molecule());
-	        	gf.generateMurckoFragments(mol,true,true,4);
-	        	//logger.debug("Murcko Fragments generated");
-	        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-	        	for (int i =0;i<smiles.length;i++){
-	        		//logger.debug("MF"+i+" :"+smiles[i]);
-	        	}
-	        	assertEquals("c1ccc(cc1)CCc2ccccc2",smiles[0]);
-	        	assertEquals(1,smiles.length);
-	        }catch (Exception e){
-	        	System.out.println("Error in testGenerateMurckoFragments1:");
-	        	e.printStackTrace();
-	        }
+	    	MDLReader reader = new MDLReader(ins);
+	    	Molecule mol = (Molecule)reader.read(new Molecule());
+	    	gf.generateMurckoFragments(mol,true,true,4);
+	    	//logger.debug("Murcko Fragments generated");
+	    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+	    	for (int i =0;i<smiles.length;i++){
+	    		//logger.debug("MF"+i+" :"+smiles[i]);
+	    	}
+	    	assertEquals("c1ccc(cc1)CCc2ccccc2",smiles[0]);
+	    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+
+	public void testGenerateMurckoFragments2() throws Exception {
     	String filename = "data/mdl/murckoTest2.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("C1CCC(C1)CCC2Cc3ccccc3(C2)",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments2:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("C1CCC(C1)CCC2Cc3ccccc3(C2)",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+
+	public void testGenerateMurckoFragments3() throws Exception {
     	String filename = "data/mdl/murckoTest3.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=false;
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("c1ccc2C=CCc2(c1)") || smiles[i].equals("c1ccc2CC=Cc2(c1)")){
-        			found=true;
-        		}        		
-        	}
-        	assertEquals(true,found);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments3:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	boolean found=false;
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    		if (smiles[i].equals("c1ccc2C=CCc2(c1)") || smiles[i].equals("c1ccc2CC=Cc2(c1)")){
+    			found=true;
+    		}        		
+    	}
+    	assertTrue(found);
+    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments4() throws ClassNotFoundException, CDKException, java.lang.Exception {
+
+	public void testGenerateMurckoFragments4() throws Exception {
     	String filename = "data/mdl/murckoTest4.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=false;
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("c1ccc(cc1)CCC3CCC(CCc2ccccc2)C3")){
-        			found=true;
-        		}
-        	}
-        	assertEquals(true,found);
-        	//assertEquals("c1ccc(cc1)CCC2CCC(C2)C4C4(c3ccccc3)",smiles[2]);
-        	assertEquals(3,smiles.length);
-        	
-        	/*String[] rings=gf.getRingFragmentsAsSmileArray();
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	boolean found=false;
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    		if (smiles[i].equals("c1ccc(cc1)CCC3CCC(CCc2ccccc2)C3")){
+    			found=true;
+    		}
+    	}
+    	assertTrue(found);
+    	//assertEquals("c1ccc(cc1)CCC2CCC(C2)C4C4(c3ccccc3)",smiles[2]);
+    	assertEquals(3,smiles.length);
+
+    	/*String[] rings=gf.getRingFragmentsAsSmileArray();
         	for (int i =0;i<rings.length;i++){
         		System.out.println("RF"+i+" :"+smiles[i]);
         	}*/
-        	String[] linker=gf.getLinkerFragmentsAsSmileArray();
-        	for (int i =0;i<linker.length;i++){
-        		//logger.debug("LF"+i+" :"+linker[i]);
-        	}
-        	
-        	
-        	
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments4:");
-        	e.printStackTrace();
-        }
+    	String[] linker=gf.getLinkerFragmentsAsSmileArray();
+    	for (int i =0;i<linker.length;i++){
+    		//logger.debug("LF"+i+" :"+linker[i]);
+    	}
 	}
-	public void testGenerateMurckoFragments5() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	
+	public void testGenerateMurckoFragments5() throws Exception {
     	String filename = "data/mdl/murckoTest5.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals(0,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments5:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals(0,smiles.length);
 	}
-	public void testGenerateMurckoFragments6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	
+	public void testGenerateMurckoFragments6() throws Exception {
     	String filename = "data/mdl/murckoTest6.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=false;
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("NC3(C(=O)c1ccccc1)(C3(c2ccccc2") || smiles[i].equals("NC(Cc1ccccc1)C(=O)c2ccccc2")){
-        			found=true;
-        		}
-        	}
-        	assertEquals(true,found);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments6:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	boolean found=false;
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    		if (smiles[i].equals("NC3(C(=O)c1ccccc1)(C3(c2ccccc2") || smiles[i].equals("NC(Cc1ccccc1)C(=O)c2ccccc2")){
+    			found=true;
+    		}
+    	}
+    	assertTrue(found);
+    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments7() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	
+	public void testGenerateMurckoFragments7() throws Exception {
     	//logger.debug("\nMurckoTesting 7");
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="OC(CC[n+]1c(Nc2ccccc2)scc1c3ccccc3)(P(=O)([O-])[O-])P(=O)([O-])[O-]";//ZINK5
         IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	//assertEquals("NC3(Cc1ccccc1)(C3(=O)(c2ccccc2))",smiles[0]);
-        	assertEquals(3,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments6:");
-        	e.printStackTrace();
-        }
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	//assertEquals("NC3(Cc1ccccc1)(C3(=O)(c2ccccc2))",smiles[0]);
+    	assertEquals(3,smiles.length);
 	}
 	
-	public void testGenerateMurckoFragments8() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments8() throws Exception {
     	//logger.debug("\nMurckoTesting 8");
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="c2ccc(Cc1ccccc1)cc2";
         IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("c1ccc(cc1)Cc2ccccc2",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments6:");
-        	e.printStackTrace();
-        }
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("c1ccc(cc1)Cc2ccccc2",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments9() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	
+	public void testGenerateMurckoFragments9() throws Exception {
     	//logger.debug("\nMurckoTesting 9");
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="c2ccc(c1ccccc1)cc2";
         IMolecule mol = sp.parseSmiles(smile); 
       
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("c1ccc(cc1)c2ccccc2",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments6:");
-        	e.printStackTrace();
-        }
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("c1ccc(cc1)c2ccccc2",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
 	
-	/*public void testGenerateMurckoFragments10() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	/*public void testGenerateMurckoFragments10() throws Exception {
     	//logger.debug("\nMurckoTesting 10");
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smile="Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N";//ZINK19
@@ -291,59 +247,50 @@ public class GenerateFragmentsTest extends CDKTestCase{
         }
 	}*/
 	
-	public void testGenerateMurckoFragments11() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments11() throws Exception {
     	String filename = "data/mdl/murckoTest7.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=false;
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        		if (smiles[i].equals("c1ccc(cc1)C2CCCC(C2)c3ccccc3")){
-        			found=true;
-        		}
-        	}
-        	assertEquals(true,found);
-        	assertEquals(3,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments11:");
-        	//e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	boolean found=false;
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    		if (smiles[i].equals("c1ccc(cc1)C2CCCC(C2)c3ccccc3")){
+    			found=true;
+    		}
+    	}
+    	assertTrue(found);
+    	assertEquals(3,smiles.length);
 	}
 	
-	public void testGenerateMurckoFragments12() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments12() throws Exception {
     	String filename = "data/mdl/murckoTest8.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	boolean found=false;
-        	for (int i =0;i<smiles.length;i++){
-        		if (smiles[i].equals("c1ccc(cc1)C2CC(C2)c3ccccc3")){
-        			found=true;
-        		}
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals(true,found);
-        	assertEquals(3,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments12:");
-        	//e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	boolean found=false;
+    	for (int i =0;i<smiles.length;i++){
+    		if (smiles[i].equals("c1ccc(cc1)C2CC(C2)c3ccccc3")){
+    			found=true;
+    		}
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertTrue(found);
+    	assertEquals(3,smiles.length);
 	}
+
 	//without add explicit hydrogen thetest fails due to problems with smile generator 
-	public void testGenerateMurckoFragments13() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments13() throws Exception {
 		//logger.debug("\nMurckoTesting 13");
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String smile="Oc1cc2ccccn2c1C(=O)OCCN3CCCCC3";//MDDR 31 
@@ -354,27 +301,21 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		ha.addExplicitHydrogensToSatisfyValency(mol);
     
 		GenerateFragments gf=new GenerateFragments();
-		try {
-    	
-			gf.generateMurckoFragments(mol,false,false,4);
-			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-			boolean found=false;
-			for (int i =0;i<smiles.length;i++){
-				//logger.debug("MF"+i+" :"+smiles[i]);
-				if (smiles[i].equals("C1CCN(CC1)CCOCc=2cc=c3c=cc=cn=23")){
-        			found=true;
-        		}
+		gf.generateMurckoFragments(mol,false,false,4);
+		String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+		boolean found=false;
+		for (int i =0;i<smiles.length;i++){
+			//logger.debug("MF"+i+" :"+smiles[i]);
+			if (smiles[i].equals("C1CCN(CC1)CCOCc=2cc=c3c=cc=cn=23")){
+				found=true;
 			}
-			assertEquals(true,found);
-			assertEquals(1,smiles.length);
-		}catch (Exception e){
-			System.out.println("Error in testGenerateMurckoFragments6:");
-			e.printStackTrace();
 		}
+		assertTrue(found);
+		assertEquals(1,smiles.length);
 	}
 	
 	//same as test 13
-	public void testGenerateMurckoFragments14() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments14() throws Exception {
 		//logger.debug("\nMurckoTesting 14");
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		String smile="C(c1ccc(cc1)c2ccccc2)n3cnc4cccnc34";//MDDR 52 
@@ -385,88 +326,69 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		ha.addExplicitHydrogensToSatisfyValency(mol);
     
 		GenerateFragments gf=new GenerateFragments();
-		try {
-    	
-			gf.generateMurckoFragments(mol,false,false,4);
-			String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-			boolean found=false;
-			for (int i =0;i<smiles.length;i++){
-				//logger.debug("MF"+i+" :"+smiles[i]);
-				if (smiles[i].equals("c1ccc(cc1)c2=ccc(c=c2)Cn4cnc3cccnc34")){
-        			found=true;
-        		}
+		gf.generateMurckoFragments(mol,false,false,4);
+		String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+		boolean found=false;
+		for (int i =0;i<smiles.length;i++){
+			//logger.debug("MF"+i+" :"+smiles[i]);
+			if (smiles[i].equals("c1ccc(cc1)c2=ccc(c=c2)Cn4cnc3cccnc34")){
+				found=true;
 			}
-			assertEquals(true,found);
-			assertEquals(3,smiles.length);
-		}catch (Exception e){
-			System.out.println("Error in testGenerateMurckoFragments6:");
-			e.printStackTrace();
 		}
+		assertTrue(found);
+		assertEquals(3,smiles.length);
 	}
+	
 	//check for spiro ring systems
-	public void testGenerateMurckoFragments15() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments15() throws Exception {
     	String filename = "data/mdl/murckoTest9.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(ins);
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("C1CCC2(CC1)(CCCC2)",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments5:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(ins);
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("C1CCC2(CC1)(CCCC2)",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
 	
-	public void testGenerateMurckoFragments16() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testGenerateMurckoFragments16() throws Exception {
     	String filename = "data/mdl/murckoTest10.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("O=C2CC=CN2(Cc1ccccc1)",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments5:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("O=C2CC=CN2(Cc1ccccc1)",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
-	public void testGenerateMurckoFragments17() throws ClassNotFoundException, CDKException, java.lang.Exception {
+
+	public void testGenerateMurckoFragments17() throws Exception {
     	String filename = "data/mdl/murckoTest11.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
-    	try {
-        	MDLReader reader = new MDLReader(new InputStreamReader(ins));
-        	Molecule mol = (Molecule)reader.read(new Molecule());
-        	gf.generateMurckoFragments(mol,true,true,4);
-        	//logger.debug("Murcko Fragments generated");
-        	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-        	for (int i =0;i<smiles.length;i++){
-        		//logger.debug("MF"+i+" :"+smiles[i]);
-        	}
-        	assertEquals("C1CCc2ccccc2(C1)",smiles[0]);
-        	assertEquals(1,smiles.length);
-        }catch (Exception e){
-        	System.out.println("Error in testGenerateMurckoFragments5:");
-        	e.printStackTrace();
-        }
+    	MDLReader reader = new MDLReader(new InputStreamReader(ins));
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	gf.generateMurckoFragments(mol,true,true,4);
+    	//logger.debug("Murcko Fragments generated");
+    	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
+    	for (int i =0;i<smiles.length;i++){
+    		//logger.debug("MF"+i+" :"+smiles[i]);
+    	}
+    	assertEquals("C1CCc2ccccc2(C1)",smiles[0]);
+    	assertEquals(1,smiles.length);
 	}
 }
 	            

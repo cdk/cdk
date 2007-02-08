@@ -373,29 +373,22 @@ public class FingerprinterTest extends CDKTestCase
 		return mol;
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try{
-			
-			BigInteger bi=new BigInteger("0");
-			bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
-			System.err.println(bi.toString());
-			bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
-			System.err.println(bi.toString());
-			FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
-			fpt.standAlone = true;
-			//fpt.testFingerprinter();
-			//fpt.testFingerprinterArguments();
-			//fpt.testBug706786();
-			//fpt.testBug771485();
-			//fpt.testBug853254();
-			//fpt.testBug931608();
-			fpt.testBug934819();
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
+		BigInteger bi=new BigInteger("0");
+		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
+		System.err.println(bi.toString());
+		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
+		System.err.println(bi.toString());
+		FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
+		fpt.standAlone = true;
+		//fpt.testFingerprinter();
+		//fpt.testFingerprinterArguments();
+		//fpt.testBug706786();
+		//fpt.testBug771485();
+		//fpt.testBug853254();
+		//fpt.testBug931608();
+		fpt.testBug934819();
 	}
 }
 

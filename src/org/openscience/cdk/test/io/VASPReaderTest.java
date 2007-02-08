@@ -57,29 +57,23 @@ public class VASPReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(ChemFile.class));
     }
 
-    public void testReading() {
+    public void testReading() throws Exception {
         String filename = "data/LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            VASPReader reader = new VASPReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
-            assertNotNull(chemFile);
-            org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
-            assertNotNull(sequence);
-            assertEquals(6, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
-            assertNotNull(model);
-            org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-            assertNotNull(crystal);
-            assertEquals(16, crystal.getAtomCount());
-            org.openscience.cdk.interfaces.IAtom atom = crystal.getAtom(0);
-            assertNotNull(atom);
-            assertNotNull(atom.getFractionalPoint3d());
-        } catch (Exception exception) {
-            logger.error(exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        VASPReader reader = new VASPReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
+        assertNotNull(chemFile);
+        org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
+        assertNotNull(sequence);
+        assertEquals(6, sequence.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
+        assertNotNull(model);
+        org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
+        assertNotNull(crystal);
+        assertEquals(16, crystal.getAtomCount());
+        org.openscience.cdk.interfaces.IAtom atom = crystal.getAtom(0);
+        assertNotNull(atom);
+        assertNotNull(atom.getFractionalPoint3d());
     }
 }

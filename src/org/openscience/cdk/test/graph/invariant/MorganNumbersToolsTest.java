@@ -59,17 +59,7 @@ public class MorganNumbersToolsTest extends CDKTestCase
 	public void testGetMorganNumbers_IAtomContainer()
 	{
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
-		int[] morganNumbers = null;
-		try
-		{
-			morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer)mol);
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-			System.err.println("An Exception");
-			fail();
-		}
+		int[] morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer)mol);
 		assertTrue(morganNumbers.length == reference.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{

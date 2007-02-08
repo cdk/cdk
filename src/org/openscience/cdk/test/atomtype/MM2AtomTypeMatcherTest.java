@@ -69,7 +69,7 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
 	    assertNotNull(matcher);
     }
     
-    public void testFindMatchingAtomType_IAtomContainer_IAtom() {
+    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
     	
     	logger.debug("**** START MM2 ATOMTYPE TEST ******");
@@ -79,36 +79,18 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
         BufferedReader fin =null;
         InputStream ins=null;
         logger.debug("**** reading MOL file ******");
-		try{
-			ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
-			fin = new BufferedReader(new InputStreamReader(ins));
-			MDLReader mdl=new MDLReader(fin);
-			mol=(Molecule)mdl.read(new Molecule());
-		} catch (Exception exc1){
-			logger.error("Problems loading file due to "+exc1.getMessage());
-			logger.debug(exc1);
-			fail("Problems loading file due to "+exc1.getMessage());
-		}
+        ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
+        fin = new BufferedReader(new InputStreamReader(ins));
+        MDLReader mdl=new MDLReader(fin);
+        mol=(Molecule)mdl.read(new Molecule());
 		assertTrue(mol.getAtomCount() > 0);
 		logger.debug("Molecule load:"+mol.getAtomCount());
-		try {
-			att.assignAtomTypePropertiesToAtom(mol);
-		} catch (Exception exception) {
-			logger.error("Could not atom type properties: " + exception.getMessage());
-			logger.debug(exception);
-			fail("Could not atom type properties: " + exception.getMessage());
-		}
+		att.assignAtomTypePropertiesToAtom(mol);
         for (int i=0;i<mol.getAtomCount();i++){
         	logger.debug("atomNr:"+i);
         	IAtomType matched = null;
-        	try {
-        		matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-        		logger.debug("Found AtomType: ", matched);
-        	} catch (Exception exception) {
-        		logger.error("Could not percieve atom type: " + exception.getMessage());
-        		logger.debug(exception);
-        		fail("Could not percieve atom type: " + exception.getMessage());
-        	}
+        	matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
+        	logger.debug("Found AtomType: ", matched);
         	assertNotNull(matched);
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }

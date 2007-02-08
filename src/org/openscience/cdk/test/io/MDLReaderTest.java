@@ -70,7 +70,7 @@ public class MDLReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(Molecule.class));
     }
 
-    public void testReadFromStringReader () {
+    public void testReadFromStringReader() throws Exception {
         String mdl =
                 "cyclopropane.mol\n" +
                 "\n" +
@@ -94,89 +94,73 @@ public class MDLReaderTest extends CDKTestCase {
                 "  2  7  1  6  0  0\n" +
                 "  3  8  1  6  0  0\n" +
                 "  3  9  1  0  0  0\n";
-        try {
-            MDLReader reader = new MDLReader(new StringReader(mdl));
-            ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
-            assertNotNull(chemFile);
-            assertEquals(1, chemFile.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1, seq.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-            assertNotNull(som);
-            assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-            assertNotNull(m);
-            assertEquals(9, m.getAtomCount());
-            assertEquals(9, m.getBondCount());
-        } catch (Throwable problem) {
-            problem.printStackTrace();
-            fail();
-        }
+        MDLReader reader = new MDLReader(new StringReader(mdl));
+        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        assertNotNull(chemFile);
+        assertEquals(1, chemFile.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1, seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+
+        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        assertNotNull(som);
+        assertEquals(1, som.getMoleculeCount());
+        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        assertNotNull(m);
+        assertEquals(9, m.getAtomCount());
+        assertEquals(9, m.getBondCount());
     }
     
-    public void testBug1542467() {
+    /**
+     * @cdk.bug 1542467
+     */
+    public void testBug1542467() throws Exception {
         String filename = "data/mdl/Strychnine_nichtOK.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            assertNotNull(chemFile);
-            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(1, containersList.size());
-            assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
-            assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	fail(e.toString());
-        }
+        MDLReader reader = new MDLReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+        assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+        assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
     }
     
-    public void testReadProton() {
+    public void testReadProton() throws Exception {
     	String mdl =
             "proton.mol\n" +
             "\n" +
             "\n" +
             "  1  0  0  0  0                 1 V2000\n" +
             "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
-    	try {
-            MDLReader reader = new MDLReader(new StringReader(mdl));
-            Molecule mol = (Molecule)reader.read(new Molecule());
-            assertNotNull(mol);
-            assertEquals(1, mol.getAtomCount());
-            assertEquals(0, mol.getBondCount());
-            IAtom atom = mol.getAtom(0);
-            assertEquals(1, atom.getFormalCharge());
-        } catch (Throwable problem) {
-            problem.printStackTrace();
-            fail();
-        }	
+    	MDLReader reader = new MDLReader(new StringReader(mdl));
+    	Molecule mol = (Molecule)reader.read(new Molecule());
+    	assertNotNull(mol);
+    	assertEquals(1, mol.getAtomCount());
+    	assertEquals(0, mol.getBondCount());
+    	IAtom atom = mol.getAtom(0);
+    	assertEquals(1, atom.getFormalCharge());
     }
     
     /**
      * The corrupt file is really ok; it is just not V2000 material.
      */
-    public void testSDF() {
+    public void testSDF() throws Exception {
         String filename = "data/mdl/prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-        	MDLReader reader = new MDLReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            assertNotNull(chemFile);
-            List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-            assertEquals(2, containersList.size());
-            assertEquals(39, ((IAtomContainer)containersList.get(0)).getAtomCount());
-            assertEquals(41, ((IAtomContainer)containersList.get(0)).getBondCount());
-            assertEquals(29, ((IAtomContainer)containersList.get(1)).getAtomCount());
-            assertEquals(28, ((IAtomContainer)containersList.get(1)).getBondCount());
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+        MDLReader reader = new MDLReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(2, containersList.size());
+        assertEquals(39, ((IAtomContainer)containersList.get(0)).getAtomCount());
+        assertEquals(41, ((IAtomContainer)containersList.get(0)).getBondCount());
+        assertEquals(29, ((IAtomContainer)containersList.get(1)).getAtomCount());
+        assertEquals(28, ((IAtomContainer)containersList.get(1)).getBondCount());
     }
     
 }

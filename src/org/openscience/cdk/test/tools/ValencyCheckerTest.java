@@ -55,12 +55,8 @@ public class ValencyCheckerTest extends CDKTestCase
     /**
      *  The JUnit setup method
      */
-    public void setUp() {
-        try {
-            satcheck = new ValencyChecker();
-        } catch (Exception e) {
-            fail();
-        }
+    public void setUp() throws Exception {
+    	satcheck = new ValencyChecker();
     }
 
 	/**

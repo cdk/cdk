@@ -64,24 +64,19 @@ public class ZMatrixReaderTest extends CDKTestCase {
     }
 
     // Do we have a ZMatrix test file??
-    public void xtestFile() {
-        try {        
-            IChemObjectReader reader;
-            System.out.println("Loading: " + inFile);
-            reader = new ZMatrixReader(new FileReader(inFile));
-            System.out.println("Expecting ZMatrix format...");
-            
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            
-            org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
-			org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
-			IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-			RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-			rebonder.rebond(atomContainer);
-            
-		} catch(Exception exc) {
-            exc.printStackTrace();
-        }
+    public void xtestFile() throws Exception {
+    	IChemObjectReader reader;
+    	System.out.println("Loading: " + inFile);
+    	reader = new ZMatrixReader(new FileReader(inFile));
+    	System.out.println("Expecting ZMatrix format...");
+
+    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+    	org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
+    	org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
+    	IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
+    	RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+    	rebonder.rebond(atomContainer);
 	}
     
 }

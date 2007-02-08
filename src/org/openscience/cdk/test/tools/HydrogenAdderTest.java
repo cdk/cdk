@@ -65,7 +65,7 @@ public class HydrogenAdderTest extends CDKTestCase {
     /**
      * The JUnit setup method
      */
-    public void setUp() {
+    public void setUp() throws Exception {
         adder = new HydrogenAdder();
     }
 
@@ -79,19 +79,13 @@ public class HydrogenAdderTest extends CDKTestCase {
         return suite;
     }
 
-    public void testProton() {
+    public void testProton() throws Exception {
         Molecule mol = new Molecule();
         Atom proton = new Atom("H");
         proton.setFormalCharge(+1);
         mol.addAtom(proton);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(1, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
@@ -99,18 +93,12 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(0, proton.getHydrogenCount());
     }
     
-    public void testHydrogen() {
+    public void testHydrogen() throws Exception {
         Molecule mol = new Molecule();
         Atom proton = new Atom("H");
         mol.addAtom(proton);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
@@ -118,25 +106,19 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(0, proton.getHydrogenCount());
     }
     
-    public void testMethane() {
+    public void testMethane() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon = new Atom("C");
         mol.addAtom(carbon);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(5, mol.getAtomCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(4, mol.getConnectedBondsCount(carbon));
     }
     
-    public void testAminomethane()
+    public void testAminomethane() throws Exception 
     {
         Molecule aminomethane = new Molecule();
         Atom carbon = new Atom("C");
@@ -146,159 +128,110 @@ public class HydrogenAdderTest extends CDKTestCase {
         Point2d nitrogenPos = new Point2d(1.0,1.0);
         nitrogen.setPoint2d(nitrogenPos);
         aminomethane.addAtom(carbon);
-	aminomethane.addAtom(nitrogen);
+        aminomethane.addAtom(nitrogen);
         aminomethane.addBond(new Bond(carbon, nitrogen));
         
-        // generate new coords
-       try {
-            adder.addExplicitHydrogensToSatisfyValency(aminomethane);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }	
+        adder.addExplicitHydrogensToSatisfyValency(aminomethane);
 
         assertEquals(7, aminomethane.getAtomCount());
 	
     }    
 
-    public void testAmmonia() {
+    public void testAmmonia() throws Exception {
         Molecule mol = new Molecule();
         Atom nitrogen = new Atom("N");
         mol.addAtom(nitrogen);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(3, mol.getConnectedBondsCount(nitrogen));
     }
 
-    public void testAmmonium() {
+    public void testAmmonium() throws Exception {
         Molecule mol = new Molecule();
         Atom nitrogen = new Atom("N");
         nitrogen.setFormalCharge(+1);
         mol.addAtom(nitrogen);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(5, mol.getAtomCount());
         assertEquals(4, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(4, mol.getConnectedBondsCount(nitrogen));
     }
 
-    public void testWater() {
+    public void testWater() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         mol.addAtom(oxygen);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(2, mol.getConnectedBondsCount(oxygen));
     }
 
-    public void testHydroxyl() {
+    public void testHydroxyl() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(-1);
         mol.addAtom(oxygen);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(1, mol.getConnectedBondsCount(oxygen));
     }
 
-    public void testHydroxonium() {
+    public void testHydroxonium() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(+1);
         mol.addAtom(oxygen);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(3, mol.getConnectedBondsCount(oxygen));
     }
     
-    public void testHalogens() {
+    public void testHalogens() throws Exception {
         halogenTest("I");
         halogenTest("F");
         halogenTest("Cl");
         halogenTest("Br");
     }
     
-    private void halogenTest(String halogen) {
+    private void halogenTest(String halogen) throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom(halogen);
         mol.addAtom(atom);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(1, mol.getConnectedBondsCount(atom));
     }
     
-    public void testSulphur() {
+    public void testSulphur() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("S");
         mol.addAtom(atom);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(3, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(2, mol.getConnectedBondsCount(atom));
     }
     
-    public void testSulfite() {
+    public void testSulfite() throws Exception {
         Molecule mol = new Molecule();
         Atom s = new Atom("S");
         Atom o1 = new Atom("O");
@@ -314,14 +247,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addBond(b1);
         mol.addBond(b2);
         mol.addBond(b3);
-        
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+ 
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
@@ -329,7 +256,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(3, mol.getConnectedBondsCount(s));
     }
     
-    public void testAceticAcid() {
+    public void testAceticAcid() throws Exception {
         Molecule mol = new Molecule();
         Atom carbonylOxygen = new Atom("O");
         Atom hydroxylOxygen = new Atom("O");
@@ -346,13 +273,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addBond(b2);
         mol.addBond(b3);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(8, mol.getAtomCount());
         assertEquals(7, mol.getBondCount());
@@ -363,7 +284,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(3, mol.getConnectedBondsCount(carbonylCarbon));
     }
     
-    public void testEthane() {
+    public void testEthane() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -372,13 +293,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addAtom(carbon2);
         mol.addBond(b);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(8, mol.getAtomCount());
         assertEquals(7, mol.getBondCount());
@@ -387,7 +302,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(4, mol.getConnectedBondsCount(carbon2));
     }
 
-    public void testEthene() {
+    public void testEthene() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -396,13 +311,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addAtom(carbon2);
         mol.addBond(b);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-           fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
@@ -411,7 +320,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(3, mol.getConnectedBondsCount(carbon2));
     }
 
-    public void testEthyne() {
+    public void testEthyne() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -420,13 +329,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         mol.addAtom(carbon2);
         mol.addBond(b);
         
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
+        adder.addExplicitHydrogensToSatisfyValency(mol);
         
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, mol.getBondCount());
@@ -435,7 +338,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(2, mol.getConnectedBondsCount(carbon2));
     }
 
-    public void testAromaticSaturation() {
+    public void testAromaticSaturation() throws Exception {
         Molecule mol = new Molecule();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -461,37 +364,26 @@ public class HydrogenAdderTest extends CDKTestCase {
             mol.getAtom(f).setHybridization(CDKConstants.HYBRIDIZATION_SP2);
             mol.getBond(f).setFlag(CDKConstants.ISAROMATIC, true);
         }
-        try {
-            adder.addHydrogensToSatisfyValency(mol);
-            new SaturationChecker().saturate(mol);
-        } catch(Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();	
-        }
+        adder.addHydrogensToSatisfyValency(mol);
+        new SaturationChecker().saturate(mol);
         MFAnalyser mfa = new MFAnalyser(mol);
         assertEquals(6, mfa.getAtomCount("H"));
     }
     
-    public void testAddImplicitHydrogens() {
+    public void testAddImplicitHydrogens() throws Exception {
         Molecule molecule = null;
-        try {
-            String filename = "data/mdl/saturationcheckertest.mol";
-            InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-            MDLReader reader = new MDLReader(ins);
-            molecule = (Molecule)reader.read((ChemObject)new Molecule());
-            adder.addHydrogensToSatisfyValency(molecule);
-        } catch (Exception exc) {
-            exc.printStackTrace();
-            fail();
-        } 
+        String filename = "data/mdl/saturationcheckertest.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (Molecule)reader.read((ChemObject)new Molecule());
+        adder.addHydrogensToSatisfyValency(molecule);
     }
     
     /**
      * Tests wether the it actually resets an old value if zero missing hydrogens
      * were calculated (bug found 2004-01-09 by egonw).
      */
-    public void testaddImplicitHydrogensToSatisfyValency_OldValue() {
+    public void testaddImplicitHydrogensToSatisfyValency_OldValue() throws Exception {
         Molecule mol = new Molecule();
         mol.addAtom(new Atom("C"));
         Atom oxygen = new Atom("O");
@@ -503,30 +395,19 @@ public class HydrogenAdderTest extends CDKTestCase {
         
         oxygen.setHydrogenCount(2); /* e.g. caused by the fact that the element symbol
                                        was changed from C to O (=actual bug) */
-        try {
-            adder.addExplicitHydrogensToSatisfyValency(mol);
-        } catch (Exception exception) {
-            System.err.println(exception);
-            exception.printStackTrace();
-            fail();
-        }
-
+        adder.addExplicitHydrogensToSatisfyValency(mol);
+        
         assertEquals(0, oxygen.getHydrogenCount());
     }
 
-    public void testRadical()
+    public void testRadical() throws Exception 
     {
     	Molecule mol = new Molecule();
     	mol.addAtom(new Atom("C"));
     	mol.addAtom(new Atom("C"));
     	mol.addSingleElectron(mol.getBuilder().newSingleElectron(mol.getAtom(0)));
     	mol.addBond(0,1,1);
-    	try {
-    		adder.addImplicitHydrogensToSatisfyValency(mol);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		fail();
-    	}
+    	adder.addImplicitHydrogensToSatisfyValency(mol);
     	assertEquals(3, mol.getAtom(1).getHydrogenCount());
     	assertEquals(2, mol.getAtom(0).getHydrogenCount());
     	
@@ -535,7 +416,7 @@ public class HydrogenAdderTest extends CDKTestCase {
      * @cdk.bug 1575269
      *
      */
-    public void testAdenine()
+    public void testAdenine() throws Exception 
     {
     	IMolecule mol = new Molecule(); // Adenine
     	IAtom a1 = mol.getBuilder().newAtom("C");
@@ -581,12 +462,8 @@ public class HydrogenAdderTest extends CDKTestCase {
     	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0);
     	mol.addBond(b11);
     	HydrogenAdder ha = new HydrogenAdder();
-    	try {
-    		HueckelAromaticityDetector.detectAromaticity(mol);
-    		ha.addExplicitHydrogensToSatisfyValency(mol);
-    	} catch (Exception ex) {
-    		fail(ex.getMessage());
-    	}
+    	HueckelAromaticityDetector.detectAromaticity(mol);
+    	ha.addExplicitHydrogensToSatisfyValency(mol);
     	MFAnalyser mfa1 = new MFAnalyser(mol);
     	assertEquals(5, mfa1.getAtomCount("H"));
     	

@@ -196,17 +196,11 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testSmiles3()
+	public void testSmiles3() throws Exception
 	{
-		try
-		{
-			String smiles = "CN1C=NC2=C1C(N(C)C(N2C)=O)=O";
-			IMolecule molecule = sp.parseSmiles(smiles);
-			assertEquals(14, molecule.getAtomCount());
-		} catch (Exception exception)
-		{
-			fail(exception.getMessage());
-		}
+		String smiles = "CN1C=NC2=C1C(N(C)C(N2C)=O)=O";
+		IMolecule molecule = sp.parseSmiles(smiles);
+		assertEquals(14, molecule.getAtomCount());
 	}
 
 

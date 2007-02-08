@@ -59,7 +59,7 @@ public class GhemicalReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(ChemModel.class));
     }
 
-    public void testExample() {
+    public void testExample() throws Exception {
         String testfile =
 "!Header mm1gp 100\n" +
 "!Info 1\n" +
@@ -92,30 +92,25 @@ public class GhemicalReaderTest extends CDKTestCase {
 "5 0.1\n" +
 "!End";
         StringReader stringReader = new StringReader(testfile);
-        try {
-            GhemicalMMReader reader = new GhemicalMMReader(stringReader);
-            ChemModel model = (ChemModel)reader.read((ChemObject)new ChemModel());
-            
-            assertNotNull(model);
-            assertNotNull(model.getMoleculeSet());
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-            assertNotNull(som);
-            assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-            assertNotNull(m);
-            assertEquals(6, m.getAtomCount());
-            assertEquals(5, m.getBondCount());
-            
-            // test reading of formal charges
-            org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
-            assertNotNull(a);
-            assertEquals(6, a.getAtomicNumber());
-            assertEquals(-0.2, a.getCharge(), 0.01);
-            assertEquals(0.06677, a.getPoint3d().x, 0.01);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        GhemicalMMReader reader = new GhemicalMMReader(stringReader);
+        ChemModel model = (ChemModel)reader.read((ChemObject)new ChemModel());
+
+        assertNotNull(model);
+        assertNotNull(model.getMoleculeSet());
+        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        assertNotNull(som);
+        assertEquals(1, som.getMoleculeCount());
+        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        assertNotNull(m);
+        assertEquals(6, m.getAtomCount());
+        assertEquals(5, m.getBondCount());
+
+        // test reading of formal charges
+        org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
+        assertNotNull(a);
+        assertEquals(6, a.getAtomicNumber());
+        assertEquals(-0.2, a.getCharge(), 0.01);
+        assertEquals(0.06677, a.getPoint3d().x, 0.01);
     }
 
 }

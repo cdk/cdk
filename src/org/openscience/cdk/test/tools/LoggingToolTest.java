@@ -38,370 +38,218 @@ public class LoggingToolTest extends CDKTestCase {
 		super(name);
 	}
 
-	public static Test suite() {
+	public static Test suite() throws Exception {
 		return new TestSuite(LoggingToolTest.class);
 	}
 
-	public void testLoggingTool_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        assertNotNull(logger);
-    }
-	
-	public void testLoggingTool() {
-        LoggingTool logger = new LoggingTool();
-        assertNotNull(logger);
-    }
-	
-	public void testLoggingTool_Class() {
-        LoggingTool logger = new LoggingTool(this.getClass());
-        assertNotNull(logger);
-    }
-	
-	public void testClass$_String() {
-        // no idea why the Coverage test requires this test
+	public void testLoggingTool_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		assertNotNull(logger);
+	}
+
+	public void testLoggingTool() throws Exception {
+		LoggingTool logger = new LoggingTool();
+		assertNotNull(logger);
+	}
+
+	public void testLoggingTool_Class() throws Exception {
+		LoggingTool logger = new LoggingTool(this.getClass());
+		assertNotNull(logger);
+	}
+
+	public void testClass$_String() throws Exception {
+		// no idea why the Coverage test requires this test
 		assertTrue(true);
-    }
+	}
 
-    public void testConfigureLog4j() {
-        try {
-            LoggingTool.configureLog4j();
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-	
-	public void testDebug_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-	
-	public void testDebug_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, this);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_int() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, 1);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_double() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, 1.0);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_boolean() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, true);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testDebug_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.debug(this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during debug: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-	
-	public void testError_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, this);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_int() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, 1);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_double() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, 1.0);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_boolean() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, true);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
-    
-	public void testError_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.error(this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during error: " + exception.getMessage());
-        }
-    }
+	public void testConfigureLog4j() throws Exception {
+		LoggingTool.configureLog4j();
+	}
 
-	public void testWarn_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-	
-	public void testWarn_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, this);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_int() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, 1);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_double() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, 1.0);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_boolean() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, true);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
-    
-	public void testWarn_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.warn(this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during warn: " + exception.getMessage());
-        }
-    }
+	public void testDebug_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this);
+	}
 
-	public void testInfo_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-	
-	public void testInfo_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, this);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_int() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, 1);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_double() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, 1.0);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_boolean() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, true);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
-    
-	public void testInfo_Object_Object_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.info(this, this, this);
-        } catch (Exception exception) {
-            fail("Exception during info: " + exception.getMessage());
-        }
-    }
+	public void testDebug_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, this);
+	}
 
-	public void testFatal_Object() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.fatal(this);
-        } catch (Exception exception) {
-            fail("Exception during fatal: " + exception.getMessage());
-        }
-    }
-	
-	public void testSetStackLength_int() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.setStackLength(20);
-        } catch (Exception exception) {
-            fail("Exception during test: " + exception.getMessage());
-        }
-    }
-	
-	public void testDumpClasspath() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.dumpClasspath();
-        } catch (Exception exception) {
-            fail("Exception during test: " + exception.getMessage());
-        }
-    }
-	
-	public void testDumpSystemProperties() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.dumpSystemProperties();
-        } catch (Exception exception) {
-            fail("Exception during test: " + exception.getMessage());
-        }
-    }
-	
-	public void testIsDebugEnabled() {
-        LoggingTool logger = new LoggingTool(this);
-        try {
-            logger.isDebugEnabled();
-        } catch (Exception exception) {
-            fail("Exception during test: " + exception.getMessage());
-        }
-    }
+	public void testDebug_Object_int() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, 1);
+	}
+
+	public void testDebug_Object_double() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, 1.0);
+	}
+
+	public void testDebug_Object_boolean() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, true);
+	}
+
+	public void testDebug_Object_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, this, this, this, this);
+	}
+
+	public void testDebug_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, this, this, this);
+	}
+
+	public void testDebug_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.debug(this, this, this);
+	}
+
+	public void testError_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this);
+	}
+
+	public void testError_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, this);
+	}
+
+	public void testError_Object_int() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, 1);
+	}
+
+	public void testError_Object_double() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, 1.0);
+	}
+
+	public void testError_Object_boolean() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, true);
+	}
+
+	public void testError_Object_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, this, this, this, this);
+	}
+
+	public void testError_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, this, this, this);
+	}
+
+	public void testError_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.error(this, this, this);
+	}
+
+	public void testWarn_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this);
+	}
+
+	public void testWarn_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, this);
+	}
+
+	public void testWarn_Object_int() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, 1);
+	}
+
+	public void testWarn_Object_double() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, 1.0);
+	}
+
+	public void testWarn_Object_boolean() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, true);
+	}
+
+	public void testWarn_Object_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, this, this, this, this);
+	}
+
+	public void testWarn_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, this, this, this);
+	}
+
+	public void testWarn_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.warn(this, this, this);
+	}
+
+	public void testInfo_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this);
+	}
+
+	public void testInfo_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, this);
+	}
+
+	public void testInfo_Object_int() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, 1);
+	}
+
+	public void testInfo_Object_double() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, 1.0);
+	}
+
+	public void testInfo_Object_boolean() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, true);
+	}
+
+	public void testInfo_Object_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, this, this, this, this);
+	}
+
+	public void testInfo_Object_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, this, this, this);
+	}
+
+	public void testInfo_Object_Object_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.info(this, this, this);
+	}
+
+	public void testFatal_Object() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.fatal(this);
+	}
+
+	public void testSetStackLength_int() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.setStackLength(20);
+	}
+
+	public void testDumpClasspath() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.dumpClasspath();
+	}
+
+	public void testDumpSystemProperties() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.dumpSystemProperties();
+	}
+
+	public void testIsDebugEnabled() throws Exception {
+		LoggingTool logger = new LoggingTool(this);
+		logger.isDebugEnabled();
+	}
 	
 }
 

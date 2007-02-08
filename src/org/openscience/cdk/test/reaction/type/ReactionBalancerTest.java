@@ -33,6 +33,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.reaction.type.ReactionBalancer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -54,36 +55,24 @@ public class ReactionBalancerTest extends CDKTestCase {
 		super(name);
 	}
 	
-    public void setUp() {
+    public void setUp() throws Exception {
 		// Read reaction1
 		String filename1 = "data/mdl/reaction-1.rxn";
 		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
 		MDLRXNReader reader1 = new MDLRXNReader(ins1);
-		try {
-			this.reaction1 = (Reaction)reader1.read(reaction1);
-		} catch (CDKException ex) {
-			System.err.println("Could not set up reaction1 in test/tools/ReactionBalancerTest");
-		}
-		
+		this.reaction1 = (Reaction)reader1.read(reaction1);
+
 		// Read reaction3
 		String filename3 = "data/mdl/reaction-3.rxn";
 		InputStream ins3 = this.getClass().getClassLoader().getResourceAsStream(filename3);
 		MDLRXNReader reader3 = new MDLRXNReader(ins3);
-		try {
-			this.reaction3 = (Reaction)reader3.read(reaction3);
-		} catch (CDKException ex) {
-			System.err.println("Could not set up reaction3 in test/tools/ReactionBalancerTest");
-		}
-		
+		this.reaction3 = (Reaction)reader3.read(reaction3);
+
 		// Read reaction4
 		String filename4 = "data/mdl/reaction-4.rxn";
 		InputStream ins4 = this.getClass().getClassLoader().getResourceAsStream(filename4);
 		MDLRXNReader reader4 = new MDLRXNReader(ins4);
-		try {
-			this.reaction4 = (Reaction)reader4.read(reaction4);
-		} catch (CDKException ex) {
-			System.err.println("Could not set up reaction4 in test/tools/ReactionBalancerTest");
-		}
+		this.reaction4 = (Reaction)reader4.read(reaction4);
 	}
 	
     public static Test suite() {
@@ -132,23 +121,15 @@ public class ReactionBalancerTest extends CDKTestCase {
 		//assertEquals(-1, notFound);
     }
 	
-	public void testBalance_water()  throws CDKException{
+	public void testBalance_water()  throws Exception {
 		HydrogenAdder ha = new HydrogenAdder();
 		for (int i = 0; i < reaction3.getReactants().getAtomContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IMolecule mol = reaction3.getReactants().getMolecule(i);
-			try {
-				ha.addExplicitHydrogensToSatisfyValency(mol);
-			} catch(Exception ex) {
-				
-			}
+			IMolecule mol = reaction3.getReactants().getMolecule(i);
+			ha.addExplicitHydrogensToSatisfyValency(mol);
 		}
 		for (int i = 0; i < reaction3.getProducts().getAtomContainerCount(); i++) {
-			org.openscience.cdk.interfaces.IMolecule mol = reaction3.getProducts().getMolecule(i);
-			try {
-				ha.addExplicitHydrogensToSatisfyValency(mol);
-			} catch(Exception ex) {
-				
-			}
+			IMolecule mol = reaction3.getProducts().getMolecule(i);
+			ha.addExplicitHydrogensToSatisfyValency(mol);
 		}
 		ReactionBalancer rb = new ReactionBalancer();
 		boolean success = rb.balance(reaction3);

@@ -66,38 +66,32 @@ public class OpenBabelConvertTest extends CDKTestCase {
     	return suite;
     }
 
-    public void test5_Hexen_3_one() {
+    public void test5_Hexen_3_one() throws Exception {
         String filenameInput = "src/data/mdl/540545.mol";
         logger.info("Testing: " + filenameInput);
-        try {
-        	/* the path only necessary for windows systems*/
-        	File PATH = getPATH();
-        	
-        	OpenBabelConvert convertOB = new OpenBabelConvert(PATH);
-        	convertOB.setInputFileToConvert(new File(filenameInput),"mol",null);
-        	File tmpFile = File.createTempFile("540545.", ".cml");
-        	convertOB.convertTo(tmpFile,"cml","-h");
-        	IChemFile chemFile = convertOB.getChemFile();
-            convertOB.reset();
-        	
-//        	 test the resulting ChemFile content
-            assertNotNull(chemFile);
-            
-            BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
-            String line = reader.readLine();
-            int lineCount = 0;
-            while (line != null) {
-            	lineCount++; 
-            	line = reader.readLine();
-            }
-            assertTrue(lineCount > 0);
-            
-        } catch (Exception exception) {
-            System.out.println("Error while reading file: " + exception.getMessage());
-            exception.printStackTrace();
-            fail(exception.toString());
+        /* the path only necessary for windows systems*/
+        File PATH = getPATH();
+
+        OpenBabelConvert convertOB = new OpenBabelConvert(PATH);
+        convertOB.setInputFileToConvert(new File(filenameInput),"mol",null);
+        File tmpFile = File.createTempFile("540545.", ".cml");
+        convertOB.convertTo(tmpFile,"cml","-h");
+        IChemFile chemFile = convertOB.getChemFile();
+        convertOB.reset();
+
+//      test the resulting ChemFile content
+        assertNotNull(chemFile);
+
+        BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
+        String line = reader.readLine();
+        int lineCount = 0;
+        while (line != null) {
+        	lineCount++; 
+        	line = reader.readLine();
         }
+        assertTrue(lineCount > 0);
     }
+
     private static File getPATH(){
     	String[] possibilities = {
     		"C:/Programme/openbabel-2.0.0awins/babel.exe", // likely??

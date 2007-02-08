@@ -60,40 +60,35 @@ public class PCCompoundASNReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(ChemFile.class));
     }
 
-    public void testReading() {
+    public void testReading() throws Exception {
         String filename = "data/pc-asn/cid1.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-        	PCCompoundASNReader reader = new PCCompoundASNReader(ins);
-        	IChemFile cFile = (IChemFile)reader.read(new ChemFile());
-        	List containers = ChemFileManipulator.getAllAtomContainers(cFile);
-        	assertEquals(1, containers.size());
-        	assertTrue(containers.get(0) instanceof IMolecule);
-        	IMolecule molecule = (IMolecule)containers.get(0);
-        	assertNotNull(molecule);
-        	
-        	// check atom stuff
-        	assertEquals(31, molecule.getAtomCount());
-        	assertNotNull(molecule.getAtom(3));
-        	assertEquals("O", molecule.getAtom(3).getSymbol());
-        	assertNotNull(molecule.getAtom(4));
-        	assertEquals("N", molecule.getAtom(4).getSymbol());
-        	
-        	// check bond stuff
-        	assertEquals(30, molecule.getBondCount());
-        	assertNotNull(molecule.getBond(3));
-        	assertEquals(molecule.getAtom(2), molecule.getBond(3).getAtom(0));
-        	assertEquals(molecule.getAtom(11), molecule.getBond(3).getAtom(1));
-        	
-        	// some extracted props
-        	assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
+        PCCompoundASNReader reader = new PCCompoundASNReader(ins);
+        IChemFile cFile = (IChemFile)reader.read(new ChemFile());
+        List containers = ChemFileManipulator.getAllAtomContainers(cFile);
+        assertEquals(1, containers.size());
+        assertTrue(containers.get(0) instanceof IMolecule);
+        IMolecule molecule = (IMolecule)containers.get(0);
+        assertNotNull(molecule);
+
+        // check atom stuff
+        assertEquals(31, molecule.getAtomCount());
+        assertNotNull(molecule.getAtom(3));
+        assertEquals("O", molecule.getAtom(3).getSymbol());
+        assertNotNull(molecule.getAtom(4));
+        assertEquals("N", molecule.getAtom(4).getSymbol());
+
+        // check bond stuff
+        assertEquals(30, molecule.getBondCount());
+        assertNotNull(molecule.getBond(3));
+        assertEquals(molecule.getAtom(2), molecule.getBond(3).getAtom(0));
+        assertEquals(molecule.getAtom(11), molecule.getBond(3).getAtom(1));
+
+        // some extracted props
+        assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
         		molecule.getProperty(CDKConstants.INCHI));
-        	assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C",
+        assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C",
         		molecule.getProperty(CDKConstants.SMILES));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
     }
 }

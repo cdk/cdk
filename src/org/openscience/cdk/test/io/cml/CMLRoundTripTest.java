@@ -41,10 +41,14 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -78,60 +82,60 @@ public class CMLRoundTripTest extends CDKTestCase {
         return new TestSuite(CMLRoundTripTest.class);
     }
 
-    public void testAtom() {
+    public void testAtom() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getSymbol(), roundTrippedAtom.getSymbol());
     }
     
-    public void testAtomId() {
+    public void testAtomId() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         atom.setID("N1");
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getID(), roundTrippedAtom.getID());
     }
     
-    public void testAtom2D() {
+    public void testAtom2D() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
         atom.setPoint2d(p2d);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getPoint2d(), roundTrippedAtom.getPoint2d(), 0.00001);
     }
     
-    public void testAtom3D() {
+    public void testAtom3D() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
         atom.setPoint3d(p3d);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
     
-    public void testAtom2DAnd3D() {
+    public void testAtom2DAnd3D() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
@@ -148,50 +152,50 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
     
-    public void testAtomFract3D() {
+    public void testAtomFract3D() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(0.3, 0.4, 0.9);
         atom.setFractionalPoint3d(p3d);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getFractionalPoint3d(), roundTrippedAtom.getFractionalPoint3d(), 0.00001);
     }
     
-    public void testPseudoAtom() {
+    public void testPseudoAtom() throws Exception {
         Molecule mol = new Molecule();
         PseudoAtom atom = new PseudoAtom("N");
         atom.setLabel("Glu55");
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertNotNull(roundTrippedAtom);
         assertTrue(roundTrippedAtom instanceof PseudoAtom);
         assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
     }
     
-    public void testAtomFormalCharge() {
+    public void testAtomFormalCharge() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("N");
         int formalCharge = +1;
         atom.setFormalCharge(formalCharge);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
     }
     
-    public void testAtomPartialCharge() {
+    public void testAtomPartialCharge() throws Exception {
         if (true) return;
         fail("Have to figure out how to store partial charges in CML2");
         Molecule mol = new Molecule();
@@ -200,14 +204,14 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setCharge(partialCharge);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
     }
     
-    public void testAtomStereoParity() {
+    public void testAtomStereoParity() throws Exception {
         if (true) return;
         fail("Have to figure out how to store atom parity in CML2");
         Molecule mol = new Molecule();
@@ -216,26 +220,26 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setStereoParity(stereo);
         mol.addAtom(atom);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getStereoParity(), roundTrippedAtom.getStereoParity());
     }
     
-    public void testIsotope() {
+    public void testIsotope() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         atom.setMassNumber(13);
         mol.addAtom(atom);
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
     }
     
-    public void testBond() {
+    public void testBond() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -244,18 +248,18 @@ public class CMLRoundTripTest extends CDKTestCase {
         Bond bond = new Bond(atom, atom2, 1.0);
         mol.addBond(bond);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
-        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
         assertEquals(2, roundTrippedBond.getAtomCount());
         assertEquals("C", roundTrippedBond.getAtom(0).getSymbol()); // preserved direction?
         assertEquals("O", roundTrippedBond.getAtom(1).getSymbol());
         assertEquals(bond.getOrder(), roundTrippedBond.getOrder(), 0.0001);
     }
     
-    public void testBondID() {
+    public void testBondID() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -265,12 +269,12 @@ public class CMLRoundTripTest extends CDKTestCase {
         bond.setID("b1");
         mol.addBond(bond);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
-        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
         assertEquals(bond.getID(), roundTrippedBond.getID());
     }
     
-    public void testBondStereo() {
+    public void testBondStereo() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         Atom atom2 = new Atom("O");
@@ -281,11 +285,11 @@ public class CMLRoundTripTest extends CDKTestCase {
         bond.setStereo(stereo);
         mol.addBond(bond);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(2, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getBondCount());
-        org.openscience.cdk.interfaces.IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
         assertEquals(bond.getStereo(), roundTrippedBond.getStereo());
     }
     
@@ -296,101 +300,73 @@ public class CMLRoundTripTest extends CDKTestCase {
      *
      * @see org.openscience.cdk.CMLFragmentsTest
      */
-    private org.openscience.cdk.interfaces.IMolecule roundTripMolecule(Molecule mol) {
+    private IMolecule roundTripMolecule(Molecule mol) throws Exception {
         String cmlString = "<!-- failed -->";
-        try {
-            Element cmlDOM = convertor.cdkMoleculeToCMLMolecule(mol);
-            cmlString = cmlDOM.toXML();
-        } catch (Exception exception) {
-            String message = "Failed when writing CML: " + exception.getMessage();
-            logger.error(message);
-            logger.debug(exception);
-            fail(message);
-        }
+        Element cmlDOM = convertor.cdkMoleculeToCMLMolecule(mol);
+        cmlString = cmlDOM.toXML();
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = null;
-        try {
-        	logger.debug("CML string: ", cmlString);
-            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-            
-            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
-            assertNotNull(file);
-            assertEquals(1, file.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence sequence = file.getChemSequence(0);
-            assertNotNull(sequence);
-            assertEquals(1, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
-            assertNotNull(chemModel);
-            org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
-            assertNotNull(moleculeSet);
-            assertEquals(1, moleculeSet.getMoleculeCount());
-            roundTrippedMol = moleculeSet.getMolecule(0);
-            assertNotNull(roundTrippedMol);
-        } catch (Exception exception) {
-            String message = "Failed when reading CML";
-            logger.error(message);
-            logger.debug(exception);
-            fail(message);
-        }
+        IMolecule roundTrippedMol = null;
+        logger.debug("CML string: ", cmlString);
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
+
+        IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        assertNotNull(file);
+        assertEquals(1, file.getChemSequenceCount());
+        IChemSequence sequence = file.getChemSequence(0);
+        assertNotNull(sequence);
+        assertEquals(1, sequence.getChemModelCount());
+        IChemModel chemModel = sequence.getChemModel(0);
+        assertNotNull(chemModel);
+        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        assertNotNull(moleculeSet);
+        assertEquals(1, moleculeSet.getMoleculeCount());
+        roundTrippedMol = moleculeSet.getMolecule(0);
+        assertNotNull(roundTrippedMol);
         
         return roundTrippedMol;
     }
     
-    private org.openscience.cdk.interfaces.IReaction roundTripReaction(IReaction reaction) {
+    private IReaction roundTripReaction(IReaction reaction) throws Exception {
         String cmlString = "<!-- failed -->";
-        try {
-            Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
-            cmlString = cmlDOM.toXML();
-        } catch (Exception exception) {
-            String message = "Failed when writing CML: " + exception.getMessage();
-            logger.error(message);
-            logger.debug(exception);
-            fail(message);
-        }
+        Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
+        cmlString = cmlDOM.toXML();
         
-        org.openscience.cdk.interfaces.IReaction roundTrippedReaction = null;
-        try {
-            logger.debug("CML string: ", cmlString);
-            CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-            
-            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
-            assertNotNull(file);
-            assertEquals(1, file.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence sequence = file.getChemSequence(0);
-            assertNotNull(sequence);
-            assertEquals(1, sequence.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel chemModel = sequence.getChemModel(0);
-            assertNotNull(chemModel);
-            org.openscience.cdk.interfaces.IReactionSet reactionSet = chemModel.getReactionSet();
-            assertNotNull(reactionSet);
-            assertEquals(1, reactionSet.getReactionCount());
-            roundTrippedReaction = reactionSet.getReaction(0);
-            assertNotNull(roundTrippedReaction);
-        } catch (Exception exception) {
-            String message = "Failed when reading CML";
-            logger.error(message);
-            logger.debug(exception);
-            fail(message);
-        }
+        IReaction roundTrippedReaction = null;
+        logger.debug("CML string: ", cmlString);
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
+
+        IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        assertNotNull(file);
+        assertEquals(1, file.getChemSequenceCount());
+        IChemSequence sequence = file.getChemSequence(0);
+        assertNotNull(sequence);
+        assertEquals(1, sequence.getChemModelCount());
+        IChemModel chemModel = sequence.getChemModel(0);
+        assertNotNull(chemModel);
+        IReactionSet reactionSet = chemModel.getReactionSet();
+        assertNotNull(reactionSet);
+        assertEquals(1, reactionSet.getReactionCount());
+        roundTrippedReaction = reactionSet.getReaction(0);
+        assertNotNull(roundTrippedReaction);
         
         return roundTrippedReaction;
     }
 
-    public void testPartialCharge() {
+    public void testPartialCharge() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
         double charge = -0.267;
         atom.setCharge(charge);
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
     }
 
-    public void testInChI() {
+    public void testInChI() throws Exception {
         Molecule mol = new Molecule();
         String inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
         mol.setProperty(CDKConstants.INCHI, inchi);
@@ -401,21 +377,21 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(inchi, roundTrippedMol.getProperty(CDKConstants.INCHI));
     }
 
-    public void testSpinMultiplicity() {
+    public void testSpinMultiplicity() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         mol.addAtom(atom);
         mol.addSingleElectron(new SingleElectron(atom));
         
-        org.openscience.cdk.interfaces.IMolecule roundTrippedMol = roundTripMolecule(mol);
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
         
         assertEquals(1, roundTrippedMol.getAtomCount());
         assertEquals(1, roundTrippedMol.getElectronContainerCount());
-        org.openscience.cdk.interfaces.IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(1, roundTrippedMol.getConnectedSingleElectronsCount(roundTrippedAtom));
     }
 
-    public void testReaction() {
+    public void testReaction() throws Exception {
     	logger.debug("********** TEST REACTION **********");
         IReaction reaction = new Reaction();
         reaction.setID("reaction.1");
@@ -464,19 +440,13 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(1, roundTrippedAgent.getAtomCount());
     }
 
-    public void testDescriptorValue_QSAR() {
+    public void testDescriptorValue_QSAR() throws Exception {
     	Molecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         DescriptorValue originalValue = null;
-        try {
-            originalValue = descriptor.calculate(molecule);
-            molecule.setProperty(originalValue.getSpecification(), originalValue);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        originalValue = descriptor.calculate(molecule);
+        molecule.setProperty(originalValue.getSpecification(), originalValue);
         IMolecule roundTrippedMol = roundTripMolecule(molecule);
 
         assertEquals(1, roundTrippedMol.getProperties().size());
@@ -502,7 +472,7 @@ public class CMLRoundTripTest extends CDKTestCase {
             	descriptorResult.getValue().toString());
     }
 
-    public void testDescriptorValue() {
+    public void testDescriptorValue() throws Exception {
     	Molecule molecule = MoleculeFactory.makeBenzene();
 
     	String propertyName = "testKey";

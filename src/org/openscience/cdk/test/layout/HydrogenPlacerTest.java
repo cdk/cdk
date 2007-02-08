@@ -121,46 +121,35 @@ public class HydrogenPlacerTest extends CDKTestCase {
     *  It is intended for visually checking the work of HydrogenPlacer, not to be run
     *  as a JUnit test. Thus the name withouth "test".
     */
-	public void visualFullMolecule2DEvaluation()
+	public void visualFullMolecule2DEvaluation() throws Exception
 	{
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
                 String filename = "data/mdl/reserpine.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		try {
-		    MDLReader reader = new MDLReader(ins);
-		    ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-		    org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-		    org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		    double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(mol);
-		    HydrogenAdder ha = new HydrogenAdder();
-		    logger.debug("Read Reserpine");
-		    logger.debug("Starting addition of H's");
-		    ha.addExplicitHydrogensToSatisfyValency(mol);
-		    logger.debug("ended addition of H's");
-		    hydrogenPlacer.placeHydrogens2D(mol, bondLength);
-            if (standAlone) {
-                MoleculeViewer2D.display(mol, false);
-            }
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    fail(e.toString());
+		MDLReader reader = new MDLReader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+		org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+		org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(mol);
+		HydrogenAdder ha = new HydrogenAdder();
+		logger.debug("Read Reserpine");
+		logger.debug("Starting addition of H's");
+		ha.addExplicitHydrogensToSatisfyValency(mol);
+		logger.debug("ended addition of H's");
+		hydrogenPlacer.placeHydrogens2D(mol, bondLength);
+		if (standAlone) {
+			MoleculeViewer2D.display(mol, false);
 		}
 	}
 
-       	public static void main(String[] args)
+       	public static void main(String[] args) throws Exception
 	{
-		try{
 			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
 			hpt.setUp();
 			hpt.standAlone = true;
 			//hpt.testPlaceHydrogens2D();
 			hpt.visualFullMolecule2DEvaluation();			
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
 	}
 }
 

@@ -62,9 +62,7 @@ public class JOELibIOTest extends CDKTestCase {
         JOEAtom converted = Convertor.convert(a);
         Atom reverted = Convertor.convert(converted);
 
-        assertTrue(a.getPoint3d().x == reverted.getPoint3d().x);
-        assertTrue(a.getPoint3d().y == reverted.getPoint3d().y);
-        assertTrue(a.getPoint3d().z == reverted.getPoint3d().z);
+        assertEquals(a.getPoint3d(), reverted.getPoint3d());
     }
 
     public void testBond() {
@@ -75,10 +73,10 @@ public class JOELibIOTest extends CDKTestCase {
         JOEBond converted = Convertor.convert(bond);
         Bond reverted = Convertor.convert(converted);
 
-        assertTrue(bond.getOrder() == reverted.getOrder());
+        assertEquals(bond.getOrder(), reverted.getOrder(), 0.001);
     }
 
-    public void testBenzene() {
+    public void testBenzene() throws Exception {
         Molecule mol = new Molecule();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -100,12 +98,8 @@ public class JOELibIOTest extends CDKTestCase {
         assertEquals(mol.getAtomCount(), reverted.getAtomCount());
         assertEquals(mol.getBondCount(), reverted.getBondCount());
 
-        try {
-            IsomorphismTester it = new IsomorphismTester(mol);
-            assertTrue(it.isIsomorphic(reverted));
-        } catch (NoSuchAtomException e) {
-            assertTrue(false);
-        }
+        IsomorphismTester it = new IsomorphismTester(mol);
+        assertTrue(it.isIsomorphic(reverted));
     }
 
     public static void main(String[] args) {

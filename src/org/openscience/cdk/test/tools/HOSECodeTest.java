@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CKD) project
  *
@@ -44,12 +41,11 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
- *  Tests the HOSECode genertor. This is *not* a JUnit test class!
+ * Tests the HOSECode generator.
  *
- * @cdk.module test-extra
- *
- *@author     steinbeck
- *@cdk.created    2002-11-16
+ * @cdk.module  test-extra
+ * @author      steinbeck
+ * @cdk.created 2002-11-16
  */
 public class HOSECodeTest extends CDKTestCase
 {
@@ -78,23 +74,15 @@ public class HOSECodeTest extends CDKTestCase
 
 	
 	/**
-	 *  A unit test for JUnit
-	 *
-	 *@return    Description of the Return Value
+	 * @cdk.bug 968852
 	 */
-	public void test968852()
-	{
-    try{
+	public void test968852() throws Exception {
         String filename = "data/mdl/2,5-dimethyl-furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
 				Molecule mol1 = (Molecule) reader.read(new Molecule());
         HueckelAromaticityDetector.detectAromaticity(mol1);
         assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6),new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
-		} catch (Exception exc) {
-			exc.printStackTrace();
-            fail(exc.getMessage());
-		}
 	}
 
 
@@ -103,9 +91,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testSecondSphere()
-	{
-    try{
+	public void testSecondSphere() throws Exception {
         String filename = "data/mdl/isopropylacetate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
@@ -117,10 +103,6 @@ public class HOSECodeTest extends CDKTestCase
 				Molecule mol2 = (Molecule) reader2.read(new Molecule());
         String code2=new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtom(2), 6);
         assertFalse(code1.equals(code2));
-		} catch (Exception exc) {
-			exc.printStackTrace();
-            fail(exc.getMessage());
-		}
 	}
 
 
@@ -129,7 +111,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test1Sphere()
+	public void test1Sphere() throws Exception
 	{
 		String[] result = 
 		{ 
@@ -158,27 +140,21 @@ public class HOSECodeTest extends CDKTestCase
 			"C-3;*C*C*C(//)"
 		};
 		
-		try
-		{
-			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
-			
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
 
-			//MoleculeViewer2D.display(molecule, true);
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			String s = null;
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
-        if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
-			}
-		} catch (Exception exc) {
-			exc.printStackTrace();
-            fail(exc.getMessage());
+
+		//MoleculeViewer2D.display(molecule, true);
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		String s = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
+			if (standAlone)
+				System.out.print("|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
 		}
 	}
 
@@ -187,7 +163,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testMakeBremserCompliant()
+	public void testMakeBremserCompliant() throws Exception
 	{
 		String[] startData = { 
      "O-1;=C(//)",
@@ -240,23 +216,16 @@ public class HOSECodeTest extends CDKTestCase
      "CCC(//)"
 		};
 		
-		try
+		String s = null;
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		for (int f = 0; f < startData.length; f++)
 		{
-			String s = null;
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			for (int f = 0; f < startData.length; f++)
-			{
-				s = hcg.makeBremserCompliant(startData[f]);
-        if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
-			}
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-            fail(exc.getMessage());
+			s = hcg.makeBremserCompliant(startData[f]);
+			if (standAlone)
+				System.out.print("|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
 		}
 	}	
 	
@@ -265,7 +234,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test4Sphere()
+	public void test4Sphere() throws Exception
 	{
 		String[] result = { 
 			
@@ -294,27 +263,19 @@ public class HOSECodeTest extends CDKTestCase
 "C-3;*C*C*C(*C*C,*C,*CC,O/*CC,*CC,*&O,*&,*C*C,&/*&,=OC,*&,=&,C,*C&,*C)"
 		};
 		
-		try
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		String s = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=C1C=Cc2ccc4c5ccccc5Oc3c(OC)cc1c2c34");
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			String s = null;
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
-        if (standAlone)
-          System.out.println(f+"|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
-			}
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-            fail(exc.getMessage());
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
+			if (standAlone)
+				System.out.println(f+"|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
 		}
-
 	}
 
 
@@ -323,7 +284,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test4()
+	public void test4() throws Exception
 	{
 		String[] result = {
 		     "C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)",
@@ -335,31 +296,27 @@ public class HOSECodeTest extends CDKTestCase
      "C-3;*C*C(*C,*C/*C*N,*&/*&*C,*C)",
      "C-3;*C*C(*C,*C/*C*C,*&/*&*N,*C)",
      "C-3;*C*C(*C*C,*C/*C*N,*C,*&/*&,*&,*&)"};
-		try
-		{
-			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C1(C=CN2)=C2C=CC=C1");
-			//display(molecule);
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
-			String s = null;
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
-        if (standAlone)
-          System.out.println(f+"|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
-			}
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-            fail(exc.getMessage());
-		}
 
+		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C1(C=CN2)=C2C=CC=C1");
+		//display(molecule);
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		String s = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
+			if (standAlone)
+				System.out.println(f+"|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
+		}
 	}
-	
-	public void testBug655169()
+
+	/**
+	 * @cdk.bug 655169
+	 */
+	public void testBug655169() throws Exception
 	{
 		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
@@ -370,28 +327,20 @@ public class HOSECodeTest extends CDKTestCase
      "Br-1;C(=C/C/)"
 		};
 
-		try
+		molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		hcg = new HOSECodeGenerator();
+		String s = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			hcg = new HOSECodeGenerator();
-			String s = null;
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
-        if (standAlone)
-          System.out.print("|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-        if (standAlone)
-          System.out.println("  OK");
-			}
-
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-            fail(exc.getMessage());
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
+			if (standAlone)
+				System.out.print("|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
 		}
-		
+
 		/*JFrame frame = new JFrame("HOSECodeTest");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout());
@@ -401,16 +350,9 @@ public class HOSECodeTest extends CDKTestCase
 		Renderer2DModel r2dm = mv.getRenderer2DModel();
 		r2dm.setDrawNumbers(true);
 
-		try
-		{
-			sdg.setMolecule((Molecule) molecule.clone());
-			sdg.generateCoordinates(new Vector2d(0, 1));
-			mv.setAtomContainer(sdg.getMolecule());
-		} catch (Exception exc)
-		{
-			//logger.debug("*** Exit due to an unexpected error during coordinate generation ***");
-			exc.printStackTrace();
-		}
+		sdg.setMolecule((Molecule) molecule.clone());
+		sdg.generateCoordinates(new Vector2d(0, 1));
+		mv.setAtomContainer(sdg.getMolecule());
 		
 		final JTree tree = new JTree(top);
 		JScrollPane treeView = new JScrollPane(tree);
@@ -425,7 +367,10 @@ public class HOSECodeTest extends CDKTestCase
 		frame.show(); */
 	}
 
-  public void testBug795480()
+	/**
+	 * @cdk.bug 795480
+	 */
+	public void testBug795480() throws Exception
 	{
 		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
@@ -436,68 +381,48 @@ public class HOSECodeTest extends CDKTestCase
      "Br-1'+4';C(=C/C-/)"
 		};
 
-		try
+		molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+		boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+		assertFalse(isAromatic);
+		molecule.getAtom(0).setFormalCharge(-1);
+		molecule.getAtom(3).setFormalCharge(+4);
+		hcg = new HOSECodeGenerator();
+		String s = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
-            boolean isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
-            assertFalse(isAromatic);
-			molecule.getAtom(0).setFormalCharge(-1);
-            molecule.getAtom(3).setFormalCharge(+4);
-			hcg = new HOSECodeGenerator();
-			String s = null;
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
-                if (standAlone)
-                    System.out.print("|" + s + "| -> " + result[f]);
-				assertEquals(result[f], s);
-                if (standAlone)
-                    System.out.println("  OK");
-			}
-            
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-            fail(exc.getMessage());
+			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 4);
+			if (standAlone)
+				System.out.print("|" + s + "| -> " + result[f]);
+			assertEquals(result[f], s);
+			if (standAlone)
+				System.out.println("  OK");
 		}
     }
-  	public void testGetAtomsOfSphere(){
-		try{
-			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
+	
+  	public void testGetAtomsOfSphere() throws Exception {
+  		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+  		HueckelAromaticityDetector.detectAromaticity(molecule);
+  		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
-			hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 4, true);
-			Vector atoms = hcg.getNodesInSphere(3);
+  		hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 4, true);
+  		Vector atoms = hcg.getNodesInSphere(3);
 
-			assertEquals(1, atoms.size());
-			assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
-
-		} catch (Exception exc){
-			exc.printStackTrace();
-          fail(exc.getMessage());
-		}
-
+  		assertEquals(1, atoms.size());
+  		assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
 	}
-  	public void testGetAtomsOfSphereWithHydr(){
-		try{
-			IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			HOSECodeGenerator hcg = new HOSECodeGenerator();
+  	
+  	public void testGetAtomsOfSphereWithHydr() throws Exception {
+  		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
+  		HueckelAromaticityDetector.detectAromaticity(molecule);
+  		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
-			hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 3, true);
-			Vector atoms = hcg.getNodesInSphere(3);
+  		hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 3, true);
+  		Vector atoms = hcg.getNodesInSphere(3);
 
-			assertEquals(2, atoms.size());
-			
-			assertEquals("H", ((IAtom)atoms.get(0)).getSymbol());
-			assertEquals("Br", ((IAtom)atoms.get(1)).getSymbol());
+  		assertEquals(2, atoms.size());
 
-		} catch (Exception exc){
-			exc.printStackTrace();
-          fail(exc.getMessage());
-		}
-
+  		assertEquals("H", ((IAtom)atoms.get(0)).getSymbol());
+  		assertEquals("Br", ((IAtom)atoms.get(1)).getSymbol());
 	}
 
   /**
@@ -505,7 +430,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		standAlone = true;
 		HOSECodeTest hct = new HOSECodeTest("HOSECodeTest");

@@ -60,113 +60,88 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         return new TestSuite(IteratingMDLReaderTest.class);
     }
 
-    public void testSDF() {
+    public void testSDF() throws Exception {
         String filename = "data/mdl/test2.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-            
-            int molCount = 0;
-            while (reader.hasNext()) {
-                Object object = reader.next();
-                assertNotNull(object);
-                assertTrue(object instanceof Molecule);
-                molCount++;
-                assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
-                    	MDLV2000Format.getInstance(), reader.getFormat());
-            }
-            
-            assertEquals(6, molCount);
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+        	Object object = reader.next();
+        	assertNotNull(object);
+        	assertTrue(object instanceof Molecule);
+        	molCount++;
+        	assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
+        			MDLV2000Format.getInstance(), reader.getFormat());
         }
+
+        assertEquals(6, molCount);
     }
 
-    public void testReadTitle() {
+    public void testReadTitle() throws Exception {
         String filename = "data/mdl/test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
-            //int molCount = 0;
-            assertTrue(reader.hasNext());
-            Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
-            assertEquals("2-methylbenzo-1,4-quinone", ((Molecule)object).getProperty(CDKConstants.TITLE));
-            assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
-        }
+        //int molCount = 0;
+        assertTrue(reader.hasNext());
+        Object object = reader.next();
+        assertNotNull(object);
+        assertTrue(object instanceof Molecule);
+        assertEquals("2-methylbenzo-1,4-quinone", ((Molecule)object).getProperty(CDKConstants.TITLE));
+        assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
     }
 
-    public void testReadDataItems() {
+    public void testReadDataItems() throws Exception {
         String filename = "data/mdl/test.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
 
-            //int molCount = 0;
-            assertTrue(reader.hasNext());
-            Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
-            Molecule m = (Molecule)object;
-            assertEquals("1", m.getProperty("E_NSC"));
-            assertEquals("553-97-9", m.getProperty("E_CAS"));
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
-        }
+        //int molCount = 0;
+        assertTrue(reader.hasNext());
+        Object object = reader.next();
+        assertNotNull(object);
+        assertTrue(object instanceof Molecule);
+        Molecule m = (Molecule)object;
+        assertEquals("1", m.getProperty("E_NSC"));
+        assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
 
-    public void testOnMDLMolfile() {
+    public void testOnMDLMolfile() throws Exception {
         String filename = "data/mdl/bug682233.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-            
-            int molCount = 0;
-            while (reader.hasNext()) {
-                Object object = reader.next();
-                assertNotNull(object);
-                assertTrue(object instanceof Molecule);
-                molCount++;
-            }
-            
-            assertEquals(1, molCount);
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+        	Object object = reader.next();
+        	assertNotNull(object);
+        	assertTrue(object instanceof Molecule);
+        	molCount++;
         }
+
+        assertEquals(1, molCount);
     }
 
-    public void testOnSingleEntrySDFile() {
+    public void testOnSingleEntrySDFile() throws Exception {
         String filename = "data/mdl/singleMol.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
-            
-            int molCount = 0;
-            while (reader.hasNext()) {
-                Object object = reader.next();
-                assertNotNull(object);
-                assertTrue(object instanceof Molecule);
-                molCount++;
-            }
-            
-            assertEquals(1, molCount);
-        } catch (Exception e) {
-            logger.debug(e);
-            fail(e.getMessage());
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+
+        int molCount = 0;
+        while (reader.hasNext()) {
+        	Object object = reader.next();
+        	assertNotNull(object);
+        	assertTrue(object instanceof Molecule);
+        	molCount++;
         }
+
+        assertEquals(1, molCount);
     }
 
 }

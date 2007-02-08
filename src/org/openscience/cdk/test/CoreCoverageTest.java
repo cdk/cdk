@@ -38,14 +38,9 @@ public class CoreCoverageTest extends CoverageTest {
         super(name);
     }
 
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
-        try {
-            super.loadClassList(CLASS_LIST);
-        } catch (Exception exception) {
-        	exception.printStackTrace();
-            fail("Could not load classes to test: " + exception.getMessage());
-        }
+        super.loadClassList(CLASS_LIST);
     }
 
     public static Test suite() {

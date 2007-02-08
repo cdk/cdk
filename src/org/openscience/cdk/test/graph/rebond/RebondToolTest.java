@@ -42,46 +42,41 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class RebondToolTest extends CDKTestCase {
     
-  public RebondToolTest(String name) {
-    super(name);
-  }
-    
-  public void setUp() {}
+	public RebondToolTest(String name) {
+		super(name);
+	}
 
-  public static Test suite() {
-    return new TestSuite(RebondToolTest.class);
-  }
+	public void setUp() {}
 
-  public void testRebondTool_double_double_double() {
-	    RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-	    assertNotNull(rebonder);
-  }
-  
-  public void testRebond_IAtomContainer() {
-    RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-    Molecule methane = new Molecule();
-    methane.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
-    methane.addAtom(new Atom("H", new Point3d(0.6, 0.6, 0.6)));
-    methane.addAtom(new Atom("H", new Point3d(-0.6, -0.6, 0.6)));
-    methane.addAtom(new Atom("H", new Point3d(0.6, -0.6, -0.6)));
-    methane.addAtom(new Atom("H", new Point3d(-0.6, 0.6, -0.6)));
-        
-    try {
-      // configure atoms
-      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
-          methane.getBuilder());
-      //org.openscience.cdk.interfaces.IAtom[] atoms = methane.getAtoms();
-      for (int i=0; i<methane.getAtomCount(); i++) {
-        factory.configure(methane.getAtom(i));
-      }
-      // rebond
-      rebonder.rebond(methane);
-    } catch (Exception exception) {
-      fail();
-            
-    }
-        
-    assertEquals(5, methane.getAtomCount());
-    assertEquals(4, methane.getBondCount());
-  }
+	public static Test suite() {
+		return new TestSuite(RebondToolTest.class);
+	}
+
+	public void testRebondTool_double_double_double() {
+		RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+		assertNotNull(rebonder);
+	}
+
+	public void testRebond_IAtomContainer() throws Exception {
+		RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+		Molecule methane = new Molecule();
+		methane.addAtom(new Atom("C", new Point3d(0.0, 0.0, 0.0)));
+		methane.addAtom(new Atom("H", new Point3d(0.6, 0.6, 0.6)));
+		methane.addAtom(new Atom("H", new Point3d(-0.6, -0.6, 0.6)));
+		methane.addAtom(new Atom("H", new Point3d(0.6, -0.6, -0.6)));
+		methane.addAtom(new Atom("H", new Point3d(-0.6, 0.6, -0.6)));
+
+		// configure atoms
+		AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+				methane.getBuilder());
+		//org.openscience.cdk.interfaces.IAtom[] atoms = methane.getAtoms();
+		for (int i=0; i<methane.getAtomCount(); i++) {
+			factory.configure(methane.getAtom(i));
+		}
+		// rebond
+		rebonder.rebond(methane);
+
+		assertEquals(5, methane.getAtomCount());
+		assertEquals(4, methane.getBondCount());
+	}
 }

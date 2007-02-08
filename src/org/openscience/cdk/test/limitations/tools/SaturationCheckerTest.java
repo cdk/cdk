@@ -57,12 +57,8 @@ public class SaturationCheckerTest extends CDKTestCase {
         super(name);
     }
     
-    public void setUp() {
-        try {
-            satcheck = new SaturationChecker();
-        } catch (Exception e) {
-            fail();
-        }
+    public void setUp() throws Exception {
+    	satcheck = new SaturationChecker();
     }
     
     public static Test suite() {

@@ -132,7 +132,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 	 * @param structures
 	 * @return
 	 */
-	private boolean everythingOk(Vector structures)
+	private boolean everythingOk(Vector structures) throws Exception
 	{
 		StructureDiagramGenerator sdg = null; 
 		Molecule mol = null;
@@ -144,15 +144,7 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 			mol = (Molecule)structures.elementAt(f);
 			sdg.setMolecule(mol);
 
-			try
-			{
-				sdg.generateCoordinates(new Vector2d(0,1));
-			}
-			catch(Exception exc)
-			{
-				exc.printStackTrace();
-				fail("*** Exit due to an unexpected error during coordinate generation ***");
-			}
+			sdg.generateCoordinates(new Vector2d(0,1));
             if (standAlone) {
             	 listviewer.addStructure(mol, true, false, "");
             }
@@ -160,16 +152,11 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		return true;
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		RandomStructureGeneratorTest test = new RandomStructureGeneratorTest();
 		test.setStandAlone(true);
-        try {
-			test.visualTestIt();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		test.visualTestIt();
 	}
 }
 

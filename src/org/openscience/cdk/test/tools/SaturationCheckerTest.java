@@ -64,12 +64,8 @@ public class SaturationCheckerTest extends CDKTestCase
     /**
     *  The JUnit setup method
     */
-    public void setUp() {
-        try {
-            satcheck = new SaturationChecker();
-        } catch (Exception e) {
-            fail();
-        }
+    public void setUp() throws Exception {
+    	satcheck = new SaturationChecker();
     }
 
 	/**
@@ -477,7 +473,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args) throws CDKException
+	public static void main(String[] args) throws Exception
 	{
 		SaturationCheckerTest sct = new SaturationCheckerTest("SaturationCheckerTest");
 		sct.standAlone = true;

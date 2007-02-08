@@ -36,13 +36,9 @@ public class StructgenCoverageTest extends CoverageTest {
         super(name);
     }
 
-    public void setUp() {
-        super.setUp();
-        try {
-            super.loadClassList(CLASS_LIST);
-        } catch (Exception exception) {
-            fail("Could not load classes to test: " + exception.getMessage());
-        }
+    public void setUp() throws Exception {
+    	super.setUp();
+        super.loadClassList(CLASS_LIST);
     }
 
     public static Test suite() {

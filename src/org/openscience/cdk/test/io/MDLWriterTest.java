@@ -32,11 +32,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -47,11 +46,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLWriterTest extends CDKTestCase {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-
     public MDLWriterTest(String name) {
         super(name);
-        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
@@ -65,41 +61,33 @@ public class MDLWriterTest extends CDKTestCase {
     	assertTrue(reader.accepts(MoleculeSet.class));
     }
 
-    public void testBug890456() {
+    /**
+     * @cdk.bug 890456
+     */
+    public void testBug890456() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         molecule.addAtom(new PseudoAtom("*"));
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         
-        try {
-            MDLWriter mdlWriter = new MDLWriter(writer);
-            mdlWriter.write(molecule);
-        } catch (Exception exception) {
-            logger.error("Error while creating an MDL file");
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
-        
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
         assertTrue(writer.toString().indexOf("M  END") != -1);
     }
 
-    public void testBug1212219() {
+    /**
+     * @cdk.bug 1212219
+     */
+    public void testBug1212219() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);
         
-        try {
-            MDLWriter mdlWriter = new MDLWriter(writer);
-            mdlWriter.write(molecule);
-        } catch (Exception exception) {
-            logger.error("Error while creating an MDL file");
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
-        
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
         assertTrue(output.indexOf("M  ISO  1   1  14") != -1);

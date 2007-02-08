@@ -64,7 +64,7 @@ public class PDBWriterTest extends TestCase {
 		return new TestSuite(PDBWriterTest.class);
 	}
 
-    public void testRoundTrip() {
+    public void testRoundTrip() throws Exception {
     	StringWriter sWriter = new StringWriter();
     	PDBWriter writer = new PDBWriter(sWriter);
     	
@@ -77,13 +77,8 @@ public class PDBWriterTest extends TestCase {
     	atom.setPoint3d(new Point3d(0.1,0.1,0.3));
     	crystal.addAtom(atom);
 
-    	try {
-			writer.write(crystal);
-			writer.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Failed to write PDB: " + e.getMessage());
-		}
+    	writer.write(crystal);
+    	writer.close();
     	
 		String output = sWriter.toString();
 		System.out.println(output);
@@ -91,14 +86,7 @@ public class PDBWriterTest extends TestCase {
 		assertTrue(output.length() > 0);
 		
 		PDBReader reader = new PDBReader();
-		ChemFile chemFile = null;
-		try {
-			chemFile = (ChemFile)reader.read(new ChemFile());
-			
-		} catch (CDKException e) {
-			e.printStackTrace();
-			fail("Failed to read PDB: " + e.getMessage());
-		}
+		ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
 		
 		assertNotNull(chemFile);
 		assertEquals(1, chemFile.getChemSequenceCount());
@@ -111,7 +99,7 @@ public class PDBWriterTest extends TestCase {
 		// Crystal structures :(
     }
 
-    public void testRoundTrip_fractionalCoordinates() {
+    public void testRoundTrip_fractionalCoordinates() throws Exception {
     	StringWriter sWriter = new StringWriter();
     	PDBWriter writer = new PDBWriter(sWriter);
     	
@@ -124,13 +112,8 @@ public class PDBWriterTest extends TestCase {
     	atom.setFractionalPoint3d(new Point3d(0.1,0.1,0.3));
     	crystal.addAtom(atom);
 
-    	try {
-			writer.write(crystal);
-			writer.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Failed to write PDB: " + e.getMessage());
-		}
+    	writer.write(crystal);
+    	writer.close();
     	
 		String output = sWriter.toString();
 		System.out.println(output);
@@ -138,14 +121,7 @@ public class PDBWriterTest extends TestCase {
 		assertTrue(output.length() > 0);
 		
 		PDBReader reader = new PDBReader();
-		ChemFile chemFile = null;
-		try {
-			chemFile = (ChemFile)reader.read(new ChemFile());
-			
-		} catch (CDKException e) {
-			e.printStackTrace();
-			fail("Failed to read PDB: " + e.getMessage());
-		}
+		ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
 		
 		assertNotNull(chemFile);
 		assertEquals(1, chemFile.getChemSequenceCount());

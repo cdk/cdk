@@ -53,20 +53,16 @@ public class Geometry3DValidatorTest extends CDKTestCase {
 		return new TestSuite(Geometry3DValidatorTest.class);
 	}
 
-	public void testEthane() {
+	public void testEthane() throws Exception {
 		String filename = "data/Heptan-TestFF-output.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            ValidatorEngine engine = new ValidatorEngine();
-            engine.addValidator(new Geometry3DValidator());
-            ValidationReport report = engine.validateChemFile(chemFile);
-            assertEquals(0, report.getErrorCount());
-            assertEquals(0, report.getWarningCount());
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        MDLReader reader = new MDLReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ValidatorEngine engine = new ValidatorEngine();
+        engine.addValidator(new Geometry3DValidator());
+        ValidationReport report = engine.validateChemFile(chemFile);
+        assertEquals(0, report.getErrorCount());
+        assertEquals(0, report.getWarningCount());
     }
 }
 

@@ -50,14 +50,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		super(name);
 	}
 	
-	public void setUp() {
-		try {
-			atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
-		} catch(Exception exc) {
-            System.out.println("AtomTypeFactoryTest.setup: ");
-            exc.printStackTrace();
-			fail("Problem instantiating AtomTypeFactory: " +  exc.getMessage());
-		}
+	public void setUp() throws Exception {
+		atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
     }
 	
 	public static Test suite() {
@@ -69,66 +63,40 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertNotSame(new Integer(0), new Integer(atf.getSize()));
     }
     
-    public void testGetInstance_InputStream_String_IChemObjectBuilder() {
-        try {
-            String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
-            InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-            AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml", new ChemObject().getBuilder());
-            assertNotNull(atf);
-            assertNotSame(new Integer(0),new Integer( atf.getSize()));
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+    public void testGetInstance_InputStream_String_IChemObjectBuilder() throws Exception {
+    	String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+    	AtomTypeFactory atf = AtomTypeFactory.getInstance(ins, "xml", new ChemObject().getBuilder());
+    	assertNotNull(atf);
+    	assertNotSame(new Integer(0),new Integer( atf.getSize()));
     }
     
-    public void testGetInstance_String_IChemObjectBuilder() {
-        try {
-            String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
-            AtomTypeFactory atf = AtomTypeFactory.getInstance(configFile, new ChemObject().getBuilder());
-            assertNotNull(atf);
-            assertNotSame(new Integer(0),new Integer( atf.getSize()));
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+    public void testGetInstance_String_IChemObjectBuilder() throws Exception {
+    	String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
+    	AtomTypeFactory atf = AtomTypeFactory.getInstance(configFile, new ChemObject().getBuilder());
+    	assertNotNull(atf);
+    	assertNotSame(new Integer(0),new Integer( atf.getSize()));
     }
     
-    public void testGetInstance_IChemObjectBuilder() {
-        try {
-            AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
-            assertNotNull(atf);
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+    public void testGetInstance_IChemObjectBuilder() throws Exception {
+    	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+    	assertNotNull(atf);
     }
     
-    public void testGetSize() {
-        try {
-            AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
-            assertNotSame(new Integer(0), new Integer(atf.getSize()));
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+    public void testGetSize() throws Exception {
+    	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+    	assertNotSame(new Integer(0), new Integer(atf.getSize()));
     }
     
-    public void testGetAllAtomTypes() {
-        try {
-            AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
-            IAtomType[] types = atf.getAllAtomTypes();
-            assertNotNull(types);
-            assertNotSame(new Integer(0), new Integer(types.length));
-        } catch (Exception exception) {
-            fail(exception.getMessage());
-        }
+    public void testGetAllAtomTypes() throws Exception {
+    	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+    	IAtomType[] types = atf.getAllAtomTypes();
+    	assertNotNull(types);
+    	assertNotSame(new Integer(0), new Integer(types.length));
     }
     
-    public void testGetAtomType_String() {
-		IAtomType atomType = null;
-		try {
-			atomType = atf.getAtomType("C4");
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'structgen.C4' from AtomTypeFactory: "  +  exc.getMessage());
-		}
-		
+    public void testGetAtomType_String() throws Exception {
+		IAtomType atomType = atf.getAtomType("C4");
         assertNotNull(atomType);
         assertEquals("C", atomType.getSymbol());
         assertEquals("C4", atomType.getAtomTypeName());
@@ -136,27 +104,17 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
 	}
 
-    public void testGetAtomTypes_String() {
-		IAtomType[] atomTypes = null;
-		try {
-			atomTypes = atf.getAtomTypes("C");
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'C' from AtomTypeFactory: "  +  exc.getMessage());
-		}
+    public void testGetAtomTypes_String() throws Exception {
+		IAtomType[] atomTypes = atf.getAtomTypes("C");
 		
         assertNotNull(atomTypes);
         assertTrue(0 < atomTypes.length);
         assertEquals("C", atomTypes[0].getSymbol());
 	}
 
-    public void testGetAtomTypeFromValency() {
-		IAtomType atomType = null;
-		try {
-            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml", new ChemObject().getBuilder());
-			atomType = factory.getAtomType("Oplus");
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'valency:O+' from AtomTypeFactory: "  +  exc.getMessage());
-		}
+    public void testGetAtomTypeFromValency() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml", new ChemObject().getBuilder());
+		IAtomType atomType = factory.getAtomType("Oplus");
 		
         assertNotNull(atomType);
         assertEquals("O", atomType.getSymbol());
@@ -166,14 +124,9 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
 	}
 
-    public void testGetAtomTypeFromHybrid() {
-		IAtomType atomType = null;
-		try {
-            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml", new ChemObject().getBuilder());
-			atomType = factory.getAtomType("C.sp2");
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'hybridization:C.sp2' from AtomTypeFactory: "  +  exc.getMessage());
-		}
+    public void testGetAtomTypeFromHybrid() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml", new ChemObject().getBuilder());
+		IAtomType atomType = factory.getAtomType("C.sp2");
 		
         assertNotNull(atomType);
         assertEquals("C", atomType.getSymbol());
@@ -185,32 +138,23 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
 	}
 
-    public void testGetAtomTypeFromPDB() {
-		IAtomType atomType = null;
-		try {
-            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml", 
+    public void testGetAtomTypeFromPDB() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml", 
                 new ChemObject().getBuilder());
-			atomType = factory.getAtomType("ALA.CA");
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'hybridization:ALA.CA' from AtomTypeFactory: "  +  exc.getMessage());
-		}
+		IAtomType atomType = factory.getAtomType("ALA.CA");
 		
         assertNotNull(atomType);
         assertEquals("C", atomType.getSymbol());
         assertEquals("ALA.CA", atomType.getAtomTypeName());
 	}
 
-    public void testConfigure_IAtom() {
+    public void testConfigure_IAtom() throws Exception {
 		IAtomType atomType = null;
         IAtom atom = new org.openscience.cdk.Atom("X");
         atom.setAtomTypeName("C.ar");
-		try {
-            AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml", new ChemObject().getBuilder());
-			atomType = factory.configure(atom);
-			assertNotNull(atomType);
-		} catch(Exception exc) {
-			fail("Problem getting AtomType for 'mol2:C.ar' from AtomTypeFactory: "  +  exc.getMessage());
-		}
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml", new ChemObject().getBuilder());
+        atomType = factory.configure(atom);
+        assertNotNull(atomType);
 		
         assertEquals("C", atom.getSymbol());
 	}
@@ -233,31 +177,26 @@ public class AtomTypeFactoryTest extends CDKTestCase {
      * </pre>
      *
      */
-    public void testGetAtomTypeFromMM2() {
+    public void testGetAtomTypeFromMM2() throws Exception {
     	AtomTypeFactory factory = null;
-		try {
-            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml", 
-                new ChemObject().getBuilder());
+    	factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml", 
+    			new ChemObject().getBuilder());
 
-    		IAtomType atomType = factory.getAtomType("C");
-            assertNotNull(atomType);
-            assertEquals("C", atomType.getSymbol());
-            assertEquals("C", atomType.getAtomTypeName());
-            assertEquals("[CSP]-[0-4][-]?+;[A-Za-z\\+\\-&&[^=%]]{0,6}[(].*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-            assertEquals(CDKConstants.HYBRIDIZATION_SP3, atomType.getHybridization());
-            
-            atomType = factory.getAtomType("Sthi");
-            assertNotNull(atomType);
-            assertEquals("S", atomType.getSymbol());
-            assertEquals("Sthi", atomType.getAtomTypeName());
-            assertEquals("S-[2];[H]{0,3}+=C.*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-            assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
-            assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-            assertEquals(new Integer(5), atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
-            		
-		} catch(Exception exc) {
-			fail("Problem getting AtomType from AtomTypeFactory: "  +  exc.getMessage());
-		}    
+    	IAtomType atomType = factory.getAtomType("C");
+    	assertNotNull(atomType);
+    	assertEquals("C", atomType.getSymbol());
+    	assertEquals("C", atomType.getAtomTypeName());
+    	assertEquals("[CSP]-[0-4][-]?+;[A-Za-z\\+\\-&&[^=%]]{0,6}[(].*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+    	assertEquals(CDKConstants.HYBRIDIZATION_SP3, atomType.getHybridization());
+
+    	atomType = factory.getAtomType("Sthi");
+    	assertNotNull(atomType);
+    	assertEquals("S", atomType.getSymbol());
+    	assertEquals("Sthi", atomType.getAtomTypeName());
+    	assertEquals("S-[2];[H]{0,3}+=C.*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+    	assertEquals(CDKConstants.HYBRIDIZATION_SP2, atomType.getHybridization());
+    	assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+    	assertEquals(new Integer(5), atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
     }
     
 }

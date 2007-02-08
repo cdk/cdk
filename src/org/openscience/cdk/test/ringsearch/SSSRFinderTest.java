@@ -191,19 +191,12 @@ public class SSSRFinderTest extends CDKTestCase {
 	  * @param molecule  A molecule to determine an atom number for each ring atom
       * @return          string representation of this ring
 	  */
-	private String toString(IRing ring, IMolecule molecule)
+	private String toString(IRing ring, IMolecule molecule) throws Exception
 	{
 		String str = "";
 		for (int f = 0; f < ring.getAtomCount(); f++)
 		{
-			try
-			{
-				str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
-			}
-			catch(Exception exc)
-			{
-			    System.err.println("Could not create string representation of Ring: " + exc.getMessage());
-			}
+			str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
 		}
 		return str;
 	}

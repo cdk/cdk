@@ -62,65 +62,47 @@ public class SMILESReaderTest extends CDKTestCase {
     	assertTrue(reader.accepts(MoleculeSet.class));
     }
 
-    public void testReading() {
+    public void testReading() throws Exception {
         String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            SMILESReader reader = new SMILESReader(ins);
-            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-            assertEquals(8, som.getMoleculeCount());
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        SMILESReader reader = new SMILESReader(ins);
+        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        assertEquals(8, som.getMoleculeCount());
     }
     
     
-    public void testReadingSmiFile_1() {
+    public void testReadingSmiFile_1() throws Exception {
         String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            SMILESReader reader = new SMILESReader(ins);
-            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-            String name = null;
-            org.openscience.cdk.interfaces.IMolecule thisMol = null;
+        SMILESReader reader = new SMILESReader(ins);
+        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        String name = null;
+        org.openscience.cdk.interfaces.IMolecule thisMol = null;
 	    
 	    thisMol = som.getMolecule(0);
 	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
 	    assertEquals("benzene", name);
-        } catch (Exception e) {
-            fail(e.toString());
-        }
     }
     
-    public void testReadingSmiFile_2() {
+    public void testReadingSmiFile_2() throws Exception {
         String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            SMILESReader reader = new SMILESReader(ins);
-            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-            org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
-            assertNull(thisMol.getProperty("SMIdbNAME"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Error in test: " + e.getMessage());
-        }
+        SMILESReader reader = new SMILESReader(ins);
+        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        org.openscience.cdk.interfaces.IMolecule thisMol = som.getMolecule(1);
+        assertNull(thisMol.getProperty("SMIdbNAME"));
     }
 
-    public void testReadingSmiFile_3() {
+    public void testReadingSmiFile_3() throws Exception {
         String filename = "data/smiles/test3.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            SMILESReader reader = new SMILESReader(ins);
-            MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
-            assertEquals(5, som.getMoleculeCount());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Error in test: " + e.getMessage());
-        }
+        SMILESReader reader = new SMILESReader(ins);
+        MoleculeSet som = (MoleculeSet)reader.read(new MoleculeSet());
+        assertEquals(5, som.getMoleculeCount());
     }
     
 }

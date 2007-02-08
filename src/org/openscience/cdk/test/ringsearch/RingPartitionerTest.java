@@ -100,16 +100,12 @@ public class RingPartitionerTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		RingPartitionerTest rpt = new RingPartitionerTest("RingPartitionerTest");
 		standAlone = true;
-        try {
-            rpt.setUp();
-            rpt.testConvertToAtomContainer_IRingSet();
-        } catch(Exception exc) {
-            System.err.println("Could setup the TestCase");
-        }
+		rpt.setUp();
+		rpt.testConvertToAtomContainer_IRingSet();
 	}
 	
 }

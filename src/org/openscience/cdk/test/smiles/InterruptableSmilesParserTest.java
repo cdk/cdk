@@ -55,12 +55,8 @@ public class InterruptableSmilesParserTest extends CDKTestCase {
 		return new TestSuite(InterruptableSmilesParserTest.class);
 	}
 	
-	public void testParseSmiles_String_long() {
-		try {
-			sp.parseSmiles("CCCC",10000);
-		} catch (CDKException x) {
-			fail("Time out should not occur for this SMILES!");
-		}
+	public void testParseSmiles_String_long() throws Exception {
+		sp.parseSmiles("CCCC",10000);
 	}
 	
 	public void testSetInterrupted_boolean() {
@@ -69,7 +65,7 @@ public class InterruptableSmilesParserTest extends CDKTestCase {
 			sp.parseSmiles("n(c(c(c(Nc(c(c(nc(c(c(Nc(c1c(cccc2)c2)c3)c3)c(cccc4)c4)c5)c5)c(cccc6)c6)c7)c7)c(cccc8)c8)cc9)c19",3000);
 			fail("This SMILES should have given an time out");
 		} catch (CDKException x) {
-		  x.printStackTrace();
+ 		    // OK, this exception should occur
 		}
 	}
 	

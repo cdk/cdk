@@ -56,12 +56,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
     /**
      *  The JUnit setup method
      */
-    public void setUp() {
-        try {
-            satcheck = new ValencyHybridChecker();
-        } catch (Exception e) {
-            fail();
-        }
+    public void setUp() throws Exception {
+    	satcheck = new ValencyHybridChecker();
     }
 
 	/**

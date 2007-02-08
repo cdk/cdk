@@ -74,25 +74,13 @@ public class CML2WriterTest extends CDKTestCase {
         return new TestSuite(CML2WriterTest.class);
     }
 
-	public void testCMLWriterBenzene() {
+	public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
         Molecule molecule = MoleculeFactory.makeBenzene();
-		try {
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-		} catch (Exception exception) {
-            logger.error("Error while detecting aromaticity: ", exception.getMessage());
-            logger.debug(exception);
-			fail(exception.getMessage());
-		}
+        HueckelAromaticityDetector.detectAromaticity(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         
-        try {
-            cmlWriter.write(molecule);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        cmlWriter.write(molecule);
 		logger.debug("****************************** testCMLWriterBenzene()");
         logger.debug(writer.toString());
 		logger.debug("******************************");
@@ -139,7 +127,7 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
 	
-	public void testCMLCrystal() {
+	public void testCMLCrystal() throws Exception {
 		StringWriter writer = new StringWriter();
         Crystal crystal = new Crystal();
         Atom silicon = new Atom("Si");
@@ -152,13 +140,7 @@ public class CML2WriterTest extends CDKTestCase {
         crystal.setC(new Vector3d(0.0, 0.0, 1.5));
         CMLWriter cmlWriter = new CMLWriter(writer);
         
-        try {
-            cmlWriter.write(crystal);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        cmlWriter.write(crystal);
         String cmlContent = writer.toString();
 		logger.debug("****************************** testCMLCrystal()");
         logger.debug(cmlContent);
@@ -167,22 +149,16 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
 	}
 	
-    public void testQSARCustomization() {
+    public void testQSARCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
-        try {
-            DescriptorValue value = descriptor.calculate(molecule);
-            molecule.setProperty(value.getSpecification(), value);
-        
-            cmlWriter.write(molecule);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        DescriptorValue value = descriptor.calculate(molecule);
+        molecule.setProperty(value.getSpecification(), value);
+
+        cmlWriter.write(molecule);
         String cmlContent = writer.toString();
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
@@ -192,7 +168,7 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("#weight\"") != -1);
     }
     
-    public void testReactionCustomization() {
+    public void testReactionCustomization() throws Exception {
     	StringWriter writer = new StringWriter();
         IReaction reaction = new Reaction();
         reaction.setID("reaction1");
@@ -208,13 +184,7 @@ public class CML2WriterTest extends CDKTestCase {
         reaction.addAgent(agent);
         
         CMLWriter cmlWriter = new CMLWriter(writer);
-        try {
-            cmlWriter.write(reaction);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        cmlWriter.write(reaction);
         String cmlContent = writer.toString();
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
@@ -225,7 +195,7 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
     }
     
-    public void testPDBAtomCustomization() {
+    public void testPDBAtomCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         PDBAtom atom = new PDBAtom("C");
@@ -234,13 +204,7 @@ public class CML2WriterTest extends CDKTestCase {
         molecule.addAtom(atom);
         
         CMLWriter cmlWriter = new CMLWriter(writer);
-        try {
-            cmlWriter.write(molecule);
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
+        cmlWriter.write(molecule);
         String cmlContent = writer.toString();
         logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);

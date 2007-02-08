@@ -42,7 +42,6 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
@@ -78,37 +77,33 @@ public class Mol2ReaderTest extends CDKTestCase {
      * Test example from website. See
      * <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
      */
-    public void testExampleFromWebsite() {
+    public void testExampleFromWebsite() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            Mol2Reader reader = new Mol2Reader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            
-            assertNotNull(chemFile);
-            assertEquals(1, chemFile.getChemSequenceCount());
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1, seq.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            
-            org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-            assertNotNull(som);
-            assertEquals(1, som.getMoleculeCount());
-            org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-            assertNotNull(m);
-            assertEquals(12, m.getAtomCount());
-            assertEquals(12, m.getBondCount());
-            
-            assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
-            assertEquals("C", m.getAtom(0).getSymbol());
-            assertEquals("H", m.getAtom(6).getAtomTypeName());
-            assertEquals("H", m.getAtom(6).getSymbol());
-        } catch (Exception e) {
-            fail(e.toString());
-        }
+        Mol2Reader reader = new Mol2Reader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+
+        assertNotNull(chemFile);
+        assertEquals(1, chemFile.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1, seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+
+        org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
+        assertNotNull(som);
+        assertEquals(1, som.getMoleculeCount());
+        org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
+        assertNotNull(m);
+        assertEquals(12, m.getAtomCount());
+        assertEquals(12, m.getBondCount());
+
+        assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
+        assertEquals("C", m.getAtom(0).getSymbol());
+        assertEquals("H", m.getAtom(6).getAtomTypeName());
+        assertEquals("H", m.getAtom(6).getSymbol());
     }
 
     
@@ -118,7 +113,7 @@ public class Mol2ReaderTest extends CDKTestCase {
      * @throws IOException if an I/O error occurs
      * @throws CDKException if an CDK error occurs
      */
-    public void testNCIfeb03_2D() throws IOException, CDKException {
+    public void testNCIfeb03_2D() throws Exception {
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
         InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
         BufferedReader br = new BufferedReader(new InputStreamReader(in));

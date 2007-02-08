@@ -141,20 +141,14 @@ public class TanimotoTest extends CDKTestCase
 
         
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try{
-			TanimotoTest tt = new TanimotoTest("TanimotoTest");
-			tt.standAlone = true;
-			//tt.testTanimoto1();
-			//tt.testTanimoto2();
-			//tt.testTanimoto3();
-			tt.visualTestR00258();
-		}
-		catch(Exception exc)
-		{
-			exc.printStackTrace();
-		}
+		TanimotoTest tt = new TanimotoTest("TanimotoTest");
+		tt.standAlone = true;
+		//tt.testTanimoto1();
+		//tt.testTanimoto2();
+		//tt.testTanimoto3();
+		tt.visualTestR00258();
 	}
 }
 

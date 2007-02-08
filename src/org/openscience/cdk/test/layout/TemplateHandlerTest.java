@@ -173,22 +173,16 @@ public class TemplateHandlerTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try
-		{
-			TemplateHandlerTest tht = new TemplateHandlerTest("TemplateHandlerTest");
-			tht.setUp();
-			tht.standAlone = true;
-			tht.testInit();
-			tht.testDetection();
-			tht.visualLayout();
-			tht.testAddMolecule();
-			tht.testRemoveMolecule();
-		} catch (Exception exc)
-		{
-			exc.printStackTrace();
-		}
+		TemplateHandlerTest tht = new TemplateHandlerTest("TemplateHandlerTest");
+		tht.setUp();
+		tht.standAlone = true;
+		tht.testInit();
+		tht.testDetection();
+		tht.visualLayout();
+		tht.testAddMolecule();
+		tht.testRemoveMolecule();
 	}
 }
 

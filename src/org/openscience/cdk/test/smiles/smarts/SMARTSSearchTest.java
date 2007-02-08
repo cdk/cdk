@@ -49,179 +49,142 @@ public class SMARTSSearchTest extends CDKTestCase {
     
     private LoggingTool logger;
     
-    public SMARTSSearchTest(java.lang.String testName) {
+    public SMARTSSearchTest(String testName) {
         super(testName);
         logger = new LoggingTool(this);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite(SMARTSSearchTest.class);
-        return suite;
+        return new TestSuite(SMARTSSearchTest.class);
     }
     
-    public void testAromaticBond() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C:C");
-            logger.debug("Query C:C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testAromaticBond() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C:C");
+    	logger.debug("Query C:C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-            
-            atomContainer = sp.parseSmiles("C1CCCCC1"); // hexane, not aromatic
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+
+    	atomContainer = sp.parseSmiles("C1CCCCC1"); // hexane, not aromatic
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testSingleBond() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C-C");
-            logger.debug("Query C-C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testSingleBond() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C-C");
+    	logger.debug("Query C-C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C=C");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("C=C");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C#C");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("C#C");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testDoubleBond() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C=C");
-            logger.debug("Query C=C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testDoubleBond() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C=C");
+    	logger.debug("Query C=C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C=C");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("C=C");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C#C");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("C#C");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testTripleBond() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C#C");
-            logger.debug("Query C#C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testTripleBond() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C#C");
+    	logger.debug("Query C#C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C=C");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("C=C");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C#C");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("C#C");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testAnyOrderBond() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C~C");
-            logger.debug("Query C~C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testAnyOrderBond() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C~C");
+    	logger.debug("Query C~C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C=C");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("C=C");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("C#C");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("C#C");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testAnyAtom() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("C*C");
-            logger.debug("Query C*C: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testAnyAtom() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("C*C");
+    	logger.debug("Query C*C: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("CNC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("CNC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("CCN");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("CCN");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testAliphaticAtom() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("CAC");
-            logger.debug("Query CAC: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testAliphaticAtom() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("CAC");
+    	logger.debug("Query CAC: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("CNC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("CNC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testAromaticAtom() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("CaC");
-            logger.debug("Query CaC: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testAromaticAtom() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("CaC");
+    	logger.debug("Query CaC: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    public void testSymbolQueryAtom() throws ParseException {
-        try {
-            QueryAtomContainer query = SMARTSParser.parse("CCC");
-            logger.debug("Query CAC: " + query.toString());
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testSymbolQueryAtom() throws Exception {
+    	QueryAtomContainer query = SMARTSParser.parse("CCC");
+    	logger.debug("Query CAC: " + query.toString());
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-            IAtomContainer atomContainer = sp.parseSmiles("CCC");
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	IAtomContainer atomContainer = sp.parseSmiles("CCC");
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("CNC");
-            assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+    	atomContainer = sp.parseSmiles("CNC");
+    	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
-            atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
-            assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+    	atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
+    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 }
 

@@ -71,642 +71,532 @@ public class CML2Test extends CDKTestCase {
         return new TestSuite(CML2Test.class);
     }
 
-    public void testCOONa() {
+    public void testCOONa() throws Exception {
         String filename = "data/cml/COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(4, mol.getAtomCount());
-            assertEquals(2, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-            java.util.Iterator atoms = mol.atoms();
-            while (atoms.hasNext()) {
-            	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
-                if (atom.getSymbol().equals("Na")) 
-                    assertEquals(+1, atom.getFormalCharge()); 
-            }
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(4, mol.getAtomCount());
+        assertEquals(2, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+
+        java.util.Iterator atoms = mol.atoms();
+        while (atoms.hasNext()) {
+        	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        	if (atom.getSymbol().equals("Na")) 
+        		assertEquals(+1, atom.getFormalCharge()); 
         }
     }
 
-    public void testNitrate() {
+    public void testNitrate() throws Exception {
         String filename = "data/cml/nitrate.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(4, mol.getAtomCount());
-            assertEquals(3, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-            java.util.Iterator atoms = mol.atoms();
-            while (atoms.hasNext()) {
-            	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
-                if (atom.getSymbol().equals("N")) 
-                    assertEquals(+1, atom.getFormalCharge()); 
-            }
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(4, mol.getAtomCount());
+        assertEquals(3, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+
+        java.util.Iterator atoms = mol.atoms();
+        while (atoms.hasNext()) {
+        	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        	if (atom.getSymbol().equals("N")) 
+        		assertEquals(+1, atom.getFormalCharge()); 
         }
     }
 
-    public void testCMLOK1() {
+    public void testCMLOK1() throws Exception {
         String filename = "data/cml/cs2a.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(38, mol.getAtomCount());
-            assertEquals(48, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(38, mol.getAtomCount());
+        assertEquals(48, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK2() {
+    public void testCMLOK2() throws Exception {
         String filename = "data/cml/cs2a.mol.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(38, mol.getAtomCount());
-            assertEquals(29, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(38, mol.getAtomCount());
+        assertEquals(29, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK3() {
+    public void testCMLOK3() throws Exception {
         String filename = "data/cml/nsc2dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(13, mol.getAtomCount());
-            assertEquals(12, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(13, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK4() {
+    public void testCMLOK4() throws Exception {
         String filename = "data/cml/nsc2dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(13, mol.getAtomCount());
-            assertEquals(12, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(13, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK5() {
+    public void testCMLOK5() throws Exception {
         String filename = "data/cml/nsc2dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(13, mol.getAtomCount());
-            assertEquals(12, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(13, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK6() {
+    public void testCMLOK6() throws Exception {
         String filename = "data/cml/nsc2dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(13, mol.getAtomCount());
-            assertEquals(12, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(13, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK7() {
+    public void testCMLOK7() throws Exception {
         String filename = "data/cml/nsc3dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(27, mol.getAtomCount());
-            assertEquals(27, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(27, mol.getAtomCount());
+        assertEquals(27, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK8() {
+    public void testCMLOK8() throws Exception {
         String filename = "data/cml/nsc2dcml.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(15, mol.getAtomCount());
-            assertEquals(14, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(15, mol.getAtomCount());
+        assertEquals(14, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK9() {
+    public void testCMLOK9() throws Exception {
         String filename = "data/cml/nsc3dmol.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(15, mol.getAtomCount());
-            assertEquals(15, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(15, mol.getAtomCount());
+        assertEquals(15, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK10() {
+    public void testCMLOK10() throws Exception {
         String filename = "data/cml/nsc3dmol.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(15, mol.getAtomCount());
-            assertEquals(15, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(15, mol.getAtomCount());
+        assertEquals(15, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK11() {
+    public void testCMLOK11() throws Exception {
         String filename = "data/cml/nsc3dmol.a1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(15, mol.getAtomCount());
-            assertEquals(15, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            fail(e.toString());
-            e.printStackTrace();
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(15, mol.getAtomCount());
+        assertEquals(15, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
-    public void testCMLOK12() {
+    public void testCMLOK12() throws Exception {
         String filename = "data/cml/nsc3dmol.a2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(15, mol.getAtomCount());
-            assertEquals(15, mol.getBondCount());
-            assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(15, mol.getAtomCount());
+        assertEquals(15, mol.getBondCount());
+        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
 
     /**
      * This test tests wether the CMLReader is able to ignore the CMLSpect part
      * of a CML file, while extracting the molecule.
      */
-    public void testCMLSpectMolExtraction() {
+    public void testCMLSpectMolExtraction() throws Exception {
         String filename = "data/cml/molAndspect.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getMoleculeSet().getMoleculeCount(), 1);
 
-            // test the molecule
-            org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals(17, mol.getAtomCount());
-            assertEquals(18, mol.getBondCount());
-            assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-            assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        // test the molecule
+        org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals(17, mol.getAtomCount());
+        assertEquals(18, mol.getBondCount());
+        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
     }
+
     /**
      * This test tests wether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
-    public void testCMLReaction() {
+    public void testCMLReaction() throws Exception {
         String filename = "data/cml/reaction.2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getReactionSet().getReactionCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getReactionSet().getReactionCount(), 1);
 
-            // test the reaction
-            IReaction reaction = model.getReactionSet().getReaction(0);
-            assertNotNull(reaction);
-            assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
-            assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
-            assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
-            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
-            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        // test the reaction
+        IReaction reaction = model.getReactionSet().getReaction(0);
+        assertNotNull(reaction);
+        assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
+        assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
+        assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+        assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+        assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
+
     /**
      * This test tests wether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
-    public void testCMLReactionWithAgents() {
+    public void testCMLReactionWithAgents() throws Exception {
         String filename = "data/cml/reaction.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(model.getReactionSet().getReactionCount(), 1);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(model.getReactionSet().getReactionCount(), 1);
 
-            // test the reaction
-            IReaction reaction = model.getReactionSet().getReaction(0);
-            assertNotNull(reaction);
-            assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
-            assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
-            assertEquals("water",reaction.getAgents().getAtomContainer(0).getID());
-            assertEquals("H+",reaction.getAgents().getAtomContainer(1).getID());
-            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
-            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        // test the reaction
+        IReaction reaction = model.getReactionSet().getReaction(0);
+        assertNotNull(reaction);
+        assertEquals("react",reaction.getReactants().getAtomContainer(0).getID());
+        assertEquals("product",reaction.getProducts().getAtomContainer(0).getID());
+        assertEquals("water",reaction.getAgents().getAtomContainer(0).getID());
+        assertEquals("H+",reaction.getAgents().getAtomContainer(1).getID());
+        assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+        assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
     /**
      * This test tests wether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
-    public void testCMLReactionList() {
+    public void testCMLReactionList() throws Exception {
         String filename = "data/cml/reactionList.1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(1,seq.getChemModelCount());
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
-            assertEquals(2,model.getReactionSet().getReactionCount());
-            assertEquals("1.3.2",model.getReactionSet().getReaction(0).getID());
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1,seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        assertEquals(2,model.getReactionSet().getReactionCount());
+        assertEquals("1.3.2",model.getReactionSet().getReaction(0).getID());
 
-            // test the reaction
-            IReaction reaction = model.getReactionSet().getReaction(0);
-            assertNotNull(reaction);
-            assertEquals("actey",reaction.getReactants().getAtomContainer(0).getID());
-            assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
-            assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
-            assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        // test the reaction
+        IReaction reaction = model.getReactionSet().getReaction(0);
+        assertNotNull(reaction);
+        assertEquals("actey",reaction.getReactants().getAtomContainer(0).getID());
+        assertEquals("a14293164",reaction.getReactants().getAtomContainer(0).getAtom(0).getID());
+        assertEquals(6, reaction.getProducts().getAtomContainer(0).getAtomCount());
+        assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
 
     /**
      * @cdk.bug 1560486
      */
-    public void testCMLWithFormula() {
+    public void testCMLWithFormula() throws Exception {
         String filename = "data/cml/cmlWithFormula.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            CMLReader reader = new CMLReader(ins);
-            IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
 
-            // test the resulting ChemFile content
-            assertNotNull(chemFile);
-            assertEquals(chemFile.getChemSequenceCount(), 1);
-            org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-            assertNotNull(seq);
-            assertEquals(seq.getChemModelCount(), 1);
-            org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-            assertNotNull(model);
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
 
-            IMolecule mol = model.getMoleculeSet().getMolecule(0);
-            assertNotNull(mol);
-            assertEquals("a",mol.getID());
-            assertEquals("a1",mol.getAtom(0).getID());
-            assertEquals(27, mol.getAtomCount());
-            assertEquals(32, mol.getBondCount());
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.toString());
-        }
+        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        assertEquals("a",mol.getID());
+        assertEquals("a1",mol.getAtom(0).getID());
+        assertEquals(27, mol.getAtomCount());
+        assertEquals(32, mol.getBondCount());
     }
 
     /**
@@ -718,59 +608,52 @@ public class CML2Test extends CDKTestCase {
 	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
 	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 	    
-	    try {
-	    	/*1*/
-		      IChemObjectReader reader = new PDBReader(ins1);
-		      IChemFile chemFile1 = (IChemFile) reader.read(new NNChemFile());
-		      IChemSequence seq1 = chemFile1.getChemSequence(0);
-		      IChemModel model1 = seq1.getChemModel(0);
-		      IAtomContainer container = model1.getMoleculeSet().getMolecule(0);
-		      IBioPolymer polymer1 = (IBioPolymer)container;
-		      int countchemFile1 = chemFile1.getChemSequenceCount();
-		      int countseq1 = seq1.getChemModelCount();
-		      int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
-		      int countpolymer1 = polymer1.getAtomCount();
-		      
-	          
-		      StringWriter writer = new StringWriter();
-		      CMLWriter cmlWriter = new CMLWriter(writer);
-		      cmlWriter.write(polymer1);
-		      String cmlContent1 = writer.toString();
-		      
-		      
-		    /*2*/
-	          CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
-		      IChemFile chemFil2 = (IChemFile)reader2.read(new NNChemFile());
-		      IChemSequence seq2 = chemFil2.getChemSequence(0);
-		      IChemModel model2 = seq2.getChemModel(0);
-		      PDBPolymer polymer2 =  (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
+	    /*1*/
+	    IChemObjectReader reader = new PDBReader(ins1);
+	    IChemFile chemFile1 = (IChemFile) reader.read(new NNChemFile());
+	    IChemSequence seq1 = chemFile1.getChemSequence(0);
+	    IChemModel model1 = seq1.getChemModel(0);
+	    IAtomContainer container = model1.getMoleculeSet().getMolecule(0);
+	    IBioPolymer polymer1 = (IBioPolymer)container;
+	    int countchemFile1 = chemFile1.getChemSequenceCount();
+	    int countseq1 = seq1.getChemModelCount();
+	    int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
+	    int countpolymer1 = polymer1.getAtomCount();
 
 
-		      int countchemFile2 = chemFil2.getChemSequenceCount();
-		      int countseq2 = seq2.getChemModelCount();
-		      int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
-		      int countpolymer2 = polymer2.getAtomCount();
-		      
-		      assertEquals(countchemFile1, countchemFile2);
-//		      assertEquals(countseq1,countseq2); /*not the same because the pdb file has more models*/
-		      assertEquals(countmodel1,countmodel2);
-		      assertEquals(countpolymer1,countpolymer2);
-		      
+	    StringWriter writer = new StringWriter();
+	    CMLWriter cmlWriter = new CMLWriter(writer);
+	    cmlWriter.write(polymer1);
+	    String cmlContent1 = writer.toString();
 
-		     writer = new StringWriter();
-		     cmlWriter = new CMLWriter(writer);
-		      cmlWriter.write(polymer2);
-		      String cmlContent2 = writer.toString();
-		      
-		      String conte1 = cmlContent1.substring(0, 1000);
-		      String conte2 = cmlContent2.substring(0, 1000);
-		      assertEquals(conte1,conte2);
-		      
-	    } catch (Exception ex) {
-            fail(ex.getMessage());
-		}
-	    
-	   
+
+	    /*2*/
+	    CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
+	    IChemFile chemFil2 = (IChemFile)reader2.read(new NNChemFile());
+	    IChemSequence seq2 = chemFil2.getChemSequence(0);
+	    IChemModel model2 = seq2.getChemModel(0);
+	    PDBPolymer polymer2 =  (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
+
+
+	    int countchemFile2 = chemFil2.getChemSequenceCount();
+	    int countseq2 = seq2.getChemModelCount();
+	    int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
+	    int countpolymer2 = polymer2.getAtomCount();
+
+	    assertEquals(countchemFile1, countchemFile2);
+//	    assertEquals(countseq1,countseq2); /*not the same because the pdb file has more models*/
+	    assertEquals(countmodel1,countmodel2);
+	    assertEquals(countpolymer1,countpolymer2);
+
+
+	    writer = new StringWriter();
+	    cmlWriter = new CMLWriter(writer);
+	    cmlWriter.write(polymer2);
+	    String cmlContent2 = writer.toString();
+
+	    String conte1 = cmlContent1.substring(0, 1000);
+	    String conte2 = cmlContent2.substring(0, 1000);
+	    assertEquals(conte1,conte2);
     }
     
 }

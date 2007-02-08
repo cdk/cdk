@@ -94,312 +94,209 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		this.standAlone = standAlone;
 	}
 
-	public void testDetectAromaticity_IAtomContainer()
+	public void testDetectAromaticity_IAtomContainer() throws Exception
 	{
 		IMolecule mol = makeAromaticMolecule();
-		try
-		{
 
-			HueckelAromaticityDetector.detectAromaticity(mol);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(6, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(6, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		HueckelAromaticityDetector.detectAromaticity(mol);
+
+		int numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
 		}
+		assertEquals(6, numberOfAromaticAtoms);
+
+		int numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
+		}
+		assertEquals(6, numberOfAromaticBonds);
+			
 	}
 	
-	public void testDetectAromaticity_IAtomContainer_IRingSet()
+	public void testDetectAromaticity_IAtomContainer_IRingSet() throws Exception
 	{
 		
 		IMolecule mol = makeAromaticMolecule();
-		try
-		{
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			HueckelAromaticityDetector.detectAromaticity(mol, rs);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(6, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(6, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+
+		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+		HueckelAromaticityDetector.detectAromaticity(mol, rs);
+
+		int numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
 		}
+		assertEquals(6, numberOfAromaticAtoms);
+
+		int numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
+		}
+		assertEquals(6, numberOfAromaticBonds);
+			
 	}
 	
-	public void testDetectAromaticity_IAtomContainer_boolean()
+	public void testDetectAromaticity_IAtomContainer_boolean() throws Exception
 	{
 		
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			HueckelAromaticityDetector.detectAromaticity(mol, false);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(10, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(11, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		IMolecule mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		HueckelAromaticityDetector.detectAromaticity(mol, false);
+
+		int numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
 		}
-		
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			HueckelAromaticityDetector.detectAromaticity(mol, true);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(6, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(6, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		assertEquals(10, numberOfAromaticAtoms);
+
+		int numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
 		}
+		assertEquals(11, numberOfAromaticBonds);
+			
+		mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		HueckelAromaticityDetector.detectAromaticity(mol, true);
+
+		numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
+		}
+		assertEquals(6, numberOfAromaticAtoms);
+
+		numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
+		}
+		assertEquals(6, numberOfAromaticBonds);
+			
 	}
 	
-	public void testDetectAromaticity_IAtomContainer_boolean_AllRingsFinder()
+	public void testDetectAromaticity_IAtomContainer_boolean_AllRingsFinder() throws Exception
 	{
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			HueckelAromaticityDetector.detectAromaticity(mol, false, new AllRingsFinder());
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(10, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(11, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		IMolecule mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		HueckelAromaticityDetector.detectAromaticity(mol, false, new AllRingsFinder());
+
+		int numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
 		}
-		
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			HueckelAromaticityDetector.detectAromaticity(mol, true, new AllRingsFinder());
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(6, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(6, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		assertEquals(10, numberOfAromaticAtoms);
+
+		int numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
 		}
+		assertEquals(11, numberOfAromaticBonds);
+			
+		mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		HueckelAromaticityDetector.detectAromaticity(mol, true, new AllRingsFinder());
+
+		numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
+		}
+		assertEquals(6, numberOfAromaticAtoms);
+
+		numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
+		}
+		assertEquals(6, numberOfAromaticBonds);
+			
 	}
 	
-	public void testDetectAromaticity_IAtomContainer_IRingSet_boolean()
+	public void testDetectAromaticity_IAtomContainer_IRingSet_boolean() throws Exception
 	{
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			HueckelAromaticityDetector.detectAromaticity(mol, rs, false);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(10, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(11, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		IMolecule mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+		HueckelAromaticityDetector.detectAromaticity(mol, rs, false);
+
+		int numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
 		}
-		
-		try
-		{
-			IMolecule mol = makeAromaticMolecule();
-			for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			
-			int numberOfAromaticAtoms = 0;
-			for (int i = 0; i < mol.getAtomCount(); i++) {
-				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticAtoms++;
-			}
-			assertEquals(6, numberOfAromaticAtoms);
-			
-			int numberOfAromaticBonds= 0;
-			for (int i = 0; i < mol.getBondCount(); i++) {
-				if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticBonds++;
-			}
-			assertEquals(6, numberOfAromaticBonds);
-			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		assertEquals(10, numberOfAromaticAtoms);
+
+		int numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
 		}
+		assertEquals(11, numberOfAromaticBonds);
+			
+		mol = makeAromaticMolecule();
+		for (int i = 0; i < mol.getAtomCount(); ++i) mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+		rs = (new AllRingsFinder()).findAllRings(mol);
+		HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+
+		numberOfAromaticAtoms = 0;
+		for (int i = 0; i < mol.getAtomCount(); i++) {
+			if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticAtoms++;
+		}
+		assertEquals(6, numberOfAromaticAtoms);
+
+		numberOfAromaticBonds= 0;
+		for (int i = 0; i < mol.getBondCount(); i++) {
+			if (((IBond)mol.getBond(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticBonds++;
+		}
+		assertEquals(6, numberOfAromaticBonds);
+			
 	}
 	
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testSetRingFlags_IRingSet()
+	public void testSetRingFlags_IRingSet() throws Exception
 	{
-		//boolean isAromatic = false;
-		try
-		{
 
-			IMolecule mol = makeAromaticMolecule();
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			
-			IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
-			HueckelAromaticityDetector.setRingFlags(ringset);
-			
-			int numberOfAromaticRings = 0;
-			for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-				if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticRings++;
-			}
-			assertEquals(numberOfAromaticRings, 1);
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		IMolecule mol = makeAromaticMolecule();
+		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+		HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+
+		IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
+		HueckelAromaticityDetector.setRingFlags(ringset);
+
+		int numberOfAromaticRings = 0;
+		for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
+			if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticRings++;
 		}
+		assertEquals(numberOfAromaticRings, 1);
 	}
 	
-	public void testGetRingSet()
+	public void testGetRingSet() throws Exception
 	{
 		IMolecule mol = makeAromaticMolecule();
-		try
-		{
 
-			HueckelAromaticityDetector.detectAromaticity(mol);
-			IRingSet rs = HueckelAromaticityDetector.getRingSet();
-			assertEquals(3, rs.getAtomContainerCount());
+		HueckelAromaticityDetector.detectAromaticity(mol);
+		IRingSet rs = HueckelAromaticityDetector.getRingSet();
+		assertEquals(3, rs.getAtomContainerCount());
 			
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
 	}
 	
-	public void testSetTimeout_long()
+	public void testSetTimeout_long() throws Exception
 	{
-		HueckelAromaticityDetector.setTimeout(0);
+		HueckelAromaticityDetector.setTimeout(1);
 		IMolecule mol = makeAromaticMolecule();
 		try {
 			HueckelAromaticityDetector.detectAromaticity(mol);
@@ -408,7 +305,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				if (((IAtom)mol.getAtom(i)).getFlag(CDKConstants.ISAROMATIC))
 					numberOfAromaticAtoms++;
 			}
-			assertEquals(0, numberOfAromaticAtoms);
+			fail("Should have failed with an time out exception");
 			
 		} catch (Exception exc)
 		{
@@ -416,11 +313,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				HueckelAromaticityDetector.setTimeout(5000); // reset timeout to default
 				return;
 			}
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+			throw exc;
 		}
 	}
 	
@@ -461,34 +354,23 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		assertNotNull(detector);
 	}
 	
-	public void testPyridine()
+	public void testPyridine() throws Exception
 	{
-		//boolean isAromatic = false;
-		try
-		{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			IMolecule mol = sp.parseSmiles("c1ccncc1");
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			
-			IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
-			HueckelAromaticityDetector.setRingFlags(ringset);
-			
-			int numberOfAromaticRings = 0;
-			for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-				if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
-					numberOfAromaticRings++;
-			}
-			assertEquals(numberOfAromaticRings, 1);
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+		IMolecule mol = sp.parseSmiles("c1ccncc1");
+		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+		HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+
+		IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
+		HueckelAromaticityDetector.setRingFlags(ringset);
+
+		int numberOfAromaticRings = 0;
+		for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
+			if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
+				numberOfAromaticRings++;
 		}
+		assertEquals(numberOfAromaticRings, 1);
 	}
 	
 	
@@ -496,7 +378,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
 	 *  outermost larger 10-ring is aromatic according to Hueckel rule.
 	 */
-	public void testAzulene()
+	public void testAzulene() throws Exception
 	{
 		boolean[] testResult =
 				{true,
@@ -513,17 +395,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		Molecule molecule = MoleculeFactory.makeAzulene();
 		boolean isAromatic = false;
 		boolean result = false;
-		try
-		{
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
-		}
+		isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			result = (molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResult[f]);
@@ -540,7 +412,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit. The N has to be counted correctly
 	 */
-	public void testIndole()
+	public void testIndole() throws Exception
 	{
 		Molecule molecule = MoleculeFactory.makeIndole();
 		boolean testResults[] = {
@@ -555,20 +427,10 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				true
 				};
 		//boolean isAromatic = false;
-		try
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
 	}
 
@@ -576,25 +438,14 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testThiazole()
+	public void testThiazole() throws Exception
 	{
 		Molecule molecule = MoleculeFactory.makeThiazole();
 		boolean[] testResults = {true, true, true, true, true};
-		try
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
-
-		} catch (Exception exc)
-		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
 
 	}
@@ -603,87 +454,69 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testTetraDehydroDecaline()
+	public void testTetraDehydroDecaline() throws Exception
 	{
 		boolean isAromatic = false;
 		//boolean testResults[] = {true, false, false};
-		try
-		{
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
-			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
-			//logger.debug("rs.size(): " + rs.size());
-			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
-			IRing r = null;
-			int i = 0, aromacount = 0;
-			java.util.Iterator rings = rs.atomContainers();
-			while (rings.hasNext()) {
-				r = (IRing)rings.next();
-				isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
-				
-				if (standAlone && isAromatic)
-				{
-					System.out.println("Ring " + i + " in test molecule is aromatic.");
-				} else if (standAlone && !isAromatic)
-				{
-					System.out.println("Ring " + i + " in test molecule is not aromatic.");
-				}
-				if (isAromatic) aromacount++;
-				i++;
-			}
-			assertEquals(aromacount, 1);
-		} catch (Exception exc)
-		{
-			if (standAlone)
+		IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+		//logger.debug("rs.size(): " + rs.size());
+		HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
+		IRing r = null;
+		int i = 0, aromacount = 0;
+		java.util.Iterator rings = rs.atomContainers();
+		while (rings.hasNext()) {
+			r = (IRing)rings.next();
+			isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
+
+			if (standAlone && isAromatic)
 			{
-				exc.printStackTrace();
+				System.out.println("Ring " + i + " in test molecule is aromatic.");
+			} else if (standAlone && !isAromatic)
+			{
+				System.out.println("Ring " + i + " in test molecule is not aromatic.");
 			}
-			fail(exc.toString());
+			if (isAromatic) aromacount++;
+			i++;
 		}
+		assertEquals(aromacount, 1);
 	}
 
     /**
      * This is a bug reported for JCP.
      */
-    public void testSFBug956924() {
-		try {
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    public void testSFBug956924() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
-			assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
-            assertEquals(7, mol.getAtomCount());
-			for (int f = 0; f < mol.getAtomCount(); f++) {
-				assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
-			}
-		} catch (Exception exc) {
-			fail(exc.toString());
-		}
+    	IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+    	assertTrue(HueckelAromaticityDetector.detectAromaticity(mol));
+    	assertEquals(7, mol.getAtomCount());
+    	for (int f = 0; f < mol.getAtomCount(); f++) {
+    		assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+    	}
 	}
 
     /**
      * This is a bug reported for JCP.
      */
-    public void testSFBug956923() {
+    public void testSFBug956923() throws Exception {
 		boolean testResults[] = {false, false, false, false, false, false, false, false};
-		try {
-			SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-			IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
-			assertFalse(HueckelAromaticityDetector.detectAromaticity(mol));
-            assertEquals(testResults.length, mol.getAtomCount());
-			for (int f = 0; f < mol.getAtomCount(); f++) {
-				assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
-		} catch (Exception exc) {
-			fail(exc.toString());
+		IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+		assertFalse(HueckelAromaticityDetector.detectAromaticity(mol));
+		assertEquals(testResults.length, mol.getAtomCount());
+		for (int f = 0; f < mol.getAtomCount(); f++) {
+			assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
 	}
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testPorphyrine()
+	public void testPorphyrine() throws Exception
 	{
 		IMolecule molecule = null;
 		boolean isAromatic = false;
@@ -731,22 +564,16 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				false,
 				false
 				};
-		try
-		{
-			String filename = "data/mdl/porphyrin.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(ins);
-			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
-			isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
-		} catch (Exception exc)
+		String filename = "data/mdl/porphyrin.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+		isAromatic = HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			exc.printStackTrace();
-			fail();
+			assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
 		}
 		assertTrue(isAromatic);
 	}
@@ -755,7 +582,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testBug698152()
+	public void testBug698152() throws Exception
 	{
 		Molecule molecule = null;
 		//boolean isAromatic = false;
@@ -777,22 +604,16 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 				false,
 				false,
 				false};
-		try
-		{
-			String filename = "data/mdl/bug698152.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(ins);
-			molecule = (Molecule) reader.read((ChemObject) new Molecule());
 
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
-		} catch (Exception exc)
+		String filename = "data/mdl/bug698152.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			exc.printStackTrace();
-			fail();
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
 	}
 
@@ -800,7 +621,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	 *  A test for the fix of bug #716259, where a quinone ring 
 	 *  was falsely detected as aromatic
 	 */
-	public void testBug716259()
+	public void testBug716259() throws Exception
 	{
 		Molecule molecule = null;
 		//boolean isAromatic = false;
@@ -825,50 +646,34 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 			false,
 			false
 		};
-		try
-		{
-			String filename = "data/mdl/bug716259.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-			MDLReader reader = new MDLReader(ins);
-			molecule = (Molecule) reader.read((ChemObject) new Molecule());
-			
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
 
-		} catch (Exception exc)
+		String filename = "data/mdl/bug716259.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLReader reader = new MDLReader(ins);
+		molecule = (Molecule) reader.read((ChemObject) new Molecule());
+
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			exc.printStackTrace();
-			fail();
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
+
 	}
 	
 	
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testQuinone()
+	public void testQuinone() throws Exception
 	{
 		Molecule molecule = MoleculeFactory.makeQuinone();
 		//boolean isAromatic = false;
 		boolean[] testResults = {false, false, false, false, false, false, false, false};
-		try
-		{
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
 
-		} catch (Exception exc)
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
 
 	}
@@ -891,28 +696,18 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testBenzene()
+	public void testBenzene() throws Exception
 	{
 		Molecule molecule = MoleculeFactory.makeBenzene();
 		//boolean isAromatic = false;
 		boolean[] testResults = {true,true,true,true,true,true};
-		try
-		{
-			HueckelAromaticityDetector.detectAromaticity(molecule);
-			for (int f = 0; f < molecule.getAtomCount(); f++)
-			{
-				assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
-			}
 
-		} catch (Exception exc)
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			if (standAlone)
-			{
-				exc.printStackTrace();
-			}
-			fail(exc.toString());
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
 		}
-		
+
 	}
 
 	private IMolecule makeAromaticMolecule()
@@ -968,7 +763,7 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 	 *
 	 *@param  args  The command line arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
 		hadt.setStandAlone(true);

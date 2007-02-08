@@ -32,35 +32,27 @@ public class RDFProtonDescriptorTest_GHR_topol extends CDKTestCase {
 		return new TestSuite(RDFProtonDescriptorTest_GHR_topol.class);
 	}
     
-	public void testExample1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	public void testExample1() throws Exception {
 		//firstly read file to molecule		
 		String filename = "data/mdl/hydroxyamino.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-            MDLReader reader = new MDLReader(ins);
-            ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-            IChemSequence seq = chemFile.getChemSequence(0);
-            IChemModel model = seq.getChemModel(0);
-            IMoleculeSet som = model.getMoleculeSet();
-            IMolecule mol = som.getMolecule(0);
+		MDLReader reader = new MDLReader(ins);
+		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+		IChemSequence seq = chemFile.getChemSequence(0);
+		IChemModel model = seq.getChemModel(0);
+		IMoleculeSet som = model.getMoleculeSet();
+		IMolecule mol = som.getMolecule(0);
 
-            for (int i=0; i < mol.getAtomCount(); i++) {
-            	System.out.println("Atom: " + mol.getAtom(i).getSymbol());
-        		if(mol.getAtom(i).getSymbol().equals("H")){
-            	//secondly perform calculation on it.
-                RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
-        		DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
-        		IDescriptorResult result = dv.getValue();
-        		System.out.println("array: " + result.toString());
-        		}		
+		for (int i=0; i < mol.getAtomCount(); i++) {
+			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+			if(mol.getAtom(i).getSymbol().equals("H")){
+				//secondly perform calculation on it.
+				RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
+				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
+				IDescriptorResult result = dv.getValue();
+				System.out.println("array: " + result.toString());
+			}		
 
-            }
-        }
-        
-        catch (Exception e) {
-        	e.printStackTrace();
-            fail(e.toString());
-            
-        }
+		}
 	}
 }

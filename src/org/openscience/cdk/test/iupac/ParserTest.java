@@ -58,7 +58,7 @@ public class ParserTest extends CDKTestCase
     // Add test methods here, they have to start with 'test' name.
     // for example:
     // public void testHello() {}
-    public void testEthane() throws ParseException
+    public void testEthane() throws Exception
     {
         Molecule parserMolecule = null;
         try {
@@ -72,7 +72,7 @@ public class ParserTest extends CDKTestCase
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
 
-    public void testPentane() throws ParseException
+    public void testPentane() throws Exception
     {
         Molecule parserMolecule = null;
         try {
@@ -86,7 +86,7 @@ public class ParserTest extends CDKTestCase
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
 
-    public void testSeptane() throws ParseException
+    public void testSeptane() throws Exception
     {
         Molecule parserMolecule = null;
         try {
@@ -100,21 +100,16 @@ public class ParserTest extends CDKTestCase
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }    
     
-    public void testEicosane() throws ParseException
+    public void testEicosane() throws Exception
     {
-        Molecule parserMolecule = null;
-        try {
-            parserMolecule = NomParser.generate("Eicosane");
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
-        }
+        Molecule parserMolecule = NomParser.generate("Eicosane");
         Molecule correctMolecule = MoleculeFactory.makeAlkane(20);
 
         assertTrue("The molecule built by the parser isn't the same as the expected one", 
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
     
-    public void testTokenMgrErrorCharacterName()
+    public void testTokenMgrErrorCharacterName() throws CDKException
     {
         try
         {
@@ -126,8 +121,6 @@ public class ParserTest extends CDKTestCase
             "In which case check the error logic of the parser.");
         } catch (TokenMgrError tme) {
             assertTrue (true);
-        } catch (CDKException exception) {
-            fail(exception.getMessage());
         }
     }
     

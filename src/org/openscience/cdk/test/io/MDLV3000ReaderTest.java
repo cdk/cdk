@@ -66,27 +66,21 @@ public class MDLV3000ReaderTest extends CDKTestCase {
     /**
      * @cdk.bug 1571207
      */
-    public void testBug1571207() {
+    public void testBug1571207() throws Exception {
         String filename = "data/mdl/molV3000.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        try {
-        	MDLV3000Reader reader = new MDLV3000Reader(ins);
-            IMolecule m = (IMolecule)reader.read(new NNMolecule());
-            assertNotNull(m);
-            assertEquals(31, m.getAtomCount());
-            assertEquals(34, m.getBondCount());
-            
-            IAtom atom = m.getAtom(0);
-            assertNotNull(atom);
-            assertNotNull(atom.getPoint2d());
-            assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
-            assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
-            
-        } catch (Exception e) {
-        	e.printStackTrace();
-            fail(e.toString());
-        }
+        MDLV3000Reader reader = new MDLV3000Reader(ins);
+        IMolecule m = (IMolecule)reader.read(new NNMolecule());
+        assertNotNull(m);
+        assertEquals(31, m.getAtomCount());
+        assertEquals(34, m.getBondCount());
+
+        IAtom atom = m.getAtom(0);
+        assertNotNull(atom);
+        assertNotNull(atom.getPoint2d());
+        assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
+        assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
     }
 
 }

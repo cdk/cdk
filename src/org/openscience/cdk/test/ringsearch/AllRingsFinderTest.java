@@ -126,6 +126,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			arf.findAllRings(molecule);
 			fail("Timeout did not throw CDKException.");
 		} catch (CDKException ex) {
+			// OK, should get the exception
 			assertEquals("Timeout for AllringsFinder exceeded", ex.getMessage());
 		}
 	}
@@ -313,19 +314,14 @@ public class AllRingsFinderTest extends CDKTestCase
 		//display(mol);
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
 		arft.setStandAlone(true);
 		//arft.testAllRingsFinder();
 		//arft.saTestBug777488();
 		//arft.showAzulene();
-		try {
-			arft.showPorphyrin();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		arft.showPorphyrin();		
 		//arft.testBigMoleculeWithIsolatedRings();
 	}	
 }
