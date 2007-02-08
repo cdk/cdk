@@ -51,7 +51,7 @@ public class AutocorrelationDescriptorMass {
 	 * @throws java.io.IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static ArrayList ListFormat(IAtomContainer container)
+	public static ArrayList<Double> ListFormat(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException {
 		int natom = container.getAtomCount();
 		int i = 0;
