@@ -184,6 +184,6 @@
   <atomType id="Hal" />
   <atomType id="Het" />
   <atomType id="Hev" />
-  
+  <atomType id="X" />
 </atomTypeList>
 

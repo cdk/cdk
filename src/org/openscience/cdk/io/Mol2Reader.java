@@ -226,9 +226,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
                     	if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
 
                         IAtom atom = molecule.getBuilder().newAtom("X");
-                        IAtomType atomType = null;
+                        IAtomType atomType;
                         try {
-                        	atFactory.getAtomType(atomTypeStr);
+                        	atomType = atFactory.getAtomType(atomTypeStr);
                         } catch (Exception exception) {
                         	// ok, *not* an mol2 atom type
                         	atomType = null;
@@ -238,7 +238,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         	atom.setSymbol(atomTypeStr);
                         } else {                        	
                             if (atomType == null) {
-                            	atomType = atFactory.getAtomType("X");
+                                atomType = atFactory.getAtomType("X");
                             	logger.error("Could not find specified atom type: ", atomTypeStr);
                             }
                             AtomTypeManipulator.configure(atom, atomType);
