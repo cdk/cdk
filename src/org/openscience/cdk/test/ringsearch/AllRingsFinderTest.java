@@ -113,7 +113,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	public void testFindAllRings_IAtomContainer_boolean() throws CDKException {
 		AllRingsFinder arf = new AllRingsFinder();
 		Molecule molecule = MoleculeFactory.makeEthylPropylPhenantren();
-		arf.findAllRings(molecule, true);
+		arf.findAllRings(molecule);
 	}
 	
 	public void testSetTimeout_long()

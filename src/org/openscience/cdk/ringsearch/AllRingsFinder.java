@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -91,12 +91,7 @@ public class AllRingsFinder
 		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules();
 		IRingSet resultSet = atomContainer.getBuilder().newRingSet();
 		while (separateRingSystem.hasNext()) {
-			IMolecule singleRingSystem = (IMolecule)separateRingSystem.next();
-			if (singleRingSystem.getBondCount() < 37) {
-				resultSet.add(findAllRings(singleRingSystem, false));
-			} else { 
-				resultSet.add(findAllRings(singleRingSystem, true));
-			}
+			resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next()));
 		}
 		return resultSet;
 	}
@@ -110,10 +105,9 @@ public class AllRingsFinder
 	 *@return                   a RingSet containing the rings in molecule
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	public IRingSet findAllRings(IAtomContainer atomContainer, boolean useSSSR) throws CDKException
+	public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws CDKException
 	{
-		if (startTime == 0)
-		{
+		if (startTime == 0) {
 			startTime = System.currentTimeMillis();
 		}
 		List paths = new ArrayList();
@@ -121,28 +115,7 @@ public class AllRingsFinder
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
 		ac.add(atomContainer);
-		logger.debug("AtomCount before removal of aliphatic atoms: " + ac.getAtomCount());
-		removeAliphatic(ac);
-		logger.debug("AtomCount after removal of aliphatic atoms: " + ac.getAtomCount());
-		if (useSSSR)
-		{
-			SSSRFinder sssrf = new SSSRFinder(atomContainer);
-			IRingSet sssr = sssrf.findSSSR();
-			List ringSets = RingPartitioner.partitionRings(sssr);
-
-			for (int r = 0; r < ringSets.size(); r++)
-			{
-				IAtomContainer tempAC
-						 = RingPartitioner.convertToAtomContainer((IRingSet) ringSets.get(r));
-
-				doSearch(tempAC, paths, ringSet);
-
-			}
-		} else
-		{
-			doSearch(ac, paths, ringSet);
-		}
-//		atomContainer.setProperty(CDKConstants.ALL_RINGS, ringSet);
+		doSearch(ac, paths, ringSet);
 		return ringSet;
 	}
 
