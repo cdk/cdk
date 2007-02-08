@@ -91,7 +91,7 @@ public class TemplateHandler3D {
     }
 
     /**
-     * Loads all existing templates into memory To add templates to be used in
+     * Loads all existing templates into memory. 
      * Template file is a mdl file. Creates a Object Set of Molecules
      */
     private void loadTemplates() throws CDKException {
