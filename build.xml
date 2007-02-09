@@ -12,8 +12,8 @@
         <!-- patches to apply -->
 
         <!-- where to find some libraries -->
-        <property name="pathtojoelib" value="../../JoeLib/joelib/" />
-
+        <property name="pathtojoelib" value="jar/libio" />
+        <property name="pathtojmol" value="jar/libio" />
 
         <!-- directories -->
         <property name="build" value="build" />
