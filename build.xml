@@ -726,8 +726,9 @@
             <tstamp>
                 <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
             </tstamp>
-                <property name="package" value="cdk-source-${TODAY_SVN}"/>
+                <property name="package" value="cdk-src+libs-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
+                <delete dir="${sourcedist.dir}"/>
                 <copy todir="${sourcedist.dir}/${src}">
                         <fileset dir="${build}" includes="*.javafiles" />
                         <fileset dir="${build}" includes="*.classes" />
@@ -735,6 +736,7 @@
                         <fileset dir="${src}" includes="**/*.java" />
                         <fileset dir="${src}" includes="**/*.jj" />
                         <fileset dir="${src}" includes="org/openscience/cdk/io/cml/data/**" />
+                        <fileset dir="${src}" excludes="org/openscience/cdk/test/**" />
                 </copy>
                 <copy todir="${sourcedist.dir}">
                         <fileset dir="." includes="build.props" />
@@ -755,9 +757,6 @@
                         <exclude name="dbdoclet*.*"/>
                     </fileset>
             </copy>
-                <copy todir="${sourcedist.dir}/src/data">
-                        <fileset dir="src/data" />
-                </copy>
             <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
             </copy>
@@ -791,6 +790,12 @@
                     <fileset dir="doc/" includes="lgpl.license" />
                 </copy>
                 <mkdir dir="${sourcedist.dir}/doc/javadoc" />
+                <!-- the below deteles are a workaround, because the above should not have copied
+                     in the src/data and src/org/openscience/cdk/test dirs -->
+                <delete dir="${sourcedist.dir}/src/data"/>
+                <delete dir="${sourcedist.dir}/src/org/openscience/cdk/test"/>
+
+                <!-- now package things up -->
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
                 <delete file="${package}.tar" />
@@ -802,8 +807,9 @@
             <tstamp>
                 <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
             </tstamp>
-                <property name="package" value="cdk-pure-source-${TODAY_SVN}"/>
+                <property name="package" value="cdk-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
+                <delete dir="${sourcedist.dir}"/>
                 <copy todir="${sourcedist.dir}/${src}">
                         <fileset dir="${build}" includes="*.javafiles" />
                         <fileset dir="${build}" includes="*.classes" />
@@ -855,6 +861,12 @@
                     <fileset dir="doc/" includes="lgpl.license" />
                 </copy>
                 <mkdir dir="${sourcedist.dir}/doc/javadoc" />
+                <!-- the below deteles are a workaround, because the above should not have copied
+                     in the src/data and src/org/openscience/cdk/test dirs -->
+                <delete dir="${sourcedist.dir}/src/data"/>
+                <delete dir="${sourcedist.dir}/src/org/openscience/cdk/test"/>
+
+                <!-- now package things up -->
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
                 <gzip zipfile="${package}.tar.gz" src="${package}.tar" />
                 <delete file="${package}.tar" />
