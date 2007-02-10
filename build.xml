@@ -560,10 +560,7 @@
             </unjar>
 
             <!-- then zip up things -->
-            <tstamp>
-                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
-            </tstamp>
-            <jar jarfile="${dist}/jar/cdk-svn-${TODAY_SVN}.jar">
+            <jar jarfile="${dist}/jar/cdk-${version}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                     <section name="org.openscience.cdk">
@@ -624,10 +621,7 @@
             </unjar>
 
             <!-- then zip up things -->
-            <tstamp>
-                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
-            </tstamp>
-            <jar jarfile="${dist}/jar/cdk-pure-svn-${TODAY_SVN}.jar">
+            <jar jarfile="${dist}/jar/cdk-pure-${version}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                     <section name="org.openscience.cdk">
@@ -700,10 +694,7 @@
             </unjar>
 
             <!-- then zip up things -->
-            <tstamp>
-                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
-            </tstamp>
-            <jar jarfile="${dist}/jar/cdk-test-svn-${TODAY_SVN}.jar">
+            <jar jarfile="${dist}/jar/cdk-test-${version}.jar">
                 <manifest>
                     <attribute name="Main-Class" value="org.openscience.cdk.test.CDKTests"/>
                     <section name="org.openscience.cdk">
@@ -723,9 +714,6 @@
 
         <target id="sourcedist" name="sourcedist" depends="init, runDoclet"
                 description="Builds the source packages.">
-            <tstamp>
-                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
-            </tstamp>
                 <property name="package" value="cdk-src+libs-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <delete dir="${sourcedist.dir}"/>
@@ -804,9 +792,6 @@
 
         <target id="puredist" name="puredist" depends="init, runDoclet"
                 description="Builds the source packages without third-party libaries.">
-            <tstamp>
-                <format property="TODAY_SVN" pattern="yyyyMMdd" locale="en" />
-            </tstamp>
                 <property name="package" value="cdk-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <delete dir="${sourcedist.dir}"/>
