@@ -63,6 +63,8 @@
 #                     Gmail server, since they require a TLS setup. Also added
 #                     code to redact the email password and login's if specified
 # Update 12/20/2006 - Fixed the regexes to take into account new modules
+# Update 02/10/2007 - Updated to change the value of version in the property file
+#                     rather than hard code it as a date stamp in the build script
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -105,7 +107,7 @@ japitools_path = '/home/rguha/src/java/japitools'
 # Optional
 # path to the last stable CDK distribution jar
 # if not required set to "" or None
-last_stable = '/home/rguha/src/java/cdk-20060714.jar'
+last_stable = '/home/rguha/src/java/cdk-0-99-1.jar'
 
 per_line = 8
 
@@ -696,6 +698,14 @@ def generateJAPI():
     os.system('%s -vh -o apicomp.html %s %s 2> japi.log'
               % (japicompat, oldJapize, newJapize))
 
+    # do some regex sub on the apicomp output
+    lines = open(os.path.join(nightly_dir, 'apicomp.html') , 'r').readlines()
+    lines = string.join(lines)
+    lines = re.sub(nightly_dir, '', lines)
+    f = open(os.path.join(nightly_dir, 'apicomp.html'), 'w')
+    f.write(lines)
+    f.close()
+    
     # copy output
     srcFile = os.path.join(nightly_dir, 'apicomp.html')
     destFile = os.path.join(nightly_web, 'apicomp.html')
@@ -813,7 +823,30 @@ def doCodeCoverage():
     celltext.append(s)
     celltext.append('<a href="emma.log">emma.log</a>')
     return celltext
+
+def updateVersion():
+    # update the build.props file
+    f = open(os.path.join(nightly_repo, 'build.props'), 'r')
+    lines = [x.strip() for x in f.readlines()]
+    f.close()
+    
+    if lines[0].find('version') != 0:
+        return False
+    
+    tmp = lines[0].split('=')
+    if tmp[1] == 'svn-%s' % (todayStr):
+        return True # it's the same day so nothing to do!
+    
+    lines[0] = '%s=svn-%s' % (tmp[0], todayStr)
+    f = open(os.path.join(nightly_repo, 'build.props'), 'w')
+    f.write('%s\n' % (string.join(lines, '\n')))
+    f.close()
+
+    # do we need to do a commit?
+    
+    return True
         
+    
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
@@ -924,6 +957,11 @@ if __name__ == '__main__':
             os.chdir(start_dir)
             sys.exit(0)
 
+        status = updateVersion()
+        if not status:
+            print "Error parsing build.props. Could not a valid version line. Exiting"
+            sys.exit(-1)
+        
         # compile the distro
         successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
@@ -1031,17 +1069,17 @@ if __name__ == '__main__':
 
     if successSrc:
         print '  Generating source distro section'
-        srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.tar.gz' % (todayStr))
-        srcDest = os.path.join(nightly_web, 'cdk-source-%s.tar.gz' % (todayStr))
+        srcSrc = os.path.join(nightly_repo, 'cdk-src+libs-svn-%s.tar.gz' % (todayStr))
+        srcDest = os.path.join(nightly_web, 'cdk-src+libs-svn-%s.tar.gz' % (todayStr))
         shutil.copyfile(srcSrc, srcDest)
-        srcSrc = os.path.join(nightly_repo, 'cdk-source-%s.zip' % (todayStr))
-        srcDest = os.path.join(nightly_web, 'cdk-source-%s.zip' % (todayStr))
+        srcSrc = os.path.join(nightly_repo, 'cdk-src+libs-svn-%s.zip' % (todayStr))
+        srcDest = os.path.join(nightly_web, 'cdk-src+libs-svn-%s.zip' % (todayStr))
         shutil.copyfile(srcSrc, srcDest)
 
         resultTable.addRow()
         resultTable.addCell("CDK Source files:")
-        resultTable.addCell("<a href=\"cdk-source-%s.tar.gz\">Compressed tar file</a>" % (todayStr))
-        resultTable.appendToCell("<a href=\"cdk-source-%s.zip\">ZIP file</a>" % (todayStr))
+        resultTable.addCell("<a href=\"cdk-src+libs-svn-%s.tar.gz\">Compressed tar file</a>" % (todayStr))
+        resultTable.appendToCell("<a href=\"cdk-src+libs-svn-%s.zip\">ZIP file</a>" % (todayStr))
 
         # check whether we can copy the run output
         resultTable.addCell(copyLogFile('srcdist.log', nightly_dir, nightly_web))
