@@ -40,7 +40,7 @@ import java.lang.Object;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
- * to the scaled atomic mass {@cdk.cite ref44or43}.
+ * to the scaled atomic mass {@cdk.cite G. Moreau, P. Broto, Nuv. J. Chim. 1980, 4, 359 - 360}.
  * 
  * @author Federico
  * @cdk.created 2007-02-08
