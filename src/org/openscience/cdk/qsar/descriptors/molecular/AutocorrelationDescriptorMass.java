@@ -24,6 +24,10 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.matrix.TopologicalMatrix;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -31,12 +35,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.MFAnalyser;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.matrix.TopologicalMatrix;
-import java.util.*;
-import java.lang.Object;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
@@ -84,7 +85,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 		List scalated = new ArrayList();
 
 		for (i = 0; i < natom; i++) {
-			scalated.add(scaledAtomicMasses(container.getAtom(i)));
+			scalated.add(new Double(scaledAtomicMasses(container.getAtom(i))));
 		}
 		return scalated;
 	}
@@ -126,7 +127,9 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 					result.add(masSum[i]);
 					
 				}
-				return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+
+                // TODO: give proper names!
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
 		                result, new String[] {""});
 				
 			}catch(Exception ex){
