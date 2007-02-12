@@ -50,7 +50,13 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
 	private final static double CARBON_MASS = 12.010735896788;
 	
-	
+	/**
+	 * This method gets the scaled atomic masses of atoms in a molecule.
+	 * @param element
+	 * @return
+	 * @throws java.io.IOException
+	 * @throws ClassNotFoundException
+	 */
 	private static double scaledAtomicMasses(IElement element)
 			throws java.io.IOException, ClassNotFoundException {
 
@@ -61,6 +67,13 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	}
 
 	
+/**
+ * This method gets a list o scaled atomic masses.
+ * @param container
+ * @return
+ * @throws java.io.IOException
+ * @throws ClassNotFoundException
+ */
 	private static List listconvertion(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException{
 		int natom = container.getAtomCount();
@@ -75,8 +88,11 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	}
 	
 
-
-		public DescriptorValue calculate(IAtomContainer container) throws CDKException{
+	/**
+	 * This method calculate the ATS Autocorrelation descriptor.
+	 */
+	
+	public DescriptorValue calculate(IAtomContainer container) throws CDKException{
 			try{		
 				List list = listconvertion(container);
 				List list1 = listconvertion(container);
