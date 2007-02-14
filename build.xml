@@ -56,11 +56,6 @@
             <echo message="    ${ANT_HOME}: ${ant.home}" />
             <echo message="       hasAnt16: ${hasAnt16}" />
             <echo message="" />
-            <echo message="JavaDoc Environment:" />
-            <echo message="    SUN JavaDoc: ${sunJavaDoc}" />
-            <echo message="  SUN JavaDoc 6: ${sunJavaDoc6}" />
-            <echo message="  gjdoc JavaDoc: ${gjdocJavaDoc}" />
-            <echo message="" />
             <echo message="CDK Environment:" />
             <echo message="    CDK version: ${version}" />
             <echo message="      build.xml: $Id$" />
@@ -385,22 +380,6 @@
         <target id="dist.init" name="dist.init">
             <mkdir dir="${dist}/jar" />
         </target>
-
-	    <target id="dist-joelib" name="dist-joelib" depends="check, nocompile-joelib, compile-joelib"/>
-	    <target id="nocompile-joelib" name="nocompile-joelib" unless="${joelib.present}">
-	      <echo message="JOELib is not found. Removed depending functionality. JOELib can be downloaded from http://joelib.sf.net/."/>
-	    </target>
-        <target id="compile-joelib" name="compile-joelib" if="${joelib.present}">
-        	<antcall target="compile-module"><param name="module" value="libio-joelib"/></antcall>
-	    </target>
-
-    <target id="dist-jmol" name="dist-jmol" depends="nocompile-jmol, compile-jmol"/>
-    <target id="nocompile-jmol" name="nocompile-jmol" unless="${jmol.present}">
-      <echo message="Jmol is not found. Removed depending functionality. Jmol can be downloaded from http://www.jmol.org/."/>
-    </target>
-    <target id="compile-jmol" name="compile-jmol" if="${jmol.present}">
-    	<antcall target="compile-module"><param name="module" value="io-jmol"/></antcall>
-    </target>
 
     <target id="dist-java3d" name="dist-java3d" depends="nocompile-java3d, compile-java3d"/>
     <target id="nocompile-java3d" name="nocompile-java3d" unless="${java3d.present}">
