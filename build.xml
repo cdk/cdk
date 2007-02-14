@@ -76,8 +76,6 @@
             <echo message="      JAI found: ${jai.present}" />
             <echo message="  XIndice found: ${xindice.present}"/>
             <echo message=" --- optional libraries ---" />
-            <echo message="     Jmol found: ${jmol.present}" />
-            <echo message="   JOELib found: ${joelib.present}" />
             <echo message="" />
             <echo message="Compiling:" />
             <echo message="            for: ${build.compiler}" />
@@ -147,12 +145,6 @@
                 <available file="${lib}/jai_core.jar"/>
               </and>
             </condition>
-            <available property="joelib.present"
-                       classname="joelib.molecule.JOEAtom"
-                       classpath="${lib}/libio/joelib.jar"/>
-            <available property="jmol.present"
-                       classname="org.jmol.api.JmolAdapter"
-                       classpath="${lib}/jmolApis.jar"/>
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>
