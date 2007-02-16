@@ -415,6 +415,7 @@
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-openbabel"/></antcall>
+            <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/></antcall>
@@ -455,6 +456,7 @@
         <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
@@ -510,6 +512,7 @@
                     <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libio-cml.jar"/>
                     <include name="cdk-libioweka.jar"/>
+                    <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
@@ -571,6 +574,7 @@
                     <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libio-cml.jar"/>
                     <include name="cdk-libioweka.jar"/>
+                    <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
@@ -638,6 +642,7 @@
                     <includesfile name="${metainf}/test-structgen.libdepends"/>
                     <includesfile name="${metainf}/test-valencycheck.libdepends"/>
                     <includesfile name="${metainf}/test-weka.libdepends"/>
+                    <includesfile name="${metainf}/test-libiomd.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-core.jar"/>
@@ -661,6 +666,7 @@
                     <include name="cdk-test-structgen.jar"/>
                     <include name="cdk-test-valencycheck.jar"/>
                     <include name="cdk-test-weka.jar"/>
+                    <include name="cdk-test-libiomd.jar"/>
                 </fileset>
             </unjar>
 
@@ -898,6 +904,7 @@
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
             <antcall target="test-module"><param name="module" value="structgen"/></antcall>
+            <antcall target="test-module"><param name="module" value="libiomd"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
