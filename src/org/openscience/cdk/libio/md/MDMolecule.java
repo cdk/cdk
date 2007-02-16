@@ -2,6 +2,7 @@ package org.openscience.cdk.libio.md;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -9,10 +10,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class MDMolecule extends Molecule{
 
 	//List of Residues
-   	private ArrayList<Residue> residues;
+   	private List residues;
 
    	//List of ChargeGroups
-   	private ArrayList<ChargeGroup> chargeGroups;
+   	private List chargeGroups;
 	
 	public MDMolecule() {
 		super();
@@ -22,7 +23,7 @@ public class MDMolecule extends Molecule{
 		super(container);
 	}
 
-	public ArrayList<Residue> getResidues() {
+	public List getResidues() {
 		return residues;
 	}
 
@@ -47,7 +48,7 @@ public class MDMolecule extends Molecule{
 	}
 
 	
-	public ArrayList<ChargeGroup> getChargeGroups() {
+	public List getChargeGroups() {
 		return chargeGroups;
 	}
 

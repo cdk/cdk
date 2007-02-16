@@ -1,6 +1,7 @@
 package org.openscience.cdk.libio.md;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -14,6 +15,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class ChargeGroup extends AtomContainer{
 	private int number;
 	private MDMolecule parentMolecule;
+	private IAtom switchingAtom;
 	
 	/**
 	 * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule
@@ -42,6 +44,16 @@ public class ChargeGroup extends AtomContainer{
 
 	public void setParentMolecule(MDMolecule parentMolecule) {
 		this.parentMolecule = parentMolecule;
+	}
+
+
+	public IAtom getSwitchingAtom() {
+		return switchingAtom;
+	}
+
+
+	public void setSwitchingAtom(IAtom switchingAtom) {
+		this.switchingAtom = switchingAtom;
 	}
 
 }
