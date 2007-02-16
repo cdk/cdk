@@ -39,14 +39,16 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
 	 * Customize Molecule
 	 */
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
-    	if (!(nodeToAdd instanceof Element))
+    	if (!(nodeToAdd instanceof CMLMolecule))
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
     	//The nodeToAdd
-    	Element element = (Element)nodeToAdd;
+    	CMLMolecule molToCustomize = (CMLMolecule)nodeToAdd;
 
     	if ((molecule instanceof MDMolecule)){
         	MDMolecule mdmol = (MDMolecule) molecule;
+        	molToCustomize.setConvention("md:mdMolecule");
+        	molToCustomize.addNamespaceDeclaration("md", "http://www.bioclipse.net/mdmolecule/");
 
         	//Residues
         	if (mdmol.getResidues().size()>0){
@@ -62,7 +64,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		// etc: add number, refs to atoms etc
   
                     //FIXME: add the <molecule> child to root molecule
-                    element.appendChild(resMol);
+            		molToCustomize.appendChild(resMol);
             	}
         	}
 
@@ -79,7 +81,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		// etc: add name, refs to atoms etc
   
                     //FIXME: add the <molecule> child to root molecule
-                    element.appendChild(cgMol);
+            		molToCustomize.appendChild(cgMol);
             	}
         	}
     	}
