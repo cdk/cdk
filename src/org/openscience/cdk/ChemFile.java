@@ -84,7 +84,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 *  Adds a ChemSequence to this container.
 	 *
 	 *@param  chemSequence  The chemSequence to be added to this container
-	 *@see                  #getChemSequences
+	 *@see                  #chemSequences
 	 */
 	public void addChemSequence(IChemSequence chemSequence)
 	{
@@ -102,7 +102,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 *  Removes a ChemSequence from this container.
 	 *
 	 *@param  chemSequence  The chemSequence to be added to this container
-	 *@see                  #getChemSequences
+	 *@see                  #chemSequences
 	 */
 	public void removeChemSequence(int pos)
 	{

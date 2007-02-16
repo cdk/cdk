@@ -292,8 +292,6 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the bond to be retrieved.
 	 *@return         The bondAt value
-	 *@see            #setElectronContainer(int, org.openscience.cdk.interfaces.IElectronContainer)
-     * @see #setElectronContainers(org.openscience.cdk.interfaces.IElectronContainer[])
 	 */
 	public IBond getBond(int number)
 	{
@@ -305,7 +303,6 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the LonePair to be retrieved.
 	 *@return         The lone pair number
-	 *@see            #setElectronContainer
 	 */
 	public ILonePair getLonePair(int number)
 	{
@@ -317,7 +314,6 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@param  number  The position of the SingleElectron to be retrieved.
 	 *@return         The single electron number
-	 *@see            #setElectronContainer
 	 */
 	public ISingleElectron getSingleElectron(int number)
 	{
@@ -637,10 +633,8 @@ public class AtomContainer extends ChemObject
 	 *  Returns the ElectronContainer at position <code>number</code> in the
 	 *  container.
 	 *
-	 *@param  number  The position of the ElectronContainer to be returned.
-	 *@return         The ElectronContainer at position <code>number</code>.
-	 *@see  #setElectronContainer(int, org.openscience.cdk.interfaces.IElectronContainer)
-     * @see #setElectronContainers(org.openscience.cdk.interfaces.IElectronContainer[])
+	 * @param  number  The position of the ElectronContainer to be returned.
+	 * @return         The ElectronContainer at position <code>number</code>.
 	 */
 	public IElectronContainer getElectronContainer(int number)
 	{
@@ -716,7 +710,6 @@ public class AtomContainer extends ChemObject
 	 * Returns the number of ElectronContainers in this Container.
 	 *
 	 * @return    The number of ElectronContainers in this Container
-     * @see       #setElectronContainerCount
 	 */
 	public int getElectronContainerCount()
 	{

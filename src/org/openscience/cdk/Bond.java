@@ -170,7 +170,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *  Sets the array of atoms making up this bond.
 	 *
 	 *@param  atoms  An array of atoms that forms this bond
-	 *@see           #getAtoms
+	 *@see           #atoms
 	 */
 	public void setAtoms(IAtom[] atoms)
 	{
@@ -195,7 +195,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *
 	 *@param  position  The position in this bond where the atom is
 	 *@return           The atom at the specified position
-	 *@see              #setAtomAt
+	 *@see              #setAtom
 	 */
 	public IAtom getAtom(int position)
 	{
@@ -247,7 +247,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *
 	 *@param  atom      The atom to be set
 	 *@param  position  The position in this bond where the atom is to be inserted
-	 *@see              #getAtomAt
+	 *@see              #getAtom
 	 */
 	public void setAtom(IAtom atom, int position)
 	{
