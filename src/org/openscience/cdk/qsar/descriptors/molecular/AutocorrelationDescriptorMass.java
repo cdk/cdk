@@ -1,8 +1,6 @@
-/* $RCSfile$
- *  $Author: egonw $
- *  $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007) $
- *  $Revision: 7636 $
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
+ *  
+ * Copyright (C) 2007  Federico
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,8 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
-
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
@@ -41,14 +37,13 @@ import java.util.List;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
- * to the scaled atomic mass {@cdk.cite G. Moreau, P. Broto, Nuv. J. Chim. 1980, 4, 359 - 360}.
+ * to the scaled atomic mass {@cdk.cite Moreau1980}.
  * 
- * @author Federico
+ * @author      Federico
  * @cdk.created 2007-02-08
- * @cdk.module qsar
- * @cdk.set qsar-descriptors
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  */
-
 public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
 	private final static double CARBON_MASS = 12.010735896788;
@@ -70,14 +65,14 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	}
 
 	
-/**
- * This method gets a list o scaled atomic masses.
- * @param container
- * @return
- * @throws java.io.IOException
- * @throws ClassNotFoundException
- */
-	private static List listconvertion(IAtomContainer container)
+	/**
+	 * This method gets a list o scaled atomic masses.
+	 * @param container
+	 * @return
+	 * @throws java.io.IOException
+	 * @throws ClassNotFoundException
+	 */
+	private static List listConvertion(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException{
 		int natom = container.getAtomCount();
 		int i = 0;
@@ -94,11 +89,10 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	/**
 	 * This method calculate the ATS Autocorrelation descriptor.
 	 */
-	
 	public DescriptorValue calculate(IAtomContainer container) throws CDKException{
 			try{		
-				List list = listconvertion(container);
-				List list1 = listconvertion(container);
+				List list = listConvertion(container);
+				List list1 = listConvertion(container);
 				
 				int natom = container.getAtomCount();
 		
@@ -133,7 +127,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 		                result, new String[] {""});
 				
 			}catch(Exception ex){
-				throw new CDKException(ex.getMessage());
+				throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
 			}
 	}
 			
