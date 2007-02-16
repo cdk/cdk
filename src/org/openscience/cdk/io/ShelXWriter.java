@@ -28,8 +28,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -43,7 +43,6 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
-//import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -172,10 +171,10 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         MFAnalyser mfa = new MFAnalyser(crystal);
         String elemNames = "";
         String elemCounts = "";
-        Vector asortedElements = mfa.getElements();
-        Enumeration elements = asortedElements.elements();
-        while (elements.hasMoreElements()) {
-            String symbol = (String)elements.nextElement();
+        List asortedElements = mfa.getElements();
+        Iterator elements = asortedElements.iterator();
+        while (elements.hasNext()) {
+            String symbol = (String)elements.next();
             elemNames += symbol + "    ".substring(symbol.length());
             String countS = new Integer(mfa.getAtomCount(symbol)).toString();
             elemCounts += countS + "    ".substring(countS.length());

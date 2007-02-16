@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -25,21 +21,18 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -789,7 +782,7 @@ public class MFAnalyser {
 	 * @return    The elements value
 	 * @see       ElementComparator
 	 */
-	public Vector getElements() {
+	public List getElements() {
 		TreeSet elements = new TreeSet(new ElementComparator());
 		for (int f = 0; f < atomContainer.getAtomCount(); f++) {
 			String symbol = atomContainer.getAtom(f).getSymbol();
@@ -797,7 +790,7 @@ public class MFAnalyser {
 				elements.add(symbol);
 			}
 		}
-		Vector results = new Vector();
+		List results = new ArrayList();
 		Iterator iter = elements.iterator();
 		while (iter.hasNext()) {
 			results.add((String) iter.next());
@@ -849,9 +842,9 @@ public class MFAnalyser {
 	 *
 	 * @return    a Hashtable, keys are the elemental symbols and values are their no.
 	 */
-	public Hashtable getFormulaHashtable() {
-		Hashtable formula = new Hashtable();
-		Vector elements = this.getElements();
+	public Map getFormulaHashtable() {
+		Map formula = new HashMap();
+		List elements = this.getElements();
 		for (int i = 0; i < elements.size(); i++) {
 			Integer numOfAtom = new Integer(this.getAtomCount((String) elements.get(i)));
 			formula.put(elements.get(i), numOfAtom);

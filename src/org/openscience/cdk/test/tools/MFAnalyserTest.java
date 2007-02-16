@@ -21,7 +21,7 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -189,7 +189,7 @@ public class MFAnalyserTest extends CDKTestCase {
 
     public void testGetFormulaHashtable() {
 	MFAnalyser mfa=new MFAnalyser(molecule);
-	Hashtable formula = mfa.getFormulaHashtable();
+	Map formula = mfa.getFormulaHashtable();
 	assertEquals(10, ((Integer)formula.get("C")).intValue());
     }
     

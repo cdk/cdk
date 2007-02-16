@@ -34,6 +34,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
@@ -211,9 +212,9 @@ public class ReactionBalancer {
 	 */
 	protected void addMoleculeHashs(org.openscience.cdk.interfaces.IMoleculeSet som, int side, Hashtable hash) {
 		for (int i = 0; i < som.getAtomContainerCount(); i++) {
-			Hashtable molHash = new MFAnalyser(som.getMolecule(i)).getFormulaHashtable();
-			for (Enumeration e = molHash.keys(); e.hasMoreElements(); ) {
-				String symbol = (String) e.nextElement();
+			Map molHash = new MFAnalyser(som.getMolecule(i)).getFormulaHashtable();
+			for (Iterator e = molHash.keySet().iterator(); e.hasNext(); ) {
+				String symbol = (String) e.next();
 				double elementCount = ((Integer) molHash.get(symbol)).doubleValue();
 				if (hash.containsKey(symbol)) {
 					double count = ((Double) hash.get(symbol)).doubleValue();
@@ -245,7 +246,7 @@ public class ReactionBalancer {
 		
 		double molsToAdd = (chargeDifference) / ((double) molCharge);
 		
-		Hashtable molHash = new MFAnalyser(mol).getFormulaHashtable();
+		Map molHash = new MFAnalyser(mol).getFormulaHashtable();
 
 		if (chargeDifference == 0) {
 			return;
@@ -294,7 +295,7 @@ public class ReactionBalancer {
 		}
 
 		// The Hashtable of the molecule used for balancing
-		Hashtable molHash = new MFAnalyser(mol).getFormulaHashtable();
+		Map molHash = new MFAnalyser(mol).getFormulaHashtable();
 
 		// How many elements do we need (negative, if more educts than products)
 		double elementCount = ((Double) diff.get(element)).doubleValue() / ((Integer) molHash.get(element)).doubleValue();
@@ -416,9 +417,9 @@ public class ReactionBalancer {
 	 *@param  elementCount  The number of occurences of the hash
 	 *@param  hash          The Hashtable to use for update
 	 */
-	protected void updateDiffHashtable(double elementCount, Hashtable hash) {
-		for (Enumeration e = hash.keys(); e.hasMoreElements(); ) {
-			String element = (String) e.nextElement();
+	protected void updateDiffHashtable(double elementCount, Map hash) {
+		for (Iterator e = hash.keySet().iterator(); e.hasNext(); ) {
+			String element = (String) e.next();
 			double tempStoich = -elementCount * ((Integer) hash.get(element)).doubleValue();
 			if (diff.containsKey(element)) {
 				tempStoich += ((Double) diff.get(element)).doubleValue();

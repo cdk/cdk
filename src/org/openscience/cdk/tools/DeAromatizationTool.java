@@ -28,13 +28,13 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
-
-import java.util.Hashtable;
-import java.util.Iterator;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -70,7 +70,7 @@ public class DeAromatizationTool {
 				ring.getBond(i).setOrder(1);
 		}
 		boolean result = false;
-		Hashtable elementCounts = new MFAnalyser(ring).getFormulaHashtable();
+		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
 		if (ring.getRingSize() == 6) {
 			if (((Integer)elementCounts.get("C")).intValue() == 6) {
 				result = DeAromatizationTool.deAromatizeBenzene(ring);
