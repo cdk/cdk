@@ -35,12 +35,10 @@
       <antcall target="test-module"><param name="module" value="core"/></antcall>
       <antcall target="test-module"><param name="module" value="standard"/></antcall>
       <antcall target="test-module"><param name="module" value="io"/></antcall>
-      <antcall target="test-module"><param name="module" value="io-jmol"/></antcall>
       <antcall target="test-module"><param name="module" value="extra"/></antcall>
       <antcall target="test-module"><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
-      <antcall target="test-module"><param name="module" value="libio-joelib"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
       <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
       <antcall target="test-module"><param name="module" value="smiles"/></antcall>
