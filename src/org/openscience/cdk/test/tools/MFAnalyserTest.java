@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -63,6 +60,19 @@ public class MFAnalyserTest extends CDKTestCase {
 		return new TestSuite(MFAnalyserTest.class);
 	}
 
+	public void testMFAnalyser_String_IAtomContainer()	{
+		assertNotNull(new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer()));
+	}
+
+	public void testMFAnalyser_IAtomContainer()	{
+		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer()));
+	}
+	
+	public void testMFAnalyser_IAtomContainer_boolean()	{
+		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), true));
+		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), false));
+	}
+	
 	public void testGetMolecularFormula()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
 		IAtomContainer ac = mfa.getAtomContainer();
@@ -83,6 +93,14 @@ public class MFAnalyserTest extends CDKTestCase {
 
         mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
 		assertEquals(2, (int)mfa.getDBE());
+	}
+	
+	public void testElements() throws Exception{
+        MFAnalyser mfa = new MFAnalyser("C10H22", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(2, (int)mfa.getElements().size());
+
+        mfa = new MFAnalyser("C10H16O", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals(3, (int)mfa.getElements().size());
 	}
 	
     public void testGetAtomContainer() {
