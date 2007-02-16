@@ -2,6 +2,7 @@ cdk-core.jar
 cdk-interfaces.jar
 cdk-standard.jar
 cdk-data.jar
+cdk-extra.jar
 cdk-libiomd.jar
 cdk-io.jar
 cdk-libio-cml.jar

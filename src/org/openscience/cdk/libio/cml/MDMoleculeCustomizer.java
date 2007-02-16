@@ -44,7 +44,7 @@ import org.xmlcml.cml.element.CMLMolecule;
  * Customize persistence of MDMolecule by adding support for residues and chargegroups
  * 
  * @author ola
- *
+ * @cdk.module libiomd
  */
 public class MDMoleculeCustomizer implements ICMLCustomizer {
 
