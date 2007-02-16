@@ -74,15 +74,15 @@ public interface IStrand extends IAtomContainer {
 
 	/**
 	 * Set a unique id for this Strand
-	 * @return
+	 * @return the id for this strand
 	 */
 	public String getStrandID();
 
 	/**
 	 * Get a unique id for this Strand
-	 * @return
 	 */
 	public void setStrandID(String strandID);
+	
 	/**
 	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
 	 * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.

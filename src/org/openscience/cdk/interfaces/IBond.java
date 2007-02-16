@@ -52,7 +52,7 @@ public interface IBond extends IElectronContainer {
 	 * Sets the array of atoms making up this bond.
 	 *
 	 * @param  atoms  An array of atoms that forms this bond
-	 * @see           #getAtoms
+	 * @see           #atoms
 	 */
 	public void setAtoms(IAtom[] atoms);
 
