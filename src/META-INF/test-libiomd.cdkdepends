@@ -1,0 +1,8 @@
+cdk-core.jar
+cdk-interfaces.jar
+cdk-standard.jar
+cdk-data.jar
+cdk-libiomd.jar
+cdk-io.jar
+cdk-libio-cml.jar
+cdk-test-core.jar

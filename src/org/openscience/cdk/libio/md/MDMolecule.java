@@ -31,6 +31,9 @@ import java.util.List;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+/**
+ * @cdk.module libiomd
+ */
 public class MDMolecule extends Molecule{
 
 	/**

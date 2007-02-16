@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Residues are used to partition molecules in distinct pieces.
  * 
  * @author ola
- *
+ * @cdk.module libiomd
  */
 public class Residue extends AtomContainer{
 

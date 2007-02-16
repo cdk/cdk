@@ -40,6 +40,9 @@ import org.openscience.cdk.libio.md.Residue;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
+/**
+ * @cdk.module test-libiomd
+ */
 public class MDMoleculeTest extends CDKTestCase {
 
     private LoggingTool logger;
