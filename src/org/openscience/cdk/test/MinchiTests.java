@@ -1,4 +1,5 @@
-/* 
+/* $Revision: 7636 $ $Author: ospjuth $ $Date: 2007-01-04 17:46:10 +0000 (Thu, 04 Jan 2007) $
+ * 
  * Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
