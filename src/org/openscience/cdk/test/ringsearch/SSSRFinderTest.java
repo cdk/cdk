@@ -52,10 +52,30 @@ public class SSSRFinderTest extends CDKTestCase {
 		return new TestSuite(SSSRFinderTest.class);
 	}
 
+	public void testSSSRFinder()
+	{
+		SSSRFinder finder = new SSSRFinder();
+		assertNotNull(finder);
+	}
+
+	public void testSSSRFinder_IAtomContainer()
+	{
+		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+		SSSRFinder finder = new SSSRFinder(molecule);
+		assertNotNull(finder);
+	}
+
 	public void testFindSSSR()
 	{
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+		assertEquals(2, ringSet.getAtomContainerCount());
+	}
+
+	public void testFindSSSR_IAtomContainer()
+	{
+		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+		IRingSet ringSet = new SSSRFinder().findSSSR(molecule);
 		assertEquals(2, ringSet.getAtomContainerCount());
 	}
 
