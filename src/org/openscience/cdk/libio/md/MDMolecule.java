@@ -9,6 +9,11 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 public class MDMolecule extends Molecule{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3129626782945020908L;
+
 	//List of Residues
    	private List residues;
 
@@ -27,7 +32,7 @@ public class MDMolecule extends Molecule{
 		return residues;
 	}
 
-	public void setResidues(ArrayList<Residue> residues) {
+	public void setResidues(List residues) {
 		this.residues = residues;
 	}
 
@@ -36,7 +41,7 @@ public class MDMolecule extends Molecule{
 	 * @param residue Residue to add
 	 */
 	public void addResidue(Residue residue){
-		if (residues==null) residues=new ArrayList<Residue>();
+		if (residues==null) residues=new ArrayList();
 
 		//Check if exists
 		if (residues.contains(residue)){
@@ -52,7 +57,7 @@ public class MDMolecule extends Molecule{
 		return chargeGroups;
 	}
 
-	public void setChargeGroups(ArrayList<ChargeGroup> chargeGroups) {
+	public void setChargeGroups(List chargeGroups) {
 		this.chargeGroups = chargeGroups;
 	}
 
@@ -61,7 +66,7 @@ public class MDMolecule extends Molecule{
 	 * @param residue Residue to add
 	 */
 	public void addChargeGroup(ChargeGroup chargeGroup){
-		if (chargeGroups==null) chargeGroups=new ArrayList<ChargeGroup>();
+		if (chargeGroups==null) chargeGroups=new ArrayList();
 
 		//Check if exists
 		if (chargeGroups.contains(chargeGroup)){
