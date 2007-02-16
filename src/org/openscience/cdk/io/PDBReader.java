@@ -258,7 +258,7 @@ public class PDBReader extends DefaultChemObjectReader {
 								String strandName=oAtom.getChainID();
 								oStrand = new PDBStrand();
 								oStrand.setStrandName(String.valueOf(strandName));
-								oStrand.setStrandID(String.valueOf(chain));
+								oStrand.setID(String.valueOf(chain));
 							}
 
 							// search for an existing monomer or create a new one.
