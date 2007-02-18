@@ -23,8 +23,6 @@
 	<classpathentry kind="lib" path="jar/javacc.jar"/>
 	<classpathentry kind="lib" path="jar/jfontchooser.jar"/>
 	<classpathentry kind="lib" path="jar/jgrapht-0.6.0.jar"/>
-	<classpathentry kind="lib" path="jar/jmolApis.jar"/>
-	<classpathentry kind="lib" path="jar/jmolIO.jar"/>
 	<classpathentry kind="lib" path="jar/jniInChI-0.1.1.jar"/>
 	<classpathentry kind="lib" path="jar/JRI.jar"/>
 	<classpathentry kind="lib" path="jar/jumbo52.jar"/>
@@ -38,10 +36,11 @@
 	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
 	<classpathentry kind="lib" path="jar/xmldb.jar"/>
 	<classpathentry kind="lib" path="jar/xom-1.1.jar"/>
-	<classpathentry kind="lib" path="jar/xom-1.1b2.jar"/>
 	<classpathentry kind="lib" path="pluginjar/aminoacidtemplates.jar"/>
 	<classpathentry kind="lib" path="pluginjar/dadmlbrowser.jar"/>
 	<classpathentry kind="lib" path="pluginjar/dirbrowser.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="develjar/com-sun-javadoc.jar"/>
+	<classpathentry kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
