@@ -109,7 +109,8 @@ public class MakeJavafilesFiles {
     		for (int i=files.length;i>0;i--) {
     			processJavaSourceFiles(files[i-1]);
     		}
-    	} else if (path.isFile() && path.getPath().endsWith(".java")) {
+    	} else if (path.isFile() && path.getPath().endsWith(".java") &&
+    			   (path.getPath().indexOf("net/sf") == -1)) {
     		String[] moduleAndSet = getModuleAndSet(path);
     		if (moduleAndSet == null) {
     			System.out.println("Something wrong with the Java source file: " + path);    			
