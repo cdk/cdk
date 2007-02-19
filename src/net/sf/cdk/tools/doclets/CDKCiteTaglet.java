@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004-2006  The Chemistry Development Kit (CDK) project
+/* $Revision: 7327 $ $Author: egonw $ $Date: 2006-11-20 20:22:51 +0100 (Mon, 20 Nov 2006) $
+ * 
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,12 +16,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package net.sf.cdk.tools;
+package net.sf.cdk.tools.doclets;
 
-import com.sun.tools.doclets.Taglet;
-import com.sun.javadoc.*;
+import java.io.File;
 import java.util.Map;
 import java.util.StringTokenizer;
+
+import net.sf.cdk.tools.bibtex.BibTeXMLEntry;
+import net.sf.cdk.tools.bibtex.BibTeXMLFile;
+import nu.xom.Builder;
+import nu.xom.Document;
+
+import com.sun.javadoc.Tag;
+import com.sun.tools.doclets.Taglet;
 
 /**
  * Taglet that expands inline cdk.cite tags into a weblink to the CDK
@@ -44,6 +48,19 @@ import java.util.StringTokenizer;
 public class CDKCiteTaglet implements Taglet {
     
     private static final String NAME = "cdk.cite";
+    
+    private static BibTeXMLFile bibtex = null;
+    
+    static {
+    	try {
+        	Builder parser = new Builder();
+    		Document doc = parser.build(new File("doc/refs/cheminf.bibx"));
+    		bibtex = new BibTeXMLFile(doc.getRootElement());
+    	} catch (Exception exc) {
+    		System.out.println("Horrible problem: " + exc.getMessage());
+    		exc.printStackTrace();
+    	}
+    }
     
     public String getName() {
         return NAME;
@@ -114,16 +131,24 @@ public class CDKCiteTaglet implements Taglet {
             StringTokenizer tokenizer = new StringTokenizer(citation, separator);
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/"
-                       + token + "\">" + token + "</a>";
+                BibTeXMLEntry entry = bibtex.getEntry(token);
+                if (entry != null) {
+                	result += entry.toHTML();
+                } else {
+                	result += token + " (not found in db)";
+                }
                 if (tokenizer.hasMoreTokens()) {
                     result += ", ";
                 }
             }
         } else {
             citation = citation.trim();
-            result += "<a href=\"http://almost.cubic.uni-koeln.de/cdk/cdk_top/bib/"
-                   + citation + "\">" + citation + "</a>";
+            BibTeXMLEntry entry = bibtex.getEntry(citation);
+            if (entry != null) {
+            	result += entry.toHTML();
+            } else {
+            	result += citation + " (not found in db)";
+            }
         }
         return result;
     }

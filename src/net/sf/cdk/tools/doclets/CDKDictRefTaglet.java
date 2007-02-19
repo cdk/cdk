@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2004  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package net.sf.cdk.tools;
+package net.sf.cdk.tools.doclets;
 
 import com.sun.tools.doclets.Taglet;
 import com.sun.javadoc.*;

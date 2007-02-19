@@ -53,8 +53,17 @@
         <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
-                 windowtitle="CDK API - version ${TODAY_SVN}">
-            <classpath refid="project.class.path" />
+                 windowtitle="CDK API - version ${TODAY_SVN}"
+                 verbose="true">
+            <classpath>
+                <pathelement location="." />
+                <fileset dir="jar">
+                    <include name="*.jar" />
+                </fileset>
+                 <dirset dir="src">
+                     <include name="net/**/*"/>
+                 </dirset>
+            </classpath>
             <tag name="cdk.set" scope="all" description="Belongs to the set:" />
             <tag name="cdk.keyword" scope="all" description="Keywords:" />
             <tag name="cdk.created" scope="all" description="Created on:" />
@@ -63,12 +72,12 @@
             <tag name="cdk.builddepends" scope="all" description="Required library to be able to compile this class:" />
             <tag name="cdk.todo" scope="all" description="To do:" />
             <tag name="cdk.license" scope="all" description="License:" />
-            <taglet name="net.sf.cdk.tools.CDKModuleTaglet" path="doc/javadoc" />
-            <taglet name="net.sf.cdk.tools.CDKCiteTaglet" path="doc/javadoc" />
-            <taglet name="net.sf.cdk.tools.CDKBugTaglet" path="doc/javadoc" />
-            <taglet name="net.sf.cdk.tools.CDKDictRefTaglet" path="doc/javadoc" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKCiteTaglet" path="jar/xom-1.1.jar:src" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKModuleTaglet" path="jar/xom-1.1.jar:src" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKBugTaglet" path="jar/xom-1.1.jar:src" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKDictRefTaglet" path="jar/xom-1.1.jar:src" />
             <packageset dir="${src}" defaultexcludes="yes">
-                <include name="org/openscience/cdk/**" />
+                <include name="org/openscience/cdk/ringsearch/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
             </packageset>
         </javadoc>
@@ -157,6 +166,8 @@
   <target name="compileTaglets.MacOSX" id="compileTaglets.MacOSX" if="isMacOsX">
     <javac srcdir="doc/javadoc/source" destdir="doc/javadoc"
            includes="*Taglet.java" debug="on" optimize="off"/>
+    <javac srcdir="src" destdir="src"
+           includes="*Taglet.java" debug="on" optimize="off"/>
   </target>
 
   <target name="compileTaglets.Other" id="compileTaglets.Other" unless="isMacOsX">
@@ -168,6 +179,20 @@
         </fileset>
         <fileset dir="${java.ext.dirs}/../../../lib">
           <include name="tools.jar" />
+        </fileset>
+      </classpath>
+    </javac>
+    <javac srcdir="src" destdir="src"
+         includes="net/sf/cdk/tools/**/*.java" debug="on" optimize="off">
+      <classpath>
+        <fileset dir="${java.ext.dirs}">
+          <include name="tools.jar" />
+        </fileset>
+        <fileset dir="${java.ext.dirs}/../../../lib">
+          <include name="tools.jar" />
+        </fileset>
+        <fileset dir="jar/">
+          <include name="xom-1.1.jar" />
         </fileset>
       </classpath>
     </javac>
