@@ -125,10 +125,9 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		// etc: add name, refs to atoms etc
 
               		//Append chgrpNo
-            		CMLScalar residueNumber=new CMLScalar(number);
-            		residueNumber.addAttribute(new Attribute("dictRef", "md:chgrpNo"));
-            		residueNumber.appendChild(String.valueOf(number));
-            		cgMol.appendChild(residueNumber);
+            		CMLScalar cgNo=new CMLScalar(number);
+            		cgNo.addAttribute(new Attribute("dictRef", "md:chgrpNo"));
+            		cgMol.appendChild(cgNo);
 
             		//Append atoms from chargeGroup as it is an AC
             		CMLAtomArray ar=new CMLAtomArray();
