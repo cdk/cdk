@@ -29,6 +29,7 @@ package org.openscience.cdk.libio.cml;
 
 import java.util.Iterator;
 
+import nu.xom.Attribute;
 import nu.xom.Element;
 
 import org.openscience.cdk.exception.CDKException;
@@ -38,7 +39,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.libio.md.ChargeGroup;
 import org.openscience.cdk.libio.md.MDMolecule;
 import org.openscience.cdk.libio.md.Residue;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+import org.xmlcml.cml.element.AbstractAtomArray;
+import org.xmlcml.cml.element.CMLAtom;
+import org.xmlcml.cml.element.CMLAtomArray;
 import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLScalar;
+import org.xmlcml.cml.tools.MoleculeTool;
 
 /**
  * Customize persistence of MDMolecule by adding support for residues and chargegroups
@@ -77,20 +84,35 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
         	molToCustomize.setConvention("md:mdMolecule");
         	molToCustomize.addNamespaceDeclaration("md", "http://www.bioclipse.net/mdmolecule/");
 
-        	//Residues
+    		Convertor conv = new Convertor(true,null);
+
+    		//Residues
         	if (mdmol.getResidues().size()>0){
             	Iterator it=mdmol.getResidues().iterator();
             	while (it.hasNext()){
             		Residue residue=(Residue) it.next();
             		int number=residue.getNumber();
 
-            		//FIXME: persist the Residue
-            		CMLMolecule resMol = new CMLMolecule();
+                    CMLMolecule resMol = new CMLMolecule();
             		resMol.setDictRef("md:residue");
             		resMol.setTitle(residue.getName());
-            		// etc: add number, refs to atoms etc
-  
-                    //FIXME: add the <molecule> child to root molecule
+
+            		//Append resNo
+            		CMLScalar residueNumber=new CMLScalar(number);
+            		residueNumber.addAttribute(new Attribute("dictRef", "md:resNo"));
+            		residueNumber.appendChild(String.valueOf(number));
+            		resMol.appendChild(residueNumber);
+
+            		//Append atoms
+            		CMLAtomArray ar=new CMLAtomArray();
+            		for (int i=0; i<residue.getAtomCount();i++){
+//            			CMLAtom cmlAtom=new CMLAtom();
+//            			cmlAtom.setId(residue.getID());
+            			ar.addAtom(conv.cdkAtomToCMLAtom(residue, residue.getAtom(i)));
+//            			ar.addAtom(cmlAtom);
+            		}
+            		resMol.addAtomArray(ar);
+            		
             		molToCustomize.appendChild(resMol);
             	}
         	}
@@ -106,8 +128,28 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		CMLMolecule cgMol = new CMLMolecule();
             		cgMol.setDictRef("md:chargeGroup");
             		// etc: add name, refs to atoms etc
-  
-                    //FIXME: add the <molecule> child to root molecule
+
+              		//Append chgrpNo
+            		CMLScalar residueNumber=new CMLScalar(number);
+            		residueNumber.addAttribute(new Attribute("dictRef", "md:chgrpNo"));
+            		residueNumber.appendChild(String.valueOf(number));
+            		cgMol.appendChild(residueNumber);
+
+            		//Append atoms from chargeGroup as it is an AC
+            		CMLAtomArray ar=new CMLAtomArray();
+            		for (int i=0; i<chargeGroup.getAtomCount();i++){
+//            			CMLAtom cmlAtom=new CMLAtom();
+//            			cmlAtom.setId(residue.getID());
+            			ar.addAtom(conv.cdkAtomToCMLAtom(chargeGroup, chargeGroup.getAtom(i)));
+//            			ar.addAtom(cmlAtom);
+            		}
+            		cgMol.addAtomArray(ar);
+            		
+            		//Append switching atom
+            		CMLAtom swAtom=conv.cdkAtomToCMLAtom(chargeGroup, chargeGroup.getSwitchingAtom());
+            		swAtom.addAttribute(new Attribute("dictRef", "md:switchingAtom"));
+            		cgMol.addAtom(swAtom,true);
+
             		molToCustomize.appendChild(cgMol);
             	}
         	}

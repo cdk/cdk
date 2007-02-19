@@ -25,6 +25,7 @@
  */
 package org.openscience.cdk.test.libio.md;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
 import junit.framework.Test;
@@ -32,7 +33,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.md.ChargeGroup;
 import org.openscience.cdk.libio.md.MDMolecule;
@@ -156,12 +159,54 @@ public class MDMoleculeTest extends CDKTestCase {
         System.out.println("****************************** testMDMoleculeCustomization()");
         System.out.println(cmlContent);
         System.out.println("******************************");
-        assertTrue(cmlContent.indexOf("<property") != -1 &&
-        		   cmlContent.indexOf("xmlns:md") != -1);
-        assertTrue(cmlContent.indexOf("#residue\"") != -1);
-        assertTrue(cmlContent.indexOf("#chargegroup\"") != -1);
+        assertTrue(cmlContent.indexOf("xmlns:md") != -1);
+        assertTrue(cmlContent.indexOf("md:residue\"") != -1);
+        assertTrue(cmlContent.indexOf("md:resNo \"") != -1);
+        assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
+        assertTrue(cmlContent.indexOf("md:cgNo \"") != -1);
+        assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
-  
+
+    public void testMDMoleculeCustomizationRoundtripping() {
+        StringWriter writer = new StringWriter();
+
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        try {
+            MDMolecule molecule=makeMDBenzene();
+            cmlWriter.write(molecule);
+
+            String serializedMol=writer.toString();
+            
+            CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
+            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+            if (!(file instanceof MDMolecule)) {
+            	fail();
+			}
+        	MDMolecule molecule2 = (MDMolecule) file;
+
+        	assertEquals(molecule.getChargeGroups().size(), molecule2.getChargeGroups().size());
+        	assertEquals(molecule.getResidues().size(), molecule2.getResidues().size());
+            
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testMDMoleculeCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        System.out.println("****************************** testMDMoleculeCustomization()");
+        System.out.println(cmlContent);
+        System.out.println("******************************");
+        assertTrue(cmlContent.indexOf("xmlns:md") != -1);
+        assertTrue(cmlContent.indexOf("md:residue\"") != -1);
+        assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
+        assertTrue(cmlContent.indexOf("#cgNumber \"") != -1);
+        assertTrue(cmlContent.indexOf("#switchingAtom\"") != -1);
+    }
+
     
     /**
      * Create a benzene molecule with 2 residues and 2 chargegroups
@@ -206,6 +251,7 @@ public class MDMoleculeTest extends CDKTestCase {
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
         ChargeGroup chg1=new ChargeGroup(ac3,0,mol);
+        chg1.setSwitchingAtom(mol.getAtom(1));
         mol.addChargeGroup(chg1);
 
         AtomContainer ac4= new AtomContainer();
@@ -213,7 +259,8 @@ public class MDMoleculeTest extends CDKTestCase {
         ac4.addAtom(mol.getAtom(3));
         ac4.addAtom(mol.getAtom(4));
         ac4.addAtom(mol.getAtom(5));
-        ChargeGroup chg2=new ChargeGroup(ac4,0,mol);
+        ChargeGroup chg2=new ChargeGroup(ac4,1,mol);
+        chg2.setSwitchingAtom(mol.getAtom(4));
         mol.addChargeGroup(chg2);
 
         return mol;
