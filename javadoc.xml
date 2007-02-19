@@ -53,8 +53,7 @@
         <javadoc destdir="${javadoc.dir}"
                  author="true" version="true" use="true"
                  public="true"
-                 windowtitle="CDK API - version ${TODAY_SVN}"
-                 verbose="true">
+                 windowtitle="CDK API - version ${TODAY_SVN}">
             <classpath>
                 <pathelement location="." />
                 <fileset dir="jar">
