@@ -136,6 +136,7 @@ public class CDKCiteTaglet implements Taglet {
                 	result += entry.toHTML();
                 } else {
                 	result += token + " (not found in db)";
+                	System.out.println("CDKCiteERROR: entry not found in database: " + token);
                 }
                 if (tokenizer.hasMoreTokens()) {
                     result += ", ";
@@ -148,6 +149,7 @@ public class CDKCiteTaglet implements Taglet {
             	result += entry.toHTML();
             } else {
             	result += citation + " (not found in db)";
+            	System.out.println("CDKCiteERROR: entry not found in database: " + citation);
             }
         }
         return result;
