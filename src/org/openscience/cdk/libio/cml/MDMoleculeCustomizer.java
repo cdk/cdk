@@ -94,6 +94,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		//Append resNo
             		CMLScalar residueNumber=new CMLScalar(number);
             		residueNumber.addAttribute(new Attribute("dictRef", "md:resNo"));
+            		resMol.addScalar(residueNumber);
 
             		//Append atoms
             		CMLAtomArray ar=new CMLAtomArray();
