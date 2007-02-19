@@ -27,7 +27,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 
 /**
- * See <a href="http://www.emsl.pnl.gov/docs/nwchem/"></a>
+ * See <a href="http://www.emsl.pnl.gov/docs/nwchem/">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

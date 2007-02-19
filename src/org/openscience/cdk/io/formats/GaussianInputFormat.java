@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.gaussian.com/g_ur/m_input.htm"></a>
+ * See <a href="http://www.gaussian.com/g_ur/m_input.htm">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

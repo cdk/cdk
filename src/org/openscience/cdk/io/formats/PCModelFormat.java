@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.serenasoft.com/"></a>
+ * See <a href="http://www.serenasoft.com/">here</a>.
  * 
  * @author Miguel Rojas
  * 

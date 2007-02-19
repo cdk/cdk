@@ -34,7 +34,7 @@ package org.openscience.cdk.io.formats;
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2004-10-25
- * @cdk.bug   1495502
+ * @cdk.bug     1495502
  */
 public interface IChemFormat extends IResourceFormat {
 

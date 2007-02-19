@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html"></a>
+ * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html">here</a>.
  * 
  * @author Miguel Rojas
  * 

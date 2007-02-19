@@ -27,7 +27,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 
 /**
- * See <a href="http://www.schrodinger.com/"></a>
+ * See <a href="http://www.schrodinger.com/">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.ch.ic.ac.uk/local/organic/t2_mmod.html"></a>
+ * See <a href="http://www.ch.ic.ac.uk/local/organic/t2_mmod.html">here</a>.
  * 
  * @author Miguel Rojas
  * 

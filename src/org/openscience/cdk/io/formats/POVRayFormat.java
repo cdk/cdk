@@ -25,7 +25,7 @@ package org.openscience.cdk.io.formats;
 
 
 /**
- * See <a href="http://www.povray.org/"></a>
+ * See <a href="http://www.povray.org/">here</a>.
  * 
  * @author Miguel Rojas
  * 

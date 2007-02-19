@@ -29,7 +29,7 @@ import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.hyper.com/"></a>
+ * See <a href="http://www.hyper.com/">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

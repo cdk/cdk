@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html"></a>
+ * See <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">here</a>.
  * 
  * @author Miguel Rojas
  * 

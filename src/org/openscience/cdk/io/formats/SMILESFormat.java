@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.daylight.com/smiles/f_smiles.html"></a>
+ * See <a href="http://www.daylight.com/smiles/f_smiles.html">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

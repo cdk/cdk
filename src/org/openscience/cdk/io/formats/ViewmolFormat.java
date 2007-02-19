@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://viewmol.sourceforge.net/"></a>
+ * See <a href="http://viewmol.sourceforge.net/">here</a>.
  * 
  * @author Miguel Rojas
  * 

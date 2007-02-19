@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html"></a>
+ * See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html">here</a>.
  * 
  * @author Miguel Rojas
  * 

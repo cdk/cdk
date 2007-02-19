@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://dasher.wustl.edu/tinker/"></a>
+ * See <a href="http://dasher.wustl.edu/tinker/">here</a>.
  * 
  * @author Miguel Rojas
  * 

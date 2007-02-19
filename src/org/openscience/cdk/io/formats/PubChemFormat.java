@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd"></a>
+ * See <a href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

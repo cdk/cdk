@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://dock.compbio.ucsf.edu"></a>
+ * See <a href="http://dock.compbio.ucsf.edu">here</a>.
  * 
  * @author Miguel Rojas
  * 

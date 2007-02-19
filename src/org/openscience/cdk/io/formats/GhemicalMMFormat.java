@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://www.uku.fi/~thassine/ghemical/"></a>
+ * See <a href="http://www.uku.fi/~thassine/ghemical/">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats
