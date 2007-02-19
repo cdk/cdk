@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a http://www.iupac.org/inchi/"></a>
+ * See <a href="http://www.iupac.org/inchi/">here</a>.
  * 
  * @cdk.module io
  * @cdk.set    io-formats

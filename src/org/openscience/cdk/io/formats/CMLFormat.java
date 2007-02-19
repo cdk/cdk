@@ -26,7 +26,8 @@ package org.openscience.cdk.io.formats;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage"></a>
+ * See <a href="http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage">here</a>.
+ * 
  * @cdk.module io
  * @cdk.set    io-formats
  */
