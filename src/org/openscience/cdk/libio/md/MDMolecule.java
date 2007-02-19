@@ -25,7 +25,6 @@
 package org.openscience.cdk.libio.md;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.openscience.cdk.Molecule;
