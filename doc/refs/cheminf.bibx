@@ -821,10 +821,8 @@ Method </bibtex:title>
           <bibtex:pages>512-529</bibtex:pages>
       </bibtex:article>
   </bibtex:entry>
-</bibtex:file>
 
-
-<bibtex:entry id="LIU98">
+  <bibtex:entry id="LIU98">
       <bibtex:article>
           <bibtex:author>Liu, S. and Cao, C. and Li, Z.
           </bibtex:author>
@@ -837,4 +835,5 @@ Method </bibtex:title>
           <bibtex:pages>387-394</bibtex:pages>
       </bibtex:article>
   </bibtex:entry>
+  
 </bibtex:file>
