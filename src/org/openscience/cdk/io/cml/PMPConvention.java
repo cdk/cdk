@@ -27,7 +27,10 @@ package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import javax.vecmath.Vector3d;
+
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.xml.sax.Attributes;
 
 /***
@@ -42,8 +45,8 @@ import org.xml.sax.Attributes;
  */
 public class PMPConvention extends CMLCoreModule {
 
-    public PMPConvention(IChemicalDocumentObject cdo) {
-        super(cdo);
+    public PMPConvention(IChemFile chemFile) {
+        super(chemFile);
     }
 
     public PMPConvention(ICMLModule conv) {
@@ -51,28 +54,15 @@ public class PMPConvention extends CMLCoreModule {
         logger.debug("New PMP Convention!");
     }
 
-    public IChemicalDocumentObject returnCDO() {
-        return this.cdo;
-    }
-
     public void startDocument() {
         super.startDocument();
-        cdo.startObject("Frame");
+//        cdo.startObject("Frame");
+        currentChemModel = currentChemFile.getBuilder().newChemModel();
     }
 
-    public void endDocument() {
-        cdo.endObject("Frame");
-        super.endDocument();
-    }
-    
-    
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("PMP element: name");
         super.startElement(xpath, uri, local, raw, atts);
-    }
-
-    public void endElement(CMLStack xpath, String uri, String local, String raw) {
-        super.endElement(xpath, uri, local, raw);
     }
 
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
@@ -85,32 +75,42 @@ public class PMPConvention extends CMLCoreModule {
             if ("P 21 21 21 (1)".equals(s)) {
                 sg = "P 2_1 2_1 2_1";
             }
-            cdo.setObjectProperty("Crystal", "spacegroup", sg);
+//            cdo.setObjectProperty("Crystal", "spacegroup", sg);
+            ((ICrystal)currentMolecule).setSpaceGroup(sg);
         } else if (xpath.toString().endsWith("floatArray/") &&
            (elementTitle.equals("a") || elementTitle.equals("b") ||
             elementTitle.equals("c"))) {
-            String axis = elementTitle + "-axis";
-            cdo.startObject(axis);
-            try {
-                StringTokenizer st = new StringTokenizer(s);
-                logger.debug("Tokens: " + st.countTokens());
-                if (st.countTokens() > 2) {
-                    String token = st.nextToken();
-                    logger.debug("FloatArray (Token): " + token);
-                    cdo.setObjectProperty(axis, "x", token);
-                    token = st.nextToken();
-                    logger.debug("FloatArray (Token): " + token);
-                    cdo.setObjectProperty(axis, "y", token);
-                    token = st.nextToken();
-                    logger.debug("FloatArray (Token): " + token);
-                    cdo.setObjectProperty(axis, "z", token);
-                } else {
-                    logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
-                }
-            } catch (Exception e) {
-                logger.debug("PMP Convention error: " + e.toString());
+        	StringTokenizer st = new StringTokenizer(s);
+        	if (st.countTokens() > 2) {
+        		if (elementTitle.equals("a")) {
+        			((ICrystal)currentMolecule).setA(
+        				new Vector3d(
+        					Double.parseDouble(st.nextToken()),
+        					Double.parseDouble(st.nextToken()),
+        					Double.parseDouble(st.nextToken())
+        				)
+        			);
+        		} else if (elementTitle.equals("b")) {
+        			((ICrystal)currentMolecule).setB(
+       					new Vector3d(
+    						Double.parseDouble(st.nextToken()),
+    						Double.parseDouble(st.nextToken()),
+    						Double.parseDouble(st.nextToken())
+       					)
+        			);
+        		} else if (elementTitle.equals("c")) {
+        			((ICrystal)currentMolecule).setC(
+       					new Vector3d(
+      						Double.parseDouble(st.nextToken()),
+      						Double.parseDouble(st.nextToken()),
+      						Double.parseDouble(st.nextToken())
+       					)
+        			);
+        		}
+        	} else {
+                logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
             }
-            cdo.endObject(axis);
+//            cdo.endObject(axis);
         } else {
             super.characterData(xpath, ch, start, length);
         }

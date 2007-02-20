@@ -25,7 +25,8 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.xml.sax.Attributes;
 
 /**
@@ -37,8 +38,8 @@ public class CMLReactionModule extends CMLCoreModule {
 
     private String objectType;
 
-	public CMLReactionModule(IChemicalDocumentObject cdo) {
-        super(cdo);
+	public CMLReactionModule(IChemFile chemFile) {
+        super(chemFile);
     }
 
     public CMLReactionModule(ICMLModule conv) {
@@ -46,54 +47,65 @@ public class CMLReactionModule extends CMLCoreModule {
         logger.debug("New CML-Reaction Module!");
     }
 
-    public IChemicalDocumentObject returnCDO() {
-        return this.cdo;
-    }
-
-    public void startDocument() {
-        super.startDocument();
-    }
-
-    public void endDocument() {
-        super.endDocument();
-    }
-    
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
-            cdo.startObject("Reaction");
+//            cdo.startObject("Reaction");
+        	if (currentReactionSet == null)
+        		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
+            currentReaction = currentChemFile.getBuilder().newReaction();
             String id = atts.getValue("id");
-            if(id != null)
-            	cdo.setObjectProperty("Reaction", "id", id);
+            if(id != null) currentReaction.setID(id);
+//            	cdo.setObjectProperty("Reaction", "id", id);
         } else if ("reactionList".equals(local)) {
-            cdo.startObject("ReactionSet");
+//            cdo.startObject("ReactionSet");
+            currentReactionSet = currentChemFile.getBuilder().newReactionSet();
             String id = atts.getValue("id");
-            if(id != null)
-            	cdo.setObjectProperty("reactionList", "id", id);
+            if(id != null) currentReactionSet.setID(id);
+//            	cdo.setObjectProperty("reactionList", "id", id);
         } else if ("reactant".equals(local)) {
-            cdo.startObject("Reactant");
+//            cdo.startObject("Reactant");
+        	if (currentReaction == null) {
+        		if (currentReactionSet == null)
+            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
+                currentReaction = currentChemFile.getBuilder().newReaction();
+        	}
+            currentMolecule = currentChemFile.getBuilder().newMolecule();
             objectType = "Reactant";
             String id = atts.getValue("id");
-            if(id != null)
-            	cdo.setObjectProperty("Reactant", "id", id);
+            if(id != null) currentMolecule.setID(id);
+//            	cdo.setObjectProperty("Reactant", "id", id);
         } else if ("product".equals(local)) {
-            cdo.startObject("Product");
+//            cdo.startObject("Product");
+        	if (currentReaction == null) {
+        		if (currentReactionSet == null)
+            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
+                currentReaction = currentChemFile.getBuilder().newReaction();
+        	}
+            currentMolecule = currentChemFile.getBuilder().newMolecule();
             objectType = "Product";
             String id = atts.getValue("id");
-            if(id != null)
-            	cdo.setObjectProperty("Product", "id", id);
+            if(id != null) currentMolecule.setID(id);
+//            	cdo.setObjectProperty("Product", "id", id);
         } else if ("substance".equals(local)) {
-            cdo.startObject("Agent");
+//            cdo.startObject("Agent");
+        	if (currentReaction == null) {
+        		if (currentReactionSet == null)
+            		currentReactionSet = currentChemFile.getBuilder().newReactionSet();
+                currentReaction = currentChemFile.getBuilder().newReaction();
+        	}
+            currentMolecule = currentChemFile.getBuilder().newMolecule();
             objectType = "Agent";
             String id = atts.getValue("id");
-            if(id != null)
-            	cdo.setObjectProperty("Agent", "id", id);
+            if(id != null) currentMolecule.setID(id);
+//            	cdo.setObjectProperty("Agent", "id", id);
         } else if ("molecule".equals(local)) {
             // do nothing for now
             super.newMolecule();
             String id = atts.getValue("id");
-            if(id != null)
-                cdo.setObjectProperty(objectType, "id", id);
-            
+            if(id != null) {
+//                cdo.setObjectProperty(objectType, "id", id);
+                currentMolecule.setID(id);
+            }            
         } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
@@ -101,15 +113,22 @@ public class CMLReactionModule extends CMLCoreModule {
 
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if ("reaction".equals(local)) {
-            cdo.endObject("Reaction");
+//            cdo.endObject("Reaction");
+        	currentReactionSet.addReaction(currentReaction);
         } else if ("reactionList".equals(local)) {
-            cdo.endObject("ReactionSet");
+//            cdo.endObject("ReactionSet");
+        	currentChemModel.setReactionSet(currentReactionSet);
+            currentChemSequence.addChemModel(currentChemModel);
+            /* FIXME: this should be when document is closed! */ 
         } else if ("reactant".equals(local)) {
-            cdo.endObject("Reactant");
+//            cdo.endObject("Reactant");
+        	currentReaction.addReactant((IMolecule)currentMolecule);
         } else if ("product".equals(local)) {
-            cdo.endObject("Product");
+//            cdo.endObject("Product");
+        	currentReaction.addProduct((IMolecule)currentMolecule);
         } else if ("substance".equals(local)) {
-            cdo.endObject("Agent");
+//            cdo.endObject("Agent");
+        	currentReaction.addAgent((IMolecule)currentMolecule);
         } else if ("molecule".equals(local)) {
             logger.debug("Storing Molecule");
             super.storeData();
@@ -119,7 +138,4 @@ public class CMLReactionModule extends CMLCoreModule {
         }
     }
 
-    public void characterData(CMLStack xpath, char ch[], int start, int length) {
-        super.characterData(xpath, ch, start, length);
-    }
 }

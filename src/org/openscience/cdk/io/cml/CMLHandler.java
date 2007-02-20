@@ -23,7 +23,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -59,9 +59,9 @@ public class CMLHandler extends DefaultHandler {
      *
      * @param cdo The Chemical Document Object in which data is stored
      **/
-    public CMLHandler(IChemicalDocumentObject cdo) {
+    public CMLHandler(IChemFile chemFile) {
         logger = new LoggingTool(this);
-        conv = new CMLCoreModule(cdo);
+        conv = new CMLCoreModule(chemFile);
         userConventions = new Hashtable();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
@@ -95,10 +95,6 @@ public class CMLHandler extends DefaultHandler {
         conv.endElement(xpath, uri, local, raw);
         xpath.pop();
         conventionStack.pop();
-    }
-
-    public IChemicalDocumentObject returnCDO() {
-        return conv.returnCDO();
     }
 
     public void startDocument() {

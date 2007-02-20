@@ -25,7 +25,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
@@ -43,8 +43,8 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     private String frame_energy;
     private LoggingTool logger;
 
-    public JMOLANIMATIONConvention(IChemicalDocumentObject cdo) {
-        super(cdo);
+    public JMOLANIMATIONConvention(IChemFile chemFile) {
+        super(chemFile);
         logger = new LoggingTool(this);
         current = UNKNOWN;
     }
@@ -54,27 +54,16 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         logger = new LoggingTool(this);
     }
 
-    public IChemicalDocumentObject returnCDO() {
-        return this.cdo;
-    }
-
-    public void startDocument() {
-        super.startDocument();
-    }
-
-    public void endDocument() {
-        super.endDocument();
-    }
-
-
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
             logger.debug("Oke, JMOLANIMATION seems to be kicked in :)");
-            cdo.startObject("Animation");
+//            cdo.startObject("Animation");
+            currentChemSequence = currentChemFile.getBuilder().newChemSequence();
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("molecule")) {
-            cdo.startObject("Frame");
+//            cdo.startObject("Frame");
+        	currentChemModel = currentChemFile.getBuilder().newChemModel();
             logger.debug("New frame being parsed.");
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {
@@ -101,16 +90,19 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = local;
         if (current == ENERGY) {
-            cdo.setObjectProperty("Frame", "energy", frame_energy);
+//            cdo.setObjectProperty("Frame", "energy", frame_energy);
                 // + " " + units);
+        	// FIXME: does not have a ChemFileCDO equivalent
             current = UNKNOWN;
             frame_energy = "";
         } else if (name.equals("list")) {
             super.endElement(xpath, uri, local, raw);
-            cdo.endObject("Animation");
+//            cdo.endObject("Animation");
+            currentChemFile.addChemSequence(currentChemSequence);
         } else if (name.equals("molecule")) {
             super.endElement(xpath, uri, local, raw);
-            cdo.endObject("Frame");
+//            cdo.endObject("Frame");
+            // nothing done in the CD upon this event
         } else {
             super.endElement(xpath, uri, local, raw);
         }

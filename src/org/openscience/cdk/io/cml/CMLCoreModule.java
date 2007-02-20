@@ -26,14 +26,34 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 
@@ -51,8 +71,24 @@ public class CMLCoreModule implements ICMLModule {
 
     protected org.openscience.cdk.tools.LoggingTool logger;
     protected final String SYSTEMID = "CML-1999-05-15";
-    protected IChemicalDocumentObject cdo;
+//    protected IChemicalDocumentObject cdo;
+
+    // data model to store things into
+    protected IChemFile currentChemFile;
+	
+    protected IAtomContainer currentMolecule;
+    protected IMoleculeSet currentMoleculeSet;
+    protected IChemModel currentChemModel;
+    protected IChemSequence currentChemSequence;
+    protected IReactionSet currentReactionSet;
+    protected IReaction currentReaction;
+    protected IAtom currentAtom;
+    protected IBond currentBond;
+    protected IStrand currentStrand;
+    protected IMonomer currentMonomer;
+    protected Map atomEnumeration;
     
+    // helper fields    
     protected int atomCounter;
     protected List elsym;
     protected List eltitles;
@@ -94,25 +130,40 @@ public class CMLCoreModule implements ICMLModule {
     protected double[] unitcellparams;
     protected int crystalScalar;
     
-    private Vector3d aAxis;
-    private Vector3d bAxis;
-    private Vector3d cAxis;
+//    private Vector3d aAxis;
+//    private Vector3d bAxis;
+//    private Vector3d cAxis;
     boolean cartesianAxesSet = false;
     
-    public CMLCoreModule(IChemicalDocumentObject cdo) {
+    public CMLCoreModule(IChemFile chemFile) {
         logger = new LoggingTool(this);
-        this.cdo = cdo;
+		this.currentChemFile = chemFile;
     }
     
     public CMLCoreModule(ICMLModule conv) {
+    	logger = new LoggingTool(this);
         inherit(conv);
     }
 
     public void inherit(ICMLModule convention) {
         if (convention instanceof CMLCoreModule) {
             CMLCoreModule conv = (CMLCoreModule)convention;
+            
+            // copy the data model
+            this.currentChemFile = conv.currentChemFile;
+            this.currentMolecule = conv.currentMolecule;
+            this.currentMoleculeSet = conv.currentMoleculeSet;
+            this.currentChemModel = conv.currentChemModel;
+            this.currentChemSequence = conv.currentChemSequence;
+            this.currentReactionSet = conv.currentReactionSet;
+            this.currentReaction = conv.currentReaction;
+            this.currentAtom = conv.currentAtom;
+            this.currentStrand = conv.currentStrand;
+            this.currentMonomer = conv.currentMonomer;
+            this.atomEnumeration = conv.atomEnumeration;
+            
+            // copy the intermediate fields
             this.logger = conv.logger;
-            this.cdo = conv.returnCDO();
             this.BUILTIN = conv.BUILTIN;
             this.atomCounter = conv.atomCounter;
             this.elsym = conv.elsym;
@@ -149,8 +200,8 @@ public class CMLCoreModule implements ICMLModule {
         }
     }
 
-    public IChemicalDocumentObject returnCDO() {
-        return (IChemicalDocumentObject)this.cdo;
+    public IChemFile returnChemFile() {
+        return currentChemFile;
     }
     
     /**
@@ -217,21 +268,50 @@ public class CMLCoreModule implements ICMLModule {
         unitcellparams = new double[6];
         cartesianAxesSet = false;
         crystalScalar = 0;
-        aAxis = new Vector3d();
-        bAxis = new Vector3d();
-        cAxis = new Vector3d();
+//        aAxis = new Vector3d();
+//        bAxis = new Vector3d();
+//        cAxis = new Vector3d();
     }
 
     public void startDocument() {
         logger.info("Start XML Doc");
-        cdo.startDocument();
+        // cdo.startDocument();
+        currentChemSequence = currentChemFile.getBuilder().newChemSequence();
+        currentChemModel = currentChemFile.getBuilder().newChemModel();
+        currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        currentMolecule = currentChemFile.getBuilder().newMolecule();
+        atomEnumeration = new HashMap();
+        
         newMolecule();
         BUILTIN = "";
         curRef = 0;
     }
     
     public void endDocument() {
-        cdo.endDocument();
+//        cdo.endDocument();
+    	if (currentReactionSet != null && currentReactionSet.getReactionCount() == 0
+    			&& currentReaction != null) {
+    		logger.debug("Adding reaction to ReactionSet");
+    		currentReactionSet.addReaction(currentReaction);
+    	}
+    	if (currentReactionSet != null && currentChemModel.getReactionSet() == null) {
+    		logger.debug("Adding SOR to ChemModel");
+    		currentChemModel.setReactionSet(currentReactionSet);
+    	}
+    	if (currentMoleculeSet != null && currentMoleculeSet.getMoleculeCount() != 0) {
+    		logger.debug("Adding reaction to MoleculeSet");
+    		currentChemModel.setMoleculeSet(currentMoleculeSet);
+    	}
+    	if (currentChemSequence.getChemModelCount() == 0) {
+    		logger.debug("Adding ChemModel to ChemSequence");
+    		currentChemSequence.addChemModel(currentChemModel);
+    	}
+    	if (currentChemFile.getChemSequenceCount() == 0) {
+    		// assume there is one non-animation ChemSequence
+//    		addChemSequence(currentChemSequence);
+    		currentChemFile.addChemSequence(currentChemSequence);
+    	}
+    	
         logger.info("End XML Doc");
     }
     
@@ -444,45 +524,57 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("molecule".equals(name)) {
             newMolecule();
             BUILTIN = "";
-            cdo.startObject("Molecule");
+//            cdo.startObject("Molecule");
+            if (currentChemModel == null) currentChemModel = currentChemFile.getBuilder().newChemModel();
+            if (currentMoleculeSet == null) currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+            currentMolecule = currentChemFile.getBuilder().newMolecule();
             for (int i = 0; i < atts.getLength(); i++) {
                 if (atts.getQName(i).equals("id")) {
-                    cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
+//                    cdo.setObjectProperty("Molecule", "id", atts.getValue(i));
+                	currentMolecule.setID(atts.getValue(i));
                 } else if (atts.getQName(i).equals("dictRef")) {
-                	cdo.setObjectProperty("Molecule", "dictRef", atts.getValue(i));
+//                	cdo.setObjectProperty("Molecule", "dictRef", atts.getValue(i));
+//                	FIXME: there is no code for this in CHemFileCDK: a bug?
                 }
             }
         } else if ("crystal".equals(name)) {
             newCrystalData();
-            cdo.startObject("Crystal");
+//            cdo.startObject("Crystal");
+            currentMolecule = currentChemFile.getBuilder().newCrystal(currentMolecule);
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
                 if (att.equals("z")) {
-                    cdo.setObjectProperty("Crystal", "z", atts.getValue(i));
+//                    cdo.setObjectProperty("Crystal", "z", atts.getValue(i));
+                	((ICrystal)currentMolecule).setZ(Integer.parseInt(atts.getValue(i)));
                 }
             }
         } else if ("symmetry".equals(name)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
                 if (att.equals("spaceGroup")) {
-                    cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
+//                    cdo.setObjectProperty("Crystal", "spacegroup", atts.getValue(i));
+                	((ICrystal)currentMolecule).setSpaceGroup(atts.getValue(i));
                 }
             }
         } else if ("identifier".equals(name)) {
         	if (atts.getValue("convention") != null && 
         		atts.getValue("convention").equals("iupac:inchi") &&
         		atts.getValue("value") != null) {
-                cdo.setObjectProperty("Molecule", "inchi", atts.getValue("value"));
+//                cdo.setObjectProperty("Molecule", "inchi", atts.getValue("value"));
+        		currentMolecule.setProperty(CDKConstants.INCHI, atts.getValue("value"));
             }
         } else if ("scalar".equals(name)) {
             if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
         } else if ("label".equals(name)) {
             if (xpath.endsWith("atomType", "label")) {
-            	cdo.setObjectProperty("Atom", "atomTypeLabel", atts.getValue("value"));
+//            	cdo.setObjectProperty("Atom", "atomTypeLabel", atts.getValue("value"));
+            	currentAtom.setAtomTypeName(atts.getValue("value"));
             }
         } else if ("list".equals(name)) {
-            cdo.startObject("MoleculeSet");
+//            cdo.startObject("MoleculeSet");
+        	currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+            currentMolecule = currentChemFile.getBuilder().newMolecule();
         }
     }
 
@@ -546,7 +638,16 @@ public class CMLCoreModule implements ICMLModule {
             }
         } else if ("molecule".equals(name)) {
             storeData();
-            cdo.endObject("Molecule");
+//            cdo.endObject("Molecule");
+            if (currentMolecule instanceof IMolecule) {
+                logger.debug("Adding molecule to set");
+                currentMoleculeSet.addMolecule((IMolecule)currentMolecule);
+                logger.debug("#mols in set: " + currentMoleculeSet.getMoleculeCount());
+            } else if (currentMolecule instanceof ICrystal) {
+                logger.debug("Adding crystal to chemModel");
+                currentChemModel.setCrystal((ICrystal)currentMolecule);
+                currentChemSequence.addChemModel(currentChemModel);
+            }
         } else if ("crystal".equals(name)) {
             if (crystalScalar > 0) {
                 // convert unit cell parameters to cartesians
@@ -554,31 +655,33 @@ public class CMLCoreModule implements ICMLModule {
                     unitcellparams[0], unitcellparams[1], unitcellparams[2],
                     unitcellparams[3], unitcellparams[4], unitcellparams[5]
                 );
-                aAxis = axes[0];
-                bAxis = axes[1];
-                cAxis = axes[2];
                 cartesianAxesSet = true;
-                cdo.startObject("a-axis");
-                cdo.setObjectProperty("a-axis", "x", new Double(aAxis.x).toString());
-                cdo.setObjectProperty("a-axis", "y", new Double(aAxis.y).toString());
-                cdo.setObjectProperty("a-axis", "z", new Double(aAxis.z).toString());
-                cdo.endObject("a-axis");
-                cdo.startObject("b-axis");
-                cdo.setObjectProperty("b-axis", "x", new Double(bAxis.x).toString());
-                cdo.setObjectProperty("b-axis", "y", new Double(bAxis.y).toString());
-                cdo.setObjectProperty("b-axis", "z", new Double(bAxis.z).toString());
-                cdo.endObject("b-axis");
-                cdo.startObject("c-axis");
-                cdo.setObjectProperty("c-axis", "x", new Double(cAxis.x).toString());
-                cdo.setObjectProperty("c-axis", "y", new Double(cAxis.y).toString());
-                cdo.setObjectProperty("c-axis", "z", new Double(cAxis.z).toString());
-                cdo.endObject("c-axis");
+//                cdo.startObject("a-axis");
+//                cdo.setObjectProperty("a-axis", "x", new Double(aAxis.x).toString());
+//                cdo.setObjectProperty("a-axis", "y", new Double(aAxis.y).toString());
+//                cdo.setObjectProperty("a-axis", "z", new Double(aAxis.z).toString());
+//                cdo.endObject("a-axis");
+//                cdo.startObject("b-axis");
+//                cdo.setObjectProperty("b-axis", "x", new Double(bAxis.x).toString());
+//                cdo.setObjectProperty("b-axis", "y", new Double(bAxis.y).toString());
+//                cdo.setObjectProperty("b-axis", "z", new Double(bAxis.z).toString());
+//                cdo.endObject("b-axis");
+//                cdo.startObject("c-axis");
+//                cdo.setObjectProperty("c-axis", "x", new Double(cAxis.x).toString());
+//                cdo.setObjectProperty("c-axis", "y", new Double(cAxis.y).toString());
+//                cdo.setObjectProperty("c-axis", "z", new Double(cAxis.z).toString());
+//                cdo.endObject("c-axis");
+                ((ICrystal)currentMolecule).setA(axes[0]);
+                ((ICrystal)currentMolecule).setB(axes[1]);
+                ((ICrystal)currentMolecule).setC(axes[2]);
             } else {
                 logger.error("Could not find crystal unit cell parameters");
             }
-            cdo.endObject("Crystal");
+//            cdo.endObject("Crystal");
         } else if ("list".equals(name)) {
-            cdo.endObject("MoleculeSet");
+//            cdo.endObject("MoleculeSet");
+            currentChemModel.setMoleculeSet(currentMoleculeSet);
+            currentChemSequence.addChemModel(currentChemModel);
         } else if ("coordinate3".equals(name)) {
             if (BUILTIN.equals("xyz3")) {
                 logger.debug("New coord3 xyz3 found: ", currentChars);
@@ -797,9 +900,12 @@ public class CMLCoreModule implements ICMLModule {
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
-                	cdo.setObjectProperty("Molecule", DICTREF, cData); 
+//                	cdo.setObjectProperty("Molecule", DICTREF, cData);
+                	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else if (DICTREF.equals("cdk:molecularProperty")) {
-                	cdo.setObjectProperty("MolecularProperty", elementTitle, cData);
+                	// FIXME: this should go into the CDKConvention thingy, I think
+//                	cdo.setObjectProperty("MolecularProperty", elementTitle, cData);
+                	currentMolecule.setProperty(elementTitle, cData);
                 }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);
@@ -881,9 +987,12 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("name".equals(name)) {
             if (xpath.endsWith("molecule", "name")) {
             	if (DICTREF.length() > 0) {
-            		cdo.setObjectProperty("Molecule", DICTREF, cData);
+//            		cdo.setObjectProperty("Molecule", DICTREF, cData);
+            		// FIXME: no idea what to do here
+            		logger.error("No idea what to do ...");
             	} else {
-            		cdo.setObjectProperty("Molecule", "Name", cData);
+//            		cdo.setObjectProperty("Molecule", "Name", cData);
+            		currentMolecule.setProperty(CDKConstants.TITLE, cData);
             	}
             }
         } else {
@@ -910,7 +1019,8 @@ public class CMLCoreModule implements ICMLModule {
 
     protected void storeData() {
         if (inchi != null) {
-            cdo.setObjectProperty("Molecule", "inchi", inchi);
+//            cdo.setObjectProperty("Molecule", "inchi", inchi);
+        	currentMolecule.setProperty(CDKConstants.INCHI, inchi);
         }
         storeAtomData();
         storeBondData();
@@ -1040,20 +1150,37 @@ public class CMLCoreModule implements ICMLModule {
 
         for (int i = 0; i < atomCounter; i++) {
             logger.info("Storing atom: ", i);
-            cdo.startObject("Atom");
+//            cdo.startObject("Atom");
+            currentAtom = currentChemFile.getBuilder().newAtom("H");
+            logger.debug("Atom # " + atomCounter);
             if (hasID) {
-                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
+//                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
+            	logger.debug("id: ", (String)elid.get(i));
+                currentAtom.setID((String)elid.get(i));
+                atomEnumeration.put((String)elid.get(i), currentAtom);
             }
             if (hasTitles) {
                 if (hasSymbols) {
                     String symbol = (String)elsym.get(i);
                     if (symbol.equals("Du") || symbol.equals("Dummy")) {
-                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
+//                        cdo.setObjectProperty("PseudoAtom", "label", (String)eltitles.get(i));
+                    	if (!(currentAtom instanceof IPseudoAtom)) {
+                            currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                            if (hasID)
+                            	atomEnumeration.put((String)elid.get(i), currentAtom);
+                        }
+                        ((IPseudoAtom)currentAtom).setLabel((String)eltitles.get(i));
                     } else {
-                        cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+//                        cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+                    	// FIXME: huh?
+                    	if (eltitles.get(i) != null)
+                    		currentAtom.setProperty(CDKConstants.TITLE, (String)eltitles.get(i));
                     }
                 } else {
-                    cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+//                    cdo.setObjectProperty("Atom", "title", (String)eltitles.get(i));
+                	// FIXME: huh?
+                	if (eltitles.get(i) != null)
+                		currentAtom.setProperty(CDKConstants.TITLE, (String)eltitles.get(i));
                 }
             }
 
@@ -1063,61 +1190,110 @@ public class CMLCoreModule implements ICMLModule {
                 if (symbol.equals("Du") || symbol.equals("Dummy")) {
                     symbol = "R";
                 }
-                cdo.setObjectProperty("Atom", "type", symbol);
+//                cdo.setObjectProperty("Atom", "type", symbol);
+                if (symbol.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
+                    currentAtom = currentChemFile.getBuilder().newPseudoAtom(currentAtom);
+                    if (hasID)
+                    	atomEnumeration.put((String)elid.get(i), currentAtom);
+                }
+                currentAtom.setSymbol(symbol);
+                try{
+                	IsotopeFactory.getInstance(currentAtom.getBuilder()).configure(currentAtom);
+                }catch(Exception ex){
+                	logger.warn("Could not configure atom");
+                }
             }
 
             if (has3D) {
-                cdo.setObjectProperty("Atom", "x3", (String)x3.get(i));
-                cdo.setObjectProperty("Atom", "y3", (String)y3.get(i));
-                cdo.setObjectProperty("Atom", "z3", (String)z3.get(i));
+//                cdo.setObjectProperty("Atom", "x3", (String)x3.get(i));
+//                cdo.setObjectProperty("Atom", "y3", (String)y3.get(i));
+//                cdo.setObjectProperty("Atom", "z3", (String)z3.get(i));
+            	if (x3.get(i) != null &&
+            		y3.get(i) != null &&
+            		z3.get(i) != null) {
+            		currentAtom.setPoint3d(
+           				new Point3d(
+          					Double.parseDouble((String)x3.get(i)),
+          					Double.parseDouble((String)y3.get(i)),
+            				Double.parseDouble((String)z3.get(i))
+            			)
+            		);
+            	}
             }
 
             if (has3Dfract) {
                 // ok, need to convert fractional into eucledian coordinates
-                cdo.setObjectProperty("Atom", "xFract", (String)xfract.get(i));
-                cdo.setObjectProperty("Atom", "yFract", (String)yfract.get(i));
-                cdo.setObjectProperty("Atom", "zFract", (String)zfract.get(i));
+//                cdo.setObjectProperty("Atom", "xFract", (String)xfract.get(i));
+//                cdo.setObjectProperty("Atom", "yFract", (String)yfract.get(i));
+//                cdo.setObjectProperty("Atom", "zFract", (String)zfract.get(i));
+                currentAtom.setFractionalPoint3d(
+               		new Point3d(
+               			Double.parseDouble((String)xfract.get(i)),
+               			Double.parseDouble((String)yfract.get(i)),
+               			Double.parseDouble((String)zfract.get(i))
+               		)
+               	);
             }
 
             if (hasFormalCharge) {
-                cdo.setObjectProperty("Atom", "formalCharge", 
-                                      (String)formalCharges.get(i));
+//                cdo.setObjectProperty("Atom", "formalCharge", 
+//                                      (String)formalCharges.get(i));
+                currentAtom.setFormalCharge(Integer.parseInt((String)formalCharges.get(i)));
             }
 
             if (hasPartialCharge) {
                 logger.debug("Storing partial atomic charge...");
-                cdo.setObjectProperty("Atom", "partialCharge", 
-                                      (String)partialCharges.get(i));
+//                cdo.setObjectProperty("Atom", "partialCharge", 
+//                                      (String)partialCharges.get(i));
+                currentAtom.setCharge(Double.parseDouble((String)partialCharges.get(i)));
             }
 
             if (hasHCounts) {
-                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
+//                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
+            	// FIXME: the hCount in CML is the total of implicit *and* explicit
+            	currentAtom.setHydrogenCount(Integer.parseInt((String)hCounts.get(i)));
             }
 
             if (has2D) {
-                if (x2.get(i) != null)
-                    cdo.setObjectProperty("Atom", "x2", (String)x2.get(i));
-                if (y2.get(i) != null)
-                    cdo.setObjectProperty("Atom", "y2", (String)y2.get(i));
+                if (x2.get(i) != null && y2.get(i) != null) {
+//                    cdo.setObjectProperty("Atom", "x2", (String)x2.get(i));
+//                    cdo.setObjectProperty("Atom", "y2", (String)y2.get(i));
+                	currentAtom.setPoint2d(
+                		new Point2d(
+                			Double.parseDouble((String)x2.get(i)),
+                			Double.parseDouble((String)y2.get(i))
+               			)
+                	);
+                }
             }
             
             if (hasDictRefs) {
-                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
+//                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
+            	if (atomDictRefs.get(i) != null)
+            		currentAtom.setProperty("org.openscience.cdk.dict", (String)atomDictRefs.get(i));
             }
 
             if (hasSpinMultiplicities && spinMultiplicities.get(i) != null) {
-                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
+//                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
+            	int unpairedElectrons = Integer.parseInt((String)spinMultiplicities.get(i))-1;
+                for (int sm=0; sm<unpairedElectrons; sm++) {
+                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newSingleElectron(currentAtom));
+                }
             }
 
             if (hasOccupancies && occupancies.get(i) != null) {
-                cdo.setObjectProperty("Atom", "occupanciy", (String)occupancies.get(i));
+//                cdo.setObjectProperty("Atom", "occupanciy", (String)occupancies.get(i));
+            	// FIXME: this has no ChemFileCDO equivalent, not even if spelled correctly
             }
 
             if (hasIsotopes) {
-                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.get(i));
+//                cdo.setObjectProperty("Atom", "massNumber", (String)isotope.get(i));
+            	if (isotope.get(i) != null)
+            		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
 
-            cdo.endObject("Atom");
+//            cdo.endObject("Atom");
+            currentMolecule.addAtom(currentAtom);
         }
         if (elid.size() > 0) {
             // assume this is the current working list
@@ -1134,7 +1310,7 @@ public class CMLCoreModule implements ICMLModule {
 
         if ((bondARef1.size() == bondCounter) && 
             (bondARef2.size() == bondCounter)) {
-            logger.debug("About to add bond info to ", cdo.getClass().getName());
+            logger.debug("About to add bond info...");
 
             Iterator orders = order.iterator();
             Iterator ids = bondid.iterator();
@@ -1143,39 +1319,60 @@ public class CMLCoreModule implements ICMLModule {
             Iterator stereos = bondStereo.iterator();
 
             while (bar1s.hasNext()) {
-                cdo.startObject("Bond");
-                if (ids.hasNext()) {
-                    cdo.setObjectProperty("Bond", "id", (String)ids.next());
-                }
-                cdo.setObjectProperty("Bond", "atom1", 
-                                      new Integer(bondElid.indexOf(
-                                                          (String)bar1s.next())).toString());
-                cdo.setObjectProperty("Bond", "atom2", 
-                                      new Integer(bondElid.indexOf(
-                                                          (String)bar2s.next())).toString());
+//                cdo.startObject("Bond");
+//                if (ids.hasNext()) {
+//                    cdo.setObjectProperty("Bond", "id", (String)ids.next());
+//                }
+//                cdo.setObjectProperty("Bond", "atom1", 
+//                                      new Integer(bondElid.indexOf(
+//                                                          (String)bar1s.next())).toString());
+//                cdo.setObjectProperty("Bond", "atom2", 
+//                                      new Integer(bondElid.indexOf(
+//                                                          (String)bar2s.next())).toString());
+                IAtom a1 = (IAtom)atomEnumeration.get((String)bar1s.next());
+            	IAtom a2 = (IAtom)atomEnumeration.get((String)bar2s.next());
+            	currentBond = currentChemFile.getBuilder().newBond(a1, a2);
+            	if (ids.hasNext()) {
+            		currentBond.setID((String)ids.next());
+            	}
 
                 if (orders.hasNext()) {
                     String bondOrder = (String)orders.next();
                     
                     if ("S".equals(bondOrder)) {
-                        cdo.setObjectProperty("Bond", "order", "1");
+//                        cdo.setObjectProperty("Bond", "order", "1");
+                    	currentBond.setOrder(CDKConstants.BONDORDER_SINGLE);
                     } else if ("D".equals(bondOrder)) {
-                        cdo.setObjectProperty("Bond", "order", "2");
+//                        cdo.setObjectProperty("Bond", "order", "2");
+                    	currentBond.setOrder(CDKConstants.BONDORDER_DOUBLE);
                     } else if ("T".equals(bondOrder)) {
-                        cdo.setObjectProperty("Bond", "order", "3");
+//                        cdo.setObjectProperty("Bond", "order", "3");
+                    	currentBond.setOrder(CDKConstants.BONDORDER_TRIPLE);
                     } else if ("A".equals(bondOrder)) {
-                        cdo.setObjectProperty("Bond", "order", "1.5");
+//                        cdo.setObjectProperty("Bond", "order", "1.5");
+                    	currentBond.setOrder(CDKConstants.BONDORDER_AROMATIC);
+                    	currentBond.setFlag(CDKConstants.ISAROMATIC, true);
                     } else {
-                        cdo.setObjectProperty("Bond", "order", bondOrder);
+//                        cdo.setObjectProperty("Bond", "order", bondOrder);
+                    	currentBond.setOrder(Double.parseDouble(bondOrder));
                     }
                 }
 
                 if (stereos.hasNext()) {
-                    cdo.setObjectProperty("Bond", "stereo", 
-                                          (String)stereos.next());
+//                    cdo.setObjectProperty("Bond", "stereo", 
+//                                          (String)stereos.next());
+                	String nextStereo = (String)stereos.next();
+                    if ("H".equals(nextStereo)) {
+                    	currentBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
+                    } else if ("W".equals(nextStereo)) {
+                    	currentBond.setStereo(CDKConstants.STEREO_BOND_UP);
+                    } else if (nextStereo != null){
+                    	logger.warn("Cannot interpret stereo information: " + nextStereo);
+                    }
                 }
 
-                cdo.endObject("Bond");
+//                cdo.endObject("Bond");
+                currentMolecule.addBond(currentBond);
             }
         }
         newBondData();

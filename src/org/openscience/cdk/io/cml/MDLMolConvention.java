@@ -25,7 +25,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.xml.sax.Attributes;
 
 /**
@@ -37,35 +37,23 @@ import org.xml.sax.Attributes;
  */
 public class MDLMolConvention extends CMLCoreModule {
 
-    public MDLMolConvention(IChemicalDocumentObject cdo) {
-        super(cdo);
+    public MDLMolConvention(IChemFile chemFile) {
+        super(chemFile);
     }
 
     public MDLMolConvention(ICMLModule conv) {
         super(conv);
     }
 
-    public IChemicalDocumentObject returnCDO() {
-        return this.cdo;
-    }
-
     public void startDocument() {
         super.startDocument();
-        cdo.startObject("Frame");
-    }
-
-    public void endDocument() {
-        cdo.endObject("Frame");
-        super.endDocument();
+//        cdo.startObject("Frame");
+        currentChemModel = currentChemFile.getBuilder().newChemModel();
     }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("MDLMol element: name");
         super.startElement(xpath, uri, local, raw, atts);
-    }
-
-    public void endElement(CMLStack xpath, String uri, String local, String raw) {
-        super.endElement(xpath, uri, local, raw);
     }
 
     public void characterData(CMLStack xpath, char ch[], int start, int length) {

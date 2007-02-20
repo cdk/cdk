@@ -25,7 +25,7 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.xml.sax.Attributes;
 
 /**
@@ -44,7 +44,7 @@ public interface ICMLModule{
   void endElement(CMLStack xpath, String uri, String local, String raw);
   void characterData(CMLStack xpath, char ch[], int start, int length);
   
-  IChemicalDocumentObject returnCDO();
+  IChemFile returnChemFile();
 
   void inherit(ICMLModule conv);
   

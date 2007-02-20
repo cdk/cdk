@@ -50,7 +50,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.cml.ChemFileCDO;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -724,7 +723,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		CMLWriter cmlWriter = new CMLWriter(output);
         cmlWriter.write(mol1);
         CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
-        IAtomContainer mol2=((ChemFileCDO)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        IAtomContainer mol2=((IChemFile)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol2);
         String cmlSmiles = sg.createSMILES(new Molecule(mol2));
         assertEquals(molSmiles,cmlSmiles);        

@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ *
+ * Copyright (C) 2005-2007  Egon Willighagen <egonw@sci.kun.nl>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,14 +25,13 @@ import java.util.Hashtable;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.io.cml.cdopi.CDOAcceptedObjects;
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -48,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
 */ 
-public class EventChemFileCDO implements IChemicalDocumentObject {
+public class EventCMLHandler extends CMLHandler {
     
 	private IChemObjectBuilder builder;
     private IAtomContainer currentMolecule;
@@ -72,8 +68,9 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
     * Constructs an iterating-abled CDO. After reading one molecule it
     * fires a frameRead event.
     */
-    public EventChemFileCDO(DefaultEventChemObjectReader eventReader,
+    public EventCMLHandler(DefaultEventChemObjectReader eventReader,
     		                IChemObjectBuilder builder) {
+    	super(builder.newChemFile());
         logger = new LoggingTool(this);
         this.eventReader = eventReader;
         this.builder = builder;
@@ -293,17 +290,5 @@ public class EventChemFileCDO implements IChemicalDocumentObject {
         logger.debug("Object property set...");
     }
     
-    /**
-    * Procedure required by the CDOInterface. This function is only
-    * supposed to be called by the JCFL library
-    */
-    public CDOAcceptedObjects acceptObjects() {
-        CDOAcceptedObjects objects = new CDOAcceptedObjects();
-        objects.add("Molecule");
-        objects.add("PsuedoAtom");
-        objects.add("Atom");
-        objects.add("Bond");
-        return objects;
-    }
 }
 

@@ -37,8 +37,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
-import org.openscience.cdk.io.cml.ChemFileCDO;
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -197,15 +195,14 @@ public class CMLReader extends DefaultChemObjectReader {
 
     private IChemFile readChemFile(IChemFile file) throws CDKException {
         logger.debug("Started parsing from input...");
-        ChemFileCDO cdo = new ChemFileCDO(file);
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
-            return cdo;
+            return null;
         }
-        parser.setContentHandler(new CMLHandler((IChemicalDocumentObject)cdo));
+        parser.setContentHandler(new CMLHandler(file));
         parser.setEntityResolver(new CMLResolver());
         parser.setErrorHandler(new CMLErrorHandler());
         try {
@@ -233,7 +230,7 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.debug(saxe);
             throw new CDKException(error, saxe);
         }
-        return cdo;
+        return file;
     }
 
     public void close() throws IOException {

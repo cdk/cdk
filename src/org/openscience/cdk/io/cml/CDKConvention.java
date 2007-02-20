@@ -27,7 +27,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.io.cml.cdopi.IChemicalDocumentObject;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.xml.sax.Attributes;
 
 /**
@@ -41,25 +41,17 @@ public class CDKConvention extends CMLCoreModule {
 
     private boolean isBond;
 
-    public CDKConvention(IChemicalDocumentObject cdo) {
-        super(cdo);
+    public CDKConvention(IChemFile chemFile) {
+        super(chemFile);
     }
 
     public CDKConvention(ICMLModule conv) {
         super(conv);
     }
     
-    public IChemicalDocumentObject returnCDO() {
-        return this.cdo;
-    }
-
     public void startDocument() {
         super.startDocument();
         isBond = false;
-    }
-
-    public void endDocument() {
-        super.endDocument();
     }
 
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
@@ -76,10 +68,6 @@ public class CDKConvention extends CMLCoreModule {
         }
     }
 
-    public void endElement (CMLStack xpath, String uri, String local, String raw) {
-        super.endElement(xpath, uri, local, raw);
-    }
-
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         if (isBond) {
@@ -89,7 +77,8 @@ public class CDKConvention extends CMLCoreModule {
                 String border = (String)st.nextElement();
                 logger.debug("new bond order: " + border);
                 // assume cdk bond object has already started
-                cdo.setObjectProperty("Bond", "order", border);
+//                cdo.setObjectProperty("Bond", "order", border);
+                currentBond.setOrder(Double.parseDouble(border));
             }
         } else {
             super.characterData(xpath, ch, start, length);

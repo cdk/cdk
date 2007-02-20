@@ -62,7 +62,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
 
     private XMLReader parser;
     private Reader input;
-    private EventChemFileCDO cdo;
+    private IChemObjectBuilder builder;    
+    private EventCMLHandler cdo;
 
     private LoggingTool logger;
 
@@ -79,7 +80,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     		              IChemObjectBuilder builder) {
         this.init();
         this.input = input;
-        this.cdo = new EventChemFileCDO(this, builder);
+        this.cdo = new EventCMLHandler(this, builder);
+        this.builder = builder;
         this.addChemObjectIOListener(listener);
     }
     
@@ -156,7 +158,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         } catch (SAXException e) {
             logger.warn("Cannot deactivate validation.");
         }
-        parser.setContentHandler(new CMLHandler(cdo));
+        parser.setContentHandler(new EventCMLHandler(this, builder));
         parser.setEntityResolver(new CMLResolver());
         parser.setErrorHandler(new CMLErrorHandler());
         try {
