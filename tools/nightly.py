@@ -65,6 +65,7 @@
 # Update 12/20/2006 - Fixed the regexes to take into account new modules
 # Update 02/10/2007 - Updated to change the value of version in the property file
 #                     rather than hard code it as a date stamp in the build script
+# Update 02/19/2007 - Updated to process CDKCite errors
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -1109,6 +1110,30 @@ if __name__ == '__main__':
         # check whether we can copy the run output
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
 
+        # process the javadoc log to get CDKCite errors
+        f = open(os.path.join(nightly_dir, 'javadoc.log'), 'r')
+        o = open(os.path.join(nightly_dir, 'citation.log'), 'w')
+        o.write("""
+        <html>
+        <head><title>CDK Javadoc Citation Errors</title></head>
+        <body>
+        <h2><center>CDK Javadoc Citation Errors</center></h2>
+        """)
+        count = 0
+        for line in f:
+            if line.find('CDKCiteERROR: ') > 0:
+                line = re.sub('\\[javadoc\\] ', '', line)
+                o.write(line+"<br>\n")
+                count += 1
+        o.write("</body></html>")
+        f.close()
+        o.close()
+        if count > 0:
+            shutil.copyfile(os.path.join(nightly_dir, 'citation.log'),
+                            os.path.join(nightly_web, 'citation.log'))
+            resultTable.appendToCell('<a href="citation.log">Citations Errors</a>')
+        else: os.unlink(os.path.join(nightly_dir, 'citation.log'))
+        
         # if the key word run did OK, add the link to the xformed keyword list
         if successKeyword and os.path.exists(os.path.join(nightly_repo, 'keyword.index.xml')):
             srcFile = os.path.join(nightly_repo, 'keyword.index.xml')
