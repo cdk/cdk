@@ -38,6 +38,8 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
@@ -159,6 +161,61 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(p.x,0.7,.1);
     	assertEquals(p.y,0.7,.1);
     	assertEquals(p.z,0.0,.1);
+    }
+    
+    public void testGet2DCenter_IAtomContainer(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	Point2d p=GeometryToolsInternalCoordinates.get2DCenter(ac);
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+
+    public void testGet2DCenter_arrayIAtom(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtom[] array=new IAtom[2];
+    	array[0]=atom1;
+    	array[1]=atom2;
+    	Point2d p=GeometryToolsInternalCoordinates.get2DCenter(array);
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+    
+    public void testGet2DCenter_IRingSet(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IRing ac=DefaultChemObjectBuilder.getInstance().newRing();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	IRingSet ringset=DefaultChemObjectBuilder.getInstance().newRingSet();
+    	ringset.addAtomContainer(ac);
+    	Point2d p=GeometryToolsInternalCoordinates.get2DCenter(ac);
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+    
+    
+    public void testGet2DCenter_Iterator(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	Point2d p=GeometryToolsInternalCoordinates.get2DCenter(ac.atoms());
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
     }
 }
 

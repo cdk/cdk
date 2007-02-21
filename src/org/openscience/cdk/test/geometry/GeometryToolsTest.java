@@ -120,5 +120,49 @@ public class GeometryToolsTest extends CDKTestCase {
     	assertEquals(minmax[2],1d,.1);
     	assertEquals(minmax[3],1d,.1);
     }
+    
+    public void testGet2DCenter_IAtomContainer_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	Point2d p=GeometryTools.get2DCenter(ac, this.makeCoordsMap(ac));
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+
+    
+    public void testGet2DCenter_Iterator_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	Point2d p=GeometryTools.get2DCenter(ac.atoms(),this.makeCoordsMap(ac));
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+
+    
+    public void testGet2DCenter_arrayIAtom_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtom[] array=new IAtom[2];
+    	array[0]=atom1;
+    	array[1]=atom2;
+    	HashMap hm=new HashMap();
+    	hm.put(atom1, atom1.getPoint2d());
+    	hm.put(atom2, atom2.getPoint2d());
+    	Point2d p=GeometryTools.get2DCenter(array,hm);
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
 }
 
