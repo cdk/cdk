@@ -152,6 +152,14 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(atom1.getPoint3d().y,1.0);
     	assertEquals(atom1.getPoint3d().z,1.0);
     }
+    
+    public void testNormalize_Point3d(){
+    	Point3d p=new Point3d(1,1,0);
+    	GeometryToolsInternalCoordinates.normalize(p);
+    	assertEquals(p.x,0.7,.1);
+    	assertEquals(p.y,0.7,.1);
+    	assertEquals(p.z,0.0,.1);
+    }
 }
 
 
