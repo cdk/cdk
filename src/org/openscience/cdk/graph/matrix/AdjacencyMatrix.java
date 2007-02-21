@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * adjacency matrix is a matrix of quare NxN matrix, where N is the number of
  * atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
  * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
- * See {@cdk.cite TRI1992}.
+ * See {@cdk.cite TRI92}.
  *
  * @cdk.module  standard
  * @cdk.keyword adjacency matrix

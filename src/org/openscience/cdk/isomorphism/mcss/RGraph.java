@@ -86,8 +86,8 @@ import java.util.ListIterator;
   *                      room for optimization in many ways including the
   *                      the algorithm itself. 
   *
- *  <p>This algorithm derives from the algorithm described in
- *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
+  *  <p>This algorithm derives from the algorithm described in
+  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
   *
   * @author      Stephane Werner from IXELIS mail@ixelis.net
   * @cdk.created 2002-07-17

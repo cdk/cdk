@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *  in other contexts.
  *
  *  <p>This algorithm derives from the algorithm described in
- *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite Han93}.
+ *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
  *  
  *  <p>With the <code>isSubgraph()</code> method, the second, and only the second
  *  argument <b>may</b> be a IQueryAtomContainer, which allows one to do MQL like queries.
