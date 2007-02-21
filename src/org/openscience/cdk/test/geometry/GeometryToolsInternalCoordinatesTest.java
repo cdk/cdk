@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -140,6 +141,16 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(minmax[1],0d,.1);
     	assertEquals(minmax[2],1d,.1);
     	assertEquals(minmax[3],1d,.1);
+    }
+    
+    
+    public void testRotate_IAtom_Point3d_Point3d_double(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,0));
+    	GeometryToolsInternalCoordinates.rotate(atom1, new Point3d(2,0,0), new Point3d(2,2,0), 90);
+    	assertEquals(atom1.getPoint3d().x,2.0);
+    	assertEquals(atom1.getPoint3d().y,1.0);
+    	assertEquals(atom1.getPoint3d().z,1.0);
     }
 }
 
