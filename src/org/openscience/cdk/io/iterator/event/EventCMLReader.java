@@ -49,7 +49,7 @@ import org.xml.sax.XMLReader;
 /**
  * Reads a molecule in CML 1.x and 2.0 format.
  * CML is an XML based application {@cdk.cite PMR99}, and this Reader
- * applies the method described in {@cdk.cite WILLIGHAGEN2001}.
+ * applies the method described in {@cdk.cite WIL01}.
  *
  * @cdk.module io
  *
