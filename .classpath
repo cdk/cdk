@@ -23,7 +23,7 @@
 	<classpathentry kind="lib" path="jar/javacc.jar"/>
 	<classpathentry kind="lib" path="jar/jfontchooser.jar"/>
 	<classpathentry kind="lib" path="jar/jgrapht-0.6.0.jar"/>
-	<classpathentry kind="lib" path="jar/jniInChI-0.1.1.jar"/>
+	<classpathentry kind="lib" path="jar/jniinchi-0.4.jar"/>
 	<classpathentry kind="lib" path="jar/JRI.jar"/>
 	<classpathentry kind="lib" path="jar/jumbo52.jar"/>
 	<classpathentry kind="lib" path="jar/log4j.jar"/>
