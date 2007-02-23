@@ -90,14 +90,14 @@ public class DensityBasedClustererModelTest extends CDKTestCase{
 	 * @throws Exception
 	 */
 //	public void testDensityBasedClustererModel2() throws Exception{
-//		DensityBasedClustererModel test = new DensityBasedClustererModel();
-//		test.setData("X:\\cdk\\src\\data\\arff\\Table3.arff");
-//		test.build();
-//		test.setParameters("X:\\cdk\\src\\data\\arff\\Table4.arff");
-//		assertNotNull (test.distributionForInstance());
-//		assertNotNull (test.logDensityForInstance());
-//		assertNotNull (test.logDensityPerClusterForInstance());
-//		assertNotNull (test.logJointDensitiesForInstance());
-//		assertNotNull (test.clusterPriors());
+//	DensityBasedClustererModel test = new DensityBasedClustererModel();
+//	test.setData("X:\\cdk\\src\\data\\arff\\Table3.arff");
+//	test.build();
+//	test.setParameters("X:\\cdk\\src\\data\\arff\\Table4.arff");
+//	assertNotNull (test.distributionForInstance());
+//	assertNotNull (test.logDensityForInstance());
+//	assertNotNull (test.logDensityPerClusterForInstance());
+//	assertNotNull (test.logJointDensitiesForInstance());
+//	assertNotNull (test.clusterPriors());
 //	}
 }

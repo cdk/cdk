@@ -42,7 +42,6 @@ import weka.clusterers.Clusterer;
  * @cdk.module test-qsar
  */
 public class KmeansClusterTest extends CDKTestCase {
-	private boolean hasAnError = false;
 
 	/**
 	 * Constructor of the KmeansClusterTest
@@ -82,14 +81,13 @@ public class KmeansClusterTest extends CDKTestCase {
 				{new Double(19), new Double(29), new Double(39)},
 		};
 		test.setParameters(newx);
-		test.clusterInstance();
-		if (test.numberOfCluster() != 3) hasAnError = true;
+		test.clusterInstance();;
 		assertNotNull (test.getClusterInstance());
 		assertNotNull (test.getClusterCentroids());
-		assertNotNull (test.getSquaredError());
+		assertEquals(Math.rint(test.getSquaredError()), 3.0, 0.01);
 		assertNotNull (test.getClusterStandardDevs());
 		assertNotNull (test.getClusterSizes());
-		assertEquals(hasAnError , false);
+		assertEquals(test.numberOfCluster() , 3);
 	}
 
 	/**
@@ -118,9 +116,9 @@ public class KmeansClusterTest extends CDKTestCase {
 		test.setParameters(newx);
 		test.clusterInstance();
 		assertNotNull (test.getClusterInstance());
-		assertNotNull (test.numberOfCluster());
+		assertEquals(test.numberOfCluster(), 2);
 		assertNotNull (test.getClusterCentroids());
-		assertNotNull (test.getSquaredError());
+		assertEquals(Math.rint(test.getSquaredError()), 4.0, 0.01);
 		assertNotNull (test.getClusterStandardDevs());
 		assertNotNull (test.getClusterSizes());
 	}

@@ -49,6 +49,17 @@ public class QSARWekaModelTests {
 
         suite.addTest(J48WModelTest.suite());
         suite.addTest(LinearRegressionWModelTest.suite());
+        suite.addTest(DensityBasedClustererModelTest.suite());
+        suite.addTest(EMClusterTest.suite());
+        suite.addTest(FilterSupervisedResampleTest.suite());
+        suite.addTest(FilterUnSupervisedResampleTest.suite());
+        suite.addTest(FilterUnSupervisedRandomizeTest.suite());
+        suite.addTest(KmeansClusterTest.suite());
+        suite.addTest(MultilayerPerceptronModelTest.suite());
+        suite.addTest(NaiveBayesModelTest.suite());
+        suite.addTest(SimpleLinearRegressionModelTest.suite());
+        suite.addTest(SMOModelTest.suite());
+        suite.addTest(SMOregModelTest.suite());
         return suite;
     }
 }

@@ -75,8 +75,8 @@ public class FilterUnSupervisedResampleTest extends CDKTestCase{
 		String[] attrib = {"X1", "X2", "X3"};
 		test.setData(attrib, typAttrib, classAttrib, y, xD);
 		test.build();
-		assertNotNull(test.getRandomSeed());
-		assertNotNull(test.getSampleSizePercent());
+		assertEquals(test.getRandomSeed(), 1);
+		assertEquals(test.getSampleSizePercent(), 100.0, 0.001);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class FilterUnSupervisedResampleTest extends CDKTestCase{
 //		//test.setOptions(options);
 //		test.setData("X:\\cdk\\src\\data\\arff\\Table3.arff");
 //		test.build();	
-//		assertNotNull(test.getRandomSeed());
-//		assertNotNull(test.getSampleSizePercent());
+//		assertEquals(test.getRandomSeed(), 1);
+//		assertEquals(test.getSampleSizePercent(), 100.0, 0.001);
 //	}
 }

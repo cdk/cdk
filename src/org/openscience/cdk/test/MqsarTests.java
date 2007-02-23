@@ -28,8 +28,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
-import org.openscience.cdk.test.qsar.model.weka.J48WModelTest;
-import org.openscience.cdk.test.qsar.model.weka.LinearRegressionWModelTest;
 import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
 
 /**
@@ -56,8 +54,7 @@ public class MqsarTests {
         suite.addTest(RJavaEnvironmentTest.suite());
 
 //      from cdk.test.qsar.model.R2
-        suite.addTest(J48WModelTest.suite());
-        suite.addTest(LinearRegressionWModelTest.suite());
+ 
         suite.addTest(QSARWekaModelTests.suite());
 
         return suite;

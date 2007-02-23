@@ -84,22 +84,22 @@ public class SMOModelTest extends CDKTestCase{
 		assertNotNull (test.attributeNames());
 		assertNotNull (test.bias());
 		assertNotNull(test.classAttributeNames());
-		assertNotNull (test.getBuildLogisticModels());
-		assertNotNull (test.getC());
-		assertNotNull (test.getCacheSize());
-		assertNotNull (test.getEpsilon());
-		assertNotNull (test.getExponent());
-		assertNotNull (test.getFeatureSpaceNormalization());
-		assertNotNull (test.getGamma());
-		assertNotNull (test.getLowerOrderTerms());
-		assertNotNull (test.getNumFolds());
-		assertNotNull (test.getRandomSeed());
-		assertNotNull (test.getToleranceParameter());
-		assertNotNull (test.getUserRBF());
-		assertNotNull (test.numClassAttributeValues());
 		assertNotNull (test.sparseIndices());
 		assertNotNull (test.sparseWeights()); 
-		assertNotNull(result);   
+		assertNotNull(result);
+		assertEquals (test.getBuildLogisticModels(), false);
+		assertEquals (test.getC(), 1.0, 0.001);
+		assertEquals (test.getCacheSize(), 250007);
+		assertEquals (test.getEpsilon(), 1.0E-12, 0.001);
+		assertEquals (test.getExponent(), 1.0, 0.01);
+		assertEquals (test.getFeatureSpaceNormalization(), false);
+		assertEquals (test.getGamma(), 0.01, 0.001);
+		assertEquals (test.getLowerOrderTerms(), false);
+		assertEquals (test.getNumFolds(), -1);
+		assertEquals (test.getRandomSeed(), 1);
+		assertEquals (test.getToleranceParameter(), 0.0010, 0.001);
+		assertEquals (test.getUserRBF(), false);
+		assertEquals (test.numClassAttributeValues(), 3);	   
 	}
 
 	/**
@@ -117,21 +117,21 @@ public class SMOModelTest extends CDKTestCase{
 //		assertNotNull (test.attributeNames());
 //		assertNotNull (test.bias());
 //		assertNotNull(test.classAttributeNames());
-//		assertNotNull (test.getBuildLogisticModels());
-//		assertNotNull (test.getC());
-//		assertNotNull (test.getCacheSize());
-//		assertNotNull (test.getEpsilon());
-//		assertNotNull (test.getExponent());
-//		assertNotNull (test.getFeatureSpaceNormalization());
-//		assertNotNull (test.getGamma());
-//		assertNotNull (test.getLowerOrderTerms());
-//		assertNotNull (test.getNumFolds());
-//		assertNotNull (test.getRandomSeed());
-//		assertNotNull (test.getToleranceParameter());
-//		assertNotNull (test.getUserRBF());
-//		assertNotNull (test.numClassAttributeValues());
 //		assertNotNull (test.sparseIndices());
 //		assertNotNull (test.sparseWeights()); 
 //		assertNotNull(result);
+//		assertEquals (test.getBuildLogisticModels(), false);
+//		assertEquals (test.getC(), 1.0, 0.001);
+//		assertEquals (test.getCacheSize(), 250007);
+//		assertEquals (test.getEpsilon(), 1.0E-12, 0.001);
+//		assertEquals (test.getExponent(), 1.0, 0.01);
+//		assertEquals (test.getFeatureSpaceNormalization(), false);
+//		assertEquals (test.getGamma(), 0.01, 0.001);
+//		assertEquals (test.getLowerOrderTerms(), false);
+//		assertEquals (test.getNumFolds(), -1);;
+//		assertEquals (test.getRandomSeed(), 1);
+//		assertEquals (test.getToleranceParameter(), 0.0010, 0.001);
+//		assertEquals (test.getUserRBF(), false);
+//		assertEquals (test.numClassAttributeValues(), 3);
 //	}
 }

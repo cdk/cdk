@@ -62,7 +62,7 @@ public class MultilayerPerceptronModelTest extends CDKTestCase{
 	 */
 	public void testMultilayerPerceptronModel() throws CDKException, java.lang.Exception, QSARModelException{
 		MultilayerPerceptronModel test = new MultilayerPerceptronModel();
-		test.setOptions(new String[] {"-G"});
+//		test.setOptions(new String[] {"-G"});
 		int[] typAttrib = {Weka.NUMERIC, Weka.NUMERIC, Weka.NUMERIC};
 		String[] classAttrib = {"A_", "B_", "C_"};
 		double[][] x = {{10, 10, 10}, {10, -10, -10}, {-10, -10, -10},
@@ -83,13 +83,13 @@ public class MultilayerPerceptronModelTest extends CDKTestCase{
 		test.predict();
 		Object[][] result = test.getPredictPredicted();
 		assertNotNull(result); 
-		assertNotNull (test.getHiddenLayers());
-		assertNotNull (test.getLearningRate());
-		assertNotNull(test.getMomentum());
-		assertNotNull (test.getRandomSeed());
-		assertNotNull (test.getTrainingTime());
-		assertNotNull (test.getValidationSetSize());
-		assertNotNull (test.getValidationThreshold());
+		assertEquals (test.getHiddenLayers(), "a");
+		assertEquals (test.getLearningRate(), 0.3, 0.01);
+		assertEquals(test.getMomentum(), 0.2, 0.01);
+		assertEquals (test.getRandomSeed(), 0);
+		assertEquals (test.getTrainingTime(), 500.0, 0.01);
+		assertEquals (test.getValidationSetSize(), 0.0, 0.001);
+		assertEquals (test.getValidationThreshold(), 20.0, 0.01);
 	}
 
 	/**
@@ -105,12 +105,12 @@ public class MultilayerPerceptronModelTest extends CDKTestCase{
 //		test.predict();
 //		Object[][] result = test.getPredictPredicted();
 //		assertNotNull(result);
-//		assertNotNull (test.getHiddenLayers());
-//		assertNotNull (test.getLearningRate());
-//		assertNotNull (test.getMomentum());
-//		assertNotNull (test.getRandomSeed());
-//		assertNotNull (test.getTrainingTime());
-//		assertNotNull (test.getValidationSetSize());
-//		assertNotNull (test.getValidationThreshold());
+//		assertEquals (test.getHiddenLayers(), "a");
+//		assertEquals (test.getLearningRate(), 0.3, 0.01);
+//		assertEquals(test.getMomentum(), 0.2, 0.01);
+//		assertEquals (test.getRandomSeed(), 0);
+//		assertEquals (test.getTrainingTime(), 500.0, 0.01);
+//		assertEquals (test.getValidationSetSize(), 0.0, 0.001);
+//		assertEquals (test.getValidationThreshold(), 20.0, 0.01);
 //	}
 }

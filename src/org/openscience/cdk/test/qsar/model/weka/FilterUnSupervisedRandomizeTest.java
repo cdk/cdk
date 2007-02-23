@@ -75,7 +75,7 @@ public class FilterUnSupervisedRandomizeTest extends CDKTestCase{
 		String[] attrib = {"X1", "X2", "X3"};
 		test.setData(attrib, typAttrib, classAttrib, y, xD);
 		test.build();
-		assertNotNull(test.getRandomSeed());
+		assertEquals(test.getRandomSeed(), 42);
 	}
 
 	/**
@@ -87,6 +87,6 @@ public class FilterUnSupervisedRandomizeTest extends CDKTestCase{
 //		//test.setOptions(options);
 //		test.setData("X:\\cdk\\src\\data\\arff\\Table3.arff");
 //		test.build();	
-//		assertNotNull(test.getRandomSeed());
+//		assertEquals(test.getRandomSeed(), 42);
 //	}
 }
