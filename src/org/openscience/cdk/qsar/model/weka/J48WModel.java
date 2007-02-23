@@ -118,12 +118,16 @@ public class J48WModel implements IWekaModel{
 	/**String with the attribut class*/
 	private String[] classAttrib;
 	private boolean cdkResource;
+	/** String with the attributs*/
+	private String[] attrib;
+	/** Boolean if the attributs was set*/
+	private boolean setAttrib = false;
 
 	/**
 	 * Constructor of the J48WModel object from varibles
 	 * 
-     * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
-     * @param classAttrib String with the attribut class.
+	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
+	 * @param classAttrib String with the attribut class.
 	 * @param y  An array containing the dependent variable.
 	 * @param x  An double array containing the independent variable.
 	 */
@@ -132,6 +136,24 @@ public class J48WModel implements IWekaModel{
 		this.classAttrib = classAttrib;
 		this.y = y;
 		this.x = x;
+	}
+
+	/**
+	 * Constructor of the J48WModel object from varibles
+	 * 
+	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
+	 * @param classAttrib String with the attribut class.
+	 * @param y  An array containing the dependent variable.
+	 * @param x  An double array containing the independent variable.
+	 * @param attrib String with the attributs
+	 */
+	public J48WModel(int[] typAttrib, String[] classAttrib, Object[] y, Object[][] x, String[] attrib){
+		this.typAttrib = typAttrib;
+		this.classAttrib = classAttrib;
+		this.y = y;
+		this.x = x;
+		this.attrib = attrib;
+		setAttrib = true;
 	}
 	/**
 	 * Constructor of the J48WModel object from file. Default the file is found into cdk.src
@@ -145,61 +167,63 @@ public class J48WModel implements IWekaModel{
 	}
 
 	/**
-     * Parses a given list of options. The parameters are determited from weka. 
-     * 
-     * <p>Valid options are (according weka library):</p>
-     * <p>-U: Use unpruned tree.</p>
-     * <p>-C confidence: Set confidence threshold for pruning. (Defalult:0.25)</p>
-     * <p>-M number: Set minimum number of instances per leaf.(Default 2)</p>
-     * <p>-R: Use reduced error pruning. No subte raising is performed.</p>
-     * <p>-N number: Set number of folds for reduced error pruning. One fold is used
-     *  as the pruning set.(Deafult:3)</p>
-     * <p>-B: Use binary splits for nominal attributes</p>
-     * <p>-S: Don't perform subtree raising</p>
-     * <p>-L: Do not clean up alfter the tree has been built</p>
-     * <p>-A: If set, Laplace smoothing is used for predicted probabilities</p>
-     * <p>-Q:The seed for reduced-error pruning</p>
-     *
-     * @param options An Array of strings containing the options 
-     * @throws QSARModelException if the options are of the wrong type for the given modeling function
-     * 
-     */
+	 * Parses a given list of options. The parameters are determited from weka. 
+	 * 
+	 * <p>Valid options are (according weka library):</p>
+	 * <p>-U: Use unpruned tree.</p>
+	 * <p>-C confidence: Set confidence threshold for pruning. (Defalult:0.25)</p>
+	 * <p>-M number: Set minimum number of instances per leaf.(Default 2)</p>
+	 * <p>-R: Use reduced error pruning. No subte raising is performed.</p>
+	 * <p>-N number: Set number of folds for reduced error pruning. One fold is used
+	 *  as the pruning set.(Deafult:3)</p>
+	 * <p>-B: Use binary splits for nominal attributes</p>
+	 * <p>-S: Don't perform subtree raising</p>
+	 * <p>-L: Do not clean up alfter the tree has been built</p>
+	 * <p>-A: If set, Laplace smoothing is used for predicted probabilities</p>
+	 * <p>-Q:The seed for reduced-error pruning</p>
+	 *
+	 * @param options An Array of strings containing the options 
+	 * @throws QSARModelException if the options are of the wrong type for the given modeling function
+	 * 
+	 */
 	public void setOptions(String[] options) throws QSARModelException {
 		this.options = options;
 	}
 	/**
-     * Get the current settings of the classifier. The parameters are determited from weka. And are specific for each
-     * algorithm.
-     *
-     * @return An Array of strings containing the options 
-     * @throws QSARModelException if the options are of the wrong type for the given modeling function
-     * 
-     */
-    public String[] getOptions() throws QSARModelException {
+	 * Get the current settings of the classifier. The parameters are determited from weka. And are specific for each
+	 * algorithm.
+	 *
+	 * @return An Array of strings containing the options 
+	 * @throws QSARModelException if the options are of the wrong type for the given modeling function
+	 * 
+	 */
+	public String[] getOptions() throws QSARModelException {
 		return options;
 	}
 	/**
-     * Builds (trains) the model.
-     *
-     * @throws QSARModelException if errors occur in data types, calls to the R session. See
-     * the corresponding method in subclasses of this class for further details.
-     */
+	 * Builds (trains) the model.
+	 *
+	 * @throws QSARModelException if errors occur in data types, calls to the R session. See
+	 * the corresponding method in subclasses of this class for further details.
+	 */
 	public void build() throws QSARModelException {
 		weka = new Weka();
 		try {
 			J48 j48 = new J48();
 			if(options != null)
 				j48.setOptions(options);
-			
+
 			if(pathTest != null){
 				if(cdkResource)
 					weka.setDatasetCDK(pathTest, j48);
 				else
 					weka.setDataset(pathTest, j48);
 			}else{
-				String[] attrib = new String[x[0].length];
-				for(int i = 0 ; i < x[0].length; i++){
-					attrib[i] = "X"+i;
+				if (!(setAttrib)){
+					this.attrib = new String[x[0].length];
+					for(int i = 0 ; i < x[0].length; i++){
+						attrib[i] = "X"+i;
+					}
 				}
 				weka.setDataset(attrib,typAttrib,classAttrib,y,x,j48);
 			}
@@ -207,34 +231,34 @@ public class J48WModel implements IWekaModel{
 			e.printStackTrace();
 		}
 	}
-    /**
-     * Specifies the parameters to predict. In this case will be the dependent varibles.
-     * It's found into cdk.src
-     * 
-     * @param  path  A String specifying the path of the file, format arff, which contians 
-     * 				 the dependent values with whose to predict. It's found into cdk.src
-     * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
-     * 
-     */
-    public void setParametersCDK(String path) throws QSARModelException {
-    	this.pathNewX = path;
+	/**
+	 * Specifies the parameters to predict. In this case will be the dependent varibles.
+	 * It's found into cdk.src
+	 * 
+	 * @param  path  A String specifying the path of the file, format arff, which contians 
+	 * 				 the dependent values with whose to predict. It's found into cdk.src
+	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
+	 * 
+	 */
+	public void setParametersCDK(String path) throws QSARModelException {
+		this.pathNewX = path;
 	}
 	/**
-     * Specifies the parameters to predict. In this case will be the independent varibles.
-     * 
-     * @param  newX  A Array Object containing the independent variable.
-     * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
-     */
-    public void setParameters(Object[][] newX) throws QSARModelException {
-    	this.newX = newX;
-    }
-    
-    /**
-     * Makes predictions using a previously built model.
-     *
-     * @throws QSARModelException if errors occur in data types, calls to the R session. See
-     * the corresponding method in subclasses of this class for further details.
-     */
+	 * Specifies the parameters to predict. In this case will be the independent varibles.
+	 * 
+	 * @param  newX  A Array Object containing the independent variable.
+	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
+	 */
+	public void setParameters(Object[][] newX) throws QSARModelException {
+		this.newX = newX;
+	}
+
+	/**
+	 * Makes predictions using a previously built model.
+	 *
+	 * @throws QSARModelException if errors occur in data types, calls to the R session. See
+	 * the corresponding method in subclasses of this class for further details.
+	 */
 	public void predict() throws QSARModelException {
 		try{
 			if(pathNewX != null){
@@ -251,19 +275,19 @@ public class J48WModel implements IWekaModel{
 					results[i] = (String)object[i];
 				}
 			}
-			
+
 		} catch ( Exception e){
 			e.printStackTrace();
 		}
 	}
 	/**
-     * Returns the predicted values for the prediction set. 
-     *
-     * This function only returns meaningful results if the <code>predict</code>
-     * method of this class has been called.
-     *
-     * @return A String[] containing the predicted values
-     */
+	 * Returns the predicted values for the prediction set. 
+	 *
+	 * This function only returns meaningful results if the <code>predict</code>
+	 * method of this class has been called.
+	 *
+	 * @return A String[] containing the predicted values
+	 */
 	public Object[] getPredictPredicted() {
 		return results;
 	}
