@@ -150,9 +150,7 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	Atom atom1=new Atom("C");
     	atom1.setPoint3d(new Point3d(1,1,0));
     	GeometryToolsInternalCoordinates.rotate(atom1, new Point3d(2,0,0), new Point3d(2,2,0), 90);
-    	assertEquals(atom1.getPoint3d().x,2.0);
-    	assertEquals(atom1.getPoint3d().y,1.0);
-    	assertEquals(atom1.getPoint3d().z,1.0);
+    	assertEquals(new Point3d(2.0, 1.0, 1.0), atom1.getPoint3d(),0.2);
     }
     
     public void testNormalize_Point3d(){
