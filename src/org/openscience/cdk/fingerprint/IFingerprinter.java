@@ -36,7 +36,21 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public interface IFingerprinter {
 
+	/**
+	 * Returns the fingerprint for the given IAtomContainer.
+	 * 
+	 * @param  ac        IAtomContainer for which the fingerprint should be calculated.
+	 * @return           the fingerprint
+	 * @throws Exception Thrown if a problem is encountered when calculating the
+	 *                   fingerprint.
+	 */
 	public BitSet getFingerprint(IAtomContainer ac) throws Exception;
+	
+	/**
+	 * Returns the size of the fingerprints calculated.
+	 * 
+	 * @return the size of the fingerprint
+	 */
 	public int getSize();
 
 }

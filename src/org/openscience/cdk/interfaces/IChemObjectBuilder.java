@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import javax.vecmath.Point3d;
+
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
  *
@@ -158,16 +160,16 @@ public interface IChemObjectBuilder {
 	/**
 	 * Constructs an IPDBAtom from a IElement.
 	 * 
-     * @param   elementSymbol  The Element for the PDBAtom
-     * @return                 IPDBAtom implementation defined for this IChemObjectBuilder
+     * @param   element  The Element for the PDBAtom
+     * @return           IPDBAtom implementation defined for this IChemObjectBuilder
 	 */	
 	public IPDBAtom newPDBAtom(IElement element);
 	
 	/**
 	 * Constructs an IPDBAtom from a String containing an element symbol.
 	 * 
-     * @param   elementSymbol  The String describing the element for the PDBAtom
-     * @return                 IPDBAtom implementation defined for this IChemObjectBuilder
+     * @param   symbol  The String describing the element for the PDBAtom
+     * @return          IPDBAtom implementation defined for this IChemObjectBuilder
 	 */	
 	public IPDBAtom newPDBAtom(String symbol);
 	
@@ -178,7 +180,7 @@ public interface IChemObjectBuilder {
      * @param   point3d         The 3D coordinates of the atom
      * @return                  IPDBAtom implementation defined for this IChemObjectBuilder
      */
-    public IPDBAtom newPDBAtom(String elementSymbol, javax.vecmath.Point3d point3d);
+    public IPDBAtom newPDBAtom(String elementSymbol, Point3d point3d);
     
     /**
 	 * Contructs a new IPDBPolymer to store the IStrands.
