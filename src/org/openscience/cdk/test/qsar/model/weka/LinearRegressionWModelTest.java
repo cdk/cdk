@@ -89,8 +89,8 @@ public class LinearRegressionWModelTest extends CDKTestCase {
         lrm.predict();
 
         Double[] preds = (Double[]) lrm.getPredictPredicted();
-        assertEquals((preds[0]).doubleValue(), 1.0, 0.001);
-        assertEquals((preds[1]).doubleValue(), 4.0, 0.001);
+        assertEquals(1.0, (preds[0]).doubleValue(), 0.001);
+        assertEquals(4.0, (preds[1]).doubleValue(), 0.001);
     }
 
     /**
@@ -111,8 +111,8 @@ public class LinearRegressionWModelTest extends CDKTestCase {
         lrm.predict();
         Double[] result = (Double[]) lrm.getPredictPredicted();
         assertNotNull(result);
-        assertEquals((result[0]).doubleValue(), 1.0, 0.001);
-        assertEquals((result[1]).doubleValue(), 4.0, 0.001);
+        assertEquals(1.0, (result[0]).doubleValue(), 0.001);
+        assertEquals(4.0, (result[1]).doubleValue(), 0.001);
     }
 //	/**
 //	 * 
@@ -258,13 +258,13 @@ public class LinearRegressionWModelTest extends CDKTestCase {
 //        for(int i = 0; i < preds.length; i++)
 //			logger.debug("result< "+i+"="+preds[i]);
 //        assertTrue(preds != null);
-//        assertEquals(preds[0], 0.5235362, 0.001);/*result extracted from test LinearRegressionTest*/
-//        assertEquals(preds[1], 0.5030381, 0.0000001);
-//        assertEquals(preds[2], 0.5184706, 0.0000001);
-//        assertEquals(preds[3], 0.5232108, 0.0000001);
-//        assertEquals(preds[4], 0.5436967, 0.0000001);
+//        assertEquals(0.5235362, preds[0], 0.001);/*result extracted from test LinearRegressionTest*/
+//        assertEquals(0.5030381, preds[1], 0.0000001);
+//        assertEquals(0.5184706, preds[2], 0.0000001);
+//        assertEquals(0.5232108, preds[3],  0.0000001);
+//        assertEquals(0.5436967, preds[4], 0.0000001);
 //
-//        assertEquals(lrm.getPredictDF(), 96, 0.1);
+//        assertEquals(96, lrm.getPredictDF(), 0.1);
 //
 //        }
 //

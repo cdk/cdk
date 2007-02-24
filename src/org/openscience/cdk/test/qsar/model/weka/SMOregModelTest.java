@@ -79,16 +79,16 @@ public class SMOregModelTest extends CDKTestCase{
 		test.classifyInstance();
 		Object[] result = test.getClassification();
 		assertNotNull (result);
-		assertEquals (test.getC(), 1.0, 0.001);
-		assertEquals (test.getCacheSize(), 250007);
-		assertEquals (test.getEpsilon(), 0.0010, 0.001);
-		assertEquals (test.getExponent(), 1.0, 0.01);
-		assertEquals (test.getFeatureSpaceNormalization(), false);
-		assertEquals (test.getGamma(), 0.01, 0.001);
-		assertEquals (test.getLowerOrderTerms(), false);
-		assertEquals (test.getToleranceParameter(), 0.0010, 0.001);
-		assertEquals (test.getUserRBF(), false);
-		assertEquals (test.getEps(), 1.0E-12, 0.001); 
+		assertEquals (1.0, test.getC(), 0.001);
+		assertEquals (250007, test.getCacheSize());
+		assertEquals (0.0010, test.getEpsilon(), 0.001);
+		assertEquals (1.0, test.getExponent(), 0.01);
+		assertEquals (false, test.getFeatureSpaceNormalization());
+		assertEquals (0.01, test.getGamma(), 0.001);
+		assertEquals (false, test.getLowerOrderTerms());
+		assertEquals (0.0010, test.getToleranceParameter(), 0.001);
+		assertEquals (false, test.getUserRBF());
+		assertEquals (1.0E-12, test.getEps(), 0.001); 
 	}
 
 	/**
@@ -104,15 +104,15 @@ public class SMOregModelTest extends CDKTestCase{
 //		test.classifyInstance();
 //		Object[] result = test.getClassification();
 //		assertNotNull (result);
-//		assertEquals (test.getC(), 1.0, 0.001);
-//		assertEquals (test.getCacheSize(), 250007);
-//		assertEquals (test.getEpsilon(), 0.0010, 0.001);;
-//		assertEquals (test.getExponent(), 1.0, 0.01);
-//		assertEquals (test.getFeatureSpaceNormalization(), false);
-//		assertEquals (test.getGamma(), 0.01, 0.001);
-//		assertEquals (test.getLowerOrderTerms(), false);
-//		assertEquals (test.getToleranceParameter(), 0.0010, 0.001);
-//		assertEquals (test.getUserRBF(), false);
-//		assertEquals (test.getEps(), 1.0E-121 0.001); 
+//		assertEquals (1.0, test.getC(), 0.001);
+//		assertEquals (250007, test.getCacheSize());
+//		assertEquals (0.0010, test.getEpsilon(), 0.001);;
+//		assertEquals (1.0, test.getExponent(), 0.01);
+//		assertEquals (false, test.getFeatureSpaceNormalization());
+//		assertEquals (0.01, test.getGamma(), 0.001);
+//		assertEquals (false, test.getLowerOrderTerms());
+//		assertEquals (0.0010, test.getToleranceParameter(), 0.001);
+//		assertEquals (false, test.getUserRBF());
+//		assertEquals (1.0E-121, test.getEps(), 0.001); 
 //	}
 }

@@ -86,8 +86,8 @@ public class SimpleLinearRegressionModelTest extends CDKTestCase{
 		slrm.predict();
 
 		Double[] preds = (Double[]) slrm.getPredictPredicted();
-		assertEquals((preds[0]).doubleValue(), 1.0, 0.001);
-		assertEquals((preds[1]).doubleValue(), 4.0, 0.001);
+		assertEquals(1.0, (preds[0]).doubleValue(), 0.001);
+		assertEquals(4.0, (preds[1]).doubleValue(), 0.001);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class SimpleLinearRegressionModelTest extends CDKTestCase{
 //		slrm.predict();
 //		Double[] result = (Double[]) slrm.getPredictPredicted();
 //		assertNotNull(result);
-//		assertEquals((result[0]).doubleValue(), 1.0, 0.001);
-//		assertEquals((result[1]).doubleValue(), 4.0, 0.001);
+//		assertEquals(1.0, (result[0]).doubleValue(), 0.001);
+//		assertEquals(4.0, (result[1]).doubleValue(), 0.001);
 //	}
 }

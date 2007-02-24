@@ -86,11 +86,11 @@ public class EMClusterTest extends CDKTestCase{
 		assertNotNull (test.getClusterPriors());
 		assertNotNull (test.getLogDensityPerClusterForInstance());
 		assertNotNull (test.getClusterModelsNumericAtts());
-		assertEquals(test.getSeed(), 100);
-		assertEquals(test.getNumClusters(), -1);
-		assertEquals(test.getMinStdDev(), 1.0E-6, 0.001);
-		assertEquals(test.getMaxIterations(), 100);
-		assertEquals(test.numberOfCluster(), 1);
+		assertEquals(100, test.getSeed());
+		assertEquals(-1, test.getNumClusters());
+		assertEquals(1.0E-6, test.getMinStdDev(), 0.001);
+		assertEquals(100, test.getMaxIterations());
+		assertEquals(1, test.numberOfCluster());
 	}
 
 	/**
@@ -107,10 +107,10 @@ public class EMClusterTest extends CDKTestCase{
 //		assertNotNull (test.getClusterPriors());
 //		assertNotNull (test.getLogDensityPerClusterForInstance());
 //		assertNotNull (test.getClusterModelsNumericAtts());
-//		assertEquals(test.getSeed(), 100);
-//		assertEquals(test.getNumClusters(), -1);
-//		assertEquals(test.getMinStdDev(), 1.0E-6, 0.001);
-//		assertEquals(test.getMaxIterations(), 100);
-//		assertEquals(test.numberOfCluster(), 1);
+//		assertEquals(100, test.getSeed());
+//		assertEquals(-1, test.getNumClusters());
+//		assertEquals(1.0E-6, test.getMinStdDev(), 0.001);
+//		assertEquals(100, test.getMaxIterations());
+//		assertEquals(1, test.numberOfCluster());
 //	}
 }

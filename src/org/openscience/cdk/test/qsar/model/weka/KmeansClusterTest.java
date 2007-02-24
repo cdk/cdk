@@ -84,10 +84,10 @@ public class KmeansClusterTest extends CDKTestCase {
 		test.clusterInstance();;
 		assertNotNull (test.getClusterInstance());
 		assertNotNull (test.getClusterCentroids());
-		assertEquals(Math.rint(test.getSquaredError()), 3.0, 0.01);
+		assertEquals(3.0, Math.rint(test.getSquaredError()), 0.01);
 		assertNotNull (test.getClusterStandardDevs());
 		assertNotNull (test.getClusterSizes());
-		assertEquals(test.numberOfCluster() , 3);
+		assertEquals(3, test.numberOfCluster());
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class KmeansClusterTest extends CDKTestCase {
 		test.setParameters(newx);
 		test.clusterInstance();
 		assertNotNull (test.getClusterInstance());
-		assertEquals(test.numberOfCluster(), 2);
+		assertEquals(2, test.numberOfCluster());
 		assertNotNull (test.getClusterCentroids());
-		assertEquals(Math.rint(test.getSquaredError()), 4.0, 0.01);
+		assertEquals(4.0, Math.rint(test.getSquaredError()), 0.01);
 		assertNotNull (test.getClusterStandardDevs());
 		assertNotNull (test.getClusterSizes());
 	}

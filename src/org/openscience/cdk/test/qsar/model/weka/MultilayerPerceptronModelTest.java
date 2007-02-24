@@ -83,13 +83,13 @@ public class MultilayerPerceptronModelTest extends CDKTestCase{
 		test.predict();
 		Object[][] result = test.getPredictPredicted();
 		assertNotNull(result); 
-		assertEquals (test.getHiddenLayers(), "a");
-		assertEquals (test.getLearningRate(), 0.3, 0.01);
-		assertEquals(test.getMomentum(), 0.2, 0.01);
-		assertEquals (test.getRandomSeed(), 0);
-		assertEquals (test.getTrainingTime(), 500.0, 0.01);
-		assertEquals (test.getValidationSetSize(), 0.0, 0.001);
-		assertEquals (test.getValidationThreshold(), 20.0, 0.01);
+		assertEquals ("a", test.getHiddenLayers());
+		assertEquals (0.3, test.getLearningRate(), 0.01);
+		assertEquals(0.2, test.getMomentum(), 0.01);
+		assertEquals (0, test.getRandomSeed());
+		assertEquals (500.0, test.getTrainingTime(), 0.01);
+		assertEquals (0.0, test.getValidationSetSize(), 0.001);
+		assertEquals (20.0, test.getValidationThreshold(), 0.01);
 	}
 
 	/**
@@ -105,12 +105,12 @@ public class MultilayerPerceptronModelTest extends CDKTestCase{
 //		test.predict();
 //		Object[][] result = test.getPredictPredicted();
 //		assertNotNull(result);
-//		assertEquals (test.getHiddenLayers(), "a");
-//		assertEquals (test.getLearningRate(), 0.3, 0.01);
-//		assertEquals(test.getMomentum(), 0.2, 0.01);
-//		assertEquals (test.getRandomSeed(), 0);
-//		assertEquals (test.getTrainingTime(), 500.0, 0.01);
-//		assertEquals (test.getValidationSetSize(), 0.0, 0.001);
-//		assertEquals (test.getValidationThreshold(), 20.0, 0.01);
+//		assertEquals ("a", test.getHiddenLayers());
+//		assertEquals (0.3, test.getLearningRate(), 0.01);
+//		assertEquals(0.2, test.getMomentum(), 0.01);
+//		assertEquals (0, test.getRandomSeed());
+//		assertEquals (500.0, test.getTrainingTime(), 0.01);
+//		assertEquals (0.0, test.getValidationSetSize(), 0.001);
+//		assertEquals (20.0, test.getValidationThreshold(), 0.01);
 //	}
 }
