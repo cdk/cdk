@@ -29,10 +29,12 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -79,6 +81,13 @@ public class MFAnalyserTest extends CDKTestCase {
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
 		assertEquals("C10H16", mf);
+	}
+	
+	public void testGetElements()	{
+		MFAnalyser mfa = new MFAnalyser("C10H16", new NNAtomContainer());
+		assertEquals(2, mfa.getElements().size());
+		mfa = new MFAnalyser("C10H19N", new NNAtomContainer());
+		assertEquals(3, mfa.getElements().size());
 	}
 	
 	public void testGetDBE() throws Exception{
@@ -200,8 +209,11 @@ public class MFAnalyserTest extends CDKTestCase {
     }
     
     public void testGetNaturalMass_IElement() throws Exception {
-        MFAnalyser mfa = new MFAnalyser("CH4", new org.openscience.cdk.AtomContainer());
-        assertEquals(1.0079760, mfa.getNaturalMass(new Element("H")), 0.1);
+        assertEquals(1.0079760, MFAnalyser.getNaturalMass(new Element("H")), 0.1);
+    }
+    
+    public void testGetCanonicalMass_IElement() throws Exception {
+        assertEquals(1.0079760, MFAnalyser.getCanonicalMass(Elements.HYDROGEN), 0.1);
     }
     
     public void testGetNaturalMass() throws Exception {
@@ -217,11 +229,16 @@ public class MFAnalyserTest extends CDKTestCase {
     public void testGetHTMLMolecularFormulaWithCharge() {
     	org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(0);
         MFAnalyser mfa = new MFAnalyser(molecule);
-	assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
-	atom.setFormalCharge(atom.getFormalCharge() + 1);
-	assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
-	atom.setFormalCharge(atom.getFormalCharge() - 2);
-	assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+        assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
+        atom.setFormalCharge(atom.getFormalCharge() + 1);
+        assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+        atom.setFormalCharge(atom.getFormalCharge() - 2);
+        assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+    }
+    
+    public void testGetHTMLMolecularFormula() {
+    	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
+        assertEquals("C<sub>8</sub>H<sub>10</sub>O<sub>2</sub>Cl<sub>2</sub>", mfa.getHTMLMolecularFormula());
     }
     
     /**
