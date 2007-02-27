@@ -69,6 +69,70 @@ public class DescriptorValueTest extends CDKTestCase {
 		assertNotNull(value);
 	}
 	
+	public void testGetValue() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		assertEquals(doubleVal, value.getValue());
+	}
+
+	public void testGetSpecification() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		assertEquals(spec, value.getSpecification());
+	}
+
+	public void testGetParameters() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		assertEquals(0, value.getParameters().length);
+	}
+
+	public void testGetParameterNames() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		assertEquals(0, value.getParameterNames().length);
+	}
+
+	public void testGetNames() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		assertEquals(1, value.getNames().length);
+	}
 }
 
 
