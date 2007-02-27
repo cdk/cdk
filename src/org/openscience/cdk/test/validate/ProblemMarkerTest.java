@@ -41,6 +41,36 @@ public class ProblemMarkerTest extends CDKTestCase {
 		return new TestSuite(ProblemMarkerTest.class);
 	}
 
+	public void testUnmarkWithError_IChemObject() {
+		IChemObject object = new ChemObject();
+		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.markWithError(object);
+		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.unmarkWithError(object);
+		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+	}
+	
+	public void testUnmarkWithWarning_IChemObject() {
+		IChemObject object = new ChemObject();
+		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		ProblemMarker.markWithWarning(object);
+		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		ProblemMarker.unmarkWithWarning(object);
+		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+	}
+	
+	public void testUnmark_IChemObject() {
+		IChemObject object = new ChemObject();
+		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		ProblemMarker.markWithWarning(object);
+		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		ProblemMarker.markWithError(object);
+		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.unmark(object);
+		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+	}
+	
 	public void testMarkWithError_IChemObject() {
 		IChemObject object = new ChemObject();
 		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
