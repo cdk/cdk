@@ -51,6 +51,40 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
 
 	public void testExtendedFingerprinter() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
+		assertNotNull(fingerprinter);
+	}
+	
+	public void testGetFingerprint_IAtomContainer() throws java.lang.Exception {
+		IFingerprinter fingerprinter = new ExtendedFingerprinter();
+		assertNotNull(fingerprinter);
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
+	}
+	
+	public void testGetSize() throws java.lang.Exception {
+		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
+		assertNotNull(fingerprinter);
+		assertEquals(512, fingerprinter.getSize());
+	}
+
+	public void testExtendedFingerprinter_int() throws java.lang.Exception {
+		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
+		assertNotNull(fingerprinter);
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
+	}
+	
+	public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
+		IFingerprinter fingerprinter = new ExtendedFingerprinter(512,7);
+		assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);

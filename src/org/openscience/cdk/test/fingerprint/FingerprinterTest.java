@@ -36,6 +36,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -278,8 +279,29 @@ public class FingerprinterTest extends CDKTestCase
 		assertEquals(0, cardinality);
 	}
 
+	public void testGetSize() throws java.lang.Exception {
+		IFingerprinter fingerprinter = new Fingerprinter(512);
+		assertNotNull(fingerprinter);
+		assertEquals(512, fingerprinter.getSize());
+	}
 
-	public void testFingerprinter() throws java.lang.Exception
+	public void testGetSearchDepth() throws java.lang.Exception {
+		Fingerprinter fingerprinter = new Fingerprinter(512,3);
+		assertNotNull(fingerprinter);
+		assertEquals(3, fingerprinter.getSearchDepth());
+	}
+
+	public void testGetFingerprint_IAtomContainer() throws java.lang.Exception
+	{
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		assertNotNull(bs);
+		assertEquals(fingerprinter.getSize(), bs.size());
+	}
+	
+	public void testIsSubset_BitSet_BitSet() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
@@ -290,9 +312,22 @@ public class FingerprinterTest extends CDKTestCase
 		assertTrue(Fingerprinter.isSubset(bs, bs1));
 	}
 	
-	public void testFingerprinterArguments() throws java.lang.Exception
+	public void testFingerprinter_int() throws java.lang.Exception
+	{
+		Fingerprinter fingerprinter = new Fingerprinter(512);
+		assertNotNull(fingerprinter);
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(Fingerprinter.isSubset(bs, bs1));
+	}
+	
+	public void testFingerprinter_int_int() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
+		assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
