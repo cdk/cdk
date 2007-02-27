@@ -133,11 +133,13 @@ abstract public class CoverageTest extends CDKTestCase {
                             testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                         }
                     }
-                    if (!testMethodNames.contains(testMethod)) {
-                        System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                        missingTestsCount++;
+                    if (!testMethod.equals("testClass$_String")) {
+                    	if (!testMethodNames.contains(testMethod)) {
+                    		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
+                    		missingTestsCount++;
+                    	}
+                    	if (!Modifier.isStatic(modifiers)) nonstaticMethods = true;
                     }
-                    if (!Modifier.isStatic(modifiers)) nonstaticMethods = true;
                 }
             }
             
@@ -158,10 +160,12 @@ abstract public class CoverageTest extends CDKTestCase {
             					testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
             				}
             			}
-            			if (!testMethodNames.contains(testMethod)) {
-            				System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-            				missingTestsCount++;
-            			}
+                        if (!testMethod.equals("testClass$_String")) {
+                        	if (!testMethodNames.contains(testMethod)) {
+                        		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
+                        		missingTestsCount++;
+                        	}
+                        }
             		}
             	}
             }
