@@ -45,39 +45,6 @@ public class AutocorrelationDescriptorMassTest extends CDKTestCase{
 	public static Test suite() {
 		return new TestSuite(AutocorrelationDescriptorMassTest.class);
 	}
-
-//	public void testscaledAtomicMasses_IElement(){
-//		try{
-//		String filename = "data/mdl/clorobenzene.mol";
-//		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-//				filename);
-//		MDLReader reader = new MDLReader(ins);
-//		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
-//		double cont = AutocorrelationDescriptorMass.scaledAtomicMasses(container.getAtom(0));
-//		double cont2 = AutocorrelationDescriptorMass.scaledAtomicMasses(container.getAtom(6));
-//		assertEquals(1,.0001, cont);
-//		assertEquals(2.952, .001, cont2);
-//		System.out.println(cont);
-//		}catch(Exception ex){
-//			fail(ex.getMessage());
-//		}
-//	
-//	}
-//	
-//	public void testlistconvertion_IAtomContainer(){
-//		try{
-//		String filename = "data/mdl/clorobenzene.mol";
-//		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-//				filename);
-//		MDLReader reader = new MDLReader(ins);
-//		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
-//		List list = AutocorrelationDescriptorMass.listconvertion(container);
-//		System.out.println("The element in position 6 of the list is: " + list.get(6));
-//		System.out.println(list);
-//		}catch(Exception ex){
-//			fail(ex.getMessage());
-//		}
-//	}	
 		
 	public void testcalculate_IAtomContainer() throws Exception {
 		String filename = "data/mdl/clorobenzene.mol";
