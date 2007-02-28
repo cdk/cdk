@@ -110,7 +110,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 	                result, new String[] {""});
 			
 		}catch(Exception ex){
-			throw new CDKException(ex.getMessage());
+			throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
 		}
 }
 
