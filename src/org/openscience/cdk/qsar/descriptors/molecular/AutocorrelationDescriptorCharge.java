@@ -66,7 +66,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 		for(int i = 0; i < natom; i++){
 			atom = mol.getAtom(i);
 			double partial = atom.getCharge();
-			charges.add(partial);
+			charges.add(new Double(partial));
 		}
 		return charges;
 	}
