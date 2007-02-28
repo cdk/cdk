@@ -24,6 +24,17 @@
     </bibtex:article>
   </bibtex:entry>
   
+  <bibtex:entry id="Moreau1980">
+    <bibtex:article>
+      <bibtex:author>Moreau G. and Broto P.</bibtex:author>
+      <bibtex:title>The autocorrelation of a topological structure: A new molecular descriptor</bibtex:title>
+      <bibtex:journal>Nouveau Journal de Chimie</bibtex:journal>
+      <bibtex:year>1980</bibtex:year>
+      <bibtex:number>4</bibtex:number>
+      <bibtex:pages>359-360</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+  
   <bibtex:entry id="BGdV04b">
     <bibtex:techreport>
       <bibtex:author>Berger, F. and Gritzmann, P. and De Vries, S.</bibtex:author>
