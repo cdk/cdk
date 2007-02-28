@@ -35,7 +35,7 @@ import weka.classifiers.functions.SimpleLinearRegression;
  * The use of this class is shown in the following code snippet
  * <pre>
  * try {
- *     SimpleLinearRegressionModel slrm = new SimpleLinearRegressionModel(x,y);
+ *     SimpleLinearRegressionModel slrm = new SimpleLinearRegressionModel(x,y); or SimpleLinearRegressionModel slrm = new SimpleLinearRegressionModel(typAttrib,classAttrib,x,y,attrib);
  *     slrm.build();
  *     slrm.setParameters(newX);
  *     slrm.predict();
@@ -117,10 +117,10 @@ public class SimpleLinearRegressionModel {
 
 	/**
 	 * Constructor of the SimpleLinearRegressionModel object from varibles
-	 * @param y  An array containing the dependent variable.
-	 * @param x  A double array containing the independent variable.
+	 * @param y  An array containing the dependent variable (class value).
+	 * @param x  A 2D array containing the independent variable (for example: qsar results).
 	 * @param typAttrib  An integer array containing the attribute type
-	 * @param attrib  A string array containig the attributs
+	 * @param attrib  A string array containing the attributs
 	 */
 	public SimpleLinearRegressionModel(int[] typAttrib, Object[] y, Object[][] x, String[] attrib){
 		this.y = y;
@@ -171,10 +171,9 @@ public class SimpleLinearRegressionModel {
 
 	/**
 	 * Specifies the parameters to predict. In this case will be the dependent varibles.
-	 * It's found into cdk.src
 	 * 
 	 * @param  path  A String specifying the path of the file, format arff, which contians 
-	 * 				 the dependent values with whose to predict. It's found into cdk.src
+	 * 				 the dependent values with whose to predict.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
@@ -185,7 +184,7 @@ public class SimpleLinearRegressionModel {
 	/**
 	 * Specifies the parameters to predict. In this case will be the independent varibles.
 	 * 
-	 * @param  newX  A Array Object containing the independent variable.
+	 * @param  newX  A 2D array Object containing the independent variable.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {

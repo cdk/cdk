@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.libio.weka.Weka;
 import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.qsar.model.weka.MultilayerPerceptronModel;
 import org.openscience.cdk.qsar.model.weka.NaiveBayesModel;
 import org.openscience.cdk.test.CDKTestCase;
 

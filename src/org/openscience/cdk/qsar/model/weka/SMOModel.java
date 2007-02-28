@@ -132,7 +132,7 @@ public class SMOModel {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -144,8 +144,8 @@ public class SMOModel {
 	 * 
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @param attrib	  A string array containing the attributs
 	 * @throws Exception  if it is unable to parse the data
 	 * 
@@ -188,7 +188,7 @@ public class SMOModel {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {
@@ -244,7 +244,7 @@ public class SMOModel {
 	 * This function only returns meaningful results if the <code>probabilities</code>
 	 * method of this class has been called.
 	 *
-	 * @return A Object[][] containing the probabilities values as Double
+	 * @return An Object[][] containing the probabilities values as Double
 	 */
 	public Object[][] getProbabilities() {
 		return this.object;
@@ -286,7 +286,7 @@ public class SMOModel {
 	}
 
 	/**Get the size of the kernel cache
-	 * @return A int containing the size of the kernel cache
+	 * @return An integer containing the size of the kernel cache
 	 */
 	public int getCacheSize(){
 		return smo.getCacheSize();
@@ -328,14 +328,14 @@ public class SMOModel {
 	}
 
 	/**Get the value of numFolds.
-	 * @return A int containing the value of numFolds
+	 * @return An integer containing the value of numFolds
 	 */
 	public int getNumFolds(){
 		return smo.getNumFolds();
 	}
 
 	/**Get the value of randomSeed
-	 * @return A int containing the value of randomSeed
+	 * @return An integer containing the value of randomSeed
 	 */
 	public int getRandomSeed(){
 		return smo.getRandomSeed();
@@ -356,7 +356,7 @@ public class SMOModel {
 	}
 
 	/**Return the number of class attribute values
-	 * @return An int containing the class attribute values
+	 * @return An integer containing the class attribute values
 	 */
 	public int numClassAttributeValues(){
 		return smo.numClassAttributeValues();

@@ -29,7 +29,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.QSARModelException;
-import org.openscience.cdk.qsar.model.weka.LinearRegressionWModel;
 import org.openscience.cdk.qsar.model.weka.SimpleLinearRegressionModel;
 import org.openscience.cdk.test.CDKTestCase;
 

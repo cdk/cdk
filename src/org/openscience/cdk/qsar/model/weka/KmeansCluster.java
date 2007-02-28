@@ -44,7 +44,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * try {
  *     KmeansCluster kMeans = new KmeansCluster();
  *     kMeans.setOptions(options);
- *     kMeans.setData(typAttrib, classAttrib, data);
+ *     kMeans.setData(attrib, typAttrib, classAttrib, data);
  *     kMeans.build();
  *     
  * } catch (Exception e) {
@@ -108,7 +108,7 @@ public class KmeansCluster{ // implements IWekaModel{
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -118,10 +118,11 @@ public class KmeansCluster{ // implements IWekaModel{
 	/**
 	 * Parses a given list of data to an arff file, and set the variable data on it.  
 	 * 
+	 * @param attrib  A string array containing the attributs
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @throws Exception  if it is unable to parse the data
 	 * 
 	 */
@@ -144,7 +145,7 @@ public class KmeansCluster{ // implements IWekaModel{
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {
@@ -170,7 +171,7 @@ public class KmeansCluster{ // implements IWekaModel{
 		return;
 	}
 
-	/** Classifies a given instance
+	/** Classifies a given instance.
 	 *  This function only returns meaningful results if the <code>build</code>
 	 *  method of this class has been called.
 	 *	
@@ -207,11 +208,11 @@ public class KmeansCluster{ // implements IWekaModel{
 	}
 
 	/**
-	 *  Returns the number of the assigned cluster if the class is enumerated, otherwise the predicted value 
+	 *  Returns the number of the assigned cluster if the class is enumerated, otherwise the predicted value. 
 	 *  This function only returns meaningful results if the <code>clusterInstance</code>
 	 *  method of this class has been called.
 	 * @return An Object[] containing the assigned cluster as Double values 
-	 *  if the class is enumerated, otherwise the predicted values 
+	 *  if the class is enumerated, otherwise the predicted values. 
 	 */
 	public Object[] getClusterInstance(){
 		return results;
@@ -282,5 +283,15 @@ public class KmeansCluster{ // implements IWekaModel{
 	 */
 	public Clusterer getClusterer(){
 		return kMeans;
+	}
+	
+	/**
+	 * Gets the current settings of the model 
+	 *
+	 * @return an array of strings containing the options
+
+	 */
+	public String[] getOptions() {
+		return kMeans.getOptions();
 	}
 }

@@ -28,7 +28,6 @@ package org.openscience.cdk.qsar.model.weka;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.MultilayerPerceptron;
 
 import org.openscience.cdk.libio.weka.Weka;
 import org.openscience.cdk.qsar.model.QSARModelException;
@@ -98,7 +97,7 @@ public class NaiveBayesModel {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -110,8 +109,8 @@ public class NaiveBayesModel {
 	 * 
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @param attrib	  A string array containing the attributs
 	 * @throws Exception  if it is unable to parse the data
 	 * 
@@ -169,7 +168,7 @@ public class NaiveBayesModel {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {

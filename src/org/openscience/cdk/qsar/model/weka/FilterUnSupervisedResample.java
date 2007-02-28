@@ -43,7 +43,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * try {
  *     FilterUnSupervisedResample filter = new FilterUnSupervisedResample();
  *     filter.setOptions(options);
- *     filter.setData(typAttrib, classAttrib, data);
+ *     filter.setData(attrib, typAttrib, classAttrib, data);
  *     filter.build();
  *     
  * } catch (Exception e) {
@@ -103,7 +103,7 @@ public class FilterUnSupervisedResample {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -113,10 +113,11 @@ public class FilterUnSupervisedResample {
 	/**
 	 * Parses a given list of data to an arff file, and set the variable data on it.  
 	 * 
+	 * @param attrib	  A string array containing the attributs
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results).  
 	 * @throws Exception  if it is unable to parse the data
 	 * 
 	 */
@@ -155,7 +156,7 @@ public class FilterUnSupervisedResample {
 	/**
 	 * Returns the current settings of the filter. 
 	 *
-	 * @return an array of strings suitable for passing to setOptions
+	 * @return an array of strings containing the options
 	 */
 	public String[] getOptions(){
 		return filter.getOptions();
@@ -164,7 +165,7 @@ public class FilterUnSupervisedResample {
 	/**
 	 * Returns the random number seed. 
 	 *
-	 * @return the random number seed as int
+	 * @return the random number seed as integer
 	 */
 	public int getRandomSeed(){
 		return filter.getRandomSeed();

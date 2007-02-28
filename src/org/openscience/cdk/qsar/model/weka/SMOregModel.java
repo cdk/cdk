@@ -88,7 +88,7 @@ public class SMOregModel {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -117,8 +117,8 @@ public class SMOregModel {
 	 * 
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @param attrib	  A string array containing the attributs
 	 * @throws Exception  if it is unable to parse the data
 	 * 
@@ -158,7 +158,7 @@ public class SMOregModel {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {
@@ -207,7 +207,7 @@ public class SMOregModel {
 	 * This function only returns meaningful results if the <code>classifyInstance</code>
 	 * method of this class has been called.
 	 *
-	 * @return A Object[] containing the classification values as Double
+	 * @return An Object[] containing the classification values as Double
 	 */
 	public Object[] getClassification() {
 		return this.object;
@@ -221,7 +221,7 @@ public class SMOregModel {
 	}
 
 	/**Get the size of the kernel cache
-	 * @return A int containing the size of the kernel cache
+	 * @return An integer containing the size of the kernel cache
 	 */
 	public int getCacheSize(){
 		return smoreg.getCacheSize();

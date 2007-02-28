@@ -85,7 +85,7 @@ public class DensityBasedClustererModel {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -95,11 +95,11 @@ public class DensityBasedClustererModel {
 	/**
 	 * Parses a given list of data to an arff file, and set the variable data on it.  
 	 * 
-	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
-	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
 	 * @param attrib	  A string array containing the attributs
+	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
+	 * @param classAttrib String with a list of the attribut class.
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @throws Exception  if it is unable to parse the data
 	 * 
 	 */
@@ -146,7 +146,7 @@ public class DensityBasedClustererModel {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D Array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {

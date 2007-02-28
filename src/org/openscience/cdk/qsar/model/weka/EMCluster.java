@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * try {
  *     EM em = new EM();
  *     em.setOptions(options);
- *     em.setData(typAttrib, classAttrib, data);
+ *     em.setData(attrib, typAttrib, classAttrib, data);
  *     em.build();
  *     
  * } catch (Exception e) {
@@ -121,7 +121,7 @@ public class EMCluster {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -131,10 +131,11 @@ public class EMCluster {
 	/**
 	 * Parses a given list of data to an arff file, and set the variable data on it.  
 	 * 
+	 * @param attrib	  A string array containing the attributs
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results).
 	 * @throws Exception  if it is unable to parse the data
 	 * 
 	 */
@@ -176,7 +177,7 @@ public class EMCluster {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D Array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {
@@ -250,7 +251,7 @@ public class EMCluster {
 	/**
 	 * Returns the cluster priors. 
 	 *
-	 * @return the prior probability for each cluster
+	 * @return the prior probability for each cluster as double array
 	 */
 	public double[] clusterPriors() {
 		return em.getClusterPriors();
@@ -259,7 +260,7 @@ public class EMCluster {
 	/**
 	 * Return the normal distributions for the cluster models  
 	 *
-	 * @return the normal distributions for the cluster models
+	 * @return the normal distributions for the cluster models as double 3D array
 	 */
 	public double[][][] getClusterModelsNumericAtts(){
 		return em.getClusterModelsNumericAtts();
@@ -268,7 +269,7 @@ public class EMCluster {
 	/**
 	 * Return the priors for the clusters 
 	 *
-	 * @return the prior for the clusters
+	 * @return the prior for the clusters as double array
 	 */
 	public double[] getClusterPriors() {
 		return em.getClusterPriors();
@@ -286,7 +287,7 @@ public class EMCluster {
 	/**
 	 * Get the maximum number of iterations 
 	 *
-	 * @return the number of iterations
+	 * @return the number of iterations as integer
 	 */
 	public int getMaxIterations() {
 		return em.getMaxIterations();
@@ -295,7 +296,7 @@ public class EMCluster {
 	/**
 	 * Get the minimum allowable standard deviation. 
 	 *
-	 * @return the minumum allowable standard deviation
+	 * @return the minumum allowable standard deviation as double
 	 */
 	public double getMinStdDev() {
 		return em.getMinStdDev();
@@ -304,7 +305,7 @@ public class EMCluster {
 	/**
 	 * Get the number of clusters 
 	 *
-	 * @return the number of clusters.
+	 * @return the number of clusters as integer
 	 */
 	public int getNumClusters() {
 		return em.getNumClusters();
@@ -313,7 +314,7 @@ public class EMCluster {
 	/**
 	 * Gets the current settings of EM 
 	 *
-	 * @return an array of strings suitable for passing to setOptions()
+	 * @return an array of strings containing the options
 
 	 */
 	public String[] getOptions() {
@@ -323,7 +324,7 @@ public class EMCluster {
 	/**
 	 * Get the random number seed  
 	 *
-	 * @return the seed
+	 * @return the seed as integer
 
 	 */
 	public int getSeed() {

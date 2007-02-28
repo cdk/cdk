@@ -30,7 +30,7 @@ import weka.classifiers.trees.J48;
  * The use of this class is shown in the following code snippet
  * <pre>
  * try {
- *     J48WModel j48 = new J48WModel(typAttrib,classAttrib,x,y);
+ *     J48WModel j48 = new J48WModel(typAttrib,classAttrib,x,y); or J48WModel j48 = new J48WModel(typAttrib,classAttrib,x,y,attrib);
  *     j48.setOptions(options);
  *     j48.build();
  *     j48.setParameters(newX);
@@ -142,10 +142,10 @@ public class J48WModel implements IWekaModel{
 	 * Constructor of the J48WModel object from varibles
 	 * 
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
-	 * @param classAttrib String with the attribut class.
-	 * @param y  An array containing the dependent variable.
-	 * @param x  An double array containing the independent variable.
-	 * @param attrib String with the attributs
+	 * @param classAttrib String with a list of the attribut class.
+	 * @param y  An array containing the dependent variable (class value).
+	 * @param x  A 2D array containing the independent variable (for example: qsar results).
+	 * @param attrib A string array containing the attributs
 	 */
 	public J48WModel(int[] typAttrib, String[] classAttrib, Object[] y, Object[][] x, String[] attrib){
 		this.typAttrib = typAttrib;
@@ -246,7 +246,7 @@ public class J48WModel implements IWekaModel{
 	/**
 	 * Specifies the parameters to predict. In this case will be the independent varibles.
 	 * 
-	 * @param  newX  A Array Object containing the independent variable.
+	 * @param  newX  A 2D array Object containing the independent variable.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {

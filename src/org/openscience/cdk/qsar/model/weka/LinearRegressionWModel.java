@@ -29,7 +29,7 @@ import weka.classifiers.functions.LinearRegression;
  * The use of this class is shown in the following code snippet
  * <pre>
  * try {
- *     LinearRegressionWModel lrm = new LinearRegressionWModel(x,y);
+ *     LinearRegressionWModel lrm = new LinearRegressionWModel(x,y); or LinearRegressionWModel lrm = new LinearRegressionWModel(typAttrib,classAttrib,x,y,attrib);
  *     lrm.setOptions(options);
  *     lrm.build();
  *     lrm.setParameters(newX);
@@ -119,10 +119,11 @@ public class LinearRegressionWModel implements IWekaModel{
 
 	/**
 	 * Constructor of the LinearRegressionWModel object from varibles
-	 * @param y  An array containing the dependent variable.
-	 * @param x  A double array containing the independent variable.
+	 * 
+	 * @param y  An array containing the dependent variable (class value).
+	 * @param x  A 2D array containing the independent variable (for example: qsar results).
 	 * @param typAttrib  An integer array containing the attribute type
-	 * @param attrib  A string array containig the attributs
+	 * @param attrib	 A string array containing the attributs
 	 */
 	public LinearRegressionWModel(int[] typAttrib, Object[] y, Object[][] x, String[] attrib){
 		this.y = y;
@@ -213,7 +214,7 @@ public class LinearRegressionWModel implements IWekaModel{
 	/**
 	 * Specifies the parameters to predict. In this case will be the independent varibles.
 	 * 
-	 * @param  newX  A Array Object containing the independent variable.
+	 * @param  newX  A 2D array Object containing the independent variable.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {

@@ -28,7 +28,6 @@ package org.openscience.cdk.qsar.model.weka;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.classifiers.functions.MultilayerPerceptron;
-import weka.classifiers.functions.SMO;
 
 import org.openscience.cdk.libio.weka.Weka;
 import org.openscience.cdk.qsar.model.QSARModelException;
@@ -66,7 +65,7 @@ import java.io.FileReader;
  *  during validation testing. (default 20) </p>
  * <p>-G: Bring up a GUI for the neural net.</p>
  * <p>-A: Do not automatically create the connections in the net. (can only be used if -G is specified) </p> 
- * <p>-B: Do Not automatically Preprocess the instances with a nominal to binary filter</p>
+ * <p>-B: Do Not automatically preprocess the instances with a nominal to binary filter</p>
  * <p>-H str: Set the number of nodes to be used on each layer. Each number represents
  *            its own layer and the num of nodes on that layer. Each number should be comma seperated.
  *            There are also the wildcards 'a', 'i', 'o', 't' (default 4) </p>
@@ -109,7 +108,7 @@ public class MultilayerPerceptronModel {
 	 * Set the variable data to the arff file 
 	 *
 	 * @param filename   The path of the file, format arff 
-	 * @throws Exception if the options are of the wrong type for the given modeling function
+	 * @throws Exception if the parameters are of the wrong type for the given modeling function
 	 * 
 	 */
 	public void setData(String filename)throws Exception{
@@ -121,8 +120,8 @@ public class MultilayerPerceptronModel {
 	 * 
 	 * @param typAttrib   Attribute type: NUMERICAL or NOMINAL.
 	 * @param classAttrib String with a list of the attribut classes.
-	 * @param y           An array containing the attribut classes.
-	 * @param x           An double array containing the qsar results. 
+	 * @param y           An array containing the dependent variable (class value).
+	 * @param x           A 2D array containing the independent variable (for example: qsar results). 
 	 * @param attrib	  A string array containing the attributs
 	 * @throws Exception  if it is unable to parse the data
 	 * 
@@ -145,7 +144,7 @@ public class MultilayerPerceptronModel {
 	 *  		  during validation testing. (default 20) </p>
 	 * <p>-G: Bring up a GUI for the neural net.</p>
 	 * <p>-A: Do not automatically create the connections in the net. (can only be used if -G is specified) </p> 
-	 * <p>-B: Do Not automatically Preprocess the instances with a nominal to binary filter</p>
+	 * <p>-B: Do Not automatically preprocess the instances with a nominal to binary filter</p>
 	 * <p>-H str: Set the number of nodes to be used on each layer. Each number represents
 	 *            its own layer and the num of nodes on that layer. Each number should be comma seperated.
 	 *            There are also the wildcards 'a', 'i', 'o', 't' (default 4) </p>
@@ -186,7 +185,7 @@ public class MultilayerPerceptronModel {
 	 * 
 	 * @param  path  A String specifying the path of the file, format arff, which contians 
 	 * 				 the new values.
-	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
+	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling functionn
 	 * 
 	 */
 	public void setParameters(String path) throws QSARModelException {
@@ -196,7 +195,7 @@ public class MultilayerPerceptronModel {
 	/**
 	 * Specifies the new parameters as 2D array object.
 	 * 
-	 * @param  newX  An Array Object containing the new values.
+	 * @param  newX  A 2D array Object containing the new values.
 	 * @throws QSARModelException if the parameters are of the wrong type for the given modeling function
 	 */
 	public void setParameters(Object[][] newX) throws QSARModelException {
@@ -252,7 +251,7 @@ public class MultilayerPerceptronModel {
 	 * This function only returns meaningful results if the <code>predict</code>
 	 * method of this class has been called.
 	 *
-	 * @return A Object[][] containing the probabilities of each class type
+	 * @return An Object[][] containing the probabilities of each class type
 	 */
 	public Object[][] getPredictPredicted() {
 		return this.object;
@@ -336,21 +335,21 @@ public class MultilayerPerceptronModel {
 	}
 
 	/**Get the number of epochs to train through
-	 * @return An int containig the number of epochs to train through
+	 * @return An double containig the number of epochs to train through
 	 */
 	public double getTrainingTime(){
 		return mp.getTrainingTime();
 	}
 
 	/**Get the percentage size of the validation set
-	 * @return An int containig the percentage size of the validation seth
+	 * @return An double containig the percentage size of the validation seth
 	 */
 	public double getValidationSetSize(){
 		return mp.getValidationSetSize();
 	}
 
 	/**Get the threshold used for validation testing
-	 * @return An int containig the threshold used for validation testing
+	 * @return An double containig the threshold used for validation testing
 	 */
 	public double getValidationThreshold(){
 		return mp.getValidationThreshold();
