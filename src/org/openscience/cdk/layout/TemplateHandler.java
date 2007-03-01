@@ -141,6 +141,48 @@ public class TemplateHandler
 		return null;
 	}
 
+	
+	/**
+	 * Checks if one of the loaded templates is isomorph to the given
+	 * Molecule. If so, it assigns the coordinates from the template to the
+	 * respective atoms in the Molecule, and marks the atoms as ISPLACED.
+	 *
+	 * @param  molecule  The molecule to be check for potential templates
+	 * @return           True if there was a possible mapping
+	 */
+	public boolean mapTemplateExact(IMolecule molecule) throws CDKException {
+        logger.debug("Trying to map a molecule...");
+		boolean mapped = false;
+		IMolecule template = null;
+		RMap map = null;
+		org.openscience.cdk.interfaces.IAtom atom1 = null;
+		org.openscience.cdk.interfaces.IAtom atom2 = null;
+		for (int f = 0; f < templates.size(); f++)
+		{
+			template = (IMolecule) templates.elementAt(f);
+			if (UniversalIsomorphismTester.isIsomorph(molecule, template))
+			{
+				List list = UniversalIsomorphismTester.getIsomorphAtomsMap(
+                    molecule.getBuilder().newAtomContainer(molecule), 
+                    molecule.getBuilder().newAtomContainer(template)
+                );
+				logger.debug("Found a subgraph mapping of size " + list.size());
+				for (int i = 0; i < list.size(); i++)
+				{
+					map = (RMap) list.get(i);
+					atom1 = molecule.getAtom(map.getId1());
+					atom2 = template.getAtom(map.getId2());
+					atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
+					atom1.setFlag(CDKConstants.ISPLACED, true);
+				}
+				mapped = true;
+			} else {
+                logger.warn("Structure does not match template: ", template.getID());
+            }
+		}
+		return mapped;
+	}
+
 
 	/**
 	 * Checks if one of the loaded templates is a substructure in the given
