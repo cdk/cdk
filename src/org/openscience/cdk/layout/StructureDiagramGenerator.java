@@ -31,12 +31,12 @@ package org.openscience.cdk.layout;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -456,25 +457,38 @@ public class StructureDiagramGenerator
 	 *@param  rs               The connected RingSet for which the layout is to be
 	 *      done
 	 */
-	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs)
+	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws Exception
 	{
 		IAtomContainer sharedAtoms;
 		Vector2d ringCenterVector;
 		int thisRing;
-		IRing ring = RingSetManipulator.getMostComplexRing(rs);
+		logger.debug("Start of layoutRingSet");
+
+		/*
+		 *  First we check if we can map any templates with predifined coordinates
+		 *  Those are stored as MDL molfiles in data/templates
+		 */
+		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
+		{
+			logger.debug("Testing if this ringset fits a template....");
+			IAtomContainer ac = AtomContainerSetManipulator.getAllInOneContainer(rs);
+			boolean templateMapped = getTemplateHandler().mapTemplateExact(new Molecule(ac));
+			logger.debug("Template mapped in layoutRingSet: ", templateMapped);
+			if (templateMapped)
+			{
+				logger.debug("Our job is done for this RingSet ");
+				return;
+			
+			}
+		}
+
 		/*
 		 *  Get the most complex ring in this RingSet
 		 */
-		// determine first bond in Ring
-		logger.debug("Start of layoutRingSet");
+
+		IRing ring = RingSetManipulator.getMostComplexRing(rs);
 		int i = 0;
-//		for (i = 0; i < ring.getElectronContainerCount(); i++)
-//		{
-//			if (ring.getElectronContainer(i) instanceof IBond)
-//			{
-//				break;
-//			}
-//		}
+		
 		/*
 		 *  Place the most complex ring at the origin of the coordinate system
 		 */
@@ -597,7 +611,7 @@ public class StructureDiagramGenerator
 	 *  Does the layout for the next RingSystem that is connected to those parts of
 	 *  the molecule that have already been laid out.
 	 */
-	private void layoutNextRingSystem()
+	private void layoutNextRingSystem() throws Exception
 	{
 		logger.debug("Start of layoutNextRingSystem()");
 		IAtom vectorAtom1 = null;
@@ -615,9 +629,12 @@ public class StructureDiagramGenerator
 
 		resetUnplacedRings();
 		IAtomContainer tempAc = atomPlacer.getPlacedAtoms(molecule);
+		logger.debug("Finding attachment bond to already placed part...");
 		nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
+		logger.debug("no bond found - we have a problem and should not be here");
 		if (nextRingAttachmentBond != null)
 		{
+			logger.debug("...bond found.");
 			vectorAtom2 = getRingAtom(nextRingAttachmentBond);
 			if (nextRingAttachmentBond.getAtom(0) == vectorAtom2)
 			{
@@ -967,7 +984,7 @@ public class StructureDiagramGenerator
 				}
 			}
 		}
-		logger.debug("There are " + unplacedCounter + " Rings.");
+		logger.debug("There are " + unplacedCounter + " unplaced Rings.");
 	}
 
 
