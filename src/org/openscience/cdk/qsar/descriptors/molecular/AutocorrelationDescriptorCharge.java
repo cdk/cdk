@@ -107,7 +107,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 			
 //			 TODO: give proper names!
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-	                result, new String[] {""});
+	                result, new String[] {"ATSc1", "ATSc2", "ATSc3", "ATSc4" ,"ATSc5"});
 			
 		}catch(Exception ex){
 			throw new CDKException("Error while calculating the ATS_charge descriptor: " + ex.getMessage(), ex);
@@ -116,8 +116,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
 
 	public String[] getParameterNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[0];
 	}
 
 	public Object getParameterType(String name) {
@@ -125,7 +124,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 	}
 
 	public Object[] getParameters() {
-		return new Object[0];
+		return null;
 	}
 
 	public DescriptorSpecification getSpecification() {

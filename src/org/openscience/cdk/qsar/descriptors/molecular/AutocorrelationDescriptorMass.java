@@ -122,9 +122,8 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 					
 				}
 
-                // TODO: give proper names!
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-		                result, new String[] {""});
+		                result, new String[] {"ATSm1", "ATSm2", "ATSm3", "ATSm4" ,"ATSm5"});
 				
 			}catch(Exception ex){
 				throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
@@ -140,7 +139,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	}
 
 	public Object[] getParameters() {
-		return new Object[0];
+		return null;
 	}
 
 	public DescriptorSpecification getSpecification() {
