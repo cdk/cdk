@@ -337,7 +337,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 *
-	 *@exception  Exception  Description of the Exception
+	 *@exception  Exception  thrown if something goes wrong
+	 *@cdk.bug 1670871
 	 */
 	public void testBug1670871() throws Exception
 	{
