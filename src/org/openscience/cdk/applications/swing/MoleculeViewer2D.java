@@ -148,7 +148,9 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
      */
     public JFrame getFrame()
     {
-        return frame;
+    	// The static display methods need JFrame. Do not remove this!
+    	if (frame == null) this.frame = new JFrame();
+    	return frame;
     }
 
 
@@ -209,7 +211,6 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
     {	
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         MoleculeViewer2D moleculeViewer = new MoleculeViewer2D();
-
         try
         {
             if (generateCoordinates)
@@ -220,6 +221,7 @@ public class MoleculeViewer2D extends JPanel implements ICDKChangeListener
             }
             moleculeViewer.setAtomContainer(molecule);
             moleculeViewer.setPreferredSize(new Dimension(600,400));
+            logger.debug("Frame is : ", moleculeViewer.getFrame());
             moleculeViewer.getFrame().setDefaultCloseOperation(closeOperation);
             Renderer2DModel r2dm = moleculeViewer.getRenderer2DModel();
             r2dm.setDrawNumbers(drawNumbers);
