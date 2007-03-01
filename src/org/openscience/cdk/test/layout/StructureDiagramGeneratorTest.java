@@ -83,7 +83,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp() { }
+	public void setUp() 
+	{ 
+			
+	}
 
 
 	/**
@@ -169,7 +172,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	{
 		StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
 		sdg.runVisualTests();
-		//sdg.bug736137();
+		//sdg.testBug1670871();
 		//sdg.testSpiroRings();
 		//sdg.visualBugPMR();
 		//sdg.testBranchedAliphatic();
@@ -329,6 +332,22 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IAtomContainer ac = generateCoordinates(m);
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
+	
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  Description of the Exception
+	 */
+	public void testBug1670871() throws Exception
+	{
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
+		IAtomContainer ac = generateCoordinates(mol);
+		//MoleculeViewer2D.display(new Molecule(ac), false);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
+	}
+
 
 
 	/**
@@ -356,7 +375,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
-
+	
 	/**
 	 *  A unit test for JUnit
 	 *
