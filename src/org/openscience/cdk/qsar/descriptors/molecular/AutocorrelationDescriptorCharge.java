@@ -105,7 +105,6 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 				
 			}
 			
-//			 TODO: give proper names!
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
 	                result, new String[] {"ATSc1", "ATSc2", "ATSc3", "ATSc4" ,"ATSc5"});
 			
