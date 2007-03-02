@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2005-2007  The JChemPaint project
+ * Copyright (C) 2005-2007  Stefan Kuhn <shk3@users.sf.net>
  *
  * Contact: jchempaint-devel@lists.sourceforge.net
  *
@@ -102,8 +99,6 @@ public class Convertor {
     private boolean useCMLIDs;
     private String prefix;
 
-    private IDCreator idCreator;
-
     /**
      * Constructs a CML convertor.
      *
@@ -114,7 +109,6 @@ public class Convertor {
         logger = new LoggingTool(this);
         this.useCMLIDs = useCMLIDs;
         this.prefix = prefix;
-        idCreator = new IDCreator();
         setupCustomizers();
     }
 
@@ -162,7 +156,7 @@ public class Convertor {
         cmlList.setDictRef("cdk:document");
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(file);
+            IDCreator.createIDs(file);
         }
 
         if (file.getChemSequenceCount() > 0) {
@@ -184,7 +178,7 @@ public class Convertor {
         cmlList.setDictRef("cdk:sequence");
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(sequence);
+            IDCreator.createIDs(sequence);
         }
 
         if (sequence.getChemModelCount() > 0) {
@@ -205,7 +199,7 @@ public class Convertor {
         cmlList.setDictRef("cdk:model");
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(model);
+            IDCreator.createIDs(model);
         }
 
         if (model.getCrystal() != null) {
@@ -229,7 +223,7 @@ public class Convertor {
         CMLReactionList reactionList = new CMLReactionList();
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(reactionSet);
+            IDCreator.createIDs(reactionSet);
         }
 
         java.util.Iterator reactionIter = reactionSet.reactions();
@@ -248,7 +242,7 @@ public class Convertor {
         CMLList cmlList = new CMLList();
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(moleculeSet);
+            IDCreator.createIDs(moleculeSet);
         }
         
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
@@ -265,7 +259,7 @@ public class Convertor {
         CMLReaction cmlReaction = new CMLReaction();
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(reaction);
+            IDCreator.createIDs(reaction);
         }
 
         // reactants
@@ -312,7 +306,7 @@ public class Convertor {
         CMLCrystal cmlCrystal = new CMLCrystal();
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(crystal);
+            IDCreator.createIDs(crystal);
         }
 
         this.checkPrefix(cmlCrystal);
@@ -394,7 +388,7 @@ public class Convertor {
         CMLMolecule cmlMolecule = new CMLMolecule();
 
         if (useCMLIDs && setIDs) {
-            idCreator.createIDs(structure);
+            IDCreator.createIDs(structure);
         }
 
         this.checkPrefix(cmlMolecule);

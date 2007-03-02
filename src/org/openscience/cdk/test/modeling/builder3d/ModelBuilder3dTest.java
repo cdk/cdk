@@ -416,8 +416,7 @@ class CMLChemFile extends ChemFile {
 	 * @throws Exception
 	 */
 	public String toCML() throws Exception {
-		IDCreator idCreator = new IDCreator();
-		idCreator.createIDs(this);
+		IDCreator.createIDs(this);
 		
 		StringWriter stringWriter = new StringWriter();
 		IChemObjectWriter writer = new CMLWriter(stringWriter);

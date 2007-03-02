@@ -133,8 +133,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public void writeMolecule(IMolecule molecule) throws Exception {
         writer.write("{\n");
         writer.write("  IMolecule mol = new Molecule();\n");
-        IDCreator idCreator = new IDCreator();
-        idCreator.createIDs(molecule);
+        IDCreator.createIDs(molecule);
         java.util.Iterator atoms = molecule.atoms();
         while (atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
