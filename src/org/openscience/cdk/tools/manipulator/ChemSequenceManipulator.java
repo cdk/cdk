@@ -127,5 +127,13 @@ public class ChemSequenceManipulator {
         }
 		return list;
 	}
+
+	public static List getAllIDs(IChemSequence sequence) {
+		ArrayList list = new ArrayList();
+        for (int i=0; i<sequence.getChemModelCount(); i++) {
+        	list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));
+        }
+		return list;
+	}
 }
 

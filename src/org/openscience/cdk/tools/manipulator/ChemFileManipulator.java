@@ -108,6 +108,16 @@ public class ChemFileManipulator {
         return list;
     }
 
+    public static List getAllIDs(IChemFile file) {
+    	ArrayList list = new ArrayList();
+        for (int i=0; i<file.getChemSequenceCount(); i++) {
+            list.addAll(ChemSequenceManipulator.getAllIDs(
+                file.getChemSequence(i)
+            ));
+        }
+        return list;
+    }
+
     /**
      * Returns all the AtomContainer's of a ChemFile.
      */

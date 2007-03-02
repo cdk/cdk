@@ -355,5 +355,21 @@ public class ChemModelManipulator {
 		return list;
 	}
 
+	public static List getAllIDs(IChemModel chemModel) {
+		ArrayList list = new ArrayList();
+        ICrystal crystal = chemModel.getCrystal();
+        if (crystal != null) {
+            list.addAll(AtomContainerManipulator.getAllIDs(crystal));
+        }
+        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        if (moleculeSet != null) {
+        	list.addAll(MoleculeSetManipulator.getAllIDs(moleculeSet));
+        }
+        IReactionSet reactionSet = chemModel.getReactionSet();
+        if (reactionSet != null) {
+        	list.addAll(ReactionSetManipulator.getAllIDs(reactionSet));
+        }
+		return list;
+	}
 }
 
