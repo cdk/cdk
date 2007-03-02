@@ -64,7 +64,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
 		assertTrue(random <= 1l);
 	}
 	
-	public void testRandomLong_Long_Long() {
+	public void testRandomLong_long_long() {
 		long lower_limit = 2l;
 		long upper_limit = 4l;
 		long random = RandomNumbersTool.randomLong(lower_limit, upper_limit);
@@ -92,7 +92,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
 		assertTrue(random <= 1.0);
 	}
 	
-	public void testRandomFloat_Float_Float() {
+	public void testRandomFloat_float_float() {
 		float lower_limit = (float)2.0;
 		float upper_limit = (float)4.0;
 		float random = RandomNumbersTool.randomFloat(lower_limit, upper_limit);
