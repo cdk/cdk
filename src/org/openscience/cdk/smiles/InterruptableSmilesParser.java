@@ -58,7 +58,7 @@ public class InterruptableSmilesParser extends SmilesParser {
 		Timer timer = new Timer(true);
 		timer.schedule(
 			new TimerTask() {
-				// this is the actual code that interrupts ValencyChecker        
+				// this is the actual code that interrupts ValencyChecker
 				public void run() {
 					setInterrupted(true);
 				}
