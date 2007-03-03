@@ -37,9 +37,17 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class Residue extends AtomContainer{
 
+	private static final long serialVersionUID = 6548353601272976798L;
+
 	private int number;
 	private String name;
 	private MDMolecule parentMolecule;
+
+	/**
+	 * Empty constructor
+	 */
+	public Residue(){
+	}
 	
 	/**
 	 * Constructor to create a Residue based on an AC, a number, and a MDMolecule

@@ -37,13 +37,19 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module libiomd
  */
 public class ChargeGroup extends AtomContainer{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 362147331841737028L;
+
 	private int number;
 	private MDMolecule parentMolecule;
 	private IAtom switchingAtom;
+	
+	
+	/**
+	 * Empty constructor
+	 */
+	public ChargeGroup(){
+	}
 	
 	/**
 	 * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule
