@@ -38,6 +38,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.JApplet;
 import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
@@ -52,13 +53,16 @@ import org.openscience.cdk.applications.swing.JExternalFrame;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -89,7 +93,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			{ "tooltops", "string like 'atomumber|test|atomnumber|text", "the texts will be used as tooltips for the respective atoms (leave out if none required"},
 			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},
 			{ "spectrumRenderer", "string", "name of a spectrum applet (see subproject in NMRShiftDB) where peaks should be highlighted when hovering over atom"},
-			{ "hightlightTable", "true or false", "if true peaks in a table will be highlighted when hovering over atom, ids are assumed to be tableid$atomnumber (default false)"}
+			{ "hightlightTable", "true or false", "if true peaks in a table will be highlighted when hovering over atom, ids are assumed to be tableid$atomnumber (default false)"},
+			{ "smiles", "string", "a structure to load as smiles"}
 	};
 
 	public String getAppletInfo() {
@@ -242,23 +247,56 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	// Code for both loadModel methods taken from JCPCDK applet
 	
 	/**
-	 * @param theModel
+	 * loads a molecule from url or smiles
 	 */
 	protected void loadModelFromParam() {
 		URL fileURL = null;
+		String smiles=null;
 		try {
 			URL documentBase = getDocumentBase();
 			String load = getParameter("load");
-      if (load != null)
+			if (load != null)
 				fileURL = new URL(documentBase, load);
-    } catch (Exception exception) {
+			smiles = getParameter("smiles");
+			} catch (Exception exception) {
 			System.out.println("Cannot load model: " + exception.toString());
 			exception.printStackTrace();
 		}
 		loadModelFromUrl(fileURL);
+		loadModelFromSmiles(smiles);
+	}
+	
+	/**
+	 * Loads a molecule from a smiles into jcp
+	 * 
+	 * @param fileURL
+	 */
+	public void loadModelFromSmiles(String smiles) {
+		if (smiles != null) {
+			try {
+				SmilesParser sp=new SmilesParser(DefaultChemObjectBuilder.getInstance());
+				IMolecule mol = sp.parseSmiles(smiles);
+				StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+				sdg.setMolecule(mol);
+				sdg.generateCoordinates(new Vector2d(0, 1));
+				mol=sdg.getMolecule();
+				IChemModel chemModel = DefaultChemObjectBuilder.getInstance().newChemModel();
+				chemModel.setMoleculeSet(DefaultChemObjectBuilder.getInstance().newMoleculeSet());
+				chemModel.getMoleculeSet().addAtomContainer(mol);
+				theModel = new JChemPaintModel(chemModel);
+			} catch (Exception exception) {
+				System.out.println("Cannot parse model: " + exception.toString());
+				exception.printStackTrace();
+			}
+		}else{
+			theModel=new JChemPaintModel();
+		}
+		initPanelAndModel(theJcpp);
 	}
 
 	/**
+	 * Loads a molecule from a url into jcp
+	 * 
 	 * @param fileURL
 	 */
 	public void loadModelFromUrl(URL fileURL) {
@@ -281,23 +319,23 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 				exception.printStackTrace();
 			}
 		}else{
-      theModel=new JChemPaintModel();
-    }
+			theModel=new JChemPaintModel();
+		}
 		initPanelAndModel(theJcpp);
 	}
 	
 	public void start() {
 		//Parameter parsing goes here
-    loadModelFromParam();
+		loadModelFromParam();
 		String atomNumbers=getParameter("atomNumbersVisible");
-    if(atomNumbers!=null){
-      if(atomNumbers.equals("true"))
-        theJcpp.getJChemPaintModel().getRendererModel().setDrawNumbers(true);
-    }
-    String background = getParameter("background");
-    if(background!=null){
-      theJcpp.getJChemPaintModel().getRendererModel().setBackColor(new Color(Integer.parseInt(background)));
-    }
+		if(atomNumbers!=null){
+			if(atomNumbers.equals("true"))
+				theJcpp.getJChemPaintModel().getRendererModel().setDrawNumbers(true);
+		}
+		String background = getParameter("background");
+		if(background!=null){
+			theJcpp.getJChemPaintModel().getRendererModel().setBackColor(new Color(Integer.parseInt(background)));
+		}
 	}
 	
 	public void init(){
