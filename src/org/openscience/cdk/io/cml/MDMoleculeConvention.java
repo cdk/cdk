@@ -36,7 +36,7 @@ import org.xml.sax.Attributes;
  * 
  * Implements a Convention for parsing an MDMolecule from CML
  * 
- * @cdk.module io
+ * @cdk.module libiomd
  * 
  * @author Ola Spjuth <ola.spjuth@farmbio.uu.se>
  *
