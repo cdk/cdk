@@ -33,6 +33,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import nu.xom.Attribute;
 import nu.xom.Document;
@@ -58,6 +61,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.libio.cml.ICMLCustomizer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -114,6 +118,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting indent;
     
     private LoggingTool logger;
+    
+    private static List customizers = null;
 
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
@@ -144,6 +150,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+    public void registerCustomizer(ICMLCustomizer customizer) {
+    	if (customizers == null) customizers = new ArrayList();
+    	
+    	customizers.add(customizer);
+    	logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    }
+    
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -202,10 +215,6 @@ public class CMLWriter extends DefaultChemObjectWriter {
              throw new CDKException("Cannot write this unsupported IChemObject: " + object.getClass().getName());
         }
 
-
-
-
-
         logger.debug("Writing object in CML of type: ", object.getClass().getName());
         
         customizeJob();
@@ -214,6 +223,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	cmlIds.isSet(), 
         	(namespacePrefix.getSetting().length() >0) ? namespacePrefix.getSetting() : null
         );
+        // adding the customizer
+        Iterator customIter = customizers.iterator();
+        while (customIter.hasNext()) {
+        	convertor.registerCustomizer((ICMLCustomizer)customIter.next());
+        }
+        
+        // now convert the object
         Element root = null;
         if (object instanceof PDBPolymer) {
         	root = convertor.cdkPDBPolymerToCMLMolecule((PDBPolymer)object);
