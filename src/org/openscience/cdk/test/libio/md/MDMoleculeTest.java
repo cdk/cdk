@@ -33,10 +33,13 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.cml.MDMoleculeConvention;
+import org.openscience.cdk.libio.cml.MDMoleculeCustomizer;
 import org.openscience.cdk.libio.md.ChargeGroup;
 import org.openscience.cdk.libio.md.MDMolecule;
 import org.openscience.cdk.libio.md.Residue;
@@ -169,18 +172,21 @@ public class MDMoleculeTest extends CDKTestCase {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
         try {
             MDMolecule molecule=makeMDBenzene();
             cmlWriter.write(molecule);
 
             String serializedMol=writer.toString();
+            System.out.println("****************************** testMDMoleculeCustomizationRoundtripping()");
+            System.out.println(serializedMol);
+            System.out.println("******************************");
             
             CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
-            IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+            reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
+            IChemFile file = (IChemFile)reader.read(new ChemFile());
 
-            if (!(file instanceof MDMolecule)) {
-            	fail();
-			}
+            assertTrue(file instanceof MDMolecule);
         	MDMolecule molecule2 = (MDMolecule) file;
 
         	assertEquals(molecule.getChargeGroups().size(), molecule2.getChargeGroups().size());
@@ -189,6 +195,7 @@ public class MDMoleculeTest extends CDKTestCase {
         } catch (Exception exception) {
             logger.error("Error while creating an CML2 file: ", exception.getMessage());
             logger.debug(exception);
+            exception.printStackTrace();
             fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
