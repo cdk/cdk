@@ -28,12 +28,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OptionalDataException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Monomer;
@@ -112,38 +112,44 @@ public class Convertor {
         setupCustomizers();
     }
 
+    public void registerCustomizer(ICMLCustomizer customizer) {
+    	if (customizers == null) customizers = new ArrayList();
+    	
+    	customizers.add(customizer);
+    	logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    }
+    
     private void setupCustomizers() {
-        if (customizers == null) {
-            customizers = new Vector();
-            try {
-                logger.debug("Starting loading Customizers...");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        this.getClass().getClassLoader().getResourceAsStream(CUSTOMIZERS_LIST)
-                ));
-                int customizerCount = 0;
-                while (reader.ready()) {
-                    // load them one by one
-                    String customizerName = reader.readLine();
-                    customizerCount++;
-                    try {
-                        ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader().
-                                loadClass(customizerName).newInstance();
-                        customizers.add(customizer);
-                        logger.info("Loaded Customizer: ", customizer.getClass().getName());
-                    } catch (ClassNotFoundException exception) {
-                        logger.info("Could not find this Customizer: ", customizerName);
-                        logger.debug(exception);
-                    } catch (Exception exception) {
-                        logger.warn("Could not load this Customizer: ", customizerName);
-                        logger.warn(exception.getMessage());
-                        logger.debug(exception);
-                    }
-                }
-                logger.info("Number of loaded customizers: ", customizerCount);
-            } catch (Exception exception) {
-                logger.error("Could not load this list: ", CUSTOMIZERS_LIST);
-                logger.debug(exception);
-            }
+        if (customizers == null) customizers = new ArrayList();
+        
+        try {
+        	logger.debug("Starting loading Customizers...");
+        	BufferedReader reader = new BufferedReader(new InputStreamReader(
+        			this.getClass().getClassLoader().getResourceAsStream(CUSTOMIZERS_LIST)
+        	));
+        	int customizerCount = 0;
+        	while (reader.ready()) {
+        		// load them one by one
+        		String customizerName = reader.readLine();
+        		customizerCount++;
+        		try {
+        			ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader().
+        			loadClass(customizerName).newInstance();
+        			customizers.add(customizer);
+        			logger.info("Loaded Customizer: ", customizer.getClass().getName());
+        		} catch (ClassNotFoundException exception) {
+        			logger.info("Could not find this Customizer: ", customizerName);
+        			logger.debug(exception);
+        		} catch (Exception exception) {
+        			logger.warn("Could not load this Customizer: ", customizerName);
+        			logger.warn(exception.getMessage());
+        			logger.debug(exception);
+        		}
+        	}
+        	logger.info("Number of loaded customizers: ", customizerCount);
+        } catch (Exception exception) {
+        	logger.error("Could not load this list: ", CUSTOMIZERS_LIST);
+        	logger.debug(exception);
         }
     }
 
