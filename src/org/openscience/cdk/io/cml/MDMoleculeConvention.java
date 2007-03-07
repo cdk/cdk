@@ -115,7 +115,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					} else {
 						logger.debug("Qname: ", qname);
 					}
-				}
+				} 
 
 				//If convention == mdmolecule, set up a new mdmolecule
 				if (atts.getQName(j).equals("convention") && atts.getValue(j).equals("mdmolecule")) {
