@@ -54,6 +54,7 @@ import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
+import org.openscience.cdk.test.tools.HOSECodeAnalyserTest;
 import org.openscience.cdk.test.tools.HOSECodeTest;
 
 /**
@@ -105,6 +106,7 @@ public class MextraTests {
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
         suite.addTest(HOSECodeTest.suite());
+        suite.addTest(HOSECodeAnalyserTest.suite());
         
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).
