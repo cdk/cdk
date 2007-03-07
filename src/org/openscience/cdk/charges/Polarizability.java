@@ -23,13 +23,17 @@
  */
 package org.openscience.cdk.charges;
 
-import org.openscience.cdk.*;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.Vector;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and

@@ -28,14 +28,17 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import org.openscience.cdk.*;
+import java.util.Iterator;
+import java.util.Vector;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 

@@ -27,7 +27,13 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.Isotope;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 
 /**
  * This class transforms implicit references to dictionary of CDK

@@ -28,14 +28,18 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.*;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import org.openscience.cdk.AminoAcid;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.BioPolymer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.Strand;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
-
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Class that facilitates building protein structures. Building DNA and RNA

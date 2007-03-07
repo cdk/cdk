@@ -28,11 +28,17 @@
  */
 package org.openscience.cdk.dict;
 
-import nu.xom.*;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.IOException;
 import java.io.Reader;
+
+import nu.xom.Attribute;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
+
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Dictionary with entries build from an OWL file.
