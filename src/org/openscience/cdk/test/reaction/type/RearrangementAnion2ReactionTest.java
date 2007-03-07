@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @author         Miguel Rojas
  * 
  * @cdk.created    2006-05-05
- * @cdk.module     reaction
+ * @cdk.module     test-reaction
  * @cdk.set        reaction-types
  * 
  **/
