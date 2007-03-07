@@ -30,6 +30,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -37,6 +40,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
 import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
+import org.openscience.cdk.io.cml.ICMLModule;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -62,6 +66,8 @@ public class CMLReader extends DefaultChemObjectReader {
     private XMLReader parser;
     private Reader input;
     private String url;
+    
+    private Map userConventions = new HashMap();
 
     private LoggingTool logger;
 
@@ -91,6 +97,10 @@ public class CMLReader extends DefaultChemObjectReader {
     
     public CMLReader() {
         this(new StringReader(""));
+    }
+    
+    public void registerConvention(String convention, ICMLModule conv) {
+    	userConventions.put(convention, conv);
     }
 
     /**
@@ -202,7 +212,14 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.warn("Cannot deactivate validation.");
             return null;
         }
-        parser.setContentHandler(new CMLHandler(file));
+        CMLHandler handler = new CMLHandler(file);
+        // copy the manually added conventions
+        Iterator conventions = userConventions.keySet().iterator();
+        while (conventions.hasNext()) {
+        	String conv = (String)conventions.next();
+        	handler.registerConvention(conv, (ICMLModule)userConventions.get(conv));
+        }
+        parser.setContentHandler(handler);
         parser.setEntityResolver(new CMLResolver());
         parser.setErrorHandler(new CMLErrorHandler());
         try {
