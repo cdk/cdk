@@ -26,6 +26,7 @@
 
 package org.openscience.cdk.io.cml;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.libio.md.ChargeGroup;
 import org.openscience.cdk.libio.md.MDMolecule;
@@ -116,10 +117,24 @@ public class MDMoleculeConvention extends CMLCoreModule {
 		
 		//We have a scalar element. Now check who it belongs to
 		if ("scalar".equals(local)) {			
+			//Residue number
 			if (DICTREF.equals("md:resNumber")){
-				//TODO
-			} else if (DICTREF.equals("md:switchingAtom")){
-				//TODO
+				int myInt=Integer.parseInt(raw);
+				currentResidue.setNumber(myInt);
+			}
+			//ChargeGroup number
+			else if (DICTREF.equals("md:cgNumber")){
+				int myInt=Integer.parseInt(raw);
+				currentChargeGroup.setNumber(myInt);
+			}
+		}
+
+		//Check atoms for md dictref
+		if ("atom".equals(local)) {
+			//Switching Atom
+			if (DICTREF.equals("md:switchingAtom")){
+				//Set current atom as switching atom
+				currentChargeGroup.setSwitchingAtom(currentAtom);
 			}
 		}
 
