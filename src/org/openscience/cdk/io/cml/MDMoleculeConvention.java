@@ -55,7 +55,6 @@ public class MDMoleculeConvention extends CMLCoreModule {
 		super(conv);
 	}
 
-
 	/**
 	 * Add parsing of elements in mdmolecule:
 	 * 
@@ -98,20 +97,25 @@ public class MDMoleculeConvention extends CMLCoreModule {
 //	</molecule>
 
 		// let the CMLCore convention deal with things first
-		super.startElement(xpath, uri, local, raw, atts);
 
 		if ("molecule".equals(local)) {
 
 			// the copy the parsed content into a new MDMolecule
-			if (atts.getValue("convention").equals("md:mdMolecule")) {
+			if (atts.getValue("convention") != null &&
+				atts.getValue("convention").equals("md:mdMolecule")) {
+				System.out.println("creating a MDMolecule");
+				super.startElement(xpath, uri, local, raw, atts);
 				currentMolecule = new MDMolecule(currentMolecule);
-			}
-			
-			//If residue or chargeGroup, set up a new one
-			if (DICTREF.equals("md:chargeGroup")){
-				currentChargeGroup=new ChargeGroup();
-			}else if (DICTREF.equals("md:residue")){
-				currentResidue=new Residue();
+			} else {
+				DICTREF = atts.getValue("dictRef") != null ? atts.getValue("dictRef") : "";
+				//If residue or chargeGroup, set up a new one
+				if (DICTREF.equals("md:chargeGroup")){
+					System.out.println("Creating a new charge group...");
+					currentChargeGroup = new ChargeGroup();
+				} else if (DICTREF.equals("md:residue")){
+					System.out.println("Creating a new residue group...");
+					currentResidue = new Residue();
+				}
 			}
 		} else 
 		
@@ -144,8 +148,6 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 * Finish up parsing of elements in mdmolecule
 	 */
 	public void endElement(CMLStack xpath, String uri, String name, String raw) {
-		super.endElement(xpath, uri, name, raw);
-		
 		if (name.equals("molecule")){
 			System.out.println("Ending element mdmolecule");
 			// add chargeGroup, and then delete them
@@ -155,8 +157,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				} else {
 					logger.error("Need to store a charge group, but the current molecule is not a MDMolecule!");
 				}
-			}
-			currentChargeGroup = null;
+				currentChargeGroup = null;
+			} else 
 			
 			// add chargeGroup, and then delete them
 			if (currentResidue != null) {
@@ -165,8 +167,13 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				} else {
 					logger.error("Need to store a residue group, but the current molecule is not a MDMolecule!");
 				}
+				currentResidue = null;
+			} else {
+				System.out.println("OK, that was the last end mdmolecule");
+				super.endElement(xpath, uri, name, raw);
 			}
-			currentResidue = null;
+		} else {
+			super.endElement(xpath, uri, name, raw);
 		}
 	}
 

@@ -27,6 +27,7 @@ package org.openscience.cdk.test.libio.md;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,6 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -45,6 +47,7 @@ import org.openscience.cdk.libio.md.MDMolecule;
 import org.openscience.cdk.libio.md.Residue;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * @cdk.module test-libiomd
@@ -185,9 +188,13 @@ public class MDMoleculeTest extends CDKTestCase {
             CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
             reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
             IChemFile file = (IChemFile)reader.read(new ChemFile());
+            List containers = ChemFileManipulator.getAllAtomContainers(file);
+            assertEquals(1, containers.size());
+            
+            IAtomContainer container = (IAtomContainer)containers.get(0);
 
-            assertTrue(file instanceof MDMolecule);
-        	MDMolecule molecule2 = (MDMolecule) file;
+            assertTrue(container instanceof MDMolecule);
+        	MDMolecule molecule2 = (MDMolecule) container;
 
         	assertEquals(molecule.getChargeGroups().size(), molecule2.getChargeGroups().size());
         	assertEquals(molecule.getResidues().size(), molecule2.getResidues().size());
