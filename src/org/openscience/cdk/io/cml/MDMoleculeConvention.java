@@ -34,7 +34,7 @@ import org.xml.sax.Attributes;
 
 /**
  * 
- * Implements a Convention for parsing an MDMolecule from CML
+ * Implements a Convention for parsing an MDMolecule from CML.
  * 
  * @cdk.module libiomd
  * 
@@ -43,7 +43,6 @@ import org.xml.sax.Attributes;
  */
 public class MDMoleculeConvention extends CMLCoreModule {
 
-	private MDMolecule currentMDMolecule;
 	private Residue currentResidue;
 	private ChargeGroup currentChargeGroup;
 	
@@ -70,6 +69,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 * 			title
 	 * 			resNumber
 	 * 			atomArray
+	 * 
+	 * @cdk.todo The JavaDoc of this class needs to be converted into HTML
 	 */
 	public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
 //		<molecule convention="md:mdMolecule"
@@ -95,77 +96,32 @@ public class MDMoleculeConvention extends CMLCoreModule {
 //	  </molecule>
 //	</molecule>
 
-		String name = raw;
-		if ("molecule".equals(name)) {
+		// let the CMLCore convention deal with things first
+		super.startElement(xpath, uri, local, raw, atts);
 
-			//FIXME: implement this
+		if ("molecule".equals(local)) {
 
-			for (int j = 0; j < atts.getLength(); j++) {
-				logger.debug("StartElement molecule");
-				DICTREF = "";
-
-				for (int i=0; i<atts.getLength(); i++) {
-					String qname = atts.getQName(i);
-					if (qname.equals("dictRef")) {
-						DICTREF = atts.getValue(i);
-						logger.debug(name, "->DICTREF found: ", atts.getValue(i));
-					} else if (qname.equals("title")) {
-						elementTitle = atts.getValue(i);
-						logger.debug(name, "->TITLE found: ", atts.getValue(i));
-					} else {
-						logger.debug("Qname: ", qname);
-					}
-				} 
-
-				//If convention == mdmolecule, set up a new mdmolecule
-				if (atts.getQName(j).equals("convention") && atts.getValue(j).equals("mdmolecule")) {
-					currentMDMolecule = new MDMolecule();
-				}
-
-				//If residue or chargeGroup, set up a new one
-				if (DICTREF.equals("md:chargeGroup")){
-					currentChargeGroup=new ChargeGroup();
-				}else if (DICTREF.equals("md:residue")){
-					currentResidue=new Residue();
-				}
-
+			// the copy the parsed content into a new MDMolecule
+			if (atts.getValue("convention").equals("md:mdMolecule")) {
+				currentMolecule = new MDMolecule(currentMolecule);
 			}
-		}
+			
+			//If residue or chargeGroup, set up a new one
+			if (DICTREF.equals("md:chargeGroup")){
+				currentChargeGroup=new ChargeGroup();
+			}else if (DICTREF.equals("md:residue")){
+				currentResidue=new Residue();
+			}
+		} else 
 		
 		//We have a scalar element. Now check who it belongs to
-		if ("scalar".equals(name)) {
-			for (int j = 0; j < atts.getLength(); j++) {
-				logger.debug("StartElement scalar");
-
-				DICTREF = "";
-
-				for (int i=0; i<atts.getLength(); i++) {
-					String qname = atts.getQName(i);
-					if (qname.equals("dictRef")) {
-						DICTREF = atts.getValue(i);
-						logger.debug(name, "->DICTREF found: ", atts.getValue(i));
-					} else {
-						logger.debug("Qname: ", qname);
-					}
-				}
-				
-				if (DICTREF.equals("md:resNumber")){
-					//TODO
-				}
-				else if (DICTREF.equals("md:switchingAtom")){
-					//TODO
-				}
-				
-				
+		if ("scalar".equals(local)) {			
+			if (DICTREF.equals("md:resNumber")){
+				//TODO
+			} else if (DICTREF.equals("md:switchingAtom")){
+				//TODO
 			}
 		}
-
-		
-		//For all else, use super implementation
-		else {
-			super.startElement(xpath, uri, local, raw, atts);
-		}
-
 
 	}
 
@@ -173,13 +129,29 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 * Finish up parsing of elements in mdmolecule
 	 */
 	public void endElement(CMLStack xpath, String uri, String name, String raw) {
-		if(name.equals("mdmolecule")){
+		super.endElement(xpath, uri, name, raw);
+		
+		if (name.equals("molecule")){
 			System.out.println("Ending element mdmolecule");
-			//FIXME: implement this
-
-		}else {
-			//For all else, use super implementation
-			super.endElement(xpath, uri, name, raw);
+			// add chargeGroup, and then delete them
+			if (currentChargeGroup != null) {
+				if (currentMolecule instanceof MDMolecule) {
+					((MDMolecule)currentMolecule).addChargeGroup(currentChargeGroup);
+				} else {
+					logger.error("Need to store a charge group, but the current molecule is not a MDMolecule!");
+				}
+			}
+			currentChargeGroup = null;
+			
+			// add chargeGroup, and then delete them
+			if (currentResidue != null) {
+				if (currentMolecule instanceof MDMolecule) {
+					((MDMolecule)currentMolecule).addResidue(currentResidue);
+				} else {
+					logger.error("Need to store a residue group, but the current molecule is not a MDMolecule!");
+				}
+			}
+			currentResidue = null;
 		}
 	}
 
