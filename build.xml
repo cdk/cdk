@@ -434,6 +434,7 @@
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
         <antcall target="compile-init"/>
+        <antcall target="compile-module"><param name="module" value="test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
