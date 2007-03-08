@@ -224,9 +224,11 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	(namespacePrefix.getSetting().length() >0) ? namespacePrefix.getSetting() : null
         );
         // adding the customizer
-        Iterator customIter = customizers.iterator();
-        while (customIter.hasNext()) {
-        	convertor.registerCustomizer((ICMLCustomizer)customIter.next());
+        if (customizers != null) {
+        	Iterator customIter = customizers.iterator();
+        	while (customIter.hasNext()) {
+        		convertor.registerCustomizer((ICMLCustomizer)customIter.next());
+        	}
         }
         
         // now convert the object
