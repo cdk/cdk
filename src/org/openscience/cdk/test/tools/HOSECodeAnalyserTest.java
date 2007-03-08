@@ -29,7 +29,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HOSECodeAnalyser;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-extra
  */
 public class HOSECodeAnalyserTest extends CDKTestCase {
 	
