@@ -12,4 +12,4 @@ cdk-sdg.jar
 cdk-extra.jar
 cdk-forcefield.jar
 cdk-valencycheck.jar
-cdk-test-core.jar
+cdk-test.jar

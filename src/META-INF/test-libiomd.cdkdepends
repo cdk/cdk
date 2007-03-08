@@ -6,4 +6,4 @@ cdk-extra.jar
 cdk-libiomd.jar
 cdk-io.jar
 cdk-libio-cml.jar
-cdk-test-core.jar
+cdk-test.jar

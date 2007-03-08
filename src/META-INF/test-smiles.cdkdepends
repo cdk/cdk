@@ -9,4 +9,4 @@ cdk-smiles.jar
 cdk-extra.jar
 cdk-test-core.jar
 cdk-sdg.jar
-cdk-libio-cml.jar
+cdk-libio.jar

@@ -10,4 +10,4 @@ cdk-smiles.jar
 cdk-qsar-weka.jar
 cdk-valencycheck.jar
 cdk-extra.jar
-cdk-test-core.jar
+cdk-test.jar

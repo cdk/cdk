@@ -7,4 +7,4 @@ cdk-io.jar
 cdk-extra.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
-cdk-test-core.jar
+cdk-test.jar

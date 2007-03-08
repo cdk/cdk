@@ -35,7 +35,7 @@ import junit.framework.Test;
  * This test class is <b>not</b> intended to be tested directly,
  * but serve as helper class for actual coverage testers.
  *
- * @cdk.module test-core
+ * @cdk.module test
  */
 abstract public class CoverageTest extends CDKTestCase {
 

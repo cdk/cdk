@@ -5,4 +5,4 @@ cdk-io.jar
 cdk-standard.jar
 cdk-pdb.jar
 cdk-nonotify.jar
-cdk-test-core.jar
+cdk-test.jar

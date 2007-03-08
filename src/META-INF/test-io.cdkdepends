@@ -14,6 +14,6 @@ cdk-qsar-pdb.jar
 cdk-pdb-cml.jar
 cdk-smiles.jar
 cdk-nonotify.jar
-cdk-test-core.jar
+cdk-test.jar
 cdk-test-data.jar
 

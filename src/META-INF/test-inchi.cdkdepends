@@ -5,5 +5,5 @@ cdk-io.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-valencycheck.jar
-cdk-test-core.jar
+cdk-test.jar
 cdk-inchi.jar

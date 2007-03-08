@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
  * the LoggingTool is configured.
  *
- * @cdk.module test-core
+ * @cdk.module test
  */
 public class CDKTestCase extends TestCase {
 

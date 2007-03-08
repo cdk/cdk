@@ -14,7 +14,7 @@ cdk-reaction.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
 cdk-smiles.jar
-cdk-test-core.jar
+cdk-test.jar
 cdk-test-standard.jar
 cdk-test-extra.jar
 cdk-test-io.jar
