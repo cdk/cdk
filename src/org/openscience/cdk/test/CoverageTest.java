@@ -26,8 +26,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Test;
 
@@ -43,7 +43,7 @@ abstract public class CoverageTest extends CDKTestCase {
     private final String testPackageName = "test.";
     
     private ClassLoader classLoader;
-    private Vector classesToTest;
+    private List classesToTest;
     
     public CoverageTest(String name) {
         super(name);
@@ -62,7 +62,7 @@ abstract public class CoverageTest extends CDKTestCase {
     }
 
     protected void loadClassList(String classList) throws Exception {
-        classesToTest = new Vector();
+        classesToTest = new ArrayList();
         
         // get the src/core.javafiles file
         BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -83,9 +83,9 @@ abstract public class CoverageTest extends CDKTestCase {
     protected boolean runCoverageTest() {
         int missingTestsCount = 0;
         int uncoveredClassesCount = 0;
-        Enumeration classes = classesToTest.elements();
-        while (classes.hasMoreElements()) {
-            String className = (String)classes.nextElement();
+        Iterator classes = classesToTest.iterator();
+        while (classes.hasNext()) {
+            String className = (String)classes.next();
             int errors = checkClass(className);
             missingTestsCount += errors;
             if (errors > 0) uncoveredClassesCount++;
