@@ -27,7 +27,6 @@ package org.openscience.cdk.reaction.type;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -170,7 +169,7 @@ public class HydrogenRearrangementGammaReaction implements IReactionProcess{
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 && atomi.getFlag(CDKConstants.REACTIVE_CENTER)) {
 				
 				hcg.getSpheres((Molecule) reactant, atomi, 4, true);
-				Vector atoms = hcg.getNodesInSphere(4);
+				List atoms = hcg.getNodesInSphere(4);
 				for(int j = 0 ; j < atoms.size() ; j++){
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
@@ -242,7 +241,7 @@ public class HydrogenRearrangementGammaReaction implements IReactionProcess{
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				HueckelAromaticityDetector.detectAromaticity(reactant);
 				hcg.getSpheres((Molecule) reactant, atomi, 4, true);
-				Vector atoms = hcg.getNodesInSphere(4);
+				List atoms = hcg.getNodesInSphere(4);
 				for(int j = 0 ; j < atoms.size() ; j++){
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
