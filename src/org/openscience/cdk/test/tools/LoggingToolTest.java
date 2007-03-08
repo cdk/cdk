@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -38,7 +35,7 @@ public class LoggingToolTest extends CDKTestCase {
 		super(name);
 	}
 
-	public static Test suite() throws Exception {
+	public static Test suite() {
 		return new TestSuite(LoggingToolTest.class);
 	}
 

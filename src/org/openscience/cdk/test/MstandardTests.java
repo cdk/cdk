@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
+import org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.test.config.SymbolsTest;
 import org.openscience.cdk.test.dict.DictRefTest;
 import org.openscience.cdk.test.exception.InvalidSmilesExceptionTest;
@@ -78,6 +79,7 @@ import org.openscience.cdk.test.ringsearch.SSSRFinderTest;
 import org.openscience.cdk.test.ringsearch.cyclebasis.CycleBasisTest;
 import org.openscience.cdk.test.ringsearch.cyclebasis.SimpleCycleBasisTest;
 import org.openscience.cdk.test.ringsearch.cyclebasis.SimpleCycleTest;
+import org.openscience.cdk.test.smiles.InvPairTest;
 import org.openscience.cdk.test.tools.DeAromatizationToolTest;
 import org.openscience.cdk.test.tools.ElementComparatorTest;
 import org.openscience.cdk.test.tools.FormatStringBufferTest;
@@ -187,6 +189,8 @@ public class MstandardTests {
         suite.addTest(FortranFormatTest.suite());
         suite.addTest(PrimesTest.suite());
         suite.addTest(RandomNumbersToolTest.suite());
+        suite.addTest(InvPairTest.suite());
+        suite.addTest(EStateAtomTypeMatcherTest.suite());
 
         return suite;
     }

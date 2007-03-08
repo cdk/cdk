@@ -40,6 +40,7 @@ import org.openscience.cdk.test.exception.CDKExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.test.tools.DataFeaturesTest;
+import org.openscience.cdk.test.tools.LoggingToolTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -81,6 +82,7 @@ public class McoreTests {
         suite.addTest(CDKExceptionTest.suite());
         suite.addTest(NoSuchAtomExceptionTest.suite());
         suite.addTest(NoSuchAtomTypeExceptionTest.suite());
+        suite.addTest(LoggingToolTest.suite());
 
         return suite;
     }

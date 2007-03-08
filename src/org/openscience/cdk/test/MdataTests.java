@@ -27,6 +27,12 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.event.ChemObjectChangeEventTest;
+import org.openscience.cdk.test.protein.data.PDBAtomTest;
+import org.openscience.cdk.test.protein.data.PDBMonomerTest;
+import org.openscience.cdk.test.protein.data.PDBPolymerTest;
+import org.openscience.cdk.test.protein.data.PDBStructureTest;
+
 /**
  * TestSuite that runs all the sample tests.
  *
@@ -73,6 +79,15 @@ public class MdataTests {
         suite.addTest(ChangeEventPropagationTest.suite());
 
         suite.addTest(FragmentAtomTest.suite());
+        
+        // test from test.event
+        suite.addTest(ChemObjectChangeEventTest.suite());
+        
+        // tests from test.protein.data
+        suite.addTest(PDBAtomTest.suite());
+        suite.addTest(PDBMonomerTest.suite());
+        suite.addTest(PDBPolymerTest.suite());
+        suite.addTest(PDBStructureTest.suite());
         
         return suite;
     }
