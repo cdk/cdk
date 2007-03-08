@@ -26,7 +26,7 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
-import java.util.Vector;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -612,7 +612,7 @@ public class HOSECodeTest extends CDKTestCase
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
   		hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 4, true);
-  		Vector atoms = hcg.getNodesInSphere(3);
+  		List atoms = hcg.getNodesInSphere(3);
 
   		assertEquals(1, atoms.size());
   		assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
@@ -624,7 +624,7 @@ public class HOSECodeTest extends CDKTestCase
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
   		hcg.getSpheres((Molecule) molecule, molecule.getAtom(0), 3, true);
-  		Vector atoms = hcg.getNodesInSphere(3);
+  		List atoms = hcg.getNodesInSphere(3);
 
   		assertEquals(2, atoms.size());
 
