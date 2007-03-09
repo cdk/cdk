@@ -55,7 +55,7 @@ import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.tools.HOSECodeAnalyserTest;
-import org.openscience.cdk.test.tools.HOSECodeTest;
+import org.openscience.cdk.test.tools.HOSECodeGeneratorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -105,7 +105,7 @@ public class MextraTests {
         // from cdk.test.math
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
-        suite.addTest(HOSECodeTest.suite());
+        suite.addTest(HOSECodeGeneratorTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
         
         // Below are the tests that are not always possible to execute, because

@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * @author      steinbeck
  * @cdk.created 2002-11-16
  */
-public class HOSECodeTest extends CDKTestCase
+public class HOSECodeGeneratorTest extends CDKTestCase
 {
 	
 	static boolean standAlone = false;
@@ -62,7 +62,7 @@ public class HOSECodeTest extends CDKTestCase
 	 *
 	 *@param  name  Description of the Parameter
 	 */
-	public HOSECodeTest(String name) {
+	public HOSECodeGeneratorTest(String name) {
 		super(name);
 	}
 
@@ -73,7 +73,7 @@ public class HOSECodeTest extends CDKTestCase
 	 */
 	public static Test suite()
 	{
-		return new TestSuite(HOSECodeTest.class);
+		return new TestSuite(HOSECodeGeneratorTest.class);
 	}
 
 	
@@ -640,7 +640,7 @@ public class HOSECodeTest extends CDKTestCase
 	public static void main(String[] args) throws Exception
 	{
 		standAlone = true;
-		HOSECodeTest hct = new HOSECodeTest("HOSECodeTest");
+		HOSECodeGeneratorTest hct = new HOSECodeGeneratorTest("HOSECodeTest");
 		hct.test4Sphere();
 		//hct.testBug655169();
 	}
