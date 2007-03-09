@@ -708,17 +708,19 @@ public class HOSECodeGenerator implements java.io.Serializable
      * @return       -1,0,1
      */
     public int compare(Object obj1, Object obj2) {
-      if(obj1==null || obj2==null || ((TreeNode) obj1).getAtom()==null || ((TreeNode) obj2).getAtom()==null)
-        return 0;
-      if(((TreeNode) obj1).getAtom().getProperty("CanonicalLable")==null || ((TreeNode) obj2).getAtom().getProperty("CanonicalLable")==null)
-          return 0;
-      if (((Long) ((TreeNode) obj1).getAtom().getProperty("CanonicalLable")).intValue() < ((Long) ((TreeNode) obj2).getAtom().getProperty("CanonicalLable")).intValue()) {
-        return (-1);
-      }
-      if (((Long) ((TreeNode) obj1).getAtom().getProperty("CanonicalLable")).intValue() > ((Long) ((TreeNode) obj2).getAtom().getProperty("CanonicalLable")).intValue()) {
-        return (1);
-      }
-      return (0);
+    	if(obj1==null || obj2==null || ((TreeNode) obj1).getAtom()==null || ((TreeNode) obj2).getAtom()==null)
+    		return 0;
+    	Long label1 = (Long)((TreeNode) obj1).getAtom().getProperty("CanonicalLable");
+    	Long label2 = (Long)((TreeNode) obj2).getAtom().getProperty("CanonicalLable");
+    	if(label1==null || label2==null)
+    		return 0;
+    	if (label1.intValue() < label2.intValue()) {
+    		return (-1);
+    	}
+    	if (label1.intValue() > label2.intValue()) {
+    		return (1);
+    	}
+    	return (0);
     }
   }
     
