@@ -165,9 +165,9 @@ public class MDMoleculeTest extends CDKTestCase {
         System.out.println("******************************");
         assertTrue(cmlContent.indexOf("xmlns:md") != -1);
         assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-        assertTrue(cmlContent.indexOf("md:resNo\"") != -1);
+        assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        assertTrue(cmlContent.indexOf("md:chgrpNo\"") != -1);
+        assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
 
@@ -214,9 +214,9 @@ public class MDMoleculeTest extends CDKTestCase {
         System.out.println("******************************");
         assertTrue(cmlContent.indexOf("xmlns:md") != -1);
         assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-        assertTrue(cmlContent.indexOf("md:resNo\"") != -1);
+        assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        assertTrue(cmlContent.indexOf("md:chgrpNo\"") != -1);
+        assertTrue(cmlContent.indexOf("md:cgnumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
 
