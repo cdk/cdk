@@ -143,34 +143,6 @@ public class MDMoleculeTest extends CDKTestCase {
 
     }
 
-    public void testMDMoleculeCustomization() {
-        StringWriter writer = new StringWriter();
-
-        CMLWriter cmlWriter = new CMLWriter(writer);
-        try {
-            IMolecule molecule=makeMDBenzene();
-            cmlWriter.write(molecule);
-
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            fail(exception.getMessage());
-        }
-        String cmlContent = writer.toString();
-        logger.debug("****************************** testMDMoleculeCustomization()");
-        logger.debug(cmlContent);
-        logger.debug("******************************");
-        System.out.println("****************************** testMDMoleculeCustomization()");
-        System.out.println(cmlContent);
-        System.out.println("******************************");
-        assertTrue(cmlContent.indexOf("xmlns:md") != -1);
-        assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-        assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
-        assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
-        assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
-    }
-
     public void testMDMoleculeCustomizationRoundtripping() {
         StringWriter writer = new StringWriter();
 
@@ -181,9 +153,9 @@ public class MDMoleculeTest extends CDKTestCase {
             cmlWriter.write(molecule);
 
             String serializedMol=writer.toString();
-            System.out.println("****************************** testMDMoleculeCustomizationRoundtripping()");
-            System.out.println(serializedMol);
-            System.out.println("******************************");
+            logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
+            logger.debug(serializedMol);
+            logger.debug("******************************");
             
             CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
             reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
@@ -209,17 +181,49 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("****************************** testMDMoleculeCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        System.out.println("****************************** testMDMoleculeCustomization()");
-        System.out.println(cmlContent);
-        System.out.println("******************************");
+//        System.out.println("****************************** testMDMoleculeCustomization()");
+//        System.out.println(cmlContent);
+//        System.out.println("******************************");
         assertTrue(cmlContent.indexOf("xmlns:md") != -1);
         assertTrue(cmlContent.indexOf("md:residue\"") != -1);
         assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        assertTrue(cmlContent.indexOf("md:cgnumber\"") != -1);
+        assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
         assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
 
+    
+
+    public void testMDMoleculeCustomization() {
+        StringWriter writer = new StringWriter();
+
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
+        try {
+            IMolecule molecule=makeMDBenzene();
+            cmlWriter.write(molecule);
+
+        } catch (Exception exception) {
+            logger.error("Error while creating an CML2 file: ", exception.getMessage());
+            logger.debug(exception);
+            fail(exception.getMessage());
+        }
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testMDMoleculeCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+//        System.out.println("****************************** testMDMoleculeCustomization()");
+//        System.out.println(cmlContent);
+//        System.out.println("******************************");
+        assertTrue(cmlContent.indexOf("xmlns:md") != -1);
+        assertTrue(cmlContent.indexOf("md:residue\"") != -1);
+        assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
+        assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
+        assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
+        assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
+    }
+    
+    
     
     /**
      * Create a benzene molecule with 2 residues and 2 chargegroups
