@@ -115,12 +115,5 @@ public class AtomContainerPermutorTest extends CDKTestCase
 	}
 
 	
-	public static void main(String[] args)
-	{
-		AtomContainerPermutorTest acpt = new
-		AtomContainerPermutorTest("AtomContainerPermutorTest");
-		//acpt.testAtomPermutation();
-		acpt.testBondPermutation();
-	}
 }
 

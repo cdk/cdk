@@ -1340,28 +1340,4 @@ public class ForceFieldTests extends CDKTestCase {
 
 	}
 
-	
-	public static void main(String[] args) throws Exception
-	{
-		
-		ForceFieldTests fft = new ForceFieldTests();
-		fft.standAlone = true;
-		fft.testGetMMFF94EnergyOfAMolecule();
-		//fft.testSteepestDescentsMinimization();
-		//fft.testConjugateGradientMinimization();
-		//fft.testNewtonRaphsonMinimization();
-		//fft.testBondStretching();
-		//fft.testAngleBending();
-		//fft.testStretchBendInteraction();
-		//fft.testTorsions();
-		//fft.testVanDerWaalsInteraction();
-		//fft.testElectrostaticInteraction();
-		//fft.testEthaneMoleculeMinimization();
-		//fft.testButaneMoleculeMinimization();
-		//fft.testHeptaneMoleculeMinimization();
-		//fft.testButanoicAcidMoleculeMinimization();
-		//fft.testCycloPropaneMoleculeMinimization();
-		//fft.testMethylbenzolMoleculeMinimization();
-	}
-
 }

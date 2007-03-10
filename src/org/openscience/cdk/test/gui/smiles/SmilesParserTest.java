@@ -90,18 +90,5 @@ public class SmilesParserTest {
 		}
 	}
 
-	/**
-	 * The main program for the SmilesParserTest class
-	 *
-	 * @param  args  The command line arguments
-	 */
-	public static void main(String[] args)
-	{
-		LoggingTool logger = new LoggingTool(SmilesParserTest.class);
-		LoggingTool.configureLog4j();
-		logger.info("Running the SmilesParserTest tests...");
-		SmilesParserTest spt = new SmilesParserTest("SmilesParserTest");
-		spt.testSMILES();
-	}
 }
 

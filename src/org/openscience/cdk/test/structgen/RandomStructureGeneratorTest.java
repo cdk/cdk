@@ -152,11 +152,5 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		return true;
 	}
 	
-	public static void main(String[] args) throws Exception
-	{
-		RandomStructureGeneratorTest test = new RandomStructureGeneratorTest();
-		test.setStandAlone(true);
-		test.visualTestIt();
-	}
 }
 

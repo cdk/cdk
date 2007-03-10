@@ -80,11 +80,5 @@ public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 		}
 	}
 	
-	public static void main(String[] args)
-	{
-		EquivalentClassesDeterministicGeneratorTest ecdgt = new EquivalentClassesDeterministicGeneratorTest("EquivalentClassesDeterministicGeneratorTest");
-		ecdgt.setStandAlone(true);
-		ecdgt.testEquivalentClassesDeterministicGenerator();
-	}	
 }
 

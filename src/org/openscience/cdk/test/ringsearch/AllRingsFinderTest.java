@@ -294,7 +294,9 @@ public class AllRingsFinderTest extends CDKTestCase
 	 * 
 	 * @cdk.bug 777488
 	 */
-	public void saTestBug777488() throws Exception {
+	public void testBug777488() throws Exception {
+		if (!runSlowTests()) fail("Not running this slow test");
+		
 		//String filename = "data/Bug646.cml";
 		String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
 		//String filename = "data/NCI_diversity_528.mol.cml";
@@ -314,15 +316,5 @@ public class AllRingsFinderTest extends CDKTestCase
 		//display(mol);
 	}
 	
-	public static void main(String[] args) throws Exception
-	{
-		AllRingsFinderTest arft = new AllRingsFinderTest("AllRingsFinderTest");
-		arft.setStandAlone(true);
-		//arft.testAllRingsFinder();
-		//arft.saTestBug777488();
-		//arft.showAzulene();
-		arft.showPorphyrin();		
-		//arft.testBigMoleculeWithIsolatedRings();
-	}	
 }
 

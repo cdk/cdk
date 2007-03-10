@@ -62,10 +62,6 @@ public class StrandTest extends TestCase {
 		return new TestSuite(StrandTest.class);
 	}
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(new TestSuite(StrandTest.class));
-	}
-
 	public void testStrand() {
 		IStrand oStrand = builder.newStrand();
 		assertNotNull(oStrand);

@@ -1089,22 +1089,5 @@ public class SmilesGeneratorTest extends CDKTestCase
 		}
 	}
 
-	/**
-	 *  The main program for the SmilesGeneratorTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args)
-	{
-		SmilesGeneratorTest sgt = new SmilesGeneratorTest("SmilesGeneratorTest");
-		sgt.setStandAlone(true);
-		//sgt.testAtomPermutation();
-		//sgt.testBondPermutation();
-		//sgt.testSmilesGenerator();
-		//sgt.testAlanin();
-		sgt.testPropylCycloPropane();
-		
-	}
-
 }
 

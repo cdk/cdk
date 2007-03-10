@@ -122,12 +122,4 @@ public class Renderer2DTest extends JPanel
 		renderer.paintMolecule(molecule, (Graphics2D)g,false,true);
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param   args    The Arguments from the commandline
-	 */	public static void main(String[] args)
-	{
-		new Renderer2DTest("data/mdl/reserpine.mol");
-	}
 }

@@ -43,17 +43,6 @@ public class DrawPolygonTest
 		test();
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param   args    The Arguments from the commandline
-	 */
-	public static void main(String[] args)
-	{
-		new DrawPolygonTest(args[0]);
-	}
-
-
 	void test()
 	{
 		int segments = 13;

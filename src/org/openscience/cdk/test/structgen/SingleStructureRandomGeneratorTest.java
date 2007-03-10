@@ -100,14 +100,6 @@ public class SingleStructureRandomGeneratorTest
 		}
 	}
 	
-	public static void main(String[] args) throws Exception
-	{
-		System.out.println("Yes!");
-		new SingleStructureRandomGeneratorTest();
-		System.out.println("Done");
-		
-	}
-	
     /**
      * @cdk.module test
      */

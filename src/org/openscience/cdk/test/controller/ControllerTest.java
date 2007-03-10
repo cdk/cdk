@@ -87,16 +87,6 @@ public class ControllerTest
 	
 	}
 
-	/**
-	 * The main method.
-	 *
-	 * @param   args    The Arguments from the commandline
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		new ControllerTest();
-	}
-	
 	/* build a molecule from 4 condensed triangles */
 	
 	Molecule buildMolecule4x3()

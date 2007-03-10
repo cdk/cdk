@@ -244,10 +244,4 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		assertTrue(strEquivalent.equals("111111222222222222111111"));
 	}
 	
-	public static void main(String[] args) throws Exception
-	{
-		EquivalentClassPartitionerTest tec = new EquivalentClassPartitionerTest("TopologicalEquivalentClassTest");
-		tec.testEquivalent();
-		tec.testFullereneC24D6D();
-	}
 }

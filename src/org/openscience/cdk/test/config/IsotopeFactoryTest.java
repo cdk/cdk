@@ -135,9 +135,4 @@ public class IsotopeFactoryTest extends CDKTestCase
         }
     }
 
-	public static void main(String[] args) throws Exception {
-		IsotopeFactoryTest ift = new IsotopeFactoryTest("IsotopeFactoryTest");
-		ift.standAlone = true;
-		ift.testGetInstance_IChemObjectBuilder();
-	}
 }

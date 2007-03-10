@@ -129,13 +129,4 @@ public class ArrowRenderer2DTest extends JPanel {
 		arrowRenderer.paintArrows(arrows,(Graphics2D) g);
 	}
 
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            The Arguments from the commandline
-	 */
-	public static void main(String[] args) {
-		new ArrowRenderer2DTest("data/mdl/reserpine.mol");
-	}
 }

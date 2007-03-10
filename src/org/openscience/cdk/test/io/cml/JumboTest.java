@@ -61,10 +61,6 @@ public class JumboTest extends CDKTestCase {
         return new TestSuite(JumboTest.class);
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(new TestSuite(JumboTest.class));
-    }
-
     /**
      * Now come the actual tests...
      */

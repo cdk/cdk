@@ -95,15 +95,4 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 		}		
 	}
 	
-	/**
-	 *  The main program for this class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception 
-	{
-		Gaussian98ReaderTest g98rt = new Gaussian98ReaderTest("Gaussian98ReaderTest");
-		standAlone = true;
-		g98rt.testNMRReading();
-	}
 }

@@ -77,18 +77,5 @@ public class PeriodicTablePanelTest extends CDKTestCase {
 		frame.setVisible(true);
 	}
 
-
-	/**
-	 *  The main program for the PeriodicTablePanelTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args)
-	{
-		PeriodicTablePanelTest ptpt = new PeriodicTablePanelTest("Visual Test");
-		ptpt.setUp();
-		ptpt.runVisual();
-
-	}
 }
 

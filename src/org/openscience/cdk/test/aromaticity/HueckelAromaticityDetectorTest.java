@@ -758,24 +758,5 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		  return mol;
 	}
 	
-	/**
-	 *  The main program for the HueckelAromaticityDetectorTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		HueckelAromaticityDetectorTest hadt = new HueckelAromaticityDetectorTest("HueckelAromaticityDetectorTest");
-		hadt.setStandAlone(true);
-		//hadt.testAzulene();
-		hadt.testTetraDehydroDecaline();
-		//hadt.testIndole();
-		//hadt.testThiazole();
-		//hadt.testBug698152();
-		//hadt.testPorphyrine();
-		//hadt.testQuinone();
-		//hadt.testBenzene();
-		//hadt.testBug716259();
-	}
 }
 

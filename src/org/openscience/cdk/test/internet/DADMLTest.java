@@ -59,15 +59,5 @@ public class DADMLTest {
       }
     }
     
-    public static void main(String[] args) {
-      if (args.length == 3) {
-        String superdb = args[0];
-        String type = args[1];
-        String index = args[2];
-        new DADMLTest(superdb, type, index);
-      } else {
-        System.out.println("Syntax: DADMLTest <superdb> <index_type> <index>");
-      }
-    }
 }
 

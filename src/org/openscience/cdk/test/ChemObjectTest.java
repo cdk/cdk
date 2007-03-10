@@ -64,10 +64,6 @@ public class ChemObjectTest extends CDKTestCase {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(new TestSuite(ChemObjectTest.class));
-	}
-
     public void testChemObject() {
         IChemObject chemObject = builder.newChemObject();
         assertNotNull(chemObject);

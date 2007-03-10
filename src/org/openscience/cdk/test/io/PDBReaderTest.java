@@ -63,10 +63,6 @@ public class PDBReaderTest extends TestCase {
 		return new TestSuite(PDBReaderTest.class);
 	}
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(new TestSuite(PDBReaderTest.class));
-	}
-
     public void testAccepts() {
     	PDBReader reader = new PDBReader();
     	assertTrue(reader.accepts(ChemFile.class));

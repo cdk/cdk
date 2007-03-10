@@ -296,13 +296,5 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		}
     }
     
-	public static void main(String[] args) throws Exception
-	{
-		UniversalIsomorphismTesterTest uitt = new UniversalIsomorphismTesterTest("UniversalIsomorphismTesterTest");
-		uitt.standAlone = true;
-		uitt.testItself();
-		//uitt.testAnyAtomAnyBondCase();
-	}
-    
 }
 

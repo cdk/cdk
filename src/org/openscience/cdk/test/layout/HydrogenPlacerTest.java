@@ -143,13 +143,5 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		}
 	}
 
-       	public static void main(String[] args) throws Exception
-	{
-			HydrogenPlacerTest hpt = new HydrogenPlacerTest("HydrogenPlacerTest");
-			hpt.setUp();
-			hpt.standAlone = true;
-			//hpt.testPlaceHydrogens2D();
-			hpt.visualFullMolecule2DEvaluation();			
-	}
 }
 

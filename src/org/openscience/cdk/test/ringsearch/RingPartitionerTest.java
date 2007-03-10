@@ -95,18 +95,5 @@ public class RingPartitionerTest extends CDKTestCase
         assertEquals(8, ac.getBondCount());
 	}
 	
-	/**
-	 *  The main program for the RingPartitionerTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		RingPartitionerTest rpt = new RingPartitionerTest("RingPartitionerTest");
-		standAlone = true;
-		rpt.setUp();
-		rpt.testConvertToAtomContainer_IRingSet();
-	}
-	
 }
 

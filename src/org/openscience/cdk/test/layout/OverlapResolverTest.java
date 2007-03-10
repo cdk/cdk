@@ -213,22 +213,5 @@ public class OverlapResolverTest extends CDKTestCase
 	}
 
 	
-	
-	/**
-	 *  The main program for the OverlapResolverTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		OverlapResolverTest ort = new OverlapResolverTest("OverlapResolverTest");
-		ort.setUp();
-		ort.standAlone = true;
-		//ort.testResolveOverlap1();
-		//ort.testResolveOverlap2();
-		//ort.testResolveOverlap3();
-		//ort.testResolveOverlap4();
-		ort.testResolveOverlap5();
-	}
 }
 

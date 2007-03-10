@@ -90,9 +90,5 @@ public class GraphRendererTest
     }
   }
 
-  public static void main(String[] args)
-  {
-    new GraphRendererTest();
-  }
 }
 

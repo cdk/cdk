@@ -299,21 +299,5 @@ double[] result = {
 		while(f >= 0);
 	}
 	
-	/**
-	 *  The main program for the HOSECodeTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args)
-	{
-		standAlone = true;
-		BremserPredictorTest bpt = new BremserPredictorTest("BremserPredictorTest");
-		//bpt.testConstructor();
-		//bpt.testPrediction();
-		//bpt.testGetConfidenceLimit();
-		//bpt.testFailure1();
-		//bpt.testFailure2();
-		bpt.testFailure3();
-	}
 }
 

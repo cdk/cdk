@@ -468,19 +468,5 @@ public class SaturationCheckerTest extends CDKTestCase
     	assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(c, coRad));
     }
     
-    /**
-	 *  The main program for the SaturationCheckerTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		SaturationCheckerTest sct = new SaturationCheckerTest("SaturationCheckerTest");
-		sct.standAlone = true;
-		sct.setUp();
-		sct.testSaturate();
-		sct.testIsSaturated();
-		sct.testAllSaturated();
-	}
 }
 

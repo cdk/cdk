@@ -64,10 +64,6 @@ public class JmolTest extends CDKTestCase {
         return new TestSuite(JmolTest.class);
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(new TestSuite(JmolTest.class));
-    }
-
     /**
      * Now come the actual tests...
      */

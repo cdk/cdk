@@ -64,10 +64,6 @@ public class PolymerTest extends TestCase {
 		return new TestSuite(PolymerTest.class);
 	}
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(new TestSuite(PolymerTest.class));
-	}
-
 	public void testPolymer() {
 		IPolymer oPolymer = builder.newPolymer();
 		assertNotNull(oPolymer);

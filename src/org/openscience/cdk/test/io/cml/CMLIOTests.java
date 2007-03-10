@@ -35,10 +35,6 @@ import junit.framework.TestSuite;
  */
 public class CMLIOTests {
 
-    public static void main (String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.io.cml Tests");
         suite.addTest(CMLStackTest.suite());

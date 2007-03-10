@@ -632,17 +632,5 @@ public class HOSECodeGeneratorTest extends CDKTestCase
   		assertEquals("Br", ((IAtom)atoms.get(1)).getSymbol());
 	}
 
-  /**
-	 *  The main program for the HOSECodeTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		standAlone = true;
-		HOSECodeGeneratorTest hct = new HOSECodeGeneratorTest("HOSECodeTest");
-		hct.test4Sphere();
-		//hct.testBug655169();
-	}
 }
 

@@ -102,21 +102,4 @@ public class GaussiansCalculationTest
     }
   }
 
-	public static void main(String[] args)
-  { 
-    if (args.length == 1)
-    { 
-      String filename = args[0];
-      if (new File(filename).canRead())
-      { 
-        new GaussiansCalculationTest(filename);
-      } else
-      { 
-        System.out.println("File " + filename + " does not exist!");
-      }
-    } else
-    { 
-      System.out.println("Syntax: GaussiansCalculationTest <inputfile>");
-    }
-  }
 }

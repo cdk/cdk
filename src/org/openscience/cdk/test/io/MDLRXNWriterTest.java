@@ -102,9 +102,4 @@ public class MDLRXNWriterTest extends CDKTestCase {
         assertEquals(1, reaction2.getProductCount());
     }
     
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-    
 }

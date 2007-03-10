@@ -271,19 +271,7 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		}
 		return true;
 	}
-	
-	public static void main(String[] args)
-	{
-		GENMDeterministicGeneratorTest test = new GENMDeterministicGeneratorTest();
-		test.setStandAlone(true);
-		try {
-			test.testIt();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		//test.testSMILES();
-	}
-	
+		
 	class MyStructureGenerationListener implements IStructureGenerationListener {
 
 		private List structures;

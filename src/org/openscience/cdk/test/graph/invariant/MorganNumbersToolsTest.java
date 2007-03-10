@@ -68,8 +68,4 @@ public class MorganNumbersToolsTest extends CDKTestCase
 		}
 	}
 
-	public static void main(String[] args)
-	{
-		new MorganNumbersToolsTest("MorganNumberToolsTest").testGetMorganNumbers_IAtomContainer();
-	}
 }

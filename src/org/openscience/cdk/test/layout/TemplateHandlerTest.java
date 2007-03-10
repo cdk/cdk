@@ -167,22 +167,5 @@ public class TemplateHandlerTest extends CDKTestCase
 		MoleculeViewer2D.display(mol, true);
 	}
 
-
-	/**
-	 *  The main program for the TemplateHandlerTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		TemplateHandlerTest tht = new TemplateHandlerTest("TemplateHandlerTest");
-		tht.setUp();
-		tht.standAlone = true;
-		tht.testInit();
-		tht.testDetection();
-		tht.visualLayout();
-		tht.testAddMolecule();
-		tht.testRemoveMolecule();
-	}
 }
 

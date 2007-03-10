@@ -102,7 +102,4 @@ public class JOELibIOTest extends CDKTestCase {
         assertTrue(it.isIsomorphic(reverted));
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(new TestSuite(JOELibIOTest.class));
-    }
 }

@@ -58,10 +58,6 @@ public class MonomerTest extends CDKTestCase {
 		return new TestSuite(MonomerTest.class);
 	}
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(new TestSuite(MonomerTest.class));
-	}
-
 	public void testMonomer() {
 		IMonomer oMonomer = builder.newMonomer();
         assertTrue(oMonomer != null);
