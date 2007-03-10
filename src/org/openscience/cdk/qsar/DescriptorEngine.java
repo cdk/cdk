@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
@@ -20,7 +17,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.qsar;
 
@@ -537,7 +533,6 @@ public class DescriptorEngine {
      * @return A list containing the classes implementing the specified interface, null if an invalid interface
      *         is specified
      */
-
     public static List getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
         if (interfaceName == null || interfaceName.equals(""))
             interfaceName = "IDescriptor";
@@ -570,7 +565,7 @@ public class DescriptorEngine {
 
                         Class klass = null;
                         try {
-                            Class.forName(className);
+                            klass = Class.forName(className);
                         } catch (ClassNotFoundException cnfe) {
                             logger.debug(cnfe);
                         } catch (NoClassDefFoundError ncdfe) {
