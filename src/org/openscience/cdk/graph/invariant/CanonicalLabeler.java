@@ -27,11 +27,11 @@
  *  */
 package org.openscience.cdk.graph.invariant;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -71,15 +71,19 @@ public class CanonicalLabeler {
    */
   public synchronized void canonLabel(IAtomContainer atomContainer) {
     if (atomContainer.getAtomCount() == 0)
-      return;
-    Vector vect = createInvarLabel(atomContainer);
+    	return;
+    if (atomContainer.getAtomCount() == 1) {
+    	atomContainer.getAtom(0).setProperty(InvPair.CANONICAL_LABEL, new Integer(1));
+    }
+      
+    ArrayList vect = createInvarLabel(atomContainer);
     step3(vect, atomContainer);
   }
 
   /**
    * @param v the invariance pair vector
    */
-  private void step2(Vector v, IAtomContainer atoms) {
+  private void step2(ArrayList v, IAtomContainer atoms) {
     primeProduct(v, atoms);
     step3(v, atoms);
   }
@@ -87,61 +91,35 @@ public class CanonicalLabeler {
   /**
    * @param v the invariance pair vector
    */
-  private void step3(Vector v, IAtomContainer atoms) {
-    sortVector(v);
-    step4(v, atoms);
-  }
-
-  /**
-   * @param v the invariance pair vector
-   */
-  private void step4(Vector v, IAtomContainer atoms) {
-    rankVector(v);
-    step5(v, atoms);
-  }
-
-  /**
-   * @param v the invariance pair vector
-   */
-  private void step5(Vector v, IAtomContainer atoms) {
-    if (!isInvPart(v))
+  private void step3(ArrayList v, IAtomContainer atoms) {
+    sortArrayList(v);
+    rankArrayList(v);
+    if (!isInvPart(v)) {
       step2(v, atoms);
-    else
-      step6(v, atoms);
-  }
-
-  /**
-   * @param v the invariance pair vector
-   */
-  private void step6(Vector v, IAtomContainer atoms) {
-    //On first pass save, partitioning as symmetry classes.
-    step7(v, atoms);
-  }
-
-  /**
-   * @param v the invariance pair vector
-   */
-  private void step7(Vector v, IAtomContainer atoms) {
-    if (((InvPair) v.lastElement()).getCurr() < v.size()) {
-      breakTies(v);
-      step2(v, atoms);
-    }
-    Iterator it = v.iterator();
-    while (it.hasNext()) {
-      ((InvPair) it.next()).comit();
+    } else {
+      //On first pass save, partitioning as symmetry classes.
+        if (((InvPair) v.get(v.size()-1)).getCurr() < v.size()) {
+            breakTies(v);
+            step2(v, atoms);
+        }
+        // now apply the ranking
+        Iterator it = v.iterator();
+        while (it.hasNext()) {
+        	((InvPair) it.next()).comit();
+        }
     }
   }
 
   /**
    * Create initial invariant labeling corresponds to step 1
    *
-   * @return Vector containting the
+   * @return ArrayList containting the
    */
-  private Vector createInvarLabel(IAtomContainer atomContainer) {
+  private ArrayList createInvarLabel(IAtomContainer atomContainer) {
     java.util.Iterator atoms = atomContainer.atoms();
     IAtom a;
     StringBuffer inv;
-    Vector vect = new Vector();
+    ArrayList vect = new ArrayList();
     while(atoms.hasNext()) {
       a = (IAtom)atoms.next();
       inv = new StringBuffer();
@@ -164,7 +142,7 @@ public class CanonicalLabeler {
    *
    * @param v the invariance pair vector
    */
-  private void primeProduct(Vector v, IAtomContainer atomContainer) {
+  private void primeProduct(ArrayList v, IAtomContainer atomContainer) {
     Iterator it = v.iterator();
     Iterator n;
     InvPair inv;
@@ -191,7 +169,7 @@ public class CanonicalLabeler {
    * @param v the invariance pair vector
    * @cdk.todo    can this be done in one loop?
    */
-  private void sortVector(Vector v) {
+  private void sortArrayList(ArrayList v) {
     Collections.sort(v, new Comparator() {
       public int compare(Object o1, Object o2) {
         return (int) (((InvPair) o1).getCurr() - ((InvPair) o2).getCurr());
@@ -209,10 +187,10 @@ public class CanonicalLabeler {
    *
    *  @param v the invariance pair vector
    */
-  private void rankVector(Vector v) {
+  private void rankArrayList(ArrayList v) {
     int num = 1;
     int[] temp = new int[v.size()];
-    InvPair last = (InvPair) v.firstElement();
+    InvPair last = (InvPair) v.get(0);
     Iterator it = v.iterator();
     InvPair curr;
     for (int x = 0; it.hasNext(); x++) {
@@ -237,8 +215,8 @@ public class CanonicalLabeler {
    * @param v the invariance pair vector
    * @return true if the vector is invariantely partitioned, false otherwise
    */
-  private boolean isInvPart(Vector v) {
-    if (((InvPair) v.lastElement()).getCurr() == v.size())
+  private boolean isInvPart(ArrayList v) {
+    if (((InvPair) v.get(v.size()-1)).getCurr() == v.size())
       return true;
     Iterator it = v.iterator();
     InvPair curr;
@@ -255,7 +233,7 @@ public class CanonicalLabeler {
    *
    * @param v the invariance pair vector
    */
-  private void breakTies(Vector v) {
+  private void breakTies(ArrayList v) {
     Iterator it = v.iterator();
     InvPair curr;
     InvPair last = null;
@@ -271,7 +249,7 @@ public class CanonicalLabeler {
       }
       last = curr;
     }
-    curr = (InvPair) v.elementAt(tie);
+    curr = (InvPair) v.get(tie);
     curr.setCurr(curr.getCurr() - 1);
     curr.setPrime();
   }
