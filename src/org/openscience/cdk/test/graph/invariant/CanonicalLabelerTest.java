@@ -30,6 +30,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -67,13 +68,13 @@ public class CanonicalLabelerTest extends CDKTestCase {
 		Iterator atoms = molecule.atoms();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
-			assertNotNull(atom.getProperty("CanonicalLable"));
+			assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
 		}
-		assertEquals(4, ((Long)molecule.getAtom(0).getProperty("CanonicalLable")).intValue());
-		assertEquals(3, ((Long)molecule.getAtom(1).getProperty("CanonicalLable")).intValue());
-		assertEquals(1, ((Long)molecule.getAtom(2).getProperty("CanonicalLable")).intValue());
-		assertEquals(5, ((Long)molecule.getAtom(3).getProperty("CanonicalLable")).intValue());
-		assertEquals(2, ((Long)molecule.getAtom(4).getProperty("CanonicalLable")).intValue());
+		assertEquals(4, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(3, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(1, ((Long)molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(5, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(2, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 	}
 
 	/**
@@ -89,12 +90,12 @@ public class CanonicalLabelerTest extends CDKTestCase {
 		Iterator atoms = molecule.atoms();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
-			assertNotNull(atom.getProperty("CanonicalLable"));
+			assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
 		}
-		assertEquals(1, ((Long)molecule.getAtom(0).getProperty("CanonicalLable")).intValue());
-		assertEquals(3, ((Long)molecule.getAtom(1).getProperty("CanonicalLable")).intValue());
-		assertEquals(4, ((Long)molecule.getAtom(2).getProperty("CanonicalLable")).intValue());
-		assertEquals(5, ((Long)molecule.getAtom(3).getProperty("CanonicalLable")).intValue());
-		assertEquals(2, ((Long)molecule.getAtom(4).getProperty("CanonicalLable")).intValue());
+		assertEquals(1, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(3, ((Long)molecule.getAtom(1).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(4, ((Long)molecule.getAtom(2).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(5, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
+		assertEquals(2, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 	}
 }

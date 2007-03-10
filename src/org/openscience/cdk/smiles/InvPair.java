@@ -41,7 +41,8 @@ public class InvPair implements java.io.Serializable{
     private static final long serialVersionUID = -1397634098919863122L;
 
   /** The description used to set the invatiance numbers in the atom's property*/
-  public static String INVARIANCE_PAIR = "InvariancePair";
+  public final static String INVARIANCE_PAIR = "InvariancePair";
+  public final static String CANONICAL_LABEL = "CanonicalLable";
 
   private long last = 0;
 
