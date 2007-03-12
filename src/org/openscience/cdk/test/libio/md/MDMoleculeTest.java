@@ -180,9 +180,11 @@ public class MDMoleculeTest extends CDKTestCase {
         assertEquals(2, chargeGroup.size());
         assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getAtomCount());
         assertEquals(4, ((ChargeGroup)chargeGroup.get(1)).getAtomCount());
+        assertNotNull(((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom());
+        assertEquals("a2", ((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom().getID());
+        assertNotNull(((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom());
+        assertEquals("a5", ((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom().getID());
     }
-
-    
 
     public void testMDMoleculeCustomization() {
         StringWriter writer = new StringWriter();

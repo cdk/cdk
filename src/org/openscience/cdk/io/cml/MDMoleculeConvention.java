@@ -105,38 +105,32 @@ public class MDMoleculeConvention extends CMLCoreModule {
 			// the copy the parsed content into a new MDMolecule
 			if (atts.getValue("convention") != null &&
 				atts.getValue("convention").equals("md:mdMolecule")) {
-				System.out.println("creating a MDMolecule");
+//				System.out.println("creating a MDMolecule");
 				super.startElement(xpath, uri, local, raw, atts);
 				currentMolecule = new MDMolecule(currentMolecule);
 			} else {
 				DICTREF = atts.getValue("dictRef") != null ? atts.getValue("dictRef") : "";
 				//If residue or chargeGroup, set up a new one
 				if (DICTREF.equals("md:chargeGroup")){
-					System.out.println("Creating a new charge group...");
+//					System.out.println("Creating a new charge group...");
 					currentChargeGroup = new ChargeGroup();
 				} else if (DICTREF.equals("md:residue")){
-					System.out.println("Creating a new residue group...");
+//					System.out.println("Creating a new residue group...");
 					currentResidue = new Residue();
 				}
 			}
 		} else 
 		
 		//We have a scalar element. Now check who it belongs to
-		if ("scalar".equals(local)) {			
-			//Residue number
-			if (DICTREF.equals("md:resNumber")){
-				int myInt=Integer.parseInt(raw);
-				currentResidue.setNumber(myInt);
-			}
-			//ChargeGroup number
-			else if (DICTREF.equals("md:cgNumber")){
-				int myInt=Integer.parseInt(raw);
-				currentChargeGroup.setNumber(myInt);
-			}
+		if ("scalar".equals(local)) {
+			DICTREF = atts.getValue("dictRef");
 			//Switching Atom
-			if (DICTREF.equals("md:switchingAtom")){
+			if ("md:switchingAtom".equals(DICTREF)){
 				//Set current atom as switching atom
+				System.out.println("Adding Switching atom: " + currentAtom);
 				currentChargeGroup.setSwitchingAtom(currentAtom);
+			} else {
+				super.startElement(xpath, uri, local, raw, atts);
 			}
 		}
 		
@@ -145,18 +139,19 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				String id = atts.getValue("ref");
 				if (id != null) {
 					// ok, an atom is referenced; look it up
-					IAtom referencedAtom = null;
+					currentAtom = null;
+//					System.out.println("#atoms: " + currentMolecule.getAtomCount());
 					Iterator atoms = currentMolecule.atoms();
 					while (atoms.hasNext()) {
 						IAtom nextAtom = (IAtom)atoms.next();
 						if (nextAtom.getID().equals(id)) {
-							referencedAtom = nextAtom; 
+							currentAtom = nextAtom; 
 						}
 					}
-					if (referencedAtom == null) {
+					if (currentAtom == null) {
 						logger.error("Could not found the referenced atom '" + id + "' for this charge group!");
 					} else {
-						currentChargeGroup.addAtom(referencedAtom);
+						currentChargeGroup.addAtom(currentAtom);
 					}
 				}
 			} else if (currentResidue != null) {
@@ -164,6 +159,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				if (id != null) {
 					// ok, an atom is referenced; look it up
 					IAtom referencedAtom = null;
+//					System.out.println("#atoms: " + currentMolecule.getAtomCount());
 					Iterator atoms = currentMolecule.atoms();
 					while (atoms.hasNext()) {
 						IAtom nextAtom = (IAtom)atoms.next();
@@ -194,7 +190,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 */
 	public void endElement(CMLStack xpath, String uri, String name, String raw) {
 		if (name.equals("molecule")){
-			System.out.println("Ending element mdmolecule");
+//			System.out.println("Ending element mdmolecule");
 			// add chargeGroup, and then delete them
 			if (currentChargeGroup != null) {
 				if (currentMolecule instanceof MDMolecule) {
@@ -214,8 +210,31 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				}
 				currentResidue = null;
 			} else {
-				System.out.println("OK, that was the last end mdmolecule");
+//				System.out.println("OK, that was the last end mdmolecule");
 				super.endElement(xpath, uri, name, raw);
+			}
+		} else if ("atomArray".equals(name)) {
+			if (xpath.length() == 2 && xpath.endsWith("molecule", "atomArray")) {
+				storeAtomData();
+			} else if (xpath.length() > 2 && xpath.endsWith("cml", "molecule", "atomArray")) {
+				storeAtomData();
+			}
+		} else if ("bondArray".equals(name)) {
+			if (xpath.length() == 2 && xpath.endsWith("molecule", "bondArray")) {
+				storeBondData();
+			} else if (xpath.length() > 2 && xpath.endsWith("cml", "molecule", "bondArray")) {
+				storeBondData();
+			}
+		} else if ("scalar".equals(name)) {
+			//Residue number
+			if ("md:resNumber".equals(DICTREF)){
+				int myInt=Integer.parseInt(currentChars);
+				currentResidue.setNumber(myInt);
+			}
+			//ChargeGroup number
+			else if ("md:cgNumber".equals(DICTREF)){
+				int myInt=Integer.parseInt(currentChars);
+				currentChargeGroup.setNumber(myInt);
 			}
 		} else {
 			super.endElement(xpath, uri, name, raw);
