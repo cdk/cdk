@@ -841,10 +841,22 @@ Method </bibtex:title>
                 Boiling Point (NBP) of Alkanes Based on a Novel Molecular
                       Distance Edge (MDE) Vector, lambda</bibtex:title>
           <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
-          <bibtex:year>i1998</bibtex:year>
+          <bibtex:year>1998</bibtex:year>
           <bibtex:volume>38</bibtex:volume>
           <bibtex:pages>387-394</bibtex:pages>
       </bibtex:article>
   </bibtex:entry>
-  
+
+  <bibtex:entry id="BALL2007">
+      <bibtex:article>
+          <bibtex:author>Bellester, P.J. and Richards, W.G.
+          </bibtex:author>
+          <bibtex:title>Ultrafast shape recognition to search compound databases for similar molecular shapes</bibtex:title>
+          <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+          <bibtex:year>2007</bibtex:year>
+          <bibtex:volume></bibtex:volume>
+          <bibtex:pages></bibtex:pages>
+      </bibtex:article>
+  </bibtex:entry>
+
 </bibtex:file>
