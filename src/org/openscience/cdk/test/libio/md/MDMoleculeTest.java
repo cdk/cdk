@@ -35,7 +35,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -143,81 +142,44 @@ public class MDMoleculeTest extends CDKTestCase {
 
     }
 
-    public void testMDMoleculeCustomizationRoundtripping() {
+    public void testMDMoleculeCustomizationRoundtripping() throws Exception {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
         cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
-        try {
-            MDMolecule molecule=makeMDBenzene();
-            cmlWriter.write(molecule);
+        MDMolecule molecule=makeMDBenzene();
+        cmlWriter.write(molecule);
 
-            String serializedMol=writer.toString();
-            logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
-            logger.debug(serializedMol);
-            logger.debug("******************************");
-            System.out.println("****************************** testMDMoleculeCustomization Write first");
-            System.out.println(serializedMol);
-            System.out.println("******************************");
-            
-            CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
-            reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
-            IChemFile file = (IChemFile)reader.read(new ChemFile());
-            List containers = ChemFileManipulator.getAllAtomContainers(file);
-            IAtomContainer moly = ChemFileManipulator.getAllInOneContainer(file);
-//            assertEquals(1, containers.size());
-            
-            //Is this really the preferred way to retrieve the MDMolecule?
-            //FIXME
-            MDMolecule molecule2=null;
-            for (int i=0; i<containers.size();i++){
-                IAtomContainer container = (IAtomContainer)containers.get(i);
-                if (container instanceof MDMolecule) {
-					molecule2 = (MDMolecule) container;
-				}
-            }
-            assertNotNull(molecule2);
-            
-            assertTrue(molecule2 instanceof MDMolecule);
+        String serializedMol=writer.toString();
+        logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
+        logger.debug(serializedMol);
+        logger.debug("******************************");
+        System.out.println("****************************** testMDMoleculeCustomization Write first");
+        System.out.println(serializedMol);
+        System.out.println("******************************");
 
-        	//Serialize the already read molecule
-            writer = new StringWriter();
-            cmlWriter = new CMLWriter(writer);
-            cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
-            cmlWriter.write(molecule2);
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
+        reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
+        IChemFile file = (IChemFile)reader.read(new ChemFile());
+        List containers = ChemFileManipulator.getAllAtomContainers(file);
+        assertEquals(1, containers.size());
 
-        	//Check that we write correct content
-            String cmlContent = writer.toString();
-            logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
-            logger.debug(cmlContent);
-            logger.debug("******************************");
-            System.out.println("****************************** testMDMoleculeCustomization Write second");
-            System.out.println(cmlContent);
-            System.out.println("******************************");
-            assertTrue(cmlContent.indexOf("xmlns:md") != -1);
-            assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-            assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
-            assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-            assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
-            assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
+        Object molecule2 = containers.get(0);
+        assertTrue(molecule2 instanceof MDMolecule);
+        MDMolecule mdMol = (MDMolecule)molecule2;
 
-            
-        	//Test content: atoms, bonds, residues.atoms, chgrp.atoms etc
-        	//TODO!
-        	assertEquals(molecule.getChargeGroups().size(), molecule2.getChargeGroups().size());
-        	assertEquals(molecule.getResidues().size(), molecule2.getResidues().size());
-            
-
-            
-        } catch (Exception exception) {
-            logger.error("Error while creating an CML2 file: ", exception.getMessage());
-            logger.debug(exception);
-            exception.printStackTrace();
-            fail(exception.getMessage());
-        }
-
-    
-    
+        assertEquals(6, mdMol.getAtomCount());
+        assertEquals(6, mdMol.getBondCount());
+        
+        List residues = mdMol.getResidues();
+        assertEquals(2, residues.size());
+        assertEquals(3, ((Residue)residues.get(0)).getAtomCount());
+        assertEquals(3, ((Residue)residues.get(1)).getAtomCount());
+        
+        List chargeGroup = mdMol.getChargeGroups();
+        assertEquals(2, chargeGroup.size());
+        assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getAtomCount());
+        assertEquals(4, ((ChargeGroup)chargeGroup.get(1)).getAtomCount());
     }
 
     

@@ -26,6 +26,8 @@
 
 package org.openscience.cdk.io.cml;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.libio.md.ChargeGroup;
@@ -131,15 +133,58 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				int myInt=Integer.parseInt(raw);
 				currentChargeGroup.setNumber(myInt);
 			}
-		}
-
-		//Check atoms for md dictref
-		if ("atom".equals(local)) {
 			//Switching Atom
 			if (DICTREF.equals("md:switchingAtom")){
 				//Set current atom as switching atom
 				currentChargeGroup.setSwitchingAtom(currentAtom);
 			}
+		}
+		
+		else if ("atom".equals(local)) {
+			if (currentChargeGroup != null) {
+				String id = atts.getValue("ref");
+				if (id != null) {
+					// ok, an atom is referenced; look it up
+					IAtom referencedAtom = null;
+					Iterator atoms = currentMolecule.atoms();
+					while (atoms.hasNext()) {
+						IAtom nextAtom = (IAtom)atoms.next();
+						if (nextAtom.getID().equals(id)) {
+							referencedAtom = nextAtom; 
+						}
+					}
+					if (referencedAtom == null) {
+						logger.error("Could not found the referenced atom '" + id + "' for this charge group!");
+					} else {
+						currentChargeGroup.addAtom(referencedAtom);
+					}
+				}
+			} else if (currentResidue != null) {
+				String id = atts.getValue("ref");
+				if (id != null) {
+					// ok, an atom is referenced; look it up
+					IAtom referencedAtom = null;
+					Iterator atoms = currentMolecule.atoms();
+					while (atoms.hasNext()) {
+						IAtom nextAtom = (IAtom)atoms.next();
+						if (nextAtom.getID().equals(id)) {
+							referencedAtom = nextAtom; 
+						}
+					}
+					if (referencedAtom == null) {
+						logger.error("Could not found the referenced atom '" + id + "' for this residue!");
+					} else {
+						currentResidue.addAtom(referencedAtom);
+					}
+				}
+			} else {
+				// ok, fine, just add it to the currentMolecule
+				super.startElement(xpath, uri, local, raw, atts);
+			}
+		}
+		
+		else {
+			super.startElement(xpath, uri, local, raw, atts);
 		}
 
 	}
