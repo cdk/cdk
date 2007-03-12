@@ -117,6 +117,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				} else if (DICTREF.equals("md:residue")){
 //					System.out.println("Creating a new residue group...");
 					currentResidue = new Residue();
+					if (atts.getValue("title")!=null)
+						currentResidue.setName(atts.getValue("title"));
 				}
 			}
 		} else 

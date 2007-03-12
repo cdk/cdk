@@ -175,6 +175,10 @@ public class MDMoleculeTest extends CDKTestCase {
         assertEquals(2, residues.size());
         assertEquals(3, ((Residue)residues.get(0)).getAtomCount());
         assertEquals(3, ((Residue)residues.get(1)).getAtomCount());
+        assertEquals("myResidue1", ((Residue)residues.get(0)).getName());
+        assertEquals("myResidue2", ((Residue)residues.get(1)).getName());
+        assertEquals(0, ((Residue)residues.get(0)).getNumber());
+        assertEquals(1, ((Residue)residues.get(1)).getNumber());
         
         List chargeGroup = mdMol.getChargeGroups();
         assertEquals(2, chargeGroup.size());
@@ -184,6 +188,11 @@ public class MDMoleculeTest extends CDKTestCase {
         assertEquals("a2", ((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom().getID());
         assertNotNull(((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom());
         assertEquals("a5", ((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom().getID());
+
+        assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getNumber());
+        assertEquals(3, ((ChargeGroup)chargeGroup.get(1)).getNumber());
+
+
     }
 
     public void testMDMoleculeCustomization() {
@@ -259,7 +268,7 @@ public class MDMoleculeTest extends CDKTestCase {
         AtomContainer ac3= new AtomContainer();
         ac3.addAtom(mol.getAtom(0));
         ac3.addAtom(mol.getAtom(1));
-        ChargeGroup chg1=new ChargeGroup(ac3,0,mol);
+        ChargeGroup chg1=new ChargeGroup(ac3,2,mol);
         chg1.setSwitchingAtom(mol.getAtom(1));
         mol.addChargeGroup(chg1);
 
@@ -268,7 +277,7 @@ public class MDMoleculeTest extends CDKTestCase {
         ac4.addAtom(mol.getAtom(3));
         ac4.addAtom(mol.getAtom(4));
         ac4.addAtom(mol.getAtom(5));
-        ChargeGroup chg2=new ChargeGroup(ac4,1,mol);
+        ChargeGroup chg2=new ChargeGroup(ac4,3,mol);
         chg2.setSwitchingAtom(mol.getAtom(4));
         mol.addChargeGroup(chg2);
 
