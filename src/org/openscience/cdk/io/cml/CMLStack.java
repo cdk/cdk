@@ -47,6 +47,10 @@ public class CMLStack {
     }
     stack[sp++] = item;
   }
+  
+  public int length() {
+	  return sp;
+  }
 
   /**
    * Retrieves and deletes to last added entry.
