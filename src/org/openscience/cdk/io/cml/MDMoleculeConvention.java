@@ -44,7 +44,6 @@ import org.xml.sax.Attributes;
  */
 public class MDMoleculeConvention extends CMLCoreModule {
 
-	private MDMolecule currentMDMolecule;
 	private Residue currentResidue;
 	private ChargeGroup currentChargeGroup;
 	
@@ -98,33 +97,50 @@ public class MDMoleculeConvention extends CMLCoreModule {
 //	</molecule>
 
 		// let the CMLCore convention deal with things first
-		
-		super.startElement(xpath, uri, local, raw, atts);
 
 		if ("molecule".equals(local)) {
 
-			DICTREF = atts.getValue("dictRef") != null ? atts.getValue("dictRef") : "";
 			// the copy the parsed content into a new MDMolecule
 			if (atts.getValue("convention") != null &&
 				atts.getValue("convention").equals("md:mdMolecule")) {
 				System.out.println("creating a MDMolecule");
-//				super.startElement(xpath, uri, local, raw, atts);
+				super.startElement(xpath, uri, local, raw, atts);
 				currentMolecule = new MDMolecule(currentMolecule);
-				currentMDMolecule = (MDMolecule)currentMolecule;
 			} else {
+				DICTREF = atts.getValue("dictRef") != null ? atts.getValue("dictRef") : "";
 				//If residue or chargeGroup, set up a new one
 				if (DICTREF.equals("md:chargeGroup")){
-					System.out.println("CG ** Creating a new charge group...");
-					currentMolecule = new ChargeGroup();
-					currentChargeGroup = (ChargeGroup)currentMolecule;
+					System.out.println("Creating a new charge group...");
+					currentChargeGroup = new ChargeGroup();
 				} else if (DICTREF.equals("md:residue")){
-					System.out.println("RES ** Creating a new residue: " + atts.getValue("title"));
-					currentMolecule = new Residue();
-					currentResidue = (Residue)currentMolecule;
-					currentResidue.setName(atts.getValue("title"));
+					System.out.println("Creating a new residue group...");
+					currentResidue = new Residue();
 				}
 			}
-		} 
+		} else 
+		
+		//We have a scalar element. Now check who it belongs to
+		if ("scalar".equals(local)) {			
+			//Residue number
+			if (DICTREF.equals("md:resNumber")){
+				int myInt=Integer.parseInt(raw);
+				currentResidue.setNumber(myInt);
+			}
+			//ChargeGroup number
+			else if (DICTREF.equals("md:cgNumber")){
+				int myInt=Integer.parseInt(raw);
+				currentChargeGroup.setNumber(myInt);
+			}
+		}
+
+		//Check atoms for md dictref
+		if ("atom".equals(local)) {
+			//Switching Atom
+			if (DICTREF.equals("md:switchingAtom")){
+				//Set current atom as switching atom
+				currentChargeGroup.setSwitchingAtom(currentAtom);
+			}
+		}
 
 	}
 
@@ -133,62 +149,32 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 */
 	public void endElement(CMLStack xpath, String uri, String name, String raw) {
 		if (name.equals("molecule")){
-
-			//FIXME: Last element should be an MDMolecule but is a ChargeGroup!
-			//Very strange, since I save a MDMolecule (confirmed)
+			System.out.println("Ending element mdmolecule");
+			// add chargeGroup, and then delete them
+			if (currentChargeGroup != null) {
+				if (currentMolecule instanceof MDMolecule) {
+					((MDMolecule)currentMolecule).addChargeGroup(currentChargeGroup);
+				} else {
+					logger.error("Need to store a charge group, but the current molecule is not a MDMolecule!");
+				}
+				currentChargeGroup = null;
+			} else 
 			
-			//End CG
-			if (currentMolecule instanceof ChargeGroup) {
-				ChargeGroup cg=(ChargeGroup)currentMolecule;
-				System.out.println("CG ** Ending element charge group: " + cg.getNumber());
-				((MDMolecule)currentMDMolecule).addChargeGroup(cg);
+			// add chargeGroup, and then delete them
+			if (currentResidue != null) {
+				if (currentMolecule instanceof MDMolecule) {
+					((MDMolecule)currentMolecule).addResidue(currentResidue);
+				} else {
+					logger.error("Need to store a residue group, but the current molecule is not a MDMolecule!");
+				}
+				currentResidue = null;
+			} else {
+				System.out.println("OK, that was the last end mdmolecule");
+				super.endElement(xpath, uri, name, raw);
 			}
-			
-			//End residue
-			if (currentMolecule instanceof Residue) {
-				Residue res=(Residue)currentMolecule;
-				System.out.println("RES ** Ending element residue: " + res.getName());
-				((MDMolecule)currentMDMolecule).addResidue(res);
-			}
-			
-			//End the MDMolecule
-			else if (currentMolecule instanceof MDMolecule){
-				System.out.println("Ending MDMolecule");
-				//Convert currentMolecule into an MDMolecule
-				currentMolecule=new MDMolecule(currentMolecule);
-				((MDMolecule)currentMolecule).setResidues(currentMDMolecule.getResidues());
-				((MDMolecule)currentMolecule).setChargeGroups(currentMDMolecule.getChargeGroups());
-			}
+		} else {
+			super.endElement(xpath, uri, name, raw);
 		}
-		
-		//We have a scalar element. Now check who it belongs to
-		else if ("scalar".equals(name)) {			
-			//Residue number
-			if (DICTREF.equals("md:resNumber")){
-				int myInt=Integer.parseInt(currentChars);
-				currentResidue.setNumber(myInt);
-				System.out.println("Ending scalar resNumber: " + currentChars );
-			}
-			//ChargeGroup number
-			else if (DICTREF.equals("md:cgNumber")){
-				int myInt=Integer.parseInt(currentChars);
-				currentChargeGroup.setNumber(myInt);
-				System.out.println("Ending scalar cgNumber" + currentChars);
-			}
-		}
-
-		//Check atoms for md dictref
-		else if ("atom".equals(name)) {
-			//Switching Atom
-			if (DICTREF.equals("md:switchingAtom")){
-				//Set current atom as switching atom
-				currentChargeGroup.setSwitchingAtom(currentAtom);
-				System.out.println("Setting switching atom to " + currentAtom.toString());
-			}
-		}
-
-		//We always want to endElement for super object
-		super.endElement(xpath, uri, name, raw);
 	}
 
 }
