@@ -23,6 +23,9 @@ import java.util.Iterator;
  * generate the 12 descriptors used to characterize the 3D structure which can then be used for a
  * variety of purposes such as storing in a database. The values are also available via a {@link XXX}.
  *
+ * <b>Note</b>: The methods of this class do no perform hydrogen removal. If you want to
+ * do the calculations excluding hydrogens, you'll need to do it yourself.
+ *
  * @author Rajarshi Guha
  * @cdk.created 2007-03-11
  * @cdk.keyword similarity, 3D, manhattan
@@ -199,6 +202,9 @@ public class DistanceMoment {
     /**
      * Evaluate the 3D similarity between two molecules.
      *
+     * The method does not remove hydrogens. If this is required, remove them from the
+     * molecules before passing them here.
+     *
      * @param query  The query molecule
      * @param target The target molecule
      * @return The similarity between the two molecules (ranging from 0 to 1)
@@ -211,7 +217,6 @@ public class DistanceMoment {
         for (int i = 0; i < mom1.length; i++) {
             sum += Math.abs(mom1[i] - mom2[i]);
         }
-        sum /= 12.0 + 1;
-        return (float) (1.0 / sum);
+        return (float) (1.0 / (1.0 + sum/12.0));
     }
 }
