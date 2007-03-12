@@ -192,7 +192,22 @@ public class MDMoleculeTest extends CDKTestCase {
         assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getNumber());
         assertEquals(3, ((ChargeGroup)chargeGroup.get(1)).getNumber());
 
+         writer = new StringWriter();
 
+         cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new MDMoleculeCustomizer());
+        cmlWriter.write(mdMol);
+
+        String serializedMDMol=writer.toString();
+        logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
+        logger.debug(serializedMol);
+        logger.debug("******************************");
+        System.out.println("****************************** testMDMoleculeCustomization Write second");
+        System.out.println(serializedMol);
+        System.out.println("******************************");
+
+        assertEquals(serializedMol, serializedMDMol);
+        
     }
 
     public void testMDMoleculeCustomization() {
