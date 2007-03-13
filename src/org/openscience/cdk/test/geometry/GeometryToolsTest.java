@@ -164,5 +164,22 @@ public class GeometryToolsTest extends CDKTestCase {
     	assertEquals(p.x,1.0,.1);
     	assertEquals(p.y,0.5,.1);
     }
+    
+    
+    public void testTranslateAllPositive_IAtomContainer_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(-1,-1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	HashMap hm=this.makeCoordsMap(ac);
+    	GeometryTools.translateAllPositive(ac,hm);
+    	assertEquals(((Point2d)hm.get(atom1)).x,0.0);
+    	assertEquals(((Point2d)hm.get(atom1)).y,0.0);
+    	assertEquals(((Point2d)hm.get(atom2)).x,2.0);
+    	assertEquals(((Point2d)hm.get(atom2)).y,1.0);
+    }
 }
 

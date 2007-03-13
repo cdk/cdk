@@ -35,6 +35,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -214,6 +215,21 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	Point2d p=GeometryToolsInternalCoordinates.get2DCenter(ac.atoms());
     	assertEquals(p.x,1.0,.1);
     	assertEquals(p.y,0.5,.1);
+    }
+    
+    public void testTranslateAllPositive_IAtomContainer_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(-1,-1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	GeometryToolsInternalCoordinates.translateAllPositive(ac);
+    	assertEquals(atom1.getPoint2d().x,0.0);
+    	assertEquals(atom1.getPoint2d().y,0.0);
+    	assertEquals(atom2.getPoint2d().x,2.0);
+    	assertEquals(atom2.getPoint2d().y,1.0);
     }
 }
 
