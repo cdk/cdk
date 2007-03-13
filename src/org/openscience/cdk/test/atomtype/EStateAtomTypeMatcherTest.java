@@ -23,6 +23,7 @@ package org.openscience.cdk.test.atomtype;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -38,6 +39,11 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		return new TestSuite(EStateAtomTypeMatcherTest.class);
 	}
 
+	public void testEStateAtomTypeMatcher() {
+		EStateAtomTypeMatcher matcher = new EStateAtomTypeMatcher();
+		assertNotNull(matcher);
+	}
+	
 }
 
 
