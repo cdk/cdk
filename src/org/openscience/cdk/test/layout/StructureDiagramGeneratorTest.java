@@ -162,23 +162,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		return sdg.getMolecule();
 	}
 
-
-	/**
-	 *  The main program for the StructureDiagramGeneratorTest class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) throws Exception
-	{
-		StructureDiagramGeneratorTest sdg = new StructureDiagramGeneratorTest("StructureDiagramGeneratorTest");
-		sdg.runVisualTests();
-		//sdg.testBug1670871();
-		//sdg.testSpiroRings();
-		//sdg.visualBugPMR();
-		//sdg.testBranchedAliphatic();
-	}
-
-
 	/**
 	 * @cdk.bug 736137
 	 */
