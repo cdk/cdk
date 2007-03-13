@@ -128,7 +128,13 @@ abstract public class CoverageTest extends CDKTestCase {
                     Class[] paramTypes = methods[i].getParameterTypes();
                     for (int j=0; j<paramTypes.length; j++) {
                         if (paramTypes[j].isArray()) {
-                            testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                        	if (paramTypes[j].getComponentType().isArray()) {
+                        		testMethod = testMethod + "_array" + 
+                        			stripBrackets(removePackage(paramTypes[j].getComponentType().getSimpleName())) +
+                        			removePackage(paramTypes[j].getComponentType().getComponentType().getName());
+                        	} else {
+                        		testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                        	}
                         } else {
                             testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                         }
@@ -155,7 +161,13 @@ abstract public class CoverageTest extends CDKTestCase {
             			Class[] paramTypes = constructors[i].getParameterTypes();
             			for (int j=0; j<paramTypes.length; j++) {
             				if (paramTypes[j].isArray()) {
-            					testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                            	if (paramTypes[j].getComponentType().isArray()) {
+                            		testMethod = testMethod + "_array" + 
+                            			stripBrackets(removePackage(paramTypes[j].getComponentType().getSimpleName())) +
+                            			removePackage(paramTypes[j].getComponentType().getComponentType().getName());
+                            	} else {
+                            		testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
+                            	}
             				} else {
             					testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
             				}
@@ -177,7 +189,12 @@ abstract public class CoverageTest extends CDKTestCase {
         }
     }
     
-    private Class loadClass(String className) {
+    private String stripBrackets(String string) {
+		// remove the [] at the end 
+		return string.substring(0,string.length()-2);
+	}
+
+	private Class loadClass(String className) {
         Class loadedClass = null;
         try {
             loadedClass = classLoader.loadClass(className);
