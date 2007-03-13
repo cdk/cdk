@@ -99,7 +99,7 @@ public class InvPair implements java.io.Serializable{
     return atom;
   }
 
-  public void comit(){
+  public void commit(){
     atom.setProperty(CANONICAL_LABEL, new Long(curr));
   }
 

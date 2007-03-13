@@ -105,7 +105,7 @@ public class CanonicalLabeler {
         // now apply the ranking
         Iterator it = v.iterator();
         while (it.hasNext()) {
-        	((InvPair) it.next()).comit();
+        	((InvPair) it.next()).commit();
         }
     }
   }

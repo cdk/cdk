@@ -112,10 +112,10 @@ public class InvPairTest extends CDKTestCase {
 		}
     }
     
-    public void testComit() {
+    public void testCommit() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
-    	pair.comit();
+    	pair.commit();
     	assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
     	assertEquals(new Long(5l), (Long)atom.getProperty(InvPair.CANONICAL_LABEL));
     }
