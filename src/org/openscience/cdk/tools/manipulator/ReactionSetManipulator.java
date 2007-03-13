@@ -99,6 +99,7 @@ public class ReactionSetManipulator {
     
     public static List getAllIDs(IReactionSet set) {
         List IDlist = new ArrayList();
+        if (set.getID() != null) IDlist.add(set.getID());
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
             IDlist.addAll(ReactionManipulator.getAllIDs(reaction));

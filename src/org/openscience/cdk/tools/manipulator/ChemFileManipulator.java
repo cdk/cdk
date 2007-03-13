@@ -110,6 +110,7 @@ public class ChemFileManipulator {
 
     public static List getAllIDs(IChemFile file) {
     	ArrayList list = new ArrayList();
+    	if (file.getID() != null) list.add(file.getID());
         for (int i=0; i<file.getChemSequenceCount(); i++) {
             list.addAll(ChemSequenceManipulator.getAllIDs(
                 file.getChemSequence(i)

@@ -208,12 +208,18 @@ public class AtomContainerSetManipulator {
         return null;
     }
     
+    /**
+     * Does not recursively return the contents of the AtomContainer.
+     * 
+     * @param set
+     * @return
+     */
     public static List getAllChemObjects(IAtomContainerSet set) {
         ArrayList list = new ArrayList();
         list.add(set);
         java.util.Iterator acs = set.atomContainers();
         while (acs.hasNext()) {
-            list.add((IAtomContainer)acs.next()); // don't recurse into AC's for now
+            list.add((IAtomContainer)acs.next());
         }
         return list;
     }

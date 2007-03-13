@@ -130,6 +130,7 @@ public class ChemSequenceManipulator {
 
 	public static List getAllIDs(IChemSequence sequence) {
 		ArrayList list = new ArrayList();
+		if (sequence.getID() != null) list.add(sequence.getID());
         for (int i=0; i<sequence.getChemModelCount(); i++) {
         	list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));
         }

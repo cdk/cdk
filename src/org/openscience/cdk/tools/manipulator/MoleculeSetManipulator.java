@@ -27,6 +27,7 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
@@ -101,7 +102,10 @@ public class MoleculeSetManipulator {
 	}
 	
     public static List getAllIDs(IMoleculeSet set) {
-		return AtomContainerSetManipulator.getAllIDs(set);
+    	List list = new ArrayList();
+    	if (set.getID() != null) list.add(set.getID());
+    	list.addAll(AtomContainerSetManipulator.getAllIDs(set));
+		return list;
 	}
 
     public static void setAtomProperties(IMoleculeSet set, Object propKey, Object propVal) {

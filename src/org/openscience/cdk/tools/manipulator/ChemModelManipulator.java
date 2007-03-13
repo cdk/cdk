@@ -357,6 +357,7 @@ public class ChemModelManipulator {
 
 	public static List getAllIDs(IChemModel chemModel) {
 		ArrayList list = new ArrayList();
+		if (chemModel.getID() != null) list.add(chemModel.getID());
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             list.addAll(AtomContainerManipulator.getAllIDs(crystal));
