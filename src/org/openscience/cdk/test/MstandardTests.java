@@ -36,6 +36,7 @@ import org.openscience.cdk.test.exception.InvalidSmilesExceptionTest;
 import org.openscience.cdk.test.exception.UnsupportedChemObjectExceptionTest;
 import org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.test.fingerprint.FingerprinterTest;
+import org.openscience.cdk.test.fingerprint.FingerprinterToolTest;
 import org.openscience.cdk.test.fingerprint.GraphOnlyFingerprinterTest;
 import org.openscience.cdk.test.geometry.BondToolsTest;
 import org.openscience.cdk.test.geometry.CrystalGeometryToolsTest;
@@ -152,6 +153,7 @@ public class MstandardTests {
         suite.addTest(FingerprinterTest.suite());
         suite.addTest(GraphOnlyFingerprinterTest.suite());
         suite.addTest(ExtendedFingerprinterTest.suite());
+        suite.addTest(FingerprinterToolTest.suite());
         suite.addTest(ProblemMarkerTest.suite());
         suite.addTest(SymbolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
