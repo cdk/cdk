@@ -64,6 +64,16 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  */
 public abstract class IDCreator {
 
+	private final static String REACTION_PREFIX = "r";
+	private final static String ATOM_PREFIX = "a";
+	private final static String BOND_PREFIX = "b";
+	private final static String ATOMCONTAINER_PREFIX = "m";
+	private final static String ATOMCONTAINERSET_PREFIX = "molSet";
+	private final static String REACTIONSET_PREFIX = "rset";
+	private final static String CHEMMODEL_PREFIX = "model";
+	private final static String CHEMSEQUENCE_PREFIX = "seq";
+	private final static String CHEMFILE_PREFIX = "file";
+	
 	/**
 	 * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML. Supports IAtomContainer, IAtomContainerSet,
@@ -117,16 +127,16 @@ public abstract class IDCreator {
     	int bondCount = 1;
     	
         if (container.getID() == null) {
-            while (tabuList.contains("m" + moleculeCount)) moleculeCount++;
-            setID("m" + moleculeCount, container, tabuList);
+            while (tabuList.contains(ATOMCONTAINER_PREFIX + moleculeCount)) moleculeCount++;
+            setID(ATOMCONTAINER_PREFIX + moleculeCount, container, tabuList);
         }
         
         Iterator atoms = container.atoms();
         while(atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
             if (atom.getID() == null) {
-                while (tabuList.contains("a" + atomCount)) atomCount++;
-                setID("a" + atomCount, atom, tabuList);
+                while (tabuList.contains(ATOM_PREFIX + atomCount)) atomCount++;
+                setID(ATOM_PREFIX + atomCount, atom, tabuList);
             }
         }
 
@@ -134,8 +144,8 @@ public abstract class IDCreator {
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             if (bond.getID() == null) {
-                while (tabuList.contains("b" + bondCount)) bondCount++;
-                setID("b" + bondCount, bond, tabuList);
+                while (tabuList.contains(BOND_PREFIX + bondCount)) bondCount++;
+                setID(BOND_PREFIX + bondCount, bond, tabuList);
             }
         }
     }
@@ -152,8 +162,8 @@ public abstract class IDCreator {
         int moleculeCount = 1;
         
         if (containerSet.getID() == null) {
-            while (tabuList.contains("molSet" + moleculeCount)) moleculeCount++;
-            setID("molSet" + moleculeCount, containerSet, tabuList);
+            while (tabuList.contains(ATOMCONTAINERSET_PREFIX + moleculeCount)) moleculeCount++;
+            setID(ATOMCONTAINERSET_PREFIX + moleculeCount, containerSet, tabuList);
         }
 
         Iterator acs = containerSet.atomContainers();
@@ -175,8 +185,8 @@ public abstract class IDCreator {
         int reactionCount = 1;
         
         if (reaction.getID() == null) {
-            while (tabuList.contains("r" + reactionCount)) reactionCount++;
-            setID("r" + reactionCount, reaction, tabuList);
+            while (tabuList.contains(REACTION_PREFIX + reactionCount)) reactionCount++;
+            setID(REACTION_PREFIX + reactionCount, reaction, tabuList);
         }
 
         Iterator reactants = reaction.getReactants().atomContainers();
@@ -192,7 +202,12 @@ public abstract class IDCreator {
     private static void createIDsForReactionSet(IReactionSet reactionSet, List tabuList) {
     	if (tabuList == null) tabuList = ReactionSetManipulator.getAllIDs(reactionSet);
         
-        for (Iterator iter = reactionSet.reactions(); iter.hasNext();) {
+    	int rsetCount = 1;
+    	if (reactionSet.getID() == null) {
+            while (tabuList.contains(REACTIONSET_PREFIX + rsetCount)) rsetCount++;
+            setID(REACTIONSET_PREFIX + rsetCount, reactionSet, tabuList);
+        }
+    	for (Iterator iter = reactionSet.reactions(); iter.hasNext();) {
             createIDsForReaction((IReaction)iter.next(), tabuList);
         }
     }
@@ -200,6 +215,12 @@ public abstract class IDCreator {
     private static void createIDsForChemFile(IChemFile file, List tabuList) {
     	if (tabuList == null) tabuList = ChemFileManipulator.getAllIDs(file);
         
+    	int fileCount = 1;
+    	if (file.getID() == null) {
+            while (tabuList.contains(CHEMFILE_PREFIX + fileCount)) fileCount++;
+            setID(CHEMFILE_PREFIX + fileCount, file, tabuList);
+        }
+    	
     	Iterator sequences = file.chemSequences();
     	while (sequences.hasNext()) {
     		createIDsForChemSequence((IChemSequence)sequences.next(), tabuList);
@@ -209,6 +230,12 @@ public abstract class IDCreator {
     private static void createIDsForChemSequence(IChemSequence sequence, List tabuList) {
     	if (tabuList == null) tabuList = ChemSequenceManipulator.getAllIDs(sequence);
         
+    	int sequenceCount = 1;
+    	if (sequence.getID() == null) {
+            while (tabuList.contains(CHEMSEQUENCE_PREFIX + sequenceCount)) sequenceCount++;
+            setID(CHEMSEQUENCE_PREFIX + sequenceCount, sequence, tabuList);
+        }
+    	
     	Iterator models = sequence.chemModels();
     	while (models.hasNext()) {
     		createIDsForChemModel((IChemModel)models.next(), tabuList);
@@ -218,6 +245,12 @@ public abstract class IDCreator {
     private static void createIDsForChemModel(IChemModel model, List tabuList) {
     	if (tabuList == null) tabuList = ChemModelManipulator.getAllIDs(model);
         
+    	int modelCount = 1;
+    	if (model.getID() == null) {
+            while (tabuList.contains(CHEMMODEL_PREFIX + modelCount)) modelCount++;
+            setID(CHEMMODEL_PREFIX + modelCount, model, tabuList);
+        }
+    	
     	ICrystal crystal = model.getCrystal();
     	if (crystal != null) createIDsForAtomContainer(crystal, tabuList);
     	IMoleculeSet moleculeSet = model.getMoleculeSet();
