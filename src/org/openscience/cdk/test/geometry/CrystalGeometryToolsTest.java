@@ -84,6 +84,20 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         assertEquals(0.0, cardAxes[2].x, 0.001);
         assertEquals(0.0, cardAxes[2].y, 0.001);
         assertEquals(3.0, cardAxes[2].z, 0.001);
+
+        // some sanity checking: roundtripping
+        cardAxes = CrystalGeometryTools.notionalToCartesian(
+            9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821
+        );
+        Vector3d a = cardAxes[0];
+        Vector3d b = cardAxes[1];
+        Vector3d c = cardAxes[2];
+        assertEquals(69.043, Math.toDegrees(b.angle(c)), 0.001);
+        assertEquals(74.441, Math.toDegrees(a.angle(c)), 0.001);
+        assertEquals(77.821, Math.toDegrees(b.angle(a)), 0.001);
+        assertEquals(9.3323, a.length(), 0.0001);
+        assertEquals(10.1989, b.length(), 0.0001);
+        assertEquals(11.2477, c.length(), 0.0001);
     }
 
     /**
@@ -125,26 +139,22 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     /**
      * This method tests the conversion of atomic fractional coordinates to
      * cartesian coordinates. The specific numbers are taken from 9603.res.
-     *
-     * <p>Uncommented because it fails, which might be correct and needs
-     * to be checked by manually calculating the values.
      */
-    /** public void testFractionalToCartesian2() {
-        double[][] cardAxes = CrystalGeometryTools.notionalToCartesian(
+    public void testFractionalToCartesian2() {
+        Vector3d[] cardAxes = CrystalGeometryTools.notionalToCartesian(
             9.3323, 10.1989, 11.2477, 69.043, 74.441, 77.821
         );
-        double[] a = {cardAxes[0][0], cardAxes[0][1], cardAxes[0][2]};
-        double[] b = {cardAxes[1][0], cardAxes[1][1], cardAxes[1][2]};
-        double[] c = {cardAxes[2][0], cardAxes[2][1], cardAxes[2][2]};
+        Vector3d a = cardAxes[0];
+        Vector3d b = cardAxes[1];
+        Vector3d c = cardAxes[2];
         
-        double[] fractCoords = {0.517879, 0.258121, 0.698477};
-        double[] cartCoords = CrystalGeometryTools.fractionalToCartesian(
-            a, b, c, fractCoords
+        Point3d cartCoords = CrystalGeometryTools.fractionalToCartesian(
+            a, b, c, new Point3d(0.517879, 0.258121, 0.698477)
         );
-        assertEquals(7.005, cartCoords[0], 0.001);
-        assertEquals(8.441, cartCoords[1], 0.001);
-        assertEquals(3.096, cartCoords[2], 0.001);
-    } **/
+        assertEquals(7.495, cartCoords.x, 0.001);
+        assertEquals(4.993, cartCoords.y, 0.001);
+        assertEquals(7.171, cartCoords.z, 0.001);
+    }
 
     /**
      * This method tests the conversion of atomic cartesian coordinates to
