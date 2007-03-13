@@ -29,7 +29,6 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -183,7 +182,7 @@ public class PDBAtomTest extends CDKTestCase {
      */
     public void testDefaultChargeValue() {
     	IPDBAtom atom = builder.newPDBAtom("C");
-        assertEquals(CDKConstants.UNSET, atom.getCharge(), 0.00000001);
+        assertEquals(0.00, atom.getCharge(), 0.00000001);
     }
     
     public void testGetRecord(){
