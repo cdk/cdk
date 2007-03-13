@@ -36,9 +36,9 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.test.CDKTestCase;
@@ -180,6 +180,19 @@ public class GeometryToolsTest extends CDKTestCase {
     	assertEquals(((Point2d)hm.get(atom1)).y,0.0);
     	assertEquals(((Point2d)hm.get(atom2)).x,2.0);
     	assertEquals(((Point2d)hm.get(atom2)).y,1.0);
+    }
+    
+    public void testGetLength2D_IBond_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(-1,-1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IBond bond=new Bond(atom1,atom2);
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	HashMap hm=this.makeCoordsMap(ac);
+    	assertEquals(GeometryTools.getLength2D(bond,hm),2.23,0.01);
     }
 }
 

@@ -39,6 +39,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLReader;
@@ -230,6 +231,19 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(atom1.getPoint2d().y,0.0);
     	assertEquals(atom2.getPoint2d().x,2.0);
     	assertEquals(atom2.getPoint2d().y,1.0);
+    }
+    
+    
+    public void testGetLength2D_IBond_HashMap(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(-1,-1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IBond bond=new Bond(atom1,atom2);
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	assertEquals(GeometryToolsInternalCoordinates.getLength2D(bond),2.23,0.01);
     }
 }
 
