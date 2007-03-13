@@ -41,6 +41,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -181,7 +182,7 @@ public class TemplateHandler3D {
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
             }
-            if (Fingerprinter.isSubset(ringSystemFingerprint, (BitSet) fingerprintData.get(i))) {
+            if (FingerprinterTool.isSubset(ringSystemFingerprint, (BitSet) fingerprintData.get(i))) {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(template, true);
                 if (UniversalIsomorphismTester.isSubgraph(ringSystems, query)) {
                     List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, query);

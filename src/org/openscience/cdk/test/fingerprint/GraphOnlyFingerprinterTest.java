@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -102,7 +102,7 @@ public class GraphOnlyFingerprinterTest extends CDKTestCase {
     	BitSet bs1 = printer.getFingerprint((IAtomContainer) mol1.clone());
     	BitSet bs2 = printer.getFingerprint((IAtomContainer) mol2.clone());
 
-    	assertTrue("Subset (with fingerprint) does NOT match", Fingerprinter.isSubset(bs1, bs2));
+    	assertTrue("Subset (with fingerprint) does NOT match", FingerprinterTool.isSubset(bs1, bs2));
 
     	// Match OK
     	logger.debug("Subset (with fingerprint) does match");

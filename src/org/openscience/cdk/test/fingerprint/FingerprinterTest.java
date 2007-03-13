@@ -36,6 +36,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
+import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -89,7 +90,7 @@ public class FingerprinterTest extends CDKTestCase
 		
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
 
 		if (standAlone)
 		{
@@ -130,7 +131,7 @@ public class FingerprinterTest extends CDKTestCase
 		
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
 
 		if (standAlone)
 		{
@@ -174,7 +175,7 @@ public class FingerprinterTest extends CDKTestCase
 		
 		BitSet superBS = fingerprinter.getFingerprint(structure2);
 		BitSet subBS = fingerprinter.getFingerprint(structure1);
-		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
 		if (standAlone)
 		{
 			MoleculeViewer2D.display(structure1, false);
@@ -217,7 +218,7 @@ public class FingerprinterTest extends CDKTestCase
 		
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
-		boolean isSubset = Fingerprinter.isSubset(superBS, subBS);
+		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
 		if (standAlone)
 		{
 			//MoleculeViewer2D.display(superstructure, false);
@@ -309,7 +310,19 @@ public class FingerprinterTest extends CDKTestCase
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(Fingerprinter.isSubset(bs, bs1));
+		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+	}
+	
+	public void testFingerprinter() throws java.lang.Exception
+	{
+		Fingerprinter fingerprinter = new Fingerprinter();
+		assertNotNull(fingerprinter);
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	public void testFingerprinter_int() throws java.lang.Exception
@@ -321,7 +334,7 @@ public class FingerprinterTest extends CDKTestCase
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(Fingerprinter.isSubset(bs, bs1));
+		assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	public void testFingerprinter_int_int() throws java.lang.Exception
@@ -333,7 +346,7 @@ public class FingerprinterTest extends CDKTestCase
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(Fingerprinter.isSubset(bs, bs1));
+		assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	public static Molecule makeFragment1()

@@ -154,39 +154,6 @@ public class Fingerprinter implements IFingerprinter {
 	}
 	
 	/**
-	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
-	 *  so, the molecular structure from which bs2 was generated is a possible
-	 *  substructure of bs1. <p>
-	 *
-	 *  Example: <pre>
-	 *  Molecule mol = MoleculeFactory.makeIndole();
-	 *  BitSet bs = Fingerprinter.getFingerprint(mol);
-	 *  Molecule frag1 = MoleculeFactory.makePyrrole();
-	 *  BitSet bs1 = Fingerprinter.getFingerprint(frag1);
-	 *  if (Fingerprinter.isSubset(bs, bs1)) {
-	 *      System.out.println("Pyrrole is subset of Indole.");
-	 *  }
-	 *  </pre>
-	 *
-	 *@param  bs1     The reference BitSet
-	 *@param  bs2     The BitSet which is compared with bs1
-	 *@return         True, if bs2 is a subset of bs2
-	 *@cdk.keyword    substructure search
-	 */
-	public static boolean isSubset(BitSet bs1, BitSet bs2)
-	{
-		BitSet clone = (BitSet) bs1.clone();
-		clone.and(bs2);
-		if (clone.equals(bs2))
-		{
-			return true;
-		}
-		return false;
-	}
-
-
-
-	/**
 	 *  Gets all pathes of length 1 up to the length given by the 'searchDepth"
 	 *  parameter. The pathes are aquired by a number of depth first searches, one
 	 *  for each atom.
@@ -376,25 +343,6 @@ public class Fingerprinter implements IFingerprinter {
 			bondSymbol = "#";
 		}
 		return bondSymbol;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  bs1  Description of the Parameter
-	 *@param  bs2  Description of the Parameter
-	 */
-	public static void listDifferences(BitSet bs1, BitSet bs2)
-	{
-		logger.debug("Listing bit positions set in bs2 but not in bs1");
-		for (int f = 0; f < bs2.size(); f++)
-		{
-			if (bs2.get(f) && !bs1.get(f))
-			{
-				logger.debug("Bit " + f + " not set in bs1");
-			}
-		}
 	}
 
 	public int getSearchDepth() {
