@@ -100,7 +100,7 @@ public class InvPair implements java.io.Serializable{
   }
 
   public void comit(){
-    atom.setProperty("CanonicalLable", new Long(curr));
+    atom.setProperty(CANONICAL_LABEL, new Long(curr));
   }
 
   public String toString(){
