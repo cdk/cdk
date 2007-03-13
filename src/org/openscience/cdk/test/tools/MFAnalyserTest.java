@@ -104,6 +104,26 @@ public class MFAnalyserTest extends CDKTestCase {
 		assertEquals(2, (int)mfa.getDBE());
 	}
 	
+	public void testGenerateElementFormula_IMolecule_arrayString() {
+		MFAnalyser mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals("C10N1H19", MFAnalyser.generateElementFormula(
+			new Molecule(mfa.getAtomContainer()), new String[] { "C", "N", "H" })
+		);
+		assertEquals("C10H19N1", MFAnalyser.generateElementFormula(
+			new Molecule(mfa.getAtomContainer()), new String[] { "C", "H", "N" })
+		);
+		assertEquals("N1H19C10", MFAnalyser.generateElementFormula(
+			new Molecule(mfa.getAtomContainer()), new String[] { "N", "H", "C" })
+		);
+	}
+	
+	public void testAnalyseAtomContainer_IAtomContainer() {
+		MFAnalyser mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
+		assertEquals("C10H19N", mfa.analyseAtomContainer(
+			new Molecule(mfa.getAtomContainer()))
+		);
+	}
+	
 	public void testElements() throws Exception{
         MFAnalyser mfa = new MFAnalyser("C10H22", DefaultChemObjectBuilder.getInstance().newAtomContainer());
 		assertEquals(2, (int)mfa.getElements().size());

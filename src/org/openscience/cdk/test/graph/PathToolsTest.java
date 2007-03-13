@@ -26,13 +26,11 @@ package org.openscience.cdk.test.graph;
 import java.util.List;
 import java.util.Vector;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,7 +56,7 @@ public class PathToolsTest extends CDKTestCase {
         return new TestSuite(PathToolsTest.class);
     }
 
-    public void testBreadthFirstTargetSearch() {
+    public void testBreadthFirstTargetSearch_IAtomContainer_Vector_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
         Vector sphere = new Vector();
@@ -68,7 +66,7 @@ public class PathToolsTest extends CDKTestCase {
         assertEquals(3, length);
     }
 
-    public void testGetShortestPath() throws Exception {
+    public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         IAtom end = null;
@@ -95,7 +93,7 @@ public class PathToolsTest extends CDKTestCase {
 
         
 
-    public void testGetPath() throws Exception {
+    public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         List paths = null;
@@ -111,7 +109,7 @@ public class PathToolsTest extends CDKTestCase {
         assertEquals(1, paths.size());
     }
 
-    public void testGetAllPaths1() throws Exception {
+    public void testGetAllPaths_IAtomContainer_IAtom_IAtom() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
@@ -137,12 +135,43 @@ public class PathToolsTest extends CDKTestCase {
         assertNotNull(path3);
     }
 
-    public void testGetNumberOfVertices() throws Exception {
+    public void testGetVertexCountAtDistance_IAtomContainer_int() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
         assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
         assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
     }
 
+    public void testGetInt2DColumnSum_arrayintint() {
+    	int[][] start = new int[2][2];
+    	start[0][0] = 5;
+    	start[0][1] = 3;
+    	start[1][0] = 1;
+    	start[1][1] = 2;
+    	
+    	assertEquals(8, PathTools.getInt2DColumnSum(start)[0]);
+    	assertEquals(3, PathTools.getInt2DColumnSum(start)[1]);
+    }
+    
+    public void testGetMolecularGraphRadius_IAtomContainer() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("CCCC");
+        assertEquals(2, PathTools.getMolecularGraphRadius(atomContainer));
+        atomContainer = sp.parseSmiles("C1C(N)CC1");
+        assertEquals(2, PathTools.getMolecularGraphRadius(atomContainer));
+        atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+        assertEquals(3, PathTools.getMolecularGraphRadius(atomContainer));
+    }
+
+    public void testGetMolecularGraphDiameter_IAtomContainer() throws Exception {
+    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("CCCC");
+        assertEquals(3, PathTools.getMolecularGraphDiameter(atomContainer));
+        atomContainer = sp.parseSmiles("C1C(N)CC1");
+        assertEquals(3, PathTools.getMolecularGraphDiameter(atomContainer));
+        atomContainer = sp.parseSmiles("c12ccccc1cccc2");
+        assertEquals(5, PathTools.getMolecularGraphDiameter(atomContainer));
+    }
+    
 }
 

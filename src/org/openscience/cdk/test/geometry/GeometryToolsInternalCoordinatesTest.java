@@ -31,11 +31,11 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -176,6 +176,19 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(p.y,0.5,.1);
     }
 
+    public void testGet2DCenterOfMass_IAtomContainer(){
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+    	ac.addAtom(atom1);
+    	ac.addAtom(atom2);
+    	Point2d p=GeometryToolsInternalCoordinates.get2DCentreOfMass(ac);
+    	assertEquals(p.x,1.0,.1);
+    	assertEquals(p.y,0.5,.1);
+    }
+
     public void testGet2DCenter_arrayIAtom(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
@@ -217,6 +230,101 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	assertEquals(p.x,1.0,.1);
     	assertEquals(p.y,0.5,.1);
     }
+
+    public void testHas2DCoordinates_IAtom() {
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(atom1));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,1));
+    	assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(atom1));
+    }
+
+    public void testHas2DCoordinates_IAtomContainer() {
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(container));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,1));
+    	atom2=new Atom("C");
+    	atom2.setPoint3d(new Point3d(1,0,5));
+    	container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(container));
+    }
+
+    public void testHas2DCoordinates_IBond() {
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IBond bond = new Bond(atom1, atom2);
+    	assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(bond));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,1));
+    	atom2=new Atom("C");
+    	atom2.setPoint3d(new Point3d(1,0,5));
+    	bond = new Bond(atom1, atom2);
+    	assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(bond));
+    }
+
+    public void testHas2DCoordinatesNew_IAtomContainer() {
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertEquals(2, GeometryToolsInternalCoordinates.has2DCoordinatesNew(container));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	atom2=new Atom("C");
+    	atom2.setPoint3d(new Point3d(1,0,1));
+    	container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertEquals(1, GeometryToolsInternalCoordinates.has2DCoordinatesNew(container));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,1));
+    	atom2=new Atom("C");
+    	atom2.setPoint3d(new Point3d(1,0,5));
+    	container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertEquals(0, GeometryToolsInternalCoordinates.has2DCoordinatesNew(container));
+    }
+
+    public void testHas3DCoordinates_IAtomContainer() {
+    	Atom atom1=new Atom("C");
+    	atom1.setPoint2d(new Point2d(1,1));
+    	Atom atom2=new Atom("C");
+    	atom2.setPoint2d(new Point2d(1,0));
+    	IAtomContainer container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(container));
+
+    	atom1=new Atom("C");
+    	atom1.setPoint3d(new Point3d(1,1,1));
+    	atom2=new Atom("C");
+    	atom2.setPoint3d(new Point3d(1,0,5));
+    	container = new AtomContainer();
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(container));
+    }
     
     public void testTranslateAllPositive_IAtomContainer_HashMap(){
     	Atom atom1=new Atom("C");
@@ -227,10 +335,10 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	GeometryToolsInternalCoordinates.translateAllPositive(ac);
-    	assertEquals(atom1.getPoint2d().x,0.0);
-    	assertEquals(atom1.getPoint2d().y,0.0);
-    	assertEquals(atom2.getPoint2d().x,2.0);
-    	assertEquals(atom2.getPoint2d().y,1.0);
+    	assertEquals(atom1.getPoint2d().x,0.0, 0.01);
+    	assertEquals(atom1.getPoint2d().y,0.0, 0.01);
+    	assertEquals(atom2.getPoint2d().x,2.0, 0.01);
+    	assertEquals(atom2.getPoint2d().y,1.0, 0.01);
     }
     
     

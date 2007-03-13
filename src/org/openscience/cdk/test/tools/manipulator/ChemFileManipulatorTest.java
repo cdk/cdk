@@ -21,8 +21,10 @@
 package org.openscience.cdk.test.tools.manipulator;
 
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -49,6 +51,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -122,6 +125,15 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         assertEquals(2, containersList.size());
     }
     
+    public void testGetAllIDs_IChemFile() {
+    	assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
+    	IDCreator.createIDs(chemFile);
+    	List allIDs = ChemFileManipulator.getAllIDs(chemFile);
+    	assertEquals(20, ChemFileManipulator.getAllIDs(chemFile).size());
+    	Set uniq = new HashSet(allIDs);
+    	assertEquals(13, uniq.size());
+    }
+    
     public void testGetAtomCount_IChemFile()
     {
     	int count = ChemFileManipulator.getAtomCount(chemFile);
@@ -143,7 +155,9 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     public void testGetAllChemObjects_IChemFile()
     {
     	List list = ChemFileManipulator.getAllChemObjects(chemFile);
-    	//assertEquals(0, list.size());
+    	assertEquals(8, list.size()); // not the file itself
+    	int atomCount = 0;
+    	int bondCount = 0;
     	int molCount = 0;
     	int molSetCount = 0;
     	int reactionCount = 0;
@@ -152,8 +166,8 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     	int chemSequenceCount = 0;
     	for (Iterator iter = list.iterator(); iter.hasNext();) {
     		Object o = iter.next();
-    		//if (o instanceof IAtom) ++atomCount;
-    		//if (o instanceof IBond) ++bondCount;
+    		if (o instanceof IAtom) ++atomCount;
+    		if (o instanceof IBond) ++bondCount;
     		if (o instanceof IMolecule) ++molCount;
     		else if (o instanceof IMoleculeSet) ++molSetCount;
     		else if (o instanceof IReaction) ++reactionCount;
@@ -162,8 +176,8 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     		else if (o instanceof IChemSequence) ++chemSequenceCount;
     		else fail("Unexpected Object of type " + o.getClass());
     	}
-    	//assertEquals(3, atomCount);
-    	//assertEquals(1, bondCount);
+    	assertEquals(0, atomCount); /// it does not recurse into IAtomContainer
+    	assertEquals(0, bondCount);
     	assertEquals(2, molCount);
     	assertEquals(1, molSetCount);
     	assertEquals(1, reactionCount);

@@ -50,7 +50,7 @@ public class IDCreatorTest extends CDKTestCase {
 		return new TestSuite(IDCreatorTest.class);
 	}
 
-	public void testCreateIDs_IAtomContainer() {
+	public void testCreateIDs_IChemObject() {
 		Molecule mol = new Molecule();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
