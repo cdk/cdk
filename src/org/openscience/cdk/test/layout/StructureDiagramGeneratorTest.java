@@ -25,6 +25,7 @@
 package org.openscience.cdk.test.layout;
 
 import java.io.InputStream;
+import java.util.List;
 
 import javax.vecmath.Vector2d;
 
@@ -47,6 +48,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -165,38 +167,18 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	/**
 	 * @cdk.bug 736137
 	 */
-	public Molecule makeBug736137() throws Exception
+	public void testBug736137() throws Exception
 	{
-		//String filename = "data/mdl/bug736137.mol";
-		String filename = "data/r.cml";
+		String filename = "data/mdl/bug736137.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		CMLReader reader = new CMLReader(ins);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IChemSequence chemSequence = chemFile.getChemSequence(0);
 		IChemModel chemModel = chemSequence.getChemModel(0);
-		IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-
-		return new Molecule(atomContainer);
+		List atomContainers = ChemModelManipulator.getAllAtomContainers(chemModel);
+		assertEquals(1, atomContainers.size());
 	}
 
-	/**
-	 * @cdk.bug 891021
-	 */
-	public Molecule makeBug891021() throws Exception
-	{
-		String filename = "data/mdl/bug891021.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		IChemSequence chemSequence = chemFile.getChemSequence(0);
-		IChemModel chemModel = chemSequence.getChemModel(0);
-		IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-
-		return new Molecule(atomContainer);
-	}	
-	
-	
-	
 	public void visualBugPMR() throws Exception
 	{
                 String filename = "data/SL0016a.cml";
