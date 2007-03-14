@@ -7,6 +7,7 @@ cdk-io.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
 cdk-extra.jar
+cdk-test.jar
 cdk-test-core.jar
 cdk-sdg.jar
 cdk-libio.jar
