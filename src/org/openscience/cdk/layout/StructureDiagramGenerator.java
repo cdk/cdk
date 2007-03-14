@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,7 +32,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -471,14 +466,18 @@ public class StructureDiagramGenerator
 		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
 		{
 			logger.debug("Testing if this ringset fits a template....");
-			IAtomContainer ac = AtomContainerSetManipulator.getAllInOneContainer(rs);
-			boolean templateMapped = getTemplateHandler().mapTemplateExact(new Molecule(ac));
-			logger.debug("Template mapped in layoutRingSet: ", templateMapped);
-			if (templateMapped)
-			{
-				logger.debug("Our job is done for this RingSet ");
-				return;
-			
+			List containers = AtomContainerSetManipulator.getAllAtomContainers(rs);
+			for (int counter=0; counter<containers.size(); counter++) {
+				IAtomContainer ac = (IAtomContainer)containers.get(counter);
+				boolean templateMapped = getTemplateHandler().mapTemplateExact(
+					ac.getBuilder().newMolecule(ac)
+				);
+				logger.debug("Template mapped in layoutRingSet: ", templateMapped);
+				if (templateMapped)
+				{
+					logger.debug("Our job is done for this RingSet ");
+					return; // FIXME: what about the rest??
+				}
 			}
 		}
 

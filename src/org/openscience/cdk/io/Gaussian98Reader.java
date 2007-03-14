@@ -25,20 +25,35 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import javax.vecmath.Point3d;
-import java.io.*;
-import java.util.StringTokenizer;
 
 /**
  * A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
@@ -454,7 +469,13 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @throws CDKException Description of the Exception
      */
     private void readNMRData(IChemModel model, String labelLine) throws CDKException {
-        IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
+    	List containers = ChemModelManipulator.getAllAtomContainers(model);
+    	if (containers.size() == 0) {
+    		// nothing to store the results into
+    		return;
+    	} // otherwise insert in the first AC
+    	
+        IAtomContainer ac = (IAtomContainer)containers.get(0);
         // Determine label for properties
         String label;
         if (labelLine.indexOf("Diamagnetic") >= 0) {

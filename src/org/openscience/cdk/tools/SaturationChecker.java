@@ -541,21 +541,23 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 		for (int f = 0; f < ringSets.size(); f++)
 		{
 			rs = (IRingSet)ringSets.get(f);
-			ac = RingSetManipulator.getAllInOneContainer(rs);
-			temp = new int[ac.getAtomCount()];
-			for (int g = 0; g < ac.getAtomCount(); g++)
-			{
-				atom = ac.getAtom(g);
-				temp[g] = atom.getHydrogenCount();
-				atom.setHydrogenCount(atomContainer.getConnectedBondsCount(atom) - ac.getConnectedBondsCount(atom) - temp[g]);
+			List containers = RingSetManipulator.getAllAtomContainers(rs);
+			for (int counter=0; counter<containers.size(); counter++) {
+				ac = (IAtomContainer)containers.get(counter);
+				temp = new int[ac.getAtomCount()];
+				for (int g = 0; g < ac.getAtomCount(); g++)
+				{
+					atom = ac.getAtom(g);
+					temp[g] = atom.getHydrogenCount();
+					atom.setHydrogenCount(atomContainer.getConnectedBondsCount(atom) - ac.getConnectedBondsCount(atom) - temp[g]);
+				}
+				saturate(ac);
+				for (int g = 0; g < ac.getAtomCount(); g++)
+				{
+					atom = ac.getAtom(g);
+					atom.setHydrogenCount(temp[g]);
+				}
 			}
-			saturate(ac);
-			for (int g = 0; g < ac.getAtomCount(); g++)
-			{
-				atom = ac.getAtom(g);
-				atom.setHydrogenCount(temp[g]);
-			}
-			
 		}
 	}
 	
