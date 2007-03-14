@@ -15,7 +15,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDR;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topol;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -23,13 +23,13 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-qsar
  */
-public class RDFProtonDescriptorTest_GDR extends CDKTestCase {
+public class RDFProtonDescriptor_GHR_topolTest extends CDKTestCase {
 
-	public RDFProtonDescriptorTest_GDR() {
+	public RDFProtonDescriptor_GHR_topolTest() {
     }
 
 	public static Test suite() {
-		return new TestSuite(RDFProtonDescriptorTest_GDR.class);
+		return new TestSuite(RDFProtonDescriptor_GHR_topolTest.class);
 	}
     
 	public void testExample1() throws Exception {
@@ -47,7 +47,7 @@ public class RDFProtonDescriptorTest_GDR extends CDKTestCase {
 			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
 			if(mol.getAtom(i).getSymbol().equals("H")){
 				//secondly perform calculation on it.
-				RDFProtonDescriptor_GDR descriptor = new RDFProtonDescriptor_GDR();
+				RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
 				System.out.println("array: " + result.toString());

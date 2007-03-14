@@ -17,6 +17,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -58,6 +59,10 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	private IRingSet varRingSet = null;
 
 	private AtomContainerSet varAtomContainerSet = null;
+	
+    private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_GDR.class);
+
+	private static String[] descriptorNames;
 
 	/**
 	 * Constructor for the RDFProtonDescriptor object
@@ -506,18 +511,17 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 				}
 				// g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
-				System.out.println("RDF g3r prob.: "+sum+ " at distance "+g3r);
-//				logger.debug("RDF g-cycl prob.: " + sum + " at distance "
-//						+ g3r);
+				logger.debug("RDF g3r prob.: "+sum+ " at distance "+g3r);
 			}
-			// atom.setProperty("gasteigerG3R", new ArrayList(g3r_function));
-			// rdfProtonCalculatedValues.add(1);
-		} else {
-			for (int i = 0; i < g3r_desc_length; i++)
-				rdfProtonCalculatedValues.add(Double.NaN);
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(),
-				getParameters(), rdfProtonCalculatedValues);
+		else {
+			for (int i=0; i<g3r_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+		}
+		return new DescriptorValue(
+			getSpecification(), getParameterNames(), 
+			getParameters(), rdfProtonCalculatedValues,
+			descriptorNames
+		);
 	}
 
 	// Others definitions

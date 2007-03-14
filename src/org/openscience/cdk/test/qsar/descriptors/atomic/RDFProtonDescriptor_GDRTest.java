@@ -15,26 +15,23 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDR;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR;
 
 /**
  * @cdk.module test-qsar
  */
-public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
+public class RDFProtonDescriptor_GDRTest extends CDKTestCase {
 
-	public RDFProtonDescriptorTest_GHR() {
+	public RDFProtonDescriptor_GDRTest() {
     }
 
 	public static Test suite() {
-		return new TestSuite(RDFProtonDescriptorTest_GHR.class);
+		return new TestSuite(RDFProtonDescriptor_GDRTest.class);
 	}
     
-	/**
-	 *  @cdk.bug 1632419
-	 */
 	public void testExample1() throws Exception {
 		//firstly read file to molecule		
 		String filename = "data/mdl/hydroxyamino.mol";
@@ -46,12 +43,11 @@ public class RDFProtonDescriptorTest_GHR extends CDKTestCase {
 		IMoleculeSet som = model.getMoleculeSet();
 		IMolecule mol = som.getMolecule(0);
 
-		RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
 		for (int i=0; i < mol.getAtomCount(); i++) {
 			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
-			System.out.println("  charge: " + mol.getAtom(i).getCharge());
 			if(mol.getAtom(i).getSymbol().equals("H")){
 				//secondly perform calculation on it.
+				RDFProtonDescriptor_GDR descriptor = new RDFProtonDescriptor_GDR();
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
 				System.out.println("array: " + result.toString());

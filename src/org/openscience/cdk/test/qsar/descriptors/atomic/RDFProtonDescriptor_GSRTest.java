@@ -15,7 +15,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_G3R;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSR;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -23,13 +23,13 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-qsar
  */
-public class RDFProtonDescriptorTest_G3R extends CDKTestCase {
+public class RDFProtonDescriptor_GSRTest extends CDKTestCase {
 
-	public RDFProtonDescriptorTest_G3R() {
+	public RDFProtonDescriptor_GSRTest() {
     }
 
 	public static Test suite() {
-		return new TestSuite(RDFProtonDescriptorTest_G3R.class);
+		return new TestSuite(RDFProtonDescriptor_GSRTest.class);
 	}
     
 	public void testExample1() throws Exception {
@@ -47,7 +47,7 @@ public class RDFProtonDescriptorTest_G3R extends CDKTestCase {
 			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
 			if(mol.getAtom(i).getSymbol().equals("H")){
 				//secondly perform calculation on it.
-				RDFProtonDescriptor_G3R descriptor = new RDFProtonDescriptor_G3R();
+				RDFProtonDescriptor_GSR descriptor = new RDFProtonDescriptor_GSR();
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
 				System.out.println("array: " + result.toString());

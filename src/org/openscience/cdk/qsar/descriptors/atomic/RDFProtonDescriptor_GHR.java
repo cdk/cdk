@@ -1,5 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
@@ -17,12 +18,16 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingTool;
+
+
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * This class calculates GHR proton descriptors used in neural networks for H1 NMR shift.
@@ -48,8 +53,6 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug xxxxxx
  */
-
-
 public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
 
     private boolean checkAromaticity = false;
@@ -57,10 +60,18 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
     private IRingSet varRingSet = null;
     private AtomContainerSet varAtomContainerSet = null;
 
+    private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_GHR.class);
+
+	private static String[] descriptorNames;
+    
     /**
      * Constructor for the RDFProtonDescriptor object
      */
     public RDFProtonDescriptor_GHR() {
+    	descriptorNames = new String[15];
+    	for (int i=0;i<15;i++) {
+    		descriptorNames[i] = "RDF_GHR_" + i; 
+    	}
     }
 
     /**
@@ -339,13 +350,18 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
 					sum += partial;
 				}
 				rdfProtonCalculatedValues.add(sum);
-				System.out.println("RDF gr distance prob.: "+sum+ " at distance "+ghr);
+				
+				logger.debug("RDF gr distance prob.: "+sum+ " at distance "+ghr);
 			}
 		}
 		else {
 			for (int i=0; i<ghr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues);
+		return new DescriptorValue(
+			getSpecification(), getParameterNames(), 
+			getParameters(), rdfProtonCalculatedValues,
+			descriptorNames
+		);
 	}
 
 //Others definitions
