@@ -103,7 +103,7 @@ public class MoleculeSetManipulator {
 	
     public static List getAllIDs(IMoleculeSet set) {
     	List list = new ArrayList();
-    	if (set.getID() != null) list.add(set.getID());
+    	// the ID is set in AtomContainerSetManipulator.getAllIDs()
     	list.addAll(AtomContainerSetManipulator.getAllIDs(set));
 		return list;
 	}
