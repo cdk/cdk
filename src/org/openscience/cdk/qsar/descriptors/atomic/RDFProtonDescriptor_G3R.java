@@ -60,7 +60,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 
 	private AtomContainerSet varAtomContainerSet = null;
 	
-    private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_GDR.class);
+    private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_G3R.class);
 
 	private static String[] descriptorNames;
 
