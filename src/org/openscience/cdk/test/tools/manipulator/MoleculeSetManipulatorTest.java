@@ -151,7 +151,6 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 		atomInMol2.setID("atom");
 		bondInMol1.setID("bond");
 		List list = MoleculeSetManipulator.getAllIDs(som);
-		System.out.println("" + list);
 		assertEquals(4, list.size());
 	}
 	

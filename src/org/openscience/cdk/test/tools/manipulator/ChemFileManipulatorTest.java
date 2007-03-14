@@ -129,7 +129,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     	assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
     	IDCreator.createIDs(chemFile);
     	List allIDs = ChemFileManipulator.getAllIDs(chemFile);
-    	assertEquals(19, ChemFileManipulator.getAllIDs(chemFile).size());
+    	assertEquals(20, ChemFileManipulator.getAllIDs(chemFile).size());
     	Set uniq = new HashSet(allIDs);
     	assertEquals(13, uniq.size());
     }
