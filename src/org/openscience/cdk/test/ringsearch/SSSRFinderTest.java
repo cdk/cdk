@@ -128,20 +128,18 @@ public class SSSRFinderTest extends CDKTestCase {
 
 	public void testLoopProblem() throws Exception
 	{
-		IMolecule molecule = null;
-		IRing ring = null;
 		String filename = "data/mdl/ring_03419.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLReader reader = new MDLReader(ins);
-		molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+		IMolecule molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
 		logger.debug("Testing " + filename);
 
 		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(3, ringSet.getAtomContainerCount());
+		assertEquals(12, ringSet.getAtomContainerCount());
 		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
-			ring = (IRing) ringSet.getAtomContainer(f);
+			IRing ring = (IRing) ringSet.getAtomContainer(f);
 			logger.debug("ring: " + toString(ring, molecule));
 		}
 	}

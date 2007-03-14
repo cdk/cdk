@@ -20,9 +20,13 @@
  */
 package org.openscience.cdk.test.ringsearch.cyclebasis;
 
+import java.util.ArrayList;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org._3pq.jgrapht.graph.SimpleGraph;
+import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -36,6 +40,13 @@ public class SimpleCycleTest extends CDKTestCase {
     
 	public static Test suite() {
 		return new TestSuite(SimpleCycleTest.class);
+	}
+	
+	public void testSimpleCycle() {
+		SimpleCycle cycle = new SimpleCycle(
+			new SimpleGraph(), new ArrayList()
+		);
+		assertNotNull(cycle);
 	}
 
 }

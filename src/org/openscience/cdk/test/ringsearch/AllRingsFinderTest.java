@@ -131,9 +131,10 @@ public class AllRingsFinderTest extends CDKTestCase
 		}
 	}
 	
-	public void testCheckTimeout()
-	{
-		fail("Not implemented.");		
+	public void testCheckTimeout() throws Exception {
+		AllRingsFinder arf = new AllRingsFinder();
+		arf.setTimeout(3);
+		arf.checkTimeout();
 	}
 	
 	public void testGetTimeout()
