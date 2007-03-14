@@ -33,13 +33,15 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.GhemicalMMFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -94,6 +96,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
+			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -101,6 +104,11 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemModel) {
             return (IChemObject) readChemModel((IChemModel)object);
+        } else if (object instanceof IChemFile) {
+        	IChemSequence sequence = object.getBuilder().newChemSequence();
+        	sequence.addChemModel((IChemModel)this.read(object.getBuilder().newChemModel()));
+        	((IChemFile)object).addChemSequence(sequence);
+        	return object;
         } else {
             throw new CDKException("Only supported is ChemModel.");
         }
