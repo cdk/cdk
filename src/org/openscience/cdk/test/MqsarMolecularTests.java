@@ -68,6 +68,10 @@ import org.openscience.cdk.test.qsar.descriptors.molecular.WeightedPathDescripto
 import org.openscience.cdk.test.qsar.descriptors.molecular.WienerNumbersDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.XLogPDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest;
+import org.openscience.cdk.test.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest;
+
 
 /**
  * TestSuite that runs all the sample tests.
@@ -126,6 +130,9 @@ public class MqsarMolecularTests {
         suite.addTest(WienerNumbersDescriptorTest.suite());
         suite.addTest(XLogPDescriptorTest.suite());
         suite.addTest(ZagrebIndexDescriptorTest.suite());
+        suite.addTest(AutocorrelationDescriptorChargeTest.suite());
+        suite.addTest(AutocorrelationDescriptorMassTest.suite());
+        suite.addTest(AutocorrelationDescriptorPolarizabilityTest.suite());
 
         return suite;
     }

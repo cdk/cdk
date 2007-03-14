@@ -47,11 +47,11 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescri
 import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_G3R;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GDR;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GHR;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GHR_topol;
-import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptorTest_GSR;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_G3RTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GDRTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GHRTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest;
+import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
@@ -91,11 +91,11 @@ public class MqsarAtomicTests {
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
         suite.addTest(PiElectronegativityDescriptorTest.suite());
         suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
-        suite.addTest(RDFProtonDescriptorTest_G3R.suite());
-        suite.addTest(RDFProtonDescriptorTest_GDR.suite());
-        suite.addTest(RDFProtonDescriptorTest_GHR.suite());
-        suite.addTest(RDFProtonDescriptorTest_GHR_topol.suite());
-        suite.addTest(RDFProtonDescriptorTest_GSR.suite());
+        suite.addTest(RDFProtonDescriptor_G3RTest.suite());
+        suite.addTest(RDFProtonDescriptor_GDRTest.suite());
+        suite.addTest(RDFProtonDescriptor_GHRTest.suite());
+        suite.addTest(RDFProtonDescriptor_GHR_topolTest.suite());
+        suite.addTest(RDFProtonDescriptor_GSRTest.suite());
         suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(VdWRadiusDescriptorTest.suite());
         
