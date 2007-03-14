@@ -195,10 +195,14 @@ public class GeometryToolsInternalCoordinates {
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			atom = atomCon.getAtom(i);
 			p = atom.getPoint2d();
-			offsetAngle = GeometryToolsInternalCoordinates.getAngle(p.x - center.x, p.y - center.y);
 			distance = p.distance(center);
-			p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
-			p.y = center.y - (Math.cos(angle + offsetAngle) * distance);
+			if (distance < 0.000000001) {
+				// do not rotate atoms which are located in the center of rotation
+			} else {
+				offsetAngle = GeometryToolsInternalCoordinates.getAngle(p.x - center.x, p.y - center.y);
+				p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
+				p.y = center.y - (Math.cos(angle + offsetAngle) * distance);
+			}
 		}
 	}
 
