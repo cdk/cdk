@@ -369,6 +369,7 @@ public class AllRingsFinder
 	 */
 	public void checkTimeout() throws CDKException
 	{
+		if (startTime == 0) return;
 		long time = System.currentTimeMillis();
 		if (time - startTime > timeout)
 		{
