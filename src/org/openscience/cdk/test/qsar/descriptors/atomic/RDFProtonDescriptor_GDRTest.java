@@ -51,7 +51,7 @@ public class RDFProtonDescriptor_GDRTest extends CDKTestCase {
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
 				System.out.println("array: " + result.toString());
-				assertNotSame(result, 0.0);
+				assertNotNull(result);
 			}		
 
 		}
