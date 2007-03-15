@@ -31,6 +31,7 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -41,9 +42,11 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -236,30 +239,42 @@ public class HydrogenRearrangementGammaReaction implements IReactionProcess{
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
+		IRingSet ringSet = null;
+		AllRingsFinder arf = new AllRingsFinder();
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			IAtom  atomi = reactant.getAtom(i);
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 				HueckelAromaticityDetector.detectAromaticity(reactant);
 				hcg.getSpheres((Molecule) reactant, atomi, 4, true);
+				/* no rearrangement if H belongs to ring*/
+				ringSet = arf.findAllRings((Molecule) reactant);
+				for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
+					Ring ring = (Ring)ringSet.getAtomContainer(ir);
+					for (int jr = 0; jr < ring.getAtomCount(); jr++) {
+						IAtom aring = ring.getAtom(jr);
+						aring.setFlag(CDKConstants.ISINRING, true);
+					}
+				}
 				List atoms = hcg.getNodesInSphere(4);
 				for(int j = 0 ; j < atoms.size() ; j++){
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
-					if(atom4.getFormalCharge() == 0 && !atom4.equals("H") && 
-							reactant.getMaximumBondOrder(atom4) == 1){
-						
-						if(atomi.getSymbol().equals("C") && reactant.getMaximumBondOrder(atom4) != 1)
-							continue;
-						
-						Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
-						while(iterat.hasNext()){
-							IAtom hydrogen = (IAtom) iterat.next();
-							if(hydrogen.getSymbol().equals("H")){
-								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								atom4.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								hydrogen.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								break; /*is only necessary one hydrogen */
-							}
+						if(!atom4.getFlag(CDKConstants.ISINRING))
+							if(atom4.getFormalCharge() == 0 && !atom4.equals("H") && 
+								reactant.getMaximumBondOrder(atom4) == 1){
+							
+							if(atomi.getSymbol().equals("C") && reactant.getMaximumBondOrder(atom4) != 1)
+								continue;
+							
+							Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
+							while(iterat.hasNext()){
+								IAtom hydrogen = (IAtom) iterat.next();
+								if(hydrogen.getSymbol().equals("H")){
+									atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									atom4.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									hydrogen.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									break; /*is only necessary one hydrogen */
+								}
 						}
 					}
 				}
