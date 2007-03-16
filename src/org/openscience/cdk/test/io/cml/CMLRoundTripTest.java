@@ -51,6 +51,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.libio.cml.Convertor;
+import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -76,6 +77,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         super(name);
         logger = new LoggingTool(this);
         convertor = new Convertor(false, "");
+        convertor.registerCustomizer(new QSARCustomizer());
     }
 
     public static Test suite() {

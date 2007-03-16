@@ -45,6 +45,8 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.libio.cml.PDBAtomCustomizer;
+import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -155,6 +157,7 @@ public class CML2WriterTest extends CDKTestCase {
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new QSARCustomizer());
         DescriptorValue value = descriptor.calculate(molecule);
         molecule.setProperty(value.getSpecification(), value);
 
@@ -204,6 +207,7 @@ public class CML2WriterTest extends CDKTestCase {
         molecule.addAtom(atom);
         
         CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new PDBAtomCustomizer());
         cmlWriter.write(molecule);
         String cmlContent = writer.toString();
         logger.debug("****************************** testPDBAtomCustomization()");
