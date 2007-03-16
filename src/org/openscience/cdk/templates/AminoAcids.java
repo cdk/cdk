@@ -20,6 +20,11 @@
  */
 package org.openscience.cdk.templates;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
@@ -30,11 +35,6 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Tool that provides templates for the (natural) amino acids.
@@ -139,6 +139,7 @@ public class AminoAcids {
         				// logger.debug("DictRef type: " + dictRef.getType());
         				if (dictRef.getType().equals("pdb:residueName")) {
         					aminoAcid.setProperty(RESIDUE_NAME, ac.getProperty(dictRef).toString().toUpperCase());
+        					aminoAcid.setMonomerName(ac.getProperty(dictRef).toString());
         				} else if (dictRef.getType().equals("pdb:oneLetterCode")) {
         					aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
         				} else if (dictRef.getType().equals("pdb:id")) {

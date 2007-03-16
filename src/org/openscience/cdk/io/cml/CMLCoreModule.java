@@ -534,7 +534,7 @@ public class CMLCoreModule implements ICMLModule {
                 	currentMolecule.setID(atts.getValue(i));
                 } else if (atts.getQName(i).equals("dictRef")) {
 //                	cdo.setObjectProperty("Molecule", "dictRef", atts.getValue(i));
-//                	FIXME: there is no code for this in CHemFileCDK: a bug?
+                	currentMolecule.setProperty(new DictRef(DICTREF, atts.getValue(i)), atts.getValue(i));
                 }
             }
         } else if ("crystal".equals(name)) {
@@ -903,9 +903,7 @@ public class CMLCoreModule implements ICMLModule {
 //                	cdo.setObjectProperty("Molecule", DICTREF, cData);
                 	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else if (DICTREF.equals("cdk:molecularProperty")) {
-                	// FIXME: this should go into the CDKConvention thingy, I think
-//                	cdo.setObjectProperty("MolecularProperty", elementTitle, cData);
-                	currentMolecule.setProperty(elementTitle, cData);
+                	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);
@@ -988,8 +986,8 @@ public class CMLCoreModule implements ICMLModule {
             if (xpath.endsWith("molecule", "name")) {
             	if (DICTREF.length() > 0) {
 //            		cdo.setObjectProperty("Molecule", DICTREF, cData);
-            		// FIXME: no idea what to do here
-            		logger.error("No idea what to do ...");
+            		
+            		currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
             	} else {
 //            		cdo.setObjectProperty("Molecule", "Name", cData);
             		currentMolecule.setProperty(CDKConstants.TITLE, cData);
