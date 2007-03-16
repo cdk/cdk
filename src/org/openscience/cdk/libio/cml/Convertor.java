@@ -28,11 +28,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OptionalDataException;
-import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
@@ -94,7 +93,7 @@ public class Convertor {
     private LoggingTool logger;
 
     private final static String CUSTOMIZERS_LIST = "libio-cml-customizers.set";
-    private static List customizers = null;
+    private static Map customizers = null;
 
     private boolean useCMLIDs;
     private String prefix;
@@ -113,14 +112,18 @@ public class Convertor {
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
-    	if (customizers == null) customizers = new ArrayList();
+    	if (customizers == null) customizers = new HashMap();
     	
-    	customizers.add(customizer);
-    	logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    	if (!customizers.containsKey(customizer.getClass().getName())) {
+    		customizers.put(customizer.getClass().getName(), customizer);
+    		logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    	} else {
+    		logger.warn("Duplicate attempt to register a customizer");
+    	}
     }
     
     private void setupCustomizers() {
-        if (customizers == null) customizers = new ArrayList();
+        if (customizers == null) customizers = new HashMap();
         
         try {
         	logger.debug("Starting loading Customizers...");
@@ -132,19 +135,23 @@ public class Convertor {
         		// load them one by one
         		String customizerName = reader.readLine();
         		customizerCount++;
-        		try {
-        			ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader().
-        			loadClass(customizerName).newInstance();
-        			customizers.add(customizer);
-        			logger.info("Loaded Customizer: ", customizer.getClass().getName());
-        		} catch (ClassNotFoundException exception) {
-        			logger.info("Could not find this Customizer: ", customizerName);
-        			logger.debug(exception);
-        		} catch (Exception exception) {
-        			logger.warn("Could not load this Customizer: ", customizerName);
-        			logger.warn(exception.getMessage());
-        			logger.debug(exception);
-        		}
+    			if (customizers.containsKey(customizerName)) {
+    				try {
+    					ICMLCustomizer customizer = (ICMLCustomizer) this.getClass().getClassLoader().
+    					loadClass(customizerName).newInstance();
+    					customizers.put(customizer.getClass().getName(), customizer);
+    					logger.info("Loaded Customizer: ", customizer.getClass().getName());
+    				} catch (ClassNotFoundException exception) {
+    					logger.info("Could not find this Customizer: ", customizerName);
+    					logger.debug(exception);
+    				} catch (Exception exception) {
+    					logger.warn("Could not load this Customizer: ", customizerName);
+    					logger.warn(exception.getMessage());
+    					logger.debug(exception);
+    				}
+    			} else {
+    				logger.warn("Duplicate attempt to register a customizer");
+    			}
         	}
         	logger.info("Number of loaded customizers: ", customizerCount);
         } catch (Exception exception) {
@@ -442,9 +449,9 @@ public class Convertor {
         	}
         }
 
-        Iterator elements = customizers.iterator();
+        Iterator elements = customizers.keySet().iterator();
         while (elements.hasNext()) {
-            ICMLCustomizer customizer = (ICMLCustomizer) elements.next();
+            ICMLCustomizer customizer = (ICMLCustomizer)customizers.get(elements.next());
             try {
                 customizer.customize(structure, cmlMolecule);
             } catch (Exception exception) {
@@ -538,9 +545,9 @@ public class Convertor {
         }
         writeProperties(cdkAtom, cmlAtom);
 
-        Iterator elements = customizers.iterator();
+        Iterator elements = customizers.keySet().iterator();
         while (elements.hasNext()) {
-            ICMLCustomizer customizer = (ICMLCustomizer) elements.next();
+            ICMLCustomizer customizer = (ICMLCustomizer)customizers.get(elements.next());
             try {
                 customizer.customize(cdkAtom, cmlAtom);
             } catch (Exception exception) {
