@@ -3,6 +3,7 @@ cdk-core.jar
 cdk-data.jar
 cdk-nonotify.jar
 cdk-standard.jar
+cdk-valencycheck.jar
 cdk-structgen.jar
 cdk-smiles.jar
 cdk-extra.jar
