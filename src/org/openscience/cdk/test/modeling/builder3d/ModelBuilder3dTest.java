@@ -1,7 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -23,9 +20,7 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,12 +38,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
@@ -57,7 +48,6 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  *  Description of the Class
@@ -323,27 +313,20 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		for (int i = 0; i < smiles.length; i++) {
 			atomContainer[i] = sp.parseSmiles(smiles[i]);
 
-			inputList.add(CMLChemFileWrapper.wrapAtomContainerInChemModel(atomContainer[i]));
+			inputList.add(atomContainer[i]);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////
 		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
 
 		StructureDiagramGenerator str;
-		CMLChemFile resultFile = null;
 		List resultList = new ArrayList();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			CMLChemFile file = (CMLChemFile) iter.next();
-			List moleculeList = ChemFileManipulator.getAllAtomContainers(file);
-			IAtomContainer molecules;
-			for (Iterator iterator = moleculeList.iterator(); iterator.hasNext();){
-				molecules = (IAtomContainer)iterator.next();
-				str = new StructureDiagramGenerator();
-				str.setMolecule((IMolecule)molecules);
-				str.generateCoordinates();
-				resultFile = CMLChemFileWrapper.wrapAtomContainerInChemModel(str.getMolecule());
-				resultList.add(resultFile);
-			}
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			str = new StructureDiagramGenerator();
+			str.setMolecule((IMolecule)molecules);
+			str.generateCoordinates();
+			resultList.add(str.getMolecule());
 		}
 		inputList = resultList;
 
@@ -351,15 +334,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		// Delete x and y coordinats
 
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IChemFile element = (IChemFile) iter.next();
-			List MoleculeList = ChemFileManipulator.getAllAtomContainers(element);
-			IAtomContainer molecules;
-			for (Iterator iterator = MoleculeList.iterator(); iterator.hasNext();){
-				molecules = (IAtomContainer)iterator.next();
-				for (Iterator atom = molecules.atoms(); atom.hasNext();){
-					Atom last = (Atom) atom.next();
-					last.setPoint2d(null);
-				}
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+				Atom last = (Atom) atom.next();
+				last.setPoint2d(null);
 			}
 		}
 
@@ -368,63 +346,16 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			CMLChemFile file = (CMLChemFile) iter.next();
-			List moleculeList = ChemFileManipulator.getAllAtomContainers(file);
-			IAtomContainer molecules;
-			for (Iterator iterator = moleculeList.iterator(); iterator.hasNext();){
-				molecules = (IAtomContainer)iterator.next();
-				IMolecule mol = file.getBuilder().newMolecule(molecules);
-				/*for(int i=0;i<mol.getAtomCount();i++){
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			IMolecule mol = molecules.getBuilder().newMolecule(molecules);
+			/*for(int i=0;i<mol.getAtomCount();i++){
 			      mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
 				  mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
 				} */
-				mol = mb3d.generate3DCoordinates(mol, false);
-				System.out.println("Calculation done");
-			}
+			mol = mb3d.generate3DCoordinates(mol, false);
+			System.out.println("Calculation done");
 		}
 		assertEquals(false, notCalculatedResults);
 	}
 
-}
-
-class CMLChemFile extends ChemFile {
-
-	/**
-	 * Constructs an empty ChemFile.
-	 */
-	public CMLChemFile() {
-		super();
-	}
-	
-	/**
-	 * Constructs a ChemFile from a CML String.
-	 * 
-	 * @param CMLString to deserialize the ChemFile from.
-	 * @throws Exception
-	 */
-	public CMLChemFile(String CMLString) throws Exception {
-		CMLReader reader = new CMLReader(
-			new ByteArrayInputStream(CMLString.getBytes())
-		);
-		reader.read(this);
-	}
-	
-	/**
-	 * Serializes this ChemFile into a CML String.
-	 * 
-	 * @return The CML String serialization.
-	 * @throws Exception
-	 */
-	public String toCML() throws Exception {
-		IDCreator.createIDs(this);
-		
-		StringWriter stringWriter = new StringWriter();
-		IChemObjectWriter writer = new CMLWriter(stringWriter);
-		writer.write(this);
-		
-		return stringWriter.toString();
-	}
-	
-	private static final long serialVersionUID = -5664142472726700883L;
-	
 }
