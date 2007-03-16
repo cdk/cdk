@@ -50,8 +50,14 @@ public class AminoAcidsTest extends CDKTestCase {
         AminoAcid[] aas = AminoAcids.createAAs();
         assertNotNull(aas);
         assertEquals(20, aas.length);
-        assertNotNull(aas[0]);
-        assertNotNull(aas[19]);
+        for (int i=0; i<20; i++) {
+        	assertNotNull(aas[i]);
+        	assertFalse(0 == aas[i].getAtomCount());
+        	assertFalse(0 == aas[i].getBondCount());
+        	assertNotNull(aas[i].getMonomerName());
+        	assertNotNull(aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT));
+        	assertNotNull(aas[i].getProperty(AminoAcids.RESIDUE_NAME));
+        }
     }
 
     public void testGetHashMapBySingleCharCode() {
