@@ -154,9 +154,9 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
         logger.debug(serializedMol);
         logger.debug("******************************");
-        System.out.println("****************************** testMDMoleculeCustomization Write first");
-        System.out.println(serializedMol);
-        System.out.println("******************************");
+        logger.debug("****************************** testMDMoleculeCustomization Write first");
+        logger.debug(serializedMol);
+        logger.debug("******************************");
 
         CMLReader reader = new CMLReader(new ByteArrayInputStream(serializedMol.getBytes()));
         reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
@@ -202,9 +202,9 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("****************************** testMDMoleculeCustomizationRoundtripping()");
         logger.debug(serializedMol);
         logger.debug("******************************");
-        System.out.println("****************************** testMDMoleculeCustomization Write second");
-        System.out.println(serializedMol);
-        System.out.println("******************************");
+        logger.debug("****************************** testMDMoleculeCustomization Write second");
+        logger.debug(serializedMDMol);
+        logger.debug("******************************");
 
         assertEquals(serializedMol, serializedMDMol);
         
