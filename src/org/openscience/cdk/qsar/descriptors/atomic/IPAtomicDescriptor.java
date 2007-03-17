@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,14 +44,13 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
-import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
- *  This class returns the ionization potential of an atom. It is
+ *  This class returns the ionization potential of an atom containg lone 
+ *  pair electrons. It is
  *  based on a decision tree which is extracted from Weka(J48) from 
- *  experimental values. Up to now is
- *  only possible predict for Cl,Br,I,N,P,O,S Atoms and they are not belong to
+ *  experimental values. Up to now is only possible predict for 
+ *  Cl,Br,I,N,P,O,S Atoms and they are not belong to
  *  conjugated system or not adjacent to an double bond.
  *
  * <p>This descriptor uses these parameters:
@@ -78,7 +76,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  */
 public class IPAtomicDescriptor implements IAtomicDescriptor {
 	
-	/** parameter for inizate IReactionSet*/
+	/** parameter for inizate IReactionSet object*/
 	private boolean setEnergy = false;
 
 	private IReactionSet reactionSet;
@@ -126,60 +124,52 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 */
 	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException{
 		reactionSet = container.getBuilder().newReactionSet();
-    	double resultD = -1.0;
+    	
+		double resultD = -1.0;
 		boolean isTarget = false;
 		Double[][] resultsH = null;
 
-//		if(atom.getSymbol().equals("F")||
-//					atom.getSymbol().equals("Cl")||
-//					atom.getSymbol().equals("Br")||
-//					atom.getSymbol().equals("I")||
-//					atom.getSymbol().equals("N")||
-//					atom.getSymbol().equals("S")||
-//					atom.getSymbol().equals("O")||
-//					atom.getSymbol().equals("P")){
-			
-			/*control if it is into an aromatic or conjugated system*/
-			HueckelAromaticityDetector.detectAromaticity(container,true);
-			AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
-			Iterator acI = conjugatedPi.atomContainers();
-     		while(acI.hasNext()){
-    			IAtomContainer ac = (IAtomContainer) acI.next();
-    			if(ac.contains(atom)){
-    				return null;
-    			}
-     		}
-     		
-			if(container.getMaximumBondOrder(atom) > 1 && container.getConnectedLonePairsCount(atom) > 0){
-				resultsH = calculateCarbonylDescriptor(atom, container);
-				resultD = getTreeDoubleHetero(resultsH);
-				resultD += 0.05;
-    			isTarget = true;
-			}else{
-				resultsH = calculateHeteroAtomDescriptor(atom, container);
-				resultD = getTreeHeteroAtom(resultsH);
-				resultD += 0.05;
-    			isTarget = true;
+		/*control if it is into an aromatic or conjugated system*/
+		HueckelAromaticityDetector.detectAromaticity(container,true);
+		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
+		Iterator acI = conjugatedPi.atomContainers();
+ 		while(acI.hasNext()){
+			IAtomContainer ac = (IAtomContainer) acI.next();
+			if(ac.contains(atom)){
+				return null;
 			}
-//		}
+ 		}
+ 		
+		if(container.getMaximumBondOrder(atom) > 1 && container.getConnectedLonePairsCount(atom) > 0){
+			resultsH = calculateCarbonylDescriptor(atom, container);
+			resultD = getTreeDoubleHetero(resultsH);
+			resultD += 0.05;
+			isTarget = true;
+		}else if(container.getConnectedLonePairsCount(atom) > 0){
+			resultsH = calculateHeteroAtomDescriptor(atom, container);
+			resultD = getTreeHeteroAtom(resultsH);
+			resultD += 0.05;
+			isTarget = true;
+		}
+			
+			
 		if(isTarget){
-			/* extract reaction*/
-			if(setEnergy){
-				if(container.getConnectedLonePairsCount(atom) > 0){
-					IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
-					setOfReactants.addMolecule((IMolecule) container);
-					IReactionProcess type  = new ElectronImpactNBEReaction();
-					atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-			        Object[] params = {Boolean.TRUE};
-			        type.setParameters(params);
-			        IReactionSet nbe = type.initiate(setOfReactants, null);
-			        Iterator it = nbe.reactions();
-			        while(it.hasNext()){
-			        	IReaction reaction = (IReaction)it.next();
-			        	reaction.setProperty("IonizationEnergy", new Double(resultD));
-			        	reactionSet.addReaction(reaction);
-			        }
-				}
+			/* inizate reaction*/
+			if(container.getConnectedLonePairsCount(atom) > 0){
+				
+				IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
+				setOfReactants.addMolecule((IMolecule) container);
+				IReactionProcess type  = new ElectronImpactNBEReaction();
+				atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
+		        Object[] params = {Boolean.TRUE};
+		        type.setParameters(params);
+		        IReactionSet nbe = type.initiate(setOfReactants, null);
+		        Iterator it = nbe.reactions();
+		        while(it.hasNext()){
+		        	IReaction reaction = (IReaction)it.next();
+		        	reaction.setProperty("IonizationEnergy", new Double(resultD));
+		        	reactionSet.addReaction(reaction);
+		        }
 			}
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD));
@@ -198,87 +188,145 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double SE_x = (resultsH[0][3]).doubleValue();
 		double PCH_x = (resultsH[0][4]).doubleValue();
 		double RES_c = (resultsH[0][5]).doubleValue();
-		if (PCH_c <= 0.04019)
+		
+		if (PCH_c <= 0.045111)
 		{
-		  if (PCH_c <= 0.027211)
+		  if (PCH_x <= -0.041368)
 		  {
-		    if (PCH_c <= 0)
+		    if (SE_c <= 7.471265)
 		    {
-		      if (SE_c <= 10.156837) { result = 07.4; /* 3.0/2.0 */}
-		      else if (SE_c > 10.156837) { result = 06.6; /* 3.0/2.0 */}
-		    }
-		    if (PCH_c > 0)
-		    {
-		      if (SB <= 0.028396)
+		      if (RES_c <= 0.182146)
 		      {
-		        if (SE_c <= 8.392565) { result = 08.9; /* 2.0/1.0 */}
-		        else if (SE_c > 8.392565) { result = 08.5; /* 2.0/1.0 */}
-		      }
-		      if (SB > 0.028396)
-		      {
-		        if (SE_c <= 8.855708)
+		        if (SB <= 0.448987)
 		        {
-		          if (PCH_c <= 0.027114) { result = 08.4; /* 2.0 */}
-		          else if (PCH_c > 0.027114) { result = 08.3; /* 2.0/1.0 */}
+		          if (RES_c <= 0.181878) { result = 08.4; /* 3.0/1.0 */}
+		          else if (RES_c > 0.181878) { result = 09.2; /* 4.0/1.0 */}
 		        }
-		        if (SE_c > 8.855708) { result = 08.2; /* 2.0/1.0 */}
+		        if (SB > 0.448987)
+		        {
+		          if (SE_c <= 6.758953) { result = 09.0; /* 2.0 */}
+		          else if (SE_c > 6.758953) { result = 09.6; /* 2.0/1.0 */}
+		        }
+		      }
+		      if (RES_c > 0.182146)
+		      {
+		        if (RES_c <= 0.371342)
+		        {
+		          if (PCH_c <= 0.019491) { result = 09.3; /* 9.0/3.0 */}
+		          else if (PCH_c > 0.019491)
+		          {
+		            if (SE_c <= 6.683097) { result = 09.7; /* 3.0 */}
+		            else if (SE_c > 6.683097) { result = 09.6; /* 4.0/2.0 */}
+		          }
+		        }
+		        if (RES_c > 0.371342)
+		        {
+		          if (PCH_c <= 0.019061) { result = 08.7; /* 3.0/1.0 */}
+		          else if (PCH_c > 0.019061)
+		          {
+		            if (SE_c <= 6.689165) { result = 09.9; /* 2.0/1.0 */}
+		            else if (SE_c > 6.689165) { result = 09.5; /* 4.0/1.0 */}
+		          }
+		        }
+		      }
+		    }
+		    if (SE_c > 7.471265)
+		    {
+		      if (SE_x <= 13.191725)
+		      {
+		        if (SB <= 0.479515)
+		        {
+		          if (PCH_x <= -0.045111) { result = 10.2; /* 4.0/2.0 */}
+		          else if (PCH_x > -0.045111) { result = 09.8; /* 2.0/1.0 */}
+		        }
+		        if (SB > 0.479515)
+		        {
+		          if (SE_c <= 7.571876) { result = 10.0; /* 4.0/2.0 */}
+		          else if (SE_c > 7.571876) { result = 09.6; /* 4.0/1.0 */}
+		        }
+		      }
+		      if (SE_x > 13.191725)
+		      {
+		        if (PCH_c <= 0.010584) { result = 09.5; /* 3.0/1.0 */}
+		        else if (PCH_c > 0.010584) { result = 09.4; /* 2.0/1.0 */}
 		      }
 		    }
 		  }
-		  if (PCH_c > 0.027211)
+		  if (PCH_x > -0.041368)
 		  {
-		    if (SB <= 0.434418)
+		    if (PCH_c <= 0.029565)
 		    {
-		      if (SE_c <= 10.049963)
+		      if (SB <= 0.028396)
 		      {
-		        if (RES_c <= 1.086842)
-		        {
-		          if (PCH_c <= 0.039387)
-		          {
-		            if (SE_x <= 9.636535)
-		            {
-		              if (PCH_c <= 0.029894) { result = 09.2; /* 2.0 */}
-		              else if (PCH_c > 0.029894) { result = 10.0; /* 3.0/1.0 */}
-		            }
-		            if (SE_x > 9.636535)
-		            {
-		              if (RES_c <= 0.699389) { result = 09.3; /* 2.0/1.0 */}
-		              else if (RES_c > 0.699389) { result = 09.7; /* 3.0/1.0 */}
-		            }
-		          }
-		          if (PCH_c > 0.039387) { result = 09.3; /* 15.0/9.0 */}
-		        }
-		        if (RES_c > 1.086842)
-		        {
-		          if (PCH_c <= 0.029565)
-		          {
-		            if (SE_c <= 8.779493) { result = 09.4; /* 3.0/1.0 */}
-		            else if (SE_c > 8.779493) { result = 08.5; /* 2.0/1.0 */}
-		          }
-		          if (PCH_c > 0.029565) { result = 08.9; /* 3.0/1.0 */}
-		        }
+		        if (PCH_c <= 0.02228) { result = 08.6; /* 3.0/1.0 */}
+		        else if (PCH_c > 0.02228) { result = 07.4; /* 2.0/1.0 */}
 		      }
-		      if (SE_c > 10.049963)
+		      if (SB > 0.028396)
 		      {
-		        if (PCH_c <= 0.03973)
+		        if (SE_x <= 9.633713)
 		        {
-		          if (SE_x <= 12.990417) { result = 09.1; /* 25.0/13.0 */}
-		          else if (SE_x > 12.990417) { result = 09.5; /* 4.0/2.0 */}
+		          if (SE_c <= 8.750164) { result = 08.4; /* 2.0/1.0 */}
+		          else if (SE_c > 8.750164) { result = 09.4; /* 3.0/1.0 */}
 		        }
-		        if (PCH_c > 0.03973)
+		        if (SE_x > 9.633713)
 		        {
-		          if (SE_x <= 12.990724) { result = 08.8; /* 3.0/2.0 */}
-		          else if (SE_x > 12.990724)
+		          if (PCH_c <= 0)
 		          {
-		            if (SE_x <= 12.991133) { result = 09.0; /* 6.0/3.0 */}
-		            else if (SE_x > 12.991133) { result = 09.1; /* 3.0/1.0 */}
+		            if (SE_c <= 7.010887) { result = 09.1; /* 2.0/1.0 */}
+		            else if (SE_c > 7.010887) { result = 08.6; /* 3.0/2.0 */}
+		          }
+		          if (PCH_c > 0)
+		          {
+		            if (SE_c <= 8.852704)
+		            {
+		              if (SB <= 0.473847)
+		              {
+		                if (PCH_c <= 0.000059) { result = 08.5; /* 2.0 */}
+		                else if (PCH_c > 0.000059)
+		                {
+		                  if (SE_c <= 8.779599) { result = 08.6; /* 4.0/1.0 */}
+		                  else if (SE_c > 8.779599) { result = 08.5; /* 2.0/1.0 */}
+		                }
+		              }
+		              if (SB > 0.473847) { result = 08.2; /* 2.0/1.0 */}
+		            }
+		            if (SE_c > 8.852704) { result = 08.2; /* 3.0/2.0 */}
 		          }
 		        }
 		      }
 		    }
-		    if (SB > 0.434418)
+		    if (PCH_c > 0.029565)
 		    {
-		      if (SE_x <= 12.995835)
+		      if (SE_x <= 12.990697)
+		      {
+		        if (PCH_c <= 0.039387)
+		        {
+		          if (RES_c <= 1.086882)
+		          {
+		            if (SE_x <= 9.519079) { result = 10.0; /* 2.0 */}
+		            else if (SE_x > 9.519079)
+		            {
+		              if (SE_c <= 8.798893) { result = 09.8; /* 3.0/1.0 */}
+		              else if (SE_c > 8.798893) { result = 09.2; /* 3.0/2.0 */}
+		            }
+		          }
+		          if (RES_c > 1.086882) { result = 08.9; /* 3.0/1.0 */}
+		        }
+		        if (PCH_c > 0.039387)
+		        {
+		          if (SE_c <= 10.049963) { result = 09.3; /* 13.0/7.0 */}
+		          else if (SE_c > 10.049963)
+		          {
+		            if (PCH_c <= 0.039719) { result = 09.1; /* 25.0/13.0 */}
+		            else if (PCH_c > 0.039719)
+		            {
+		              if (SE_c <= 10.079873) { result = 09.3; /* 2.0/1.0 */}
+		              else if (SE_c > 10.079873) { result = 08.9; /* 2.0/1.0 */}
+		            }
+		          }
+		        }
+		      }
+		      if (SE_x > 12.990697)
 		      {
 		        if (PCH_c <= 0.039882)
 		        {
@@ -286,7 +334,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		          {
 		            if (SE_x <= 12.995039)
 		            {
-		              if (SE_c <= 10.112309) { result = 09.0; /* 2.0/1.0 */}
+		              if (SE_c <= 10.112309) { result = 09.0; /* 8.0/4.0 */}
 		              else if (SE_c > 10.112309) { result = 08.8; /* 3.0/1.0 */}
 		            }
 		            if (SE_x > 12.995039)
@@ -295,96 +343,51 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		              else if (SE_c > 10.117785) { result = 09.0; /* 2.0/1.0 */}
 		            }
 		          }
-		          if (RES_c > 0.913891) { result = 08.9; /* 2.0 */}
+		          if (RES_c > 0.913891) { result = 08.9; /* 3.0/1.0 */}
 		        }
-		        if (PCH_c > 0.039882)
-		        {
-		          if (RES_c <= 0.456038) { result = 08.9; /* 3.0 */}
-		          else if (RES_c > 0.456038) { result = 08.8; /* 3.0/1.0 */}
-		        }
-		      }
-		      if (SE_x > 12.995835)
-		      {
-		        if (SB <= 0.438563) { result = 08.4; /* 3.0/2.0 */}
-		        else if (SB > 0.438563)
-		        {
-		          if (PCH_c <= 0.038233)
-		          {
-		            if (SE_c <= 10.920431) { result = 08.9; /* 2.0/1.0 */}
-		            else if (SE_c > 10.920431) { result = 08.7; /* 2.0/1.0 */}
-		          }
-		          if (PCH_c > 0.038233)
-		          {
-		            if (RES_c <= 0.699389)
-		            {
-		              if (RES_c <= 0) { result = 08.6; /* 4.0/2.0 */}
-		              else if (RES_c > 0) { result = 09.1; /* 2.0 */}
-		            }
-		            if (RES_c > 0.699389) { result = 08.9; /* 3.0/1.0 */}
-		          }
-		        }
+		        if (PCH_c > 0.039882) { result = 08.8; /* 7.0/4.0 */}
 		      }
 		    }
 		  }
 		}
-		if (PCH_c > 0.04019)
+		if (PCH_c > 0.045111)
 		{
-		  if (SE_c <= 0)
+		  if (SE_c <= 7.915887)
 		  {
-		    if (SE_x <= -0.758741)
+		    if (RES_c <= 0.699389)
 		    {
-		      if (SB <= 15.078905)
-		      {
-		        if (PCH_c <= 3.99999650662589E120) { result = 06.6; /* 3.0/1.0 */}
-		        else if (PCH_c > 3.99999650662589E120) { result = 07.7; /* 2.0/1.0 */}
-		      }
-		      if (SB > 15.078905)
-		      {
-		        if (PCH_c <= 5.022942234028359E120) { result = 08.6; /* 2.0/1.0 */}
-		        else if (PCH_c > 5.022942234028359E120) { result = 09.0; /* 2.0/1.0 */}
-		      }
+		      if (PCH_c <= 1.979715) { result = 11.1; /* 4.0/2.0 */}
+		      else if (PCH_c > 1.979715) { result = 08.9; /* 3.0/2.0 */}
 		    }
-		    if (SE_x > -0.758741)
-		    {
-		      if (RES_c <= 0.699389)
-		      {
-		        if (PCH_c <= 1.979715) { result = 11.1; /* 4.0/1.0 */}
-		        else if (PCH_c > 1.979715) { result = 08.7; /* 2.0/1.0 */}
-		      }
-		      if (RES_c > 0.699389) { result = 08.5; /* 2.0 */}
-		    }
+		    if (RES_c > 0.699389) { result = 08.5; /* 2.0 */}
 		  }
-		  if (SE_c > 0)
+		  if (SE_c > 7.915887)
 		  {
-		    if (PCH_c <= 0.046142)
+		    if (SB <= 0.325594)
 		    {
-		      if (RES_c <= 0.93486)
+		      if (PCH_c <= 0.582583)
 		      {
-		        if (PCH_c <= 0.045502)
-		        {
-		          if (PCH_c <= 0.045325)
-		          {
-		            if (SE_c <= 9.926993) { result = 09.8; /* 2.0 */}
-		            else if (SE_c > 9.926993) { result = 09.7; /* 4.0/2.0 */}
-		          }
-		          if (PCH_c > 0.045325) { result = 09.6; /* 4.0/2.0 */}
-		        }
-		        if (PCH_c > 0.045502)
-		        {
-		          if (SE_c <= 9.956658) { result = 09.5; /* 3.0/1.0 */}
-		          else if (SE_c > 9.956658) { result = 09.6; /* 5.0/3.0 */}
-		        }
+		        if (PCH_c <= 0.576351) { result = 08.3; /* 3.0/1.0 */}
+		        else if (PCH_c > 0.576351) { result = 07.5; /* 2.0/1.0 */}
 		      }
-		      if (RES_c > 0.93486) { result = 09.9; /* 3.0/2.0 */}
+		      if (PCH_c > 0.582583)
+		      {
+		        if (PCH_c <= 1.296286) { result = 08.4; /* 2.0/1.0 */}
+		        else if (PCH_c > 1.296286) { result = 09.4; /* 3.0/2.0 */}
+		      }
 		    }
-		    if (PCH_c > 0.046142)
+		    if (SB > 0.325594)
 		    {
-		      if (SB <= 0.049347)
+		      if (SE_x <= 12.940799)
 		      {
-		        if (SE_c <= 7.941729) { result = 09.4; /* 3.0/2.0 */}
-		        else if (SE_c > 7.941729) { result = 08.4; /* 2.0/1.0 */}
+		        if (SB <= 0.421092) { result = 09.9; /* 2.0 */}
+		        else if (SB > 0.421092)
+		        {
+		          if (PCH_c <= 0.045325) { result = 09.7; /* 5.0/3.0 */}
+		          else if (PCH_c > 0.045325) { result = 09.6; /* 4.0/2.0 */}
+		        }
 		      }
-		      if (SB > 0.049347) { result = 08.3; /* 6.0/4.0 */}
+		      if (SE_x > 12.940799) { result = 09.5; /* 6.0/3.0 */}
 		    }
 		  }
 		}
@@ -404,684 +407,408 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double EE  = (resultsH[0][2]).doubleValue();
 		double PE  = (resultsH[0][3]).doubleValue();
 		
-		if (SE <= 9.104677)
+		if (SE <= 8.80606)
 		{
-		  if (EE <= 6.64375)
+		  if (EE <= 6.489)
 		  {
-		    if (PE <= 1.575052)
+		    if (SCH <= -0.315373)
 		    {
-		      if (EE <= 4.58175)
+		      if (EE <= 5.422063)
 		      {
-		        if (EE <= 3.566)
+		        if (EE <= 4.608813)
 		        {
-		          if (PE <= 0.654288)
+		          if (SCH <= -0.330239) { result = 06.2; /* 3.0/2.0 */}
+		          else if (SCH > -0.330239)
 		          {
-		            if (EE <= 1.438) { result = 09.8; /* 3.0/1.0 */}
-		            else if (EE > 1.438) { result = 09.1; /* 2.0/1.0 */}
+		            if (SE <= 8.120134) { result = 08.5; /* 2.0/1.0 */}
+		            else if (SE > 8.120134) { result = 09.0; /* 2.0/1.0 */}
 		          }
-		          if (PE > 0.654288) { result = 06.2; /* 2.0/1.0 */}
 		        }
-		        if (EE > 3.566)
+		        if (EE > 4.608813)
 		        {
-		          if (SE <= 8.122649)
+		          if (SCH <= -0.32534)
 		          {
-		            if (SCH <= -0.330239) { result = 05.7; /* 3.0/2.0 */}
-		            else if (SCH > -0.330239) { result = 08.5; /* 3.0/1.0 */}
+		            if (EE <= 5.00775) { result = 08.6; /* 7.0/3.0 */}
+		            else if (EE > 5.00775) { result = 08.5; /* 4.0/1.0 */}
 		          }
-		          if (SE > 8.122649) { result = 09.4; /* 3.0/1.0 */}
+		          if (SCH > -0.32534) { result = 08.1; /* 3.0/2.0 */}
 		        }
 		      }
-		      if (EE > 4.58175)
+		      if (EE > 5.422063)
 		      {
-		        if (SCH <= -0.32534)
+		        if (SCH <= -0.321973)
 		        {
-		          if (SCH <= -0.327241)
-		          {
-		            if (EE <= 5.1445)
-		            {
-		              if (EE <= 4.687406) { result = 08.7; /* 2.0/1.0 */}
-		              else if (EE > 4.687406)
-		              {
-		                if (EE <= 5.00775) { result = 08.6; /* 6.0/2.0 */}
-		                else if (EE > 5.00775) { result = 08.5; /* 2.0 */}
-		              }
-		            }
-		            if (EE > 5.1445)
-		            {
-		              if (SE <= 6.834307) { result = 08.4; /* 2.0/1.0 */}
-		              else if (SE > 6.834307) { result = 09.3; /* 3.0/1.0 */}
-		            }
-		          }
-		          if (SCH > -0.327241)
-		          {
-		            if (SE <= 8.1475) { result = 08.3; /* 2.0/1.0 */}
-		            else if (SE > 8.1475)
-		            {
-		              if (SE <= 8.153334) { result = 08.8; /* 3.0/1.0 */}
-		              else if (SE > 8.153334) { result = 08.5; /* 2.0 */}
-		            }
-		          }
+		          if (SE <= 8.1475) { result = 08.4; /* 3.0/1.0 */}
+		          else if (SE > 8.1475) { result = 08.5; /* 2.0/1.0 */}
 		        }
-		        if (SCH > -0.32534)
+		        if (SCH > -0.321973)
 		        {
-		          if (PE <= 1.51965)
-		          {
-		            if (EE <= 4.8445) { result = 05.9; /* 2.0/1.0 */}
-		            else if (EE > 4.8445) { result = 08.1; /* 4.0/2.0 */}
-		          }
-		          if (PE > 1.51965)
-		          {
-		            if (SCH <= -0.314518)
-		            {
-		              if (EE <= 5.96675) { result = 08.6; /* 2.0/1.0 */}
-		              else if (EE > 5.96675) { result = 08.0; /* 4.0/1.0 */}
-		            }
-		            if (SCH > -0.314518) { result = 08.6; /* 6.0/4.0 */}
-		          }
+		          if (EE <= 6.102) { result = 07.9; /* 2.0/1.0 */}
+		          else if (EE > 6.102) { result = 08.0; /* 3.0/1.0 */}
 		        }
 		      }
 		    }
-		    if (PE > 1.575052)
+		    if (SCH > -0.315373)
 		    {
-		      if (SCH <= -0.589854)
+		      if (PE <= 4.873452) { result = 09.2; /* 15.0/10.0 */}
+		      else if (PE > 4.873452)
 		      {
-		        if (SE <= -1.398023)
+		        if (SCH <= -0.139567)
 		        {
-		          if (EE <= 4.767125)
+		          if (EE <= 1.438) { result = 09.8; /* 3.0/1.0 */}
+		          else if (EE > 1.438)
 		          {
-		            if (SE <= -9.044681) { result = 10.3; /* 2.0/1.0 */}
-		            else if (SE > -9.044681)
-		            {
-		              if (SE <= -8.924774) { result = 07.4; /* 2.0/1.0 */}
-		              else if (SE > -8.924774) { result = 09.5; /* 2.0/1.0 */}
-		            }
-		          }
-		          if (EE > 4.767125)
-		          {
-		            if (SCH <= -4.914758)
-		            {
-		              if (SE <= -7.648857) { result = 08.9; /* 2.0/1.0 */}
-		              else if (SE > -7.648857) { result = 09.4; /* 3.0/1.0 */}
-		            }
-		            if (SCH > -4.914758)
-		            {
-		              if (SE <= -6.54053) { result = 08.4; /* 2.0/1.0 */}
-		              else if (SE > -6.54053) { result = 07.2; /* 3.0/2.0 */}
-		            }
+		            if (SE <= 8.60319) { result = 09.1; /* 6.0/2.0 */}
+		            else if (SE > 8.60319) { result = 08.6; /* 2.0/1.0 */}
 		          }
 		        }
-		        if (SE > -1.398023)
+		        if (SCH > -0.139567)
 		        {
-		          if (PE <= 95.654219) { result = 09.6; /* 11.0/8.0 */}
-		          else if (PE > 95.654219)
-		          {
-		            if (SCH <= -5.702423) { result = 07.7; /* 2.0/1.0 */}
-		            else if (SCH > -5.702423) { result = 09.5; /* 3.0/2.0 */}
-		          }
-		        }
-		      }
-		      if (SCH > -0.589854)
-		      {
-		        if (EE <= 5.439)
-		        {
-		          if (SCH <= -0.332749)
-		          {
-		            if (SE <= 8.80606) { result = 09.2; /* 2.0/1.0 */}
-		            else if (SE > 8.80606) { result = 12.6; /* 2.0 */}
-		          }
-		          if (SCH > -0.332749)
-		          {
-		            if (SE <= 8.495417) { result = 09.7; /* 2.0/1.0 */}
-		            else if (SE > 8.495417) { result = 05.1; /* 3.0/2.0 */}
-		          }
-		        }
-		        if (EE > 5.439)
-		        {
-		          if (EE <= 6.259)
-		          {
-		            if (SCH <= -0.168201) { result = 09.2; /* 5.0/1.0 */}
-		            else if (SCH > -0.168201) { result = 05.4; /* 2.0/1.0 */}
-		          }
-		          if (EE > 6.259)
-		          {
-		            if (SE <= 8.543609) { result = 08.9; /* 2.0/1.0 */}
-		            else if (SE > 8.543609) { result = 09.1; /* 4.0/1.0 */}
-		          }
+		          if (SE <= 7.833611) { result = 09.3; /* 3.0/2.0 */}
+		          else if (SE > 7.833611) { result = 08.5; /* 3.0/1.0 */}
 		        }
 		      }
 		    }
 		  }
-		  if (EE > 6.64375)
+		  if (EE > 6.489)
 		  {
-		    if (PE <= 2.644757)
+		    if (SE <= 8.42798)
 		    {
-		      if (EE <= 7.7465)
+		      if (EE <= 8.234438)
 		      {
-		        if (SE <= 8.311315)
+		        if (EE <= 7.813)
 		        {
-		          if (PE <= 1.531406)
+		          if (SE <= 8.274057)
 		          {
-		            if (SE <= 8.002657)
+		            if (EE <= 6.8275)
 		            {
-		              if (PE <= 0.004639) { result = 08.3; /* 2.0 */}
-		              else if (PE > 0.004639) { result = 07.6; /* 2.0/1.0 */}
+		              if (SCH <= -0.315888) { result = 07.8; /* 2.0/1.0 */}
+		              else if (SCH > -0.315888) { result = 08.0; /* 3.0 */}
 		            }
-		            if (SE > 8.002657)
+		            if (EE > 6.8275)
 		            {
-		              if (EE <= 6.90325)
-		              {
-		                if (SCH <= -0.315888) { result = 07.8; /* 2.0/1.0 */}
-		                else if (SCH > -0.315888) { result = 08.0; /* 3.0/1.0 */}
-		              }
-		              if (EE > 6.90325) { result = 07.8; /* 3.0/1.0 */}
+		              if (SCH <= -0.315373) { result = 07.6; /* 2.0/1.0 */}
+		              else if (SCH > -0.315373) { result = 08.3; /* 3.0/1.0 */}
 		            }
 		          }
-		          if (PE > 1.531406) { result = 07.9; /* 5.0/3.0 */}
+		          if (SE > 8.274057)
+		          {
+		            if (SCH <= -0.310518)
+		            {
+		              if (SCH <= -0.310845) { result = 07.9; /* 5.0/3.0 */}
+		              else if (SCH > -0.310845) { result = 08.5; /* 2.0/1.0 */}
+		            }
+		            if (SCH > -0.310518)
+		            {
+		              if (SCH <= -0.305857)
+		              {
+		                if (EE <= 7.07075) { result = 07.6; /* 2.0/1.0 */}
+		                else if (EE > 7.07075)
+		                {
+		                  if (SE <= 8.357012) { result = 08.3; /* 6.0/3.0 */}
+		                  else if (SE > 8.357012) { result = 07.8; /* 3.0/2.0 */}
+		                }
+		              }
+		              if (SCH > -0.305857)
+		              {
+		                if (SE <= 8.360428) { result = 07.7; /* 3.0 */}
+		                else if (SE > 8.360428) { result = 07.9; /* 2.0/1.0 */}
+		              }
+		            }
+		          }
 		        }
-		        if (SE > 8.311315)
+		        if (EE > 7.813)
 		        {
-		          if (SCH <= -0.305242)
+		          if (EE <= 8.079)
 		          {
-		            if (SCH <= -0.308425)
+		            if (EE <= 7.994375)
 		            {
-		              if (EE <= 6.84575) { result = 07.7; /* 3.0/2.0 */}
-		              else if (EE > 6.84575) { result = 08.3; /* 4.0/1.0 */}
+		              if (SE <= 8.376288) { result = 08.0; /* 4.0/1.0 */}
+		              else if (SE > 8.376288) { result = 07.5; /* 2.0 */}
 		            }
-		            if (SCH > -0.308425)
-		            {
-		              if (SCH <= -0.306392) { result = 07.5; /* 2.0/1.0 */}
-		              else if (SCH > -0.306392)
-		              {
-		                if (EE <= 7.5165) { result = 07.8; /* 3.0/1.0 */}
-		                else if (EE > 7.5165) { result = 07.7; /* 2.0/1.0 */}
-		              }
-		            }
+		            if (EE > 7.994375) { result = 07.6; /* 3.0 */}
 		          }
-		          if (SCH > -0.305242)
+		          if (EE > 8.079)
 		          {
-		            if (SE <= 8.390548) { result = 08.7; /* 2.0 */}
-		            else if (SE > 8.390548)
-		            {
-		              if (SE <= 8.435289) { result = 08.2; /* 3.0/1.0 */}
-		              else if (SE > 8.435289) { result = 08.6; /* 2.0 */}
-		            }
+		            if (SCH <= -0.303186) { result = 07.7; /* 2.0/1.0 */}
+		            else if (SCH > -0.303186) { result = 08.0; /* 4.0 */}
 		          }
 		        }
 		      }
-		      if (EE > 7.7465)
+		      if (EE > 8.234438)
 		      {
-		        if (EE <= 8.716625)
+		        if (EE <= 8.70775)
 		        {
-		          if (EE <= 8.234438)
+		          if (EE <= 8.326844) { result = 07.9; /* 5.0/1.0 */}
+		          else if (EE > 8.326844)
 		          {
-		            if (SE <= 8.388638)
-		            {
-		              if (SE <= 8.357858)
-		              {
-		                if (SCH <= -0.308632) { result = 07.6; /* 2.0/1.0 */}
-		                else if (SCH > -0.308632)
-		                {
-		                  if (EE <= 7.897375) { result = 08.2; /* 2.0/1.0 */}
-		                  else if (EE > 7.897375) { result = 08.0; /* 4.0/1.0 */}
-		                }
-		              }
-		              if (SE > 8.357858)
-		              {
-		                if (SE <= 8.360428) { result = 07.7; /* 3.0 */}
-		                else if (SE > 8.360428)
-		                {
-		                  if (EE <= 7.994375) { result = 07.5; /* 3.0/1.0 */}
-		                  else if (EE > 7.994375)
-		                  {
-		                    if (EE <= 8.079) { result = 07.6; /* 3.0 */}
-		                    else if (EE > 8.079) { result = 08.0; /* 3.0/1.0 */}
-		                  }
-		                }
-		              }
-		            }
-		            if (SE > 8.388638) { result = 08.1; /* 3.0/2.0 */}
-		          }
-		          if (EE > 8.234438)
-		          {
-		            if (SCH <= -0.302776) { result = 07.9; /* 9.0/4.0 */}
-		            else if (SCH > -0.302776)
-		            {
-		              if (SCH <= -0.300515)
-		              {
-		                if (SCH <= -0.302509) { result = 08.1; /* 3.0/1.0 */}
-		                else if (SCH > -0.302509) { result = 07.7; /* 3.0/1.0 */}
-		              }
-		              if (SCH > -0.300515)
-		              {
-		                if (EE <= 8.4175) { result = 07.9; /* 2.0/1.0 */}
-		                else if (EE > 8.4175) { result = 08.2; /* 2.0 */}
-		              }
-		            }
+		            if (SCH <= -0.301277) { result = 08.1; /* 5.0/2.0 */}
+		            else if (SCH > -0.301277) { result = 07.7; /* 2.0/1.0 */}
 		          }
 		        }
-		        if (EE > 8.716625)
+		        if (EE > 8.70775)
 		        {
-		          if (SCH <= -0.298843)
+		          if (SCH <= -0.299978)
 		          {
-		            if (SCH <= -0.299978) { result = 07.8; /* 7.0/4.0 */}
-		            else if (SCH > -0.299978) { result = 07.9; /* 3.0 */}
+		            if (SE <= 8.391832) { result = 07.0; /* 4.0/2.0 */}
+		            else if (SE > 8.391832) { result = 07.8; /* 2.0 */}
 		          }
-		          if (SCH > -0.298843)
+		          if (SCH > -0.299978)
 		          {
-		            if (SE <= 8.446749) { result = 07.7; /* 5.0/1.0 */}
-		            else if (SE > 8.446749) { result = 08.3; /* 6.0/4.0 */}
+		            if (SE <= 8.289405) { result = 07.7; /* 2.0 */}
+		            else if (SE > 8.289405) { result = 07.9; /* 3.0 */}
 		          }
 		        }
 		      }
 		    }
-		    if (PE > 2.644757)
+		    if (SE > 8.42798)
 		    {
-		      if (EE <= 8.473938)
+		      if (EE <= 8.732)
 		      {
-		        if (EE <= 7.4345)
+		        if (EE <= 7.673875)
 		        {
-		          if (PE <= 4.95)
+		          if (EE <= 6.99075) { result = 08.6; /* 5.0/2.0 */}
+		          else if (EE > 6.99075)
 		          {
-		            if (SE <= 7.90981) { result = 08.2; /* 2.0/1.0 */}
-		            else if (SE > 7.90981) { result = 09.0; /* 2.0/1.0 */}
-		          }
-		          if (PE > 4.95)
-		          {
-		            if (EE <= 7.432125)
+		            if (SE <= 8.672826) { result = 08.5; /* 4.0/2.0 */}
+		            else if (SE > 8.672826)
 		            {
-		              if (EE <= 7.119)
-		              {
-		                if (SE <= 8.681096) { result = 08.5; /* 3.0/1.0 */}
-		                else if (SE > 8.681096) { result = 08.6; /* 2.0 */}
-		              }
-		              if (EE > 7.119)
-		              {
-		                if (SE <= -0.876239) { result = 08.1; /* 3.0/2.0 */}
-		                else if (SE > -0.876239) { result = 08.8; /* 2.0 */}
-		              }
+		              if (SE <= 8.724731) { result = 08.6; /* 3.0/1.0 */}
+		              else if (SE > 8.724731) { result = 08.4; /* 2.0/1.0 */}
 		            }
-		            if (EE > 7.432125) { result = 09.4; /* 2.0 */}
 		          }
 		        }
-		        if (EE > 7.4345)
+		        if (EE > 7.673875)
 		        {
-		          if (SCH <= -0.160825)
+		          if (SCH <= -0.1603)
 		          {
-		            if (PE <= 4.969413)
-		            {
-		              if (SE <= 7.984435) { result = 08.1; /* 2.0/1.0 */}
-		              else if (SE > 7.984435) { result = 08.7; /* 2.0 */}
-		            }
-		            if (PE > 4.969413) { result = 08.4; /* 14.0/6.0 */}
+		            if (SCH <= -0.16701) { result = 08.7; /* 4.0/2.0 */}
+		            else if (SCH > -0.16701) { result = 08.4; /* 9.0/2.0 */}
 		          }
-		          if (SCH > -0.160825)
+		          if (SCH > -0.1603)
 		          {
-		            if (SE <= 8.943162)
+		            if (EE <= 8.4175)
 		            {
-		              if (SE <= 8.711918) { result = 08.7; /* 2.0/1.0 */}
-		              else if (SE > 8.711918)
-		              {
-		                if (EE <= 8.25675) { result = 08.5; /* 4.0/1.0 */}
-		                else if (EE > 8.25675) { result = 08.3; /* 3.0/1.0 */}
-		              }
+		              if (SE <= 8.75386) { result = 08.3; /* 2.0 */}
+		              else if (SE > 8.75386) { result = 08.1; /* 2.0/1.0 */}
 		            }
-		            if (SE > 8.943162) { result = 08.8; /* 2.0 */}
+		            if (EE > 8.4175) { result = 07.9; /* 3.0/2.0 */}
 		          }
 		        }
 		      }
-		      if (EE > 8.473938)
+		      if (EE > 8.732)
 		      {
-		        if (SE <= 8.704665)
+		        if (SE <= 8.707362)
 		        {
-		          if (SE <= -0.876239) { result = 08.3; /* 2.0/1.0 */}
-		          else if (SE > -0.876239) { result = 08.4; /* 2.0 */}
+		          if (SE <= 8.460227) { result = 07.7; /* 3.0/1.0 */}
+		          else if (SE > 8.460227) { result = 08.3; /* 4.0/2.0 */}
 		        }
-		        if (SE > 8.704665)
+		        if (SE > 8.707362)
 		        {
-		          if (EE <= 9.707625)
+		          if (EE <= 9.536)
 		          {
-		            if (EE <= 9.24575)
-		            {
-		              if (EE <= 8.732) { result = 08.2; /* 5.0/1.0 */}
-		              else if (EE > 8.732) { result = 08.3; /* 3.0/1.0 */}
-		            }
-		            if (EE > 9.24575)
-		            {
-		              if (SE <= 8.735737) { result = 08.1; /* 2.0 */}
-		              else if (SE > 8.735737) { result = 08.2; /* 3.0/1.0 */}
-		            }
+		            if (EE <= 9.24575) { result = 08.2; /* 2.0/1.0 */}
+		            else if (EE > 9.24575) { result = 08.1; /* 3.0/1.0 */}
 		          }
-		          if (EE > 9.707625)
-		          {
-		            if (SE <= 8.776484) { result = 07.8; /* 4.0/1.0 */}
-		            else if (SE > 8.776484) { result = 08.2; /* 2.0/1.0 */}
-		          }
+		          if (EE > 9.536) { result = 07.8; /* 6.0/3.0 */}
 		        }
 		      }
 		    }
 		  }
 		}
-		if (SE > 9.104677)
+		if (SE > 8.80606)
 		{
-		  if (SE <= 10.164422)
+		  if (PE <= 4.260194)
 		  {
-		    if (EE <= 4.896125)
+		    if (EE <= 4.862859)
 		    {
-		      if (PE <= 3.141977)
+		      if (EE <= 4.0805)
 		      {
-		        if (PE <= 3.13937) { result = 06.7; /* 4.0/2.0 */}
-		        else if (PE > 3.13937)
+		        if (SCH <= -0.395706)
 		        {
-		          if (EE <= 3.795813) { result = 09.9; /* 2.0/1.0 */}
-		          else if (EE > 3.795813) { result = 10.4; /* 3.0/1.0 */}
+		          if (SCH <= -0.398947) { result = 12.6; /* 3.0/1.0 */}
+		          else if (SCH > -0.398947)
+		          {
+		            if (SCH <= -0.395985) { result = 09.1; /* 2.0/1.0 */}
+		            else if (SCH > -0.395985)
+		            {
+		              if (EE <= 3.795813) { result = 09.2; /* 4.0/2.0 */}
+		              else if (EE > 3.795813) { result = 10.4; /* 3.0/1.0 */}
+		            }
+		          }
+		        }
+		        if (SCH > -0.395706)
+		        {
+		          if (EE <= 3.566) { result = 07.5; /* 3.0/2.0 */}
+		          else if (EE > 3.566)
+		          {
+		            if (EE <= 3.795813) { result = 09.3; /* 2.0/1.0 */}
+		            else if (EE > 3.795813) { result = 10.0; /* 5.0/3.0 */}
+		          }
 		        }
 		      }
-		      if (PE > 3.141977)
+		      if (EE > 4.0805)
 		      {
-		        if (EE <= 4.508938)
+		        if (SCH <= -0.382949)
 		        {
-		          if (SCH <= -0.39244)
+		          if (PE <= 3.172064)
 		          {
-		            if (SCH <= -0.392753)
-		            {
-		              if (EE <= 3.9875)
-		              {
-		                if (SE <= 9.288328) { result = 09.4; /* 2.0/1.0 */}
-		                else if (SE > 9.288328) { result = 09.5; /* 3.0/2.0 */}
-		              }
-		              if (EE > 3.9875) { result = 09.8; /* 5.0/2.0 */}
-		            }
-		            if (SCH > -0.392753)
-		            {
-		              if (SE <= 9.323366) { result = 09.5; /* 2.0 */}
-		              else if (SE > 9.323366) { result = 09.3; /* 2.0 */}
-		            }
+		            if (EE <= 4.509125) { result = 09.8; /* 5.0/2.0 */}
+		            else if (EE > 4.509125) { result = 09.7; /* 3.0 */}
 		          }
-		          if (SCH > -0.39244)
+		          if (PE > 3.172064)
 		          {
-		            if (EE <= 4.138375)
+		            if (SCH <= -0.388693)
 		            {
-		              if (SCH <= -0.389247)
+		              if (SE <= 9.323245) { result = 09.6; /* 2.0 */}
+		              else if (SE > 9.323245)
 		              {
-		                if (SE <= 9.332876) { result = 09.1; /* 3.0/1.0 */}
-		                else if (SE > 9.332876) { result = 08.7; /* 2.0/1.0 */}
-		              }
-		              if (SCH > -0.389247)
-		              {
-		                if (SCH <= -0.385186) { result = 06.9; /* 2.0/1.0 */}
-		                else if (SCH > -0.385186) { result = 10.4; /* 4.0/2.0 */}
+		                if (EE <= 4.509125) { result = 09.5; /* 2.0 */}
+		                else if (EE > 4.509125) { result = 09.9; /* 4.0/2.0 */}
 		              }
 		            }
-		            if (EE > 4.138375)
-		            {
-		              if (SCH <= -0.384627) { result = 09.5; /* 3.0/1.0 */}
-		              else if (SCH > -0.384627) { result = 09.6; /* 2.0/1.0 */}
-		            }
+		            if (SCH > -0.388693) { result = 09.7; /* 2.0 */}
 		          }
 		        }
-		        if (EE > 4.508938)
+		        if (SCH > -0.382949)
 		        {
-		          if (SE <= 9.323138) { result = 09.7; /* 4.0/1.0 */}
-		          else if (SE > 9.323138)
-		          {
-		            if (SCH <= -0.387072) { result = 09.6; /* 11.0/6.0 */}
-		            else if (SCH > -0.387072)
-		            {
-		              if (EE <= 4.77525)
-		              {
-		                if (SE <= 9.460441) { result = 06.5; /* 2.0/1.0 */}
-		                else if (SE > 9.460441)
-		                {
-		                  if (SE <= 9.567383) { result = 10.1; /* 2.0 */}
-		                  else if (SE > 9.567383) { result = 09.7; /* 2.0 */}
-		                }
-		              }
-		              if (EE > 4.77525) { result = 09.4; /* 3.0/2.0 */}
-		            }
-		          }
+		          if (SCH <= -0.371513) { result = 09.6; /* 4.0/2.0 */}
+		          else if (SCH > -0.371513) { result = 09.4; /* 3.0/2.0 */}
 		        }
 		      }
 		    }
-		    if (EE > 4.896125)
+		    if (EE > 4.862859)
 		    {
 		      if (SE <= 9.561631)
 		      {
-		        if (PE <= 4.268441)
+		        if (EE <= 6.120359)
 		        {
-		          if (EE <= 6.120359)
+		          if (SCH <= -0.389218)
 		          {
-		            if (EE <= 5.407875)
+		            if (EE <= 5.2105)
 		            {
-		              if (SCH <= -0.388146) { result = 09.1; /* 14.0/7.0 */}
-		              else if (SCH > -0.388146)
-		              {
-		                if (SCH <= -0.380305)
-		                {
-		                  if (SCH <= -0.3831)
-		                  {
-		                    if (EE <= 5.087813) { result = 09.5; /* 2.0/1.0 */}
-		                    else if (EE > 5.087813) { result = 09.6; /* 3.0/1.0 */}
-		                  }
-		                  if (SCH > -0.3831) { result = 09.4; /* 4.0/2.0 */}
-		                }
-		                if (SCH > -0.380305) { result = 09.1; /* 3.0/2.0 */}
-		              }
+		              if (SE <= 9.325385) { result = 09.2; /* 2.0/1.0 */}
+		              else if (SE > 9.325385) { result = 09.1; /* 5.0/3.0 */}
 		            }
-		            if (EE > 5.407875)
+		            if (EE > 5.2105)
 		            {
-		              if (SCH <= -0.389218) { result = 09.0; /* 8.0/5.0 */}
-		              else if (SCH > -0.389218)
+		              if (EE <= 5.422063) { result = 09.0; /* 2.0/1.0 */}
+		              else if (EE > 5.422063)
 		              {
-		                if (SCH <= -0.377395)
-		                {
-		                  if (EE <= 5.79875)
-		                  {
-		                    if (EE <= 5.709125)
-		                    {
-		                      if (SCH <= -0.387072) { result = 09.1; /* 2.0/1.0 */}
-		                      else if (SCH > -0.387072) { result = 09.2; /* 6.0/3.0 */}
-		                    }
-		                    if (EE > 5.709125)
-		                    {
-		                      if (SE <= 9.46366) { result = 09.4; /* 2.0 */}
-		                      else if (SE > 9.46366) { result = 09.1; /* 2.0 */}
-		                    }
-		                  }
-		                  if (EE > 5.79875)
-		                  {
-		                    if (EE <= 5.87375) { result = 09.3; /* 5.0/1.0 */}
-		                    else if (EE > 5.87375)
-		                    {
-		                      if (EE <= 6.081) { result = 09.2; /* 3.0/1.0 */}
-		                      else if (EE > 6.081) { result = 09.3; /* 2.0 */}
-		                    }
-		                  }
-		                }
-		                if (SCH > -0.377395)
-		                {
-		                  if (SE <= 9.514797) { result = 09.4; /* 2.0/1.0 */}
-		                  else if (SE > 9.514797) { result = 08.8; /* 2.0/1.0 */}
-		                }
+		                if (EE <= 5.559375) { result = 09.6; /* 3.0/1.0 */}
+		                else if (EE > 5.559375) { result = 09.0; /* 2.0/1.0 */}
 		              }
 		            }
 		          }
-		          if (EE > 6.120359)
+		          if (SCH > -0.389218)
 		          {
-		            if (EE <= 6.382352)
+		            if (EE <= 5.64575)
 		            {
-		              if (EE <= 6.287)
-		              {
-		                if (EE <= 6.1415) { result = 09.1; /* 2.0 */}
-		                else if (EE > 6.1415)
-		                {
-		                  if (EE <= 6.1935)
-		                  {
-		                    if (EE <= 6.153625) { result = 09.2; /* 2.0 */}
-		                    else if (EE > 6.153625) { result = 08.6; /* 2.0 */}
-		                  }
-		                  if (EE > 6.1935) { result = 09.2; /* 3.0/1.0 */}
-		                }
-		              }
-		              if (EE > 6.287)
-		              {
-		                if (EE <= 6.3445)
-		                {
-		                  if (SE <= 9.416251) { result = 09.4; /* 3.0/1.0 */}
-		                  else if (SE > 9.416251) { result = 09.0; /* 3.0/1.0 */}
-		                }
-		                if (EE > 6.3445) { result = 09.2; /* 3.0/1.0 */}
-		              }
+		              if (EE <= 5.295125) { result = 09.4; /* 9.0/5.0 */}
+		              else if (EE > 5.295125) { result = 09.2; /* 6.0/3.0 */}
 		            }
-		            if (EE > 6.382352)
+		            if (EE > 5.64575)
 		            {
-		              if (EE <= 9.106)
+		              if (EE <= 5.87375)
 		              {
-		                if (EE <= 6.73075) { result = 09.3; /* 6.0/3.0 */}
-		                else if (EE > 6.73075)
-		                {
-		                  if (SCH <= -0.373374) { result = 09.1; /* 11.0/4.0 */}
-		                  else if (SCH > -0.373374)
-		                  {
-		                    if (EE <= 8.619875)
-		                    {
-		                      if (EE <= 8.496125) { result = 09.3; /* 5.0/2.0 */}
-		                      else if (EE > 8.496125) { result = 09.2; /* 2.0 */}
-		                    }
-		                    if (EE > 8.619875) { result = 09.1; /* 5.0 */}
-		                  }
-		                }
+		                if (SCH <= -0.38064) { result = 09.3; /* 5.0/1.0 */}
+		                else if (SCH > -0.38064) { result = 09.4; /* 4.0/2.0 */}
 		              }
-		              if (EE > 9.106) { result = 09.0; /* 4.0 */}
+		              if (EE > 5.87375)
+		              {
+		                if (EE <= 6.050813) { result = 09.2; /* 2.0 */}
+		                else if (EE > 6.050813) { result = 09.3; /* 3.0/1.0 */}
+		              }
 		            }
 		          }
 		        }
-		        if (PE > 4.268441)
+		        if (EE > 6.120359)
 		        {
-		          if (SE <= 9.271976) { result = 08.9; /* 5.0/1.0 */}
-		          else if (SE > 9.271976)
+		          if (SCH <= -0.387072) { result = 09.4; /* 2.0 */}
+		          else if (SCH > -0.387072)
 		          {
-		            if (SE <= 9.28526) { result = 08.7; /* 3.0 */}
-		            else if (SE > 9.28526) { result = 08.2; /* 2.0/1.0 */}
+		            if (SE <= 9.208068) { result = 09.3; /* 2.0/1.0 */}
+		            else if (SE > 9.208068)
+		            {
+		              if (EE <= 8.617)
+		              {
+		                if (SCH <= -0.374181)
+		                {
+		                  if (EE <= 6.764188) { result = 09.2; /* 11.0/4.0 */}
+		                  else if (EE > 6.764188) { result = 09.1; /* 7.0/2.0 */}
+		                }
+		                if (SCH > -0.374181) { result = 09.2; /* 4.0 */}
+		              }
+		              if (EE > 8.617) { result = 09.1; /* 5.0 */}
+		            }
 		          }
 		        }
 		      }
 		      if (SE > 9.561631)
 		      {
-		        if (EE <= 7.2)
+		        if (EE <= 7.141875)
 		        {
-		          if (SE <= 10.084617)
+		          if (SCH <= -0.143549)
 		          {
-		            if (SE <= 9.636089)
+		            if (EE <= 5.479375) { result = 09.8; /* 3.0/2.0 */}
+		            else if (EE > 5.479375)
 		            {
-		              if (SE <= 9.596428) { result = 08.6; /* 2.0/1.0 */}
-		              else if (SE > 9.596428) { result = 08.8; /* 3.0/2.0 */}
-		            }
-		            if (SE > 9.636089)
-		            {
-		              if (EE <= 5.4805) { result = 09.5; /* 3.0/2.0 */}
-		              else if (EE > 5.4805) { result = 07.2; /* 3.0/2.0 */}
+		              if (EE <= 5.709125) { result = 09.0; /* 2.0 */}
+		              else if (EE > 5.709125) { result = 09.3; /* 2.0/1.0 */}
 		            }
 		          }
-		          if (SE > 10.084617)
+		          if (SCH > -0.143549)
 		          {
-		            if (SCH <= -0.143246)
+		            if (SCH <= -0.139872)
 		            {
-		              if (EE <= 6.331813) { result = 10.1; /* 3.0 */}
-		              else if (EE > 6.331813)
-		              {
-		                if (EE <= 6.3705) { result = 09.6; /* 2.0/1.0 */}
-		                else if (EE > 6.3705) { result = 09.5; /* 2.0/1.0 */}
-		              }
+		              if (EE <= 6.331813) { result = 10.1; /* 4.0/1.0 */}
+		              else if (EE > 6.331813) { result = 10.0; /* 7.0/3.0 */}
 		            }
-		            if (SCH > -0.143246)
-		            {
-		              if (EE <= 6.8215)
-		              {
-		                if (EE <= 6.3445) { result = 09.9; /* 3.0/1.0 */}
-		                else if (EE > 6.3445) { result = 10.0; /* 4.0/1.0 */}
-		              }
-		              if (EE > 6.8215) { result = 09.9; /* 3.0/1.0 */}
-		            }
+		            if (SCH > -0.139872) { result = 09.9; /* 4.0/1.0 */}
 		          }
 		        }
-		        if (EE > 7.2)
+		        if (EE > 7.141875)
 		        {
-		          if (EE <= 7.813)
+		          if (SE <= 10.155788)
 		          {
-		            if (EE <= 7.652625) { result = 09.2; /* 6.0/2.0 */}
-		            else if (EE > 7.652625) { result = 08.8; /* 2.0/1.0 */}
+		            if (SE <= 10.12694) { result = 08.8; /* 2.0/1.0 */}
+		            else if (SE > 10.12694) { result = 09.7; /* 3.0/1.0 */}
 		          }
-		          if (EE > 7.813) { result = 09.3; /* 3.0/1.0 */}
+		          if (SE > 10.155788) { result = 09.2; /* 4.0/2.0 */}
 		        }
 		      }
 		    }
 		  }
-		  if (SE > 10.164422)
+		  if (PE > 4.260194)
 		  {
-		    if (SCH <= -0.245922)
+		    if (EE <= 6.19275)
 		    {
-		      if (PE <= 4.056221)
+		      if (EE <= 5.2105)
 		      {
-		        if (SE <= 11.333807) { result = 11.9; /* 3.0/2.0 */}
-		        else if (SE > 11.333807) { result = 09.7; /* 3.0/2.0 */}
+		        if (SE <= 10.475336) { result = 10.8; /* 3.0/1.0 */}
+		        else if (SE > 10.475336) { result = 10.2; /* 4.0/2.0 */}
 		      }
-		      if (PE > 4.056221)
+		      if (EE > 5.2105)
 		      {
-		        if (EE <= 4.726703)
+		        if (EE <= 5.39475)
 		        {
-		          if (EE <= 3.068625) { result = 09.9; /* 4.0/3.0 */}
-		          else if (EE > 3.068625) { result = 09.4; /* 5.0/3.0 */}
+		          if (SE <= 10.47544) { result = 10.1; /* 2.0 */}
+		          else if (SE > 10.47544) { result = 10.7; /* 2.0 */}
 		        }
-		        if (EE > 4.726703) { result = 09.6; /* 7.0/5.0 */}
+		        if (EE > 5.39475)
+		        {
+		          if (SE <= 10.510052) { result = 09.7; /* 2.0/1.0 */}
+		          else if (SE > 10.510052) { result = 10.1; /* 2.0/1.0 */}
+		        }
 		      }
 		    }
-		    if (SCH > -0.245922)
+		    if (EE > 6.19275)
 		    {
-		      if (PE <= 4.769337)
+		      if (SCH <= -0.080603) { result = 09.0; /* 6.0/1.0 */}
+		      else if (SCH > -0.080603)
 		      {
-		        if (SCH <= -0.173729)
-		        {
-		          if (SCH <= -0.239893) { result = 08.3; /* 2.0/1.0 */}
-		          else if (SCH > -0.239893) { result = 10.9; /* 3.0/1.0 */}
-		        }
-		        if (SCH > -0.173729)
-		        {
-		          if (SE <= 10.47544)
-		          {
-		            if (SE <= 10.475336) { result = 10.4; /* 2.0/1.0 */}
-		            else if (SE > 10.475336)
-		            {
-		              if (EE <= 5.171203) { result = 10.4; /* 2.0/1.0 */}
-		              else if (EE > 5.171203) { result = 10.1; /* 3.0/1.0 */}
-		            }
-		          }
-		          if (SE > 10.47544)
-		          {
-		            if (SE <= 10.507124) { result = 10.7; /* 2.0 */}
-		            else if (SE > 10.507124) { result = 09.0; /* 3.0/2.0 */}
-		          }
-		        }
-		      }
-		      if (PE > 4.769337)
-		      {
-		        if (SCH <= -0.160687)
-		        {
-		          if (SE <= 11.201319) { result = 09.1; /* 7.0/4.0 */}
-		          else if (SE > 11.201319) { result = 09.2; /* 3.0 */}
-		        }
-		        if (SCH > -0.160687)
-		        {
-		          if (SE <= 11.517466)
-		          {
-		            if (EE <= 4.138375) { result = 07.9; /* 2.0 */}
-		            else if (EE > 4.138375) { result = 08.3; /* 2.0/1.0 */}
-		          }
-		          if (SE > 11.517466)
-		          {
-		            if (EE <= 3.880188) { result = 08.3; /* 2.0/1.0 */}
-		            else if (EE > 3.880188) { result = 08.9; /* 2.0/1.0 */}
-		          }
-		        }
+		        if (SE <= 9.271976) { result = 08.9; /* 6.0/1.0 */}
+		        else if (SE > 9.271976) { result = 08.7; /* 3.0 */}
 		      }
 		    }
 		  }
@@ -1089,16 +816,15 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		return result;
 	}
 	/**
-	 * This method calculates the ionization potential of an atom and set the ionization
-	 * energy into each reaction as property
+	 * Get the reactions obtained with ionization.
+	 * The energy is set as property
 	 * 
 	 * @return The IReactionSet value
 	 */
-	public IReactionSet getReactionSet(IAtom atom, IAtomContainer container) throws CDKException{
-		setEnergy = true;
-		calculate(atom,container);
+	public IReactionSet getReactionSet() throws CDKException{
 		return reactionSet;
 	}
+	
 	/**
 	 * Calculate the necessary descriptors for Heteratom atoms
 	 * @param atomContainer The IAtomContainer
