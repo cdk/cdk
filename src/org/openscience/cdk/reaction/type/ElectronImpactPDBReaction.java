@@ -150,7 +150,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 
-            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() == 2){
+            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() > 1){
                 /**/
                 for (int j = 0; j < 2; j++){
                     IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
@@ -222,7 +222,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
             IBond bond = (IBond) bonds.next();
             atom0 = bond.getAtom(0);
             atom1 = bond.getAtom(1);
-            if (bond.getOrder() == 2 &&
+            if (bond.getOrder() > 1 &&
                     atom0.getSymbol().equals("C") &&
                     atom1.getSymbol().equals("C")) {
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
