@@ -156,7 +156,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
             }
 
             if(result != -1)
-            	dar.add(result);
+            	dar.add(new Double(result));
         }
 
         IPBondDescriptor descriptorB = new IPBondDescriptor();
@@ -167,10 +167,12 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
         	if(bond.getOrder() < 2)
         		continue;
         	
-            double result = ((DoubleResult)descriptorB.calculate(bond,atomContainer).getValue()).doubleValue();
-            if(result == -1)
+        	double result = ((DoubleResult)descriptorB.calculate(bond,atomContainer).getValue()).doubleValue();
+            
+        	if(result == -1)
             	continue;
-            IReactionSet irs = descriptorB.getReactionSet();
+            
+        	IReactionSet irs = descriptorB.getReactionSet();
             
             if(irs.getReactionCount() > 0){
             	Iterator iter = irs.reactions();
@@ -179,12 +181,11 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
             	}
             }
 
-            if(result != -1)
-                dar.add(result);
+            dar.add(new Double(result));
         }
         
         if(dar.size() == 0)
-        	dar.add(-1.0);
+        	dar.add(new Double(-1.0));
         
         DoubleArrayResult results = arrangingEnergy(dar);
         
@@ -203,7 +204,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
     	int count = array.size();
     	
     	for(int i = 0; i < count; i++){
-	    	double min = (Double)array.get(0);
+	    	double min = ((Double)array.get(0)).doubleValue();
 	    	int pos = 0;
 			for(int j = 0; j < array.size(); j++){
 				double value = ((Double)array.get(j)).doubleValue();
