@@ -249,6 +249,10 @@ public class GasteigerMarsiliPartialCharges {
                     factors[1] = 13.79;
                     factors[2] = 0.47;/*0.47*/
                 }
+            } else if (AtomSymbol.equals("Si")) {// <--not correct
+                factors[0] = 8.10;// <--not correct
+                factors[1] = 7.92;// <--not correct
+                factors[2] = 1.78;// <--not correct
             } else if (AtomSymbol.equals("P")) {
                 factors[0] = 8.90;
                 factors[1] = 8.32;

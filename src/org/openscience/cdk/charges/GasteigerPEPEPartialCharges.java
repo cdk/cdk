@@ -598,6 +598,16 @@ public class GasteigerPEPEPartialCharges {
 						factors[1] = 11.86;
 						factors[2] = 7.32;
 					}
+				} else if (AtomSymbol.equals("P")) {// <--No correct
+					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
+						factors[0] = 10.73;// <--No correct
+						factors[1] = 11.16;// <--No correct
+						factors[2] = 6.81;// <--No correct
+					}else {
+						factors[0] = 9.60;// <--No correct
+						factors[1] = 13.32;// <--No correct
+						factors[2] = 2.72;// <--No correct
+					}
 				} else if (AtomSymbol.equals("S")) {
 					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
 						
