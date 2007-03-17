@@ -316,8 +316,8 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	MDLReader reader = new MDLReader(ins);
     	IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
     	mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);  
-    	for(int i =0;i<mol.getAtomCount();i++)
-    		System.out.println(i+", "+mol.getAtom(i).getSymbol()+" "+mol.getAtom(i).getHydrogenCount());
+//    	for(int i =0;i<mol.getAtomCount();i++)
+//    		System.out.println(i+", "+mol.getAtom(i).getSymbol()+" "+mol.getAtom(i).getHydrogenCount());
 
 //  	mol.getAtomAt(6).setFormalCharge(1);
     	HydrogenAdder adder = new HydrogenAdder();
@@ -437,5 +437,37 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         return mol;
     	
     }
+    
+    /**
+	 *  A unit test for JUnit: Cyanoallene
+	 *
+	 *@return    Description of the Return Value
+	 */
+    public void testCyanoallene() throws Exception
+	{
+    	IMolecule mol = null;
+    	mol = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=CC#N");
+    	HydrogenAdder adder = new HydrogenAdder();
+    	adder.addImplicitHydrogensToSatisfyValency(mol);
+    	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    	lpcheck.newSaturate(mol);
+    	HueckelAromaticityDetector.detectAromaticity(mol);
+        
+        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        
+        assertEquals(1, acSet.getAtomContainerCount());
+        IAtomContainer ac1 = acSet.getAtomContainer(0);
+        assertEquals(4, ac1.getAtomCount());
+        assertEquals(3, ac1.getBondCount());
+        
+        for (int i = 0; i < ac1.getAtomCount(); i++) {
+            assertTrue(mol.contains(ac1.getAtom(i)));
+        }
+        
+        for (int i = 0; i < ac1.getBondCount(); i++) {
+            assertTrue(mol.contains(ac1.getBond(i)));
+        }
+        
+	}
     
 }
