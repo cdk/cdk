@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -62,6 +63,10 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 
     /**
 	 *  A unit test for JUnit with C-Cl
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
 	 */
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -73,12 +78,10 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+		double result = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
-//        logger.debug(resultAccordingNIST+"="+dar.get(0));
 
-        assertEquals(1, dar.size());
-        assertEquals(resultAccordingNIST, dar.get(0), 2.2);
+        assertEquals(resultAccordingNIST, result, 0.53);
     }
     /**
 	 *  A unit test for JUnit with COCCCC=O
@@ -93,18 +96,19 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
         
         double resultAccordingNIST = 9.37; 
+        
         assertEquals(2, dar.size());
-        assertEquals(resultAccordingNIST, dar.get(0), 0.3);
+        assertEquals(resultAccordingNIST, dar.get(0), 0.09);
     }
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
-		IMolecule mol = sp.parseSmiles("C=CCC(=O)CC");
+		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
 		HydrogenAdder hAdder = new HydrogenAdder();
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
@@ -112,12 +116,14 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol).getValue());
+		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
 
-//		logger.debug(dar.get(0)+", "+dar.get(1));
-        double resultAccordingNIST = 9.37; 
+        double resultAccordingNIST = 9.50; 
         assertEquals(2, dar.size());
-        assertEquals(resultAccordingNIST, dar.get(0), 1.4);
+        assertEquals(resultAccordingNIST, dar.get(0), 0.15);
+        
+        IReactionSet reactionSet = descriptor.getReactionSet();
+        assertEquals(3, reactionSet.getReactionCount());
     }
     /**
      * A unit test for JUnit with C-Cl
@@ -135,12 +141,14 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet(mol);
+		descriptor.calculate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet();
 		double resultAccordingNIST = 11.26; 
-//        logger.debug(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
-        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
+
+		double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
         assertEquals(1, reactionSet.getReactionCount());
-        assertEquals(resultAccordingNIST, result, 2.2);
+        assertEquals(resultAccordingNIST, result, 0.53);
     }
     /**
      * A unit test for JUnit with CCCC
@@ -158,8 +166,32 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet(mol);
+		descriptor.calculate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet();
+		
         assertEquals(0, reactionSet.getReactionCount());
     }
+    /**
+     * A unit test for JUnit with CCC#CCCO
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecule mol = sp.parseSmiles("CCC#CCCO");
 
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		descriptor.calculate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet();
+		
+        assertEquals(3, reactionSet.getReactionCount());
+    }
 }
