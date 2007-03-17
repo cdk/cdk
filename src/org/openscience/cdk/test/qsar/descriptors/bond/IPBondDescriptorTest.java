@@ -91,7 +91,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(4),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95; 
-        assertEquals(result, resultAccordingNIST, 0.7);
+        assertEquals(result, resultAccordingNIST, 0.1);
     }
     /**
 	 *  A unit test for JUnit with C=CCCCC
@@ -129,13 +129,14 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet(mol.getBond(0),mol);
-        double resultAccordingNIST = 9.44; 
-//        logger.debug(resultAccordingNIST+"="+reactionSet.getReaction(0).getProperty("IonizationEnergy"));
+		descriptor.calculate(mol.getBond(0), mol);
+		IReactionSet reactionSet = descriptor.getReactionSet();
+		
+		double resultAccordingNIST = 9.44; 
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
 
         assertEquals(2, reactionSet.getReactionCount());
-        assertEquals(resultAccordingNIST, result, 2.1);
+        assertEquals(resultAccordingNIST, result, 0.02);
     }
     /**
      * A unit test for JUnit with CCCCCC
@@ -155,8 +156,10 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet(mol.getBond(0),mol);
-        assertEquals(0, reactionSet.getReactionCount());
+		descriptor.calculate(mol.getBond(0), mol);
+		IReactionSet reactionSet = descriptor.getReactionSet();
+
+		assertEquals(0, reactionSet.getReactionCount());
     }
     /**
      * A unit test for JUnit with C#CCC
@@ -222,11 +225,11 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47; 
-        assertEquals(resultAccordingNIST, result, 0.03);
+        assertEquals(resultAccordingNIST, result, 0.2);
         
         result= ((DoubleResult)descriptor.calculate(mol.getBond(2),mol).getValue()).doubleValue();
         resultAccordingNIST = 8.47; 
-        assertEquals(resultAccordingNIST, result, 0.03);
+        assertEquals(resultAccordingNIST, result, 0.2);
     }
     /**
      * A unit test for JUnit with C1=C(C)CCS1
@@ -295,6 +298,30 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(1),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.03; 
         assertEquals(resultAccordingNIST, result, 0.11);
+        
+    }
+    
+    /**
+     * A unit test for JUnit with C=CC=C
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemReaction1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C=CC=C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 9.072; 
+        assertEquals(resultAccordingNIST, result, 2.11);
         
     }
     

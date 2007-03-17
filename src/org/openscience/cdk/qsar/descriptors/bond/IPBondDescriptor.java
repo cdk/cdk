@@ -121,36 +121,38 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException{
-		reactionSet = container.getBuilder().newReactionSet();
+		String[] descriptorNames = {"DoubleResult"};
+    	reactionSet = container.getBuilder().newReactionSet();
+    	
     	double resultD = -1.0;
 		boolean isTarget = false;
 		double[] resultsH = null;
 		
 		try{
 			HueckelAromaticityDetector.detectAromaticity(container,true);
-		} catch (Exception exc)
-		{
-		}
+		} catch (Exception exc){}
         
-        if(bond.getOrder() > 1 && (container.getConnectedLonePairsCount(bond.getAtom(0)) == 0) && 
-        		(container.getConnectedLonePairsCount(bond.getAtom(1)) == 0)){
+        if(bond.getOrder() > 1 && 
+        		(container.getConnectedLonePairsCount(bond.getAtom(0)) == 0) && /*not containing heteroatoms*/ 
+        		(container.getConnectedLonePairsCount(bond.getAtom(1)) == 0) && 
+        		!bond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) && !bond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)){ /*not belonging to aromatics*/
         		
         		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
                 Iterator acI = conjugatedPi.atomContainers();
-        		boolean isConjugatedPi = false;
+
+                boolean isConjugatedPi = false;
         		boolean isConjugatedPi_withHeteroatom = false;
-                while(acI.hasNext()){
+                
+        		while(acI.hasNext()){
         			IAtomContainer ac = (IAtomContainer) acI.next();
         			if(ac.contains(bond)){
         				isConjugatedPi = true;
-            			
-            			/*aromatic */
             			
             			Iterator atoms = ac.atoms();
             			while(atoms.hasNext()){
             				IAtom atomsss = (IAtom) atoms.next();
             				
-            				if(container.getConnectedLonePairsCount(atomsss) != 0){
+            				if(container.getConnectedLonePairsCount(atomsss) > 0){
             					isConjugatedPi_withHeteroatom = true;
             					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
                     			resultD = getPySystWithHetero(resultsH);
@@ -161,7 +163,7 @@ public class IPBondDescriptor implements IBondDescriptor {
             			}
             			
             			if(!isConjugatedPi_withHeteroatom){
-	            			resultsH = calculateCojugatedPiSystWithoutHeteroDescriptor(bond, container, ac);
+	            			resultsH = calculateCojugatedPiSystDescriptor(bond, container, ac);
 	            			resultD = getConjugatedPiSys(resultsH);
         					resultD += 0.05;
                 			isTarget = true;
@@ -169,10 +171,9 @@ public class IPBondDescriptor implements IBondDescriptor {
             			}
         			}
         		}
-        		
                 if(!isConjugatedPi){
 
-					resultsH = calculatePiSystWithoutHeteroDescriptor(bond, container);
+					resultsH = calculatePiSystDescriptor(bond, container);
 					resultD = getAcetyl_EthylWithoutHetero(resultsH);
 					resultD += 0.05;
         			isTarget = true;
@@ -180,24 +181,22 @@ public class IPBondDescriptor implements IBondDescriptor {
 		}
 
 		if(isTarget){
-    		/* extract reaction*/
-    		if(setEnergy){
-    			IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
-    			setOfReactants.addMolecule((IMolecule) container);
-    			IReactionProcess type  = new ElectronImpactPDBReaction();
-    			bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
-    	        Object[] params = {Boolean.TRUE};
-    	        type.setParameters(params);
-    	        IReactionSet pbb = type.initiate(setOfReactants, null);
-    	        Iterator it = pbb.reactions();
-    	        while(it.hasNext()){
-    	        	IReaction reaction = (IReaction)it.next();
-    	        	reaction.setProperty("IonizationEnergy", new Double(resultD));
-    	        	reactionSet.addReaction(reaction);
-    	        }
-    		}
+    		/* iniziate reaction*/
+			IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
+			setOfReactants.addMolecule((IMolecule) container);
+			IReactionProcess type  = new ElectronImpactPDBReaction();
+			bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
+	        Object[] params = {Boolean.TRUE};
+	        type.setParameters(params);
+	        IReactionSet pbb = type.initiate(setOfReactants, null);
+	        Iterator it = pbb.reactions();
+	        while(it.hasNext()){
+	        	IReaction reaction = (IReaction)it.next();
+	        	reaction.setProperty("IonizationEnergy", new Double(resultD));
+	        	reactionSet.addReaction(reaction);
+	        }
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD),descriptorNames);
 	}
 
 	/**
@@ -350,247 +349,168 @@ public class IPBondDescriptor implements IBondDescriptor {
 		double EE_1 = resultsH[1];
 		double RES_c2  = resultsH[2];
 		
-		if (RES_c2 <= 8.264821)
+		if (RES_c2 <= 8.242293)
 		{
-		  if (RES_c2 <= 8.108001)
+		  if (EE_1 <= 0.324173)
 		  {
-		    if (RES_c2 <= 8.057972)
+		    if (EE_1 <= 0.263763)
 		    {
-		      if (EE_1 <= 0.535372)
+		      if (EE_1 <= 0.196384)
 		      {
-		        if (EE_1 <= 0.315691) { result = 07.4; /* 4.0/3.0 */}
-		        else if (EE_1 > 0.315691) { result = 08.5; /* 7.0/3.0 */}
+		        if (EE_1 <= 0.150372) { result = 06.2; /* 2.0/1.0 */}
+		        else if (EE_1 > 0.150372) { result = 07.9; /* 3.0/1.0 */}
 		      }
-		      if (EE_1 > 0.535372)
-		      {
-		        if (SE_1 <= 0.017166) { result = 09.0; /* 5.0/2.0 */}
-		        else if (SE_1 > 0.017166) { result = 08.4; /* 4.0/1.0 */}
-		      }
+		      if (EE_1 > 0.196384) { result = 08.3; /* 5.0/2.0 */}
 		    }
-		    if (RES_c2 > 8.057972)
+		    if (EE_1 > 0.263763)
 		    {
-		      if (SE_1 <= 0.015059)
+		      if (RES_c2 <= 8.152026)
 		      {
-		        if (EE_1 <= 0.474993)
-		        {
-		          if (EE_1 <= 0.342397) { result = 08.3; /* 5.0/3.0 */}
-		          else if (EE_1 > 0.342397)
-		          {
-		            if (SE_1 <= 0.003624)
-		            {
-		              if (RES_c2 <= 8.099624) { result = 08.4; /* 2.0/1.0 */}
-		              else if (RES_c2 > 8.099624) { result = 08.2; /* 2.0/1.0 */}
-		            }
-		            if (SE_1 > 0.003624)
-		            {
-		              if (RES_c2 <= 8.08761) { result = 08.2; /* 5.0/2.0 */}
-		              else if (RES_c2 > 8.08761) { result = 08.1; /* 4.0/1.0 */}
-		            }
-		          }
-		        }
-		        if (EE_1 > 0.474993) { result = 08.4; /* 11.0/2.0 */}
+		        if (EE_1 <= 0.26488) { result = 08.7; /* 2.0 */}
+		        else if (EE_1 > 0.26488) { result = 08.5; /* 2.0 */}
 		      }
-		      if (SE_1 > 0.015059)
-		      {
-		        if (RES_c2 <= 8.093834) { result = 06.0; /* 3.0/2.0 */}
-		        else if (RES_c2 > 8.093834) { result = 08.6; /* 3.0/1.0 */}
-		      }
+		      if (RES_c2 > 8.152026) { result = 07.7; /* 3.0/2.0 */}
 		    }
 		  }
-		  if (RES_c2 > 8.108001)
+		  if (EE_1 > 0.324173)
 		  {
-		    if (SE_1 <= 0.015323)
+		    if (SE_1 <= 0.009142)
 		    {
-		      if (SE_1 <= 0.001425)
+		      if (RES_c2 <= 8.152026) { result = 08.2; /* 29.0/19.0 */}
+		      else if (RES_c2 > 8.152026)
 		      {
-		        if (SE_1 <= 0.001) { result = 07.9; /* 3.0/1.0 */}
-		        else if (SE_1 > 0.001) { result = 08.7; /* 2.0/1.0 */}
-		      }
-		      if (SE_1 > 0.001425)
-		      {
-		        if (RES_c2 <= 8.152804)
+		        if (RES_c2 <= 8.217601)
 		        {
-		          if (SE_1 <= 0.002809)
+		          if (SE_1 <= 0.006519)
 		          {
-		            if (RES_c2 <= 8.117603) { result = 08.2; /* 4.0/2.0 */}
-		            else if (RES_c2 > 8.117603)
-		            {
-		              if (RES_c2 <= 8.142897) { result = 08.5; /* 4.0/1.0 */}
-		              else if (RES_c2 > 8.142897) { result = 08.2; /* 3.0/1.0 */}
-		            }
+		            if (SE_1 <= 0.005641) { result = 07.8; /* 3.0/1.0 */}
+		            else if (SE_1 > 0.005641) { result = 08.1; /* 2.0/1.0 */}
 		          }
-		          if (SE_1 > 0.002809)
+		          if (SE_1 > 0.006519)
 		          {
-		            if (SE_1 <= 0.015213)
-		            {
-		              if (EE_1 <= 0.529275)
-		              {
-		                if (SE_1 <= 0.005641) { result = 07.9; /* 3.0/2.0 */}
-		                else if (SE_1 > 0.005641) { result = 07.7; /* 4.0/2.0 */}
-		              }
-		              if (EE_1 > 0.529275) { result = 08.2; /* 10.0/3.0 */}
-		            }
-		            if (SE_1 > 0.015213) { result = 08.5; /* 3.0/1.0 */}
+		            if (EE_1 <= 1.552108) { result = 08.0; /* 5.0/1.0 */}
+		            else if (EE_1 > 1.552108) { result = 07.8; /* 2.0/1.0 */}
 		          }
 		        }
-		        if (RES_c2 > 8.152804)
-		        {
-		          if (EE_1 <= 0.421993)
-		          {
-		            if (RES_c2 <= 8.187427) { result = 08.4; /* 2.0 */}
-		            else if (RES_c2 > 8.187427) { result = 07.8; /* 6.0/4.0 */}
-		          }
-		          if (EE_1 > 0.421993)
-		          {
-		            if (RES_c2 <= 8.1927)
-		            {
-		              if (SE_1 <= 0.008055)
-		              {
-		                if (EE_1 <= 1.012744) { result = 07.8; /* 4.0/2.0 */}
-		                else if (EE_1 > 1.012744)
-		                {
-		                  if (EE_1 <= 1.552817) { result = 08.0; /* 3.0/1.0 */}
-		                  else if (EE_1 > 1.552817) { result = 07.8; /* 2.0/1.0 */}
-		                }
-		              }
-		              if (SE_1 > 0.008055) { result = 08.0; /* 5.0/1.0 */}
-		            }
-		            if (RES_c2 > 8.1927)
-		            {
-		              if (RES_c2 <= 8.260167)
-		              {
-		                if (SE_1 <= 0.010313)
-		                {
-		                  if (SE_1 <= 0.005082) { result = 08.5; /* 2.0 */}
-		                  else if (SE_1 > 0.005082) { result = 07.9; /* 3.0/1.0 */}
-		                }
-		                if (SE_1 > 0.010313) { result = 08.5; /* 3.0/1.0 */}
-		              }
-		              if (RES_c2 > 8.260167) { result = 07.8; /* 2.0/1.0 */}
-		            }
-		          }
-		        }
+		        if (RES_c2 > 8.217601) { result = 07.9; /* 2.0 */}
 		      }
 		    }
-		    if (SE_1 > 0.015323)
+		    if (SE_1 > 0.009142)
 		    {
-		      if (SE_1 <= 0.015444) { result = 08.1; /* 3.0/2.0 */}
-		      else if (SE_1 > 0.015444) { result = 08.3; /* 11.0/7.0 */}
+		      if (RES_c2 <= 8.057972)
+		      {
+		        if (EE_1 <= 0.529275)
+		        {
+		          if (EE_1 <= 0.472268) { result = 08.6; /* 3.0/1.0 */}
+		          else if (EE_1 > 0.472268) { result = 08.5; /* 2.0 */}
+		        }
+		        if (EE_1 > 0.529275) { result = 07.9; /* 2.0/1.0 */}
+		      }
+		      if (RES_c2 > 8.057972)
+		      {
+		        if (SE_1 <= 0.015444)
+		        {
+		          if (EE_1 <= 0.421993) { result = 08.1; /* 3.0/1.0 */}
+		          else if (EE_1 > 0.421993)
+		          {
+		            if (SE_1 <= 0.015007)
+		            {
+		              if (SE_1 <= 0.014856) { result = 08.4; /* 7.0 */}
+		              else if (SE_1 > 0.014856)
+		              {
+		                if (SE_1 <= 0.014941) { result = 08.2; /* 2.0 */}
+		                else if (SE_1 > 0.014941) { result = 08.4; /* 2.0 */}
+		              }
+		            }
+		            if (SE_1 > 0.015007)
+		            {
+		              if (RES_c2 <= 8.1046) { result = 08.6; /* 3.0/1.0 */}
+		              else if (RES_c2 > 8.1046)
+		              {
+		                if (RES_c2 <= 8.11885) { result = 08.5; /* 4.0/2.0 */}
+		                else if (RES_c2 > 8.11885) { result = 08.2; /* 3.0/1.0 */}
+		              }
+		            }
+		          }
+		        }
+		        if (SE_1 > 0.015444) { result = 08.3; /* 6.0/4.0 */}
+		      }
 		    }
 		  }
 		}
-		if (RES_c2 > 8.264821)
+		if (RES_c2 > 8.242293)
 		{
-		  if (EE_1 <= 0.783755)
+		  if (RES_c2 <= 8.568494)
 		  {
-		    if (RES_c2 <= 8.987296)
+		    if (EE_1 <= 0.79014)
 		    {
-		      if (RES_c2 <= 8.576444)
+		      if (SE_1 <= 0.016065)
 		      {
-		        if (EE_1 <= 0.351149)
+		        if (EE_1 <= 0.301514) { result = 07.2; /* 3.0/2.0 */}
+		        else if (EE_1 > 0.301514)
 		        {
-		          if (SE_1 <= 0.004116) { result = 07.4; /* 3.0/2.0 */}
-		          else if (SE_1 > 0.004116) { result = 06.9; /* 3.0/2.0 */}
-		        }
-		        if (EE_1 > 0.351149)
-		        {
-		          if (EE_1 <= 0.522338)
-		          {
-		            if (EE_1 <= 0.415386) { result = 07.0; /* 2.0/1.0 */}
-		            else if (EE_1 > 0.415386) { result = 07.5; /* 3.0/1.0 */}
-		          }
-		          if (EE_1 > 0.522338)
-		          {
-		            if (SE_1 <= 0.002325) { result = 07.3; /* 2.0/1.0 */}
-		            else if (SE_1 > 0.002325) { result = 07.4; /* 2.0/1.0 */}
-		          }
+		          if (SE_1 <= 0.001726) { result = 07.3; /* 2.0/1.0 */}
+		          else if (SE_1 > 0.001726) { result = 07.8; /* 6.0/2.0 */}
 		        }
 		      }
-		      if (RES_c2 > 8.576444)
-		      {
-		        if (RES_c2 <= 8.923106)
-		        {
-		          if (RES_c2 <= 8.883992)
-		          {
-		            if (SE_1 <= 0.003414) { result = 08.4; /* 2.0/1.0 */}
-		            else if (SE_1 > 0.003414) { result = 09.5; /* 2.0 */}
-		          }
-		          if (RES_c2 > 8.883992) { result = 09.0; /* 6.0/3.0 */}
-		        }
-		        if (RES_c2 > 8.923106)
-		        {
-		          if (RES_c2 <= 8.931694) { result = 08.8; /* 4.0/2.0 */}
-		          else if (RES_c2 > 8.931694)
-		          {
-		            if (RES_c2 <= 8.965872) { result = 08.4; /* 4.0/1.0 */}
-		            else if (RES_c2 > 8.965872) { result = 07.8; /* 2.0/1.0 */}
-		          }
-		        }
-		      }
+		      if (SE_1 > 0.016065) { result = 07.3; /* 3.0/2.0 */}
 		    }
-		    if (RES_c2 > 8.987296)
+		    if (EE_1 > 0.79014)
 		    {
-		      if (SE_1 <= 0.004762)
-		      {
-		        if (SE_1 <= 0.003624)
-		        {
-		          if (RES_c2 <= 9.935204)
-		          {
-		            if (EE_1 <= 0) { result = 10.1; /* 3.0/1.0 */}
-		            else if (EE_1 > 0) { result = 07.6; /* 2.0/1.0 */}
-		          }
-		          if (RES_c2 > 9.935204)
-		          {
-		            if (RES_c2 <= 10.086795) { result = 08.3; /* 2.0/1.0 */}
-		            else if (RES_c2 > 10.086795) { result = 08.0; /* 3.0/2.0 */}
-		          }
-		        }
-		        if (SE_1 > 0.003624) { result = 09.0; /* 3.0/2.0 */}
-		      }
-		      if (SE_1 > 0.004762)
-		      {
-		        if (EE_1 <= 0.213113) { result = 09.2; /* 2.0/1.0 */}
-		        else if (EE_1 > 0.213113)
-		        {
-		          if (EE_1 <= 0.373231) { result = 08.6; /* 3.0/1.0 */}
-		          else if (EE_1 > 0.373231) { result = 08.8; /* 2.0/1.0 */}
-		        }
-		      }
+		      if (SE_1 <= 0.005082) { result = 08.2; /* 2.0 */}
+		      else if (SE_1 > 0.005082) { result = 07.5; /* 3.0/2.0 */}
 		    }
 		  }
-		  if (EE_1 > 0.783755)
+		  if (RES_c2 > 8.568494)
 		  {
-		    if (SE_1 <= 0.009271)
+		    if (SE_1 <= 0.004762)
 		    {
-		      if (SE_1 <= 0.001726)
+		      if (EE_1 <= 0.324173)
 		      {
-		        if (EE_1 <= 2.061043) { result = 07.0; /* 2.0/1.0 */}
-		        else if (EE_1 > 2.061043) { result = 06.3; /* 2.0/1.0 */}
+		        if (EE_1 <= 0.124581) { result = 09.0; /* 4.0/3.0 */}
+		        else if (EE_1 > 0.124581) { result = 07.5; /* 2.0/1.0 */}
 		      }
-		      if (SE_1 > 0.001726) { result = 08.2; /* 7.0/4.0 */}
-		    }
-		    if (SE_1 > 0.009271)
-		    {
-		      if (EE_1 <= 1.239858)
+		      if (EE_1 > 0.324173)
 		      {
-		        if (RES_c2 <= 8.965872) { result = 08.7; /* 2.0 */}
-		        else if (RES_c2 > 8.965872)
+		        if (SE_1 <= 0.003414)
 		        {
-		          if (RES_c2 <= 8.97498) { result = 08.6; /* 3.0 */}
+		          if (RES_c2 <= 8.965872) { result = 08.4; /* 3.0 */}
+		          else if (RES_c2 > 8.965872) { result = 08.1; /* 2.0/1.0 */}
+		        }
+		        if (SE_1 > 0.003414)
+		        {
+		          if (RES_c2 <= 8.917376) { result = 09.0; /* 4.0/2.0 */}
+		          else if (RES_c2 > 8.917376)
+		          {
+		            if (SE_1 <= 0.004702) { result = 08.8; /* 2.0/1.0 */}
+		            else if (SE_1 > 0.004702) { result = 08.4; /* 2.0/1.0 */}
+		          }
+		        }
+		      }
+		    }
+		    if (SE_1 > 0.004762)
+		    {
+		      if (EE_1 <= 1.140026)
+		      {
+		        if (SE_1 <= 0.016032)
+		        {
+		          if (RES_c2 <= 9.853716) { result = 09.5; /* 3.0/1.0 */}
+		          else if (RES_c2 > 9.853716) { result = 08.6; /* 5.0/3.0 */}
+		        }
+		        if (SE_1 > 0.016032)
+		        {
+		          if (RES_c2 <= 8.97498) { result = 08.6; /* 2.0 */}
 		          else if (RES_c2 > 8.97498) { result = 08.5; /* 2.0 */}
 		        }
 		      }
-		      if (EE_1 > 1.239858)
+		      if (EE_1 > 1.140026)
 		      {
-		        if (SE_1 <= 0.012219) { result = 08.2; /* 2.0 */}
-		        else if (SE_1 > 0.012219) { result = 08.1; /* 2.0/1.0 */}
+		        if (RES_c2 <= 8.987296) { result = 08.7; /* 4.0/2.0 */}
+		        else if (RES_c2 > 8.987296) { result = 08.2; /* 4.0/1.0 */}
 		      }
 		    }
 		  }
 		}
-
-		
-		
 		return result;
 	}
 	
@@ -822,14 +742,12 @@ public class IPBondDescriptor implements IBondDescriptor {
 		
 	}
 	/**
-	 * This method calculates the ionization potential of a bond and set the ionization
-	 * energy into each reaction as property
+	 * Get the reactions obtained with ionization.
+	 * The energy is set as property
 	 * 
 	 * @return The IReactionSet value
 	 */
-	public IReactionSet getReactionSet(IBond bond, IAtomContainer container) throws CDKException{
-		setEnergy = true;
-		calculate(bond,container);
+	public IReactionSet getReactionSet() throws CDKException{
 		return reactionSet;
 	}
 	
@@ -840,7 +758,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 * @return     Array with the values of the descriptors.
 	 * @throws CDKException 
 	 */
-	private double[] calculatePiSystWithoutHeteroDescriptor(IBond bond, IAtomContainer atomContainer) throws CDKException {
+	private double[] calculatePiSystDescriptor(IBond bond, IAtomContainer atomContainer) throws CDKException {
 		double[] results = new double[6];
 		IAtom positionC = bond.getAtom(0);
 		IAtom positionX = bond.getAtom(1);
@@ -875,7 +793,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 * @return     Array with the values of the descriptors.
 	 * @throws CDKException 
 	 */
-	private double[] calculateCojugatedPiSystWithoutHeteroDescriptor(IBond bond, IAtomContainer atomContainer, IAtomContainer conjugatedSys) throws CDKException {
+	private double[] calculateCojugatedPiSystDescriptor(IBond bond, IAtomContainer atomContainer, IAtomContainer conjugatedSys) throws CDKException {
 		double[] results = new double[3];
 		
 		results[0] = 0.0;
@@ -888,24 +806,27 @@ public class IPBondDescriptor implements IBondDescriptor {
 			IAtom atomsss = (IAtom) atomIt.next();
 			
 			PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
-			double result1;
-			result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+			double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+			
+			
+			
 			if(result1 > results[0])
 				results[0] = result1;
 			
 			SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
 			double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-			results[2] = results[2] + result2;
-				
+			results[2] += result2;
+			
 		}
 		
-		/*calculation of the bond descriptors*/
 		Iterator bondIt = conjugatedSys.bonds();
 		while(bondIt.hasNext()){
 			IBond bondsss = (IBond) bondIt.next();
-			
+			try{
 			ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
 			DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
+			
+			
 			double result1 = dar.get(0);
 			double resutt2 = dar.get(1);
 			double result12 = (result1+resutt2);
@@ -914,10 +835,15 @@ public class IPBondDescriptor implements IBondDescriptor {
 			if(result12 != 0)
 				resultT = result12/2;
 			
-			results[1]  = results[1] + resultT;
+			results[1] += resultT;
 			
+			
+			} catch (Exception exc)
+			{
+				continue;
+			}
 		}
-		if(results[1]!= 0)
+		if(results[1] != 0)
 			results[1] = results[1]/conjugatedSys.getAtomCount();
 		
 		if(results[2] != 0)
