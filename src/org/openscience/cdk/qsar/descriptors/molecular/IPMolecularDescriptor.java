@@ -20,9 +20,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -33,8 +37,6 @@ import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-
-import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. It is
@@ -68,9 +70,7 @@ import java.util.Iterator;
  */
 public class IPMolecularDescriptor implements IMolecularDescriptor {
 
-    /** parameter for inizate IReactionSet*/
-    private boolean setEnergy = false;
-    private IReactionSet reactionSet;
+	private IReactionSet reactionSet;
     /**
      *  Constructor for the IPMolecularDescriptor object
      */
@@ -114,56 +114,111 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Description of the Method
+     *  It calculates the first ionization energy of a molecule. 
      *
-     *@param  atomContainer                AtomContainer
-     *@return                   The 1,2 .. ionization energy
+     *@param  atomContainer     AtomContainer
+     *@return                   The 1 ionization energy
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        reactionSet = atomContainer.getBuilder().newReactionSet();
-        DoubleArrayResult dar = new DoubleArrayResult();
+    	String[] descriptorNames = {"DoubleResult"};
+    	
+    	DoubleResult value = new DoubleResult(((DoubleArrayResult)calculatePlus(atomContainer).getValue()).get(0));
+    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), value, descriptorNames );
+    }
+    
+    /**
+     *  It calculates the 1,2,.. ionization energies of a molecule. 
+     *
+     *@param  atomContainer     AtomContainer
+     *@return                   The 1, 2, .. ionization energies
+     *@exception  CDKException  Possible Exceptions
+     */
+    public DescriptorValue calculatePlus(IAtomContainer atomContainer) throws CDKException {
+    	String[] descriptorNames = {"DoubleArrayResult"};
+    	
+    	reactionSet = atomContainer.getBuilder().newReactionSet();
+        ArrayList dar = new ArrayList();
         IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
         Iterator itA = atomContainer.atoms();
         while(itA.hasNext()){
             IAtom atom = (IAtom) itA.next();
-            double result = -1;
-            if(setEnergy){
-                IReactionSet irs = descriptorA.getReactionSet(atom,atomContainer);
-                if(irs.getReactionCount() > 0){
-                    Iterator iter = irs.reactions();
-                    while(iter.hasNext()){
-                        reactionSet.addReaction((IReaction)iter.next());
-                    }
+            
+            double result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
+            if(result == -1)
+            	continue;
+            IReactionSet irs = descriptorA.getReactionSet();
+            if(irs.getReactionCount() > 0){
+                Iterator iter = irs.reactions();
+                while(iter.hasNext()){
+                    reactionSet.addReaction((IReaction)iter.next());
                 }
-
-            }else
-                result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
+            }
 
             if(result != -1)
-            dar.add(result);
+            	dar.add(result);
         }
 
         IPBondDescriptor descriptorB = new IPBondDescriptor();
-        for(int i = 0; i < atomContainer.getBondCount(); i++){
-            double result = -1;
-            if(setEnergy){
-                IReactionSet irs = descriptorB.getReactionSet(atomContainer.getBond(i),atomContainer);
-                if(irs.getReactionCount() > 0){
-                    Iterator iter = irs.reactions();
-                    while(iter.hasNext()){
-                        reactionSet.addReaction((IReaction)iter.next());
-                    }
-                }
-            }else
-                result = ((DoubleResult)descriptorB.calculate(atomContainer.getBond(i),atomContainer).getValue()).doubleValue();
+        Iterator itB = atomContainer.bonds();
+        while(itB.hasNext()){
+            IBond bond = (IBond) itB.next();
+
+        	if(bond.getOrder() < 2)
+        		continue;
+        	
+            double result = ((DoubleResult)descriptorB.calculate(bond,atomContainer).getValue()).doubleValue();
+            if(result == -1)
+            	continue;
+            IReactionSet irs = descriptorB.getReactionSet();
+            
+            if(irs.getReactionCount() > 0){
+            	Iterator iter = irs.reactions();
+            	while(iter.hasNext()){
+            		reactionSet.addReaction((IReaction)iter.next());
+            	}
+            }
 
             if(result != -1)
                 dar.add(result);
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), dar);
+        
+        if(dar.size() == 0)
+        	dar.add(-1.0);
+        
+        DoubleArrayResult results = arrangingEnergy(dar);
+        
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results, descriptorNames);
     }
-
+    
+    /**
+     * put in increasing order the ArrayList
+     * 
+     * @param array The ArrayList to order
+     * @return      The DoubleArrayResult ordered
+     */
+    private DoubleArrayResult arrangingEnergy(ArrayList array){
+        
+    	DoubleArrayResult results = new DoubleArrayResult();
+    	int count = array.size();
+    	
+    	for(int i = 0; i < count; i++){
+	    	double min = (Double)array.get(0);
+	    	int pos = 0;
+			for(int j = 0; j < array.size(); j++){
+				double value = ((Double)array.get(j)).doubleValue();
+				if( value < min){
+					min = value;
+					pos = j;
+				}
+			}
+	    	array.remove(pos);
+	    	results.add(min);
+    	}
+    	
+    	return results;
+    }
+    
     /**
      * Returns the specific type of the DescriptorResult object.
      * <p/>
@@ -180,14 +235,12 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
     }
 
     /**
-     * This method calculates the ionization potential of a molecule and set the ionization
-     * energy into each reaction as property
+	 * Get the reactions obtained with the ionization.
+	 * The energy is set as property
      *
      * @return The IReactionSet value
      */
-    public IReactionSet getReactionSet(IAtomContainer container) throws CDKException{
-        setEnergy = true;
-        calculate(container);
+    public IReactionSet getReactionSet() throws CDKException{
         return reactionSet;
     }
 
