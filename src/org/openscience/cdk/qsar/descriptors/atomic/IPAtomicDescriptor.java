@@ -1050,10 +1050,10 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		EffectiveAtomPolarizabilityDescriptor descriptor3 = new EffectiveAtomPolarizabilityDescriptor();
 		PiElectronegativityDescriptor descriptor4 = new PiElectronegativityDescriptor();
 
-		results[0]= new Double(((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[1]= new Double(((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[2]= new Double(((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[3]= new Double(((DoubleResult)descriptor4.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[0]= ((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue();
+		results[1]= ((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue();
+		results[2]= ((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue();
+		results[3]= ((DoubleResult)descriptor4.calculate(atom,atomContainer).getValue()).doubleValue();
     	
 		return results;
 	}
