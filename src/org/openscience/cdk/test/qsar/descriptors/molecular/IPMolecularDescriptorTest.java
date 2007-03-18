@@ -214,6 +214,6 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
 		IReactionSet reactionSet = descriptor.getReactionSet();
 		
-        assertEquals(1, reactionSet.getReactionCount());
+        assertEquals(3, reactionSet.getReactionCount());
     }
 }

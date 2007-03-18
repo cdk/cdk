@@ -334,7 +334,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         assertEquals(resultAccordingNIST, result, 0.11);
         
         IReactionSet reactionSet = descriptor.getReactionSet();
-		assertEquals(1, reactionSet.getReactionCount());
+		assertEquals(5, reactionSet.getReactionCount());
         
     }
     /**
@@ -360,7 +360,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         assertEquals(resultAccordingNIST, result, 0.21);
         
         IReactionSet reactionSet = descriptor.getReactionSet();
-		assertEquals(1, reactionSet.getReactionCount());
+		assertEquals(3, reactionSet.getReactionCount());
         
     }
     /**
@@ -384,6 +384,31 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
         double resultAccordingNIST = 7.77; 
         assertEquals(resultAccordingNIST, result, 0.3);
+        
+        IReactionSet reactionSet = descriptor.getReactionSet();
+		assertEquals(3, reactionSet.getReactionCount());
+        
+    }
+    
+    /**
+     * A unit test for JUnit with OC(C#CC)(C)C
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("OC(C#CC)(C)C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		descriptor.calculate(mol.getAtom(0),mol);
         
         IReactionSet reactionSet = descriptor.getReactionSet();
 		assertEquals(1, reactionSet.getReactionCount());
