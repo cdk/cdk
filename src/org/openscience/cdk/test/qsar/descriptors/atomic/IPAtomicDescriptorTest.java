@@ -255,10 +255,10 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		lpcheck.newSaturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-        assertNotNull(result);
+//        assertNotNull(result);
         
         result= ((DoubleResult)descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
-        assertNotNull(result);
+//        assertNotNull(result);
         
     }
     /**
