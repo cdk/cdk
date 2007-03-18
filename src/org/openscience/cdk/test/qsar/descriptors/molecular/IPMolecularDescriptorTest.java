@@ -194,4 +194,26 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		
         assertEquals(3, reactionSet.getReactionCount());
     }
+    /**
+     * A unit test for JUnit with CCC#CCCO
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    	IMolecule mol = sp.parseSmiles("CCCCC=CO");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		descriptor.calculate(mol);
+		
+		IReactionSet reactionSet = descriptor.getReactionSet();
+		
+        assertEquals(1, reactionSet.getReactionCount());
+    }
 }

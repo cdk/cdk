@@ -75,9 +75,6 @@ import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
  * 
  */
 public class IPAtomicDescriptor implements IAtomicDescriptor {
-	
-	/** parameter for inizate IReactionSet object*/
-	private boolean setEnergy = false;
 
 	private IReactionSet reactionSet;
 	
@@ -127,7 +124,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     	
 		double resultD = -1.0;
 		boolean isTarget = false;
-		Double[][] resultsH = null;
+		boolean isConjugated = false;
+		double[] resultsH = null;
 
 		/*control if it is into an aromatic or conjugated system*/
 		HueckelAromaticityDetector.detectAromaticity(container,true);
@@ -136,16 +134,25 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
  		while(acI.hasNext()){
 			IAtomContainer ac = (IAtomContainer) acI.next();
 			if(ac.contains(atom)){
-				return null;
+				isConjugated = true;
+				if(container.getMaximumBondOrder(atom) == 1 && container.getConnectedLonePairsCount(atom) > 0){
+					resultsH = calculateHeteroAtomConjugatedDescriptor(atom, container,ac);
+					resultD = getTreeHeteroConjAtom(resultsH);
+					resultD += 0.05;
+					isTarget = true;
+				}
 			}
  		}
  		
+		if(atom.getFlag(CDKConstants.ISAROMATIC))
+			return null;
+		
 		if(container.getMaximumBondOrder(atom) > 1 && container.getConnectedLonePairsCount(atom) > 0){
 			resultsH = calculateCarbonylDescriptor(atom, container);
 			resultD = getTreeDoubleHetero(resultsH);
 			resultD += 0.05;
 			isTarget = true;
-		}else if(container.getConnectedLonePairsCount(atom) > 0){
+		}else if(container.getConnectedLonePairsCount(atom) > 0 && !isConjugated){
 			resultsH = calculateHeteroAtomDescriptor(atom, container);
 			resultD = getTreeHeteroAtom(resultsH);
 			resultD += 0.05;
@@ -180,14 +187,152 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 * @param resultsH Array which contains the results of each descriptor
 	 * @return the result
 	 */
-	private double getTreeDoubleHetero(Double[][] resultsH) {
+	private double getTreeHeteroConjAtom(double[] resultsH) {
 		double result = 0.0;
-		double SE_c = (resultsH[0][0]).doubleValue();
-		double PCH_c = (resultsH[0][1]).doubleValue();
-		double SB  = (resultsH[0][2]).doubleValue();
-		double SE_x = (resultsH[0][3]).doubleValue();
-		double PCH_x = (resultsH[0][4]).doubleValue();
-		double RES_c = (resultsH[0][5]).doubleValue();
+		double SE_1 = resultsH[0];
+		double SE_2 = resultsH[1];
+		double EE_1  = resultsH[2];
+		double RES_c2 = resultsH[3];
+	
+		if (SE_1 <= -0.069065)
+		{
+		  if (SE_1 <= -0.138994)
+		  {
+		    if (EE_1 <= 0.676304)
+		    {
+		      if (SE_1 <= -2.022267) { result = 07.7; /* 2.0 */}
+		      else if (SE_1 > -2.022267) { result = 08.2; /* 4.0/2.0 */}
+		    }
+		    if (EE_1 > 0.676304)
+		    {
+		      if (SE_1 <= -2.514435) { result = 08.0; /* 3.0/1.0 */}
+		      else if (SE_1 > -2.514435) { result = 09.5; /* 4.0/2.0 */}
+		    }
+		  }
+		  if (SE_1 > -0.138994)
+		  {
+		    if (EE_1 <= 0.032157)
+		    {
+		      if (EE_1 <= 0.026958)
+		      {
+		        if (EE_1 <= 0.023022) { result = 08.1; /* 2.0/1.0 */}
+		        else if (EE_1 > 0.023022)
+		        {
+		          if (SE_1 <= -0.074747) { result = 08.6; /* 3.0/1.0 */}
+		          else if (SE_1 > -0.074747) { result = 08.9; /* 3.0 */}
+		        }
+		      }
+		      if (EE_1 > 0.026958)
+		      {
+		        if (SE_2 <= 0.081676) { result = 08.3; /* 2.0/1.0 */}
+		        else if (SE_2 > 0.081676) { result = 08.0; /* 6.0/1.0 */}
+		      }
+		    }
+		    if (EE_1 > 0.032157)
+		    {
+		      if (EE_1 <= 0.045671) { result = 08.6; /* 5.0/2.0 */}
+		      else if (EE_1 > 0.045671)
+		      {
+		        if (SE_1 <= -0.137681) { result = 08.1; /* 2.0/1.0 */}
+		        else if (SE_1 > -0.137681) { result = 08.4; /* 5.0/2.0 */}
+		      }
+		    }
+		  }
+		}
+		if (SE_1 > -0.069065)
+		{
+		  if (SE_1 <= -0.061906)
+		  {
+		    if (RES_c2 <= 0.006978) { result = 07.4; /* 15.0/10.0 */}
+		    else if (RES_c2 > 0.006978)
+		    {
+		      if (SE_1 <= -0.063064) { result = 07.5; /* 8.0/5.0 */}
+		      else if (SE_1 > -0.063064) { result = 07.3; /* 2.0/1.0 */}
+		    }
+		  }
+		  if (SE_1 > -0.061906)
+		  {
+		    if (RES_c2 <= 0.003398)
+		    {
+		      if (SE_1 <= 0.051565)
+		      {
+		        if (EE_1 <= 0.007932)
+		        {
+		          if (SE_1 <= -0.023796) { result = 08.7; /* 4.0/2.0 */}
+		          else if (SE_1 > -0.023796)
+		          {
+		            if (EE_1 <= -0.003129) { result = 07.3; /* 2.0/1.0 */}
+		            else if (EE_1 > -0.003129) { result = 07.4; /* 4.0/2.0 */}
+		          }
+		        }
+		        if (EE_1 > 0.007932)
+		        {
+		          if (SE_1 <= -0.0252)
+		          {
+		            if (SE_1 <= -0.02952) { result = 08.0; /* 2.0/1.0 */}
+		            else if (SE_1 > -0.02952) { result = 07.8; /* 2.0/1.0 */}
+		          }
+		          if (SE_1 > -0.0252) { result = 07.7; /* 4.0/1.0 */}
+		        }
+		      }
+		      if (SE_1 > 0.051565)
+		      {
+		        if (RES_c2 <= -0.003572) { result = 08.5; /* 4.0/2.0 */}
+		        else if (RES_c2 > -0.003572)
+		        {
+		          if (SE_1 <= 0.126992) { result = 07.6; /* 2.0/1.0 */}
+		          else if (SE_1 > 0.126992) { result = 08.2; /* 2.0/1.0 */}
+		        }
+		      }
+		    }
+		    if (RES_c2 > 0.003398)
+		    {
+		      if (SE_1 <= -0.031039)
+		      {
+		        if (RES_c2 <= 0.005076) { result = 08.1; /* 9.0/5.0 */}
+		        else if (RES_c2 > 0.005076)
+		        {
+		          if (SE_1 <= -0.061705) { result = 08.2; /* 2.0 */}
+		          else if (SE_1 > -0.061705)
+		          {
+		            if (SE_1 <= -0.060998) { result = 08.3; /* 2.0 */}
+		            else if (SE_1 > -0.060998) { result = 08.0; /* 2.0/1.0 */}
+		          }
+		        }
+		      }
+		      if (SE_1 > -0.031039)
+		      {
+		        if (SE_1 <= -0.023566)
+		        {
+		          if (SE_1 <= -0.028788) { result = 07.9; /* 2.0 */}
+		          else if (SE_1 > -0.028788) { result = 09.3; /* 2.0/1.0 */}
+		        }
+		        if (SE_1 > -0.023566)
+		        {
+		          if (RES_c2 <= 0.004518) { result = 08.2; /* 2.0/1.0 */}
+		          else if (RES_c2 > 0.004518) { result = 08.7; /* 4.0/2.0 */}
+		        }
+		      }
+		    }
+		  }
+		}
+		
+		return result;
+	}
+	/**
+	 * tree desicion for the carbonyl atoms
+	 * 
+	 * @param resultsH Array which contains the results of each descriptor
+	 * @return the result
+	 */
+	private double getTreeDoubleHetero(double[] resultsH) {
+		double result = 0.0;
+		double SE_c = resultsH[0];
+		double PCH_c = resultsH[1];
+		double SB  = resultsH[2];
+		double SE_x = resultsH[3];
+		double PCH_x = resultsH[4];
+		double RES_c = resultsH[5];
 		
 		if (PCH_c <= 0.045111)
 		{
@@ -400,12 +545,12 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 * @param resultsH Array which contains the results of each descriptor
 	 * @return the result
 	 */
-	private double getTreeHeteroAtom(Double[][] resultsH) {
+	private double getTreeHeteroAtom(double[] resultsH) {
 		double result = 0.0;
-		double SE = (resultsH[0][0]).doubleValue();
-		double SCH = (resultsH[0][1]).doubleValue();
-		double EE  = (resultsH[0][2]).doubleValue();
-		double PE  = (resultsH[0][3]).doubleValue();
+		double SE = resultsH[0];
+		double SCH = resultsH[1];
+		double EE  = resultsH[2];
+		double PE  = resultsH[3];
 		
 		if (SE <= 8.80606)
 		{
@@ -824,24 +969,91 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	public IReactionSet getReactionSet() throws CDKException{
 		return reactionSet;
 	}
-	
 	/**
 	 * Calculate the necessary descriptors for Heteratom atoms
 	 * @param atomContainer The IAtomContainer
 	 * @return     Array with the values of the descriptors.
 	 * @throws CDKException 
 	 */
-	private Double[][] calculateHeteroAtomDescriptor(IAtom atom, IAtomContainer atomContainer) throws CDKException {
-		Double[][] results = new Double[1][4];
+	private double[] calculateHeteroAtomConjugatedDescriptor(IAtom atom, IAtomContainer atomContainer, IAtomContainer conjugatedSys) throws CDKException {
+		double[] results = new double[4];
+		results[0] = -10.0;
+		results[1] = 0.0;
+		results[2] = 0.0;
+		results[3] = 0.0;
+		
+		/*calculation of the atomic descriptors*/
+		Iterator atomIt = conjugatedSys.atoms();
+		while(atomIt.hasNext()){
+			IAtom atomsss = (IAtom) atomIt.next();
+			
+			if(atomContainer.getConnectedLonePairsCount(atomsss) == 0){
+				PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
+				double result1;
+					result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+				
+				if(result1 != 0.0)
+				if(result1 > results[0])
+					results[0] = result1;
+			}else{
+				
+				PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
+				double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+				results[1] = result1;
+			}
+			
+			SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
+			double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
+			results[3] += result2;
+			
+		}
+		/*calculation of the bond descriptors*/
+		Iterator bondIt = conjugatedSys.bonds();
+		while(bondIt.hasNext()){
+			IBond bondsss = (IBond) bondIt.next();
+			
+			ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
+			DoubleArrayResult dar;
+			
+			dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
+			double result1 = dar.get(0);
+			double resutt2 = dar.get(1);
+			double result12 = (result1+resutt2);
+			
+			double resultT = 0;
+			if(result12 != 0)
+				resultT = result12/2;
+			
+			results[2] += resultT;
+			
+		}
+		if(results[2] != 0)
+			results[2] = results[1]/conjugatedSys.getAtomCount();
+		
+		if(results[3] != 0)
+			results[3] = results[2]/conjugatedSys.getAtomCount();
+		
+		
+		return results;
+    	
+	}
+	/**
+	 * Calculate the necessary descriptors for Heteratom atoms
+	 * @param atomContainer The IAtomContainer
+	 * @return     Array with the values of the descriptors.
+	 * @throws CDKException 
+	 */
+	private double[] calculateHeteroAtomDescriptor(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+		double[] results = new double[4];
 		SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
 		PartialSigmaChargeDescriptor descriptor2 = new PartialSigmaChargeDescriptor();
 		EffectiveAtomPolarizabilityDescriptor descriptor3 = new EffectiveAtomPolarizabilityDescriptor();
 		PiElectronegativityDescriptor descriptor4 = new PiElectronegativityDescriptor();
 
-		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue());
-		results[0][3]= new Double(((DoubleResult)descriptor4.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[0]= new Double(((DoubleResult)descriptor1.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[1]= new Double(((DoubleResult)descriptor2.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[2]= new Double(((DoubleResult)descriptor3.calculate(atom,atomContainer).getValue()).doubleValue());
+		results[3]= new Double(((DoubleResult)descriptor4.calculate(atom,atomContainer).getValue()).doubleValue());
     	
 		return results;
 	}
@@ -850,9 +1062,9 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 * @param atomContainer The IAtomContainer
 	 * @return     Array with the values of the descriptors.
 	 */
-	private Double[][] calculateCarbonylDescriptor(IAtom atom, IAtomContainer atomContainer) {
+	private double[] calculateCarbonylDescriptor(IAtom atom, IAtomContainer atomContainer) {
 		
-		Double[][] results = new Double[1][6];
+		double[] results = new double[6];
 		IAtom positionX = atom;
 		IAtom positionC = null; 
 		List listAtoms = atomContainer.getConnectedAtomsList(atom);
@@ -864,26 +1076,85 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 
 		IBond bond = atomContainer.getBond(positionX, positionC);
 		try {
-        	/*0*/
-			SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
-    		results[0][0]= new Double(((DoubleResult)descriptor1.calculate(positionC, atomContainer).getValue()).doubleValue());
-        	/*1*/
-    		PartialPiChargeDescriptor descriptor2 = new PartialPiChargeDescriptor();
-    		results[0][1]= new Double(((DoubleResult)descriptor2.calculate(positionC,atomContainer).getValue()).doubleValue());
-    		/*2*/
-    		BondPartialSigmaChargeDescriptor descriptor3 = new BondPartialSigmaChargeDescriptor();
-    		results[0][2]= new Double(((DoubleResult)descriptor3.calculate(bond, atomContainer).getValue()).doubleValue());
-    		/*3*/
-    		SigmaElectronegativityDescriptor descriptor4 = new SigmaElectronegativityDescriptor();
-    		results[0][3]= new Double(((DoubleResult)descriptor4.calculate(positionX, atomContainer).getValue()).doubleValue());
-        	/*4*/
-    		PartialPiChargeDescriptor descriptor5 = new PartialPiChargeDescriptor();
-    		results[0][4]= new Double(((DoubleResult)descriptor5.calculate(positionX, atomContainer).getValue()).doubleValue());
-    		/*5*/
-    		ResonancePositiveChargeDescriptor descriptor6 = new ResonancePositiveChargeDescriptor();
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(bond, atomContainer).getValue());
-			double datT = (dar.get(0)+dar.get(1))/2;
-			results[0][5] = new Double(datT);
+			AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(atomContainer);
+			
+			if(conjugatedPi.getAtomContainerCount() == 1){
+				IAtomContainer conjugatedSy = conjugatedPi.getAtomContainer(0);
+				Iterator atomIt = conjugatedSy.atoms();
+				while(atomIt.hasNext()){
+					IAtom atomsss = (IAtom) atomIt.next();
+					if(atomsss.getSymbol().equals("C")){
+						PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
+						double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
+
+						if(result1 > results[1])
+							results[1] = result1;
+						
+						SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
+						double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
+						results[0] += result2;
+					}
+				}
+				if(results[0] != 0)
+					results[0] = results[0]/conjugatedSy.getAtomCount();
+				
+				if(results[1] != 0)
+					results[1] = results[1]/conjugatedSy.getAtomCount();
+			}else{
+				/* 1 */
+				try{
+				SigmaElectronegativityDescriptor descriptor1 = new SigmaElectronegativityDescriptor();
+				results[0] = ((DoubleResult)descriptor1.calculate(positionC,(IAtomContainer) atomContainer).getValue()).doubleValue();
+
+				}catch(Exception e){
+					results[0] = 0.0;
+				}
+//				System.out.println("symbolC: "+atomContainer.getAtom(positionC).getSymbol());
+//				System.out.println("symbolX: "+atomContainer.getAtom(positionX).getSymbol());
+				
+				/* 2 */
+				try{
+				PartialPiChargeDescriptor descriptor2 = new PartialPiChargeDescriptor();
+				results[1] = ((DoubleResult)descriptor2.calculate(positionC,(IAtomContainer) atomContainer).getValue()).doubleValue();
+				}catch(Exception e){
+					results[1] = 0.0;
+				}
+			}
+			/* 3 */
+			try{
+			BondPartialSigmaChargeDescriptor descriptor3 = new BondPartialSigmaChargeDescriptor();
+			results[2] = ((DoubleResult)descriptor3.calculate(bond,(IAtomContainer) atomContainer).getValue()).doubleValue();
+			}catch(Exception e){
+				results[2] = 0.0;
+			}
+			/* 4 */
+			try{
+			SigmaElectronegativityDescriptor descriptor4 = new SigmaElectronegativityDescriptor();
+			results[3] = ((DoubleResult)descriptor4.calculate(positionX,(IAtomContainer) atomContainer).getValue()).doubleValue();
+			}catch(Exception e){
+				results[3] = 0.0;
+			}
+			/* 5 */
+			try{
+			PartialPiChargeDescriptor descriptor5 = new PartialPiChargeDescriptor();
+			results[4] = ((DoubleResult)descriptor5.calculate(positionX,(IAtomContainer) atomContainer).getValue()).doubleValue();
+			}catch(Exception e){
+				results[4] = 0.0;
+			}
+			/* 6 */
+			try{
+			ResonancePositiveChargeDescriptor descriptor6 = new ResonancePositiveChargeDescriptor();
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(bond,atomContainer).getValue());
+			double datT =0.0;
+			if((new Double(dar.get(0))).toString().equals("Infinity")||
+					(new Double(dar.get(1))).toString().equals("Infinity")){}
+			else if(dar.get(0) == 0 && dar.get(1) == 0){}
+			else
+				datT = (dar.get(0)+dar.get(1))/2;
+			results[5] = datT;
+			}catch(Exception e){
+				results[5] = 0.0;
+			}
  
 		} catch (CDKException e) {
 			e.printStackTrace();

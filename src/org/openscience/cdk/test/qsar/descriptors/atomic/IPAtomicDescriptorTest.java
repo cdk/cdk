@@ -311,4 +311,83 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         assertEquals(0, reactionSet.getReactionCount());
     }
 
+    /**
+     * A unit test for JUnit with O(C=CC=C)C
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemWithHeteroatomDescriptor3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("O(C=CC=C)C");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.03; 
+        assertEquals(resultAccordingNIST, result, 0.11);
+        
+        IReactionSet reactionSet = descriptor.getReactionSet();
+		assertEquals(1, reactionSet.getReactionCount());
+        
+    }
+    /**
+     * A unit test for JUnit with OC=CC
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemWithHeteroatomDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("OC=CC");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 8.64; 
+        assertEquals(resultAccordingNIST, result, 0.21);
+        
+        IReactionSet reactionSet = descriptor.getReactionSet();
+		assertEquals(1, reactionSet.getReactionCount());
+        
+    }
+    /**
+     * A unit test for JUnit with C1=C(C)CCS1
+     * 
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     * @throws java.lang.Exception
+     */
+    public void testIPPySystemWithHeteroatomDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = sp.parseSmiles("C1=C(C)CCS1");
+
+		HydrogenAdder hAdder = new HydrogenAdder();
+		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		
+		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.newSaturate(mol);
+		
+		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
+        double resultAccordingNIST = 7.77; 
+        assertEquals(resultAccordingNIST, result, 0.3);
+        
+        IReactionSet reactionSet = descriptor.getReactionSet();
+		assertEquals(1, reactionSet.getReactionCount());
+        
+    }
+    
 }

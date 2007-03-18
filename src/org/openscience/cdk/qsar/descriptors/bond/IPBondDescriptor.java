@@ -75,8 +75,6 @@ import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
  */
 public class IPBondDescriptor implements IBondDescriptor {
 	
-	/** parameter for inizate IReactionSet*/
-	private boolean setEnergy = false;
 	private IReactionSet reactionSet;
 
 	/**
@@ -154,10 +152,10 @@ public class IPBondDescriptor implements IBondDescriptor {
             				
             				if(container.getConnectedLonePairsCount(atomsss) > 0){
             					isConjugatedPi_withHeteroatom = true;
-            					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
-                    			resultD = getPySystWithHetero(resultsH);
-            					resultD += 0.05;
-                    			isTarget = true;
+//            					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
+//                    			resultD = getPySystWithHetero(resultsH);
+//            					resultD += 0.05;
+//                    			isTarget = true;
                     			break;
             				}
             			}
@@ -199,144 +197,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(resultD),descriptorNames);
 	}
 
-	/**
-	 * tree desicion for the PySystWithHetero
-	 * 
-	 * @param resultsH Array which contains the results of each descriptor
-	 * @return the result
-	 */
-	private double getPySystWithHetero(double[] resultsH) {
-		double result = 0.0;
-		double SE_1 = resultsH[0];
-		double SE_2 = resultsH[1];
-		double EE_1  = resultsH[2];
-		double RES_c2 = resultsH[3];
 	
-		if (SE_1 <= -0.069065)
-		{
-		  if (SE_1 <= -0.138994)
-		  {
-		    if (EE_1 <= 0.676304)
-		    {
-		      if (SE_1 <= -2.022267) { result = 07.7; /* 2.0 */}
-		      else if (SE_1 > -2.022267) { result = 08.2; /* 4.0/2.0 */}
-		    }
-		    if (EE_1 > 0.676304)
-		    {
-		      if (SE_1 <= -2.514435) { result = 08.0; /* 3.0/1.0 */}
-		      else if (SE_1 > -2.514435) { result = 09.5; /* 4.0/2.0 */}
-		    }
-		  }
-		  if (SE_1 > -0.138994)
-		  {
-		    if (EE_1 <= 0.032157)
-		    {
-		      if (EE_1 <= 0.026958)
-		      {
-		        if (EE_1 <= 0.023022) { result = 08.1; /* 2.0/1.0 */}
-		        else if (EE_1 > 0.023022)
-		        {
-		          if (SE_1 <= -0.074747) { result = 08.6; /* 3.0/1.0 */}
-		          else if (SE_1 > -0.074747) { result = 08.9; /* 3.0 */}
-		        }
-		      }
-		      if (EE_1 > 0.026958)
-		      {
-		        if (SE_2 <= 0.081676) { result = 08.3; /* 2.0/1.0 */}
-		        else if (SE_2 > 0.081676) { result = 08.0; /* 6.0/1.0 */}
-		      }
-		    }
-		    if (EE_1 > 0.032157)
-		    {
-		      if (EE_1 <= 0.045671) { result = 08.6; /* 5.0/2.0 */}
-		      else if (EE_1 > 0.045671)
-		      {
-		        if (SE_1 <= -0.137681) { result = 08.1; /* 2.0/1.0 */}
-		        else if (SE_1 > -0.137681) { result = 08.4; /* 5.0/2.0 */}
-		      }
-		    }
-		  }
-		}
-		if (SE_1 > -0.069065)
-		{
-		  if (SE_1 <= -0.061906)
-		  {
-		    if (RES_c2 <= 0.006978) { result = 07.4; /* 15.0/10.0 */}
-		    else if (RES_c2 > 0.006978)
-		    {
-		      if (SE_1 <= -0.063064) { result = 07.5; /* 8.0/5.0 */}
-		      else if (SE_1 > -0.063064) { result = 07.3; /* 2.0/1.0 */}
-		    }
-		  }
-		  if (SE_1 > -0.061906)
-		  {
-		    if (RES_c2 <= 0.003398)
-		    {
-		      if (SE_1 <= 0.051565)
-		      {
-		        if (EE_1 <= 0.007932)
-		        {
-		          if (SE_1 <= -0.023796) { result = 08.7; /* 4.0/2.0 */}
-		          else if (SE_1 > -0.023796)
-		          {
-		            if (EE_1 <= -0.003129) { result = 07.3; /* 2.0/1.0 */}
-		            else if (EE_1 > -0.003129) { result = 07.4; /* 4.0/2.0 */}
-		          }
-		        }
-		        if (EE_1 > 0.007932)
-		        {
-		          if (SE_1 <= -0.0252)
-		          {
-		            if (SE_1 <= -0.02952) { result = 08.0; /* 2.0/1.0 */}
-		            else if (SE_1 > -0.02952) { result = 07.8; /* 2.0/1.0 */}
-		          }
-		          if (SE_1 > -0.0252) { result = 07.7; /* 4.0/1.0 */}
-		        }
-		      }
-		      if (SE_1 > 0.051565)
-		      {
-		        if (RES_c2 <= -0.003572) { result = 08.5; /* 4.0/2.0 */}
-		        else if (RES_c2 > -0.003572)
-		        {
-		          if (SE_1 <= 0.126992) { result = 07.6; /* 2.0/1.0 */}
-		          else if (SE_1 > 0.126992) { result = 08.2; /* 2.0/1.0 */}
-		        }
-		      }
-		    }
-		    if (RES_c2 > 0.003398)
-		    {
-		      if (SE_1 <= -0.031039)
-		      {
-		        if (RES_c2 <= 0.005076) { result = 08.1; /* 9.0/5.0 */}
-		        else if (RES_c2 > 0.005076)
-		        {
-		          if (SE_1 <= -0.061705) { result = 08.2; /* 2.0 */}
-		          else if (SE_1 > -0.061705)
-		          {
-		            if (SE_1 <= -0.060998) { result = 08.3; /* 2.0 */}
-		            else if (SE_1 > -0.060998) { result = 08.0; /* 2.0/1.0 */}
-		          }
-		        }
-		      }
-		      if (SE_1 > -0.031039)
-		      {
-		        if (SE_1 <= -0.023566)
-		        {
-		          if (SE_1 <= -0.028788) { result = 07.9; /* 2.0 */}
-		          else if (SE_1 > -0.028788) { result = 09.3; /* 2.0/1.0 */}
-		        }
-		        if (SE_1 > -0.023566)
-		        {
-		          if (RES_c2 <= 0.004518) { result = 08.2; /* 2.0/1.0 */}
-		          else if (RES_c2 > 0.004518) { result = 08.7; /* 4.0/2.0 */}
-		        }
-		      }
-		    }
-		  }
-		}
-		
-		return result;
-	}
 	/**
 	 * tree desicion for the ConjugatedPiSys
 	 * 
@@ -851,75 +712,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 		
 		return results;
 	}
-	/**
-	 * Calculate the necessary descriptors for pi conjugated systems with one added heteroatom
-	 * 
-	 * @param atomContainer The IAtomContainer
-	 * @return     Array with the values of the descriptors.
-	 * @throws CDKException 
-	 */
-	private double[] calculateCojugatedPiSystWithHeteroDescriptor(IBond bond, IAtomContainer atomContainer, IAtomContainer conjugatedSys) throws CDKException {
-		double[] results = new double[4];
-		
-		results[0] = -10.0;
-		results[1] = 0.0;
-		results[2] = 0.0;
-		results[3] = 0.0;
-		
-		/*calculation of the atomic descriptors*/
-		Iterator atomIt = conjugatedSys.atoms();
-		while(atomIt.hasNext()){
-			IAtom atomsss = (IAtom) atomIt.next();
-			
-			if(atomContainer.getConnectedLonePairsCount(atomsss) == 0){
-				PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
-				double result1;
-					result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				
-				if(result1 != 0.0)
-				if(result1 > results[0])
-					results[0] = result1;
-			}else{
-				
-				PartialPiChargeDescriptor descriptor1 = new PartialPiChargeDescriptor();
-				double result1 = ((DoubleResult)descriptor1.calculate(atomsss,atomContainer).getValue()).doubleValue();
-				results[1] = result1;
-			}
-			
-			SigmaElectronegativityDescriptor descriptor2 = new SigmaElectronegativityDescriptor();
-			double result2 = ((DoubleResult)descriptor2.calculate(atomsss,atomContainer).getValue()).doubleValue();
-			results[3] += result2;
-			
-		}
-		/*calculation of the bond descriptors*/
-		Iterator bondIt = conjugatedSys.bonds();
-		while(bondIt.hasNext()){
-			IBond bondsss = (IBond) bondIt.next();
-			
-			ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
-			DoubleArrayResult dar;
-			
-			dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
-			double result1 = dar.get(0);
-			double resutt2 = dar.get(1);
-			double result12 = (result1+resutt2);
-			
-			double resultT = 0;
-			if(result12 != 0)
-				resultT = result12/2;
-			
-			results[2] += resultT;
-			
-		}
-		if(results[2] != 0)
-			results[2] = results[1]/conjugatedSys.getAtomCount();
-		
-		if(results[3] != 0)
-			results[3] = results[2]/conjugatedSys.getAtomCount();
-		
-		
-		return results;
-	}
+	
 	 /**
      * Gets the parameterNames attribute of the IPBondDescriptor object.
      *

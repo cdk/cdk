@@ -144,6 +144,9 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
         while(itA.hasNext()){
             IAtom atom = (IAtom) itA.next();
             
+            if(atomContainer.getConnectedLonePairsCount(atom) == 0)
+            	continue;
+            
             double result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
             if(result == -1)
             	continue;
