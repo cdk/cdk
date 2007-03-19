@@ -25,6 +25,7 @@
 package org.openscience.cdk.test.fingerprint;
 
 import java.util.BitSet;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -63,6 +64,17 @@ public class FingerprinterToolTest extends CDKTestCase
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+	}
+	
+	public void testListDifferences_BitSet_BitSet() throws Exception{
+		Fingerprinter fingerprinter = new Fingerprinter();
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		BitSet bs = fingerprinter.getFingerprint(mol);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		List l=FingerprinterTool.listDifferences(bs1, bs);
+		this.assertEquals(l.size(),19);
 	}
 }
 

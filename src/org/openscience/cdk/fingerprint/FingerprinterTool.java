@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -71,16 +73,26 @@ public class FingerprinterTool {
 		return false;
 	}
 
-	public static void listDifferences(BitSet bs1, BitSet bs2)
+	/**
+	 * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger
+	 * 
+	 * @param bs1 First bitset
+	 * @param bs2 Second bitset
+	 * @return An arrayList of Integers
+	 */
+	public static List listDifferences(BitSet bs1, BitSet bs2)
 	{
+		List l=new ArrayList();
 		logger.debug("Listing bit positions set in bs2 but not in bs1");
 		for (int f = 0; f < bs2.size(); f++)
 		{
 			if (bs2.get(f) && !bs1.get(f))
 			{
+				l.add(new Integer(f));
 				logger.debug("Bit " + f + " not set in bs1");
 			}
 		}
+		return l;
 	}
 
 }
