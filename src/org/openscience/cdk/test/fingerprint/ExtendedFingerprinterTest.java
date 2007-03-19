@@ -33,6 +33,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -64,6 +66,19 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
+	
+	public void testGetFingerprint_IAtomContainer_IRingSet() throws java.lang.Exception {
+		ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
+		assertNotNull(fingerprinter);
+		
+		Molecule mol = MoleculeFactory.makeIndole();
+		IRingSet ringset=new AllRingsFinder().findAllRings(mol);
+		BitSet bs = fingerprinter.getFingerprint(mol,ringset);
+		Molecule frag1 = MoleculeFactory.makePyrrole();
+		BitSet bs1 = fingerprinter.getFingerprint(frag1);
+		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+	}
+	
 	
 	public void testGetSize() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
