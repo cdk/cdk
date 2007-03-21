@@ -258,6 +258,7 @@ public class ReactionManipulator {
     
     public static List getAllChemObjects(IReaction reaction) {
         ArrayList list = new ArrayList();
+        list.add(reaction);
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             list.add(reactants.getMolecule(i));

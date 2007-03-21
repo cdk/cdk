@@ -170,9 +170,9 @@ public class ReactionSetManipulator {
     
     public static List getAllChemObjects(IReactionSet set) {
         ArrayList list = new ArrayList();
+        list.add(set);
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
-            list.add(reaction);
             list.addAll(ReactionManipulator.getAllChemObjects(reaction));
         }
         return list;
