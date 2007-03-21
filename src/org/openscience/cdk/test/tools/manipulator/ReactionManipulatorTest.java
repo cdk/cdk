@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ * 
+ * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,6 +20,9 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import junit.framework.Test;
@@ -32,12 +32,15 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -50,18 +53,27 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
 public class ReactionManipulatorTest extends CDKTestCase {
 
+	private IReaction reaction;
+	
 	public ReactionManipulatorTest(String name) {
 		super(name);
 	}
 
-    public void setUp() {}
+    public void setUp() throws Exception {
+		String filename1 = "data/mdl/reaction-1.rxn";
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        MDLRXNReader reader1 = new MDLRXNReader(ins1);
+        ReactionSet set = (ReactionSet)reader1.read(new ReactionSet());
+        reaction = set.getReaction(0);
+        reader1.close();
+    }
 
     public static Test suite() {
         TestSuite suite = new TestSuite(ReactionManipulatorTest.class);
         return suite;
 	}
 
-    public void testReverse() {
+    public void testReverse_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setDirection(Reaction.BACKWARD);
         Molecule water = new Molecule();
@@ -76,7 +88,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
     }
     
-    public void testGetAllIDs() {
+    public void testGetAllIDs_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setID("r1");
         Molecule water = new Molecule();
@@ -96,7 +108,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-    public void testMappingAtoms()throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
     	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
     	IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C=C");
     	IMolecule product = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=C");
@@ -124,7 +136,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-    public void testMappingBonds()throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testGetMappedChemObject_IReaction_IBond()throws ClassNotFoundException, CDKException, java.lang.Exception {
     	IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
     	IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C=C");
     	IMolecule product = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=C");
@@ -143,9 +155,65 @@ public class ReactionManipulatorTest extends CDKTestCase {
         assertEquals(mappedBond, product.getBond(0));
         
         mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
-        assertEquals(mappedBond, reactant.getBond(1));
-        
-        
+        assertEquals(mappedBond, reactant.getBond(1));        
     }
+    
+	public void testGetAtomCount_IReaction() throws Exception {
+        assertEquals(19, ReactionManipulator.getAtomCount(reaction));
+	}
+	
+	public void testGetBondCount_IReaction() throws Exception {
+        assertEquals(18, ReactionManipulator.getBondCount(reaction));
+	}
+	
+	public void testGetAllAtomContainers_IReaction() throws Exception {
+		assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
+	}	
+    
+	public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
+		ReactionManipulator.setAtomProperties(reaction, "test", "ok");
+		Iterator atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+		while (atomContainers.hasNext()) {
+			IAtomContainer container = (IAtomContainer)atomContainers.next();
+			Iterator atoms = container.atoms();
+			while (atoms.hasNext()) {
+				IAtom atom = (IAtom)atoms.next();
+				assertNotNull(atom.getProperty("test"));
+				assertEquals("ok", atom.getProperty("test"));
+			}
+		}
+	}
+
+	public void testGetAllChemObjects_IReactionSet() {
+		List allObjects = ReactionManipulator.getAllChemObjects(reaction);
+		// does not recurse beyond the IAtomContainer, so:
+		// reaction, 2xreactant, 1xproduct
+		assertEquals(4, allObjects.size());
+	}
+
+	public void testGetRelevantAtomContainer_IReaction_IAtom() {
+		Iterator atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+		while (atomContainers.hasNext()) {
+			IAtomContainer container = (IAtomContainer)atomContainers.next();
+			IAtom anAtom = container.getAtom(0);
+			assertEquals(
+				container, 
+				ReactionManipulator.getRelevantAtomContainer(reaction, anAtom)
+			);
+		}
+	}
+	
+	public void testGetRelevantAtomContainer_IReaction_IBond() {
+		Iterator atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+		while (atomContainers.hasNext()) {
+			IAtomContainer container = (IAtomContainer)atomContainers.next();
+			IBond aBond = container.getBond(0);
+			assertEquals(
+				container, 
+				ReactionManipulator.getRelevantAtomContainer(reaction, aBond)
+			);
+		}
+	}
+
 }
 
