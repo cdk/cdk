@@ -122,6 +122,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof IReaction) {
              return (IChemObject) readReaction(object.getBuilder());
+         } else if (object instanceof IReactionSet) {
+             IReactionSet reactionSet = object.getBuilder().newReactionSet();
+             reactionSet.addReaction(readReaction(object.getBuilder()));
+             return reactionSet;
          } else if (object instanceof IChemModel) {
              IChemModel model = object.getBuilder().newChemModel();
              IReactionSet reactionSet = object.getBuilder().newReactionSet();
@@ -147,6 +151,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
          } else if (object instanceof IChemModel) {
              return true;
          } else if (object instanceof IChemFile) {
+             return true;
+         } else if (object instanceof IReactionSet) {
              return true;
          }
          return false;
