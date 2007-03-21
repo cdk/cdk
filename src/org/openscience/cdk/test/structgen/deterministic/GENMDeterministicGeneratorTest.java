@@ -93,7 +93,6 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	public void testAnotherOne() throws Exception {
 		if (runSlowTests()) {	
 			GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C6H13O2N1","");
-			MyStructureGenerationListener myListener = new MyStructureGenerationListener();
 			gdg.generate();
 			assertEquals(23946, gdg.getNumberOfStructures());
 		}
@@ -145,6 +144,74 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		List uniqueSMILES = assertUnique(structures);
 		assertTrue(uniqueSMILES.contains("CCCC"));
 		assertTrue(uniqueSMILES.contains("CC(C)C"));
+	}
+
+	/**
+	 * @cdk.bug 1678346
+	 */
+	public void testPhosphate() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("H2P1O4","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(2, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+//		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("OP(=O)(=O)O"));
+	}
+
+	public void testDichloroEthane() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H4F2","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(2, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("FCCF"));
+	}
+
+	public void testTMS() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C4H12Si1","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(1, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("C[Si](C)(C)C"));
+	}
+
+	public void testMMS() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C1H6Si1","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(1, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("C[Si](C)(C)C"));
+	}
+
+	public void testDMS() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H8Si1","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(1, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("C[Si](C)(C)C"));
 	}
 
 	private List assertUnique(List structures) {
