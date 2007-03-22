@@ -75,11 +75,10 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	private static List listConvertion(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException{
 		int natom = container.getAtomCount();
-		int i = 0;
 
 		List scalated = new ArrayList();
 
-		for (i = 0; i < natom; i++) {
+		for (int i = 0; i < natom; i++) {
 			scalated.add(new Double(scaledAtomicMasses(container.getAtom(i))));
 		}
 		return scalated;
