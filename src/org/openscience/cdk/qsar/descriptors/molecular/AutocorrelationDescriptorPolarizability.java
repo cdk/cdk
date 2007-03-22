@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import java.util.*;
-import java.lang.Object;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
