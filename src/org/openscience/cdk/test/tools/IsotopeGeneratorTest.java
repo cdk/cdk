@@ -89,13 +89,13 @@ public class IsotopeGeneratorTest extends CDKTestCase
 		assertEquals(4, containerSet.getAtomContainerCount());
 		
 		double mm = Math.round((getMass(containerSet.getAtomContainer(0))));
-		assertEquals(158.0, mm);
+		assertEquals(158.0, mm, 0.0);
 		mm = Math.round((getMass(containerSet.getAtomContainer(1))));
-		assertEquals(160.0, mm);
+		assertEquals(160.0, mm, 0.0);
 		mm = Math.round((getMass(containerSet.getAtomContainer(2))));
-		assertEquals(160.0, mm);
+		assertEquals(160.0, mm, 0.0);
 		mm = Math.round((getMass(containerSet.getAtomContainer(3))));
-		assertEquals(162.0, mm);
+		assertEquals(162.0, mm, 0.0);
 	}
 	/**
 	 * A unit test for JUnit: Isotopes of the Chloromethylidyne.
@@ -115,9 +115,9 @@ public class IsotopeGeneratorTest extends CDKTestCase
 		assertEquals(2, containerSet.getAtomContainerCount());
 		
 		double mm = Math.round((getMass(containerSet.getAtomContainer(0))));
-		assertEquals(47.0, mm);
+		assertEquals(47.0, mm, 0.0);
 		mm = Math.round((getMass(containerSet.getAtomContainer(1))));
-		assertEquals(49.0, mm);
+		assertEquals(49.0, mm, 0.0);
 	}
 	/**
 	 * A unit test for JUnit: Isotopes of the Chloromethylidyne with a 
@@ -139,7 +139,7 @@ public class IsotopeGeneratorTest extends CDKTestCase
 		assertEquals(1, containerSet.getAtomContainerCount());
 		
 		double mm = Math.round((getMass(containerSet.getAtomContainer(0))));
-		assertEquals(47.0, mm);
+		assertEquals(47.0, mm, 0.0);
 	}
 	/**
 	 * returns the exact mass for a given molecular formula, using mass already set
