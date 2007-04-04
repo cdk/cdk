@@ -92,7 +92,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Description of the Method.
+     *  Evaluate the Zagreb Index for a molecule.
      *
      *@param  atomContainer                AtomContainer
      *@return                   zagreb index

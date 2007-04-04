@@ -105,7 +105,7 @@ public class CarbonConnectivityOrderZeroDescriptor implements IMolecularDescript
 
 
     /**
-     *  Description of the Method
+     *  Evaluate the descriptor for the molecule.
      *
      *@param  atomContainer     AtomContainer
      *@return                   Carbon connectivity index (order 0)

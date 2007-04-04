@@ -85,7 +85,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
 
     /**
-     * Description of the Method
+     * Evaluate the descriptor for the molecule.
      *
      * @param atomContainer AtomContainer
      * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and LOBMIN in that

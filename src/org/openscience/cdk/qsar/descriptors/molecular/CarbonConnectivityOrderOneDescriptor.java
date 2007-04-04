@@ -109,7 +109,7 @@ public class CarbonConnectivityOrderOneDescriptor implements IMolecularDescripto
 
 
     /**
-     *  Description of the Method
+     *  Evaluate the descriptor for the method.
      *
      *@param  atomContainer                AtomContainer
      *@return                   chi1C

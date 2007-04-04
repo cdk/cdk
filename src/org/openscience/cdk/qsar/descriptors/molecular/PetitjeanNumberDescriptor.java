@@ -110,7 +110,7 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
 
 
     /**
-     *  Description of the Method
+     *  Evaluate the descriptor for the molecule.
      *
      *@param  atomContainer                AtomContainer
      *@return                   petitjean number
