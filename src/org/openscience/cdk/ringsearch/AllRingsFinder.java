@@ -24,20 +24,15 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Finds the Set of all Rings. This is an implementation of the algorithm
@@ -101,7 +96,6 @@ public class AllRingsFinder
 	 *  Fings the set of all rings in a molecule
 	 *
 	 *@param  atomContainer     the molecule to be searched for rings
-	 *@param  useSSSR           use the SSSRFinder & RingPartitioner as pre-filter
 	 *@return                   a RingSet containing the rings in molecule
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
@@ -130,7 +124,7 @@ public class AllRingsFinder
 	 */
 	private void doSearch(IAtomContainer ac, List paths, IRingSet ringSet) throws CDKException
 	{
-		IAtom atom = null;
+		IAtom atom;
 		/*
 		 *  First we convert the molecular graph into a a path graph by
 		 *  creating a set of two membered paths from all the bonds in the molecule
@@ -161,7 +155,7 @@ public class AllRingsFinder
 	private void removeAliphatic(IAtomContainer ac) throws CDKException
 	{
 		boolean removedSomething;
-		IAtom atom = null;
+		IAtom atom;
 		do
 		{
 			removedSomething = false;
@@ -191,10 +185,10 @@ public class AllRingsFinder
 	 */
 	private void remove(IAtom atom, IAtomContainer ac, List paths, IRingSet rings) throws CDKException
 	{
-		Path path1 = null;
-		Path path2 = null;
-		Path union = null;
-		int intersectionSize = 0;
+		Path path1;
+		Path path2;
+		Path union;
+		int intersectionSize;
 		newPaths.clear();
 		removePaths.clear();
 		potentialRings.clear();
@@ -260,10 +254,10 @@ public class AllRingsFinder
 	 */
 	private void detectRings(List paths, IRingSet ringSet, IAtomContainer ac)
 	{
-		Path path = null;
-		IRing ring = null;
+		Path path;
+		IRing ring;
 		int bondNum;
-		IAtom a1 = null, a2 = null;
+		IAtom a1, a2 = null;
 		for (int f = 0; f < paths.size(); f++)
 		{
 			path = (Path) paths.get(f);
@@ -317,7 +311,7 @@ public class AllRingsFinder
 	 */
 	private void initPathGraph(IAtomContainer ac, List paths)
 	{
-		Path path = null;
+		Path path;
 
         Iterator bonds = ac.bonds();
         while (bonds.hasNext()) {
@@ -340,9 +334,9 @@ public class AllRingsFinder
 	{
 		int minDegree = 999;
 		// :-)
-		int degree = minDegree;
+		int degree;
 		IAtom minAtom = null;
-		IAtom atom = null;
+		IAtom atom;
 		for (int f = 0; f < ac.getAtomCount(); f++)
 		{
 			atom = ac.getAtom(f);
