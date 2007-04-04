@@ -28,11 +28,6 @@
  */
 
 package org.openscience.cdk.ringsearch;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -42,6 +37,11 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Finds the Smallest Set of Smallest Rings. 
@@ -226,11 +226,14 @@ public class SSSRFinder {
 			
 			IAtom[] atoms = new IAtom[vertices.size()];
 			atoms[0] = (IAtom) vertices.get(0);
-			for (int i = 1; i < vertices.size(); i++) {
+            for (int i = 1; i < vertices.size(); i++) {
 				atoms[i] = (IAtom) vertices.get(i);
 				ring.addElectronContainer(ac.getBond(atoms[i-1], atoms[i]));
 			}
-			ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
+
+            for (int i = 0; i < atoms.length; i++) atoms[i].setFlag(CDKConstants.ISINRING, true);
+
+            ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);
 
 			ringSet.addAtomContainer(ring);

@@ -20,16 +20,11 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import java.io.InputStream;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -37,187 +32,213 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
 /**
  * @cdk.module test-standard
  */
 public class SSSRFinderTest extends CDKTestCase {
-    
-	private final LoggingTool logger = new LoggingTool(SSSRFinderTest.class);
-	
+
+    private final LoggingTool logger = new LoggingTool(SSSRFinderTest.class);
+
     public SSSRFinderTest(String name) {
         super(name);
     }
-    
-	public static Test suite() {
-		return new TestSuite(SSSRFinderTest.class);
-	}
 
-	public void testSSSRFinder()
-	{
-		SSSRFinder finder = new SSSRFinder();
-		assertNotNull(finder);
-	}
+    public static Test suite() {
+        return new TestSuite(SSSRFinderTest.class);
+    }
 
-	public void testSSSRFinder_IAtomContainer()
-	{
-		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
-		SSSRFinder finder = new SSSRFinder(molecule);
-		assertNotNull(finder);
-	}
+    public void testSSSRFinder_IAtomContainer()
+    {
+        IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+        SSSRFinder finder = new SSSRFinder(molecule);
+        assertNotNull(finder);
+    }
 
-	public void testFindSSSR()
-	{
-		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(2, ringSet.getAtomContainerCount());
-	}
+    public void testFindSSSR()
+    {
+        IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        assertEquals(2, ringSet.getAtomContainerCount());
+    }
 
-	public void testFindSSSR_IAtomContainer()
-	{
-		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
-		IRingSet ringSet = new SSSRFinder().findSSSR(molecule);
-		assertEquals(2, ringSet.getAtomContainerCount());
-	}
+    public void testFindSSSR_IAtomContainer()
+    {
+        IMolecule molecule = MoleculeFactory.makeAlphaPinene();
+        SSSRFinder sssrFinder = new SSSRFinder(molecule);
+        IRingSet ringSet = sssrFinder.findSSSR();
+        assertEquals(2, ringSet.getAtomContainerCount());
+    }
 
-	public void testGetAtomContainerCount() throws Exception
-	{
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule molecule = sp.parseSmiles("c1ccccc1");
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(1, ringSet.getAtomContainerCount());
-	}
+    public void testGetAtomContainerCount() throws Exception
+    {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        assertEquals(1, ringSet.getAtomContainerCount());
+    }
 
-	public void testBicyclicCompound() throws Exception
-	{
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(2, ringSet.getAtomContainerCount());
-	}
+    public void testRingFlags1() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 
-	/**
-	 * @cdk.bug 826942
-	 */
-	public void testSFBug826942() throws Exception
-	{
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		assertEquals(4, ringSet.getAtomContainerCount());
-	}
+        int count = 0;
+        Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+        }
+        assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
+    }
 
-	public void testProblem1() throws Exception
-	{
-		IMolecule molecule = null;
-		IRing ring = null;
-		String filename = "data/mdl/figueras-test-sep3D.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
-		logger.debug("Testing " + filename);
+    public void testRingFlags2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("c1cccc1CC");
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
 
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(3, ringSet.getAtomContainerCount());
-		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-		{
-			ring = (IRing) ringSet.getAtomContainer(f);
-			logger.debug("ring: " + toString(ring, molecule));
-		}
-	}
+        int count = 0;
+        Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+        }
+        assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);
+    }
 
-	public void testLoopProblem() throws Exception
-	{
-		String filename = "data/mdl/ring_03419.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		IMolecule molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
-		logger.debug("Testing " + filename);
+    public void testBicyclicCompound() throws Exception
+    {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        assertEquals(2, ringSet.getAtomContainerCount());
+    }
 
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(12, ringSet.getAtomContainerCount());
-		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-		{
-			IRing ring = (IRing) ringSet.getAtomContainer(f);
-			logger.debug("ring: " + toString(ring, molecule));
-		}
-	}
+    /**
+     * @cdk.bug 826942
+     */
+    public void testSFBug826942() throws Exception
+    {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        assertEquals(4, ringSet.getAtomContainerCount());
+    }
 
-	
-	public void testProblem2() throws Exception
-	{
-		IMolecule molecule = null;
-		IRing ring = null;
-		String filename = "data/mdl/figueras-test-buried.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
-		logger.debug("Testing " + filename);
+    public void testProblem1() throws Exception
+    {
+        IMolecule molecule = null;
+        IRing ring = null;
+        String filename = "data/mdl/figueras-test-sep3D.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        logger.debug("Testing " + filename);
 
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(10, ringSet.getAtomContainerCount());
-		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-		{
-			ring = (IRing) ringSet.getAtomContainer(f);
-			logger.debug("ring: " + toString(ring, molecule));
-		}
-	}
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
+        assertEquals(3, ringSet.getAtomContainerCount());
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
+        {
+            ring = (IRing) ringSet.getAtomContainer(f);
+            logger.debug("ring: " + toString(ring, molecule));
+        }
+    }
 
-	public void testProblem3() throws Exception {
-		IMolecule molecule = null;
-		IRing ring = null;
-		String filename = "data/mdl/figueras-test-inring.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
-		logger.debug("Testing " + filename);
+    public void testLoopProblem() throws Exception
+    {
+        String filename = "data/mdl/ring_03419.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        IMolecule molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        logger.debug("Testing " + filename);
 
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(5, ringSet.getAtomContainerCount());
-		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-		{
-			ring = (IRing) ringSet.getAtomContainer(f);
-			logger.debug("ring: " + toString(ring, molecule));
-		}
-	}
-	
-	/**
-	 * @cdk.bug 891021
-	 */
-	public void testBug891021() throws Exception {
-		IMolecule molecule = null;
-		String filename = "data/mdl/too.many.rings.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
-		molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
-		logger.debug("Testing " + filename);
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
+        assertEquals(12, ringSet.getAtomContainerCount());
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
+        {
+            IRing ring = (IRing) ringSet.getAtomContainer(f);
+            logger.debug("ring: " + toString(ring, molecule));
+        }
+    }
 
-		IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-		logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-		assertEquals(57, ringSet.getAtomContainerCount());
-	}
-	
-	
-	 /**
-	  * Convenience method for giving a string representation 
-	  * of this ring based on the number of the atom in a given 
-	  * molecule.
+
+    public void testProblem2() throws Exception
+    {
+        IMolecule molecule = null;
+        IRing ring = null;
+        String filename = "data/mdl/figueras-test-buried.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        logger.debug("Testing " + filename);
+
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
+        assertEquals(10, ringSet.getAtomContainerCount());
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
+        {
+            ring = (IRing) ringSet.getAtomContainer(f);
+            logger.debug("ring: " + toString(ring, molecule));
+        }
+    }
+
+    public void testProblem3() throws Exception {
+        IMolecule molecule = null;
+        IRing ring = null;
+        String filename = "data/mdl/figueras-test-inring.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        logger.debug("Testing " + filename);
+
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
+        assertEquals(5, ringSet.getAtomContainerCount());
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
+        {
+            ring = (IRing) ringSet.getAtomContainer(f);
+            logger.debug("ring: " + toString(ring, molecule));
+        }
+    }
+
+    /**
+     * @cdk.bug 891021
+     */
+    public void testBug891021() throws Exception {
+        IMolecule molecule = null;
+        String filename = "data/mdl/too.many.rings.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
+        logger.debug("Testing " + filename);
+
+        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
+        assertEquals(57, ringSet.getAtomContainerCount());
+    }
+
+
+     /**
+      * Convenience method for giving a string representation
+      * of this ring based on the number of the atom in a given
+      * molecule.
       *
-	  * @param molecule  A molecule to determine an atom number for each ring atom
+      * @param molecule  A molecule to determine an atom number for each ring atom
       * @return          string representation of this ring
-	  */
-	private String toString(IRing ring, IMolecule molecule) throws Exception
-	{
-		String str = "";
-		for (int f = 0; f < ring.getAtomCount(); f++)
-		{
-			str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
-		}
-		return str;
-	}
+      */
+    private String toString(IRing ring, IMolecule molecule) throws Exception
+    {
+        String str = "";
+        for (int f = 0; f < ring.getAtomCount(); f++)
+        {
+            str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
+        }
+        return str;
+    }
 }
 
 
