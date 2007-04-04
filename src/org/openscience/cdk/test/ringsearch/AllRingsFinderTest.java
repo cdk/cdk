@@ -20,30 +20,26 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import java.io.InputStream;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -316,6 +312,41 @@ public class AllRingsFinderTest extends CDKTestCase
 
 		//display(mol);
 	}
-	
+
+    public void testRingFlags1() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("c1ccccc1");
+
+        IRingSet ringSet = null;
+        AllRingsFinder arf = new AllRingsFinder();
+        ringSet = arf.findAllRings(molecule);
+
+
+        int count = 0;
+        Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+        }
+        assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
+    }
+
+    public void testRingFlags2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("c1cccc1CC");
+
+        IRingSet ringSet = null;
+        AllRingsFinder arf = new AllRingsFinder();
+        ringSet = arf.findAllRings(molecule);
+
+
+        int count = 0;
+        Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            if (atom.getFlag(CDKConstants.ISINRING)) count++;
+        }
+        assertEquals("All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);
+    }
 }
 

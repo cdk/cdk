@@ -24,15 +24,11 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.Iterator;
 
 /**
  * Spanning tree of a molecule.
@@ -229,27 +225,31 @@ public class SpanningTree {
 	 * @see getRings()
 	 * @see getBasicRings()
 	 */
-	public IAtomContainer getCyclicFragmentsContainer() throws NoSuchAtomException {
-		IAtomContainer fragContainer = this.molecule.getBuilder().newAtomContainer();
-		IAtomContainer spt = getSpanningTree();
-		
-		for (int i = 0; i < totalEdgeCount; i++) if (!bondsInTree[i]) {  
-			IRing ring = getRing(spt,molecule.getBond(i));
-			for (int b=0; b < ring.getBondCount(); b++ ) {
-				IBond ringBond = ring.getBond(b);
-				if (!fragContainer.contains(ringBond)) {
-					fragContainer.addBond(ringBond);
-					for (int atomCount=0;atomCount<ringBond.getAtomCount(); atomCount++) {
-						IAtom atom = ringBond.getAtom(atomCount);
-						if (!fragContainer.contains(atom)) fragContainer.addAtom(atom);
-					}
-				}
-			}
-	    }
-		return fragContainer;
-	}
-	
-	/**
+    public IAtomContainer getCyclicFragmentsContainer() throws NoSuchAtomException {
+        IAtomContainer fragContainer = this.molecule.getBuilder().newAtomContainer();
+        IAtomContainer spt = getSpanningTree();
+
+        for (int i = 0; i < totalEdgeCount; i++)
+            if (!bondsInTree[i]) {
+                IRing ring = getRing(spt, molecule.getBond(i));
+                for (int b = 0; b < ring.getBondCount(); b++) {
+                    IBond ringBond = ring.getBond(b);
+                    if (!fragContainer.contains(ringBond)) {
+                        fragContainer.addBond(ringBond);
+                        for (int atomCount = 0; atomCount < ringBond.getAtomCount(); atomCount++) {
+                            IAtom atom = ringBond.getAtom(atomCount);
+                            if (!fragContainer.contains(atom)) {
+                                atom.setFlag(CDKConstants.ISINRING, true);
+                                fragContainer.addAtom(atom);
+                            }
+                        }
+                    }
+                }
+            }
+        return fragContainer;
+    }
+
+    /**
 	 * Identifies wether bonds are cyclic or not. It is used by several other methods.
 	 * 
 	 * @throws NoSuchAtomException
