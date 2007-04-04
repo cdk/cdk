@@ -24,19 +24,18 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-
-import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
+import java.io.IOException;
 
 /**
  * The calculation of the inductive partial atomic charges and equalization of
@@ -366,7 +365,7 @@ public class InductivePartialCharges {
 
 
 	/**
-	 *  Description of the Method
+	 *  Evaluate the square of the Euclidean distance between two atoms.
 	 *
 	 *@param  atom1  first atom
 	 *@param  atom2  second atom
