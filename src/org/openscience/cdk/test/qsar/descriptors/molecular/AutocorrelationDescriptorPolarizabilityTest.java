@@ -1,17 +1,17 @@
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizability;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.exception.CDKException;
-import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.io.InputStream;
 
 /**
  * @cdk.module test-qsar
@@ -36,8 +36,10 @@ public class AutocorrelationDescriptorPolarizabilityTest extends CDKTestCase {
 			IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
 			DescriptorValue count = new AutocorrelationDescriptorPolarizability().calculate(container);
 			System.out.println(count.getValue());
-			
-		}catch(Exception ex){
+
+            fail("Not validated yet");
+
+        }catch(Exception ex){
 			fail(ex.getMessage());
 		}
 	}

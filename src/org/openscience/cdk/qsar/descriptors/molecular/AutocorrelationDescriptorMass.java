@@ -32,9 +32,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.MFAnalyser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
  * to the scaled atomic mass {@cdk.cite Moreau1980}.
@@ -72,64 +69,55 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	 * @throws java.io.IOException
 	 * @throws ClassNotFoundException
 	 */
-	private static List listConvertion(IAtomContainer container)
+	private static double[] listConvertion(IAtomContainer container)
 			throws java.io.IOException, ClassNotFoundException{
 		int natom = container.getAtomCount();
 
-		List scalated = new ArrayList();
+		double[] scalated = new double[natom];
 
 		for (int i = 0; i < natom; i++) {
-			scalated.add(new Double(scaledAtomicMasses(container.getAtom(i))));
+			scalated[i] = scaledAtomicMasses(container.getAtom(i));
 		}
 		return scalated;
 	}
 	
 
 	/**
-	 * This method calculate the ATS Autocorrelation descriptor.
-	 */
-	public DescriptorValue calculate(IAtomContainer container) throws CDKException{
-			try{		
-				List list = listConvertion(container);
-				List list1 = listConvertion(container);
-				
-				int natom = container.getAtomCount();
-		
-				int[][] distancematrix = TopologicalMatrix.getMatrix(container);
-		
-				double[] masSum = new double[5];
-				
-		
-				for (int k = 0; k < 5; k++) {
-					for (int i = 0; i < natom; i++) {
-						for (int j = 0; j < natom; j++) {
-							
-							if (distancematrix[i][j] == k){
-								double num = ((Double)list.get(i)).doubleValue();
-								double num2 = ((Double)list1.get(j)).doubleValue();
-								masSum[k] += 1 * (num * num2);
-							}
-						}
-					}
-					if (k > 0)
-						masSum[k] = masSum[k] / 2;
-					
-				}
-				DoubleArrayResult result=new DoubleArrayResult(5);
-				for(int i=0;i<masSum.length;i++){
-					result.add(masSum[i]);
-					
-				}
+     * This method calculate the ATS Autocorrelation descriptor.
+     */
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        try {
+            double[] w = listConvertion(container);
+            int natom = container.getAtomCount();
+            int[][] distancematrix = TopologicalMatrix.getMatrix(container);
+            double[] masSum = new double[5];
 
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-		                result, new String[] {"ATSm1", "ATSm2", "ATSm3", "ATSm4" ,"ATSm5"});
-				
-			}catch(Exception ex){
-				throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
-			}
-	}
-			
-	public String[] getParameterNames() {
+            for (int k = 0; k < 5; k++) {
+                for (int i = 0; i < natom; i++) {
+                    for (int j = 0; j < natom; j++) {
+
+                        if (distancematrix[i][j] == k) {
+                            masSum[k] += w[i] * w[j];
+                        } else masSum[k] += 0.0;
+                    }
+                }
+                if (k > 0) masSum[k] = masSum[k] / 2;
+
+            }
+            DoubleArrayResult result = new DoubleArrayResult(5);
+            for (int i = 0; i < masSum.length; i++) {
+                result.add(masSum[i]);
+            }
+
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    result, new String[]{"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"});
+
+        } catch (Exception ex) {
+            throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
+        }
+    }
+
+    public String[] getParameterNames() {
 		return new String[0];
 	}
 
