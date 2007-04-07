@@ -1137,6 +1137,7 @@
             and 0 for other positions.
         </definition>
         <isClassifiedAs rdf:resource="#constitutionalDescriptor"/>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="isProtonInConjugatedPiSystem">
@@ -2247,7 +2248,7 @@
     </Descriptor>
 
     <Descriptor rdf:ID="autoCorrelationCharge">
-        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <rdfs:label>Moreau-Broto Autocorrelation (charge) descriptors</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:contributor rdf:resource="#fm"/>
         <dc:date>2006-01-15</dc:date>
@@ -2259,7 +2260,7 @@
     </Descriptor>
 
     <Descriptor rdf:ID="autoCorrelationPolarizability">
-        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <rdfs:label>Moreau-Broto Autocorrelation  (polarizability) descriptors</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:contributor rdf:resource="#fm"/>
         <dc:date>2006-01-15</dc:date>
@@ -2271,7 +2272,7 @@
     </Descriptor>
 
     <Descriptor rdf:ID="autoCorrelationMass">
-        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <rdfs:label>Moreau-Broto Autocorrelation (mass) descriptors</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:contributor rdf:resource="#fm"/>
         <dc:date>2006-01-15</dc:date>
@@ -2393,6 +2394,21 @@
             on the implementation in the ADAPT software package.
         </description>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="ip">
+        <rdfs:label>Ionization Potential</rdfs:label>
+        <dc:contributor rdf:resource="#mr"/>
+        <dc:date>2006-01-15</dc:date>
+        <definition>
+		Descriptor that evaluates the ionization potential.
+        </definition>
+        <description>
+		It should be noted that the descriptor values are obtained using a predictive model
+		and are not calculated directly from the structure
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
