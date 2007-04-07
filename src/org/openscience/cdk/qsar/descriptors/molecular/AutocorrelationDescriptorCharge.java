@@ -115,9 +115,9 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
                 this.getClass().getName(),
-                "$Id: AtomCountDescriptor.java $",
+                "$Id: AutoCorrelationDescriptorCharge.java $",
                 "The Chemistry Development Kit");
     }
 

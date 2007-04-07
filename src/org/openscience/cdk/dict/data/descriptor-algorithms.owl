@@ -58,7 +58,7 @@
     <owl:Class rdf:ID="DescriptorValue">
         <rdfs:label>Descriptor Value</rdfs:label>
         <rdfs:comment>One or more output values calculated by an Implementation
-          of a certain Algorithm for a certain molecule.</rdfs:comment>
+            of a certain Algorithm for a certain molecule.</rdfs:comment>
     </owl:Class>
 
     <owl:ObjectProperty rdf:ID="isA">
@@ -158,6 +158,10 @@
 
     <Contributor rdf:ID="mrc">
         <rdfs:label>Miguel Rojas</rdfs:label>
+    </Contributor>
+
+    <Contributor rdf:ID="fm">
+        <rdfs:label>Federico Marighetti</rdfs:label>
     </Contributor>
 
     <!-- the facts: Categories -->
@@ -304,13 +308,13 @@
         <dc:contributor rdf:resource="#mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition>
-        	Descriptor that returns the hybridization state of an atom.
+            Descriptor that returns the hybridization state of an atom.
         </definition>
         <description>
-        	The calculation find a SIMPLE WAY the molecular geometry for
-        	following from Valence Shell Electron Pair Repulsion or
-        	VSEPR model and at the same time its hybridization of atoms
-        	in a molecule.
+            The calculation find a SIMPLE WAY the molecular geometry for
+            following from Valence Shell Electron Pair Repulsion or
+            VSEPR model and at the same time its hybridization of atoms
+            in a molecule.
         </description>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
@@ -397,7 +401,9 @@
         <dc:date>2005-01-27</dc:date>
         <definition>
             Eigenvalue based descriptor noted for its utility in chemical diversity
-            described by Pearlman et al. <bibtex:cite ref="PEA99"/>.
+            described by Pearlman et al.
+            <bibtex:cite ref="PEA99"/>
+            .
         </definition>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
         <isClassifiedAs rdf:resource="#hybridDescriptor"/>
@@ -948,7 +954,7 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
- 
+
     <Descriptor rdf:ID="chi1C">
         <rdfs:label>Carbon connectivity index (order 1)</rdfs:label>
         <annotation>
@@ -1398,54 +1404,58 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-	<Descriptor rdf:ID="partialPiCharge">
-	    <rdfs:label>Partial Pi Charge</rdfs:label>
-		<dc:contributor rdf:resource="#mrc"/>
-		<dc:date>2006-05-08</dc:date>
-		<definition>
-			Descriptor that calculates pi partial charges in pi-bonded
-			systems of an heavy atom.
-		</definition>
-		<description>
-			Calculation is based on Gasteiger H.Saller (PEPE) <bibtex:cite ref="SALLER" />.
-		</description>
-		<isClassifiedAs rdf:resource="#electronicDescriptor"/>
-		<isClassifiedAs rdf:resource="#atomicDescriptor"/>
-	</Descriptor>
+    <Descriptor rdf:ID="partialPiCharge">
+        <rdfs:label>Partial Pi Charge</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates pi partial charges in pi-bonded
+            systems of an heavy atom.
+        </definition>
+        <description>
+            Calculation is based on Gasteiger H.Saller (PEPE)
+            <bibtex:cite ref="SALLER"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
+    </Descriptor>
 
-	<Descriptor rdf:ID="partialSigmaCharge">
-	    <rdfs:label>Partial Pi Charge</rdfs:label>
-		<dc:contributor rdf:resource="#mrc"/>
-		<dc:date>2006-05-08</dc:date>
-		<definition>
-			Descriptor that calculates sigma partial charges in
-			sigma-bonded systems (PEOE) of an heavy atom.
-		</definition>
-		<description>
-			Calculation is based on Gasteiger Marsili (PEOE) <bibtex:cite ref="MARSILI" />.
-		</description>
-		<isClassifiedAs rdf:resource="#electronicDescriptor"/>
-		<isClassifiedAs rdf:resource="#atomicDescriptor"/>
-	</Descriptor>
+    <Descriptor rdf:ID="partialSigmaCharge">
+        <rdfs:label>Partial Pi Charge</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates sigma partial charges in
+            sigma-bonded systems (PEOE) of an heavy atom.
+        </definition>
+        <description>
+            Calculation is based on Gasteiger Marsili (PEOE)
+            <bibtex:cite ref="MARSILI"/>
+            .
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
+    </Descriptor>
 
-	<Descriptor rdf:ID="partialTChargeMMFF94">
-	    <rdfs:label>Partial Total Charge (MMFF94)</rdfs:label>
-		<dc:contributor rdf:resource="#mrc"/>
-		<dc:date>2006-05-08</dc:date>
-		<definition>
-			Descriptor that calculates total partial charges of an heavy
-			atom.
-		</definition>
-		<description>
-			Calculation is based on MMFF94.
-		</description>
-		<isClassifiedAs rdf:resource="#electronicDescriptor"/>
-		<isClassifiedAs rdf:resource="#atomicDescriptor"/>
-	</Descriptor>
+    <Descriptor rdf:ID="partialTChargeMMFF94">
+        <rdfs:label>Partial Total Charge (MMFF94)</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates total partial charges of an heavy
+            atom.
+        </definition>
+        <description>
+            Calculation is based on MMFF94.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#atomicDescriptor"/>
+    </Descriptor>
 
     <Descriptor rdf:ID="period">
         <rdfs:label>Period of an atom</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf" />
+        <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition>
             Descriptor that returns the period in the periodic table of an atom belonging to an atom container
@@ -1455,7 +1465,7 @@
 
     <Descriptor rdf:ID="petitjeanNumber">
         <rdfs:label>Petitjean Number</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf" />
+        <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition>
             Descriptor that calculates the Petitjean Number of a molecule.
@@ -1502,7 +1512,7 @@
 
     <Descriptor rdf:ID="piContact">
         <rdfs:label>Pi-contact of two atoms</rdfs:label>
-        <dc:contributor rdf:resourrce="#mf" />
+        <dc:contributor rdf:resourrce="#mf"/>
         <dc:date>2005-02-07</dc:date>
         <definition>
             Descriptor that check if two atoms have pi-contact (this is true when there is one and
@@ -1516,32 +1526,33 @@
         <dc:contributor rdf:resource="#mrc"/>
         <dc:date>2006-05-08</dc:date>
         <definition>
-        	This algorithm contains a method that returns the pi
-        	electronegativity for a given atom.
+            This algorithm contains a method that returns the pi
+            electronegativity for a given atom.
         </definition>
         <description>
-        	Pi electronegativity is given by
-        	<mrow xmlns="http://www.w3.org/1998/Math/MathML">
-        		<mi>X</mi>
-        		<mo>=</mo>
-        		<mi>a</mi>
-        		<mo>+</mo>
-        		<mi>b</mi>
-        		<mi>q</mi>
-        		<mo>+</mo>
-        		<mi>c</mi>
-        		<mrow>
-        			<mo>(</mo>
-        			<mrow>
-        				<msup>
-        					<mi>q</mi>
-        					<mi>2</mi>
-        				</msup>
-        			</mrow>
-        			<mo>)</mo>
-        		</mrow>
-        	</mrow>, where a, b and c are Gasteiger Marsili parameters, and q
-        	is the sigma charge.
+            Pi electronegativity is given by
+            <mrow xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>X</mi>
+                <mo>=</mo>
+                <mi>a</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+                <mi>q</mi>
+                <mo>+</mo>
+                <mi>c</mi>
+                <mrow>
+                    <mo>(</mo>
+                    <mrow>
+                        <msup>
+                            <mi>q</mi>
+                            <mi>2</mi>
+                        </msup>
+                    </mrow>
+                    <mo>)</mo>
+                </mrow>
+            </mrow>
+            , where a, b and c are Gasteiger Marsili parameters, and q
+            is the sigma charge.
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#atomicDescriptor"/>
@@ -2058,78 +2069,78 @@
     </Descriptor>
 
     <Descriptor rdf:ID="covalentRadius">
-    	<rdfs:label>Covalent Radius</rdfs:label>
-    	<dc:contributor rdf:resource="#mrc" />
-    	<dc:date>2006-05-08</dc:date>
-    	<definition>
-    		Descriptor that returns the covalent radius of a given atom.
-    	</definition>
-    	<isClassifiedAs rdf:resource="#molecularDescriptor" />
+        <rdfs:label>Covalent Radius</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that returns the covalent radius of a given atom.
+        </definition>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="bondPartialPiCharge">
-    	<rdfs:label>Bond Partial Pi Charge</rdfs:label>
-    	<dc:contributor rdf:resource="#mrc" />
-    	<dc:date>2006-05-08</dc:date>
-    	<definition>
-    		Descriptor that calculates bond-pi Partial charge of a bond.
-    	</definition>
-    	<description>
-    		Calculation is calculated determining the difference the
-    		Partial Pi Charge on atoms A and B of a bond. Based in
-    		Gasteiger Charge.
-    	</description>
-    	<isClassifiedAs rdf:resource="#electronicDescriptor" />
-    	<isClassifiedAs rdf:resource="#bondDescriptor" />
+        <rdfs:label>Bond Partial Pi Charge</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates bond-pi Partial charge of a bond.
+        </definition>
+        <description>
+            Calculation is calculated determining the difference the
+            Partial Pi Charge on atoms A and B of a bond. Based in
+            Gasteiger Charge.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#bondDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="bondPartialSigmaCharge">
-    	<rdfs:label>Bond Partial Sigma Charge</rdfs:label>
-    	<dc:contributor rdf:resource="#mrc" />
-    	<dc:date>2006-05-08</dc:date>
-    	<definition>
-    		Descriptor that calculates bond-sigma Partial charge of a
-    		bond.
-    	</definition>
-    	<description>
-    		Calculation is calculated determining the difference the
-    		Partial Sigma Charge on atoms A and B of a bond. Based in
-    		Gasteiger Charge.
-    	</description>
-    	<isClassifiedAs rdf:resource="#electronicDescriptor" />
-    	<isClassifiedAs rdf:resource="#bondDescriptor" />
+        <rdfs:label>Bond Partial Sigma Charge</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates bond-sigma Partial charge of a
+            bond.
+        </definition>
+        <description>
+            Calculation is calculated determining the difference the
+            Partial Sigma Charge on atoms A and B of a bond. Based in
+            Gasteiger Charge.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#bondDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="bondPartialTCharge">
-    	<rdfs:label>Bond Partial Total Charge</rdfs:label>
-    	<dc:contributor rdf:resource="#mrc" />
-    	<dc:date>2006-05-08</dc:date>
-    	<definition>
-    		Descriptor that calculates bond-total Partial charge of a
-    		bond.
-    	</definition>
-    	<description>
-    		Calculation is calculated determining the difference the
-    		Partial Total Charge on atoms A and B of a bond. Based in
-    		Gasteiger Charge.
-    	</description>
-    	<isClassifiedAs rdf:resource="#electronicDescriptor" />
-    	<isClassifiedAs rdf:resource="#bondDescriptor" />
+        <rdfs:label>Bond Partial Total Charge</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates bond-total Partial charge of a
+            bond.
+        </definition>
+        <description>
+            Calculation is calculated determining the difference the
+            Partial Total Charge on atoms A and B of a bond. Based in
+            Gasteiger Charge.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#bondDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="bondSigmaElectronegativity">
-    	<rdfs:label>Bond Sigma Electronegativity</rdfs:label>
-    	<dc:contributor rdf:resource="#mrc" />
-    	<dc:date>2006-05-08</dc:date>
-    	<definition>
-    		Descriptor that calculates of bond-Polarizability of a bond.
-    	</definition>
-    	<description>
-    		Calculation is calculated determining the difference the
-    		Sigma electronegativity on atoms A and B of a bond.
-    	</description>
-    	<isClassifiedAs rdf:resource="#electronicDescriptor" />
-    	<isClassifiedAs rdf:resource="#bondDescriptor" />
+        <rdfs:label>Bond Sigma Electronegativity</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2006-05-08</dc:date>
+        <definition>
+            Descriptor that calculates of bond-Polarizability of a bond.
+        </definition>
+        <description>
+            Calculation is calculated determining the difference the
+            Sigma electronegativity on atoms A and B of a bond.
+        </description>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
+        <isClassifiedAs rdf:resource="#bondDescriptor"/>
     </Descriptor>
 
     <Descriptor rdf:ID="petitjeanShapeIndex">
@@ -2212,7 +2223,7 @@
         <isClassifiedAs rdf:resource="#geometricalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
-    
+
     <Descriptor rdf:ID="NilaComplexity">
         <rdfs:label>Fragment Complexity</rdfs:label>
         <dc:contributor rdf:resource="#chhoppe"/>
@@ -2235,12 +2246,37 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
-    <Descriptor rdf:ID="ats">
+    <Descriptor rdf:ID="autoCorrelationCharge">
         <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="#fm"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
-            The Moreau-Broto autocorrelation descriptors modified to remove dependency on molecular size.
+            The Moreau-Broto autocorrelation descriptors using partial charges
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="autoCorrelationPolarizability">
+        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="#fm"/>
+        <dc:date>2006-01-15</dc:date>
+        <definition>
+            The Moreau-Broto autocorrelation descriptors using polarizability
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+    <Descriptor rdf:ID="autoCorrelationMass">
+        <rdfs:label>Moreau-Broto Autocorrelation descriptors</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:contributor rdf:resource="#fm"/>
+        <dc:date>2006-01-15</dc:date>
+        <definition>
+            The Moreau-Broto autocorrelation descriptors using atomic weight
         </definition>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
@@ -2252,7 +2288,7 @@
         <dc:date>2006-08-23</dc:date>
         <definition>
             The TAE RECON descriptors for amino acid sequences. Uses precalculated quantum mechanical
-	    parameters to generate a set of 147 descriptors for a given sequence
+            parameters to generate a set of 147 descriptors for a given sequence
         </definition>
         <isClassifiedAs rdf:resource="#proteinDescriptor"/>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
@@ -2280,10 +2316,10 @@
         <dc:contributor rdf:resource="#rguha"/>
         <dc:date>2006-09-26</dc:date>
         <definition>
-              Calculates the ratio of length to breadth.
+            Calculates the ratio of length to breadth.
         </definition>
         <description>
-          The descriptor has two values
+            The descriptor has two values
             indicating the maximum and minimumn value of LoB. Note that this method does not
             perform any orientation.
         </description>
@@ -2346,15 +2382,15 @@
 
     <Descriptor rdf:ID="weightedPath">
         <rdfs:label>Weighted Path</rdfs:label>
-        <dc:contributor rdf:resource="#rg" />
+        <dc:contributor rdf:resource="#rg"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
-        	Descriptor that evaluates the weighted path descriptors.
+            Descriptor that evaluates the weighted path descriptors.
         </definition>
         <description>
-        	These decsriptors were described by Randic and characterize
-        	molecular branching. Five descriptors are calculated, based
-        	on the implementation in the ADAPT software package.
+            These decsriptors were described by Randic and characterize
+            molecular branching. Five descriptors are calculated, based
+            on the implementation in the ADAPT software package.
         </description>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
@@ -2463,21 +2499,21 @@
             </bibtex:article>
         </bibtex:entry>
     </Reference>
-    
+
     <Reference rdf:ID="MARSILI">
         <bibtex:entry>
-        	<bibtex:article>
-        		<bibtex:author>Gasteiger, J.</bibtex:author>
-        		<bibtex:author>Marsili, M.</bibtex:author>
-        		<bibtex:title>
-        			Iterative Partial Equalization of Orbital
-        			Electronegativity- A Rapid Access to Atomic Charges
-        		</bibtex:title>
-        		<bibtex:journal>Tetrahedron</bibtex:journal>
-        		<bibtex:year>1980</bibtex:year>
-        		<bibtex:volume>36</bibtex:volume>
-        		<bibtex:pages>3219-3228</bibtex:pages>
-        	</bibtex:article>
+            <bibtex:article>
+                <bibtex:author>Gasteiger, J.</bibtex:author>
+                <bibtex:author>Marsili, M.</bibtex:author>
+                <bibtex:title>
+                    Iterative Partial Equalization of Orbital
+                    Electronegativity- A Rapid Access to Atomic Charges
+                </bibtex:title>
+                <bibtex:journal>Tetrahedron</bibtex:journal>
+                <bibtex:year>1980</bibtex:year>
+                <bibtex:volume>36</bibtex:volume>
+                <bibtex:pages>3219-3228</bibtex:pages>
+            </bibtex:article>
         </bibtex:entry>
     </Reference>
 
@@ -2527,19 +2563,19 @@
 
     <Reference rdf:ID="SALLER">
         <bibtex:entry>
-        	<bibtex:article>
-        		<bibtex:author>Gasteiger, J.</bibtex:author>
-        		<bibtex:author>Saller, H.</bibtex:author>
-        		<bibtex:title>
-        			Berechnung der Ladungsverteilung in konjugierten
-        			Systemen durch eine Quantifizierung des
-        			Mesomeriekonzeptes
-        		</bibtex:title>
-        		<bibtex:journal>Angew. Chem.</bibtex:journal>
-        		<bibtex:year>1985</bibtex:year>
-        		<bibtex:volume>97</bibtex:volume>
-        		<bibtex:pages>699-701</bibtex:pages>
-        	</bibtex:article>
+            <bibtex:article>
+                <bibtex:author>Gasteiger, J.</bibtex:author>
+                <bibtex:author>Saller, H.</bibtex:author>
+                <bibtex:title>
+                    Berechnung der Ladungsverteilung in konjugierten
+                    Systemen durch eine Quantifizierung des
+                    Mesomeriekonzeptes
+                </bibtex:title>
+                <bibtex:journal>Angew. Chem.</bibtex:journal>
+                <bibtex:year>1985</bibtex:year>
+                <bibtex:volume>97</bibtex:volume>
+                <bibtex:pages>699-701</bibtex:pages>
+            </bibtex:article>
         </bibtex:entry>
     </Reference>
 
