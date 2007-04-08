@@ -11,6 +11,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.LoggingTool;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,6 +44,7 @@ import java.util.List;
  * @cdk.keyword substructure search
  */
 public class SMARTSQueryTool {
+     private LoggingTool logger;
 
     private String smarts;
     private IAtomContainer atomContainer = null;
@@ -51,6 +53,7 @@ public class SMARTSQueryTool {
     private List matchingAtoms = null;
 
     public SMARTSQueryTool(String smarts) throws CDKException {
+        logger = new LoggingTool(this);
         this.smarts = smarts;
         initializeQuery();
     }
@@ -137,7 +140,13 @@ public class SMARTSQueryTool {
     private void initializeMolecule() throws CDKException {
         // do all ring perception
         AllRingsFinder arf = new AllRingsFinder();
-        IRingSet ringSet = arf.findAllRings(atomContainer);
+        IRingSet ringSet = null;
+        try {
+            ringSet = arf.findAllRings(atomContainer);
+        } catch (CDKException e) {
+            logger.debug(e.toString());
+            throw new CDKException(e.toString());
+        }
 
         // next we want to add a property to each ring atom that
         // will be an array of Integers, indicating what size ring
@@ -158,7 +167,12 @@ public class SMARTSQueryTool {
         }
 
         // check for atomaticity
-        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        try {
+            HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        } catch (CDKException e) {
+            logger.debug(e.toString());
+            throw new CDKException(e.toString());
+        }
     }
 
     private void initializeQuery() throws CDKException {
@@ -195,11 +209,4 @@ public class SMARTSQueryTool {
         }
         return atomMapping;
     }
-
-
-    public static void main(String[] args) throws CDKException {
-
-
-    }
-
 }
