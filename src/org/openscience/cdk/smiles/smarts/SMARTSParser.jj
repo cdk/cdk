@@ -1,0 +1,422 @@
+options {
+STATIC=false;
+OPTIMIZE_TOKEN_MANAGER=true;
+FORCE_LA_CHECK=true;
+}
+
+PARSER_BEGIN(SMARTSParser)
+/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 12:46:10 -0500 (Thu, 04 Jan 2007) $    
+ * 
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * (or see http://www.gnu.org/copyleft/lesser.html)
+ */
+package org.openscience.cdk.smiles.smarts;
+
+import java.io.StringReader;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.IsotopeFactory;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
+import org.openscience.cdk.tools.LoggingTool;
+
+/**
+ * This parser implements a (small) subset of the SMARTS syntax as defined on
+ * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
+ * Daylight website</a>. But note that not all parsed strings are yet converted
+ * in the corresponding queries. Not all concepts can yet be represented in
+ * SMARTSAtom. This code is very experimental.
+ *
+ * <p>Example code using SMARTS substructure search looks like:
+ * <pre>
+ * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+ * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * QueryAtomContainer query = SMARTSParser.parse("C*C");
+ * boolean queryMatch = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
+ * </pre>
+ *
+ * <p>See the cdk.test.smiles.smarts.ParserTest for examples of the implemented
+ * subset.
+ *
+ * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
+ *
+ * @author      Egon Willighagen
+ * @cdk.created 2004-03-29
+ *
+ * @cdk.require ant1.6
+ * @cdk.module  experimental
+ *
+ * @cdk.keyword SMARTS
+ * @cdk.keyword substructure search
+ */
+public class SMARTSParser {
+    
+    private IQueryAtom previousAtom = null;
+    private SMARTSBond currentBond = null;
+    private QueryAtomContainer container = null;
+    
+    private final static LoggingTool logger = new LoggingTool(SMARTSParser.class);
+    
+    public static QueryAtomContainer parse(String stringToParse) throws CDKException {
+        QueryAtomContainer container = null;
+        StringReader stringReader = new StringReader(stringToParse);
+        try {
+            SMARTSParser parser = new SMARTSParser(stringReader);
+            container = parser.Parse();
+        } catch (ParseException exception) {
+            throw new CDKException("The string " + stringToParse + " is not a valid" +
+              " SMARTS string: " + exception.getMessage(), exception);
+        }
+        return container;
+    }
+    
+}
+PARSER_END(SMARTSParser)
+
+JAVACODE
+void AddAnyAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS atom: " + tok.image);
+    AnyAtom atom = new AnyAtom();
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddAliphaticAtom() {
+    logger.debug("Adding aliphatic atom");
+    AliphaticAtom atom = new AliphaticAtom();
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddAromaticAtom() {
+    logger.debug("Adding aromatic atom");
+    AromaticAtom atom = new AromaticAtom();
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddCurrentBond(IQueryAtom atom, IQueryAtom atom2) {
+    if (currentBond == null) {
+        // add default bond
+        currentBond = new AnyOrderQueryBond();
+    }
+    Atom[] atoms = new Atom[2];
+    atoms[0] = (Atom)atom;
+    atoms[1] = (Atom)atom2;
+    currentBond.setAtoms(atoms);
+    container.addBond(currentBond);
+    currentBond = null;
+}
+
+JAVACODE
+void AddNewElementAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS atom: " + tok.image);
+    SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewNumberAtom() {
+    Token tok = getToken(0);
+    logger.debug("Adding SMARTS atom: " + tok.image);
+    try {
+        String sym = IsotopeFactory.getInstance(new ChemObject().getBuilder()).getElement(Integer.parseInt(tok.image)).getSymbol();
+        SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(sym));
+        container.addAtom(atom);
+        if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+        previousAtom = atom;
+    } catch (Exception exp) {
+        logger.debug("Exception caught: " + exp);
+    }
+}
+
+JAVACODE
+void AddNewDegreeAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS degree atom: " + tok.image);
+    DegreeAtom atom = new DegreeAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewFormalChargeAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS formal charge atom: " + tok.image);
+    FormalChargeAtom atom = new FormalChargeAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewImplicitHCountAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS implicit Hcount atom: " + tok.image);
+    ImplicitHCountAtom atom = new ImplicitHCountAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void AddNewTotalHCountAtom() {
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
+    TotalHCountAtom atom = new TotalHCountAtom(Integer.parseInt(tok.image));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
+void SetCurrentBondToOrderQuery(double order) {
+    currentBond = new OrderQueryBond();
+    currentBond.setOrder(order);
+}
+
+JAVACODE
+void SetCurrentBondToAnyOrder() {
+    currentBond = new AnyOrderQueryBond();
+}
+
+JAVACODE
+void SetCurrentBondToAromatic() {
+    currentBond = new AromaticQueryBond();
+}
+
+QueryAtomContainer Parse() :
+{}
+{
+    { 
+        container = new QueryAtomContainer();
+        previousAtom = null;
+    }
+    
+    (SMARTS())+ <EOF>
+    
+    { return container; }
+}
+
+void SMARTS() :
+{}
+{
+    AtomExpression() [ BondExpression() ] 
+}
+
+void AtomExpression() :
+{}
+{
+    Element() | SMARTSAtomExpression()
+}
+
+void SMARTSAtomExpression() :
+{}
+{
+    "*" AddAnyAtom()        |
+    "a" AddAromaticAtom()   |
+    "A" AddAliphaticAtom()  |
+    (InBracketsSMARTSAtom()) 
+}
+
+void InBracketsSMARTSAtom() :
+{}
+{
+    "[" 
+    (Degree() | TotalHCount() | ImplicitHCount() | AtomicNumber() )
+    "]"
+}
+
+void AtomicNumber() :
+{}
+{
+    "#" (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
+}
+
+void TotalHCount() :
+{}
+{
+	<H> <DIGIT> AddNewTotalHCountAtom()
+}
+
+void ImplicitHCount() :
+{}
+{
+	"h" <DIGIT> AddNewImplicitHCountAtom()
+}
+
+void Degree() :
+{}
+{
+	"D" <DIGIT> AddNewDegreeAtom()
+}
+
+void Element() :
+{}
+{
+	(TwoCharElement() | OneCharElement())
+    AddNewElementAtom()
+}
+
+void BondExpression() :
+{}
+{
+    ("-" SetCurrentBondToOrderQuery(1.0) ) | 
+    ("=" SetCurrentBondToOrderQuery(2.0) ) | 
+    ("#" SetCurrentBondToOrderQuery(3.0) ) | 
+    (":" SetCurrentBondToAromatic() ) | 
+    ("~" SetCurrentBondToAnyOrder() )
+}
+
+void TwoCharElement() :
+{}
+{
+	<HE> | <LI> | <BE> | <NE> | <NA> | <MG> | <AL> | <SI> | <AR> | <CA> | <SC> |
+    <TI> | <CR> | <MN> | <FE> | <CO> | <NI> | <CU> | <ZN> | <GA> | <GE> | <AS> |
+    <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
+    <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
+    <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
+    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA>
+}
+
+void OneCharElement() :
+{}
+{
+	<H> | <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
+}
+
+
+TOKEN :
+{
+    < DIGIT: ["0"-"9"] >
+}
+
+TOKEN :
+{
+    < DIGITS: (["0"-"9"])+ >
+}
+
+TOKEN : /* ELEMENTS */
+{
+	<  H: "H" >
+|   < HE: "He" >
+|   < LI: "Li" >
+|   < BE: "Be" >
+|   <  B: "B" >
+|   <  C: "C" >
+|   <  N: "N" >
+|   <  O: "O" >
+|   <  F: "F" >
+|   < NE: "Ne" >
+|   < NA: "Na" >
+|   < MG: "Mg" >
+|	< AL: "Al" >
+|	< SI: "Si" >
+|   <  P: "P" >
+|   <  S: "S" >
+|	< CL: "Cl" >
+|	< AR: "Ar" >
+|   <  K: "K" >
+|   < CA: "Ca" >
+|   < SC: "Sc" >
+|   < TI: "Ti" >
+|   <  V: "V" >
+|   < CR: "Cr" >
+|   < MN: "Mn" >
+|   < FE: "Fe" >
+|   < CO: "Co" >
+|   < NI: "Ni" >
+|   < CU: "Cu" >
+|   < ZN: "Zn" >
+|   < GA: "Ga" >
+|   < GE: "Ge" >
+|   < AS: "As" >
+|   < SE: "Se" >
+|   < BR: "Br" >
+|   < KR: "Kr" >
+|   < RB: "Rb" >
+|   < SR: "Sr" >
+|   <  Y: "Y" >
+|   < ZR: "Zr" >
+|   < NB: "Nb" >
+|   < MO: "Mo" >
+|   < TC: "Tc" >
+|   < RU: "Ru" >
+|   < RH: "Rh" >
+|   < PD: "Pd" >
+|   < AG: "Ag" >
+|   < CD: "Cd" >
+|   < IN: "In" >
+|   < SN: "Sn" >
+|   < SB: "Sb" >
+|   < TE: "Te" >
+|   <  I: "I" >
+|   < XE: "Xe" >
+|   < CS: "Cs" >
+|   < BA: "Ba" >
+|   < LA: "La" >
+|   < HF: "Hf" >
+|   < TA: "Ta" >
+|   <  W: "W" >
+|   < RE: "Re" >
+|   < OS: "Os" >
+|   < IR: "Ir" >
+|   < PT: "Pt" >
+|   < AU: "Au" >
+|   < HG: "Hg" >
+|   < TL: "Tl" >
+|   < PB: "Pb" >
+|   < BI: "Bi" >
+|   < PO: "Po" >
+|   < AT: "At" >
+|   < RN: "Rn" >
+|   < FR: "Fr" >
+|   < RA: "Ra" >
+|   < AC: "Ac" >
+|   < TH: "Th" >
+|   < PA: "Pa" >
+|   <  U: "U" >
+}
+
