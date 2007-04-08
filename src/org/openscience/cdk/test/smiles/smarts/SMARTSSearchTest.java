@@ -25,14 +25,11 @@ package org.openscience.cdk.test.smiles.smarts;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.ParseException;
 import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -161,7 +158,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     public void testAromaticAtom() throws Exception {
-    	QueryAtomContainer query = SMARTSParser.parse("CaC");
+    	QueryAtomContainer query = SMARTSParser.parse("aaa");
     	logger.debug("Query CaC: " + query.toString());
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
@@ -169,7 +166,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     	assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
 
     	atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
-    	assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+        assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
     public void testSymbolQueryAtom() throws Exception {
