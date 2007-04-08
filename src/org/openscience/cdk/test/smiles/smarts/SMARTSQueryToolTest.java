@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
- * @author Egon Willighagen
+ * @author Rajarshi Guha
  * @cdk.module test-experimental
  * @cdk.require ant1.6
  */
