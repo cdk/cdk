@@ -265,6 +265,13 @@ public class CDKConstants {
     * Atoms                                 *
     ****************************************/
 
+    /**
+     * This property will contain an ArrayList of Integers. Each
+     * element of the list indicates the size of the ring the given
+     * atom belongs to (if it is a ring atom at all).
+     */
+    public static final String RING_SIZES = "RingSizes";
+
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
       * This is a property used for calculating NMR chemical
