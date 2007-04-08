@@ -25,7 +25,6 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.io.VASPReaderTest;
 import org.openscience.cdk.test.isomorphism.SMARTSTest;
 
@@ -46,6 +45,8 @@ public class MexperimentalTests {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
             suite.addTest(new TestSuite(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSSearchTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSQueryToolTest");
             suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {
             // ok, does not exist, just skip
