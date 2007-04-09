@@ -67,6 +67,18 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         for (int i = 0; i < 3; i++) {
             assertEquals(map2.get(i), ret2.get(i));
         }
+    }
+
+    public void testQueryToolRings() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("CC");
+
+        boolean status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        int nmatch = querytool.countMatches();
+        assertEquals(9, nmatch);
 
     }
 }
