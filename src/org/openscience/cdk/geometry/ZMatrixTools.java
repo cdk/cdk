@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -39,6 +36,7 @@ import javax.vecmath.Vector3d;
  * @cdk.keyword Z Matrix
  *
  * @cdk.created 2004-02-09
+ * @cdk.bug     1653028
  */
 public class ZMatrixTools {
 

@@ -62,17 +62,18 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * <p>The method will fail if the molecule is disconnected. The
  * partitionIntoMolecules(AtomContainer) can help here.
  *
- *@author      steinbeck
- *@cdk.created 2004-02-02
- *@see         org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
- *@cdk.keyword Layout
- *@cdk.keyword Structure Diagram Generation (SDG)
- *@cdk.keyword 2D coordinates
- *@cdk.keyword Coordinate generation, 2D
- *@cdk.dictref blue-obelisk:layoutMolecule
- *@cdk.module  sdg
- *@cdk.bug     1610997
- *@cdk.bug     1536561
+ * @author      steinbeck
+ * @cdk.created 2004-02-02
+ * @see         org.openscience.cdk.graph.ConnectivityChecker#partitionIntoMolecules(IAtomContainer)
+ * @cdk.keyword Layout
+ * @cdk.keyword Structure Diagram Generation (SDG)
+ * @cdk.keyword 2D coordinates
+ * @cdk.keyword Coordinate generation, 2D
+ * @cdk.dictref blue-obelisk:layoutMolecule
+ * @cdk.module  sdg
+ * @cdk.bug     1610997
+ * @cdk.bug     1536561
+ * @cdk.bug     1677912
  */
 public class StructureDiagramGenerator
 {

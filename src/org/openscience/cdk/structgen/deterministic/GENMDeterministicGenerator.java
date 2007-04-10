@@ -72,6 +72,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @author      Christoph Steinbeck
  * @cdk.created 2004-02-16
  * @cdk.module  structgen
+ * @cdk.bug     1678346
  */
 public class GENMDeterministicGenerator {
 
