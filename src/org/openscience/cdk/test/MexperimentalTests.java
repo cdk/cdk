@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -25,8 +22,8 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.test.io.VASPReaderTest;
-import org.openscience.cdk.test.isomorphism.SMARTSTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
@@ -39,19 +36,6 @@ public class MexperimentalTests {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
         suite.addTest(AssociationTest.suite());
         suite.addTest(VASPReaderTest.suite());
-        suite.addTest(SMARTSTest.suite());
-        
-        try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
-            suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSSearchTest");
-            suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSQueryToolTest");
-            suite.addTest(new TestSuite(testClass));
-        } catch (Exception exception) {
-            // ok, does not exist, just skip
-            System.out.println("Could not load the SMARTS Parser test: " + exception.getMessage());
-        }
         return suite;
     }
 

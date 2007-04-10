@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ * 
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,23 +23,21 @@ package org.openscience.cdk.test.smiles.smarts;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
-import org.openscience.cdk.smiles.smarts.ParseException;
 import org.openscience.cdk.smiles.smarts.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * JUnit test routines for the SMARTS parser.
  *
- * @cdk.module test-experimental
+ * @cdk.module  test-smarts
  * @cdk.require ant1.6
  *
- * @author Egon Willighagen
+ * @author      Egon Willighagen
  */
 public class ParserTest extends CDKTestCase {
     

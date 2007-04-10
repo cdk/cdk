@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* $Revision$ $Author$ $Date$
+ * 
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -37,10 +34,10 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
- * @cdk.module test-experimental
+ * @cdk.module  test-smarts
  * @cdk.require ant1.6
  *
- * @author Egon Willighagen
+ * @author      Egon Willighagen
  */
 public class SMARTSSearchTest extends CDKTestCase {
     

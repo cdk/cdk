@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -49,7 +46,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-experimental
+ * @cdk.module  test-smarts
  * @cdk.require java1.4+
  */
 public class SMARTSTest extends CDKTestCase {

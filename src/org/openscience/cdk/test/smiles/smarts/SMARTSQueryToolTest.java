@@ -1,33 +1,50 @@
+/* $Revision: 7921 $ $Author: egonw $ $Date: 2007-02-09 00:35:55 +0100 (Fri, 09 Feb 2007) $
+ * 
+ * Copyright (C) 2007  Rajarshi Guha <>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.test.smiles.smarts;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
- * @author Rajarshi Guha
- * @cdk.module test-experimental
+ * @author      Rajarshi Guha
+ * @cdk.module  test-smarts
  * @cdk.require ant1.6
  */
 public class SMARTSQueryToolTest extends CDKTestCase {
 
-    private LoggingTool logger;
-
     public SMARTSQueryToolTest(String testName) {
         super(testName);
-        logger = new LoggingTool(this);
     }
 
     public static Test suite() {
