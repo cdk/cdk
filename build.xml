@@ -430,6 +430,7 @@
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
             <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
