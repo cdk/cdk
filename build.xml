@@ -462,6 +462,7 @@
         <antcall target="compile-module"><param name="module" value="test-osjvmts"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
