@@ -597,6 +597,7 @@
                     <include name="cdk-svg.jar"/>
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
+                    <include name="cdk-smarts.jar"/>
                     <include name="cdk-smiles.jar"/>
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
@@ -645,6 +646,7 @@
                     <includesfile name="${metainf}/test-qsar.libdepends"/>
                     <includesfile name="${metainf}/test-qsarMolecular.libdepends"/>
                     <includesfile name="${metainf}/test-reaction.libdepends"/>
+                    <includesfile name="${metainf}/test-smarts.libdepends"/>
                     <includesfile name="${metainf}/test-smiles.libdepends"/>
                     <includesfile name="${metainf}/test-standard.libdepends"/>
                     <includesfile name="${metainf}/test-structgen.libdepends"/>
@@ -669,6 +671,7 @@
                     <include name="cdk-test-qsar.jar"/>
                     <include name="cdk-test-qsarMolecular.jar"/>
                     <include name="cdk-test-reaction.jar"/>
+                    <include name="cdk-test-smarts.jar"/>
                     <include name="cdk-test-smiles.jar"/>
                     <include name="cdk-test-standard.jar"/>
                     <include name="cdk-test-structgen.jar"/>
@@ -902,7 +905,8 @@
             <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall>
-        	<antcall target="test-module"><param name="module" value="smiles"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="smarts"/></antcall> 
+                <antcall target="test-module"><param name="module" value="smiles"/></antcall>
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsarAtomic"/></antcall>
