@@ -40,8 +40,8 @@ import java.util.List;
 /**
  * This class provides a easy to use wrapper around SMARTS matching functionality.
  * <p/>
- * User code that wants to do SMARTS matching should use this rather than using  SMARTSParser directly.
- * Example usage would be
+ * User code that wants to do SMARTS matching should use this rather than using  SMARTSParser
+ * (and UniversalIsomorphismTester) directly. Example usage would be
  * <pre>
  * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
@@ -57,15 +57,14 @@ import java.util.List;
  * }
  * </pre>
  *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2007-04-08
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  */
 public class SMARTSQueryTool {
     private LoggingTool logger;
-
     private String smarts;
     private IAtomContainer atomContainer = null;
     private QueryAtomContainer query = null;
@@ -186,6 +185,24 @@ public class SMARTSQueryTool {
             }
         }
 
+        // determine how many rings bonds each atom is a part of
+        atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+
+            int counter = 0;
+            IAtom any;
+            for (int i = 0; i < connectedAtoms.size(); i++) {
+                any = (IAtom) connectedAtoms.get(i);
+                if (any.getFlag(CDKConstants.ISINRING)) {
+                    counter++;
+                }
+            }
+            if (connectedAtoms.size() != 0)
+                atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
+        }
+        
         // check for atomaticity
         try {
             HueckelAromaticityDetector.detectAromaticity(atomContainer);
@@ -198,6 +215,7 @@ public class SMARTSQueryTool {
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
         query = SMARTSParser.parse(smarts);
+        System.out.println(query);
     }
 
 

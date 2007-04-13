@@ -272,6 +272,12 @@ public class CDKConstants {
      */
     public static final String RING_SIZES = "RingSizes";
 
+    /**
+     * This property indicates how many ring bonds are connected to
+     * the given atom.
+     */
+    public static final String RING_CONNECTIONS = "RingConnections";
+
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
       * This is a property used for calculating NMR chemical
