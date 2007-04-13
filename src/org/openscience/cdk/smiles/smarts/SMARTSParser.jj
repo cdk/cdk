@@ -1,3 +1,4 @@
+
 options {
 STATIC=false;
 OPTIMIZE_TOKEN_MANAGER=true;
@@ -5,34 +6,11 @@ FORCE_LA_CHECK=true;
 }
 
 PARSER_BEGIN(SMARTSParser)
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 12:46:10 -0500 (Thu, 04 Jan 2007) $    
- * 
- * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
- * Copyright (C)      2007  Sushil Ronghe <ronghester@gmail.com>
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * (or see http://www.gnu.org/copyleft/lesser.html)
- */
 package org.openscience.cdk.smiles.smarts;
-
 import java.io.StringReader;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.IsotopeFactory;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -50,7 +28,33 @@ import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.RingAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.tools.LoggingTool;
+
+/* $RCSfile$    
+ * $Original Author: egonw $
+ * $code extension: sushil ronghe$   
+ * $Date: 2007-03-26 (Mon, 26 March 2007) $    
+ * $Revision: 6382 $
+ * 
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * (or see http://www.gnu.org/copyleft/lesser.html)
+ */
 
 /**
  * This parser implements a (small) subset of the SMARTS syntax as defined on
@@ -61,8 +65,8 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * <p>Example code using SMARTS substructure search looks like:
  * <pre>
- * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * SmilesParser sp = new SmilesParser();
+ * AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
  * QueryAtomContainer query = SMARTSParser.parse("C*C");
  * boolean queryMatch = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
  * </pre>
@@ -72,11 +76,11 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
  *
- * @author      Egon Willighagen
- * @cdk.created 2004-03-29
+ * @author      Sushil Ronghe
+ * @cdk.created 2007-03-29
  *
  * @cdk.require ant1.6
- * @cdk.module  smarts
+ * @cdk.module  experimental
  *
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
@@ -186,10 +190,49 @@ JAVACODE
 void AddNewFormalChargeAtom() {
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS formal charge atom: " + tok.image);
-    FormalChargeAtom atom = new FormalChargeAtom(Integer.parseInt(tok.image));
+    String ss = new String(tok.image);
+    int count = getSignCount(ss);
+    FormalChargeAtom atom = new FormalChargeAtom(count);
     container.addAtom(atom);
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+}
+JAVACODE
+
+void AddNewRingAtom(){
+RingAtom atom;
+Token tt = getToken(-1);
+logger.debug("adding SMARTS Ring atom: "+ tt.image);
+String ss = new String(tt.image);
+if(ss.equals("r")){
+    atom=new RingAtom();
+}
+else{
+    atom=new RingAtom(Integer.parseInt(tt.image));
+} 
+container.addAtom(atom);
+if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+JAVACODE
+
+void AddTotalRingConnectionAtom(){
+Token tt = getToken(-1);
+logger.debug("adding SMARTS format charge atom: "+ tt.image);
+TotalRingConnectionAtom atom = new TotalRingConnectionAtom(Integer.parseInt(tt.image));
+container.addAtom(atom);
+if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+JAVACODE
+int getSignCount(String sss) {
+    int count=0;
+    for (int i=0;i<sss.length();i++){
+            if(sss.charAt(i)=='+'|sss.charAt(i)=='-'){
+                count++;
+            }
+        }
+ return count; 
 }
 
 JAVACODE
@@ -253,6 +296,7 @@ void AtomExpression() :
     Element() | SMARTSAtomExpression()
 }
 
+
 void SMARTSAtomExpression() :
 {}
 {
@@ -266,7 +310,14 @@ void InBracketsSMARTSAtom() :
 {}
 {
     "[" 
-    (Degree() | TotalHCount() | ImplicitHCount() | AtomicNumber() )
+    (Degree()               | 
+     TotalHCount()          | 
+     ImplicitHCount()       | 
+     AtomicNumber()         |
+     Element()              |
+     ChargeAtom()           |
+     RingAtom()             |
+     TotalRingConnection())
     "]"
 }
 
@@ -279,21 +330,37 @@ void AtomicNumber() :
 void TotalHCount() :
 {}
 {
-	<H> <DIGIT> AddNewTotalHCountAtom()
+	<H> [<DIGIT>] AddNewTotalHCountAtom()
+}
+
+void ChargeAtom():
+{Token t;}
+{
+        ("n" ("+"|"-") | <SIGNS>) AddNewFormalChargeAtom()
 }
 
 void ImplicitHCount() :
 {}
 {
-	"h" <DIGIT> AddNewImplicitHCountAtom()
+	"h" [<DIGIT>] AddNewImplicitHCountAtom()
 }
 
 void Degree() :
 {}
 {
-	"D" <DIGIT> AddNewDegreeAtom()
+	"D" [<DIGIT>] AddNewDegreeAtom()
 }
-
+void RingAtom() :
+{}
+{
+        
+        "r" [<DIGIT>] AddNewRingAtom()
+}
+void TotalRingConnection():
+{}
+{
+        "x" [<DIGIT>] AddTotalRingConnectionAtom()
+}
 void Element() :
 {}
 {
@@ -314,7 +381,7 @@ void BondExpression() :
 void TwoCharElement() :
 {}
 {
-	<HE> | <LI> | <BE> | <NE> | <NA> | <MG> | <AL> | <SI> | <AR> | <CA> | <SC> |
+    <HE> | <LI> | <BE> | <NE> | <NA> | <MG> | <AL> | <SI> | <AR> | <CA> | <SC> |
     <TI> | <CR> | <MN> | <FE> | <CO> | <NI> | <CU> | <ZN> | <GA> | <GE> | <AS> |
     <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
     <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
@@ -329,10 +396,36 @@ void OneCharElement() :
 }
 
 
-TOKEN :
+TOKEN:
 {
     < DIGIT: ["0"-"9"] >
 }
+
+TOKEN:
+{
+    <SIGN: ["+","-"] >
+}
+TOKEN:
+{
+    <SIGNS: (["+","-"])+>
+}
+TOKEN: /* Opetator*/
+{
+    < Exclamation: "!" >
+}
+TOKEN:
+{
+    < Amps :"&"  >
+}
+TOKEN:
+{
+    <Comma:",">
+}
+TOKEN:
+{
+    <Colon:";">
+}
+
 
 TOKEN :
 {
@@ -341,7 +434,7 @@ TOKEN :
 
 TOKEN : /* ELEMENTS */
 {
-	<  H: "H" >
+    <  H: "H" >
 |   < HE: "He" >
 |   < LI: "Li" >
 |   < BE: "Be" >
@@ -353,12 +446,12 @@ TOKEN : /* ELEMENTS */
 |   < NE: "Ne" >
 |   < NA: "Na" >
 |   < MG: "Mg" >
-|	< AL: "Al" >
-|	< SI: "Si" >
+|   < AL: "Al" >
+|   < SI: "Si" >
 |   <  P: "P" >
 |   <  S: "S" >
-|	< CL: "Cl" >
-|	< AR: "Ar" >
+|   < CL: "Cl" >
+|   < AR: "Ar" >
 |   <  K: "K" >
 |   < CA: "Ca" >
 |   < SC: "Sc" >
