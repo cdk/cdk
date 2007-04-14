@@ -29,8 +29,8 @@
  *
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This matcher checks the number of ring connections of the checked Atom
@@ -47,7 +47,7 @@ public class TotalRingConnectionAtom extends SMARTSAtom {
     }
     public boolean matches(IAtom atom) {
       if(atom.getProperty(CDKConstants.RING_CONNECTIONS)!=null){
-       Integer total_ring_bond = ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
+       int total_ring_bond = ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
       if(Connection_Size == total_ring_bond)
           return true;
       }
