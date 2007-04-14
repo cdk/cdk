@@ -1,4 +1,4 @@
-package org.openscience.cdk.isomorphism.matchers.smarts;
+
 /*
  *  $RCSfile$
  *  $Author: Sushil Ronghe $
@@ -28,15 +28,17 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
-/**
- *
- * @author niper
- */
+package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
-import java.util.*;
-import org.openscience.cdk.interfaces.IBond;
+
+/**
+ * This matcher checks the number of ring connections of the checked Atom
+ * with other Atom's. This cannot be matched with a unpreprocessed Atom!
+ *
+ * @cdk.module extra
+ */
+
 public class TotalRingConnectionAtom extends SMARTSAtom {
     private int Connection_Size;
     /** Creates a new instance of TotalRingConnectionAtom */
@@ -44,20 +46,12 @@ public class TotalRingConnectionAtom extends SMARTSAtom {
         Connection_Size = m_Connection_Size;
     }
     public boolean matches(IAtom atom) {
-      //System.out.println(atom.getProperty(CDKConstants.TOTAL_RING_BOND));
-      //System.out.println("***************");
-      if(atom.getProperty(CDKConstants.TOTAL_RING_BOND)!=null){
-      //System.out.println(atom+"-->"+((Integer)atom.getProperty(CDKConstants.TOTAL_RING_BOND)).intValue());
-      Integer total_ring_bond = ((Integer)atom.getProperty(CDKConstants.TOTAL_RING_BOND)).intValue();
+      if(atom.getProperty(CDKConstants.RING_CONNECTIONS)!=null){
+       Integer total_ring_bond = ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
       if(Connection_Size == total_ring_bond)
           return true;
+      }
       return false;
-      }
-      else {
-          System.out.println("this atom is null-->"+atom);
-          return false;    
-      }
-          
     }
     public String toString() {
         return ("Total Ring Connection Atom of size "+ Connection_Size);
