@@ -20,13 +20,8 @@
  */
 package org.openscience.cdk.test.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,11 +29,15 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
- * @author      Rajarshi Guha
- * @cdk.module  test-smarts
+ * @author Rajarshi Guha
+ * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
 public class SMARTSQueryToolTest extends CDKTestCase {
@@ -95,6 +94,38 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         assertTrue(status);
 
         int nmatch = querytool.countMatches();
+        assertEquals(9, nmatch);
+
+    }
+
+    public void testQueryToolSingleAtomCase() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("C");
+
+        boolean status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        int nmatch = querytool.countMatches();
+        assertEquals(8, nmatch);
+    }
+
+    public void testQueryToolResetSmarts() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
+        SMARTSQueryTool querytool = new SMARTSQueryTool("C");
+
+        boolean status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        int nmatch = querytool.countMatches();
+        assertEquals(8, nmatch);
+
+        querytool.setSmarts("CC");
+        status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        nmatch = querytool.countMatches();
         assertEquals(9, nmatch);
 
     }

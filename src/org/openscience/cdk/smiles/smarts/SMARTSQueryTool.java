@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
@@ -115,8 +116,25 @@ public class SMARTSQueryTool {
         this.atomContainer = atomContainer;
         initializeMolecule();
 
-        List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(this.atomContainer, query);
-        matchingAtoms = getAtomMappings(bondMapping, this.atomContainer);
+        // lets see if we have a single atom query
+        if (query.getAtomCount() == 1) {
+            // lets get the query atom
+            IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
+
+            matchingAtoms = new ArrayList();
+            Iterator atoms = this.atomContainer.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = (IAtom) atoms.next();
+                if (queryAtom.matches(atom)) {
+                    List tmp = new ArrayList();
+                    tmp.add(atom);
+                    matchingAtoms.add(tmp);
+                }
+            }
+        } else {
+            List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(this.atomContainer, query);
+            matchingAtoms = getAtomMappings(bondMapping, this.atomContainer);
+        }
 
         return matchingAtoms.size() != 0;
     }
@@ -202,7 +220,7 @@ public class SMARTSQueryTool {
             if (connectedAtoms.size() != 0)
                 atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
         }
-        
+
         // check for atomaticity
         try {
             HueckelAromaticityDetector.detectAromaticity(atomContainer);
@@ -214,8 +232,7 @@ public class SMARTSQueryTool {
 
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
-        query = SMARTSParser.parse(smarts);
-        System.out.println(query);
+        query = SMARTSParser.parse(smarts);        
     }
 
 
