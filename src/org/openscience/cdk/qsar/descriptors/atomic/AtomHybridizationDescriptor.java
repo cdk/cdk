@@ -116,7 +116,8 @@ public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 		atm = new HybridizationStateATMatcher();
 		matched = atm.findMatchingAtomType(container, atom);
 		if (matched == null) {
-			throw new CDKException("The matched atom type was null");
+            int atnum = container.getAtomNumber(atom);
+            throw new CDKException("The matched atom type was null (atom number "+atnum+") "+atom.getSymbol());
 		}
 		AtomTypeManipulator.configure(atom, matched);
 
