@@ -60,7 +60,6 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  * @cdk.created  2003-04-01
  *
  * @cdk.keyword  id, creation
- * @cdk.bug      1455341
  */
 public abstract class IDCreator {
 

@@ -64,6 +64,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module       qsar
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:ionizationPotential
+ * @cdk.bug          1628465
  * 
  * @see IPAtomicDescriptor
  * @see IPBondDescriptor

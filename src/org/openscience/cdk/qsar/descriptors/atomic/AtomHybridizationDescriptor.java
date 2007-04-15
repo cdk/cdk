@@ -52,11 +52,12 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *   </tr>
  * </table>
  *
- *@author         mfe4
- *@cdk.created    2004-11-13
- *@cdk.module     qsar
- *@cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:atomHybridization
+ * @author         mfe4
+ * @cdk.created    2004-11-13
+ * @cdk.module     qsar
+ * @cdk.set        qsar-descriptors
+ * @cdk.dictref    qsar-descriptors:atomHybridization
+ * @cdk.bug        1558660
  */
 public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 

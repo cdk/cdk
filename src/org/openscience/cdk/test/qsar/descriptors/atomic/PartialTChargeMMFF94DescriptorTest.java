@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsar
+ * @cdk.bug    1627763
  */
 public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	

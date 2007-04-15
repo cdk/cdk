@@ -59,8 +59,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
- * @see GasteigerMarsiliPartialCharges
- * @see GasteigerPEPEPartialCharges
+ * @cdk.bug     1558660
+ * @see         GasteigerMarsiliPartialCharges
+ * @see         GasteigerPEPEPartialCharges
  */
 public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 

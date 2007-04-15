@@ -60,7 +60,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.module  qsar
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialPiCharge
- * @see GasteigerPEPEPartialCharges
+ * @cdk.bug     1558660
+ * @see         GasteigerPEPEPartialCharges
  */
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 

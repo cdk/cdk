@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
@@ -59,10 +56,10 @@ import org.openscience.cdk.tools.LoggingTool;
  * Helper class for ModelBuilder3D. Handles templates. This is
  * our layout solution for 3D ring systems
  *
- * @author      cho,steinbeck
+ * @author      cho
+ * @author      steinbeck
  * @cdk.created 2004-09-21
  * @cdk.module  builder3d
- * @cdk.bug     1300920
  */
 public class TemplateHandler3D {
 	

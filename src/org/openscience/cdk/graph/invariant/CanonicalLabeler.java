@@ -47,7 +47,6 @@ import org.openscience.cdk.smiles.InvPair;
  *
  * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @cdk.created  2002-02-26
- * @cdk.bug      1562527
  *
  * @cdk.keyword canonicalization
  */

@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword    molecule, molecular mass
  * @cdk.keyword    molecule, molecular formula
  * @cdk.keyword    molecule, double bond equivalents
+ * @cdk.bug        1647096
  */
 public class MFAnalyser {
 
