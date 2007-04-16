@@ -573,8 +573,16 @@ public class CMLCoreModule implements ICMLModule {
             }
         } else if ("list".equals(name)) {
 //            cdo.startObject("MoleculeSet");
-        	currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
-            currentMolecule = currentChemFile.getBuilder().newMolecule();
+        	if (DICTREF.equals("cdk:model")) {
+        		currentChemModel = currentChemFile.getBuilder().newChemModel();
+        	} else if (DICTREF.equals("cdk:moleculeSet")) {
+        		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		currentMolecule = currentChemFile.getBuilder().newMolecule();
+        	} else {
+        		// the old default
+        		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		currentMolecule = currentChemFile.getBuilder().newMolecule();
+        	}
         }
     }
 
@@ -680,8 +688,14 @@ public class CMLCoreModule implements ICMLModule {
 //            cdo.endObject("Crystal");
         } else if ("list".equals(name)) {
 //            cdo.endObject("MoleculeSet");
-            currentChemModel.setMoleculeSet(currentMoleculeSet);
-            currentChemSequence.addChemModel(currentChemModel);
+        	// FIXME: I really should check the DICTREF, but there is currently
+        	// no mechanism for storing these for use with endTag() :(
+        	// So, instead, for now, just see if it already has done the setting
+        	// to work around duplication
+        	if (currentChemModel.getMoleculeSet() != currentMoleculeSet) {
+        		currentChemModel.setMoleculeSet(currentMoleculeSet);
+        		currentChemSequence.addChemModel(currentChemModel);
+        	}
         } else if ("coordinate3".equals(name)) {
             if (BUILTIN.equals("xyz3")) {
                 logger.debug("New coord3 xyz3 found: ", currentChars);
