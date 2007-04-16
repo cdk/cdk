@@ -52,7 +52,7 @@ import java.util.*;
  * set the timeout to a higher value, and assign it to this SmilesGenerator. In
  * the vast majority of cases, however, the defaults will be fine.
  *
- * @author         Oliver Horlacher,
+ * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)
  * @cdk.created    2002-02-26
  * @cdk.keyword    SMILES, generator
@@ -159,7 +159,6 @@ public class SmilesGenerator
 	 *  assign the SAR.
 	 *
 	 *@param  molecule  The molecule to evaluate
-	 *@return           Description of the Returned Value
 	 *@see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
 	 */
 	public synchronized String createSMILES(IMolecule molecule)
@@ -177,10 +176,6 @@ public class SmilesGenerator
 
 	/**
 	 *  Generate a SMILES for the given <code>Reaction</code>.
-	 *
-	 *@param  reaction          Description of the Parameter
-	 *@return                   Description of the Return Value
-	 *@exception  CDKException  Description of the Exception
 	 */
 	public synchronized String createSMILES(IReaction reaction) throws CDKException
 	{
@@ -236,8 +231,6 @@ public class SmilesGenerator
 	 *  assign the SAR.
 	 *
 	 *@param  molecule                 The molecule to evaluate
-	 *@param  doubleBondConfiguration  Description of Parameter
-	 *@return                          Description of the Returned Value
 	 *@exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles.
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
@@ -260,8 +253,6 @@ public class SmilesGenerator
 	 *@param  molecule                 The molecule to evaluate
 	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
 	 *      will not be chiral.
-	 *@param  doubleBondConfiguration  Description of Parameter
-	 *@return                          Description of the Returned Value
 	 *@exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for crating the chiral smiles. This excpetion
 	 *      can only be thrown if chiral smiles is created, ignore it if you want a
@@ -304,8 +295,6 @@ public class SmilesGenerator
 	 *@param  molecule                 The molecule to evaluate
 	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
 	 *      will not be chiral.
-	 *@param  doubleBondConfiguration  Description of Parameter
-	 *@return                          Description of the Returned Value
 	 *@exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles. This excpetion
 	 *      can only be thrown if chiral smiles is created, ignore it if you want a
@@ -397,14 +386,6 @@ public class SmilesGenerator
 		return l.toString();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  ac  Description of the Parameter
-	 *@param  a   Description of the Parameter
-	 *@return     Description of the Return Value
-	 */
 	private org.openscience.cdk.interfaces.IAtom hasWedges(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom a)
 	{
 		List atoms = ac.getConnectedAtomsList(a);
@@ -534,10 +515,6 @@ public class SmilesGenerator
 
 	/**
 	 *  Gets the bondBroken attribute of the SmilesGenerator object
-	 *
-	 *@param  a1  Description of Parameter
-	 *@param  a2  Description of Parameter
-	 *@return     The bondBroken value
 	 */
 	private boolean isBondBroken(IAtom a1, IAtom a2)
 	{
@@ -578,9 +555,7 @@ public class SmilesGenerator
 
 	/**
 	 *  Determines if the atom <code>a</code> is a atom with a ring marker.
-	 *
-	 *@param  a1  Description of Parameter
-	 *@param  v   Description of the Parameter
+     *
 	 *@return     true if the atom participates in a bond that was broken in the
 	 *      first pass.
 	 */
@@ -630,10 +605,6 @@ public class SmilesGenerator
 
 	/**
 	 *  Gets the ringOpenings attribute of the SmilesGenerator object
-	 *
-	 *@param  a       Description of Parameter
-	 *@param  vbonds  Description of the Parameter
-	 *@return         The ringOpenings value
 	 */
 	private Vector getRingOpenings(IAtom a, Vector vbonds)
 	{
@@ -659,10 +630,6 @@ public class SmilesGenerator
 	/**
 	 *  Returns true if the <code>atom</code> in the <code>container</code> has
 	 *  been marked as a chiral center by the user.
-	 *
-	 *@param  atom       Description of Parameter
-	 *@param  container  Description of Parameter
-	 *@return            The chiralCenter value
 	 */
 //	private boolean isChiralCenter(IAtom atom, IAtomContainer container)
 //	{
@@ -714,7 +681,6 @@ public class SmilesGenerator
 	 *      will not be chiral.
 	 *@param  atomContainer            the AtomContainer that the SMILES string is
 	 *      generated for.
-	 *@param  doubleBondConfiguration  Description of Parameter
 	 */
 	private void createSMILES(org.openscience.cdk.interfaces.IAtom a, StringBuffer line, IAtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration)
 	{
@@ -785,14 +751,6 @@ public class SmilesGenerator
 
 	/**
 	 *  Parse a branch
-	 *
-	 *@param  v                        Description of Parameter
-	 *@param  buffer                   Description of Parameter
-	 *@param  container                Description of Parameter
-	 *@param  parent                   Description of Parameter
-	 *@param  chiral                   Description of Parameter
-	 *@param  doubleBondConfiguration  Description of Parameter
-	 *@param  atomsInOrderOfSmiles     Description of Parameter
 	 */
 	private void parseChain(Vector v, StringBuffer buffer, IAtomContainer container, IAtom parent, boolean chiral, boolean[] doubleBondConfiguration, Vector atomsInOrderOfSmiles)
 	{
@@ -1555,7 +1513,6 @@ public class SmilesGenerator
 	 *@param  atomsInOrderOfSmiles     a vector containing the atoms in the order
 	 *      they are in the smiles.
 	 *@param  currentChain             The chain we currently deal with.
-	 *@param  doubleBondConfiguration  Description of Parameter
 	 */
 	private void parseAtom(IAtom a, StringBuffer buffer, IAtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, IAtom parent, Vector atomsInOrderOfSmiles, Vector currentChain)
 	{
@@ -1709,7 +1666,6 @@ public class SmilesGenerator
 	 *  + is returned if it is -1 - is returned. The positive values all have + in
 	 *  front of them.
 	 *
-	 *@param  a  Description of Parameter
 	 *@return    string representing the charge on <code>a</code>
 	 */
 	private String generateChargeString(IAtom a)
@@ -1744,7 +1700,6 @@ public class SmilesGenerator
 	 *  mass is the same as the majour isotope an empty string is returned.
 	 *
 	 *@param  a  the atom to create the mass
-	 *@return    Description of the Returned Value
 	 */
 	private String generateMassString(IAtom a)
 	{
@@ -1773,12 +1728,6 @@ public class SmilesGenerator
     }
 
 
-	/**
-	 *  Description of the Class
-	 *
-	 *@author         shk3
-	 *@cdk.created    2003-06-17
-	 */
 	class BrokenBond
 	{
 
@@ -1798,8 +1747,6 @@ public class SmilesGenerator
 		 *  the marker <code>marker</code>.
 		 *
 		 *@param  marker  the ring closure marker. (Great comment!)
-		 *@param  a1      Description of Parameter
-		 *@param  a2      Description of Parameter
 		 */
 		BrokenBond(org.openscience.cdk.interfaces.IAtom a1, org.openscience.cdk.interfaces.IAtom a2, int marker)
 		{
@@ -1842,23 +1789,12 @@ public class SmilesGenerator
 		}
 
 
-		/**
-		 *  Description of the Method
-		 *
-		 *@return    Description of the Returned Value
-		 */
 		public String toString()
 		{
 			return Integer.toString(marker);
 		}
 
 
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  o  Description of Parameter
-		 *@return    Description of the Returned Value
-		 */
 		public boolean equals(Object o)
 		{
 			if (!(o instanceof BrokenBond))

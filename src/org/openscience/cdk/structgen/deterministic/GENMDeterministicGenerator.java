@@ -2761,21 +2761,11 @@ public class GENMDeterministicGenerator {
 			listeners.add(x);
 		}
 
-
-		/**
-		 *  Description of the Method
-		 *
-		 * @param  x  Description of Parameter
-		 */
 		public void removeChangeListener(IStructureGenerationListener x)
 		{
 			listeners.remove(x);
 		}
 
-
-		/**
-		 *  Description of the Method
-		 */
 		protected void fireChange() {
 			if (listeners == null) return;
 			

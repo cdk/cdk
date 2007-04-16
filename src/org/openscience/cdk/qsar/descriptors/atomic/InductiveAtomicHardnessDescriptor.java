@@ -208,14 +208,6 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(atomicHardness));
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  atom1  Description of the Parameter
-	 *@param  atom2  Description of the Parameter
-	 *@return        Description of the Return Value
-	 */
 	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
 		double distance = 0;
 		double tmp = 0;

@@ -139,13 +139,6 @@ public class PopupController2D extends Controller2D {
         return null;
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  mouseX  Description of the Parameter
-	 *@param  mouseY  Description of the Parameter
-	 *@param  event   Description of the Parameter
-	 */
 	private void popupMenuForNearestChemObject(int mouseX, int mouseY, MouseEvent event)
 	{
 		IChemObject objectInRange = getChemObjectInRange(mouseX, mouseY);

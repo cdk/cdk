@@ -52,12 +52,6 @@ public class ChemAction extends JCPAction
 	private static final long serialVersionUID = -399343341314165265L;
 	private PTDialog dialog = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
@@ -207,12 +201,6 @@ public class ChemAction extends JCPAction
 			this.model = model;
 		}
 
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  event  Description of the Parameter
-		 */
 		public void stateChanged(EventObject event)
 		{
 			logger.debug("Element change signaled...");

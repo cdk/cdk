@@ -55,12 +55,6 @@ public class ValidateAction extends JCPAction
     
     ValidateFrame frame = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("detected validate action: ", type);
@@ -133,10 +127,6 @@ public class ValidateAction extends JCPAction
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	private void clearValidate()
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
@@ -150,12 +140,6 @@ public class ValidateAction extends JCPAction
 		jcpmodel.fireChange();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  object  Description of the Parameter
-	 */
 	private void runValidate(IChemObject object)
 	{
 		logger.info("Running validation");

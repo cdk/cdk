@@ -52,11 +52,6 @@ public class ChangeAtomSymbolAction extends JCPAction
 
 	private static final long serialVersionUID = -8502905723573311893L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("About to change atom type of relevant atom!");

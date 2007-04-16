@@ -47,21 +47,11 @@ public class SetColorSchemeAction extends JCPAction
 
     private static final long serialVersionUID = 8812815445839360119L;
 
-
-    /**
-	 *  Constructor for the SetColorSchemeAction object
-	 */
 	public SetColorSchemeAction()
 	{
 		super();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.info("Changing color scheme to: ", type);

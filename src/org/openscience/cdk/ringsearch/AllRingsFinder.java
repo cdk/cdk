@@ -115,8 +115,6 @@ public class AllRingsFinder
 
 
 	/**
-	 *  Description of the Method
-	 *
 	 *@param  ac                The AtomContainer to be searched
 	 *@param  paths            A vectoring storing all the paths
 	 *@param  ringSet           A ringset to be extended while we search

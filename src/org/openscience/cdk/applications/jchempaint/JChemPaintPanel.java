@@ -282,12 +282,6 @@ public abstract class JChemPaintPanel
 		return JCPLocalizationHandler.getInstance().getString("Untitled-") + Integer.toString(instances.size() + 1);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
 	public Image takeSnapshot() {
 		return null;
 	}
@@ -392,10 +386,6 @@ public abstract class JChemPaintPanel
 		this.lastSavedFile = lsf;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 //	private void setupWorkingDirectory() {
 //		try {
 //			if (System.getProperty("user.dir") != null) {
@@ -497,12 +487,6 @@ public abstract class JChemPaintPanel
 		return cmd;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  file  Description of the Parameter
-	 */
 	public void showChemFile(Reader file) {
 		IChemObjectReader cor = null;
 
@@ -580,12 +564,6 @@ public abstract class JChemPaintPanel
 		return jchemPaintModel;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
 	public int showWarning() {
 		if (jchemPaintModel.isModified() && !getIsOpenedByViewer() && !guiString.equals("applet")) {
 			int answer = JOptionPane.showConfirmDialog(this, jchemPaintModel.getTitle() + " " + JCPLocalizationHandler.getInstance().getString("warning"), JCPLocalizationHandler.getInstance().getString("warningheader"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -609,12 +587,6 @@ public abstract class JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  chemFile  Description of the Parameter
-	 */
 	public void processChemFile(org.openscience.cdk.interfaces.IChemFile chemFile) {
 		logger.info("Information read from file:");
 
@@ -699,12 +671,6 @@ public abstract class JChemPaintPanel
 	    }
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  chemModel  Description of the Parameter
-	 */
 	public void processChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
@@ -780,12 +746,6 @@ public abstract class JChemPaintPanel
 		return coReader;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  chemFile  Description of the Parameter
-	 */
 	public void showChemFile(org.openscience.cdk.interfaces.IChemFile chemFile) {
 		logger.info("Information read from file:");
 
@@ -805,12 +765,6 @@ public abstract class JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  chemModel  Description of the Parameter
-	 */
 	public void showChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
 		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
@@ -972,31 +926,14 @@ public abstract class JChemPaintPanel
       this.panel = panel;
     }
     
-    	/**
-    	 *  Description of the Method
-    	 *
-    	 *@param  e  Description of the Parameter
-    	 */
     	public void mousePressed(MouseEvent e) {
     		maybeShowPopup(e);
     	}
     
-    
-    	/**
-    	 *  Description of the Method
-    	 *
-    	 *@param  e  Description of the Parameter
-    	 */
     	public void mouseReleased(MouseEvent e) {
     		//maybeShowPopup(e);
     	}
     
-    
-    	/**
-    	 *  Description of the Method
-    	 *
-    	 *@param  e  Description of the Parameter
-    	 */
     	private void maybeShowPopup(MouseEvent e) {
     	    if (e.isPopupTrigger()) {
     			popupMenu.show(e.getComponent(),
@@ -1092,12 +1029,6 @@ public abstract class JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model  Description of the Parameter
-	 */
 	public void registerModel(JChemPaintModel model) {
 	}
 
@@ -1124,13 +1055,6 @@ public abstract class JChemPaintPanel
 		return "1.11";
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  mimeType  Description of the Parameter
-	 *@param  script    Description of the Parameter
-	 */
 	public void runScript(String mimeType, String script) {
 		logger.error("JChemPaintPanel's CDKEditBus.runScript() implementation called but not implemented!");
 	}

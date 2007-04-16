@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003-2007  The JChemPaint project
+ *  Copyright (C) 2003-2007  E.L. Willighagen <elw38@cam.ac.uk>
  *
  *  Contact: jchempaint-devel@lists.sf.net
  *
@@ -52,11 +52,6 @@ public class EditChemObjectPropsAction extends JCPAction {
 
 	private static final long serialVersionUID = 7123137508085454087L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event) {
 		if (jcpPanel.getJChemPaintModel() != null) {
 			JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();

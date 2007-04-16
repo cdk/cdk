@@ -160,22 +160,12 @@ public class UndoStack
 		logger.debug(listObjects());
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
 	public int size()
 	{
 		return stack.size();
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
 	String listObjects()
 	{
 		String s = "List of Object hashcodes in the stack: \n";

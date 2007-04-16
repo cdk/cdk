@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The JChemPaint project
  *
@@ -43,11 +39,6 @@ public class AboutAction extends JCPAction
 
 	private static final long serialVersionUID = 1420132959122535398L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		AboutDialog ad = new AboutDialog();

@@ -47,11 +47,6 @@ public class InsertSmilesAction extends JCPAction
 
 	private static final long serialVersionUID = -7583781404068411100L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Gonna show the InsertFromSmiles dialog...");

@@ -46,12 +46,6 @@ public class ModelPropsAction extends JCPAction
     
     JChemPaintModelPropsEditor editor = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (editor == null)

@@ -110,10 +110,6 @@ public class JCPPropertyHandler
 		return currentProperties;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void reloadProperties()
 	{
 		Properties applicationProps = null;
@@ -151,10 +147,6 @@ public class JCPPropertyHandler
 		currentProperties = applicationProps;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void saveProperties()
 	{
 		try

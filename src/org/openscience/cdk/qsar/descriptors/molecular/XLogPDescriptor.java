@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *

@@ -135,11 +135,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		}
 	}
 	
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  graphics  Description of the Parameter
-	 */
 	protected void customizeRendering(Graphics2D graphics)
 	{
 		if (r2dm.getUseAntiAliasing())
@@ -151,9 +146,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 	/**
 	 *@param  minmax    array of length for with min and max 2D coordinates
-	 *@param  caption   Description of the Parameter
-	 *@param  side      Description of the Parameter
-	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintBoundingBox(double[] minmax, String caption,
 			int side, Graphics2D graphics)
@@ -185,11 +177,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  graphics  Description of the Parameter
-	 */
 	public void paintLassoLines(Graphics2D graphics)
 	{
 		Vector points = r2dm.getLassoPoints();
@@ -211,9 +198,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Searches through all the atoms in the given array of atoms, triggers the
 	 *  paintColouredAtoms method if the atom has got a certain color and triggers
 	 *  the paintAtomSymbol method if the symbol of the atom is not C.
-	 *
-	 *@param  atomCon   Description of the Parameter
-	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintAtoms(IAtomContainer atomCon, Graphics2D graphics)
 	{
@@ -223,14 +207,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  container  Description of the Parameter
-	 *@param  atom       Description of the Parameter
-	 *@param  graphics   Description of the Parameter
-	 */
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
 		if (!r2dm.getShowExplicitHydrogens() && atom.getSymbol().equals("H")) return;
@@ -327,7 +303,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  atom      The atom to be drawn
 	 *@param  color     The color of the atom to be drawn
-	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintColouredAtomBackground(org.openscience.cdk.interfaces.IAtom atom, Color color, Graphics2D graphics)
 	{
@@ -361,12 +336,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *
 	 *@param  atom        The atom to be drawn
-	 *@param  backColor   Description of the Parameter
 	 *@param  graphics    Graphics2D to draw too
 	 *@param  alignment   How to align the H's
 	 *@param  atomNumber  Number of the atom in the AtomContainer, 0 is not in
 	 *      container
-	 *@param  isRadical   Description of the Parameter
 	 */
 	public void paintAtomSymbol(IAtom atom, Color backColor, Graphics2D graphics,
 			int alignment, int atomNumber, boolean isRadical)
@@ -813,14 +786,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	
 	/**
 	 *  Makes a clear empty space using the background color.
-	 *
-	 *@param  x          Description of the Parameter
-	 *@param  y          Description of the Parameter
-	 *@param  width          Description of the Parameter
-	 *@param  height          Description of the Parameter
-	 *@param  border     Description of the Parameter
-	 *@param  backColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintEmptySpace(int x, int y, int width, int height, int border,
 			Color backColor, Graphics2D graphics)
@@ -845,10 +810,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Paints the label of the given PseudoAtom, instead of it's symbol.
 	 *
 	 *@param  atom       The atom to be drawn
-	 *@param  backColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
-	 *@param  alignment  Description of the Parameter
-	 *@param  isRadical  Description of the Parameter
 	 */
 	public void paintPseudoAtomLabel(IPseudoAtom atom, Color backColor,
 			Graphics2D graphics, int alignment, boolean isRadical)
@@ -955,8 +916,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  the right color.
 	 *
 	 *@param  ringSet   The set of rings the molecule contains
-	 *@param  atomCon   Description of the Parameter
-	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintBonds(IAtomContainer atomCon, IRingSet ringSet, Graphics2D graphics)
 	{
@@ -1019,9 +978,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  A ring is defined aromatic if all atoms are aromatic, -or- all bonds are
 	 *  aromatic.
-	 *
-	 *@param  ring  Description of the Parameter
-	 *@return       Description of the Return Value
 	 */
 	public boolean ringIsAromatic(IRing ring)
 	{
@@ -1049,8 +1005,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Triggers the paint method suitable to the bondorder of the given bond.
 	 *
 	 *@param  bond       The Bond to be drawn.
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1104,9 +1058,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  is part of a ring with CDK's grey inner bonds.
 	 *
 	 *@param  bond       The Bond to be drawn.
-	 *@param  ring       Description of the Parameter
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintRingBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
@@ -1146,10 +1097,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 	/**
 	 *  Draws the ring in an aromatic ring.
-	 *
-	 *@param  ring       Description of the Parameter
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintRingRing(IRing ring, Color bondColor, Graphics2D graphics)
 	{
@@ -1192,11 +1139,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  Paint a Bond in an aromatic ring, using CDK style, meaning grey inner
 	 *  bonds.
-	 *
-	 *@param  bond       Description of the Parameter
-	 *@param  ring       Description of the Parameter
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintAromaticRingBondCDKStyle(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
@@ -1209,8 +1151,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Paints the given single bond.
 	 *
 	 *@param  bond       The single bond to be drawn
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintSingleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1225,8 +1165,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Paints the given single bond.
 	 *
 	 *@param  bond       The single bond to be drawn
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1263,8 +1201,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Paints The given double bond.
 	 *
 	 *@param  bond       The double bond to be drawn
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintDoubleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1282,8 +1218,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Paints the given triple bond.
 	 *
 	 *@param  bond       The triple bond to be drawn
-	 *@param  bondColor  Description of the Parameter
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintTripleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1305,7 +1239,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *@param  bond       The bond to be drawn
 	 *@param  ring       The ring the bond is part of
 	 *@param  bondColor  Color of the bond
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintInnerBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
@@ -1349,7 +1282,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  coords
 	 *@param  bondColor  Color of the bond
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
 	{
@@ -1367,7 +1299,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  bond       The singlebond to be drawn
 	 *@param  bondColor  Color of the bond
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1398,7 +1329,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  bond       The single bond to be drawn
 	 *@param  bondColor  Color of the bond
-	 *@param  graphics   Description of the Parameter
 	 */
 	public void paintDashedWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -1444,8 +1374,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  Paints a line between the start point and end point of the pointer vector
 	 *  that is stored in the Renderer2DModel.
-	 *
-	 *@param  graphics  Description of the Parameter
 	 */
 	public void paintPointerVector(Graphics2D graphics)
 	{
@@ -1500,7 +1428,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  Gets the screenCoordinates attribute of the Renderer2D object
 	 *
-	 *@param  point  Description of the Parameter
 	 *@return    The screenCoordinates value
 	 */
 	protected Point getScreenCoordinates(Point point)
@@ -1525,7 +1452,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *  Expects an array of even length with x's at the uneven indices and y's at
 	 *  the even indices.
 	 *
-	 *@param  coords  Description of the Parameter
 	 *@return         The screenCoordinates value
 	 */
 	public int[] getScreenCoordinates(int[] coords)
@@ -1553,7 +1479,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	/**
 	 *  Gets the screenSize attribute of the Renderer2D object
 	 *
-	 *@param  size  Description of the Parameter
 	 *@return       The screenSize value
 	 */
 	protected float getScreenSize(int size)
@@ -1567,7 +1492,6 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 *
 	 *@param  atom        The atom.
 	 *@param  graphics    The current graphics object.
-	 *@param  atomNumber  Description of the Parameter
 	 */
 	public void paintToolTip(org.openscience.cdk.interfaces.IAtom atom, Graphics2D graphics, int atomNumber)
 	{

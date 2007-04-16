@@ -140,41 +140,21 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 		setVisible(true);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void closeFrame()
 	{
 		dispose();
 	}
 
-
-	/**
-	 *  Description of the Class
-	 *
-	 *@author     steinbeck
-	 */
 	class CancelAction extends AbstractAction
 	{
 
 		private static final long serialVersionUID = -2305492502437164455L;
 
-
-		/**
-		 *  Constructor for the CancelAction object
-		 */
 		CancelAction()
 		{
 			super("Cancel");
 		}
 
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  event  Description of the Parameter
-		 */
 		public void actionPerformed(ActionEvent event)
 		{
 			closeFrame();
@@ -194,22 +174,12 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 		
 		StructureDiagramGenerator diagramGenerator;
 
-
-		/**
-		 *  Constructor for the CreateAction object
-		 */
 		CreateAction()
 		{
 			super("Create");
 			this.diagramGenerator = new StructureDiagramGenerator();
 		}
 
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  event  Description of the Parameter
-		 */
 		public void actionPerformed(ActionEvent event)
 		{
 			if (from3DButton != null && from3DButton.isSelected())
@@ -263,13 +233,6 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 			closeFrame();
 		}
 
-
-		/**
-		 *  Description of the Method
-		 *
-		 *@param  molecule  Description of the Parameter
-		 *@return           Description of the Return Value
-		 */
 		private IMolecule relayoutMolecule(IMolecule molecule)
 		{
 			IMolecule cleanedMol = molecule;

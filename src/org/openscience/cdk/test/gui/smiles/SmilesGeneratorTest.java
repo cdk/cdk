@@ -1,9 +1,6 @@
-/*  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-04-21 10:59:31 +0200 (Fri, 21 Apr 2006) $
- *  $Revision: 6067 $
+/* $Revision: 6067 $ $Author: egonw $ $Date: 2006-04-21 10:59:31 +0200 (Fri, 21 Apr 2006) $
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -61,12 +58,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 {
 	boolean standAlone = false;
 
-
-	/**
-	 *  Constructor for the SmilesGeneratorTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
 	public SmilesGeneratorTest(String name)
 	{
 		super(name);
@@ -288,8 +279,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testCisResorcinol() throws Exception
 	{
@@ -392,8 +381,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testCisTransDecalin() throws Exception
 	{
@@ -502,8 +489,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testDoubleBondConfiguration() throws Exception
 	{
@@ -792,12 +777,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  mol  Description of the Parameter
-	 */
 	private void fixCarbonHCount(Molecule mol)
 	{
 		/*
@@ -946,12 +925,6 @@ public class SmilesGeneratorTest extends CDKTestCase
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  molecule  Description of the Parameter
-	 */
 	private void display(Molecule molecule)
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();

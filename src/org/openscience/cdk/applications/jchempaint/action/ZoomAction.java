@@ -36,8 +36,6 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 
 
 /**
- *  Description of the Class
- *
  * @cdk.module jchempaint
  * @author     steinbeck
  */
@@ -46,11 +44,6 @@ public class ZoomAction extends JCPAction
 
     private static final long serialVersionUID = -2459332630141921895L;
 
-    /**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Zooming in/out in mode: ", type);

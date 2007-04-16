@@ -67,12 +67,6 @@ public class AppletCanvas extends Canvas
 		this.renderer = renderer;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  g  Description of the Parameter
-	 */
 	public void update(Graphics g)
 	{
 		paint(g);
@@ -89,12 +83,6 @@ public class AppletCanvas extends Canvas
 		this.model = model;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  g  Description of the Parameter
-	 */
 	public void paint(Graphics g)
 	{
 		renderer.getRenderer2DModel().setBackgroundDimension(getSize());

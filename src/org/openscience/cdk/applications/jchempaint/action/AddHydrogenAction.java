@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2003-2007  The JChemPaint project
  *
@@ -66,12 +62,6 @@ public class AddHydrogenAction extends JCPAction
     private IAtomContainer changedAtomsAndBonds = null;
     private HashMap hydrogenAtomMap = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
         this.hydrogenAtomMap = null;

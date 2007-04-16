@@ -204,10 +204,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
         return showInsertTextField;
     }
 
-
-    /**
-	 *  Description of the Method
-	 */
 	public void customizeView() {
 		if (showMenuBar) {
 			if (menu == null) {
@@ -239,10 +235,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	void setupIfModelNotEmpty()
 	{
 		org.openscience.cdk.interfaces.IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
@@ -527,10 +519,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		return frame;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void setupPopupMenus(PopupController2D inputAdapter)
 	{
     if (inputAdapter.getPopupMenu(Atom.class) == null)
@@ -555,12 +543,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@return    Description of the Return Value
-	 */
 	public Image takeSnapshot()
 	{
 		Image snapImage = null;
@@ -758,12 +740,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  s1  Description of the Parameter
-	 *@param  s2  Description of the Parameter
-	 */
 	public void runScript(String s1, String s2)
 	{
 		logger.info("runScript method currently not supported");
@@ -823,20 +799,11 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
    }
 
 
-   /**
-    *  Description of the Method
-    *
-    * @param  x  Description of Parameter
-    */
    public void removeChangeListener(ChangeListener x)
    {
        changeListeners.remove(ChangeListener.class, x);
    }
 
-
-   /**
-    *  Description of the Method
-    */
    protected void fireChange(String reason)
    {
        lastEventReason = reason;

@@ -503,11 +503,6 @@ public class PeriodicTablePanel extends JPanel
 	    
         private static final long serialVersionUID = 6176240749900870566L;
 
-        /**
-		 *  Description of the Method
-		 *
-		 *@param  e  Description of the Parameter
-		 */
 		public void actionPerformed(ActionEvent e)
 		{
 			ElementButton button = (ElementButton) e.getSource();
@@ -530,12 +525,6 @@ public class PeriodicTablePanel extends JPanel
 
         private static final long serialVersionUID = -8708581865777449553L;
 
-        /**
-		 *  Description of the Method
-		 *
-		 * @param  e  Description of the Parameter
-		 *
-		 */
 		 public void actionPerformed(ActionEvent e)
 		 {
 			 layeredPane.remove(panel);
@@ -545,12 +534,6 @@ public class PeriodicTablePanel extends JPanel
 		 }
 	 }
 	 
-	 /**
-	 *  Description of the Class
-	 *
-	 *@author     steinbeck
-	 *@cdk.created    February 10, 2004
-	 */
 	 class ElementButton extends JButton
 	 {
 

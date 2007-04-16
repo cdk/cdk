@@ -1,9 +1,6 @@
-/*
- *  $RCSfile: ForceFieldTests.java,v $
- *  $Author$
- *  $Date$
- *  *
- *  Copyright (C) 2005-2007  Violeta Labarta Beceiro (vlabarta@yahoo.com)
+/* $Revision$ $Author$ $Date$
+ *
+ *  Copyright (C) 2005-2007  Violeta Labarta Beceiro <vlabarta@yahoo.com>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -202,10 +199,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (BondStretching)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testBondStretching() throws Exception {
 		//logger.debug("");
@@ -329,10 +322,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (AngleBending)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testAngleBending() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		//logger.debug("");
@@ -476,10 +465,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (StretchBendInteraction)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testStretchBendInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
@@ -595,16 +580,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  molecule       Description of the Parameter
-	 *@param  min            Description of the Parameter
-	 *@param  positiveShift  Description of the Parameter
-	 *@param  negativeShift  Description of the Parameter
-	 *@return                Description of the Return Value
-	 */
 	public IAtomContainer coordinateScrambler(IAtomContainer molecule, int min, double positiveShift, double negativeShift) {
 		double nPertubatedAtoms = min + Math.random() * molecule.getAtomCount();
 		double coord = 0.0;
@@ -638,9 +613,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception     Description of the Exception
-	 *@exception  CDKException  Description of the Exception
 	 */
 	public void testForceField() throws Exception, CDKException {
 		
@@ -649,10 +621,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (Torsions)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testTorsions() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
@@ -814,10 +782,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (VanDerWaalsInteraction)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testVanDerWaalsInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
@@ -972,10 +936,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (ElectrostaticInteraction)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testElectrostaticInteraction() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
@@ -1062,10 +1022,6 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	/**
 	 *  A unit test for JUnit (Ethane test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testEthaneMoleculeMinimization() throws Exception {
 		
@@ -1099,10 +1055,6 @@ public class ForceFieldTests extends CDKTestCase {
 
 	/**
 	 *  A unit test for JUnit (Ethan test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 /*	public void testButaneMoleculeMinimization() throws Exception {
 		
@@ -1151,10 +1103,6 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	/**
 	 *  A unit test for JUnit (Heptane test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testHeptaneMoleculeMinimization() throws Exception {
 		
@@ -1199,10 +1147,6 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	/**
 	 *  A unit test for JUnit (Butanoic Acid test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 /*	public void testButanoicAcidMoleculeMinimization() throws Exception {
 		
@@ -1247,10 +1191,6 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	/**
 	 *  A unit test for JUnit (Cyclo Propane test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 /*	public void testCycloPropaneMoleculeMinimization() throws Exception {
 		
@@ -1295,10 +1235,6 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	/**
 	 *  A unit test for JUnit (Heptan test)
-	 *
-	 *@exception  ClassNotFoundException  Description of the Exception
-	 *@exception  CDKException            Description of the Exception
-	 *@exception  java.lang.Exception     Description of the Exception
 	 */
 	public void testMethylbenzolMoleculeMinimization() throws Exception {
 		

@@ -1,11 +1,8 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2002-2003  The Jmol Development Team
- *  Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
+ *  Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -57,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * A reader for Gaussian98 output. Gaussian 98 is a quantum chemistry program
- * by Gaussian, Inc. (http://www.gaussian.com/).
+ * by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
  * <p/>
  * <p>Molecular coordinates, energies, and normal coordinates of vibrations are
  * read. Each set of coordinates is added to the ChemFile in the order they are
@@ -144,13 +141,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         return false;
     }
 
-    /**
-     * Description of the Method
-     *
-     * @param object Description of the Parameter
-     * @return Description of the Return Value
-     * @throws CDKException Description of the Exception
-     */
     public IChemObject read(IChemObject object) throws CDKException {
         customizeJob();
 
@@ -171,12 +161,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
-
-    /**
-     * Description of the Method
-     *
-     * @throws IOException Description of the Exception
-     */
     public void close() throws IOException {
         input.close();
     }
@@ -463,10 +447,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
 
     /**
      * Reads NMR nuclear shieldings.
-     *
-     * @param model     Description of the Parameter
-     * @param labelLine Description of the Parameter
-     * @throws CDKException Description of the Exception
      */
     private void readNMRData(IChemModel model, String labelLine) throws CDKException {
     	List containers = ChemModelManipulator.getAllAtomContainers(model);
@@ -556,19 +536,12 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
 
 
-    /**
-     * Description of the Method
-     */
     private void initIOSettings() {
         readOptimizedStructureOnly = new BooleanIOSetting("ReadOptimizedStructureOnly", IOSetting.LOW,
                 "Should I only read the optimized structure from a geometry optimization?",
                 "false");
     }
 
-
-    /**
-     * Description of the Method
-     */
     private void customizeJob() {
         fireIOSettingQuestion(readOptimizedStructureOnly);
     }

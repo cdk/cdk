@@ -44,11 +44,6 @@ public class HelpAction extends JCPAction
 
 	private static final long serialVersionUID = -9213900779679488824L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (type.equals("tutorial"))

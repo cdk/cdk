@@ -150,12 +150,6 @@ public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements
 
 
 	// Accept all directories and all gif, jpg, or tiff files.
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  f  Description of the Parameter
-	 *@return    Description of the Return Value
-	 */
 	public boolean accept(File f)
 	{
 		if (f.isDirectory())

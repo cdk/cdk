@@ -44,11 +44,6 @@ public class PreferencesAction extends JCPAction
 
     private static final long serialVersionUID = 9107133740176493345L;
 
-    /**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if (type.equals("save"))

@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -73,8 +69,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  Constructor for the StructureDiagramGeneratorTest object
-	 *
-	 *@param  name  Description of the Parameter
 	 */
 	public StructureDiagramGeneratorTest(String name)
 	{
@@ -101,10 +95,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		return new TestSuite(StructureDiagramGeneratorTest.class);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void runVisualTests() throws Exception
 	{
 		moleculeListViewer = new MoleculeListViewer();
@@ -132,14 +122,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		showIt(makeJhao4(), "Bug jhao4");
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  molecule  Description of the Parameter
-	 *@param  name      Description of the Parameter
-	 *@return           Description of the Return Value
-	 */
 	private boolean showIt(IMolecule molecule, String name) throws Exception
 	{
 		MoleculeViewer2D mv = new MoleculeViewer2D();
@@ -148,14 +130,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		return true;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  m              Description of the Parameter
-	 *@return                Description of the Return Value
-	 *@exception  Exception  Description of the Exception
-	 */
 	public IAtomContainer generateCoordinates(IMolecule m) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
@@ -196,8 +170,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testAlphaPinene() throws Exception
 	{
@@ -209,8 +181,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testBiphenyl() throws Exception
 	{
@@ -222,8 +192,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void test4x3CondensedRings() throws Exception
 	{
@@ -235,8 +203,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testPhenylEthylBenzene() throws Exception
 	{
@@ -248,8 +214,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testSpiroRings() throws Exception
 	{
@@ -262,8 +226,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testMethylDecaline() throws Exception
 	{
@@ -275,8 +237,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testBranchedAliphatic() throws Exception
 	{
@@ -288,8 +248,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testDiamantane() throws Exception
 	{
@@ -318,8 +276,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testEthylCyclohexane() throws Exception
 	{
@@ -331,8 +287,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testBicycloRings() throws Exception
 	{
@@ -344,8 +298,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public IMolecule makeJhao3() throws Exception
 	{
@@ -356,8 +308,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public IMolecule makeJhao4() throws Exception
 	{
@@ -368,8 +318,6 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	
 	/**
 	 *  A unit test for JUnit
-	 *
-	 *@exception  Exception  Description of the Exception
 	 */
 	public void testBenzene() throws Exception
 	{

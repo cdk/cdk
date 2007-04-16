@@ -247,12 +247,6 @@ public class Fingerprinter implements IFingerprinter {
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  newPath  Description of the Parameter
-	 */
 	private void checkAndStore(List newPath, Map paths)
 	{
 		String newPathString = "";
@@ -296,13 +290,6 @@ public class Fingerprinter implements IFingerprinter {
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  symbol  Description of the Parameter
-	 *@return         Description of the Return Value
-	 */
 	private String convertSymbol(String symbol)
 	{
 		String returnSymbol = symbol;

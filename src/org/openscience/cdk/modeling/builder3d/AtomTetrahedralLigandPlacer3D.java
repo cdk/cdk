@@ -55,9 +55,6 @@ public class AtomTetrahedralLigandPlacer3D {
 	private final double DEFAULT_BOND_LENGTH_H = 1.0;
 	//private final double DEFAULT_BOND_LENGTH_HA = 1.3;
 
-	/**
-	 *  Description of the Field
-	 */
 	public final double TETRAHEDRAL_ANGLE =
 			2.0 * Math.acos(1.0 / Math.sqrt(3.0));
 
@@ -247,16 +244,6 @@ public class AtomTetrahedralLigandPlacer3D {
 		return newPoints;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  refAtom     Description of the Parameter
-	 *@param  withCoords  Description of the Parameter
-	 *@param  length      Description of the Parameter
-	 *@param  angle       Description of the Parameter
-	 *@return             Description of the Return Value
-	 */
 	public Point3d get3DCoordinatesForSPLigands(IAtom refAtom, IAtomContainer withCoords, double length, double angle) {
 		//logger.debug(" SP Ligands start "+refAtom.getPoint3d()+" "+(withCoords.getAtomAt(0)).getPoint3d());
 		Vector3d ca = new Vector3d(refAtom.getPoint3d());
@@ -888,14 +875,6 @@ public class AtomTetrahedralLigandPlacer3D {
 		return connectedAtoms;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  atom  Description of the Parameter
-	 *@param  ac    Description of the Parameter
-	 *@return       Description of the Return Value
-	 */
 	public boolean hasUnsetNeighbour(IAtom atom, IAtomContainer ac) {
 		java.util.List atoms = ac.getConnectedAtomsList(atom);
 		for (int i = 0; i < atoms.size(); i++) {

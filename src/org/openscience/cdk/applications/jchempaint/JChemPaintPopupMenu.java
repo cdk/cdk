@@ -62,13 +62,6 @@ public class JChemPaintPopupMenu extends CDKPopupMenu
 		createPopupMenu(jcpPanel, type);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  jcpPanel  Description of the Parameter
-	 *@param  type      Description of the Parameter
-	 */
 	protected void createPopupMenu(JChemPaintPanel jcpPanel, String type)
 	{
 		String[] menuKeys = StringHelper.tokenize(getMenuResourceString(type + "popup"));
@@ -139,14 +132,6 @@ public class JChemPaintPopupMenu extends CDKPopupMenu
 		return mi;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  jcpPanel  Description of the Parameter
-	 *@param  key       Description of the Parameter
-	 *@return           Description of the Return Value
-	 */
 	protected JMenu createMenu(JChemPaintPanel jcpPanel, String key)
 	{
 		logger.debug("Creating menu: ", key);

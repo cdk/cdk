@@ -52,12 +52,6 @@ public class ShowChemObjectProperty extends JCPAction
     
     TextViewDialog dialog = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		IChemObject object = getSource(event);

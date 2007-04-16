@@ -153,12 +153,6 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 		centerDialog();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void hyperlinkUpdate(HyperlinkEvent e)
 	{
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
@@ -247,10 +241,6 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 		Cursor cursor;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	protected void centerDialog()
 	{
 		Dimension screenSize = this.getToolkit().getScreenSize();
@@ -264,10 +254,6 @@ public class HelpDialog extends JDialog implements HyperlinkListener
 		this.setLocation(x, y);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 */
 	public void OKPressed()
 	{
 		this.setVisible(false);

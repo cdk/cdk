@@ -57,12 +57,6 @@ public class CreateSmilesAction extends JCPAction
 	TextViewDialog dialog = null;
 	JFrame frame = null;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		logger.debug("Trying to create smile: ", type);

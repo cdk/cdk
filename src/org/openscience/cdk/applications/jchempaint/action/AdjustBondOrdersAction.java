@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2003-2007  The JChemPaint project
  *
@@ -54,11 +50,6 @@ public class AdjustBondOrdersAction extends JCPAction
 
 	private static final long serialVersionUID = -2930750443449102916L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
         HashMap changedBonds = null;

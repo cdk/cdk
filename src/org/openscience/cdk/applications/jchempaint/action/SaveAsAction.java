@@ -116,12 +116,6 @@ public class SaveAsAction extends JCPAction
 		}
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	protected void saveAs(ActionEvent event)
 	{
 		int ready=1;
@@ -231,14 +225,6 @@ public class SaveAsAction extends JCPAction
             .getProperty("askForIOSettings", "true").equals("true");
     }
     
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model          Description of the Parameter
-	 *@param  outFile        Description of the Parameter
-	 *@exception  Exception  Description of the Exception
-	 */
 	protected void saveAsMol(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in a MDL molfile file...");
@@ -258,14 +244,6 @@ public class SaveAsAction extends JCPAction
 		cow.close();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  object         Description of the Parameter
-	 *@param  outFile        Description of the Parameter
-	 *@exception  Exception  Description of the Exception
-	 */
 	protected void saveAsCML2(IChemObject object, File outFile) throws Exception
 	{
 		if(Float.parseFloat(System.getProperty("java.specification.version"))<1.5){
@@ -298,14 +276,6 @@ public class SaveAsAction extends JCPAction
 		sw.close();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model          Description of the Parameter
-	 *@param  outFile        Description of the Parameter
-	 *@exception  Exception  Description of the Exception
-	 */
 	protected void saveAsSMILES(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents in SMILES format...");
@@ -323,14 +293,6 @@ public class SaveAsAction extends JCPAction
 		cow.close();
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model          Description of the Parameter
-	 *@param  outFile        Description of the Parameter
-	 *@exception  Exception  Description of the Exception
-	 */
 	protected void saveAsCDKSourceCode(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a CDK source code file...");
@@ -355,13 +317,6 @@ public class SaveAsAction extends JCPAction
 		}
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  model          Description of the Parameter
-	 *@param  outFile        Description of the Parameter
-	 *@exception  Exception  Description of the Exception
-	 */
 	protected void saveAsSVG(IChemModel model, File outFile) throws Exception
 	{
 		logger.info("Saving the contents as a SVG file...");

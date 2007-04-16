@@ -56,7 +56,6 @@ public class AboutDialog extends JFrame {
 
 	private static final long serialVersionUID = 8890609574363086221L;
 	
-	/**  Description of the Field */
 	protected static LoggingTool logger = null;
 
 	/** Displays the About Dialog for JChemPaint.  */
@@ -66,7 +65,6 @@ public class AboutDialog extends JFrame {
 		doInit();
 	}
 
-	/**  Description of the Method */
 	public void doInit() {
 		Package self = Package.getPackage("org.openscience.cdk.applications.jchempaint");
 		String version = self.getImplementationVersion();

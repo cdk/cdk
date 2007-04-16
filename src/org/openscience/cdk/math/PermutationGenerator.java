@@ -72,9 +72,6 @@ public class PermutationGenerator {
 	// Reset
 	//------
 
-	/**
-	 *  Description of the Method
-	 */
 	public void reset() {
 		for (int i = 0; i < a.length; i++) {
 			a[i] = i;
@@ -115,11 +112,6 @@ public class PermutationGenerator {
 	// Are there more permutations?
 	//-----------------------------
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @return    Description of the Return Value
-	 */
 	public boolean hasMore() {
 		return numLeft.compareTo(BigInteger.ZERO) == 1;
 	}

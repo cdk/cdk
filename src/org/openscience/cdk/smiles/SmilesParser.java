@@ -474,15 +474,6 @@ public class SmilesParser {
 		return molecule;
 	}
 
-
-	/**
-	 *  Gets the AtomString attribute of the SmilesParser object
-	 *
-	 *@param  pos                         Description of the Parameter
-	 *@param  smiles                      Description of the Parameter
-	 *@return                             The AtomString value
-	 *@exception  InvalidSmilesException  Description of the Exception
-	 */
 	private String getAtomString(String smiles, int pos) throws InvalidSmilesException
 	{
 		logger.debug("getAtomString()");
@@ -511,14 +502,6 @@ public class SmilesParser {
 		return atomString.toString();
 	}
 
-
-	/**
-	 *  Gets the Charge attribute of the SmilesParser object
-	 *
-	 *@param  chargeString  Description of the Parameter
-	 *@param  position      Description of the Parameter
-	 *@return               The Charge value
-	 */
 	private int getCharge(String chargeString, int position)
 	{
 		logger.debug("getCharge(): Parsing charge from: ", chargeString.substring(position));
@@ -557,14 +540,6 @@ public class SmilesParser {
 		return charge;
 	}
 
-
-	/**
-	 *  Gets the implicitHydrogenCount attribute of the SmilesParser object
-	 *
-	 *@param  s         Description of the Parameter
-	 *@param  position  Description of the Parameter
-	 *@return           The implicitHydrogenCount value
-	 */
 	private int getImplicitHydrogenCount(String s, int position)
 	{
 		logger.debug("getImplicitHydrogenCount(): Parsing implicit hydrogens from: " + s);
@@ -592,14 +567,6 @@ public class SmilesParser {
 		return count;
 	}
 
-
-	/**
-	 *  Gets the ElementSymbol attribute of the SmilesParser object
-	 *
-	 *@param  s    Description of the Parameter
-	 *@param  pos  Description of the Parameter
-	 *@return      The ElementSymbol value
-	 */
 	private String getElementSymbol(String s, int pos)
 	{
 		logger.debug("getElementSymbol(): Parsing element symbol (pos=" + pos + ") from: " + s);
@@ -634,10 +601,6 @@ public class SmilesParser {
 	 *
 	 *  See: <a href="http://www.daylight.com/dayhtml/smiles/smiles-atoms.html">
 	 *  http://www.daylight.com/dayhtml/smiles/smiles-atoms.html</a> .
-	 *
-	 *@param  s    Description of the Parameter
-	 *@param  pos  Description of the Parameter
-	 *@return      The symbolForOrganicSubsetElement value
 	 */
 	private String getSymbolForOrganicSubsetElement(String s, int pos)
 	{
@@ -666,10 +629,6 @@ public class SmilesParser {
 
 	/**
 	 *  Gets the RingNumber attribute of the SmilesParser object
-	 *
-	 *@param  s    Description of the Parameter
-	 *@param  pos  Description of the Parameter
-	 *@return      The RingNumber value
 	 */
 	private String getRingNumber(String s, int pos) throws InvalidSmilesException {
 		logger.debug("getRingNumber()");
@@ -688,13 +647,6 @@ public class SmilesParser {
 		return retString;
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  s                           Description of the Parameter
-	 *@return                             Description of the Return Value
-	 *@exception  InvalidSmilesException  Description of the Exception
-	 */
 	private IAtom assembleAtom(String s) throws InvalidSmilesException
 	{
 		logger.debug("assembleAtom(): Assembling atom from: ", s);
@@ -840,8 +792,6 @@ public class SmilesParser {
 
 	/**
 	 *  We call this method when a ring (depicted by a number) has been found.
-	 *
-	 *@param  atom  Description of the Parameter
 	 */
 	private void handleRing(IAtom atom)
 	{

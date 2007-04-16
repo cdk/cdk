@@ -54,12 +54,6 @@ public class CreateReactionAction extends JCPAction
 
 	private static final long serialVersionUID = -7625810885316702776L;
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		IChemObject object = getSource(event);

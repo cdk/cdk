@@ -43,11 +43,6 @@ public class LicenseAction extends JCPAction
     
     private static final long serialVersionUID = -1800997374859623178L;
 
-    /**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		LicenseDialog ad = new LicenseDialog();

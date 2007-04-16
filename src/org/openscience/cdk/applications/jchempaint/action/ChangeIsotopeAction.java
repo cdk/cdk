@@ -4,7 +4,7 @@
  *  $Date$
  *  $Revision$
  *
- *  Copyright (C) 2003-2007  The JChemPaint project
+ *  Copyright (C) 2003-2007  Egon Willighagen <egonw@user.sf.net>
  *
  *  Contact: jchempaint-devel@lists.sourceforge.net
  *
@@ -51,11 +51,6 @@ public class ChangeIsotopeAction extends JCPAction
 
 	private static final long serialVersionUID = -4692219842740123315L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		logger.debug("About to change atom type of relevant atom!");

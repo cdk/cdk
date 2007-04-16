@@ -65,11 +65,6 @@ public class EditAction extends JCPAction {
 
 	private static final long serialVersionUID = -1051272879400028225L;
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  event  Description of the Parameter
-	 */
 	public void actionPerformed(ActionEvent event) {
 		// learn some stuff about event
 		logger.debug("Event source: ", event.getSource().getClass().getName());
