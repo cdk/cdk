@@ -357,7 +357,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Element cmlDOM = convertor.cdkChemModelToCMLList(model);
         cmlString = cmlDOM.toXML();
         
-        System.out.println("CML string: "+ cmlString);
+        logger.debug("CML string: ", cmlString);
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
         IChemFile file = (IChemFile)reader.read(model.getBuilder().newChemFile());
