@@ -253,6 +253,7 @@ public class Convertor {
 
     private CMLList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
         CMLList cmlList = new CMLList();
+        cmlList.setDictRef("cdk:moleculeSet");
 
         if (useCMLIDs && setIDs) {
             IDCreator.createIDs(moleculeSet);
