@@ -36,7 +36,9 @@ import nu.xom.Element;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
@@ -181,6 +183,28 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertNotNull(roundTrippedAtom);
         assertTrue(roundTrippedAtom instanceof PseudoAtom);
         assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
+    }
+    
+    /**
+     * @cdk.bug 1455346
+     */
+    public void testChemModel() throws Exception {
+    	ChemModel model = new ChemModel();
+    	MoleculeSet moleculeSet = new MoleculeSet();
+        Molecule mol = new Molecule();
+        PseudoAtom atom = new PseudoAtom("N");
+        mol.addAtom(atom);
+        moleculeSet.addAtomContainer(mol);
+        model.setMoleculeSet(moleculeSet);
+        
+        IChemModel roundTrippedModel = roundTripChemModel(model);
+        
+        IMoleculeSet roundTrippedMolSet = roundTrippedModel.getMoleculeSet(); 
+        assertNotNull(roundTrippedMolSet);
+        assertEquals(1, roundTrippedMolSet.getAtomContainerCount());
+        IMolecule roundTrippedMolecule = roundTrippedMolSet.getMolecule(0);
+        assertNotNull(roundTrippedMolecule);
+        assertEquals(1, roundTrippedMolecule.getAtomCount());
     }
     
     public void testAtomFormalCharge() throws Exception {
@@ -328,6 +352,26 @@ public class CMLRoundTripTest extends CDKTestCase {
         return roundTrippedMol;
     }
     
+    private IChemModel roundTripChemModel(IChemModel model) throws Exception {
+        String cmlString = "<!-- failed -->";
+        Element cmlDOM = convertor.cdkChemModelToCMLList(model);
+        cmlString = cmlDOM.toXML();
+        
+        System.out.println("CML string: "+ cmlString);
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
+
+        IChemFile file = (IChemFile)reader.read(model.getBuilder().newChemFile());
+        assertNotNull(file);
+        assertEquals(1, file.getChemSequenceCount());
+        IChemSequence sequence = file.getChemSequence(0);
+        assertNotNull(sequence);
+        assertEquals(1, sequence.getChemModelCount());
+        IChemModel chemModel = sequence.getChemModel(0);
+        assertNotNull(chemModel);
+        
+        return chemModel;
+    }
+
     private IReaction roundTripReaction(IReaction reaction) throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkReactionToCMLReaction(reaction);
