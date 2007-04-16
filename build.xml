@@ -220,8 +220,8 @@
                         <exclude name="AttachedGroup.java" />
                         <exclude name="MoleculeBuilder.java" />
                     </fileset>
-                    <fileset dir="${doc}">
-                        <include name="javadoc/net/sf/cdk/tools/*.class" />
+                    <fileset dir="${src}">
+                        <include name="net/sf/cdk/tools/*.class" />
                     </fileset>
                 </delete>
 
