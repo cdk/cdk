@@ -38,7 +38,7 @@ public class SymbolAndChargeQueryAtom extends org.openscience.cdk.Atom implement
         super(atom.getSymbol());
         setFormalCharge(atom.getFormalCharge());
     }
-    
+    public void setOperator(String str){}
     public boolean matches(IAtom atom) {
         return this.getSymbol().equals(atom.getSymbol())&&this.getFormalCharge()==atom.getFormalCharge();
     };

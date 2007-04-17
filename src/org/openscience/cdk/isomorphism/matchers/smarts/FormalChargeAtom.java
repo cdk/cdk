@@ -40,9 +40,21 @@ public class FormalChargeAtom extends SMARTSAtom {
         this.charge = charge;
     }
     
-	public boolean matches(IAtom atom) {
-        return (atom.getFormalCharge() == this.charge);
+    public int getOperator(){
+        if(ID!=null )
+            return 1;
+        else if(this.charge!=Default)
+            return 2;
+        return 3;
+    }
+    public boolean matches(IAtom atom) {
+     switch(getOperator()){
+                case 1: { if(atom.getFormalCharge()!=this.charge) return true;}
+                case 2: { if(atom.getFormalCharge()==this.charge) return true;}
+                default: return false;
+            }   
     };
+    
 
     public String toString() {
 		StringBuffer s = new StringBuffer();

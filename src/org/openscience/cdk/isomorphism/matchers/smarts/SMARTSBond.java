@@ -44,6 +44,7 @@ public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
 
 	public boolean matches(IBond bond) {
         return false;
+        
     };
 }
 

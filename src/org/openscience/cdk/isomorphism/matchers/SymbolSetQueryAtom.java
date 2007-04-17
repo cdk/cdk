@@ -49,7 +49,7 @@ public class SymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implement
      *  Constructor for the SymbolSetQueryAtom object
      */
     public SymbolSetQueryAtom() { }
-
+    public void setOperator(String str){}
 
     /**
      *  The matches implementation of the QueryAtom interface.

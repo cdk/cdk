@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtom extends IAtom {
-    
+         public static final int Default=56562;
 	/**
 	 * Returns true of the given <code>atom</code> matches this IQueryAtom.
 	 * 
@@ -41,6 +41,8 @@ public interface IQueryAtom extends IAtom {
 	 * @return     true, if this IQueryAtom matches the given IAtom
 	 */
 	public boolean matches(IAtom atom);
+        public void setOperator(String ID);
+        
     
 }
 

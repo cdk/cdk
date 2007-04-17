@@ -45,16 +45,56 @@ public class TotalRingConnectionAtom extends SMARTSAtom {
     public TotalRingConnectionAtom(int m_Connection_Size){
         Connection_Size = m_Connection_Size;
     }
+    public TotalRingConnectionAtom(){
+        Connection_Size = Default;
+    }
+   
+    public int getOperator(){
+        if(ID!=null && this.Connection_Size==Default)
+            return 1;
+        else if(ID!=null && this.Connection_Size!=Default)
+            return 2;
+        else if(this.Connection_Size==Default)
+            return 3;
+        else if(this.Connection_Size!=Default)
+            return 4;
+        return 5;
+    }
+    private int getXX(IAtom atom){
+        if(atom.getFlag(CDKConstants.ISINRING))
+          return ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
+        else
+            return 0;
+    }
     public boolean matches(IAtom atom) {
-      if(atom.getProperty(CDKConstants.RING_CONNECTIONS)!=null){
-       int total_ring_bond = ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
-      if(Connection_Size == total_ring_bond)
-          return true;
-      }
-      return false;
+      switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
+    }
+    private boolean defaultCheck(IAtom atom){
+        if(getXX(atom)!=0)
+            return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if(getXX(atom)!=0 && getXX(atom)==this.Connection_Size) 
+            return true;
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(getXX(atom)==0)return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if(getXX(atom)!=0 && getXX(atom)!=this.Connection_Size) return true;
+        return false;
     }
     public String toString() {
-        return ("Total Ring Connection Atom of size "+ Connection_Size);
+        return ("Total Ring Connection Atom of size "+ Connection_Size +" Operator "+ ID);
     }
     
     

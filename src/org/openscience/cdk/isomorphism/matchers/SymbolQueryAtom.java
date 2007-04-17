@@ -31,16 +31,23 @@ import org.openscience.cdk.interfaces.IAtom;
 public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
     
     private static final long serialVersionUID = -5774610415273279451L;
-
+    private String ID;
     public SymbolQueryAtom() {}
     
     public SymbolQueryAtom(IAtom atom) {
         super(atom.getSymbol());
     }
     
-	public boolean matches(IAtom atom) {
-        return this.getSymbol().equals(atom.getSymbol());
+    public boolean matches(IAtom atom) {
+        if(ID!=null)
+           return this.getSymbol()!=(atom.getSymbol());
+        else 
+            return this.getSymbol().equals(atom.getSymbol());
     };
+    public void setOperator(String str){
+        ID = str;
+    }
+    
 
     public String toString() {
 		StringBuffer s = new StringBuffer();

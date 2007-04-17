@@ -50,7 +50,7 @@ public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom im
      *  Constructor for the InverseSymbolSetQueryAtom object
      */
     public InverseSymbolSetQueryAtom() { }
-
+    public void setOperator(String str){}
 
     /**
      *  The matches implementation of the QueryAtom interface.

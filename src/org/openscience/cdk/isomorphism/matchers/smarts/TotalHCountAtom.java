@@ -40,11 +40,51 @@ public class TotalHCountAtom extends SMARTSAtom {
     public TotalHCountAtom(int hCount) {
         this.hCount = hCount;
     }
+    public TotalHCountAtom(){
+        this.hCount = Default;
+    }
+   
+    public int getOperator(){
+        if(ID!=null && this.hCount==Default)
+            return 1;
+        else if(ID!=null && this.hCount!=Default)
+            return 2;
+        else if(this.hCount==Default)
+            return 3;
+        else if(this.hCount!=Default)
+            return 4;
+        return 5;
+    }
+    public int getHH(IAtom atom){
+       return ((Integer)atom.getProperty("org.openscience." +
+                "cdk.Atom.totalHCount")).intValue();
+    }
     
-	public boolean matches(IAtom atom) {
-        int hCount = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalHCount")).intValue();
-        return (hCount == this.hCount);
+    public boolean matches(IAtom atom) {
+        switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
     };
+     private boolean defaultCheck(IAtom atom){
+        if(getHH(atom)!=0)return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if(getHH(atom)!=0 && getHH(atom)==this.hCount) return true;
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(getHH(atom)==0)return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if(getHH(atom)!=0 && getHH(atom)!=this.hCount) return false;
+        return false;
+    }
 
     public String toString() {
 		StringBuffer s = new StringBuffer();

@@ -40,11 +40,51 @@ public class TotalValencyAtom extends SMARTSAtom {
     public TotalValencyAtom(int valency) {
         this.valency = valency;
     }
+    public TotalValencyAtom(){
+        this.valency = Default;
+    }
+     
+    public int getOperator(){
+        if(ID!=null && this.valency==Default)
+            return 1;
+        else if(ID!=null && this.valency!=Default)
+            return 2;
+        else if(this.valency==Default)
+            return 3;
+        else if(this.valency!=Default)
+            return 4;
+        return 5;
+    }
+    private int getVV(IAtom atom){
+       return ((Integer)atom.getProperty("org.openscience." +
+               "cdk.Atom.totalValency")).intValue();
+    }
     
-	public boolean matches(IAtom atom) {
-        int valency = ((Integer)atom.getProperty("org.openscience.cdk.Atom.totalValency")).intValue();
-        return (valency == this.valency);
+   public boolean matches(IAtom atom) {
+         switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
     };
+    private boolean defaultCheck(IAtom atom){
+        if(getVV(atom)!=0)return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if(getVV(atom)!=0 && getVV(atom)==this.valency) return true;
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(getVV(atom)==0)return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if(getVV(atom)!=0 && getVV(atom)!=this.valency) return false;
+        return false;
+    }
 
     public String toString() {
 		StringBuffer s = new StringBuffer();

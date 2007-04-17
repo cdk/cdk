@@ -39,7 +39,7 @@ public class SymbolChargeIDQueryAtom extends org.openscience.cdk.Atom implements
         setFormalCharge(atom.getFormalCharge());
         setID(atom.getID());
     }
-    
+    public void setOperator(String str){}
     public boolean matches(IAtom atom) {
         return this.getSymbol().equals(atom.getSymbol())&&
                this.getFormalCharge()==atom.getFormalCharge() &&

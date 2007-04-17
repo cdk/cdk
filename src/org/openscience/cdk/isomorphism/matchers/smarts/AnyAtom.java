@@ -24,6 +24,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.CDKConstants;
 
 /**
  * This matcher any Atom.
@@ -37,8 +38,17 @@ public class AnyAtom extends SMARTSAtom {
     public AnyAtom() {
     }
     
-	public boolean matches(IAtom atom) {
-        return true; // :)
+    public int getOperator(){
+        if(ID!=null)
+            return 1;
+        return 2;
+    }
+    public boolean matches(IAtom atom) {
+       switch(getOperator()){
+                case 1:  return false;
+                case 2:  return true;
+                default: return false;
+            }
     };
 
     public String toString() {

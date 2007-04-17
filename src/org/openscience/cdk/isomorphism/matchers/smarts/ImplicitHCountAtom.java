@@ -39,11 +39,49 @@ public class ImplicitHCountAtom extends SMARTSAtom {
     public ImplicitHCountAtom(int hCount) {
         this.hCount = hCount;
     }
-    
-	public boolean matches(IAtom atom) {
-        return (atom.getHydrogenCount() == this.hCount);
+    public ImplicitHCountAtom(){
+        this.hCount = Default;
+    }
+   
+    public int getOperator(){
+        if(ID!=null && this.hCount==Default)
+            return 1;
+        else if(ID!=null && this.hCount!=Default)
+            return 2;
+        else if(this.hCount==Default)
+            return 3;
+        else if(this.hCount!=Default)
+            return 4;
+        return 5;
+    }
+    private int getIMPH(IAtom atom){
+        return atom.getHydrogenCount();
+    }
+    public boolean matches(IAtom atom) {
+        switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
     };
-
+    private boolean defaultCheck(IAtom atom){
+        if(getIMPH(atom)!=0)return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if(getIMPH(atom)!=0 && getIMPH(atom)==this.hCount) return true;
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(getIMPH(atom)==0)return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if(getIMPH(atom)!=0 && getIMPH(atom)!=this.hCount) return false;
+        return false;
+    }
     public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("ImplicitHCountAtom(");

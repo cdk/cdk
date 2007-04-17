@@ -38,12 +38,18 @@ public class AromaticAtom extends SMARTSAtom {
 
     public AromaticAtom() {
     }
-    
-	public boolean matches(IAtom atom) {
-        if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-            return true;
-        }
-        return false;
+   
+    public int getOperator(){
+        if(ID!=null)
+            return 1;
+        return 2;
+    }
+    public boolean matches(IAtom atom) {
+     switch(getOperator()){
+                case 1: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
+                case 2: { if(atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
+                default: return false;
+            }   
     };
 
     public String toString() {

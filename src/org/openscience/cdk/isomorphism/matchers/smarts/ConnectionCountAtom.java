@@ -40,11 +40,51 @@ public class ConnectionCountAtom extends SMARTSAtom {
     public ConnectionCountAtom(int count) {
         this.count = count;
     }
+    public ConnectionCountAtom(){
+        this.count = Default;
+    }
+    public int getOperator(){
+        if(ID!=null && this.count==Default)
+            return 1;
+        else if(ID!=null && this.count!=Default)
+            return 2;
+        else if(this.count==Default)
+            return 3;
+        else if(this.count!=Default)
+            return 4;
+        return 5;
+    }
+    public int getCC(IAtom atom){
+        return ((Integer)atom.getProperty("org.openscience." +
+                "cdk.Atom.connectionCount")).intValue();
+    }
     
-	public boolean matches(IAtom atom) {
-        int count = ((Integer)atom.getProperty("org.openscience.cdk.Atom.connectionCount")).intValue();
-        return (count == this.count);
+    public boolean matches(IAtom atom) {
+        switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
     };
+    
+    private boolean defaultCheck(IAtom atom){
+        if(getCC(atom)!=0)return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if(getCC(atom)!=0 && getCC(atom)==this.count) return true;
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(getCC(atom)==0)return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if(getCC(atom)!=0 && getCC(atom)!=this.count) return false;
+        return false;
+    }
 
     public String toString() {
 		StringBuffer s = new StringBuffer();

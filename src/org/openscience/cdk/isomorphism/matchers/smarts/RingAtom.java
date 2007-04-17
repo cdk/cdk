@@ -33,7 +33,6 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
-
 import java.util.ArrayList;
 
 /**
@@ -55,27 +54,60 @@ public class RingAtom extends SMARTSAtom {
         // this will match ring atom of specific size
         RING_SIZE = m_Ring_SIZE;
     }
-
+    
+     public int getOperator(){
+        if(ID!=null && this.RING_SIZE==Default)
+            return 1;
+        else if(ID!=null && this.RING_SIZE!=Default)
+            return 2;
+        else if(this.RING_SIZE==Default)
+            return 3;
+        else if(this.RING_SIZE!=Default)
+            return 4;
+        return 5;
+    }
     public boolean matches(IAtom atom) {
-        if (RING_SIZE == 1) {
-            return atom.getFlag(CDKConstants.ISINRING);
-        } else {
-            if (atom.getFlag(CDKConstants.ISINRING)) {
+        switch(getOperator()){
+            case 1:return defaultOperatorCheck(atom);
+            case 2:return nonDefaultOperatorCheck(atom);
+            case 3:return defaultCheck(atom);
+            case 4:return nonDefaultCheck(atom);
+            default:return false;
+        }
+    }
+    private boolean defaultCheck(IAtom atom){
+        if(atom.getFlag(CDKConstants.ISINRING))
+            return true;
+        return false;
+    }
+    private boolean nonDefaultCheck(IAtom atom){
+        if (atom.getFlag(CDKConstants.ISINRING)) {
                 ArrayList ll = (ArrayList) atom.getProperty(CDKConstants.RING_SIZES);
-                for (int i = 0; i < ll.size(); i++) {
-                    if (((Integer) ll.get(i)).intValue() == RING_SIZE) {
-                        return true;
+                for (int i = 0; i < ll.size(); i++){ 
+                    if (((Integer) ll.get(i)).intValue() == RING_SIZE){
+                        return true; 
                     }
                 }
-                return false;
             }
-            return false;
-        }
+        return false;
+    }
+    private boolean defaultOperatorCheck(IAtom atom){
+        if(!atom.getFlag(CDKConstants.ISINRING))return true;
+        return false;
+    }
+    private boolean nonDefaultOperatorCheck(IAtom atom){
+        if (atom.getFlag(CDKConstants.ISINRING)) {
+                ArrayList ll = (ArrayList) atom.getProperty(CDKConstants.RING_SIZES);
+                for (int i = 0; i < ll.size(); i++) 
+                    if (((Integer) ll.get(i)).intValue() != RING_SIZE) 
+                        return true;
+            }
+        return false;
     }
 
     public String toString() {
         if (RING_SIZE != 1)
-            return ("ring atom of size:" + RING_SIZE);
+            return ("ring atom of size:" + RING_SIZE + " operator " );
         return ("ring atom of size: Any");
     }
 }

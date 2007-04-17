@@ -36,20 +36,16 @@ public class AromaticQueryBond extends SMARTSBond {
     private static final long serialVersionUID = 6941220923564432716L;
     private IAtom atom1;
     private IAtom atom2;
-    private boolean checkpoint;
     public AromaticQueryBond() {
     }
 
     public AromaticQueryBond(IQueryAtom m_atom1, IQueryAtom m_atom2, double order) {
         super(m_atom1, m_atom2, order);
-        if (m_atom1 instanceof AromaticAtom && 
-                m_atom2 instanceof AromaticAtom){
-            checkpoint=true;
-        }
+       
     }
     
 	public boolean matches(IBond bond) {      
-         if (checkpoint && bond.getFlag(CDKConstants.ISAROMATIC)) {
+         if ( bond.getFlag(CDKConstants.ISAROMATIC)) {
             return true;
         }
         

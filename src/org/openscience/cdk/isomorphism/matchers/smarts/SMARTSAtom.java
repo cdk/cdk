@@ -32,11 +32,16 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.module extra
  */
 public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
+    public String ID;
     
     public SMARTSAtom() {}
     
 	public boolean matches(IAtom atom) {
         return false;
     };
+        public void setOperator(String str){
+            ID = str;
+        }
+        
 }
 
