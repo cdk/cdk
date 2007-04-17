@@ -31,12 +31,14 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.OperatorContainer;
+import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSOperatorAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
 /* $RCSfile$
  * $Original Author: egonw $
  * $code extension: sushil ronghe$
- * $Date: 2007-03-26 (Mon, 26 March 2007) $
+ * $Date: 2007-04-18 (Wed, 18 April 2007) $
  * $Revision: 6382 $
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
@@ -58,11 +60,9 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 
 /**
- * This parser implements a (small) subset of the SMARTS syntax as defined on
+ * This parser implements a nearly complete subset of the SMARTS syntax as defined on
  * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
- * Daylight website</a>. But note that not all parsed strings are yet converted
- * in the corresponding queries. Not all concepts can yet be represented in
- * SMARTSAtom. This code is very experimental.
+ * Daylight website</a>. 
  *
  * <p>Example code using SMARTS substructure search looks like:
  * <pre>
@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
  *
  * @author      Sushil Ronghe
- * @cdk.created 2007-03-29
+ * @cdk.created 2007-04-29
  *
  * @cdk.require ant1.6
  * @cdk.module  smarts
@@ -91,11 +91,13 @@ public class SMARTSParser {
     private IQueryAtom previousAtom = null;
     private SMARTSBond currentBond = null;
     private QueryAtomContainer container = null;
-    
+    private QueryAtomContainer  opcontainer = new QueryAtomContainer ();
+    private OperatorContainer OperMap = new OperatorContainer();
     private final static LoggingTool logger = new LoggingTool(SMARTSParser.class);
     
     public static QueryAtomContainer parse(String stringToParse) throws CDKException {
         QueryAtomContainer container = null;
+        
         StringReader stringReader = new StringReader(stringToParse);
         try {
             SMARTSParser parser = new SMARTSParser(stringReader);
@@ -179,9 +181,16 @@ void AddNewNumberAtom() {
 
 JAVACODE
 void AddNewDegreeAtom() {
+    DegreeAtom atom;
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS degree atom: " + tok.image);
-    DegreeAtom atom = new DegreeAtom(Integer.parseInt(tok.image));
+    String ss = new String(tok.image);
+    if(ss.equals("D")){
+    atom=new DegreeAtom();
+    }
+    else{
+    atom=new DegreeAtom(Integer.parseInt(tok.image));
+    } 
     container.addAtom(atom);
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
@@ -218,9 +227,16 @@ if (previousAtom != null) AddCurrentBond(previousAtom, atom);
 JAVACODE
 
 void AddTotalRingConnectionAtom(){
+TotalRingConnectionAtom atom;
 Token tt = getToken(-1);
 logger.debug("adding SMARTS format charge atom: "+ tt.image);
-TotalRingConnectionAtom atom = new TotalRingConnectionAtom(Integer.parseInt(tt.image));
+String ss = new String(tt.image);
+if(ss.equals("x")){
+    atom=new TotalRingConnectionAtom();
+}
+else{
+    atom=new TotalRingConnectionAtom(Integer.parseInt(tt.image));
+} 
 container.addAtom(atom);
 if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
@@ -238,9 +254,16 @@ int getSignCount(String sss) {
 
 JAVACODE
 void AddNewImplicitHCountAtom() {
+    ImplicitHCountAtom atom;
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS implicit Hcount atom: " + tok.image);
-    ImplicitHCountAtom atom = new ImplicitHCountAtom(Integer.parseInt(tok.image));
+    String ss = new String(tok.image);
+    if(ss.equals("h")){
+     atom=new ImplicitHCountAtom();
+    }
+    else{
+    atom=new ImplicitHCountAtom(Integer.parseInt(tok.image));
+    } 
     container.addAtom(atom);
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
@@ -248,12 +271,61 @@ void AddNewImplicitHCountAtom() {
 
 JAVACODE
 void AddNewTotalHCountAtom() {
+    TotalHCountAtom atom;
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
-    TotalHCountAtom atom = new TotalHCountAtom(Integer.parseInt(tok.image));
+    String ss = new String(tok.image);
+    if(ss.equals("h")){
+     atom=new TotalHCountAtom();
+    }
+    else{
+    atom=new TotalHCountAtom(Integer.parseInt(tok.image));
+    } 
     container.addAtom(atom);
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+}
+JAVACODE
+void AddOperator(){
+    Token tok = getToken(-1);  
+  try{
+    OperMap.addElement(new String(tok.image));
+    opcontainer.addAtom (previousAtom);
+    container.removeAtom(previousAtom);
+    previousAtom = null;
+    }
+    catch(java.lang.NullPointerException NPT){
+     //System.out.println("error caught");
+      NPT.printStackTrace();
+   }
+    
+}
+JAVACODE
+void AddOperatorAtom(){
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS total OP atom: " + tok.image);
+    previousAtom.setOperator("!");
+    
+}
+JAVACODE
+void AddFinalOperatorExpression(){
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS total OPF atom: " + tok.image);
+    if(OperMap.size()!=0 && opcontainer.getAtomCount()!=0){
+         opcontainer.addAtom (previousAtom);
+         container.removeAtom(previousAtom);
+         SMARTSOperatorAtom atom = new SMARTSOperatorAtom(opcontainer,OperMap);
+         container.addAtom(atom);
+         if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+            previousAtom = atom;
+    }
+    OperMap = new OperatorContainer();
+    opcontainer = new QueryAtomContainer ();
+}
+JAVACODE
+void AddOperatorExpression(){
+    Token tok = getToken(-1);
+    logger.debug("Adding SMARTS total OPEX atom: " + tok.image);
 }
 
 JAVACODE
@@ -311,6 +383,14 @@ void InBracketsSMARTSAtom() :
 {}
 {
     "[" 
+            FinalOperatorExpression()
+         
+    "]"
+}
+
+void ExpressionAtom():
+{}
+{
     (Degree()               | 
      TotalHCount()          | 
      ImplicitHCount()       | 
@@ -318,15 +398,32 @@ void InBracketsSMARTSAtom() :
      Element()              |
      ChargeAtom()           |
      RingAtom()             |
-     TotalRingConnection())
-    "]"
+     TotalRingConnection() )  
+}
+void OperatorAtom():
+{}
+{
+     <excl> ExpressionAtom() AddOperatorAtom()
 }
 
 void AtomicNumber() :
 {}
 {
-    "#" (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
+    <HASH> (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
 }
+void OperatorExpression():
+{}
+{
+      ( Operator() (OperatorAtom() | ExpressionAtom()))* 
+      AddOperatorExpression()
+}
+void FinalOperatorExpression():
+{}
+{
+        (OperatorAtom() | ExpressionAtom()) [OperatorExpression()]
+        AddFinalOperatorExpression()
+}
+
 
 void TotalHCount() :
 {}
@@ -337,30 +434,30 @@ void TotalHCount() :
 void ChargeAtom():
 {Token t;}
 {
-        ("n" ("+"|"-") | <SIGNS>) AddNewFormalChargeAtom()
+        (("+"|"-") | <SIGNS>) AddNewFormalChargeAtom()
 }
 
 void ImplicitHCount() :
 {}
 {
-	"h" [<DIGIT>] AddNewImplicitHCountAtom()
+	<h> [<DIGIT>] AddNewImplicitHCountAtom()
 }
 
 void Degree() :
 {}
 {
-	"D" [<DIGIT>] AddNewDegreeAtom()
+	<D> [<DIGIT>] AddNewDegreeAtom()
 }
 void RingAtom() :
 {}
 {
         
-        "r" [<DIGIT>] AddNewRingAtom()
+        <r> [<DIGIT>] AddNewRingAtom()
 }
 void TotalRingConnection():
 {}
 {
-        "x" [<DIGIT>] AddTotalRingConnectionAtom()
+        <x> [<DIGIT>] AddTotalRingConnectionAtom()
 }
 void Element() :
 {}
@@ -374,7 +471,7 @@ void BondExpression() :
 {
     ("-" SetCurrentBondToOrderQuery(1.0) ) | 
     ("=" SetCurrentBondToOrderQuery(2.0) ) | 
-    ("#" SetCurrentBondToOrderQuery(3.0) ) | 
+    (<HASH> SetCurrentBondToOrderQuery(3.0) ) | 
     (":" SetCurrentBondToAromatic() ) | 
     ("~" SetCurrentBondToAnyOrder() )
 }
@@ -395,7 +492,11 @@ void OneCharElement() :
 {
 	<H> | <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
 }
-
+void Operator():
+{}
+{
+   (<coln>|<coma>|<amps>)   AddOperator()  
+}
 
 TOKEN:
 {
@@ -412,22 +513,40 @@ TOKEN:
 }
 TOKEN: /* Opetator*/
 {
-    < Exclamation: "!" >
+    < excl: "!" >
 }
 TOKEN:
 {
-    < Amps :"&"  >
+    < amps :"&"  >
 }
 TOKEN:
 {
-    <Comma:",">
+    <coma:",">
 }
 TOKEN:
 {
-    <Colon:";">
+    <coln:";">
 }
-
-
+TOKEN:
+{
+    <h:"h">
+}
+TOKEN:
+{
+    <D:"D">
+}
+TOKEN:
+{
+     <r:"r">
+}
+TOKEN:
+{
+    <x:"x">
+}
+TOKEN:
+{
+    <HASH:"#">
+}
 TOKEN :
 {
     < DIGITS: (["0"-"9"])+ >
@@ -514,4 +633,3 @@ TOKEN : /* ELEMENTS */
 |   < PA: "Pa" >
 |   <  U: "U" >
 }
-
