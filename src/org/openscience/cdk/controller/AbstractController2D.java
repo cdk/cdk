@@ -959,13 +959,13 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		{
 			logger.info("User asks to delete an Atom");
 			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, highlightedAtom);
-			logger.debug("Atoms before delete: ", container.getAtomCount());
-			Iterator atoms = container.getConnectedAtomsList(highlightedAtom).iterator();
-			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
 			IElectronContainer[] eContainer = AtomContainerManipulator.getElectronContainerArray(container.getConnectedElectronContainersList(highlightedAtom));
 			for (int i=0; i<eContainer.length; i++) {
 				undoRedoContainer.addBond((IBond) eContainer[i]);
 			}
+			logger.debug("Atoms before delete: ", container.getAtomCount());
+			Iterator atoms = container.getConnectedAtomsList(highlightedAtom).iterator();
+			ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, highlightedAtom);
 			updateAtoms(container, atoms);
 			undoRedoContainer.addAtom(highlightedAtom);
 			if (type == null) {
@@ -993,8 +993,8 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			logger.info("User asks to delete selected part");
 			IAtomContainer containerToUpdate = ChemModelManipulator.getRelevantAtomContainer(chemModel, r2dm.getSelectedPart().getAtom(0));
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
-				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
 				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
+				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
 			}
 			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
 				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
