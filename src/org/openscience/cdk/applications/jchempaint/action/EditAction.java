@@ -35,16 +35,19 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
+import org.openscience.cdk.applications.undoredo.FlipEdit;
+import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * This class implements editing options from the 'Edit' menu.
@@ -95,6 +98,7 @@ public class EditAction extends JCPAction {
 			jcpModel.fireChange();
 		}
 		else if (type.equals("cutSelected")) {
+			IAtomContainer undoRedoContainer = chemModel.getBuilder().newAtomContainer();
 			logger.debug("Deleting all selected atoms...");
 			if (renderModel.getSelectedPart() == null || renderModel.getSelectedPart().getAtomCount() == 0) {
 				JOptionPane.showMessageDialog(jcpPanel, "No selection made. Please select some atoms first!", "Error warning", JOptionPane.WARNING_MESSAGE);
@@ -103,10 +107,16 @@ public class EditAction extends JCPAction {
 				IAtomContainer selected = renderModel.getSelectedPart();
 				logger.debug("Found # atoms to delete: ", selected.getAtomCount());
 				for (int i = 0; i < selected.getAtomCount(); i++) {
+					undoRedoContainer.add(selected);
+					for(int k=0;k<ChemModelManipulator.getRelevantAtomContainer(chemModel,selected.getAtom(i)).getConnectedBondsCount(selected.getAtom(i));k++){
+						undoRedoContainer.addBond((IBond)ChemModelManipulator.getRelevantAtomContainer(chemModel,selected.getAtom(i)).getConnectedBondsList(selected.getAtom(i)).get(k));
+					}
 					ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, selected.getAtom(i));
 				}
 			}
 			renderModel.setSelectedPart(new org.openscience.cdk.AtomContainer());
+			RemoveAtomsAndBondsEdit  edit = new RemoveAtomsAndBondsEdit(chemModel,undoRedoContainer,"Cut selected");
+            jcpPanel.getUndoSupport().postEdit(edit);
 			jcpModel.fireChange();
 		}
 		else if (type.equals("selectAll")) {
