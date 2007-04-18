@@ -186,7 +186,7 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 			Iterator iterator =r2dm.getMerge().keySet().iterator();
 			while(iterator.hasNext()){
 				IAtom atom1=(IAtom)iterator.next();
-				int[] coords = { (int)atom1.getPoint2d().x,(int)atom1.getPoint2d().y};
+				int[] coords = { (int)r2dm.getRenderingCoordinate(atom1).x,(int)r2dm.getRenderingCoordinate(atom1).y};
 				int[] screenCoords = getScreenCoordinates(coords);
 				graphics.setColor(r2dm.getSelectedPartColor());
 				graphics.drawOval((int)(screenCoords[0]-r2dm.getBondLength()/2),(int)(screenCoords[1]-r2dm.getBondLength()/2),(int)r2dm.getBondLength(),(int)r2dm.getBondLength());
