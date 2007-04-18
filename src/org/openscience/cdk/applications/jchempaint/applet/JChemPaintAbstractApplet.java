@@ -90,7 +90,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			{ "atomNumbersVisible", "true or false", "should atom numbers be shown"},
 			{ "load", "url", "URL of the chemical data" },
 			{ "compact", "true or false", "compact means elements shown as dots, no figures etc. (default false)"},
-			{ "tooltops", "string like 'atomumber|test|atomnumber|text", "the texts will be used as tooltips for the respective atoms (leave out if none required"},
+			{ "tooltips", "string like 'atomumber|test|atomnumber|text", "the texts will be used as tooltips for the respective atoms (leave out if none required"},
 			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},
 			{ "spectrumRenderer", "string", "name of a spectrum applet (see subproject in NMRShiftDB) where peaks should be highlighted when hovering over atom"},
 			{ "hightlightTable", "true or false", "if true peaks in a table will be highlighted when hovering over atom, ids are assumed to be tableid$atomnumber (default false)"},
