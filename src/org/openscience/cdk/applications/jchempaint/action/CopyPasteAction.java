@@ -94,7 +94,11 @@ public class CopyPasteAction extends JCPAction{
 	            	return;
 	            }
 	            Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
-	            JcpSelection jcpselection=new JcpSelection(tocopy);
+	            IAtomContainer tocopyclone=(IAtomContainer)tocopy.clone();
+	            for(int i=0;i<tocopy.getAtomCount();i++){
+	            	tocopyclone.getAtom(i).setPoint2d(renderModel.getRenderingCoordinate(tocopy.getAtom(i)));
+	            }
+	            JcpSelection jcpselection=new JcpSelection(tocopyclone);
 	            sysClip.setContents(jcpselection,null);
 	        } else if ("paste".equals(type)) {
 	        	Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -135,12 +139,16 @@ public class CopyPasteAction extends JCPAction{
                         );
                         sdg.generateCoordinates();
         				jcpPanel.scaleAndCenterMolecule(topaste,jcpPanel.getSize());
+        				for(int i=0;i<topaste.getAtomCount();i++){
+        					renderModel.getRenderingCoordinates().put(topaste.getAtom(i), topaste.getAtom(i).getPoint2d());
+        				}
         			}catch(Exception ex){
         				//we just try smiles
         			}
         		}
 	            if (topaste != null) {
 	                topaste = (IAtomContainer)topaste.clone();
+	                
 	                org.openscience.cdk.interfaces.IChemModel chemModel = jcpModel.getChemModel();
 	                //translate the new structure a bit
 	                GeometryTools.translate2D(topaste, 25, 25,jcpModel.getRendererModel().getRenderingCoordinates()); //in pixels
