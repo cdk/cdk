@@ -58,7 +58,7 @@ public class VASPReaderTest extends CDKTestCase {
     }
 
     public void testReading() throws Exception {
-        String filename = "data/LiMoS2_optimisation_ISIF3.vasp";
+        String filename = "data/vasp/LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
