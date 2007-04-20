@@ -257,7 +257,11 @@ public class PDBReader extends DefaultChemObjectReader {
 							if (oStrand == null) {
 								String strandName=oAtom.getChainID();
 								oStrand = new PDBStrand();
-								oStrand.setStrandName(String.valueOf(strandName));
+								if (strandName != null && strandName.length() > 0) {
+									oStrand.setStrandName(String.valueOf(strandName));
+								} else {
+									oStrand.setStrandName(String.valueOf(chain));
+								}
 								oStrand.setID(String.valueOf(chain));
 							}
 
