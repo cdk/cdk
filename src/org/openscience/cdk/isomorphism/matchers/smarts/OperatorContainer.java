@@ -2,7 +2,7 @@
 /*
  *  $RCSfile$
  *  $Author: Sushil Ronghe $
- *  $Date: 2007-04-12  $
+ *  $Date: 2007-04-20  $
  *  $Revision: 6631 $
  *
  *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
@@ -37,7 +37,7 @@
  *
  * @author niper
  */
-public class OperatorContainer implements Enumeration {
+public class OperatorContainer {
     /** Creates a new instance of OperatorContainer */
     Vector con;
     Enumeration enumObj;
@@ -46,8 +46,7 @@ public class OperatorContainer implements Enumeration {
     }
     public void addElement(String str){
         con.add(str);
-    }
-    
+    }    
     public boolean hasMoreElements(){
        return con.elements().hasMoreElements();
     }
