@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
@@ -33,7 +32,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Monomer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -41,7 +39,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
@@ -207,13 +204,16 @@ public class PDBReaderTest extends TestCase {
 	    assertTrue(container instanceof IBioPolymer);
 	    IBioPolymer polymer = (IBioPolymer)container;
 
-	    if (!(polymer.getStrand("A") instanceof PDBStrand)) fail("Strand A is not a PDBStrand");
+	    assertTrue(
+	    	"Strand A is not a PDBStrand",
+	    	polymer.getStrand("A") instanceof PDBStrand
+	    );
 	    PDBStrand strandA=(PDBStrand)polymer.getStrand("A");
 	    List lst=(List)strandA.getMonomerNamesInSequentialOrder();
 	    String monomer1=(String)lst.get(0);
 	    IMonomer mono1=strandA.getMonomer(monomer1);
-	    assertTrue(mono1.getID()!=null);
-	    
+	    assertNotNull(mono1);
+	    assertNotNull(mono1.getMonomerName());
 	    
 	    // chemical validation
 	    assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
