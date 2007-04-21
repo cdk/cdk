@@ -27,15 +27,13 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * The HueckelAromaticityDetector detects the aromaticity based on the Hueckel
