@@ -434,6 +434,27 @@ public class HueckelAromaticityDetectorTest extends CDKTestCase
 		}
 	}
 
+	/**
+	 *  A unit test for JUnit. The N has to be counted correctly
+	 */
+	public void testPyrrole() throws Exception
+	{
+		Molecule molecule = MoleculeFactory.makePyrrole();
+		boolean testResults[] = {
+				true,
+				true,
+				true,
+				true,
+				true
+				};
+		//boolean isAromatic = false;
+		HueckelAromaticityDetector.detectAromaticity(molecule);
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC) == testResults[f]);
+		}
+	}
+
 
 	/**
 	 *  A unit test for JUnit
