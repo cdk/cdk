@@ -273,6 +273,7 @@ public class PDBReader extends DefaultChemObjectReader {
 								monomer.setMonomerType(oAtom.getResName());
 								monomer.setChainID(oAtom.getChainID());
 								monomer.setICode(oAtom.getICode());
+								monomer.setResSeq(oAtom.getResSeq());
 								oMonomer = monomer;
 							}
 
