@@ -29,8 +29,11 @@ import java.io.FileReader;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.MoleculeSet;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -65,21 +68,22 @@ public class SDFSubstructureFinder {
         LoggingTool logger = new LoggingTool();
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
-	String ifilename = args[0];
-	Molecule substructure = null;
-	   SmilesGenerator smilesGenerator = new SmilesGenerator();
-       try {
-	    File input = new File(ifilename);
-	    if (!input.isDirectory()) {
-		IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
-		if (reader.accepts(Molecule.class)) {
-		   substructure = (Molecule)reader.read(new Molecule());
-		}
-	    }
-	} catch (Exception exception) {
-	    System.err.println(ifilename + ": error=");
-	    exception.printStackTrace();
-	}
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        
+        String ifilename = args[0];
+        IMolecule substructure = null;
+        try {
+        	File input = new File(ifilename);
+        	if (!input.isDirectory()) {
+        		IChemObjectReader reader = new SMILESReader(new FileReader(input));
+        		if (reader.accepts(MoleculeSet.class)) {
+        			substructure = ((IMoleculeSet)reader.read(new MoleculeSet())).getMolecule(0);
+        		}
+        	}
+        } catch (Exception exception) {
+        	System.err.println(ifilename + ": error=");
+        	exception.printStackTrace();
+        }
  
         if (substructure != null) {
 		Molecule molecule;

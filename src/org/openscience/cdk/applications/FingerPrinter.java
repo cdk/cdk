@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,17 +25,14 @@ package org.openscience.cdk.applications;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.List;
 
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * Command line utility that will generate fingerprints for a set of files.
@@ -58,29 +55,34 @@ public class FingerPrinter {
             System.err.println("syntax: FingerPrinter <file> <file2> ...");
             System.exit(0);
         }
-        
+
         // to make sure the CDK LoggingTool is configured
         LoggingTool logger = new LoggingTool();
         LoggingTool.configureLog4j();
         logger.dumpSystemProperties();
 
         Fingerprinter fingerprinter = new Fingerprinter();
-        
+
         // loop over all files
         for (int i=0; i<args.length; i++) {
             String ifilename = args[i];
             try {
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
-                    if (reader.accepts(Molecule.class)) {
-                        ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
-                        List containersList = ChemFileManipulator.getAllAtomContainers(content);
-                        if (containersList.size() > 0) {
-                            for (int j = 0; j < containersList.size(); j++) {
-                                String print = fingerprinter.getFingerprint((IAtomContainer)containersList.get(j)).toString();
-                                System.out.println(ifilename + " ("+ j +"): fingerprint=" + print);
-                            }
+                    IteratingMDLReader reader = new IteratingMDLReader(new FileReader(input),
+                        DefaultChemObjectBuilder.getInstance());
+                    IMolecule molecule;
+                    while (reader.hasNext()) {
+                        molecule = (Molecule)reader.next();
+                        try {
+                            String print = fingerprinter.getFingerprint(molecule).toString();
+                            System.out.println("Hit molecule's remark: " +
+                                molecule.getProperty(CDKConstants.REMARK));
+                            System.out.println("Fingerprint=" + print);
+                        } catch (Exception exception) {
+                            logger.debug(exception);
+                            System.err.println(ifilename + ": error=");
+                            exception.printStackTrace();
                         }
                     }
                 }
