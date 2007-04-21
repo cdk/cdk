@@ -14,8 +14,8 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.alignment.KabschAlignment;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -49,7 +49,7 @@ public class KabschAlignmentTest extends CDKTestCase {
         IAtomContainer ac;
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         ac = (IAtomContainer) cList.get(0);
