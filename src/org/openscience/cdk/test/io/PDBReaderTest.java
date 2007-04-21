@@ -467,4 +467,194 @@ public class PDBReaderTest extends TestCase {
 	    // PDB validation
 	    assertEquals(9, pdb.getStructures().size());
     }
+    
+    public void test1D66() throws Exception {
+	    String filename = "data/pdb/1D66.pdb";
+	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+	    IChemObjectReader reader = new PDBReader(ins);
+	    assertNotNull(reader);
+
+	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
+	    assertNotNull(chemFile);
+	    assertEquals(1, chemFile.getChemSequenceCount());
+
+	    org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    assertEquals(1, seq.getChemModelCount());
+
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    assertEquals(1, model.getMoleculeSet().getMoleculeCount());
+
+	    IAtomContainer container = model.getMoleculeSet().getMolecule(0);
+	    assertTrue(container instanceof IBioPolymer);
+	    IBioPolymer polymer = (IBioPolymer)container;
+
+	    assertTrue(polymer instanceof PDBPolymer);
+	    PDBPolymer pdb = (PDBPolymer)polymer;
+
+	    assertTrue(polymer.getStrandNames().contains("D"));
+	    assertTrue(polymer.getStrandNames().contains("E"));
+	    assertTrue(polymer.getStrandNames().contains("A"));
+	    assertTrue(polymer.getStrandNames().contains("B"));
+
+	    assertTrue(
+	    	"Strand A is not a PDBStrand",
+	    	polymer.getStrand("D") instanceof PDBStrand
+	    );
+	    assertTrue(
+		    	"Strand A is not a PDBStrand",
+		    	polymer.getStrand("E") instanceof PDBStrand
+		    );
+	    assertTrue(
+		    	"Strand A is not a PDBStrand",
+		    	polymer.getStrand("A") instanceof PDBStrand
+		    );
+	    assertTrue(
+		    	"Strand A is not a PDBStrand",
+		    	polymer.getStrand("B") instanceof PDBStrand
+		    );
+
+	    //Check to pick up all 4 strands
+	    assertEquals(polymer.getStrands().size(),4);
+
+	    //The following check is to see that the first monomers in a strand
+	    //can be accessed consecutively
+	    //i.e. their resSeq numbering follows that in the File
+
+	    //Strand A
+	    PDBStrand strandA=(PDBStrand)polymer.getStrand("A");
+	    List lst=(List)strandA.getMonomerNamesInSequentialOrder();
+	    
+	    //Should be 57 monomers in strand A
+	    assertEquals(57, lst.size());
+	    
+	    String monomer1=(String)lst.get(0);
+	    IMonomer mono1=strandA.getMonomer(monomer1);
+	    assertNotNull(mono1);
+	    assertNotNull(mono1.getMonomerName());
+	    assertTrue(
+		    	"Monomer is not a PDBMonomer",
+		    	mono1 instanceof PDBMonomer
+		    	);
+	    PDBMonomer pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("A", pdbMonomer.getChainID());
+	    assertEquals("8", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(1);
+	    mono1=strandA.getMonomer(monomer1);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("A", pdbMonomer.getChainID());
+	    assertEquals("9", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(2);
+	    mono1=strandA.getMonomer(monomer1);
+	    pdbMonomer =(PDBMonomer)mono1;
+	    assertEquals("A", pdbMonomer.getChainID());
+	    assertEquals("10",pdbMonomer.getResSeq());
+
+	    //Strand B
+	    PDBStrand strandB=(PDBStrand)polymer.getStrand("B");
+	    lst=(List)strandB.getMonomerNamesInSequentialOrder();
+	    
+	    //Should be 57 monomers in strand B
+	    assertEquals(57, lst.size());
+	    
+	    monomer1=(String)lst.get(0);
+	    mono1=strandB.getMonomer(monomer1);
+	    assertNotNull(mono1);
+	    assertNotNull(mono1.getMonomerName());
+	    assertTrue(
+		    	"Monomer is not a PDBMonomer",
+		    	mono1 instanceof PDBMonomer
+		    	);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("B", pdbMonomer.getChainID());
+	    assertEquals("8", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(1);
+	    mono1=strandB.getMonomer(monomer1);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("B", pdbMonomer.getChainID());
+	    assertEquals("9", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(2);
+	    mono1=strandB.getMonomer(monomer1);
+	    pdbMonomer =(PDBMonomer)mono1;
+	    assertEquals("B", pdbMonomer.getChainID());
+	    assertEquals("10",pdbMonomer.getResSeq());
+
+
+	    //Strand E
+	    PDBStrand strandE=(PDBStrand)polymer.getStrand("E");
+	    lst=(List)strandE.getMonomerNamesInSequentialOrder();
+	    
+	    //Should be 19 monomers in strand E
+	    assertEquals(19, lst.size());
+	    
+	    monomer1=(String)lst.get(0);
+	    mono1=strandE.getMonomer(monomer1);
+	    assertNotNull(mono1);
+	    assertNotNull(mono1.getMonomerName());
+	    assertTrue(
+		    	"Monomer is not a PDBMonomer",
+		    	mono1 instanceof PDBMonomer
+		    	);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("E", pdbMonomer.getChainID());
+	    assertEquals("20", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(1);
+	    mono1=strandE.getMonomer(monomer1);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("E", pdbMonomer.getChainID());
+	    assertEquals("21", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(2);
+	    mono1=strandE.getMonomer(monomer1);
+	    pdbMonomer =(PDBMonomer)mono1;
+	    assertEquals("E", pdbMonomer.getChainID());
+	    assertEquals("22",pdbMonomer.getResSeq());
+
+
+	    
+	    //Chain D should be 1,2,3...19
+	    PDBStrand strandD=(PDBStrand)polymer.getStrand("D");
+	    lst=(List)strandD.getMonomerNamesInSequentialOrder();
+
+	    //Should be 19 monomers in strand D
+	    assertEquals(19, lst.size());
+	    
+	    monomer1=(String)lst.get(0);
+	    mono1=strandD.getMonomer(monomer1);
+	    assertNotNull(mono1);
+	    assertNotNull(mono1.getMonomerName());
+	    assertTrue(
+		    	"Monomer is not a PDBMonomer",
+		    	mono1 instanceof PDBMonomer
+		    	);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("D", pdbMonomer.getChainID());
+	    assertEquals("1", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(1);
+	    mono1=strandD.getMonomer(monomer1);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("D", pdbMonomer.getChainID());
+	    assertEquals("2", pdbMonomer.getResSeq());
+
+	    monomer1=(String)lst.get(2);
+	    mono1=strandD.getMonomer(monomer1);
+	    pdbMonomer=(PDBMonomer)mono1;
+	    assertEquals("D", pdbMonomer.getChainID());
+	    assertEquals("3",pdbMonomer.getResSeq());
+
+	    // PDB Structures validation
+	    //Should have 6 helices
+	    assertEquals(6, pdb.getStructures().size());
+	      
+    }
+  
+    
 }
