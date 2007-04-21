@@ -72,7 +72,7 @@ public class TanimotoTest extends CDKTestCase
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-		if (!standAlone) assertEquals(tanimoto, 0.59, 0.01);
+		if (!standAlone) assertEquals(0.40625, tanimoto, 0.01);
 	}
 	public void testTanimoto2() throws java.lang.Exception
 	{
@@ -83,7 +83,7 @@ public class TanimotoTest extends CDKTestCase
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-		if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
+		if (!standAlone) assertEquals(1.0, tanimoto, 0.001);
 	}
 	
         public void testTanimoto3() throws java.lang.Exception
@@ -92,7 +92,7 @@ public class TanimotoTest extends CDKTestCase
             double[] f2 = {1,2,3,4,5,6,7};
             float tanimoto = Tanimoto.calculate(f1,f2);
             if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-            if (!standAlone) assertEquals(tanimoto, 1.0, 0.001);
+            if (!standAlone) assertEquals(1.0, tanimoto, 0.001);
         }
 
     	public void visualTestR00258() throws java.lang.Exception
