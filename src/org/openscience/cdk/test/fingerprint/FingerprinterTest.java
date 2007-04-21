@@ -38,6 +38,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -62,6 +63,16 @@ public class FingerprinterTest extends CDKTestCase
 		return new TestSuite(FingerprinterTest.class);
 	}
 
+	public void testRegression() throws Exception {
+		IMolecule mol1 = MoleculeFactory.makeIndole();
+		IMolecule mol2 = MoleculeFactory.makePyrrole();
+		Fingerprinter fingerprinter = new Fingerprinter();
+		BitSet bs1 = fingerprinter.getFingerprint(mol1);
+		assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 32, bs1.cardinality());
+		BitSet bs2 = fingerprinter.getFingerprint(mol2);
+		assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
+	}
+	
 	/**
 	 * @cdk.bug 706786
 	 */
