@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.structgen.stoichastic;
+package org.openscience.cdk.test.structgen.stochastic.operator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,14 +28,14 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * @cdk.module test-structgen
  */
-public class PartialFilledStructureMergerTest extends CDKTestCase {
+public class ChemGraphTest extends CDKTestCase {
     
-    public PartialFilledStructureMergerTest(String name) {
+    public ChemGraphTest(String name) {
         super(name);
     }
     
 	public static Test suite() {
-		return new TestSuite(PartialFilledStructureMergerTest.class);
+		return new TestSuite(ChemGraphTest.class);
 	}
 
 }

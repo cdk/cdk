@@ -27,9 +27,9 @@ import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.test.structgen.VicinitySamplerTest;
 import org.openscience.cdk.test.structgen.deterministic.EquivalentClassesDeterministicGeneratorTest;
 import org.openscience.cdk.test.structgen.deterministic.GENMDeterministicGeneratorTest;
-import org.openscience.cdk.test.structgen.stoichastic.PartialFilledStructureMergerTest;
-import org.openscience.cdk.test.structgen.stoichastic.operator.ChemGraphTest;
-import org.openscience.cdk.test.structgen.stoichastic.operator.CrossoverMachineTest;
+import org.openscience.cdk.test.structgen.stochastic.PartialFilledStructureMergerTest;
+import org.openscience.cdk.test.structgen.stochastic.operator.ChemGraphTest;
+import org.openscience.cdk.test.structgen.stochastic.operator.CrossoverMachineTest;
 
 /**
  * TestSuite that runs all the sample tests for the structgen module.
