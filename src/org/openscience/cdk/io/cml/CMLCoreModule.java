@@ -917,7 +917,7 @@ public class CMLCoreModule implements ICMLModule {
 //                	cdo.setObjectProperty("Molecule", DICTREF, cData);
                 	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else if (DICTREF.equals("cdk:molecularProperty")) {
-                	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
+                	currentMolecule.setProperty(elementTitle, cData);
                 }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);
