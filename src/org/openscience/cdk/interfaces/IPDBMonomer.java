@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-08-14 21:51:36 +0200 (Mon, 14 Aug 2006) $
- * $Revision: 6785 $
+/* $Revision: 6785 $ $Author: egonw $ $Date: 2006-08-14 21:51:36 +0200 (Mon, 14 Aug 2006) $
  *
- *  Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +21,7 @@
 package org.openscience.cdk.interfaces;
 
 /**
- * Represents the idea of an chemical Monomer.
+ * Represents the idea of an protein monomer as found in PDB files.
  *
  * @cdk.module  interfaces
  *
@@ -36,33 +33,47 @@ package org.openscience.cdk.interfaces;
 public interface IPDBMonomer extends IMonomer {
 	
 	/**
-     * set the I code of this Monomer.
+     * Sets the ICode of this monomer.
      * 
-     * @param newICode  the I code of this Monomer
+     * @param newICode  the I code of this monomer
      */
 	public void setICode(String newICode);
 	
 	/**
-     * get the I code of this Monomer.
+     * Gets the ICode of this monomer.
      * 
-     * @return the I code of this Monomer
+     * @return the ICode of this monomer
      */
     public String getICode();
     
     /**
-     * set the Chain ID of this Monomer.
+     * Sets the Chain ID of this monomer.
      * 
-     * @param newChainID  the Chain ID of this Monomer
+     * @param newChainID  the Chain ID of this monomer
      */
     public void setChainID(String newChainID);
     
     /**
-     * get the Chain ID of this Monomer.
+     * Gets the Chain ID of this monomer.
      * 
-     * @return the Chain ID of this Monomer
+     * @return the Chain ID of this monomer
      */
     public String getChainID();
 	
+    /**
+     * Gets the sequence identifier of this monomer.
+     * 
+     * @return  the sequence identifier of this monomer
+     */
+    public String getResSeq();
+
+    /**
+     * Sets the sequence identifier of this monomer.
+     * 
+     * @param newResSeq  the new sequence identifier of this monomer
+     */
+    public void setResSeq(String newResSeq);
+
 }
 
 

@@ -62,19 +62,48 @@ public class PDBMonomerTest extends CDKTestCase {
 		PDBMonomer monomer = new PDBMonomer();
 		assertNotNull(monomer);
 		assertEquals(monomer.getICode(), null);
-		
 	}
 	
 	public void testSetICode_String() {
+		PDBMonomer monomer = new PDBMonomer();
+		monomer.setICode(null);
+		assertNull(monomer.getICode());
 	}
 	
 	public void testGetICode() {
+		PDBMonomer monomer = new PDBMonomer();
+		assertNull(monomer.getICode());
+		monomer.setICode("iCode");
+		assertNotNull(monomer.getICode());
+		assertEquals("iCode", monomer.getICode());
 	}
 	
 	public void testSetChainID_String() {
+		PDBMonomer monomer = new PDBMonomer();
+		monomer.setChainID(null);
+		assertNull(monomer.getChainID());
 	}
 	
 	public void testGetChainID() {
+		PDBMonomer monomer = new PDBMonomer();
+		assertNull(monomer.getChainID());
+		monomer.setChainID("chainA");
+		assertNotNull(monomer.getChainID());
+		assertEquals("chainA", monomer.getChainID());
+	}
+	
+	public void testSetResSeq_String() {
+		PDBMonomer monomer = new PDBMonomer();
+		monomer.setResSeq(null);
+		assertNull(monomer.getResSeq());
+	}
+	
+	public void testGetResSeq() {
+		PDBMonomer monomer = new PDBMonomer();
+		assertNull(monomer.getResSeq());
+		monomer.setResSeq("reqSeq");
+		assertNotNull(monomer.getResSeq());
+		assertEquals("reqSeq", monomer.getResSeq());
 	}
 	
 	public void testToString() {

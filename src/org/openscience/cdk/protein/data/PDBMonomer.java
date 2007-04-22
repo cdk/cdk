@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-19 15:22:09 +0200 (Wed, 19 Apr 2006) $
- * $Revision: 6013 $
+/* $Revision: 6013 $ $Author: egonw $$Date: 2006-04-19 15:22:09 +0200 (Wed, 19 Apr 2006) $
  *
  * Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -46,12 +43,12 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
 	private String iCode;
 
 	/**
-	 * Denotes which chain in the PDB file this monomer is in
+	 * Denotes which chain in the PDB file this monomer is in.
 	 */
 	private String chainID;
 
 	/**
-	 * Denotes which residue sequence in the current chain that this monomer is in
+	 * Denotes which residue sequence in the current chain that this monomer is in.
 	 */
 	private String resSeq;
     
