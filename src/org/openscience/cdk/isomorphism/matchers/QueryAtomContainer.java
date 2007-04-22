@@ -44,6 +44,11 @@ public class QueryAtomContainer extends org.openscience.cdk.AtomContainer implem
             throw new IllegalArgumentException("AtomContainer is not of type QueryAtomContainer");
         }
     }
+    public void setOperator(String ID){
+        IQueryAtom QA = (IQueryAtom)super.getLastAtom();
+        if(QA!=null)
+            QA.setOperator(ID);
+    }
     
     public void addAtom(IAtom atom) {
         if (atom instanceof IQueryAtom) {
