@@ -1,4 +1,4 @@
-/* $RCSfile$
+ /* $RCSfile$
  * $Author$
  * $Date$
  * $Revision$
@@ -35,20 +35,37 @@ import org.openscience.cdk.CDKConstants;
 public class AromaticAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = -3345204886992669829L;
-
+    private IAtom Element=null;
     public AromaticAtom() {
     }
-   
+    public AromaticAtom(IAtom m_atom){
+        Element = m_atom;
+    }
     public int getOperator(){
-        if(ID!=null)
+        if(ID!=null && Element!=null)
             return 1;
-        return 2;
+        else if(ID!=null && Element==null)
+            return 2;
+        else if(ID==null && Element==null)
+            return 3;
+        else if(ID==null && Element!=null)
+            return 4;
+        return 5;
     }
     public boolean matches(IAtom atom) {
      switch(getOperator()){
-                case 1: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
-                case 2: { if(atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
-                default: return false;
+                case 1: { if((!atom.getFlag(CDKConstants.ISAROMATIC)) &
+                         (atom.getSymbol()!=Element.getSymbol())) return true;}
+                case 2: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
+                case 3:{if(atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
+                case 4:{
+                         if(
+                            (atom.getFlag(CDKConstants.ISAROMATIC)) &
+                            (atom.getSymbol().equals(Element.getSymbol()))
+                           ) 
+                        return true;
+                       }
+                default:return false;
             }   
     };
 
