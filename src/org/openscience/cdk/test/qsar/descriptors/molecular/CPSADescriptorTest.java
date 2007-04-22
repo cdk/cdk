@@ -29,8 +29,8 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -56,7 +56,7 @@ public class CPSADescriptorTest extends CDKTestCase {
     public void testCPSA() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/benzene.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);

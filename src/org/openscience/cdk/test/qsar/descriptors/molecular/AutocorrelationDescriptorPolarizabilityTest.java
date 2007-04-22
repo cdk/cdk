@@ -1,17 +1,17 @@
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizability;
 import org.openscience.cdk.test.CDKTestCase;
-
-import java.io.InputStream;
 
 /**
  * @cdk.module test-qsar
@@ -27,21 +27,16 @@ public class AutocorrelationDescriptorPolarizabilityTest extends CDKTestCase {
 		return new TestSuite(AutocorrelationDescriptorPolarizabilityTest.class);
 	}
 	
-	public void testcalculate_IAtomContainer() throws CDKException {
-		try{
-			String filename = "data/mdl/clorobenzene.mol";
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-					filename);
-			MDLReader reader = new MDLReader(ins);
-			IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
-			DescriptorValue count = new AutocorrelationDescriptorPolarizability().calculate(container);
-			System.out.println(count.getValue());
+	public void testcalculate_IAtomContainer() throws Exception {
+		String filename = "data/mdl/clorobenzene.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+				filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
+		DescriptorValue count = new AutocorrelationDescriptorPolarizability().calculate(container);
+		System.out.println(count.getValue());
 
-            fail("Not validated yet");
-
-        }catch(Exception ex){
-			fail(ex.getMessage());
-		}
+		fail("Not validated yet");
 	}
 
 }

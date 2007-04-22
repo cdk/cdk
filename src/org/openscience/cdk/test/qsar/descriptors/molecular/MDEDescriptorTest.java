@@ -10,7 +10,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
@@ -35,7 +35,7 @@ public class MDEDescriptorTest extends CDKTestCase {
     public void testMDE1() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/mdeotest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);

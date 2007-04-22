@@ -34,7 +34,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
@@ -63,7 +63,7 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
         // first molecule is nbutane, second is naphthalene
         String filename = "data/mdl/petitejean.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);

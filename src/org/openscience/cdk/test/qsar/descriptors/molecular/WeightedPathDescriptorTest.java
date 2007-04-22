@@ -35,7 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptor;
@@ -79,7 +79,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
 
         String filename = "data/mdl/wpo.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new ReaderFactory().createReader(ins);
+        IChemObjectReader reader = new MDLV2000Reader(ins);
         IChemFile content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         mol = (IAtomContainer) cList.get(0);
@@ -95,7 +95,7 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
 
         filename = "data/mdl/wpn.sdf";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        reader = new ReaderFactory().createReader(ins);
+        reader = new MDLV2000Reader(ins);
         content = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         cList = ChemFileManipulator.getAllAtomContainers(content);
         mol = (IAtomContainer) cList.get(0);
