@@ -33,6 +33,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.RingAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OperatorContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSOperatorAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
 /* $RCSfile$
@@ -132,6 +133,17 @@ void AddAliphaticAtom() {
 }
 
 JAVACODE
+void AddELementAromaticAtom(){
+    Token tok = getToken(-1);
+    logger.debug("Adding aromatic atom");
+    String ss = new String(tok.image);
+    AromaticAtom atom = new AromaticAtom(new Atom(ss.toUpperCase()));
+    container.addAtom(atom);
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+}
+
+JAVACODE
 void AddAromaticAtom() {
     logger.debug("Adding aromatic atom");
     AromaticAtom atom = new AromaticAtom();
@@ -163,6 +175,24 @@ void AddNewElementAtom() {
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
 }
+JAVACODE
+void AddTotalConnectionAtom(){
+     TotalConnectionAtom atom;
+     Token tok = getToken(-1);
+     logger.debug("adding smarts atoms:" + tok.image);
+     String ss = new String(tok.image);
+     if(ss=="X"){
+         atom = new TotalConnectionAtom();
+     }
+     else{
+        atom=new TotalConnectionAtom(Integer.parseInt(tok.image));
+     }
+     container.addAtom(atom);
+     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+     previousAtom = atom; 
+     
+}
+
 
 JAVACODE
 void AddNewNumberAtom() {
@@ -304,7 +334,7 @@ JAVACODE
 void AddOperatorAtom(){
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS total OP atom: " + tok.image);
-    previousAtom.setOperator("!");
+    container.setOperator("!");
     
 }
 JAVACODE
@@ -376,6 +406,7 @@ void SMARTSAtomExpression() :
     "*" AddAnyAtom()        |
     "a" AddAromaticAtom()   |
     "A" AddAliphaticAtom()  |
+    AromaticAtms()          |
     (InBracketsSMARTSAtom()) 
 }
 
@@ -391,14 +422,16 @@ void InBracketsSMARTSAtom() :
 void ExpressionAtom():
 {}
 {
-    (Degree()               | 
-     TotalHCount()          | 
-     ImplicitHCount()       | 
-     AtomicNumber()         |
-     Element()              |
-     ChargeAtom()           |
-     RingAtom()             |
-     TotalRingConnection() )  
+    (Degree()                | 
+     TotalHCount()           | 
+     ImplicitHCount()        |
+     TotalRingConnection()   |
+     RingAtom()              | 
+     AtomicNumber()          |
+     AromaticAtms()          |
+     Element()               |
+     TotalConnectionAtom()   |   
+     ChargeAtom() )  
 }
 void OperatorAtom():
 {}
@@ -430,6 +463,12 @@ void TotalHCount() :
 {
 	<H> [<DIGIT>] AddNewTotalHCountAtom()
 }
+void Element() :
+{}
+{
+	(TwoCharElement() | OneCharElement())
+    AddNewElementAtom()
+}
 
 void ChargeAtom():
 {Token t;}
@@ -459,12 +498,12 @@ void TotalRingConnection():
 {
         <x> [<DIGIT>] AddTotalRingConnectionAtom()
 }
-void Element() :
+void TotalConnectionAtom():
 {}
 {
-	(TwoCharElement() | OneCharElement())
-    AddNewElementAtom()
+        <X> [<DIGIT>] AddTotalConnectionAtom()
 }
+
 
 void BondExpression() :
 {}
@@ -498,6 +537,11 @@ void Operator():
    (<coln>|<coma>|<amps>)   AddOperator()  
 }
 
+void AromaticAtms():
+{}
+{
+   (<c>|<n>|<o>|<p>|<s>)  AddELementAromaticAtom()
+}
 TOKEN:
 {
     < DIGIT: ["0"-"9"] >
@@ -537,6 +581,10 @@ TOKEN:
 }
 TOKEN:
 {
+   <X:"X">
+}
+TOKEN:
+{
      <r:"r">
 }
 TOKEN:
@@ -550,6 +598,14 @@ TOKEN:
 TOKEN :
 {
     < DIGITS: (["0"-"9"])+ >
+}
+TOKEN :
+{
+    <c:"c">
+   |<n:"n">
+   |<o:"o">
+   |<s:"s">
+   |<p:"p">
 }
 
 TOKEN : /* ELEMENTS */
