@@ -32,20 +32,28 @@ public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryA
     
     private static final long serialVersionUID = -5774610415273279451L;
     private String ID;
+    private int HCount=0;
     public SymbolQueryAtom() {}
     
     public SymbolQueryAtom(IAtom atom) {
         super(atom.getSymbol());
     }
+    public void setHCount(int m_HCount){
+       HCount = m_HCount;
+    }
     
     public boolean matches(IAtom atom) {
-        if(ID!=null)
+        if(ID!=null && HCount==0)
            return this.getSymbol()!=(atom.getSymbol());
+        else if(ID==null && HCount!=0){
+            return (this.getHydrogenCount()==HCount);
+        }
         else 
             return this.getSymbol().equals(atom.getSymbol());
     };
     public void setOperator(String str){
         ID = str;
+        
     }
     
 
