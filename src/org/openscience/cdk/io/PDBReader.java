@@ -250,15 +250,14 @@ public class PDBReader extends DefaultChemObjectReader {
 							}
 
 							// search for an existing strand or create a new one.
-							oStrand = oBP.getStrand(String.valueOf(chain));
+							String strandName = oAtom.getChainID();
+							if (strandName == null || strandName.length() == 0) {
+								strandName = String.valueOf(chain);
+							}
+							oStrand = oBP.getStrand(strandName);
 							if (oStrand == null) {
-								String strandName=oAtom.getChainID();
 								oStrand = new PDBStrand();
-								if (strandName != null && strandName.length() > 0) {
-									oStrand.setStrandName(String.valueOf(strandName));
-								} else {
-									oStrand.setStrandName(String.valueOf(chain));
-								}
+								oStrand.setStrandName(strandName);
 								oStrand.setID(String.valueOf(chain));
 							}
 

@@ -93,7 +93,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 		    oStrand != null) {	// Maybe better to throw nullpointer exception here, so user realises that
 								// Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
 			oStrand.addAtom(oAtom);	
-			if (!strands.contains(oStrand.getStrandName())) {
+			if (!strands.containsKey(oStrand.getStrandName())) {
 				strands.put(oStrand.getStrandName(), oStrand);
 			}
 		}
