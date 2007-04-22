@@ -53,20 +53,21 @@ public class AromaticAtom extends SMARTSAtom {
         return 5;
     }
     public boolean matches(IAtom atom) {
-     switch(getOperator()){
+    	switch(getOperator()){
                 case 1: { if((!atom.getFlag(CDKConstants.ISAROMATIC)) &
-                         (atom.getSymbol()!=Element.getSymbol())) return true;}
-                case 2: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
-                case 3:{if(atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
+                         (atom.getSymbol()!=Element.getSymbol())) return true; break;}
+                case 2: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true; break;}
+                case 3:{if(atom.getFlag(CDKConstants.ISAROMATIC)) return true; break;}
                 case 4:{
                          if(
                             (atom.getFlag(CDKConstants.ISAROMATIC)) &
                             (atom.getSymbol().equals(Element.getSymbol()))
                            ) 
-                        return true;
+                        return true; break;
                        }
                 default:return false;
             }   
+    	return false;
     };
 
     public String toString() {
