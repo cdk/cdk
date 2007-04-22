@@ -14,7 +14,7 @@ String moduleName = "";
 
 Pattern junit = Pattern.compile(".*\\[junit\\].*");
 Pattern module = Pattern.compile(".*test.M(.*)Tests.*");
-Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.]*)\\ssec.*");
+Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.|\\,]*)\\ssec.*");
 Pattern failed = Pattern.compile(".*FAILED.*");
 
 int testsRun = 0;
@@ -42,7 +42,14 @@ while (line != null) {
       run = Integer.parseInt(statsLine.group(1));
       int failed = Integer.parseInt(statsLine.group(2));
       int error = Integer.parseInt(statsLine.group(3));
-      double time = Double.parseDouble(statsLine.group(4));
+      String rawTime = statsLine.group(4);
+      StringBuffer processedTime = new StringBuffer();
+      for (int timeChar=0; timeChar<rawTime.length(); timeChar++) {
+        if (rawTime.charAt(timeChar) != ',') {
+          processedTime.append(rawTime.charAt(timeChar));
+        }
+      }
+      double time = Double.parseDouble(processedTime.toString());
       System.out.println(moduleName + ": run=" + run +
         " failed=" + failed + " error=" + error +
         " time=" + time + " secs");
