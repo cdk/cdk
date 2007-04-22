@@ -25,7 +25,6 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
@@ -33,7 +32,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Monomer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -41,7 +39,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
@@ -493,26 +490,26 @@ public class PDBReaderTest extends TestCase {
 
 	    assertTrue(polymer instanceof PDBPolymer);
 	    PDBPolymer pdb = (PDBPolymer)polymer;
+	    assertEquals(4, pdb.getStrandCount());
 
 	    assertTrue(polymer.getStrandNames().contains("D"));
-	    assertTrue(polymer.getStrandNames().contains("E"));
-	    assertTrue(polymer.getStrandNames().contains("A"));
-	    assertTrue(polymer.getStrandNames().contains("B"));
-
 	    assertTrue(
-	    	"Strand A is not a PDBStrand",
+	    	"Strand D is not a PDBStrand",
 	    	polymer.getStrand("D") instanceof PDBStrand
 	    );
+	    assertTrue(polymer.getStrandNames().contains("E"));
 	    assertTrue(
-		    	"Strand A is not a PDBStrand",
+		    	"Strand E is not a PDBStrand",
 		    	polymer.getStrand("E") instanceof PDBStrand
 		    );
+	    assertTrue(polymer.getStrandNames().contains("A"));
 	    assertTrue(
 		    	"Strand A is not a PDBStrand",
 		    	polymer.getStrand("A") instanceof PDBStrand
 		    );
+	    assertTrue(polymer.getStrandNames().contains("B"));
 	    assertTrue(
-		    	"Strand A is not a PDBStrand",
+		    	"Strand B is not a PDBStrand",
 		    	polymer.getStrand("B") instanceof PDBStrand
 		    );
 
