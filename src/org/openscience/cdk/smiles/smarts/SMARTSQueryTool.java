@@ -220,6 +220,13 @@ public class SMARTSQueryTool {
             if (connectedAtoms.size() != 0)
                 atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
         }
+        //set the property TOTAL_CONNECTION
+        atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = (IAtom) atoms.next();
+            int count = atomContainer.getConnectedAtomsCount(atom);
+            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(count));
+        }
 
         // check for atomaticity
         try {
