@@ -224,8 +224,16 @@ public class SMARTSQueryTool {
         atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
+            int counter = 0;
             int count = atomContainer.getConnectedAtomsCount(atom);
+            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+             for (int i = 0; i < connectedAtoms.size(); i++) {
+                if(((IAtom)connectedAtoms.get(i)).getSymbol().equals("H")){
+                    counter++;
+                }
+             }
             atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(count));
+            atom.setProperty(CDKConstants.HCOUNT,new Integer(counter));
         }
 
         // check for atomaticity
