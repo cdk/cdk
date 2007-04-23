@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 public class TotalHCountAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = -3532280322660394553L;
-    
+    private String Elem=null;
     private int hCount;
     
     public TotalHCountAtom(int hCount) {
@@ -42,6 +42,9 @@ public class TotalHCountAtom extends SMARTSAtom {
     }
     public TotalHCountAtom(){
         this.hCount = Default;
+    }
+    public void setSymbol(String ss){
+        Elem = ss;
     }
    
     public int getOperator(){
@@ -56,11 +59,10 @@ public class TotalHCountAtom extends SMARTSAtom {
         return 5;
     }
     public int getHH(IAtom atom){
-       return ((Integer)atom.getProperty("org.openscience." +
-                "cdk.Atom.totalHCount")).intValue();
+       return ((Integer)atom.getProperty(CDKConstants.HCOUNT)).intValue();
     }
     
-    public boolean matches(IAtom atom) {
+    public boolean matche(IAtom atom) {
         switch(getOperator()){
             case 1:return defaultOperatorCheck(atom);
             case 2:return nonDefaultOperatorCheck(atom);
@@ -69,6 +71,15 @@ public class TotalHCountAtom extends SMARTSAtom {
             default:return false;
         }
     };
+    public boolean matches(IAtom atom){
+        if(matche(atom)){
+            if(atom.getSymbol().equals(this.Elem))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
      private boolean defaultCheck(IAtom atom){
         if(getHH(atom)!=0)return true;
         return false;
