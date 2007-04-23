@@ -40,11 +40,15 @@
  */
 public class TotalConnectionAtom extends SMARTSAtom{
     private int Count;
+    private String Elem;
     /** Creates a new instance of TotalConnectionAtom */
     public TotalConnectionAtom() {
     }
     public TotalConnectionAtom(int m_XX){
         Count = m_XX;
+    }
+    public void setSymbol(String ss){
+        Elem = ss;
     }
     public int getOperator(){
          if(ID!=null && this.Count==Default)
@@ -63,7 +67,7 @@ public class TotalConnectionAtom extends SMARTSAtom{
         else
            return 0;
     }
-    public boolean matches(IAtom atom) {
+    public boolean matche(IAtom atom) {
         switch(getOperator()){
             case 1:return defaultOperatorCheck(atom);
             case 2:return nonDefaultOperatorCheck(atom);
@@ -72,6 +76,15 @@ public class TotalConnectionAtom extends SMARTSAtom{
             default:return false;
         }
     };
+    public boolean matches(IAtom atom){
+        if(matche(atom)){
+            if(atom.getSymbol().equals(this.Elem))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
     private boolean defaultCheck(IAtom atom){
         if(getXX(atom)!=0)return true;
         return false;
