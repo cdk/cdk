@@ -172,8 +172,6 @@ void AddNewElementAtom() {
     logger.debug("Adding SMARTS atom: " + tok.image);
     SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
     container.addAtom(atom);
-    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
-    previousAtom = atom;
 }
 JAVACODE
 void AddTotalConnectionAtom(){
@@ -305,7 +303,7 @@ void AddNewTotalHCountAtom() {
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
     String ss = new String(tok.image);
-    if(ss.equals("h")){
+    if(ss.equals("H")){
      atom=new TotalHCountAtom();
     }
     else{
@@ -314,6 +312,26 @@ void AddNewTotalHCountAtom() {
     container.addAtom(atom);
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+}
+JAVACODE
+void setProperty(){
+  IQueryAtom atom = (IQueryAtom)container.getLastAtom();
+  if(atom instanceof TotalHCountAtom || atom instanceof TotalConnectionAtom){       
+        container.removeAtom(atom);
+        IQueryAtom Tatom = (IQueryAtom)container.getLastAtom();
+        container.removeAtom(Tatom);
+        atom.setSymbol(Tatom.getSymbol());
+        container.addAtom(atom);
+        previousAtom = atom;
+  }
+  else{
+  IQueryAtom atomT = (IQueryAtom)container.getLastAtom();
+  if (previousAtom != null) AddCurrentBond(previousAtom, atomT);
+    previousAtom = atomT;
+  }
+  
+  
+       
 }
 JAVACODE
 void AddOperator(){
@@ -424,12 +442,12 @@ void ExpressionAtom():
 {
     (Degree()                | 
      TotalHCount()           | 
-     ImplicitHCount()        |
+     ImplicitHCount()        |    
      TotalRingConnection()   |
      RingAtom()              | 
      AtomicNumber()          |
      AromaticAtms()          |
-     Element()               |
+     ElementWithComplexExp() | 
      TotalConnectionAtom()   |   
      ChargeAtom() )  
 }
@@ -457,7 +475,12 @@ void FinalOperatorExpression():
         AddFinalOperatorExpression()
 }
 
-
+void ElementWithComplexExp():
+{String tok=null;}
+{
+         Element() [TotalHCount()|TotalConnectionAtom()] setProperty()
+                           
+}
 void TotalHCount() :
 {}
 {
@@ -467,7 +490,7 @@ void Element() :
 {}
 {
 	(TwoCharElement() | OneCharElement())
-    AddNewElementAtom()
+        AddNewElementAtom()
 }
 
 void ChargeAtom():
@@ -530,6 +553,13 @@ void OneCharElement() :
 {}
 {
 	<H> | <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
+        
+}
+String CharElement():
+{}
+{
+     (<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>)
+     {return getToken(-1).image;} 
 }
 void Operator():
 {}
