@@ -289,6 +289,11 @@ public class CDKConstants {
      *
      */
     public static final String TOTAL_CONNECTIONS = "TotalConnections";
+    /*
+     *Hydrogen count
+     *
+     */
+    public static final String HCOUNT = "TotalHydrogenCount";
 
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
