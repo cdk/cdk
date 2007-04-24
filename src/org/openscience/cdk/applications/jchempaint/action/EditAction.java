@@ -29,6 +29,8 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -38,9 +40,10 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
-import org.openscience.cdk.applications.undoredo.FlipEdit;
+import org.openscience.cdk.applications.jchempaint.action.CopyPasteAction.JcpSelection;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -87,6 +90,17 @@ public class EditAction extends JCPAction {
 				atomInRange = renderModel.getHighlightedAtom();
 			}
 			if (atomInRange != null) {
+				try{
+		            Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+		            IAtomContainer tocopyclone=atomInRange.getBuilder().newAtomContainer();
+		            tocopyclone.addAtom((IAtom)atomInRange.clone());
+		            tocopyclone.getAtom(0).setPoint2d(renderModel.getRenderingCoordinate(atomInRange));
+		            JcpSelection jcpselection=new CopyPasteAction().new JcpSelection(tocopyclone);
+		            sysClip.setContents(jcpselection,null);
+				}catch(Exception ex){
+					//shouldn't happen
+					ex.printStackTrace();
+				}
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atomInRange);
 			}
 			else {
@@ -105,6 +119,18 @@ public class EditAction extends JCPAction {
 			}
 			else {
 				IAtomContainer selected = renderModel.getSelectedPart();
+				try{
+		            Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
+		            IAtomContainer tocopyclone=(IAtomContainer)selected.clone();
+		            for(int i=0;i<tocopyclone.getAtomCount();i++){
+		            	tocopyclone.getAtom(i).setPoint2d(renderModel.getRenderingCoordinate(selected.getAtom(i)));
+		            }
+		            JcpSelection jcpselection=new CopyPasteAction().new JcpSelection(tocopyclone);
+		            sysClip.setContents(jcpselection,null);
+				}catch(Exception ex){
+					//shouldn't happen
+					ex.printStackTrace();
+				}
 				logger.debug("Found # atoms to delete: ", selected.getAtomCount());
 				for (int i = 0; i < selected.getAtomCount(); i++) {
 					undoRedoContainer.add(selected);
