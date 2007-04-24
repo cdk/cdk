@@ -233,7 +233,7 @@ public class SMARTSQueryTool {
                 }
              }
             atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(count));
-            atom.setProperty(CDKConstants.HCOUNT,new Integer(counter));
+            atom.setProperty(CDKConstants.TOTAL_H_COUNT,new Integer(counter));
         }
 
         // check for atomaticity
