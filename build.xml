@@ -104,6 +104,10 @@
                           targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
                   <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
                 </uptodate>
+                <uptodate property="SMARTSParserJJTJavafiles.uptodate"
+                		  targetfile="${src}/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.java">
+                  <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jj" />
+                </uptodate>
               </and>
             </condition>
 
@@ -152,7 +156,10 @@
 
             <!-- test Ant version -->
             <condition property="hasAnt16">
-                <contains string="${ant.version}" substring="1.6"/>
+              <or>
+              <contains string="${ant.version}" substring="1.6"/>
+              <contains string="${ant.version}" substring="1.7"/>
+              </or>
             </condition>
 
             <!-- test Java version -->
@@ -215,6 +222,8 @@
                     <fileset dir="${src}/org/openscience/cdk/smiles/smarts" includes="*.java">
 			<exclude name="SMARTSQueryTool.java" />
 		    </fileset>
+					<fileset dir="${src}/org/openscience/cdk/smiles/smarts/parser" 
+                      includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
                     <fileset dir="${src}/org/openscience/cdk/iupac/parser" includes="*.java">
                         <!-- the next are from CVS -->
                         <exclude name="AttachedGroup.java" />
@@ -378,6 +387,14 @@
           <javacc target="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.jj"
             outputdirectory="${src}/org/openscience/cdk/smiles/smarts/"
             javacchome="${lib}"/>
+          <delete>
+              <fileset id="javacc-generated"
+                dir="${src}/org/openscience/cdk/smiles/smarts/parser/"
+                includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
+          </delete>
+          <javacc target="${src}/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jj"
+                  javacchome="${lib}"
+                  outputdirectory="${src}/org/openscience/cdk/smiles/smarts/parser/"/>
         </target>
 
         <target id="dist.init" name="dist.init">
