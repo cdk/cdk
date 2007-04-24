@@ -1,0 +1,517 @@
+options {
+	STATIC=false;
+	FORCE_LA_CHECK=true;
+	USER_CHAR_STREAM = false;
+    UNICODE_INPUT = false;
+    IGNORE_CASE = false;
+    MULTI=true;
+    VISITOR=true;
+    NODE_DEFAULT_VOID=true;
+}
+
+PARSER_BEGIN(SMARTSParser)
+
+package org.openscience.cdk.smiles.smarts.parser;
+
+import java.io.StringReader;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor;
+import org.openscience.cdk.tools.LoggingTool;
+
+public class SMARTSParser {
+
+	public static QueryAtomContainer parse(String stringToParse) throws CDKException {
+        QueryAtomContainer container = null;
+        StringReader stringReader = new StringReader(stringToParse);
+        try {
+            SMARTSParser parser = new SMARTSParser(stringReader);
+            ASTStart start = parser.Start();
+            SmartsQueryVisitor visitor = new SmartsQueryVisitor();
+            container = (QueryAtomContainer)start.jjtAccept(visitor, null);
+        } catch (ParseException exception) {
+            throw new CDKException("The string " + stringToParse + " is not a valid" +
+              " SMARTS string: " + exception.getMessage(), exception);
+        }
+        return container;	
+	} 
+}
+
+PARSER_END(SMARTSParser)
+
+<*> TOKEN:
+{
+    <#_WS: ( " " | "\t" | "\n" | "\r" ) >
+}
+
+<DEFAULT> TOKEN:
+{
+    // Logical Operators
+    <L_AND : ";" >
+    |
+    <H_AND : "&" >
+    |
+    <OR    : "," >
+    |
+    <NOT   : "!" >
+    |
+    // Bond
+    <   S_BOND : "-" >  // single bond 
+    |
+    <UP_S_BOND : "/" >  // directional single bond "up"
+    |
+    <DN_S_BOND : "\\" > // directional sinble bond "down"
+    |
+    <UP_OR_UNSPECIFIED_S_BOND : "/?" > 
+    |
+    <DN_OR_UNSPECIFIED_S_BOND : "\\?" >
+    |
+    <   D_BOND : "=" >  // double bond
+    |
+    <   T_BOND : "#" >  // triple bond
+    |
+    <   AR_BOND : ":" >  // aromatic bond
+    |
+    < ANY_BOND : "~" >  // any bond
+    |
+    <   R_BOND : "@" >  // any ring bond
+    |
+    // Elements
+        <  c: "c" >
+    |   <  n: "n" >
+    |   <  o: "o" >
+    |   <  H: "H" >
+    |   < HE: "He" >
+    |   < LI: "Li" >
+    |   < BE: "Be" >
+    |   <  B: "B" >
+    |   <  C: "C" >
+    |   <  N: "N" >
+    |   <  O: "O" >
+    |   <  F: "F" >
+    |   < NE: "Ne" >
+    |   < NA: "Na" >
+    |   < MG: "Mg" >
+    |	< AL: "Al" >
+    |	< SI: "Si" >
+    |   <  P: "P" >
+    |   <  S: "S" >
+    |	< CL: "Cl" >
+    |	< AR: "Ar" >
+    |   <  K: "K" >
+    |   < CA: "Ca" >
+    |   < SC: "Sc" >
+    |   < TI: "Ti" >
+    |   <  V: "V" >
+    |   < CR: "Cr" >
+    |   < MN: "Mn" >
+    |   < FE: "Fe" >
+    |   < CO: "Co" >
+    |   < NI: "Ni" >
+    |   < CU: "Cu" >
+    |   < ZN: "Zn" >
+    |   < GA: "Ga" >
+    |   < GE: "Ge" >
+    |   < AS: "As" >
+    |   < SE: "Se" >
+    |   < BR: "Br" >
+    |   < KR: "Kr" >
+    |   < RB: "Rb" >
+    |   < SR: "Sr" >
+    |   <  Y: "Y" >
+    |   < ZR: "Zr" >
+    |   < NB: "Nb" >
+    |   < MO: "Mo" >
+    |   < TC: "Tc" >
+    |   < RU: "Ru" >
+    |   < RH: "Rh" >
+    |   < PD: "Pd" >
+    |   < AG: "Ag" >
+    |   < CD: "Cd" >
+    |   < IN: "In" >
+    |   < SN: "Sn" >
+    |   < SB: "Sb" >
+    |   < TE: "Te" >
+    |   <  I: "I" >
+    |   < XE: "Xe" >
+    |   < CS: "Cs" >
+    |   < BA: "Ba" >
+    |   < LA: "La" >
+    |   < HF: "Hf" >
+    |   < TA: "Ta" >
+    |   <  W: "W" >
+    |   < RE: "Re" >
+    |   < OS: "Os" >
+    |   < IR: "Ir" >
+    |   < PT: "Pt" >
+    |   < AU: "Au" >
+    |   < HG: "Hg" >
+    |   < TL: "Tl" >
+    |   < PB: "Pb" >
+    |   < BI: "Bi" >
+    |   < PO: "Po" >
+    |   < AT: "At" >
+    |   < RN: "Rn" >
+    |   < FR: "Fr" >
+    |   < RA: "Ra" >
+    |   < AC: "Ac" >
+    |   < TH: "Th" >
+    |   < PA: "Pa" >
+    |   <  U: "U" >
+    // Atomic Primitives
+    |   < WILDCARD: "*" >
+    |
+    <h : "h" >
+    |
+    <a : "a" >
+    |
+    <A : "A" >
+    |
+    <D : "D" >
+    |
+    <R : "R" >
+    |
+    <r : "r" >
+    |
+    <v : "v" >
+    |
+    <X : "X" >
+    |
+    <x : "x" >
+    |
+    <DOLLAR : "$" >
+    |
+    <L_PAREN : "(" >
+    | 
+    <R_PAREN : ")" >
+    |
+    <L_BRACKET : "[" >
+    |
+    <R_BRACKET : "]" >
+    |
+    <NUMBER: (["0"-"9"])+ >
+}
+
+/**
+ *                     Start ::= ReactionExpression
+ *        ReactionExpression ::= GroupExpression (">>" GroupExpression)? |
+ *                               ">" GroupExpression ">" | ">>" GroupExpression
+ *           GroupExpression ::= "(" SmartsExpresion ")" ( "." "(" SmartsExpression ")" )*
+ *          SmartsExpression ::= ( LogicalExpression | ExplicitAtomExpression ) 
+ *                               ( "<" [Bond] SmartsExpression ">" )* ( [Bond] SmartsExpression )?
+ *                      Bond ::= LowAndBond
+ *                LowAndBond ::= OrBond [ ";" AndBond ]
+ *                    OrBond ::= ExplicitHighAndBond [ "," OrBond ]
+ *       ExplicitHighAndBond ::= ImplicitHighAndBond [ "&" ExplicitHighAndBond ]
+ *       ImplicitHighAndBond ::= NotBond [ ImplicitHighAndBond ]
+ *                   NotBond ::= [ "!" ] SimpleBond
+ *                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
+ *    ExplicitAtomExpression ::= ( "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
+ *                               | "c" | "o" | "n" | "*" | "A" | "a" ) [ Number ]
+ *         LogicalExpression ::= "[" LowAndExpression "]" [ Number ]
+ *          LowAndExpression ::= OrExpression ( ";" LowAndExpression )?
+ *              OrExpression ::= ExplicitHighAndExpression ( "," OrExpression ) ?
+ * ExplicitHighAndExpression ::= ImplicitHighAndExpression ( "&" ExplicitHighAndExpression )?
+ * ImplicitHighAndExpression ::= NotExpression ( ImplicitHighAndExpression ) ?
+ *             NotExpression ::= "!" ( PrimitiveAtomExpression | RecursiveSmartsExpression )
+ * RecursiveSmartsExpression ::= "$" "(" SmartsExpression ")"
+ *   PrimitiveAtomExpression ::= NonHydrogenElement | "*" | "A" | "a" | "D" Number? | "H" Number? | "h" Number? 
+ *                               | "R" Number? | "r" Number? | "v" Number? | "X" Number? | "x" Number? 
+ *                               | ("+" | "-") Number? | "#" Number? | "@" | "@@" | Number
+ *                    Number ::= ( "0"-"9" )+
+ *         onHydrogenElement ::= ( "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+ *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
+ *                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
+ *                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
+ *                               "HF" | "TA" | "RE" | "OS" | "IR" | "PT" | "AU" | "HG" | "TL" | "PB" | "BI" |
+ *                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
+ *                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
+ *                               "c" | "o" | "n" ) [ NUMBER ]
+ */
+
+ASTStart Start() #Start : {}
+{
+    ReactionExpression()
+    {
+        return jjtThis;
+    }
+}
+
+void ReactionExpression() #Reaction : {}
+{
+    GroupExpression() ( ">>" [GroupExpression()] )?
+    |
+    ">" GroupExpression() ">"
+    |
+    ">>" GroupExpression()
+}
+
+void GroupExpression() #Group : {}
+{
+    [<L_PAREN>] SmartsExpression() [<R_PAREN>] ( "." [<L_PAREN>] SmartsExpression() [<R_PAREN>] ) *
+}    
+
+void SmartsExpression() #Smarts : {}
+{
+    ( LogicalExpression() | ExplicitAtomExpression() ) 
+    ( <L_PAREN> [ Bond() ] SmartsExpression() <R_PAREN> ) * 
+    ( [ Bond() ] SmartsExpression() ) ?
+}
+
+void Bond() #Bond : {}
+{
+    LowAndBond() 
+}
+
+void LowAndBond() #LowAndBond : {}
+{
+    OrBond() ( <L_AND> LowAndBond() ) ?
+}
+
+void OrBond() #OrBond : {}
+{
+    ExplicitHighAndBond() ( <OR> OrBond() ) ?
+}
+
+void ExplicitHighAndBond() #ExplicitHighAndBond : {}
+{
+    ImplicitHighAndBond() ( <H_AND> ExplicitHighAndBond() ) ?
+}
+
+void ImplicitHighAndBond() #ImplicitHighAndBond : {}
+{
+    NotBond() ( ImplicitHighAndBond() ) ?
+}
+
+void NotBond() #NotBond : {}
+{
+    [ <NOT> { jjtThis.setType(SMARTSParserConstants.NOT); } ] SimpleBond() 
+}
+void SimpleBond() #SimpleBond : {}
+{
+    (
+        LOOKAHEAD(2)
+        <S_BOND> 
+        | 
+        <UP_S_BOND> // TODO: Need API
+        | 
+        <DN_S_BOND> // TODO: Need API
+        | 
+        <UP_OR_UNSPECIFIED_S_BOND> // TODO: Need API
+        | 
+        <DN_OR_UNSPECIFIED_S_BOND> // TODO: Need API
+        | 
+        <D_BOND> 
+        | 
+        <T_BOND> 
+        | 
+        <AR_BOND> 
+        | 
+        <ANY_BOND> 
+        | 
+        <R_BOND> // TODO: Need API
+    )
+    {
+        jjtThis.setBondType(token.kind);
+    }
+}
+
+void ExplicitAtomExpression() #ExplicitAtom : {}
+{
+    ( <B> | <C> | <N> | <O> | <P> | <S> | <F> | <CL> | <BR> | <I> | <WILDCARD> | <A> | <a> | <c> | <n> | <o>)
+    {
+        jjtThis.setSymbol(token.image);
+    }
+    ( <NUMBER> )?
+}
+
+void LogicalExpression() #LogicalExpression : {}
+{
+    <L_BRACKET> LowAndExpression() <R_BRACKET> ( <NUMBER> )?
+}
+
+// TODO: This requires a fully implemented SMARTSAtom API (or something else) that 
+// could encapsulate logical criterias
+void LowAndExpression() #LowAndExpression : {}
+{
+    OrExpression() ( <L_AND> LowAndExpression() ) ? 
+}
+
+void OrExpression() #OrExpression : {}
+{
+    ExplicitHighAndExpression() ( <OR> OrExpression() ) ?
+}
+
+void ExplicitHighAndExpression() #ExplicitHighAndExpression : {}
+{
+    ( ImplicitHighAndExpression() ) ( <H_AND> ExplicitHighAndExpression() ) ?
+}
+
+void ImplicitHighAndExpression() #ImplicitHighAndExpression : {}
+{
+    NotExpression() ( ImplicitHighAndExpression() ) ?  
+}
+
+void NotExpression() #NotExpression : 
+{ jjtThis.setType(SMARTSParserConstants.DEFAULT); }
+{
+    [ <NOT> { jjtThis.setType(SMARTSParserConstants.NOT); } ] 
+    ( PrimitiveAtomExpression() | RecursiveSmartsExpression() )
+}
+
+void RecursiveSmartsExpression() #RecursiveSmartsExpression : {}
+{
+    <DOLLAR> <L_PAREN> SmartsExpression() <R_PAREN>
+}
+
+void PrimitiveAtomExpression() : {}
+{
+    (
+        NoHydrogenElement() 
+        |
+        AnyAtom()
+        |
+        Aromatic()
+        |
+        Aliphatic()
+        |
+        Degree()
+        |
+        TotalHCount()
+        |
+        ImplicitHCount()
+        |
+        RingMembership()
+        |
+        RingSize()
+        |
+        Valence()
+        |
+        TotalConnectivity()
+        |
+        RingConnectivity()
+        |
+        Charge()
+        |
+        AtomicNumber()
+        |
+        Chirality()
+    )
+}
+
+void TotalHCount() #TotalHCount : {}
+{
+    <H> { jjtThis.setCount(1); } [ <NUMBER> { jjtThis.setCount( Integer.parseInt(token.image) ); } ]
+}
+
+void ImplicitHCount() #ImplicitHCount: {}
+{
+    <h> { jjtThis.setCount(1); } [ <NUMBER> { jjtThis.setCount( Integer.parseInt(token.image) ); } ]
+}
+
+void Degree() #Degree : {}
+{
+    <D> { jjtThis.setDegree(1); } [ <NUMBER> { jjtThis.setDegree( Integer.parseInt(token.image) ); } ]
+}
+
+void AtomicNumber() #AtomicNumber : {}
+{
+    "#" <NUMBER> { jjtThis.setNumber( Integer.parseInt(token.image) ); }
+}
+
+void Charge() #Charge : { Token charge; }
+{
+    // Here I am assuming nobody will write anything like -----------... for more than 8, instead, use -<n>
+    LOOKAHEAD(2)
+    "+" { jjtThis.setPositive(true); jjtThis.setCharge(1); } [ charge = <NUMBER> { jjtThis.setCharge( Integer.parseInt(charge.image) ); } ]
+    | "-" { jjtThis.setPositive(false); jjtThis.setCharge(1); } [ charge = <NUMBER> { jjtThis.setCharge( Integer.parseInt(charge.image) ); } ]
+    | "--"          { jjtThis.setPositive(false); jjtThis.setCharge(2); }
+    | "---"         { jjtThis.setPositive(false); jjtThis.setCharge(3); }
+    | "----"        { jjtThis.setPositive(false); jjtThis.setCharge(4); }
+    | "-----"       { jjtThis.setPositive(false); jjtThis.setCharge(5); }
+    | "------"      { jjtThis.setPositive(false); jjtThis.setCharge(6); }
+    | "-------"     { jjtThis.setPositive(false); jjtThis.setCharge(7); } 
+    | "--------"    { jjtThis.setPositive(false); jjtThis.setCharge(8); }
+    | "++"          { jjtThis.setPositive(true); jjtThis.setCharge(2); }   
+    | "+++"         { jjtThis.setPositive(true); jjtThis.setCharge(3); }
+    | "++++"        { jjtThis.setPositive(true); jjtThis.setCharge(4); }
+    | "+++++"       { jjtThis.setPositive(true); jjtThis.setCharge(5); }
+    | "++++++"      { jjtThis.setPositive(true); jjtThis.setCharge(6); }
+    | "+++++++"     { jjtThis.setPositive(true); jjtThis.setCharge(7); }
+    | "++++++++"    { jjtThis.setPositive(true); jjtThis.setCharge(8); } 
+}
+
+void RingConnectivity() #RingConnectivity : {}
+{
+    <x> { jjtThis.setNumOfConnection(1); } 
+    [ <NUMBER> { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+}
+
+void TotalConnectivity() #TotalConnectivity : {}
+{
+    <X> { jjtThis.setNumOfConnection(1); } 
+    [ <NUMBER> { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+}
+
+void Valence() #Valence : {}
+{
+    <v> { jjtThis.setOrder(1); } 
+    [ <NUMBER> { jjtThis.setOrder( Integer.parseInt(token.image) ); } ]
+}
+
+void RingMembership() #RingMembership : {}
+{
+    <R> { jjtThis.setNumOfMembership(1); } 
+    [ <NUMBER> { jjtThis.setNumOfMembership( Integer.parseInt(token.image) ); } ]
+}
+
+void RingSize() #RingSize : {}
+{
+    <r> { jjtThis.setSize(1); } 
+    [ <NUMBER> { jjtThis.setSize( Integer.parseInt(token.image) ); } ]
+}
+
+void Aliphatic() #Aliphatic : {}
+{
+    <A> 
+}
+
+void Aromatic() #Aromatic : {}
+{
+    <a>
+}
+
+void AnyAtom() #AnyAtom : {}
+{
+    <WILDCARD>
+}
+
+void AtomicMass() #AtomicMass : {}
+{
+    <NUMBER> { jjtThis.setMass( Integer.parseInt(token.image) ); }
+}
+
+void Chirality() #Chirality : {}
+{
+    LOOKAHEAD(2)
+    "@" | "@@"
+}
+
+void NoHydrogenElement() #Element: {}
+{
+	(
+    <HE> | <LI> | <BE> | <NE> | <NA> | <MG> | <AL> | <SI> | <AR> | <CA> | <SC> |
+    <TI> | <CR> | <MN> | <FE> | <CO> | <NI> | <CU> | <ZN> | <GA> | <GE> | <AS> |
+    <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
+    <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
+    <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
+    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
+	<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U> | 
+    <c> | <o> | <n>
+    )
+    {
+        jjtThis.setSymbol(token.image);
+    }
+    ( <NUMBER> )?
+}
