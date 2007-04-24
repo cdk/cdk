@@ -59,7 +59,7 @@ public class TotalHCountAtom extends SMARTSAtom {
         return 5;
     }
     public int getHH(IAtom atom){
-       return ((Integer)atom.getProperty(CDKConstants.HCOUNT)).intValue();
+       return ((Integer)atom.getProperty(CDKConstants.TOTAL_H_COUNT)).intValue();
     }
     
     public boolean matche(IAtom atom) {
