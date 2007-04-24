@@ -994,11 +994,10 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			IAtomContainer containerToUpdate = ChemModelManipulator.getRelevantAtomContainer(chemModel, r2dm.getSelectedPart().getAtom(0));
 			for(int i=0;i<r2dm.getSelectedPart().getAtomCount();i++){
 				undoRedoContainer.addAtom(r2dm.getSelectedPart().getAtom(i));
+				for(int k=0;k<ChemModelManipulator.getRelevantAtomContainer(chemModel,r2dm.getSelectedPart().getAtom(i)).getConnectedBondsCount(r2dm.getSelectedPart().getAtom(i));k++){
+					undoRedoContainer.addBond((IBond)ChemModelManipulator.getRelevantAtomContainer(chemModel,r2dm.getSelectedPart().getAtom(i)).getConnectedBondsList(r2dm.getSelectedPart().getAtom(i)).get(k));
+				}
 				ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel,r2dm.getSelectedPart().getAtom(i));
-			}
-			for(int i=0;i<r2dm.getSelectedPart().getBondCount();i++){
-				ChemModelManipulator.removeElectronContainer(chemModel,r2dm.getSelectedPart().getBond(i));
-				undoRedoContainer.addBond(r2dm.getSelectedPart().getBond(i));
 			}
 			type = "Remove Substructure";
 			// update atoms
