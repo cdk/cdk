@@ -28,7 +28,21 @@
  */
 package org.openscience.cdk.applications.jchempaint.application;
 
-import org.apache.commons.cli.*;
+import java.awt.Point;
+import java.io.File;
+import java.io.FileReader;
+
+import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.UnrecognizedOptionException;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
@@ -36,10 +50,6 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.swing.*;
-import java.io.File;
-import java.io.FileReader;
 
 /**
  *  JChemPaint main class.
@@ -185,6 +195,8 @@ public class JChemPaint implements SwingConstants
 		frame.getContentPane().add(jpvop);*/
 		frame.setVisible(true);
 		frame.pack();
+		//this centers the drawing panel, seems to be necessary
+		((JChemPaintEditorPanel)frame.getContentPane().getComponent(0)).getScrollPane().getViewport().setViewPosition(new Point((int)(((JChemPaintEditorPanel)frame.getContentPane().getComponent(0)).getDrawingPanel().getWidth()/2.5),(int)(((JChemPaintEditorPanel)frame.getContentPane().getComponent(0)).getDrawingPanel().getHeight()/2.5)));
 		logger.debug("End of JCP constructor");
 	}
 
