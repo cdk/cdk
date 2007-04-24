@@ -263,7 +263,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			exception.printStackTrace();
 		}
 		loadModelFromUrl(fileURL);
-		loadModelFromSmiles(smiles);
+		if(smiles!=null)
+			loadModelFromSmiles(smiles);
 	}
 	
 	/**
