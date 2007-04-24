@@ -293,7 +293,7 @@ public class CDKConstants {
      *Hydrogen count
      *
      */
-    public static final String HCOUNT = "TotalHydrogenCount";
+    public static final String TOTAL_H_COUNT = "TotalHydrogenCount";
 
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
