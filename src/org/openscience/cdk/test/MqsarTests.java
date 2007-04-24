@@ -47,11 +47,18 @@ public class MqsarTests {
 
         suite.addTest(DescriptorEngineTest.suite());
         
-//      from cdk.test.qsar.model.R2
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
-        suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
-        suite.addTest(RJavaEnvironmentTest.suite());
+        String rhome = System.getenv("R_HOME");
+        String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
+
+        if (rhome != null && rhome.equals("") &&
+        	ldlibrarypath != null && ldlibrarypath.equals("")) {
+
+//      	from cdk.test.qsar.model.R2
+        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
+        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
+        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
+        	suite.addTest(RJavaEnvironmentTest.suite());
+        }
 
 //      from cdk.test.qsar.model.R2
  
