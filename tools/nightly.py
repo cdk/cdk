@@ -584,8 +584,8 @@ def generateCDKDepGraph():
         return None
     
     os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > cdkdep.dot' % (classpath))
-    os.system('dot -Tpng cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
-    os.system('dot -Tps cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
+    os.system('/usr/bin/dot -Tpng cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
+    os.system('/usr/bin/dot -Tps cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
     os.unlink('cdkdep.dot')
 
     celltext = []
@@ -1389,7 +1389,11 @@ if __name__ == '__main__':
     f.write(page)
     f.close()
     
-             
+
+    # lets get rid of the build.props file
+    # so that the next build will get the latest from svn
+    os.unlink(os.path.join(nightly_repo, 'build.props'))
+    
     # go back to where we started
     os.chdir(start_dir)
 
