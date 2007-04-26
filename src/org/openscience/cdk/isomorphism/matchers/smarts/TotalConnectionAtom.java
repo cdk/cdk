@@ -43,6 +43,7 @@ public class TotalConnectionAtom extends SMARTSAtom{
     private String Elem;
     /** Creates a new instance of TotalConnectionAtom */
     public TotalConnectionAtom() {
+        Count=Default;
     }
     public TotalConnectionAtom(int m_XX){
         Count = m_XX;
@@ -100,5 +101,8 @@ public class TotalConnectionAtom extends SMARTSAtom{
     private boolean nonDefaultOperatorCheck(IAtom atom){
         if(getXX(atom)!=0 && getXX(atom)!=this.Count) return false;
         return false;
+    }
+    public String toString(){
+        return new String("TotalConnectionAtom ("+ Count+ ")" );
     }
 }
