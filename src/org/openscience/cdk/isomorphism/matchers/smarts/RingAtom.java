@@ -46,7 +46,7 @@ public class RingAtom extends SMARTSAtom {
 
     public RingAtom() {
         // this will match any ring atom
-        RING_SIZE = 1;
+        RING_SIZE = Default;
 
     }
 
@@ -106,9 +106,7 @@ public class RingAtom extends SMARTSAtom {
     }
 
     public String toString() {
-        if (RING_SIZE != 1)
-            return ("ring atom of size:" + RING_SIZE + " operator " );
-        return ("ring atom of size: Any");
+            return ("RingAtom(" +RING_SIZE +")" );
     }
 }
 
