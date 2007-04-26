@@ -30,8 +30,10 @@
  */
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
+import java.util.logging.Logger;
 import org.openscience.cdk.isomorphism.matchers.*;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *    THis class is special for matching the complex operator expression.
@@ -47,15 +49,31 @@ public class SMARTSOperatorAtom extends SMARTSAtom{
     public SMARTSOperatorAtom(IQueryAtomContainer m_IQAT,OperatorContainer m_OPC){
         IQAT = m_IQAT;
         OPC = m_OPC;
+        
+        
+    }
+    public SMARTSOperatorAtom(IQueryAtomContainer m_IQAT){
+        IQAT = m_IQAT;
+        OPC = null;
     }
     public boolean matches(IAtom atom){
            int i=0;value = false;
+        if(OPC==null){
+             while(i<IQAT.getAtomCount()){
+                Previousatom = (IQueryAtom)IQAT.getAtom(i);
+                value = Previousatom.matches(atom);
+                i++;
+             }
+             return value;
+        }
+        else{
         while(i<IQAT.getAtomCount()){
            Previousatom = (IQueryAtom)IQAT.getAtom(i);i++;Nextatom = (IQueryAtom)IQAT.getAtom(i);
             value = getOperationResult(atom);    
         }
         value = getOperationResult(atom);
         return value;
+        }
     }
     private boolean getOperationResult(IAtom atom){
         if(Previousatom!=null && Nextatom!=null && OPC.hasMoreElements()){
@@ -78,7 +96,10 @@ public class SMARTSOperatorAtom extends SMARTSAtom{
         else return 4;
     }
     public String toString(){
-        return new String("SOperatorAtom -> " +
-                "["+IQAT.getAtomCount()+"//"+OPC.size()+"]");
+        StringBuffer print = new StringBuffer();
+        for(int j=0;j<IQAT.getAtomCount();j++){
+            print.append(IQAT.getAtom(j).toString()+",");
+        }
+        return "SMARTSOperatorAtom("+print.toString()+")";
     }
 }
