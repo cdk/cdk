@@ -94,7 +94,7 @@ public class TotalRingConnectionAtom extends SMARTSAtom {
         return false;
     }
     public String toString() {
-        return ("Total Ring Connection Atom of size "+ Connection_Size +" Operator "+ ID);
+        return ("TotalRingConnectionAtom("+ Connection_Size +")");
     }
     
     
