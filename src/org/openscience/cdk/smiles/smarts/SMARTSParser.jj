@@ -34,6 +34,11 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OperatorContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSOperatorAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ColumnAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.BracketAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.RecurseAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
 /* $RCSfile$
@@ -91,8 +96,15 @@ public class SMARTSParser {
     
     private IQueryAtom previousAtom = null;
     private SMARTSBond currentBond = null;
+    private QueryAtomContainer lastatomcontainer = new QueryAtomContainer ();
+    private IQueryAtom lastatom; 
     private QueryAtomContainer container = null;
-    private QueryAtomContainer  opcontainer = new QueryAtomContainer ();
+    private QueryAtomContainer  atomcontainer = new QueryAtomContainer ();
+    private QueryAtomContainer smartexpress = new QueryAtomContainer();
+    private static boolean bstart=false;
+    private static boolean cstart=false;
+    private static boolean rstart=false;
+    private int columncounter=0;
     private OperatorContainer OperMap = new OperatorContainer();
     private final static LoggingTool logger = new LoggingTool(SMARTSParser.class);
     
@@ -102,10 +114,13 @@ public class SMARTSParser {
         StringReader stringReader = new StringReader(stringToParse);
         try {
             SMARTSParser parser = new SMARTSParser(stringReader);
-            container = parser.Parse();
+            container = parser.Parse(); 
         } catch (ParseException exception) {
             throw new CDKException("The string " + stringToParse + " is not a valid" +
-              " SMARTS string: " + exception.getMessage(), exception);
+              " SMARTS string: " + exception.getMessage(), exception);          
+        }
+        catch(Exception ex){
+             ex.printStackTrace();
         }
         return container;
     }
@@ -114,13 +129,111 @@ public class SMARTSParser {
 PARSER_END(SMARTSParser)
 
 JAVACODE
+void StartRecursion(){
+     rstart = true;
+}
+JAVACODE
+void AddStartBracket(){
+  if(rstart){}
+  else{
+   logger.debug("Bracket start is on: ");
+   container.addAtom(new BracketAtom());
+   bstart = true;
+  }
+   
+}
+JAVACODE
+void AddEndBracket(){
+   logger.debug("Bracket end: ");
+  if(rstart && !bstart){rstart= false;}
+   
+  else if(bstart)
+   caseBraket();
+}
+JAVACODE
+void caseBraket(){
+SMARTSOperatorAtom atom;
+   while(!(container.getLastAtom() instanceof BracketAtom)){
+      IQueryAtom tempatom = (IQueryAtom)container.getLastAtom();
+      atomcontainer.addAtom(tempatom);
+      container.removeAtom(tempatom);
+   }
+   IQueryAtom BA =(IQueryAtom)container.getLastAtom();
+   container.removeAtom(BA);
+   if(OperMap.size()<1){
+    atom = new SMARTSOperatorAtom(atomcontainer);
+   }
+   else{
+     atom = new SMARTSOperatorAtom(atomcontainer,OperMap);
+   }
+   container.addAtom(atom);
+   /////////////////////////////////////////////////////////////////
+   if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+   /////////////////////////////////////////////////////////////////
+   bstart = false;
+   OperMap = new OperatorContainer();
+   atomcontainer = new QueryAtomContainer();
+}
+JAVACODE
+void AddStartColumn(){
+   logger.debug("Column start is on: ");
+   if(!cstart){
+      cstart = true;
+      lastatom = (IQueryAtom)container.getLastAtom();
+      columncounter++;
+   }
+   if(cstart){
+     lastatomcontainer.addAtom((IQueryAtom)container.getLastAtom());
+     columncounter++;
+  }
+
+}
+JAVACODE
+void AddEndColumn(){
+   logger.debug("Column end is on: ");
+   columncounter--;
+  if(rstart && !cstart){
+     rstart= false;
+  }
+  else if(cstart){
+   if(columncounter == 1){
+      previousAtom = lastatom;
+      lastatomcontainer = new QueryAtomContainer();
+      cstart = false;
+   }
+   else if(lastatomcontainer.getAtomCount() > 0){
+      previousAtom = (IQueryAtom)lastatomcontainer.getLastAtom();
+      
+   }
+   else{
+      cstart = false;
+    }
+ }
+   
+}
+
+JAVACODE
+void AddMassAtom(){
+   Token tok = getToken(-1);
+   logger.debug("Adding Mass Atom: "+ tok.image);
+   MassAtom atom = new MassAtom(Integer.parseInt(tok.image));
+   container.addAtom(atom);
+   if(!bstart ){
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+  }
+}
+JAVACODE
 void AddAnyAtom() {
     Token tok = getToken(-1);
     logger.debug("Adding SMARTS atom: " + tok.image);
     AnyAtom atom = new AnyAtom();
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 
 JAVACODE
@@ -128,9 +241,12 @@ void AddAliphaticAtom() {
     logger.debug("Adding aliphatic atom");
     AliphaticAtom atom = new AliphaticAtom();
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
-}
+  }
+
+ }
 
 JAVACODE
 void AddELementAromaticAtom(){
@@ -139,8 +255,10 @@ void AddELementAromaticAtom(){
     String ss = new String(tok.image);
     AromaticAtom atom = new AromaticAtom(new Atom(ss.toUpperCase()));
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 
 JAVACODE
@@ -148,8 +266,11 @@ void AddAromaticAtom() {
     logger.debug("Adding aromatic atom");
     AromaticAtom atom = new AromaticAtom();
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
+
 }
 
 JAVACODE
@@ -172,6 +293,10 @@ void AddNewElementAtom() {
     logger.debug("Adding SMARTS atom: " + tok.image);
     SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(tok.image));
     container.addAtom(atom);
+    if(!bstart ){
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
+  }
 }
 JAVACODE
 void AddTotalConnectionAtom(){
@@ -186,8 +311,10 @@ void AddTotalConnectionAtom(){
         atom=new TotalConnectionAtom(Integer.parseInt(tok.image));
      }
      container.addAtom(atom);
+     if(!bstart ){
      if (previousAtom != null) AddCurrentBond(previousAtom, atom);
-     previousAtom = atom; 
+     previousAtom = atom;
+    }
      
 }
 
@@ -200,8 +327,10 @@ void AddNewNumberAtom() {
         String sym = IsotopeFactory.getInstance(new ChemObject().getBuilder()).getElement(Integer.parseInt(tok.image)).getSymbol();
         SymbolQueryAtom atom = new SymbolQueryAtom(new Atom(sym));
         container.addAtom(atom);
+        if(!bstart ){
         if (previousAtom != null) AddCurrentBond(previousAtom, atom);
-        previousAtom = atom;
+          previousAtom = atom;
+        }
     } catch (Exception exp) {
         logger.debug("Exception caught: " + exp);
     }
@@ -220,20 +349,27 @@ void AddNewDegreeAtom() {
     atom=new DegreeAtom(Integer.parseInt(tok.image));
     } 
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 
 JAVACODE
 void AddNewFormalChargeAtom() {
     Token tok = getToken(-1);
+    FormalChargeAtom atom;
     logger.debug("Adding SMARTS formal charge atom: " + tok.image);
     String ss = new String(tok.image);
-    int count = getSignCount(ss);
-    FormalChargeAtom atom = new FormalChargeAtom(count);
+    if(ss.equals("+") || ss.equals("-"))
+     atom = new FormalChargeAtom(1);
+    else
+     atom = new FormalChargeAtom(Integer.parseInt(tok.image));
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 JAVACODE
 
@@ -249,8 +385,10 @@ else{
     atom=new RingAtom(Integer.parseInt(tt.image));
 } 
 container.addAtom(atom);
-if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+if(!bstart ){
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 JAVACODE
 
@@ -266,8 +404,10 @@ else{
     atom=new TotalRingConnectionAtom(Integer.parseInt(tt.image));
 } 
 container.addAtom(atom);
-if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+if(!bstart ){
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 JAVACODE
 int getSignCount(String sss) {
@@ -293,8 +433,10 @@ void AddNewImplicitHCountAtom() {
     atom=new ImplicitHCountAtom(Integer.parseInt(tok.image));
     } 
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 
 JAVACODE
@@ -310,38 +452,36 @@ void AddNewTotalHCountAtom() {
     atom=new TotalHCountAtom(Integer.parseInt(tok.image));
     } 
     container.addAtom(atom);
+    if(!bstart ){
     if (previousAtom != null) AddCurrentBond(previousAtom, atom);
     previousAtom = atom;
+  }
 }
 JAVACODE
-void setProperty(){
-  IQueryAtom atom = (IQueryAtom)container.getLastAtom();
-  if(atom instanceof TotalHCountAtom || atom instanceof TotalConnectionAtom){       
-        container.removeAtom(atom);
-        IQueryAtom Tatom = (IQueryAtom)container.getLastAtom();
-        container.removeAtom(Tatom);
-        atom.setSymbol(Tatom.getSymbol());
-        container.addAtom(atom);
-        previousAtom = atom;
-  }
-  else{
-  IQueryAtom atomT = (IQueryAtom)container.getLastAtom();
-  if (previousAtom != null) AddCurrentBond(previousAtom, atomT);
-    previousAtom = atomT;
+void AddValencyAtom(){
+  TotalValencyAtom atom;
+  Token tok = getToken(-1);
+    logger.debug("Adding SMARTS total Hcount atom: " + tok.image);
+    String ss = new String(tok.image);
+    if(ss.equals("v")){
+     atom=new TotalValencyAtom();
+    }
+    else{
+    atom=new TotalValencyAtom(Integer.parseInt(tok.image));
+    } 
+    container.addAtom(atom);
+    if(!bstart ){
+    if (previousAtom != null) AddCurrentBond(previousAtom, atom);
+    previousAtom = atom;
   }
   
-  
-       
 }
 JAVACODE
 void AddOperator(){
     Token tok = getToken(-1);  
-  try{
-    OperMap.addElement(new String(tok.image));
-    opcontainer.addAtom (previousAtom);
-    container.removeAtom(previousAtom);
-    previousAtom = null;
-    }
+  try{    
+      OperMap.addElement(tok.image);
+     }
     catch(java.lang.NullPointerException NPT){
      //System.out.println("error caught");
       NPT.printStackTrace();
@@ -355,27 +495,6 @@ void AddOperatorAtom(){
     container.setOperator("!");
     
 }
-JAVACODE
-void AddFinalOperatorExpression(){
-    Token tok = getToken(-1);
-    logger.debug("Adding SMARTS total OPF atom: " + tok.image);
-    if(OperMap.size()!=0 && opcontainer.getAtomCount()!=0){
-         opcontainer.addAtom (previousAtom);
-         container.removeAtom(previousAtom);
-         SMARTSOperatorAtom atom = new SMARTSOperatorAtom(opcontainer,OperMap);
-         container.addAtom(atom);
-         if (previousAtom != null) AddCurrentBond(previousAtom, atom);
-            previousAtom = atom;
-    }
-    OperMap = new OperatorContainer();
-    opcontainer = new QueryAtomContainer ();
-}
-JAVACODE
-void AddOperatorExpression(){
-    Token tok = getToken(-1);
-    logger.debug("Adding SMARTS total OPEX atom: " + tok.image);
-}
-
 JAVACODE
 void SetCurrentBondToOrderQuery(double order) {
     currentBond = new OrderQueryBond();
@@ -399,62 +518,92 @@ QueryAtomContainer Parse() :
         container = new QueryAtomContainer();
         previousAtom = null;
     }
-    
-    (SMARTS())+ <EOF>
-    
+    ((SMARTS())+ |ConsumeToken()) <EOF>
     { return container; }
 }
 
 void SMARTS() :
 {}
 {
-    AtomExpression() [ BondExpression() ] 
+    (AtomExpression()) [ BondExpression() ] 
 }
-
-void AtomExpression() :
+void BondExpression() :
 {}
 {
-    Element() | SMARTSAtomExpression()
+    
+    ("=" SetCurrentBondToOrderQuery(2.0) ) | 
+    (<HASH> SetCurrentBondToOrderQuery(3.0) ) | 
+    (":" SetCurrentBondToAromatic() ) | 
+    ("~" SetCurrentBondToAnyOrder() )
 }
-
-
-void SMARTSAtomExpression() :
+void AtomExpression():
 {}
 {
-    "*" AddAnyAtom()        |
-    "a" AddAromaticAtom()   |
-    "A" AddAliphaticAtom()  |
-    AromaticAtms()          |
-    (InBracketsSMARTSAtom()) 
-}
-
-void InBracketsSMARTSAtom() :
-{}
-{
-    "[" 
-            FinalOperatorExpression()
-         
-    "]"
-}
-
-void ExpressionAtom():
-{}
-{
-    (Degree()                | 
+    (
+     "*" AddAnyAtom()        |
+     "a" AddAromaticAtom()   |
+     "A" AddAliphaticAtom()  |
+     Recursion()             |
+     Element()               |
+     StartBracket()          |
+     EndBracket()            |
+     StartColumn()           |
+     EndColumn()             |
+     Degree()                |
      TotalHCount()           | 
      ImplicitHCount()        |    
      TotalRingConnection()   |
      RingAtom()              | 
      AtomicNumber()          |
      AromaticAtms()          |
-     ElementWithComplexExp() | 
-     TotalConnectionAtom()   |   
-     ChargeAtom() )  
+     TotalConnectionAtom()   |
+     OperatorAtom()          |
+     Operator()              |
+     ChargeAtom()            |
+     MassAtom()              
+            
+    )  
+}
+void ConsumeToken():
+{}
+{
+    <DOT> 
 }
 void OperatorAtom():
 {}
 {
-     <excl> ExpressionAtom() AddOperatorAtom()
+     <excl> AtomExpression() AddOperatorAtom()
+}
+void MassAtom():
+{}
+{
+     <DIGIT> AddMassAtom()
+}
+
+void StartBracket():
+{}
+{
+    <STARTOFBRACKET> AddStartBracket()
+}
+void Recursion():
+{}
+{
+   <$> [<STARTOFBRACKET>|<STARTOFCOLUMN>] StartRecursion()
+}
+void EndBracket():
+{}
+{
+    <ENDOFBRACKET>  AddEndBracket()
+}
+void StartColumn():
+{}
+{
+    <STARTOFCOLUMN> AddStartColumn()
+}
+void EndColumn():
+{}
+{
+    <ENDOFCOLUMN>  AddEndColumn()
 }
 
 void AtomicNumber() :
@@ -462,25 +611,7 @@ void AtomicNumber() :
 {
     <HASH> (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
 }
-void OperatorExpression():
-{}
-{
-      ( Operator() (OperatorAtom() | ExpressionAtom()))* 
-      AddOperatorExpression()
-}
-void FinalOperatorExpression():
-{}
-{
-        (OperatorAtom() | ExpressionAtom()) [OperatorExpression()]
-        AddFinalOperatorExpression()
-}
 
-void ElementWithComplexExp():
-{String tok=null;}
-{
-         Element() [TotalHCount()|TotalConnectionAtom()] setProperty()
-                           
-}
 void TotalHCount() :
 {}
 {
@@ -496,7 +627,12 @@ void Element() :
 void ChargeAtom():
 {Token t;}
 {
-        (("+"|"-") | <SIGNS>) AddNewFormalChargeAtom()
+        ("+"|"-") [<DIGIT>]AddNewFormalChargeAtom()
+}
+void ValenyAtom():
+{}
+{
+      <v> [<DIGIT>] AddValencyAtom()
 }
 
 void ImplicitHCount() :
@@ -527,17 +663,6 @@ void TotalConnectionAtom():
         <X> [<DIGIT>] AddTotalConnectionAtom()
 }
 
-
-void BondExpression() :
-{}
-{
-    ("-" SetCurrentBondToOrderQuery(1.0) ) | 
-    ("=" SetCurrentBondToOrderQuery(2.0) ) | 
-    (<HASH> SetCurrentBondToOrderQuery(3.0) ) | 
-    (":" SetCurrentBondToAromatic() ) | 
-    ("~" SetCurrentBondToAnyOrder() )
-}
-
 void TwoCharElement() :
 {}
 {
@@ -546,20 +671,14 @@ void TwoCharElement() :
     <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
     <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
     <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
-    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA>
+    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL>
 }
 
 void OneCharElement() :
 {}
 {
-	<H> | <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
+	 <B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>
         
-}
-String CharElement():
-{}
-{
-     (<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U>)
-     {return getToken(-1).image;} 
 }
 void Operator():
 {}
@@ -584,6 +703,10 @@ TOKEN:
 TOKEN:
 {
     <SIGNS: (["+","-"])+>
+}
+TOKEN:
+{
+   <$:"$">
 }
 TOKEN: /* Opetator*/
 {
@@ -619,11 +742,35 @@ TOKEN:
 }
 TOKEN:
 {
+     <DOT:".">
+}
+TOKEN:
+{
     <x:"x">
 }
 TOKEN:
 {
+   <v:"v">
+}
+TOKEN:
+{
     <HASH:"#">
+}
+TOKEN:
+{
+    <STARTOFBRACKET:"[">
+}
+TOKEN:
+{
+    <ENDOFBRACKET:"]">
+}
+TOKEN:
+{
+    <STARTOFCOLUMN:"(">
+}
+TOKEN:
+{
+   <ENDOFCOLUMN:")">
 }
 TOKEN :
 {
