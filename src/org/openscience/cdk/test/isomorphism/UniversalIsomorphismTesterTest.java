@@ -36,6 +36,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
@@ -44,8 +45,12 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -82,6 +87,28 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         } else {
             assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
         }
+
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("CCN");
+        QueryAtomContainer query = new QueryAtomContainer();
+        IQueryAtom a1 = new SymbolQueryAtom();
+        a1.setSymbol("C");
+        
+        AnyAtom a2 = new AnyAtom();
+        
+        Bond b1 = new OrderQueryBond(a1, a2, 1.0d);
+        
+        IQueryAtom a3 = new SymbolQueryAtom();
+        a3.setSymbol("C");
+        
+        Bond b2 = new OrderQueryBond(a2, a3, 1.0d);
+        query.addAtom(a1);
+        query.addAtom(a2);
+        query.addAtom(a3);
+        
+        query.addBond(b1);
+        query.addBond(b2);
+        assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));        
 	}
 
 	public void test2() throws java.lang.Exception
