@@ -29,6 +29,7 @@
 package org.openscience.cdk.test.isomorphism;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -46,6 +47,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -88,29 +90,42 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
             assertTrue(UniversalIsomorphismTester.isSubgraph(mol, frag1));
         }
 
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer atomContainer = sp.parseSmiles("CCN");
-        QueryAtomContainer query = new QueryAtomContainer();
+		      
+	}
+
+	/**
+     * @cdk.bug 1708336 
+     */
+	public void testSFBug1708336() throws CDKException {
+		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer atomContainer = builder.newAtomContainer();
+        atomContainer.addAtom(builder.newAtom("C"));
+        atomContainer.addAtom(builder.newAtom("C"));
+        atomContainer.addAtom(builder.newAtom("N"));
+        atomContainer.addBond(0,1,1.0);
+        atomContainer.addBond(1,2,1.0);
+        IQueryAtomContainer query = new QueryAtomContainer();
         IQueryAtom a1 = new SymbolQueryAtom();
         a1.setSymbol("C");
         
         AnyAtom a2 = new AnyAtom();
         
-        Bond b1 = new OrderQueryBond(a1, a2, 1.0d);
+        Bond b1 = new OrderQueryBond(a1, a2, 1.0);
         
         IQueryAtom a3 = new SymbolQueryAtom();
         a3.setSymbol("C");
         
-        Bond b2 = new OrderQueryBond(a2, a3, 1.0d);
+        Bond b2 = new OrderQueryBond(a2, a3, 1.0);
         query.addAtom(a1);
         query.addAtom(a2);
         query.addAtom(a3);
         
         query.addBond(b1);
         query.addBond(b2);
-        assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));        
-	}
 
+        assertEquals(null, UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query));  
+	}
+	
 	public void test2() throws java.lang.Exception
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
