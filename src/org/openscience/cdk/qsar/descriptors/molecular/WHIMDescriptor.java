@@ -35,6 +35,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
+import javax.vecmath.Point3d;
 import java.util.Hashtable;
 
 
@@ -281,9 +282,8 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    public Object getParameterType(String name) {
-        Object o = new String();
-        return (o);
+    public Object getParameterType(String name) {        
+        return ("");
     }
 
 
@@ -306,9 +306,11 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         // get the coordinate matrix
         double[][] cmat = new double[ac.getAtomCount()][3];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            cmat[i][0] = ac.getAtom(i).getPoint3d().x;
-            cmat[i][1] = ac.getAtom(i).getPoint3d().y;
-            cmat[i][2] = ac.getAtom(i).getPoint3d().z;
+            Point3d coords = ac.getAtom(i).getPoint3d();
+            if (coords == null) throw new CDKException("Molecules should have 3D coordinates");
+            cmat[i][0] = coords.x;
+            cmat[i][1] = coords.y;
+            cmat[i][2] = coords.z;
         }
 
         // set up the weight vector
