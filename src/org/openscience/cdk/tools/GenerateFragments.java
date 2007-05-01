@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+ * Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,7 +25,6 @@
  */
 package org.openscience.cdk.tools;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -46,7 +42,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Generate ring and Murcko fragments.
@@ -137,7 +132,11 @@ public class GenerateFragments {
 				
 		//logger.debug("Number of RingSystems:"+this.ringFragments.size());
 		for (int f = 0; f < this.ringFragments.size(); f++) {
-			firstRingAtomContainer = RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(f));
+			firstRingAtomContainer = molecule.getBuilder().newAtomContainer();
+			IRingSet ringSet = (IRingSet)this.ringFragments.get(f);
+			for (int i=0;i<ringSet.getAtomContainerCount();i++) {
+				firstRingAtomContainer.add(ringSet.getAtomContainer(i));
+			}
 			
 			if (firstRingAtomContainer.getAtomCount()>=minimumRingSize){
 				tmpRingFragments.add(firstRingAtomContainer);
@@ -249,7 +248,7 @@ public class GenerateFragments {
 		}else if (tmpRingFragments.size() ==1){
 			//logger.debug("Number of RingSystems is 1");
 			murckoFragment=new Molecule();
-			murckoFragment=addFragments(RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(0)),murckoFragment,molecule);
+			murckoFragment=addFragments((IRingSet) this.ringFragments.get(0),murckoFragment,molecule);
 			murckoFragment=addFragmentBonds(murckoFragment,molecule);
 			this.murckoFragments.add(murckoFragment);
 		}
@@ -277,7 +276,11 @@ public class GenerateFragments {
 			if (addAtomContainer.getAtom(i).getFlag(CDKConstants.ISINRING)&& !targetMolecule.contains(addAtomContainer.getAtom(i))){
 				//Find all Ring atoms and add them 
 				for (int j = 0; j < this.ringFragments.size(); j++) {
-					ringAtomContainer = RingSetManipulator.getAllInOneContainer((IRingSet) this.ringFragments.get(j));
+					ringAtomContainer = addAtomContainer.getBuilder().newAtomContainer();
+					IRingSet ringSet = (IRingSet)this.ringFragments.get(j);
+					for (int k=0; k<ringSet.getAtomContainerCount(); k++) {
+						ringAtomContainer.add(ringSet.getAtomContainer(k));
+					}
 					if (ringAtomContainer.contains(addAtomContainer.getAtom(i))){
 						targetMolecule=addFragments(ringAtomContainer, targetMolecule,mainMolecule);
 						break;
@@ -333,7 +336,12 @@ public class GenerateFragments {
 		return targetMolecule;
 	}
 	
-	
+	private IMolecule addFragments(IRingSet ringSet, IMolecule targetMolecule, IMolecule mainMolecule){
+		for (int i=0;i<ringSet.getAtomContainerCount();i++) {
+			addFragments(ringSet.getAtomContainer(i), targetMolecule, mainMolecule);
+		}
+		return targetMolecule;
+	}	
 	
 	/**
 	 * add the rings to the murcko fragment

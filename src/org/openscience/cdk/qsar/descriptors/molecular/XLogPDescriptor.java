@@ -212,8 +212,12 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             //logger.debug("atomRingSet.size "+atomRingSet.size());
             if (atomRingSet.getAtomContainerCount()>0){
                 if (atomRingSet.getAtomContainerCount()>1){
-                    ssrf=new SSSRFinder(RingSetManipulator.getAllInOneContainer(atomRingSet));
-                    atomRingSet=ssrf.findEssentialRings();
+                	Iterator containers = RingSetManipulator.getAllAtomContainers(atomRingSet).iterator();
+                	atomRingSet = rs.getBuilder().newRingSet();
+                	while (containers.hasNext()) {
+                		ssrf = new SSSRFinder((IAtomContainer)containers.next());
+                		atomRingSet.add(ssrf.findEssentialRings());
+                	}
                     //logger.debug(" SSSRatomRingSet.size "+atomRingSet.size());
                 }
                 for (int j=0;j<atomRingSet.getAtomContainerCount();j++){
