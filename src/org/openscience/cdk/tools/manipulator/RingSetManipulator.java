@@ -27,18 +27,40 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.interfaces.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
  */
 public class RingSetManipulator {
     
+	public static int getAtomCount(IRingSet set) {
+		int count = 0;
+		Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+        	count += ((IAtomContainer)acs.next()).getAtomCount();
+        }
+        return count;
+	}
+	
+	public static int getBondCount(IRingSet set) {
+		int count = 0;
+		Iterator acs = set.atomContainers();
+        while (acs.hasNext()) {
+        	count += ((IAtomContainer)acs.next()).getBondCount();
+        }
+        return count;
+	}
+	
 	/**
 	 * Returns all the atoms and bonds from all the rings in the RingSet 
 	 * in one AtomContainer.
