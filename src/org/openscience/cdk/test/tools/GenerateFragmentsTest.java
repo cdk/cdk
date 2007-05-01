@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -38,7 +37,7 @@ import org.openscience.cdk.tools.HydrogenAdder;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  */
 public class GenerateFragmentsTest extends CDKTestCase{
 	

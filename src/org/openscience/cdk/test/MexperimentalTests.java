@@ -24,6 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.io.VASPReaderTest;
+import org.openscience.cdk.test.tools.GenerateFragmentsTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
@@ -36,6 +37,7 @@ public class MexperimentalTests {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
         suite.addTest(AssociationTest.suite());
         suite.addTest(VASPReaderTest.suite());
+        suite.addTest(GenerateFragmentsTest.suite());
         return suite;
     }
 
