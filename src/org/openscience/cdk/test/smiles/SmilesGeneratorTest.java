@@ -51,6 +51,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -729,6 +730,34 @@ public class SmilesGeneratorTest extends CDKTestCase {
         assertEquals(molSmiles,cmlSmiles);        
 	}
 
+	/**
+	 * @cdk.bug 1014344
+	 */
+	public void testTest() throws Exception {
+		String filename_cml = "data/mdl/9554.mol";
+		String filename_mol = "data/mdl/9553.mol";
+		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
+		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
+		MDLReader reader1 = new MDLReader(ins1);
+        Molecule mol1 = (Molecule) reader1.read(new Molecule());
+        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+        StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol1);
+        sdg.generateCoordinates();
+		
+		MDLReader reader2 = new MDLReader(ins2);		
+		Molecule mol2 = (Molecule) reader2.read(new Molecule());
+		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+        sdg=new StructureDiagramGenerator(mol2);
+        sdg.generateCoordinates();
+		
+		SmilesGenerator sg = new SmilesGenerator();
+		
+		String moleculeSmile1 = sg.createChiralSMILES(mol1, new boolean[mol1.getBondCount()]);
+		String moleculeSmile2 = sg.createChiralSMILES(mol2, new boolean[mol2.getBondCount()]);
+		assertFalse(moleculeSmile1.equals(moleculeSmile2));
+	}
+	
+	
 	/**
 	 * @cdk.bug 1014344
 	 */

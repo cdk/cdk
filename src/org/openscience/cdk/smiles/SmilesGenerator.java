@@ -366,7 +366,16 @@ public class SmilesGenerator
 					{
 						for (int k = 0; k < allrings.getAtomCount(); k++)
 						{
-							allrings.getAtom(k).setProperty(RING_CONFIG, UP);
+							IBond bond = molecule.getBond(allrings.getAtom(k), hasWedges(molecule, allrings.getAtom(k)));
+							if(bond!=null){
+								if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
+								{
+									allrings.getAtom(k).setProperty(RING_CONFIG, UP);
+								} else
+								{
+									allrings.getAtom(k).setProperty(RING_CONFIG, DOWN);
+								}
+							}
 						}
 					}
 				}
