@@ -165,6 +165,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
+			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IMoleculeSet.class.equals(interfaces[i])) return true;
 		}
 		return false;
@@ -186,6 +187,13 @@ public class MDLWriter extends DefaultChemObjectWriter {
 				return;
 			} else if (object instanceof IChemFile) {
 				writeChemFile((IChemFile)object);
+				return;
+			} else if (object instanceof IChemModel) {
+				IChemFile file = object.getBuilder().newChemFile();
+				IChemSequence sequence = object.getBuilder().newChemSequence();
+				sequence.addChemModel((IChemModel)object);
+				file.addChemSequence(sequence);
+				writeChemFile((IChemFile)file);
 				return;
 			} else if (object instanceof IMolecule) {
 				writeMolecule((IMolecule)object);

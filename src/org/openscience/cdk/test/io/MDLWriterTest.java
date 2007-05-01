@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
@@ -57,6 +58,7 @@ public class MDLWriterTest extends CDKTestCase {
     public void testAccepts() throws Exception {
     	MDLWriter reader = new MDLWriter();
     	assertTrue(reader.accepts(ChemFile.class));
+    	assertTrue(reader.accepts(ChemModel.class));
     	assertTrue(reader.accepts(Molecule.class));
     	assertTrue(reader.accepts(MoleculeSet.class));
     }
