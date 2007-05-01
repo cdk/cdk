@@ -40,6 +40,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 
 /**
@@ -131,11 +132,14 @@ public class ValidateAction extends JCPAction
 	{
 		JChemPaintModel jcpmodel = jcpPanel.getJChemPaintModel();
 		org.openscience.cdk.interfaces.IChemModel model = jcpmodel.getChemModel();
-		IAtomContainer atoms = ChemModelManipulator.getAllInOneContainer(model);
-		logger.info("Clearing errors on atoms: " + atoms.getAtomCount());
-		for (int i = 0; i < atoms.getAtomCount(); i++)
-		{
-			ProblemMarker.unmark(atoms.getAtom(i));
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		while (containers.hasNext()) {
+			IAtomContainer atoms = (IAtomContainer)containers.next();
+			logger.info("Clearing errors on atoms: " + atoms.getAtomCount());
+			for (int i = 0; i < atoms.getAtomCount(); i++)
+			{
+				ProblemMarker.unmark(atoms.getAtom(i));
+			}
 		}
 		jcpmodel.fireChange();
 	}

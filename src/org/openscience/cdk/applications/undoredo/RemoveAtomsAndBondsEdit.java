@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.applications.undoredo;
 
+import java.util.Iterator;
+
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -55,7 +57,11 @@ public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {
 			IAtomContainer undoRedoContainer, String type) {
 		this.chemModel = chemModel;
 		this.undoRedoContainer = undoRedoContainer;
-		this.container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		this.container = chemModel.getBuilder().newAtomContainer();
+    	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		container.add((IAtomContainer)containers.next());
+    	}
 		this.type = type;
 	}
 

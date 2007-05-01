@@ -32,6 +32,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -146,7 +147,12 @@ public class EditAction extends JCPAction {
 			jcpModel.fireChange();
 		}
 		else if (type.equals("selectAll")) {
-			renderModel.setSelectedPart(ChemModelManipulator.getAllInOneContainer(jcpModel.getChemModel()));
+			IAtomContainer wholeModel = jcpModel.getChemModel().getBuilder().newAtomContainer();
+        	Iterator containers = ChemModelManipulator.getAllAtomContainers(jcpModel.getChemModel()).iterator();
+        	while (containers.hasNext()) {
+        		wholeModel.add((IAtomContainer)containers.next());
+        	}
+			renderModel.setSelectedPart(wholeModel);
 			((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
 			jcpPanel.lastAction.set(0,jcpPanel.getMoveButton());
 			jcpPanel.getMoveButton().setBackground(Color.GRAY);
@@ -178,7 +184,12 @@ public class EditAction extends JCPAction {
 				jcpModel.fireChange();
 			}
 			else if (object instanceof Reaction) {
-				renderModel.setSelectedPart(ReactionManipulator.getAllInOneContainer((Reaction) object));
+				IAtomContainer wholeModel = jcpModel.getChemModel().getBuilder().newAtomContainer();
+	        	Iterator containers = ReactionManipulator.getAllAtomContainers((Reaction)object).iterator();
+	        	while (containers.hasNext()) {
+	        		wholeModel.add((IAtomContainer)containers.next());
+	        	}
+				renderModel.setSelectedPart(wholeModel);
 				jcpModel.fireChange();
 			}
 			else {
@@ -189,7 +200,12 @@ public class EditAction extends JCPAction {
 			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
-				renderModel.setSelectedPart(MoleculeSetManipulator.getAllInOneContainer(reaction.getReactants()));
+				IAtomContainer wholeModel = jcpModel.getChemModel().getBuilder().newAtomContainer();
+	        	Iterator containers = MoleculeSetManipulator.getAllAtomContainers(reaction.getReactants()).iterator();
+	        	while (containers.hasNext()) {
+	        		wholeModel.add((IAtomContainer)containers.next());
+	        	}
+				renderModel.setSelectedPart(wholeModel);
 				jcpModel.fireChange();
 			}
 			else {
@@ -200,7 +216,12 @@ public class EditAction extends JCPAction {
 			IChemObject object = getSource(event);
 			if (object instanceof Reaction) {
 				Reaction reaction = (Reaction) object;
-				renderModel.setSelectedPart(MoleculeSetManipulator.getAllInOneContainer(reaction.getProducts()));
+				IAtomContainer wholeModel = jcpModel.getChemModel().getBuilder().newAtomContainer();
+	        	Iterator containers = MoleculeSetManipulator.getAllAtomContainers(reaction.getProducts()).iterator();
+	        	while (containers.hasNext()) {
+	        		wholeModel.add((IAtomContainer)containers.next());
+	        	}
+				renderModel.setSelectedPart(wholeModel);
 				jcpModel.fireChange();
 			}
 			else {

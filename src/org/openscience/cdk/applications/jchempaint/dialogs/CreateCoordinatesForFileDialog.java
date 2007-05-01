@@ -34,6 +34,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -54,6 +55,7 @@ import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.Projector;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -101,8 +103,7 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 		generate2DButton = new JRadioButton("create with layout algorithm");
 		group.add(generate2DButton);
 		radioPanel.add(generate2DButton);
-		if (GeometryTools.has3DCoordinates(ChemModelManipulator.getAllInOneContainer(chemModel)))
-		{
+		if (GeometryTools.has3DCoordinates(chemModel)) {
 			from3DButton = new JRadioButton("create from 3D coordinates in file");
 			group.add(from3DButton);
 			radioPanel.add(from3DButton);
@@ -185,7 +186,10 @@ public class CreateCoordinatesForFileDialog extends JInternalFrame
 			if (from3DButton != null && from3DButton.isSelected())
 			{
 				// JOptionPane.showMessageDialog(jchempaint, "Not implemented yet");
-				Projector.project2D(ChemModelManipulator.getAllInOneContainer(chemModel), renderingCoordinates);
+				Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+				while (containers.hasNext()) {
+					Projector.project2D((IAtomContainer)containers.next(), renderingCoordinates);
+				}
 			} else
 			{
 				org.openscience.cdk.interfaces.IMoleculeSet som = chemModel.getMoleculeSet();

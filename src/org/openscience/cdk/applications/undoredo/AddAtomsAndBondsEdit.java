@@ -77,7 +77,11 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer container = chemModel.getBuilder().newAtomContainer();
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		container.add((IAtomContainer)containers.next());
+    	}
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBond(i);
 			container.addBond(bond);
@@ -101,22 +105,21 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
 		for (int i = 0; i < undoRedoContainer.getBondCount(); i++) {
 			IBond bond = undoRedoContainer.getBond(i);
-			container.removeBond(bond);
+			ChemModelManipulator.getRelevantAtomContainer(chemModel, bond).removeBond(bond);
 		}
 		for (int i = 0; i < undoRedoContainer.getAtomCount(); i++) {
 			IAtom atom = undoRedoContainer.getAtom(i);
-			container.removeAtom(atom);
+			ChemModelManipulator.getRelevantAtomContainer(chemModel, atom).removeAtom(atom);
 		}
-		for (int i = 0; i < container.getAtomCount(); i++) {
-			this.updateAtom(container,container.getAtom(i));
-		}
-		IMolecule molecule = container.getBuilder().newMolecule(container);
-		IMoleculeSet moleculeSet = ConnectivityChecker
-				.partitionIntoMolecules(molecule);
-		chemModel.setMoleculeSet(moleculeSet);
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		IAtomContainer container = (IAtomContainer)containers.next();
+    		for (int i = 0; i < container.getAtomCount(); i++) {
+    			this.updateAtom(container,container.getAtom(i));
+    		}
+    	}
 	}
 
 	/*

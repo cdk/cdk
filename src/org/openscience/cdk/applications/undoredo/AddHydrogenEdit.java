@@ -142,8 +142,11 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 */
 	private void redoExplicitHydrogenAdding() {
 		if (model.getMoleculeSet() != null) {
-			IAtomContainer container = ChemModelManipulator
-					.getAllInOneContainer(model);
+			IAtomContainer container = model.getBuilder().newAtomContainer();
+        	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+        	while (containers.hasNext()) {
+        		container.add((IAtomContainer)containers.next());
+        	}
 			for (int i = 0; i < changedAtomsAndBonds.getAtomCount(); i++) {
 				container.addAtom(changedAtomsAndBonds.getAtom(i));
 			}

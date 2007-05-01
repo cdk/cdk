@@ -26,6 +26,7 @@ package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.undo.UndoableEdit;
 import javax.vecmath.Point2d;
@@ -186,13 +187,15 @@ public class AddHydrogenAction extends JCPAction
                         HydrogenPlacer hPlacer = new HydrogenPlacer();
 						hPlacer.placeHydrogens2D(molecule, bondLength, jcpmodel.getRendererModel().getRenderingCoordinates());
 
-						
-					    IAtomContainer atomCon = ChemModelManipulator.getAllInOneContainer(jcpmodel.getChemModel());
-						for (int k = 0; k < atomCon.getAtomCount(); k++)
-						{
-							IAtom currentAtom = atomCon.getAtom(k);
-							if(jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)!=null){
-								currentAtom.setPoint2d(new Point2d((Point2d)jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)));
+						Iterator containers =  ChemModelManipulator.getAllAtomContainers(jcpmodel.getChemModel()).iterator();
+						while (containers.hasNext()) {
+							IAtomContainer atomCon = (IAtomContainer)containers.next(); 
+							for (int k = 0; k < atomCon.getAtomCount(); k++)
+							{
+								IAtom currentAtom = atomCon.getAtom(k);
+								if(jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)!=null){
+									currentAtom.setPoint2d(new Point2d((Point2d)jcpmodel.getRendererModel().getRenderingCoordinate(currentAtom)));
+								}
 							}
 						}
 						

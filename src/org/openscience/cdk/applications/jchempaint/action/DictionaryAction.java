@@ -28,6 +28,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -53,14 +54,17 @@ public class DictionaryAction extends JCPAction {
         
         // make explicit references
         CDKDictionaryReferences.makeReferencesExplicit(chemModel);
-        IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
-        for (int i=0; i<container.getAtomCount(); i++) {
-            logger.debug("Making references for atom...");
-            CDKDictionaryReferences.makeReferencesExplicit(container.getAtom(i));
-        }
-        for (int i=0; i<container.getBondCount(); i++) {
-            logger.debug("Making references for bond...");
-            CDKDictionaryReferences.makeReferencesExplicit(container.getBond(i));
+        Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+        while (containers.hasNext()) {
+        	IAtomContainer container = (IAtomContainer)containers.next();
+        	for (int i=0; i<container.getAtomCount(); i++) {
+        		logger.debug("Making references for atom...");
+        		CDKDictionaryReferences.makeReferencesExplicit(container.getAtom(i));
+        	}
+        	for (int i=0; i<container.getBondCount(); i++) {
+        		logger.debug("Making references for bond...");
+        		CDKDictionaryReferences.makeReferencesExplicit(container.getBond(i));
+        	}
         }
         
         jcpModel.fireChange();

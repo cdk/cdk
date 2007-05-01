@@ -32,17 +32,15 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
@@ -306,15 +304,16 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(model);
-		if (ac != null)
-		{
-			cow.write(new Molecule(ac));
-			cow.close();
-		} else
-		{
-			System.err.println("AC == null!");
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		while (containers.hasNext()) {
+			IAtomContainer ac = (IAtomContainer)containers.next();
+			if (ac != null) {
+				cow.write(ac);
+			} else {
+				System.err.println("AC == null!");
+			}
 		}
+		cow.close();
 	}
 
 	protected void saveAsSVG(IChemModel model, File outFile) throws Exception
@@ -325,15 +324,18 @@ public class SaveAsAction extends JCPAction
 		{
 			cow.addChemObjectIOListener(new SwingGUIListener(jcpPanel, 4));
 		}
-		IAtomContainer ac = (IAtomContainer) ChemModelManipulator.getAllInOneContainer(model);
-		if (ac != null)
-		{
-			cow.write((org.openscience.cdk.AtomContainer) ac.clone());
-			cow.close();
-		} else
-		{
-			System.err.println("AC == null!");
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		while (containers.hasNext()) {
+			IAtomContainer ac = (IAtomContainer)containers.next();
+			if (ac != null)
+			{
+				cow.write((IAtomContainer) ac.clone());
+			} else
+			{
+				System.err.println("AC == null!");
+			}
 		}
+		cow.close();
 	}
 }
 

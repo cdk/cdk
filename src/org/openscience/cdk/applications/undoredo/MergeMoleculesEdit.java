@@ -1,6 +1,7 @@
 package org.openscience.cdk.applications.undoredo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
@@ -37,7 +38,11 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer container = chemModel.getBuilder().newAtomContainer();
+    	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		container.add((IAtomContainer)containers.next());
+    	}
 		for (int objects=0; objects<undoredoContainer.size(); objects++) {
 			Object[] undoObjects = (Object[]) undoredoContainer.get(objects);
 			IAtom atom1 = (IAtom) undoObjects[0];
@@ -67,7 +72,11 @@ public class MergeMoleculesEdit  extends AbstractUndoableEdit{
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer container = chemModel.getBuilder().newAtomContainer();
+    	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		container.add((IAtomContainer)containers.next());
+    	}
 		for (int objects=0; objects<undoredoContainer.size(); objects++) {
 			Object[] undoObjects = (Object[]) undoredoContainer.get(objects);
 			IAtom atom1 = (IAtom) undoObjects[0];

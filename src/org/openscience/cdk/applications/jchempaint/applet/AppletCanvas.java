@@ -32,6 +32,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
 import javax.vecmath.Point2d;
 
@@ -87,9 +88,12 @@ public class AppletCanvas extends Canvas
 	{
 		renderer.getRenderer2DModel().setBackgroundDimension(getSize());
 		IAtomContainer container = null;
-		if (model != null)
-		{
-			container = ChemModelManipulator.getAllInOneContainer(model.getChemModel());
+		if (model != null) {
+			container = model.getChemModel().getBuilder().newAtomContainer();
+        	Iterator containers = ChemModelManipulator.getAllAtomContainers(model.getChemModel()).iterator();
+        	while (containers.hasNext()) {
+        		container.add((IAtomContainer)containers.next());
+        	}
 		} else
 		{
 			Atom carbon = new Atom("C");

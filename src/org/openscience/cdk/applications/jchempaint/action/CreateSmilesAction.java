@@ -29,6 +29,7 @@
 package org.openscience.cdk.applications.jchempaint.action;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 
@@ -83,20 +84,27 @@ public class CreateSmilesAction extends JCPAction
 		{
 			ChemModel model = (ChemModel) jcpPanel.getJChemPaintModel().getChemModel();
             SmilesGenerator generator = new SmilesGenerator();
-			IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
-			Molecule molecule = new Molecule(container);
-			Molecule moleculewithh=(Molecule)molecule.clone();
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
-			double bondLength = GeometryTools.getBondLengthAverage(container,jcpPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
-		    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
-			smiles = generator.createSMILES(molecule);
-			boolean[] bool=new boolean[moleculewithh.getBondCount()];
-		    SmilesGenerator sg = new SmilesGenerator();
-			for(int i=0;i<bool.length;i++){
-		      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
-				bool[i]=true;
-			}
-			chiralsmiles=generator.createChiralSMILES(moleculewithh,bool);
+            Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+            while (containers.hasNext()) {
+            	IAtomContainer container = (IAtomContainer)containers.next();
+            	Molecule molecule = new Molecule(container);
+            	Molecule moleculewithh=(Molecule)molecule.clone();
+            	new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+            	double bondLength = GeometryTools.getBondLengthAverage(container,jcpPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
+            	new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
+            	smiles += generator.createSMILES(molecule);
+            	boolean[] bool=new boolean[moleculewithh.getBondCount()];
+            	SmilesGenerator sg = new SmilesGenerator();
+            	for(int i=0;i<bool.length;i++){
+            		if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
+            			bool[i]=true;
+            	}
+            	chiralsmiles += generator.createChiralSMILES(moleculewithh,bool);
+            	if (containers.hasNext()) {
+            		chiralsmiles += ".";
+            		smiles += ".";
+            	}
+            }
 			dialog.setMessage("Generated SMILES:", "SMILES: "+smiles+System.getProperty("line.separator")+"chiral SMILES: "+chiralsmiles);
 		} catch (Exception exception)
 		{

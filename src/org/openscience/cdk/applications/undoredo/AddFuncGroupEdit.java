@@ -35,7 +35,7 @@ public class AddFuncGroupEdit  extends AbstractUndoableEdit{
 	 * @see javax.swing.undo.UndoableEdit#redo()
 	 */
 	public void redo() throws CannotRedoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, oldatom.getAtom(0));
 		container.add(addedGroup);
 		container.remove(oldatom);
 	}
@@ -46,7 +46,7 @@ public class AddFuncGroupEdit  extends AbstractUndoableEdit{
 	 * @see javax.swing.undo.UndoableEdit#undo()
 	 */
 	public void undo() throws CannotUndoException {
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, addedGroup.getAtom(0));
 		System.err.println("con "+container);
 		System.err.println("ac "+addedGroup);
 		for (int objects=0; objects<addedGroup.getAtomCount(); objects++) {
