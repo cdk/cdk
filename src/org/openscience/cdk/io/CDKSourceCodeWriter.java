@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -113,6 +114,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
+			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -125,6 +127,13 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
                 logger.error(ex.getMessage());
                 logger.debug(ex);
             }
+        } else if (object instanceof IAtomContainer) {
+            try {
+                writeAtomContainer((IAtomContainer)object);
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                logger.debug(ex);
+            } 
         } else {
             throw new CDKException("Only supported is writing of Molecule objects.");
         }
@@ -133,6 +142,26 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public void writeMolecule(IMolecule molecule) throws Exception {
         writer.write("{\n");
         writer.write("  IMolecule mol = new Molecule();\n");
+        IDCreator.createIDs(molecule);
+        java.util.Iterator atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = (IAtom)atoms.next();
+            writeAtom(atom);
+            writer.write("  mol.addAtom(" + atom.getID() + ");\n");
+        }
+
+        Iterator bonds = molecule.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = (IBond) bonds.next();
+            writeBond(bond);
+            writer.write("  mol.addBond(" + bond.getID() + ");\n");
+        }
+        writer.write("}\n");
+    }
+
+    public void writeAtomContainer(IAtomContainer molecule) throws Exception {
+        writer.write("{\n");
+        writer.write("  IAtomContainer mol = new AtomContainer();\n");
         IDCreator.createIDs(molecule);
         java.util.Iterator atoms = molecule.atoms();
         while (atoms.hasNext()) {
