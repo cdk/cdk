@@ -751,6 +751,22 @@ public class GeometryTools {
 	 *@param  ac  Description of the Parameter
 	 *@return    boolean indication that 3D coordinates are available
 	 */
+	public static boolean has3DCoordinates(IChemModel model) {
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		while (containers.hasNext()) {
+			IAtomContainer ac = (IAtomContainer)containers.next();
+			boolean hasCoords = GeometryToolsInternalCoordinates.has3DCoordinates(ac); 
+			if (!hasCoords) return false; 
+		}
+		return true;
+	}
+		
+	/**
+	 *  Determines if this model contains 3D coordinates
+	 *
+	 *@param  ac  Description of the Parameter
+	 *@return    boolean indication that 3D coordinates are available
+	 */
 	public static boolean has3DCoordinates(IAtomContainer ac) {
 		return GeometryToolsInternalCoordinates.has3DCoordinates(ac);
 	}
