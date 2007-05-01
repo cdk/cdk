@@ -38,6 +38,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.util.Iterator;
 
 import javax.swing.undo.UndoableEdit;
 
@@ -50,6 +51,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -124,9 +126,12 @@ public class CopyPasteAction extends JCPAction{
         			if (reader.accepts(Molecule.class)) { 
         				topaste = (IAtomContainer) reader.read(new Molecule());
         			} else if (reader.accepts(ChemFile.class)) {
-        				topaste = ChemFileManipulator.getAllInOneContainer(
-        						(ChemFile)reader.read(new ChemFile())
-        				);
+        				topaste = new Molecule();
+        				IChemFile file = (IChemFile)reader.read(new ChemFile());
+                    	Iterator containers = ChemFileManipulator.getAllAtomContainers(file).iterator();
+                    	while (containers.hasNext()) {
+                    		topaste.add((IAtomContainer)containers.next());
+                    	}
         			}
         		}
         		if(topaste==null && transfer!=null && (transfer.isDataFlavorSupported (DataFlavor.stringFlavor))) {

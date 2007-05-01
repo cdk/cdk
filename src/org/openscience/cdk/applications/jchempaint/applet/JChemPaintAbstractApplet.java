@@ -34,16 +34,15 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import javax.swing.JApplet;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.jchempaint.InsertTextPanel;
 import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
@@ -64,9 +63,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * The
@@ -194,8 +191,13 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		}
 		if(getParameter("tooltips")!=null){
 			StringTokenizer st=new StringTokenizer(getParameter("tooltips"),"|");
+			IAtomContainer container = theModel.getChemModel().getBuilder().newAtomContainer();
+        	Iterator containers = ChemModelManipulator.getAllAtomContainers(theModel.getChemModel()).iterator();
+        	while (containers.hasNext()) {
+        		container.add((IAtomContainer)containers.next());
+        	}
 			while(st.hasMoreTokens()){
-				IAtom atom=AtomContainerSetManipulator.getAllInOneContainer(theModel.getChemModel().getMoleculeSet()).getAtom(Integer.parseInt(st.nextToken())-1);
+				IAtom atom = container.getAtom(Integer.parseInt(st.nextToken())-1);
 				theModel.getRendererModel().getToolTipTextMap().put(atom,st.nextToken());
 			}
 			theModel.getRendererModel().setShowTooltip(true);
@@ -230,7 +232,11 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
 	        }else{
 	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)(.9*this.getSize().getWidth()),(int)(.9*this.getSize().getHeight())));
-	        	IAtomContainer atomContainer=AtomContainerSetManipulator.getAllInOneContainer(theModel.getChemModel().getMoleculeSet());
+	        	IAtomContainer atomContainer = theModel.getChemModel().getBuilder().newAtomContainer();
+            	Iterator containers = ChemModelManipulator.getAllAtomContainers(theModel.getChemModel()).iterator();
+            	while (containers.hasNext()) {
+            		atomContainer.add((IAtomContainer)containers.next());
+            	}
 	    		GeometryTools.translateAllPositive(atomContainer,theModel.getRendererModel().getRenderingCoordinates());
 	    		GeometryTools.scaleMolecule(atomContainer, theModel.getRendererModel().getBackgroundDimension(), 0.8,theModel.getRendererModel().getRenderingCoordinates());			
 	    		GeometryTools.center(atomContainer, theModel.getRendererModel().getBackgroundDimension(),theModel.getRendererModel().getRenderingCoordinates());
@@ -366,8 +372,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
     StringWriter sw = new StringWriter();
     MDLWriter mdlwriter = new MDLWriter(sw);
     mdlwriter.dontWriteAromatic();
-    Molecule all=new Molecule((AtomContainer)MoleculeSetManipulator.getAllInOneContainer(theJcpp.getJChemPaintModel().getChemModel().getMoleculeSet()));
-    mdlwriter.write(all);
+    mdlwriter.write(theJcpp.getJChemPaintModel().getChemModel());
     return(sw.toString());
   }
   
@@ -375,28 +380,37 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
   public String getSmiles(){
 		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
         SmilesGenerator generator = new SmilesGenerator();
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
-		Molecule molecule = new Molecule(container);
-		return generator.createSMILES(molecule);
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		String SMILES = "";
+		while (containers.hasNext()) {
+			IMolecule molecule = model.getBuilder().newMolecule((IAtomContainer)containers.next());
+			SMILES += generator.createSMILES(molecule);
+			if (containers.hasNext()) SMILES += ".";
+		}
+		return SMILES;
   }
 
   
   public String getSmilesChiral() throws Exception{
 		ChemModel model = (ChemModel) theJcpp.getJChemPaintModel().getChemModel();
-        SmilesGenerator generator = new SmilesGenerator();
-		IAtomContainer container = ChemModelManipulator.getAllInOneContainer(model);
-		Molecule moleculewithh=new Molecule(container);
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
-		double bondLength = GeometryTools.getBondLengthAverage(container,theJcpp.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
-	    new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
-		boolean[] bool=new boolean[moleculewithh.getBondCount()];
-	    SmilesGenerator sg = new SmilesGenerator();
-		for(int i=0;i<bool.length;i++){
-	      if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
-			bool[i]=true;
+        Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		String SMILES = "";
+		while (containers.hasNext()) {
+			IAtomContainer container = (IAtomContainer)containers.next();
+			IMolecule moleculewithh = model.getBuilder().newMolecule(container);
+			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+			double bondLength = GeometryTools.getBondLengthAverage(container,theJcpp.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
+			new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
+			boolean[] bool=new boolean[moleculewithh.getBondCount()];
+			SmilesGenerator sg = new SmilesGenerator();
+			for(int i=0;i<bool.length;i++){
+				if (sg.isValidDoubleBondConfiguration(moleculewithh, moleculewithh.getBond(i)))
+					bool[i]=true;
+			}
+			SMILES += sg.createSMILES(moleculewithh);
+			if (containers.hasNext()) SMILES += ".";
 		}
-		return generator.createChiralSMILES(moleculewithh,bool);
-
+		return SMILES;
   }
 
   /**

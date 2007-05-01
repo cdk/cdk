@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -282,10 +283,14 @@ public class InsertTextPanel extends JPanel implements ActionListener {
             double scaleFactor = GeometryTools.getScaleFactor(molecule, bondLength,jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
             GeometryTools.scaleMolecule(molecule, scaleFactor, renderModel.getRenderingCoordinates());
             //if there are no atoms in the actual chemModel all 2D-coordinates would be set to NaN
-            if (ChemModelManipulator.getAllInOneContainer(chemModel).getAtomCount() != 0) {
+            if (ChemModelManipulator.getAtomCount(chemModel) != 0) {
+            	IAtomContainer container = chemModel.getBuilder().newAtomContainer();
+            	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+            	while (containers.hasNext()) {
+            		container.add((IAtomContainer)containers.next());
+            	}
                 GeometryTools.translate2DCenterTo((IAtomContainer)molecule,
-                        GeometryTools.get2DCenter(
-                                ChemModelManipulator.getAllInOneContainer(chemModel),
+                		GeometryTools.get2DCenter(container,
                                 jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates()
                         ),
                         jChemPaintPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates()

@@ -29,6 +29,7 @@
 package org.openscience.cdk.applications.jchempaint;
 
 import java.util.EventObject;
+import java.util.Iterator;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -224,7 +225,11 @@ public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener
 		}
 		else if (position == 1) {
 			// depict bruto formula
-			IAtomContainer wholeModel = ChemModelManipulator.getAllInOneContainer((IChemModel)model);
+			IAtomContainer wholeModel = model.getBuilder().newAtomContainer();
+        	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+        	while (containers.hasNext()) {
+        		wholeModel.add((IAtomContainer)containers.next());
+        	}
 			String formula = new MFAnalyser(wholeModel,true).getHTMLMolecularFormulaWithCharge();
 			int impliciths=0;
 			for(int i=0;i<wholeModel.getAtomCount();i++){
