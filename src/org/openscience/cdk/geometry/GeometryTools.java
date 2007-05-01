@@ -778,6 +778,26 @@ public class GeometryTools {
 	 *@param  ac  Description of the Parameter
 	 *@return    0 no 2d, 1=some, 2= for each atom
 	 */
+	public static int has2DCoordinatesNew(IChemModel model) {
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+		int oldCoords = -1;
+		while (containers.hasNext()) {
+			IAtomContainer ac = (IAtomContainer)containers.next();
+			int hasCoords = GeometryToolsInternalCoordinates.has2DCoordinatesNew(ac); 
+			if (hasCoords == 1) return 1;
+			if (oldCoords != -1 && oldCoords != hasCoords) return 1;
+			oldCoords = hasCoords;
+		}
+		return oldCoords;
+	}
+
+	/**
+	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  ac  Description of the Parameter
+	 *@return    0 no 2d, 1=some, 2= for each atom
+	 */
 	public static int has2DCoordinatesNew(IAtomContainer ac) {
 		return  GeometryToolsInternalCoordinates.has2DCoordinatesNew(ac);
 	}
