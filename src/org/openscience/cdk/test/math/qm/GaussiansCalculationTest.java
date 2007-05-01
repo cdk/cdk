@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -28,13 +28,16 @@
  */
 package org.openscience.cdk.test.math.qm;
  
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.util.Iterator;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
@@ -43,8 +46,8 @@ import org.openscience.cdk.math.qm.ClosedShellJob;
 import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
 import org.openscience.cdk.math.qm.SimpleBasisSet;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  
 /**
  * Demonstration of the quantum mechanical capabilities of CDK.
@@ -80,22 +83,25 @@ public class GaussiansCalculationTest
       }
       ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-      org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
-      org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
-      IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-      org.openscience.cdk.interfaces.IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
+      IChemSequence chemSequence = chemFile.getChemSequence(0);
+      IChemModel chemModel = chemSequence.getChemModel(0);
+      Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+      while (containers.hasNext()) {
+    	  IAtomContainer atomContainer = (IAtomContainer)containers.next();
+    	  IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
 
-      GaussiansBasis basis = new SimpleBasisSet(atoms);
-        
-      Orbitals orbitals = new Orbitals(basis);
-      
-      int count_electrons = 0;
-      for(int i=0; i<atoms.length; i++)
-        count_electrons += atoms[i].getAtomicNumber();
-      orbitals.setCountElectrons(count_electrons);
-      
-      ClosedShellJob job = new ClosedShellJob(orbitals);
-      orbitals = job.calculate();
+    	  GaussiansBasis basis = new SimpleBasisSet(atoms);
+
+    	  Orbitals orbitals = new Orbitals(basis);
+
+    	  int count_electrons = 0;
+    	  for(int i=0; i<atoms.length; i++)
+    		  count_electrons += atoms[i].getAtomicNumber();
+    	  orbitals.setCountElectrons(count_electrons);
+
+    	  ClosedShellJob job = new ClosedShellJob(orbitals);
+    	  orbitals = job.calculate();
+      }
     } catch(Exception exc)
     { 
       exc.printStackTrace();

@@ -150,9 +150,8 @@ public class RingSetManipulatorTest extends CDKTestCase {
     	ac2.addAtom(builder.newAtom("C"));
     	ac2.addBond(0, 1, 2);
     	rs.addAtomContainer(ac2);
-    	IAtomContainer ac = RingSetManipulator.getAllInOneContainer(rs);
-    	assertEquals(3, ac.getAtomCount());
-    	assertEquals(1, ac.getBondCount());
+    	assertEquals(3, RingSetManipulator.getAtomCount(rs));
+    	assertEquals(1, RingSetManipulator.getBondCount(rs));
     }
     
     public void testGetHeaviestRing_IRingSet_IBond()

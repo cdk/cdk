@@ -75,19 +75,6 @@ public class ReactionSetManipulator {
         }
     }
     
-    /** 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-     */
-    public static IAtomContainer getAllInOneContainer(IReactionSet set) {
-        IAtomContainer container = set.getBuilder().newAtomContainer();
-        for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
-            IReaction reaction = (IReaction)iter.next();
-            container.add(ReactionManipulator.getAllInOneContainer(reaction));
-        }
-        return container;
-    }
-    
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
         IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {

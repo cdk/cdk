@@ -44,6 +44,7 @@ import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import javax.swing.JFrame;
@@ -237,7 +238,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 
 	void setupIfModelNotEmpty()
 	{
-		org.openscience.cdk.interfaces.IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(jchemPaintModel.getChemModel());
+		IAtomContainer ac = jchemPaintModel.getChemModel().getBuilder().newAtomContainer();
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(jchemPaintModel.getChemModel()).iterator();
+		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
 
 		Renderer2DModel rendererModel = jchemPaintModel.getRendererModel();
 		if (ac.getAtomCount() != 0)
@@ -560,7 +563,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             	logger.debug(exception);
             	return null;
             }
-            IAtomContainer ac = MoleculeSetManipulator.getAllInOneContainer(model.getMoleculeSet());
+    		IAtomContainer ac = model.getBuilder().newAtomContainer();
+    		Iterator containers = MoleculeSetManipulator.getAllAtomContainers(model.getMoleculeSet()).iterator();
+    		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
             Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
@@ -649,7 +654,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			
 			for (int i = 1; i <= reactionSet.getReactionCount(); i++)
 			{
-				org.openscience.cdk.interfaces.IAtomContainer ac = ReactionManipulator.getAllInOneContainer(reactionSet.getReaction(i - 1));
+				IAtomContainer ac = reactionSet.getBuilder().newAtomContainer();
+				Iterator containers = ReactionManipulator.getAllAtomContainers(reactionSet.getReaction(i - 1)).iterator();
+				while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
 				GeometryTools.center(ac, baseDim,rm.getRenderingCoordinates());
 				GeometryTools.translate2D(ac, 0, baseDim.height * (reactionSet.getReactionCount() - i),rm.getRenderingCoordinates());
 			}

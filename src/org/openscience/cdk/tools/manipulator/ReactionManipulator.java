@@ -108,28 +108,6 @@ public class ReactionManipulator {
         }
     }
     
-    /** 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-     */
-    public static IAtomContainer getAllInOneContainer(IReaction reaction) {
-        IAtomContainer container = reaction.getBuilder().newAtomContainer();
-        if (reaction == null) {
-            return container;
-        }
-        IMoleculeSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-            IMolecule molecule = reactants.getMolecule(i);
-            container.add(molecule);
-        }
-        IMoleculeSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
-            IMolecule molecule = products.getMolecule(i);
-            container.add(molecule);
-        }
-        return container;
-    }
-    
     /**
      * get all molecule of a IReaction. Reactants + Products
      * 

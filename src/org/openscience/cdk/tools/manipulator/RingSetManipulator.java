@@ -62,25 +62,6 @@ public class RingSetManipulator {
 	}
 	
 	/**
-	 * Returns all the atoms and bonds from all the rings in the RingSet 
-	 * in one AtomContainer.
-	 *
-	 * @return an AtomContainer with all atoms and bonds from the RingSet
-     * 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-	 */
-	public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
-		// FIXME: make RingSet a subclass of IChemObject (see bug #) and clean up
-		// the code in the next line
-		IAtomContainer container = ringSet.getBuilder().newAtomContainer();
-		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
-			container.add((IRing)ringSet.getAtomContainer(i));
-		}
-		return container;
-	}
-
-	/**
      * Returns all the AtomContainer's in a RingSet.
      */
     public static List getAllAtomContainers(IRingSet set) {

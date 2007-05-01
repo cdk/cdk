@@ -35,7 +35,6 @@ import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -44,7 +43,6 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.ChemSequenceManipulator;
 
 /**
@@ -116,12 +114,6 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
 	{
 		List list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
 		assertEquals(4, list.size());
-	}
-	
-	public void testGetAllInOneContainer_IChemSequence()
-	{
-		IAtomContainer ac = ChemSequenceManipulator.getAllInOneContainer(chemSequence);
-		assertEquals(3, ac.getAtomCount());
 	}
 	
 	public void testGetAllChemObjects_IChemSequence()

@@ -40,7 +40,6 @@ import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -144,12 +143,6 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     {
     	int count = ChemFileManipulator.getBondCount(chemFile);
     	assertEquals(2, count);
-    }
-    
-    public void testGetAllInOneContainer_IChemFile()
-    {
-    	IAtomContainer ac = ChemFileManipulator.getAllInOneContainer(chemFile);
-    	assertEquals(3, ac.getAtomCount());
     }
     
     public void testGetAllChemObjects_IChemFile()

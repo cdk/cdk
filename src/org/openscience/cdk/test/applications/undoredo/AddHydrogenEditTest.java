@@ -1,22 +1,23 @@
 package org.openscience.cdk.test.applications.undoredo;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.HydrogenAdder;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
  * Junit test for the ddHydrogenEditTest class
@@ -59,8 +60,9 @@ public class AddHydrogenEditTest extends TestCase {
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
 		edit.redo();
-		IAtomContainer container = ChemModelManipulator
-				.getAllInOneContainer(model);
+		IAtomContainer container = model.getBuilder().newAtomContainer();
+		Iterator containers = MoleculeSetManipulator.getAllAtomContainers(model.getMoleculeSet()).iterator();
+		while (containers.hasNext()) container.add((IAtomContainer)containers.next());
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.IAtom atom = container.getAtom(i);
 			org.openscience.cdk.interfaces.IAtom atom2 = changedAtomsAndBonds.getAtom(i);
@@ -101,8 +103,9 @@ public class AddHydrogenEditTest extends TestCase {
 		model.setMoleculeSet(som);
 		AddHydrogenEdit edit = new AddHydrogenEdit(model, changedAtomsAndBonds);
 		edit.undo();
-		IAtomContainer container = ChemModelManipulator
-				.getAllInOneContainer(model);
+		IAtomContainer container = model.getBuilder().newAtomContainer();
+		Iterator containers = MoleculeSetManipulator.getAllAtomContainers(model.getMoleculeSet()).iterator();
+		while (containers.hasNext()) container.add((IAtomContainer)containers.next());
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.IAtom atom = container.getAtom(i);
 			org.openscience.cdk.interfaces.IAtom atom2 = changedAtomsAndBonds.getAtom(i);

@@ -27,14 +27,13 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
  * Class with convenience methods that provide methods from
@@ -74,27 +73,6 @@ public class ChemSequenceManipulator {
         return count;
     }
 
-    /**
-     * Puts all the Molecules of this container together in one 
-     * AtomCcntainer.
-     *
-     * @return  The AtomContainer with all the Molecules of this container
-     * 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-     */
-    public static IAtomContainer getAllInOneContainer(IChemSequence sequence) {
-        IAtomContainer container = sequence.getBuilder().newAtomContainer();
-        for (int i = 0; i < sequence.getChemModelCount(); i++) {
-            IChemModel model = sequence.getChemModel(i);
-            List models = ChemModelManipulator.getAllAtomContainers(model);
-            for (int j = 0; j < models.size(); j++)
-                container.add((IAtomContainer) models.get(j));
-
-        }
-        return container;
-    }
-    
     /**
      * Returns all the AtomContainer's of a ChemSequence.
      */

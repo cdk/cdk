@@ -200,13 +200,6 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		assertEquals(2, ChemModelManipulator.getAtomCount(model));
     }
     
-    public void testGetAllInOneContainer_IChemModel()
-    {
-    	IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
-    	assertEquals(3, ac.getAtomCount());
-    	assertEquals(1, ac.getBondCount());
-    }
-    
     public void testSetAtomProperties_IChemModel_Object_Object()
     {
     	String key = "key";

@@ -406,7 +406,9 @@ public abstract class JChemPaintPanel
 		lastUsedJCPP = this;
 		if (model != null && jchemPaintModel != null && model.getChemModel().getMoleculeSet() != null) {
 			model.getRendererModel().setBackgroundDimension(jchemPaintModel.getRendererModel().getBackgroundDimension());
-			IAtomContainer acc = ChemModelManipulator.getAllInOneContainer(model.getChemModel());
+			IAtomContainer acc = model.getChemModel().getBuilder().newAtomContainer();
+			Iterator containers = ChemModelManipulator.getAllAtomContainers(model.getChemModel()).iterator();
+			while (containers.hasNext()) acc.add((IAtomContainer)containers.next()); 
 			Dimension molDim = GeometryTools.get2DDimension(acc,model.getRendererModel().getRenderingCoordinates());
 //			Dimension molDim = GeometryTools.get2DDimension(model.getChemModel().getMoleculeSet().getAtomContainer(0));
 			
@@ -617,7 +619,9 @@ public abstract class JChemPaintPanel
   }
 
 	public void scaleAndCenterMolecule(org.openscience.cdk.interfaces.IChemModel chemModel, Dimension dim) {
-		IAtomContainer ac = ChemModelManipulator.getAllInOneContainer(chemModel);
+		IAtomContainer ac = chemModel.getBuilder().newAtomContainer();
+		Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
 		scaleAndCenterMolecule(ac,dim);
 	}
 	
@@ -673,7 +677,7 @@ public abstract class JChemPaintPanel
 
 	public void processChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
-		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
+		if (ChemModelManipulator.getBondCount(chemModel) == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
@@ -681,7 +685,7 @@ public abstract class JChemPaintPanel
 		}
 
 		// check for coordinates
-		if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+		if ((GeometryTools.has2DCoordinatesNew(chemModel)==0)) {
 			String error = "Model does not have 2D coordinates. Cannot open file.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
@@ -689,7 +693,7 @@ public abstract class JChemPaintPanel
 			frame.pack();
 			frame.show();
 			return;
-		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+		} else if ((GeometryTools.has2DCoordinatesNew(chemModel)==1)) {
 			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
 			if(result>1){
 				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());
@@ -767,7 +771,7 @@ public abstract class JChemPaintPanel
 
 	public void showChemModel(org.openscience.cdk.interfaces.IChemModel chemModel) {
 		// check for bonds
-		if (ChemModelManipulator.getAllInOneContainer(chemModel).getBondCount() == 0) {
+		if (ChemModelManipulator.getBondCount(chemModel) == 0) {
 			String error = "Model does not have bonds. Cannot depict contents.";
 			logger.warn(error);
 			JOptionPane.showMessageDialog(this, error);
@@ -775,7 +779,7 @@ public abstract class JChemPaintPanel
 		}
 
 		// check for coordinates
-		if (!(GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+		if (!(GeometryTools.has2DCoordinatesNew(chemModel)==0)) {
 
 			String error = "Model does not have coordinates. Will ask for coord generation.";
 			logger.warn(error);
@@ -785,7 +789,7 @@ public abstract class JChemPaintPanel
 			frame.show();
 			frame.moveToFront();
 			return;
-		} else if ((GeometryTools.has2DCoordinatesNew(ChemModelManipulator.getAllInOneContainer(chemModel))==0)) {
+		} else if ((GeometryTools.has2DCoordinatesNew(chemModel)==0)) {
 			int result=JOptionPane.showConfirmDialog(this,"Model has some 2d coordinates. Do you want to show only the atoms with 2d coordiantes?","Only some 2d cooridantes",JOptionPane.YES_NO_OPTION);
 			if(result>1){
 				CreateCoordinatesForFileDialog frame = new CreateCoordinatesForFileDialog(chemModel, jchemPaintModel.getRendererModel().getRenderingCoordinates());

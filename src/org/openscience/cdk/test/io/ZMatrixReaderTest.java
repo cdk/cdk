@@ -25,6 +25,7 @@
 package org.openscience.cdk.test.io;
 
 import java.io.FileReader;
+import java.util.Iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -74,9 +75,12 @@ public class ZMatrixReaderTest extends CDKTestCase {
 
     	org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
     	org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
-    	IAtomContainer atomContainer = ChemModelManipulator.getAllInOneContainer(chemModel);
-    	RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-    	rebonder.rebond(atomContainer);
+		RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
+    	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+    	while (containers.hasNext()) {
+    		IAtomContainer atomContainer = (IAtomContainer)containers.next();
+    		rebonder.rebond(atomContainer);
+    	}
 	}
     
 }

@@ -155,32 +155,6 @@ public class ChemModelManipulator {
     }
     
     /**
-     * Puts all the Molecules of this container together in one 
-     * AtomContainer.
-     *
-     * @return  The AtomContainer with all the Molecules of this container
-     * 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-     */
-    public static IAtomContainer getAllInOneContainer(IChemModel chemModel) {
-        IAtomContainer container = chemModel.getBuilder().newAtomContainer();
-        ICrystal crystal = chemModel.getCrystal();
-        if (crystal != null) {
-            container.add(crystal);
-        }
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
-        if (moleculeSet != null) {
-            container.add(MoleculeSetManipulator.getAllInOneContainer(moleculeSet));
-        }
-        IReactionSet reactionSet = chemModel.getReactionSet();
-        if (reactionSet != null) {
-            container.add(ReactionSetManipulator.getAllInOneContainer(reactionSet));
-        }
-        return container;
-    }
-
-    /**
      * Adds a new Molecule to the MoleculeSet inside a given ChemModel.
      * Creates a MoleculeSet if none is contained.
      * 

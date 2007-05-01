@@ -158,13 +158,6 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 		assertEquals(2, list.size());
 	}
 	
-	public void testGetAllInOneContainer_IAtomContainerSet()
-	{
-		IAtomContainer ac = AtomContainerSetManipulator.getAllInOneContainer(som);
-		assertTrue(ac.contains(atomInMol1));
-		assertTrue(ac.contains(atomInMol2));
-	}
-	
 	public void testSetAtomProperties_IAtomContainerSet_Object_Object()
 	{
 		String key = "key";

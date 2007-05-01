@@ -84,7 +84,9 @@ public class ChangeAtomSymbolAction extends JCPAction
 				logger.error("Error while configuring atom");
 				logger.debug(exception);
 			}
-			((Controller2D)jcpPanel.getDrawingPanel().getMouseListeners()[0]).updateAtom(MoleculeSetManipulator.getAllInOneContainer(jcpm.getChemModel().getMoleculeSet()), atomInRange);
+			((Controller2D)jcpPanel.getDrawingPanel().getMouseListeners()[0]).updateAtom(
+				MoleculeSetManipulator.getRelevantAtomContainer(jcpm.getChemModel().getMoleculeSet(), atomInRange), atomInRange
+			);
             UndoableEdit  edit = new ChangeAtomSymbolEdit(atomInRange, formerSymbol, symbol);
             jcpPanel.getUndoSupport().postEdit(edit);
 			jcpm.fireChange();

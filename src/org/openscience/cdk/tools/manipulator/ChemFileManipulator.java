@@ -72,26 +72,6 @@ public class ChemFileManipulator {
     }
 
     /**
-     * Puts all the Molecules of this container together in one 
-     * AtomCcntainer.
-     *
-     * @return  The AtomContainer with all the Molecules of this container
-     * 
-     * @deprecated This method has a serious performace impact. Try to use
-     *   other methods.
-     */
-    public static IAtomContainer getAllInOneContainer(IChemFile file) {
-        IAtomContainer container = file.getBuilder().newAtomContainer();
-        for (int i = 0; i < file.getChemSequenceCount(); i++) {
-            IChemSequence sequence = file.getChemSequence(i);
-            List sequences = ChemSequenceManipulator.getAllAtomContainers(sequence);
-            for (int j = 0; j < sequences.size(); j++)
-                container.add((IAtomContainer) sequences.get(j));
-        }
-        return container;
-    }
-
-    /**
      * Returns a List of all IChemObject inside a ChemFile.
      *
      * @return  A list of all ChemObjects
