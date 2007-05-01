@@ -25,7 +25,6 @@
 
 package org.openscience.cdk.test.atomtype;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -44,6 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.HydrogenAdder;
@@ -62,12 +62,36 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
 	private LoggingTool logger;
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 	private HydrogenAdder haad=new HydrogenAdder();
+	
+	private static IMolecule testMolecule = null;
+	
 	public MMFF94AtomTypeMatcherTest(String name) {
         super(name);
     }
 
-    public void setUp() {
+    public void setUp() throws Exception {
     	logger = new LoggingTool(this);
+    }
+    
+    public void setUpTestMolecule() throws Exception {
+    	if (testMolecule == null) {
+        	//logger.debug("**** START ATOMTYPE TEST ******");
+        	AtomTypeTools att=new AtomTypeTools();
+            MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
+            InputStream ins=this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
+            MDLReader mdl=new MDLReader(new InputStreamReader(ins));
+            testMolecule=(Molecule)mdl.read(new NNMolecule());
+           
+            att.assignAtomTypePropertiesToAtom(testMolecule);
+            for (int i=0;i<testMolecule.getAtomCount();i++){
+            	logger.debug("atomNr:" + testMolecule.getAtom(i).toString());
+            	IAtomType matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
+            	assertNotNull(matched);
+            	AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);       
+            }
+            
+            logger.debug("MMFF94 Atom 0:"+testMolecule.getAtom(0).getAtomTypeName());
+    	}
     }
 
     public static Test suite() {
@@ -81,41 +105,45 @@ public class MMFF94AtomTypeMatcherTest extends CDKTestCase {
     }
     
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	if (!this.runSlowTests()) fail("Slow tests turned of");
-    	
-    	//logger.debug("**** START ATOMTYPE TEST ******");
-    	AtomTypeTools att=new AtomTypeTools();
-    	//SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    	Molecule mol=null;
-        //HydrogenAdder hAdder = new HydrogenAdder();
-        MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
-        BufferedReader fin =null;
-        InputStream ins=this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
-        fin = new BufferedReader(new InputStreamReader(ins));
-        //fin=new BufferedReader(new FileReader("data/mmff94AtomTypeTest_molecule.mol"));
-        MDLReader mdl=new MDLReader(fin);
-        mol=(Molecule)mdl.read(new Molecule());
-       
-        att.assignAtomTypePropertiesToAtom(mol);
-        for (int i=0;i<mol.getAtomCount();i++){
-        	logger.debug("atomNr:" + mol.getAtom(i).toString());
-        	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
-        	assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
-        }
-        
-        logger.debug("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
-        //logger.debug("Atom 0:"+mol.getAtomAt(256).getAtomTypeName());
-        
-        assertEquals("Sthi",mol.getAtom(0).getAtomTypeName());
-        assertEquals("Csp2",mol.getAtom(7).getAtomTypeName());
-        assertEquals("Csp",mol.getAtom(51).getAtomTypeName());
-        assertEquals("N=O",mol.getAtom(148).getAtomTypeName());
-        assertEquals("Oar",mol.getAtom(198).getAtomTypeName());
-        assertEquals("N2OX",mol.getAtom(233).getAtomTypeName());
-        assertEquals("NAZT",mol.getAtom(256).getAtomTypeName());
-        //logger.debug("**** END OF ATOMTYPE TEST ******");
+    	setUpTestMolecule();
+    	for (int i=0;i<testMolecule.getAtomCount();i++) {
+    		assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
+    		assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
+    	}
     }
+    
+    // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
+    
+    public void testSthi() throws Exception {
+    	setUpTestMolecule();
+    	assertEquals("Sthi",testMolecule.getAtom(0).getAtomTypeName());
+    }
+    public void testCsp2() throws Exception {
+    	setUpTestMolecule();
+    	assertEquals("Csp2",testMolecule.getAtom(7).getAtomTypeName());
+    }
+    public void testCsp() throws Exception {
+    	setUpTestMolecule();
+        assertEquals("Csp",testMolecule.getAtom(51).getAtomTypeName());
+    }
+    public void testNdbO() throws Exception {
+    	setUpTestMolecule();
+        assertEquals("N=O",testMolecule.getAtom(148).getAtomTypeName());
+    }
+    public void testOar() throws Exception {
+    	setUpTestMolecule();
+        assertEquals("Oar",testMolecule.getAtom(198).getAtomTypeName());
+    }
+    public void testN2OX() throws Exception {
+    	setUpTestMolecule();
+        assertEquals("N2OX",testMolecule.getAtom(233).getAtomTypeName());
+    }
+    public void testNAZT() throws Exception {
+    	setUpTestMolecule();
+        assertEquals("NAZT",testMolecule.getAtom(256).getAtomTypeName());
+    }
+    
+    // Other tests
     
 	public void testFindMatchingAtomType_IAtomContainer_IAtom_Methanol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 
