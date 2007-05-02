@@ -19,22 +19,22 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -66,12 +66,17 @@ public class BCUTDescriptorTest extends CDKTestCase {
         params[1] = new Integer(2);
         params[2] = new Boolean(true);
         descriptor.setParameters(params);
-        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
+        DescriptorValue descriptorValue = descriptor.calculate(ac);
+
+        DoubleArrayResult retval = (DoubleArrayResult) descriptorValue.getValue();
         assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.size(); i++) {
             assertTrue(Math.abs(0.0 - retval.get(i)) > 0.0000001);
         }
+
+        String[] names = descriptorValue.getNames();
+        for (int i = 0; i < names.length; i++) assertNotNull(names[i]);
 
         /*
         assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);

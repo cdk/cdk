@@ -360,12 +360,13 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < nhigh; i++) retval.add(eval3[eval3.length - i - 1]);
 
             names = new String[ 3 * nhigh + 3 * nlow ];
+            counter = 0;
             for (int j = 0; j < suffix.length; j++) {
                 for (int i = 0; i < nhigh; i++) {
-                    names[i] = "BCUT" + suffix[j] + "-" + (i + 1) + "l";
+                    names[counter++] = "BCUT" + suffix[j] + "-" + (i + 1) + "l";
                 }
                 for (int i = 0; i < nlow; i++) {
-                    names[i] = "BCUT" + suffix[j] + "-" + (i + 1) + "h";
+                    names[counter++] = "BCUT" + suffix[j] + "-" + (i + 1) + "h";
                 }
             }
         }
