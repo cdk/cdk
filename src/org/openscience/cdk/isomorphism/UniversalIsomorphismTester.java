@@ -779,7 +779,7 @@ public class UniversalIsomorphismTester {
 
         if (a2 instanceof IQueryBond) {
             if (a1.equals(b1) || a2.equals(b2) ||
-                !queryAdjacency(a1, b1, a2, b2)) {
+                !queryAdjacencyAndOrder(a1, b1, a2, b2)) {
                 x.getForbidden().set(j);
                 y.getForbidden().set(i);
             } else if (hasCommonAtom(a1, b1)) {
@@ -862,6 +862,46 @@ public class UniversalIsomorphismTester {
     	  // well, this looks fishy: the atom2 is not always a IQueryAtom !
           return ((IQueryAtom)atom2).matches(atom1);
       } else return atom1 == null && atom2 == null;
+
+  }
+  
+  /**
+   *  Determines if 2 bond have 1 atom in common if second is a query AtomContainer
+   *  and wheter the order of the atoms is correct (atoms match).
+   *
+   * @param  a1  first bond
+   * @param  b1  second bond
+   * @return    the symbol of the common atom or "" if
+   *            the 2 bonds have no common atom
+   */
+  private static boolean queryAdjacencyAndOrder(IBond bond1, IBond bond2, IBond queryBond1, IBond queryBond2) {
+
+	  IAtom centralAtom = null;
+	  IAtom centralQueryAtom = null;
+
+      if (bond1.contains(bond2.getAtom(0))) {
+    	  centralAtom = bond2.getAtom(0);
+      } else if (bond1.contains(bond2.getAtom(1))) {
+    	  centralAtom = bond2.getAtom(1);
+      }
+
+      if (queryBond1.contains(queryBond2.getAtom(0))) {
+    	  centralQueryAtom = queryBond2.getAtom(0);
+      } else if (queryBond1.contains(queryBond2.getAtom(1))) {
+    	  centralQueryAtom = queryBond2.getAtom(1);
+      }
+
+      if (centralAtom != null && centralQueryAtom != null
+          && ((IQueryAtom)centralQueryAtom).matches(centralAtom)) {
+    	  IQueryAtom queryAtom1 = (IQueryAtom)queryBond1.getConnectedAtom(centralQueryAtom);
+    	  IQueryAtom queryAtom2 = (IQueryAtom)queryBond2.getConnectedAtom(centralQueryAtom);
+    	  IAtom atom1 = bond1.getConnectedAtom(centralAtom);
+    	  IAtom atom2 = bond2.getConnectedAtom(centralAtom);
+    	  if (queryAtom1.matches(atom1) && queryAtom2.matches(atom2) ||
+        	  queryAtom1.matches(atom2) && queryAtom2.matches(atom1)) {
+    		  return true;
+    	  } else return false;
+      } else return centralAtom == null && centralQueryAtom == null;
 
   }
 

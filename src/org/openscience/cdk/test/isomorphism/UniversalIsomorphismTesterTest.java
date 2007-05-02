@@ -29,7 +29,6 @@
 package org.openscience.cdk.test.isomorphism;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -123,7 +122,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         query.addBond(b1);
         query.addBond(b2);
 
-        assertEquals(null, UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query));  
+        List list = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query);
+        
+        assertTrue(list.isEmpty());  
 	}
 	
 	public void test2() throws java.lang.Exception
