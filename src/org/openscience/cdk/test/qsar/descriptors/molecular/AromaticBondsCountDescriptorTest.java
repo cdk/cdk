@@ -23,16 +23,22 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -58,5 +64,15 @@ public class AromaticBondsCountDescriptorTest extends CDKTestCase {
         IAtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol
         assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
+    
+    public void testViaFlags() throws Exception {
+    	IMolecule molecule = MoleculeFactory.makeBenzene();
+    	for (Iterator bonds=molecule.bonds(); bonds.hasNext();) {
+    		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+    	}
+    	IMolecularDescriptor descriptor = new AromaticBondsCountDescriptor();
+    	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+    }
+
 }
 
