@@ -107,6 +107,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     public void close() throws IOException {
+    	writer.flush();
         writer.close();
     }
 
@@ -123,16 +124,20 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         if (object instanceof IMolecule) {
             try {
                 writeMolecule((IMolecule)object);
+                writer.flush();
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
                 logger.debug(ex);
+                throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
             }
         } else if (object instanceof IAtomContainer) {
             try {
                 writeAtomContainer((IAtomContainer)object);
+                writer.flush();
             } catch (Exception ex) {
                 logger.error(ex.getMessage());
                 logger.debug(ex);
+                throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
             } 
         } else {
             throw new CDKException("Only supported is writing of Molecule objects.");
