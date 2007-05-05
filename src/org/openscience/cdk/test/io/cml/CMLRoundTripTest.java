@@ -25,6 +25,7 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
+import java.util.Iterator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -326,7 +327,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      *
      * @see org.openscience.cdk.CMLFragmentsTest
      */
-    private IMolecule roundTripMolecule(Molecule mol) throws Exception {
+    private IMolecule roundTripMolecule(IMolecule mol) throws Exception {
         String cmlString = "<!-- failed -->";
         Element cmlDOM = convertor.cdkMoleculeToCMLMolecule(mol);
         cmlString = cmlDOM.toXML();
@@ -529,6 +530,27 @@ public class CMLRoundTripTest extends CDKTestCase {
 
         assertNotNull(roundTrippedMol.getProperty(propertyName));
         assertEquals(propertyValue, roundTrippedMol.getProperty(propertyName));
+    }
+
+    /**
+     * Tests of bond order information is stored even when aromiticity is given.
+     * 
+     * @throws Exception
+     */
+    public void testAromaticity() throws Exception {
+    	IMolecule molecule = MoleculeFactory.makeBenzene();
+    	for (Iterator bonds=molecule.bonds(); bonds.hasNext();) {
+    		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+    	}
+    	
+        IMolecule roundTrippedMol = roundTripMolecule(molecule);
+        double orderSum = 0.0;
+        for (Iterator bonds=roundTrippedMol.bonds(); bonds.hasNext();) {
+        	IBond bond = (IBond)bonds.next();
+    		orderSum += bond.getOrder();
+    		assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+    	}
+        assertEquals(9.0, orderSum, 0.001);
     }
 }
 

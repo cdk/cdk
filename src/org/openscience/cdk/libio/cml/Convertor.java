@@ -64,6 +64,7 @@ import org.xmlcml.cml.base.CMLException;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
 import org.xmlcml.cml.element.CMLBondStereo;
+import org.xmlcml.cml.element.CMLBondType;
 import org.xmlcml.cml.element.CMLCml;
 import org.xmlcml.cml.element.CMLCrystal;
 import org.xmlcml.cml.element.CMLIdentifier;
@@ -585,10 +586,7 @@ public class Convertor {
         }
 
         double border = cdkBond.getOrder();
-        if (cdkBond.getFlag(CDKConstants.ISAROMATIC) |
-                border == CDKConstants.BONDORDER_AROMATIC) {
-            cmlBond.setOrder("A");
-        } else if (border == CDKConstants.BONDORDER_SINGLE) {
+        if (border == CDKConstants.BONDORDER_SINGLE) {
             cmlBond.setOrder("S");
         } else if (border == CDKConstants.BONDORDER_DOUBLE) {
             cmlBond.setOrder("D");
@@ -602,6 +600,10 @@ public class Convertor {
             scalar.setTitle("order");
             scalar.setValue(cdkBond.getOrder());
             cmlBond.appendChild(scalar);
+        }
+        if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {
+        	CMLBondType bType = new CMLBondType();
+        	bType.setDictRef("cdk:aromaticBond");
         }
 
         if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||

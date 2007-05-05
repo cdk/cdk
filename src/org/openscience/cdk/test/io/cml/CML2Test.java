@@ -603,6 +603,8 @@ public class CML2Test extends CDKTestCase {
 	 * @cdk.bug 1085912
 	 */
 	public void testSFBug1085912_1() throws Exception {
+		if (!runSlowTests()) { fail("Not running this slow test"); }
+		
 		String filename_pdb = "data/pdb/1CKV.pdb";
 		String filename_cml = "data/cml/1CKV_1.cml";
 	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);

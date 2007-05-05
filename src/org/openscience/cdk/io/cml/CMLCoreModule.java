@@ -118,6 +118,7 @@ public class CMLCoreModule implements ICMLModule {
     protected List bondStereo;
     protected List bondDictRefs;
     protected List bondElid;
+    protected List bondAromaticity;
     protected boolean stereoGiven;
     protected String inchi;
     protected int curRef;
@@ -192,6 +193,7 @@ public class CMLCoreModule implements ICMLModule {
             this.order = conv.order;
             this.bondStereo = conv.bondStereo;
             this.bondDictRefs = conv.bondDictRefs;
+            this.bondAromaticity = conv.bondAromaticity;
             this.curRef = conv.curRef;
             this.unitcellparams = conv.unitcellparams;
             this.inchi = conv.inchi;
@@ -259,6 +261,7 @@ public class CMLCoreModule implements ICMLModule {
         bondStereo = new ArrayList();
         bondDictRefs = new ArrayList();
         bondElid = new ArrayList();
+        bondAromaticity = new ArrayList();
     }
 
     /**
@@ -521,6 +524,13 @@ public class CMLCoreModule implements ICMLModule {
                     stereoGiven=true;
                 }
             }
+        } else if ("bondType".equals(name)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                if (atts.getQName(i).equals("dictRef")) {
+                	if (atts.getValue(i).equals("cdk:aromaticBond"))
+                		bondAromaticity.add(Boolean.TRUE);
+                }
+            }
         } else if ("molecule".equals(name)) {
             newMolecule();
             BUILTIN = "";
@@ -595,6 +605,8 @@ public class CMLCoreModule implements ICMLModule {
                 bondStereo.add("");
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.add(null);
+            if (bondAromaticity.size() > bondDictRefs.size())
+            	bondAromaticity.add(null);
         } else if ("atom".equals(name)) {
             if (atomCounter > eltitles.size()) {
                 eltitles.add(null);
@@ -1329,6 +1341,7 @@ public class CMLCoreModule implements ICMLModule {
             Iterator bar1s = bondARef1.iterator();
             Iterator bar2s = bondARef2.iterator();
             Iterator stereos = bondStereo.iterator();
+            Iterator aroms = bondAromaticity.iterator();
 
             while (bar1s.hasNext()) {
 //                cdo.startObject("Bond");
@@ -1362,7 +1375,7 @@ public class CMLCoreModule implements ICMLModule {
                     	currentBond.setOrder(CDKConstants.BONDORDER_TRIPLE);
                     } else if ("A".equals(bondOrder)) {
 //                        cdo.setObjectProperty("Bond", "order", "1.5");
-                    	currentBond.setOrder(CDKConstants.BONDORDER_AROMATIC);
+                    	currentBond.setOrder(CDKConstants.BONDORDER_SINGLE);
                     	currentBond.setFlag(CDKConstants.ISAROMATIC, true);
                     } else {
 //                        cdo.setObjectProperty("Bond", "order", bondOrder);
@@ -1381,6 +1394,13 @@ public class CMLCoreModule implements ICMLModule {
                     } else if (nextStereo != null){
                     	logger.warn("Cannot interpret stereo information: " + nextStereo);
                     }
+                }
+
+                if (aroms.hasNext()) {
+                	Object nextArom = aroms.next();
+                	if (nextArom != null && nextArom == Boolean.TRUE) {
+                		currentBond.setFlag(CDKConstants.ISAROMATIC, true);
+                	}
                 }
 
 //                cdo.endObject("Bond");

@@ -148,7 +148,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        assertEquals(CDKConstants.BONDORDER_AROMATIC, bond.getOrder(), 0.0001);
+        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder(), 0.0001);
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
     

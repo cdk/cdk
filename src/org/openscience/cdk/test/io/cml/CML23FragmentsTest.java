@@ -173,7 +173,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     	assertEquals(CDKConstants.STEREO_BOND_DOWN, bond.getStereo());
     }
 
-    public void testBondAromatic() throws Exception {
+  public void testBondAromatic() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray atomRef1='a1' atomRef2='a2' order='A'/></molecule>";
         IChemFile chemFile = parseCMLString(cmlString);
         IMolecule mol = checkForSingleMoleculeFile(chemFile);
@@ -181,11 +181,24 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        assertEquals(CDKConstants.BONDORDER_AROMATIC, bond.getOrder(), 0.0001);
+        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder(), 0.0001);
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
     
-    public void testList() throws Exception {
+  
+  public void testBondAromatic2() throws Exception {
+      String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2'/><bondArray><bond atomRefs='a1 a2' order='2'><bondType dictRef='cdk:aromaticBond'/></bond></bondArray></molecule>";
+      IChemFile chemFile = parseCMLString(cmlString);
+      IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+      assertEquals(2, mol.getAtomCount());
+      assertEquals(1, mol.getBondCount());
+      org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
+      assertEquals(CDKConstants.BONDORDER_DOUBLE, bond.getOrder(), 0.0001);
+      assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
+  }
+
+  public void testList() throws Exception {
         String cmlString = 
           "<list>" + 
           "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>" +

@@ -56,6 +56,16 @@
     <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
   </molecule>
 
+  <!-- CML23FragmentsTest.testBondAromatic2() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2'/>
+    <bondArray>
+      <bond atomRefs='a1 a2' order='2'>
+        <bondType dictRef="cdk:aromaticBond"/>
+      </bond>
+    </bondArray>
+  </molecule>
+
   <!-- CML23FragmentsTest.testList() -->
   <list> 
     <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
