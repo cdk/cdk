@@ -103,11 +103,11 @@ public class GasteigerPEPEPartialCharges {
 	 *  
 	 *
 	 *@param  ac             AtomContainer
-	 *@param  addCharge      true=add charge to existing charge, false=reset charge
+	 *@param  addCharge      unused
 	 *@return                AtomContainer with partial charges
 	 *@exception  Exception  Possible Exceptions
 	 */
-	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean addCharge) throws Exception {
+	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 //		logger.debug("smiles1: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
 		IAtomContainerSet setHI = null;
 		
@@ -268,11 +268,7 @@ public class GasteigerPEPEPartialCharges {
 						double chargeT = 0.0;
 						chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
 //						logger.debug("i<|"+chargeT+"=c:" +charge + "+g: "+gasteigerFactors[k][STEP_SIZE * i + i + 5]);
-						if(addCharge){
-							ac.getAtom(i).setCharge(ac.getAtom(i).getCharge()+chargeT);
-						}else{
-							ac.getAtom(i).setCharge(chargeT);
-						}
+						ac.getAtom(i).setCharge(chargeT);
 					}
 			}
 			
