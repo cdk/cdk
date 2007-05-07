@@ -98,11 +98,11 @@ public class GasteigerMarsiliPartialCharges {
      *  Main method which assigns Gasteiger Marisili partial sigma charges
      *
      *@param  ac             AtomContainer
-     *@param  setCharge      boolean flag to set charge on atoms
+     *@param  addCharge      true=add charge to existing charge, false=reset charge
      *@return                AtomContainer with partial charges
      *@exception  Exception  Possible Exceptions
      */
-    public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
+    public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean addCharge) throws Exception {
 
 //		if (setCharge) {
 //			atomTypeCharges.setCharges(ac); // not necessary initial charge
@@ -170,7 +170,11 @@ public class GasteigerMarsiliPartialCharges {
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            ac.getAtom(i).setCharge(gasteigerFactors[STEP_SIZE * i + i + 5]);
+        	if(addCharge){
+        		ac.getAtom(i).setCharge(ac.getAtom(i).getCharge()+gasteigerFactors[STEP_SIZE * i + i + 5]);
+        	}else{
+        		ac.getAtom(i).setCharge(gasteigerFactors[STEP_SIZE * i + i + 5]);
+        	}
         }
         return ac;
     }
