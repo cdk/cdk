@@ -280,7 +280,7 @@ public class ForceFieldConfigurator {
 				configureAtom(atom, hoseCode, isInHeteroRing);
 			} catch (CDKException ex2) {
 				System.out.println("Could not final configure atom " + i + " due to " + ex2.toString());
-				throw new Exception("Could not final configure atom due to problems with force field");
+				throw new Exception("Could not final configure atom due to problems with force field", ex2);
 			}
 		}
 		
