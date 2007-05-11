@@ -56,8 +56,7 @@ public class DegreeAtom extends SMARTSAtom {
         return 5;
     }
     private int getDD(IAtom atom){
-       return ((Integer)atom.getProperty("org.openscience." +
-               "cdk.Atom.degree")).intValue(); 
+    	return atom.getFormalCharge();
     }
     
  public boolean matches(IAtom atom) {
@@ -75,7 +74,7 @@ public class DegreeAtom extends SMARTSAtom {
         return false;
     }
     private boolean nonDefaultCheck(IAtom atom){
-        if(getDD(atom)!=0 && getDD(atom)==this.degree) return true;
+        if(getDD(atom)==this.degree) return true;
         return false;
     }
     private boolean defaultOperatorCheck(IAtom atom){

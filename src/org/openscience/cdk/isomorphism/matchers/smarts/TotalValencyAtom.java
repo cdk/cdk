@@ -56,8 +56,7 @@ public class TotalValencyAtom extends SMARTSAtom {
         return 5;
     }
     private int getVV(IAtom atom){
-       return ((Integer)atom.getProperty("org.openscience." +
-               "cdk.Atom.totalValency")).intValue();
+    	return atom.getValency(); //TODO: atom.getValency always returns 0
     }
     
    public boolean matches(IAtom atom) {

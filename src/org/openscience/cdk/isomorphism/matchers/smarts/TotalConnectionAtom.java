@@ -63,7 +63,8 @@ public class TotalConnectionAtom extends SMARTSAtom{
         return 5;
     }
     public int getXX(IAtom atom){
-        if(atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)!=null)
+        if(atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)!=null) 
+        	// TODO: atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) doesn't count Hydrogen
           return ((Integer)atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue();
         else
            return 0;

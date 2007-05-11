@@ -27,34 +27,40 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 
 /**
- * This matcher any non-aromatic atom. This assumes that aromaticity in the molecule
- * has been perceived.
- *
+ * This matcher any non-aromatic atom. This assumes that aromaticity in the
+ * molecule has been perceived.
+ * 
  * @cdk.module extra
  */
 public class AliphaticAtom extends SMARTSAtom {
-    
-    private static final long serialVersionUID = 5145049891214205622L;
 
-    public AliphaticAtom() {
-    }
-    public int getOperator(){
-        if(ID!=null)
-            return 1;
-        return 2;
-    }
-    
-  public boolean matches(IAtom atom) {
-            switch(getOperator()){
-                case 1: { if(atom.getFlag(CDKConstants.ISAROMATIC)) return true;}
-                case 2: return true;
-                default: return false;
-            }
-        
-    };
+	private static final long serialVersionUID = 5145049891214205622L;
 
-    public String toString() {
+	public AliphaticAtom() {
+		setFlag(CDKConstants.ISALIPHATIC, true);
+	}
+
+	public int getOperator() {
+		if (ID != null)
+			return 1;
+		return 2;
+	}
+
+	public boolean matches(IAtom atom) {
+		switch (getOperator()) {
+		case 1: {
+			if (atom.getFlag(CDKConstants.ISAROMATIC))
+				return true;
+		}
+		case 2:
+			return (!atom.getFlag(CDKConstants.ISAROMATIC)); 
+		default:
+			return false;
+		}
+
+	};
+
+	public String toString() {
 		return "AliphaticAtom()";
-    }
+	}
 }
-

@@ -31,7 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * 
  * @cdk.module extra
  */
-public class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements
+public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements
         IQueryAtom {
     public String ID;
 
@@ -41,53 +41,9 @@ public class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements
     public void setOperator(String str) {
         ID = str;
     }
-
-    private LogicalOperator logicalExpression;
-
-    public LogicalOperator getLogicalExpression() {
-        return logicalExpression;
-    }
-
-    public void setLogicalExpression(LogicalOperator logicalExpression) {
-        this.logicalExpression = logicalExpression;
-    }
-
     public boolean matches(IAtom atom) {
-        if (logicalExpression != null) {
-            return checkLogicalExpression(atom, logicalExpression);
-        }
         return false;
     }
 
-    private boolean checkLogicalExpression(IAtom atom, LogicalOperator op) {
-        if ("PSEUDO".equals(op.getName())) {
-            return ((IQueryAtom) op.getLeft()).matches(atom);
-        }
-        Object lo = op.getLeft();
-        boolean lb = false;
-        if (lo instanceof IQueryAtom) {
-            lb = ((IQueryAtom) lo).matches(atom);
-        } else if (lo instanceof LogicalOperator) {
-            lb = checkLogicalExpression(atom, (LogicalOperator) lo);
-        }
-        Object ro = op.getRight();
-        boolean rb = true;
-        if (ro != null) {
-            if (ro instanceof IQueryAtom) {
-                rb = ((IQueryAtom) ro).matches(atom);
-            } else if (ro instanceof LogicalOperator) {
-                rb = checkLogicalExpression(atom, (LogicalOperator) ro);
-            }
-        }
-        if ("and".equals(op.getName())) {
-            return (lb && rb);
-        } else if ("or".equals(op.getName())) {
-            return (lb || rb);
-        } else if ("not".equals(op.getName())) {
-            return (!lb);
-        } else {
-            return false;
-        }
-    }
 
 }

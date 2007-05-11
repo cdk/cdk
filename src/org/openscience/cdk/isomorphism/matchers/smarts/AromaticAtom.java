@@ -40,6 +40,7 @@ public class AromaticAtom extends SMARTSAtom {
     }
     public AromaticAtom(IAtom m_atom){
         Element = m_atom;
+        setFlag(CDKConstants.ISAROMATIC, true);
     }
     public int getOperator(){
         if(ID!=null && Element!=null)
