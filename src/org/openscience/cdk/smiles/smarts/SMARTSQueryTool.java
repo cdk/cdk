@@ -57,6 +57,11 @@ import java.util.List;
  *    }
  * }
  * </pre>
+ * 
+ * To use the JJTree based Smarts Parser, use:
+ * <pre>
+ * SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", true);
+ * </pre>
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
@@ -71,10 +76,19 @@ public class SMARTSQueryTool {
     private QueryAtomContainer query = null;
 
     private List matchingAtoms = null;
+    /**
+     * Whether to use JJTree based smarts parser
+     */
+    private boolean useJJTree = false;
 
     public SMARTSQueryTool(String smarts) throws CDKException {
+    	this(smarts, false);
+    }
+    
+    public SMARTSQueryTool(String smarts, boolean useJJTree) throws CDKException {
         logger = new LoggingTool(this);
         this.smarts = smarts;
+        this.useJJTree = useJJTree;
         initializeQuery();
     }
 
@@ -247,7 +261,11 @@ public class SMARTSQueryTool {
 
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
-        query = SMARTSParser.parse(smarts);        
+        if (useJJTree) {
+        	query = org.openscience.cdk.smiles.smarts.parser.SMARTSParser.parse(smarts);
+        } else {
+        	query = SMARTSParser.parse(smarts);
+        }
     }
 
 
