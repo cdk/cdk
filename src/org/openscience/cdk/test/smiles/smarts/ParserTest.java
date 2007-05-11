@@ -279,10 +279,7 @@ public class ParserTest extends CDKTestCase {
         parse("[$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N])]");
     }
     public void testPattern45() throws Exception {
-        parse("[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:");
-    }
-    public void testPattern46() throws Exception {
-        parse("[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1");
+        parse("[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1");
     }
     public void testPattern47() throws Exception {
         parse("[CHX4]([CH3X4])[CH2X4][CH3X4]");
@@ -339,10 +336,7 @@ public class ParserTest extends CDKTestCase {
         parse("[CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH]");
     }
     public void testPattern65() throws Exception {
-        parse("[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:");
-    }
-    public void testPattern66() throws Exception {
-        parse("[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1");
+        parse("[CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1");
     }
     public void testPattern67() throws Exception {
         parse("[CHX4]([CH3X4])[CH2X4][CH3X4]");
@@ -435,7 +429,7 @@ public class ParserTest extends CDKTestCase {
         parse("[CX1-]#[NX2+]");
     }
     public void testPattern97() throws Exception {
-        parse("[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8] Hits both forms.");
+        parse("[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]");
     }
     public void testPattern98() throws Exception {
         parse("[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8].[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]");
@@ -473,11 +467,13 @@ public class ParserTest extends CDKTestCase {
     public void testPattern110() throws Exception {
         parse("[OX2,OX1-][OX2,OX1-]");
     }
-    public void testPattern111() throws Exception {
-        parse("[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX 2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]");
+    public void testPattern111() throws Exception { // Phosphoric_acid groups.
+        parse("[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX" +
+        		"2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]");
     }
-    public void testPattern112() throws Exception {
-        parse("[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([ $([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]");
+    public void testPattern112() throws Exception { // Phosphoric_ester groups.
+        parse("[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([" +
+        		"$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]");
     }
     public void testPattern113() throws Exception {
         parse("[S-][CX3](=S)[#6]");
@@ -671,10 +667,10 @@ public class ParserTest extends CDKTestCase {
     public void testPattern176() throws Exception {
         parse("*-!@*");
     }
-    public void testPattern177() throws Exception {
+    public void testPattern177() throws Exception { // CIS or TRANS double or aromatic bond in a ring
         parse("*/,\\[R]=,:;@[R]/,\\*");
     }
-    public void testPattern178() throws Exception {
+    public void testPattern178() throws Exception { // Fused benzene rings
         parse("c12ccccc1cccc2");
     }
     public void testPattern179() throws Exception {
@@ -686,64 +682,102 @@ public class ParserTest extends CDKTestCase {
     public void testPattern181() throws Exception {
         parse("[oX2r5]");
     }
-    public void testPattern182() throws Exception {
+    public void testPattern182() throws Exception { // Unfused benzene ring
         parse("[cR1]1[cR1][cR1][cR1][cR1][cR1]1");
     }
-    public void testPattern183() throws Exception {
+    public void testPattern183() throws Exception { // Multiple non-fused benzene rings
         parse("[cR1]1[cR1][cR1][cR1][cR1][cR1]1.[cR1]1[cR1][cR1][cR1][cR1][cR1]1");
     }
-    public void testPattern184() throws Exception {
-        parse("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]");
+    public void testPattern184() throws Exception { // Generic amino acid: low specificity.
+        parse("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]"); 
     }
-    public void testPattern185() throws Exception {
-        parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),");
+    public void testPattern185() throws Exception { //Template for 20 standard a.a.s
+        parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N])," +
+        		"$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX" +
+        		"4H2][CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N])]");
     }
-    public void testPattern186() throws Exception {
+    public void testPattern186() throws Exception { // Proline
         parse("[$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]");
     }
-    public void testPattern187() throws Exception {
+    public void testPattern187() throws Exception { // Glycine
         parse("[$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N])]");
     }
-    public void testPattern188() throws Exception {
-        parse("[$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N]");
+    public void testPattern188() throws Exception {  // Alanine
+        parse("[$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([CH3X4])[CX3](=[OX1])[OX2H,OX1-,N]");
     }
-    public void testPattern189() throws Exception {
-        parse("[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1),");
+    public void testPattern189() throws Exception { //18_standard_aa_side_chains.
+        parse("([$([CH3X4]),$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3](=[NH2X3+,NHX2+0])[NH2X3])," + 
+        		"$([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH])," + 
+        		"$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH])," + 
+        		"$([CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:" + 
+        		"[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1)," + 
+        		"$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4])," + 
+        		"$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4])," + 
+        		"$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H])," + 
+        		"$([CHX4]([CH3X4])[OX2H]),$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12)," + 
+        		"$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1),$([CHX4]([CH3X4])[CH3X4])])");
     }
-    public void testPattern190() throws Exception {
-        parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3]");
+    public void testPattern190() throws Exception { // N in Any_standard_amino_acid.
+    	parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3]" + 
+    			"(=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3]" + 
+    			"(=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([$([CH3X4])," + 
+    			"$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3](=[NH2X3+,NHX2+0])[NH2X3]),$" +
+    			"([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH])," +
+    			"$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH])," +
+    			"$([CH2X4][#6X3]1:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:" + 
+    			"[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1)," + 
+    			"$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4])," + 
+    			"$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4])," +
+    			"$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H])," +
+    			"$([CHX4]([CH3X4])[OX2H]),$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12)," + 
+    			"$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1)," +
+    			"$([CHX4]([CH3X4])[CH3X4])])[CX3](=[OX1])[OX2H,OX1-,N])]"); 
     }
-    public void testPattern191() throws Exception {
-        parse("[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:[#6X3H]1),");
+    public void testPattern191() throws Exception { // Non-standard amino acid.
+        parse("[$([NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]);!$([$([$([NX3H,NX4H2+])," + 
+        		"$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N])," +
+        		"$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][CX3](=[OX1])[OX2H,OX1-,N])," + 
+        		"$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([$([CH3X4]),$([CH2X4][CH2X4][CH2X4][NHX3][CH0X3]" + 
+        		"(=[NH2X3+,NHX2+0])[NH2X3]),$([CH2X4][CX3](=[OX1])[NX3H2]),$([CH2X4][CX3](=[OX1])[OH0-,OH])," +
+        		"$([CH2X4][SX2H,SX1H0-]),$([CH2X4][CH2X4][CX3](=[OX1])[OH0-,OH]),$([CH2X4][#6X3]1:" + 
+        		"[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:" + 
+        		"[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H])," + 
+        		"$([#7X3H])]:[#6X3H]1),$([CHX4]([CH3X4])[CH2X4][CH3X4]),$([CH2X4][CHX4]([CH3X4])[CH3X4])," +
+        		"$([CH2X4][CH2X4][CH2X4][CH2X4][NX4+,NX3+0]),$([CH2X4][CH2X4][SX2][CH3X4])," +
+        		"$([CH2X4][cX3]1[cX3H][cX3H][cX3H][cX3H][cX3H]1),$([CH2X4][OX2H]),$([CHX4]([CH3X4])[OX2H])," + 
+        		"$([CH2X4][cX3]1[cX3H][nX3H][cX3]2[cX3H][cX3H][cX3H][cX3H][cX3]12)," + 
+        		"$([CH2X4][cX3]1[cX3H][cX3H][cX3]([OHX2,OH0X1-])[cX3H][cX3H]1)," + 
+        		"$([CHX4]([CH3X4])[CH3X4])])[CX3](=[OX1])[OX2H,OX1-,N])])]");
     }
-    public void testPattern192() throws Exception {
-        parse("[$([NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]);!$([$([$([NX3H,NX4H2+]),");
+    public void testPattern192() throws Exception { //Azide group
+        parse("[$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]");
     }
-    public void testPattern193() throws Exception {
-        parse("[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),$([#7X3H])]:");
+    public void testPattern193() throws Exception { // Azide ion
+        parse("[$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])]");
     }
-    public void testPattern194() throws Exception {
-        parse("[#6X3H]:[$([#7X3H+,#7X2H0+0]:[#6X3H]:[#7X3H]),");
+    public void testPattern194() throws Exception { //Azide or azide ion
+        parse("[$([$(*-[NX2-]-[NX2+]#[NX1]),$(*-[NX2]=[NX2+]=[NX1-])]),$([$([NX1-]=[NX2+]=[NX1-]),$([NX1]#[NX2+]-[NX1-2])])]");
     }
-    public void testPattern195() throws Exception {
+
+    public void testPattern195() throws Exception { // Sulfide
         parse("[#16X2H0]");
     }
-    public void testPattern196() throws Exception {
+    public void testPattern196() throws Exception { // Mono-sulfide
         parse("[#16X2H0][!#16]");
     }
-    public void testPattern197() throws Exception {
+    public void testPattern197() throws Exception { // Di-sulfide
         parse("[#16X2H0][#16X2H0]");
     }
-    public void testPattern198() throws Exception {
+    public void testPattern198() throws Exception { // Two sulfides
         parse("[#16X2H0][!#16].[#16X2H0][!#16]");
     }
-    public void testPattern199() throws Exception {
+    public void testPattern199() throws Exception { // Acid/conj-base
         parse("[OX2H,OX1H0-]");
     }
-    public void testPattern200() throws Exception {
+    public void testPattern200() throws Exception { // Non-acid Oxygen
         parse("[OX2H0]");
     }
-    public void testPattern201() throws Exception {
+    public void testPattern201() throws Exception { // Acid/base
         parse("[H1,H0-]");
     }
     public void testPattern202() throws Exception {
@@ -782,13 +816,14 @@ public class ParserTest extends CDKTestCase {
     public void testPattern213() throws Exception {
         parse("[$([OH]-*=[!#6])]");
     }
-    public void testPattern214() throws Exception {
-        parse("[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX 2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]");
+    public void testPattern214() throws Exception { // Phosphoric_Acid 
+        parse("[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX" +
+        		"2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]");
     }
-    public void testPattern215() throws Exception {
+    public void testPattern215() throws Exception { // Sulfonic Acid. High specificity.
         parse("[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H,OX1H0-]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H,OX1H0-])]");
     }
-    public void testPattern216() throws Exception {
+    public void testPattern216() throws Exception { // Acyl Halide
         parse("[CX3](=[OX1])[F,Cl,Br,I]");
     }
     public void testPattern217() throws Exception {
@@ -813,16 +848,16 @@ public class ParserTest extends CDKTestCase {
         parse("[+1]~*~*~[-1]");
     }
     public void testPattern224() throws Exception {
-        parse("[$([!-0!-1!-2!-3!-4]~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~[!+0!+1!+2!+3!+4]),$([ !-0!-1!-2!-3!-4]~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~[!+0!+1!+2!+3!+ 4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~ *~*~*~*~*~[!+0!+1!+2!+3!+4])]");
+        parse("[$([!-0!-1!-2!-3!-4]~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4]),$([!-0!-1!-2!-3!-4]~*~*~*~*~*~*~*~*~*~[!+0!+1!+2!+3!+4])]");
     }
     public void testPattern225() throws Exception {
         parse("([!-0!-1!-2!-3!-4].[!+0!+1!+2!+3!+4])");
     }
-    public void testPattern226() throws Exception {
+    public void testPattern226() throws Exception { // Hydrogen-bond acceptor, Only hits carbonyl and nitroso
         parse("[#6,#7;R0]=[#8]");
     }
-    public void testPattern227() throws Exception {
-        parse("[!$([#6,F,Cl,Br,I,o,s,nX3,#7v5,#15v5,#16v4,#16v6,*+1,*+2,*+3,])]");
+    public void testPattern227() throws Exception { // Hydrogen-bond acceptor
+        parse("[!$([#6,F,Cl,Br,I,o,s,nX3,#7v5,#15v5,#16v4,#16v6,*+1,*+2,*+3])]");
     }
     public void testPattern228() throws Exception {
         parse("[!$([#6,H0,-,-2,-3])]");
@@ -839,8 +874,9 @@ public class ParserTest extends CDKTestCase {
     public void testPattern232() throws Exception {
         parse("[#7;X2v4+0]");
     }
-    public void testPattern233() throws Exception {
-        parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][ CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N])] i");
+    public void testPattern233() throws Exception { // Amino Acid
+        parse("[$([$([NX3H,NX4H2+]),$([NX3](C)(C)(C))]1[CX4H]([CH2][CH2][CH2]1)[CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H2][" + 
+        		"CX3](=[OX1])[OX2H,OX1-,N]),$([$([NX3H2,NX4H3+]),$([NX3H](C)(C))][CX4H]([*])[CX3](=[OX1])[OX2H,OX1-,N])]");
     }
     public void testPattern234() throws Exception {
         parse("[#6][CX3](=O)[$([OX2H0]([#6])[#6]),$([#7])]");
@@ -852,19 +888,19 @@ public class ParserTest extends CDKTestCase {
         parse("[O,N;!H0;R0]");
     }
     public void testPattern237() throws Exception {
-        parse("[#8]=[C,N] or O=[C,N]");
+        parse("[#8]=[C,N]");
     }
-    public void testPattern238() throws Exception {
+    public void testPattern238() throws Exception { // PCB
         parse("[$(c:cCl),$(c:c:cCl),$(c:c:c:cCl)]-[$(c:cCl),$(c:c:cCl),$(c:c:c:cCl)]");
     }
-    public void testPattern239() throws Exception {
+    public void testPattern239() throws Exception { // Imidazolium Nitrogen
         parse("[nX3r5+]:c:n");
     }
-    public void testPattern240() throws Exception {
-        parse("[c;$([*Cl]),$([*H1])]1ccc(O)c(C)c1 or Cc1:c(O):c:c:[$(cCl),$([cH])]:c1");
+    public void testPattern240() throws Exception { // 1-methyl-2-hydroxy benzene with either a Cl or H at the 5 position.
+        parse("[c;$([*Cl]),$([*H1])]1ccc(O)c(C)c1");
+        parse("Cc1:c(O):c:c:[$(cCl),$([cH])]:c1");
     }
-    public void testPattern241() throws Exception {
+    public void testPattern241() throws Exception { // Nonstandard atom groups.
         parse("[!#1;!#2;!#3;!#5;!#6;!#7;!#8;!#9;!#11;!#12;!#15;!#16;!#17;!#19;!#20;!#35;!#53]");
-    }
-
+    }    
 }
