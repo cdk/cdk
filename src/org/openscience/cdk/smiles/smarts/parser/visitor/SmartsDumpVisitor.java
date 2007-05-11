@@ -1,14 +1,33 @@
+/* $Revision: $ $Author: $ $Date: $ 
+ *
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * (or see http://www.gnu.org/copyleft/lesser.html)
+ */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
 import org.openscience.cdk.smiles.smarts.parser.ASTAliphatic;
 import org.openscience.cdk.smiles.smarts.parser.ASTAnyAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTAromatic;
+import org.openscience.cdk.smiles.smarts.parser.ASTAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTAtomicMass;
 import org.openscience.cdk.smiles.smarts.parser.ASTAtomicNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTCharge;
 import org.openscience.cdk.smiles.smarts.parser.ASTChirality;
-import org.openscience.cdk.smiles.smarts.parser.ASTDegree;
+import org.openscience.cdk.smiles.smarts.parser.ASTExplicitConnectivity;
 import org.openscience.cdk.smiles.smarts.parser.ASTElement;
 import org.openscience.cdk.smiles.smarts.parser.ASTExplicitAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndBond;
@@ -17,7 +36,6 @@ import org.openscience.cdk.smiles.smarts.parser.ASTGroup;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHCount;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTLogicalExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTLowAndBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTLowAndExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTNotBond;
@@ -28,19 +46,43 @@ import org.openscience.cdk.smiles.smarts.parser.ASTPrimitiveAtomExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTReaction;
 import org.openscience.cdk.smiles.smarts.parser.ASTRecursiveSmartsExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTRingConnectivity;
+import org.openscience.cdk.smiles.smarts.parser.ASTRingIdentifier;
 import org.openscience.cdk.smiles.smarts.parser.ASTRingMembership;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingSize;
+import org.openscience.cdk.smiles.smarts.parser.ASTSmallestRingSize;
 import org.openscience.cdk.smiles.smarts.parser.ASTSimpleBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTSmarts;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
 import org.openscience.cdk.smiles.smarts.parser.ASTTotalConnectivity;
 import org.openscience.cdk.smiles.smarts.parser.ASTTotalHCount;
 import org.openscience.cdk.smiles.smarts.parser.ASTValence;
-import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor;
+import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
 
+/**
+ * An AST Tree visitor. It dumps the whole AST tree into console
+ *
+ * @author Dazhi Jiao
+ * @cdk.created 2007-04-24
+ * @cdk.module smarts
+ * @cdk.keyword SMARTS AST
+ */
 public class SmartsDumpVisitor implements SMARTSParserVisitor {
-    private int indent = 0;
+    public Object visit(ASTRingIdentifier node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+	}
+
+	public Object visit(ASTAtom node, Object data) {
+        System.out.println(indentString() + node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+	}
+	private int indent = 0;
 
     private String indentString() {
       StringBuffer sb = new StringBuffer();
@@ -86,13 +128,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }
-    public Object visit(ASTBond node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
+
     public Object visit(ASTNotBond node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -101,7 +137,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         return data;
     }
     public Object visit(ASTSimpleBond node, Object data) {
-        System.out.println(indentString() + node);
+        System.out.println(indentString() + node + " [" + node.getBondType() + "]");
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
@@ -139,13 +175,6 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }    
-    public Object visit(ASTLogicalExpression node, Object data) {
-        System.out.println(indentString() + node);
-        ++indent;
-        data = node.childrenAccept(this, data);
-        --indent;
-        return data;
-    }
 
     public Object visit(ASTElement node, Object data) {
         System.out.println(indentString() + node + " " + node.getSymbol());
@@ -183,8 +212,8 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }    
-    public Object visit(ASTDegree node, Object data){
-        System.out.println(indentString() + node + " " + node.getDegree());
+    public Object visit(ASTExplicitConnectivity node, Object data){
+        System.out.println(indentString() + node + " " + node.getNumOfConnection());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
@@ -232,7 +261,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }    
-    public Object visit(ASTRingSize node, Object data){
+    public Object visit(ASTSmallestRingSize node, Object data){
         System.out.println(indentString() + node + " " + node.getSize());
         ++indent;
         data = node.childrenAccept(this, data);

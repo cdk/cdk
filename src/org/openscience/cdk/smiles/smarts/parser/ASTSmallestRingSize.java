@@ -20,25 +20,25 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents atomic number (#) in smarts
+ * An AST node. It represents the smallest SSSR ring size (r) in smarts
  *
  * @author Dazhi Jiao
- * @cdk.created 2007-04-24
+ * @cdk.created 2007-05-10
  * @cdk.module smarts
  * @cdk.keyword SMARTS AST
  */
-public class ASTAtomicNumber extends SimpleNode {
+public class ASTSmallestRingSize extends SimpleNode {
     /**
-     * The atomic number
+     * The smallest SSSR size
      */
-    private int number;
+    private int size;
 
     /**
      * Creates a new instance
      *
      * @param id
      */
-    public ASTAtomicNumber(int id) {
+    public ASTSmallestRingSize(int id) {
         super(id);
     }
 
@@ -48,17 +48,17 @@ public class ASTAtomicNumber extends SimpleNode {
      * @param p
      * @param id
      */
-    public ASTAtomicNumber(SMARTSParser p, int id) {
+    public ASTSmallestRingSize(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the atomic number
+     * Returns the smallest SSSR size
      * 
      * @return
      */
-    public int getNumber() {
-        return number;
+    public int getSize() {
+        return size;
     }
 
     /* (non-Javadoc)
@@ -69,11 +69,11 @@ public class ASTAtomicNumber extends SimpleNode {
     }
 
     /**
-     * Sets the atomic number
+     * Sets the smallest SSSR size
      * 
-     * @param number
+     * @param size
      */
-    public void setNumber(int number) {
-        this.number = number;
+    public void setSize(int size) {
+        this.size = size;
     }
 }

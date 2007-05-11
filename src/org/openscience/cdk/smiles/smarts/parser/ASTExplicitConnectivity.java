@@ -20,25 +20,25 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents atomic number (#) in smarts
+ * An AST node. It represents the explicit connectivity (D) in smarts.
  *
  * @author Dazhi Jiao
- * @cdk.created 2007-04-24
+ * @cdk.created 2007-05-10
  * @cdk.module smarts
  * @cdk.keyword SMARTS AST
  */
-public class ASTAtomicNumber extends SimpleNode {
+public class ASTExplicitConnectivity extends SimpleNode {
     /**
-     * The atomic number
+     * Number of explicit connections
      */
-    private int number;
+    private int numOfConnection;
 
     /**
      * Creates a new instance
      *
      * @param id
      */
-    public ASTAtomicNumber(int id) {
+    public ASTExplicitConnectivity(int id) {
         super(id);
     }
 
@@ -48,17 +48,17 @@ public class ASTAtomicNumber extends SimpleNode {
      * @param p
      * @param id
      */
-    public ASTAtomicNumber(SMARTSParser p, int id) {
+    public ASTExplicitConnectivity(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the atomic number
+     * Returns the number of explicit connections
      * 
      * @return
      */
-    public int getNumber() {
-        return number;
+    public int getNumOfConnection() {
+        return numOfConnection;
     }
 
     /* (non-Javadoc)
@@ -69,11 +69,11 @@ public class ASTAtomicNumber extends SimpleNode {
     }
 
     /**
-     * Sets the atomic number
+     * Sets the number of explicit connections
      * 
-     * @param number
+     * @param degree
      */
-    public void setNumber(int number) {
-        this.number = number;
+    public void setNumOfConnection(int degree) {
+        this.numOfConnection = degree;
     }
 }

@@ -11,27 +11,89 @@ options {
 
 PARSER_BEGIN(SMARTSParser)
 
+/* $RCSfile$
+ * $Author: $
+ * $Date: $
+ * $Revision: $
+ *
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * (or see http://www.gnu.org/copyleft/lesser.html)
+ */
+
 package org.openscience.cdk.smiles.smarts.parser;
 
 import java.io.StringReader;
+import java.util.Stack;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor;
 import org.openscience.cdk.tools.LoggingTool;
 
+/**
+ * This parser implements a nearly complete subset of the SMARTS syntax as defined on
+ * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
+ * Daylight website</a>. 
+ *
+ * <p>Example code using SMARTS substructure search looks like:
+ * <pre>
+ * SmilesParser sp = new SmilesParser();
+ * AtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
+ * QueryAtomContainer query = SMARTSParser.parse("C*C");
+ * boolean queryMatch = UniversalIsomorphismTester.isSubgraph(atomContainer, query);
+ * </pre>
+ *
+ * <p>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
+ * subset.
+ *
+ * This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)
+ * <p>To get the AST, the code looks like:
+ * <pre>
+ * SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
+ * ASTStart = parser.start();
+ * </pre>
+ *
+ * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
+ *
+ * @author      Dazhi Jiao
+ * @cdk.created 2007-04-23
+ *
+ * @cdk.require ant1.6
+ * @cdk.module  smarts
+ *
+ * @cdk.keyword SMARTS
+ * @cdk.keyword substructure search
+ */
 public class SMARTSParser {
 
-	public static QueryAtomContainer parse(String stringToParse) throws CDKException {
+	/**
+	 * This method parses a Smarts String and returns an instance of 
+	 * <code>QueryAtomContainer</code>
+	 */
+	public static QueryAtomContainer parse(String smarts) throws CDKException {
         QueryAtomContainer container = null;
-        StringReader stringReader = new StringReader(stringToParse);
+        StringReader reader = new StringReader(smarts);
         try {
-            SMARTSParser parser = new SMARTSParser(stringReader);
+            SMARTSParser parser = new SMARTSParser(reader);
             ASTStart start = parser.Start();
-            SmartsQueryVisitor visitor = new SmartsQueryVisitor();
+            org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor visitor 
+            	= new org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor();
             container = (QueryAtomContainer)start.jjtAccept(visitor, null);
         } catch (ParseException exception) {
-            throw new CDKException("The string " + stringToParse + " is not a valid" +
+            throw new CDKException("The string " + smarts + " is not a valid" +
               " SMARTS string: " + exception.getMessage(), exception);
         }
         return container;	
@@ -81,6 +143,7 @@ PARSER_END(SMARTSParser)
         <  c: "c" >
     |   <  n: "n" >
     |   <  o: "o" >
+    |   <  s: "s" >
     |   <  H: "H" >
     |   < HE: "He" >
     |   < LI: "Li" >
@@ -190,44 +253,46 @@ PARSER_END(SMARTSParser)
     |
     <R_BRACKET : "]" >
     |
-    <NUMBER: (["0"-"9"])+ >
+    <DIGIT: ["0"-"9"] > // this needs to appear first!!!
 }
 
 /**
- *                     Start ::= ReactionExpression
- *        ReactionExpression ::= GroupExpression (">>" GroupExpression)? |
- *                               ">" GroupExpression ">" | ">>" GroupExpression
- *           GroupExpression ::= "(" SmartsExpresion ")" ( "." "(" SmartsExpression ")" )*
- *          SmartsExpression ::= ( LogicalExpression | ExplicitAtomExpression ) 
- *                               ( "<" [Bond] SmartsExpression ">" )* ( [Bond] SmartsExpression )?
- *                      Bond ::= LowAndBond
- *                LowAndBond ::= OrBond [ ";" AndBond ]
- *                    OrBond ::= ExplicitHighAndBond [ "," OrBond ]
- *       ExplicitHighAndBond ::= ImplicitHighAndBond [ "&" ExplicitHighAndBond ]
- *       ImplicitHighAndBond ::= NotBond [ ImplicitHighAndBond ]
- *                   NotBond ::= [ "!" ] SimpleBond
+ *                     Start ::= <ReactionExpression>
+ *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
+ *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
+ *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." "(" <SmartsExpression> ")" )*
+ *          SmartsExpression ::= <RingIdentifierExpression>
+ *                               ( "<" (<Bond>)? <SmartsExpression> ">" )* ( (<Bond>)? <SmartsExpression> )?
+ *                      Bond ::= <LowAndBond>
+ *                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
+ *                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
+ *       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
+ *       ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
+ *                   NotBond ::= [ "!" ] <SimpleBond>
  *                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
- *    ExplicitAtomExpression ::= ( "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
- *                               | "c" | "o" | "n" | "*" | "A" | "a" ) [ Number ]
- *         LogicalExpression ::= "[" LowAndExpression "]" [ Number ]
- *          LowAndExpression ::= OrExpression ( ";" LowAndExpression )?
- *              OrExpression ::= ExplicitHighAndExpression ( "," OrExpression ) ?
- * ExplicitHighAndExpression ::= ImplicitHighAndExpression ( "&" ExplicitHighAndExpression )?
- * ImplicitHighAndExpression ::= NotExpression ( ImplicitHighAndExpression ) ?
- *             NotExpression ::= "!" ( PrimitiveAtomExpression | RecursiveSmartsExpression )
- * RecursiveSmartsExpression ::= "$" "(" SmartsExpression ")"
- *   PrimitiveAtomExpression ::= NonHydrogenElement | "*" | "A" | "a" | "D" Number? | "H" Number? | "h" Number? 
- *                               | "R" Number? | "r" Number? | "v" Number? | "X" Number? | "x" Number? 
- *                               | ("+" | "-") Number? | "#" Number? | "@" | "@@" | Number
- *                    Number ::= ( "0"-"9" )+
- *         onHydrogenElement ::= ( "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+ *    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
+ *                               | "c" | "o" | "n" | "*" | "A" | "a" ] 
+ *  RingIdentifierExpression ::= ( <LogicalExpression> | <ExplicitAtomExpression> ) ( ( <Bond> )? <Digit> ) *
+ *         LogicalExpression ::= "[" <LowAndExpression> "]" 
+ *          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
+ *              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
+ * ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
+ * ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
+ *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
+ * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
+ *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Number>)? | "H" (<Number>)? | "h" (<Number>)?
+ *                               | "R" (<Number>)? | "r" (<Number>)? | "v" (<Number>)? | "X" (<Number>)? | "x" (<Number>)? 
+ *                               | ("+" | "-") (<Number>)? | "#" (<Number>)? | "@" | "@@" | <Number>
+ *                     Digit ::= ( "0" - "9")
+ *                    Digits ::= ( "0"-"9" )+
+ *         onHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
  *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
  *                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
  *                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
  *                               "HF" | "TA" | "RE" | "OS" | "IR" | "PT" | "AU" | "HG" | "TL" | "PB" | "BI" |
  *                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
  *                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
- *                               "c" | "o" | "n" ) [ NUMBER ]
+ *                               "c" | "o" | "n" ]
  */
 
 ASTStart Start() #Start : {}
@@ -247,21 +312,73 @@ void ReactionExpression() #Reaction : {}
     ">>" GroupExpression()
 }
 
-void GroupExpression() #Group : {}
+void GroupExpression() #Group : { ASTSmarts smarts; }
 {
-    [<L_PAREN>] SmartsExpression() [<R_PAREN>] ( "." [<L_PAREN>] SmartsExpression() [<R_PAREN>] ) *
+    [<L_PAREN>] SmartsExpression() [<R_PAREN>] 
+    ( "." 
+    	[<L_PAREN>] SmartsExpression() [<R_PAREN>] 
+    )*
 }    
 
-void SmartsExpression() #Smarts : {}
+void SmartsExpression() #Smarts : 
 {
-    ( LogicalExpression() | ExplicitAtomExpression() ) 
-    ( <L_PAREN> [ Bond() ] SmartsExpression() <R_PAREN> ) * 
-    ( [ Bond() ] SmartsExpression() ) ?
+	ASTAtom atom; 
+}
+{
+	atom = AtomExpression() 
+	(
+	  (
+	  	( LowAndBond() )? 
+	  	( 
+	  		<DIGIT>
+	  		{
+	  			ASTLowAndBond bond = null;
+				ASTRingIdentifier ringId = new ASTRingIdentifier(JJTRINGIDENTIFIER);
+				if (jjtree.peekNode() instanceof ASTLowAndBond) {
+					bond = (ASTLowAndBond)jjtree.popNode(); // pop the bond
+					ringId.jjtAddChild(bond, 0);
+				}
+				ringId.setRingId(Integer.parseInt(token.image));
+				atom.jjtAddChild(ringId, atom.jjtGetNumChildren());
+	  		} 
+	  		| 
+	  		atom = AtomExpression()
+	  	)
+	  ) 
+	  |
+	  ( <L_PAREN> ( LowAndBond() )? SmartsExpression() <R_PAREN> ) 
+	)* 
 }
 
-void Bond() #Bond : {}
+ASTAtom	 AtomExpression() #Atom : 
 {
-    LowAndBond() 
+	Token firstToken;
+	Token rightBracket;
+}
+{
+	( 
+	    ( 
+	    	<L_BRACKET> { firstToken = getToken(1); }
+	    	LowAndExpression() 
+	    	<R_BRACKET> { rightBracket = token; }
+	    	{
+	    		// If the LowAndExpression is "[H]", change it to an ExplicitAtom
+	    		if (firstToken.image.equals("H")) {
+		    		if ( (rightBracket.beginColumn - firstToken.endColumn) == 1) {
+		    			jjtree.popNode();
+		    			ASTExplicitAtom explicitAtom = new ASTExplicitAtom(JJTEXPLICITATOM);
+						explicitAtom.setSymbol("H");
+						jjtree.pushNode(explicitAtom);
+		    		}
+	    		}
+	    	}
+	    ) 
+	    | 
+	    ExplicitAtomExpression() 
+	)
+	{
+		return jjtThis;
+	}
 }
 
 void LowAndBond() #LowAndBond : {}
@@ -319,16 +436,10 @@ void SimpleBond() #SimpleBond : {}
 
 void ExplicitAtomExpression() #ExplicitAtom : {}
 {
-    ( <B> | <C> | <N> | <O> | <P> | <S> | <F> | <CL> | <BR> | <I> | <WILDCARD> | <A> | <a> | <c> | <n> | <o>)
+    ( <B> | <C> | <N> | <O> | <P> | <S> | <F> | <CL> | <BR> | <I> | <WILDCARD> | <A> | <a> | <c> | <n> | <o> | <s>)
     {
         jjtThis.setSymbol(token.image);
     }
-    ( <NUMBER> )?
-}
-
-void LogicalExpression() #LogicalExpression : {}
-{
-    <L_BRACKET> LowAndExpression() <R_BRACKET> ( <NUMBER> )?
 }
 
 // TODO: This requires a fully implemented SMARTSAtom API (or something else) that 
@@ -376,7 +487,7 @@ void PrimitiveAtomExpression() : {}
         |
         Aliphatic()
         |
-        Degree()
+        ExplicitConnectivity()
         |
         TotalHCount()
         |
@@ -384,7 +495,7 @@ void PrimitiveAtomExpression() : {}
         |
         RingMembership()
         |
-        RingSize()
+        SmallestRingSize()
         |
         Valence()
         |
@@ -400,32 +511,47 @@ void PrimitiveAtomExpression() : {}
     )
 }
 
-void TotalHCount() #TotalHCount : {}
+void TotalHCount() #TotalHCount : 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    <H> { jjtThis.setCount(1); } [ <NUMBER> { jjtThis.setCount( Integer.parseInt(token.image) ); } ]
+    <H> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void ImplicitHCount() #ImplicitHCount: {}
+void ImplicitHCount() #ImplicitHCount: 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    <h> { jjtThis.setCount(1); } [ <NUMBER> { jjtThis.setCount( Integer.parseInt(token.image) ); } ]
+    <h> { jjtThis.setCount(1); } [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setCount( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void Degree() #Degree : {}
+void ExplicitConnectivity() #ExplicitConnectivity : 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    <D> { jjtThis.setDegree(1); } [ <NUMBER> { jjtThis.setDegree( Integer.parseInt(token.image) ); } ]
+    <D> { jjtThis.setNumOfConnection(1); } 
+    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setNumOfConnection( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void AtomicNumber() #AtomicNumber : {}
+void AtomicNumber() #AtomicNumber : 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    "#" <NUMBER> { jjtThis.setNumber( Integer.parseInt(token.image) ); }
+    "#" ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
 }
 
-void Charge() #Charge : { Token charge; }
+void Charge() #Charge : 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    // Here I am assuming nobody will write anything like -----------... for more than 8, instead, use -<n>
+    // Here assuming nobody will write anything like -----------... 
+    // with more than 8 of them
     LOOKAHEAD(2)
-    "+" { jjtThis.setPositive(true); jjtThis.setCharge(1); } [ charge = <NUMBER> { jjtThis.setCharge( Integer.parseInt(charge.image) ); } ]
-    | "-" { jjtThis.setPositive(false); jjtThis.setCharge(1); } [ charge = <NUMBER> { jjtThis.setCharge( Integer.parseInt(charge.image) ); } ]
+    "+" { jjtThis.setPositive(true); jjtThis.setCharge(1); } 
+      [ ( <DIGIT> { digits.append(token.image); } )+ 
+      { jjtThis.setCharge( Integer.parseInt(digits.toString()) ); } ]
+    | "-" { jjtThis.setPositive(false); jjtThis.setCharge(1); } 
+      [ ( <DIGIT> { digits.append(token.image); } )+ 
+      { jjtThis.setCharge( Integer.parseInt(digits.toString()) ); } ]
     | "--"          { jjtThis.setPositive(false); jjtThis.setCharge(2); }
     | "---"         { jjtThis.setPositive(false); jjtThis.setCharge(3); }
     | "----"        { jjtThis.setPositive(false); jjtThis.setCharge(4); }
@@ -445,31 +571,39 @@ void Charge() #Charge : { Token charge; }
 void RingConnectivity() #RingConnectivity : {}
 {
     <x> { jjtThis.setNumOfConnection(1); } 
-    [ <NUMBER> { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+    [ ( <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
 }
 
-void TotalConnectivity() #TotalConnectivity : {}
+void TotalConnectivity() #TotalConnectivity : 
+{ StringBuffer digits = new StringBuffer(); }
 {
     <X> { jjtThis.setNumOfConnection(1); } 
-    [ <NUMBER> { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setNumOfConnection( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void Valence() #Valence : {}
+void Valence() #Valence : 
+{ StringBuffer digits = new StringBuffer(); }
 {
     <v> { jjtThis.setOrder(1); } 
-    [ <NUMBER> { jjtThis.setOrder( Integer.parseInt(token.image) ); } ]
+    [ ( <DIGIT> { digits.append(token.image); })+ 
+    { jjtThis.setOrder( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void RingMembership() #RingMembership : {}
+void RingMembership() #RingMembership : 
+{ StringBuffer digits = new StringBuffer(); }
 {
     <R> { jjtThis.setNumOfMembership(1); } 
-    [ <NUMBER> { jjtThis.setNumOfMembership( Integer.parseInt(token.image) ); } ]
+    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setNumOfMembership( Integer.parseInt(digits.toString()) ); } ]
 }
 
-void RingSize() #RingSize : {}
+void SmallestRingSize() #SmallestRingSize : 
+{ StringBuffer digits = new StringBuffer(); }
 {
     <r> { jjtThis.setSize(1); } 
-    [ <NUMBER> { jjtThis.setSize( Integer.parseInt(token.image) ); } ]
+    [ ( <DIGIT> { digits.append(token.image); } )+ 
+    { jjtThis.setSize( Integer.parseInt(digits.toString()) ); } ]
 }
 
 void Aliphatic() #Aliphatic : {}
@@ -487,9 +621,15 @@ void AnyAtom() #AnyAtom : {}
     <WILDCARD>
 }
 
-void AtomicMass() #AtomicMass : {}
+void AtomicMass() #AtomicMass : 
+{ StringBuffer digits = new StringBuffer(); }
 {
-    <NUMBER> { jjtThis.setMass( Integer.parseInt(token.image) ); }
+    ( <DIGIT> { digits.append(token.image); } )+
+}
+
+void RingIdentifier() #RingIdentifier: {}
+{
+	LowAndBond() <DIGIT>
 }
 
 void Chirality() #Chirality : {}
@@ -508,10 +648,9 @@ void NoHydrogenElement() #Element: {}
     <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
     <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
 	<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U> | 
-    <c> | <o> | <n>
+    <c> | <o> | <n> | <s> 
     )
     {
         jjtThis.setSymbol(token.image);
     }
-    ( <NUMBER> )?
 }

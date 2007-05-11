@@ -1,14 +1,33 @@
+/* $Revision: $ $Author: $ $Date: $ 
+ *
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * (or see http://www.gnu.org/copyleft/lesser.html)
+ */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
 import org.openscience.cdk.smiles.smarts.parser.ASTAliphatic;
 import org.openscience.cdk.smiles.smarts.parser.ASTAnyAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTAromatic;
+import org.openscience.cdk.smiles.smarts.parser.ASTAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTAtomicMass;
 import org.openscience.cdk.smiles.smarts.parser.ASTAtomicNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTCharge;
 import org.openscience.cdk.smiles.smarts.parser.ASTChirality;
-import org.openscience.cdk.smiles.smarts.parser.ASTDegree;
+import org.openscience.cdk.smiles.smarts.parser.ASTExplicitConnectivity;
 import org.openscience.cdk.smiles.smarts.parser.ASTElement;
 import org.openscience.cdk.smiles.smarts.parser.ASTExplicitAtom;
 import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndBond;
@@ -17,7 +36,6 @@ import org.openscience.cdk.smiles.smarts.parser.ASTGroup;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHCount;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTLogicalExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTLowAndBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTLowAndExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTNotBond;
@@ -27,8 +45,9 @@ import org.openscience.cdk.smiles.smarts.parser.ASTOrExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTReaction;
 import org.openscience.cdk.smiles.smarts.parser.ASTRecursiveSmartsExpression;
 import org.openscience.cdk.smiles.smarts.parser.ASTRingConnectivity;
+import org.openscience.cdk.smiles.smarts.parser.ASTRingIdentifier;
 import org.openscience.cdk.smiles.smarts.parser.ASTRingMembership;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingSize;
+import org.openscience.cdk.smiles.smarts.parser.ASTSmallestRingSize;
 import org.openscience.cdk.smiles.smarts.parser.ASTSimpleBond;
 import org.openscience.cdk.smiles.smarts.parser.ASTSmarts;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
@@ -36,15 +55,34 @@ import org.openscience.cdk.smiles.smarts.parser.ASTTotalConnectivity;
 import org.openscience.cdk.smiles.smarts.parser.ASTTotalHCount;
 import org.openscience.cdk.smiles.smarts.parser.ASTValence;
 import org.openscience.cdk.smiles.smarts.parser.Node;
-import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParserConstants;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor;
+import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
 
+/**
+ * An AST tree visitor. It is a prototype that translate Smarts to MQL. 
+ * It is far from fully functioning.
+ *
+ * @author Dazhi Jiao
+ * @cdk.created 2007-04-24
+ * @cdk.module smarts
+ * @cdk.keyword SMARTS AST
+ */
 public class Smarts2MQLVisitor implements SMARTSParserVisitor {
-    String symbolIdentified = "";
+    public Object visit(ASTRingIdentifier node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	String symbolIdentified = "";
     boolean not = false;
     
-    public Object visit(SimpleNode node, Object data) {
+    public Object visit(ASTAtom node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object visit(SimpleNode node, Object data) {
         return node.childrenAccept(this, data);
     }
 
@@ -64,9 +102,9 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         String local = "";
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             Node child = node.jjtGetChild(i);
-            if (child instanceof ASTLogicalExpression) {
+            if (child instanceof ASTAtom) {
                 local = (String)child.jjtAccept(this, local);
-            } else if (child instanceof ASTBond) {
+            } else if (child instanceof ASTLowAndBond) {
                 i++;
                 Node nextChild = node.jjtGetChild(i); // the next child should
                 // be another smarts
@@ -84,12 +122,6 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
             }
         }        
         return data + local;
-    }
-
-    // TODO: Accept only one bond. Need to find out whether MQL supports
-    // logical bonds
-    public Object visit(ASTBond node, Object data) {
-        return node.jjtGetChild(0).jjtAccept(this, data);
     }
 
     // TODO: Accept only one bond. Need to find out whether MQL supports
@@ -157,22 +189,6 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     public Object visit(ASTExplicitAtom node, Object data) {
         data = data + node.getSymbol(); // TODO: ring handling!
         return data;
-    }
-
-    public Object visit(ASTLogicalExpression node, Object data) {
-        this.symbolIdentified = "";
-        String str = "";
-        for (int i = 0; i < node.jjtGetNumChildren(); i++) {
-            str += node.jjtGetChild(i).jjtAccept(this, data);
-        }
-        if (!"".equals(str)) {
-            str = "[" + str + "]";
-        }
-        if ("".equals(symbolIdentified)) {
-            return "*" + str;
-        } else {
-            return symbolIdentified + str;
-        }
     }
 
     public Object visit(ASTLowAndExpression node, Object data) {
@@ -265,7 +281,7 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         return data;
     }
 
-    public Object visit(ASTDegree node, Object data) {
+    public Object visit(ASTExplicitConnectivity node, Object data) {
 //      TODO: a property? not sure. just making things up here :)
         return data;
     }
@@ -300,7 +316,7 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         return "ring";
     }
 
-    public Object visit(ASTRingSize node, Object data) {
+    public Object visit(ASTSmallestRingSize node, Object data) {
         return data;
     }
 
