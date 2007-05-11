@@ -56,7 +56,7 @@ public class TotalValencyAtom extends SMARTSAtom {
         return 5;
     }
     private int getVV(IAtom atom){
-    	return atom.getValency(); //TODO: atom.getValency always returns 0
+    	return atom.getValency(); 
     }
     
    public boolean matches(IAtom atom) {

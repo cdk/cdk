@@ -1,4 +1,3 @@
-
 /*
  *  $RCSfile$
  *  $Author: Sushil Ronghe $
@@ -29,81 +28,107 @@
  *
  */
 
-        
- package org.openscience.cdk.isomorphism.matchers.smarts;
- import org.openscience.cdk.interfaces.IAtom;
- import org.openscience.cdk.CDKConstants;
+package org.openscience.cdk.isomorphism.matchers.smarts;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.CDKConstants;
 
 /**
- *
+ * 
  * @author niper
  */
-public class TotalConnectionAtom extends SMARTSAtom{
-    private int Count;
-    private String Elem;
-    /** Creates a new instance of TotalConnectionAtom */
-    public TotalConnectionAtom() {
-        Count=Default;
-    }
-    public TotalConnectionAtom(int m_XX){
-        Count = m_XX;
-    }
-    public void setSymbol(String ss){
-        Elem = ss;
-    }
-    public int getOperator(){
-         if(ID!=null && this.Count==Default)
-            return 1;
-        else if(ID!=null && this.Count!=Default)
-            return 2;
-        else if(this.Count==Default)
-            return 3;
-        else if(this.Count!=Default)
-            return 4;
-        return 5;
-    }
-    public int getXX(IAtom atom){
-        if(atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)!=null) 
-        	// TODO: atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) doesn't count Hydrogen
-          return ((Integer)atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue();
-        else
-           return 0;
-    }
-    public boolean matche(IAtom atom) {
-        switch(getOperator()){
-            case 1:return defaultOperatorCheck(atom);
-            case 2:return nonDefaultOperatorCheck(atom);
-            case 3:return defaultCheck(atom);
-            case 4:return nonDefaultCheck(atom);
-            default:return false;
-        }
-    };
-    public boolean matches(IAtom atom){
-        if(matche(atom)){
-            if(atom.getSymbol().equals(this.Elem))
-                return true;
-            else
-                return false;
-        }
-        return false;
-    }
-    private boolean defaultCheck(IAtom atom){
-        if(getXX(atom)!=0)return true;
-        return false;
-    }
-    private boolean nonDefaultCheck(IAtom atom){
-        if(getXX(atom)!=0 && getXX(atom)==this.Count) return true;
-        return false;
-    }
-    private boolean defaultOperatorCheck(IAtom atom){
-        if(getXX(atom)==0) return true;
-        return false;
-    }
-    private boolean nonDefaultOperatorCheck(IAtom atom){
-        if(getXX(atom)!=0 && getXX(atom)!=this.Count) return false;
-        return false;
-    }
-    public String toString(){
-        return new String("TotalConnectionAtom ("+ Count+ ")" );
-    }
+public class TotalConnectionAtom extends SMARTSAtom {
+	private static final long serialVersionUID = 2714616726873309671L;
+
+	private int Count;
+
+	private String Elem;
+
+	/** Creates a new instance of TotalConnectionAtom */
+	public TotalConnectionAtom() {
+		Count = Default;
+	}
+
+	public TotalConnectionAtom(int m_XX) {
+		Count = m_XX;
+	}
+
+	public void setSymbol(String ss) {
+		Elem = ss;
+	}
+
+	public int getOperator() {
+		if (ID != null && this.Count == Default)
+			return 1;
+		else if (ID != null && this.Count != Default)
+			return 2;
+		else if (this.Count == Default)
+			return 3;
+		else if (this.Count != Default)
+			return 4;
+		return 5;
+	}
+
+	public int getXX(IAtom atom) {
+		if (atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) != null)
+			return ((Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS))
+					.intValue();
+		else
+			return 0;
+	}
+
+	public boolean matches(IAtom atom) {
+		switch (getOperator()) {
+		case 1:
+			return defaultOperatorCheck(atom) && (atom.getSymbol().equals(this.Elem));
+		case 2:
+			return nonDefaultOperatorCheck(atom) && (atom.getSymbol().equals(this.Elem));
+		case 3:
+			return defaultCheck(atom) && (atom.getSymbol().equals(this.Elem));
+		case 4:
+			return nonDefaultCheck(atom);
+		default:
+			return false;
+		}
+	};
+
+	/*
+	public boolean matches(IAtom atom) {
+		if (matche(atom)) {
+			if (atom.getSymbol().equals(this.Elem))
+				return true;
+			else
+				return false;
+		}
+		return false;
+	}
+	*/
+
+	private boolean defaultCheck(IAtom atom) {
+		if (getXX(atom) != 0)
+			return true;
+		return false;
+	}
+
+	private boolean nonDefaultCheck(IAtom atom) {
+		if (getXX(atom) != 0 && getXX(atom) == this.Count)
+			return true;
+		return false;
+	}
+
+	private boolean defaultOperatorCheck(IAtom atom) {
+		if (getXX(atom) == 0)
+			return true;
+		return false;
+	}
+
+	private boolean nonDefaultOperatorCheck(IAtom atom) {
+		if (getXX(atom) != 0 && getXX(atom) != this.Count)
+			return false;
+		return false;
+	}
+
+	public String toString() {
+		return new String("TotalConnectionAtom (" + Count + ")");
+	}
 }

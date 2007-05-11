@@ -37,6 +37,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticSymbolAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorBond;
@@ -426,18 +427,15 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTTotalHCount node, Object data) {
-		TotalHCountAtom atom = new TotalHCountAtom(node.getCount());
-		return atom;
+		return new TotalHCountAtom(node.getCount());
 	}
 
 	public Object visit(ASTImplicitHCount node, Object data) {
-		ImplicitHCountAtom atom = new ImplicitHCountAtom(node.getCount());
-		return atom;
+		return new ImplicitHCountAtom(node.getCount());
 	}
 
 	public Object visit(ASTExplicitConnectivity node, Object data) {
-		DegreeAtom atom = new DegreeAtom(node.getNumOfConnection());
-		return atom;
+		return new ExplicitConnectionAtom(node.getNumOfConnection());
 	}
 
 	public Object visit(ASTAtomicNumber node, Object data) {

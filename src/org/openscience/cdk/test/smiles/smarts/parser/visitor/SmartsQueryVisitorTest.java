@@ -888,7 +888,6 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     	int m = match("[A]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
     	assertEquals(19, m);
     }
-    //TODO: atomicnumber always 0 in smiles parsed atomcontainer
     public void testPropertyAtomicNumber1() throws Exception {
     	int m = match("[#6]", "c1cc(C)c(N)cc1");
     	assertEquals(7, m);    	
@@ -1001,6 +1000,30 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     	int m = match("[X2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
     	assertEquals(3, m);
     }
+    public void testPropertyD1() throws Exception {
+    	int m = match("[D2]", "CCO");
+    	assertEquals(1, m);
+    }
+    public void testPropertyD2() throws Exception {
+    	int m = match("[D2]", "O");
+    	assertEquals(0, m);
+    }
+    public void testPropertyD3() throws Exception {
+    	int m = match("[D2]", "CCC(=O)CC");
+    	assertEquals(2, m);
+    }
+    public void testPropertyD4() throws Exception {
+    	int m = match("[D2]", "FC(Cl)=C=C(Cl)F");
+    	assertEquals(1, m);
+    }
+    public void testPropertyD5() throws Exception {
+    	int m = match("[D2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	assertEquals(12, m);
+    }
+    public void testPropertyD6() throws Exception {
+    	int m = match("[D2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	assertEquals(8, m);
+    }    
     public void testPropertyHAtom1() throws Exception {
     	int m = match("[H]", "[H+].[Cl-]");
     	assertEquals(1, m);    	
@@ -1125,7 +1148,8 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     	int m = match("[C,c]@[C,c]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
     	assertEquals(22, m);
     }
-    public void testBondStereo1() throws Exception { //TODO: Stereo bond not implemented in smiles parser?
+    //TODO: Stereo bond not implemented in smiles parser?
+    public void testBondStereo1() throws Exception { 
     	int m = match("F/?C=C/Cl", "F/C=C/Cl");
     	assertEquals(1, m);
     }
@@ -1267,11 +1291,11 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     	int m = match("[#7,C;+0,+1]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
     	assertEquals(1, m);    	
     }
+    */
     public void testLogicalOrLowAnd7() throws Exception {
     	int m = match("[#7,C;+0,+1]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
     	assertEquals(0, m);    	
     }
-    */
     
     public void testRing1() throws Exception {
     	int m = match("C1CCCCC1", "C1CCCCC1CCCC");
@@ -1297,8 +1321,104 @@ public class SmartsQueryVisitorTest extends CDKTestCase {
     	int m = match("C1CCCCC1", "CCCCCC");
     	assertEquals(0, m);     	
     }
-    public void testRing7() throws Exception {
+    public void testAromaticRing1() throws Exception {
     	int m = match("c1ccccc1", "c1ccccc1");
     	assertEquals(12, m);
+    }    
+    public void testAromaticRing2() throws Exception {
+    	int m = match("c1ccccc1", "c1cccc2c1cccc2");
+    	assertEquals(24, m);
     }
+    public void testAromaticRing3() throws Exception {
+    	int m = match("c1ccccn1", "c1cccc2c1cccc2");
+    	assertEquals(0, m);
+    }
+    public void testAromaticRing4() throws Exception {
+    	int m = match("c1ccccn1", "c1cccc2c1cccn2");
+    	assertEquals(2, m);
+    }    
+    
+    /*
+     * Testing amino acides matching. AA smarts from Daylight smarts example page
+     */
+    public void testAminoAcid1() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid2() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCCNC(N)=N)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid3() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(N)=O)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid4() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(O)=O)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid5() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CS)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid6() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCC(N)=O)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid7() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCC(O)=O)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid8() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC([H])C(O)=O");
+    	assertEquals(0, m);
+    }
+    public void testAminoAcid9() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CNC=N1)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid10() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(CC)C)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid11() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(C)C)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid12() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCCCN)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid13() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCSC)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid14() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CC=CC=C1)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid15() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "OC(C1CCCN1)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid16() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CO)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid17() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(C)O)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid18() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CNC2=C1C=CC=C2)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid19() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC1=CC=C(O)C=C1)C(O)=O");
+    	assertEquals(1, m);
+    }
+    public void testAminoAcid20() throws Exception {
+    	int m = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(C)C)C(O)=O");
+    	assertEquals(1, m);
+    }    
 }

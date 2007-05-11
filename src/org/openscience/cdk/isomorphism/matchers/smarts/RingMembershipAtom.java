@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * This query atom matches any atom with a certain number of SSSR. 
@@ -46,11 +47,8 @@ public class RingMembershipAtom extends SMARTSAtom {
 	public boolean matches(IAtom atom) {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
 			// TODO: ESSENTIAL_RINGS not calculated in IAtom
-			ArrayList rings = (ArrayList) atom
-					.getProperty(CDKConstants.ESSENTIAL_RINGS);
-			if (rings != null) {
-				return rings.size() == numSSSR;
-			}
+			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);
+			return ringSet.getAtomContainerCount() == numSSSR;
 		}
 		return false;
 	}

@@ -31,12 +31,15 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching functionality.
@@ -188,36 +191,75 @@ public class SMARTSQueryTool {
      * @throws CDKException if there is a problem in ring perception or aromaticity detection,
      *                      which is usually related to a timeout in the ring finding code.
      */
-    private void initializeMolecule() throws CDKException {
+    private void initializeMolecule() throws CDKException {    	
         // do all ring perception
         AllRingsFinder arf = new AllRingsFinder();
-        IRingSet ringSet = null;
+        IRingSet allRings = null;
         try {
-            ringSet = arf.findAllRings(atomContainer);
+            allRings = arf.findAllRings(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString());
         }
 
-        // next we want to add a property to each ring atom that
-        // will be an array of Integers, indicating what size ring
-        // the given atom belongs to
+        // sets SSSR information
+        SSSRFinder finder = new SSSRFinder(atomContainer);
+        IRingSet sssr = finder.findEssentialRings();
+        
         Iterator atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
-            if (atom.getFlag(CDKConstants.ISINRING)) {
+            
+            // add a property to each ring atom that will be an array of 
+            // Integers, indicating what size ring the given atom belongs to
+            // Add SSSR ring counts
+            if (allRings.contains(atom)) { // it's in a ring
+            	atom.setFlag(CDKConstants.ISINRING, true);
                 // lets find which ring sets it is a part of
                 List ringsizes = new ArrayList();
-                IRingSet currentRings = ringSet.getRings(atom);
+                IRingSet currentRings = allRings.getRings(atom);
+                int min = 0;
                 for (int i = 0; i < currentRings.getAtomContainerCount(); i++) {
                     int size = currentRings.getAtomContainer(i).getAtomCount();
+                    if (min > size) min = size;
                     ringsizes.add(new Integer(size));
                 }
                 atom.setProperty(CDKConstants.RING_SIZES, ringsizes);
+                atom.setProperty(CDKConstants.SMALLEST_RINGS, sssr.getRings(atom));
+            }
+            
+            // determine how many rings bonds each atom is a part of
+            int hCount = atom.getHydrogenCount();
+            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+            int total = hCount + connectedAtoms.size(); 
+            for (int i = 0; i < connectedAtoms.size(); i++) {
+            	if(((IAtom)connectedAtoms.get(i)).getSymbol().equals("H")) {
+            		total--;
+            		hCount++;
+                }
+             }
+            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(total));
+            atom.setProperty(CDKConstants.TOTAL_H_COUNT, new Integer(hCount)); 
+            
+            //TODO: Sets atom valency. 
+            // Code copied from org.openscience.cdk.qsar.ChiIndexUtils
+            Map valenceMap;
+            AtomValenceDescriptor avd = new AtomValenceDescriptor();
+            valenceMap = avd.valencesTable;
+            if (valenceMap.get(atom.getSymbol()) != null) {
+                atom.setValency(((Integer)valenceMap.get(atom.getSymbol())).intValue() -
+                		atom.getFormalCharge());
             }
         }
-
-        // determine how many rings bonds each atom is a part of
+        
+        Iterator bonds = atomContainer.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+        	if (allRings.getRings(bond).size() > 0) {
+        		bond.setFlag(CDKConstants.ISINRING, true);
+        	}
+        }
+        
         atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
@@ -231,32 +273,17 @@ public class SMARTSQueryTool {
                     counter++;
                 }
             }
-            if (connectedAtoms.size() != 0)
-                atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
-        }
-        //set the property TOTAL_CONNECTION
-        atoms = atomContainer.atoms();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
-            int counter = 0;
-            int count = atomContainer.getConnectedAtomsCount(atom);
-            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-             for (int i = 0; i < connectedAtoms.size(); i++) {
-                if(((IAtom)connectedAtoms.get(i)).getSymbol().equals("H")){
-                    counter++;
-                }
-             }
-            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(count));
-            atom.setProperty(CDKConstants.TOTAL_H_COUNT,new Integer(counter));
+            atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
         }
 
         // check for atomaticity
         try {
-            HueckelAromaticityDetector.detectAromaticity(atomContainer);
+            HueckelAromaticityDetector.detectAromaticity(atomContainer, true, arf);
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString());
         }
+
     }
 
     private void initializeQuery() throws CDKException {
