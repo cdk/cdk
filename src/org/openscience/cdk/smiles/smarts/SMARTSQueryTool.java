@@ -198,7 +198,52 @@ public class SMARTSQueryTool {
 	 *             detection, which is usually related to a timeout in the ring
 	 *             finding code.
 	 */
-    private void initializeMolecule() throws CDKException {    	
+    private void initializeMolecule() throws CDKException {    
+        // Code copied from 
+    	// org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
+        Map valencesTable = new HashMap();
+        valencesTable.put("H", new Integer(1));
+        valencesTable.put("Li", new Integer(1));
+        valencesTable.put("Be", new Integer(2));
+        valencesTable.put("B", new Integer(3));
+        valencesTable.put("C", new Integer(4));
+        valencesTable.put("N", new Integer(5));
+        valencesTable.put("O", new Integer(6));
+        valencesTable.put("F", new Integer(7));
+        valencesTable.put("Na", new Integer(1));
+        valencesTable.put("Mg", new Integer(2));
+        valencesTable.put("Al", new Integer(3));
+        valencesTable.put("Si", new Integer(4));
+        valencesTable.put("P", new Integer(5));
+        valencesTable.put("S", new Integer(6));
+        valencesTable.put("Cl", new Integer(7));
+        valencesTable.put("K", new Integer(1));
+        valencesTable.put("Ca", new Integer(2));
+        valencesTable.put("Ga", new Integer(3));
+        valencesTable.put("Ge", new Integer(4));
+        valencesTable.put("As", new Integer(5));
+        valencesTable.put("Se", new Integer(6));
+        valencesTable.put("Br", new Integer(7));
+        valencesTable.put("Rb", new Integer(1));
+        valencesTable.put("Sr", new Integer(2));
+        valencesTable.put("In", new Integer(3));
+        valencesTable.put("Sn", new Integer(4));
+        valencesTable.put("Sb", new Integer(5));
+        valencesTable.put("Te", new Integer(6));
+        valencesTable.put("I", new Integer(7));
+        valencesTable.put("Cs", new Integer(1));
+        valencesTable.put("Ba", new Integer(2));
+        valencesTable.put("Tl", new Integer(3));
+        valencesTable.put("Pb", new Integer(4));
+        valencesTable.put("Bi", new Integer(5));
+        valencesTable.put("Po", new Integer(6));
+        valencesTable.put("At", new Integer(7));
+        valencesTable.put("Fr", new Integer(1));
+        valencesTable.put("Ra", new Integer(2));
+        valencesTable.put("Cu", new Integer(2));
+        valencesTable.put("Mn", new Integer(2));
+        valencesTable.put("Co", new Integer(2));    	
+    	
         // do all ring perception
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet allRings = null;
@@ -247,51 +292,6 @@ public class SMARTSQueryTool {
              }
             atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(total));
             atom.setProperty(CDKConstants.TOTAL_H_COUNT, new Integer(hCount)); 
-            
-            // TODO: Sets atom valency.
-            // Code copied from org.openscience.cdk.qsar.ChiIndexUtils
-            Map valencesTable = new HashMap();
-            valencesTable.put("H", new Integer(1));
-            valencesTable.put("Li", new Integer(1));
-            valencesTable.put("Be", new Integer(2));
-            valencesTable.put("B", new Integer(3));
-            valencesTable.put("C", new Integer(4));
-            valencesTable.put("N", new Integer(5));
-            valencesTable.put("O", new Integer(6));
-            valencesTable.put("F", new Integer(7));
-            valencesTable.put("Na", new Integer(1));
-            valencesTable.put("Mg", new Integer(2));
-            valencesTable.put("Al", new Integer(3));
-            valencesTable.put("Si", new Integer(4));
-            valencesTable.put("P", new Integer(5));
-            valencesTable.put("S", new Integer(6));
-            valencesTable.put("Cl", new Integer(7));
-            valencesTable.put("K", new Integer(1));
-            valencesTable.put("Ca", new Integer(2));
-            valencesTable.put("Ga", new Integer(3));
-            valencesTable.put("Ge", new Integer(4));
-            valencesTable.put("As", new Integer(5));
-            valencesTable.put("Se", new Integer(6));
-            valencesTable.put("Br", new Integer(7));
-            valencesTable.put("Rb", new Integer(1));
-            valencesTable.put("Sr", new Integer(2));
-            valencesTable.put("In", new Integer(3));
-            valencesTable.put("Sn", new Integer(4));
-            valencesTable.put("Sb", new Integer(5));
-            valencesTable.put("Te", new Integer(6));
-            valencesTable.put("I", new Integer(7));
-            valencesTable.put("Cs", new Integer(1));
-            valencesTable.put("Ba", new Integer(2));
-            valencesTable.put("Tl", new Integer(3));
-            valencesTable.put("Pb", new Integer(4));
-            valencesTable.put("Bi", new Integer(5));
-            valencesTable.put("Po", new Integer(6));
-            valencesTable.put("At", new Integer(7));
-            valencesTable.put("Fr", new Integer(1));
-            valencesTable.put("Ra", new Integer(2));
-            valencesTable.put("Cu", new Integer(2));
-            valencesTable.put("Mn", new Integer(2));
-            valencesTable.put("Co", new Integer(2));
 
             if (valencesTable.get(atom.getSymbol()) != null) {
                 atom.setValency(((Integer)valencesTable.get(atom.getSymbol())).intValue() -
