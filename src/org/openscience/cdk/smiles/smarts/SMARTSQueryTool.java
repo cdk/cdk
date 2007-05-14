@@ -20,6 +20,12 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -31,41 +37,37 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 /**
- * This class provides a easy to use wrapper around SMARTS matching functionality.
- * <p/>
- * User code that wants to do SMARTS matching should use this rather than using  SMARTSParser
- * (and UniversalIsomorphismTester) directly. Example usage would be
+ * This class provides a easy to use wrapper around SMARTS matching
+ * functionality. <p/> User code that wants to do SMARTS matching should use
+ * this rather than using SMARTSParser (and UniversalIsomorphismTester)
+ * directly. Example usage would be
+ * 
  * <pre>
  * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- * IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
- * SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO");
- * <p/>
+ * IAtomContainer atomContainer = sp.parseSmiles(&quot;CC(=O)OC(=O)C&quot;);
+ * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;);
+ * &lt;p/&gt;
  * boolean status = querytool.matches(atomContainer);
  * if (status) {
  *    int nmatch = querytool.countMatches();
  *    List mappings = querytool.getMatchingAtoms();
- *    for (int i = 0; i < nmatch; i++) {
+ *    for (int i = 0; i &lt; nmatch; i++) {
  *       List atomIndices = (List) mappings.get(i);
  *    }
  * }
  * </pre>
  * 
  * To use the JJTree based Smarts Parser, use:
+ * 
  * <pre>
- * SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", true);
+ * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;, true);
  * </pre>
- *
+ * 
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
@@ -80,8 +82,8 @@ public class SMARTSQueryTool {
 
     private List matchingAtoms = null;
     /**
-     * Whether to use JJTree based smarts parser
-     */
+	 * Whether to use JJTree based smarts parser
+	 */
     private boolean useJJTree = false;
 
     public SMARTSQueryTool(String smarts) throws CDKException {
@@ -96,38 +98,43 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Returns the current SMARTS pattern being used.
-     *
-     * @return The SMARTS pattern
-     */
+	 * Returns the current SMARTS pattern being used.
+	 * 
+	 * @return The SMARTS pattern
+	 */
     public String getSmarts() {
         return smarts;
     }
 
     /**
-     * Set a new SMARTS pattern.
-     *
-     * @param smarts The new SMARTS pattern
-     * @throws CDKException if there is an error in parsing the pattern
-     */
+	 * Set a new SMARTS pattern.
+	 * 
+	 * @param smarts
+	 *            The new SMARTS pattern
+	 * @throws CDKException
+	 *             if there is an error in parsing the pattern
+	 */
     public void setSmarts(String smarts) throws CDKException {
         this.smarts = smarts;
         initializeQuery();
     }
 
     /**
-     * Perform a SMARTS match and check whether the query is present in the target molecule.
-     * <p/>
-     * This function simply checks whether the query pattern matches the specified molecule.
-     * However the function will also, internally, save the mapping of query atoms to the target
-     * molecule
-     *
-     * @param atomContainer The target moleculoe
-     * @return true if the pattern is found in the target molecule, false otherwise
-     * @throws CDKException if there is an error in ring, aromaticity or isomorphism perception
-     * @see #getMatchingAtoms()
-     * @see #countMatches()
-     */
+	 * Perform a SMARTS match and check whether the query is present in the
+	 * target molecule. <p/> This function simply checks whether the query
+	 * pattern matches the specified molecule. However the function will also,
+	 * internally, save the mapping of query atoms to the target molecule
+	 * 
+	 * @param atomContainer
+	 *            The target moleculoe
+	 * @return true if the pattern is found in the target molecule, false
+	 *         otherwise
+	 * @throws CDKException
+	 *             if there is an error in ring, aromaticity or isomorphism
+	 *             perception
+	 * @see #getMatchingAtoms()
+	 * @see #countMatches()
+	 */
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
         // TODO: we should consider some sort of caching?
         this.atomContainer = atomContainer;
@@ -157,40 +164,40 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Returns the number of times the pattern was found in the target molecule.
-     * <p/>
-     * This function should be called after {@link #matches(org.openscience.cdk.interfaces.IAtomContainer)}.
-     * If not, the results may be undefined.
-     *
-     * @return The number of times the pattern was found in the target molecule
-     */
+	 * Returns the number of times the pattern was found in the target molecule.
+	 * <p/> This function should be called after
+	 * {@link #matches(org.openscience.cdk.interfaces.IAtomContainer)}. If not,
+	 * the results may be undefined.
+	 * 
+	 * @return The number of times the pattern was found in the target molecule
+	 */
     public int countMatches() {
         return matchingAtoms.size();
     }
 
     /**
-     * Get the atoms in the target molecule that match the query pattern.
-     * <p/>
-     * Since there may be multiple matches, the return value is a List of List objects. Each
-     * List object contains the indices of the atoms in the target molecule, that match the
-     * query pattern
-     *
-     * @return A List of List of atom indices in the target molecule
-     */
+	 * Get the atoms in the target molecule that match the query pattern. <p/>
+	 * Since there may be multiple matches, the return value is a List of List
+	 * objects. Each List object contains the indices of the atoms in the target
+	 * molecule, that match the query pattern
+	 * 
+	 * @return A List of List of atom indices in the target molecule
+	 */
     public List getMatchingAtoms() {
         return matchingAtoms;
     }
 
     /**
-     * Prepare the target molecule for analysis.
-     * <p/>
-     * We perform ring perception and aromaticity detection and set up the appropriate
-     * properties. Right now, this function is called each time we need to do a query
-     * and this is inefficient.
-     *
-     * @throws CDKException if there is a problem in ring perception or aromaticity detection,
-     *                      which is usually related to a timeout in the ring finding code.
-     */
+	 * Prepare the target molecule for analysis. <p/> We perform ring perception
+	 * and aromaticity detection and set up the appropriate properties. Right
+	 * now, this function is called each time we need to do a query and this is
+	 * inefficient.
+	 * 
+	 * @throws CDKException
+	 *             if there is a problem in ring perception or aromaticity
+	 *             detection, which is usually related to a timeout in the ring
+	 *             finding code.
+	 */
     private void initializeMolecule() throws CDKException {    	
         // do all ring perception
         AllRingsFinder arf = new AllRingsFinder();
@@ -210,7 +217,7 @@ public class SMARTSQueryTool {
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             
-            // add a property to each ring atom that will be an array of 
+            // add a property to each ring atom that will be an array of
             // Integers, indicating what size ring the given atom belongs to
             // Add SSSR ring counts
             if (allRings.contains(atom)) { // it's in a ring
@@ -241,13 +248,53 @@ public class SMARTSQueryTool {
             atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(total));
             atom.setProperty(CDKConstants.TOTAL_H_COUNT, new Integer(hCount)); 
             
-            //TODO: Sets atom valency. 
+            // TODO: Sets atom valency.
             // Code copied from org.openscience.cdk.qsar.ChiIndexUtils
-            Map valenceMap;
-            AtomValenceDescriptor avd = new AtomValenceDescriptor();
-            valenceMap = avd.valencesTable;
-            if (valenceMap.get(atom.getSymbol()) != null) {
-                atom.setValency(((Integer)valenceMap.get(atom.getSymbol())).intValue() -
+            Map valencesTable = new HashMap();
+            valencesTable.put("H", new Integer(1));
+            valencesTable.put("Li", new Integer(1));
+            valencesTable.put("Be", new Integer(2));
+            valencesTable.put("B", new Integer(3));
+            valencesTable.put("C", new Integer(4));
+            valencesTable.put("N", new Integer(5));
+            valencesTable.put("O", new Integer(6));
+            valencesTable.put("F", new Integer(7));
+            valencesTable.put("Na", new Integer(1));
+            valencesTable.put("Mg", new Integer(2));
+            valencesTable.put("Al", new Integer(3));
+            valencesTable.put("Si", new Integer(4));
+            valencesTable.put("P", new Integer(5));
+            valencesTable.put("S", new Integer(6));
+            valencesTable.put("Cl", new Integer(7));
+            valencesTable.put("K", new Integer(1));
+            valencesTable.put("Ca", new Integer(2));
+            valencesTable.put("Ga", new Integer(3));
+            valencesTable.put("Ge", new Integer(4));
+            valencesTable.put("As", new Integer(5));
+            valencesTable.put("Se", new Integer(6));
+            valencesTable.put("Br", new Integer(7));
+            valencesTable.put("Rb", new Integer(1));
+            valencesTable.put("Sr", new Integer(2));
+            valencesTable.put("In", new Integer(3));
+            valencesTable.put("Sn", new Integer(4));
+            valencesTable.put("Sb", new Integer(5));
+            valencesTable.put("Te", new Integer(6));
+            valencesTable.put("I", new Integer(7));
+            valencesTable.put("Cs", new Integer(1));
+            valencesTable.put("Ba", new Integer(2));
+            valencesTable.put("Tl", new Integer(3));
+            valencesTable.put("Pb", new Integer(4));
+            valencesTable.put("Bi", new Integer(5));
+            valencesTable.put("Po", new Integer(6));
+            valencesTable.put("At", new Integer(7));
+            valencesTable.put("Fr", new Integer(1));
+            valencesTable.put("Ra", new Integer(2));
+            valencesTable.put("Cu", new Integer(2));
+            valencesTable.put("Mn", new Integer(2));
+            valencesTable.put("Co", new Integer(2));
+
+            if (valencesTable.get(atom.getSymbol()) != null) {
+                atom.setValency(((Integer)valencesTable.get(atom.getSymbol())).intValue() -
                 		atom.getFormalCharge());
             }
         }
