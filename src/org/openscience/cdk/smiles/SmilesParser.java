@@ -756,20 +756,12 @@ public class SmilesParser {
 				} else if (mychar == '+' || mychar == '-')
 				{
 					charge = getCharge(s, position);
-					atom.setFormalCharge(charge);
-					if(s.length()>=position+1){
-						char next=s.charAt(position+1);
-						if(Character.isDigit(next)){
-							char[] nextarray={next};
-							atom.setFormalCharge(atom.getFormalCharge()*Integer.parseInt(new String(nextarray)));
-						}
-						position++;
-					}
 					position++;
 					if (charge < -1 || charge > 1)
 					{
 						position++;
 					}
+					atom.setFormalCharge(charge);
 				} else if (mychar == '@')
 				{
 					if (position < s.length() - 1 && s.charAt(position + 1) == '@')
