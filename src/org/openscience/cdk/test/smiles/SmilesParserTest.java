@@ -1008,7 +1008,24 @@ public class SmilesParserTest extends CDKTestCase {
 		assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 		assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 	}
-
+	/**
+	 * @cdk.bug 1719287
+	 */
+	public void testBug1719287() throws Exception {
+		//                             0  1 23 45
+		IMolecule mol = sp.parseSmiles("OC(=O)[C@@H](N)CC[S+1](C)C[C@@H](O1)[C@@H](O)[C@@H](O)[C@@H]1n(c3)c(n2)c(n3)c(N)nc2");
+		assertNotNull(mol);
+		assertEquals(6, mol.getAtomCount());
+		assertEquals(6, mol.getBondCount());
+		// test only option for delocalized bond system
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(0)), 0.001);
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(1)), 0.001);
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(2)), 0.001);
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(3)), 0.001);
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(4)), 0.001);
+		assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(5)), 0.001);			
+	}
+	
 	/**
 	 * @cdk.bug 1503541
 	 */
