@@ -185,24 +185,20 @@ public class GeometryToolsInternalCoordinates {
 	 *
 	 *@param  atomCon  The molecule to be rotated
 	 *@param  center   A point giving the rotation center
-	 *@param  angle    The angle by which to rotate the molecule
+	 *@param  angle    The angle by which to rotate the molecule, in radians
 	 */
 	public static void rotate(IAtomContainer atomCon, Point2d center, double angle) {
 		Point2d p;
-		double distance;
-		double offsetAngle;
+		double costheta = Math.cos(angle);
+		double sintheta = Math.sin(angle);
 		IAtom atom;
 		for (int i = 0; i < atomCon.getAtomCount(); i++) {
 			atom = atomCon.getAtom(i);
 			p = atom.getPoint2d();
-			distance = p.distance(center);
-			if (distance < 0.000000001) {
-				// do not rotate atoms which are located in the center of rotation
-			} else {
-				offsetAngle = GeometryToolsInternalCoordinates.getAngle(p.x - center.x, p.y - center.y);
-				p.x = center.x + (Math.sin(angle + offsetAngle) * distance);
-				p.y = center.y - (Math.cos(angle + offsetAngle) * distance);
-			}
+			double x = p.x - center.x;
+			double y = p.y - center.y;
+			p.x = x * costheta - y * sintheta + center.x;
+			p.y = x * sintheta + y * costheta + center.y;
 		}
 	}
 
