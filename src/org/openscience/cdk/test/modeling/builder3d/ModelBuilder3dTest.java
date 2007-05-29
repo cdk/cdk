@@ -158,6 +158,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	IMolecule mol = sp.parseSmiles(smile);
     	hAdder.addExplicitHydrogensToSatisfyValency(mol);
     	mb3d.generate3DCoordinates(mol, false);
+    	for(int i=0;i<mol.getAtomCount();i++){
+    		assertNotNull(mol.getAtom(i).getPoint3d());
+    	}
     }
 
     public void testModelBuilder3D_Konstanz() throws Exception {
@@ -170,7 +173,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles(smile);
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		mol = mb3d.generate3DCoordinates(mol, false);
-	}
+    	for(int i=0;i<mol.getAtomCount();i++){
+    		assertNotNull(mol.getAtom(i).getPoint3d());
+    	}
+    }
 
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
     	if (!this.runSlowTests()) fail("Slow tests turned of");
@@ -182,7 +188,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles(smile);
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		mol = mb3d.generate3DCoordinates(mol, false);
-	}
+    	for(int i=0;i<mol.getAtomCount();i++){
+    		assertNotNull(mol.getAtom(i).getPoint3d());
+    	}
+    }
     
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
     	if (!this.runSlowTests()) fail("Slow tests turned of");
@@ -194,6 +203,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	IMolecule mol = sp.parseSmiles(smile);
     	hAdder.addExplicitHydrogensToSatisfyValency(mol);
     	mol = mb3d.generate3DCoordinates(mol, false);
+    	for(int i=0;i<mol.getAtomCount();i++){
+    		assertNotNull(mol.getAtom(i).getPoint3d());
+    	}
     }
 
     /**
@@ -214,7 +226,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		}
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		mol = mb3d.generate3DCoordinates(mol, false);
-		assertNotNull(mol.getAtom(0).getPoint3d());
+    	for(int i=0;i<mol.getAtomCount();i++){
+    		assertNotNull(mol.getAtom(i).getPoint3d());
+    	}
 	}
     
     /**
@@ -255,7 +269,9 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	IMolecule ac= new NNMolecule((IAtomContainer)containersList.get(0));
     	hAdder.addExplicitHydrogensToSatisfyValency(ac);
     	ac = mb3d.generate3DCoordinates(ac, false);
-    	assertNotNull(ac.getAtom(0).getPoint3d());
+    	for(int i=0;i<ac.getAtomCount();i++){
+    		assertNotNull(ac.getAtom(i).getPoint3d());
+    	}
     }
 
     
