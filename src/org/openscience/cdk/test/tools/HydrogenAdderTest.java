@@ -469,5 +469,22 @@ public class HydrogenAdderTest extends CDKTestCase {
     	
     }
     
+    /**
+     * @cdk.bug 1727373
+     *
+     */
+    public void testBug1727373() throws Exception {
+        Molecule molecule = null;
+        String filename = "data/mdl/carbocations.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins);
+        molecule = (Molecule)reader.read((ChemObject)new Molecule());
+        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        assertEquals(2,molecule.getAtom(0).getHydrogenCount());
+        assertEquals(0,molecule.getAtom(1).getHydrogenCount());
+        assertEquals(1,molecule.getAtom(2).getHydrogenCount());
+        assertEquals(2,molecule.getAtom(3).getHydrogenCount());
+    }
+    
 }
 
