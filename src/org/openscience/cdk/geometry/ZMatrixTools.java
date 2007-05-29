@@ -68,6 +68,8 @@ public class ZMatrixTools {
                 cartesianCoords[index] = new Point3d(-Math.cos((angles[2]/180)*Math.PI)*distances[2]+distances[1],
                                            Math.sin((angles[2]/180)*Math.PI)*distances[2],
                                            0d);
+                if (first_atoms[index] == 0)
+                    cartesianCoords[index].x = (cartesianCoords[index].x - distances[1]) * -1;
             } else {
                 Vector3d cd = new Vector3d();
                 cd.sub(cartesianCoords[third_atoms[index]], cartesianCoords[second_atoms[index]]);
@@ -84,9 +86,7 @@ public class ZMatrixTools {
                 Vector3d ba = rotate(bc,n2,-angles[index]);
                 
                 ba.normalize();
-                
-                Vector3d ban = new Vector3d(ba);
-                ban.scale(distances[index]);
+                ba.scale(distances[index]);
                 
                 Point3d result = new Point3d();
                 result.add(cartesianCoords[first_atoms[index]], ba);
