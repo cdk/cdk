@@ -37,9 +37,12 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Provides methods for adding missing hydrogen atoms.
+ * Provides methods for adding missing hydrogen atoms. Make sure to correctly
+ * instantiate the HydrogenAdder for the type of molecule you are using. If
+ * your molecule has charges, or requires atomic hybridization information to
+ * derive, you need the parameterized constructor, as explained below.
  *
- * <p>An example:
+ * <p>An example, for a neutral molecule:
  * <pre>
  *   Molecule methane = new Molecule();
  *   Atom carbon = new Atom("C");
@@ -76,7 +79,12 @@ import java.util.HashMap;
  * </pre>
  *
  * <p>This class skips adding hydrogens for radicals, i.e IAtom's that
- * have an associated ISingleAtom.
+ * have an associated ISingleAtom. Use the following code, if your molecule
+ * has charged atoms:
+ *
+ * <pre>
+ *   HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
+ * </pre>
  *
  * @cdk.keyword    hydrogen, adding
  * @cdk.module     valencycheck
