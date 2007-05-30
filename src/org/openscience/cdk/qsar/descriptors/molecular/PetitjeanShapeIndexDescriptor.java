@@ -61,11 +61,12 @@ import javax.vecmath.Point3d;
  * </table>
  *
  *
- * @author Rajarshi Guha
+ * @author      Rajarshi Guha
  * @cdk.created 2006-01-14
- * @cdk.module qsar
- * @cdk.set qsar-descriptors
+ * @cdk.module  qsar
+ * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
+ * @cdk.keyword Petit-Jean, shape index
  */
 public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
 

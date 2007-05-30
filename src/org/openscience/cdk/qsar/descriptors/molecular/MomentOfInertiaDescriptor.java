@@ -70,13 +70,14 @@ import javax.vecmath.Point3d;
  * </tr>
  * </table>
  *
- * @author Rajarshi Guha
- * @cdk.created 2005-02-07
+ * @author           Rajarshi Guha
+ * @cdk.created      2005-02-07
  * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends Jama-1.0.1.jar
- * @cdk.module qsar
- * @cdk.set qsar-descriptors
- * @cdk.dictref qsar-descriptors:momentOfInertia
+ * @cdk.depends      Jama-1.0.1.jar
+ * @cdk.module       qsar
+ * @cdk.set          qsar-descriptors
+ * @cdk.dictref      qsar-descriptors:momentOfInertia
+ * @cdk.keyword      moment of inertia
  */
 public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
 

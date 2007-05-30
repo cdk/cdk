@@ -76,7 +76,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2004-11-03
  * @cdk.module     qsar
  * @cdk.set        qsar-descriptors
- * @cdk.dictref qsar-descriptors:wienerNumbers
+ * @cdk.dictref    qsar-descriptors:wienerNumbers
+ * @cdk.keyword    Wiener number
  */
 public class WienerNumbersDescriptor implements IMolecularDescriptor {
 

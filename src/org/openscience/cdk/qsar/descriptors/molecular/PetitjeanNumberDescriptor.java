@@ -57,13 +57,15 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *   </tr>
  * </table>
  *
- * Returns a single value named <i>PetitjeanNumber</i>
+ * Returns a single value named <i>PetitjeanNumber</i>.
+ *
  * @author         mfe4
  * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
  * @cdk.module     qsar
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
+ * @cdk.keyword    Petit-Jean, number
  */
 public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
 
