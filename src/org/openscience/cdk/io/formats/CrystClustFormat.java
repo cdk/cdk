@@ -73,10 +73,12 @@ public class CrystClustFormat implements IChemFormatMatcher {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
+		return getRequiredDataFeatures();
 	}
 
 	public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_3D_COORDINATES |
+		       DataFeatures.HAS_UNITCELL_PARAMETERS |
+               DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 }

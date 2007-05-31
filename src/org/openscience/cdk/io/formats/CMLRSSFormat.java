@@ -62,7 +62,9 @@ public class CMLRSSFormat implements IChemFormat {
 	}
 
 	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
+		return DataFeatures.HAS_3D_COORDINATES |
+		       DataFeatures.HAS_GRAPH_REPRESENTATION |
+		       DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
 	public int getRequiredDataFeatures() {

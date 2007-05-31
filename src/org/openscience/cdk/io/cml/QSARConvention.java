@@ -146,7 +146,7 @@ public class QSARConvention extends CMLCoreModule {
     	} else if ("xsd:integer".equals(currentDescriptorDataType)) {
     		result = new IntegerResult(Integer.parseInt(descriptorValue));
     	} else if ("xsd:boolean".equals(currentDescriptorDataType)) {
-    		result = new BooleanResult(Boolean.parseBoolean(descriptorValue));
+    		result = new BooleanResult(new Boolean(descriptorValue).booleanValue());
     	}
 		return result;
 	}
