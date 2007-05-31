@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -105,7 +108,7 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      * @return    The array of Molecules of this container 
      * @see #setMolecules
      */
-    public java.util.Iterator molecules() {
+    public Iterator<IAtomContainer> molecules() {
         return super.atomContainers();
     }
     

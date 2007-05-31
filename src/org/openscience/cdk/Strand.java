@@ -57,7 +57,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	private static final long serialVersionUID = 4200943086350928356L;
 
 	/** The list of all Monomers in the Strand.*/
-	private Hashtable monomers;
+	private Hashtable<String, IMonomer> monomers;
 	/** The name of this strand (e.g. A, B). */
 	private String strandName;
 	/** The type of this strand (e.g. PEPTIDE, DNA, RNA). */
@@ -69,7 +69,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	public Strand () {
 		super();
 		// Stand stuff
-		monomers = new Hashtable();
+		monomers = new Hashtable<String, IMonomer>();
 		Monomer oMonomer = new Monomer();
 		oMonomer.setMonomerName("");
 		oMonomer.setMonomerType("UNKNOWN");
@@ -186,7 +186,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames() {
+	public Collection<String> getMonomerNames() {
 		return monomers.keySet();
 	}
 	
@@ -222,7 +222,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 *
 	 * @return hashtable containing the monomers in the strand.
 	 */
-	public Hashtable getMonomers()	{
+	public Hashtable<String, IMonomer> getMonomers()	{
 		return monomers;
 	}
     

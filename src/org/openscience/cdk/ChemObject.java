@@ -64,11 +64,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	/**
 	 * List for listener administration.
 	 */
-	private List chemObjectListeners;
+	private List<IChemObjectListener> chemObjectListeners;
 	/**
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
-	private Hashtable properties;
+	private Hashtable<Object, Object> properties;
 	/**
 	 *  You will frequently have to use some flags on a IChemObject. For example, if
 	 *  you want to draw a molecule and see if you've already drawn an atom, or in
@@ -116,10 +116,10 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *
 	 *@return    List with the ChemObjects associated.
 	 */
-	private List lazyChemObjectListeners()
+	private List<IChemObjectListener> lazyChemObjectListeners()
 	{
 		if (chemObjectListeners == null) {
-			chemObjectListeners = new ArrayList();
+			chemObjectListeners = new ArrayList<IChemObjectListener>();
 		}
 		return chemObjectListeners;
 	}
@@ -134,7 +134,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public void addListener(IChemObjectListener col)
 	{
-		List listeners = lazyChemObjectListeners();
+		List<IChemObjectListener> listeners = lazyChemObjectListeners();
 
 		if (!listeners.contains(col))
 		{
@@ -217,11 +217,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *
 	 * @return    Returns in instance of the properties
 	 */
-	private Hashtable lazyProperties()
+	private Hashtable<Object, Object> lazyProperties()
 	{
 		if (properties == null)
 		{
-			properties = new Hashtable();
+			properties = new Hashtable<Object, Object>();
 		}
 		return properties;
 	}
@@ -307,7 +307,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		}
 		// clone the properties
 		if (properties != null) {
-			Hashtable clonedHashtable = new Hashtable();
+			Hashtable<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
 			Enumeration keys = properties.keys();
 			while (keys.hasMoreElements()) {
 				Object key = keys.nextElement();

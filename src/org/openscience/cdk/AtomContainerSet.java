@@ -21,6 +21,7 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -240,7 +241,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * 
      * @return A new Iterator for this AtomContainerSet.
 	 */
-	public java.util.Iterator atomContainers() {
+	public Iterator<IAtomContainer> atomContainers() {
 		return new AtomContainerIterator();
 	}
 
@@ -248,7 +249,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * The inner Iterator class.
      *
      */
-	private class AtomContainerIterator implements java.util.Iterator {
+	private class AtomContainerIterator implements Iterator<IAtomContainer> {
 		private int pointer = 0;
     	
         public boolean hasNext() {
@@ -256,8 +257,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	    return false;
         }
 
-        public Object next() {
-            //++pointer;
+        public IAtomContainer next() {
             return atomContainers[pointer++];
         }
 

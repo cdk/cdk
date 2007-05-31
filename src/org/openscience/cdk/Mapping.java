@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
@@ -71,7 +73,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      *
      * @return An Iterator to two IChemObjects that define the mapping
      */
-    public java.util.Iterator relatedChemObjects() {
+    public Iterator<IChemObject> relatedChemObjects() {
     	return new ChemObjectIterator();
     }
     
@@ -79,7 +81,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * The inner Iterator class.
      *
      */
-    private class ChemObjectIterator implements java.util.Iterator {
+    private class ChemObjectIterator implements Iterator<IChemObject> {
 
         private int pointer = 0;
     	
@@ -88,7 +90,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
             return false;
         }
 
-        public Object next() {
+        public IChemObject next() {
             return relation[pointer++];
         }
 

@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -121,7 +122,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 *@return    The Iterator to ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
-	public java.util.Iterator chemSequences()
+	public Iterator<IChemSequence> chemSequences()
 	{
 		return new ChemSequenceIterator();
 	}
@@ -130,7 +131,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
      * The inner Iterator class.
      *
      */
-    private class ChemSequenceIterator implements java.util.Iterator {
+    private class ChemSequenceIterator implements Iterator<IChemSequence> {
 
         private int pointer = 0;
     	
@@ -139,7 +140,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	    return false;
         }
 
-        public Object next() {
+        public IChemSequence next() {
             return chemSequences[pointer++];
         }
 

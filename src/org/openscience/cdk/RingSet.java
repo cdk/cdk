@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
@@ -66,9 +67,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	 * @return   A vector of all rings that this bond is part of  
 	 */
 
-	public List getRings(org.openscience.cdk.interfaces.IBond bond)
+	public List<IRing> getRings(IBond bond)
 	{
-		List rings = new ArrayList();
+		List<IRing> rings = new ArrayList<IRing>();
 		Ring ring;
 		for (int i = 0; i < getAtomContainerCount(); i++)
 		{
@@ -111,9 +112,9 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
 
-	public List getConnectedRings(IRing ring)
+	public List<IRing> getConnectedRings(IRing ring)
 	{
-		List connectedRings = new ArrayList();
+		List<IRing> connectedRings = new ArrayList<IRing>();
 		IRing tempRing;
 		IAtom atom;
 		for (int i  = 0; i < ring.getAtomCount(); i++)

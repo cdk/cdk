@@ -55,14 +55,14 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 */
 	private static final long serialVersionUID = -2596790658835319339L;
 
-	private Hashtable monomers;	// the list of all the contained Monomers. 
+	private Hashtable<String, IMonomer> monomers;	// the list of all the contained Monomers. 
 	
 	/**
 	 * Contructs a new Polymer to store the Monomers.
 	 */	
 	public Polymer() {
 		super();
-		monomers = new Hashtable();
+		monomers = new Hashtable<String, IMonomer>();
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames() {
+	public Collection<String> getMonomerNames() {
 		return monomers.keySet();
 	}
 	

@@ -107,7 +107,7 @@ public class AtomContainer extends ChemObject
 	/**
 	 * Internal list of atom parities.
 	 */
-	protected Hashtable atomParities;
+	protected Hashtable<IAtom, IAtomParity> atomParities;
 
 
 	/**
@@ -136,7 +136,7 @@ public class AtomContainer extends ChemObject
 		this.lonePairs = new ILonePair[this.lonePairCount];
 		this.singleElectrons = new ISingleElectron[this.singleElectronCount];
 		
-		atomParities = new Hashtable(atomCount/2);
+		atomParities = new Hashtable<IAtom, IAtomParity>(atomCount/2);
 
 		for (int f = 0; f < container.getAtomCount(); f++) {
 			atoms[f] = container.getAtom(f);
@@ -178,7 +178,7 @@ public class AtomContainer extends ChemObject
 		bonds = new IBond[bondCount];
 		lonePairs = new ILonePair[lpCount];
 		singleElectrons = new ISingleElectron[seCount];
-        atomParities = new Hashtable(atomCount/2);
+        atomParities = new Hashtable<IAtom, IAtomParity>(atomCount/2);
 	}
 
     /**
@@ -367,7 +367,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    An Iterator with the atoms in this container
 	 */
-	public java.util.Iterator atoms()
+	public Iterator<IAtom> atoms()
 	{
 		return new AtomIterator();
 	}
@@ -376,7 +376,7 @@ public class AtomContainer extends ChemObject
      * The inner AtomIterator class.
      *
      */
-    private class AtomIterator implements java.util.Iterator {
+    private class AtomIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
     	
@@ -384,7 +384,7 @@ public class AtomContainer extends ChemObject
             return pointer < atomCount;
         }
 
-        public Object next() {
+        public IAtom next() {
             return atoms[pointer++];
         }
 
@@ -399,7 +399,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    An Iterator with the bonds in this container
 	 */
-	public java.util.Iterator bonds()
+	public Iterator<IBond> bonds()
 	{
 		return new BondIterator();
 	}
@@ -408,7 +408,7 @@ public class AtomContainer extends ChemObject
      * The inner BondIterator class.
      *
      */
-    private class BondIterator implements java.util.Iterator {
+    private class BondIterator implements Iterator<IBond> {
 
         private int pointer = 0;
     	
@@ -416,7 +416,7 @@ public class AtomContainer extends ChemObject
             return pointer < bondCount;
         }
 
-        public Object next() {
+        public IBond next() {
             return bonds[pointer++];
         }
 
@@ -431,7 +431,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    An Iterator with the lone pairs in this container
 	 */
-	public Iterator lonePairs()
+	public Iterator<ILonePair> lonePairs()
 	{
 		return new LonePairIterator();
 	}
@@ -440,7 +440,7 @@ public class AtomContainer extends ChemObject
      * The inner LonePairIterator class.
      *
      */
-    private class LonePairIterator implements java.util.Iterator {
+    private class LonePairIterator implements Iterator<ILonePair> {
 
         private int pointer = 0;
     	
@@ -448,7 +448,7 @@ public class AtomContainer extends ChemObject
             return pointer < lonePairCount;
         }
 
-        public Object next() {
+        public ILonePair next() {
             return lonePairs[pointer++];
         }
 
@@ -463,7 +463,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    An Iterator with the single electrons in this container
 	 */
-	public Iterator singleElectrons()
+	public Iterator<ISingleElectron> singleElectrons()
 	{
 		return new SingleElectronIterator();
 	}
@@ -472,7 +472,7 @@ public class AtomContainer extends ChemObject
      * The inner SingleElectronIterator class.
      *
      */
-    private class SingleElectronIterator implements java.util.Iterator {
+    private class SingleElectronIterator implements Iterator<ISingleElectron> {
 
         private int pointer = 0;
     	
@@ -480,7 +480,7 @@ public class AtomContainer extends ChemObject
             return pointer < singleElectronCount;
         }
 
-        public Object next() {
+        public ISingleElectron next() {
             return singleElectrons[pointer++];
         }
 
@@ -495,7 +495,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@return    An Iterator with the electron containers in this container
 	 */
-	public Iterator electronContainers()
+	public Iterator<IElectronContainer> electronContainers()
 	{
 		return new ElectronContainerIterator();
 	}
@@ -504,7 +504,7 @@ public class AtomContainer extends ChemObject
      * The inner ElectronContainerIterator class.
      *
      */
-    private class ElectronContainerIterator implements java.util.Iterator {
+    private class ElectronContainerIterator implements Iterator<IElectronContainer> {
 
         private int pointer = 0;
     	
@@ -512,7 +512,7 @@ public class AtomContainer extends ChemObject
             return pointer < (bondCount + lonePairCount + singleElectronCount);
         }
 
-        public Object next() {
+        public IElectronContainer next() {
         	if (pointer < bondCount) return bonds[pointer++];
         	else if (pointer < bondCount+lonePairCount) return lonePairs[(pointer++)-bondCount];
         	else if (pointer < bondCount+lonePairCount+singleElectronCount) return singleElectrons[(pointer++)-bondCount-lonePairCount];
@@ -722,9 +722,9 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The ArrayList with the connected atoms
 	 */
-	public List getConnectedAtomsList(IAtom atom)
+	public List<IAtom> getConnectedAtomsList(IAtom atom)
 	{
-		List atomsList = new ArrayList();
+		List<IAtom> atomsList = new ArrayList<IAtom>();
 		for (int i = 0; i < bondCount; i++)
 		{
 			if (bonds[i].contains(atom)) atomsList.add(bonds[i].getConnectedAtom(atom));
@@ -738,9 +738,9 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The ArrayList with connected atoms
 	 */
-	public List getConnectedBondsList(IAtom atom)
+	public List<IBond> getConnectedBondsList(IAtom atom)
 	{
-		List bondsList = new ArrayList();
+		List<IBond> bondsList = new ArrayList<IBond>();
 		for (int i = 0; i < bondCount; i++)
 		{
 			if (bonds[i].contains(atom)) bondsList.add(bonds[i]);
@@ -757,8 +757,8 @@ public class AtomContainer extends ChemObject
      * @see #electronContainers()
      * @see #getBond
      */
-    public List getConnectedLonePairsList(IAtom atom) {
-        List lps = new ArrayList();
+    public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
+        List<ILonePair> lps = new ArrayList<ILonePair>();
         for (int i = 0; i < lonePairCount; i++) {
             if (lonePairs[i].contains(atom)) lps.add(lonePairs[i]);
         }
@@ -771,9 +771,9 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public List getConnectedSingleElectronsList(IAtom atom)
+	public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom)
 	{
-		List lps = new ArrayList();
+		List<ISingleElectron> lps = new ArrayList<ISingleElectron>();
 		for (int i = 0; i < singleElectronCount; i++)
 		{
 			if (singleElectrons[i].contains(atom)) lps.add(singleElectrons[i]);
@@ -787,9 +787,9 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The ArrayList with the  connected atoms
 	 */
-	public List getConnectedElectronContainersList(IAtom atom)
+	public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom)
 	{
-		List lps = new ArrayList();
+		List<IElectronContainer> lps = new ArrayList<IElectronContainer>();
 		for (int i = 0; i < bondCount; i++)
 		{
 			if (bonds[i].contains(atom)) lps.add(bonds[i]);

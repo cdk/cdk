@@ -25,7 +25,9 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -56,7 +58,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	/**
 	 *  Array of ChemModels.
 	 */
-	protected org.openscience.cdk.interfaces.IChemModel[] chemModels;
+	protected IChemModel[] chemModels;
 	
 	/**
 	 *  Number of ChemModels contained by this container.
@@ -123,7 +125,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      * @return    The Iterator to ChemModels in this container
      * @see       #addChemModel
      */
-     public java.util.Iterator chemModels() {
+     public Iterator<IChemModel> chemModels() {
     	 return new ChemModelIterator();
      }
 
@@ -131,7 +133,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
       * The inner Iterator class.
       *
       */
-     private class ChemModelIterator implements java.util.Iterator {
+     private class ChemModelIterator implements Iterator<IChemModel> {
 
          private int pointer = 0;
      	
@@ -140,7 +142,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
  	    return false;
          }
 
-         public Object next() {
+         public IChemModel next() {
              return chemModels[pointer++];
          }
 

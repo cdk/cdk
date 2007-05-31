@@ -64,7 +64,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 */
 	private static final long serialVersionUID = -5001873073769634393L;
 
-	private Hashtable strands;	// the list of all the contained Strands.
+	private Hashtable<String, IStrand> strands;	// the list of all the contained Strands.
 	
 	/**
 	 * Contructs a new Polymer to store the Strands.
@@ -72,7 +72,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	public BioPolymer() {
 		super();
 		// Strand stuff
-		strands = new Hashtable();
+		strands = new Hashtable<String, IStrand>();
 	}
 	
 	/**
@@ -193,9 +193,9 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames() {
+	public Collection<String> getMonomerNames() {
 		Enumeration keys = strands.keys();
-		Hashtable monomers = new Hashtable();
+		Hashtable<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
 		
 		while(keys.hasMoreElements())	{
 			Strand oStrand = (Strand)strands.get(keys.nextElement());
@@ -233,7 +233,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 *
 	 * @return a <code>Collection</code> of all the strand names.
 	 */
-	public Collection getStrandNames() {
+	public Collection<String> getStrandNames() {
 		return strands.keySet();
 	}
 	
@@ -253,7 +253,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	/**
 	 * @return hashtable containing the monomers in the strand.
 	 */
-	public Map getStrands()	{
+	public Map<String, IStrand> getStrands()	{
 		return strands;
 	}
 	

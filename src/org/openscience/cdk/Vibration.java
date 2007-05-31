@@ -45,7 +45,7 @@ public class Vibration {
     /**
      * List of atom vectors of type double[3]
      */
-    private Vector atomVectors = new Vector();
+    private Vector<double[]> atomVectors = new Vector<double[]>();
     
     /**
      * Create a vibration identified by the label.
@@ -81,7 +81,7 @@ public class Vibration {
      * @return atom vector in double[3] array
      */
     public double[] getAtomVector(int index) {
-        return (double[]) atomVectors.elementAt(index);
+        return atomVectors.elementAt(index);
     }
     
     /**

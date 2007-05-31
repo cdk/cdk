@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -139,7 +140,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *@return    An Iterator to atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public java.util.Iterator atoms()
+	public Iterator<IAtom> atoms()
 	{
 		return new AtomsIterator();
 	}
@@ -148,7 +149,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * The inner Iterator class.
      *
      */
-    private class AtomsIterator implements java.util.Iterator {
+    private class AtomsIterator implements Iterator<IAtom> {
 
         private int pointer = 0;
     	
@@ -157,7 +158,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	    return false;
         }
 
-        public Object next() {
+        public IAtom next() {
             ++pointer;
             return atoms[pointer-1];
         }

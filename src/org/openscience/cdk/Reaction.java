@@ -27,8 +27,11 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Iterator;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 
 /**
@@ -59,13 +62,13 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 
 	protected int growArraySize = 3;
 
-    protected org.openscience.cdk.interfaces.IMoleculeSet reactants;
-    protected org.openscience.cdk.interfaces.IMoleculeSet products;
+    protected IMoleculeSet reactants;
+    protected IMoleculeSet products;
     /** These are the used solvent, catalysist etc that normally appear above
         the reaction arrow */
-    protected org.openscience.cdk.interfaces.IMoleculeSet agents;
+    protected IMoleculeSet agents;
     
-    protected org.openscience.cdk.interfaces.IMapping[] map;
+    protected IMapping[] map;
     protected int mappingCount;
     
     private int reactionDirection;
@@ -158,7 +161,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return An Iterator to the Mappings.
      * @see    #addMapping
      */
-    public java.util.Iterator mappings() {
+    public Iterator<IMapping> mappings() {
         Mapping[] returnMappings = new Mapping[mappingCount];
         System.arraycopy(this.map, 0, returnMappings, 0, returnMappings.length);
         return new MappingIterator();
@@ -168,7 +171,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * The inner Mapping Iterator class.
      *
      */
-    private class MappingIterator implements java.util.Iterator {
+    private class MappingIterator implements Iterator<IMapping> {
 
         private int pointer = 0;
     	
@@ -177,7 +180,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 	    return false;
         }
 
-        public Object next() {
+        public IMapping next() {
             return map[pointer++];
         }
 
@@ -452,7 +455,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         clone.products = (MoleculeSet)((MoleculeSet)products).clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
-        Hashtable atomatom = new Hashtable();
+        Hashtable<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
         for (int i = 0; i < ((MoleculeSet)reactants).getMoleculeCount(); ++i) {
             Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);

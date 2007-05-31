@@ -24,6 +24,7 @@
 package org.openscience.cdk;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IReaction;
@@ -70,7 +71,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	/**
 	 *  Array of Reactions.
 	 */
-	private org.openscience.cdk.interfaces.IReaction[] reactions;
+	private IReaction[] reactions;
 	
 	/**
 	 *  Number of Reactions contained by this container.
@@ -99,7 +100,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 *
 	 * @param  reaction  The reaction to be added to this container 
 	 */
-	public void addReaction(org.openscience.cdk.interfaces.IReaction reaction) {
+	public void addReaction(IReaction reaction) {
 		if (reactionCount + 1 >= reactions.length) growReactionArray();
 		reactions[reactionCount] = reaction;
 		reactionCount++;
@@ -130,7 +131,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 * @param  number  The position of the Reaction to be returned
 	 * @return         The Reaction at position <code>number</code>
 	 */
-    public org.openscience.cdk.interfaces.IReaction getReaction(int number) {
+    public IReaction getReaction(int number) {
         return (Reaction)reactions[number];
     }
     
@@ -140,7 +141,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      * 
      * @return A new Iterator for this ReactionSet.
      */
-    public java.util.Iterator reactions() {
+    public Iterator<IReaction> reactions() {
     	return new ReactionIterator();
     }
     
@@ -148,7 +149,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      * The inner Iterator class.
      *
      */
-    private class ReactionIterator implements java.util.Iterator {
+    private class ReactionIterator implements Iterator<IReaction> {
 
         private int pointer = 0;
     	
@@ -157,7 +158,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	    return false;
         }
 
-        public Object next() {
+        public IReaction next() {
             return reactions[pointer++];
         }
 
