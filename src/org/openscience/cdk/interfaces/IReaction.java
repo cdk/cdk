@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
+
 /**
  * Represents the idea of a chemical reaction. The reaction consists of 
  * a set of reactants and a set of products.
@@ -115,7 +117,7 @@ public interface IReaction extends IChemObject {
      * @return An Iterator to the Mappings.
      * @see    #addMapping
      */
-    public java.util.Iterator mappings();
+    public Iterator<IMapping> mappings();
     
     /**
      * Adds a reactant to this reaction.

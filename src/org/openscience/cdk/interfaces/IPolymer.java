@@ -79,7 +79,7 @@ public interface IPolymer extends IMolecule {
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames();
+	public Collection<String> getMonomerNames();
 	
 	/**
 	 * Removes a particular monomer, specified by its name.

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
@@ -46,7 +48,7 @@ public interface IBond extends IElectronContainer {
 	 *@return    An Iterator to atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public java.util.Iterator atoms();
+	public Iterator<IAtom> atoms();
 
 	/**
 	 * Sets the array of atoms making up this bond.

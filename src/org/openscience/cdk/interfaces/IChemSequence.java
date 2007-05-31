@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
+
 /** 
  * A sequence of ChemModels, which can, for example, be used to
  * store the course of a reaction. Each state of the reaction would be
@@ -56,7 +58,7 @@ public interface IChemSequence extends IChemObject {
      * @return    The Iterator to ChemModels in this container
      * @see       #addChemModel
      */
-     public java.util.Iterator chemModels();
+     public Iterator<IChemModel> chemModels();
 
 	/**
 	 * Returns the ChemModel at position <code>number</code> in the

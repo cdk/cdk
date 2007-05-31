@@ -73,6 +73,6 @@ public interface IPDBPolymer extends IBioPolymer {
 	 * 
 	 * @return Collection containing the PDBStructure in the PDBPolymer
 	 */
-	public Collection getStructures();
+	public Collection<IPDBStructure> getStructures();
 	
 }

@@ -40,7 +40,7 @@ public interface IRingSet extends IAtomContainerSet {
 	 * @param   bond  The bond to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public List getRings(IBond bond);
+	public List<IRing> getRings(IBond bond);
 	
 	/**
 	 * Returns a vector of all rings that this atom is part of.
@@ -57,7 +57,7 @@ public interface IRingSet extends IAtomContainerSet {
 	 * @param   ring  A ring with which all return rings must share one or more atoms
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
-	public List getConnectedRings(IRing ring);
+	public List<IRing> getConnectedRings(IRing ring);
 	
 	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.

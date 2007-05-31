@@ -97,7 +97,7 @@ public interface IBioPolymer extends IPolymer {
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames();
+	public Collection<String> getMonomerNames();
 	
 	/**
 	 * Return the number of strands present in the BioPolymer.
@@ -120,7 +120,7 @@ public interface IBioPolymer extends IPolymer {
 	 *
 	 * @return a <code>Collection</code> of all the strand names.
 	 */
-	public Collection getStrandNames();
+	public Collection<String> getStrandNames();
 	
 	/**
 	 * Removes a particular strand, specified by its name.
@@ -134,6 +134,6 @@ public interface IBioPolymer extends IPolymer {
 	 * 
 	 * @return hashtable containing the strands in the Polymer
 	 */
-	public Map getStrands();
+	public Map<String,IStrand> getStrands();
 	
 }

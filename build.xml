@@ -196,7 +196,7 @@
                   </or>
             	</not>
             </condition>
-
+		  	<fail if="isNotJava15+" message="This CDK release requires Java5 or better."/>
         </target>
 
 
@@ -307,7 +307,7 @@
 
             <!-- ok, now that we have a copy, compile this copy -->
             <javac srcdir="${build.src}" destdir="${build}" optimize="${optimization}"
-                    debug="${debug}" deprecation="${deprecation}" target="1.3" source="1.3">
+                    debug="${debug}" deprecation="${deprecation}" target="1.5" source="1.5">
                 <classpath>
                     <fileset dir="${lib}" >
                         <exclude name="**/*" unless="module.libdepends.present" />

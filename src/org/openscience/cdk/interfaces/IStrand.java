@@ -109,7 +109,7 @@ public interface IStrand extends IAtomContainer {
 	 *
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
-	public Collection getMonomerNames();
+	public Collection<String> getMonomerNames();
 	
 	/**
 	 * Removes a particular monomer, specified by its name.
@@ -123,5 +123,5 @@ public interface IStrand extends IAtomContainer {
 	 * 
 	 * @return hashtable containing the monomers in the strand.
 	 */
-	public Hashtable getMonomers();
+	public Hashtable<String,IMonomer> getMonomers();
 }

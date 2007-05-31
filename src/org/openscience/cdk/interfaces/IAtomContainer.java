@@ -127,35 +127,35 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 *@return    An Iterator with the atoms in this container
 	 */
-	public Iterator atoms();
+	public Iterator<IAtom> atoms();
 
 	/**
 	 *  Returns an Iterator for looping over all bonds in this container.
 	 *
 	 *@return    An Iterator with the bonds in this container
 	 */
-	public Iterator bonds();
+	public Iterator<IBond> bonds();
 	
 	/**
 	 *  Returns an Iterator for looping over all lone pairs in this container.
 	 *
 	 *@return    An Iterator with the lone pairs in this container
 	 */
-	public Iterator lonePairs();
+	public Iterator<ILonePair> lonePairs();
 	
 	/**
 	 *  Returns an Iterator for looping over all single electrons in this container.
 	 *
 	 *@return    An Iterator with the single electrons in this container
 	 */
-	public Iterator singleElectrons();
+	public Iterator<ISingleElectron> singleElectrons();
 	
 	/**
 	 *  Returns an Iterator for looping over all electron containers in this container.
 	 *
 	 *@return    An Iterator with the electron containers in this container
 	 */
-	public Iterator electronContainers();
+	public Iterator<IElectronContainer> electronContainers();
 	
 	/**
 	 *  Returns the atom at position 0 in the container.
@@ -285,7 +285,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom the bond partners are searched of.
 	 *@return       The ArrayList with the connected atoms
 	 */
-	public List getConnectedAtomsList(IAtom atom);
+	public List<IAtom> getConnectedAtomsList(IAtom atom);
 
 	/**
 	 *  Returns an ArrayList of all Bonds connected to the given atom.
@@ -293,7 +293,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom the connected bonds are searched of
 	 *@return       The ArrayList with connected atoms
 	 */
-	public List getConnectedBondsList(IAtom atom);
+	public List<IBond> getConnectedBondsList(IAtom atom);
 
 	/**
 	 *  Returns the array of lone pairs connected to an atom.
@@ -301,7 +301,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom for which to get lone pairs
 	 *@return       The array of LonePairs of this AtomContainer
 	 */
-	public List getConnectedLonePairsList(IAtom atom);
+	public List<ILonePair> getConnectedLonePairsList(IAtom atom);
 
 	/**
 	 *  Returns an array of all SingleElectron connected to the given atom.
@@ -309,7 +309,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom on which the single electron is located
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
-	public List getConnectedSingleElectronsList(IAtom atom);
+	public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom);
 	
 	/**
 	 *  Returns an ArrayList of all electronContainers connected to the given atom.
@@ -317,7 +317,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom the connected electronContainers are searched of
 	 *@return       The ArrayList with the  connected atoms
 	 */
-	public List getConnectedElectronContainersList(IAtom atom);
+	public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom);
 
 	
 	/**

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Iterator;
+
 /**
  * A Object containing a number of ChemSequences. This is supposed to be the
  * top level container, which can contain all the concepts stored in a chemical
@@ -55,7 +57,7 @@ public interface IChemFile extends IChemObject {
 	 *@return    The Iterator to ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
-	public java.util.Iterator chemSequences();
+	public Iterator<IChemSequence> chemSequences();
 
 	/**
 	 * Returns the ChemSequence at position <code>number</code> in the container.
