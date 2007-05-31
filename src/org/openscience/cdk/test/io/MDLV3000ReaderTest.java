@@ -25,11 +25,13 @@
 package org.openscience.cdk.test.io;
 
 import java.io.InputStream;
+import java.io.StringReader;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV3000Reader;
@@ -81,6 +83,17 @@ public class MDLV3000ReaderTest extends CDKTestCase {
         assertNotNull(atom.getPoint2d());
         assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
         assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
+    }
+    
+    public void testEmptyString() throws Exception {
+    	String emptyString = "";
+    	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
+    	try {
+    		reader.read(new NNMolecule());
+    		fail("Should have received a CDK Exception");
+    	} catch (CDKException cdkEx) {
+    		assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
+    	}
     }
 
 }

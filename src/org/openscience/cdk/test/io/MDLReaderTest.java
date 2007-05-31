@@ -37,7 +37,9 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -161,6 +163,13 @@ public class MDLReaderTest extends CDKTestCase {
         assertEquals(41, ((IAtomContainer)containersList.get(0)).getBondCount());
         assertEquals(29, ((IAtomContainer)containersList.get(1)).getAtomCount());
         assertEquals(28, ((IAtomContainer)containersList.get(1)).getBondCount());
+    }
+    
+    public void testEmptyString() throws Exception {
+    	String emptyString = "";
+    	MDLReader reader = new MDLReader(new StringReader(emptyString));
+    	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+    	assertNull(mol);
     }
     
 }

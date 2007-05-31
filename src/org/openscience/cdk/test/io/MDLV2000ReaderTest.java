@@ -42,7 +42,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -364,6 +366,13 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	IChemFile chemFile = (IChemFile) reader.read((IChemObject) new org.openscience.cdk.ChemFile());
     	assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge());
     	assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge());
+    }
+    
+    public void testEmptyString() throws Exception {
+    	String emptyString = "";
+    	MDLV2000Reader reader = new MDLV2000Reader(new StringReader(emptyString));
+    	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+    	assertNull(mol);
     }
 
 }
