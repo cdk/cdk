@@ -207,6 +207,12 @@ public class GeometryToolsTest extends CDKTestCase {
     	assertFalse(GeometryTools.has2DCoordinates(container));
     }
 
+    public void testHas2DCoordinates_EmptyAtomContainer() {
+    	IAtomContainer container = new AtomContainer();
+    	assertFalse(GeometryTools.has2DCoordinates(container));
+    	assertFalse(GeometryTools.has2DCoordinates(null));
+}
+
     public void testHas2DCoordinatesNew_IAtomContainer() {
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));

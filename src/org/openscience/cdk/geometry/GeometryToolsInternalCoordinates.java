@@ -808,6 +808,8 @@ public class GeometryToolsInternalCoordinates {
 	 *@return    0 no 2d, 1=some, 2= for each atom
 	 */
 	public static int has2DCoordinatesNew(IAtomContainer ac) {
+		if (ac == null) return 0;
+		
 		boolean no2d=false;
 		boolean with2d=false;
 		java.util.Iterator atoms = ac.atoms();
