@@ -147,9 +147,15 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return readData;
     }
     
+    /**
+     * @throws CDKException when no file content is detected
+     */
     public void readHeader(IAtomContainer readData) throws CDKException {
 		// read four lines
     	String line1 = readLine();
+    	if (line1 == null) {
+    		throw new CDKException("Expected a header line, but found nothing.");
+    	}
     	if (line1.length() > 0) readData.setProperty(CDKConstants.TITLE, line1);
     	readLine();
     	String line3 = readLine();
