@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * in the SD file, without reading them into memory first. Suitable
  * for (very) large SDF files. For parsing the molecules in the
  * SD file, it uses the <code>MDLV2000Reader</code> or 
- * <code>MDLV2000Reader</code> reader; it does <b>not</b> work
+ * <code>MDLV3000Reader</code> reader; it does <b>not</b> work
  * for SDF files with MDL formats prior to the V2000 format.
  * 
  * <p>Example use:
@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module io
  *
  * @see org.openscience.cdk.io.MDLV2000Reader
+ * @see org.openscience.cdk.io.MDLV3000Reader
  * 
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created    2003-10-19
