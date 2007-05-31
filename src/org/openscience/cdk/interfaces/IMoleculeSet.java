@@ -63,7 +63,7 @@ public interface IMoleculeSet extends IAtomContainerSet {
      * @return    The array of Molecules of this container 
      * @see       #setMolecules(IMolecule[])
      */
-    public Iterator<IMolecule> molecules();
+    public Iterator<IAtomContainer> molecules();
     
     /**
      * Returns the Molecule at position <code>number</code> in the
