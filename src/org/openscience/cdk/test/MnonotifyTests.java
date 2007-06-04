@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -82,7 +83,7 @@ public class MnonotifyTests {
         suite.addTest(NNChemSequenceTest.suite());
         suite.addTest(NNCrystalTest.suite());
         suite.addTest(NNElectronContainerTest.suite());
-        suite.addTest(NNElementTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NNElementTest.class));
         suite.addTest(NNIsotopeTest.suite());
         suite.addTest(NNLonePairTest.suite());
         suite.addTest(NNMoleculeTest.suite());

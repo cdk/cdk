@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -20,14 +17,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -40,107 +36,99 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends CDKTestCase {
+public class ElementTest {
 
 	protected IChemObjectBuilder builder;
 	
-    public ElementTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+	@Before public void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(ElementTest.class);
     }
     
     // test constructors
     
-    public void testElement() {
+    @Test public void testElement() {
         IElement e = builder.newElement();
-        assertTrue(e instanceof IChemObject);
+        Assert.assertTrue(e instanceof IChemObject);
     }
     
-    public void testElement_IElement() {
+    @Test public void testElement_IElement() {
     	IElement element = builder.newElement();
         IElement e = builder.newElement(element);
-        assertTrue(e instanceof IChemObject);
+        Assert.assertTrue(e instanceof IChemObject);
     }
     
-    public void testElement_String() {
+    @Test public void testElement_String() {
         IElement e = builder.newElement("C");
-        assertEquals("C", e.getSymbol());
+        Assert.assertEquals("C", e.getSymbol());
     }
     
-    public void testElement_String_int() {
+    @Test public void testElement_String_int() {
         IElement e = builder.newElement("H", 1);
-        assertEquals("H", e.getSymbol());
-        assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals("H", e.getSymbol());
+        Assert.assertEquals(1, e.getAtomicNumber());
     }
     
     // test methods
     
-    public void testSetSymbol_String() {
+    @Test public void testSetSymbol_String() {
         IElement e = builder.newElement();
         e.setSymbol("C");
-        assertEquals("C", e.getSymbol());
+        Assert.assertEquals("C", e.getSymbol());
     }
         
-    public void testGetSymbol() {
+    @Test public void testGetSymbol() {
         IElement e = builder.newElement("X");
-        assertEquals("X", e.getSymbol());
+        Assert.assertEquals("X", e.getSymbol());
     }
         
-    public void testSetAtomicNumber_int() {
+    @Test public void testSetAtomicNumber_int() {
         IElement e = builder.newElement("H");
         e.setAtomicNumber(1);
-        assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals(1, e.getAtomicNumber());
     }
 
-    public void testGetAtomicNumber() {
+    @Test public void testGetAtomicNumber() {
         IElement e = builder.newElement("D", 1);
-        assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals(1, e.getAtomicNumber());
     }
 
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IElement elem = builder.newElement();
         Object clone = elem.clone();
-        assertTrue(clone instanceof IElement);
+        Assert.assertTrue(clone instanceof IElement);
     }
     
-    public void testClone_Symbol() throws Exception {
+    @Test public void testClone_Symbol() throws Exception {
         IElement elem = builder.newElement("C");
         IElement clone = (IElement)elem.clone();
         
         // test cloning of symbol
         elem.setSymbol("H");
-        assertEquals("C", clone.getSymbol());
+        Assert.assertEquals("C", clone.getSymbol());
     }
     
-    public void testClone_IAtomicNumber() throws Exception {
+    @Test public void testClone_IAtomicNumber() throws Exception {
         IElement elem = builder.newElement("C", 6);
         IElement clone = (IElement)elem.clone();
         
         // test cloning of atomic number
         elem.setAtomicNumber(5); // don't care about symbol
-        assertEquals(6, clone.getAtomicNumber());
+        Assert.assertEquals(6, clone.getAtomicNumber());
     }
     
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         IElement elem = builder.newElement();
         String description = elem.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+        	Assert.assertTrue(description.charAt(i) != '\n');
+        	Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    public void testCompare_Object() {
+    @Test public void testCompare_Object() {
         // Added to keep the Coverage checker happy, but since the
         // compare(Object) method is not part of the interface, nothing is tested
-        assertTrue(true);
+    	Assert.assertTrue(true);
     }
 }

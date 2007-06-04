@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -43,51 +44,51 @@ public class MdataTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The CDK data module Tests");
         
-        suite.addTest(DataCoverageTest.suite());
-        
-        suite.addTest(AminoAcidTest.suite());
-        suite.addTest(AtomContainerTest.suite());
-        //suite.addTest(AtomEnumerationTest.suite());
-        suite.addTest(AtomParityTest.suite());
-        suite.addTest(AtomTest.suite());
-        suite.addTest(AtomTypeTest.suite());
-        suite.addTest(BioPolymerTest.suite());
-        suite.addTest(BondTest.suite());
-        suite.addTest(ChemFileTest.suite());
-        suite.addTest(ChemModelTest.suite());
-        suite.addTest(ChemObjectTest.suite());
-        suite.addTest(ChemSequenceTest.suite());
-        suite.addTest(CrystalTest.suite());
-        suite.addTest(DefaultChemObjectBuilderTest.suite());
-        suite.addTest(ElectronContainerTest.suite());
-        suite.addTest(ElementTest.suite());
-        suite.addTest(IsotopeTest.suite());
-        suite.addTest(LonePairTest.suite());
-        suite.addTest(MappingTest.suite());
-        suite.addTest(MoleculeTest.suite());
-        suite.addTest(MonomerTest.suite());
-        suite.addTest(PolymerTest.suite());
-        suite.addTest(PseudoAtomTest.suite());
-        suite.addTest(ReactionTest.suite());
-        suite.addTest(RingTest.suite());
-        suite.addTest(RingSetTest.suite());
-        suite.addTest(AtomContainerSetTest.suite());
-        suite.addTest(MoleculeSetTest.suite());
-        suite.addTest(ReactionSetTest.suite());
-        suite.addTest(SingleElectronTest.suite());
-        suite.addTest(StrandTest.suite());
-        suite.addTest(ChangeEventPropagationTest.suite());
-
-        suite.addTest(FragmentAtomTest.suite());
-        
-        // test from test.event
-        suite.addTest(ChemObjectChangeEventTest.suite());
-        
-        // tests from test.protein.data
-        suite.addTest(PDBAtomTest.suite());
-        suite.addTest(PDBMonomerTest.suite());
-        suite.addTest(PDBPolymerTest.suite());
-        suite.addTest(PDBStructureTest.suite());
+//        suite.addTest(DataCoverageTest.suite());
+//        
+//        suite.addTest(AminoAcidTest.suite());
+//        suite.addTest(AtomContainerTest.suite());
+//        //suite.addTest(AtomEnumerationTest.suite());
+//        suite.addTest(AtomParityTest.suite());
+//        suite.addTest(AtomTest.suite());
+//        suite.addTest(AtomTypeTest.suite());
+//        suite.addTest(BioPolymerTest.suite());
+//        suite.addTest(BondTest.suite());
+//        suite.addTest(ChemFileTest.suite());
+//        suite.addTest(ChemModelTest.suite());
+//        suite.addTest(ChemObjectTest.suite());
+//        suite.addTest(ChemSequenceTest.suite());
+//        suite.addTest(CrystalTest.suite());
+//        suite.addTest(DefaultChemObjectBuilderTest.suite());
+//        suite.addTest(ElectronContainerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ElementTest.class));
+//        suite.addTest(IsotopeTest.suite());
+//        suite.addTest(LonePairTest.suite());
+//        suite.addTest(MappingTest.suite());
+//        suite.addTest(MoleculeTest.suite());
+//        suite.addTest(MonomerTest.suite());
+//        suite.addTest(PolymerTest.suite());
+//        suite.addTest(PseudoAtomTest.suite());
+//        suite.addTest(ReactionTest.suite());
+//        suite.addTest(RingTest.suite());
+//        suite.addTest(RingSetTest.suite());
+//        suite.addTest(AtomContainerSetTest.suite());
+//        suite.addTest(MoleculeSetTest.suite());
+//        suite.addTest(ReactionSetTest.suite());
+//        suite.addTest(SingleElectronTest.suite());
+//        suite.addTest(StrandTest.suite());
+//        suite.addTest(ChangeEventPropagationTest.suite());
+//
+//        suite.addTest(FragmentAtomTest.suite());
+//        
+//        // test from test.event
+//        suite.addTest(ChemObjectChangeEventTest.suite());
+//        
+//        // tests from test.protein.data
+//        suite.addTest(PDBAtomTest.suite());
+//        suite.addTest(PDBMonomerTest.suite());
+//        suite.addTest(PDBPolymerTest.suite());
+//        suite.addTest(PDBStructureTest.suite());
         
         return suite;
     }

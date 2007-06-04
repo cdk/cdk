@@ -1,8 +1,5 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- * 
+/* $Revision$ $Author$ $Date$    
+ *
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
@@ -20,12 +17,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.JUnit4TestAdapter;
 
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.ElementTest;
@@ -37,16 +32,12 @@ import org.openscience.cdk.test.ElementTest;
  */
 public class DebugElementTest extends ElementTest {
 
-    public DebugElementTest(String name) {
-        super(name);
-    }
-
     public void setUp() {
     	super.builder = DebugChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(DebugElementTest.class);
+    public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(DebugElementTest.class);
     }
 
 }

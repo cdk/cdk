@@ -24,9 +24,6 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ElementTest;
 
@@ -37,16 +34,8 @@ import org.openscience.cdk.test.ElementTest;
  */
 public class NNElementTest extends ElementTest {
 
-    public NNElementTest(String name) {
-        super(name);
-    }
-
     public void setUp() {
     	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNElementTest.class);
     }
 
 }
