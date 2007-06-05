@@ -783,7 +783,7 @@ def doCodeCoverage():
         if testsuite.find('smiles') != -1: continue
         print '    Analyzing %s' % (testsuite)
 
-        cmd = """java -cp %s emmarun -cp develjar/junit.jar:dist/jar/cdk-test.jar:dist/jar/cdk-svn-%s.jar:dist/jar/cdk-test-svn-%s.jar -ix +org.openscience.cdk.* -r html -sp src junit.textui.TestRunner org.openscience.cdk.test.%s &> tmp.log && cat tmp.log >> ../emma.log""" % (classpath, todayStr, todayStr, testsuite)
+        cmd = """java -cp %s emmarun -cp develjar/junit-4.3.1.jar:dist/jar/cdk-test.jar:dist/jar/cdk-svn-%s.jar:dist/jar/cdk-test-svn-%s.jar -ix +org.openscience.cdk.* -r html -sp src junit.textui.TestRunner org.openscience.cdk.test.%s &> tmp.log && cat tmp.log >> ../emma.log""" % (classpath, todayStr, todayStr, testsuite)
         os.system(cmd)
         if os.path.exists('coverage'):
             shutil.copytree('coverage', (os.path.join('emma', testsuite)))
