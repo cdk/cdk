@@ -226,7 +226,7 @@ public class MakeJavafilesFiles {
     	StringBuffer sb = new StringBuffer();
     	String className = classFile.getPath().substring(sourceDir.length()+1);
         for (int i=0; i<className.length()-5; i++) {
-            if (className.charAt(i) == '/' || className.charAt(i) == '\') {
+            if (className.charAt(i) == '/' || className.charAt(i) == '\\') {
                 sb.append('.');
             } else {
                 sb.append(className.charAt(i));
