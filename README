@@ -26,7 +26,7 @@ CDK library.
 2. Compiling
 
 Compiling and jar-ing the software is done with Jakarta's 
-Ant (http://jakarta.apache.org/ant/):
+Ant (http://jakarta.apache.org/ant/) and requires Java 1.5.0 or better:
 
 cdk/$ ls build.xml
 build.xml
