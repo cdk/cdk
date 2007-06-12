@@ -331,7 +331,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
 			inputList.add(atomContainer[i]);
 		}
-
+		System.out.println(inputList.size());
 		///////////////////////////////////////////////////////////////////////////////////////////
 		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
 
@@ -371,7 +371,14 @@ public class ModelBuilder3dTest extends CDKTestCase {
 			mol = mb3d.generate3DCoordinates(mol, false);
 			System.out.println("Calculation done");
 		}
+		
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+				Atom last = (Atom) atom.next();
+				if (last.getPoint3d() == null) notCalculatedResults = true;
+			}
+		}
 		assertEquals(false, notCalculatedResults);
 	}
-
 }
