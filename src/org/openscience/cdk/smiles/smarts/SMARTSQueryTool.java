@@ -20,12 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -40,6 +34,8 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.*;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching
@@ -151,7 +147,7 @@ public class SMARTSQueryTool {
                 IAtom atom = (IAtom) atoms.next();
                 if (queryAtom.matches(atom)) {
                     List tmp = new ArrayList();
-                    tmp.add(atom);
+                    tmp.add(new Integer(this.atomContainer.getAtomNumber(atom)));
                     matchingAtoms.add(tmp);
                 }
             }
