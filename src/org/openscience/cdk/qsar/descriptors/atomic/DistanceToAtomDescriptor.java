@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import javax.vecmath.Point3d;
 
 /**
  *  This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must be calculated beforehand.
@@ -94,7 +94,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter must be of type Integer");
         }
-        focusPosition = ((Integer) params[0]).intValue();
+        focusPosition = (Integer) params[0];
     }
 
 
@@ -105,7 +105,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      */
     public Object[] getParameters() {
         Object[] params = new Object[1];
-        params[0] = new Integer(focusPosition);
+        params[0] = focusPosition;
         return params;
     }
 
@@ -120,16 +120,15 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      */
 
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-        double distanceToAtom = 0;
-        
-        IAtom target = atom;
+        double distanceToAtom;
+
         IAtom focus = container.getAtom(focusPosition);
 
-        if (target.getPoint3d() == null || focus.getPoint3d() == null) {
+        if (atom.getPoint3d() == null || focus.getPoint3d() == null) {
         	throw new CDKException("Target or focus atom must have 3D coordinates.");
         }
         
-        distanceToAtom = calculateDistanceBetweenTwoAtoms(target, focus);
+        distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
         
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(distanceToAtom));
 
@@ -144,7 +143,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      * @return distance between atom1 and atom2
      */
     private double calculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
-        double distance = 0;
+        double distance;
         Point3d firstPoint = atom1.getPoint3d();
         Point3d secondPoint = atom2.getPoint3d();
         distance = firstPoint.distance(secondPoint);
@@ -170,7 +169,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return 0;
     }
 }
 

@@ -31,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
+import java.util.List;
+
 /**
  * This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
  *
@@ -93,9 +95,9 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomDegree = 0;
-        java.util.List neighboors = container.getConnectedAtomsList(atom);
-        for (int i =0; i< neighboors.size();i++) {
-            if(!((IAtom)neighboors.get(i)).getSymbol().equals("H")) atomDegree+=1;
+        List<IAtom> neighboors = container.getConnectedAtomsList(atom);
+        for (IAtom neighboor : neighboors) {
+            if (!neighboor.getSymbol().equals("H")) atomDegree += 1;
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomDegree));
     }

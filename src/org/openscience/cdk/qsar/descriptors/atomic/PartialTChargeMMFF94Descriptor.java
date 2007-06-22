@@ -114,8 +114,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     	DoubleResult aphaPartialCharge;
     	try {
 	       	mmff.assignMMFF94PartialCharges(ac);
-	       	IAtom target = atom;
-	        aphaPartialCharge = new DoubleResult(((Double)target.getProperty("MMFF94charge")).doubleValue());
+            aphaPartialCharge = new DoubleResult((Double) atom.getProperty("MMFF94charge"));
     	} catch (Exception ex1) {
 	            throw new CDKException("Problems with assignMMFF94PartialCharges due to " + ex1.toString(), ex1);
     	}

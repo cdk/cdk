@@ -106,12 +106,12 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         }
         if (!(params[0] instanceof Integer))
             throw new CDKException("The parameter 1 must be of type Integer");
-        maxIterations = ((Integer) params[0]).intValue();
+        maxIterations = (Integer) params[0];
         
         if(params.length > 1 && params[1] != null){
 	        if (!(params[1] instanceof Integer)) 
 	            throw new CDKException("The parameter 2 must be of type Integer");
-	        maxResonStruc = ((Integer) params[1]).intValue();
+	        maxResonStruc = (Integer) params[1];
         }
     }
 
@@ -125,7 +125,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Integer(maxIterations);
+        params[0] = maxIterations;
         return params;
     }
 
@@ -144,7 +144,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         try {
         	double q = 0.0;
         	if(maxIterations != -1 && maxResonStruc == -1){
-        		Object[] params = {new Integer(maxIterations)};
+        		Object[] params = {maxIterations};
         		descriptor.setParameters(params);
         	}
 //        	else if(maxIterations == -1 && maxResonStruc != -1){
@@ -197,7 +197,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0); 
+        return 0; 
     }
 }
 

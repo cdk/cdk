@@ -24,9 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +31,9 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class returns the valence of an atom.
@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  */
 public class AtomValenceDescriptor implements IAtomicDescriptor {
 
-    public Map valencesTable;
+    public Map<String,Integer> valencesTable;
 
     /**
      * Constructor for the AtomValenceDescriptor object
@@ -68,47 +68,47 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
     public AtomValenceDescriptor() {
         if (valencesTable == null) {
             valencesTable = new HashMap();
-            valencesTable.put("H", new Integer(1));
-            valencesTable.put("Li", new Integer(1));
-            valencesTable.put("Be", new Integer(2));
-            valencesTable.put("B", new Integer(3));
-            valencesTable.put("C", new Integer(4));
-            valencesTable.put("N", new Integer(5));
-            valencesTable.put("O", new Integer(6));
-            valencesTable.put("F", new Integer(7));
-            valencesTable.put("Na", new Integer(1));
-            valencesTable.put("Mg", new Integer(2));
-            valencesTable.put("Al", new Integer(3));
-            valencesTable.put("Si", new Integer(4));
-            valencesTable.put("P", new Integer(5));
-            valencesTable.put("S", new Integer(6));
-            valencesTable.put("Cl", new Integer(7));
-            valencesTable.put("K", new Integer(1));
-            valencesTable.put("Ca", new Integer(2));
-            valencesTable.put("Ga", new Integer(3));
-            valencesTable.put("Ge", new Integer(4));
-            valencesTable.put("As", new Integer(5));
-            valencesTable.put("Se", new Integer(6));
-            valencesTable.put("Br", new Integer(7));
-            valencesTable.put("Rb", new Integer(1));
-            valencesTable.put("Sr", new Integer(2));
-            valencesTable.put("In", new Integer(3));
-            valencesTable.put("Sn", new Integer(4));
-            valencesTable.put("Sb", new Integer(5));
-            valencesTable.put("Te", new Integer(6));
-            valencesTable.put("I", new Integer(7));
-            valencesTable.put("Cs", new Integer(1));
-            valencesTable.put("Ba", new Integer(2));
-            valencesTable.put("Tl", new Integer(3));
-            valencesTable.put("Pb", new Integer(4));
-            valencesTable.put("Bi", new Integer(5));
-            valencesTable.put("Po", new Integer(6));
-            valencesTable.put("At", new Integer(7));
-            valencesTable.put("Fr", new Integer(1));
-            valencesTable.put("Ra", new Integer(2));
-            valencesTable.put("Cu", new Integer(2));
-            valencesTable.put("Mn", new Integer(2));
-            valencesTable.put("Co", new Integer(2));
+            valencesTable.put("H", 1);
+            valencesTable.put("Li", 1);
+            valencesTable.put("Be", 2);
+            valencesTable.put("B", 3);
+            valencesTable.put("C", 4);
+            valencesTable.put("N", 5);
+            valencesTable.put("O", 6);
+            valencesTable.put("F", 7);
+            valencesTable.put("Na", 1);
+            valencesTable.put("Mg", 2);
+            valencesTable.put("Al", 3);
+            valencesTable.put("Si", 4);
+            valencesTable.put("P", 5);
+            valencesTable.put("S", 6);
+            valencesTable.put("Cl", 7);
+            valencesTable.put("K", 1);
+            valencesTable.put("Ca", 2);
+            valencesTable.put("Ga", 3);
+            valencesTable.put("Ge", 4);
+            valencesTable.put("As", 5);
+            valencesTable.put("Se", 6);
+            valencesTable.put("Br", 7);
+            valencesTable.put("Rb", 1);
+            valencesTable.put("Sr", 2);
+            valencesTable.put("In", 3);
+            valencesTable.put("Sn", 4);
+            valencesTable.put("Sb", 5);
+            valencesTable.put("Te", 6);
+            valencesTable.put("I", 7);
+            valencesTable.put("Cs", 1);
+            valencesTable.put("Ba", 2);
+            valencesTable.put("Tl", 3);
+            valencesTable.put("Pb", 4);
+            valencesTable.put("Bi", 5);
+            valencesTable.put("Po", 6);
+            valencesTable.put("At", 7);
+            valencesTable.put("Fr", 1);
+            valencesTable.put("Ra", 2);
+            valencesTable.put("Cu", 2);
+            valencesTable.put("Mn", 2);
+            valencesTable.put("Co", 2);
         }
     }
 
@@ -153,9 +153,9 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      */
 
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-        int atomValence = 0;
+        int atomValence;
         String symbol = atom.getSymbol();
-        atomValence = ((Integer) valencesTable.get(symbol)).intValue();
+        atomValence = valencesTable.get(symbol);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomValence));
     }
 

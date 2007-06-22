@@ -104,7 +104,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 		if (!(params[0] instanceof Boolean)) {
 			throw new CDKException("The second parameter must be of type Boolean");
 		}
-		checkAromaticity = ((Boolean) params[0]).booleanValue();
+		checkAromaticity = (Boolean) params[0];
 	}
 
 
@@ -117,7 +117,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
-		params[0] = new Boolean(checkAromaticity);
+		params[0] = checkAromaticity;
 		return params;
 	}
 
@@ -139,24 +139,22 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
 		java.util.List neighboor = mol.getConnectedAtomsList(atom);
-		IAtom target = atom;
-		IAtom neighbour0 = (IAtom)neighboor.get(0);
-		if(target.getSymbol().equals("H")) {
+        IAtom neighbour0 = (IAtom)neighboor.get(0);
+		if(atom.getSymbol().equals("H")) {
 			//logger.debug("aromatic proton");
 			if(neighbour0.getFlag(CDKConstants.ISAROMATIC)) {
 				isProtonInAromaticSystem = 1;
 			}
 			else {
 				java.util.List betaAtoms = ac.getConnectedAtomsList(neighbour0);
-				for (int i = 0; i < betaAtoms.size(); i++) {
-					if(((IAtom)betaAtoms.get(i)).getFlag(CDKConstants.ISAROMATIC)) {
-						isProtonInAromaticSystem = 2;
-					}
-					else {
-						isProtonInAromaticSystem = 0;
-					}
-				}
-			}
+                for (Object betaAtom : betaAtoms) {
+                    if (((IAtom) betaAtom).getFlag(CDKConstants.ISAROMATIC)) {
+                        isProtonInAromaticSystem = 2;
+                    } else {
+                        isProtonInAromaticSystem = 0;
+                    }
+                }
+            }
 		}
 		else {
 			isProtonInAromaticSystem = 0;
@@ -186,7 +184,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		return new Boolean(true);
+		return true;
 	}
 }
 

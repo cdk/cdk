@@ -23,9 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.BFSShortestPath;
+import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -61,7 +62,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
     private org._3pq.jgrapht.Graph mygraph = null;
-    java.util.List mylist = null;
+    java.util.List<Edge> mylist = null;
     Object startVertex = null;
     Object endVertex = null;
 
@@ -98,7 +99,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter must be of type Integer");
         }
-        focusPosition = ((Integer) params[0]).intValue();
+        focusPosition = (Integer) params[0];
     }
 
 
@@ -109,7 +110,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      */
     public Object[] getParameters() {
         Object[] params = new Object[1];
-        params[0] = new Integer(focusPosition);
+        params[0] = focusPosition;
         return params;
     }
 
@@ -126,14 +127,13 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         mygraph = MoleculeGraphs.getMoleculeGraph((Molecule)container);
         int bondsToAtom = 0;
-        
-        IAtom target = atom;
+
         IAtom focus = container.getAtom(focusPosition);
         
-        startVertex = target;
+        startVertex = atom;
         endVertex = focus;
         
-        mylist = BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
+        mylist = findPathBetween(mygraph,startVertex,endVertex);
         
         bondsToAtom = mylist.size();
         
@@ -161,7 +161,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Integer(0);
+        return 0;
     }
 }
 

@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,6 +34,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.IOException;
 
 /**
  *  This class return the covalent radius of a given atom.
@@ -139,7 +139,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
                 throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
             }
 
-        double covalentradius = 0;
+        double covalentradius;
         try {
             String symbol = atom.getSymbol();
             IAtomType type = factory.getAtomType(symbol);

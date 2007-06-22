@@ -104,7 +104,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
         }
         if(params.length==0)
         	return;
-        maxIterations = ((Integer) params[0]).intValue();
+        maxIterations = (Integer) params[0];
     }
 
 
@@ -117,7 +117,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Integer(maxIterations);
+        params[0] = maxIterations;
         return params;
     }
 
@@ -175,7 +175,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Integer(0); 
+        return 0; 
     }
 }
 

@@ -20,21 +20,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -44,6 +35,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *  This class returns the ionization potential of an atom containg lone 
@@ -114,7 +108,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	/**
 	 *  This method calculates the ionization potential of an atom.
 	 *
-	 *@param  chemObj           The IAtom to ionize.
+	 *@param  atom          The IAtom to ionize.
 	 *@param  container         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential. Not possible the ionization.
 	 *@exception  CDKException  Description of the Exception
@@ -125,7 +119,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double resultD = -1.0;
 		boolean isTarget = false;
 		boolean isConjugated = false;
-		double[] resultsH = null;
+		double[] resultsH;
 
 		/*control if it is into an aromatic or conjugated system*/
 		HueckelAromaticityDetector.detectAromaticity(container,true);
@@ -966,7 +960,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 * 
 	 * @return The IReactionSet value
 	 */
-	public IReactionSet getReactionSet() throws CDKException{
+	public IReactionSet getReactionSet()
+    {
 		return reactionSet;
 	}
 	/**
@@ -1065,16 +1060,16 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	private double[] calculateCarbonylDescriptor(IAtom atom, IAtomContainer atomContainer) {
 		
 		double[] results = new double[6];
-		IAtom positionX = atom;
-		IAtom positionC = null; 
-		List listAtoms = atomContainer.getConnectedAtomsList(atom);
-		for(Iterator it = listAtoms.iterator(); it.hasNext();){
-			IAtom atom2 = (IAtom)it.next();
-			if(((IBond)atomContainer.getBond(atom, atom2)).getOrder() > 1)
-				positionC = atom2;
-		}
+        IAtom positionC = null;
+		List<IAtom> listAtoms = atomContainer.getConnectedAtomsList(atom);
+        for (IAtom listAtom : listAtoms) {
+            if (atomContainer.getBond(atom, listAtom).getOrder() <= 1) {
+                continue;
+            }
+            positionC = listAtom;
+        }
 
-		IBond bond = atomContainer.getBond(positionX, positionC);
+        IBond bond = atomContainer.getBond(atom, positionC);
 		try {
 			AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(atomContainer);
 			
@@ -1130,14 +1125,14 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 			/* 4 */
 			try{
 			SigmaElectronegativityDescriptor descriptor4 = new SigmaElectronegativityDescriptor();
-			results[3] = ((DoubleResult)descriptor4.calculate(positionX,(IAtomContainer) atomContainer).getValue()).doubleValue();
+			results[3] = ((DoubleResult)descriptor4.calculate(atom,(IAtomContainer) atomContainer).getValue()).doubleValue();
 			}catch(Exception e){
 				results[3] = 0.0;
 			}
 			/* 5 */
 			try{
 			PartialPiChargeDescriptor descriptor5 = new PartialPiChargeDescriptor();
-			results[4] = ((DoubleResult)descriptor5.calculate(positionX,(IAtomContainer) atomContainer).getValue()).doubleValue();
+			results[4] = ((DoubleResult)descriptor5.calculate(atom,(IAtomContainer) atomContainer).getValue()).doubleValue();
 			}catch(Exception e){
 				results[4] = 0.0;
 			}

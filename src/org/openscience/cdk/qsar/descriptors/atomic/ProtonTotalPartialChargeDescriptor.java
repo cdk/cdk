@@ -124,10 +124,9 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
-        IAtom target = atom;
-        java.util.List neighboors = mol.getConnectedAtomsList(target);
+        java.util.List neighboors = mol.getConnectedAtomsList(atom);
         DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.size() + 1);
-        protonPartialCharge.add( target.getCharge() );
+        protonPartialCharge.add( atom.getCharge() );
         for (int i = 0; i < neighboors.size(); i++) {
         	IAtom neighbour = (IAtom)neighboors.get(i);
             if (neighbour.getSymbol().equals("H")) {

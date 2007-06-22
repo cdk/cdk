@@ -24,10 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,6 +34,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.io.IOException;
+
 /**
  *  Inductive atomic hardness of an atom in a polyatomic system can be defined
  *  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
@@ -157,19 +157,18 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
                 throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
             }
 
-		IAtom target = atom;
-		double atomicHardness = 0;
+        double atomicHardness;
 
-		double radiusTarget = 0;
+		double radiusTarget;
 		
 		java.util.Iterator allAtoms = ac.atoms();
 		atomicHardness = 0;
-		double partial = 0;
-		double radius = 0;
-		String symbol = null;
-		IAtomType type = null;
+		double partial;
+		double radius;
+		String symbol;
+		IAtomType type;
 		try {
-			symbol = target.getSymbol();
+			symbol = atom.getSymbol();
 			type = factory.getAtomType(symbol);
 			radiusTarget = type.getCovalentRadius();
 		} catch (Exception ex1) {
@@ -179,12 +178,12 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 
 		while (allAtoms.hasNext()) {
 			IAtom curAtom = (IAtom)allAtoms.next();
-			if (target.getPoint3d() == null || curAtom.getPoint3d() == null) {
+			if (atom.getPoint3d() == null || curAtom.getPoint3d() == null) {
 				throw new CDKException("The target atom or current atom had no 3D coordinates. These are required");
 			}
 
 
-			if (!target.equals(curAtom)) {
+			if (!atom.equals(curAtom)) {
 				partial = 0;
 				symbol = curAtom.getSymbol();
 
@@ -197,7 +196,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 				radius = type.getCovalentRadius();
 				partial += radius * radius;
 				partial += (radiusTarget * radiusTarget);
-				partial = partial / (calculateSquareDistanceBetweenTwoAtoms(target, curAtom));
+				partial = partial / (calculateSquareDistanceBetweenTwoAtoms(atom, curAtom));
 				atomicHardness += partial;
 			}
 		}
@@ -209,8 +208,8 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 	}
 
 	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {
-		double distance = 0;
-		double tmp = 0;
+		double distance;
+		double tmp;
 		Point3d firstPoint = atom1.getPoint3d();
 		Point3d secondPoint = atom2.getPoint3d();
 		tmp = firstPoint.distance(secondPoint);

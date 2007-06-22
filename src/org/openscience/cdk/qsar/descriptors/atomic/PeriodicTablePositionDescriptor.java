@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.Hashtable;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -33,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.Hashtable;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -59,7 +59,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  */
 public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
-	public Hashtable periodicTable;
+	public Hashtable<String, Integer> periodicTable;
 	
 	/**
 	 *  Constructor for the PeriodicTablePositionDescriptor object
@@ -67,45 +67,45 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	public PeriodicTablePositionDescriptor() {
 		//logger = new LoggingTool(this);
 	    if (periodicTable == null) { 
-		periodicTable = new Hashtable();
-		periodicTable.put("H", new Integer(1));
-		periodicTable.put("Li", new Integer(2));
-		periodicTable.put("Be", new Integer(2));
-		periodicTable.put("B", new Integer(2));
-		periodicTable.put("C", new Integer(2));
-		periodicTable.put("N", new Integer(2));
-		periodicTable.put("O", new Integer(2));
-		periodicTable.put("F", new Integer(2));
-		periodicTable.put("Na", new Integer(3));
-		periodicTable.put("Mg", new Integer(3));
-		periodicTable.put("Al", new Integer(3));
-		periodicTable.put("Si", new Integer(3));
-		periodicTable.put("P", new Integer(3));
-		periodicTable.put("S", new Integer(3));
-		periodicTable.put("Cl", new Integer(3));
-		periodicTable.put("K", new Integer(4));
-		periodicTable.put("Ca", new Integer(4));
-		periodicTable.put("Ga", new Integer(4));
-		periodicTable.put("Ge", new Integer(4));
-		periodicTable.put("As", new Integer(4));
-		periodicTable.put("Se", new Integer(4));
-		periodicTable.put("Br", new Integer(4));
-		periodicTable.put("Rb", new Integer(5));
-		periodicTable.put("Sr", new Integer(5));
-		periodicTable.put("In", new Integer(5));
-		periodicTable.put("Sn", new Integer(5));
-		periodicTable.put("Sb", new Integer(5));
-		periodicTable.put("Te", new Integer(5));
-		periodicTable.put("I", new Integer(5));
-		periodicTable.put("Cs", new Integer(6));
-		periodicTable.put("Ba", new Integer(6));
-		periodicTable.put("Tl", new Integer(6));
-		periodicTable.put("Pb", new Integer(6));
-		periodicTable.put("Bi", new Integer(6));
-		periodicTable.put("Po", new Integer(6));
-		periodicTable.put("At", new Integer(6));
-		periodicTable.put("Fr", new Integer(7));
-		periodicTable.put("Ra", new Integer(7));	    
+		periodicTable = new Hashtable<String, Integer>();
+		periodicTable.put("H", 1);
+		periodicTable.put("Li", 2);
+		periodicTable.put("Be", 2);
+		periodicTable.put("B", 2);
+		periodicTable.put("C", 2);
+		periodicTable.put("N", 2);
+		periodicTable.put("O", 2);
+		periodicTable.put("F", 2);
+		periodicTable.put("Na", 3);
+		periodicTable.put("Mg", 3);
+		periodicTable.put("Al", 3);
+		periodicTable.put("Si", 3);
+		periodicTable.put("P", 3);
+		periodicTable.put("S", 3);
+		periodicTable.put("Cl", 3);
+		periodicTable.put("K", 4);
+		periodicTable.put("Ca", 4);
+		periodicTable.put("Ga", 4);
+		periodicTable.put("Ge", 4);
+		periodicTable.put("As", 4);
+		periodicTable.put("Se", 4);
+		periodicTable.put("Br", 4);
+		periodicTable.put("Rb", 5);
+		periodicTable.put("Sr", 5);
+		periodicTable.put("In", 5);
+		periodicTable.put("Sn", 5);
+		periodicTable.put("Sb", 5);
+		periodicTable.put("Te", 5);
+		periodicTable.put("I", 5);
+		periodicTable.put("Cs", 6);
+		periodicTable.put("Ba", 6);
+		periodicTable.put("Tl", 6);
+		periodicTable.put("Pb", 6);
+		periodicTable.put("Bi", 6);
+		periodicTable.put("Po", 6);
+		periodicTable.put("At", 6);
+		periodicTable.put("Fr", 7);
+		periodicTable.put("Ra", 7);
 	    }
 	}
 
@@ -153,9 +153,9 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 */
 
 	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-		int period = 0;
+		int period;
 		String symbol = atom.getSymbol();
-		period = ((Integer)periodicTable.get(symbol)).intValue();
+		period = (Integer) periodicTable.get(symbol);
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period));
 	}
 

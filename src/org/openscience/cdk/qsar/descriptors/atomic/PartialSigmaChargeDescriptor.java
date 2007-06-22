@@ -105,7 +105,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
         if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter 2 must be of type Integer");
         }
-        maxIterations = ((Integer) params[0]).intValue();
+        maxIterations = (Integer) params[0];
     }
 
 
@@ -117,7 +117,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Integer(maxIterations);
+        params[0] = maxIterations;
         return params;
     }
 
@@ -175,8 +175,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0)};
-        return object;
+        return new Integer[]{0};
     }
 }
 

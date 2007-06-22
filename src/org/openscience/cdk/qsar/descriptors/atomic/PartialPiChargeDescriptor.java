@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
-
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+
+import java.io.IOException;
 
 /**
  *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
@@ -111,18 +111,18 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         
         if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
-	        maxIterations = ((Integer) params[0]).intValue();
+	        maxIterations = (Integer) params[0];
 	        
 	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
-        	lpeChecker = ((Boolean) params[1]).booleanValue();
+        	lpeChecker = (Boolean) params[1];
         }
 	    
 	    if(params.length > 2 && params[2] != null){
         	if (!(params[2] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
-        	maxResonStruc = ((Integer) params[2]).intValue();
+        	maxResonStruc = (Integer) params[2];
         }
     }
 
@@ -135,7 +135,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Integer(maxIterations);
+        params[0] = maxIterations;
         return params;
     }
 
@@ -206,8 +206,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	Integer[] object = {new Integer(0)};
-        return object;
+        return new Integer[]{0};
     }
 }
 

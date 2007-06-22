@@ -193,8 +193,7 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
             container.getBuilder());
 
 			// take atomtype for the given element...
-			IAtomType atomType = atomATF.getAtomType(atom.getSymbol());
-			return atomType;
+            return atomATF.getAtomType(atom.getSymbol());
 			
 		} catch (Exception ex1) 
 		{
