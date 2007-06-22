@@ -1713,8 +1713,10 @@ public class SmilesGenerator
 	private String generateMassString(IAtom a)
 	{
 		if (isotopeFactory == null) setupIsotopeFactory(a.getBuilder());
-		
-		IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
+
+        if (a instanceof IPseudoAtom) return Integer.toString(a.getMassNumber());
+
+        IIsotope majorIsotope = isotopeFactory.getMajorIsotope(a.getSymbol());
 		if (majorIsotope.getMassNumber() == a.getMassNumber())
 		{
 			return "";
