@@ -371,19 +371,18 @@ public class GasteigerPEPEPartialCharges {
                     ac.getBuilder()
                 );
 
-			java.util.List atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
-			for(int i = 0 ; i < atoms.size() ; i++){
-				double covalentradius = 0;
-	            String symbol = ((IAtom)atoms.get(i)).getSymbol();
-	            IAtomType type = factory.getAtomType(symbol);
-	            covalentradius = type.getCovalentRadius();
+			java.util.List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
+            for (IAtom atom : atoms) {
+                double covalentradius = 0;
+                String symbol = atom.getSymbol();
+                IAtomType type = factory.getAtomType(symbol);
+                covalentradius = type.getCovalentRadius();
 
-	            double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
-				double sumI = CoulombForceConstant*charge/(covalentradius*covalentradius);
-//				logger.debug("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
-				sum += sumI;
-			}
-		} catch (CDKException e) {
+                double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
+                //				logger.debug("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
+                sum += CoulombForceConstant * charge / (covalentradius * covalentradius);
+            }
+        } catch (CDKException e) {
             logger.debug(e);
         }
 		

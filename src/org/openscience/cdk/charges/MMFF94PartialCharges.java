@@ -23,12 +23,14 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.Hashtable;
-import java.util.Vector;
-
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
+
+import java.util.Hashtable;
+import java.util.Vector;
+
 /**
  *  The calculation of the MMFF94 partial charges.
  *  Charges are stored as atom properties:
@@ -83,45 +85,44 @@ public class MMFF94PartialCharges {
 		double sumOfFormalCharges = 0;
 		double sumOfBondIncrements = 0;
 		org.openscience.cdk.interfaces.IAtom thisAtom = null;
-		java.util.List neighboors = null;
+		java.util.List<IAtom> neighboors;
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;
-		java.util.Iterator atoms = ac.atoms();
+		java.util.Iterator<IAtom> atoms = ac.atoms();
 		while(atoms.hasNext()) {
 			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
-			thisAtom = (org.openscience.cdk.interfaces.IAtom)atoms.next();
+			thisAtom = atoms.next();
 			data = (Vector) parameterSet.get("data"+thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtomsList(thisAtom);
 			formalCharge = thisAtom.getCharge();
-			theta = ((Double)data.get(5)).doubleValue();
+			theta = (Double) data.get(5);
 			charge = formalCharge * (1 - (neighboors.size() * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
-			for(int n = 0; n < neighboors.size(); n++) {
-				org.openscience.cdk.interfaces.IAtom neighbour = (org.openscience.cdk.interfaces.IAtom)neighboors.get(n);
-				dataNeigh = (Vector) parameterSet.get("data"+neighbour.getAtomTypeName());
-				if (parameterSet.containsKey("bond"+thisAtom.getAtomTypeName()+";"+neighbour.getAtomTypeName())) {
-					bondData = (Vector) parameterSet.get("bond"+thisAtom.getAtomTypeName()+";"+neighbour.getAtomTypeName());
-					sumOfBondIncrements -= ((Double) bondData.get(4)).doubleValue();
-				}
-				else if (parameterSet.containsKey("bond"+neighbour.getAtomTypeName()+";"+thisAtom.getAtomTypeName())) {
-					bondData = (Vector) parameterSet.get("bond"+neighbour.getAtomTypeName()+";"+thisAtom.getAtomTypeName());
-					sumOfBondIncrements += ((Double) bondData.get(4)).doubleValue();
-				}
-				else {
-					// Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
-					sumOfBondIncrements += ( theta - ((Double)dataNeigh.get(5)).doubleValue() );
-				}
-				
-				
-				dataNeigh = (Vector) parameterSet.get("data"+neighbour.getID());
-				formalChargeNeigh = neighbour.getCharge();
-				sumOfFormalCharges += formalChargeNeigh;
-			}
-			charge += sumOfFormalCharges * theta;
+            for (IAtom neighboor : neighboors) {
+                IAtom neighbour = (IAtom) neighboor;
+                dataNeigh = (Vector) parameterSet.get("data" + neighbour.getAtomTypeName());
+                if (parameterSet.containsKey("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName())) {
+                    bondData = (Vector) parameterSet.get("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName());
+                    sumOfBondIncrements -= (Double) bondData.get(4);
+                } else
+                if (parameterSet.containsKey("bond" + neighbour.getAtomTypeName() + ";" + thisAtom.getAtomTypeName())) {
+                    bondData = (Vector) parameterSet.get("bond" + neighbour.getAtomTypeName() + ";" + thisAtom.getAtomTypeName());
+                    sumOfBondIncrements += (Double) bondData.get(4);
+                } else {
+                    // Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
+                    sumOfBondIncrements += (theta - (Double) dataNeigh.get(5));
+                }
+
+
+                dataNeigh = (Vector) parameterSet.get("data" + neighbour.getID());
+                formalChargeNeigh = neighbour.getCharge();
+                sumOfFormalCharges += formalChargeNeigh;
+            }
+            charge += sumOfFormalCharges * theta;
 			charge += sumOfBondIncrements;
-			thisAtom.setProperty("MMFF94charge", new Double(charge));
+			thisAtom.setProperty("MMFF94charge", charge);
 			//logger.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
 		}
 		return ac;

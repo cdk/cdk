@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.Vector;
-
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Vector;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
@@ -111,8 +112,8 @@ public class Polarizability {
                                                          int influenceSphereCutOff) {
         double polarizabilitiy = 0;
         Molecule acH = new Molecule(atomContainer);
-        Vector startAtom = new Vector(1);
-        startAtom.add(0, (Atom) atom);
+        Vector<IAtom> startAtom = new Vector<IAtom>(1);
+        startAtom.add(0, atom);
         double bond;
         try {
             HydrogenAdder hAdder = new HydrogenAdder();
@@ -246,11 +247,11 @@ public class Polarizability {
      *@return       The numberOfHydrogen value
      */
     private int getNumberOfHydrogen(IAtomContainer atomContainer, org.openscience.cdk.interfaces.IAtom atom) {
-        java.util.List bonds = atomContainer.getConnectedBondsList(atom);
+        java.util.List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
         org.openscience.cdk.interfaces.IAtom connectedAtom;
         int hCounter = 0;
-        for (int i = 0; i < bonds.size(); i++) {
-            connectedAtom = ((org.openscience.cdk.interfaces.IBond)bonds.get(i)).getConnectedAtom(atom);
+        for (IBond bond : bonds) {
+            connectedAtom = bond.getConnectedAtom(atom);
             if (connectedAtom.getSymbol().equals("H")) {
                 hCounter += 1;
             }
