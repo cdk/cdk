@@ -84,7 +84,8 @@ public class HueckelAromaticityDetector
 	 * @param  ringSet		  set of ALL rings
 	 * @param  atomContainer  The AtomContainer to detect rings in
 	 * @return                True if molecule has aromatic features
-	 * @exception             org.openscience.cdk.exception.CDKException  
+	 * @exception             org.openscience.cdk.exception.CDKException Thrown in case of errors or an
+	 *				AllRingsFinder timeout  
 	 */
 	public static boolean detectAromaticity(IAtomContainer atomContainer, IRingSet ringSet) throws org.openscience.cdk.exception.CDKException
 	{
@@ -139,12 +140,8 @@ public class HueckelAromaticityDetector
 		long after = System.currentTimeMillis();
 		logger.debug("time for finding all rings: " + (after - before) + " milliseconds");
 		logger.debug("Finished AllRingsFinder");
-		if (ringSet.getAtomContainerCount() > 0)
-		{
-			return detectAromaticity(atomContainer, ringSet, removeAromatictyFlags);
-		}
-		return false;
-	}
+        return ringSet.getAtomContainerCount() > 0 && detectAromaticity(atomContainer, ringSet, removeAromatictyFlags);
+    }
 
 
 	/**
@@ -173,11 +170,11 @@ public class HueckelAromaticityDetector
 			}
 			for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 			{
-				((IRing) ringSet.getAtomContainer(f)).setFlag(CDKConstants.ISAROMATIC, false);
+				ringSet.getAtomContainer(f).setFlag(CDKConstants.ISAROMATIC, false);
 			}
 		}
 
-		IRing ring = null;
+		IRing ring;
 		//RingSetManipulator.sort(ringSet);
 		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
@@ -223,7 +220,7 @@ public class HueckelAromaticityDetector
 			IRing ring = (IRing) ringset.getAtomContainer(i);
 			for (int j = 0; j < ring.getAtomCount(); j++)
 			{
-				if (ring.getAtom(j).getFlag(CDKConstants.ISAROMATIC) != true)
+				if (!ring.getAtom(j).getFlag(CDKConstants.ISAROMATIC))
 				{
 					aromatic = false;
 					break;

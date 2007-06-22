@@ -28,10 +28,10 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
@@ -61,37 +61,33 @@ public class AromaticityCalculator
 	public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
 		
-		java.util.Iterator ringAtoms = ring.atoms();
+		java.util.Iterator<IAtom> ringAtoms = ring.atoms();
 		int eCount = 0;
-		java.util.List conectedBonds;
+		java.util.List<IBond> conectedBonds;
 		int numDoubleBond = 0;
 		boolean allConnectedBondsSingle;
 		
 		while (ringAtoms.hasNext())
 		{
-			IAtom atom = (IAtom)ringAtoms.next();
+			IAtom atom = ringAtoms.next();
 			numDoubleBond = 0;
 			allConnectedBondsSingle = true;
 			conectedBonds = atomContainer.getConnectedBondsList(atom);
-			for (int j = 0; j < conectedBonds.size(); j++)
-			{
-				IBond bond = (IBond)conectedBonds.get(j);
-				if (bond.getOrder() == 2 && ring.contains(bond))
-				{
-					numDoubleBond++;
-				}
-				
-				// Count the Electron if bond order = 1.5
-				else if (bond.getOrder() == 1.5 && ring.contains(bond))
-				{
-					numDoubleBond = 1;
-				}
-				
-				if (bond.getOrder() != 1) {
-					allConnectedBondsSingle = false;
-				}
-			}
-			if (numDoubleBond == 1)
+            for (IBond conectedBond : conectedBonds) {
+                if (conectedBond.getOrder() == 2 && ring.contains(conectedBond)) {
+                    numDoubleBond++;
+                }
+
+                // Count the Electron if bond order = 1.5
+                else if (conectedBond.getOrder() == 1.5 && ring.contains(conectedBond)) {
+                    numDoubleBond = 1;
+                }
+
+                if (conectedBond.getOrder() != 1) {
+                    allConnectedBondsSingle = false;
+                }
+            }
+            if (numDoubleBond == 1)
 			{
 				//C or heteroatoms both contibute 1 electron in sp2 hybridized form
 				eCount++;
@@ -119,11 +115,7 @@ public class AromaticityCalculator
 				return false;	
 			}
 		}
-		if (eCount - 2 != 0 && (eCount - 2) % 4 == 0)
-		{
-			return true;
-		}
-		return false;
-	}
+        return eCount - 2 != 0 && (eCount - 2) % 4 == 0;
+    }
 }
 
