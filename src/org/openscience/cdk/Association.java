@@ -136,12 +136,12 @@ public class Association extends ElectronContainer implements java.io.Serializab
 	 * @return     true if the atom participates in this Association
 	 */
 	public boolean contains(Atom atom) {
-        for (int i=0; i<atoms.length; i++) {
-            if (atoms[i] == atom) {
+        for (Atom atom1 : atoms) {
+            if (atom1 == atom) {
                 return true;
             }
         }
-		return false;
+        return false;
 	}
 
 	/**

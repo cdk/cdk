@@ -321,12 +321,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
             return false;
         }
         AtomType type = (AtomType) object;
-        if ((getAtomTypeName() == type.getAtomTypeName()) &&
-            (maxBondOrder == type.maxBondOrder) &&
-            (bondOrderSum == type.bondOrderSum)) {
-            return true;
-        }
-        return false;
+        return (getAtomTypeName() == type.getAtomTypeName()) &&
+                (maxBondOrder == type.maxBondOrder) &&
+                (bondOrderSum == type.bondOrderSum);
     }
     
     /**

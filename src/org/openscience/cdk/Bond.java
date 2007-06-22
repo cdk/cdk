@@ -24,14 +24,13 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.Iterator;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  *  Implements the concept of a covalent bond between two atoms. A bond is
@@ -154,8 +153,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < 2) return true;
-	    return false;
+            return pointer < 2;
         }
 
         public IAtom next() {
@@ -200,7 +198,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 */
 	public IAtom getAtom(int position)
 	{
-		return (IAtom)atoms[position];
+		return atoms[position];
 	}
 
 
@@ -215,10 +213,10 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	{
 		if (atoms[0] == atom)
 		{
-			return (Atom)atoms[1];
+			return atoms[1];
 		} else if (atoms[1] == atom)
 		{
-			return (Atom)atoms[0];
+			return atoms[0];
 		}
 		return null;
 	}
@@ -366,15 +364,13 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		if (object instanceof IBond)
 		{
 			Bond bond = (Bond) object;
-			for (int i = 0; i < atoms.length; i++)
-			{
-				if (!bond.contains(atoms[i]))
-				{
-					return false;
-				}
-			}
+            for (IAtom atom : atoms) {
+                if (!bond.contains(atom)) {
+                    return false;
+                }
+            }
 
-			// not important ??!!
+            // not important ??!!
 			//if (order==bond.order)
 			//  return false;
 

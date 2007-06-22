@@ -24,13 +24,13 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  *  A Object containing a number of ChemSequences. This is supposed to be the
@@ -136,8 +136,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < chemSequenceCount) return true;
-	    return false;
+            return pointer < chemSequenceCount;
         }
 
         public IChemSequence next() {
@@ -159,7 +158,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	 */
 	public IChemSequence getChemSequence(int number)
 	{
-		return (ChemSequence)chemSequences[number];
+		return chemSequences[number];
 	}
 
 

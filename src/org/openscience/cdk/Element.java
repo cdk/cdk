@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IElement;
+
+import java.io.Serializable;
 
 /**
  * Implements the idea of an element in the periodic table.
@@ -192,10 +192,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
             return false;
         }
         Element elem = (Element)object;
-        if (atomicNumber == elem.atomicNumber &&
-            symbol == elem.symbol) {
-            return true;
-        }
-        return false;
+        return atomicNumber == elem.atomicNumber &&
+                symbol.equals(elem.symbol);
     }
 }

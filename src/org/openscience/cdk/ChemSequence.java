@@ -24,13 +24,13 @@
 
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemSequence;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to
@@ -138,8 +138,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
          private int pointer = 0;
      	
          public boolean hasNext() {
-             if (pointer < chemModelCount) return true;
- 	    return false;
+             return pointer < chemModelCount;
          }
 
          public IChemModel next() {

@@ -28,10 +28,10 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+
+import java.io.Serializable;
 
 /**
  * Used to store and retrieve data of a particular isotope.
@@ -281,12 +281,9 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
             return false;
         }
         Isotope isotope = (Isotope)object;
-        if (massNumber == isotope.massNumber && 
-            exactMass == isotope.exactMass &&
-            naturalAbundance == isotope.naturalAbundance) {
-            return true;
-        }
-        return false;
+        return massNumber == isotope.massNumber &&
+                exactMass == isotope.exactMass &&
+                naturalAbundance == isotope.naturalAbundance;
     }
     
     public Object clone() throws CloneNotSupportedException {

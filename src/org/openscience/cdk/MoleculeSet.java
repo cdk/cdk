@@ -23,12 +23,12 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+
+import java.util.Iterator;
 
 /** 
  * A set of molecules, for example those taking part in a reaction.
@@ -96,10 +96,9 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
     public void setMolecules(org.openscience.cdk.interfaces.IMolecule[] molecules)
     {
 	    if (atomContainerCount > 0) removeAllAtomContainers();
-	    for (int f = 0; f < molecules.length; f++)
-	    {
-		    addMolecule(molecules[f]);
-	    }
+        for (IMolecule molecule : molecules) {
+            addMolecule(molecule);
+        }
     }
     
     /**

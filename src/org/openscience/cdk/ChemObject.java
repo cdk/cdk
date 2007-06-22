@@ -29,16 +29,17 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.event.ChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -100,7 +101,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 * Constructs a new IChemObject by copying the flags, and the
 	 * identifier. It does not copy the listeners and properties.
 	 * 
-	 * @param chemObject 
+	 * @param chemObject the object to copy
 	 */
 	public ChemObject(IChemObject chemObject) {
 		// copy the flags
@@ -184,9 +185,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public void notifyChanged() {
         if (getNotification() && getListenerCount() > 0) {
         	List listeners = lazyChemObjectListeners();
-            for (int f = 0; f < listeners.size(); f++) {
-                ((IChemObjectListener) listeners.get(f)).stateChanged(
-                    new org.openscience.cdk.event.ChemObjectChangeEvent(this)
+            for (Object listener : listeners) {
+                ((IChemObjectListener) listener).stateChanged(
+                        new ChemObjectChangeEvent(this)
                 );
             }
         }
@@ -205,8 +206,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getNotification() && getListenerCount() > 0) {
         	List listeners = lazyChemObjectListeners();
-            for (int f = 0; f < listeners.size(); f++) {
-                ((IChemObjectListener) listeners.get(f)).stateChanged(evt);
+            for (Object listener : listeners) {
+                ((IChemObjectListener) listener).stateChanged(evt);
             }
         }
 	}
@@ -302,10 +303,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		ChemObject clone = (ChemObject)super.clone();
 		// clone the flags
 		clone.flags = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-		for (int f = 0; f < flags.length; f++) {
-			clone.flags[f] = flags[f];
-		}
-		// clone the properties
+        System.arraycopy(flags, 0, clone.flags, 0, flags.length);
+        // clone the properties
 		if (properties != null) {
 			Hashtable<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
 			Enumeration keys = properties.keys();
@@ -341,12 +340,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			return false;
 		}
 		ChemObject chemObj = (ChemObject) object;
-		if (identifier == chemObj.identifier)
-		{
-			return true;
-		}
-		return false;
-	}
+        return identifier.equals(chemObj.identifier);
+    }
 
 
 	/**

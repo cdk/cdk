@@ -23,10 +23,10 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+
+import java.io.Serializable;
 
 
 /**
@@ -66,6 +66,8 @@ public class Molecule extends AtomContainer implements Serializable, IMolecule, 
 	 *
 	 * @param  atomCount  init capacity of Atom array
 	 * @param  bondCount  init capacity of Bond array
+     * @param lonePairCount number of lone pairs
+     * @param singleElectronCount number of single electrons
 	 */
 	public Molecule(int atomCount, int bondCount, int lonePairCount, int singleElectronCount)
 	{

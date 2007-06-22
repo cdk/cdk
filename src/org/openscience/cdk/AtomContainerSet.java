@@ -20,13 +20,13 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * A set of AtomContainers.
@@ -253,8 +253,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < atomContainerCount) return true;
-	    return false;
+            return pointer < atomContainerCount;
         }
 
         public IAtomContainer next() {
@@ -275,7 +274,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return         The AtomContainer at position <code>number</code> .
 	 */
 	public org.openscience.cdk.interfaces.IAtomContainer getAtomContainer(int number) {
-		return (AtomContainer)atomContainers[number];
+		return atomContainers[number];
 	}
 
 	/**
@@ -362,7 +361,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		for (int i = 0; i < atomContainerCount; i++) {
 			clone.addAtomContainer((IAtomContainer)atomContainers[i].clone(), 1.0);
 		}
-		return (Object) clone;
+		return clone;
 	}
 
 	/**

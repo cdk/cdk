@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IChemObject;
+
+import java.util.Iterator;
 
 /**
  * A Mapping is an relation between two ChemObjects in a non-chemical
@@ -86,8 +86,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < 2) return true;
-            return false;
+            return pointer < 2;
         }
 
         public IChemObject next() {
@@ -117,10 +116,10 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 		Mapping clone = (Mapping)super.clone();
         // clone the related IChemObject's
         if (relation != null) {
-		    ((Mapping)clone).relation = new IChemObject[relation.length];
+		    clone.relation = new IChemObject[relation.length];
             for (int f = 0; f < relation.length; f++) {
                 if (relation[f] != null) {
-                    ((Mapping)clone).relation[f] = (IChemObject)relation[f].clone();
+                    clone.relation[f] = (IChemObject)relation[f].clone();
                 }
             }
         }

@@ -24,10 +24,10 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
+
+import java.io.Serializable;
 
 /**
  * A LonePair is an orbital primarily located with one Atom, containing
@@ -114,7 +114,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * @return     true if this lone pair is associated with the atom
      */
     public boolean contains(IAtom atom)     {
-        return (this.atom == atom) ? true : false;
+        return (this.atom == atom);
     }
 
 	/**

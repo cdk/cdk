@@ -24,15 +24,9 @@
 
 package org.openscience.cdk;
 
-import java.io.Serializable;
+import org.openscience.cdk.interfaces.*;
 
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import java.io.Serializable;
 
 /** 
  * An object containig multiple MoleculeSet and 
@@ -88,7 +82,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 */
 	public IMoleculeSet getMoleculeSet()
 	{
-		return (MoleculeSet)this.setOfMolecules;
+		return this.setOfMolecules;
 	}
 
 
