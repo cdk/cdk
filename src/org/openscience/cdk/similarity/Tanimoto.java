@@ -29,8 +29,9 @@
 package org.openscience.cdk.similarity;
 
 
-import java.util.BitSet;
 import org.openscience.cdk.exception.CDKException;
+
+import java.util.BitSet;
 
 /**
  *  Calculates the Tanimoto coefficient for a given pair of two 
@@ -67,6 +68,7 @@ public class Tanimoto
      * @param bitset1 A bitset (such as a fingerprint) for the first molecule
      * @param bitset2 A bitset (such as a fingerprint) for the second molecule
      * @return The Tanimoto coefficient
+     * @throws org.openscience.cdk.exception.CDKException  if bitsets are not of the same length
      */
     public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException
     {
@@ -77,9 +79,8 @@ public class Tanimoto
         }
         BitSet one_and_two = (BitSet)bitset1.clone();
         one_and_two.and(bitset2);
-        float _common_bit_count = one_and_two.cardinality(); 
-        float _tanimoto_coefficient = _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
-        return _tanimoto_coefficient;
+        float _common_bit_count = one_and_two.cardinality();
+        return _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
     }
     
     /**
@@ -88,6 +89,7 @@ public class Tanimoto
      * @param features1 The first feature vector
      * @param features2 The second feature vector
      * @return The continuous Tanimoto coefficient
+     * @throws org.openscience.cdk.exception.CDKException  if the features are not of the same length
      */
     public static float calculate(double[] features1, double[] features2) throws CDKException {
 

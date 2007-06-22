@@ -37,9 +37,9 @@ public class DistanceMoment {
         double y = 0;
         double z = 0;
 
-        Iterator atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
             if (p == null) throw new CDKException("Molecule must have 3D coordinates");
             x += p.x;
@@ -54,16 +54,15 @@ public class DistanceMoment {
 
     private static float mu1(double[] x) {
         float sum = 0;
-        for (int i = 0; i < x.length; i++) {
-            sum += x[i];
+        for (double aX : x) {
+            sum += aX;
         }
         return sum / x.length;
     }
 
     private static float mu2(double[] x, double mean) {
         float sum = 0;
-        for (int i = 0; i < x.length; i++) {
-            double aX = x[i];
+        for (double aX : x) {
             sum += (aX - mean) * (aX - mean);
         }
         return sum / (x.length - 1);
@@ -71,8 +70,7 @@ public class DistanceMoment {
 
     private static float mu3(double[] x, double mean, double sigma) {
         float sum = 0;
-        for (int i = 0; i < x.length; i++) {
-            double aX = x[i];
+        for (double aX : x) {
             sum += ((aX - mean) / sigma) * ((aX - mean) / sigma) * ((aX - mean) / sigma);
         }
         return sum / x.length;
@@ -87,7 +85,7 @@ public class DistanceMoment {
      */
     public static float[] generateMoments(IAtomContainer atomContainer) throws CDKException {
         // lets check if we have 3D coordinates
-        Iterator atoms;
+        Iterator<IAtom> atoms;
 
         int natom = atomContainer.getAtomCount();
 
@@ -108,7 +106,7 @@ public class DistanceMoment {
 
         // eval dist to centroid
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
             double d = p.distance(ctd);
             distCtd[counter++] = d;
@@ -131,7 +129,7 @@ public class DistanceMoment {
         atoms = atomContainer.atoms();
         counter = 0;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
             double d = p.distance(cst);
             distCst[counter++] = d;
@@ -142,7 +140,7 @@ public class DistanceMoment {
         counter = 0;
         max = Double.MIN_VALUE;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
             double d = p.distance(fct);
             distFct[counter++] = d;
@@ -159,7 +157,7 @@ public class DistanceMoment {
         atoms = atomContainer.atoms();
         counter = 0;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
             double d = p.distance(ftf);
             distFtf[counter++] = d;
