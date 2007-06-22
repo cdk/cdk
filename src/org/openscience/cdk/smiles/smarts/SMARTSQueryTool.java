@@ -47,7 +47,6 @@ import java.util.*;
  * SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
  * IAtomContainer atomContainer = sp.parseSmiles(&quot;CC(=O)OC(=O)C&quot;);
  * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;);
- * &lt;p/&gt;
  * boolean status = querytool.matches(atomContainer);
  * if (status) {
  *    int nmatch = querytool.countMatches();
@@ -76,7 +75,7 @@ public class SMARTSQueryTool {
     private IAtomContainer atomContainer = null;
     private QueryAtomContainer query = null;
 
-    private List matchingAtoms = null;
+    private List<List<Integer>> matchingAtoms = null;
     /**
 	 * Whether to use JJTree based smarts parser
 	 */
@@ -141,13 +140,13 @@ public class SMARTSQueryTool {
             // lets get the query atom
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
-            matchingAtoms = new ArrayList();
-            Iterator atoms = this.atomContainer.atoms();
+            matchingAtoms = new ArrayList<List<Integer>>();
+            Iterator<IAtom> atoms = this.atomContainer.atoms();
             while (atoms.hasNext()) {
-                IAtom atom = (IAtom) atoms.next();
+                IAtom atom = atoms.next();
                 if (queryAtom.matches(atom)) {
-                    List tmp = new ArrayList();
-                    tmp.add(new Integer(this.atomContainer.getAtomNumber(atom)));
+                    List<Integer> tmp = new ArrayList<Integer>();
+                    tmp.add(this.atomContainer.getAtomNumber(atom));
                     matchingAtoms.add(tmp);
                 }
             }
@@ -179,7 +178,7 @@ public class SMARTSQueryTool {
 	 * 
 	 * @return A List of List of atom indices in the target molecule
 	 */
-    public List getMatchingAtoms() {
+    public List<List<Integer>> getMatchingAtoms() {
         return matchingAtoms;
     }
 
@@ -197,52 +196,52 @@ public class SMARTSQueryTool {
     private void initializeMolecule() throws CDKException {    
         // Code copied from 
     	// org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
-        Map valencesTable = new HashMap();
-        valencesTable.put("H", new Integer(1));
-        valencesTable.put("Li", new Integer(1));
-        valencesTable.put("Be", new Integer(2));
-        valencesTable.put("B", new Integer(3));
-        valencesTable.put("C", new Integer(4));
-        valencesTable.put("N", new Integer(5));
-        valencesTable.put("O", new Integer(6));
-        valencesTable.put("F", new Integer(7));
-        valencesTable.put("Na", new Integer(1));
-        valencesTable.put("Mg", new Integer(2));
-        valencesTable.put("Al", new Integer(3));
-        valencesTable.put("Si", new Integer(4));
-        valencesTable.put("P", new Integer(5));
-        valencesTable.put("S", new Integer(6));
-        valencesTable.put("Cl", new Integer(7));
-        valencesTable.put("K", new Integer(1));
-        valencesTable.put("Ca", new Integer(2));
-        valencesTable.put("Ga", new Integer(3));
-        valencesTable.put("Ge", new Integer(4));
-        valencesTable.put("As", new Integer(5));
-        valencesTable.put("Se", new Integer(6));
-        valencesTable.put("Br", new Integer(7));
-        valencesTable.put("Rb", new Integer(1));
-        valencesTable.put("Sr", new Integer(2));
-        valencesTable.put("In", new Integer(3));
-        valencesTable.put("Sn", new Integer(4));
-        valencesTable.put("Sb", new Integer(5));
-        valencesTable.put("Te", new Integer(6));
-        valencesTable.put("I", new Integer(7));
-        valencesTable.put("Cs", new Integer(1));
-        valencesTable.put("Ba", new Integer(2));
-        valencesTable.put("Tl", new Integer(3));
-        valencesTable.put("Pb", new Integer(4));
-        valencesTable.put("Bi", new Integer(5));
-        valencesTable.put("Po", new Integer(6));
-        valencesTable.put("At", new Integer(7));
-        valencesTable.put("Fr", new Integer(1));
-        valencesTable.put("Ra", new Integer(2));
-        valencesTable.put("Cu", new Integer(2));
-        valencesTable.put("Mn", new Integer(2));
-        valencesTable.put("Co", new Integer(2));    	
+        Map<String, Integer> valencesTable = new HashMap<String, Integer>();
+        valencesTable.put("H", 1);
+        valencesTable.put("Li", 1);
+        valencesTable.put("Be", 2);
+        valencesTable.put("B", 3);
+        valencesTable.put("C", 4);
+        valencesTable.put("N", 5);
+        valencesTable.put("O", 6);
+        valencesTable.put("F", 7);
+        valencesTable.put("Na", 1);
+        valencesTable.put("Mg", 2);
+        valencesTable.put("Al", 3);
+        valencesTable.put("Si", 4);
+        valencesTable.put("P", 5);
+        valencesTable.put("S", 6);
+        valencesTable.put("Cl", 7);
+        valencesTable.put("K", 1);
+        valencesTable.put("Ca", 2);
+        valencesTable.put("Ga", 3);
+        valencesTable.put("Ge", 4);
+        valencesTable.put("As", 5);
+        valencesTable.put("Se", 6);
+        valencesTable.put("Br", 7);
+        valencesTable.put("Rb", 1);
+        valencesTable.put("Sr", 2);
+        valencesTable.put("In", 3);
+        valencesTable.put("Sn", 4);
+        valencesTable.put("Sb", 5);
+        valencesTable.put("Te", 6);
+        valencesTable.put("I", 7);
+        valencesTable.put("Cs", 1);
+        valencesTable.put("Ba", 2);
+        valencesTable.put("Tl", 3);
+        valencesTable.put("Pb", 4);
+        valencesTable.put("Bi", 5);
+        valencesTable.put("Po", 6);
+        valencesTable.put("At", 7);
+        valencesTable.put("Fr", 1);
+        valencesTable.put("Ra", 2);
+        valencesTable.put("Cu", 2);
+        valencesTable.put("Mn", 2);
+        valencesTable.put("Co", 2);
     	
         // do all ring perception
         AllRingsFinder arf = new AllRingsFinder();
-        IRingSet allRings = null;
+        IRingSet allRings;
         try {
             allRings = arf.findAllRings(atomContainer);
         } catch (CDKException e) {
@@ -254,9 +253,9 @@ public class SMARTSQueryTool {
         SSSRFinder finder = new SSSRFinder(atomContainer);
         IRingSet sssr = finder.findEssentialRings();
         
-        Iterator atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             
             // add a property to each ring atom that will be an array of
             // Integers, indicating what size ring the given atom belongs to
@@ -264,13 +263,13 @@ public class SMARTSQueryTool {
             if (allRings.contains(atom)) { // it's in a ring
             	atom.setFlag(CDKConstants.ISINRING, true);
                 // lets find which ring sets it is a part of
-                List ringsizes = new ArrayList();
+                List<Integer> ringsizes = new ArrayList<Integer>();
                 IRingSet currentRings = allRings.getRings(atom);
                 int min = 0;
                 for (int i = 0; i < currentRings.getAtomContainerCount(); i++) {
                     int size = currentRings.getAtomContainer(i).getAtomCount();
                     if (min > size) min = size;
-                    ringsizes.add(new Integer(size));
+                    ringsizes.add(size);
                 }
                 atom.setProperty(CDKConstants.RING_SIZES, ringsizes);
                 atom.setProperty(CDKConstants.SMALLEST_RINGS, sssr.getRings(atom));
@@ -278,26 +277,26 @@ public class SMARTSQueryTool {
             
             // determine how many rings bonds each atom is a part of
             int hCount = atom.getHydrogenCount();
-            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-            int total = hCount + connectedAtoms.size(); 
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-            	if(((IAtom)connectedAtoms.get(i)).getSymbol().equals("H")) {
-            		total--;
-            		hCount++;
+            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+            int total = hCount + connectedAtoms.size();
+            for (IAtom connectedAtom : connectedAtoms) {
+                if (connectedAtom.getSymbol().equals("H")) {
+                    total--;
+                    hCount++;
                 }
-             }
-            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS,new Integer(total));
-            atom.setProperty(CDKConstants.TOTAL_H_COUNT, new Integer(hCount)); 
+            }
+            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS, total);
+            atom.setProperty(CDKConstants.TOTAL_H_COUNT, hCount);
 
             if (valencesTable.get(atom.getSymbol()) != null) {
-                atom.setValency(((Integer)valencesTable.get(atom.getSymbol())).intValue() -
+                atom.setValency(valencesTable.get(atom.getSymbol()) -
                 		atom.getFormalCharge());
             }
         }
         
-        Iterator bonds = atomContainer.bonds();
+        Iterator<IBond> bonds = atomContainer.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
         	if (allRings.getRings(bond).size() > 0) {
         		bond.setFlag(CDKConstants.ISINRING, true);
         	}
@@ -305,18 +304,18 @@ public class SMARTSQueryTool {
         
         atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
-            List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+            IAtom atom = atoms.next();
+            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
 
             int counter = 0;
             IAtom any;
-            for (int i = 0; i < connectedAtoms.size(); i++) {
-                any = (IAtom) connectedAtoms.get(i);
+            for (IAtom connectedAtom : connectedAtoms) {
+                any = connectedAtom;
                 if (any.getFlag(CDKConstants.ISINRING)) {
                     counter++;
                 }
             }
-            atom.setProperty(CDKConstants.RING_CONNECTIONS, new Integer(counter));
+            atom.setProperty(CDKConstants.RING_CONNECTIONS, counter);
         }
 
         // check for atomaticity
@@ -339,17 +338,17 @@ public class SMARTSQueryTool {
     }
 
 
-    private List getAtomMappings(List bondMapping, IAtomContainer atomContainer) {
-        List atomMapping = new ArrayList();
+    private List<List<Integer>> getAtomMappings(List bondMapping, IAtomContainer atomContainer) {
+        List<List<Integer>> atomMapping = new ArrayList<List<Integer>>();
 
         // loop over each mapping
-        for (int i = 0; i < bondMapping.size(); i++) {
-            List list = (List) bondMapping.get(i);
+        for (Object aBondMapping : bondMapping) {
+            List list = (List) aBondMapping;
 
-            List tmp = new ArrayList();
+            List<Integer> tmp = new ArrayList<Integer>();
             // loop over this mapping
-            for (int j = 0; j < list.size(); j++) {
-                RMap map = (RMap) list.get(j);
+            for (Object aList : list) {
+                RMap map = (RMap) aList;
                 int bondID = map.getId1();
 
                 // get the atoms in this bond
@@ -357,8 +356,8 @@ public class SMARTSQueryTool {
                 IAtom atom1 = bond.getAtom(0);
                 IAtom atom2 = bond.getAtom(1);
 
-                Integer idx1 = new Integer(atomContainer.getAtomNumber(atom1));
-                Integer idx2 = new Integer(atomContainer.getAtomNumber(atom2));
+                Integer idx1 = atomContainer.getAtomNumber(atom1);
+                Integer idx2 = atomContainer.getAtomNumber(atom2);
 
                 if (!tmp.contains(idx1)) tmp.add(idx1);
                 if (!tmp.contains(idx2)) tmp.add(idx2);

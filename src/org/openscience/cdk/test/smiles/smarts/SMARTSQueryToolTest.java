@@ -30,7 +30,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import static java.util.Collections.sort;
 import java.util.List;
 
 /**
@@ -61,25 +61,25 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         int nmatch = querytool.countMatches();
         assertEquals(2, nmatch);
 
-        List map1 = new ArrayList();
-        map1.add(new Integer(1));
-        map1.add(new Integer(2));
-        map1.add(new Integer(3));
+        List<Integer> map1 = new ArrayList<Integer>();
+        map1.add(1);
+        map1.add(2);
+        map1.add(3);
 
-        List map2 = new ArrayList();
-        map2.add(new Integer(3));
-        map2.add(new Integer(4));
-        map2.add(new Integer(5));
+        List<Integer> map2 = new ArrayList<Integer>();
+        map2.add(3);
+        map2.add(4);
+        map2.add(5);
 
         List mappings = querytool.getMatchingAtoms();
         List ret1 = (List) mappings.get(0);
-        Collections.sort(ret1);
+        sort(ret1);
         for (int i = 0; i < 3; i++) {
             assertEquals(map1.get(i), ret1.get(i));
         }
 
         List ret2 = (List) mappings.get(1);
-        Collections.sort(ret2);
+        sort(ret2);
         for (int i = 0; i < 3; i++) {
             assertEquals(map2.get(i), ret2.get(i));
         }
