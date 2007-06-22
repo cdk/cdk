@@ -24,12 +24,7 @@
 package org.openscience.cdk.atomtype;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 /**
@@ -44,7 +39,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		IAtomType atomType = null;
 		
 		try {
-			String fragment = "";
+			String fragment;
 			
 			AllRingsFinder arf = new AllRingsFinder();
 			IRingSet rs = arf.findAllRings(atomContainer);
@@ -57,10 +52,10 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 			
 			String element = atom.getSymbol();
 			
-			java.util.List attachedAtoms = atomContainer.getConnectedAtomsList(atom);
+			java.util.List<IAtom> attachedAtoms = atomContainer.getConnectedAtomsList(atom);
 			
 			for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
-				IAtom attached = (IAtom)attachedAtoms.get(j);
+				IAtom attached = attachedAtoms.get(j);
 				IBond b = atomContainer.getBond(atom, attached);
 				
 				if (atom.getFlag(CDKConstants.ISAROMATIC)

@@ -19,11 +19,11 @@
  */
 package org.openscience.cdk.atomtype;
 
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -73,8 +73,7 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
         }
 
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
-        for (int i=0; i<types.length; i++) {
-            IAtomType type = types[i];
+        for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);
             int charge = atom.getFormalCharge();
             if (charge == type.getFormalCharge()) {

@@ -24,18 +24,18 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in
@@ -130,11 +130,11 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 			if (mat1.matches()) {
 				ID = atomTypeIds[j];
 				Object property = atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
-	        		int atomChemGroupConstant = ((Integer)property).intValue();
+	        		int atomChemGroupConstant = (Integer) property;
 				Object ringSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
 				int atomRingSize = -1;
 				if (ringSize != null) {
-					atomRingSize = ((Integer)ringSize).intValue();
+					atomRingSize = (Integer) ringSize;
 				}
 				if (atomTypeIds[j].equals("C")) {
 					if (atomChemGroupConstant != -1) {//in Ring

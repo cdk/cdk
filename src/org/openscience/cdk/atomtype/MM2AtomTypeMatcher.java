@@ -24,18 +24,18 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 
@@ -106,11 +106,11 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 		org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)atomInterface;
 		logger.debug("****** Configure MM2 AtomType via findMatching ******");
 		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
-		int atomChemicalGroupConstant = ((Integer)atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue();
+		int atomChemicalGroupConstant = (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
 		int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default 
 	    Object oRingSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
 	    if (oRingSize != null) {
-	    	atomRingSize = ((Integer)oRingSize).intValue();
+	    	atomRingSize = (Integer) oRingSize;
 	    }
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atomSphericalMatcher + " ");
 					

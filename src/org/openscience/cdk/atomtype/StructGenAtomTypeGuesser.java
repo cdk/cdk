@@ -19,15 +19,15 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
@@ -81,15 +81,14 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 		int charge = atom.getFormalCharge();
 		int hcount = atom.getHydrogenCount();
 
-		List matchingTypes = new ArrayList();
+		List<IAtomType> matchingTypes = new ArrayList<IAtomType>();
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
-        for (int i=0; i<types.length; i++) {
-            IAtomType type = types[i];
+        for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);
-			if (bondOrderSum - charge + hcount <= types[i].getBondOrderSum() && 
-	            maxBondOrder <= types[i].getMaxBondOrder()) {
-				matchingTypes.add(type);
-			}
+            if (bondOrderSum - charge + hcount <= type.getBondOrderSum() &&
+                    maxBondOrder <= type.getMaxBondOrder()) {
+                matchingTypes.add(type);
+            }
         }
         logger.debug("    No Match");
         
