@@ -28,13 +28,13 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Utility class that finds the shortest bond path between two atoms using
@@ -49,7 +49,7 @@ public final class BFSShortestPath {
     
     private BFSShortestPath(  ) {} // ensure non-instantiability.
 
-    public static List findPathBetween( Graph graph, Object startVertex,
+    public static List<Edge> findPathBetween( Graph graph, Object startVertex,
             Object endVertex ) {
             MyBreadthFirstIterator iter =
                 new MyBreadthFirstIterator( graph, startVertex );
@@ -65,8 +65,8 @@ public final class BFSShortestPath {
             return null;
         }
 
-    private static List createPath( MyBreadthFirstIterator iter, Object endVertex ) {
-        List path = new ArrayList(  );
+    private static List<Edge> createPath( MyBreadthFirstIterator iter, Object endVertex ) {
+        List<Edge> path = new ArrayList<Edge>(  );
 
         while( true ) {
             Edge edge = iter.getSpanningTreeEdge( endVertex );
