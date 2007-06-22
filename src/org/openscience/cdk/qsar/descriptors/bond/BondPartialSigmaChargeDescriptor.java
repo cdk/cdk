@@ -122,7 +122,7 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
         
     	Integer[] params = new Integer[1];
     	for(int i = 0 ; i < 2 ; i++){
-    		params[0] = new Integer(6);
+    		params[0] = 6;
 	        descriptor.setParameters(params);
 	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],mol).getValue()).doubleValue();
     	}

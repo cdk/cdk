@@ -20,20 +20,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
@@ -44,6 +36,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
+
+import java.util.Iterator;
 
 /**
  *  
@@ -128,7 +122,9 @@ public class IPBondDescriptor implements IBondDescriptor {
 		
 		try{
 			HueckelAromaticityDetector.detectAromaticity(container,true);
-		} catch (Exception exc){}
+		} catch (Exception exc){
+            exc.printStackTrace();
+        }
         
         if(bond.getOrder() > 1 && 
         		(container.getConnectedLonePairsCount(bond.getAtom(0)) == 0) && /*not containing heteroatoms*/ 
@@ -190,7 +186,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 	        Iterator it = pbb.reactions();
 	        while(it.hasNext()){
 	        	IReaction reaction = (IReaction)it.next();
-	        	reaction.setProperty("IonizationEnergy", new Double(resultD));
+	        	reaction.setProperty("IonizationEnergy", resultD);
 	        	reactionSet.addReaction(reaction);
 	        }
 		}
@@ -608,7 +604,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 * 
 	 * @return The IReactionSet value
 	 */
-	public IReactionSet getReactionSet() throws CDKException{
+	public IReactionSet getReactionSet(){
 		return reactionSet;
 	}
 	
@@ -701,8 +697,8 @@ public class IPBondDescriptor implements IBondDescriptor {
 			
 			} catch (Exception exc)
 			{
-				continue;
-			}
+                exc.printStackTrace();
+            }
 		}
 		if(results[1] != 0)
 			results[1] = results[1]/conjugatedSys.getAtomCount();

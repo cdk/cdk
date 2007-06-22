@@ -20,8 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atompair;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.AtomContainerSet;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -106,7 +106,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         if (!(params[0] instanceof Boolean)) {
             throw new CDKException("The first parameter must be of type Boolean");
         }
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -118,7 +118,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
     }
 
@@ -142,13 +142,13 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-        java.util.Iterator detected = acSet.atomContainers();
+        java.util.Iterator<IAtomContainer> detected = acSet.atomContainers();
 
-        java.util.List neighboorsFirst = mol.getConnectedAtomsList(first);
-        java.util.List neighboorsSecond = mol.getConnectedAtomsList(second);
+        java.util.List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(first);
+        java.util.List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(second);
 
         while (detected.hasNext()) {
-        	IAtomContainer detectedAC = (IAtomContainer)detected.next();
+        	IAtomContainer detectedAC = detected.next();
             if (detectedAC.contains(first) && detectedAC.contains(second)) {
                 counter += 1;
                 break;
@@ -176,8 +176,8 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
     private boolean isANeighboorsInAnAtomContainer(java.util.List neighs, IAtomContainer ac) {
         boolean isIn = false;
         int count = 0;
-        for (int i = 0; i < neighs.size(); i++) {
-            if (ac.contains((IAtom)neighs.get(i))) {
+        for (Object neigh : neighs) {
+            if (ac.contains((IAtom) neigh)) {
                 count += 1;
             }
         }
@@ -208,7 +208,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
      * @return       The parameterType value
      */
     public Object getParameterType(String name) {
-        if (name.equals("checkAromaticity")) return new Boolean(true);
+        if (name.equals("checkAromaticity")) return true;
         return null;
     }
 }

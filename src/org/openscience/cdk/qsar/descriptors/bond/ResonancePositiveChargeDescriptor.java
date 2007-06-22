@@ -24,21 +24,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -53,6 +43,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
+
+import java.util.ArrayList;
 
 /**
  *  <p>The calculation of Resonance stabilization of a positive charge of an heavy 
@@ -146,10 +138,10 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 			throw new CDKException("Could not clone IAtomContainer!", e);
 		}
 
-		ArrayList result1 = new ArrayList();
-    	ArrayList distance1 = new ArrayList();
-    	ArrayList result2 = new ArrayList();
-    	ArrayList distance2 = new ArrayList();
+		ArrayList<DoubleResult> result1 = new ArrayList<DoubleResult>();
+    	ArrayList<IntegerResult> distance1 = new ArrayList<IntegerResult>();
+    	ArrayList<DoubleResult> result2 = new ArrayList<DoubleResult>();
+    	ArrayList<IntegerResult> distance2 = new ArrayList<IntegerResult>();
     	
     	
     	IAtom atom0 = bond.getAtom(0);
@@ -237,9 +229,9 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    						 if(atomsP.getFormalCharge()== 1 || product.getAtom(k).getFormalCharge() == 1){
 		    						 DoubleResult electroneg = new DoubleResult(0.0); 
 	    						    Object[] params = new Integer[2];
-	    	    					params[0] = new Integer(6);
+	    	    					params[0] = 6;
 	    	    					if(isAromatic)
-		    	    					params[1] = new Integer(maxNumbStruc);
+		    	    					params[1] = maxNumbStruc;
 	    	    						
 	    	    					pielectronegativity.setParameters(params);
 	    	    					try{
@@ -250,7 +242,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    	    			        if(i == 0)result1.add(electroneg);
 	    	    			        else result2.add(electroneg);
 	    	    			        BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
-	    	    			        Object[] paramsD = {new Integer(prod.getAtomNumber(atomsP))};
+	    	    			        Object[] paramsD = {prod.getAtomNumber(atomsP)};
 	    	    			        descriptor.setParameters(paramsD);
 	    	    			        IntegerResult dis = ((IntegerResult)descriptor.calculate(prod.getAtom(positionAC),prod).getValue());
 	    	    			        
@@ -270,10 +262,10 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
         double value = 0.0;
         double sum = 0.0;
         for(int i = 0 ; i < result1.size() ; i++){
-        	double suM = ((DoubleResult)result1.get(i)).doubleValue();
+        	double suM = (result1.get(i)).doubleValue();
         	if(suM < 0)
         		suM = -1*suM;
-        	sum += suM*Math.pow(0.67,((IntegerResult)distance1.get(i)).intValue());
+        	sum += suM*Math.pow(0.67,(distance1.get(i)).intValue());
         }
         value = 26.63/sum;
         if(result1.size() > 0){
@@ -284,10 +276,10 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
         value = 0.0;
         sum = 0.0;
         for(int i = 0 ; i < result2.size() ; i++){
-        	double suM = ((DoubleResult)result2.get(i)).doubleValue();
+        	double suM = (result2.get(i)).doubleValue();
         	if(suM < 0)
         		suM = -1*suM;
-        	sum += suM*Math.pow(0.67,((IntegerResult)distance2.get(i)).intValue());
+        	sum += suM*Math.pow(0.67,(distance2.get(i)).intValue());
         }
         value = 26.63/sum;
         if(result2.size() > 0){
@@ -332,8 +324,8 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
    }
     /**
      * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
-     * 
-	 * @param mol
+     *
+     * @param molecule The molecle to clean
 	 */
 	public void cleanFlagReactiveCenter(IMolecule molecule){
 		for(int j = 0 ; j < molecule.getAtomCount(); j++)
