@@ -29,10 +29,7 @@ import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -122,7 +119,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			throw new CDKException(
 					"The second parameter must be of type Boolean");
 		}
-		checkAromaticity = ((Boolean) params[0]).booleanValue();
+		checkAromaticity = (Boolean) params[0];
 	}
 
 	/**
@@ -133,7 +130,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
-		params[0] = Boolean.valueOf(checkAromaticity);
+		params[0] = checkAromaticity;
 		return params;
 	}
 
@@ -185,15 +182,15 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			HueckelAromaticityDetector.detectAromaticity(varAtomContainer,
 					varRingSet, true);
 		}
-		List rsAtom;
+		List<IRing> rsAtom;
 		Ring ring;
-		List ringsWithThisBond;
+		List<IRing> ringsWithThisBond;
 		// SET ISINRING FLAGS FOR BONDS
 //		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();
 
-        Iterator bondsInContainer = varAtomContainer.bonds();
+        Iterator<IBond> bondsInContainer = varAtomContainer.bonds();
         while (bondsInContainer.hasNext()) {
-            IBond bond = (IBond) bondsInContainer.next();                    
+            IBond bond = bondsInContainer.next();
 			ringsWithThisBond = varRingSet.getRings(bond);
 			if (ringsWithThisBond.size() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
@@ -214,26 +211,26 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);
 
 		// neighboors[0] is the atom joined to the target proton:
-		java.util.List neighboors = mol.getConnectedAtomsList(atom);
-		IAtom neighbour0 = (IAtom) neighboors.get(0);
+		List<IAtom> neighboors = mol.getConnectedAtomsList(atom);
+		IAtom neighbour0 = neighboors.get(0);
 
 		// 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
-		List atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
-		List atomsInThirdSphere = null;
-		List atomsInFourthSphere = null;
-		List atomsInFifthSphere = null;
-		List atomsInSixthSphere = null;
-		List atomsInSeventhSphere = null;
+		List<IAtom> atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
+		List<IAtom> atomsInThirdSphere;
+		List<IAtom> atomsInFourthSphere;
+		List<IAtom> atomsInFifthSphere;
+		List<IAtom> atomsInSixthSphere;
+		List<IAtom> atomsInSeventhSphere;
 
 		// SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS
 		// DURING DETECTION
-		ArrayList singles = new ArrayList(); // list of any bond not
+		ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not
 												// rotatable
-		ArrayList doubles = new ArrayList(); // list with only double bonds
-		ArrayList atoms = new ArrayList(); // list with all the atoms in
+		ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
+		ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in
 											// spheres
 		// atoms.add( new Integer( mol.getAtomNumber(neighboors[0]) ) );
-		ArrayList bondsInCycloex = new ArrayList(); // list for bonds in
+		ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in
 													// cycloexane-like rings
 
 		// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -255,201 +252,188 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		int sphere;
 
 		// THIS MAIN FOR LOOP DETECT RIGID BONDS IN 7 SPHERES:
-		for (int a = 0; a < atomsInSecondSphere.size(); a++) {
-			IAtom curAtomSecond = (IAtom) atomsInSecondSphere.get(a);
-			secondBond = mol.getBond(neighbour0, curAtomSecond);
-			if (mol.getAtomNumber(curAtomSecond) != atomPosition
-					&& getIfBondIsNotRotatable(mol, secondBond, detected)) {
-				sphere = 2;
-				bondOrder = secondBond.getOrder();
-				bondNumber = mol.getBondNumber(secondBond);
-				theBondIsInA6MemberedRing = false;
-				checkAndStore(bondNumber, bondOrder, singles, doubles,
-						bondsInCycloex, mol.getAtomNumber(curAtomSecond),
-						atoms, sphere, theBondIsInA6MemberedRing);
-				atomsInThirdSphere = mol.getConnectedAtomsList(curAtomSecond);
-				if (atomsInThirdSphere.size() > 0) {
-					for (int b = 0; b < atomsInThirdSphere.size(); b++) {
-						IAtom curAtomThird = (IAtom) atomsInThirdSphere.get(b);
-						thirdBond = mol.getBond(curAtomThird, curAtomSecond);
-						// IF THE ATOMS IS IN THE THIRD SPHERE AND IN A
-						// CYCLOEXANE-LIKE RING, IT IS STORED IN THE PROPER
-						// LIST:
-						if (mol.getAtomNumber(curAtomThird) != atomPosition
-								&& getIfBondIsNotRotatable(mol, thirdBond,
-										detected)) {
-							sphere = 3;
-							bondOrder = thirdBond.getOrder();
-							bondNumber = mol.getBondNumber(thirdBond);
-							theBondIsInA6MemberedRing = false;
+        for (IAtom curAtomSecond : atomsInSecondSphere) {
+            secondBond = mol.getBond(neighbour0, curAtomSecond);
+            if (mol.getAtomNumber(curAtomSecond) != atomPosition
+                    && getIfBondIsNotRotatable(mol, secondBond, detected)) {
+                sphere = 2;
+                bondOrder = secondBond.getOrder();
+                bondNumber = mol.getBondNumber(secondBond);
+                theBondIsInA6MemberedRing = false;
+                checkAndStore(bondNumber, bondOrder, singles, doubles,
+                        bondsInCycloex, mol.getAtomNumber(curAtomSecond),
+                        atoms, sphere, theBondIsInA6MemberedRing);
+                atomsInThirdSphere = mol.getConnectedAtomsList(curAtomSecond);
+                if (atomsInThirdSphere.size() > 0) {
+                    for (IAtom curAtomThird : atomsInThirdSphere) {
+                        thirdBond = mol.getBond(curAtomThird, curAtomSecond);
+                        // IF THE ATOMS IS IN THE THIRD SPHERE AND IN A
+                        // CYCLOEXANE-LIKE RING, IT IS STORED IN THE PROPER
+                        // LIST:
+                        if (mol.getAtomNumber(curAtomThird) != atomPosition
+                                && getIfBondIsNotRotatable(mol, thirdBond,
+                                detected)) {
+                            sphere = 3;
+                            bondOrder = thirdBond.getOrder();
+                            bondNumber = mol.getBondNumber(thirdBond);
+                            theBondIsInA6MemberedRing = false;
 
-							// if the bond is in a cyclohexane-like ring (a ring
-							// with 5 or more atoms, not aromatic)
-							// the boolean "theBondIsInA6MemberedRing" is set to
-							// true
-							if (!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
-								if (!curAtomThird.equals(neighbour0)) {
-									rsAtom = varRingSet.getRings(thirdBond);
-									for (int f = 0; f < rsAtom.size(); f++) {
-										ring = (Ring) rsAtom.get(f);
-										if (ring.getRingSize() > 4
-												&& ring.contains(thirdBond)) {
-											theBondIsInA6MemberedRing = true;
-										}
-									}
-								}
-							}
-							checkAndStore(bondNumber, bondOrder, singles,
-									doubles, bondsInCycloex, mol
-											.getAtomNumber(curAtomThird),
-									atoms, sphere, theBondIsInA6MemberedRing);
-							theBondIsInA6MemberedRing = false;
-							atomsInFourthSphere = mol
-									.getConnectedAtomsList(curAtomThird);
-							if (atomsInFourthSphere.size() > 0) {
-								for (int c = 0; c < atomsInFourthSphere.size(); c++) {
-									IAtom curAtomFourth = (IAtom) atomsInFourthSphere
-											.get(c);
-									fourthBond = mol.getBond(curAtomThird,
-											curAtomFourth);
-									if (mol.getAtomNumber(curAtomFourth) != atomPosition
-											&& getIfBondIsNotRotatable(mol,
-													fourthBond, detected)) {
-										sphere = 4;
-										bondOrder = fourthBond.getOrder();
-										bondNumber = mol
-												.getBondNumber(fourthBond);
-										theBondIsInA6MemberedRing = false;
-										checkAndStore(
-												bondNumber,
-												bondOrder,
-												singles,
-												doubles,
-												bondsInCycloex,
-												mol
-														.getAtomNumber(curAtomFourth),
-												atoms, sphere,
-												theBondIsInA6MemberedRing);
-										atomsInFifthSphere = mol
-												.getConnectedAtomsList(curAtomFourth);
-										if (atomsInFifthSphere.size() > 0) {
-											for (int d = 0; d < atomsInFifthSphere
-													.size(); d++) {
-												IAtom curAtomFifth = (IAtom) atomsInFifthSphere
-														.get(d);
-												fifthBond = mol.getBond(
-														curAtomFifth,
-														curAtomFourth);
-												if (mol
-														.getAtomNumber(curAtomFifth) != atomPosition
-														&& getIfBondIsNotRotatable(
-																mol, fifthBond,
-																detected)) {
-													sphere = 5;
-													bondOrder = fifthBond
-															.getOrder();
-													bondNumber = mol
-															.getBondNumber(fifthBond);
-													theBondIsInA6MemberedRing = false;
-													checkAndStore(
-															bondNumber,
-															bondOrder,
-															singles,
-															doubles,
-															bondsInCycloex,
-															mol
-																	.getAtomNumber(curAtomFifth),
-															atoms, sphere,
-															theBondIsInA6MemberedRing);
-													atomsInSixthSphere = mol
-															.getConnectedAtomsList(curAtomFifth);
-													if (atomsInSixthSphere
-															.size() > 0) {
-														for (int e = 0; e < atomsInSixthSphere
-																.size(); e++) {
-															IAtom curAtomSixth = (IAtom) atomsInSixthSphere
-																	.get(e);
-															sixthBond = mol
-																	.getBond(
-																			curAtomFifth,
-																			curAtomSixth);
-															if (mol
-																	.getAtomNumber(curAtomSixth) != atomPosition
-																	&& getIfBondIsNotRotatable(
-																			mol,
-																			sixthBond,
-																			detected)) {
-																sphere = 6;
-																bondOrder = sixthBond
-																		.getOrder();
-																bondNumber = mol
-																		.getBondNumber(sixthBond);
-																theBondIsInA6MemberedRing = false;
-																checkAndStore(
-																		bondNumber,
-																		bondOrder,
-																		singles,
-																		doubles,
-																		bondsInCycloex,
-																		mol
-																				.getAtomNumber(curAtomSixth),
-																		atoms,
-																		sphere,
-																		theBondIsInA6MemberedRing);
-																atomsInSeventhSphere = mol
-																		.getConnectedAtomsList(curAtomSixth);
-																if (atomsInSeventhSphere
-																		.size() > 0) {
-																	for (int f = 0; f < atomsInSeventhSphere
-																			.size(); f++) {
-																		IAtom curAtomSeventh = (IAtom) atomsInSeventhSphere
-																				.get(f);
-																		seventhBond = mol
-																				.getBond(
-																						curAtomSeventh,
-																						curAtomSixth);
-																		if (mol
-																				.getAtomNumber(curAtomSeventh) != atomPosition
-																				&& getIfBondIsNotRotatable(
-																						mol,
-																						seventhBond,
-																						detected)) {
-																			sphere = 7;
-																			bondOrder = seventhBond
-																					.getOrder();
-																			bondNumber = mol
-																					.getBondNumber(seventhBond);
-																			theBondIsInA6MemberedRing = false;
-																			checkAndStore(
-																					bondNumber,
-																					bondOrder,
-																					singles,
-																					doubles,
-																					bondsInCycloex,
-																					mol
-																							.getAtomNumber(curAtomSeventh),
-																					atoms,
-																					sphere,
-																					theBondIsInA6MemberedRing);
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+                            // if the bond is in a cyclohexane-like ring (a ring
+                            // with 5 or more atoms, not aromatic)
+                            // the boolean "theBondIsInA6MemberedRing" is set to
+                            // true
+                            if (!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
+                                if (!curAtomThird.equals(neighbour0)) {
+                                    rsAtom = varRingSet.getRings(thirdBond);
+                                    for (IRing aRsAtom : rsAtom) {
+                                        ring = (Ring) aRsAtom;
+                                        if (ring.getRingSize() > 4
+                                                && ring.contains(thirdBond)) {
+                                            theBondIsInA6MemberedRing = true;
+                                        }
+                                    }
+                                }
+                            }
+                            checkAndStore(bondNumber, bondOrder, singles,
+                                    doubles, bondsInCycloex, mol
+                                    .getAtomNumber(curAtomThird),
+                                    atoms, sphere, theBondIsInA6MemberedRing);
+                            theBondIsInA6MemberedRing = false;
+                            atomsInFourthSphere = mol
+                                    .getConnectedAtomsList(curAtomThird);
+                            if (atomsInFourthSphere.size() > 0) {
+                                for (IAtom curAtomFourth : atomsInFourthSphere) {
+                                    fourthBond = mol.getBond(curAtomThird,
+                                            curAtomFourth);
+                                    if (mol.getAtomNumber(curAtomFourth) != atomPosition
+                                            && getIfBondIsNotRotatable(mol,
+                                            fourthBond, detected)) {
+                                        sphere = 4;
+                                        bondOrder = fourthBond.getOrder();
+                                        bondNumber = mol
+                                                .getBondNumber(fourthBond);
+                                        theBondIsInA6MemberedRing = false;
+                                        checkAndStore(
+                                                bondNumber,
+                                                bondOrder,
+                                                singles,
+                                                doubles,
+                                                bondsInCycloex,
+                                                mol
+                                                        .getAtomNumber(curAtomFourth),
+                                                atoms, sphere,
+                                                theBondIsInA6MemberedRing);
+                                        atomsInFifthSphere = mol
+                                                .getConnectedAtomsList(curAtomFourth);
+                                        if (atomsInFifthSphere.size() > 0) {
+                                            for (IAtom curAtomFifth : atomsInFifthSphere) {
+                                                fifthBond = mol.getBond(
+                                                        curAtomFifth,
+                                                        curAtomFourth);
+                                                if (mol
+                                                        .getAtomNumber(curAtomFifth) != atomPosition
+                                                        && getIfBondIsNotRotatable(
+                                                        mol, fifthBond,
+                                                        detected)) {
+                                                    sphere = 5;
+                                                    bondOrder = fifthBond
+                                                            .getOrder();
+                                                    bondNumber = mol
+                                                            .getBondNumber(fifthBond);
+                                                    theBondIsInA6MemberedRing = false;
+                                                    checkAndStore(
+                                                            bondNumber,
+                                                            bondOrder,
+                                                            singles,
+                                                            doubles,
+                                                            bondsInCycloex,
+                                                            mol
+                                                                    .getAtomNumber(curAtomFifth),
+                                                            atoms, sphere,
+                                                            theBondIsInA6MemberedRing);
+                                                    atomsInSixthSphere = mol
+                                                            .getConnectedAtomsList(curAtomFifth);
+                                                    if (atomsInSixthSphere
+                                                            .size() > 0) {
+                                                        for (IAtom curAtomSixth : atomsInSixthSphere) {
+                                                            sixthBond = mol
+                                                                    .getBond(
+                                                                            curAtomFifth,
+                                                                            curAtomSixth);
+                                                            if (mol
+                                                                    .getAtomNumber(curAtomSixth) != atomPosition
+                                                                    && getIfBondIsNotRotatable(
+                                                                    mol,
+                                                                    sixthBond,
+                                                                    detected)) {
+                                                                sphere = 6;
+                                                                bondOrder = sixthBond
+                                                                        .getOrder();
+                                                                bondNumber = mol
+                                                                        .getBondNumber(sixthBond);
+                                                                theBondIsInA6MemberedRing = false;
+                                                                checkAndStore(
+                                                                        bondNumber,
+                                                                        bondOrder,
+                                                                        singles,
+                                                                        doubles,
+                                                                        bondsInCycloex,
+                                                                        mol
+                                                                                .getAtomNumber(curAtomSixth),
+                                                                        atoms,
+                                                                        sphere,
+                                                                        theBondIsInA6MemberedRing);
+                                                                atomsInSeventhSphere = mol
+                                                                        .getConnectedAtomsList(curAtomSixth);
+                                                                if (atomsInSeventhSphere
+                                                                        .size() > 0) {
+                                                                    for (IAtom curAtomSeventh : atomsInSeventhSphere) {
+                                                                        seventhBond = mol
+                                                                                .getBond(
+                                                                                        curAtomSeventh,
+                                                                                        curAtomSixth);
+                                                                        if (mol
+                                                                                .getAtomNumber(curAtomSeventh) != atomPosition
+                                                                                && getIfBondIsNotRotatable(
+                                                                                mol,
+                                                                                seventhBond,
+                                                                                detected)) {
+                                                                            sphere = 7;
+                                                                            bondOrder = seventhBond
+                                                                                    .getOrder();
+                                                                            bondNumber = mol
+                                                                                    .getBondNumber(seventhBond);
+                                                                            theBondIsInA6MemberedRing = false;
+                                                                            checkAndStore(
+                                                                                    bondNumber,
+                                                                                    bondOrder,
+                                                                                    singles,
+                                                                                    doubles,
+                                                                                    bondsInCycloex,
+                                                                                    mol
+                                                                                            .getAtomNumber(curAtomSeventh),
+                                                                                    atoms,
+                                                                                    sphere,
+                                                                                    theBondIsInA6MemberedRing);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-		// Variables
+        // Variables
 		double distance;
 		double sum;
 		double smooth = -20;
@@ -480,57 +464,55 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			smooth = -2.86;
 			angle = 0;
 			int ya_counter = 0;
-			List connAtoms;
+			List<IAtom> connAtoms;
 			for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
 				sum = 0;
-				for (int cyc = 0; cyc < bondsInCycloex.size(); cyc++) {
-					ya_counter = 0;
-					angle = 0;
-					partial = 0;
-					Integer thisInCycloexBond = (Integer) bondsInCycloex
-							.get(cyc);
-					position = thisInCycloexBond.intValue();
-					theInCycloexBond = mol.getBond(position);
-					cycloexBondAtom0 = theInCycloexBond.getAtom(0);
-					cycloexBondAtom1 = theInCycloexBond.getAtom(1);
+                for (Integer aBondsInCycloex : bondsInCycloex) {
+                    ya_counter = 0;
+                    angle = 0;
+                    partial = 0;
+                    position = aBondsInCycloex;
+                    theInCycloexBond = mol.getBond(position);
+                    cycloexBondAtom0 = theInCycloexBond.getAtom(0);
+                    cycloexBondAtom1 = theInCycloexBond.getAtom(1);
 
-					connAtoms = mol.getConnectedAtomsList(cycloexBondAtom0);
-					for (int g = 0; g < connAtoms.size(); g++) {
-						if (((IAtom) connAtoms.get(g)).equals(neighbour0))
-							ya_counter += 1;
-					}
+                    connAtoms = mol.getConnectedAtomsList(cycloexBondAtom0);
+                    for (IAtom connAtom : connAtoms) {
+                        if (connAtom.equals(neighbour0))
+                            ya_counter += 1;
+                    }
 
-					if (ya_counter > 0) {
-						a_a.set(cycloexBondAtom1.getPoint3d().x,
-								cycloexBondAtom1.getPoint3d().y,
-								cycloexBondAtom1.getPoint3d().z);
-						a_b.set(cycloexBondAtom0.getPoint3d().x,
-								cycloexBondAtom0.getPoint3d().y,
-								cycloexBondAtom0.getPoint3d().z);
-					} else {
-						a_a.set(cycloexBondAtom0.getPoint3d().x,
-								cycloexBondAtom0.getPoint3d().y,
-								cycloexBondAtom0.getPoint3d().z);
-						a_b.set(cycloexBondAtom1.getPoint3d().x,
-								cycloexBondAtom1.getPoint3d().y,
-								cycloexBondAtom1.getPoint3d().z);
-					}
-					b_a.set(neighbour0.getPoint3d().x,
-							neighbour0.getPoint3d().y,
-							neighbour0.getPoint3d().z);
-					b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom
-							.getPoint3d().z);
+                    if (ya_counter > 0) {
+                        a_a.set(cycloexBondAtom1.getPoint3d().x,
+                                cycloexBondAtom1.getPoint3d().y,
+                                cycloexBondAtom1.getPoint3d().z);
+                        a_b.set(cycloexBondAtom0.getPoint3d().x,
+                                cycloexBondAtom0.getPoint3d().y,
+                                cycloexBondAtom0.getPoint3d().z);
+                    } else {
+                        a_a.set(cycloexBondAtom0.getPoint3d().x,
+                                cycloexBondAtom0.getPoint3d().y,
+                                cycloexBondAtom0.getPoint3d().z);
+                        a_b.set(cycloexBondAtom1.getPoint3d().x,
+                                cycloexBondAtom1.getPoint3d().y,
+                                cycloexBondAtom1.getPoint3d().z);
+                    }
+                    b_a.set(neighbour0.getPoint3d().x,
+                            neighbour0.getPoint3d().y,
+                            neighbour0.getPoint3d().z);
+                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom
+                            .getPoint3d().z);
 
-					angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
 
-					// logger.debug("gcycr ANGLE: " + angle + " "
-					// +mol.getAtomNumber(cycloexBondAtom0) + "
-					// "+mol.getAtomNumber(cycloexBondAtom1));
+                    // logger.debug("gcycr ANGLE: " + angle + " "
+                    // +mol.getAtomNumber(cycloexBondAtom0) + "
+                    // "+mol.getAtomNumber(cycloexBondAtom1));
 
-					partial = Math.exp(smooth * (Math.pow((g3r - angle), 2)));
-					sum += partial;
-				}
-				// g3r_function.add(new Double(sum));
+                    partial = Math.exp(smooth * (Math.pow((g3r - angle), 2)));
+                    sum += partial;
+                }
+                // g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
 				logger.debug("RDF g3r prob.: "+sum+ " at distance "+g3r);
 			}
@@ -583,18 +565,17 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	private boolean getIfACarbonIsDoubleBondedToAnOxygen(Molecule mol,
 			IAtom carbonAtom) {
 		boolean isDoubleBondedToOxygen = false;
-		java.util.List neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
+		List<IAtom> neighToCarbon = mol.getConnectedAtomsList(carbonAtom);
 		org.openscience.cdk.interfaces.IBond tmpBond;
 		int counter = 0;
-		for (int nei = 0; nei < neighToCarbon.size(); nei++) {
-			IAtom neighbour = (IAtom) neighToCarbon.get(nei);
-			if (neighbour.getSymbol().equals("O")) {
-				tmpBond = mol.getBond(neighbour, carbonAtom);
-				if (tmpBond.getOrder() == 2.0)
-					counter += 1;
-			}
-		}
-		if (counter > 0)
+        for (IAtom neighbour : neighToCarbon) {
+            if (neighbour.getSymbol().equals("O")) {
+                tmpBond = mol.getBond(neighbour, carbonAtom);
+                if (tmpBond.getOrder() == 2.0)
+                    counter += 1;
+            }
+        }
+        if (counter > 0)
 			isDoubleBondedToOxygen = true;
 		return isDoubleBondedToOxygen;
 	}
@@ -615,24 +596,28 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 
 	// this method store atoms and bonds in proper lists:
 	private void checkAndStore(int bondToStore, double bondOrder,
-			ArrayList singleVec, ArrayList doubleVec, ArrayList cycloexVec,
-			int a1, ArrayList atomVec, int sphere, boolean isBondInCycloex) {
+			ArrayList<Integer> singleVec,
+            ArrayList<Integer> doubleVec,
+            ArrayList<Integer> cycloexVec,
+			int a1,
+            ArrayList<Integer> atomVec,
+            int sphere, boolean isBondInCycloex) {
 		if (!atomVec.contains(new Integer(a1))) {
 			if (sphere < 6)
-				atomVec.add(new Integer(a1));
+				atomVec.add(a1);
 		}
 		if (!cycloexVec.contains(new Integer(bondToStore))) {
 			if (isBondInCycloex) {
-				cycloexVec.add(new Integer(bondToStore));
+				cycloexVec.add(bondToStore);
 			}
 		}
 		if (bondOrder == 2.0) {
 			if (!doubleVec.contains(new Integer(bondToStore)))
-				doubleVec.add(new Integer(bondToStore));
+				doubleVec.add(bondToStore);
 		}
 		if (bondOrder == 1.0) {
 			if (!singleVec.contains(new Integer(bondToStore)))
-				singleVec.add(new Integer(bondToStore));
+				singleVec.add(bondToStore);
 		}
 	}
 
@@ -653,11 +638,10 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		double[] values;
 		double distance = 0;
 		IAtom atom0 = bond.getAtom(0);
-		IAtom atom1 = bond.getAtom(1);
-		List bondsAtLeft = mol.getConnectedBondsList(atom0);
+        List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
 		int partial;
 		for (int i = 0; i < bondsAtLeft.size(); i++) {
-			IBond curBond = (IBond) bondsAtLeft.get(i);
+			IBond curBond = bondsAtLeft.get(i);
 			values = calculateDistanceBetweenAtomAndBond(atom, curBond);
 			partial = mol.getBondNumber(curBond);
 			if (i == 0) {
@@ -714,7 +698,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	 */
 	public Object getParameterType(String name) {
 		if (name.equals("atomPosition"))
-			return new Integer(0);
+			return 0;
 		return Boolean.TRUE;
 	}
 }
