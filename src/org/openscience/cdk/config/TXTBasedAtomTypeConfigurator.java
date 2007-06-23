@@ -23,7 +23,10 @@
  */
 package org.openscience.cdk.config;
 
-import java.awt.Color;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +34,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * AtomType list configurator that uses the AtomTypes originally
@@ -69,8 +69,8 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * @throws        IOException when a problem occured with reading from the InputStream
      * @return        A List with read IAtomType's.
      */
-    public List readAtomTypes(IChemObjectBuilder builder) throws IOException {
-        List atomTypes = new ArrayList();
+    public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
+        List<IAtomType> atomTypes = new ArrayList<IAtomType>();
 
         if (ins == null) {
             // trying the default
@@ -111,9 +111,9 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         String sColorB = tokenizer.nextToken();
                         
                         try {
-                            mass = new Double(sam).doubleValue();
-                            vdwaals = new Double(svdwaals).doubleValue();
-                            covalent = new Double(scovalent).doubleValue();
+                            mass = new Double(sam);
+                            vdwaals = new Double(svdwaals);
+                            covalent = new Double(scovalent);
                             atomicNumber = Integer.parseInt(san);
                             colorR = Integer.parseInt(sColorR);
                             colorG = Integer.parseInt(sColorG);
