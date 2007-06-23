@@ -152,7 +152,7 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testSetStereoParity_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setStereoParity(-1);
-        assertEquals(0, atom.getStereoParity());
+        assertEquals(0, atom.getStereoParity().intValue());
     }
 
     public void testPseudoAtom_IAtom() {

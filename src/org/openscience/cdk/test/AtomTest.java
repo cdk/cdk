@@ -192,7 +192,7 @@ public class AtomTest extends CDKTestCase {
 
         IAtom a = builder.newAtom("C");
         a.setStereoParity(parity);
-        assertEquals(parity, a.getStereoParity());
+        assertEquals(parity, a.getStereoParity().intValue());
     }
     public void testGetStereoParity() {
         testSetStereoParity_int();
@@ -274,7 +274,7 @@ public class AtomTest extends CDKTestCase {
 
         // test cloning
         atom.setStereoParity(4);
-        assertEquals(3, clone.getStereoParity());
+        assertEquals(3, clone.getStereoParity().intValue());
     }
 
     /**

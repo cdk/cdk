@@ -101,7 +101,7 @@ public interface IAtom extends IAtomType {
 	 * @see    org.openscience.cdk.CDKConstants for predefined values.
 	 * @see    #getStereoParity
 	 */
-	public void setStereoParity(int stereoParity);
+	public void setStereoParity(Integer stereoParity);
 	
 	/**
 	 * Returns a point specifying the location of this
@@ -139,7 +139,7 @@ public interface IAtom extends IAtomType {
 	 * @see       org.openscience.cdk.CDKConstants
 	 * @see       #setStereoParity
 	 */
-	public int getStereoParity();
+	public Integer getStereoParity();
 	
 }
 

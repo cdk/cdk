@@ -95,7 +95,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         /**
          *  A stereo parity descriptor for the stereochemistry of this atom.
          */
-        protected int stereoParity;
+        protected Integer stereoParity;
         /**
          *  The partial charge of the atom.
          *
@@ -286,9 +286,9 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @see    org.openscience.cdk.CDKConstants for predefined values.
          * @see    #getStereoParity
          */
-        public void setStereoParity(int stereoParity) {
-                this.stereoParity = stereoParity;
-		notifyChanged();
+        public void setStereoParity(Integer stereoParity) {
+        	this.stereoParity = stereoParity;
+        	notifyChanged();
         }
 
         /**
@@ -336,7 +336,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @see       org.openscience.cdk.CDKConstants
          * @see       #setStereoParity
          */
-        public int getStereoParity() {
+        public Integer getStereoParity() {
             return this.stereoParity;
         }
 

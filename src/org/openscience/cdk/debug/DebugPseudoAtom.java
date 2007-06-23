@@ -108,7 +108,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		super.setFractionalPoint3d(point3d);
 	}
 
-	public void setStereoParity(int stereoParity) {
+	public void setStereoParity(Integer stereoParity) {
 		logger.debug("Setting stereoParity: ", stereoParity);
 		super.setStereoParity(stereoParity);
 	}
@@ -146,7 +146,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return point3d;
 	}
 
-	public int getStereoParity() {
+	public Integer getStereoParity() {
 		logger.debug("Getting stereo parity: ", super.getStereoParity());
 		return super.getStereoParity();
 	}
