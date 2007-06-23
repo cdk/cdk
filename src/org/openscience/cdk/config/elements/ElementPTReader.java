@@ -27,14 +27,15 @@
  */
 package org.openscience.cdk.config.elements;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Vector;
-
+import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Vector;
 
 /**
  * Reader that instantiates an XML parser and customized handler to process
@@ -119,8 +120,8 @@ public class ElementPTReader {
      * @return a Vector of Isotope's. Returns an empty vector is some reading error
      *         occured.
      */
-    public Vector readElements() {
-        Vector elements = new Vector();
+    public Vector<PeriodicTableElement> readElements() {
+        Vector<PeriodicTableElement> elements = new Vector<PeriodicTableElement>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

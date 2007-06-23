@@ -23,12 +23,12 @@
  */
 package org.openscience.cdk.config.elements;
 
-import java.util.Vector;
-
 import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.Vector;
 
 /**
  * Reads an element list in CML2 format. An example definition is:
@@ -61,7 +61,7 @@ public class ElementPTHandler extends DefaultHandler
 	private int scalarType;
 	private LoggingTool logger;
 	private String currentChars;
-	private Vector elements;
+	private Vector<PeriodicTableElement> elements;
 	
 	public PeriodicTableElement elementType;
 	public String currentElement;
@@ -77,7 +77,7 @@ public class ElementPTHandler extends DefaultHandler
 	*
 	* @return A Vector object with all isotopes
 	*/
-	public Vector getElements() 
+	public Vector<PeriodicTableElement> getElements() 
 	{
 		return elements;
 	}
@@ -86,7 +86,7 @@ public class ElementPTHandler extends DefaultHandler
 
 	public void startDocument() 
 	{
-		elements = new Vector();
+		elements = new Vector<PeriodicTableElement>();
 		scalarType = SCALAR_UNSET;
 		elementType = null;
 	}

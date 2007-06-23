@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.config.elements.ElementPTReader;
+import org.openscience.cdk.tools.LoggingTool;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OptionalDataException;
 import java.util.Vector;
-
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.config.elements.ElementPTReader;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Used to store and return data of a particular chemicalElement. As this class is a
@@ -48,7 +48,7 @@ public class ElementPTFactory
 {
 
 	private static ElementPTFactory efac = null;
-	private Vector elements = null;
+	private Vector<PeriodicTableElement> elements = null;
 	private boolean debug = false;
 	private LoggingTool logger;
 
@@ -120,20 +120,18 @@ public class ElementPTFactory
 	 *@param  symbol  An element symbol to search for
 	 *@return         An array of element that matches the given element symbol
 	 */
-	public PeriodicTableElement getElement(String symbol)
-	{
-		for (int f = 0; f < elements.size(); f++)
-		{
-			if (((PeriodicTableElement) elements.elementAt(f)).getSymbol().equals(symbol))
-				try {
-					return (PeriodicTableElement) ((PeriodicTableElement) elements.elementAt(f)).clone();
-				} catch (CloneNotSupportedException e) {
-					logger.error("Could not clone PeriodicTableElement: ", e.getMessage());
+	public PeriodicTableElement getElement(String symbol) {
+        for (PeriodicTableElement element : elements) {
+            if (element.getSymbol().equals(symbol)) {
+                try {
+                    return (PeriodicTableElement) element.clone();
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone PeriodicTableElement: ", e.getMessage());
 					logger.debug(e);
-				}
-
-		}
-		return null;
+                }
+            }
+        }
+        return null;
 	}
 
 	/**
