@@ -29,7 +29,6 @@ import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,21 +63,19 @@ public class IsotopeFactory
 {
 
 	private static IsotopeFactory ifac = null;
-	private List isotopes = null;
-    private HashMap majorIsotopes = null;
+	private List<IIsotope> isotopes = null;
+    private HashMap<String, IIsotope> majorIsotopes = null;
     private boolean debug = false;
     private LoggingTool logger;
 
-	/**
-	 * Private constructor for the IsotopeFactory object.
-	 *
-	 *@exception  IOException             A problem with reading the isotopes.xml
-	 *      file
-	 *@exception  OptionalDataException   Unexpected data appeared in the isotope
-	 *      ObjectInputStream
-	 */
-	private IsotopeFactory(IChemObjectBuilder builder) throws IOException, OptionalDataException
-    {
+    /**
+     * Private constructor for the IsotopeFactory object.
+     *
+     *@exception IOException             A problem with reading the isotopes.xml
+     *      file
+     * @param builder The builder from which we the factory will be generated
+     */
+	private IsotopeFactory(IChemObjectBuilder builder) throws IOException {
         logger = new LoggingTool(this);
         logger.info("Creating new IsotopeFactory");
 
@@ -107,7 +104,7 @@ public class IsotopeFactory
               Isotope isotope = (Isotope)isotopes.elementAt(f);
           } What's this loop for?? */
 
-        majorIsotopes = new HashMap();
+        majorIsotopes = new HashMap<String, IIsotope>();
     }
 
 
@@ -117,11 +114,9 @@ public class IsotopeFactory
          * @param      builder                 ChemObjectBuilder used to construct the Isotope's
 	 * @return                             The instance value
 	 * @exception  IOException             Description of the Exception
-	 * @exception  OptionalDataException   Description of the Exception
 	 */
 	public static IsotopeFactory getInstance(IChemObjectBuilder builder)
-			 throws IOException, OptionalDataException
-    {
+			 throws IOException {
         if (ifac == null) {
             ifac = new IsotopeFactory(builder);
         }
@@ -146,27 +141,24 @@ public class IsotopeFactory
 	 *@param  symbol  An element symbol to search for
 	 *@return         An array of isotopes that matches the given element symbol
 	 */
-	public IIsotope[] getIsotopes(String symbol)
-	{
-  	ArrayList list = new ArrayList();
-		for (int f = 0; f < isotopes.size(); f++)
-		{
-			if (((IIsotope) isotopes.get(f)).getSymbol().equals(symbol))
-			{
-				try {
-					IIsotope clone = (IIsotope) ((IIsotope) isotopes.get(f)).clone();
-					list.add(clone);
-				} catch (CloneNotSupportedException e) {
-					logger.error("Could not clone IIsotope: ", e.getMessage());
-					logger.debug(e);
-				}
-			}
-		}
-  	return (IIsotope[]) list.toArray(new IIsotope[list.size()]);
-	}
+    public IIsotope[] getIsotopes(String symbol) {
+        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+        for (IIsotope isotope : isotopes) {
+            if (isotope.getSymbol().equals(symbol)) {
+                try {
+                    IIsotope clone = (IIsotope) isotope.clone();
+                    list.add(clone);
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone IIsotope: ", e.getMessage());
+                    logger.debug(e);
+                }
+            }
+        }
+        return list.toArray(new IIsotope[list.size()]);
+    }
 
 
-	/**
+    /**
 	 * Returns the most abundant (major) isotope with a given atomic number.
      *
      * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
@@ -181,21 +173,20 @@ public class IsotopeFactory
      */
     public IIsotope getMajorIsotope(int atomicNumber) {
         IIsotope major = null;
-        for (int f = 0; f < isotopes.size(); f++) {
-            IIsotope current = (IIsotope) isotopes.get(f);
-            if (current.getAtomicNumber() == atomicNumber) {
-            	try {
-            		if (major == null) {
-            			major = (IIsotope)current.clone();
-            		} else {
-            			if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-            				major = (IIsotope)current.clone();
-            			}
-            		}
-            	} catch (CloneNotSupportedException e) {
-					logger.error("Could not clone IIsotope: ", e.getMessage());
-					logger.debug(e);
-				}
+        for (IIsotope isotope : isotopes) {
+            if (isotope.getAtomicNumber() == atomicNumber) {
+                try {
+                    if (major == null) {
+                        major = (IIsotope) isotope.clone();
+                    } else {
+                        if (isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                            major = (IIsotope) isotope.clone();
+                        }
+                    }
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone IIsotope: ", e.getMessage());
+                    logger.debug(e);
+                }
             }
         }
         if (major == null) logger.error("Could not find major isotope for: ", atomicNumber);
@@ -220,25 +211,24 @@ public class IsotopeFactory
      */
     public IIsotope getMajorIsotope(String symbol) {
         IIsotope major = null;
-        if (majorIsotopes.containsKey(
-        		symbol)) {
-            major = (IIsotope)majorIsotopes.get(symbol);
+        if (majorIsotopes.containsKey(symbol)) {
+            major = majorIsotopes.get(symbol);
         } else {
-            for (int f = 0; f < isotopes.size(); f++) {
-                IIsotope current = (IIsotope) isotopes.get(f);
-                if (current.getSymbol().equals(symbol)) {
-                	try {
-                		if (major == null) {
-                			major = (IIsotope)current.clone();
-                		} else {
-                			if (current.getNaturalAbundance() > major.getNaturalAbundance()) {
-                				major = (IIsotope)current.clone();
-                			}
-                		}
-                	} catch (CloneNotSupportedException e) {
-    					logger.error("Could not clone IIsotope: ", e.getMessage());
-    					logger.debug(e);
-    				}                }
+            for (IIsotope isotope : isotopes) {
+                if (isotope.getSymbol().equals(symbol)) {
+                    try {
+                        if (major == null) {
+                            major = (IIsotope) isotope.clone();
+                        } else {
+                            if (isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                                major = (IIsotope) isotope.clone();
+                            }
+                        }
+                    } catch (CloneNotSupportedException e) {
+                        logger.error("Could not clone IIsotope: ", e.getMessage());
+                        logger.debug(e);
+                    }
+                }
             }
             if (major == null) {
                 logger.error("Could not find major isotope for: ", symbol);

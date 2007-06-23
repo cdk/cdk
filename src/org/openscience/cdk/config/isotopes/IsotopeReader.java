@@ -27,16 +27,17 @@
  */
 package org.openscience.cdk.config.isotopes;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Reader that instantiates an XML parser and customized handler to process
@@ -124,8 +125,8 @@ public class IsotopeReader {
      * @return a List of Isotope's. Returns an empty list is some reading error
      *         occured.
      */
-    public List readIsotopes() {
-        List isotopes = new ArrayList();
+    public List<IIsotope> readIsotopes() {
+        List<IIsotope> isotopes = new ArrayList<IIsotope>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

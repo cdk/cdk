@@ -23,14 +23,14 @@
  */
 package org.openscience.cdk.config.isotopes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Reads an isotope list in CML2 format. An example definition is:
@@ -55,7 +55,7 @@ public class IsotopeHandler extends DefaultHandler {
 
     private LoggingTool logger;
     private String currentChars;
-    private List isotopes;
+    private List<IIsotope> isotopes;
 
     private IIsotope workingIsotope;
     private String currentElement;
@@ -78,14 +78,14 @@ public class IsotopeHandler extends DefaultHandler {
      *
      * @return A List object with all isotopes
      */
-    public List getIsotopes() {
+    public List<IIsotope> getIsotopes() {
         return isotopes;
     }
 
     // SAX Parser methods
 
     public void startDocument() {
-        isotopes = new ArrayList();
+        isotopes = new ArrayList<IIsotope>();
     }
 
     public void endElement(String uri, String local, String raw) {
