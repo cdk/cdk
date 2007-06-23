@@ -47,7 +47,7 @@ package org.openscience.cdk;
  */
 public class CDKConstants {
 	
-	public final static int UNSET = Integer.MIN_VALUE;	
+	public final static Object UNSET = null;	
 
 	/** A bond of degree 1.0. */
 	public final static double BONDORDER_SINGLE = 1.0;
