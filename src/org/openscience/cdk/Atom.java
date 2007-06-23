@@ -78,58 +78,49 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *  A 2D point specifying the location of this atom in a 2D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point2d point2d;
+        protected javax.vecmath.Point2d point2d = (Point2d) CDKConstants.UNSET;
         /**
          *  A 3 point specifying the location of this atom in a 3D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point3d point3d;
+        protected javax.vecmath.Point3d point3d = (Point3d) CDKConstants.UNSET;
         /**
          *  A 3 point specifying the location of this atom in a crystal unit cell.
          */
-        protected javax.vecmath.Point3d fractionalPoint3d;
+        protected javax.vecmath.Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
         /**
          *  The number of implicitly bound hydrogen atoms for this atom.
          */
-        protected Integer hydrogenCount;
+        protected Integer hydrogenCount = (Integer) CDKConstants.UNSET;
         /**
          *  A stereo parity descriptor for the stereochemistry of this atom.
          */
-        protected Integer stereoParity;
+        protected Integer stereoParity = (Integer) CDKConstants.UNSET;
         /**
          *  The partial charge of the atom.
          *
          * The default value is {@link CDKConstants.UNSET} and serves to provide a check whether the charge has been
          * set or not
          */
-        protected Double charge;
+        protected Double charge = (Double) CDKConstants.UNSET;
         
         /**
          * Constructs an completely unset Atom.
          */
         public Atom() {
             super((String)null);
-            this.fractionalPoint3d = null;
-            this.point3d = null;
-            this.point2d = null;
-            this.hydrogenCount = 0;
-        }
-        
-        /**
-         * Constructs an Atom from a String containing an element symbol.
-         *
-         * @param   elementSymbol  The String describing the element for the Atom
-         */
-        public Atom(String elementSymbol)
-        {
-                super(elementSymbol);
-                this.fractionalPoint3d = null;
-                this.point3d = null;
-                this.point2d = null;
-                this.hydrogenCount = 0;
         }
 
-        /**
+    /**
+     * Constructs an Atom from a String containing an element symbol.
+     *
+     * @param elementSymbol The String describing the element for the Atom
+     */
+    public Atom(String elementSymbol) {
+        super(elementSymbol);      
+    }
+
+    /**
          * Constructs an Atom from an Element and a Point3d.
          *
          * @param   elementSymbol   The symbol of the atom
