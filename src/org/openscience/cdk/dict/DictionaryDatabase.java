@@ -57,13 +57,13 @@ public class DictionaryDatabase {
         "xml", "xml", "owl"
     };
     
-    private Hashtable dictionaries;
+    private Hashtable<String, Dictionary> dictionaries;
 
     public DictionaryDatabase() {
         logger = new LoggingTool(this);
         
         // read dictionaries distributed with CDK
-        dictionaries = new Hashtable();
+        dictionaries = new Hashtable<String, Dictionary>();
         for (int i=0; i<dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
             String type = dictionaryTypes[i];
@@ -99,6 +99,8 @@ public class DictionaryDatabase {
 
     /**
      * Reads a custom dictionary into the database.
+     * @param reader The reader from which the dictionary data will be read
+     * @param name The name of the dictionary
      */
     public void readDictionary(Reader reader, String name) {
         name = name.toLowerCase();
@@ -119,17 +121,20 @@ public class DictionaryDatabase {
 
     /**
      * Returns a String[] with the names of the known dictionaries.
+     * @return The names of the dictionaries
      */
     public String[] getDictionaryNames() {
         return dictionaryNames;
     }
     
     public Dictionary getDictionary(String dictionaryName) {
-    	return (Dictionary)dictionaries.get(dictionaryName);
+    	return dictionaries.get(dictionaryName);
     }
     
     /**
      * Returns a String[] with the id's of all entries in the specified database.
+     * @return The entry names for the specified dictionary
+     * @param dictionaryName The name of the dictionary
      */
     public String[] getDictionaryEntries(String dictionaryName) {
         Dictionary dictionary = getDictionary(dictionaryName);
