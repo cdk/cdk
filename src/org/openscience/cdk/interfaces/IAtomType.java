@@ -52,7 +52,7 @@ public interface IAtomType extends IIsotope {
 	 * @param  maxBondOrder  The new MaxBondOrder value
      * @see    #getMaxBondOrder
 	 */
-	public void setMaxBondOrder(double maxBondOrder);
+	public void setMaxBondOrder(Double maxBondOrder);
 
 	/**
 	 * Sets the the exact bond order sum attribute of the AtomType object.
@@ -76,7 +76,7 @@ public interface IAtomType extends IIsotope {
 	 * @return    The MaxBondOrder value
      * @see       #setMaxBondOrder
 	 */
-	public double getMaxBondOrder();
+	public Double getMaxBondOrder();
 
 	/**
 	 * Gets the bondOrderSum attribute of the AtomType object.

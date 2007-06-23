@@ -154,7 +154,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setAtomTypeName(identifier);
 	}
 
-	public void setMaxBondOrder(double maxBondOrder) {
+	public void setMaxBondOrder(Double maxBondOrder) {
 		logger.debug("Setting max bond order: ", maxBondOrder);
 		super.setMaxBondOrder(maxBondOrder);
 	}
@@ -169,7 +169,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return super.getAtomTypeName();
 	}
 
-	public double getMaxBondOrder() {
+	public Double getMaxBondOrder() {
 		logger.debug("Getting max bond order: ", super.getMaxBondOrder());
 		return super.getMaxBondOrder();
 	}

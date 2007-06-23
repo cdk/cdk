@@ -60,7 +60,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	/**
 	 *  The maximum bond order allowed for this atom type.
 	 */
-	double maxBondOrder;
+	Double maxBondOrder;
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
@@ -179,7 +179,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #getMaxBondOrder
 	 */
-	public void setMaxBondOrder(double maxBondOrder)
+	public void setMaxBondOrder(Double maxBondOrder)
 	{
 		this.maxBondOrder = maxBondOrder;
 		notifyChanged();
@@ -220,7 +220,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setMaxBondOrder
 	 */
-	public double getMaxBondOrder()
+	public Double getMaxBondOrder()
 	{
 		return maxBondOrder;
 	}
