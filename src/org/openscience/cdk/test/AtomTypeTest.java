@@ -141,7 +141,7 @@ public class AtomTypeTest extends CDKTestCase {
 
         IAtomType a = builder.newAtomType("C");
         a.setFormalCharge(charge);
-        assertEquals(charge, a.getFormalCharge());
+        assertEquals(charge, a.getFormalCharge().intValue());
     }
     public void testGetFormalCharge() {
         testSetFormalCharge_int();
@@ -318,7 +318,7 @@ public class AtomTypeTest extends CDKTestCase {
         IAtomType clone = (IAtomType)at.clone();
         
         at.setFormalCharge(2);
-        assertEquals(1, clone.getFormalCharge());
+        assertEquals(1, clone.getFormalCharge().intValue());
     }
     
     /**
@@ -370,6 +370,6 @@ public class AtomTypeTest extends CDKTestCase {
 
     public void testDefaultFormalCharge() {
         IAtomType atomType = builder.newAtomType("C");
-        assertEquals(0, atomType.getFormalCharge());
+        assertEquals(0, atomType.getFormalCharge().intValue());
     }
 }

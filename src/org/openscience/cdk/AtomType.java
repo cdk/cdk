@@ -79,7 +79,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      *
      */
-    protected int formalCharge;
+    protected Integer formalCharge;
 
     /**
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
@@ -245,9 +245,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getFormalCharge
      */
-    public void setFormalCharge(int charge) {
-        this.formalCharge = charge;
-	notifyChanged();
+    public void setFormalCharge(Integer charge) {
+    	this.formalCharge = charge;
+    	notifyChanged();
     }
     
     /**
@@ -257,7 +257,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setFormalCharge
      */
-    public int getFormalCharge() {
+    public Integer getFormalCharge() {
         return this.formalCharge;
     }
     

@@ -417,7 +417,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(1, mol.getAtomCount());
 		assertEquals("O", mol.getAtom(0).getSymbol());
-		assertEquals(-1, mol.getAtom(0).getFormalCharge());
+		assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
 	}
 
 	/**
@@ -508,7 +508,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "[H+]";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(1, mol.getAtomCount());
-		assertEquals(1, mol.getAtom(0).getFormalCharge());
+		assertEquals(1, mol.getAtom(0).getFormalCharge().intValue());
 	}
 
 
@@ -676,7 +676,7 @@ public class SmilesParserTest extends CDKTestCase {
 			assertEquals(2, mol.getConnectedAtomsCount(atomi));
 		}
 		// and the first atom should have a negative charge
-		assertEquals(-1, mol.getAtom(0).getFormalCharge());
+		assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
 	}
 
 

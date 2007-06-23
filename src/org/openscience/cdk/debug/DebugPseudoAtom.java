@@ -181,12 +181,12 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getBondOrderSum();
 	}
 
-	public void setFormalCharge(int charge) {
+	public void setFormalCharge(Integer charge) {
 		logger.debug("Setting formal charge: ", charge);
 		super.setFormalCharge(charge);
 	}
 
-	public int getFormalCharge() {
+	public Integer getFormalCharge() {
 		logger.debug("Getting formal charge: ", super.getFormalCharge());
 		return super.getFormalCharge();
 	}

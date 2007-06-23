@@ -108,11 +108,11 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
         assertNotNull(a);
         assertEquals("Na", a.getSymbol());
-        assertEquals(1, a.getFormalCharge());
+        assertEquals(1, a.getFormalCharge().intValue());
         a = m.getAtom(2); 
         assertNotNull(a);
         assertEquals("O", a.getSymbol());
-        assertEquals(-1, a.getFormalCharge());
+        assertEquals(-1, a.getFormalCharge().intValue());
     }
 
     public void testAPinene() throws Exception {
@@ -355,7 +355,7 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	assertEquals(0, mol.getBondCount());
     	assertEquals(1, AtomContainerManipulator.getTotalFormalCharge(mol));
     	IAtom atom = mol.getAtom(0);
-    	assertEquals(1, atom.getFormalCharge());
+    	assertEquals(1, atom.getFormalCharge().intValue());
     }
 
     public void testReadingCharges() throws CDKException {
@@ -364,8 +364,8 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	IChemFile chemFile = (IChemFile) reader.read((IChemObject) new org.openscience.cdk.ChemFile());
-    	assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge());
-    	assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge());
+    	assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge().intValue());
+    	assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge().intValue());
     }
     
     public void testEmptyString() throws Exception {

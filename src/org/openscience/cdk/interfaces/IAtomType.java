@@ -92,7 +92,7 @@ public interface IAtomType extends IIsotope {
      * @param  charge  The formal charge
      * @see    #getFormalCharge
      */
-    public void setFormalCharge(int charge);
+    public void setFormalCharge(Integer charge);
     
     /**
      * Returns the formal charge of this atom.
@@ -100,7 +100,7 @@ public interface IAtomType extends IIsotope {
      * @return the formal charge of this atom
      * @see    #setFormalCharge
      */
-    public int getFormalCharge();
+    public Integer getFormalCharge();
     
     /**
      * Sets the formal neighbour count of this atom.

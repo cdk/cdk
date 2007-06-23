@@ -100,7 +100,7 @@ public class CML2Test extends CDKTestCase {
         while (atoms.hasNext()) {
         	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
         	if (atom.getSymbol().equals("Na")) 
-        		assertEquals(+1, atom.getFormalCharge()); 
+        		assertEquals(+1, atom.getFormalCharge().intValue()); 
         }
     }
 
@@ -133,7 +133,7 @@ public class CML2Test extends CDKTestCase {
         while (atoms.hasNext()) {
         	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
         	if (atom.getSymbol().equals("N")) 
-        		assertEquals(+1, atom.getFormalCharge()); 
+        		assertEquals(+1, atom.getFormalCharge().intValue()); 
         }
     }
 

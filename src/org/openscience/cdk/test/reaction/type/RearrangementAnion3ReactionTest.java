@@ -92,7 +92,7 @@ public class RearrangementAnion3ReactionTest extends CDKTestCase {
         
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(-1, product.getAtom(1).getFormalCharge());
+        Assert.assertEquals(-1, product.getAtom(1).getFormalCharge().intValue());
         
         /*C=[C-]-C*/
 		IMolecule molecule2 = getMolecule2();

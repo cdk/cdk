@@ -122,13 +122,13 @@ public class PseudoAtomTest extends CDKTestCase {
 
     public void testGetFormalCharge() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
-        assertEquals(0, atom.getFormalCharge());
+        assertEquals(0, atom.getFormalCharge().intValue());
     }
 
     public void testSetFormalCharge_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setFormalCharge(+5);
-        assertEquals(0, atom.getFormalCharge());
+        assertEquals(0, atom.getFormalCharge().intValue());
     }
 
     public void testSetHydrogenCount_int() {

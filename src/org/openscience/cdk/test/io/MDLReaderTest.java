@@ -144,7 +144,7 @@ public class MDLReaderTest extends CDKTestCase {
     	assertEquals(1, mol.getAtomCount());
     	assertEquals(0, mol.getBondCount());
     	IAtom atom = mol.getAtom(0);
-    	assertEquals(1, atom.getFormalCharge());
+    	assertEquals(1, atom.getFormalCharge().intValue());
     }
     
     /**

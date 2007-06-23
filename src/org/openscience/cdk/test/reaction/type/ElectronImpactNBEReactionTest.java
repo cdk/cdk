@@ -85,7 +85,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge());
+        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
         
         Assert.assertTrue(setOfReactions.getReaction(0).mappings().hasNext());
@@ -116,7 +116,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge());
+        Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
 		
 	}
