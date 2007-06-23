@@ -60,7 +60,7 @@ public interface IAtomType extends IIsotope {
 	 * @param  bondOrderSum  The new bondOrderSum value
      * @see    #getBondOrderSum
 	 */
-	public void setBondOrderSum(double bondOrderSum);
+	public void setBondOrderSum(Double bondOrderSum);
 
 	/**
 	 * Gets the id attribute of the AtomType object.
@@ -84,7 +84,7 @@ public interface IAtomType extends IIsotope {
 	 * @return    The bondOrderSum value
      * @see       #setBondOrderSum
 	 */
-	public double getBondOrderSum();
+	public Double getBondOrderSum();
 	
     /**
      * Sets the formal charge of this atom.

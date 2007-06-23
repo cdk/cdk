@@ -215,7 +215,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		super.setMaxBondOrder(maxBondOrder);
 	}
 
-	public void setBondOrderSum(double bondOrderSum) {
+	public void setBondOrderSum(Double bondOrderSum) {
 		logger.debug("Setting bond order sum: ", bondOrderSum);
 		super.setBondOrderSum(bondOrderSum);
 	}
@@ -230,7 +230,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		return super.getMaxBondOrder();
 	}
 
-	public double getBondOrderSum() {
+	public Double getBondOrderSum() {
 		logger.debug("Getting bond order sum: ", super.getBondOrderSum());
 		return super.getBondOrderSum();
 	}

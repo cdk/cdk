@@ -309,7 +309,7 @@ public class MFAnalyser {
    		    IAtomType[] types = factory.getAtomTypes(ac.getAtom(f).getSymbol());
    		    if(types.length==0)
    		    	throw new CDKException("Calculation of double bond equivalents not possible due to problems with element "+ac.getAtom(f).getSymbol());
-   		    valencies[(int)types[0].getBondOrderSum()+ac.getAtom(f).getFormalCharge()]++;
+   		    valencies[(int)types[0].getBondOrderSum().intValue()+ac.getAtom(f).getFormalCharge()]++;
 		}
 		return  1 + (valencies[4]) + (valencies[3] /2) - (valencies[1] /2);
 	}

@@ -64,7 +64,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
-	double bondOrderSum;
+	Double bondOrderSum;
 
     /**
      * The Vanderwaals radius of this atom type.
@@ -193,7 +193,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #getBondOrderSum
 	 */
-	public void setBondOrderSum(double bondOrderSum)
+	public void setBondOrderSum(Double bondOrderSum)
 	{
 		this.bondOrderSum = bondOrderSum;
 		notifyChanged();
@@ -233,7 +233,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setBondOrderSum
 	 */
-	public double getBondOrderSum()
+	public Double getBondOrderSum()
 	{
 		return bondOrderSum;
 	}
