@@ -340,7 +340,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			return false;
 		}
 		ChemObject chemObj = (ChemObject) object;
-        return identifier.equals(chemObj.identifier);
+        return identifier == chemObj.identifier;        
     }
 
 
