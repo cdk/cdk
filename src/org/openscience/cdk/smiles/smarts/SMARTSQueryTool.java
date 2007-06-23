@@ -276,7 +276,10 @@ public class SMARTSQueryTool {
             }
             
             // determine how many rings bonds each atom is a part of
-            int hCount = atom.getHydrogenCount();
+            int hCount;
+            if (atom.getHydrogenCount() == CDKConstants.UNSET) hCount = 0;
+            else hCount = atom.getHydrogenCount();
+            
             List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
             int total = hCount + connectedAtoms.size();
             for (IAtom connectedAtom : connectedAtoms) {
