@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk.test;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -128,19 +127,19 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testSetFormalCharge_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setFormalCharge(+5);
-        assertEquals(0, atom.getFormalCharge().intValue());
+        assertEquals(5, atom.getFormalCharge().intValue());
     }
 
     public void testSetHydrogenCount_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setHydrogenCount(+5);
-        assertEquals(0, atom.getHydrogenCount().intValue());
+        assertEquals(5, atom.getHydrogenCount().intValue());
     }
 
     public void testSetCharge_double() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setCharge(0.78);
-        assertEquals(0.0, atom.getCharge(), 0.001);
+        assertEquals(0.78, atom.getCharge(), 0.001);
     }
 
     public void testSetExactMass_double() {
@@ -152,7 +151,7 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testSetStereoParity_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setStereoParity(-1);
-        assertEquals(0, atom.getStereoParity().intValue());
+        assertEquals(-1, atom.getStereoParity().intValue());
     }
 
     public void testPseudoAtom_IAtom() {
