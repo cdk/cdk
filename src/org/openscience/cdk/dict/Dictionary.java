@@ -51,11 +51,11 @@ import java.util.Hashtable;
  */
 public class Dictionary {
 
-    private Hashtable entries;
+    private Hashtable<String, Entry> entries;
     private String ownNS = null;
     
     public Dictionary() {
-        entries = new Hashtable();
+        entries = new Hashtable<String, Entry>();
     }
     
     public static Dictionary unmarshal(Reader reader) {
@@ -71,6 +71,10 @@ public class Dictionary {
         }
 	
         try {
+            if (parser == null) {
+                logger.debug("parser object was null!");
+                return null;
+            }
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.debug("Deactivated validation");
         } catch (SAXException e) {
@@ -113,7 +117,7 @@ public class Dictionary {
     }
     
     public Entry getEntry(String identifier) {
-        return (Entry)entries.get(identifier);
+        return entries.get(identifier);
     }
     
     public int size() {
