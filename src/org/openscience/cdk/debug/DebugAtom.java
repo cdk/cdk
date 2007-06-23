@@ -68,12 +68,12 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		logger.debug("Instantiated a DebugAtom: element= ", element);
 	}
 
-	public void setCharge(double charge) {
+	public void setCharge(Double charge) {
 		logger.debug("Setting charge: ", charge);
 		super.setCharge(charge);
 	}
 
-	public double getCharge() {
+	public Double getCharge() {
 		logger.debug("Setting charge: ", super.getCharge());
 		return super.getCharge();
 	}

@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -43,7 +40,7 @@ public interface IAtom extends IAtomType {
 	 * @param  charge  The partial charge
 	 * @see    #getCharge
 	 */
-	public void setCharge(double charge);
+	public void setCharge(Double charge);
 
 	/**
 	 * Returns the partial charge of this atom.
@@ -51,7 +48,7 @@ public interface IAtom extends IAtomType {
 	 * @return the charge of this atom
 	 * @see    #setCharge
 	 */
-	public double getCharge();
+	public Double getCharge();
 
 	/**
 	 * Sets the hydrogen count of this atom.

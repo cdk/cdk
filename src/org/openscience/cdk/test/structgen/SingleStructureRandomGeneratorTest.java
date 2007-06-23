@@ -34,7 +34,6 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.structgen.SingleStructureRandomGenerator;
@@ -96,7 +95,9 @@ public class SingleStructureRandomGeneratorTest
 			atom = mol.getAtom(f);
 			bondCount =  mol.getBondOrderSum(atom);
 			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
-			atom.setHydrogenCount(4 - (int)bondCount - (int)atom.getCharge());
+			atom.setHydrogenCount(4 - (int)bondCount - 
+				(atom.getCharge()==null ? 0 : atom.getCharge().intValue())
+			);
 		}
 	}
 	

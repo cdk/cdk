@@ -75,8 +75,8 @@ public class ElectrostaticInteractions {
 		//logger.debug("molecule.getAtomCount() : " + molecule.getAtomCount());
 		//logger.debug("molecule.getBondCount() : " + molecule.getBondCount());
 		if (molecule.getAtomCount() == 12 & molecule.getBondCount() == 11) {
-		    molecule.getAtom(3).setCharge(1);
-		    molecule.getAtom(8).setCharge(1);
+		    molecule.getAtom(3).setCharge(Double.valueOf(1.0));
+		    molecule.getAtom(8).setCharge(Double.valueOf(1.0));
 		}
 		
 		electrostaticInteractionNumber = 0;

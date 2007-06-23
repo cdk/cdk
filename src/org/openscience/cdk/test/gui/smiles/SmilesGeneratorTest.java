@@ -790,13 +790,13 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			atom = mol.getAtom(f);
 			bondCount = mol.getBondOrderSum(atom);
-			if (atom.getSymbol().equals("C"))
-			{
-				atom.setHydrogenCount(4 - (int) bondCount - (int) atom.getCharge());
-			}
-			if (atom.getSymbol().equals("N"))
-			{
-				atom.setHydrogenCount(3 - (int) bondCount - (int) atom.getCharge());
+			int correction = (int)bondCount - (
+				atom.getCharge()!=null ? atom.getCharge().intValue() : 0
+			);
+			if (atom.getSymbol().equals("C")) {
+				atom.setHydrogenCount(4 - correction);
+			} else if (atom.getSymbol().equals("N")) {
+				atom.setHydrogenCount(3 - correction);
 			}
 			if (standAlone)
 			{

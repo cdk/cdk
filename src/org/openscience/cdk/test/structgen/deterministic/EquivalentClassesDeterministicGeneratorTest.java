@@ -75,7 +75,9 @@ public class EquivalentClassesDeterministicGeneratorTest extends CDKTestCase
 		{
 			atom = mol.getAtom(f);
 			bondCount =  mol.getBondOrderSum(atom);
-			atom.setHydrogenCount(4 - (int)bondCount - (int)atom.getCharge());
+			atom.setHydrogenCount(4 - (int)bondCount -
+				(atom.getCharge()==null ? 0 : atom.getCharge().intValue())
+			);
 			if (standAlone) System.out.println("Hydrogen count for atom " + f + ": " + atom.getHydrogenCount());
 		}
 	}

@@ -70,12 +70,12 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point3d=" + point3d);
 	}
 	
-	public void setCharge(double charge) {
+	public void setCharge(Double charge) {
 		logger.debug("Setting charge: ", charge);
 		super.setCharge(charge);
 	}
 
-	public double getCharge() {
+	public Double getCharge() {
 		logger.debug("Setting charge: ", super.getCharge());
 		return super.getCharge();
 	}
