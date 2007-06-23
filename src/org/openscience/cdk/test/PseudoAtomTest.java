@@ -134,7 +134,7 @@ public class PseudoAtomTest extends CDKTestCase {
     public void testSetHydrogenCount_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setHydrogenCount(+5);
-        assertEquals(0, atom.getHydrogenCount());
+        assertEquals(0, atom.getHydrogenCount().intValue());
     }
 
     public void testSetCharge_double() {

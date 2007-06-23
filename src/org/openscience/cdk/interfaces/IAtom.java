@@ -51,20 +51,20 @@ public interface IAtom extends IAtomType {
 	public Double getCharge();
 
 	/**
-	 * Sets the hydrogen count of this atom.
+	 * Sets the implicit hydrogen count of this atom.
 	 *
 	 * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
 	 * @see    #getHydrogenCount
 	 */
-	public void setHydrogenCount(int hydrogenCount);
+	public void setHydrogenCount(Integer hydrogenCount);
 
 	/**
-	 * Returns the hydrogen count of this atom.
+	 * Returns the implicit hydrogen count of this atom.
 	 *
 	 * @return    The hydrogen count of this atom.
 	 * @see       #setHydrogenCount
 	 */
-	public int getHydrogenCount();
+	public Integer getHydrogenCount();
 
 	/**
 	 * Sets a point specifying the location of this

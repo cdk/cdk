@@ -125,14 +125,16 @@ public class AtomTest extends CDKTestCase {
      * Method to test the get/setHydrogenCount() methods.
      */
     public void testSetHydrogenCount_int() {
-        int count = 1;
+        Integer count = Integer.valueOf(1);
 
         IAtom a = builder.newAtom("C");
         a.setHydrogenCount(count);
         assertEquals(count, a.getHydrogenCount());
     }
     public void testGetHydrogenCount() {
-        testSetHydrogenCount_int();
+    	// should be null by default
+    	IAtom a = builder.newAtom("C");
+    	assertNull(a.getHydrogenCount());
     }
 
     /**
@@ -254,12 +256,12 @@ public class AtomTest extends CDKTestCase {
      */
     public void testClone_HydrogenCount() throws Exception {
         IAtom atom = builder.newAtom("C");
-        atom.setHydrogenCount(3);
+        atom.setHydrogenCount(Integer.valueOf(3));
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
-        atom.setHydrogenCount(4);
-        assertEquals(3, clone.getHydrogenCount());
+        atom.setHydrogenCount(Integer.valueOf(4));
+        assertEquals(3, clone.getHydrogenCount().intValue());
     }
 
     /**

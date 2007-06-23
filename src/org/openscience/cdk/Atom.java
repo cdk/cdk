@@ -91,7 +91,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         /**
          *  The number of implicitly bound hydrogen atoms for this atom.
          */
-        protected int hydrogenCount;
+        protected Integer hydrogenCount;
         /**
          *  A stereo parity descriptor for the stereochemistry of this atom.
          */
@@ -217,15 +217,15 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
         }
 
         /**
-         *  Sets the hydrogen count of this atom.
+         *  Sets the number of implicit hydrogen count of this atom.
          *
          * @param  hydrogenCount  The number of hydrogen atoms bonded to this atom.
          *
          * @see    #getHydrogenCount
          */
-        public void setHydrogenCount(int hydrogenCount) {
-                this.hydrogenCount = hydrogenCount;
-		notifyChanged();
+        public void setHydrogenCount(Integer hydrogenCount) {
+        	this.hydrogenCount = hydrogenCount;
+        	notifyChanged();
         }
 
         /**
@@ -235,8 +235,8 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see       #setHydrogenCount
          */
-        public int getHydrogenCount() {
-                return this.hydrogenCount;
+        public Integer getHydrogenCount() {
+        	return this.hydrogenCount;
         }
 
         /**

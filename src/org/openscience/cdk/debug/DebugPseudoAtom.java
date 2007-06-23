@@ -80,12 +80,12 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getCharge();
 	}
 
-	public void setHydrogenCount(int hydrogenCount) {
+	public void setHydrogenCount(Integer hydrogenCount) {
 		logger.debug("Setting hydrogen count: ", hydrogenCount);
 		super.setHydrogenCount(hydrogenCount);
 	}
 
-	public int getHydrogenCount() {
+	public Integer getHydrogenCount() {
 		logger.debug("Getting hydrogen count: ", super.getHydrogenCount());
 		return super.getHydrogenCount();
 	}

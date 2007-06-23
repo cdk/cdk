@@ -260,8 +260,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         // Should be two disconnected Bs with H-count == 4
         assertEquals("incorrect atom count", 2, ac.getAtomCount());
         assertEquals("incorrect bond count", 0, ac.getBondCount());
-        assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getHydrogenCount());
-        assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getHydrogenCount());
+        assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getHydrogenCount().intValue());
+        assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getHydrogenCount().intValue());
     }
     /**
      * Test total formal charge.

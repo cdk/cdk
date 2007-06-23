@@ -90,7 +90,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(1, mol.getAtomCount());
         assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(0, mol.getConnectedBondsCount(proton));
-        assertEquals(0, proton.getHydrogenCount());
+        assertNotNull(proton.getHydrogenCount());
+        assertEquals(0, proton.getHydrogenCount().intValue());
     }
     
     public void testHydrogen() throws Exception {
@@ -103,7 +104,8 @@ public class HydrogenAdderTest extends CDKTestCase {
         assertEquals(2, mol.getAtomCount());
         assertEquals(2, new MFAnalyser(mol).getAtomCount("H"));
         assertEquals(1, mol.getConnectedBondsCount(proton));
-        assertEquals(0, proton.getHydrogenCount());
+        assertNotNull(proton.getHydrogenCount());
+        assertEquals(0, proton.getHydrogenCount().intValue());
     }
     
     public void testMethane() throws Exception {
@@ -397,7 +399,8 @@ public class HydrogenAdderTest extends CDKTestCase {
                                        was changed from C to O (=actual bug) */
         adder.addExplicitHydrogensToSatisfyValency(mol);
         
-        assertEquals(0, oxygen.getHydrogenCount());
+        assertNotNull(oxygen.getHydrogenCount());
+        assertEquals(0, oxygen.getHydrogenCount().intValue());
     }
 
     public void testRadical() throws Exception 
@@ -408,8 +411,10 @@ public class HydrogenAdderTest extends CDKTestCase {
     	mol.addSingleElectron(mol.getBuilder().newSingleElectron(mol.getAtom(0)));
     	mol.addBond(0,1,1);
     	adder.addImplicitHydrogensToSatisfyValency(mol);
-    	assertEquals(3, mol.getAtom(1).getHydrogenCount());
-    	assertEquals(2, mol.getAtom(0).getHydrogenCount());
+    	assertNotNull(mol.getAtom(1).getHydrogenCount());
+    	assertEquals(3, mol.getAtom(1).getHydrogenCount().intValue());
+    	assertNotNull(mol.getAtom(0).getHydrogenCount());
+    	assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
     	
     }
     /**
@@ -480,10 +485,10 @@ public class HydrogenAdderTest extends CDKTestCase {
         MDLReader reader = new MDLReader(ins);
         molecule = (Molecule)reader.read((ChemObject)new Molecule());
         adder.addImplicitHydrogensToSatisfyValency(molecule);
-        assertEquals(2,molecule.getAtom(0).getHydrogenCount());
-        assertEquals(0,molecule.getAtom(1).getHydrogenCount());
-        assertEquals(1,molecule.getAtom(2).getHydrogenCount());
-        assertEquals(2,molecule.getAtom(3).getHydrogenCount());
+        assertEquals(2,molecule.getAtom(0).getHydrogenCount().intValue());
+        assertEquals(0,molecule.getAtom(1).getHydrogenCount().intValue());
+        assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
+        assertEquals(2,molecule.getAtom(3).getHydrogenCount().intValue());
     }
     
 }

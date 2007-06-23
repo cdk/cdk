@@ -672,7 +672,7 @@ public class SmilesParserTest extends CDKTestCase {
 		while (atoms.hasNext())
 		{
 			IAtom atomi = (IAtom)atoms.next();
-			assertEquals(1, atomi.getHydrogenCount());
+			assertEquals(1, atomi.getHydrogenCount().intValue());
 			assertEquals(2, mol.getConnectedAtomsCount(atomi));
 		}
 		// and the first atom should have a negative charge
@@ -688,7 +688,7 @@ public class SmilesParserTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(10, mol.getAtomCount());
 		assertEquals("N", mol.getAtom(6).getSymbol());
-		assertEquals(1, mol.getAtom(6).getHydrogenCount());
+		assertEquals(1, mol.getAtom(6).getHydrogenCount().intValue());
 	}
 
 
@@ -765,7 +765,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "C";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(1, mol.getAtomCount());
-		assertEquals(4, mol.getAtom(0).getHydrogenCount());
+		assertEquals(4, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -776,7 +776,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "CC";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(2, mol.getAtomCount());
-		assertEquals(3, mol.getAtom(0).getHydrogenCount());
+		assertEquals(3, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -787,7 +787,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "C=C";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(2, mol.getAtomCount());
-		assertEquals(2, mol.getAtom(0).getHydrogenCount());
+		assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -798,7 +798,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "C#C";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(2, mol.getAtomCount());
-		assertEquals(1, mol.getAtom(0).getHydrogenCount());
+		assertEquals(1, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -809,7 +809,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "CCC";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(3, mol.getAtomCount());
-		assertEquals(2, mol.getAtom(1).getHydrogenCount());
+		assertEquals(2, mol.getAtom(1).getHydrogenCount().intValue());
 	}
 
 
@@ -820,7 +820,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "C1CCCCC1";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(6, mol.getAtomCount());
-		assertEquals(2, mol.getAtom(0).getHydrogenCount());
+		assertEquals(2, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -831,7 +831,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "c1=cc=cc=c1";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(6, mol.getAtomCount());
-		assertEquals(1, mol.getAtom(0).getHydrogenCount());
+		assertEquals(1, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 
@@ -842,7 +842,7 @@ public class SmilesParserTest extends CDKTestCase {
 		String smiles = "c1ccccc1";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertEquals(6, mol.getAtomCount());
-		assertEquals(1, mol.getAtom(0).getHydrogenCount());
+		assertEquals(1, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
 

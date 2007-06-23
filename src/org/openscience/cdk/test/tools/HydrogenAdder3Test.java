@@ -110,14 +110,15 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         assertEquals(10, ((IAtomContainer)containersList.get(0)).getAtomCount());
         IAtom sulfur = ((IAtomContainer)containersList.get(0)).getAtom(1);
         assertEquals("S", sulfur.getSymbol());
-        assertEquals(0, sulfur.getHydrogenCount());
+        assertNotNull(sulfur.getHydrogenCount());
+        assertEquals(0, sulfur.getHydrogenCount().intValue());
         assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
 
         // add explicit hydrogens
         adder.addExplicitHydrogensToSatisfyValency(((IAtomContainer)containersList.get(0)));
         assertEquals(21, ((IAtomContainer)containersList.get(0)).getAtomCount());
 
-        assertEquals(0, sulfur.getHydrogenCount());
+        assertEquals(0, sulfur.getHydrogenCount().intValue());
         assertEquals(3, ((IAtomContainer)containersList.get(0)).getConnectedAtomsCount(sulfur));
     }
 
@@ -137,14 +138,16 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         assertEquals(10, atomContainer_0.getAtomCount());
         IAtom sulfur = atomContainer_0.getAtom(1);
         assertEquals("S", sulfur.getSymbol());
-        assertEquals(0, sulfur.getHydrogenCount());
+        assertNotNull(sulfur.getHydrogenCount());
+        assertEquals(0, sulfur.getHydrogenCount().intValue());
         assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
 
         // add explicit hydrogens
         adder.addImplicitHydrogensToSatisfyValency(atomContainer_0);
         assertEquals(10, atomContainer_0.getAtomCount());
 
-        assertEquals(0, sulfur.getHydrogenCount());
+        assertNotNull(sulfur.getHydrogenCount());
+        assertEquals(0, sulfur.getHydrogenCount().intValue());
         assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
     }
 }

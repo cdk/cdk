@@ -200,7 +200,7 @@ public class MFAnalyserTest extends CDKTestCase {
             {
                 // Each B has two explicit and two implicit H.
                 b++;
-                assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
+                assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount().intValue());
                 java.util.List nbs = ac.getConnectedAtomsList(atom);
                 assertEquals("incorrect connected count", 2, nbs.size());
                 assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());
