@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SAX Handler for the AtomTypeReader.
@@ -58,7 +58,7 @@ public class AtomTypeHandler extends DefaultHandler {
     
     private LoggingTool logger;
     private String currentChars;
-    private List atomTypes;
+    private List<IAtomType> atomTypes;
     private int scalarType;
     private IAtomType atomType;
 
@@ -80,7 +80,7 @@ public class AtomTypeHandler extends DefaultHandler {
      * 
      * @return The read IAtomType's.
      */
-    public List getAtomTypes() {
+    public List<IAtomType> getAtomTypes() {
         return atomTypes;
     }
 
@@ -93,7 +93,7 @@ public class AtomTypeHandler extends DefaultHandler {
     } */
 
     public void startDocument() {
-        atomTypes = new ArrayList();
+        atomTypes = new ArrayList<IAtomType>();
         scalarType = SCALAR_UNSET;
         atomType = null;
     }

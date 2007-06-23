@@ -27,16 +27,17 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * XML Reader for the CDKBasedAtomTypeConfigurator.
@@ -115,8 +116,8 @@ public class AtomTypeReader {
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
      * @return         a List with atom types. Is empty if some reading error occured.
      */
-    public List readAtomTypes(IChemObjectBuilder builder) {
-    	List isotopes = new ArrayList();
+    public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
+    	List<IAtomType> isotopes = new ArrayList<IAtomType>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");

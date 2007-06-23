@@ -92,8 +92,8 @@ public class AtomTypeFactory {
     private final static String XML_EXTENSION = "xml";
     
     private static LoggingTool logger;
-    private static Hashtable tables = null;
-    private List atomTypes = null;
+    private static Hashtable<String, AtomTypeFactory> tables = null;
+    private List<IAtomType> atomTypes = null;
 
 	/**
 	 * Private constructor for the AtomTypeFactory singleton.
@@ -104,7 +104,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new ArrayList(100);
+        atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(configFile, builder);
     }
 
@@ -116,7 +116,7 @@ public class AtomTypeFactory {
         if (logger == null) {
             logger = new LoggingTool(this);
         }
-        atomTypes = new ArrayList(100);
+        atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(ins, format, builder);
     }
 
@@ -162,12 +162,12 @@ public class AtomTypeFactory {
      */
     public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
         if (tables == null) {
-            tables = new Hashtable();
+            tables = new Hashtable<String, AtomTypeFactory>();
         }
         if (!(tables.containsKey(configFile))) {
             tables.put(configFile, new AtomTypeFactory(configFile, builder));
         }
-        return (AtomTypeFactory)tables.get(configFile);
+        return tables.get(configFile);
     }
 
 	/**
@@ -244,7 +244,7 @@ public class AtomTypeFactory {
 		} else
 		{
 			logger.debug("AtomTypeConfigurator was null!");
-			atomTypes = new ArrayList();
+			atomTypes = new ArrayList<IAtomType>();
 		}
 	}
 
@@ -269,15 +269,12 @@ public class AtomTypeFactory {
 	 */
 	public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
-		IAtomType atomType;
-		for (int f = 0; f < atomTypes.size(); f++)
-		{
-			atomType = (IAtomType) atomTypes.get(f);
-			if (atomType.getAtomTypeName().equals(identifier)) {
-				return atomType;
-			}
-		}
-		throw new NoSuchAtomTypeException("The AtomType " + identifier + " could not be found");
+        for (IAtomType atomType : atomTypes) {
+            if (atomType.getAtomTypeName().equals(identifier)) {
+                return atomType;
+            }
+        }
+        throw new NoSuchAtomTypeException("The AtomType " + identifier + " could not be found");
 	}
 
 
@@ -292,22 +289,19 @@ public class AtomTypeFactory {
 	public IAtomType[] getAtomTypes(String symbol)
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
-        List atomList = new ArrayList();
-        IAtomType atomType;
-        for (int f = 0; f < atomTypes.size(); f++)
-        {
-            atomType = (IAtomType) atomTypes.get(f);
+        List<IAtomType> atomList = new ArrayList<IAtomType>();
+        for (IAtomType atomType : atomTypes) {
             // logger.debug("  does symbol match for: ", atomType);
             if (atomType.getSymbol().equals(symbol)) {
                 // logger.debug("Atom type found for symbol: ", atomType);
-            	IAtomType clone;
-				try {
-					clone = (IAtomType)atomType.clone();
-	                atomList.add(clone);
-				} catch (CloneNotSupportedException e) {
-					logger.error("Could not clone IAtomType: ", e.getMessage());
-					logger.debug(e);
-				}
+                IAtomType clone;
+                try {
+                    clone = (IAtomType) atomType.clone();
+                    atomList.add(clone);
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone IAtomType: ", e.getMessage());
+                    logger.debug(e);
+                }
             }
         }
         IAtomType[] atomTypes = (IAtomType[])atomList.toArray(new IAtomType[atomList.size()]);
@@ -327,19 +321,18 @@ public class AtomTypeFactory {
 	public IAtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
-		List atomtypeList = new ArrayList();
-		IAtomType atomType;
-		for (int f = 0; f < atomTypes.size(); f++)
-		{
-			try {
-                atomType = (IAtomType) ((IAtomType) atomTypes.get(f)).clone();
-				atomtypeList.add(atomType);
-			} catch (CloneNotSupportedException e) {
-				logger.error("Could not clone IAtomType: ", e.getMessage());
-				logger.debug(e);
-			}
-		}
-		return (IAtomType[])atomtypeList.toArray(new IAtomType[atomtypeList.size()]);
+		List<IAtomType> atomtypeList = new ArrayList<IAtomType>();
+        for (IAtomType atomType : atomTypes) {
+            IAtomType clone;
+            try {
+                clone = (IAtomType) atomType.clone();
+                atomtypeList.add(clone);
+            } catch (CloneNotSupportedException e) {
+                logger.error("Could not clone IAtomType: ", e.getMessage());
+                logger.debug(e);
+            }
+        }
+        return (IAtomType[])atomtypeList.toArray(new IAtomType[atomtypeList.size()]);
 	}
 
 

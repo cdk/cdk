@@ -23,11 +23,12 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Interface that allows reading atom type configuration data from some
@@ -52,6 +53,6 @@ public interface IAtomTypeConfigurator {
      * @return A List containing the AtomTypes extracted from the InputStream
      * @throws IOException when something went wrong with reading the data
      */
-    public List readAtomTypes(IChemObjectBuilder builder) throws IOException;
+    public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException;
 
 }
