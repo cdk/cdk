@@ -484,7 +484,9 @@ public class SmilesGenerator
 	 */
 	private boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration)
 	{
-		int lengthAtom = container.getConnectedAtomsCount(a) + a.getHydrogenCount();
+
+        int lengthAtom = container.getConnectedAtomsCount(a) +
+                (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount());
 		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))
 		{
 			return (false);
@@ -1679,7 +1681,7 @@ public class SmilesGenerator
 	 */
 	private String generateChargeString(IAtom a)
 	{
-		int charge = a.getFormalCharge();
+		int charge = (a.getFormalCharge() == CDKConstants.UNSET ? 0 : a.getFormalCharge());
 		StringBuffer buffer = new StringBuffer(3);
 		if (charge > 0)
 		{
