@@ -295,26 +295,34 @@ public class HOSECodeGenerator implements java.io.Serializable
 		else
 			return "-"+sb.toString();
 	}
-  
-  private String createChargeCode(IAtom atom){
-    StringBuffer tempCode=new StringBuffer();
-    if (atom != null && atom.getFormalCharge()!=0){
-      if(Math.abs(atom.getFormalCharge())==1){
-        if(atom.getFormalCharge()<0)
-          tempCode.append("-");
-        else
-          tempCode.append("+");
-      }else{
-        tempCode.append("'");
-        if(atom.getFormalCharge()>0)
-          tempCode.append("+");
-        tempCode.append(atom.getFormalCharge()+"'");
-      }
-    }
-    return(tempCode+"");
-  }
 
-	/**
+    private String createChargeCode(IAtom atom) {
+        StringBuffer tempCode = new StringBuffer();
+
+        if (atom != null) {
+            
+            Integer formalCharge = atom.getFormalCharge();
+            if (formalCharge == CDKConstants.UNSET) formalCharge = 0;
+
+            if (formalCharge != 0) {
+
+                if (Math.abs(formalCharge) == 1) {
+                    if (formalCharge < 0)
+                        tempCode.append("-");
+                    else
+                        tempCode.append("+");
+                } else {
+                    tempCode.append("'");
+                    if (formalCharge > 0)
+                        tempCode.append("+");
+                    tempCode.append(formalCharge + "'");
+                }
+            }
+        }
+        return (tempCode + "");
+    }
+
+    /**
 	 *  Prepares for a breadth first search within the AtomContainer. The actual
 	 *  recursion is done in nextSphere()
 	 *
