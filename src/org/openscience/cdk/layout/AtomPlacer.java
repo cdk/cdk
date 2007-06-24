@@ -28,13 +28,6 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -48,6 +41,12 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  *  Methods for generating coordinates for atoms in various situations. They can
@@ -381,7 +380,9 @@ public class AtomPlacer
         // the correct counts need saving and restoring
         int[] numh = new int[ac.getAtomCount()];
         for (int i = 0, n = ac.getAtomCount(); i < n; i ++) {
-            numh[i] = ac.getAtom(i).getHydrogenCount();
+            Integer tmp = ac.getAtom(i).getHydrogenCount();
+            if (tmp == CDKConstants.UNSET) numh[i]= 0;
+            else numh[i] = tmp;            
         }
 
         if(GeometryTools.has2DCoordinatesNew(ac)==2){
