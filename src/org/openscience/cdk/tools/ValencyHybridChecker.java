@@ -243,8 +243,8 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, double maxBondOrder, IAtomType type) {
         logger.debug("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
-        int hcount = atom.getHydrogenCount();
-        int charge = atom.getFormalCharge();
+        Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
         if (charge == type.getFormalCharge()) {
             logger.debug("couldMatchAtomType:     formal charge matches...");
             if (atom.getHybridization() == type.getHybridization()) {
@@ -334,8 +334,8 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         }
         double bondOrderSum = container.getBondOrderSum(atom);
         double maxBondOrder = container.getMaximumBondOrder(atom);
-        int hcount = atom.getHydrogenCount();
-        int charge = atom.getFormalCharge();
+        Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();        
 
         logger.debug("Checking saturation of atom ", atom.getSymbol());
         logger.debug("bondOrderSum: ", bondOrderSum);
