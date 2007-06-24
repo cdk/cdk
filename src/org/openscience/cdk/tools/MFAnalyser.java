@@ -326,7 +326,9 @@ public class MFAnalyser {
 			} else {
 				return 0;
 			}
-			mass += ac.getAtom(f).getHydrogenCount() * h.getExactMass();
+            int hcount = 0;
+            if (ac.getAtom(f).getHydrogenCount() != CDKConstants.UNSET) hcount = ac.getAtom(f).getHydrogenCount();
+            mass += hcount * h.getExactMass();
 		}
 		return mass;
 	}
