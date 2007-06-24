@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
@@ -146,7 +147,9 @@ public class AtomContainerManipulator {
     public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
         int hCount = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            hCount += atomContainer.getAtom(i).getHydrogenCount();
+            Integer ihcount = atomContainer.getAtom(i).getHydrogenCount();
+            if (ihcount != CDKConstants.UNSET)
+                hCount += ihcount;
         }
         return hCount;
     }
