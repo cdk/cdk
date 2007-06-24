@@ -24,27 +24,15 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Analyses a molecular formula given in String format and builds
@@ -677,7 +665,7 @@ public class MFAnalyser {
 			if(useboth){
 				
 			}
-			if (atom.getHydrogenCount() > 0) {
+            if (atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() > 0) {
 				HCount += atom.getHydrogenCount();
 			}
 			if (symbols.get(symbol) != null) {
