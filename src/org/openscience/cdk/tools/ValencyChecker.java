@@ -28,19 +28,14 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * This class is an experimental alternative to the SaturationChecker.
@@ -155,8 +150,12 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
      */
     public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, double maxBondOrder, IAtomType type) {
         logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", type);
-        int hcount = atom.getHydrogenCount();
-        int charge = atom.getFormalCharge();
+        Integer hcount = atom.getHydrogenCount();
+        if (hcount == CDKConstants.UNSET) hcount = 0;
+
+        Integer charge = atom.getFormalCharge();
+        if (charge == CDKConstants.UNSET) charge = 0;
+
         if (charge == type.getFormalCharge()) {
             if (bondOrderSum + hcount <= type.getBondOrderSum() && 
                 maxBondOrder <= type.getMaxBondOrder()) {

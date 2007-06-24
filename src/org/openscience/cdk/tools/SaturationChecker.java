@@ -28,24 +28,18 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Provides methods for checking whether an atoms valences are saturated with
@@ -503,27 +497,40 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 }
               }
             }
-            if (atomContainer.getBondOrderSum(atom) < atomTypes1[0].getBondOrderSum() - atom.getHydrogenCount())
-            {
-              logger.debug("Atom has " + atomContainer.getBondOrderSum(atom) + ", may have: " + atomTypes1[0].getBondOrderSum());
-              partners = atomContainer.getConnectedAtomsList(atom);
-              for (int g = 0; g < partners.size(); g++)
-              {
-                partner = (IAtom)partners.get(g);
-                logger.debug("Atom has " + partners.size() + " partners");
-                atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
-                if(atomTypes2.length==0)
-                  return;
-                if (atomContainer.getBondOrderSum(partner) < atomTypes2[0].getBondOrderSum() - partner.getHydrogenCount())
-                {
-                  logger.debug("Partner has " + atomContainer.getBondOrderSum(partner) + ", may have: " + atomTypes2[0].getBondOrderSum());
-                  bond = atomContainer.getBond(atom, partner);
-                  logger.debug("Bond order was " + bond.getOrder());
-                  bond.setOrder(bond.getOrder() + 1);
-                  logger.debug("Bond order now " + bond.getOrder());
-                  break;
-                }
-              }
+
+              Double bondOrderSum = atomTypes1[0].getBondOrderSum();
+              Integer hydrogenCount = atom.getHydrogenCount();
+              Double atomContainerBondOrderSum = atomContainer.getBondOrderSum(atom);
+              if (bondOrderSum == CDKConstants.UNSET) bondOrderSum = 0.0;
+              if (hydrogenCount == CDKConstants.UNSET) hydrogenCount = 0;
+              if (atomContainerBondOrderSum == CDKConstants.UNSET) atomContainerBondOrderSum = 0.0;
+
+              if (atomContainerBondOrderSum < bondOrderSum - hydrogenCount) {
+                  logger.debug("Atom has " + atomContainerBondOrderSum + ", may have: " + bondOrderSum);
+                  partners = atomContainer.getConnectedAtomsList(atom);
+                  for (int g = 0; g < partners.size(); g++) {
+                      partner = (IAtom) partners.get(g);
+                      logger.debug("Atom has " + partners.size() + " partners");
+                      atomTypes2 = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(partner.getSymbol());
+                      if (atomTypes2.length == 0)
+                          return;
+
+                      Double bos2 = atomTypes2[0].getBondOrderSum();
+                      Integer hc2 = partner.getHydrogenCount();
+                      Double acbos2 = atomContainer.getBondOrderSum(partner);
+                      if (bos2 == CDKConstants.UNSET) bos2= 0.0;
+                      if (hc2 == CDKConstants.UNSET) hc2 = 0;
+                      if (acbos2 == CDKConstants.UNSET) acbos2 = 0.0;
+
+                      if (acbos2 < bos2 - hc2) {
+                          logger.debug("Partner has " + acbos2 + ", may have: " + bos2);
+                          bond = atomContainer.getBond(atom, partner);
+                          logger.debug("Bond order was " + bond.getOrder());
+                          bond.setOrder(bond.getOrder() + 1);
+                          logger.debug("Bond order now " + bond.getOrder());
+                          break;
+                      }
+                  }
             }
           }
 				}
@@ -667,8 +674,16 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
             if (atomTypes.length > 0) {
                 IAtomType defaultAtom = atomTypes[0];
                 logger.debug("DefAtom: ", defaultAtom);
-                missingHydrogen = (int) (defaultAtom.getBondOrderSum() -
+
+                Integer formalCharge = atom.getFormalCharge();
+                if (formalCharge == null) formalCharge = 0;
+
+                Double tmpBondOrderSum = defaultAtom.getBondOrderSum();
+                if (tmpBondOrderSum == null) tmpBondOrderSum = 0.0;
+
+                 missingHydrogen = (int) (tmpBondOrderSum -
                     bondOrderSum - singleElectronSum + atom.getFormalCharge());
+
                 if (atom.getFlag(CDKConstants.ISAROMATIC)){
                     boolean subtractOne=true;
                     for(int i=0;i<connectedBonds.size();i++){

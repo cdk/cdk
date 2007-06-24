@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -336,7 +337,9 @@ public class HydrogenAdder {
      */
     public int[] addImplicitHydrogensToSatisfyValency(IAtomContainer container, IAtom atom) throws CDKException
     {
-        int formerHydrogens = atom.getHydrogenCount();
+        Integer formerHydrogens = atom.getHydrogenCount();
+        if (formerHydrogens == CDKConstants.UNSET) formerHydrogens = 0;
+        
         int missingHydrogens = calculateNumberOfImplicitHydrogens(container, atom);
         atom.setHydrogenCount(missingHydrogens);
         int[] hydrogens = new int[2];
