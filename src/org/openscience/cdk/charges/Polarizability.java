@@ -189,7 +189,7 @@ public class Polarizability {
                 polarizabilitiyFactor = 1.279;
             }
         } else if (AtomSymbol.equals("N")) {
-            if (atom.getCharge() < 0) {
+            if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() < 0) {
                 polarizabilitiyFactor = 1.090;
             } else if (atomContainer.getMaximumBondOrder(atom) == 1) {
                 polarizabilitiyFactor = 1.094;
@@ -199,9 +199,9 @@ public class Polarizability {
                 polarizabilitiyFactor = 0.852;
             }
         } else if (AtomSymbol.equals("O")) {
-            if (atom.getCharge() == -1) {
+            if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == -1) {
                 polarizabilitiyFactor = 1.791;
-            } else if (atom.getCharge() == 1) {
+            } else if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == 1) {
                 polarizabilitiyFactor = 0.422;
             } else if (atomContainer.getMaximumBondOrder(atom) == 1) {
                 polarizabilitiyFactor = 0.664;
