@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -146,7 +147,9 @@ public class WeightDescriptor implements IMolecularDescriptor {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
                     weight += IsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
-                    weight += (container.getAtom(i).getHydrogenCount() * 1.00782504);
+                    Integer hcount = container.getAtom(i).getHydrogenCount();
+                    if (hcount == CDKConstants.UNSET) hcount = 0;
+                    weight += (hcount * 1.00782504);
                 }
             } catch (Exception e) {
                 throw new CDKException("Could not calculate wright: " + e.getMessage(), e);

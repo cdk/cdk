@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -170,7 +171,7 @@ public class ValenceCarbonConnectivityOrderZeroDescriptor implements IMolecularD
                                 hcount += 1;
                             }
                         }
-                        hcount += atomContainer.getAtom(i).getHydrogenCount();
+                        hcount += (atomContainer.getAtom(i).getHydrogenCount() == CDKConstants.UNSET ? 0 : atomContainer.getAtom(i).getHydrogenCount());
                         atomValue = (valence - hcount) / (atomicNumber - valence - 1);
                         if (atomValue > 0) {
                             if(symbol.equals("C")) {

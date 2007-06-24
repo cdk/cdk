@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -185,7 +186,8 @@ public class ValenceCarbonConnectivityOrderOneDescriptor implements IMolecularDe
 							hcount += 1;
 						}
 					}
-					hcount += curAtom.getHydrogenCount();
+
+                    hcount += (curAtom.getHydrogenCount() == CDKConstants.UNSET ? 0 : curAtom.getHydrogenCount());
 					atomValue = (valence - hcount) / (atomicNumber - valence - 1);
 					//if(atomValue > 0) {
 						chiAtom.add(new Double(atomValue));
