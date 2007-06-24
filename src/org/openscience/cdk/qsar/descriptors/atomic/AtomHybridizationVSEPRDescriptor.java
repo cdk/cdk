@@ -147,8 +147,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 		IAtomType atomType = findMatchingAtomType(container, atom);
 		
 		double bondOrderSum = container.getBondOrderSum(atom);
-		int charge = atom.getFormalCharge();
-		int hcount = atom.getHydrogenCount();
+		 Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
+		Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
 		int valency = atomType.getValency();
 		double nLonePair = (valency - ( hcount + bondOrderSum ) - charge) / 2;
 		
