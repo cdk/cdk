@@ -682,7 +682,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                 if (tmpBondOrderSum == null) tmpBondOrderSum = 0.0;
 
                  missingHydrogen = (int) (tmpBondOrderSum -
-                    bondOrderSum - singleElectronSum + atom.getFormalCharge());
+                    bondOrderSum - singleElectronSum + formalCharge);
 
                 if (atom.getFlag(CDKConstants.ISAROMATIC)){
                     boolean subtractOne=true;
@@ -695,9 +695,9 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                         missingHydrogen--;
                 }
                 logger.debug("Atom: ", atom.getSymbol());
-                logger.debug("  max bond order: " + defaultAtom.getBondOrderSum());
+                logger.debug("  max bond order: " + tmpBondOrderSum);
                 logger.debug("  bond order sum: " + bondOrderSum);
-                logger.debug("  charge        : " + atom.getFormalCharge());
+                logger.debug("  charge        : " + formalCharge);
             } else {
                 logger.warn("Could not find atom type for ", atom.getSymbol());
             }
