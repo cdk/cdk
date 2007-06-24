@@ -101,8 +101,9 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
         }
         double bondOrderSum = container.getBondOrderSum(atom);
         double maxBondOrder = container.getMaximumBondOrder(atom);
-        int hcount = atom.getHydrogenCount();
-        int charge = atom.getFormalCharge();
+        Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
+
 
         logger.debug("Checking saturation of atom ", atom.getSymbol());
         logger.debug("bondOrderSum: ", bondOrderSum);
