@@ -23,15 +23,12 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
 
 /**
 * Provides methods for checking whether an atoms lone pair electrons are saturated 
@@ -119,10 +116,16 @@ public class LonePairElectronChecker {
 	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
 		
 		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
-        double bondOrderSum = ac.getBondOrderSum(atom);
-		int charge = atom.getFormalCharge();
-		int hcount = atom.getHydrogenCount();
-		if(hcount == 0){
+        Double bondOrderSum = ac.getBondOrderSum(atom);
+        if (bondOrderSum == CDKConstants.UNSET) bondOrderSum = 0.0;
+
+        Integer charge = atom.getFormalCharge();
+        if (charge == CDKConstants.UNSET) charge = 0;
+
+        Integer hcount = atom.getHydrogenCount();
+        if (hcount == CDKConstants.UNSET) hcount = 0;
+        
+        if(hcount == 0){
 			java.util.List atomsC = ac.getConnectedAtomsList(atom);
 			for(int i = 0 ; i < atomsC.size() ; i++)
 				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
@@ -171,10 +174,16 @@ public class LonePairElectronChecker {
         	int nLonePairI = ac.getConnectedLonePairsCount(atom);
     		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
             
-            double bondOrderSum = ac.getBondOrderSum(atom);
-    		int charge = atom.getFormalCharge();
-    		int hcount = atom.getHydrogenCount();
-    		if(hcount == 0){
+            Double bondOrderSum = ac.getBondOrderSum(atom);
+            if (bondOrderSum == CDKConstants.UNSET) bondOrderSum = 0.0;
+
+            Integer charge = atom.getFormalCharge();
+            if (charge == CDKConstants.UNSET) charge = 0;
+
+            Integer hcount = atom.getHydrogenCount();
+            if (hcount == CDKConstants.UNSET) hcount = 0;
+
+            if(hcount == 0){
     			java.util.List atomsC = ac.getConnectedAtomsList(atom);
     			for(int i = 0 ; i < atomsC.size() ; i++)
     				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
