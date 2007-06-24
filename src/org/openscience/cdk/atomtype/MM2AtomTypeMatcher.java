@@ -250,7 +250,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					}
 					
 				} else if (atomTypeIds[j].equals("HS")) {
-					if (atom.getMaxBondOrder() > 1) {
+					if (atom.getMaxBondOrder() != null && atom.getMaxBondOrder() > 1) {
 						ID="HC";
 					}
 				} else if (atomTypeIds[j].equals("HO")) {

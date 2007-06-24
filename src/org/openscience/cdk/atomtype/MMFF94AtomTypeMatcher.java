@@ -119,11 +119,12 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		boolean atomTypeFlag = false;
 		Matcher mat1=null;
 		Matcher mat2=null;
-		double tmpMaxBondOrder = 0;
+		Double tmpMaxBondOrder;
 		maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		for (int j = 0; j < atomTypeIds.length; j++){
         	tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
-        	String atomSphericalMatcher = (String)factory.getAtomType(atomTypeIds[j]).getProperty(CDKConstants.SPHERICAL_MATCHER);
+            if (tmpMaxBondOrder == CDKConstants.UNSET) tmpMaxBondOrder = 0.0;
+            String atomSphericalMatcher = (String)factory.getAtomType(atomTypeIds[j]).getProperty(CDKConstants.SPHERICAL_MATCHER);
 			logger.debug(j + " ATOM TYPE "+ tmpMaxBondOrder + " " +atomSphericalMatcher);
 			p1 =Pattern.compile(atomSphericalMatcher);
 			mat1 = p1.matcher((String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER));
