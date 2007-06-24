@@ -204,8 +204,18 @@ public class BondTools {
     if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
-    int lengthAtom = container.getConnectedAtomsList(atom).size() + atom.getHydrogenCount();
-    int lengthParent = container.getConnectedAtomsList(parent).size() + parent.getHydrogenCount();
+
+      int hcount;
+      if (atom.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = atom.getHydrogenCount();
+
+    int lengthAtom = container.getConnectedAtomsList(atom).size() + hcount;
+
+       if (parent.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = parent.getHydrogenCount();
+
+    int lengthParent = container.getConnectedAtomsList(parent).size() + hcount;
+      
     if (container.getBond(atom, parent) != null) {
       if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
         java.util.List atoms = container.getConnectedAtomsList(atom);
@@ -243,7 +253,12 @@ public class BondTools {
    * @return                          false=is not start of configuration, true=is
    */
   private static boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
-    int lengthAtom = container.getConnectedAtomsList(a).size() + a.getHydrogenCount();
+      int hcount;
+      if (a.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
+      else hcount = a.getHydrogenCount();
+
+    int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
+      
     if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N"))) {
       return (false);
     }
