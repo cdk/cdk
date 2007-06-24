@@ -55,7 +55,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
 
     public void testRandomBoolean() {
         boolean random = RandomNumbersTool.randomBoolean();
-        assertTrue(random == true || random == false);
+        assertTrue(random || !random);
     }
 
     public void testRandomLong() {
@@ -171,7 +171,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
 
         for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.exponentialFloat(mean);
 
-        // no get the sd of the values
+        // no get the mean of the values
         float m = 0.0f;
         for (int i = 0; i < ntry; i++) m += values[i];
         m = m / ntry;
@@ -182,13 +182,13 @@ public class RandomNumbersToolTest extends CDKTestCase {
 
     public void testExponentialDouble() {
         double mean = 1.0f;
-        double epsilon = 0.01f;
+        double epsilon = 0.001f;
         int ntry = 10000000;
         double[] values = new double[ntry];
 
         for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.exponentialDouble(mean);
 
-        // no get the sd of the values
+        // no get the mean of the values
         double m = 0.0f;
         for (int i = 0; i < ntry; i++) m += values[i];
         m = m / ntry;
