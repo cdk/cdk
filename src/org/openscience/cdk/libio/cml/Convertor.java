@@ -24,16 +24,6 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OptionalDataException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
@@ -42,43 +32,19 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.base.CMLElement;
 import org.xmlcml.cml.base.CMLException;
-import org.xmlcml.cml.element.CMLAtom;
-import org.xmlcml.cml.element.CMLBond;
-import org.xmlcml.cml.element.CMLBondStereo;
-import org.xmlcml.cml.element.CMLBondType;
-import org.xmlcml.cml.element.CMLCml;
-import org.xmlcml.cml.element.CMLCrystal;
-import org.xmlcml.cml.element.CMLIdentifier;
-import org.xmlcml.cml.element.CMLList;
-import org.xmlcml.cml.element.CMLMolecule;
-import org.xmlcml.cml.element.CMLProduct;
-import org.xmlcml.cml.element.CMLProductList;
-import org.xmlcml.cml.element.CMLReactant;
-import org.xmlcml.cml.element.CMLReactantList;
-import org.xmlcml.cml.element.CMLReaction;
-import org.xmlcml.cml.element.CMLReactionList;
-import org.xmlcml.cml.element.CMLScalar;
-import org.xmlcml.cml.element.CMLSubstance;
-import org.xmlcml.cml.element.CMLSubstanceList;
+import org.xmlcml.cml.element.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OptionalDataException;
+import java.util.*;
 
 /**
  * @cdk.module       libio-cml
@@ -505,10 +471,14 @@ public class Convertor {
         map2DCoordsToCML(cmlAtom, cdkAtom);
         map3DCoordsToCML(cmlAtom, cdkAtom);
         mapFractionalCoordsToCML(cmlAtom, cdkAtom);
-        cmlAtom.setFormalCharge(cdkAtom.getFormalCharge());
+
+        Integer formalCharge = cdkAtom.getFormalCharge() == CDKConstants.UNSET ? 0 : cdkAtom.getFormalCharge();
+        cmlAtom.setFormalCharge(formalCharge);
         // CML's hydrogen count consists of the sum of implicit and explicit
         // hydrogens (see bug #1655045).
-        int totalHydrogen = cdkAtom.getHydrogenCount();
+
+        Integer totalHydrogen = cdkAtom.getHydrogenCount() == CDKConstants.UNSET ? 0 : cdkAtom.getHydrogenCount();
+
         if (container != null) {
         	Iterator bonds = container.getConnectedBondsList(cdkAtom).iterator();
         	while (bonds.hasNext()) {
@@ -537,7 +507,8 @@ public class Convertor {
                 logger.debug(e);
             }
         }
-        if (cdkAtom.getCharge() != 0.0) {
+
+        if (cdkAtom.getCharge() != CDKConstants.UNSET && cdkAtom.getCharge() != 0.0) {
             CMLScalar scalar = new CMLScalar();
             this.checkPrefix(scalar);
 //            scalar.setDataType("xsd:float");
