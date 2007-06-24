@@ -258,11 +258,13 @@ public class AtomPlacer3D {
 	 */
 	private int getHybridisationState(IAtom atom1) {
 
-		if (atom1.getFormalNeighbourCount() == 1 || atom1.getMaxBondOrder() > 4) {
-		} else if (atom1.getFormalNeighbourCount() == 2 || atom1.getMaxBondOrder() == 3) {
+        Double maxBondOrder = atom1.getMaxBondOrder() == CDKConstants.UNSET ? 0 : atom1.getMaxBondOrder();
+
+        if (atom1.getFormalNeighbourCount() == 1 || maxBondOrder > 4) {
+		} else if (atom1.getFormalNeighbourCount() == 2 || maxBondOrder == 3) {
 			//sp
 			return 1;
-		} else if (atom1.getFormalNeighbourCount() == 3 || (atom1.getMaxBondOrder() > 1 && atom1.getMaxBondOrder() < 3)) {
+		} else if (atom1.getFormalNeighbourCount() == 3 || (maxBondOrder > 1 && maxBondOrder < 3)) {
 			//sp2
 			return 2;
 		} else {

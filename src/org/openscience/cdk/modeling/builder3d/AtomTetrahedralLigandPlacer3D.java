@@ -28,19 +28,18 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Vector;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix3d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKConstants;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  *  A set of static utility classes for geometric calculations on Atoms.
@@ -212,14 +211,15 @@ public class AtomTetrahedralLigandPlacer3D {
 			return newPoints;
 		}
 
-		if (refAtom.getFormalNeighbourCount() == 1 || refAtom.getMaxBondOrder() > 4) {
-		} else if (refAtom.getFormalNeighbourCount() == 2 || refAtom.getMaxBondOrder() == 3) {
+        Double refMaxBondOrder = refAtom.getMaxBondOrder() == CDKConstants.UNSET ? 0.0 : refAtom.getMaxBondOrder();
+        if (refAtom.getFormalNeighbourCount() == 1 || refMaxBondOrder > 4) {
+		} else if (refAtom.getFormalNeighbourCount() == 2 || refMaxBondOrder == 3) {
 			//sp
 			if (angle == -1){
 				angle=SP_ANGLE;
 			}
 			newPoints[0] = get3DCoordinatesForSPLigands(refAtom, withCoords, length, angle);
-		} else if (refAtom.getFormalNeighbourCount() == 3 || (refAtom.getMaxBondOrder() > 1 && refAtom.getMaxBondOrder() < 3)) {
+		} else if (refAtom.getFormalNeighbourCount() == 3 || (refMaxBondOrder> 1 && refMaxBondOrder < 3)) {
 			//sp2
 			if (angle == -1){
 				angle=SP2_ANGLE;

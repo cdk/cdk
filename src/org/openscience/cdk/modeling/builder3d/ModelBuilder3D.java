@@ -28,16 +28,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
@@ -50,6 +40,11 @@ import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.io.IOException;
+import java.util.*;
 
 /**
  *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
@@ -97,8 +92,7 @@ public class ModelBuilder3D {
 	
 	/**
 	 *  Constructor for the ModelBuilder3D object
-	 *
-	 *@param  molecule         Molecule
+	 *	 
 	 *@param  templateHandler  templateHandler Object
 	 *@param  ffname           name of force field
 	 */
@@ -424,8 +418,13 @@ public class ModelBuilder3D {
 		noCoords.addAtom(unplacedAtom);
 		Point3d centerPlacedMolecule = ap3d.geometricCenterAllPlacedAtoms(molecule);
 		IAtom atomB = atomNeighbours.getAtom(0);
-		double length = ap3d.getBondLengthValue(atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName());
-		double angle = (ap3d.getAngleValue(atomB.getAtomTypeName(), atomA.getAtomTypeName(), unplacedAtom.getAtomTypeName())) * Math.PI / 180;
+
+        String atypeNameA = atomA.getAtomTypeName();
+        String atypeNameB = atomB.getAtomTypeName();
+        String atypeNameUnplaced = unplacedAtom.getAtomTypeName();
+
+        double length = ap3d.getBondLengthValue(atypeNameA, atypeNameUnplaced);
+        double angle = (ap3d.getAngleValue(atypeNameB, atypeNameA, atypeNameUnplaced)) * Math.PI / 180;
 		/*
 		 *  System.out.println("A:"+atomA.getSymbol()+" "+atomA.getAtomTypeName()+" B:"+atomB.getSymbol()+" "+atomB.getAtomTypeName()
 		 *  +" unplaced Atom:"+unplacedAtom.getAtomTypeName()+" BL:"+length+" Angle:"+angle
@@ -451,7 +450,7 @@ public class ModelBuilder3D {
 		}
 
 		int stereo = -1;
-		if (atomA.getStereoParity() != 0 ||
+		if (atomA.getStereoParity() != CDKConstants.UNSET && atomA.getStereoParity() != 0 ||
 				(Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) < 2
 				 && Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) != 0)
 				 && molecule.getMaximumBondOrder(atomA) < 1.5) {
