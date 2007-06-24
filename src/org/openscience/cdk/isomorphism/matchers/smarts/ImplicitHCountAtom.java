@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -55,7 +56,8 @@ public class ImplicitHCountAtom extends SMARTSAtom {
         return 5;
     }
     private int getIMPH(IAtom atom){
-        return atom.getHydrogenCount();
+        if (atom.getHydrogenCount() == CDKConstants.UNSET) return 0;
+        else return atom.getHydrogenCount();
     }
     public boolean matches(IAtom atom) {
         switch(getOperator()){
