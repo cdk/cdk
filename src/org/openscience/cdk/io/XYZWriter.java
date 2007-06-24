@@ -24,23 +24,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.vecmath.Point3d;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.io.*;
 
 /**
  * @cdk.module io
@@ -157,7 +151,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 }
                 
                 if (writecharge) {
-                    double ct = a.getCharge();
+                    double ct = a.getCharge() == CDKConstants.UNSET ? 0.0 : a.getCharge();
                     st = st + "\t" + ct;
                 }
                 
