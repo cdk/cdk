@@ -24,23 +24,19 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ArrayList;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
@@ -274,7 +270,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private void createCenterCode(IAtom root, IAtomContainer ac, boolean ringsize)
 	{
 		int partnerCount = 0;
-		partnerCount = atomContainer.getConnectedBondsCount(root) + root.getHydrogenCount(); 
+		partnerCount = atomContainer.getConnectedBondsCount(root) +
+                (root.getHydrogenCount() == CDKConstants.UNSET ? 0 : root.getHydrogenCount()); 
 		centerCode = root.getSymbol() + "-" + partnerCount + createChargeCode(root)+(ringsize ? getRingcode(root, ac) : "" )+";";
 	}
 	
