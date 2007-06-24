@@ -27,15 +27,12 @@
  *  */
 package org.openscience.cdk.graph.invariant;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
+
+import java.util.*;
 
 /**
  * Canonically lables an atom container implementing
@@ -122,15 +119,19 @@ public class CanonicalLabeler {
     while(atoms.hasNext()) {
       a = (IAtom)atoms.next();
       inv = new StringBuffer();
-      inv.append(atomContainer.getConnectedAtomsList(a).size() + a.getHydrogenCount()); //Num connections
+      inv.append(atomContainer.getConnectedAtomsList(a).size() +
+              (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount())); //Num connections
       inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
       inv.append(a.getAtomicNumber());                                              //Atomic number
-      if (a.getCharge() < 0)                                                        //Sign of charge
+
+      Double charge = a.getCharge();
+        if (charge == CDKConstants.UNSET) charge = 0.0;
+      if (charge < 0)                                                        //Sign of charge
         inv.append(1);
       else
         inv.append(0);                                                              //Absolute charge
-      inv.append((int)Math.abs(a.getFormalCharge()));                                     //Hydrogen count
-      inv.append(a.getHydrogenCount());
+      inv.append((int)Math.abs( (a.getFormalCharge() == CDKConstants.UNSET ? 0.0 : a.getFormalCharge())));                                     //Hydrogen count
+      inv.append((a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount()));
       vect.add(new InvPair(Long.parseLong(inv.toString()), a));
     }
     return vect;
