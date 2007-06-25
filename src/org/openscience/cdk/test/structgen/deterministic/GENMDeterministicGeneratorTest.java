@@ -175,6 +175,13 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		assertTrue(uniqueSMILES.contains("FCCF"));
 	}
 
+	public void noTest() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C8H14O","");
+		gdg.generate();
+		int count = gdg.getNumberOfStructures();
+		System.out.println("count: " + count);
+	}
+
 	public void testTMS() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C4H12Si1","");
 		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 

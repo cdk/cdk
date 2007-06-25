@@ -71,7 +71,7 @@ public class BCUTDescriptorTest extends CDKTestCase {
         DoubleArrayResult retval = (DoubleArrayResult) descriptorValue.getValue();
         assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
-        for (int i = 0; i < retval.size(); i++) {
+        for (int i = 0; i < retval.length(); i++) {
             assertTrue(Math.abs(0.0 - retval.get(i)) > 0.0000001);
         }
 

@@ -34,6 +34,6 @@ public class TaeAminoAcidDescriptorTest extends CDKTestCase {
         DescriptorValue result = descriptor.calculate(pepseq);
 
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
-        assertTrue(dar.size() == 147);
+        assertTrue(dar.length() == 147);
     }
 }

@@ -56,7 +56,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
         IntegerArrayResult iaResult = (IntegerArrayResult)result;
-        for (int i=0; i<iaResult.size(); i++) {
+        for (int i=0; i<iaResult.length(); i++) {
         	assertTrue(iaResult.get(i) >= 1); // all AAs are found at least once
         }
         assertEquals(20, iaResult.get(8)); // glycine is in all of them, so 20 times

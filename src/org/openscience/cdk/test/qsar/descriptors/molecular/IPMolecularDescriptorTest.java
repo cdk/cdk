@@ -100,7 +100,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
         
         double resultAccordingNIST = 9.37; 
         
-        assertEquals(2, dar.size());
+        assertEquals(2, dar.length());
         assertEquals(resultAccordingNIST, dar.get(0), 0.09);
     }
     /**
@@ -119,7 +119,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
 
         double resultAccordingNIST = 9.50; 
-        assertEquals(2, dar.size());
+        assertEquals(2, dar.length());
         assertEquals(resultAccordingNIST, dar.get(0), 0.15);
         
         IReactionSet reactionSet = descriptor.getReactionSet();

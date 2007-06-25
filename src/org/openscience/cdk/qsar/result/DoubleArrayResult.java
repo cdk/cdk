@@ -53,7 +53,7 @@ public class DoubleArrayResult implements IDescriptorResult {
         return ((Double) this.array.get(index)).doubleValue();
     }
 
-    public int size() {
+    public int length() {
         return this.array.size();
     }
 

@@ -37,6 +37,13 @@ public interface IDescriptorResult {
      * @return A string representation.
      */
     public String toString();
+    
+    /**
+     * Returns the length of this descriptor.
+     * 
+     * @return the length of the array of return values.
+     */
+    public int length();
 
 }
 

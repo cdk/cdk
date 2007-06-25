@@ -339,7 +339,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < eval2.length; i++) retval.add(eval2[i]);
             for (int i = 0; i < eval3.length; i++) retval.add(eval3[i]);
 
-            names = new String[retval.size()];
+            names = new String[retval.length()];
             for (int j = 0; j < suffix.length; j++) {
                 for (int i = 0; i < eval1.length; i++) {
                     names[i] = "BCUT" + suffix[j] + "-" + (i + 1) + "l";

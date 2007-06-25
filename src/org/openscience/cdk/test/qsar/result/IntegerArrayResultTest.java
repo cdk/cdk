@@ -42,13 +42,13 @@ public class IntegerArrayResultTest extends CDKTestCase {
 	public void testIntegerArrayResult_int() {
 		IntegerArrayResult result = new IntegerArrayResult(5);
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 	}
 	
 	public void testIntegerArrayResult() {
 		IntegerArrayResult result = new IntegerArrayResult();
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 	}
 	
 	public void testAdd_int() {
@@ -59,15 +59,15 @@ public class IntegerArrayResultTest extends CDKTestCase {
 		result.add(5);
 		result.add(5);
 		result.add(5);
-		assertEquals(5, result.size());
+		assertEquals(5, result.length());
 	}
 	
 	public void testSize() {
 		IntegerArrayResult result = new IntegerArrayResult();
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 		result.add(5);
-		assertEquals(1, result.size());
+		assertEquals(1, result.length());
 	}
 
 	public void testToString() {

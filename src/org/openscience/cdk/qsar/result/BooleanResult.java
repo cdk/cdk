@@ -43,5 +43,9 @@ public class BooleanResult implements IDescriptorResult {
     public String toString() {
         return Boolean.toString(value);
     }
+    
+    public int length() {
+    	return 1;
+    }
 }
 

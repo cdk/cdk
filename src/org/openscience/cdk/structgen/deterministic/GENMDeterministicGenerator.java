@@ -302,9 +302,9 @@ public class GENMDeterministicGenerator {
 		 maxNumberOfBasicUnit[4]=molecularFormula[4];//N
 		 maxNumberOfBasicUnit[5]=molecularFormula[3];//O
 		 maxNumberOfBasicUnit[6]=molecularFormula[1];//C
-		 maxNumberOfBasicUnit[7]=molecularFormula[1];//SiH3
-		 maxNumberOfBasicUnit[8]=molecularFormula[1];//SiH2
-		 maxNumberOfBasicUnit[9]=molecularFormula[1];//SiH
+		 maxNumberOfBasicUnit[7]=molecularFormula[7];//SiH3
+		 maxNumberOfBasicUnit[8]=molecularFormula[7];//SiH2
+		 maxNumberOfBasicUnit[9]=molecularFormula[7];//SiH
 		 maxNumberOfBasicUnit[10]=molecularFormula[6];//PH2
 		 maxNumberOfBasicUnit[11]=molecularFormula[6];//PH
 		 maxNumberOfBasicUnit[12]=molecularFormula[5];//SH

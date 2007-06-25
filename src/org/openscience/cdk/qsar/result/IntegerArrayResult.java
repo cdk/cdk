@@ -53,7 +53,7 @@ public class IntegerArrayResult implements IDescriptorResult {
         return ((Integer)this.array.get(index)).intValue();
     }
 
-    public int size() {
+    public int length() {
         return this.array.size();
     }
 

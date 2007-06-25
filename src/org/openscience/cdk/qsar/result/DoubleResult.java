@@ -41,5 +41,10 @@ public class DoubleResult implements IDescriptorResult {
     public String toString() {
         return Double.toString(value);
     }
+    
+    public int length() {
+    	return 1;
+    }
+
 }
 

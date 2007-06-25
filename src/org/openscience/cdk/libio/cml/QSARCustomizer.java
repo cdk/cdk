@@ -99,9 +99,9 @@ public class QSARCustomizer implements ICMLCustomizer {
             IntegerArrayResult result = (IntegerArrayResult)value;
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:int"));
-            scalar.addAttribute(new Attribute("size", "" + result.size()));
+            scalar.addAttribute(new Attribute("size", "" + result.length()));
             StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.size(); i++) {
+            for (int i=0; i<result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }
             scalar.appendChild(buffer.toString());
@@ -109,9 +109,9 @@ public class QSARCustomizer implements ICMLCustomizer {
             DoubleArrayResult result = (DoubleArrayResult)value;
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:double"));
-            scalar.addAttribute(new Attribute("size", "" + result.size()));
+            scalar.addAttribute(new Attribute("size", "" + result.length()));
             StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.size(); i++) {
+            for (int i=0; i<result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }
             scalar.appendChild(buffer.toString());

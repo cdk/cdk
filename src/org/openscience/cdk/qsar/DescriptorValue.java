@@ -122,9 +122,9 @@ public class DescriptorValue {
             } else {
                 int ndesc = 0;
                 if (value instanceof DoubleArrayResult) {
-                    ndesc = ((DoubleArrayResult) value).size();
+                    ndesc = ((DoubleArrayResult) value).length();
                 } else if (value instanceof IntegerArrayResult) {
-                    ndesc = ((IntegerArrayResult)value).size();
+                    ndesc = ((IntegerArrayResult)value).length();
                 }
                 descriptorNames = new String[ndesc];
                 for (int i = 1; i < ndesc+1; i++) descriptorNames[i] = title+i;

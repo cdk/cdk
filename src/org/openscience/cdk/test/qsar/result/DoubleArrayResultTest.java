@@ -42,21 +42,21 @@ public class DoubleArrayResultTest extends CDKTestCase {
 	public void testDoubleArrayResult_int() {
 		DoubleArrayResult result = new DoubleArrayResult(5);
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 	}
 	
 	public void testDoubleArrayResult() {
 		DoubleArrayResult result = new DoubleArrayResult();
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 	}
 	
 	public void testSize() {
 		DoubleArrayResult result = new DoubleArrayResult();
 		assertNotNull(result);
-		assertEquals(0, result.size());
+		assertEquals(0, result.length());
 		result.add(5);
-		assertEquals(1, result.size());
+		assertEquals(1, result.length());
 	}
 
 	public void testAdd_double() {
@@ -66,7 +66,7 @@ public class DoubleArrayResultTest extends CDKTestCase {
 		result.add(5);
 		result.add(2);
 		result.add(-3);
-		assertEquals(3, result.size());
+		assertEquals(3, result.length());
 	}
 
 	public void testToString() {

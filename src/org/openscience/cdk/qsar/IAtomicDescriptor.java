@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module qsar
  */
 public interface IAtomicDescriptor extends IDescriptor {
-    
+
     /** 
      * Calculates the descriptor value for the given IAtom.
      *
@@ -46,6 +46,6 @@ public interface IAtomicDescriptor extends IDescriptor {
      *                      documentation for individual descriptors
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException;
-    
+
 }
 

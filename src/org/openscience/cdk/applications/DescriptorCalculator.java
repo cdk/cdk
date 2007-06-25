@@ -169,12 +169,12 @@ public class DescriptorCalculator {
                 stringWriter.write(((BooleanResult)result).booleanValue()+" ");
                 if (firstTime) headerLine = headerLine + title + " ";
             } else if (result instanceof DoubleArrayResult) {
-                for (int i = 0; i < ((DoubleArrayResult)result).size(); i++) {
+                for (int i = 0; i < ((DoubleArrayResult)result).length(); i++) {
                     stringWriter.write(((DoubleArrayResult)result).get(i)+" ");
                     if (firstTime) headerLine = headerLine + title + "." + i + " ";
                 }
             } else if (result instanceof IntegerArrayResult) {
-                for (int i = 0; i < ((IntegerArrayResult)result).size(); i++) {
+                for (int i = 0; i < ((IntegerArrayResult)result).length(); i++) {
                     stringWriter.write(((IntegerArrayResult)result).get(i)+" ");
                     if (firstTime) headerLine = headerLine + title + "." + i + " ";
                 }
