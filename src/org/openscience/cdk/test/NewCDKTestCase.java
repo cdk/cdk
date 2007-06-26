@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision: 8050 $ $Author: egonw $ $Date: 2007-03-08 13:03:42 +0100 (Thu, 08 Mar 2007) $
  * 
  * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -26,33 +23,23 @@ package org.openscience.cdk.test;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
- * the LoggingTool is configured. This is the JUnit 3.8 version. JUnit4 test
- * cases should extend NewCDKTestCase.
+ * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
  *
  * @cdk.module test
  * 
- * @see NewCDKTestCase
+ * @see        CDKTestCase
  */
-public class CDKTestCase extends TestCase {
+public class NewCDKTestCase {
 
     static {
         LoggingTool.configureLog4j();
     }
 
-    public CDKTestCase() {
-        super();
-    }
-    
-    public CDKTestCase(String name) {
-        super(name);
-    }
-    
     /**
      * Determines if slow JUnit tests are to be run. You can set this
      * from the command line when running Ant: 
@@ -104,8 +91,8 @@ public class CDKTestCase extends TestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
-        assertEquals(p1.x, p2.x, error);
-        assertEquals(p1.y, p2.y, error);
+    	Assert.assertEquals(p1.x, p2.x, error);
+    	Assert.assertEquals(p1.y, p2.y, error);
     }
         
     /**
@@ -117,9 +104,9 @@ public class CDKTestCase extends TestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
-        assertEquals(p1.x, p2.x, error);
-        assertEquals(p1.y, p2.y, error);
-        assertEquals(p1.z, p2.z, error);
+    	Assert.assertEquals(p1.x, p2.x, error);
+    	Assert.assertEquals(p1.y, p2.y, error);
+    	Assert.assertEquals(p1.z, p2.z, error);
     }
         
 }
