@@ -107,7 +107,8 @@ public class    DescriptorEngineTest extends CDKTestCase {
     public void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         String[] availClasses = engine.getAvailableDictionaryClasses();
-        Assert.assertEquals(5, availClasses.length);                
+        for (String s : availClasses) System.out.println("s = " + s);
+        Assert.assertEquals(6, availClasses.length);
     }
 }
 
