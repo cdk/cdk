@@ -436,19 +436,23 @@ public class SmilesGenerator
 		{
 			return false;
 		}
-		int lengthAtom = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
-		int lengthParent = container.getConnectedAtomsCount(parent) + parent.getHydrogenCount();
+
+        Integer atomHcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        Integer parentHcount =parent.getHydrogenCount() == CDKConstants.UNSET ? 0 : parent.getHydrogenCount();
+
+        int lengthAtom = container.getConnectedAtomsCount(atom) + atomHcount;
+		int lengthParent = container.getConnectedAtomsCount(parent) + parentHcount;
 		if (container.getBond(atom, parent) != null)
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
 			{
-				List atoms = container.getConnectedAtomsList(atom);
+				List<IAtom> atoms = container.getConnectedAtomsList(atom);
 				org.openscience.cdk.interfaces.IAtom one = null;
 				org.openscience.cdk.interfaces.IAtom two = null;
 				IAtom atomi = null;
 				for (int i = 0; i < atoms.size(); i++)
 				{
-					atomi = (IAtom)container.getAtom(i);
+					atomi = container.getAtom(i);
 					if (atomi != parent && one == null)
 					{
 						one = atomi;
