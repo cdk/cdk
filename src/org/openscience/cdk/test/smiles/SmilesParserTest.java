@@ -20,24 +20,20 @@
  */
 package org.openscience.cdk.test.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -52,7 +48,8 @@ public class SmilesParserTest extends NewCDKTestCase {
 	
 	private SmilesParser sp;
 
-	public void setUp() {
+    @Before
+    public void setUp() {
 		sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 	}
 
