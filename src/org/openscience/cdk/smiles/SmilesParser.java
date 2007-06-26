@@ -24,26 +24,21 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Enumeration;
-import java.util.Stack;
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyHybridChecker;
+
+import java.util.Enumeration;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
  * SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
@@ -681,9 +676,11 @@ public class SmilesParser {
 								currentSymbol = currentSymbol.toUpperCase();
 								atom = builder.newAtom(currentSymbol);
 								atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-								if (atom.getHydrogenCount() > 0)
+
+                                Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+                                if (hcount > 0)
 								{
-									atom.setHydrogenCount(atom.getHydrogenCount() - 1);
+									atom.setHydrogenCount(hcount - 1);
 								}
 							} else
 							{
