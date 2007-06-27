@@ -257,8 +257,77 @@ public class StructGenMatcherTest extends CDKTestCase {
             assertNotNull(matched);
             assertEquals("Cl1", matched.getAtomTypeName());
         }
-
     }
+
+    public void testOxygen1() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom carbon = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+
+        carbon.setHydrogenCount(1);
+        o1.setHydrogenCount(1);
+        o2.setHydrogenCount(0);
+
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o1, 1.0);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o2, 2.0);
+
+        mol.addAtom(carbon);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+        mol.addBond(bond1);
+        mol.addBond(bond2);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+
+        // look at the sp2 O first
+        IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("C4", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+    }
+
+    public void testOxygen2() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+
+        IBond bond1  = DefaultChemObjectBuilder.getInstance().newBond(h1, o1, 1.0);
+        IBond bond2  = DefaultChemObjectBuilder.getInstance().newBond(o1, o2, 1.0);
+        IBond bond3  = DefaultChemObjectBuilder.getInstance().newBond(o2, h2, 1.0);
+
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
+
+        mol.addBond(bond1);
+        mol.addBond(bond2);
+        mol.addBond(bond3);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+    }
+
+    
 
 
 }
