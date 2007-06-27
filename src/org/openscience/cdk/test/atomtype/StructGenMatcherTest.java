@@ -107,7 +107,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("F1", matched.getAtomTypeName());
         }
     }
@@ -132,7 +132,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("Cl1", matched.getAtomTypeName());
         }
     }
@@ -157,7 +157,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("Br1", matched.getAtomTypeName());
         }
     }
@@ -182,7 +182,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("I1", matched.getAtomTypeName());
         }
     }
@@ -229,7 +229,7 @@ public class StructGenMatcherTest extends CDKTestCase {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("Cl1", matched.getAtomTypeName());
         }
     }
@@ -317,7 +317,7 @@ public class StructGenMatcherTest extends CDKTestCase {
     }
 
     /*
-    Tests P5, S2, Cl1
+    Tests P4, S2, Cl1
      */
     public void testP5() throws CDKException {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
@@ -357,7 +357,7 @@ public class StructGenMatcherTest extends CDKTestCase {
 
         for (int i = 1; i < 4; i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals("Cl1", matched.getAtomTypeName());
         }
     }
@@ -404,13 +404,230 @@ public class StructGenMatcherTest extends CDKTestCase {
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched;
 
-        String[] atomTypes = {"P3", "O2", "O2", "O2" , "C4", "C4", "C4" };
+        String[] atomTypes = {"P3", "O2", "O2", "O2", "C4", "C4", "C4"};
         for (int i = 0; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertNotNull("atom "+i+" failed to match", matched);
+            assertNotNull("atom " + i + " failed to match", matched);
             assertEquals(atomTypes[i], matched.getAtomTypeName());
-        }       
+        }
     }
 
+
+    /* Test Na1, Cl1 */
+    public void testNa1() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom na = DefaultChemObjectBuilder.getInstance().newAtom("Na");
+        IAtom cl = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IBond bond = DefaultChemObjectBuilder.getInstance().newBond(na, cl, 1.0);
+        mol.addAtom(na);
+        mol.addAtom(cl);
+        mol.addBond(bond);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("Na1", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("Cl1", matched.getAtomTypeName());
+    }
+
+    /* Test Si4, C4, Cl1 */
+    public void testSi4() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom si = DefaultChemObjectBuilder.getInstance().newAtom("Si");
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom cl1 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IAtom cl2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IAtom cl3 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+
+        c1.setHydrogenCount(3);
+
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(si, c1, 1.0);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(si, cl1, 1.0);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(si, cl2, 1.0);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(si, cl3, 1.0);
+
+        mol.addAtom(si);
+        mol.addAtom(c1);
+        mol.addAtom(cl1);
+        mol.addAtom(cl2);
+        mol.addAtom(cl3);
+
+        mol.addBond(bond1);
+        mol.addBond(bond2);
+        mol.addBond(bond3);
+        mol.addBond(bond4);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("Si4", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("C4", matched.getAtomTypeName());
+
+        for (int i = 3; i < mol.getAtomCount(); i++) {
+            matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            assertNotNull("atom " + i + " failed to match", matched);
+            assertEquals("Cl1", matched.getAtomTypeName());
+        }
+    }
+
+    /* Tests S2, H1 */
+    public void testS2() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        s.setHydrogenCount(2);
+
+        mol.addAtom(s);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("S2", matched.getAtomTypeName());
+
+        mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, 1.0);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, 1.0);
+
+        mol.addAtom(s);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("S2", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("H1", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
+        assertNotNull(matched);
+        assertEquals("H1", matched.getAtomTypeName());
+    }
+
+    /* Tests S3, O2 */
+    public void testS3() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
+
+        mol.addAtom(s);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("S3", matched.getAtomTypeName());
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+    }
+
+
+    /* Tests S4, Cl1 */
+    public void testS4() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        mol.addAtom(s);
+        for (int i = 0; i < 6; i++) {
+            IAtom f = DefaultChemObjectBuilder.getInstance().newAtom("F");
+            mol.addAtom(f);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(s, f, 1.0);
+            mol.addBond(bond);
+        }
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("S4", matched.getAtomTypeName());
+
+        for (int i = 1; i < mol.getAtomCount(); i++) {
+            matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            assertNotNull("atom " + i + " failed to match", matched);
+            assertEquals("F1", matched.getAtomTypeName());
+        }
+    }
+
+    /* Tests S4, O2 */
+    public void testS4oxide() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o3 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(s, o3, 2.0);
+
+        mol.addAtom(s);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+        mol.addAtom(o3);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+        mol.addBond(b3);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertNotNull(matched);
+        assertEquals("S4", matched.getAtomTypeName());
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
+        assertNotNull(matched);
+        assertEquals("O2", matched.getAtomTypeName());
+    }
 
 }
