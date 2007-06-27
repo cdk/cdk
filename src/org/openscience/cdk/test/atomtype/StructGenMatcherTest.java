@@ -98,11 +98,11 @@ public class StructGenMatcherTest extends CDKTestCase {
         assertNotNull(mol);
         
         String[] atomTypes = {
-        	"","","","","","","","","","",
-        	"","","","","","","","","","",
-        	"","","","","","","","","","",
-        	"","","","","","","","","","",
-        	"","","",""
+        	"C4","C4","C4","C4","C4","C4","N3","C4","C4","C4",
+        	"N3","C4","C4","C4","C4","C4","C4","C4","C4","C4",
+        	"C4","O2","C4","C4","C4","C4","C4","C4","C4","O2",
+        	"O2","C4","O2","C4","C4","O2","O2","C4","O2","C4",
+        	"O2","C4","C4","O2"
         };
         StructGenMatcher atm = new StructGenMatcher();
         for (int i=0; i<atomTypes.length; i++) {
