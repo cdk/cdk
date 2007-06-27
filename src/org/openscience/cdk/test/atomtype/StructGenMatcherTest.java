@@ -21,7 +21,6 @@
 package org.openscience.cdk.test.atomtype;
 
 import java.io.InputStream;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,14 +29,12 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.StructGenMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * This class tests the matching of atom types defined in the 
@@ -96,9 +93,23 @@ public class StructGenMatcherTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        assertEquals(44, mol.getAtomCount());
+        assertEquals(49, mol.getBondCount());
         assertNotNull(mol);
         
-        fail("FIXME: add matched atom type tests here for all atoms");
+        String[] atomTypes = {
+        	"","","","","","","","","","",
+        	"","","","","","","","","","",
+        	"","","","","","","","","","",
+        	"","","","","","","","","","",
+        	"","","",""
+        };
+        StructGenMatcher atm = new StructGenMatcher();
+        for (int i=0; i<atomTypes.length; i++) {
+        	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
+            assertNotNull(matched);
+        	assertEquals(atomTypes[i], matched.getAtomTypeName());
+        }
     }    
 
 }
