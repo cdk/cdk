@@ -2,5 +2,3 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-data.jar
 cdk-test.jar
-cdk-io.jar
-cdk-nonotify.jar
