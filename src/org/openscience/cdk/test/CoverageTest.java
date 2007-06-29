@@ -21,6 +21,7 @@
 package org.openscience.cdk.test;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -65,9 +66,9 @@ abstract public class CoverageTest extends CDKTestCase {
         classesToTest = new ArrayList();
         
         // get the src/core.javafiles file
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-            this.getClass().getClassLoader().getResourceAsStream(classList)
-        ));
+        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(classList);
+        if (stream == null) fail("File not found in the classpath: " + classList);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         while (reader.ready()) {
             // load them one by one
             String rawClassName = reader.readLine();
