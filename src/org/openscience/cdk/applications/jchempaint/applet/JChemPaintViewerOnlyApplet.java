@@ -58,7 +58,8 @@ public class JChemPaintViewerOnlyApplet extends JChemPaintAbstractApplet impleme
 	 * @see java.applet.Applet#init()
 	 */
 	public void init() {
-		JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth()-100,(int)this.getSize().getHeight()-100), "applet");
+		JChemPaintViewerOnlyPanel jcpvop = new JChemPaintViewerOnlyPanel(new Dimension((int)this.getSize().getWidth(),(int)this.getSize().getHeight()), "applet", !(getParameter("scrollbars")!=null && getParameter("scrollbars").equals("false")));
+		
 		setTheJcpp(jcpvop);
 		/*String atomNumbers=getParameter("spectrumRenderer");
     	if(atomNumbers!=null){*/

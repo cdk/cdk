@@ -91,7 +91,8 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			{ "impliciths", "true or false", "the implicit hs will be added from start (default false)"},
 			{ "spectrumRenderer", "string", "name of a spectrum applet (see subproject in NMRShiftDB) where peaks should be highlighted when hovering over atom"},
 			{ "hightlightTable", "true or false", "if true peaks in a table will be highlighted when hovering over atom, ids are assumed to be tableid$atomnumber (default false)"},
-			{ "smiles", "string", "a structure to load as smiles"}
+			{ "smiles", "string", "a structure to load as smiles"},
+			{ "scrollbars", "true or false", "if the molecule is too big to be displayed in normal size, shall scrollbars be used (default) or the molecule be resized - only for viewer applet"}
 	};
 
 	public String getAppletInfo() {
@@ -154,7 +155,7 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		// model.setSoftware("JChemPaint " + version);
 		theModel.setSoftware("JChemPaint " /*+  version */);
 		theModel.setGendate((Calendar.getInstance()).getTime().toString());
-		jcpp.setJChemPaintModel(theModel);
+		jcpp.setJChemPaintModel(theModel,new Dimension((int)this.getWidth()-100,(int)this.getHeight()-100));
 		jcpp.registerModel(theModel);
 		if(getParameter("detachable")!=null && getParameter("detachable").equals("true"))
 			jcpp.addFilePopUpMenu();		
@@ -222,14 +223,16 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 	          }
 	        }
 	        if(!theModel.getRendererModel().getIsCompact()){
-		        int x=largestX-smallestX+30;
-		        int y=largestY - smallestY+30;
-		        if(x<300)
-		          x=300;
-		        if(y<300)
-		          y=300;
-		        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
-		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theModel.getRendererModel().getBackgroundDimension());
+		        if(jcpp.isShowscrollbars()){
+			        int x=largestX-smallestX+30;
+			        int y=largestY - smallestY+30;
+			        if(x<300)
+			          x=300;
+			        if(y<300)
+			          y=300;
+			        theModel.getRendererModel().setBackgroundDimension(new Dimension(x,y));
+		        }
+		        jcpp.scaleAndCenterMolecule(theModel.getChemModel(),theJcpp.isShowscrollbars() ? theModel.getRendererModel().getBackgroundDimension() : jcpp.getViewerDimension());
 	        }else{
 	        	theModel.getRendererModel().setBackgroundDimension(new Dimension((int)(.9*this.getSize().getWidth()),(int)(.9*this.getSize().getHeight())));
 	        	IAtomContainer atomContainer = theModel.getChemModel().getBuilder().newAtomContainer();

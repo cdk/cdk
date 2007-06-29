@@ -134,11 +134,21 @@ public abstract class JChemPaintPanel
     //we remember the moveButton since this is special
     protected JButton moveButton=null;
     private JScrollPane scrollPane;
+    
+    private boolean showscrollbars=true;
 
 	/**
 	 *  Constructor for the JChemPaintPanel object
 	 */
 	public JChemPaintPanel() {
+		this(true);
+	}
+	/**
+	 *  Constructor for the JChemPaintPanel object
+	 *  @param showscrollbars shall the drawing panel have scrollbars?
+	 */
+	public JChemPaintPanel(boolean showscrollbars) {
+		this.showscrollbars=showscrollbars;
 		logger = new LoggingTool(this);
 
 //        undoManager = new UndoManager();
@@ -153,14 +163,20 @@ public abstract class JChemPaintPanel
         drawingPanel = new DrawingPanel();
 		drawingPanel.setOpaque(true);
 		drawingPanel.setBackground(Color.white);
-		scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		if(showscrollbars){
+			scrollPane = new JScrollPane(drawingPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	
+			mainContainer.add(scrollPane, BorderLayout.CENTER);
+		}else{
+			mainContainer.add(drawingPanel,BorderLayout.CENTER);
+		}
 
-		mainContainer.add(scrollPane, BorderLayout.CENTER);
-        mainContainer.add(topContainer, BorderLayout.NORTH);
-
+		mainContainer.add(topContainer, BorderLayout.NORTH);
         add(mainContainer, BorderLayout.CENTER);
-		setSize(new Dimension(900, 400));
-		setPreferredSize(new Dimension(900, 400));
+        //where do 900/400 come frome? doesn't seem to have an effect anyway
+		//setSize(new Dimension(900, 400));
+		//setPreferredSize(new Dimension(900, 400));
         instances.add(this);
 	}
 
@@ -402,7 +418,7 @@ public abstract class JChemPaintPanel
 	 *
 	 *@param  model  The new jChemPaintModel value
 	 */
-	public void setJChemPaintModel(JChemPaintModel model) {
+	public void setJChemPaintModel(JChemPaintModel model, Dimension panelDimension) {
 		lastUsedJCPP = this;
 		if (model != null && jchemPaintModel != null && model.getChemModel().getMoleculeSet() != null) {
 			model.getRendererModel().setBackgroundDimension(jchemPaintModel.getRendererModel().getBackgroundDimension());
@@ -463,7 +479,7 @@ public abstract class JChemPaintPanel
 		this.jchemPaintModel = model;
 		jchemPaintModel.addChangeListener(this);
 		org.openscience.cdk.interfaces.IChemModel chemModel = model.getChemModel();
-		scaleAndCenterMolecule(chemModel);
+		scaleAndCenterMolecule(chemModel,panelDimension);
 		drawingPanel.setJChemPaintModel(model);
 	}
 
@@ -631,16 +647,35 @@ public abstract class JChemPaintPanel
 	 *@param  ac  The IAtomContainer of the structure to be scaled and centered.
 	 */
 	public void scaleAndCenterMolecule(IAtomContainer ac, Dimension dim){
-		((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
+	    if(showscrollbars){
+			((JViewport) drawingPanel.getParent()).setViewPosition(new Point((drawingPanel.getWidth()-getWidth())/2>0 ? (drawingPanel.getWidth()-getWidth())/2 : 0 ,(drawingPanel.getHeight()-getHeight())/2>0 ? (drawingPanel.getHeight()-getHeight())/2 : 0));
+		}
 	    JChemPaintModel jcpm = getJChemPaintModel();
 	    Renderer2DModel rendererModel = jcpm.getRendererModel();
 	    
 	    double scaleFactor = GeometryTools.getScaleFactor(ac, rendererModel.getBondLength(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	    GeometryTools.scaleMolecule(ac, scaleFactor, jchemPaintModel.getRendererModel().getRenderingCoordinates());
-	    Rectangle view = ((JViewport) drawingPanel.getParent()).getViewRect();
+	    if(!showscrollbars && dim!=null){
+	    	Dimension moldims=GeometryTools.get2DDimension(ac, rendererModel.getRenderingCoordinates());
+	    	scaleFactor=1;
+	    	if(moldims.width>dim.width){
+	    		scaleFactor=((float)dim.width-100)/(float)moldims.width;
+	    	}
+	    	if(moldims.height>dim.height && dim.height/moldims.height<scaleFactor){
+	    		scaleFactor=((float)dim.height-100)/(float)moldims.height;
+	    	}
+	        GeometryTools.scaleMolecule(ac, scaleFactor, jchemPaintModel.getRendererModel().getRenderingCoordinates());
+	    }
+	    
+	    Rectangle view;
+	    if(showscrollbars){
+	    	view = ((JViewport) drawingPanel.getParent()).getViewRect();
+	    }else{
+	    	view = new Rectangle(drawingPanel.getSize());
+	    }
+	    Renderer2DModel model = jchemPaintModel.getRendererModel();
 	    double x = view.getX() + view.getWidth();
 	    double y = view.getY() + view.getHeight();
-	    Renderer2DModel model = jchemPaintModel.getRendererModel();
 	    double relocatedY = model.getBackgroundDimension().getSize().getHeight() - (y + view.getY() / 2);
 	    double relocatedX = view.getX() / 2;
 	    Dimension viewablePart = new Dimension((int) x, (int) y);
@@ -657,7 +692,7 @@ public abstract class JChemPaintPanel
 	                relocatedY=0;
 	                GeometryTools.center(ac, model.getBackgroundDimension(),jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	            }else{
-	                 GeometryTools.center(ac, viewablePart,jchemPaintModel.getRendererModel().getRenderingCoordinates());
+	                GeometryTools.center(ac, viewablePart,jchemPaintModel.getRendererModel().getRenderingCoordinates());
 	            }
 	        }else{
 	            relocatedY = model.getBackgroundDimension().getSize().getHeight() - (dim.getHeight());
@@ -715,14 +750,14 @@ public abstract class JChemPaintPanel
 		if (isEmbedded()) {
 			if (showWarning() != JOptionPane.CANCEL_OPTION) {
 				registerModel(jcpm);
-				setJChemPaintModel(jcpm);
+				setJChemPaintModel(jcpm,null);
 				repaint();
 			}
 		}else if (getJChemPaintModel().getChemModel().getMoleculeSet() == null ||
 				getJChemPaintModel().getChemModel().getReactionSet() == null /*|| 
 				getJChemPaintModel().getChemModel().getMoleculeSet().getMolecule(0).getAtoms().length == 0*/) {
 			    registerModel(jcpm);
-				setJChemPaintModel(jcpm);
+				setJChemPaintModel(jcpm,null);
 				repaint();
 		} else {
 			JFrame jcpf = JChemPaintEditorPanel.getNewFrame(jcpm);
@@ -806,7 +841,7 @@ public abstract class JChemPaintPanel
 			}
 		}
 
-		setJChemPaintModel(new JChemPaintModel((ChemModel)chemModel));
+		setJChemPaintModel(new JChemPaintModel((ChemModel)chemModel),null);
 	}
 
 
@@ -1133,6 +1168,9 @@ public abstract class JChemPaintPanel
 		this.scrollPane = scrollPane;
 	}
 
+	public boolean isShowscrollbars() {
+		return showscrollbars;
+	}
 }
 
 

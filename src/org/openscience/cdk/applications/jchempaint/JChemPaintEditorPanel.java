@@ -146,7 +146,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 		this.guiString = guiString;
         customizeView();
-        super.setJChemPaintModel(new JChemPaintModel());
+        super.setJChemPaintModel(new JChemPaintModel(),null);
 		setShowToolBar(true, lines);
 		if(!guiString.equals("applet")){
 			setShowInsertTextField(true);
@@ -506,7 +506,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		JChemPaintEditorPanel jcpep = new JChemPaintEditorPanel();
 		frame.getContentPane().add(jcpep);
 		jcpep.registerModel(model);
-		jcpep.setJChemPaintModel(model);
+		jcpep.setJChemPaintModel(model,null);
 		frame.setTitle(model.getTitle());
 		//This ensures that the drawingpanel is never smaller than the application
 		frame.addComponentListener(new ComponentAdapter(){

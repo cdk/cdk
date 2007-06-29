@@ -51,7 +51,7 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *  Constructor for the JChemPaintViewerOnlyPanel object
 	 */
 	public JChemPaintViewerOnlyPanel() {
-		this(null, "stable");
+		this(null, "stable",true);
 	}
 
 
@@ -60,15 +60,13 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 	 *
 	 *@param  panelDimension  Description of the Parameter
 	 */
-	public JChemPaintViewerOnlyPanel(Dimension panelDimension, String guiString) {
-		super();
+	public JChemPaintViewerOnlyPanel(Dimension panelDimension, String guiString, boolean showscrollbars) {
+		super(showscrollbars);
 		this.guiString=guiString;
-		super.setJChemPaintModel(new JChemPaintModel());
+		super.setJChemPaintModel(new JChemPaintModel(),panelDimension);
 		setViewerOnly();
-//		buildFilePopUpMenu();
-		//logger = new LoggingTool(this);
 		if (panelDimension != null) {
-			super.getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
+			getJChemPaintModel().getRendererModel().setBackgroundDimension(panelDimension);
 			viewerDimension = new Dimension(((int) panelDimension.getWidth()) + 10, ((int) panelDimension.getHeight() + 10));
 			super.setPreferredSize(viewerDimension);
 			viewerDimension = getJChemPaintModel().getRendererModel().getBackgroundDimension();
@@ -76,6 +74,8 @@ public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 		else {
 			viewerDimension = panelDimension;
 		}
+		//		buildFilePopUpMenu();
+		//logger = new LoggingTool(this);
 	}
 
 
