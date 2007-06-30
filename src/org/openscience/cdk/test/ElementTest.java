@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +45,10 @@ public class ElementTest {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
     
+	public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(ElementTest.class);
+    }
+	
     // test constructors
     
     @Test public void testElement() {

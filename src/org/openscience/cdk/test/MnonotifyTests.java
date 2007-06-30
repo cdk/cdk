@@ -24,11 +24,11 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.nonotify.NNAminoAcidTest;
+import org.openscience.cdk.test.nonotify.NNAtomContainerSetTest;
 import org.openscience.cdk.test.nonotify.NNAtomContainerTest;
 import org.openscience.cdk.test.nonotify.NNAtomTest;
 import org.openscience.cdk.test.nonotify.NNAtomTypeTest;
@@ -44,16 +44,15 @@ import org.openscience.cdk.test.nonotify.NNElectronContainerTest;
 import org.openscience.cdk.test.nonotify.NNElementTest;
 import org.openscience.cdk.test.nonotify.NNIsotopeTest;
 import org.openscience.cdk.test.nonotify.NNLonePairTest;
+import org.openscience.cdk.test.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.test.nonotify.NNMoleculeTest;
 import org.openscience.cdk.test.nonotify.NNMonomerTest;
 import org.openscience.cdk.test.nonotify.NNPolymerTest;
 import org.openscience.cdk.test.nonotify.NNPseudoAtomTest;
+import org.openscience.cdk.test.nonotify.NNReactionSetTest;
 import org.openscience.cdk.test.nonotify.NNReactionTest;
 import org.openscience.cdk.test.nonotify.NNRingSetTest;
 import org.openscience.cdk.test.nonotify.NNRingTest;
-import org.openscience.cdk.test.nonotify.NNAtomContainerSetTest;
-import org.openscience.cdk.test.nonotify.NNMoleculeSetTest;
-import org.openscience.cdk.test.nonotify.NNReactionSetTest;
 import org.openscience.cdk.test.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.test.nonotify.NNStrandTest;
 
@@ -83,7 +82,7 @@ public class MnonotifyTests {
         suite.addTest(NNChemSequenceTest.suite());
         suite.addTest(NNCrystalTest.suite());
         suite.addTest(NNElectronContainerTest.suite());
-        suite.addTest(new JUnit4TestAdapter(NNElementTest.class));
+        suite.addTest(NNElementTest.suite());
         suite.addTest(NNIsotopeTest.suite());
         suite.addTest(NNLonePairTest.suite());
         suite.addTest(NNMoleculeTest.suite());
