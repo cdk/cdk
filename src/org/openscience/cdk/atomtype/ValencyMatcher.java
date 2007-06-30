@@ -64,7 +64,7 @@ public class ValencyMatcher implements IAtomTypeMatcher {
 	public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {
-                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml",
+                factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml",
                           atom.getBuilder());
             } catch (Exception ex1) {
                 logger.error(ex1.getMessage());
@@ -76,7 +76,7 @@ public class ValencyMatcher implements IAtomTypeMatcher {
 		double bondOrderSum = atomContainer.getBondOrderSum(atom);
 		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		int charge = atom.getFormalCharge();
-		int hcount = atom.getHydrogenCount();
+		int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
 
         IAtomType[] types = factory.getAtomTypes(atom.getSymbol());
         for (IAtomType type : types) {
