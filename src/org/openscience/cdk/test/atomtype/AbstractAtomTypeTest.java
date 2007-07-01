@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -60,10 +60,10 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 		if (testedAtomTypes.containsKey(expectedID)) {
 			// increase the count, so that redundancy can be calculated
 			testedAtomTypes.put(expectedID,
-				Integer.valueOf(1 + testedAtomTypes.get(expectedID).intValue())
-			);
+                    1 + testedAtomTypes.get(expectedID)
+            );
 		} else {
-			testedAtomTypes.put(expectedID, Integer.valueOf(1));
+			testedAtomTypes.put(expectedID, 1);
 		}
 	}
 	
