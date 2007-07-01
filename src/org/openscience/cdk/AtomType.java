@@ -114,7 +114,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		this.identifier = null;
 		this.formalNeighbourCount = 0;
 		this.electronValency = 0;
-		this.hybridization = CDKConstants.HYBRIDIZATION_UNSET;
+		this.hybridization = (Integer) CDKConstants.UNSET;
 		this.formalCharge = 0;
 	}
 
