@@ -20,10 +20,7 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import java.io.InputStream;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,10 +36,12 @@ import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.io.InputStream;
+
 /**
  * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
  *
- * @cdk.module test-experimental
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.atomtype.MMFF2AtomTypeMatcher
  */
