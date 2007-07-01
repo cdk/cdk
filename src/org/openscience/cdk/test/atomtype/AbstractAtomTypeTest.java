@@ -36,7 +36,7 @@ import org.openscience.cdk.test.NewCDKTestCase;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
-	protected static Map<String, Integer> testedAtomTypes;
+	protected Map<String, Integer> testedAtomTypes;
 	
 	public void assertAtomType(String expectedID, IAtomType foundAtomType) {
 		addTestedAtomType(expectedID);
