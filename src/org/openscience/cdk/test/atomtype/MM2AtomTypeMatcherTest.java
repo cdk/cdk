@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$$Date$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -20,56 +17,55 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test.atomtype;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.JUnit4TestAdapter;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- * Checks the functionality of the AtomType-MMFF94AtomTypeMatcher.
+ * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
  *
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  *
- * @see org.openscience.cdk.atomtype.MMFF94AtomTypeMatcher
+ * @see org.openscience.cdk.atomtype.MMFF2AtomTypeMatcher
  */
-public class MM2AtomTypeMatcherTest extends CDKTestCase {
+public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
-	private LoggingTool logger;
-	
+	private static LoggingTool logger;
 	private static IMolecule testMolecule = null;
 	
-    public MM2AtomTypeMatcherTest(String name) {
-        super(name);
+    public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(MM2AtomTypeMatcherTest.class);
     }
-
-    public void setUp() throws Exception {
-    	logger = new LoggingTool(this);
+	
+    @BeforeClass public static void setUp() throws Exception {
+    	logger = new LoggingTool(MM2AtomTypeMatcher.class);
     	
     	if (testMolecule == null) {
     		// read the test file and percieve atom types
     		AtomTypeTools att=new AtomTypeTools();
     		MM2AtomTypeMatcher atm= new MM2AtomTypeMatcher();
     		logger.debug("**** reading MOL file ******");
-    		InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
+    		InputStream ins = MM2AtomTypeMatcher.class.getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
     		IChemObjectReader mdl = new MDLV2000Reader(ins);
     		testMolecule=(IMolecule)mdl.read(new NNMolecule());
-    		assertTrue(testMolecule.getAtomCount() > 0);
     		logger.debug("Molecule load:"+testMolecule.getAtomCount());
     		att.assignAtomTypePropertiesToAtom(testMolecule);
     		for (int i=0;i<testMolecule.getAtomCount();i++){
@@ -77,49 +73,70 @@ public class MM2AtomTypeMatcherTest extends CDKTestCase {
     			IAtomType matched = null;
     			matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
     			logger.debug("Found AtomType: ", matched);
-    			assertNotNull(matched);
     			AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);       
     		}
     	}
     }
 
-    public static Test suite() {
-        return new TestSuite(MM2AtomTypeMatcherTest.class);
-    }
-    
-    public void testMMFF94AtomTypeMatcher() {
+    @Test public void testMMFF94AtomTypeMatcher() {
     	MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
-	    assertNotNull(matcher);
+	    Assert.assertNotNull(matcher);
     }
     
-    public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
+    @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
     	for (int i=0;i<testMolecule.getAtomCount();i++) {
-    		assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
-    		assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
+    		Assert.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
+    		Assert.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
     	}
     }
     
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
     
-    public void testSthi() {
-        assertEquals("Sthi",testMolecule.getAtom(0).getAtomTypeName());
+    @Test public void testSthi() {
+        assertAtomType("Sthi",testMolecule.getAtom(0));
     }
-    public void testCsp2() {
-        assertEquals("Csp2",testMolecule.getAtom(7).getAtomTypeName());
+    @Test public void testCsp2() {
+        assertAtomType("Csp2",testMolecule.getAtom(7));
     }
-    public void testCsp() {
-        assertEquals("Csp",testMolecule.getAtom(51).getAtomTypeName());
+    @Test public void testCsp() {
+        assertAtomType("Csp",testMolecule.getAtom(51));
     }
-    public void testNdbC() {
-        assertEquals("N=C",testMolecule.getAtom(148).getAtomTypeName());
+    @Test public void testNdbC() {
+        assertAtomType("N=C",testMolecule.getAtom(148));
     }
-    public void testOar() {
-        assertEquals("Oar",testMolecule.getAtom(198).getAtomTypeName());
+    @Test public void testOar() {
+        assertAtomType("Oar",testMolecule.getAtom(198));
     }
-    public void testN2OX() {
-        assertEquals("N2OX",testMolecule.getAtom(233).getAtomTypeName());
+    @Test public void testN2OX() {
+        assertAtomType("N2OX",testMolecule.getAtom(233));
     }
-    public void testNsp2() {
-        assertEquals("Nsp2",testMolecule.getAtom(256).getAtomTypeName());
+    @Test public void testNsp2() {
+        assertAtomType("Nsp2",testMolecule.getAtom(256));
     }
+    
+    /**
+     * The test seems to be run by JUnit in order in which they found
+     * in the source. Ugly, but @AfterClass does not work because that
+     * methods does cannot Assert.assert anything.
+     */
+    @Test public void countTestedAtomTypes() {
+    	AtomTypeFactory factory = AtomTypeFactory.getInstance(
+    		"org/openscience/cdk/config/data/mm2_atomtypes.xml",
+            NoNotificationChemObjectBuilder.getInstance()
+        );
+    	
+   	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
+    	if (expectedTypes.length != testedAtomTypes.size()) {
+       	    String errorMessage = "Atom types not tested:";
+       	    for (int i=0; i<expectedTypes.length; i++) {
+       	    	if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
+       	    		errorMessage += " " + expectedTypes[i].getAtomTypeName();
+       	    }
+    		Assert.assertEquals(errorMessage,
+    			factory.getAllAtomTypes().length, 
+    			testedAtomTypes.size()
+    		);
+    	}
+    }
+
 }
