@@ -730,8 +730,8 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         assertAtomType("F1", matched);
     }
 
-    @Test
-    public void testSe2() throws CDKException {
+  
+    @Test public void testSe2() throws CDKException {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
         IAtom o = DefaultChemObjectBuilder.getInstance().newAtom("O");
@@ -748,7 +748,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType("O2", matched);        
 
     }
 
@@ -763,14 +763,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
             NoNotificationChemObjectBuilder.getInstance()
         );
 
-   	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
-    	if (expectedTypes.length != testedAtomTypes.size()) {
+   	    IAtomType[] expectedTypes = factory.getAllAtomTypes();        
+        if (expectedTypes.length != testedAtomTypes.size()) {
        	    String errorMessage = "Atom types not tested:";
-       	    for (int i=0; i<expectedTypes.length; i++) {
-       	    	if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
-       	    		errorMessage += " " + expectedTypes[i].getAtomTypeName();
-       	    }
-    		Assert.assertEquals(errorMessage,
+            for (IAtomType expectedType : expectedTypes) {
+                if (!testedAtomTypes.containsKey(expectedType.getAtomTypeName()))
+                    errorMessage += " " + expectedType.getAtomTypeName();
+            }
+            Assert.assertEquals(errorMessage,
     			factory.getAllAtomTypes().length,
     			testedAtomTypes.size()
     		);
