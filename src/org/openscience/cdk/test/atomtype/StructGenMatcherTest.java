@@ -21,7 +21,6 @@
 package org.openscience.cdk.test.atomtype;
 
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -693,6 +692,66 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         assertAtomType("C4", matched);
     }
 
+    /* Test B3, F1 */
+    @Test public void testB3() throws CDKException {
+       IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom b = DefaultChemObjectBuilder.getInstance().newAtom("B");
+        IAtom f1 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+        IAtom f2 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+        IAtom f3 = DefaultChemObjectBuilder.getInstance().newAtom("F");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(b, f1, 1.0);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(b, f2, 1.0);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(b, f3, 1.0);
+
+        mol.addAtom(b);
+        mol.addAtom(f1);
+        mol.addAtom(f2);
+        mol.addAtom(f3);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        mol.addBond(b3);
+
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertAtomType("B3", matched);
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertAtomType("F1", matched);
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
+        assertAtomType("F1", matched);
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
+        assertAtomType("F1", matched);
+    }
+
+    @Test
+    public void testSe2() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
+        IAtom o = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(se, o, 2.0);
+        mol.addAtom(se);
+        mol.addAtom(o);
+        mol.addBond(b1);
+
+        StructGenMatcher matcher = new StructGenMatcher();
+        IAtomType matched;
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        assertAtomType("Se2", matched);
+
+
+        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
+        assertAtomType("O2", matched);
+
+    }
+
     /**
      * The test seems to be run by JUnit in order in which they found
      * in the source. Ugly, but @AfterClass does not work because that
@@ -703,7 +762,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     		"org/openscience/cdk/config/data/structgen_atomtypes.xml",
             NoNotificationChemObjectBuilder.getInstance()
         );
-    	
+
    	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
     	if (expectedTypes.length != testedAtomTypes.size()) {
        	    String errorMessage = "Atom types not tested:";
@@ -712,10 +771,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
        	    		errorMessage += " " + expectedTypes[i].getAtomTypeName();
        	    }
     		Assert.assertEquals(errorMessage,
-    			factory.getAllAtomTypes().length, 
+    			factory.getAllAtomTypes().length,
     			testedAtomTypes.size()
     		);
     	}
     }
-    
+
 }
