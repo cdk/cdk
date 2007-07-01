@@ -21,13 +21,9 @@
 package org.openscience.cdk.test.atomtype;
 
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.*;
 import org.openscience.cdk.atomtype.HybridizationMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -68,9 +64,14 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     
     @Test public void testN3() throws CDKException {
         Molecule mol = new Molecule();
+
         Atom atom = new Atom("N");
-        atom.setHydrogenCount(3);
-        mol.addAtom(atom);
+        for (int i = 0; i < 3; i++) {
+            Atom h = new Atom("H");
+            mol.addAtom(h);
+            mol.addBond(new Bond(atom, h, 1.0)) ;
+        }
+                       
 
         HybridizationMatcher atm = new HybridizationMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
@@ -82,7 +83,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     @Test public void testFlourine() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        atom1.setHydrogenCount(0);
+        atom1.setHydrogenCount(0);        
         mol.addAtom(atom1);
         for (int i = 0; i < 4; i++) {
             IAtom floruineAtom = DefaultChemObjectBuilder.getInstance().newAtom("F");
@@ -93,6 +94,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
+        Assert.assertNotNull(matched);
         assertAtomType("C.sp3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
@@ -169,23 +171,6 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
             matched = matcher.findMatchingAtomType(mol, atom);
             assertAtomType("atom " + i + " failed to match", "I", matched);
         }
-    }
-
-    @Test public void testLithium() throws CDKException {
-        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("Li");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("F");
-        IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2);
-        mol.addAtom(atom1);
-        mol.addAtom(atom2);
-        mol.addBond(bond);
-
-        HybridizationMatcher matcher = new HybridizationMatcher();
-        IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Li", matched);
-
-        matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("F", matched);
     }
 
     /*
