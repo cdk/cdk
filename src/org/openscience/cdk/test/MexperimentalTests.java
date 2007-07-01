@@ -23,6 +23,8 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
+import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.io.VASPReaderTest;
 import org.openscience.cdk.test.tools.GenerateFragmentsTest;
 
@@ -35,9 +37,14 @@ public class MexperimentalTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
+
         suite.addTest(AssociationTest.suite());
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(GenerateFragmentsTest.suite());
+        // from cdk.test.atomtype
+        suite.addTest(MMFF94AtomTypeMatcherTest.suite());
+        suite.addTest(MM2AtomTypeMatcherTest.suite());
+        
         return suite;
     }
 

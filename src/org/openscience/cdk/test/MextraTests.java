@@ -22,10 +22,19 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.test.applications.undoredo.*;
-import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
-import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
+import org.openscience.cdk.test.applications.undoredo.AddAtomsAndBondsEditTest;
+import org.openscience.cdk.test.applications.undoredo.AddHydrogenEditTest;
+import org.openscience.cdk.test.applications.undoredo.AdjustBondOrdersEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeAtomSymbolEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeChargeEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeIsotopeEditTest;
+import org.openscience.cdk.test.applications.undoredo.CleanUpEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
+import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
+import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
 import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
@@ -61,9 +70,6 @@ public class MextraTests {
         // Individual Tests
         // from cdk.test.applications
         // from cdk.test.aromaticity
-        // from cdk.test.atomtype
-        suite.addTest(MMFF94AtomTypeMatcherTest.suite());
-        suite.addTest(MM2AtomTypeMatcherTest.suite());
         // from cdk.test.dict
         suite.addTest(DictDBTest.suite());
         // from cdk.test.charges

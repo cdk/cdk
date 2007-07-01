@@ -20,7 +20,10 @@
  */
 package org.openscience.cdk.test.atomtype;
 
+import java.io.InputStream;
+
 import junit.framework.JUnit4TestAdapter;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,8 +38,6 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import java.io.InputStream;
 
 /**
  * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
@@ -55,7 +56,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 	
     @BeforeClass public static void setUp() throws Exception {
-    	logger = new LoggingTool(MM2AtomTypeMatcher.class);
+    	logger = new LoggingTool(MM2AtomTypeMatcherTest.class);
     	
     	if (testMolecule == null) {
     		// read the test file and percieve atom types
