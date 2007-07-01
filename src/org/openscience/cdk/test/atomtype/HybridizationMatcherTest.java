@@ -61,9 +61,9 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         HybridizationMatcher atm = new HybridizationMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(matched);
+        Assert.assertEquals("C", matched.getSymbol());
         
         Assert.assertEquals(thisHybridization, matched.getHybridization());
-        Assert.assertEquals("C", matched.getSymbol());
     }
     
     @Test public void testN3() throws CDKException {
@@ -93,12 +93,12 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "F1", matched);
+            assertAtomType("atom " + i + " failed to match", "F", matched);
         }
     }
 
@@ -116,12 +116,12 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType("atom " + i + " failed to match", "Cl", matched);
         }
     }
 
@@ -139,12 +139,12 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Br1", matched);
+            assertAtomType("atom " + i + " failed to match", "Br", matched);
         }
     }
 
@@ -162,12 +162,12 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "I1", matched);
+            assertAtomType("atom " + i + " failed to match", "I", matched);
         }
     }
 
@@ -182,10 +182,10 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Li1", matched);
+        assertAtomType("Li", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("F1", matched);
+        assertAtomType("F", matched);
     }
 
     /*
@@ -210,7 +210,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType("atom " + i + " failed to match", "Cl", matched);
         }
     }
 
@@ -240,14 +240,13 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         // look at the sp2 O first
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
-
+        assertAtomType("O.sp2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType("C.default", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType("O.sp2", matched);
     }
 
     /*
@@ -277,16 +276,16 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("O2", matched);
+        assertAtomType("O.sp3", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType("O.sp3", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("H1", matched);
+        assertAtomType("H", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
-        assertAtomType("H1", matched);
+        assertAtomType("H", matched);
     }
 
     /*
@@ -374,7 +373,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         HybridizationMatcher matcher = new HybridizationMatcher();
         IAtomType matched;
 
-        String[] atomTypes = {"P3", "O2", "O2", "O2", "C4", "C4", "C4"};
+        String[] atomTypes = {"P3", "O.sp3", "O.sp3", "O.sp3", "C.sp3", "C.sp3", "C.sp3"};
         for (int i = 0; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
             assertAtomType("atom " + i + " failed to match", atomTypes[i], matched);
@@ -386,7 +385,9 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     @Test public void testNa1() throws CDKException {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom na = DefaultChemObjectBuilder.getInstance().newAtom("Na");
+        na.setFormalCharge(Integer.valueOf(1));
         IAtom cl = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        cl.setFormalCharge(Integer.valueOf(-1));
         IBond bond = DefaultChemObjectBuilder.getInstance().newBond(na, cl, 1.0);
         mol.addAtom(na);
         mol.addAtom(cl);
@@ -396,10 +397,10 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Na1", matched);
+        assertAtomType("Na+", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("Cl1", matched);
+        assertAtomType("Cl-", matched);
     }
 
     /* Test Si4, C4, Cl1 */
@@ -436,11 +437,11 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         assertAtomType("Si4", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
 
         for (int i = 3; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType("atom " + i + " failed to match", "Cl", matched);
         }
     }
 
@@ -456,7 +457,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S2", matched);
+        assertAtomType("S", matched);
 
         mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         s = DefaultChemObjectBuilder.getInstance().newAtom("S");
@@ -473,13 +474,13 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(b2);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S2", matched);
+        assertAtomType("S", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("H1", matched);
+        assertAtomType("H", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("H1", matched);
+        assertAtomType("H", matched);
     }
 
     /* Tests S3, O2 */
@@ -508,11 +509,11 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType("O.sp2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
+        assertAtomType("O.sp2", matched);
     }
 
 
@@ -537,7 +538,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType("atom " + i + " failed to match", "F1", matched);
+            assertAtomType("atom " + i + " failed to match", "F", matched);
         }
     }
 
@@ -640,15 +641,15 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("N3", matched);
+        assertAtomType("N.sp", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp1", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("C4", matched);
+        assertAtomType("C.sp3", matched);
     }
 
 
