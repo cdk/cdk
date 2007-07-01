@@ -177,7 +177,7 @@ public class AtomTypeTest extends CDKTestCase {
 
         IAtomType atom = builder.newAtomType("C");
         atom.setHybridization(hybridization);
-        assertEquals(hybridization, atom.getHybridization());
+        assertEquals(hybridization, (int) atom.getHybridization());
     }
     public void testGetHybridization() {
         testSetHybridization_int();
@@ -206,7 +206,7 @@ public class AtomTypeTest extends CDKTestCase {
     public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
     	IAtomType a = builder.newAtomType("C");
-        a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(benzol));
+        a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
         assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());    	
     }    
     public void testGetChemicalGroupConstant(){
@@ -216,7 +216,7 @@ public class AtomTypeTest extends CDKTestCase {
     public void  testSetRingSize_int(){
     	int five=5;
     	IAtomType a = builder.newAtomType("C");
-        a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(five));
+        a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
         assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());    	
     }    
     public void  testGetRingSize(){
@@ -342,7 +342,7 @@ public class AtomTypeTest extends CDKTestCase {
         IAtomType clone = (IAtomType)at.clone();
         
         at.setHybridization(2);
-        assertEquals(1, clone.getHybridization());
+        assertEquals(1, (int) clone.getHybridization());
     }
     
     /**
