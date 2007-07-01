@@ -204,7 +204,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setHybridization(hybridization);
 	}
 
-	public int getHybridization() {
+	public Integer getHybridization() {
 		logger.debug("Getting hybridization: ", super.getHybridization());
 		return super.getHybridization();
 	}

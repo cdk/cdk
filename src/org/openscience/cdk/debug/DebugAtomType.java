@@ -260,7 +260,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		super.setHybridization(hybridization);
 	}
 
-	public int getHybridization() {
+	public Integer getHybridization() {
 		logger.debug("Getting hybridization: ", super.getHybridization());
 		return super.getHybridization();
 	}

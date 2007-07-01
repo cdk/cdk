@@ -206,7 +206,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		super.setHybridization(hybridization);
 	}
 
-	public int getHybridization() {
+	public Integer getHybridization() {
 		logger.debug("Getting hybridization: ", super.getHybridization());
 		return super.getHybridization();
 	}

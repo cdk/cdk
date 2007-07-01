@@ -132,7 +132,7 @@ public interface IAtomType extends IIsotope {
      * @return the hybridization of this atom
      * @see    #setHybridization
      */
-    public int getHybridization();
+    public Integer getHybridization();
     
     /**
      * Sets the Vanderwaals radius for this AtomType.
