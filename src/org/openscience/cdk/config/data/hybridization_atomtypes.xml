@@ -5,7 +5,7 @@
               xmlns:cvs="https://www.cvshome.org/"
               xmlns:cdk="http://cdk.sf.net/dict/cdk/"
 
-              id="valency" title="Valency AtomTypes">
+              id="valency" title="Hybridization AtomTypes">
 
     <metadataList>
         <metadata name="cvs:last-change-by" content="$Author: kaihartmann $"/>
