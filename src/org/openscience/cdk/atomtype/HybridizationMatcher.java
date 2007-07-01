@@ -80,6 +80,9 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
         for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);
 
+            // if the symbol doesn't match no use carrying on
+            if (!atom.getSymbol().equals(type.getSymbol())) continue;
+
             // if formal charge doesn't match, no use carrying on
             int formalCharge = atom.getFormalCharge();
             if (formalCharge != type.getFormalCharge()) {
@@ -98,12 +101,18 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
                 }
             }
 
-            // we'll have to evaluate the hyb state
+            // since the hyb state is not available, we will
+            // match against the formal charge, max bond order, neighbor count
+            // and symbol and take the matching types hyb state
+
+            // lets first get the max bond order
             logger.debug("      Evaluating hybridization state");
             List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
-            double maxBondOrder = -1;            
+            double maxBondOrder = -1;
+            double bondOrderSum = 0;
             for (IBond bond : connectedBonds) {
                 if (bond.getOrder() > maxBondOrder) maxBondOrder = bond.getOrder();
+                bondOrderSum += bond.getOrder();
             }
 
             // in case the atom has all implicit hydrogens ad no explicit bonds,
@@ -112,22 +121,17 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
                 maxBondOrder = 1.0;
             }
 
-            Integer hybridizationState = -1;
 
-            // TODO we should take into account sp3d an sp3d2 states
-            if (maxBondOrder == 1.0) hybridizationState = CDKConstants.HYBRIDIZATION_SP3;
-            else if (maxBondOrder == 2.0 || maxBondOrder == 1.5) hybridizationState = CDKConstants.HYBRIDIZATION_SP2;
-            else if (maxBondOrder == 3.0) hybridizationState = CDKConstants.HYBRIDIZATION_SP1;
 
             // we should check max bond order as well, since double bonded
             // carbons have the same state as aromatic carbons
-            if (hybridizationState == type.getHybridization() && maxBondOrder == type.getMaxBondOrder()) {
-                logger.debug("     hybridization matches. Setting the state");
+            if (bondOrderSum == type.getBondOrderSum()&& maxBondOrder == type.getMaxBondOrder()) {
+                logger.debug("     Match found. Setting the state");
                 // set the state on the atom
-                atom.setHybridization(hybridizationState);
+                atom.setHybridization(type.getHybridization());
                 return type;
             } else {
-                logger.debug("     hybridization state does not match.");
+                logger.debug("     No match found.");
             }
         }
 
