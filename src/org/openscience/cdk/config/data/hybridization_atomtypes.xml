@@ -157,12 +157,14 @@
             <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
             <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
         </atom>
+        <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
     </atomType>
     <atomType id="O.sp3">
         <atom elementType="O" formalCharge="0">
             <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
             <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
         </atom>
+        <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
     </atomType>
     <atomType id="Oplus">
         <atom elementType="O" formalCharge="1">
