@@ -178,12 +178,18 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             mass1 = factory.getMajorIsotope(bond.getAtom(0).getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(bond.getAtom(1).getSymbol()).getMassNumber();
 
-            double x1 = bond.getAtom(0).getPoint3d().x;
-            double y1 = bond.getAtom(0).getPoint3d().y;
-            double z1 = bond.getAtom(0).getPoint3d().z;
-            double x2 = bond.getAtom(1).getPoint3d().x;
-            double y2 = bond.getAtom(1).getPoint3d().y;
-            double z2 = bond.getAtom(1).getPoint3d().z;
+            Point3d p1 = bond.getAtom(0).getPoint3d();
+            Point3d p2 = bond.getAtom(1).getPoint3d();
+
+            if (p1 == null || p2 == null) {
+                throw new CDKException("Molecule must have 3D coordinates");
+            }
+            double x1 = p1.x;
+            double y1 = p1.y;
+            double z1 = p1.z;
+            double x2 = p2.x;
+            double y2 = p2.y;
+            double z2 = p2.z;
 
             double dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
             sum += (mass1 * mass2) / dist;
