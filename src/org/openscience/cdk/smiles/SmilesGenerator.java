@@ -1562,7 +1562,7 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if (a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2)
+			if (a.getHybridization() != CDKConstants.UNSET && a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2)
 			{
 				buffer.append(a.getSymbol().toLowerCase());
 			} else
