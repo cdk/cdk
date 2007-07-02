@@ -60,26 +60,26 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	/**
 	 *  The maximum bond order allowed for this atom type.
 	 */
-	Double maxBondOrder;
+	Double maxBondOrder = (Double) CDKConstants.UNSET;
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
-	Double bondOrderSum;
+	Double bondOrderSum = (Double) CDKConstants.UNSET;
 
     /**
      * The Vanderwaals radius of this atom type.
      */
-    double vanderwaalsRadius;
+    Double vanderwaalsRadius = (Double) CDKConstants.UNSET;
     /**
      * The covalent radius of this atom type.
      */
-    double covalentRadius;
+    Double covalentRadius = (Double) CDKConstants.UNSET;
     
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
      *
      */
-    protected Integer formalCharge;
+    protected Integer formalCharge = (Integer) CDKConstants.UNSET;
 
     /**
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
@@ -90,14 +90,14 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     /**
      *  The electron Valency of this atom with CDKConstants.UNSET as default.
      */
-    protected int electronValency;
+    protected Integer electronValency = (Integer) CDKConstants.UNSET;
 
     /**
      * The formal number of neighbours this atom type can have with CDKConstants_UNSET
      * as default. This includes explicitely and implicitely connected atoms, including
      * implicit hydrogens.
      */
-    protected int formalNeighbourCount;
+    protected Integer formalNeighbourCount = (Integer) CDKConstants.UNSET;
 
     /**
      * String representing the identifier for this atom type with null as default.
@@ -114,7 +114,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		this.identifier = null;
 		this.formalNeighbourCount = 0;
 		this.electronValency = 0;
-		this.hybridization = (Integer) CDKConstants.UNSET;
 		this.formalCharge = 0;
 	}
 
@@ -280,7 +279,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setFormalNeighbourCount
      */
-    public int getFormalNeighbourCount() {
+    public Integer getFormalNeighbourCount() {
         return this.formalNeighbourCount;
     }
     
@@ -343,7 +342,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @return The Vanderwaals radius for this AtomType
      * @see    #setVanderwaalsRadius
      */
-    public double getVanderwaalsRadius() {
+    public Double getVanderwaalsRadius() {
         return this.vanderwaalsRadius;
     }
     
@@ -364,7 +363,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @return The covalent radius for this AtomType
      * @see    #setCovalentRadius
      */
-    public double getCovalentRadius() {
+    public Double getCovalentRadius() {
         return this.covalentRadius;
     }
     
@@ -388,7 +387,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	 * @see #setValency
 	 *
 	 */
-	public int getValency()
+	public Integer getValency()
 	{
 		return this.electronValency;
 	}

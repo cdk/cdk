@@ -20,17 +20,12 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.LoggingTool;
+import java.util.Hashtable;
 
 /**
  * Debugging data class.
@@ -194,7 +189,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setFormalNeighbourCount(count);
 	}
 
-	public int getFormalNeighbourCount() {
+	public Integer getFormalNeighbourCount() {
 		logger.debug("Getting formal neighbour count: ", super.getFormalNeighbourCount());
 		return super.getFormalNeighbourCount();
 	}
@@ -214,7 +209,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setVanderwaalsRadius(radius);
 	}
 
-	public double getVanderwaalsRadius() {
+	public Double getVanderwaalsRadius() {
 		logger.debug("Getting vanderwaals radius: ", super.getVanderwaalsRadius());
 		return super.getVanderwaalsRadius();
 	}
@@ -224,7 +219,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setCovalentRadius(radius);
 	}
 
-	public double getCovalentRadius() {
+	public Double getCovalentRadius() {
 		logger.debug("Getting covalent radius: ", super.getCovalentRadius());
 		return super.getCovalentRadius();
 	}
@@ -234,7 +229,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		super.setValency(valency);
 	}
 
-	public int getValency() {
+	public Integer getValency() {
 		logger.debug("Getting valency: ", super.getValency());
 		return super.getValency();
 	}

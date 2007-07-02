@@ -116,7 +116,7 @@ public interface IAtomType extends IIsotope {
      * @return the formal neighbour count of this atom
      * @see    #setFormalNeighbourCount
      */
-    public int getFormalNeighbourCount();
+    public Integer getFormalNeighbourCount();
     
     /**
      * Sets the hybridization of this atom.
@@ -148,7 +148,7 @@ public interface IAtomType extends IIsotope {
      * @return The Vanderwaals radius for this AtomType
      * @see    #setVanderwaalsRadius
      */
-    public double getVanderwaalsRadius();
+    public Double getVanderwaalsRadius();
     
     /**
      * Sets the covalent radius for this AtomType.
@@ -164,7 +164,7 @@ public interface IAtomType extends IIsotope {
      * @return The covalent radius for this AtomType
      * @see    #setCovalentRadius
      */
-    public double getCovalentRadius();
+    public Double getCovalentRadius();
     
 	/**
 	 * Sets the the exact electron valency of the AtomType object.
@@ -180,7 +180,7 @@ public interface IAtomType extends IIsotope {
 	 * @return The valency value
 	 * @see    #setValency(int)
 	 */
-	public int getValency();
+	public Integer getValency();
 
 }
 
