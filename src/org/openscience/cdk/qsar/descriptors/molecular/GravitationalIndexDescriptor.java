@@ -34,6 +34,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
+import javax.vecmath.Point3d;
 import java.util.Vector;
 
 
@@ -204,12 +205,18 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             mass1 = factory.getMajorIsotope(b.getAtom(0).getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(b.getAtom(1).getSymbol()).getMassNumber();
 
-            double x1 = b.getAtom(0).getPoint3d().x;
-            double y1 = b.getAtom(0).getPoint3d().y;
-            double z1 = b.getAtom(0).getPoint3d().z;
-            double x2 = b.getAtom(1).getPoint3d().x;
-            double y2 = b.getAtom(1).getPoint3d().y;
-            double z2 = b.getAtom(1).getPoint3d().z;
+            Point3d point0 = b.getAtom(0).getPoint3d();
+            Point3d point1 = b.getAtom(1).getPoint3d();
+            if (point0 == null || point1 == null) {
+                throw new CDKException("The molecule must have 3D coordinates");
+            }
+            
+            double x1 = point0.x;
+            double y1 = point0.y;
+            double z1 = point0.z;
+            double x2 = point1.x;
+            double y2 = point1.y;
+            double z2 = point1.z;
 
             double dist = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
             heavysum += (mass1 * mass2) / dist;
