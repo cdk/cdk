@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk.test.config;
 
-import java.io.InputStream;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.InputStream;
 
 
 /**
@@ -134,7 +133,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		assertEquals(0, atomType.getFormalCharge().intValue());
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
 		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
-		assertEquals(3, atomType.getFormalNeighbourCount());
+		assertEquals(3, (int) atomType.getFormalNeighbourCount());
 		assertEquals(CDKConstants.HYBRIDIZATION_SP2, (int) atomType.getHybridization());
 	}
 

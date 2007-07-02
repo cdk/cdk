@@ -155,7 +155,7 @@ public class AtomTypeTest extends CDKTestCase {
 
         IAtomType a = builder.newAtomType("C");
         a.setValency(valency);
-        assertEquals(valency, a.getValency());
+        assertEquals(valency, (int) a.getValency());
     }
     public void testGetValency() {
         testSetValency_int();
@@ -166,7 +166,7 @@ public class AtomTypeTest extends CDKTestCase {
 
         IAtomType a = builder.newAtomType("C");
         a.setFormalNeighbourCount(count);
-        assertEquals(count, a.getFormalNeighbourCount());
+        assertEquals(count, (int) a.getFormalNeighbourCount());
     }
     public void testGetFormalNeighbourCount() {
         testSetFormalNeighbourCount_int();
@@ -330,7 +330,7 @@ public class AtomTypeTest extends CDKTestCase {
         IAtomType clone = (IAtomType)at.clone();
         
         at.setFormalNeighbourCount(2);
-        assertEquals(1, clone.getFormalNeighbourCount());
+        assertEquals(1, (int) clone.getFormalNeighbourCount());
     }
     
     /**
