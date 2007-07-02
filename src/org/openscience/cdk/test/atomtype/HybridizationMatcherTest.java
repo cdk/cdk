@@ -208,18 +208,24 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
 
-        carbon.setHydrogenCount(1);
-        o1.setHydrogenCount(1);
-        o2.setHydrogenCount(0);
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
         IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o1, 1.0);
         IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o2, 2.0);
 
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(carbon, h1, 1.0);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(o1, h2, 1.0);
+
         mol.addAtom(carbon);
         mol.addAtom(o1);
         mol.addAtom(o2);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
         mol.addBond(bond1);
         mol.addBond(bond2);
+        mol.addBond(bond3);
+        mol.addBond(bond4);
 
         HybridizationMatcher matcher = new HybridizationMatcher();
 
@@ -228,10 +234,10 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         assertAtomType("O.sp2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C.default", matched);
+        assertAtomType("C.sp2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O.sp2", matched);
+        assertAtomType("O.sp3", matched);
     }
 
     /*
