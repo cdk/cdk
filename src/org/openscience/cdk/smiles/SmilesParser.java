@@ -210,8 +210,9 @@ public class SmilesParser {
 
 		boolean HaveSP2=false;
 
-		for (int j=0;j<=m.getAtomCount()-1;j++) {
-			if (m.getAtom(j).getHybridization()==2) {
+        for (int j=0;j<=m.getAtomCount()-1;j++) {
+            Integer hybridization = m.getAtom(j).getHybridization();
+            if (hybridization != CDKConstants.UNSET && hybridization == CDKConstants.HYBRIDIZATION_SP2) {
 				HaveSP2=true;
 				break;
 			}
