@@ -110,7 +110,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the get/setCharge() methods.
      */
-    public void testSetCharge_double() {
+    public void testSetCharge_Double() {
         double charge = 0.15;
 
         IAtom a = builder.newAtom("C");
@@ -118,14 +118,14 @@ public class AtomTest extends CDKTestCase {
         assertEquals(charge, a.getCharge(), 0.001);
     }
     public void testGetCharge() {
-        testSetCharge_double();
+        testSetCharge_Double();
     }
 
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetHydrogenCount_int() {
-        Integer count = Integer.valueOf(1);
+    public void testSetHydrogenCount_Integer() {
+        Integer count = 1;
 
         IAtom a = builder.newAtom("C");
         a.setHydrogenCount(count);
@@ -187,7 +187,7 @@ public class AtomTest extends CDKTestCase {
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetStereoParity_int() {
+    public void testSetStereoParity_Integer() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
 
         IAtom a = builder.newAtom("C");
@@ -195,7 +195,7 @@ public class AtomTest extends CDKTestCase {
         assertEquals(parity, a.getStereoParity().intValue());
     }
     public void testGetStereoParity() {
-        testSetStereoParity_int();
+        testSetStereoParity_Integer();
     }
     
     /**
