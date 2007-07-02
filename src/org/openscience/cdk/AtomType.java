@@ -267,7 +267,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getFormalNeighbourCount
      */
-    public void setFormalNeighbourCount(int count) {
+    public void setFormalNeighbourCount(Integer count) {
         this.formalNeighbourCount = count;
 	notifyChanged();
     }
@@ -290,7 +290,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getHybridization
      */
-    public void setHybridization(int hybridization) {
+    public void setHybridization(Integer hybridization) {
         this.hybridization = hybridization;
         notifyChanged();
     }
@@ -331,7 +331,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @param radius The Vanderwaals radius for this AtomType
      * @see   #getVanderwaalsRadius
      */
-    public void setVanderwaalsRadius(double radius) {
+    public void setVanderwaalsRadius(Double radius) {
         this.vanderwaalsRadius = radius;
 	notifyChanged();
     }
@@ -352,7 +352,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * @param radius The covalent radius for this AtomType
      * @see    #getCovalentRadius
      */
-    public void setCovalentRadius(double radius) {
+    public void setCovalentRadius(Double radius) {
         this.covalentRadius = radius;
 	notifyChanged();
     }
@@ -374,7 +374,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	 * @see #getValency
 	 *
 	 */
-	public void setValency(int valency)
+	public void setValency(Integer valency)
 	{
 		this.electronValency = valency;
 		notifyChanged();
