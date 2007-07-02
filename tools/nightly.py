@@ -327,18 +327,21 @@ def transformXML2HTML(src, dest, xsltFile, pmd=True):
     else: # cannot xform, so just copy the XML file
         shutil.copyfile(src, dest)
     
-def writeJunitSummaryHTML(stats):
+def writeJunitSummaryHTML(stats, stable=True):
+    pagetype = 'Stable'
+    if not stable: pagetype = 'Unstable'
+        
     summary = """
     <html>
     <head>
-    <title>CDK JUnit Test Summary (%s)</title>
+    <title>CDK JUnit Test Summary (%s) [%s]</title>
     <style type="text/css">
     tr.crash { background-color: #F778A1;}
     </style>
     </head>
     <body>
     <center>
-    <h2>CDK JUnit Test Summary (%s)</h2>
+    <h2>CDK JUnit Test Summary (%s) [%s]</h2>
     <table border=0 cellspacing=5 cellpadding=3>
     <thead>
     <tr>
@@ -352,14 +355,16 @@ def writeJunitSummaryHTML(stats):
     <tr>
     <td colspan=5><hr></td>
     </tr>
-    """ % (todayNice, todayNice)
+    """ % (todayNice, pagetype, todayNice, pagetype)
 
     totalTest = 0
     totalFail = 0
     totalError = 0
     
     for entry in stats:
-
+        if stable and (entry[0] == 'experimental' or entry[0] == 'smarts'): continue
+        if not stable and entry[0] != 'experimental' and entry[0] != 'smarts': continue
+        
         if int(entry[1]) != -1:
             totalTest = totalTest + int(entry[1])
             totalFail = totalFail + int(entry[2])
@@ -396,9 +401,14 @@ def writeJunitSummaryHTML(stats):
     </center>
     </body>
     </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100)
+
+    summary += """
+    </center>
+    </body>
+    </html>"""
     return summary
 
-def parseJunitOutput(summaryFile):
+def parseJunitOutput(summaryFile, stable=True):
     f = open(os.path.join(nightly_dir,'test.log'), 'r')
     stats = []
     foundModuleEntry = False
@@ -431,7 +441,7 @@ def parseJunitOutput(summaryFile):
     f.close()
 
     # get an HTML summary
-    summary = writeJunitSummaryHTML(stats)
+    summary = writeJunitSummaryHTML(stats, stable)
     
     # write out this HTML
     fileName = os.path.join(nightly_web, summaryFile)
@@ -1196,13 +1206,15 @@ if __name__ == '__main__':
 
         # summarize JUnit test results - it will go into nightly_web
         parseJunitOutput('junitsummary.html')
+        parseJunitOutput('junitsummary-unstable.html', stable=False)
         
         # check whether we can copy the run output and link to the summary
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
-            resultTable.appendToCell("<a href=\"junitsummary.html\">Summary</a>")
+            resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
+            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>") 
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
@@ -1218,10 +1230,10 @@ if __name__ == '__main__':
     # do the code coverage
     if successTestDist:
         print '  Performing code coverage'
-        celltexts = doCodeCoverage()
-        if celltexts:
-            resultTable.addRow()
-            for celltext in celltexts: resultTable.addCell(celltext)
+        #celltexts = doCodeCoverage()
+        #if celltexts:
+        #    resultTable.addRow()
+        #    for celltext in celltexts: resultTable.addCell(celltext)
     else:
         resultTable.addRow()
         resultTable.addCell("""Code <a href="http://emma.sourceforge.net/">coverage</a>""")
