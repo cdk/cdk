@@ -84,24 +84,24 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals("C4", at.getAtomTypeName());
     }
     
-    public void testSetMaxBondOrder_double() {
+    public void testSetMaxBondOrder_Double() {
         IAtomType at = builder.newAtomType("C");
         at.setMaxBondOrder(3.0);
         assertEquals(3.0, at.getMaxBondOrder(), 0.001);
     }
 
     public void testGetMaxBondOrder() {
-        testSetMaxBondOrder_double();
+        testSetMaxBondOrder_Double();
     }
 
-    public void testSetBondOrderSum_double() {
+    public void testSetBondOrderSum_Double() {
         IAtomType at = builder.newAtomType("C");
         at.setBondOrderSum(4.0);
         assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
     
     public void testGetBondOrderSum() {
-        testSetBondOrderSum_double();
+        testSetBondOrderSum_Double();
     }
     
     public void testCompare() {
@@ -114,29 +114,29 @@ public class AtomTypeTest extends CDKTestCase {
         }
     }
     
-    public void testSetVanderwaalsRadius_double() {
+    public void testSetVanderwaalsRadius_Double() {
         IAtomType at = builder.newAtomType("C");
         at.setVanderwaalsRadius(1.0);
         assertEquals(1.0, at.getVanderwaalsRadius(), 0.001);
     }
     public void testGetVanderwaalsRadius() {
-        testSetVanderwaalsRadius_double();
+        testSetVanderwaalsRadius_Double();
     }
     
     
-    public void testSetCovalentRadius_double() {
+    public void testSetCovalentRadius_Double() {
         IAtomType at = builder.newAtomType("C");
         at.setCovalentRadius(1.0);
         assertEquals(1.0, at.getCovalentRadius(), 0.001);
     }
     public void testGetCovalentRadius() {
-        testSetCovalentRadius_double();
+        testSetCovalentRadius_Double();
     }
     
     /**
      * Method to test the get/setFormalCharge() methods.
      */
-    public void testSetFormalCharge_int() {
+    public void testSetFormalCharge_Integer() {
         int charge = 1;
 
         IAtomType a = builder.newAtomType("C");
@@ -144,13 +144,13 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals(charge, a.getFormalCharge().intValue());
     }
     public void testGetFormalCharge() {
-        testSetFormalCharge_int();
+        testSetFormalCharge_Integer();
     }
 
     /**
      * Method to test the get/setValency() methods.
      */
-    public void testSetValency_int() {
+    public void testSetValency_Integer() {
         int valency = 4;
 
         IAtomType a = builder.newAtomType("C");
@@ -158,10 +158,10 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals(valency, (int) a.getValency());
     }
     public void testGetValency() {
-        testSetValency_int();
+        testSetValency_Integer();
     }
 
-    public void testSetFormalNeighbourCount_int() {
+    public void testSetFormalNeighbourCount_Integer() {
         int count = 4;
 
         IAtomType a = builder.newAtomType("C");
@@ -169,10 +169,10 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals(count, (int) a.getFormalNeighbourCount());
     }
     public void testGetFormalNeighbourCount() {
-        testSetFormalNeighbourCount_int();
+        testSetFormalNeighbourCount_Integer();
     }
 
-    public void testSetHybridization_int() {
+    public void testSetHybridization_Integer() {
         int hybridization = CDKConstants.HYBRIDIZATION_SP3;
 
         IAtomType atom = builder.newAtomType("C");
@@ -180,7 +180,7 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals(hybridization, (int) atom.getHybridization());
     }
     public void testGetHybridization() {
-        testSetHybridization_int();
+        testSetHybridization_Integer();
     }
 
     public void testSetAcceptor_boolean(){
