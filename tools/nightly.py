@@ -751,6 +751,10 @@ def transformJunitResultToHTML(filename):
     s = StringIO.StringIO()
     lines = open(filename, 'r').readlines()
     lines = string.join(lines)
+
+    ## make some subs to get valid HTML
+    lines = lines.replace("<","&lt;")
+    line = lines.replace(">", "&gt;")
     s.write("""
     <html>
     <body>
