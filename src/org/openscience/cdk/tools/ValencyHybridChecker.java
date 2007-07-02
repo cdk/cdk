@@ -290,21 +290,24 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         }
 
         logger.debug("Found atomtypes: ", atomTypes.length);
-        for (int f = 0; f < atomTypes.length; f++) {
-            IAtomType type = atomTypes[f];
+        for (IAtomType type : atomTypes) {
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
-                int formalNeighbourCount = type.getFormalNeighbourCount();
-                if (type.getHybridization() == CDKConstants.HYBRIDIZATION_UNSET) {
-                    missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
+                int formalNeighbourCount = type.getFormalNeighbourCount() == CDKConstants.UNSET ? 0 : type.getFormalNeighbourCount();
+                if (type.getHybridization() == CDKConstants.UNSET) {
+                    double typeBoSum = type.getBondOrderSum() == CDKConstants.UNSET ? 0 : type.getBondOrderSum();
+                    missingHydrogens = (int) (typeBoSum - bondOrderSum);
                 } else {
                     switch (atom.getHybridization()) {
                         case CDKConstants.HYBRIDIZATION_SP3:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount;
+                            break;
                         case CDKConstants.HYBRIDIZATION_SP2:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount;
+                            break;
                         case CDKConstants.HYBRIDIZATION_SP1:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
+                            missingHydrogens = formalNeighbourCount - neighbourCount;
+                            break;
                         default:
                             missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
                     }
@@ -312,7 +315,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
                 break;
             }
         }
-        
+
         logger.debug("missing hydrogens: ", missingHydrogens);
         return missingHydrogens;
     }
