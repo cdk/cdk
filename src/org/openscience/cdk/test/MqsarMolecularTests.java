@@ -96,9 +96,7 @@ public class MqsarMolecularTests {
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BCUTDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
-        suite.addTest(BPolDescriptorTest.suite());
-        suite.addTest(CarbonConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(CarbonConnectivityOrderOneDescriptorTest.suite());
+        suite.addTest(BPolDescriptorTest.suite());        
         suite.addTest(ChiChainDescriptorTest.suite());
         suite.addTest(ChiPathDescriptorTest.suite());
         suite.addTest(ChiClusterDescriptorTest.suite());
