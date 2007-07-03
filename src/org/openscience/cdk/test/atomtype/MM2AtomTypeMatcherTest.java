@@ -21,6 +21,8 @@
 package org.openscience.cdk.test.atomtype;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -51,6 +53,8 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	private static LoggingTool logger;
 	private static IMolecule testMolecule = null;
 	
+    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(MM2AtomTypeMatcherTest.class);
     }
@@ -93,25 +97,25 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
     
     @Test public void testSthi() {
-        assertAtomType("Sthi",testMolecule.getAtom(0));
+        assertAtomType(testedAtomTypes, "Sthi",testMolecule.getAtom(0));
     }
     @Test public void testCsp2() {
-        assertAtomType("Csp2",testMolecule.getAtom(7));
+        assertAtomType(testedAtomTypes, "Csp2",testMolecule.getAtom(7));
     }
     @Test public void testCsp() {
-        assertAtomType("Csp",testMolecule.getAtom(51));
+        assertAtomType(testedAtomTypes, "Csp",testMolecule.getAtom(51));
     }
     @Test public void testNdbC() {
-        assertAtomType("N=C",testMolecule.getAtom(148));
+        assertAtomType(testedAtomTypes, "N=C",testMolecule.getAtom(148));
     }
     @Test public void testOar() {
-        assertAtomType("Oar",testMolecule.getAtom(198));
+        assertAtomType(testedAtomTypes, "Oar",testMolecule.getAtom(198));
     }
     @Test public void testN2OX() {
-        assertAtomType("N2OX",testMolecule.getAtom(233));
+        assertAtomType(testedAtomTypes, "N2OX",testMolecule.getAtom(233));
     }
     @Test public void testNsp2() {
-        assertAtomType("Nsp2",testMolecule.getAtom(256));
+        assertAtomType(testedAtomTypes, "Nsp2",testMolecule.getAtom(256));
     }
     
     /**

@@ -22,6 +22,8 @@ package org.openscience.cdk.test.atomtype;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -61,6 +63,8 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	
 	private static IMolecule testMolecule = null;
 	
+    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
+
 	@BeforeClass public static void setUpTestMolecule() throws Exception {
     	logger = new LoggingTool(MMFF94AtomTypeMatcherTest.class);
     
@@ -105,31 +109,31 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     
     @Test public void testSthi() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("Sthi",testMolecule.getAtom(0));
+    	assertAtomType(testedAtomTypes, "Sthi",testMolecule.getAtom(0));
     }
     @Test public void testCsp2() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("Csp2",testMolecule.getAtom(7));
+    	assertAtomType(testedAtomTypes, "Csp2",testMolecule.getAtom(7));
     }
     @Test public void testCsp() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("Csp",testMolecule.getAtom(51));
+    	assertAtomType(testedAtomTypes, "Csp",testMolecule.getAtom(51));
     }
     @Test public void testNdbO() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("N=O",testMolecule.getAtom(148));
+    	assertAtomType(testedAtomTypes, "N=O",testMolecule.getAtom(148));
     }
     @Test public void testOar() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("Oar",testMolecule.getAtom(198));
+    	assertAtomType(testedAtomTypes, "Oar",testMolecule.getAtom(198));
     }
     @Test public void testN2OX() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("N2OX",testMolecule.getAtom(233));
+    	assertAtomType(testedAtomTypes, "N2OX",testMolecule.getAtom(233));
     }
     @Test public void testNAZT() throws Exception {
     	setUpTestMolecule();
-    	assertAtomType("NAZT",testMolecule.getAtom(256));
+    	assertAtomType(testedAtomTypes, "NAZT",testMolecule.getAtom(256));
     }
     
     // Other tests
@@ -159,7 +163,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());       
@@ -190,7 +194,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());    
 	}
@@ -223,7 +227,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
@@ -253,7 +257,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());		
 	}
@@ -283,7 +287,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());			
 	}
@@ -332,7 +336,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
@@ -360,7 +364,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
         }
         for (int i=0; i<testResult.length;i++){
-        	assertAtomType(testResult[i],mol.getAtom(i));
+        	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());		
 	}

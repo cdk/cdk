@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.test.atomtype;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.NewCDKTestCase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -36,23 +36,21 @@ import java.util.Map;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
-	protected Map<String, Integer> testedAtomTypes;
-	
-	public void assertAtomType(String expectedID, IAtomType foundAtomType) {
-		addTestedAtomType(expectedID);
+	public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
+		addTestedAtomType(testedAtomTypes, expectedID);
 
 		Assert.assertNotNull(foundAtomType);
 		Assert.assertEquals(expectedID, foundAtomType.getAtomTypeName());
 	}
 
-	public void assertAtomType(String error, String expectedID, IAtomType foundAtomType) {
-		addTestedAtomType(expectedID);
+	public void assertAtomType(Map<String, Integer> testedAtomTypes, String error, String expectedID, IAtomType foundAtomType) {
+		addTestedAtomType(testedAtomTypes, expectedID);
 
 		Assert.assertNotNull(error, foundAtomType);
 		Assert.assertEquals(error, expectedID, foundAtomType.getAtomTypeName());
 	}
 
-	private void addTestedAtomType(String expectedID) {
+	private void addTestedAtomType(Map<String, Integer> testedAtomTypes, String expectedID) {
 		if (testedAtomTypes == null) {
 			testedAtomTypes = new HashMap<String, Integer>();
 		}

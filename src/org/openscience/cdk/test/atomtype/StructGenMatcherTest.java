@@ -20,7 +20,11 @@
  */
 package org.openscience.cdk.test.atomtype;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.JUnit4TestAdapter;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -42,6 +46,8 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * @cdk.module test-core
  */
 public class StructGenMatcherTest extends AbstractAtomTypeTest {
+
+    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(StructGenMatcherTest.class);
@@ -93,12 +99,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "F1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "F1", matched);
         }
     }
 
@@ -116,12 +122,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "Cl1", matched);
         }
     }
 
@@ -139,12 +145,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Br1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "Br1", matched);
         }
     }
 
@@ -162,12 +168,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "I1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "I1", matched);
         }
     }
 
@@ -182,10 +188,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Li1", matched);
+        assertAtomType(testedAtomTypes, "Li1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("F1", matched);
+        assertAtomType(testedAtomTypes, "F1", matched);
     }
 
     /*
@@ -205,12 +211,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         StructGenMatcher matcher = new StructGenMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("As3", matched);
+        assertAtomType(testedAtomTypes, "As3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
             matched = matcher.findMatchingAtomType(mol, atom);
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "Cl1", matched);
         }
     }
 
@@ -240,14 +246,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
         // look at the sp2 O first
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
     }
 
     /*
@@ -277,16 +283,16 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("H1", matched);
+        assertAtomType(testedAtomTypes, "H1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
-        assertAtomType("H1", matched);
+        assertAtomType(testedAtomTypes, "H1", matched);
     }
 
     /*
@@ -320,15 +326,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("P4", matched);
+        assertAtomType(testedAtomTypes, "P4", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(4));
-        assertAtomType("S2", matched);
+        assertAtomType(testedAtomTypes, "S2", matched);
 
         for (int i = 1; i < 4; i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "Cl1", matched);
         }
     }
 
@@ -377,7 +383,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         String[] atomTypes = {"P3", "O2", "O2", "O2", "C4", "C4", "C4"};
         for (int i = 0; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType(atomTypes[i], matched);
+            assertAtomType(testedAtomTypes, atomTypes[i], matched);
         }
     }
 
@@ -396,10 +402,10 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Na1", matched);
+        assertAtomType(testedAtomTypes, "Na1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("Cl1", matched);
+        assertAtomType(testedAtomTypes, "Cl1", matched);
     }
 
     /* Test Si4, C4, Cl1 */
@@ -433,14 +439,14 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Si4", matched);
+        assertAtomType(testedAtomTypes, "Si4", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
         for (int i = 3; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType("atom " + i + " failed to match", "Cl1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "Cl1", matched);
         }
     }
 
@@ -456,7 +462,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S2", matched);
+        assertAtomType(testedAtomTypes, "S2", matched);
 
         mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         s = DefaultChemObjectBuilder.getInstance().newAtom("S");
@@ -473,13 +479,13 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(b2);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S2", matched);
+        assertAtomType(testedAtomTypes, "S2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("H1", matched);
+        assertAtomType(testedAtomTypes, "H1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("H1", matched);
+        assertAtomType(testedAtomTypes, "H1", matched);
     }
 
     /* Tests S3, O2 */
@@ -504,15 +510,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S3", matched);
+        assertAtomType(testedAtomTypes, "S3", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
     }
 
 
@@ -533,11 +539,11 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S4", matched);
+        assertAtomType(testedAtomTypes, "S4", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             matched = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            assertAtomType("atom " + i + " failed to match", "F1", matched);
+            assertAtomType(testedAtomTypes, "atom " + i + " failed to match", "F1", matched);
         }
     }
 
@@ -567,18 +573,18 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("S4", matched);
+        assertAtomType(testedAtomTypes, "S4", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
     }
 
     /* Tests N3, O2 */
@@ -604,15 +610,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("N3", matched);
+        assertAtomType(testedAtomTypes, "N3", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("H1", matched);
+        assertAtomType(testedAtomTypes, "H1", matched);
     }
 
     @Test public void testN3cyanide() throws CDKException {
@@ -640,15 +646,15 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("N3", matched);
+        assertAtomType(testedAtomTypes, "N3", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
     }
 
 
@@ -679,17 +685,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("N5", matched);
+        assertAtomType(testedAtomTypes, "N5", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("O2", matched);
+        assertAtomType(testedAtomTypes, "O2", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
-        assertAtomType("C4", matched);
+        assertAtomType(testedAtomTypes, "C4", matched);
     }
 
     /* Test B3, F1 */
@@ -717,17 +723,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("B3", matched);
+        assertAtomType(testedAtomTypes, "B3", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("F1", matched);
+        assertAtomType(testedAtomTypes, "F1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(2));
-        assertAtomType("F1", matched);
+        assertAtomType(testedAtomTypes, "F1", matched);
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(3));
-        assertAtomType("F1", matched);
+        assertAtomType(testedAtomTypes, "F1", matched);
     }
 
   
@@ -744,11 +750,11 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType("Se2", matched);
+        assertAtomType(testedAtomTypes, "Se2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType("O2", matched);        
+        assertAtomType(testedAtomTypes, "O2", matched);        
 
     }
 
