@@ -17,3 +17,4 @@ cdk-applications.jar
 cdk-valencycheck.jar
 cdk-smiles.jar
 cdk-test.jar
+cdk-test-core.jar
