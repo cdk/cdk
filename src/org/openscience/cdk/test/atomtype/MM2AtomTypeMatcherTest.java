@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 /**
  * Checks the functionality of the AtomType-MMFF2AtomTypeMatcher.
  *
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  *
  * @see org.openscience.cdk.atomtype.MMFF2AtomTypeMatcher
  */
