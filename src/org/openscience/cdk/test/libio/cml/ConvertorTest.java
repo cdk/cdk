@@ -1,6 +1,6 @@
 /* $Revision: 7636 $ $Author: ospjuth $ $Date: 2007-01-04 17:46:10 +0000 (Thu, 04 Jan 2007) $
  *
- * Copyright (C) 2007  Ola Spjuth <ospjuth@users.sf.net>
+ * Copyright (C) 2007  Stefan Kuhn <shk3@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
