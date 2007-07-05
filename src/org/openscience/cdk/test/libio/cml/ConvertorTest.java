@@ -65,7 +65,6 @@ public class ConvertorTest extends CDKTestCase {
         mol.addAtom(new Atom("H")); // 5
 
         mol.addBond(0, 1, 2); // 1
-        mol.addBond(1, 2, 2); // 2
         mol.addBond(2, 0, 1); // 3
         mol.addBond(3, 0, 1); // 4
         mol.addBond(4, 1, 1); // 5
