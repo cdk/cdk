@@ -32,7 +32,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
@@ -122,7 +121,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleResult(0.0);
+        return new DoubleArrayResult();
     }
 
     public void setParameters(Object[] params) throws CDKException {
