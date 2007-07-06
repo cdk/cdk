@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="perf"/>
 	<classpathentry kind="lib" path="develjar/ant_doxygen.jar"/>
 	<classpathentry kind="lib" path="develjar/dbdoclet.jar"/>
-	<classpathentry kind="lib" path="develjar/junit.jar"/>
 	<classpathentry kind="lib" path="doc/jar/jabref.jar"/>
 	<classpathentry kind="lib" path="jar/antlr.jar"/>
 	<classpathentry kind="lib" path="jar/batik-awt-util.jar"/>
@@ -42,5 +41,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="develjar/com-sun-javadoc.jar"/>
 	<classpathentry kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar"/>
+	<classpathentry kind="lib" path="develjar/junit-4.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
