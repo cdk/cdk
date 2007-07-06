@@ -206,7 +206,7 @@ public class ValencyMatcherTest extends AbstractAtomTypeTest {
 
         ValencyMatcher matcher = new ValencyMatcher();
         IAtomType matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType(testedAtomTypes, "As", matched);
+        assertAtomType(testedAtomTypes, "As3", matched);
 
         for (int i = 1; i < mol.getAtomCount(); i++) {
             IAtom atom = mol.getAtom(i);
@@ -679,7 +679,7 @@ public class ValencyMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType(testedAtomTypes, "N", matched);
+        assertAtomType(testedAtomTypes, "N5", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));

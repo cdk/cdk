@@ -62,7 +62,7 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
      * @param atomContainer AtomContainer
      * @param atom          the target atom
      * @return the matching AtomType
-     * @throws CDKException Exception thrown if something goed wrong
+     * @throws CDKException Exception thrown if something good wrong
      */
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
@@ -101,9 +101,9 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
                 }
             }
 
-            // since the hyb state is not available, we will
+            // since the hybridization state is not available, we will
             // match against the formal charge, max bond order, neighbor count
-            // and symbol and take the matching types hyb state
+            // and symbol and take the matching types hybridization state
 
             // lets first get the max bond order
             logger.debug("      Evaluating hybridization state");
@@ -115,10 +115,14 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
                 bondOrderSum += bond.getOrder();
             }
 
-            // in case the atom has all implicit hydrogens ad no explicit bonds,
+            // in case the atom has all implicit hydrogens and no explicit bonds,
             // then we can return a max bond order of 1
             if (maxBondOrder == -1 && atom.getHydrogenCount() != CDKConstants.UNSET) {
                 maxBondOrder = 1.0;
+            }
+            // also count the implicit hydrogens with the bond order sum
+            if (atom.getHydrogenCount() != CDKConstants.UNSET) {
+            	bondOrderSum += atom.getHydrogenCount();
             }
 
 
