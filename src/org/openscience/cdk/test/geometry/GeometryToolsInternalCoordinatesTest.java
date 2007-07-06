@@ -120,7 +120,7 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
     	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
-    	GeometryToolsInternalCoordinates.rotate(ac, new Point2d(0,0),Math.PI);
+    	GeometryToolsInternalCoordinates.rotate(ac, new Point2d(0,0),Math.PI/2);
     	assertEquals(atom1.getPoint2d().x,-1,.2);
     	assertEquals(atom1.getPoint2d().y,1,.2);
     	assertEquals(atom2.getPoint2d().x,0,.2);
