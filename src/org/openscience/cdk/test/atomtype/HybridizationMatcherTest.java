@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
@@ -559,7 +560,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType(testedAtomTypes, "N", matched);
+        assertAtomType(testedAtomTypes, "N.sp2", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
@@ -634,7 +635,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtomType matched;
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(0));
-        assertAtomType(testedAtomTypes, "N", matched);
+        assertAtomType(testedAtomTypes, "N5", matched);
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
@@ -672,4 +673,43 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     	}
     }
     
+    @Test public void testAdenine() throws Exception {
+    	IMolecule mol = new NNMolecule();
+    	IAtom a1 = mol.getBuilder().newAtom("C"); mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newAtom("C"); mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newAtom("C"); mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("N"); mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newAtom("N"); mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newAtom("N"); mol.addAtom(a6);
+    	a6.setHydrogenCount(1);
+    	IAtom a7 = mol.getBuilder().newAtom("N"); mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newAtom("N"); mol.addAtom(a8);
+    	a8.setHydrogenCount(2);
+    	IAtom a9 = mol.getBuilder().newAtom("C"); mol.addAtom(a9);
+    	a9.setHydrogenCount(1);
+    	IAtom a10 = mol.getBuilder().newAtom("C"); mol.addAtom(a10);
+    	a10.setHydrogenCount(1);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, 2.0); mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, 1.0); mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, 1.0); mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, 1.0); mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a2, a6, 1.0); mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, 2.0); mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, 1.0); mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, 2.0); mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, 2.0); mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a6, a9, 1.0); mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0); mol.addBond(b11);
+    	HybridizationMatcher matcher = new HybridizationMatcher();
+    	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a1));
+    	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a2));
+    	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a3));
+    	assertAtomType(testedAtomTypes, "N.sp2", matcher.findMatchingAtomType(mol, a4));
+    	assertAtomType(testedAtomTypes, "N.sp2", matcher.findMatchingAtomType(mol, a5));
+    	assertAtomType(testedAtomTypes, "N.sp2", matcher.findMatchingAtomType(mol, a6));
+    	assertAtomType(testedAtomTypes, "N.sp2", matcher.findMatchingAtomType(mol, a7));
+    	assertAtomType(testedAtomTypes, "N.sp3", matcher.findMatchingAtomType(mol, a8));
+    	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a9));
+    	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a10));
+    }
 }

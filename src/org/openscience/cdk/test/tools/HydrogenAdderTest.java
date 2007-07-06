@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
@@ -482,7 +483,7 @@ public class HydrogenAdderTest extends CDKTestCase {
         Molecule molecule = null;
         String filename = "data/mdl/carbocations.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
         molecule = (Molecule)reader.read((ChemObject)new Molecule());
         adder.addImplicitHydrogensToSatisfyValency(molecule);
         assertEquals(2,molecule.getAtom(0).getHydrogenCount().intValue());

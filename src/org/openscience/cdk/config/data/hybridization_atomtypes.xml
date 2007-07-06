@@ -58,6 +58,14 @@
         </atom>
         <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
     </atomType>    
+    <atomType id="Cplus">
+        <atom elementType="C" formalCharge="1">
+            <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
+            <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
+            <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+        </atom>
+        <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+    </atomType>
     <atomType id="Cplus.sp2">
         <atom elementType="C" formalCharge="1">
             <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
@@ -90,14 +98,7 @@
             <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
         </atom>
     </atomType>
-    <atomType id="N">
-        <atom elementType="N" formalCharge="0">
-            <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
-            <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
-            <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
-        </atom>
-    </atomType>
-    <atomType id="N">
+    <atomType id="N5">
         <atom elementType="N" formalCharge="0">
             <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
             <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">5.0</scalar>
@@ -120,7 +121,13 @@
         </atom>
         <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
     </atomType>
-
+    <atomType id="N">
+        <atom elementType="N" formalCharge="0">
+            <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
+            <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
+            <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+        </atom>
+    </atomType>
     <atomType id="N.sp3">
         <atom elementType="N" formalCharge="0">
             <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
