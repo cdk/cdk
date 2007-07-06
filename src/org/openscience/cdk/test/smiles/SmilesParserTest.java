@@ -46,12 +46,7 @@ import java.util.List;
  */
 public class SmilesParserTest extends NewCDKTestCase {
 	
-	private SmilesParser sp;
-
-    @Before
-    public void setUp() {
-		sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
-	}
+	private static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 
 	@org.junit.Test (timeout=1000)
 	public void testPyridine_N_oxideUncharged() throws Exception {
