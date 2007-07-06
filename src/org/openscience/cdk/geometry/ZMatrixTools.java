@@ -44,7 +44,7 @@ public class ZMatrixTools {
      * Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
      * The first Atom end up in the origin, the second on on the x axis, and the third
      * one in the XY plane. The rest is added by applying the Zmatrix distances, angles
-     * and dihedrals.
+     * and dihedrals. Angles are in degrees.
      *
      * @param distances     Array of distance variables of the Z matrix
      * @param angles        Array of angle variables of the Z matrix
@@ -79,10 +79,8 @@ public class ZMatrixTools {
                 
                 Vector3d n1 = new Vector3d();
                 n1.cross(cd, bc);
-                n1.normalize();
                 
-                Vector3d n2 = rotate(n1,bc,dihedrals[index]);
-                n2.normalize();
+                Vector3d n2 = rotate(n1,bc,-dihedrals[index]);
                 Vector3d ba = rotate(bc,n2,-angles[index]);
                 
                 ba.normalize();
@@ -98,7 +96,7 @@ public class ZMatrixTools {
     
     private static Vector3d rotate(Vector3d vector, Vector3d axis, double angle) {
         Matrix3d rotate = new Matrix3d();
-        rotate.set(new AxisAngle4d(axis.x, axis.y, axis.z, (angle/180)*Math.PI));
+        rotate.set(new AxisAngle4d(axis, Math.toRadians(angle)));
         Vector3d result = new Vector3d();
         rotate.transform(vector, result);
         return result;
