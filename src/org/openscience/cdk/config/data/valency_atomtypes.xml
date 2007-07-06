@@ -242,10 +242,10 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
     </atom>
   </atomType>
-  <atomType id="As">
+  <atomType id="As3">
     <atom elementType="As" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
-      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">1.0</scalar>
+      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">3.0</scalar>
     </atom>
   </atomType>
   <atomType id="AsPlus">
