@@ -247,7 +247,8 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
         if (charge == type.getFormalCharge()) {
             logger.debug("couldMatchAtomType:     formal charge matches...");
-            if (atom.getHybridization() == type.getHybridization()) {
+            if (atom.getHybridization() == CDKConstants.UNSET || 
+            	atom.getHybridization() == type.getHybridization()) {
                 logger.debug("couldMatchAtomType:     hybridization is OK...");
                 if (bondOrderSum + hcount <= type.getBondOrderSum()) {
                     logger.debug("couldMatchAtomType:     bond order sum is OK...");
@@ -294,7 +295,10 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount() == CDKConstants.UNSET ? 0 : type.getFormalNeighbourCount();
-                if (type.getHybridization() == CDKConstants.UNSET) {
+                if (atom.getHybridization() == CDKConstants.UNSET) {
+                    double typeBoSum = type.getBondOrderSum() == CDKConstants.UNSET ? 0 : type.getBondOrderSum();
+                    missingHydrogens = (int) (typeBoSum - bondOrderSum);
+                } else if (type.getHybridization() == CDKConstants.UNSET) {
                     double typeBoSum = type.getBondOrderSum() == CDKConstants.UNSET ? 0 : type.getBondOrderSum();
                     missingHydrogens = (int) (typeBoSum - bondOrderSum);
                 } else {
@@ -321,7 +325,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
     /**
-     * Checks wether an Atom is saturated by comparing it with known AtomTypes.
+     * Checks whether an Atom is saturated by comparing it with known AtomTypes.
      * It returns true if the atom is an PseudoAtom and when the element is not in the list.
      */
 	public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {
@@ -349,6 +353,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         boolean elementPlusChargeMatches = false;
         for (int f = 0; f < atomTypes.length; f++) {
             IAtomType type = atomTypes[f];
+            logger.debug("AT label: " + type.getAtomTypeName());
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
                     maxBondOrder <= type.getMaxBondOrder()) {
