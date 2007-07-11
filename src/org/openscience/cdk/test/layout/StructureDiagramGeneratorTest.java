@@ -122,6 +122,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		showIt(makeJhao2(), "Bug jhao2");
 		showIt(makeJhao3(), "Bug jhao3");
 		showIt(makeJhao4(), "Bug jhao4");
+		showIt(makeBug1750968(), "Bug 1750968");
 	}
 
 	private boolean showIt(IMolecule molecule, String name) throws Exception
@@ -752,5 +753,20 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		mol.addBond(3, 8, 1.0); // 12
 		return mol;
 	}
+	
+	/**
+	 * @cdk.bug 1750968
+	 */
+	public IMolecule makeBug1750968() throws Exception {
+		String filename = "data/mdl/bug_1750968.mol";
+
+//		set up molecule reader
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		IChemObjectReader molReader = new MDLReader(ins);
+
+//		read molecule
+		return ((IMolecule) molReader.read(new	Molecule()));
+	}
+
 }
 
