@@ -74,7 +74,7 @@ public class RingPartitioner {
             ring = (IRing) rs.getAtomContainer(0);
             IRingSet newRs = ring.getBuilder().newRingSet();
             newRs.addAtomContainer(ring);
-            tempRingSet = walkRingSystem(rs, ring, newRs);
+            //tempRingSet = walkRingSystem(rs, ring, newRs);
 //            logger.debug("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
             ringSets.add(walkRingSystem(rs, ring, newRs));
 
