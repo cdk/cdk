@@ -245,7 +245,8 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
         logger.debug("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
         Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
         Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
-        if (charge == type.getFormalCharge()) {
+        Integer typeCharge = type.getFormalCharge() == CDKConstants.UNSET ? 0 : type.getFormalCharge();
+        if (charge == typeCharge) {
             logger.debug("couldMatchAtomType:     formal charge matches...");
             if (atom.getHybridization() == CDKConstants.UNSET || 
             	atom.getHybridization() == type.getHybridization()) {
