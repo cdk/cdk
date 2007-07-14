@@ -35,7 +35,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.MFAnalyser;
@@ -102,7 +102,7 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         String filename = "data/mdl/sulfurCompound.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         assertEquals(1, containersList.size());
@@ -129,7 +129,7 @@ public class HydrogenAdder3Test extends HydrogenAdderTest {
         String filename = "data/mdl/sulfurCompound.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         assertEquals(1, containersList.size());
