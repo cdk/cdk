@@ -158,7 +158,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
-  <atomType id="F+">
+  <atomType id="Fplus">
     <atom elementType="F" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
@@ -176,7 +176,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
-  <atomType id="Cl+">
+  <atomType id="Clplus">
     <atom elementType="Cl" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
@@ -194,7 +194,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
-  <atomType id="Br+">
+  <atomType id="Brplus">
     <atom elementType="Br" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
@@ -212,7 +212,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">0.0</scalar>
     </atom>
   </atomType>
-  <atomType id="I+">
+  <atomType id="Iplus">
     <atom elementType="I" formalCharge="1">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">2.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">2.0</scalar>
