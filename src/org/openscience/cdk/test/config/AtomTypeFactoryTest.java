@@ -207,38 +207,38 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
     
     public void testXMLValidityHybrid() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/hybridization_atomtypes.xml", "Hybrid");
     }
         
     public void testXMLValidityMM2() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
     }
         
     public void testXMLValidityMMFF94() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/mmff95_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/mmff95_atomtypes.xml", "MMFF94");
     }
         
     public void testXMLValidityMol2() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml", "Mol2");
     }
         
     public void testXMLValidityPDB() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml", "PDB");
     }
         
     public void testXMLValidityStructGen() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
     }
         
     public void testXMLValidityValency() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/valency_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/valency_atomtypes.xml", "Valency");
     }
         
     public void testXMLValidityValency2() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+    	assertValidCML("org/openscience/cdk/config/data/valency2_atomtypes.xml", "Valency2");
     }
         
-    private void assertValidCML(String atomTypeList) throws Exception {    	
+    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {    	
     	DocumentBuilderFactory factory =
     		DocumentBuilderFactory.newInstance();
     	factory.setNamespaceAware(true);
@@ -256,8 +256,8 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	);
     	assertNotNull("Could not find the atom type list CML source", ins);
     	DocumentBuilder parser = factory.newDocumentBuilder();
-    	parser.setErrorHandler(new SAXValidityErrorHandler("MM2"));
-    	parser.parse(ins);    	
+    	parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+    	parser.parse(ins);
     }
     
     class SAXValidityErrorHandler implements ErrorHandler {
