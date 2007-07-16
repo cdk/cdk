@@ -1,7 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -20,7 +17,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
 package org.openscience.cdk.test.config;
 
@@ -32,17 +28,28 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.io.InputStream;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * Checks the funcitonality of the AtomTypeFactory
+ * Checks the functionality of the AtomTypeFactory.
  *
  * @cdk.module test-core
  */
 public class AtomTypeFactoryTest extends CDKTestCase {
 
+	private static final String JAXP_SCHEMA_LANGUAGE =
+	    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+
+	private static final String W3C_XML_SCHEMA =
+	    "http://www.w3.org/2001/XMLSchema"; 
+	
     AtomTypeFactory atf = null;
     
 	public AtomTypeFactoryTest(String name) {
@@ -197,6 +204,84 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	assertEquals(CDKConstants.HYBRIDIZATION_SP2, (int) atomType.getHybridization());
     	assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     	assertEquals(5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
+    }
+    
+    public void testXMLValidityHybrid() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+    }
+        
+    public void testXMLValidityMM2() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml");
+    }
+        
+    public void testXMLValidityMMFF94() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/mmff95_atomtypes.xml");
+    }
+        
+    public void testXMLValidityMol2() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml");
+    }
+        
+    public void testXMLValidityPDB() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml");
+    }
+        
+    public void testXMLValidityStructGen() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml");
+    }
+        
+    public void testXMLValidityValency() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/valency_atomtypes.xml");
+    }
+        
+    public void testXMLValidityValency2() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+    }
+        
+    private void assertValidCML(String atomTypeList) throws Exception {    	
+    	DocumentBuilderFactory factory =
+    		DocumentBuilderFactory.newInstance();
+    	factory.setNamespaceAware(true);
+    	factory.setValidating(true);
+    	InputStream cmlSchema = this.getClass().getClassLoader().getResourceAsStream(
+       		"org/openscience/cdk/io/cml/data/cml25b1.xsd"
+   		);
+    	assertNotNull("Could not find the CML schema", cmlSchema);
+    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
+    	factory.setFeature("http://apache.org/xml/features/validation/schema", true);
+    	
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+    		atomTypeList
+    	);
+    	assertNotNull("Could not find the atom type list CML source", ins);
+    	DocumentBuilder parser = factory.newDocumentBuilder();
+    	parser.setErrorHandler(new SAXValidityErrorHandler("MM2"));
+    	parser.parse(ins);    	
+    }
+    
+    class SAXValidityErrorHandler implements ErrorHandler {
+
+    	private String atomTypeList;
+    	
+    	public SAXValidityErrorHandler(String atomTypeList) {
+			this.atomTypeList = atomTypeList;
+		}
+    	
+		public void error(SAXParseException arg0) throws SAXException {
+			arg0.printStackTrace();
+			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+		}
+
+		public void fatalError(SAXParseException arg0) throws SAXException {
+			arg0.printStackTrace();
+			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+		}
+
+		public void warning(SAXParseException arg0) throws SAXException {
+			// warnings are fine			
+		}
+    	
     }
     
 }
