@@ -230,7 +230,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
         
     public void testXMLValidityMMFF94() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/mmff95_atomtypes.xml", "MMFF94");
+    	assertValidCML("org/openscience/cdk/config/data/mmff94_atomtypes.xml", "MMFF94");
     }
         
     public void testXMLValidityMol2() throws Exception {
