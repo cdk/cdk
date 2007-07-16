@@ -20,22 +20,31 @@
  */
 package org.openscience.cdk.test.config;
 
+import java.io.InputStream;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
+import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Checks the functionality of the AtomTypeFactory.
@@ -44,12 +53,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class AtomTypeFactoryTest extends CDKTestCase {
 
-	private static final String JAXP_SCHEMA_LANGUAGE =
-	    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-
-	private static final String W3C_XML_SCHEMA =
-	    "http://www.w3.org/2001/XMLSchema"; 
-	
     AtomTypeFactory atf = null;
     
 	public AtomTypeFactoryTest(String name) {
@@ -206,6 +209,20 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	assertEquals(5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
     }
     
+    public void testCanReadCMLSchema() throws Exception {
+    	InputStream cmlSchema = this.getClass().getClassLoader().getResourceAsStream(
+       		"org/openscience/cdk/io/cml/data/cml25b1.xsd"
+    	);
+    	assertNotNull("Could not find the CML schema", cmlSchema);
+
+    	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+
+    	// make sure the schema is read 
+    	Document schemaDoc = parser.parse(cmlSchema);
+    	assertNotNull(schemaDoc.getFirstChild());
+    	assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
+    }
+    
     public void testXMLValidityHybrid() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/hybridization_atomtypes.xml", "Hybrid");
     }
@@ -239,25 +256,23 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     }
         
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {    	
-    	DocumentBuilderFactory factory =
-    		DocumentBuilderFactory.newInstance();
-    	factory.setNamespaceAware(true);
-    	factory.setValidating(true);
     	InputStream cmlSchema = this.getClass().getClassLoader().getResourceAsStream(
-       		"org/openscience/cdk/io/cml/data/cml25b1.xsd"
-   		);
+   			"org/openscience/cdk/io/cml/data/cml25b1.xsd"
+    	);
     	assertNotNull("Could not find the CML schema", cmlSchema);
-    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
-    	factory.setFeature("http://apache.org/xml/features/validation/schema", true);
-    	
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-    		atomTypeList
+   			atomTypeList
     	);
     	assertNotNull("Could not find the atom type list CML source", ins);
-    	DocumentBuilder parser = factory.newDocumentBuilder();
-    	parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
-    	parser.parse(ins);
+
+    	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+    	Document document = parser.parse(ins);
+    	SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    	Source schemaFile = new StreamSource(cmlSchema);
+    	Schema schema = factory.newSchema(schemaFile);
+    	Validator validator = schema.newValidator();
+    	validator.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+    	validator.validate(new DOMSource(document));
     }
     
     class SAXValidityErrorHandler implements ErrorHandler {
@@ -269,17 +284,15 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		}
     	
 		public void error(SAXParseException arg0) throws SAXException {
-			arg0.printStackTrace();
 			fail(atomTypeList + " is not valid: " + arg0.getMessage());
 		}
 
 		public void fatalError(SAXParseException arg0) throws SAXException {
-			arg0.printStackTrace();
 			fail(atomTypeList + " is not valid: " + arg0.getMessage());
 		}
 
 		public void warning(SAXParseException arg0) throws SAXException {
-			// warnings are fine			
+			System.out.println("WARNING from atomTypeList: " + arg0.getMessage());			
 		}
     	
     }
