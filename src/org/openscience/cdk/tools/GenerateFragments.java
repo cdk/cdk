@@ -44,12 +44,16 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
- * Generate ring and Murcko fragments.
+ * Generate ring and Murcko-like fragments.
  * <ul>
  *   <li>ring fragments (largest ringsystems)</li>
  *   <li>Murcko fragments described by Murcko et al. {@cdk.cite MURCKO96}</li>
  * </ul>
  *
+ * Linkers include the ring atoms. In CDK notion aromatic atoms are flagged as ISAROMATIC and have small letters in smiles.
+ * If you want to create molecules out of these smiles you have to change all the letters to upper ones.
+ * For this please use isSmilesToUpperCase() and setSmilesToUpperCase()
+ * 
  * <p>Due to some problems with SaturationChecker the SMILES generation might be a problem.
  * When you want to use the get..SmileArray methods please do (that seems to work, refer test 13+14):
  * <pre>
@@ -76,6 +80,7 @@ public class GenerateFragments {
 	private IRingSet ringSetsMolecule=null;
 	private boolean sidechainHetatoms=true;
 	private boolean exocyclicDoubleBonds=true;
+	private boolean smilesToUpperCase=false;
 	//private IChemObjectBuilder builder;
 	
 	public GenerateFragments() {
@@ -100,7 +105,7 @@ public class GenerateFragments {
 	 * generates Murcko fragments takes two parameters
 	 * @param molecule	the molecule
 	 * @param sidechainHetatoms	boolean if sidchain hetero atoms should be included (true)
-	 * @param exocyclicDoubleBonds boolean if bonds with order >1 should be included
+	 * @param exocyclicDoubleBonds boolean if bonds with order >1 should be included on ring systems and linkers
 	 * @param minimumRingSize int indicates the minimum ring size as to considered as fragment (ringSize<minimimRingSize)
 	 * return	void
 	 */
@@ -167,13 +172,21 @@ public class GenerateFragments {
 							for (int i = 0; i < firstRingSubstituents.getAtomCount(); i++){
 //								logger.debug("First Ring Sub is in RING");
 //								//check for ring-ring system
+								//Is a zero-atom linker
 								if (firstRingSubstituents.getAtom(i).getFlag(CDKConstants.ISINRING) && secondRingAtomContainer.contains(firstRingSubstituents.getAtom(i))){
 									//logger.debug("\tFound a ring-ring System");
 									murckoFragment=new Molecule();
+									
 									murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
 									murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 									murckoFragment=addFragmentBonds(murckoFragment,molecule);
 									
+									linkerFragment=new Molecule();
+									linkerFragment.addAtom(firstRingAtom);
+									linkerFragment.addAtom(firstRingSubstituents.getAtom(i));
+									linkerFragment=addFragmentBonds(linkerFragment, molecule);
+									
+									this.linkerFragments.add(linkerFragment);
 									this.murckoFragments.add(murckoFragment);
 									//logger.debug("MFragment:"+murckoFragment.getAtomCount()+" CC:"+ConnectivityChecker.isConnected(murckoFragment));
 									//logger.debug(murckoFragment.toString());
@@ -208,23 +221,40 @@ public class GenerateFragments {
 												}
 												
 												//Check Path, direct connection between the substituents ->linker
-												if (checkPath(firstRingAtom, secondRingAtom, path) && path.getAtomCount()>0){
+												if ((checkPath(firstRingAtom, secondRingAtom, path) && path.getAtomCount()>0)){
 													murckoFragment=new Molecule();
 													
-													//add root atom to path
+													//add both root atoms to path
 													if (!path.contains(firstRingSubstituents.getAtom(i))){
 														path.addAtom(firstRingSubstituents.getAtom(i));
-													}												
+													}
+													if (!path.contains(secondRingSubstituents.getAtom(i))){
+														path.addAtom(secondRingSubstituents.getAtom(i));
+													}
+//													//add both ring atoms to path
+													//if (!path.contains(firstRingAtom)){
+													//	path.addAtom(firstRingAtom);
+													//}
+													//if (!path.contains(secondRingAtom)){
+													//	path.addAtom(secondRingAtom);
+													//}
 													//1. add path
 													//2. add rings  
 													//3. connect ring atoms to path
 													murckoFragment=addPathFragments(path,murckoFragment,molecule);
+													linkerFragment=new Molecule(murckoFragment);
+													if (!linkerFragment.contains(firstRingAtom)){
+														linkerFragment.addAtom(firstRingAtom);
+													}
+													if (!linkerFragment.contains(secondRingAtom)){
+														linkerFragment.addAtom(secondRingAtom);
+													}													
+													linkerFragment=addFragmentBonds(linkerFragment, molecule);
 													murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
 													murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 													
 													murckoFragment=addFragmentBonds(murckoFragment,molecule);
-													linkerFragment=new Molecule(murckoFragment);
-																																					
+																																																		
 													this.linkerFragments.add(linkerFragment);
 													this.murckoFragments.add(murckoFragment);
 													//logger.debug("\tADD MURCKOFRAGMENT");
@@ -401,6 +431,24 @@ public class GenerateFragments {
 		return substituents;
 	}
 
+	/**
+	 * check for zero-Atom linkers  
+	 * @param firstRingAtom		IAtom of the first root atom
+	 * @param secondRingAtom	IAtom of the second root atom
+	 * @param molecule			IMolecule original molecule
+	 * @return	boolean true for zero atom linker, eg in biphenyl systems
+	 */
+	private boolean zeroAtomLinker(IAtom firstRingAtom, IAtom secondRingAtom, IMolecule molecule){
+		
+		List atoms= molecule.getConnectedAtomsList(firstRingAtom);
+		if (atoms.contains(secondRingAtom)){		
+			return true;
+		}else{
+			return false;}		
+	}
+	
+	
+	
 	
 	/**
 	 * @return String[] smiles of the murcko fragments
@@ -417,7 +465,11 @@ public class GenerateFragments {
 					IMolecule mol=(IMolecule)this.murckoFragments.get(i);
 					if (ConnectivityChecker.isConnected(mol)){
 						sg = new SmilesGenerator();
-						murckoFragmentsmiles[i]=sg.createSMILES(mol);
+						if (smilesToUpperCase){
+							murckoFragmentsmiles[i]=sg.createSMILES(mol).toUpperCase();
+						}else{
+							murckoFragmentsmiles[i]=sg.createSMILES(mol);
+						}
 					}else{
 						logger.debug("ERROR in getMurckoFrameworksAsSmileArray due to:Molecule is not connected");
 					}
@@ -444,7 +496,11 @@ public class GenerateFragments {
 				try{
 					IMolecule mol=(IMolecule)this.ringFragments.get(i);
 					sg = new SmilesGenerator();
-					ringFragmentSmiles[i]=sg.createSMILES(mol);
+					if (smilesToUpperCase){
+						ringFragmentSmiles[i]=sg.createSMILES(mol).toUpperCase();
+					}else{
+						ringFragmentSmiles[i]=sg.createSMILES(mol);
+					}					
 				} catch (Exception e){
 					logger.error("ERROR in smile generation due to:"+e.toString());			
 				}		
@@ -467,7 +523,11 @@ public class GenerateFragments {
 				try{
 					IMolecule mol=(IMolecule)this.linkerFragments.get(i);
 					sg = new SmilesGenerator();
-					linkerFragmentSmiles[i]=sg.createSMILES(mol);
+					if (smilesToUpperCase){
+						linkerFragmentSmiles[i]=sg.createSMILES(mol).toUpperCase();
+					}else{
+						linkerFragmentSmiles[i]=sg.createSMILES(mol);
+					}
 				} catch (Exception e){
 					logger.error("ERROR in smile generation due to:"+e.toString());
 				}		
@@ -502,5 +562,13 @@ public class GenerateFragments {
 	 */
 	public List getLinkerFragments() {
 		return this.linkerFragments;
+	}
+
+	public boolean isSmilesToUpperCase() {
+		return smilesToUpperCase;
+	}
+
+	public void setSmilesToUpperCase(boolean smilesToUpperCase) {
+		this.smilesToUpperCase = smilesToUpperCase;
 	}
 }
