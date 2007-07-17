@@ -8,7 +8,7 @@
      xmlns:isUnits="http://www.xml-cml.org/units/siUnits" 
      xmlns:bibx="http://bibtexml.sf.net/" 
 
-     xsi:schemaLocation="http://www.xml-cml.org/schema ../schemas/cml23.xsd
+     xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml25b1.xsd
                          http://bibtexml.sf.net/       ../schemas/bibtexml.xsd"
       id="isotopes" 
       title="properties of the isotopes">
