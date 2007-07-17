@@ -190,7 +190,7 @@ public class IsotopeFactoryTest extends CDKTestCase
     		atomTypeList
     	);
     	File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins,
-    		"../schemas/cml23.xsd", "file://" + tmpCMLSchema.getAbsolutePath()
+    		"../../io/cml/data/cml25b1.xsd", "file://" + tmpCMLSchema.getAbsolutePath()
     	);
     	assertNotNull("Could not find the atom type list CML source", ins);
 
