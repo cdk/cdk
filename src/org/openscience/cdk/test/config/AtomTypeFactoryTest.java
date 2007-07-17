@@ -336,13 +336,11 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		}
     	
 		public void error(SAXParseException arg0) throws SAXException {
-			arg0.printStackTrace();
-			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+			fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
 		}
 
 		public void fatalError(SAXParseException arg0) throws SAXException {
-			arg0.printStackTrace();
-			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+			fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
 		}
 
 		public void warning(SAXParseException arg0) throws SAXException {
