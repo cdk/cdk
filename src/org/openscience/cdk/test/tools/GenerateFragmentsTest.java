@@ -286,6 +286,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	}
 	
 	//same as test 13
+	//add test for linkers
 	public void testGenerateMurckoFragments14() throws Exception {
 		//logger.debug("\nMurckoTesting 14");
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -298,15 +299,27 @@ public class GenerateFragmentsTest extends CDKTestCase{
     
 		gf.generateMurckoFragments(mol,false,false,4);
 		String[] smiles=gf.getMurckoFrameworksAsSmileArray();
-		assertEquals(3,smiles.length);
-		boolean found=false;
-		for (int i =0;i<smiles.length;i++){
-//			System.out.println("MF"+i+" :"+smiles[i]);
-			if (smiles[i].equals("c1=cc=c(c=c1)c2=cc=c(c=c2)Cn4c=nc=3c=cc=nc=34")){
-				found=true;
+		String[] linkers=gf.getLinkerFragmentsAsSmileArray();
+		int found=0;
+		assertEquals(3,linkers.length);
+		for (int i =0;i<linkers.length;i++){
+			//System.out.println("linkers"+i+" :"+linkers[i]);
+			if (linkers[i].equals("nCc1=cc=c(c)c=c1") || linkers[i].equals("cCn") || linkers[i].equals("cc")){
+				found++;
 			}
 		}
-		assertTrue(found);
+		assertEquals(3,found);
+		
+		assertEquals(3,smiles.length);
+		boolean fnd=false;
+		for (int i =0;i<smiles.length;i++){
+			//System.out.println("MF"+i+" :"+smiles[i]);
+			//if (smiles[i].equals("c1=cc=c(c=c1)c2=cc=c(c=c2)Cn4c=nc=3c=cc=nc=34")){
+			if (smiles[i].equals("c1=cc=c(c=c1)c2=cc=c(c=c2)Cn4c=nc3=cc=cn=c34")){
+				fnd=true;
+			}
+		}
+		assertTrue(fnd);
 	}
 	
 	//check for spiro ring systems
@@ -348,12 +361,15 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	IChemObjectReader reader = new MDLV2000Reader(new InputStreamReader(ins));
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+    	//System.out.println(mol.toString());
+    	//This strange, when the next line is comment out the test will fail
+    	mol.toString();
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
     	String[] smiles=gf.getMurckoFrameworksAsSmileArray();
     	assertEquals(1,smiles.length);
     	for (int i =0;i<smiles.length;i++){
-//    		System.out.println("MF"+i+" :"+smiles[i]);
+    		//System.out.println("MF"+i+" :"+smiles[i]);
     	}
     	assertEquals("C1CCC2=CC=CC=C2(C1)",smiles[0]);
 	}
