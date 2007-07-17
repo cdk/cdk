@@ -7166,7 +7166,10 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     </xsd:annotation>
     <xsd:complexType>
         <xsd:sequence>
-            <xsd:element ref="abundance" minOccurs="0" maxOccurs="1"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="abundance" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="scalar" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:choice>
         </xsd:sequence>
         <xsd:attributeGroup ref="title"/>
         <xsd:attributeGroup ref="id"/>
