@@ -544,6 +544,7 @@
                 <xsd:enumeration value="Cs"/>
                 <xsd:enumeration value="Cu"/>
                 <xsd:enumeration value="Db"/>
+                <xsd:enumeration value="Ds"/>
                 <xsd:enumeration value="Dy"/>
                 <xsd:enumeration value="Er"/>
                 <xsd:enumeration value="Es"/>
@@ -606,6 +607,7 @@
                 <xsd:enumeration value="Rb"/>
                 <xsd:enumeration value="Re"/>
                 <xsd:enumeration value="Rf"/>
+                <xsd:enumeration value="Rg"/>
                 <xsd:enumeration value="Rh"/>
                 <xsd:enumeration value="Rn"/>
                 <xsd:enumeration value="Ru"/>
