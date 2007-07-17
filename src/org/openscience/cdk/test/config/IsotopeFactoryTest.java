@@ -24,15 +24,30 @@
  */
 package org.openscience.cdk.test.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.test.CDKTestCase;
+import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
@@ -42,7 +57,28 @@ import org.openscience.cdk.test.CDKTestCase;
 public class IsotopeFactoryTest extends CDKTestCase
 {
 	boolean standAlone = false;
+
+    final static AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+
+	private static final String JAXP_SCHEMA_LANGUAGE =
+	    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+
+	private static final String W3C_XML_SCHEMA =
+	    "http://www.w3.org/2001/XMLSchema"; 
 	
+    static File tmpCMLSchema;
+    
+    static {
+    	try {
+			InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
+		       	"org/openscience/cdk/io/cml/data/cml25b1.xsd"
+		    );
+			tmpCMLSchema = copyFileToTmp("cml2.5.b1", ".xsd", in, null, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+
 	public IsotopeFactoryTest(String name) {
 		super(name);
 	}
@@ -133,6 +169,106 @@ public class IsotopeFactoryTest extends CDKTestCase
         for (int i=0; i<container.getAtomCount(); i++) {
             assertTrue(0 < container.getAtom(i).getAtomicNumber());
         }
+    }
+
+    public void testXMLValidityHybrid() throws Exception {
+    	assertValidCML("org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
+    }
+
+    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {    	
+    	InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
+    	DocumentBuilderFactory factory =
+    		DocumentBuilderFactory.newInstance();
+    	factory.setNamespaceAware(true);
+    	factory.setValidating(true);
+    	assertNotNull("Could not find the CML schema", cmlSchema);
+    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
+    	factory.setFeature("http://apache.org/xml/features/validation/schema", true);
+    	
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+    		atomTypeList
+    	);
+    	File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins,
+    		"../schemas/cml23.xsd", "file://" + tmpCMLSchema.getAbsolutePath()
+    	);
+    	assertNotNull("Could not find the atom type list CML source", ins);
+
+    	DocumentBuilder parser = factory.newDocumentBuilder();
+    	parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+    	parser.parse(new FileInputStream(tmpInput));
+    }
+
+    public void testCanReadCMLSchema() throws Exception {
+    	InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
+    	assertNotNull("Could not find the CML schema", cmlSchema);
+
+    	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+
+    	// make sure the schema is read 
+    	Document schemaDoc = parser.parse(cmlSchema);
+    	assertNotNull(schemaDoc.getFirstChild());
+    	assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
+    }
+    
+    /**
+     * Copies a file to TMP (whatever that is on your platform), and optionally
+     * replaces a String on the fly. The temporary file will be named prefix+suffix
+     * 
+     * @param prefix      Prefix of the temporary file name
+     * @param suffix      Suffix of the temporary file name
+     * @param in          InputStream to copy from
+     * @param toReplace   String to replace. Null, if nothing needs to be replaced.
+     * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
+     * 
+     * @return            The temporary file/
+     * @throws IOException
+     */
+    private static File copyFileToTmp(String prefix, String suffix, InputStream in,
+    		String toReplace, String replaceWith) throws IOException {
+    	File tmpFile = File.createTempFile(prefix, suffix);
+    	FileOutputStream out= new FileOutputStream(tmpFile);
+    	byte[] buf = new byte[4096];
+    	int i = 0;
+    	while((i=in.read(buf)) != -1) {
+    		if (toReplace != null && replaceWith != null && i >= toReplace.length() &&
+    			new String(buf).contains(toReplace)) {
+    			// a replacement has been defined
+    			String newString = new String(buf).replaceAll(toReplace, replaceWith);
+    			out.write(newString.getBytes());
+    		} else {
+    			// no replacement needs to be done
+    			out.write(buf, 0, i);
+    		}
+    	}
+    	in.close();
+    	out.close();
+    	tmpFile.deleteOnExit();
+    	return tmpFile;
+    }
+
+    class SAXValidityErrorHandler implements ErrorHandler {
+
+    	private String atomTypeList;
+    	
+    	public SAXValidityErrorHandler(String atomTypeList) {
+			this.atomTypeList = atomTypeList;
+		}
+    	
+		public void error(SAXParseException arg0) throws SAXException {
+			arg0.printStackTrace();
+			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+		}
+
+		public void fatalError(SAXParseException arg0) throws SAXException {
+			arg0.printStackTrace();
+			fail(atomTypeList + " is not valid: " + arg0.getMessage());
+		}
+
+		public void warning(SAXParseException arg0) throws SAXException {
+			// warnings are fine			
+		}
+    	
     }
 
 }
