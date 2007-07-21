@@ -23,6 +23,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.test.atomtype.StructGenAtomTypeGuesserTest;
@@ -62,6 +63,7 @@ public class McoreTests {
         suite.addTest(DataFeaturesTest.suite());
 
         // cdk.atomtype
+        suite.addTest(CDKAtomTypeMatcherTest.suite());
         suite.addTest(HybridizationStateATMatcherTest.suite());
         suite.addTest(HybridizationMatcherTest.suite());
         suite.addTest(StructGenMatcherTest.suite());

@@ -28,9 +28,10 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.StructGenMatcher;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,7 +44,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * This class tests the matching of atom types defined in the
  * structgen atom type list.
  *
- * @cdk.module nocompile
+ * @cdk.module test-core
  */
 public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
@@ -53,9 +54,50 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         return new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class);
     }
 
+    @Test public void testCDKAtomTypeMatcher() throws CDKException {
+        CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
+        Assert.assertNotNull(matcher);
+    }
+
+    @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        final int thisHybridization = CDKConstants.HYBRIDIZATION_SP3;
+        atom.setHybridization(thisHybridization);
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        IAtomType matched = atm.findMatchingAtomType(mol, atom);
+        Assert.assertNotNull(matched);
+        Assert.assertEquals("C", matched.getSymbol());
+
+        Assert.assertEquals(thisHybridization, matched.getHybridization());
+    }
+
+
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
         Assert.assertNotNull(matcher);
+    }
+
+    @Test public void countTestedAtomTypes() {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/data/cdk_atomtypes.xml",
+            NoNotificationChemObjectBuilder.getInstance()
+        );
+
+            IAtomType[] expectedTypes = factory.getAllAtomTypes();
+        if (expectedTypes.length != testedAtomTypes.size()) {
+            String errorMessage = "Atom types not tested:";
+            for (int i=0; i<expectedTypes.length; i++) {
+                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
+                        errorMessage += " " + expectedTypes[i].getAtomTypeName();
+            }
+                Assert.assertEquals(errorMessage,
+                        factory.getAllAtomTypes().length,
+                        testedAtomTypes.size()
+                );
+        }
     }
 
 }

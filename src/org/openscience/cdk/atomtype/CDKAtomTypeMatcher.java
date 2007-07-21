@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author         egonw
  * @cdk.created    2007-07-20
- * @cdk.module     nocompile
+ * @cdk.module     core
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
@@ -45,7 +45,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     /**
      * Constructor for the StructGenMatcher object.
      */
-    public StructGenMatcher() {
+    public CDKAtomTypeMatcher() {
         logger = new LoggingTool(this);
     }
 
