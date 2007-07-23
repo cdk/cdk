@@ -24,6 +24,12 @@
  */
 package org.openscience.cdk.test.config;
 
+import javax.xml.validation.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+import javax.xml.XMLConstants;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -175,28 +181,44 @@ public class IsotopeFactoryTest extends CDKTestCase
     	assertValidCML("org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
     }
 
-    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {    	
-    	InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
-    	DocumentBuilderFactory factory =
-    		DocumentBuilderFactory.newInstance();
-    	factory.setNamespaceAware(true);
-    	factory.setValidating(true);
-    	assertNotNull("Could not find the CML schema", cmlSchema);
-    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-    	factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
-    	factory.setFeature("http://apache.org/xml/features/validation/schema", true);
-    	
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-    		atomTypeList
-    	);
-    	File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins,
-    		"../../io/cml/data/cml25b1.xsd", "file://" + tmpCMLSchema.getAbsolutePath()
-    	);
-    	assertNotNull("Could not find the atom type list CML source", ins);
+    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
+            atomTypeList
+        );
+        File tmpInput = copyFileToTmp(shortcut, ".cmlinput", ins,
+                "../../io/cml/data/cml25b1.xsd", "file://" + tmpCMLSchema.getAbsolutePath()
+        );
+        assertNotNull("Could not find the atom type list CML source", ins);
 
-    	DocumentBuilder parser = factory.newDocumentBuilder();
-    	parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
-    	parser.parse(new FileInputStream(tmpInput));
+        if (System.getProperty("java.version").indexOf("1.6") != -1 ||
+            System.getProperty("java.version").indexOf("1.7") != -1) {
+
+            InputStream cmlSchema = new FileInputStream(tmpCMLSchema);
+            assertNotNull("Could not find the CML schema", cmlSchema);
+            DocumentBuilderFactory factory =
+                DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.setValidating(true);
+            factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+            factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
+            factory.setFeature("http://apache.org/xml/features/validation/schema", true);
+
+            DocumentBuilder parser = factory.newDocumentBuilder();
+            parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
+            parser.parse(new FileInputStream(tmpInput));
+        } else if (System.getProperty("java.version").indexOf("1.5") != -1) {
+            DocumentBuilder parser =
+                DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document document = parser.parse(tmpInput);
+            SchemaFactory factory =
+                SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Source schemaFile = new StreamSource(tmpCMLSchema);
+            Schema schema = factory.newSchema(schemaFile);
+            Validator validator = schema.newValidator();
+            validator.validate(new DOMSource(document));
+        } else {
+            fail("Don't know how to validate with Java version: " + System.getProperty("java.version"));
+        }
     }
 
     public void testCanReadCMLSchema() throws Exception {
