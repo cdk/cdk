@@ -25,33 +25,9 @@ package org.openscience.cdk.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.test.io.CDKSourceCodeWriterTest;
-import org.openscience.cdk.test.io.ChemObjectIOInstantionTests;
-import org.openscience.cdk.test.io.CrystClustReaderTest;
-import org.openscience.cdk.test.io.GamessReaderTest;
-import org.openscience.cdk.test.io.Gaussian98ReaderTest;
-import org.openscience.cdk.test.io.GhemicalReaderTest;
-import org.openscience.cdk.test.io.HINReaderTest;
-import org.openscience.cdk.test.io.INChIPlainTextReaderTest;
-import org.openscience.cdk.test.io.INChIReaderTest;
-import org.openscience.cdk.test.io.MDLRXNReaderTest;
-import org.openscience.cdk.test.io.MDLRXNWriterTest;
-import org.openscience.cdk.test.io.MDLReaderTest;
-import org.openscience.cdk.test.io.MDLV2000ReaderTest;
-import org.openscience.cdk.test.io.MDLV3000ReaderTest;
-import org.openscience.cdk.test.io.MDLWriterTest;
-import org.openscience.cdk.test.io.Mol2ReaderTest;
-import org.openscience.cdk.test.io.PDBWriterTest;
-import org.openscience.cdk.test.io.PMPReaderTest;
-import org.openscience.cdk.test.io.ReaderFactoryTest;
-import org.openscience.cdk.test.io.SDFReaderTest;
-import org.openscience.cdk.test.io.ShelXReaderTest;
-import org.openscience.cdk.test.io.ShelXWriterTest;
-import org.openscience.cdk.test.io.WriterFactoryTest;
-import org.openscience.cdk.test.io.XYZReaderTest;
-import org.openscience.cdk.test.io.XYZWriterTest;
+import org.openscience.cdk.test.io.*;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
+import org.openscience.cdk.test.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
 
 /**
@@ -61,9 +37,9 @@ import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
  */
 public class MioTests {
 
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.io Tests");
-        
+    public static Test suite() {
+        TestSuite suite = new TestSuite("The cdk.io Tests");
+
         suite.addTest(CMLIOTests.suite());
         suite.addTest(CrystClustReaderTest.suite());
         suite.addTest(CDKSourceCodeWriterTest.suite());
@@ -77,7 +53,7 @@ public class MioTests {
         suite.addTest(MDLReaderTest.suite());
         suite.addTest(MDLV2000ReaderTest.suite());
         suite.addTest(MDLV3000ReaderTest.suite());
-          suite.addTest(SDFReaderTest.suite());
+        suite.addTest(SDFReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());
         suite.addTest(MDLRXNWriterTest.suite());
@@ -90,13 +66,14 @@ public class MioTests {
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         suite.addTest(XYZReaderTest.suite());
         suite.addTest(XYZWriterTest.suite());
-        
+
         suite.addTest(ReaderFactoryTest.suite());
         suite.addTest(WriterFactoryTest.suite());
         suite.addTest(ChemObjectIOInstantionTests.suite());
-        
+
         // cdk.io.iterator package
         suite.addTest(IteratingMDLReaderTest.suite());
+        suite.addTest(IteratingMDLConformerReaderTest.suite());
         return suite;
     }
 
