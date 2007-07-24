@@ -24,9 +24,9 @@
 
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.event.ChemObjectChangeEventTest;
 import org.openscience.cdk.test.protein.data.PDBAtomTest;
 import org.openscience.cdk.test.protein.data.PDBMonomerTest;
@@ -57,6 +57,7 @@ public class MdataTests {
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
         suite.addTest(ChemSequenceTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ConformerContainerTest.class));
         suite.addTest(CrystalTest.suite());
         suite.addTest(DefaultChemObjectBuilderTest.suite());
         suite.addTest(ElectronContainerTest.suite());
