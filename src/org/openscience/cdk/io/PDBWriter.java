@@ -61,7 +61,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     final String ATOM_NAME_FORMAT = "%-4s";
     final String POSITION_FORMAT = "%8.3f";	
 	
-	static BufferedWriter writer;
+    private BufferedWriter writer;
     
 	public PDBWriter() {
 		this(new StringWriter());

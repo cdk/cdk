@@ -49,7 +49,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  */
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
-	static BufferedWriter writer;
+    private BufferedWriter writer;
     //private LoggingTool logger;
 
     /**

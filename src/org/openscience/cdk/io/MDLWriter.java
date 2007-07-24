@@ -74,7 +74,7 @@ import java.util.*;
  */
 public class MDLWriter extends DefaultChemObjectWriter {
 
-    static BufferedWriter writer;
+    private BufferedWriter writer;
     private LoggingTool logger;
     private int moleculeNumber;
     public Map sdFields=null;

@@ -32,7 +32,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 	private final static String NS_RDF        = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	private final static String NS_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
 	
-    static BufferedWriter writer;
+    private BufferedWriter writer;
     private Map linkmap=new HashMap();
     private Map datemap=new HashMap();
     private Map titlemap=new HashMap();

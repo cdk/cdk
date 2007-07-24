@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
 public class SMILESWriter extends DefaultChemObjectWriter {
 
     private LoggingTool logger;
-    static BufferedWriter writer;
+    private BufferedWriter writer;
 
     /**
      * Contructs a new SMILESWriter that can write a list of SMILES to a Writer

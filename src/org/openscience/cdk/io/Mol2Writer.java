@@ -44,7 +44,7 @@ import java.util.Iterator;
  */
 public class Mol2Writer extends DefaultChemObjectWriter {
 
-	static BufferedWriter writer;
+    private BufferedWriter writer;
 	private LoggingTool logger;
     
     public Mol2Writer() {

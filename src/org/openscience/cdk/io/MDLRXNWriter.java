@@ -67,7 +67,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
-	static BufferedWriter writer;
+    private BufferedWriter writer;
     private LoggingTool logger;
 
     

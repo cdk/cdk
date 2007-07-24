@@ -74,7 +74,7 @@ import org.w3c.dom.Document;
 public class SVGWriter extends DefaultChemObjectWriter {
 
     private LoggingTool logger;
-    static BufferedWriter writer;
+    private BufferedWriter writer;
 
     /**
      * Constructor.

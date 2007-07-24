@@ -61,7 +61,7 @@ import java.util.Iterator;
  */
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
-	static BufferedWriter writer;
+    private BufferedWriter writer;
     private LoggingTool logger;
 
     /**

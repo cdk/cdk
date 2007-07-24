@@ -45,7 +45,7 @@ import java.io.*;
  */
 public class XYZWriter extends DefaultChemObjectWriter {
   
-	static BufferedWriter writer;
+    private BufferedWriter writer;
     private LoggingTool logger;
 
     /**

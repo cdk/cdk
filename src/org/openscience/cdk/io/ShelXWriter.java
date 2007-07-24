@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  */
 public class ShelXWriter extends DefaultChemObjectWriter {
 
-	static BufferedWriter writer;
+    private BufferedWriter writer;
 	//private LoggingTool logger;
 
     /**

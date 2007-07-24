@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class HINWriter extends DefaultChemObjectWriter {
 
-    static BufferedWriter writer;
+    private BufferedWriter writer;
 
     /**
      * Constructor.
