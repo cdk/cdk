@@ -332,7 +332,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         IAtomContainer atomContainer = (IAtomContainer) o;
         if (!atomContainer.getProperty(CDKConstants.TITLE).equals(title)) return -1;
 
-        if (atomContainer.getAtomCount() != coordinates.size()) return -1;
+        if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount()) return -1;
 
         boolean coordsMatch;
         int index = 0;
