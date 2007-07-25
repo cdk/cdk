@@ -112,7 +112,7 @@ public class ConformerContainerTest {
     public void testToArray() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer[] array = (IAtomContainer[]) container.toArray();
-        Assert.assertEquals(20, array.length);
+        Assert.assertEquals(nconfs, array.length);
     }
 
     @Test
@@ -124,7 +124,18 @@ public class ConformerContainerTest {
             IAtomContainer atomContainer = iter.next();
             nmol++;
         }
-        Assert.assertEquals(20, nmol);
+        Assert.assertEquals(nconfs, nmol);
+    }
+
+    @Test
+    public void testIterator2() {
+        ConformerContainer container = new ConformerContainer(confs);
+        int nmol = 0;
+        for (IAtomContainer conf : container) {
+            nmol++;
+        }
+        Assert.assertEquals(nconfs, nmol);
+
     }
 
     @Test
@@ -134,10 +145,10 @@ public class ConformerContainerTest {
         Assert.assertEquals(0, container.size());
 
         for (int i = 0; i < nconfs; i++) container.add(confs[i]);
-        Assert.assertEquals(20, container.size());
+        Assert.assertEquals(nconfs, container.size());
 
         container.remove(0);
-        Assert.assertEquals(19, container.size());
+        Assert.assertEquals(nconfs-1, container.size());
     }
 
     @Test
@@ -153,6 +164,18 @@ public class ConformerContainerTest {
         ConformerContainer container = new ConformerContainer(confs);
         base.setProperty(CDKConstants.TITLE, "junk");
         container.add(base);
-
     }
+
+    @Test(expected  = IndexOutOfBoundsException.class)
+    public void testGet1() {
+        ConformerContainer container = new ConformerContainer(confs);
+        container.get(100);        
+    }
+
+    @Test(expected  = IndexOutOfBoundsException.class)
+    public void testGet2() {
+        ConformerContainer container = new ConformerContainer(confs);
+        for (int i = 0; i < container.size()+1; i++) container.get(i);        
+    }
+
 }
