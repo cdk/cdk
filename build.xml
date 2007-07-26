@@ -449,6 +449,7 @@
             <antcall target="compile-module"><param name="module" value="svg"/></antcall>
             <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
             <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
         </target>
@@ -480,6 +481,7 @@
         <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
