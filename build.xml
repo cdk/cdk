@@ -521,6 +521,7 @@
                     <includesfile name="${metainf}/forcefield.libdepends"/>
                     <includesfile name="${metainf}/inchi.libdepends"/>
                     <includesfile name="${metainf}/smarts.libdepends"/>
+                    <includesfile name="${metainf}/pcore.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
@@ -557,6 +558,7 @@
                     <include name="cdk-smarts.jar"/>
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
+                    <include name="cdk-pcore.jar"/>
                 </fileset>
             </unjar>
 
