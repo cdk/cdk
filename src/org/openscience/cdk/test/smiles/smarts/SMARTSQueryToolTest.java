@@ -23,12 +23,15 @@ package org.openscience.cdk.test.smiles.smarts;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.HydrogenAdder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Collections.sort;
 import java.util.List;
@@ -115,6 +118,23 @@ public class SMARTSQueryToolTest extends CDKTestCase {
 
         nmatch = querytool.countMatches();
         assertEquals(9, nmatch);
+    }
+
+    public void testUniqueQueries() throws CDKException, IOException, ClassNotFoundException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
+        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        HydrogenAdder hadder = new HydrogenAdder();        
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", true);
+
+        boolean status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        int nmatch = querytool.countMatches();
+        assertEquals(24, nmatch);
+
+        List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
+        assertEquals(2, umatch.size());
     }
 
 
