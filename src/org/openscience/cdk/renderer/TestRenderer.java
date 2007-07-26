@@ -24,15 +24,15 @@ public class TestRenderer extends JPanel {
 	JFrame frame;
 	SwingPainter painter = new SwingPainter();
 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-	Graphics2D graphic;
+	//Graphics2D graphic;
 	
 	public class RendererListner implements MouseListener {
 		public void mouseClicked(MouseEvent e) {
 			//System.out.println(e); 
 			Point2D ptSrc = e.getPoint();
-			Point2D ptDst = Java2DRenderer.GetCoorFromScreen(graphic, ptSrc);
+			Point2D ptDst = Java2DRenderer.getCoorFromScreen(painter.getGraphics2D(), ptSrc);
 			System.out.println("Mouse click at " + ptSrc + " real world coordinates: " + ptDst);
-			Java2DRenderer.ShowClosestAtomOrBond(painter.getMolecule(), ptDst);
+			Java2DRenderer.showClosestAtomOrBond(painter.getMolecule(), ptDst);
 			
 		}
 		public void mouseEntered(MouseEvent e) { 	}
@@ -52,6 +52,9 @@ public class TestRenderer extends JPanel {
 
 		//IMolecule mol = MoleculeFactory.makeAlphaPinene();
 		IMolecule mol = MoleculeFactory.makeThiazole();
+		//IMolecule mol = MoleculeFactory.makeAlkane(18);
+		System.out.println("molecule: " + mol);
+		
 		
 		sdg.setMolecule(mol);
 		try {
@@ -100,12 +103,18 @@ public class TestRenderer extends JPanel {
 		
 		private IMolecule molecule;
 		
+		Graphics2D graphic;
+		
 		public void setMolecule(IMolecule molecule) {
 			this.molecule = molecule;
 		}
 		public IMolecule getMolecule() {
 			return this.molecule;
 		}
+		public Graphics2D getGraphics2D() {			
+			return this.graphic;
+		}
+		AffineTransform affinelast = new AffineTransform();
 		public void paint(Graphics g) {
 			//if (isOpaque()) { //paint background
 	        //    g.setColor(getBackground());
@@ -113,9 +122,15 @@ public class TestRenderer extends JPanel {
 				g.fillRect(0, 0, getWidth(), getHeight());
 	       // }
 			super.paint(g);
-			System.out.println("Painting molecule..!");
+			//System.out.println("Painting molecule..!");
 			graphic = (Graphics2D)g;
-			model.setZoomFactor(0.5);
+			model.setZoomFactor(0.8);
+			
+			if (!affinelast.equals(graphic.getTransform())) {
+				System.out.println("swing changed matrix to:" + graphic.getTransform());
+				affinelast = graphic.getTransform();
+			}
+
 			renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
 		}
 	}

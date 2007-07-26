@@ -92,10 +92,14 @@ public class Java2DRenderer implements IRenderer2D {
 		}
 		// calculate the molecule boundaries via the shapes
 		Rectangle2D molBounds = createRectangle2D(shapes);
+		//System.out.println("molBounds: " + molBounds);
+		//System.out.println("bounds: " + bounds);
+		//System.out.println("\tmatrix before:" + graphics.getTransform());
 		
-		scaleGraphics(graphics, molBounds, bounds);
-		translateGraphics(graphics, molBounds, bounds);
-		
+		AffineTransform transformMatrix = createScaleTransform(molBounds,bounds);
+		graphics.setTransform(transformMatrix);
+		System.out.println("transform matrix:" + graphics.getTransform());
+
 		// draw the shapes
 		graphics.setColor(Color.BLACK);
 		graphics.setStroke(new BasicStroke(
@@ -109,7 +113,6 @@ public class Java2DRenderer implements IRenderer2D {
 		// add rendering of atom symbols?
 		paintAtoms(atomCon, graphics);
 		
-		System.out.println("transform matrix:" + graphics.getTransform());
 	}
 	/**
 	 *  Searches through all the atoms in the given array of atoms, triggers the
@@ -125,7 +128,7 @@ public class Java2DRenderer implements IRenderer2D {
 	}
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
-		System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
+		//System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
 		Font font;
 		font = new Font("Serif", Font.PLAIN, 20);
 		
@@ -235,30 +238,34 @@ public class Java2DRenderer implements IRenderer2D {
 //		graphics.drawString(symbol, screenX, screenY );
 		
 	}
-
-	private void scaleGraphics(Graphics2D graphics, Rectangle2D contextBounds, Rectangle2D rendererBounds) {
+	private AffineTransform createScaleTransform(Rectangle2D contextBounds, Rectangle2D rendererBounds) {
+		AffineTransform affine = new AffineTransform();
+		
+		//scale
 		double factor = rendererModel.getZoomFactor() * (1.0 - rendererModel.getMargin() * 2.0);
 	    double scaleX = factor * rendererBounds.getWidth() / contextBounds.getWidth();
 	    double scaleY = factor * rendererBounds.getHeight() / contextBounds.getHeight();
 
 	    if (scaleX > scaleY) {
-//	    	logger.debug("Scaled by Y: " + scaleY);
+	    	//System.out.println("Scaled by Y: " + scaleY);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
-	    	graphics.scale(scaleY, -scaleY);
+	    	affine.scale(scaleY, -scaleY);
 	    } else {
-//	    	logger.debug("Scaled by X: " + scaleX);
+	    	//System.out.println("Scaled by X: " + scaleX);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
-	    	graphics.scale(scaleX, -scaleX);
+	    	affine.scale(scaleX, -scaleX);
 	    }
-	  }
-
-	private void translateGraphics(Graphics2D graphics, Rectangle2D contextBounds, Rectangle2D rendererBounds) {
-		double scale = graphics.getTransform().getScaleX();
+	    //translate
+	    double scale = affine.getScaleX();
+		//System.out.println("scale: " + scale);
 	    double dx = -contextBounds.getX() * scale + 0.5 * (rendererBounds.getWidth() - contextBounds.getWidth() * scale);
 	    double dy = -contextBounds.getY() * scale - 0.5 * (rendererBounds.getHeight() + contextBounds.getHeight() * scale);
-	    						
-	    graphics.translate(dx / scale, dy / scale);
+	    //System.out.println("dx: " + dx + " dy:" +dy);						
+	    affine.translate(dx / scale, dy / scale);
+	    
+		return affine;
 	}
+	
 	/**
 	 *  Returns model coordinates from screencoordinates provided by the graphics translation
 	 *   
@@ -266,7 +273,7 @@ public class Java2DRenderer implements IRenderer2D {
 	 * @param ptSrc the point to convert
 	 * @return
 	 */
-	public static Point2D GetCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
+	public static Point2D getCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
 		Point2D ptDst = new Point2D.Double();
 		AffineTransform affine = graphics.getTransform();
 		try {
@@ -283,7 +290,7 @@ public class Java2DRenderer implements IRenderer2D {
 	 * @param container
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
 	 */
-	public static void ShowClosestAtomOrBond(IAtomContainer container, Point2D ptSrc) {
+	public static void showClosestAtomOrBond(IAtomContainer container, Point2D ptSrc) {
 		IAtom atom = GeometryToolsInternalCoordinates.getClosestAtom( ptSrc.getX(), ptSrc.getY(), container);
 		double Atomdist = Math.sqrt(Math.pow(atom.getPoint2d().x - ptSrc.getX(), 2) + Math.pow(atom.getPoint2d().y - ptSrc.getY(), 2));
 
