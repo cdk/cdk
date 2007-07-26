@@ -15,16 +15,16 @@ import org.openscience.cdk.pharmacophore.PharmacophoreQueryBond;
 import java.io.InputStream;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-pcore
  */
 public class PharmacophoreMatcherTest {
 
     public static ConformerContainer conformers = null;
 
     @BeforeClass
-    public void loadConformerData() {
+    public static void loadConformerData() {
         String filename = "data/mdl/pcoretest1.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
         if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
     }

@@ -8,7 +8,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * Represents a pharmacophore query distance constraint.
  *
  * @author Rajarshi Guha
- * @cdk.module extra
+ * @cdk.module pcore
  * @cdk.keywords pharmacophore
  * @cdk.keywords 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom

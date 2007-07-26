@@ -6,7 +6,7 @@ import org.openscience.cdk.Bond;
  * Represents a distance relationship between two pharmacophore groups.
  *
  * @author Rajarshi Guha
- * @cdk.module extra
+ * @cdk.module pcore
  * @cdk.keywords pharmacophore
  * @cdk.keywords 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
