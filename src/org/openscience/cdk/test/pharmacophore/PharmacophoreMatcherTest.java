@@ -59,15 +59,16 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(100, statuses.length);
 
         int[] hits = new int[18];
-        int i = 0;
-        for (boolean status : statuses) {
-            if (status) hits[i] = i;
-            i++;
+        int idx = 0;
+        for (int i = 0; i < statuses.length; i++) {
+            if (statuses[i]) hits[idx++] = i;
         }
 
-        int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
 
-        Assert.assertEquals("There was an error in the expected hits", expected, hits);
+        int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
+        for (int i = 0; i < expected.length; i++) {
+            Assert.assertEquals("Hit "+i+" didn't match", expected[i], hits[i]);
+        }        
     }
 
     @Test(expected = CDKException.class)
