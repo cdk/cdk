@@ -22,7 +22,6 @@ package org.openscience.cdk.test.smiles.smarts;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -60,17 +59,16 @@ public class ParserTest extends CDKTestCase {
     }
 
     public int match(String smarts, String smiles) throws Exception {
-   	 SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
-   	 SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-   	 IAtomContainer atomContainer = sp.parseSmiles(smiles);  
-   	 boolean status = sqt.matches(atomContainer);
-   	 if (status) {
-   		 int nmatch = sqt.countMatches();
-   		 return nmatch;
-   	 } else {
-   		 return 0;
-   	 }
-   }
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles(smiles);
+        boolean status = sqt.matches(atomContainer);
+        if (status) {
+            return sqt.countMatches();
+        } else {
+            return 0;
+        }
+    }
     
     public void testQueryAtomCreation() throws Exception {
     	QueryAtomContainer container = SMARTSParser.parse("*");
@@ -920,9 +918,10 @@ public class ParserTest extends CDKTestCase {
     public void testPattern241() throws Exception { // Nonstandard atom groups.
         parse("[!#1;!#2;!#3;!#5;!#6;!#7;!#8;!#9;!#11;!#12;!#15;!#16;!#17;!#19;!#20;!#35;!#53]");
     }    
-    /**
+    /*
      * From http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html
      */
+
     public void testPropertyCharge1() throws Exception {
     	assertEquals(0, match("[+1]", "[OH-].[Mg+2]"));
     }
@@ -939,8 +938,9 @@ public class ParserTest extends CDKTestCase {
     	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2"));
     }
     public void testPropertyAromatic1() throws Exception {
-    	int m = match("[a]", "c1cc(C)c(N)cc1");
-    	assertEquals(6, m);
+    	//int m = match("[a]", "c1cc(C)c(N)cc1");
+        int m = match("[a]", "c1ccccc1");
+        assertEquals(6, m);
     }
     public void testPropertyAromatic2() throws Exception {
     	int m = match("[a]", "c1c(C)c(N)cnc1");
@@ -1406,5 +1406,18 @@ public class ParserTest extends CDKTestCase {
     public void testRing7() throws Exception {
     	int m = match("c1ccccc1", "c1ccccc1");
     	assertEquals(12, m);
-    }    
+    }
+
+    public void testImplicitHinHydroxyl() throws Exception {
+        int m = match("[Oh]", "N1CCCC1OC(C)=O");
+        assertEquals(0, m);
+    }
+
+    public void testImplicitHinAmide() throws Exception {
+        int m = match("[Nh]", "N1CCCC1OC(C)=O");
+        assertEquals(1, m);
+
+        m = match("[Nh2]", "N1CCCC1OC(C)=O");
+        assertEquals(0, m);
+    }
 }
