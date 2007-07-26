@@ -137,5 +137,22 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         assertEquals(2, umatch.size());
     }
 
+      public void testQuery() throws CDKException, IOException, ClassNotFoundException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
+        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        HydrogenAdder hadder = new HydrogenAdder();
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", true);
+
+        boolean status = querytool.matches(atomContainer);
+        assertTrue(status);
+
+        int nmatch = querytool.countMatches();
+        assertEquals(4, nmatch);
+
+        List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
+        assertEquals(1, umatch.size());
+    }
+
 
 }
