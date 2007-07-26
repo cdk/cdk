@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
@@ -37,7 +36,6 @@ import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
-import org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest;
 import org.openscience.cdk.test.similarity.DistanceMomentTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
 import org.openscience.cdk.test.tools.HOSECodeAnalyserTest;
@@ -115,9 +113,7 @@ public class MextraTests {
         suite.addTest(ChangeChargeEditTest.suite());
         
         // other
-        suite.addTest(VariousTests.suite());
-
-        suite.addTest(new JUnit4TestAdapter(PharmacophoreMatcherTest.class));
+        suite.addTest(VariousTests.suite());        
         
         return suite;
     }
