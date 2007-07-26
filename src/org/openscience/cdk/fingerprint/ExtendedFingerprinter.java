@@ -100,7 +100,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 */
 	public BitSet getFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
 		BitSet bs = fingerprinter.getFingerprint(ac);
-		int size = fingerprinter.getSize();
+		int size = this.getSize();
 		MFAnalyser mfa=new MFAnalyser(ac);
 		float weight=mfa.getCanonicalMass();
 		for(int i=1;i<11;i++){
