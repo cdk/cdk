@@ -12,6 +12,9 @@ import java.awt.geom.Rectangle2D.Float;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import javax.vecmath.Point2d;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.font.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +22,8 @@ import java.util.List;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -37,6 +42,7 @@ public class Java2DRenderer implements IRenderer2D {
 	private Renderer2DModel rendererModel;
 
 	protected LoggingTool logger;
+
 
 	public Java2DRenderer(Renderer2DModel model) {
 		this.rendererModel = model;
@@ -119,7 +125,7 @@ public class Java2DRenderer implements IRenderer2D {
 	}
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
-		//System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
+		System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
 		Font font;
 		font = new Font("Serif", Font.PLAIN, 20);
 		
@@ -133,6 +139,8 @@ public class Java2DRenderer implements IRenderer2D {
 		if (atom.getSymbol() != null) {
 			symbol = atom.getSymbol();
 		}
+		//symbol = "L"; //to test if a certain symbol is spaced out right 
+		
 		boolean drawSymbol = true; //paint all Atoms for the time being
 		boolean isRadical = (container.getConnectedSingleElectronsCount(atom) > 0);
 		if (atom instanceof IPseudoAtom)
@@ -203,7 +211,7 @@ public class Java2DRenderer implements IRenderer2D {
 		TextLayout layout = new TextLayout(symbol, font, frc);
 		Rectangle2D bounds = layout.getBounds();
 		
-		float margin = 0.02f; 
+		float margin = 0.03f; 
 		float screenX = (float)(atom.getPoint2d().x - bounds.getWidth()/2);
 		float screenY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
 
@@ -251,7 +259,43 @@ public class Java2DRenderer implements IRenderer2D {
 	    						
 	    graphics.translate(dx / scale, dy / scale);
 	}
+	/**
+	 *  Returns model coordinates from screencoordinates provided by the graphics translation
+	 *   
+	 * @param graphics
+	 * @param ptSrc the point to convert
+	 * @return
+	 */
+	public static Point2D GetCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
+		Point2D ptDst = new Point2D.Double();
+		AffineTransform affine = graphics.getTransform();
+		try {
+			affine.inverseTransform(ptSrc, ptDst);
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to reverse affine transformation");
+			System.exit(0);
+		}
+		return ptDst;
+	}
+	/**
+	 * 
+	 * @param container
+	 * @param ptSrc in real world coordinates (ie not screencoordinates)
+	 */
+	public static void ShowClosestAtomOrBond(IAtomContainer container, Point2D ptSrc) {
+		IAtom atom = GeometryToolsInternalCoordinates.getClosestAtom( ptSrc.getX(), ptSrc.getY(), container);
+		double Atomdist = Math.sqrt(Math.pow(atom.getPoint2d().x - ptSrc.getX(), 2) + Math.pow(atom.getPoint2d().y - ptSrc.getY(), 2));
 
+		System.out.println("closest Atom distance: " + Atomdist + " Atom:" + atom);
+		
+		IBond bond = GeometryToolsInternalCoordinates.getClosestBond( ptSrc.getX(), ptSrc.getY(), container);
+		Point2d bondCenter = GeometryToolsInternalCoordinates.get2DCenter(bond.atoms());
+		
+		double Bonddist = Math.sqrt(Math.pow(bondCenter.x - ptSrc.getX(), 2) + Math.pow(bondCenter.y - ptSrc.getY(), 2));
+		System.out.println("closest Bond distance: " + Bonddist + " Bond: " + bond);
+	}
+	
 	private Rectangle2D createRectangle2D(List shapes) {
 	    Iterator it = shapes.iterator();
 	    Rectangle2D result = ((Shape) it.next()).getBounds2D();
@@ -263,25 +307,7 @@ public class Java2DRenderer implements IRenderer2D {
 	    // FIXME: should add a small white margin around this
 	    return result;      
 	}
-	/**
-	 *  Returns model coordinates from screencoordinates provided by the graphics translation
-	 *   
-	 * @param graphics
-	 * @param ptSrc the point to convert
-	 * @return
-	 */
-	public Point2D GetCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
-		Point2D ptDst = new Point2D.Double();
-		AffineTransform affine = graphics.getTransform();
-		try {
-			affine.inverseTransform(ptSrc, ptDst);
-		}
-		catch (Exception exception) {
-			logger.warn("Unable to reverse affine transformation");
-			logger.debug(exception);
-		}
-		return ptDst;
-	}
+	
 	public Renderer2DModel getRenderer2DModel() {
 		return this.rendererModel;
 	}
