@@ -31,7 +31,7 @@ public class PharmacophoreMatcherTest {
 
 
     @Test
-    public static void testMatcherQuery1() throws CDKException {
+    public void testMatcherQuery1() throws CDKException {
         Assert.assertNotNull(conformers);
 
         // make a query
@@ -68,6 +68,30 @@ public class PharmacophoreMatcherTest {
         int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
 
         Assert.assertEquals("There was an error in the expected hits", expected, hits);
+    }
+
+    @Test(expected = CDKException.class)
+    public void testInvalidQuery() throws CDKException {
+        QueryAtomContainer query = new QueryAtomContainer();
+
+        PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[NX3]");
+
+        query.addAtom(o);
+        query.addAtom(n1);
+        query.addAtom(n2);
+
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(o, n1, 4.0, 4.5);
+        PharmacophoreQueryBond b2 = new PharmacophoreQueryBond(o, n2, 4.0, 5.0);
+        PharmacophoreQueryBond b3 = new PharmacophoreQueryBond(n1, n2, 5.4, 5.8);
+
+        query.addBond(b1);
+        query.addBond(b2);
+        query.addBond(b3);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        matcher.matches(conformers);
 
     }
 }
