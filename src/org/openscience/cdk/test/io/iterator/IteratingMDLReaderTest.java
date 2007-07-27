@@ -27,11 +27,8 @@
  *  */
 package org.openscience.cdk.test.io.iterator;
 
-import java.io.InputStream;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -40,11 +37,12 @@ import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.InputStream;
+
 /**
  * TestCase for the reading MDL mol files using one test file.
  *
  * @cdk.module test-io
- *
  * @see org.openscience.cdk.io.MDLReader
  */
 public class IteratingMDLReaderTest extends CDKTestCase {
@@ -68,12 +66,12 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         int molCount = 0;
         while (reader.hasNext()) {
-        	Object object = reader.next();
-        	assertNotNull(object);
-        	assertTrue(object instanceof Molecule);
-        	molCount++;
-        	assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
-        			MDLV2000Format.getInstance(), reader.getFormat());
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof Molecule);
+            molCount++;
+            assertEquals("Molecule # was not in MDL V2000 format: " + molCount,
+                    MDLV2000Format.getInstance(), reader.getFormat());
         }
 
         assertEquals(6, molCount);
@@ -90,7 +88,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Object object = reader.next();
         assertNotNull(object);
         assertTrue(object instanceof Molecule);
-        assertEquals("2-methylbenzo-1,4-quinone", ((Molecule)object).getProperty(CDKConstants.TITLE));
+        assertEquals("2-methylbenzo-1,4-quinone", ((Molecule) object).getProperty(CDKConstants.TITLE));
         assertEquals(MDLV2000Format.getInstance(), reader.getFormat());
     }
 
@@ -105,7 +103,7 @@ public class IteratingMDLReaderTest extends CDKTestCase {
         Object object = reader.next();
         assertNotNull(object);
         assertTrue(object instanceof Molecule);
-        Molecule m = (Molecule)object;
+        Molecule m = (Molecule) object;
         assertEquals("1", m.getProperty("E_NSC"));
         assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
@@ -118,10 +116,10 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         int molCount = 0;
         while (reader.hasNext()) {
-        	Object object = reader.next();
-        	assertNotNull(object);
-        	assertTrue(object instanceof Molecule);
-        	molCount++;
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof Molecule);
+            molCount++;
         }
 
         assertEquals(1, molCount);
@@ -135,13 +133,30 @@ public class IteratingMDLReaderTest extends CDKTestCase {
 
         int molCount = 0;
         while (reader.hasNext()) {
-        	Object object = reader.next();
-        	assertNotNull(object);
-        	assertTrue(object instanceof Molecule);
-        	molCount++;
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof Molecule);
+            molCount++;
         }
 
         assertEquals(1, molCount);
+    }
+
+    public void testEmptyEntryIteratingReader() {
+        String filename = "data/mdl/emptyStructures.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins, DefaultChemObjectBuilder.getInstance());
+        int molCount = 0;
+        while (reader.hasNext()) {
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof Molecule);
+            molCount++;
+        }
+
+        assertEquals(2, molCount);
+
     }
 
 }

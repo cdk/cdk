@@ -24,24 +24,15 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.NoSuchElementException;
-
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.io.formats.IChemFormat;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
-import org.openscience.cdk.io.formats.MDLV2000Format;
-import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
+import java.util.NoSuchElementException;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
@@ -149,11 +140,12 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     IChemObjectReader reader = factory.createReader(currentFormat);
                     reader.setReader(new StringReader(buffer.toString()));
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
-                    if (nextMolecule.getAtomCount() > 0) {
-                        hasNext = true;
-                    } else {
-                        hasNext = false;
-                    }
+
+                    // note that a molecule may have 0 atoms, but still
+                    // be useful (by having SD tags for example), so just
+                    // check for null'ness rather than atom count
+                    hasNext = nextMolecule != null;
+
                     // now read the data part
                     currentLine = input.readLine();
                     readDataBlockInto(nextMolecule);
