@@ -92,12 +92,10 @@ public class Java2DRenderer implements IRenderer2D {
 		}
 		// calculate the molecule boundaries via the shapes
 		Rectangle2D molBounds = createRectangle2D(shapes);
-		//System.out.println("molBounds: " + molBounds);
-		//System.out.println("bounds: " + bounds);
-		//System.out.println("\tmatrix before:" + graphics.getTransform());
 		
 		AffineTransform transformMatrix = createScaleTransform(molBounds,bounds);
-		graphics.setTransform(transformMatrix);
+		affine = transformMatrix;
+		graphics.transform(transformMatrix);
 		System.out.println("transform matrix:" + graphics.getTransform());
 
 		// draw the shapes
@@ -201,11 +199,8 @@ public class Java2DRenderer implements IRenderer2D {
 			return;
 		
 	//	AffineTransform affine = graphics.getTransform();
-
 	//	Point2D srcPts = new Point2D.Double( ,  );
-				
 	//	graphics.setTransform(new AffineTransform()); //set the graphics transform to the identity
-		
 	//	Point2D desPts = srcPts; //new Point2D.Double();
 	//	desPts = affine.transform(srcPts, desPts); //get screencoordinates for atom
 		
@@ -285,7 +280,19 @@ public class Java2DRenderer implements IRenderer2D {
 		}
 		return ptDst;
 	}
-	/**
+	static AffineTransform affine;
+	public static Point2D getCoorFromScreen(Point2D ptSrc) {
+		Point2D ptDst = new Point2D.Double();
+		//AffineTransform affine = graphics.getTransform();
+		try {
+			affine.inverseTransform(ptSrc, ptDst);
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to reverse affine transformation");
+			System.exit(0);
+		}
+		return ptDst;
+	}/**
 	 * 
 	 * @param container
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
@@ -311,7 +318,13 @@ public class Java2DRenderer implements IRenderer2D {
 	      Rectangle2D.union(result, ((Shape) it.next()).getBounds2D(), result);
 	    }
 	        
-	    // FIXME: should add a small white margin around this
+	    // FIXME: make a decent estimate for the margin
+	    double margin = result.getHeight() / 50; //2% margin
+	    if (margin < 0.2) {
+	    	margin = 0.2; //0.2 is enough to make symbols appear on screen	
+	    }
+	    result.setRect(result.getMinX() - margin, result.getMinY() - margin, result.getWidth() + 2 * margin, result.getHeight() + 2 * margin);
+	    
 	    return result;      
 	}
 	

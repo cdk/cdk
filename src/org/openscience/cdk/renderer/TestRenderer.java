@@ -30,7 +30,9 @@ public class TestRenderer extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			//System.out.println(e); 
 			Point2D ptSrc = e.getPoint();
-			Point2D ptDst = Java2DRenderer.getCoorFromScreen(painter.getGraphics2D(), ptSrc);
+			
+			//painter.getGraphics2D(),
+			Point2D ptDst = Java2DRenderer.getCoorFromScreen( ptSrc);
 			System.out.println("Mouse click at " + ptSrc + " real world coordinates: " + ptDst);
 			Java2DRenderer.showClosestAtomOrBond(painter.getMolecule(), ptDst);
 			
@@ -124,7 +126,7 @@ public class TestRenderer extends JPanel {
 			super.paint(g);
 			//System.out.println("Painting molecule..!");
 			graphic = (Graphics2D)g;
-			model.setZoomFactor(0.8);
+			model.setZoomFactor(1);
 			
 			if (!affinelast.equals(graphic.getTransform())) {
 				System.out.println("swing changed matrix to:" + graphic.getTransform());
