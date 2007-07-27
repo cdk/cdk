@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author: miguelrojasch $
- *  $Date: 2006-09-27 13:32:31 +0000 (Mi, 27 Sep 2006) $
- *  $Revision: 7069 $
+/*  $Revision: 7069 $ $Author: miguelrojasch $ $Date: 2006-09-27 13:32:31 +0000 (Mi, 27 Sep 2006) $
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -27,7 +23,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.geometry;
+package org.openscience.cdk.renderer.progz;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
