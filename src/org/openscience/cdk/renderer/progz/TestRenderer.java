@@ -29,7 +29,6 @@ public class TestRenderer extends JPanel {
 	JFrame frame;
 	SwingPainter painter = new SwingPainter();
 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-	//Graphics2D graphic;
 	
 	public class RendererListner implements MouseListener {
 		public void mouseClicked(MouseEvent e) {
@@ -37,7 +36,8 @@ public class TestRenderer extends JPanel {
 			Point2D ptSrc = e.getPoint();
 			
 			//painter.getGraphics2D(),
-			Point2D ptDst = Java2DRenderer.getCoorFromScreen( ptSrc);
+			//Point2D ptDst = Java2DRenderer.getCoorFromScreen( ptSrc);
+			Point2D ptDst = painter.renderer.getCoorFromScreen( ptSrc);
 			System.out.println("Mouse click at " + ptSrc + " real world coordinates: " + ptDst);
 			Java2DRenderer.showClosestAtomOrBond(painter.getMolecule(), ptDst);
 			
@@ -106,8 +106,9 @@ public class TestRenderer extends JPanel {
 
 		Renderer2DModel model = new Renderer2DModel();
 		
-		IRenderer2D renderer = new Java2DRenderer(model);
-		
+		//IRenderer2D renderer = new Java2DRenderer(model);
+		IJava2DRenderer renderer = new Java2DRenderer(model);
+
 		private IMolecule molecule;
 		
 		Graphics2D graphic;

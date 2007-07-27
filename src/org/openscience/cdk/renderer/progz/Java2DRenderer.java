@@ -40,9 +40,10 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.validate.ProblemMarker;
 
 
-public class Java2DRenderer implements IRenderer2D {
+public class Java2DRenderer implements IJava2DRenderer {
 
 	private Renderer2DModel rendererModel;
+	private AffineTransform affine;
 
 	protected LoggingTool logger;
 
@@ -237,7 +238,7 @@ public class Java2DRenderer implements IRenderer2D {
 		
 	}
 	private AffineTransform createScaleTransform(Rectangle2D contextBounds, Rectangle2D rendererBounds) {
-		AffineTransform affine = new AffineTransform();
+		AffineTransform affinet = new AffineTransform();
 		
 		//scale
 		double factor = rendererModel.getZoomFactor() * (1.0 - rendererModel.getMargin() * 2.0);
@@ -247,31 +248,25 @@ public class Java2DRenderer implements IRenderer2D {
 	    if (scaleX > scaleY) {
 	    	//System.out.println("Scaled by Y: " + scaleY);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
-	    	affine.scale(scaleY, -scaleY);
+	    	affinet.scale(scaleY, -scaleY);
 	    } else {
 	    	//System.out.println("Scaled by X: " + scaleX);
 	    	// FIXME: should be -X: to put the origin in the lower left corner 
-	    	affine.scale(scaleX, -scaleX);
+	    	affinet.scale(scaleX, -scaleX);
 	    }
 	    //translate
-	    double scale = affine.getScaleX();
+	    double scale = affinet.getScaleX();
 		//System.out.println("scale: " + scale);
 	    double dx = -contextBounds.getX() * scale + 0.5 * (rendererBounds.getWidth() - contextBounds.getWidth() * scale);
 	    double dy = -contextBounds.getY() * scale - 0.5 * (rendererBounds.getHeight() + contextBounds.getHeight() * scale);
 	    //System.out.println("dx: " + dx + " dy:" +dy);						
-	    affine.translate(dx / scale, dy / scale);
+	    affinet.translate(dx / scale, dy / scale);
 	    
-		return affine;
+		return affinet;
 	}
 	
-	/**
-	 *  Returns model coordinates from screencoordinates provided by the graphics translation
-	 *   
-	 * @param graphics
-	 * @param ptSrc the point to convert
-	 * @return
-	 */
-	public static Point2D getCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
+	
+	/*public static Point2D getCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
 		Point2D ptDst = new Point2D.Double();
 		AffineTransform affine = graphics.getTransform();
 		try {
@@ -282,11 +277,15 @@ public class Java2DRenderer implements IRenderer2D {
 			System.exit(0);
 		}
 		return ptDst;
-	}
-	static AffineTransform affine;
-	public static Point2D getCoorFromScreen(Point2D ptSrc) {
+	}*/
+	/**
+	 *  Returns model coordinates from screencoordinates provided by the graphics translation
+	 *   
+	 * @param ptSrc the point to convert
+	 * @return Point2D in real world coordinates
+	 */
+	public Point2D getCoorFromScreen(Point2D ptSrc) {
 		Point2D ptDst = new Point2D.Double();
-		//AffineTransform affine = graphics.getTransform();
 		try {
 			affine.inverseTransform(ptSrc, ptDst);
 		}
@@ -295,7 +294,8 @@ public class Java2DRenderer implements IRenderer2D {
 			System.exit(0);
 		}
 		return ptDst;
-	}/**
+	}
+	/**
 	 * 
 	 * @param container
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
