@@ -410,8 +410,10 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         prop.setProperty("ForceReadAs3DCoordinates","true");
         PropertiesListener listener = new PropertiesListener(prop);
         reader.addChemObjectIOListener(listener);
+        reader.customizeJob();
 
         IMolecule mol = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        assertNotNull(mol);
         assertEquals(5, mol.getAtomCount());
 
         boolean has3d = GeometryTools.has3DCoordinates(mol);
