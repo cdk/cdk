@@ -622,6 +622,7 @@
                     <include name="cdk-smiles.jar"/>
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
+                    <include name="cdk-pcore.jar"/>
                 </fileset>
             </unjar>
 
@@ -674,6 +675,7 @@
                     <includesfile name="${metainf}/test-valencycheck.libdepends"/>
                     <includesfile name="${metainf}/test-weka.libdepends"/>
                     <includesfile name="${metainf}/test-libiomd.libdepends"/>
+                    <includesfile name="${metainf}/test-pcore.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-core.jar"/>
@@ -699,6 +701,7 @@
                     <include name="cdk-test-valencycheck.jar"/>
                     <include name="cdk-test-weka.jar"/>
                     <include name="cdk-test-libiomd.jar"/>
+                    <include name="cdk-test-pcore.jar"/>
                 </fileset>
             </unjar>
 
@@ -935,6 +938,7 @@
                 <antcall target="test-module"><param name="module" value="qsarMolecular"/></antcall>
                 <antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
             <antcall target="test-module"><param name="module" value="structgen"/></antcall>
             <antcall target="test-module"><param name="module" value="libiomd"/></antcall>

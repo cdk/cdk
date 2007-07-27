@@ -132,7 +132,7 @@
       <antcall target="doccheck-module"><param name="module" value="qsar"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="experimental"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="svg"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="smarts"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="structgen"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="valencycheck"/></antcall>
     </target>

@@ -43,6 +43,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="builder3d"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smiles"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smarts"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="pcore"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="forcefield"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsar"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="experimental"/></antcall>
@@ -61,6 +62,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-reaction"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-smiles"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-standard"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-pcore"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-valencycheck"/></antcall>
     </target>
 
