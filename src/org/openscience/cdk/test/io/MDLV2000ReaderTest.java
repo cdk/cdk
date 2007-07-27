@@ -24,30 +24,23 @@
  *  */
 package org.openscience.cdk.test.io;
 
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -362,17 +355,47 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	String filename = "data/mdl/withcharges.mol";
     	logger.info("Testing: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	IChemFile chemFile = (IChemFile) reader.read((IChemObject) new org.openscience.cdk.ChemFile());
-    	assertEquals(1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge().intValue());
-    	assertEquals(-1,chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge().intValue());
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IChemFile chemFile = (IChemFile) reader.read((IChemObject) new org.openscience.cdk.ChemFile());
+        assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(6).getFormalCharge().intValue());
+        assertEquals(-1, chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0).getAtom(8).getFormalCharge().intValue());
     }
-    
+
     public void testEmptyString() throws Exception {
-    	String emptyString = "";
-    	MDLV2000Reader reader = new MDLV2000Reader(new StringReader(emptyString));
-    	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
-    	assertNull(mol);
+        String emptyString = "";
+        MDLV2000Reader reader = new MDLV2000Reader(new StringReader(emptyString));
+        IMolecule mol = (IMolecule) reader.read(new NNMolecule());
+        assertNull(mol);
+    }
+
+    public void testNoAtomCase() throws CDKException {
+        String filename = "data/mdl/emptyStructure.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+
+        IAtomContainer container = (IAtomContainer) containersList.get(0);
+        assertNotNull(container);
+        assertEquals(0, container.getAtomCount());
+        assertEquals(0, container.getBondCount());
+
+
+        Hashtable props = container.getProperties();
+        Enumeration keys = props.keys();
+        ArrayList<String> obsKeys = new ArrayList<String>();
+        while (keys.hasMoreElements()) {
+            String s = (String) keys.nextElement();
+            obsKeys.add(s);
+        }
+
+        assertEquals("SubstanceType", obsKeys.get(0));
+        assertEquals("TD50 Rat", obsKeys.get(5));
+        assertEquals("ChemCount", obsKeys.get(11));
+
     }
 
 }
