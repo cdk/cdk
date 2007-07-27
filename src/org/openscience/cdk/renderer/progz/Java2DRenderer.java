@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.renderer.progz.GeometryToolsInternalCoordinates;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
