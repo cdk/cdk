@@ -1,0 +1,121 @@
+
+ 
+
+  4  3  0  0  0  0  0  0  0  0  1 V2000
+    0.0000   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.6652   -1.1508    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.9956   -1.1508    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.3260   -1.1508    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  3  0  0  0  0
+M  END
+>  <Formula>
+C3H3N
+
+>  <DSSTox_ID>
+29
+
+>  <DSSTox_FileName>
+CPDBAS_v2a_1451_1Mar05
+
+>  <MolWeight>
+53.0634
+
+>  <StructureShown>
+tested form
+
+>  <ChemName>
+Acrylonitrile
+
+>  <CAS>
+107-13-1
+
+>  <SubstanceType>
+defined organic
+
+>  <TestedForm>
+parent
+
+>  <ChemCount>
+1
+
+>  <ChemName_IUPAC>
+acrylonitrile
+
+>  <SMILES>
+C=CC#N
+
+>  <SMILES_Parent>
+C=CC#N
+
+>  <INChI>
+INChI=1.12Beta/C3H3N/c1-2-3-4/h1H2,2H
+
+>  <StudyType>
+carcinogenicity
+
+>  <Species>
+rat
+
+>  <Endpoint>
+TD50, Tumor Target Sites
+
+>  <SAL CPDB>
+pos
+
+>  <TD50 Rat notext>
+16.9
+
+>  <TD50 Rat>
+16.9 m v 
+
+>  <Target Sites Rat Male>
+ezy nrv orc smi sto
+
+>  <Target Sites Rat Female>
+ezy mgl nas nrv orc smi sto
+
+$$$$
+
+ 
+
+  0  0  0  0  0  0  0  0  0  0  1 V2000
+M  END
+>  <DSSTox_ID>
+30
+
+>  <DSSTox_FileName>
+CPDBAS_v2a_1451_1Mar05
+
+>  <ChemName>
+Actinomycin C
+
+>  <CAS>
+8052-16-2
+
+>  <SubstanceType>
+mixture or unknown
+
+>  <ChemNote>
+unknown composition
+
+>  <ChemCount>
+1
+
+>  <StudyType>
+carcinogenicity
+
+>  <Species>
+rat
+
+>  <Endpoint>
+TD50, Tumor Target Sites
+
+>  <TD50 Rat>
+NP
+
+>  <Target Sites Rat Male>
+NP
+
+$$$$

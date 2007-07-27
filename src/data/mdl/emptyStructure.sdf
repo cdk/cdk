@@ -1,0 +1,42 @@
+
+ 
+
+  0  0  0  0  0  0  0  0  0  0  1 V2000
+M  END
+>  <DSSTox_ID>
+30
+
+>  <DSSTox_FileName>
+CPDBAS_v2a_1451_1Mar05
+
+>  <ChemName>
+Actinomycin C
+
+>  <CAS>
+8052-16-2
+
+>  <SubstanceType>
+mixture or unknown
+
+>  <ChemNote>
+unknown composition
+
+>  <ChemCount>
+1
+
+>  <StudyType>
+carcinogenicity
+
+>  <Species>
+rat
+
+>  <Endpoint>
+TD50, Tumor Target Sites
+
+>  <TD50 Rat>
+NP
+
+>  <Target Sites Rat Male>
+NP
+
+$$$$
