@@ -32,6 +32,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.test.CDKTestCase;
@@ -153,6 +154,12 @@ public class IteratingMDLReaderTest extends CDKTestCase {
             assertNotNull(object);
             assertTrue(object instanceof Molecule);
             molCount++;
+
+            if (molCount == 2) {
+                IMolecule mol = (IMolecule) object;
+                String s = (String) mol.getProperty("Species");
+                assertEquals("rat", s);
+            }
         }
 
         assertEquals(2, molCount);
