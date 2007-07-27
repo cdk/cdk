@@ -28,8 +28,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -37,10 +39,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -396,6 +395,27 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         assertEquals("TD50 Rat", obsKeys.get(5));
         assertEquals("ChemCount", obsKeys.get(11));
 
+    }
+
+    /**
+     * @cdk.bug 1732307
+
+     */
+    public void testZeroZCoordinates() throws CDKException {
+        String filename = "data/mdl/nozcoord.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        Properties prop = new Properties();
+        prop.setProperty("ForceReadAs3DCoordinates","true");
+        PropertiesListener listener = new PropertiesListener(prop);
+        reader.addChemObjectIOListener(listener);
+
+        IMolecule mol = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+        assertEquals(5, mol.getAtomCount());
+
+        boolean has3d = GeometryTools.has3DCoordinates(mol);
+        assertTrue(has3d);
     }
 
 }
