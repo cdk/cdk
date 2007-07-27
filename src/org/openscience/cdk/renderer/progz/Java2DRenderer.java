@@ -1,4 +1,7 @@
-package org.openscience.cdk.renderer;
+package org.openscience.cdk.renderer.progz;
+
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.renderer.IRenderer2D;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
