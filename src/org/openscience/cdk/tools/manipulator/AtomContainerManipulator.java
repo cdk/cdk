@@ -156,10 +156,10 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * @return The summed implicit + explicit hydrogens of the given IAtom.
+     * @return The number of explicit hydrogens on the given IAtom.
      */
-    public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
-        int hCount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+    public static int countExplicitHydrogens(IAtomContainer atomContainer, IAtom atom) {
+    	int hCount = 0;
         Iterator connectedAtoms = atomContainer.getConnectedAtomsList(atom).iterator(); 
         while (connectedAtoms.hasNext()) {
         	IAtom connectedAtom = (IAtom)connectedAtoms.next();
@@ -168,6 +168,14 @@ public class AtomContainerManipulator {
         }
         return hCount;
     }
+    /**
+     * @return The summed implicit + explicit hydrogens of the given IAtom.
+     */
+	public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
+        int hCount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        hCount += countExplicitHydrogens(atomContainer, atom);
+        return hCount;
+	}
 
     public static List getAllIDs(IAtomContainer mol) {
     	List idList = new ArrayList();
