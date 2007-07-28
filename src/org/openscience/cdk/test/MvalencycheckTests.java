@@ -23,6 +23,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.tools.CDKHydrogenAdderTest;
 import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogens;
 import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogensAndCharges;
 import org.openscience.cdk.test.tools.DeduceBondOrderTestFromHybridization;
@@ -54,6 +55,9 @@ public class MvalencycheckTests {
         suite.addTest(DeduceBondOrderTestFromHybridization.suite());
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogensAndCharges.suite());
+        
+        // the next generation valency tools that rely on CDKAtomTypeMatcher
+        suite.addTest(CDKHydrogenAdderTest.suite());
         
         return suite;
     }

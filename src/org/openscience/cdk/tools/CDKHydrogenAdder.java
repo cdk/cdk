@@ -38,7 +38,8 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * Assumes CDK atom types to be detected and adds missing hydrogens based on the
  * atom typing.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module valencycheck
  */
 public class CDKHydrogenAdder {
 
