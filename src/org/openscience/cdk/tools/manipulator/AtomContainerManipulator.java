@@ -28,6 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
@@ -150,6 +151,20 @@ public class AtomContainerManipulator {
             Integer ihcount = atomContainer.getAtom(i).getHydrogenCount();
             if (ihcount != CDKConstants.UNSET)
                 hCount += ihcount;
+        }
+        return hCount;
+    }
+
+    /**
+     * @return The summed implicit + explicit hydrogens of the given IAtom.
+     */
+    public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
+        int hCount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        Iterator connectedAtoms = atomContainer.getConnectedAtomsList(atom).iterator(); 
+        while (connectedAtoms.hasNext()) {
+        	IAtom connectedAtom = (IAtom)connectedAtoms.next();
+        	if (connectedAtom.getSymbol().equals(Elements.HYDROGEN.getSymbol()))
+        		hCount++;
         }
         return hCount;
     }
