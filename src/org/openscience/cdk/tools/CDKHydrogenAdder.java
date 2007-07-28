@@ -26,6 +26,7 @@ package org.openscience.cdk.tools;
 
 import java.util.Iterator;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -75,6 +76,9 @@ public class CDKHydrogenAdder {
 		IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
 		if (type == null)
 			throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
+		
+		if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
+			throw new CDKException("Atom type is too general; cannot decide the number of implicit hydrogen to add for: " + atom.getAtomTypeName());
 		
 		// very simply counting: each missing explicit neighbor is a missing hydrogen
 		atom.setHydrogenCount(
