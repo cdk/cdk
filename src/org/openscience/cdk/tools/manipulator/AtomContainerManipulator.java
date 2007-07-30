@@ -28,7 +28,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
@@ -163,7 +162,7 @@ public class AtomContainerManipulator {
         Iterator connectedAtoms = atomContainer.getConnectedAtomsList(atom).iterator(); 
         while (connectedAtoms.hasNext()) {
         	IAtom connectedAtom = (IAtom)connectedAtoms.next();
-        	if (connectedAtom.getSymbol().equals(Elements.HYDROGEN.getSymbol()))
+        	if (connectedAtom.getSymbol().equals("H"))
         		hCount++;
         }
         return hCount;

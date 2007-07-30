@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -47,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class CDKHydrogenAdderTest extends CDKTestCase {
 
 //	private final static LoggingTool logger = new LoggingTool(CDKHydrogenAdderTest.class);
-	private final static CDKHydrogenAdder adder = new CDKHydrogenAdder();
+	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	private final static CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
 	
     public CDKHydrogenAdderTest(String name) {

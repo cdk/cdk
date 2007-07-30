@@ -25,6 +25,8 @@
 package org.openscience.cdk.tools;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Hashtable;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -32,7 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Assumes CDK atom types to be detected and adds missing hydrogens based on the
@@ -43,13 +45,23 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class CDKHydrogenAdder {
 
-	private static AtomTypeFactory atomTypeList;
-	private final static String ATOM_TYPE_LIST = "org/openscience/cdk/config/data/cdk_atomtypes.xml";
-	
-	static {
-		atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, NoNotificationChemObjectBuilder.getInstance());
-	}
-	
+    private AtomTypeFactory atomTypeList;
+    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/config/data/cdk_atomtypes.xml";
+
+    private static Map<String,CDKHydrogenAdder> tables = new Hashtable<String,CDKHydrogenAdder>(3);
+
+    private CDKHydrogenAdder(IChemObjectBuilder builder) {
+        if (atomTypeList == null)
+            atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
+    }
+
+    public static CDKHydrogenAdder getInstance(IChemObjectBuilder builder) {
+        if (!tables.containsKey(builder.getClass().getName()))
+            tables.put(builder.getClass().getName(), new CDKHydrogenAdder(builder));
+        return tables.get(builder.getClass().getName());
+    }
+
+
 	/**
 	 * Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
 	 * 
