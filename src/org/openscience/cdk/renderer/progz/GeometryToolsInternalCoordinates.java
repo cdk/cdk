@@ -298,12 +298,9 @@ public class GeometryToolsInternalCoordinates {
 	 */
 	public static double[] getMinMax(IAtomContainer container) {
 		double maxX = Double.MIN_VALUE;
-		double
-				maxY = Double.MIN_VALUE;
-		double
-				minX = Double.MAX_VALUE;
-		double
-				minY = Double.MAX_VALUE;
+		double maxY = Double.MIN_VALUE;
+		double minX = Double.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
 		for (int i = 0; i < container.getAtomCount(); i++) {
 			IAtom atom = container.getAtom(i);
 			if (atom.getPoint2d() != null) {
@@ -599,7 +596,24 @@ public class GeometryToolsInternalCoordinates {
 
         return new int[]{begin1X, begin1Y, begin2X, begin2Y, end1X, end1Y, end2X, end2Y};
 	}
+	public static double[] distanceCalculator(double[] coords, double dist) {
+		double angle;
+		if ((coords[2] - coords[0]) == 0) {
+			angle = Math.PI / 2;
+		} else {
+			angle = Math.atan(((double) coords[3] - (double) coords[1]) / ((double) coords[2] - (double) coords[0]));
+		}
+		double begin1X = (Math.cos(angle + Math.PI / 2) * dist + coords[0]);
+		double begin1Y = (Math.sin(angle + Math.PI / 2) * dist + coords[1]);
+		double begin2X = (Math.cos(angle - Math.PI / 2) * dist + coords[0]);
+		double begin2Y = (Math.sin(angle - Math.PI / 2) * dist + coords[1]);
+		double end1X = (Math.cos(angle - Math.PI / 2) * dist + coords[2]);
+		double end1Y = (Math.sin(angle - Math.PI / 2) * dist + coords[3]);
+		double end2X = (Math.cos(angle + Math.PI / 2) * dist + coords[2]);
+		double end2Y = (Math.sin(angle + Math.PI / 2) * dist + coords[3]);
 
+        return new double[]{begin1X, begin1Y, begin2X, begin2Y, end1X, end1Y, end2X, end2Y};
+	}
 
 	/**
 	 *  Writes the coordinates of the atoms participating the given bond into an
@@ -911,7 +925,7 @@ public class GeometryToolsInternalCoordinates {
 		}
 		return true;
 	}
-
+	
 
 	/**
 	 *  Determines if this model contains 3D coordinates

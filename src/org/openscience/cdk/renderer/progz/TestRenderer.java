@@ -24,12 +24,27 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+//import org.openscience.cdk.interfaces.ISetOfMolecules;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+
 public class TestRenderer extends JPanel {
 
 	JFrame frame;
 	SwingPainter painter = new SwingPainter();
 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-	
+	protected IChemObjectBuilder builder;
+	public void setUp() {
+       	builder = DefaultChemObjectBuilder.getInstance();
+    }
 	public class RendererListner implements MouseListener {
 		public void mouseClicked(MouseEvent e) {
 			//System.out.println(e); 
@@ -49,17 +64,22 @@ public class TestRenderer extends JPanel {
 	}
 	
 	private TestRenderer() {
-		frame = new TestFrame();
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		painter = new SwingPainter();
 		//painter.addMouseMotionListener(new TestRendererMouseE());
 		//only react on mouse clicks for now
 		painter.addMouseListener(new RendererListner());
-
-		//IMolecule mol = MoleculeFactory.makeAlphaPinene();
-		IMolecule mol = MoleculeFactory.makeThiazole();
-		//IMolecule mol = MoleculeFactory.makeAlkane(18);
+		setUp();
+		
+		IMolecule mol;
+		//mol = MoleculeFactory.makeAlphaPinene();
+		mol = MoleculeFactory.makeThiazole();
+		//mol = MoleculeFactory.makeAlkane(3);
+		
+		//mol = MoleculeFactory.makeBenzene();
+		//mol = makeBenzene();
 		System.out.println("molecule: " + mol);
 		
 		
@@ -81,16 +101,9 @@ public class TestRenderer extends JPanel {
 	private void run() {
 		frame.setSize(400, 400);
 
-		frame.show();
+//		frame.show();
+		frame.setVisible(true);
 		
-	}
-
-	private class TestFrame extends JFrame {
-	    private static final long serialVersionUID = 1;
-
-	    private SwingPainter painter;
-	    
-	   
 	}
 	
 	/**
@@ -142,4 +155,59 @@ public class TestRenderer extends JPanel {
 			renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
 		}
 	}
+	public IMolecule makeBenzene() {
+		  IMolecule benzene = builder.newMolecule();
+
+		  System.out.println("testing..");
+		  IAtom atomC0 = new Atom("C");
+		    atomC0.setID("C0"); atomC0.setHydrogenCount(1);
+		  IAtom atomC1 = new Atom("C");
+		    atomC1.setID("C1"); atomC1.setHydrogenCount(1);
+		  IAtom atomC2 = new Atom("C");
+		    atomC2.setID("C2"); atomC2.setHydrogenCount(1);
+		  IAtom atomC3 = new Atom("C");
+		    atomC3.setID("C3"); atomC3.setHydrogenCount(1);
+		  IAtom atomC4 = new Atom("C"); 
+		    atomC4.setID("C4"); atomC4.setHydrogenCount(1);
+		  IAtom atomC5 = new Atom("C"); 
+		    atomC5.setID("C5"); atomC5.setHydrogenCount(1);
+
+		    atomC0.setFlag(CDKConstants.ISAROMATIC, true);
+		    atomC1.setFlag(CDKConstants.ISAROMATIC, true);
+		    atomC2.setFlag(CDKConstants.ISAROMATIC, true);
+		    atomC3.setFlag(CDKConstants.ISAROMATIC, true);
+		    atomC4.setFlag(CDKConstants.ISAROMATIC, true);
+		    atomC5.setFlag(CDKConstants.ISAROMATIC, true);
+
+		  IBond bondB0 = builder.newBond(atomC0, atomC1);
+		    bondB0.setElectronCount(2);
+		  IBond bondB1 = builder.newBond(atomC1, atomC2);
+		    bondB1.setElectronCount(2);
+		  IBond bondB2 = builder.newBond(atomC2, atomC3);
+		    bondB2.setElectronCount(2);
+		  IBond bondB3 = builder.newBond(atomC3, atomC4);
+		    bondB3.setElectronCount(2);
+		  IBond bondB4 = builder.newBond(atomC4, atomC5);
+		    bondB4.setElectronCount(2);
+		  IBond bondB5 = builder.newBond(atomC0, atomC5);
+		    bondB5.setElectronCount(2);
+
+		  IBond bondingSystem = builder.newBond();
+		    bondingSystem.setElectronCount(6);
+		    bondingSystem.setAtoms(
+		      new IAtom[] { atomC0, atomC1, atomC2, 
+		                    atomC3, atomC4, atomC5}
+		    );
+
+		  benzene.addAtom(atomC0); benzene.addAtom(atomC1);
+		  benzene.addAtom(atomC2); benzene.addAtom(atomC3);
+		  benzene.addAtom(atomC4); benzene.addAtom(atomC5);
+
+		  benzene.addBond(bondB0); benzene.addBond(bondB1);
+		  benzene.addBond(bondB2); benzene.addBond(bondB3);
+		  benzene.addBond(bondB4); benzene.addBond(bondB5);
+		  benzene.addBond(bondingSystem);
+
+		  return benzene;
+		}
 }
