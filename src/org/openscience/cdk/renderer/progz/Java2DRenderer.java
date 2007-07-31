@@ -254,13 +254,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		if (drawSymbol != true)
 			return;
 		
-	//	AffineTransform affine = graphics.getTransform();
-	//	Point2D srcPts = new Point2D.Double( ,  );
-	//	graphics.setTransform(new AffineTransform()); //set the graphics transform to the identity
-	//	Point2D desPts = srcPts; //new Point2D.Double();
-	//	desPts = affine.transform(srcPts, desPts); //get screencoordinates for atom
-		
-
 		FontRenderContext frc = graphics.getFontRenderContext();
 		TextLayout layout = new TextLayout(symbol, font, frc);
 		Rectangle2D bounds = layout.getBounds();
@@ -283,11 +276,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		graphics.setColor(atomColor);
 		layout.draw(graphics, screenX, screenY);
 
-	//	graphics.setTransform(affine);
-
 		graphics.setColor(saveColor);
-//		graphics.drawString(symbol, screenX, screenY );
-		
 	}
 	/**
 	 *  Paints a rectangle of the given color at the position of the given atom.
@@ -303,14 +292,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 		System.out.println("painting paintColouredAtomBackground now at " + x + " / " + y);
 		//FIXME: right size for this AtomRadius (currently estimate)
 		double atomRadius = 0.8;
-		//old one: 		int atomRadius = rendererModel.getAtomRadius();
 		
 		graphics.setColor(color);
-	/*	int[] coords = { x - (atomRadius / 2),
-				(int) r2dm.getRenderingCoordinate(atom).y + (atomRadius / 2)};
-		
-		int radius = (int) getScreenSize(atomRadius);
-		coords = getScreenCoordinates(coords);*/
+	
 		Rectangle2D shape = new Rectangle2D.Double();
 		shape.setFrame(x - (atomRadius / 2), y - (atomRadius / 2), atomRadius, atomRadius);
 		if(rendererModel.getIsCompact())
@@ -342,18 +326,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 					return false;
 		}
 		return isAromatic;
-	}
-	/**
-	 *  Paint a Bond in an aromatic ring, using CDK style, meaning grey inner
-	 *  bonds.
-	 */
-	public void paintAromaticRingBondCDKStyle(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
-	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
-		System.out.println("painting aromaticRingBondCDKStyle now at" + center);
-
-		paintSingleBond(bond, bondColor, graphics);
-		paintInnerBond(bond, ring, Color.lightGray, graphics);
 	}
 	public static double distance2points(Point2d a, Point2d b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
@@ -424,19 +396,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 			);
 		graphics.draw(linegood);
 		graphics.setColor(bondColor);
-		/* old code:
-		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
-		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));
-		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x), 2) + Math.pow((coords[3] - center.y), 2));
-		if (dist1 < dist2)
-		{
-			int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
-			paintOneBond(shortenBond(newCoords1, ring.getRingSize()), bondColor, graphics);
-		} else
-		{
-			int[] newCoords2 = {coords[2], coords[3], coords[4], coords[5]};
-			paintOneBond(shortenBond(newCoords2, ring.getRingSize()), bondColor, graphics);
-		}*/
+		
 	}
 
 	/**
@@ -483,18 +443,12 @@ public class Java2DRenderer implements IJava2DRenderer {
 				if (ringIsAromatic(ring) && rendererModel.getShowAromaticity())
 				{
 					logger.debug("Ring is aromatic");
-					if (rendererModel.getShowAromaticityInCDKStyle())
+					if (!painted_rings.contains(ring))
 					{
-						paintAromaticRingBondCDKStyle(currentBond, ring, bondColor, graphics);
-					} else
-					{
-						if (!painted_rings.contains(ring))
-						{
-							paintRingRing(ring, bondColor, graphics);
-							painted_rings.add(ring);
-						}
-						paintSingleBond(currentBond, bondColor, graphics);
+						paintRingRing(ring, bondColor, graphics);
+						painted_rings.add(ring);
 					}
+					paintSingleBond(currentBond, bondColor, graphics);
 				} else
 				{
 					logger.debug("Ring is *not* aromatic");
@@ -565,7 +519,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		System.out.println("painting paintWedgeBond now for: " + bond);
-
+		//TODO: rewrite this old code:
 		/*double wedgeWidth = r2dm.getBondWidth() * 2.0;
 		// this value should be made customazible
 
@@ -597,7 +551,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintDashedWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		System.out.println("painting paintDashedWedgeBond now for: " + bond);
-	/*	graphics.setColor(bondColor);
+		//TODO: rewrite this old code:
+/*	graphics.setColor(bondColor);
 
 		double bondLength = GeometryTools.getLength2D(bond, r2dm.getRenderingCoordinates());
 		int numberOfLines = (int) (bondLength / 4.0);
@@ -731,7 +686,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		
+		//TODO: rewrite this old code:
 		/*if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
 		{
 			int[] screencoords=getScreenCoordinates(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()));
@@ -795,7 +750,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		System.out.println("painting paintTripleBond now at " + bond.getAtom(0).getPoint2d());
 
 		paintSingleBond(bond, bondColor, graphics);
-
+		//TODO: rewrite this old code:
 	/*	int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
