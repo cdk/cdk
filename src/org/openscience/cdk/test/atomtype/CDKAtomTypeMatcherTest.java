@@ -29,14 +29,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
@@ -69,12 +67,40 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(matched);
-        Assert.assertEquals("C", matched.getSymbol());
+        assertAtomType(testedAtomTypes, "C.sp3", matched);
 
         Assert.assertEquals(thisHybridization, matched.getHybridization());
     }
 
+    @Test public void testEthene() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
 
+        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
+    }
+    
+    @Test public void testEthene_withHybridInfo() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        final int thisHybridization = CDKConstants.HYBRIDIZATION_SP2;
+        atom.setHybridization(thisHybridization);
+        atom2.setHybridization(thisHybridization);
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
+    }
+    
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
         Assert.assertNotNull(matcher);
