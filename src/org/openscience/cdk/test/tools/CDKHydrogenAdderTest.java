@@ -49,7 +49,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
 //	private final static LoggingTool logger = new LoggingTool(CDKHydrogenAdderTest.class);
 	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
-	private final static CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
+	private final static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	
     public CDKHydrogenAdderTest(String name) {
         super(name);

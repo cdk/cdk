@@ -19,7 +19,9 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -28,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -43,11 +45,23 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
-    private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-    		"org/openscience/cdk/config/data/cdk_atomtypes.xml",
-        	NoNotificationChemObjectBuilder.getInstance()
-        );
+	private AtomTypeFactory factory;
+	
+    private static Map<IChemObjectBuilder,CDKAtomTypeMatcher> factories = new Hashtable<IChemObjectBuilder,CDKAtomTypeMatcher>(3); 
     // private static LoggingTool logger = new LoggingTool(CDKAtomTypeMatcher.class);
+    
+    private CDKAtomTypeMatcher(IChemObjectBuilder builder) {
+    	factory = AtomTypeFactory.getInstance(
+			"org/openscience/cdk/config/data/cdk_atomtypes.xml",
+			builder
+		);
+    }
+    
+    public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
+    	if (!factories.containsKey(builder))
+    		factories.put(builder, new CDKAtomTypeMatcher(builder));
+    	return factories.get(builder);
+    }
     
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {

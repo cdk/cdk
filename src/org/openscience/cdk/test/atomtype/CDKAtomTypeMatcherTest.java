@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -53,7 +54,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testCDKAtomTypeMatcher() throws CDKException {
-        CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
@@ -64,7 +65,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         atom.setHybridization(thisHybridization);
         mol.addAtom(atom);
 
-        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
         Assert.assertNotNull(matched);
         assertAtomType(testedAtomTypes, "C.sp3", matched);
@@ -80,7 +81,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom2);
         mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
 
-        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
     }
@@ -96,13 +97,13 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom2);
         mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
 
-        CDKAtomTypeMatcher atm = new CDKAtomTypeMatcher();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
     }
     
     @Test public void testStructGenMatcher() throws Exception {
-        CDKAtomTypeMatcher matcher = new CDKAtomTypeMatcher();
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
 
