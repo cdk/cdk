@@ -68,6 +68,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         IAtomType type = null;
         type = perceiveCarbons(atomContainer, atom);
         if (type == null) type = perceiveOxygens(atomContainer, atom);
+        if (type == null) type = perceiveNitrogens(atomContainer, atom);
         return type;
     }
     
@@ -117,32 +118,65 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
     
     private IAtomType perceiveOxygens(IAtomContainer atomContainer, IAtom atom)
-		throws CDKException {
-	if ("O".equals(atom.getSymbol())) {
-		// if hybridization is given, use that
-		if (atom.getHybridization() != CDKConstants.UNSET) {
-			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
-    			return factory.getAtomType("O.sp2");
-			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
-				return factory.getAtomType("O.sp3");
-			}
-		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
-				atom.getFormalCharge() != 0) {
-			// FIXME: I don't perceive charged atoms yet
-			return null;
-		} else if (atomContainer.getConnectedBondsCount(atom) > 2) {
-			// FIXME: I don't perceive carbons with more than 4 connections yet
-			return null;
-		} else { // OK, use bond order info
-			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-				return factory.getAtomType("O.sp2");
-			} else {
-				return factory.getAtomType("O.sp3");
-			}
-		}
-	}
-	return null;
-}
+    	throws CDKException {
+    	if ("O".equals(atom.getSymbol())) {
+    		// if hybridization is given, use that
+    		if (atom.getHybridization() != CDKConstants.UNSET) {
+    			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    				return factory.getAtomType("O.sp2");
+    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+    				return factory.getAtomType("O.sp3");
+    			}
+    		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() != 0) {
+    			// FIXME: I don't perceive charged atoms yet
+    			return null;
+    		} else if (atomContainer.getConnectedBondsCount(atom) > 2) {
+    			// FIXME: I don't perceive carbons with more than 4 connections yet
+    			return null;
+    		} else { // OK, use bond order info
+    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    				return factory.getAtomType("O.sp2");
+    			} else {
+    				return factory.getAtomType("O.sp3");
+    			}
+    		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom)
+    	throws CDKException {
+    	if ("N".equals(atom.getSymbol())) {
+    		// if hybridization is given, use that
+    		if (atom.getHybridization() != CDKConstants.UNSET) {
+    			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP1) {
+    				return factory.getAtomType("N.sp1");
+    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    				return factory.getAtomType("N.sp2");
+    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+    				return factory.getAtomType("N.sp3");
+    			}
+    		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() != 0) {
+    			// FIXME: I don't perceive charged atoms yet
+    			return null;
+    		} else if (atomContainer.getConnectedBondsCount(atom) > 3) {
+    			// FIXME: I don't perceive carbons with more than 3 connections yet
+    			return null;
+    		} else { // OK, use bond order info
+    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    				return factory.getAtomType("N.sp3");
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    				return factory.getAtomType("N.sp2");
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
+    				return factory.getAtomType("N.sp1");
+    			}
+    		}
+    	}
+    	return null;
+    }
 }
 

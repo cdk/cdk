@@ -120,5 +120,70 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
     }
 
+    public void testHCN() throws CDKException {
+    	IMolecule molecule = new NNMolecule();
+    	IAtom newAtom = new NNAtom(Elements.CARBON);
+    	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
+    	molecule.addAtom(newAtom);
+    	molecule.addAtom(newAtom2);
+    	molecule.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
+    	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom, type);
+    	type = matcher.findMatchingAtomType(molecule, newAtom2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom2, type);
+    	
+    	assertNull(newAtom.getHydrogenCount());
+    	adder.addImplicitHydrogens(molecule);
+    	assertNotNull(newAtom.getHydrogenCount());
+    	assertNotNull(newAtom2.getHydrogenCount());
+    	assertEquals(1, newAtom.getHydrogenCount().intValue());	
+    	assertEquals(0, newAtom2.getHydrogenCount().intValue());	
+    }
+
+    public void testMethylAmine() throws CDKException {
+    	IMolecule molecule = new NNMolecule();
+    	IAtom newAtom = new NNAtom(Elements.CARBON);
+    	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
+    	molecule.addAtom(newAtom);
+    	molecule.addAtom(newAtom2);
+    	molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+    	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom, type);
+    	type = matcher.findMatchingAtomType(molecule, newAtom2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom2, type);
+    	
+    	assertNull(newAtom.getHydrogenCount());
+    	adder.addImplicitHydrogens(molecule);
+    	assertNotNull(newAtom.getHydrogenCount());
+    	assertNotNull(newAtom2.getHydrogenCount());
+    	assertEquals(3, newAtom.getHydrogenCount().intValue());	
+    	assertEquals(2, newAtom2.getHydrogenCount().intValue());	
+    }
+
+    public void testMethyleneImine() throws CDKException {
+    	IMolecule molecule = new NNMolecule();
+    	IAtom newAtom = new NNAtom(Elements.CARBON);
+    	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
+    	molecule.addAtom(newAtom);
+    	molecule.addAtom(newAtom2);
+    	molecule.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+    	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom, type);
+    	type = matcher.findMatchingAtomType(molecule, newAtom2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom2, type);
+    	
+    	assertNull(newAtom.getHydrogenCount());
+    	adder.addImplicitHydrogens(molecule);
+    	assertNotNull(newAtom.getHydrogenCount());
+    	assertNotNull(newAtom2.getHydrogenCount());
+    	assertEquals(2, newAtom.getHydrogenCount().intValue());	
+    	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
+    }
 }
 
