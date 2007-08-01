@@ -23,6 +23,7 @@ package org.openscience.cdk.test.tools;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -73,6 +74,50 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	adder.addImplicitHydrogens(molecule);
     	assertNotNull(newAtom.getHydrogenCount());
     	assertEquals(4, newAtom.getHydrogenCount().intValue());	
+    }
+
+    public void testFormaldehyde() throws CDKException {
+    	IMolecule molecule = new NNMolecule();
+    	IAtom newAtom = new NNAtom(Elements.CARBON);
+    	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
+    	molecule.addAtom(newAtom);
+    	molecule.addAtom(newAtom2);
+    	molecule.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+    	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom, type);
+    	type = matcher.findMatchingAtomType(molecule, newAtom2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom2, type);
+    	
+    	assertNull(newAtom.getHydrogenCount());
+    	adder.addImplicitHydrogens(molecule);
+    	assertNotNull(newAtom.getHydrogenCount());
+    	assertNotNull(newAtom2.getHydrogenCount());
+    	assertEquals(2, newAtom.getHydrogenCount().intValue());	
+    	assertEquals(0, newAtom2.getHydrogenCount().intValue());	
+    }
+
+    public void testMethanol() throws CDKException {
+    	IMolecule molecule = new NNMolecule();
+    	IAtom newAtom = new NNAtom(Elements.CARBON);
+    	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
+    	molecule.addAtom(newAtom);
+    	molecule.addAtom(newAtom2);
+    	molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+    	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom, type);
+    	type = matcher.findMatchingAtomType(molecule, newAtom2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(newAtom2, type);
+    	
+    	assertNull(newAtom.getHydrogenCount());
+    	adder.addImplicitHydrogens(molecule);
+    	assertNotNull(newAtom.getHydrogenCount());
+    	assertNotNull(newAtom2.getHydrogenCount());
+    	assertEquals(3, newAtom.getHydrogenCount().intValue());	
+    	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
     }
 
 }

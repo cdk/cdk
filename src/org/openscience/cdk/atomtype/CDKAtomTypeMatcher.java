@@ -67,6 +67,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         throws CDKException {
         IAtomType type = null;
         type = perceiveCarbons(atomContainer, atom);
+        if (type == null) type = perceiveOxygens(atomContainer, atom);
         return type;
     }
     
@@ -115,5 +116,33 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
     
+    private IAtomType perceiveOxygens(IAtomContainer atomContainer, IAtom atom)
+		throws CDKException {
+	if ("O".equals(atom.getSymbol())) {
+		// if hybridization is given, use that
+		if (atom.getHybridization() != CDKConstants.UNSET) {
+			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    			return factory.getAtomType("O.sp2");
+			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+				return factory.getAtomType("O.sp3");
+			}
+		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+				atom.getFormalCharge() != 0) {
+			// FIXME: I don't perceive charged atoms yet
+			return null;
+		} else if (atomContainer.getConnectedBondsCount(atom) > 2) {
+			// FIXME: I don't perceive carbons with more than 4 connections yet
+			return null;
+		} else { // OK, use bond order info
+			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+				return factory.getAtomType("O.sp2");
+			} else {
+				return factory.getAtomType("O.sp3");
+			}
+		}
+	}
+	return null;
+}
 }
 
