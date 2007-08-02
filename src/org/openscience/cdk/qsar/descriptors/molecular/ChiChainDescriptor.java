@@ -64,6 +64,12 @@ import java.util.List;
  * <li>VCH-6 - Valence chain, order 6
  * </ol>
  *
+ * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+ * the various fragments. As a result calculations may be slow. In addition, recent
+ * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
+ * branches etc.) whereas these descriptors use the older more complex fragment
+ * definitions.
+ *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
  * @cdk.module qsar

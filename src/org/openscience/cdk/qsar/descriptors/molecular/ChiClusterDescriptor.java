@@ -62,6 +62,12 @@ import java.util.List;
  * <li>VC-5 - Valence cluster, order 5
  * <li>VC-6 - Valence cluster, order 6
  * </ol>
+ * <p/>
+ * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+ * the various fragments. As a result calculations may be slow. In addition, recent
+ * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
+ * branches etc.) whereas these descriptors use the older more complex fragment
+ * definitions.
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13

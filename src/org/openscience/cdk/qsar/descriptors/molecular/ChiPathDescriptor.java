@@ -60,6 +60,12 @@ import java.util.List;
  * <li>SP-0, SP-1, ..., SP-7 - Simple path, orders 0 to 7
  * <li>VP-0, VP-1, ..., VP-7 - Valence path, orders 0 to 7
  * </ol>
+ * <p/>
+ * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+ * the various fragments. As a result calculations may be slow. In addition, recent
+ * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
+ * branches etc.) whereas these descriptors use the older more complex fragment
+ * definitions.
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
