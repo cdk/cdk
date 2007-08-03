@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="html.xsl"?>
 <atomTypeList xmlns="http://www.xml-cml.org/schema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml25b1.xsd"
