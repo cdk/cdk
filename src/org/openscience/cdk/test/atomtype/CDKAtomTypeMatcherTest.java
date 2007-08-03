@@ -53,7 +53,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         return new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class);
     }
 
-    @Test public void testCDKAtomTypeMatcher() throws CDKException {
+    @Test public void testGetInstance_IChemObjectBuilder() throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
     }
