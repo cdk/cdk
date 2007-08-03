@@ -14,7 +14,7 @@
         <html>
             <head>
                 <title>
-                    <xsl:value-of select="//@rdf:about"/>
+                    <xsl:value-of select="/cml:atomTypeList/@title"/>
                     <style type="text/css"> 
                       body { font-family: Verdana,Arial,Helvetica, sans-serif; font-size: 11px; }
                       td { font-family: Verdana,Arial,Helvetica, sans-serif; font-size: 11px; }
@@ -25,20 +25,22 @@
             <body>
                <h2>Atom Types</h2>
                <xsl:element name="div">
-                  <xsl:apply-templates select="//cml:atomType"/>
+                  <table>
+                    <xsl:apply-templates select="//cml:atomType"/>
+                  </table>
                </xsl:element>
 
             </body>
         </html>
     </xsl:template>
 
-    <xsl:template match="//iupac:inchi">
+    <xsl:template match="//cml:atomType">
         <tr>
-            <td class="header">
-                <xsl:text>InChI</xsl:text>
+            <td>
+                <xsl:value-of select="./@id"/>
             </td>
             <td>
-                <span property="chem:inchi"><xsl:value-of select="."/></span>
+                <xsl:value-of select="./cml:scalar[@dataType='cdk:hybridization']"/>
             </td>
         </tr>
     </xsl:template>
