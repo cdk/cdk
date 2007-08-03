@@ -29,7 +29,7 @@ import java.util.BitSet;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -108,7 +108,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 				bs.set(size-26+i); // 26 := RESERVED_BITS+1
 		}
 		if(rs==null){
-			rs=new SSSRFinder(ac).findSSSR();
+			rs=new AllRingsFinder().findAllRings(ac);
 		}
 		for(int i=0;i<7;i++){
 			if(rs.getAtomContainerCount()>i)
