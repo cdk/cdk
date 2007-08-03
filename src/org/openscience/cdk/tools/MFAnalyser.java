@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2002-2007  Christoph Steinbeck
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -44,8 +44,10 @@ import java.util.*;
  * MFAnalyser(IAtomContainer ac, boolean useboth) and set useboth to true, all explicit Hs and all implicit Hs are used, 
  * the implicit ones also on atoms with explicit Hs.
  *
- * @author         seb
- * @cdk.created    13. April 2005
+ * @author         Christoph Steinbeck
+ * @author         Stefan Kuhn
+ * @author         Egon Willighagen
+ * @cdk.created    MFAnalyser
  * @cdk.module     standard
  * @cdk.keyword    molecule, molecular mass
  * @cdk.keyword    molecule, molecular formula
@@ -251,23 +253,23 @@ public class MFAnalyser {
 		}
 		IAtomContainer ac = getAtomContainer();
 		IIsotope h = si.getMajorIsotope("H");
-		Map symbols=this.getSymolMap(ac);
-		Iterator it = symbols.keySet().iterator();
+		Map<String, Integer> symbols=this.getSymolMap(ac);
+		Iterator<String> it = symbols.keySet().iterator();
 		while (it.hasNext()) {
-			String key = (String)it.next();
+			String key = it.next();
 			if (key.equals("H")){
 				if(useboth){
-					mass += this.getNaturalMass(h)*HCount;
+					mass += MFAnalyser.getNaturalMass(h)*HCount;
 				}else{
 					if (symbols.get(key) != null) {
-						mass += getNaturalMass(h)*((Integer)symbols.get(key)).intValue();
+						mass += getNaturalMass(h)*symbols.get(key).intValue();
 					} else {
 						mass += getNaturalMass(h)*HCount;					
 					}
 				}
 			}else{
 				IElement i = si.getElement(key);
-				mass += getNaturalMass(i)*((Integer)symbols.get(key)).intValue();
+				mass += getNaturalMass(i)*symbols.get(key).intValue();
 			}
 		}
 		return mass;
@@ -284,9 +286,9 @@ public class MFAnalyser {
 	public IAtomContainer removeHydrogensPreserveMultiplyBonded() {
 		IAtomContainer ac = getAtomContainer();
 
-		List h = new ArrayList();
+		List<IAtom> h = new ArrayList<IAtom>();
 		// H list.
-		List multi_h = new ArrayList();
+		List<IAtom> multi_h = new ArrayList<IAtom>();
 		// multiply bonded H
 
 		// Find multiply bonded H.
@@ -319,12 +321,12 @@ public class MFAnalyser {
 	 * @return           The mol without Hs.
 	 * @cdk.keyword      hydrogen, removal
 	 */
-	private IAtomContainer removeHydrogens(List preserve) {
+	private IAtomContainer removeHydrogens(List<IAtom> preserve) {
 		IAtomContainer ac = getAtomContainer();
 
-		Map map = new HashMap();
+		Map<IAtom,IAtom> map = new HashMap<IAtom,IAtom>();
 		// maps original atoms to clones.
-		List remove = new ArrayList();
+		List<IAtom> remove = new ArrayList<IAtom>();
 		// lists removed Hs.
 
 		// Clone atoms except those to be removed.
@@ -381,18 +383,18 @@ public class MFAnalyser {
 					logger.error("Could not clone: ", ac.getBond(i));
 					logger.debug(e);
 				}
-				clone.setAtoms(new IAtom[]{(IAtom) map.get(atom0), (IAtom) map.get(atom1)});
+				clone.setAtoms(new IAtom[]{map.get(atom0), map.get(atom1)});
 				mol.addBond(clone);
 			}
 		}
 
 		// Recompute hydrogen counts of neighbours of removed Hydrogens.
-		for (Iterator i = remove.iterator();
+		for (Iterator<IAtom> i = remove.iterator();
 				i.hasNext(); ) {
 			// Process neighbours.
-			for (Iterator n = ac.getConnectedAtomsList((IAtom) i.next()).iterator();
+			for (Iterator n = ac.getConnectedAtomsList(i.next()).iterator();
 					n.hasNext(); ) {
-				final IAtom neighb = (IAtom) map.get(n.next());
+				final IAtom neighb = map.get(n.next());
 				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
 			}
 		}
@@ -407,8 +409,8 @@ public class MFAnalyser {
 	 * @return         The heavyAtoms value
 	 * @cdk.keyword    hydrogen, removal
 	 */
-	public List getHeavyAtoms() {
-		ArrayList newAc = new ArrayList();
+	public List<IAtom> getHeavyAtoms() {
+		List<IAtom> newAc = new ArrayList<IAtom>();
 		IAtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			if (!ac.getAtom(f).getSymbol().equals(H_ELEMENT_SYMBOL)) {
@@ -489,13 +491,12 @@ public class MFAnalyser {
 	 * @param ac the atomcontainer to calculate with
 	 * @return the hashmap
 	 */
-	private Map getSymolMap(IAtomContainer ac){
+	private Map<String, Integer> getSymolMap(IAtomContainer ac){
 		String symbol;
-		SortedMap symbols = new TreeMap();
+		SortedMap<String,Integer> symbols = new TreeMap<String,Integer>();
 		IAtom atom = null;
 		HCount=0;
 		for (int f = 0; f < ac.getAtomCount(); f++) {
-			int hs=0;
 			atom = ac.getAtom(f);
 			symbol = atom.getSymbol();
 			if(useboth){
@@ -505,13 +506,13 @@ public class MFAnalyser {
 				HCount += atom.getHydrogenCount();
 			}
 			if (symbols.get(symbol) != null) {
-				symbols.put(symbol, new Integer(((Integer) symbols.get(symbol)).intValue() + 1));
+				symbols.put(symbol, symbols.get(symbol) + 1);
 			} else {
-				symbols.put(symbol, new Integer(1));
+				symbols.put(symbol, 1);
 			}
 		}
 		if(useboth && symbols.get(H_ELEMENT_SYMBOL)!=null)
-				HCount+=((Integer)symbols.get(H_ELEMENT_SYMBOL)).intValue();
+				HCount+=symbols.get(H_ELEMENT_SYMBOL).intValue();
 		return symbols;
 	}
 	
@@ -523,9 +524,8 @@ public class MFAnalyser {
 	 * @return     a string containing the molecular formula.
 	 */
 	public String analyseAtomContainer(IAtomContainer ac) {
-		String symbol;
 		String mf = "";
-		Map symbols = this.getSymolMap(ac);
+		Map<String, Integer> symbols = this.getSymolMap(ac);
 		mf = addSymbolToFormula(symbols, "C", mf);
 		if(useboth){
 			if (HCount > 0)
@@ -549,7 +549,7 @@ public class MFAnalyser {
 		mf = addSymbolToFormula(symbols, "O", mf);
 		mf = addSymbolToFormula(symbols, "S", mf);
 		mf = addSymbolToFormula(symbols, "P", mf);
-		Iterator it = symbols.keySet().iterator();
+		Iterator<String> it = symbols.keySet().iterator();
 		while (it.hasNext()) {
 			Object key = it.next();
 			if (!((String) key).equals("C") && !((String) key).equals(H_ELEMENT_SYMBOL) && !((String) key).equals("N") && !((String) key).equals("O") && !((String) key).equals("S") && !((String) key).equals("P")) {
@@ -568,7 +568,7 @@ public class MFAnalyser {
 	 * @param  formula  The chemical formula
 	 * @return          Description of the Return Value
 	 */
-	private String addSymbolToFormula(Map sm, String symbol, String formula) {
+	private String addSymbolToFormula(Map<String, Integer> sm, String symbol, String formula) {
 		if (sm.get(symbol) != null) {
 			formula += symbol;
 			if (!sm.get(symbol).equals(new Integer(1))) {
@@ -607,18 +607,18 @@ public class MFAnalyser {
 	 * @return    The elements value
 	 * @see       ElementComparator
 	 */
-	public List getElements() {
-		TreeSet elements = new TreeSet(new ElementComparator());
+	public List<String> getElements() {
+		TreeSet<String> elements = new TreeSet<String>((Comparator<? super String>)new ElementComparator());
 		for (int f = 0; f < atomContainer.getAtomCount(); f++) {
 			String symbol = atomContainer.getAtom(f).getSymbol();
 			if (!elements.contains(symbol)) {
 				elements.add(symbol);
 			}
 		}
-		List results = new ArrayList();
-		Iterator iter = elements.iterator();
+		List<String> results = new ArrayList<String>();
+		Iterator<String> iter = elements.iterator();
 		while (iter.hasNext()) {
-			results.add((String) iter.next());
+			results.add(iter.next());
 		}
 		return results;
 	}
@@ -667,11 +667,11 @@ public class MFAnalyser {
 	 *
 	 * @return    a Hashtable, keys are the elemental symbols and values are their no.
 	 */
-	public Map getFormulaHashtable() {
-		Map formula = new HashMap();
-		List elements = this.getElements();
+	public Map<String, Integer> getFormulaHashtable() {
+		Map<String, Integer> formula = new HashMap<String, Integer>();
+		List<String> elements = this.getElements();
 		for (int i = 0; i < elements.size(); i++) {
-			Integer numOfAtom = new Integer(this.getAtomCount((String) elements.get(i)));
+			Integer numOfAtom = new Integer(this.getAtomCount(elements.get(i)));
 			formula.put(elements.get(i), numOfAtom);
 		}
 		return formula;
