@@ -29,6 +29,8 @@ import java.util.BitSet;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -106,6 +108,57 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+	}
+	
+	/*
+	 * this test only works with allringsfinder in fingerprinter
+	 */
+	public void testDifferentRingFinders()throws Exception{
+		IFingerprinter fingerprinter = new ExtendedFingerprinter();
+		Molecule ac1=new Molecule();
+		Atom atom1=new Atom("C");
+		Atom atom2=new Atom("C");
+		Atom atom3=new Atom("C");
+		Atom atom4=new Atom("C");
+		Atom atom5=new Atom("C");
+		Atom atom6=new Atom("C");
+		ac1.addAtom(atom1);
+		ac1.addAtom(atom2);
+		ac1.addAtom(atom3);
+		ac1.addAtom(atom4);
+		ac1.addAtom(atom5);
+		ac1.addAtom(atom6);
+		Bond bond1=new Bond(atom1,atom2);
+		Bond bond2=new Bond(atom2,atom3);
+		Bond bond3=new Bond(atom3,atom4);
+		Bond bond4=new Bond(atom4,atom5);
+		Bond bond5=new Bond(atom5,atom6);
+		Bond bond6=new Bond(atom6,atom1);
+		ac1.addBond(bond1);
+		ac1.addBond(bond2);
+		ac1.addBond(bond3);
+		ac1.addBond(bond4);
+		ac1.addBond(bond5);
+		ac1.addBond(bond6);
+		Molecule ac2=new Molecule();
+		ac2.addAtom(atom1);
+		ac2.addAtom(atom2);
+		ac2.addAtom(atom3);
+		ac2.addAtom(atom4);
+		ac2.addAtom(atom5);
+		ac2.addAtom(atom6);
+		Bond bond7=new Bond(atom3,atom1);
+		ac2.addBond(bond1);
+		ac2.addBond(bond2);
+		ac2.addBond(bond3);
+		ac2.addBond(bond4);
+		ac2.addBond(bond5);
+		ac2.addBond(bond6);
+		ac2.addBond(bond7);
+		BitSet bs = fingerprinter.getFingerprint(ac1);
+		BitSet bs1 = fingerprinter.getFingerprint(ac2);
+		assertTrue(FingerprinterTool.isSubset(bs1, bs));	
+		
 	}
 	
 }
