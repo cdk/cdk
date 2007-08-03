@@ -102,7 +102,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 		BitSet bs = fingerprinter.getFingerprint(ac);
 		int size = this.getSize();
 		MFAnalyser mfa=new MFAnalyser(ac);
-		float weight=mfa.getCanonicalMass();
+		float weight=mfa.getNaturalMass();
 		for(int i=1;i<11;i++){
 			if(weight>(100*i))
 				bs.set(size-26+i); // 26 := RESERVED_BITS+1

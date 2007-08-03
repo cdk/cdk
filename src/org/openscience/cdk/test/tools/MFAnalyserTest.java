@@ -29,7 +29,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -232,18 +231,9 @@ public class MFAnalyserTest extends CDKTestCase {
         assertEquals(1.0079760, MFAnalyser.getNaturalMass(new Element("H")), 0.1);
     }
     
-    public void testGetCanonicalMass_IElement() throws Exception {
-        assertEquals(1.0079760, MFAnalyser.getCanonicalMass(Elements.HYDROGEN), 0.1);
-    }
-    
     public void testGetNaturalMass() throws Exception {
     	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
     	assertEquals((float)209.0692 , mfa.getNaturalMass() ,.001);
-    }
-    
-    public void testGetCanonicalMass() throws Exception {
-    	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
-    	assertEquals((float)209.06982 , mfa.getCanonicalMass() ,.001);
     }
     
     public void testGetHTMLMolecularFormulaWithCharge() {
@@ -272,7 +262,6 @@ public class MFAnalyserTest extends CDKTestCase {
 		hAdder.addExplicitHydrogensToSatisfyValency(mol);
 		MFAnalyser mfa=new MFAnalyser(mol);
 		assertEquals((float)187.2382 , mfa.getNaturalMass() ,.001);
-		assertEquals((float)187.23773 , mfa.getCanonicalMass() ,.001);
 		assertEquals("C12H13NO",mfa.getMolecularFormula());
     }
 }
