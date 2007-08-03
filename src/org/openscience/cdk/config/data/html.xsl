@@ -2,6 +2,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:cml="http://www.xml-cml.org/schema"
+    xmlns:cdk="http://cdk.sf.net/dict/cdk/"
 
     exclude-result-prefixes="cml">
  
@@ -26,6 +27,10 @@
                <h2>Atom Types</h2>
                <xsl:element name="div">
                   <table>
+                    <td><b>identifier</b></td>
+                    <td><b>element</b></td>
+                    <td><b>formal charge</b></td>
+                    <td><b>hybridization</b></td>
                     <xsl:apply-templates select="//cml:atomType"/>
                   </table>
                </xsl:element>
@@ -36,12 +41,10 @@
 
     <xsl:template match="//cml:atomType">
         <tr>
-            <td>
-                <xsl:value-of select="./@id"/>
-            </td>
-            <td>
-                <xsl:value-of select="./cml:scalar[@dataType='cdk:hybridization']"/>
-            </td>
+            <td><xsl:value-of select="./@id"/></td>
+            <td><xsl:value-of select="./cml:atom/@elementType"/></td>
+            <td><xsl:value-of select="./cml:atom/@formalCharge"/></td>
+            <td><xsl:value-of select="./cml:scalar[@dictRef='cdk:hybridization']"/></td>
         </tr>
     </xsl:template>
 
