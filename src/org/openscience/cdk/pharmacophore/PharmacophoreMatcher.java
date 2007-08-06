@@ -14,10 +14,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 
 import javax.vecmath.Point3d;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -210,38 +207,49 @@ public class PharmacophoreMatcher {
         return matchingPAtoms;
     }
 
+    /**
+     * Get the uniue matching pharmacophore groups.
+     * <p/>
+     * The method should be called after performing the match, otherwise the return value is null.
+     * The method returns a List of List's. Each List represents the pharmacophore groups in the
+     * target molecule that matched the query. Each pharmacophore group contains the indices of the
+     * atoms (in the target molecule) that correspond to the group.
+     * <p/>
+     * This is analogous to the USA form of return value from a SMARTS match.
+     *
+     * @return a List of a List of pharmacophore groups in the target molecule that match the query
+     * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
+     */
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
-         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
-        for (List<PharmacophoreAtom> atomMapping : matchingPAtoms) {
-            /*
+        List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
 
-            // see if this sequence of atom indices is present
-            // in the return container
-            boolean present = false;
-            for (List<Integer> r : ret) {
-                if (r.size() != atomMapping.size()) continue;
-                Collections.sort(r);
-                boolean matches = true;
-                for (int i = 0; i < atomMapping.size(); i++) {
-                    int index1 = atomMapping.get(i);
-                    int index2 = r.get(i);
-                    if (index1 != index2) {
-                        matches = false;
-                        break;
-                    }
-                }
-                if (matches) {
-                    present = true;
-                    break;
+        List<String> tmp = new ArrayList<String>();
+        for (List<PharmacophoreAtom> pmatch : matchingPAtoms) {
+            List<Integer> ilist = new ArrayList<Integer>();
+            for (PharmacophoreAtom patom : pmatch) {
+                int[] indices = patom.getMatchingAtoms();
+                for (int i : indices) {
+                    if (!ilist.contains(i)) ilist.add(i);
                 }
             }
-            if (!present) ret.add(atomMapping);
-            */
+            Collections.sort(ilist);
+
+            // convert the list of ints to a string
+            String s = "";
+            for (int i : ilist) s += i;
+            tmp.add(s);
         }
 
-//        return ret;
-        
-            return null;
+        // now we go through our integer list and see if we can get rid of duplicates
+        List<String> utmp = new ArrayList<String>();
+        for (int i = 0; i < tmp.size(); i++) {
+            String ilist = tmp.get(i);
+            if (!utmp.contains(ilist)) {
+                utmp.add(ilist);
+                ret.add(matchingPAtoms.get(i));
+            }
+        }
+        return ret;
     }
 
     /**
