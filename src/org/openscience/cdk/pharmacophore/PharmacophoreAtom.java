@@ -52,6 +52,11 @@ public class PharmacophoreAtom extends Atom {
         this.smarts = pharmacophoreAtom.getSmarts();
         this.symbol = pharmacophoreAtom.getSymbol();
         setPoint3d(new Point3d(pharmacophoreAtom.getPoint3d()));
+        if (pharmacophoreAtom.getMatchingAtoms() != null) {
+            int[] indices = pharmacophoreAtom.getMatchingAtoms();
+            matchingAtoms = new int[indices.length];
+            System.arraycopy(indices, 0, matchingAtoms, 0, indices.length);
+        }
     }
 
     /**
