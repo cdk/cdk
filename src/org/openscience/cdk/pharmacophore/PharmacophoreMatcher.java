@@ -210,6 +210,40 @@ public class PharmacophoreMatcher {
         return matchingPAtoms;
     }
 
+    public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
+         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
+        for (List<PharmacophoreAtom> atomMapping : matchingPAtoms) {
+            /*
+
+            // see if this sequence of atom indices is present
+            // in the return container
+            boolean present = false;
+            for (List<Integer> r : ret) {
+                if (r.size() != atomMapping.size()) continue;
+                Collections.sort(r);
+                boolean matches = true;
+                for (int i = 0; i < atomMapping.size(); i++) {
+                    int index1 = atomMapping.get(i);
+                    int index2 = r.get(i);
+                    if (index1 != index2) {
+                        matches = false;
+                        break;
+                    }
+                }
+                if (matches) {
+                    present = true;
+                    break;
+                }
+            }
+            if (!present) ret.add(atomMapping);
+            */
+        }
+
+//        return ret;
+        
+            return null;
+    }
+
     /**
      * Get the query pharmacophore
      *
