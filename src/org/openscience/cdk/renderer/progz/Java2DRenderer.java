@@ -17,6 +17,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D.Double;
 import java.awt.geom.Ellipse2D;
+import java.awt.Polygon;
+import java.awt.geom.GeneralPath;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -182,10 +184,16 @@ public class Java2DRenderer implements IJava2DRenderer {
 	}
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
-		//System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
+		System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
 		Font font;
-		font = new Font("Serif", Font.PLAIN, 20);
-		
+		//font = new Font("Serif", Font.PLAIN, 20);
+		if (rendererModel.getFont() != null) {
+			font = rendererModel.getFont();
+			System.out.println("the font is now: " + font);
+		}
+		else 
+			font = new Font("Arial", Font.PLAIN, 20);
+
 		float fscale = 25;
 		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
 		AffineTransform trans = new AffineTransform(transmatrix);
@@ -330,7 +338,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public static double distance2points(Point2d a, Point2d b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 	}
-
+	public static double distance2points(double x0, double y0, double x1, double y1) {
+		return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
+	}
 	/**
 	 *  Paints the inner bond of a double bond that is part of a ring.
 	 *
@@ -518,30 +528,48 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		System.out.println("painting paintWedgeBond now for: " + bond);
-		//TODO: rewrite this old code:
-		/*double wedgeWidth = r2dm.getBondWidth() * 2.0;
-		// this value should be made customazible
+		System.out.print("painting paintWedgeBond now for: " + bond);
+		double wedgeWidth = rendererModel.getBondWidth() /10;
+		//perhaps introduce a new setting instead of using getBondWidth here
+		System.out.println(" wedgeWidth: " + wedgeWidth);
+		
+		double x0, x1, y0, y1;
 
-		int[] coords = GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates());
-		int[] screenCoords = getScreenCoordinates(coords);
-		graphics.setColor(bondColor);
-		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
-		int[] newScreenCoords = getScreenCoordinates(newCoords);
 		if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
-		{
-			int[] xCoords = {screenCoords[0], newScreenCoords[6], newScreenCoords[4]};
-			int[] yCoords = {screenCoords[1], newScreenCoords[7], newScreenCoords[5]};
-			graphics.fillPolygon(xCoords, yCoords, 3);
+		{ //FIXME: check if this is correct, I think the difference between STEREO_BOND_UP and the 
+			//other is which is the 'startpoint', please tell me (Nout) if this is correct. 
+			x0 = bond.getAtom(0).getPoint2d().x;
+			x1 = bond.getAtom(1).getPoint2d().x;
+			y0 = bond.getAtom(0).getPoint2d().y;
+			y1 = bond.getAtom(1).getPoint2d().y;
 		} else
 		{
-			int[] xCoords = {screenCoords[2], newScreenCoords[0], newScreenCoords[2]};
-			int[] yCoords = {screenCoords[3], newScreenCoords[1], newScreenCoords[3]};
-			graphics.fillPolygon(xCoords, yCoords, 3);
-		}*/
+			x1 = bond.getAtom(0).getPoint2d().x;
+			x0 = bond.getAtom(1).getPoint2d().x;
+			y1 = bond.getAtom(0).getPoint2d().y;
+			y0 = bond.getAtom(1).getPoint2d().y;
+		}
+		double angle;
+		if ((x1 - x0) == 0) {
+			angle = Math.PI / 2;
+		} else {
+			angle = Math.atan((y1 - y0) / (x1 - x0));
+		}
+		float newxup = (float)(x1 - Math.sin(angle) * wedgeWidth);
+		float newyup = (float)(y1 + Math.cos(angle) * wedgeWidth);
+		
+		float newxdown = (float)(x1 + Math.sin(angle) * wedgeWidth);
+		float newydown = (float)(y1 - Math.cos(angle) * wedgeWidth);
+		
+		GeneralPath p = new GeneralPath(); //create a triangle with GenaralPath
+		p.moveTo((float)x0, (float)y0);
+		p.lineTo(newxup, newyup);
+		p.lineTo(newxdown, newydown);
+		p.closePath();
+		
+		graphics.setColor(bondColor);
+        graphics.fill(p);
 	}
-
-
 	/**
 	 *  Paints the given bond as a dashed wedge bond.
 	 *
@@ -551,43 +579,55 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintDashedWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		System.out.println("painting paintDashedWedgeBond now for: " + bond);
-		//TODO: rewrite this old code:
-/*	graphics.setColor(bondColor);
+		//TODO: (in progress :p) rewrite this old code:
+		double wedgeWidth = rendererModel.getBondWidth() /10;
+		double bondWidth = rendererModel.getBondWidth() / 40;
+		double x0, x1, y0, y1;
 
-		double bondLength = GeometryTools.getLength2D(bond, r2dm.getRenderingCoordinates());
-		int numberOfLines = (int) (bondLength / 4.0);
-		// this value should be made customizable
-		double wedgeWidth = r2dm.getBondWidth() * 2.0;
-		// this value should be made customazible
-
-		double widthStep = wedgeWidth / (double) numberOfLines;
-		Point2d point1 = r2dm.getRenderingCoordinate(bond.getAtom(0));
-		Point2d point2 = r2dm.getRenderingCoordinate(bond.getAtom(1));
-		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN_INV)
+		if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
+		{ //FIXME: check if this is correct, I think the difference between STEREO_BOND_UP and the 
+			//other is which is the 'startpoint', please tell me (Nout) if this is correct. 
+			x0 = bond.getAtom(0).getPoint2d().x;
+			x1 = bond.getAtom(1).getPoint2d().x;
+			y0 = bond.getAtom(0).getPoint2d().y;
+			y1 = bond.getAtom(1).getPoint2d().y;
+		} else
 		{
-			// draw the wedge bond the other way around
-			point1 = r2dm.getRenderingCoordinate(bond.getAtom(1));
-			point2 = r2dm.getRenderingCoordinate(bond.getAtom(0));
+			x1 = bond.getAtom(0).getPoint2d().x;
+			x0 = bond.getAtom(1).getPoint2d().x;
+			y1 = bond.getAtom(0).getPoint2d().y;
+			y0 = bond.getAtom(1).getPoint2d().y;
 		}
-		Vector2d lengthStep = new Vector2d(point2);
-		lengthStep.sub(point1);
-		lengthStep.scale(1.0 / numberOfLines);
-		Vector2d vector2d = GeometryToolsInternalCoordinates.calculatePerpendicularUnitVector(point1, point2);
-
-		Point2d currentPoint = new Point2d(point1);
-		Point2d q1 = new Point2d();
-		Point2d q2 = new Point2d();
-		for (int i = 0; i <= numberOfLines; ++i)
-		{
-			Vector2d offset = new Vector2d(vector2d);
-			offset.scale(i * widthStep);
-			q1.add(currentPoint, offset);
-			q2.sub(currentPoint, offset);
-			int[] lineCoords = {(int) q1.x, (int) q1.y, (int) q2.x, (int) q2.y};
-			lineCoords = getScreenCoordinates(lineCoords);
-			graphics.drawLine(lineCoords[0], lineCoords[1], lineCoords[2], lineCoords[3]);
-			currentPoint.add(lengthStep);
-		}*/
+		double angle;
+		if ((x1 - x0) == 0) {
+			angle = Math.PI / 2;
+		} else {
+			angle = Math.atan((y1 - y0) / (x1 - x0));
+		}
+		float newxup = (float)(x1 - Math.sin(angle) * wedgeWidth);
+		float newyup = (float)(y1 + Math.cos(angle) * wedgeWidth);
+		
+		float newxdown = (float)(x1 + Math.sin(angle) * wedgeWidth);
+		float newydown = (float)(y1 - Math.cos(angle) * wedgeWidth);
+		
+		double bondLength = distance2points(bond.getAtom(0).getPoint2d(), bond.getAtom(1).getPoint2d());
+		int numberOfLines = (int) (bondLength / bondWidth / 2);
+		System.out.println("lines: " + numberOfLines);
+		
+		graphics.setColor(bondColor);
+		
+		double xl, xr, yl, yr;
+		Line2D.Double line = new Line2D.Double();
+		for (int i = 0; i < numberOfLines; i++) {
+			double t = (double)i / numberOfLines;
+			xl = x0 + t * (newxup - x0);
+			xr = x0 + t * (newxdown - x0);
+			yl = y0 + t * (newyup - y0);
+			yr = y0 + t * (newydown - y0);
+			System.out.println(i + " : " + t + " from " + xl + " ; " + yl + " to: " + xr + " ; " + yr);
+			line.setLine(xl, yl, xr, yr);
+			graphics.draw(line);
+		}
 	}
 
 	/**
