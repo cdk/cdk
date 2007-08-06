@@ -6,13 +6,16 @@ import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.pharmacophore.PharmacophoreAtom;
 import org.openscience.cdk.pharmacophore.PharmacophoreMatcher;
 import org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom;
 import org.openscience.cdk.pharmacophore.PharmacophoreQueryBond;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @cdk.module test-pcore
@@ -67,8 +70,44 @@ public class PharmacophoreMatcherTest {
 
         int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
         for (int i = 0; i < expected.length; i++) {
-            Assert.assertEquals("Hit "+i+" didn't match", expected[i], hits[i]);
-        }        
+            Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
+        }
+    }
+
+    @Test
+    public void testMatchedAtoms() throws CDKException {
+        Assert.assertNotNull(conformers);
+
+        // make a query
+        QueryAtomContainer query = new QueryAtomContainer();
+
+        PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[N]");
+
+        query.addAtom(o);
+        query.addAtom(n1);
+        query.addAtom(n2);
+
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(o, n1, 4.0, 4.5);
+        PharmacophoreQueryBond b2 = new PharmacophoreQueryBond(o, n2, 4.0, 5.0);
+        PharmacophoreQueryBond b3 = new PharmacophoreQueryBond(n1, n2, 5.4, 5.8);
+
+        query.addBond(b1);
+        query.addBond(b2);
+        query.addBond(b3);
+
+        IAtomContainer conf1 = conformers.get(0);
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(conf1);
+        Assert.assertTrue(status);
+
+        List<List<PharmacophoreAtom>> pmatches = matcher.getMatchingPharmacophoreAtoms();
+        Assert.assertEquals(2, pmatches.size());
+
+        List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
+        Assert.assertEquals(1, upmatches.size());
+
     }
 
     @Test(expected = CDKException.class)
