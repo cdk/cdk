@@ -176,9 +176,10 @@ System.out.println("molecule: " + mol);
 	    IBond bondB2 = builder.newBond(atomC0, atomH0);
 	    bondB2.setElectronCount(1);
     bondB2.setStereo(CDKConstants.STEREO_BOND_DOWN);
-	    
+
     IBond bondB3 = builder.newBond(atomC0, atomH1);
     bondB3.setElectronCount(1);
+    bondB3.setStereo(CDKConstants.STEREO_BOND_UP);
 
 		mol.addAtom(atomC0); 
 		mol.addAtom(atomO1);

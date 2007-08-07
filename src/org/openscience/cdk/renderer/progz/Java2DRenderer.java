@@ -143,6 +143,15 @@ public class Java2DRenderer implements IJava2DRenderer {
 		// add rendering of atom symbols?
 		paintAtoms(atomCon, graphics);
 		
+		/*// draw the shapes
+		graphics.setColor(Color.ORANGE);
+		graphics.setStroke(new BasicStroke(
+			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
+			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+		);
+		for (Iterator iter = shapes.iterator(); iter.hasNext();) {
+			graphics.draw((Shape)iter.next());
+		}*/
 	}
 	protected IRingSet getRingSet(IAtomContainer atomContainer)
 	{
@@ -180,6 +189,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			paintAtom(atomCon, atomCon.getAtom(i), graphics);
+
 		}
 	}
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
@@ -194,7 +204,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 		else 
 			font = new Font("Arial", Font.PLAIN, 20);
 
-		float fscale = 25;
+		//the graphics objects has a transform which is 'reversed' to go from world coordinates
+		//to screencoordinates, so transform the charaters to show them right.
+		float fscale = 25; 
 		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
 		AffineTransform trans = new AffineTransform(transmatrix);
 		font = font.deriveFont(trans);
@@ -262,12 +274,16 @@ public class Java2DRenderer implements IJava2DRenderer {
 		if (drawSymbol != true)
 			return;
 		
+		Color saveColor = graphics.getColor();
 		FontRenderContext frc = graphics.getFontRenderContext();
 		TextLayout layout = new TextLayout(symbol, font, frc);
 		Rectangle2D bounds = layout.getBounds();
 		
-		float margin = 0.03f; 
-		float screenX = (float)(atom.getPoint2d().x - bounds.getWidth()/2);
+		float margin = 0.03f; //size of clean area next to text
+		//btest has to be substracted to get the text on the exact right position
+		//FIXME: get this value *somehow* from the graphics object.
+		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
+		float screenX = (float)(atom.getPoint2d().x - bounds.getWidth()/2 - btest); 
 		float screenY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
 
 		bounds.setRect(bounds.getX() + screenX - margin,
@@ -276,14 +292,14 @@ public class Java2DRenderer implements IJava2DRenderer {
 		                  bounds.getHeight() + 2 * margin);
 		
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
-		Color saveColor = graphics.getColor();
+		
 		Color bgColor = graphics.getBackground();
 		graphics.setColor(bgColor);
 		graphics.fill(bounds);
 		
 		graphics.setColor(atomColor);
 		layout.draw(graphics, screenX, screenY);
-
+	
 		graphics.setColor(saveColor);
 	}
 	/**
@@ -612,13 +628,14 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		double bondLength = distance2points(bond.getAtom(0).getPoint2d(), bond.getAtom(1).getPoint2d());
 		int numberOfLines = (int) (bondLength / bondWidth / 2);
+
 		System.out.println("lines: " + numberOfLines);
 		
 		graphics.setColor(bondColor);
 		
 		double xl, xr, yl, yr;
 		Line2D.Double line = new Line2D.Double();
-		for (int i = 0; i < numberOfLines; i++) {
+		for (int i = 0; i < numberOfLines - 2; i++) {
 			double t = (double)i / numberOfLines;
 			xl = x0 + t * (newxup - x0);
 			xr = x0 + t * (newxdown - x0);
