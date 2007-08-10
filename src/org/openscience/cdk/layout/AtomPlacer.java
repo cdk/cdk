@@ -348,11 +348,11 @@ public class AtomPlacer
             startAngle = GeometryTools.getAngle(((Point2d)renderingCoordinates.get(startAtom)).x - ((Point2d)renderingCoordinates.get(atom)).x, ((Point2d)renderingCoordinates.get(startAtom)).y - ((Point2d)renderingCoordinates.get(atom)).y);
         }
         logger.debug("Before check: distributePartners->startAngle: " + startAngle);
-        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
-            -0.001))
-        {
-            startAngle = Math.PI/placedNeighbours.getAtomCount();
-        }
+//        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
+//            -0.001))
+//        {
+//            startAngle = Math.PI/placedNeighbours.getAtomCount();
+//        }
         logger.debug("After check: distributePartners->startAngle: " + startAngle);
         populatePolygonCorners(atomsToDraw, renderingCoordinates==null ? new Point2d(atom.getPoint2d()) : ((Point2d)renderingCoordinates.get(atom)), startAngle, addAngle, radius);
 
