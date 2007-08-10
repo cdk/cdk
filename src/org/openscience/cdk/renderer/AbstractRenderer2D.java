@@ -415,7 +415,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		int atomSymbolYOffset = atomSymbolH / 2;
 
 		// calculate IMPLICIT H width, height
-		int implicitHydrogenCount = atom.getHydrogenCount();
+		int implicitHydrogenCount = 0;
+		if (atom.getHydrogenCount() != null)
+			implicitHydrogenCount = atom.getHydrogenCount();
+				
 		int hSymbolW = 0;
 		// unless next condition, this is the default
 		int hSymbolH = 0;
