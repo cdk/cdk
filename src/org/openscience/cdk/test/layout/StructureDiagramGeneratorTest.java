@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.vecmath.Vector2d;
 
 import junit.framework.Test;
@@ -106,6 +107,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
 		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol")
 		, "Polycarpol");*/
+		showIt(makeTetraMethylCycloButane(), "TetraMethylCycloButane");
 		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
 		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
 		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
@@ -136,6 +138,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	public IAtomContainer generateCoordinates(IMolecule m) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+		sdg.setUseTemplates(true);
 		sdg.setMolecule(m);
 		sdg.generateCoordinates(new Vector2d(0, 1));
 		return sdg.getMolecule();
@@ -158,18 +161,38 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
 	public void visualBugPMR() throws Exception
 	{
-                String filename = "data/SL0016a.cml";
+                String filename = "data/cml/SL0016a.cml";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		CMLReader reader = new CMLReader(ins);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);
 		IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		MoleculeViewer2D.display(mol, true);
-		//logger.debug(new SmilesGenerator().createSMILES(mol));
+		//MoleculeViewer2D.display(mol, true, false, JFrame.DO_NOTHING_ON_CLOSE,"");
+
 	}
 	
 	
+
+	/**
+	 *  A unit test for JUnit
+	 *
+	 *@exception  Exception  thrown if something goes wrong
+	 *@cdk.bug 1670871
+	 */
+	public void testBugLecture2007() throws Exception
+	{
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		//IMolecule mol = sp.parseSmiles("Oc1nc(nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
+		IMolecule mol = sp.parseSmiles("O=C(N1CCN(CC1)CCCN(C)C)C3(C=2C=CC(=CC=2)C)(CCCCC3)");
+		
+		//IMolecule mol = sp.parseSmiles("C1CCC1CCCCCCCC1CC1");
+
+		IAtomContainer ac = generateCoordinates(mol);
+//		MoleculeViewer2D.display(new Molecule(ac), false);
+        assertTrue(GeometryTools.has2DCoordinates(ac));
+	}
+
 	
 	/**
 	 *  A unit test for JUnit
@@ -353,6 +376,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		HueckelAromaticityDetector.detectAromaticity(cdkMol, false);
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
 	}
+	
+
 	
 	/**
 	 * @cdk.bug 1572062
@@ -696,7 +721,30 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
             fail("2D generation failed");
         }
 	}
-	
+
+	Molecule makeTetraMethylCycloButane()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("C")); // 6
+		mol.addAtom(new Atom("C")); // 7
+		mol.addAtom(new Atom("C")); // 8
+		
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 3, 1.0); // 3
+		mol.addBond(3, 0, 1.0); // 4
+		mol.addBond(0, 4, 1.0); // 5
+		mol.addBond(1, 5, 1.0); // 6
+		mol.addBond(2, 6, 1.0); // 7
+		mol.addBond(3, 7, 1.0); // 8
+		return mol;
+	}
+
 	
 	Molecule makeJhao1()
 	{
