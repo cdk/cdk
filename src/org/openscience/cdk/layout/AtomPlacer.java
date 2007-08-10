@@ -219,7 +219,7 @@ public class AtomPlacer
 
             logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
             logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
-            startAngle = GeometryTools.getAngle(xDiff, yDiff);
+            startAngle = GeometryToolsInternalCoordinates.getAngle(xDiff, yDiff);
             //- (Math.PI / 2.0);
             logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 

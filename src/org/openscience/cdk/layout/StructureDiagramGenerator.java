@@ -681,7 +681,8 @@ public class StructureDiagramGenerator
 			//logger.debug(ringSystem.getAtomCount());
 			logger.debug("oldPoint1 again: " + oldPoint1);
 			logger.debug("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));
-			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (0.5 * Math.PI) + (angle1 - angle2));
+			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (angle1 - angle2));
+			//GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (0.5 * Math.PI) + (angle1 - angle2));
 			//GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
 			//vectorAtom2.setPoint2d(oldPoint2);
 			vectorAtom1.setPoint2d(oldPoint1);

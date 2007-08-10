@@ -57,7 +57,7 @@ public class OverlapResolver
 	private org.openscience.cdk.tools.LoggingTool logger = null;
 
 	double bondLength = 1.5;
-	int maxSteps = 100;
+	int maxSteps = 10000;
 	
 	public OverlapResolver()
 	{
@@ -73,6 +73,7 @@ public class OverlapResolver
 	 */
 	public double resolveOverlap(IAtomContainer ac, IRingSet sssr)
 	{
+
 		Vector overlappingAtoms = new Vector();
 		Vector overlappingBonds = new Vector();
 		logger.debug("Start of resolveOverlap");
@@ -106,6 +107,8 @@ public class OverlapResolver
 		double choice = 0;
 		logger.debug("We are here because of an overlap situation.");
 		//logger.debug("Overlap score: " + overlapScore);
+
+		
 		do{
 			/* we take a random overlapping 
 			 * pair of atoms
@@ -141,6 +144,7 @@ public class OverlapResolver
 			, overlappingBonds);
 			steps ++;
 		}while(overlapScore > 0 && !(steps > maxSteps));
+
 		if (steps < 100)
 		{
 			logger.debug("Overlap situation resolved");
