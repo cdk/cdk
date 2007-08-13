@@ -35,6 +35,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Checks the funcitonality of the RingSet class.
  *
@@ -44,14 +48,14 @@ import org.openscience.cdk.interfaces.IRingSet;
  */
 public class RingSetTest extends CDKTestCase {
 
-	protected IChemObjectBuilder builder;
-	
+  protected IChemObjectBuilder builder;
+  
     public RingSetTest(String name) {
         super(name);
     }
 
     public void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+        builder = DefaultChemObjectBuilder.getInstance();
     }
 
     public static Test suite() {
@@ -325,13 +329,83 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertEquals(2, ringset.getConnectedRings(ring2).size());
-        assertEquals(2, ringset.getConnectedRings(ring1).size());
+        assertEquals(1, ringset.getConnectedRings(ring2).size());
+        assertEquals(1, ringset.getConnectedRings(ring1).size());
     }
 
     public void testClone() {
         // Added to make the Coverage tool happy
         // The method is apparently not part of the interface yet
-    	assertTrue(true);
+      assertTrue(true);
     }
+    
+    /**
+     * Test for RingSetTest bug #1772613.
+     * When using method getConnectedRings(...) of RingSet.java fused or bridged rings
+     * returned a list of connected rings that contained duplicates.
+     * Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * @cdk.bug 1772613
+     */
+    public void testGetConnectedRingsBug1772613() throws Exception {
+        // Build a bridged and fused norbomane like ring system
+        // C1CCC2C(C1)C4CC2C3CCCCC34
+        IRing leftCyclohexane = builder.newRing(6, "C");
+        IRing rightCyclopentane = builder.newRing(5, "C");
+        
+        IRing leftCyclopentane = builder.newRing();
+        IBond leftCyclohexane0RightCyclopentane4 = builder.newBond(leftCyclohexane.getAtom(0), rightCyclopentane.getAtom(4));
+        IBond leftCyclohexane1RightCyclopentane2 = builder.newBond(leftCyclohexane.getAtom(1), rightCyclopentane.getAtom(2));
+        leftCyclopentane.addAtom(leftCyclohexane.getAtom(0));
+        leftCyclopentane.addAtom(leftCyclohexane.getAtom(1));
+        leftCyclopentane.addAtom(rightCyclopentane.getAtom(2));
+        leftCyclopentane.addAtom(rightCyclopentane.getAtom(3));
+        leftCyclopentane.addAtom(rightCyclopentane.getAtom(4));
+        leftCyclopentane.addBond(leftCyclohexane.getBond(leftCyclohexane.getAtom(0), leftCyclohexane.getAtom(1)));
+        leftCyclopentane.addBond(leftCyclohexane1RightCyclopentane2);
+        leftCyclopentane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(2), rightCyclopentane.getAtom(3)));
+        leftCyclopentane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(3), rightCyclopentane.getAtom(4)));
+        leftCyclopentane.addBond(leftCyclohexane0RightCyclopentane4);
+    
+        IRing rightCyclohexane = builder.newRing();
+        IAtom rightCyclohexaneAtom0 = builder.newAtom("C");
+        IAtom rightCyclohexaneAtom1 = builder.newAtom("C");
+        IAtom rightCyclohexaneAtom2 = builder.newAtom("C");
+        IAtom rightCyclohexaneAtom5 = builder.newAtom("C");
+        IBond rightCyclohexaneAtom0Atom1 = builder.newBond(rightCyclohexaneAtom0, rightCyclohexaneAtom1);
+        IBond rightCyclohexaneAtom1Atom2 = builder.newBond(rightCyclohexaneAtom1, rightCyclohexaneAtom2);
+        IBond rightCyclohexane2rightCyclopentane1 = builder.newBond(rightCyclohexaneAtom2, rightCyclopentane.getAtom(1));
+        IBond rightCyclohexane5rightCyclopentane0 = builder.newBond(rightCyclohexaneAtom5, rightCyclopentane.getAtom(0));
+        IBond rightCyclohexaneAtom0Atom5 = builder.newBond(rightCyclohexaneAtom0, rightCyclohexaneAtom5);
+        rightCyclohexane.addAtom(rightCyclohexaneAtom0);
+        rightCyclohexane.addAtom(rightCyclohexaneAtom1);
+        rightCyclohexane.addAtom(rightCyclohexaneAtom2);
+        rightCyclohexane.addAtom(rightCyclopentane.getAtom(1));
+        rightCyclohexane.addAtom(rightCyclopentane.getAtom(0));
+        rightCyclohexane.addAtom(rightCyclohexaneAtom5);
+        rightCyclohexane.addBond(rightCyclohexaneAtom0Atom1);
+        rightCyclohexane.addBond(rightCyclohexaneAtom1Atom2);
+        rightCyclohexane.addBond(rightCyclohexane2rightCyclopentane1);
+        rightCyclohexane.addBond(rightCyclopentane.getBond(rightCyclopentane.getAtom(0), rightCyclopentane.getAtom(1)));
+        rightCyclohexane.addBond(rightCyclohexane5rightCyclopentane0);
+        rightCyclohexane.addBond(rightCyclohexaneAtom0Atom5);
+        
+        IRingSet ringSet = builder.newRingSet();
+        ringSet.addAtomContainer(leftCyclohexane);
+        ringSet.addAtomContainer(leftCyclopentane);
+        ringSet.addAtomContainer(rightCyclopentane);
+        ringSet.addAtomContainer(rightCyclohexane);
+        
+        // Get connected rings
+        List connectedRings = ringSet.getConnectedRings(leftCyclohexane);
+        
+        // Iterate over the connectedRings and fail if any duplicate is found
+        List foundRings = new ArrayList();
+        for (Iterator iterator = connectedRings.iterator(); iterator.hasNext(); ) {
+            IRing connectedRing = (IRing) iterator.next();
+            if (foundRings.contains(connectedRing))
+                fail("The list of connected rings contains duplicates.");
+            foundRings.add(connectedRing);
+        }
+    }
+  
 }

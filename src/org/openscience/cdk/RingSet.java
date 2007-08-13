@@ -123,7 +123,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 			for (int j = 0; j < getAtomContainerCount(); j++)
 			{	
 				tempRing = (IRing)getAtomContainer(j);
-				if (tempRing != ring && tempRing.contains(atom))
+				if (tempRing != ring && !connectedRings.contains(tempRing) && tempRing.contains(atom))
 				{
 					connectedRings.add(tempRing);
 				}
