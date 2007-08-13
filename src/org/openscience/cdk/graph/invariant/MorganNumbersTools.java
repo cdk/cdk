@@ -40,7 +40,9 @@ public class MorganNumbersTools {
 
   /**
    *  Makes an array containing the morgan numbers of the atoms of atomContainer.
+   *  WARNING: This method may fail for large molecules due to an overflow of the int[] used here
    *
+   * @deprecated Use getLongMorganNumbers() instead
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
@@ -50,6 +52,36 @@ public class MorganNumbersTools {
     int N = atomContainer.getAtomCount();
     morganMatrix = new int[N];
     tempMorganMatrix = new int[N];
+    java.util.List atoms = null;
+    for (int f = 0; f < N; f++) {
+      morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+      tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
+    }
+    for (int e = 0; e < N; e++) {
+      for (int f = 0; f < N; f++) {
+        morganMatrix[f] = 0;
+        atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
+        for (int g = 0; g < atoms.size(); g++) {
+          morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber((IAtom)atoms.get(g))];
+        }
+      }
+      System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
+    }
+    return tempMorganMatrix;
+  }
+
+  /**
+   *  Makes an array containing the morgan numbers of the atoms of atomContainer.
+   *
+   * @param  atomContainer  The atomContainer to analyse.
+   * @return                The morgan numbers value.
+   */
+  public static long[] getLongMorganNumbers(IAtomContainer atomContainer) {
+    long[] morganMatrix;
+    long[] tempMorganMatrix;
+    int N = atomContainer.getAtomCount();
+    morganMatrix = new long[N];
+    tempMorganMatrix = new long[N];
     java.util.List atoms = null;
     for (int f = 0; f < N; f++) {
       morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
