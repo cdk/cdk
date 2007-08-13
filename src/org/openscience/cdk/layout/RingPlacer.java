@@ -270,7 +270,7 @@ public class RingPlacer
 //        }
         IBond currentBond = sharedAtoms.getBond(0);
 		Vector atomsToDraw = new Vector();
-		for (int i = 0; i < ring.getBondCount() - 2; i++)
+		for (int i = 0; i < ring.getBondCount(); i++)
 		{
 			currentBond = ring.getNextBond(currentBond, currentAtom);
 			currentAtom = currentBond.getConnectedAtom(currentAtom);
