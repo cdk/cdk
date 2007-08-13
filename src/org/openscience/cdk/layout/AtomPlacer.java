@@ -723,6 +723,8 @@ public class AtomPlacer
         //ConnectivityChecker cc = new ConnectivityChecker();
         int longest = 0;
         int longestPathLength = 0;
+        int maxDegreeSum = 0;
+        int degreeSum = 0;
         IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
         for (int f = 0; f < molecule.getAtomCount(); f++)
         {
@@ -736,10 +738,16 @@ public class AtomPlacer
         breadthFirstSearch(molecule, startSphere, pathes);
         for (int f = 0; f < molecule.getAtomCount(); f++)
         {
-            if (pathes[f].getAtomCount() > longestPathLength)
+            if (pathes[f].getAtomCount() >= longestPathLength)
             {
-                longest = f;
-                longestPathLength = pathes[f].getAtomCount();
+            	degreeSum = getDegreeSum(pathes[f], molecule);
+            	
+            	if (degreeSum > maxDegreeSum) 
+            	{
+            		maxDegreeSum = degreeSum;
+            		longest = f;
+            		longestPathLength = pathes[f].getAtomCount();
+            	}
             }
         }
         logger.debug("End of getLongestUnplacedChain.");
@@ -960,6 +968,29 @@ public class AtomPlacer
     }
 
 
+    /**
+     *  Sums up the degrees of atoms in an atomcontainer
+     *
+     *@param  ac  The atomcontainer to be processed
+     *@param  superAC  The superAtomContainer from which the former has been derived
+     *
+     *@return 
+     */
+    int getDegreeSum(IAtomContainer ac, IAtomContainer superAC)
+    {
+    	int degreeSum = 0;
+        //String path = "DegreeSum for Path: ";
+    	for (int f = 0; f < ac.getAtomCount(); f++)
+        {
+    		//path += ac.getAtom(f).getSymbol();
+            degreeSum += superAC.getConnectedBondsCount(ac.getAtom(f));
+        }
+        //System.out.println(path + ": " + degreeSum);
+        return degreeSum;
+    }
+
+
+    
     /**
      *  Calculates weights for unplaced atoms.
      *
