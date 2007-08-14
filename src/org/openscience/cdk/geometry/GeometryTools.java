@@ -45,6 +45,7 @@ import java.util.List;
  * This class is extensively used, for example, by JChemPaint to edit molecule.
  * All methods in this class use an external set of coordinates (e. g. from the rendererModel). If you want to change the coordinates in the atoms, use GeometryToolsInternalCoordinates.
  *
+ * @author 		  Christopn Steinbeck
  * @author        seb
  * @author        Stefan Kuhn
  * @author        Egon Willighagen
