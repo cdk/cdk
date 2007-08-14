@@ -405,7 +405,10 @@ public class StructureDiagramGenerator
 			 */
 			angle = Math.toRadians(-30);
 			logger.debug("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
-			atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
+			if (firstBondVector != null)
+				atomPlacer.placeLinearChain(longestChain, firstBondVector, bondLength);
+			else
+				atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
 			logger.debug("Placed longest aliphatic chain");
 		}
 
