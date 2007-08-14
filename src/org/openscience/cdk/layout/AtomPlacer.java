@@ -38,7 +38,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.tools.HydrogenAdder;
+
+//removed during debugging. Before you put this in again, contact
+// er@doktor-steinbeck.de
+//import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -385,15 +388,20 @@ public class AtomPlacer
             else numh[i] = tmp;            
         }
 
-        if(GeometryTools.has2DCoordinatesNew(ac)==2){
-            try{
-                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
-            }catch(Exception ex){
-                logger.warn("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.getMessage());
-                logger.debug(ex);
-            }
-            new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
-        }
+//		SDG should lay out what it gets and not fiddle with molecules
+//      during layout so this was 
+//      removed during debugging. Before you put this in again, contact
+//      er@doktor-steinbeck.de
+        
+//        if(GeometryTools.has2DCoordinatesNew(ac)==2){
+//            try{
+//                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
+//            }catch(Exception ex){
+//                logger.warn("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.getMessage());
+//                logger.debug(ex);
+//            }
+//            new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
+//        }
         logger.debug("Placing linear chain of length " + ac.getAtomCount());
         Vector2d bondVector = initialBondVector;
         IAtom atom = null;
