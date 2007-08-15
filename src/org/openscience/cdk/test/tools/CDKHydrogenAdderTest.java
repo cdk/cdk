@@ -23,7 +23,9 @@ package org.openscience.cdk.test.tools;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -185,5 +187,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	assertEquals(2, newAtom.getHydrogenCount().intValue());	
     	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
     }
+    
+    public void testSulphur() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("S");
+        mol.addAtom(atom);
+    	IAtomType type = matcher.findMatchingAtomType(mol, atom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(atom, type);
+        
+    	assertNull(atom.getHydrogenCount());
+        adder.addImplicitHydrogens(mol);
+        assertEquals(1, mol.getAtomCount());
+    	assertNotNull(atom.getHydrogenCount());
+    	assertEquals(2, atom.getHydrogenCount().intValue());	
+    }
+
 }
 

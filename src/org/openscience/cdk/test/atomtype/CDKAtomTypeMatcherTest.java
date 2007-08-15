@@ -36,6 +36,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
@@ -166,6 +167,28 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
     }
+    
+    @Test public void testS3() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
+
+        mol.addAtom(s);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(0));
+        assertAtomType(testedAtomTypes, "S.3", matched);
+    }
+
     
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());

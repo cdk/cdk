@@ -69,6 +69,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         type = perceiveCarbons(atomContainer, atom);
         if (type == null) type = perceiveOxygens(atomContainer, atom);
         if (type == null) type = perceiveNitrogens(atomContainer, atom);
+        if (type == null) type = perceiveSulphurs(atomContainer, atom);
         return type;
     }
     
@@ -174,6 +175,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
     				return factory.getAtomType("N.sp1");
     			}
+    		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom)
+    	throws CDKException {
+    	if ("S".equals(atom.getSymbol())) {
+    		int neighborcount = atomContainer.getConnectedBondsCount(atom);
+    		if (neighborcount == 2) {
+    			return factory.getAtomType("S.3");
     		}
     	}
     	return null;
