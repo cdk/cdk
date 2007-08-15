@@ -69,6 +69,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         type = perceiveCarbons(atomContainer, atom);
         if (type == null) type = perceiveOxygens(atomContainer, atom);
         if (type == null) type = perceiveNitrogens(atomContainer, atom);
+        if (type == null) type = perceiveHydrogens(atomContainer, atom);
         if (type == null) type = perceiveSulphurs(atomContainer, atom);
         return type;
     }
@@ -190,5 +191,30 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	}
     	return null;
     }
+    
+    private IAtomType perceiveHydrogens(IAtomContainer atomContainer, IAtom atom)
+        throws CDKException {
+    	if ("H".equals(atom.getSymbol())) {
+    		int neighborcount = atomContainer.getConnectedBondsCount(atom);
+    		if (neighborcount == 2) {
+    			// FIXME: bridging hydrogen as in B2H6
+    			return null;
+    		} else if (neighborcount == 1) {
+    			if (atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0) {
+    				return factory.getAtomType("H");
+    			}
+    		} else if (neighborcount == 0) {
+    			if (atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0) {
+    				return factory.getAtomType("H");
+    			} else if (atom.getFormalCharge() == 1){
+    				return factory.getAtomType("H.plus");
+    			} else if (atom.getFormalCharge() == -1){
+    				return factory.getAtomType("H.minus");
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
 }
 

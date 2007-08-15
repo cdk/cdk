@@ -190,6 +190,35 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     
+    @Test public void testHydrogen() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "H", atm.findMatchingAtomType(mol, atom));
+    }
+    
+    @Test public void testProton() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        atom.setFormalCharge(1);
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "H.plus", atm.findMatchingAtomType(mol, atom));
+    }
+    
+    @Test public void testHydride() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "H.minus", atm.findMatchingAtomType(mol, atom));
+    }
+
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);

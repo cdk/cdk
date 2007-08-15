@@ -37,6 +37,7 @@ import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -201,6 +202,41 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         assertEquals(1, mol.getAtomCount());
     	assertNotNull(atom.getHydrogenCount());
     	assertEquals(2, atom.getHydrogenCount().intValue());	
+    }
+
+    public void testProton() throws Exception {
+    	Molecule mol = new Molecule();
+    	Atom proton = new Atom("H");
+    	proton.setFormalCharge(+1);
+    	mol.addAtom(proton);
+    	IAtomType type = matcher.findMatchingAtomType(mol, proton);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(proton, type);
+
+    	adder.addImplicitHydrogens(mol);
+
+    	assertEquals(1, mol.getAtomCount());
+    	assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
+    	assertEquals(0, mol.getConnectedBondsCount(proton));
+    	assertNotNull(proton.getHydrogenCount());
+    	assertEquals(0, proton.getHydrogenCount().intValue());
+    }
+
+    public void testHydrogen() throws Exception {
+    	Molecule mol = new Molecule();
+    	Atom proton = new Atom("H");
+    	mol.addAtom(proton);
+    	IAtomType type = matcher.findMatchingAtomType(mol, proton);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(proton, type);
+
+    	adder.addImplicitHydrogens(mol);
+
+    	assertEquals(1, mol.getAtomCount());
+    	assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
+    	assertEquals(0, mol.getConnectedBondsCount(proton));
+    	assertNotNull(proton.getHydrogenCount());
+    	assertEquals(1, proton.getHydrogenCount().intValue());
     }
 
 }
