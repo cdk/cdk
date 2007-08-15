@@ -84,7 +84,7 @@ public class CDKHydrogenAdder {
 	 */
 	public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
 		if (atom.getAtomTypeName() == null)
-			throw new CDKException("IAtom is not typed!" + atom.getSymbol());
+			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 		
 		IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
 		if (type == null)
