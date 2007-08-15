@@ -815,6 +815,48 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 //		read molecule
 		return ((IMolecule) molReader.read(new	Molecule()));
 	}
+  
+  /**
+   * Test for StructureDiagramGenerator bug #1772609 "NPE with bridged rings in SDG/RingPlacer".
+   * In method RingPlacer.placeBridgedRing(...) it could happen, that not all atoms of an unplaced
+   * ring were selected for placing. Thus, those atoms later lacked 2D coordinates (they were null)
+   * and the RingPlacer crashed with a NullPointerException such as:
+   *
+   * java.lang.NullPointerException
+   *   at javax.vecmath.Tuple2d.<init>(Tuple2d.java:66)
+   *   at javax.vecmath.Vector2d.<init>(Vector2d.java:74)
+   *   at org.openscience.cdk.layout.RingPlacer.placeFusedRing(RingPlacer.java:379)
+   *   at org.openscience.cdk.layout.RingPlacer.placeRing(RingPlacer.java:99)
+   *   at org.openscience.cdk.layout.RingPlacer.placeConnectedRings(RingPlacer.java:663)
+   *   at org.openscience.cdk.layout.StructureDiagramGenerator.layoutRingSet(StructureDiagramGenerator.java:516)
+   *   at org.openscience.cdk.layout.StructureDiagramGenerator.generateCoordinates(StructureDiagramGenerator.java:379)
+   *   at org.openscience.cdk.layout.StructureDiagramGenerator.generateCoordinates(StructureDiagramGenerator.java:445)
+   *
+   * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+   * @cdk.bug 1772609
+   */
+  public void testNPEWithBridgedRingsBug1772609() throws Exception {
+    // set up molecule reader
+    String filename = "data/mdl/bug1772609.mol";
+    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    IChemObjectReader molReader = new MDLReader(ins);
+    
+    // read molecule
+    IMolecule molecule = (IMolecule) molReader.read(new Molecule());
+
+    // rebuild 2D coordinates
+    // repeat this 10 times since the bug does only occur by chance
+    StructureDiagramGenerator structureDiagramGenerator = new StructureDiagramGenerator();
+    try {
+      for (int i = 0; i < 10; i++) {
+        structureDiagramGenerator.setMolecule(molecule);
+        structureDiagramGenerator.generateCoordinates();
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      fail("Test failed trying to layout bridged ring systems.");
+    }
+  } 
 
 }
 
