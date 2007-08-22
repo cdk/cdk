@@ -43,7 +43,9 @@ import java.util.*;
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
  * isotope and formal charge information of the atoms. In addition to this it
- * takes stereochemistry in account for both Bond's and Atom's. IMPORTANT: The
+ * takes stereochemistry in account for both Bond's and Atom's. Via the flag 
+ * useAromaticity it can be set if only SP2-hybridized atoms shall be set to 
+ * lower case (default) or atoms, which are SP2 or aromatic. IMPORTANT: The
  * aromaticity detection for this SmilesGenerator relies on AllRingsFinder,
  * which is known to take very long for some molecules with many cycles or
  * special cyclic topologies. Thus, the AllRingsFinder has a built-in timeout
@@ -51,6 +53,7 @@ import java.util.*;
  * SMILES generated at any expense, you need to create your own AllRingsFinder,
  * set the timeout to a higher value, and assign it to this SmilesGenerator. In
  * the vast majority of cases, however, the defaults will be fine.
+ * If you have a set off ALL rings before, supply this via setRings to speed up generation.
  *
  * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)
@@ -93,6 +96,7 @@ public class SmilesGenerator
 	private final String RING_CONFIG = "stereoconfig";
 	private final String UP = "up";
 	private final String DOWN = "down";
+	private boolean useAromaticityFlag=false;
 
 	/**
 	 *  Create the SMILES generator.
@@ -383,7 +387,7 @@ public class SmilesGenerator
 		}
 
 		StringBuffer l = new StringBuffer();
-		createSMILES(start, l, molecule, chiral, doubleBondConfiguration);
+		createSMILES(start, l, molecule, chiral, doubleBondConfiguration,useAromaticityFlag);
 		rings = null;
 		
 		// remove all CanonicalLable/InvariancePair props
@@ -436,23 +440,19 @@ public class SmilesGenerator
 		{
 			return false;
 		}
-
-        Integer atomHcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
-        Integer parentHcount =parent.getHydrogenCount() == CDKConstants.UNSET ? 0 : parent.getHydrogenCount();
-
-        int lengthAtom = container.getConnectedAtomsCount(atom) + atomHcount;
-		int lengthParent = container.getConnectedAtomsCount(parent) + parentHcount;
+		int lengthAtom = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
+		int lengthParent = container.getConnectedAtomsCount(parent) + parent.getHydrogenCount();
 		if (container.getBond(atom, parent) != null)
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
 			{
-				List<IAtom> atoms = container.getConnectedAtomsList(atom);
+				List atoms = container.getConnectedAtomsList(atom);
 				org.openscience.cdk.interfaces.IAtom one = null;
 				org.openscience.cdk.interfaces.IAtom two = null;
 				IAtom atomi = null;
 				for (int i = 0; i < atoms.size(); i++)
 				{
-					atomi = container.getAtom(i);
+					atomi = (IAtom)container.getAtom(i);
 					if (atomi != parent && one == null)
 					{
 						one = atomi;
@@ -488,9 +488,7 @@ public class SmilesGenerator
 	 */
 	private boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration)
 	{
-
-        int lengthAtom = container.getConnectedAtomsCount(a) +
-                (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount());
+		int lengthAtom = container.getConnectedAtomsCount(a) + a.getHydrogenCount();
 		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))
 		{
 			return (false);
@@ -683,8 +681,7 @@ public class SmilesGenerator
 			}
 		}
 	}
-
-
+	
 	/**
 	 *  Performes a DFS search on the <code>atomContainer</code>. Then parses the
 	 *  resulting tree to create the SMILES string.
@@ -696,8 +693,9 @@ public class SmilesGenerator
 	 *      will not be chiral.
 	 *@param  atomContainer            the AtomContainer that the SMILES string is
 	 *      generated for.
+	 *@param useAromaticity				true=aromaticity or sp2 will trigger lower case letters, wrong=only sp2
 	 */
-	private void createSMILES(org.openscience.cdk.interfaces.IAtom a, StringBuffer line, IAtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration)
+	private void createSMILES(org.openscience.cdk.interfaces.IAtom a, StringBuffer line, IAtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration, boolean useAromaticity)
 	{
 		Vector tree = new Vector();
 		
@@ -708,7 +706,7 @@ public class SmilesGenerator
 		createDFSTree(a, tree, null, atomContainer);
 		//logger.debug("Done with tree");
 		
-		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector());
+		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector(), useAromaticity);
 	}
 
 
@@ -767,7 +765,7 @@ public class SmilesGenerator
 	/**
 	 *  Parse a branch
 	 */
-	private void parseChain(Vector v, StringBuffer buffer, IAtomContainer container, IAtom parent, boolean chiral, boolean[] doubleBondConfiguration, Vector atomsInOrderOfSmiles)
+	private void parseChain(Vector v, StringBuffer buffer, IAtomContainer container, IAtom parent, boolean chiral, boolean[] doubleBondConfiguration, Vector atomsInOrderOfSmiles, boolean useAromaticity)
 	{
 		int positionInVector = 0;
 		IAtom atom;
@@ -780,7 +778,7 @@ public class SmilesGenerator
 				atom = (IAtom) o;
 				if (parent != null)
 				{
-					parseBond(buffer, atom, parent, container);
+					parseBond(buffer, atom, parent, container, useAromaticity);
 				} else
 				{
 					if (chiral && BondTools.isStereo(container, atom))
@@ -788,7 +786,7 @@ public class SmilesGenerator
 						parent = (IAtom) ((Vector) v.get(1)).get(0);
 					}
 				}
-				parseAtom(atom, buffer, container, chiral, doubleBondConfiguration, parent, atomsInOrderOfSmiles, v);
+				parseAtom(atom, buffer, container, chiral, doubleBondConfiguration, parent, atomsInOrderOfSmiles, v, useAromaticity);
 				//logger.debug("in parseChain after parseAtom()");
 				/*
 				 *  The principle of making chiral smiles is quite simple, although the code is
@@ -1468,7 +1466,7 @@ public class SmilesGenerator
 				{
 					buffer.append('(');
 				}
-				parseChain((Vector) o, buffer, container, parent, chiral, doubleBondConfiguration, atomsInOrderOfSmiles);
+				parseChain((Vector) o, buffer, container, parent, chiral, doubleBondConfiguration, atomsInOrderOfSmiles, useAromaticity);
 				if (brackets)
 				{
 					buffer.append(')');
@@ -1490,10 +1488,15 @@ public class SmilesGenerator
 	 *@param  a2             Atom participating in the bond.
 	 *@param  atomContainer  the AtomContainer that the SMILES string is generated
 	 *      for.
+   	 *@param useAromaticity				true=aromaticity or sp2 will trigger lower case letters, wrong=only sp2
 	 */
-	private void parseBond(StringBuffer line, IAtom a1, IAtom a2, IAtomContainer atomContainer)
+	private void parseBond(StringBuffer line, IAtom a1, IAtom a2, IAtomContainer atomContainer, boolean useAromaticity)
 	{
 		//logger.debug("in parseBond()");
+		if (useAromaticity && a1.getFlag(CDKConstants.ISAROMATIC) && a2.getFlag(CDKConstants.ISAROMATIC))
+		{
+			return;
+		}
 		if (atomContainer.getBond(a1, a2) == null)
 		{
 			return;
@@ -1528,8 +1531,9 @@ public class SmilesGenerator
 	 *@param  atomsInOrderOfSmiles     a vector containing the atoms in the order
 	 *      they are in the smiles.
 	 *@param  currentChain             The chain we currently deal with.
+   	 *@param useAromaticity				true=aromaticity or sp2 will trigger lower case letters, wrong=only sp2
 	 */
-	private void parseAtom(IAtom a, StringBuffer buffer, IAtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, IAtom parent, Vector atomsInOrderOfSmiles, Vector currentChain)
+	private void parseAtom(IAtom a, StringBuffer buffer, IAtomContainer container, boolean chiral, boolean[] doubleBondConfiguration, IAtom parent, Vector atomsInOrderOfSmiles, Vector currentChain, boolean useAromaticity)
 	{
 		String symbol = a.getSymbol();
 		boolean stereo = BondTools.isStereo(container, a);
@@ -1562,7 +1566,7 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if (a.getHybridization() != CDKConstants.UNSET && a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2)
+			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != CDKConstants.UNSET && a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2))
 			{
 				buffer.append(a.getSymbol().toLowerCase());
 			} else
@@ -1685,7 +1689,7 @@ public class SmilesGenerator
 	 */
 	private String generateChargeString(IAtom a)
 	{
-		int charge = (a.getFormalCharge() == CDKConstants.UNSET ? 0 : a.getFormalCharge());
+		int charge = a.getFormalCharge();
 		StringBuffer buffer = new StringBuffer(3);
 		if (charge > 0)
 		{
@@ -1850,6 +1854,11 @@ public class SmilesGenerator
 		this.ringFinder = ringFinder;
 	}
 
+	/**
+	 * @param false=only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case 
+	 */
+	public void setUseAromaticityFlag(boolean useAromaticityFlag) {
+		this.useAromaticityFlag = useAromaticityFlag;
+	}
+
 }
-
-
