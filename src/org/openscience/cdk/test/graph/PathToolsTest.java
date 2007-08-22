@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.test.graph;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -34,6 +36,8 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -59,7 +63,7 @@ public class PathToolsTest extends CDKTestCase {
     public void testBreadthFirstTargetSearch_IAtomContainer_Vector_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
-        Vector sphere = new Vector();
+        Vector<IAtom> sphere = new Vector<IAtom>();
         sphere.addElement(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
         //logger.debug("PathLengthTest->length: " + length);
@@ -91,6 +95,28 @@ public class PathToolsTest extends CDKTestCase {
         assertEquals(3, path.size());
     }
 
+    public void testGetShortestPath_Middle() throws Exception {
+    	String filename = "data/mdl/shortest_path_test.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	IMolecule testMolecule = new Molecule();
+    	reader.read(testMolecule);
+
+    	ArrayList<IAtom> path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule, 
+    		testMolecule.getAtom(0), testMolecule.getAtom(9)
+    	);
+    	assertEquals(10, path.size());
+
+    	path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule, 
+    		testMolecule.getAtom(1), testMolecule.getAtom(9)
+    	);
+    	assertEquals(9, path.size());
+
+    	path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule,
+    		testMolecule.getAtom(9), testMolecule.getAtom(0)
+    	);
+    	assertEquals(10, path.size());
+    }
         
 
     public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
