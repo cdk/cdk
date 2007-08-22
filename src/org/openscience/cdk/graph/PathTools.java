@@ -437,13 +437,13 @@ public class PathTools {
         int natom = atomContainer.getAtomCount();
         int endNumber = atomContainer.getAtomNumber(end);
         int startNumber = atomContainer.getAtomNumber(start);
-        int[] d = new int[natom];
+        int[] dist = new int[natom];
         int[] previous = new int[natom];
         for (int i = 0; i < natom; i++) {
-            d[i] = 99999999;
+            dist[i] = 99999999;
             previous[i] = -1;
         }
-        d[atomContainer.getAtomNumber(start)] = 0;
+        dist[atomContainer.getAtomNumber(start)] = 0;
 
         ArrayList S = new ArrayList();
         ArrayList Q = new ArrayList();
@@ -457,8 +457,8 @@ public class PathTools {
             int index = 0;
             for (int i = 0; i < Q.size(); i++) {
                 int tmp = ((Integer)Q.get(i)).intValue();
-                if (d[tmp] < u) {
-                    u = d[tmp];
+                if (dist[tmp] < u) {
+                    u = dist[tmp];
                     index = i;
                 }
             }
@@ -470,8 +470,8 @@ public class PathTools {
             java.util.List connected = atomContainer.getConnectedAtomsList( atomContainer.getAtom(u) );
             for (int i = 0; i < connected.size(); i++) {
                 int anum = atomContainer.getAtomNumber((IAtom)connected.get(i));
-                if (d[anum] > d[u] + 1) { // all edges have equals weights
-                    d[anum] = d[u] + 1;
+                if (dist[anum] > dist[u] + 1) { // all edges have equals weights
+                    dist[anum] = dist[u] + 1;
                     previous[anum] = u;
                 }
             }
