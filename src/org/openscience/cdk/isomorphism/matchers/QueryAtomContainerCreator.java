@@ -27,6 +27,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
@@ -193,5 +194,41 @@ public class QueryAtomContainerCreator {
         return queryContainer;
     }
 
+    /**
+     *  Creates a QueryAtomContainer with SymbolQueryAtom's and
+     *  OrderQueryBond's. Each PseudoAtom will be replaced by a 
+     *  AnyAtom
+     *
+     *@param  container  The AtomContainer that stands as model
+     *@return            The new QueryAtomContainer created from container.
+     */
+    public static QueryAtomContainer createAnyAtomForPseudoAtomQueryContainer(IAtomContainer container) {
+        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        for (int i = 0; i < container.getAtomCount(); i++) {
+        	if (container.getAtom(i) instanceof PseudoAtom) {
+				queryContainer.addAtom(new AnyAtom());
+			}
+        	else {
+        		queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
+			}
+            
+        }
+        Iterator bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+                queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
+                                      (IQueryAtom) queryContainer.getAtom(index2),
+                                      1.5));
+            } else {
+                queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
+                                      (IQueryAtom) queryContainer.getAtom(index2),
+                                      bond.getOrder()));
+            }
+        }
+        return queryContainer;
+    }
 }
 
