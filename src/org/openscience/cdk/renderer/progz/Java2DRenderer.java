@@ -274,10 +274,10 @@ public class Java2DRenderer implements IJava2DRenderer {
 		Rectangle2D bounds = layoutAtom.getBounds();
 		
 		float margin = 0.03f; //size of clean area next to text
-		//btest has to be substracted to get the text on the exact right position
-		//FIXME: get this value *somehow* from the graphics object?.
 		float marginSmall = (float)(margin * 0.6);
-		
+		float marginLarge = (float)(margin * 2);//margin for MassNumber/FormalCharge etc.
+		//btest has to be substracted to get the text on the exact right position
+		//FIXME: get right value from graphics object? (width of line or so)
 		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
 		float screenAtomX = (float)(atom.getPoint2d().x - bounds.getWidth()/2 - btest); 
 		float screenAtomY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
@@ -288,81 +288,109 @@ public class Java2DRenderer implements IJava2DRenderer {
 				(float)(bounds.getHeight() + 2 * margin));
 		
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
+		Color otherColor = Color.black;
+		Color bgColor = graphics.getBackground();
+		//bgColor = Color.BLUE;
+		graphics.setColor(bgColor);
+		graphics.fill(bounds);// draw atom background
 		
+	
 		if (atom.getMassNumber() != 0) {
 			graphics.setFont(fontSmall);
 			String textMass = Integer.toString(atom.getMassNumber());
 			FontRenderContext frcMass = graphics.getFontRenderContext();
 			TextLayout layoutMass = new TextLayout(textMass, fontSmall, frcMass);
 			Rectangle2D boundsMass = layoutMass.getBounds();
-
-			float screenMassX = (float)(screenAtomX - boundsMass.getWidth() - margin - marginSmall); 
+			
+	/*		System.out.println(" layoutMass.getAdvance()" + layoutMass.getAdvance() +
+					" layoutMass.getAscent()" + layoutMass.getAscent() +
+					" layoutMass.getBaseline()" + layoutMass.getBaseline() +
+					" layoutMass.getDescent()" + layoutMass.getDescent() +
+					" layoutMass.getLeading()" + layoutMass.getLeading() + 
+					" layoutMass.getVisibleAdvance()" + layoutMass.getVisibleAdvance() );
+			System.out.println("boundsMass.getWidth(): " + boundsMass.getWidth() + 
+					" boundsMass.getX() " + boundsMass.getX());*/
+					
+			float tempWA = (float)(layoutMass.getAdvance() - (float)boundsMass.getWidth());
+			System.out.println("tempWA " + tempWA);
+	
+			//terrible way of getting the MassNumber on the right X location for 'every?' number
+			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
+			float screenMassX = (float)(screenAtomX - layoutMass.getAdvance() + tempWA - (float)boundsMass.getX() - marginSmall);
 			float screenMassY = (float)(screenAtomY + bounds.getHeight() - margin - marginSmall - boundsMass.getHeight() / 2);
 
-			boundsMass.setRect(boundsMass.getX() + screenMassX - marginSmall,
-						boundsMass.getY() + screenMassY - marginSmall,
-						boundsMass.getWidth() + 2 * marginSmall,
-						boundsMass.getHeight() + 2 * marginSmall);
+			boundsMass.setRect((float)((float)boundsMass.getX() + screenMassX - marginSmall),
+						(float)(boundsMass.getY() + screenMassY - marginLarge),
+						(float)(boundsMass.getWidth() + 2 * marginSmall),
+						(float)(boundsMass.getHeight() + 2 * marginLarge));
 		
-			Color colorMass = Color.BLACK;
-			Color bgColor = Color.green;
+
 			graphics.setColor(bgColor);
 			graphics.fill(boundsMass);// draw atom background
 			graphics.setFont(fontSmall);
-			graphics.setColor(colorMass);
-			layoutMass.draw(graphics, screenMassX, screenMassY);// draw atom symbol
+			graphics.setColor(otherColor);
+			layoutMass.draw(graphics, screenMassX, screenMassY);// draw Mass Number
 		}
 		if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) {
+
 			graphics.setFont(fontSmall);
 			String baseString = "+";
 			String textFormal = "";
+			float marginRight = 0;//margin on the right (=to hide part of bonds)
 			if (atom.getFormalCharge() != 1 && atom.getFormalCharge() != -1)
-				textFormal += Integer.toString(atom.getFormalCharge());
+				textFormal += Integer.toString(Math.abs(atom.getFormalCharge()));
 			
-			if (atom.getFormalCharge() > 0)
+			if (atom.getFormalCharge() > 0) {
 				textFormal += "+";
-			else 
-				textFormal += "-";
-			
+				marginRight = margin;
+			}
 			FontRenderContext frcFormal = graphics.getFontRenderContext();
-			TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
-			TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
-			Rectangle2D boundsFormalC = layoutFormal.getBounds();
+			float screenFormalX = (float)(screenAtomX + bounds.getWidth() + marginSmall);
+			if (textFormal != "") { //draw amount and optional '+'-symbol
+				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
+				TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
+				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 		
-			float screenFormalX = (float)(screenAtomX + bounds.getWidth() + marginSmall); 
-			float screenFormalY = (float)(screenAtomY + bounds.getHeight() - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
-			System.out.println(
-					//" TextLayout Descent: " + layoutFormal.getDescent() + 
-					//" Ascent: " + layoutFormal.getAscent() +
-					" getAdvance: " + layoutFormal.getAdvance() +
-					" getBaseline: " + layoutFormal.getBaseline() +
-					" boundsFormalC.getHeight()" + boundsFormalC.getHeight() +
-					" BasegetAdvance: " + layoutBase.getAdvance() +
-					" BasegetBaseline: " + layoutBase.getBaseline() );
+				 
+				float screenFormalY = (float)(screenAtomY + bounds.getHeight() + marginSmall - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
 			
-			boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
-					(float)(boundsFormalC.getY() + screenFormalY - marginSmall),
-					(float)(boundsFormalC.getWidth() + 2 * marginSmall),
-					(float)(boundsFormalC.getHeight() + 2 * marginSmall));
+				boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
+					(float)(boundsFormalC.getY() + screenFormalY - marginLarge),
+					(float)(boundsFormalC.getWidth() + 2 * marginSmall + marginRight),
+					(float)(boundsFormalC.getHeight() + 2 * marginLarge));
 		
-			Color colorFormalC = Color.BLACK;
-			Color bgColor = Color.green;
-			graphics.setColor(bgColor);
-			graphics.fill(boundsFormalC);// draw Formal Charge background
-			graphics.setFont(fontSmall);
-			graphics.setColor(colorFormalC);
-			layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
+				graphics.setColor(bgColor);
+				graphics.fill(boundsFormalC);// draw Formal Charge background
+				graphics.setFont(fontSmall);
+				graphics.setColor(otherColor);
+				layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
+				screenFormalX += boundsFormalC.getWidth();
+			} else {
+				screenFormalX += marginSmall;
+			}
+			if (atom.getFormalCharge() < 0) { //draw the 'minus' symbol
+				textFormal = "_";
+				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
+				Rectangle2D boundsFormalC = layoutFormal.getBounds();
+		
+				float screenFormalY = (float)(screenAtomY + bounds.getHeight() + marginSmall - boundsFormalC.getHeight() / 2);//
 			
+				boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
+					(float)(boundsFormalC.getY() + screenFormalY - 3 * marginLarge),
+					(float)(boundsFormalC.getWidth() + marginSmall + marginLarge),
+					(float)(boundsFormalC.getHeight() + 6 * marginLarge));
+
+				graphics.setColor(bgColor);
+				graphics.fill(boundsFormalC);// draw Formal Charge background
+				graphics.setFont(fontSmall);
+				graphics.setColor(otherColor);
+				layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
+				screenFormalX += boundsFormalC.getWidth();
+			}
 		}
-		Color bgColor = graphics.getBackground();
-		bgColor = Color.BLUE;
-		graphics.setColor(bgColor);
-		graphics.fill(bounds);// draw atom background
 		graphics.setFont(font);
 		graphics.setColor(atomColor);
-		layoutAtom.draw(graphics, screenAtomX, screenAtomY);// draw atom symbol
-	
-		
+		layoutAtom.draw(graphics, screenAtomX, screenAtomY);// draw atom symbol		
 		
 		graphics.setColor(saveColor);
 	}

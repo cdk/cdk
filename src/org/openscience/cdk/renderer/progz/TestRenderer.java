@@ -199,11 +199,15 @@ mol.addBond(bondB1);
 	    atomC0.setID("C0"); atomC0.setHydrogenCount(3);
 		IAtom atomC1 = new Atom("C");
 		atomC1.setID("C1"); atomC1.setHydrogenCount(2);
-		atomC0.setMassNumber(16);
+		
 		IAtom atomS = new Atom("S");
 		atomS.setID("S"); atomC1.setHydrogenCount(1);
-		atomS.setMassNumber(6);
-		atomC0.setFormalCharge(-1);
+		atomC0.setMassNumber(10);
+		atomS.setMassNumber(4);
+		
+		atomC1.setMassNumber(26);
+		
+		atomC0.setFormalCharge(-2);
 		atomS.setFormalCharge(2);
 		atomC1.setFormalCharge(-1);
 
