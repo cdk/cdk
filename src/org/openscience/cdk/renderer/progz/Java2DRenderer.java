@@ -127,38 +127,27 @@ public class Java2DRenderer implements IJava2DRenderer {
 		graphics.transform(transformMatrix);
 		System.out.println("transform matrix:" + graphics.getTransform());
 
-		// draw the shapes
+		// set basic shape form
 		graphics.setColor(Color.BLACK);
 		graphics.setStroke(new BasicStroke(
 			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
 			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
 		);
-/*		for (Iterator iter = shapes.iterator(); iter.hasNext();) {
-			graphics.draw((Shape)iter.next());
-		}*/
+
 		IRingSet ringSet = getRingSet(atomCon);
 		
+		// draw bonds
 		paintBonds(atomCon, ringSet, graphics);
 
 		// add rendering of atom symbols?
 		paintAtoms(atomCon, graphics);
 		
-		/*// draw the shapes
-		graphics.setColor(Color.ORANGE);
-		graphics.setStroke(new BasicStroke(
-			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
-			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
-		);
-		for (Iterator iter = shapes.iterator(); iter.hasNext();) {
-			graphics.draw((Shape)iter.next());
-		}*/
 	}
 	protected IRingSet getRingSet(IAtomContainer atomContainer)
 	{
 	  IRingSet ringSet = atomContainer.getBuilder().newRingSet();
 	  java.util.Iterator molecules = null;
-
-	  try
+  try
 	  {
 	    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).molecules();
 	  }
@@ -189,36 +178,19 @@ public class Java2DRenderer implements IJava2DRenderer {
 		for (int i = 0; i < atomCon.getAtomCount(); i++)
 		{
 			paintAtom(atomCon, atomCon.getAtom(i), graphics);
-
 		}
 	}
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
 		System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
-		Font font;
-		//font = new Font("Serif", Font.PLAIN, 20);
-		if (rendererModel.getFont() != null) {
-			font = rendererModel.getFont();
-			System.out.println("the font is now: " + font);
-		}
-		else 
-			font = new Font("Arial", Font.PLAIN, 20);
-
-		//the graphics objects has a transform which is 'reversed' to go from world coordinates
-		//to screencoordinates, so transform the charaters to show them right.
-		float fscale = 25; 
-		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
-		AffineTransform trans = new AffineTransform(transmatrix);
-		font = font.deriveFont(trans);
-		
-		graphics.setFont(font);
+				
 		String symbol = "";
 		if (atom.getSymbol() != null) {
 			symbol = atom.getSymbol();
 		}
 		//symbol = "L"; //to test if a certain symbol is spaced out right 
-		
-		boolean drawSymbol = false; //paint all Atoms for the time being
+
+		boolean drawSymbol = true; //paint all Atoms for the time being
 		boolean isRadical = (container.getConnectedSingleElectronsCount(atom) > 0);
 		if (atom instanceof IPseudoAtom)
 		{
@@ -275,31 +247,123 @@ public class Java2DRenderer implements IJava2DRenderer {
 			return;
 		
 		Color saveColor = graphics.getColor();
+
+		Font font;
+		//font = new Font("Serif", Font.PLAIN, 20);
+		if (rendererModel.getFont() != null) {
+			font = rendererModel.getFont();
+			System.out.println("the font is now: " + font);
+		}
+		else 
+			font = new Font("Arial", Font.PLAIN, 20);
+
+		//the graphics objects has a transform which is 'reversed' to go from world coordinates
+		//to screencoordinates, so transform the charaters to show them right.
+		float fscale = 25; 
+		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
+		AffineTransform trans = new AffineTransform(transmatrix);
+		font = font.deriveFont(trans);
+		
+		float sizeSmall = (float)(font.getSize2D() * 0.4);
+		Font fontSmall = font.deriveFont(sizeSmall); //font for upper/lower text such as Massnumber, Charges, HydrogenCount etc..
+
+		graphics.setFont(font);
+
 		FontRenderContext frc = graphics.getFontRenderContext();
-		TextLayout layout = new TextLayout(symbol, font, frc);
-		Rectangle2D bounds = layout.getBounds();
+		TextLayout layoutAtom = new TextLayout(symbol, font, frc);
+		Rectangle2D bounds = layoutAtom.getBounds();
 		
 		float margin = 0.03f; //size of clean area next to text
 		//btest has to be substracted to get the text on the exact right position
-		//FIXME: get this value *somehow* from the graphics object.
+		//FIXME: get this value *somehow* from the graphics object?.
+		float marginSmall = (float)(margin * 0.6);
+		
 		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
-		float screenX = (float)(atom.getPoint2d().x - bounds.getWidth()/2 - btest); 
-		float screenY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
+		float screenAtomX = (float)(atom.getPoint2d().x - bounds.getWidth()/2 - btest); 
+		float screenAtomY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
 
-		bounds.setRect(bounds.getX() + screenX - margin,
-		                  bounds.getY() + screenY - margin,
-		                  bounds.getWidth() + 2 * margin,
-		                  bounds.getHeight() + 2 * margin);
+		bounds.setRect((float)(bounds.getX() + screenAtomX - margin),
+				(float)(bounds.getY() + screenAtomY - margin),
+				(float)(bounds.getWidth() + 2 * margin),
+				(float)(bounds.getHeight() + 2 * margin));
 		
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
 		
-		Color bgColor = graphics.getBackground();
-		graphics.setColor(bgColor);
-		graphics.fill(bounds);
+		if (atom.getMassNumber() != 0) {
+			graphics.setFont(fontSmall);
+			String textMass = Integer.toString(atom.getMassNumber());
+			FontRenderContext frcMass = graphics.getFontRenderContext();
+			TextLayout layoutMass = new TextLayout(textMass, fontSmall, frcMass);
+			Rectangle2D boundsMass = layoutMass.getBounds();
+
+			float screenMassX = (float)(screenAtomX - boundsMass.getWidth() - margin - marginSmall); 
+			float screenMassY = (float)(screenAtomY + bounds.getHeight() - margin - marginSmall - boundsMass.getHeight() / 2);
+
+			boundsMass.setRect(boundsMass.getX() + screenMassX - marginSmall,
+						boundsMass.getY() + screenMassY - marginSmall,
+						boundsMass.getWidth() + 2 * marginSmall,
+						boundsMass.getHeight() + 2 * marginSmall);
 		
+			Color colorMass = Color.BLACK;
+			Color bgColor = Color.green;
+			graphics.setColor(bgColor);
+			graphics.fill(boundsMass);// draw atom background
+			graphics.setFont(fontSmall);
+			graphics.setColor(colorMass);
+			layoutMass.draw(graphics, screenMassX, screenMassY);// draw atom symbol
+		}
+		if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) {
+			graphics.setFont(fontSmall);
+			String baseString = "+";
+			String textFormal = "";
+			if (atom.getFormalCharge() != 1 && atom.getFormalCharge() != -1)
+				textFormal += Integer.toString(atom.getFormalCharge());
+			
+			if (atom.getFormalCharge() > 0)
+				textFormal += "+";
+			else 
+				textFormal += "-";
+			
+			FontRenderContext frcFormal = graphics.getFontRenderContext();
+			TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
+			TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
+			Rectangle2D boundsFormalC = layoutFormal.getBounds();
+		
+			float screenFormalX = (float)(screenAtomX + bounds.getWidth() + marginSmall); 
+			float screenFormalY = (float)(screenAtomY + bounds.getHeight() - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
+			System.out.println(
+					//" TextLayout Descent: " + layoutFormal.getDescent() + 
+					//" Ascent: " + layoutFormal.getAscent() +
+					" getAdvance: " + layoutFormal.getAdvance() +
+					" getBaseline: " + layoutFormal.getBaseline() +
+					" boundsFormalC.getHeight()" + boundsFormalC.getHeight() +
+					" BasegetAdvance: " + layoutBase.getAdvance() +
+					" BasegetBaseline: " + layoutBase.getBaseline() );
+			
+			boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
+					(float)(boundsFormalC.getY() + screenFormalY - marginSmall),
+					(float)(boundsFormalC.getWidth() + 2 * marginSmall),
+					(float)(boundsFormalC.getHeight() + 2 * marginSmall));
+		
+			Color colorFormalC = Color.BLACK;
+			Color bgColor = Color.green;
+			graphics.setColor(bgColor);
+			graphics.fill(boundsFormalC);// draw Formal Charge background
+			graphics.setFont(fontSmall);
+			graphics.setColor(colorFormalC);
+			layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
+			
+		}
+		Color bgColor = graphics.getBackground();
+		bgColor = Color.BLUE;
+		graphics.setColor(bgColor);
+		graphics.fill(bounds);// draw atom background
+		graphics.setFont(font);
 		graphics.setColor(atomColor);
-		layout.draw(graphics, screenX, screenY);
+		layoutAtom.draw(graphics, screenAtomX, screenAtomY);// draw atom symbol
 	
+		
+		
 		graphics.setColor(saveColor);
 	}
 	/**
@@ -351,6 +415,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		}
 		return isAromatic;
 	}
+	
 	public static double distance2points(Point2d a, Point2d b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 	}
@@ -595,7 +660,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintDashedWedgeBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		System.out.println("painting paintDashedWedgeBond now for: " + bond);
-		//TODO: (in progress :p) rewrite this old code:
 		double wedgeWidth = rendererModel.getBondWidth() /10;
 		double bondWidth = rendererModel.getBondWidth() / 40;
 		double x0, x1, y0, y1;
@@ -641,7 +705,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 			xr = x0 + t * (newxdown - x0);
 			yl = y0 + t * (newyup - y0);
 			yr = y0 + t * (newydown - y0);
-			System.out.println(i + " : " + t + " from " + xl + " ; " + yl + " to: " + xr + " ; " + yr);
+			//System.out.println(i + " : " + t + " from " + xl + " ; " + yl + " to: " + xr + " ; " + yr);
 			line.setLine(xl, yl, xr, yr);
 			graphics.draw(line);
 		}
@@ -737,9 +801,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 		}
 	}
 	/**
-	 *  Paints the given single bond.
+	 *  Paints the given 'Any'  bond.
 	 *
-	 *@param  bond       The single bond to be drawn
+	 *@param  bond The given 'Any'  bond to be drawn
 	 */
 	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -772,9 +836,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 		}*/
 	}
 	/**
-	 *  Paints the given single bond.
+	 *  Paints the given double bond.
 	 *
-	 *@param  bond       The single bond to be drawn
+	 *@param  bond       The double bond to be drawn
 	 */
 	public void paintDoubleBond(IBond bond, Color bondColor, Graphics2D graphics)
 	{
@@ -850,16 +914,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		graphics.setColor(bondColor);
 		graphics.draw(line);
 	}
-	
-/*	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
-	{
-		graphics.setColor(bondColor);
-        int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
-		int[] screenCoords = getScreenCoordinates(newCoords);
-    int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
-		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
-        graphics.fillPolygon(xCoords, yCoords, 4);
-	}*/
 	
 	private AffineTransform createScaleTransform(Rectangle2D contextBounds, Rectangle2D rendererBounds) {
 		AffineTransform affinet = new AffineTransform();
@@ -948,9 +1002,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 	    	}
 	        
 	    	// FIXME: make a decent estimate for the margin
-	    	double margin = result.getHeight() / 50; //2% margin
-	    	if (margin < 0.2) {
-	    		margin = 0.2; //0.2 is enough to make symbols appear on screen	
+	    	double margin = result.getHeight() / 20; //5% margin
+	    	if (margin < 1) {
+	    		margin = 1; //1 is ~enough to make symbols + text appear on screen	
 	    	}
 	    	result.setRect(result.getMinX() - margin, result.getMinY() - margin, result.getWidth() + 2 * margin, result.getHeight() + 2 * margin);
 	    

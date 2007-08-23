@@ -77,11 +77,13 @@ public class TestRenderer extends JPanel {
 		//mol = MoleculeFactory.makeAlphaPinene();
 		//mol = MoleculeFactory.makeThiazole();
 		//mol = MoleculeFactory.makeAlkane(3);
+		mol = makeMasstest();
 		
 		//mol = MoleculeFactory.makeBenzene();
 		//mol = makeBenzene();
 		//mol = makeWedgeTest();
-		mol = makeSWedgeTest();
+		
+		//mol = makeSWedgeTest();
 System.out.println("molecule: " + mol);
 		
 		
@@ -191,59 +193,29 @@ mol.addBond(bondB1);
 
 	  return mol;	
 	}
-	public IMolecule makeWedgeTest() {
+	public IMolecule makeMasstest() {
 		IMolecule mol = builder.newMolecule();
 		IAtom atomC0 = new Atom("C");
 	    atomC0.setID("C0"); atomC0.setHydrogenCount(3);
 		IAtom atomC1 = new Atom("C");
-		atomC1.setID("C1"); atomC1.setHydrogenCount(0);
-		
-
-		IAtom atomC2 = new Atom("C");
-		atomC1.setID("C2"); atomC2.setHydrogenCount(0);
-		IAtom atomO1 = new Atom("O");
-		atomO1.setID("O1"); atomO1.setHydrogenCount(1);
-		IAtom atomO2 = new Atom("O");
-		atomO2.setID("O2"); atomO2.setHydrogenCount(0);
-		
-		IAtom atomH0 = new Atom("H");
-		atomH0.setID("H0"); atomH0.setHydrogenCount(0);
-		IAtom atomH1 = new Atom("H");
-		atomH0.setID("H1"); atomH1.setHydrogenCount(0);
-		IAtom atomH2 = new Atom("H");
-		atomH0.setID("H2"); atomH2.setHydrogenCount(0);
+		atomC1.setID("C1"); atomC1.setHydrogenCount(2);
+		atomC0.setMassNumber(16);
+		IAtom atomS = new Atom("S");
+		atomS.setID("S"); atomC1.setHydrogenCount(1);
+		atomS.setMassNumber(6);
+		atomC0.setFormalCharge(-1);
+		atomS.setFormalCharge(2);
+		atomC1.setFormalCharge(-1);
 
 		IBond bondB0 = builder.newBond(atomC0, atomC1);
 	    bondB0.setElectronCount(1);
-	    IBond bondB1 = builder.newBond(atomC1, atomO1);
+	    IBond bondB1 = builder.newBond(atomC1, atomS);
 	    bondB1.setElectronCount(1);
-	    bondB1.setStereo(CDKConstants.STEREO_BOND_UP);
-	    
-	    IBond bondB2 = builder.newBond(atomC1, atomC2);
-	    bondB2.setElectronCount(1);
-	    IBond bondB3 = builder.newBond(atomC2, atomO2);
-	    bondB3.setElectronCount(2);
-	  
-		IBond bondB4 = builder.newBond(atomO1, atomH0);
-		bondB4.setElectronCount(1);
-		IBond bondB5 = builder.newBond(atomC1, atomH1);
-		bondB5.setElectronCount(1);
-		bondB5.setStereo(CDKConstants.STEREO_BOND_DOWN);
-
-		IBond bondB6 = builder.newBond(atomC2, atomH2);
-		bondB6.setElectronCount(1);
 
 		mol.addAtom(atomC0); mol.addAtom(atomC1);
-		mol.addAtom(atomC2); mol.addAtom(atomO1);
-	  mol.addAtom(atomO2);
-	  mol.addAtom(atomH0);
-	  mol.addAtom(atomH1);
-	  mol.addAtom(atomH2);
-mol.addBond(bondB0); mol.addBond(bondB1);
-	  mol.addBond(bondB2); mol.addBond(bondB3);
-	  mol.addBond(bondB4);
-	  mol.addBond(bondB5);
-	  mol.addBond(bondB6);
+		mol.addAtom(atomS);
+		mol.addBond(bondB0); 
+		mol.addBond(bondB1); 
 
 	  return mol;	
 	}
