@@ -27,10 +27,19 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.StringWriter;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
+import javax.imageio.stream.ImageOutputStream;
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
 import javax.swing.JFileChooser;
@@ -41,6 +50,8 @@ import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPExportFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
+import org.openscience.cdk.io.MDLWriter;
+import org.w3c.dom.Node;
 
 import com.sun.media.jai.codec.JPEGEncodeParam;
 
@@ -91,20 +102,51 @@ public class ExportAction extends SaveAsAction {
                 }
             } else {
                 // A binary image
-                Image awtImage = jcpPanel.takeSnapshot();
+                RenderedImage awtImage = jcpPanel.takeSnapshot();
                 String filename = outFile.toString();
                 logger.debug("Creating binary image: ", filename);
-                RenderedOp image = JAI.create("AWTImage", awtImage);
-                if (type.equals(JCPExportFileFilter.bmp)) {
-                    JAI.create("filestore", image, filename, "BMP", null);
-                } else if (type.equals(JCPExportFileFilter.tiff)) {
-                    JAI.create("filestore", image, filename, "TIFF", null);
-                } else if (type.equals(JCPExportFileFilter.jpg)) {
-                    JAI.create("filestore", image, filename, "JPEG", new JPEGEncodeParam());
-                } else if (type.equals(JCPExportFileFilter.png)) {
-                    JAI.create("filestore", image, filename, "PNG", null);
-                } else { // default to a PNG binary image
-                    JAI.create("filestore", image, filename, "PNG", null);
+                if (type.equals(JCPExportFileFilter.png)) {
+            		try {
+            			ImageWriter writer = ImageIO.getImageWriters(
+            				new ImageTypeSpecifier(awtImage), "png"
+            			).next();
+            			ImageTypeSpecifier specifier = new ImageTypeSpecifier(awtImage);
+            			IIOMetadata meta = writer.getDefaultImageMetadata( specifier, null );
+
+            			Node node = meta.getAsTree( "javax_imageio_png_1.0" );
+            			IIOMetadataNode tExtNode = new IIOMetadataNode("tEXt");
+            			IIOMetadataNode tExtEntryNode = new IIOMetadataNode("tEXtEntry");
+            			tExtEntryNode.setAttribute( "keyword", "molfile" );
+            			// create the MDL molfile
+            			StringWriter outputString = new StringWriter();
+            			MDLWriter mdlWriter = new MDLWriter(outputString);
+            			JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
+                        ChemModel model = (ChemModel)jcpm.getChemModel();
+                        mdlWriter.write(model);
+                        mdlWriter.close();
+            			tExtEntryNode.setAttribute( "value", outputString.toString());
+            			tExtNode.appendChild(tExtEntryNode);
+            			node.appendChild(tExtNode);
+            			meta.mergeTree("javax_imageio_png_1.0", node);
+            			
+            			ImageOutputStream ios = ImageIO.createImageOutputStream(new FileOutputStream(filename));
+            			writer.setOutput(ios);
+            			writer.write( meta, new IIOImage(awtImage, null, meta), null );
+					} catch (Exception e1) {
+						System.out.println("Error while writing PNG: " + e1.getMessage());
+						e1.printStackTrace();
+					}                	
+                } else {
+                	RenderedOp image = JAI.create("AWTImage", awtImage);
+                	if (type.equals(JCPExportFileFilter.bmp)) {
+                		JAI.create("filestore", image, filename, "BMP", null);
+                	} else if (type.equals(JCPExportFileFilter.tiff)) {
+                		JAI.create("filestore", image, filename, "TIFF", null);
+                	} else if (type.equals(JCPExportFileFilter.jpg)) {
+                		JAI.create("filestore", image, filename, "JPEG", new JPEGEncodeParam());
+                	} else { // default to a PNG binary image
+                		JAI.create("filestore", image, filename, "PNG", null);
+                	}
                 }
                 logger.debug("Binary image saved to: ", filename);
             }
@@ -112,5 +154,6 @@ public class ExportAction extends SaveAsAction {
 
         jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());        
     }
+    
 }
     

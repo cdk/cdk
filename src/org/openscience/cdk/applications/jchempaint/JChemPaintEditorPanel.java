@@ -32,9 +32,10 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -546,9 +547,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 		}
 	}
 
-	public Image takeSnapshot()
+	public RenderedImage takeSnapshot()
 	{
-		Image snapImage = null;
+		BufferedImage image = null;
 		try
 		{
 			logger.info("Making snapshot... ");
@@ -568,8 +569,8 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
             Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
-            snapImage = createImage((int)dim.getWidth()+20, (int)dim.getHeight()+20);
-            Graphics2D snapGraphics = (Graphics2D) snapImage.getGraphics();
+            image = new BufferedImage((int)dim.getWidth()+20, (int)dim.getHeight()+20, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D snapGraphics = image.createGraphics();
             snapGraphics.setBackground(Color.WHITE);
             snapGraphics.clearRect(0,0,(int)dim.getWidth()+20, (int)dim.getHeight()+20);
             r2d.useScreenSize=false;
@@ -581,9 +582,9 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 			logger.debug("painting succeeded.");
 		} catch (NullPointerException e)
 		{
-            snapImage = null;
+            image = null;
 		}
-		return snapImage;
+		return image;
 	}
 
 
