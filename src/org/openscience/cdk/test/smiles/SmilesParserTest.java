@@ -1089,6 +1089,21 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(4)), 0.001);
 		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(5)), 0.001);			
 	}
+
+	/**
+	 * Test case for bug #1783367 "SmilesParser incorrectly assigns double bonds".
+	 * "C=%10C=CC=C%02C=%10N(C)CCC%02" was parsed incorrectly whereas "C=1C=CC=C%02C=1N(C)CCC%02"
+	 * was parsed correctly. There was a bug with parsing "C=%10".
+	 * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+	 *
+	 * @cdk.bug 1783367
+	 */
+	@org.junit.Test (timeout=1000)
+	public void testBug1783367() throws Exception {
+		String smiles = "C=%10C=CC=C%02C=%10N(C)CCC%02";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1.0, mol.getBond(0).getOrder());
+	}
 	
 }
 

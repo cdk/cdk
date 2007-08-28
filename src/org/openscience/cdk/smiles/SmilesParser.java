@@ -126,7 +126,7 @@ public class SmilesParser {
 	IAtom[] rings = null;
 	double[] ringbonds = null;
 	int thisRing = -1;
-	org.openscience.cdk.Molecule molecule = null;
+	IMolecule molecule = null;
 	String currentSymbol = null;
 
 	public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException
@@ -257,7 +257,7 @@ public class SmilesParser {
 		boolean bondExists = true;
 		thisRing = -1;
 		currentSymbol = null;
-		molecule = new org.openscience.cdk.Molecule();
+		molecule = builder.newMolecule();
 		position = 0;
 		// we don't want more than 1024 rings
 		rings = new IAtom[1024];
@@ -345,7 +345,7 @@ public class SmilesParser {
 				} else if (mychar == '=')
 				{
 					position++;
-					if (status == 2 || smiles.length() == position + 1 || !(smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9'))
+					if (status == 2 || smiles.length() == position + 1 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
 					{
 						bondStatus = CDKConstants.BONDORDER_DOUBLE;
 					} else
@@ -355,7 +355,7 @@ public class SmilesParser {
 				} else if (mychar == '#')
 				{
 					position++;
-					if (status == 2 || smiles.length() == position + 1 || !(smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9'))
+					if (status == 2 || smiles.length() == position + 1 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
 					{
 						bondStatus = CDKConstants.BONDORDER_TRIPLE;
 					} else
