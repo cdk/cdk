@@ -1105,5 +1105,40 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(1.0, mol.getBond(0).getOrder());
 	}
 	
+
+	/**
+	 * Test case for bug #1783547 "Lost aromaticity in SmilesParser with Biphenyl".
+	 * The source of the bug is a NullPointerException thrown in DeduceBondSystemTool.java
+	 * at line:
+	 *
+	 *     if (r.getAtom(j).getHybridization() != 2) {
+	 *
+	 * And this is a consequence of the refactoring of primitive types to Objects
+	 * and having them a default value of null.
+	 * In this case the following line in AtomType.java causes the null value:
+	 *
+	 *     protected Integer hybridization = (Integer) CDKConstants.UNSET;
+	 *
+	 * @cdk.bug 1783547
+	 */
+	@org.junit.Test (timeout=1000)
+	public void testBug1783547() throws Exception {
+		// easy case
+		String smiles = "c1ccccc1C1=CC=CC=C1";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(2.0, mol.getBond(0).getOrder());
+		Assert.assertEquals(1.0, mol.getBond(1).getOrder());
+		Assert.assertEquals(2.0, mol.getBond(2).getOrder());
+		Assert.assertEquals(1.0, mol.getBond(3).getOrder());
+		
+		// harder case
+		String smiles2 = "C%21=%01C=CC=C%02C=%01N(C)CCC%02.C%21c%02ccccc%02";
+		IMolecule mol2 = sp.parseSmiles(smiles2);
+		Assert.assertEquals(2.0, mol2.getBond(16).getOrder());
+		Assert.assertEquals(1.0, mol2.getBond(17).getOrder());
+		Assert.assertEquals(2.0, mol2.getBond(18).getOrder());
+		Assert.assertEquals(1.0, mol2.getBond(19).getOrder());
+	}	
+		
 }
 

@@ -728,7 +728,7 @@ public class DeduceBondSystemTool {
 
                     //logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                    if (r.getAtom(j).getHybridization() != CDKConstants.HYBRIDIZATION_SP2) {
+                    if (r.getAtom(j).getHybridization() == CDKConstants.UNSET || r.getAtom(j).getHybridization() != CDKConstants.HYBRIDIZATION_SP2) {
                     	rs.removeAtomContainer(i);
                         i--; // go back
                         continue iloop;
@@ -782,7 +782,7 @@ public class DeduceBondSystemTool {
 
                 // logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                if (r.getAtom(j).getHybridization() != 2) {
+                if (r.getAtom(j).getHybridization() == CDKConstants.UNSET || r.getAtom(j).getHybridization() != 2) {
                     NonSP2Count++;
                     if (r.getAtom(j).getSymbol().equals("C")) {
                         Check[i] = false;
