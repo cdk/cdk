@@ -54,7 +54,7 @@
             <echo message="   Java ext dir: ${java.ext.dirs}" />
             <echo message="    Ant version: ${ant.version}" />
             <echo message="    ${ANT_HOME}: ${ant.home}" />
-            <echo message="       hasAnt16: ${hasAnt16}" />
+            <echo message="       hasAnt17: ${hasAnt17}" />
             <echo message="" />
             <echo message="CDK Environment:" />
             <echo message="    CDK version: ${version}" />
@@ -155,11 +155,8 @@
             </condition>
 
             <!-- test Ant version -->
-            <condition property="hasAnt16">
-              <or>
-              <contains string="${ant.version}" substring="1.6"/>
+            <condition property="hasAnt17">
               <contains string="${ant.version}" substring="1.7"/>
-              </or>
             </condition>
 
             <!-- test Java version -->
@@ -196,7 +193,8 @@
                   </or>
             	</not>
             </condition>
-		  	<fail if="isNotJava15+" message="This CDK release requires Java5 or better."/>
+            <fail if="isNotJava15+" message="This CDK release requires Java5 or better."/>
+            <fail unless="hasAnt17" message="This CDK release requires Ant 1.7 or better."/>
         </target>
 
 
@@ -296,7 +294,7 @@
                     <!-- excludesfile name="${build}/java1.4.javafiles" unless="isJava14"/ -->
                     <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                     <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
-                    <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt16"/>
+                    <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt17"/>
                     <excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
                     <excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
                     <excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
@@ -327,7 +325,7 @@
                 <!-- excludesfile name="${build}/java1.4.javafiles" unless="isJava14"/ -->
                 <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                 <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
-                <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt16"/>
+                <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt17"/>
             	<excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
             	<excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
@@ -343,7 +341,7 @@
                     <!-- excludesfile name="${build}/java1.4.classes" unless="isJava14"/ -->
                     <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                     <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
-                    <excludesfile name="${build}/ant1.6.classes" unless="hasAnt16"/>
+                    <excludesfile name="${build}/ant1.6.classes" unless="hasAnt17"/>
 	                <excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
                 	<excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
@@ -367,7 +365,7 @@
        </target>
 
         <!-- Convert the JavaCC .jj file to the correct .java files for the IUPAC parser -->
-        <target id="javacc" name="javacc" depends="init, check" if="hasAnt16" unless="dotjjfiles.uptodate">
+        <target id="javacc" name="javacc" depends="init, check" if="hasAnt17" unless="dotjjfiles.uptodate">
           <echo message="Compiling Ant 1.6 depending classes." />
           <!-- the IUPAC name parser -->
           <delete>
