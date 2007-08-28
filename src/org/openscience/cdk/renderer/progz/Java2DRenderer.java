@@ -1,3 +1,4 @@
+
 package org.openscience.cdk.renderer.progz;
 
 import org.openscience.cdk.CDKConstants;
@@ -7,15 +8,12 @@ import org.openscience.cdk.renderer.IRenderer2D;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.geom.Ellipse2D.Double;
 import java.awt.geom.Ellipse2D;
 import java.awt.Polygon;
 import java.awt.geom.GeneralPath;
@@ -90,37 +88,22 @@ public class Java2DRenderer implements IJava2DRenderer {
 		// TODO Auto-generated method stub
 		
 	}
-
+	/**
+	 * Paint the given Molecule on the graphics object at location specified by bounds.
+	 * 
+	 *@param  atomCon The molecule to be drawn
+	 *@param  graphics Graphics2D to draw on
+	 *@param  bounds
+	 */
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics,
 			Rectangle2D bounds) {
-		List shapes = new ArrayList();
-		// create the bond shapes
-		Iterator bonds = atomCon.bonds();
-		while (bonds.hasNext()) {
-			IBond bond = (IBond)bonds.next();
-			shapes.add(
-				new Line2D.Double(
-					bond.getAtom(0).getPoint2d().x,
-					bond.getAtom(0).getPoint2d().y,
-					bond.getAtom(1).getPoint2d().x,
-					bond.getAtom(1).getPoint2d().y
-				)
-			);
-		}
 		//rendererModel.setShowAromaticity(true);
 		
-		
-		
-		// calculate the molecule boundaries via the shapes
-		Rectangle2D molBounds = createRectangle2D(shapes);
+		// calculate the molecule boundaries via the atomContainer
+		Rectangle2D molBounds = createRectangle2D(atomCon); 
 		if (molBounds == null) {
-			molBounds = new Rectangle2D.Double();
-				
-			IAtom atom = atomCon.getAtom(0);
-			double x = atom.getPoint2d().x;
-			double y = atom.getPoint2d().y;
-			
-			molBounds.setRect(x - 1, y - 1, 2, 2);
+			logger.debug("empty atomCon: no molBounds -> no drawing ");
+			return;
 		}
 		AffineTransform transformMatrix = createScaleTransform(molBounds,bounds);
 		affine = transformMatrix;
@@ -139,7 +122,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		// draw bonds
 		paintBonds(atomCon, ringSet, graphics);
 
-		// add rendering of atom symbols?
+		// draw atom symbols
 		paintAtoms(atomCon, graphics);
 		
 	}
@@ -169,9 +152,10 @@ public class Java2DRenderer implements IJava2DRenderer {
 	  return ringSet;
 	}
 	/**
-	 *  Searches through all the atoms in the given array of atoms, triggers the
-	 *  paintColouredAtoms method if the atom has got a certain color and triggers
-	 *  the paintAtomSymbol method if the symbol of the atom is not C.
+	 * Triggers paintAtom method for all the atoms in the given array of atoms.
+	 *
+	 * @param atomCon
+	 * @param graphics
 	 */
 	public void paintAtoms(IAtomContainer atomCon, Graphics2D graphics)
 	{
@@ -180,15 +164,20 @@ public class Java2DRenderer implements IJava2DRenderer {
 			paintAtom(atomCon, atomCon.getAtom(i), graphics);
 		}
 	}
+	/**
+	 *  triggers the
+	 *  paintColouredAtoms method if the atom has got a certain color and triggers
+	 *  the paintAtomSymbol method if the symbol of the atom is not C
+	 *  
+	 * @param container
+	 * @param atom
+	 * @param graphics
+	 */
 	public void paintAtom(IAtomContainer container, IAtom atom, Graphics2D graphics)
 	{
-		System.out.println("IAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
+		System.out.println("paintAtom Symbol:" + atom.getSymbol() + " atom:" + atom);
 				
-		String symbol = "";
-		if (atom.getSymbol() != null) {
-			symbol = atom.getSymbol();
-		}
-		//symbol = "L"; //to test if a certain symbol is spaced out right 
+	
 
 		boolean drawSymbol = true; //paint all Atoms for the time being
 		boolean isRadical = (container.getConnectedSingleElectronsCount(atom) > 0);
@@ -201,6 +190,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 //			} else {
 			//	paintPseudoAtomLabel((IPseudoAtom) atom, atomBackColor, graphics, alignment, isRadical);
 //			}
+			System.out.println("call paintPseudoAtomLabel here?");
 			return;
 		} else if (!atom.getSymbol().equals("C"))
 		{
@@ -241,60 +231,82 @@ public class Java2DRenderer implements IJava2DRenderer {
                 logger.debug("Could not get an instance of IsotopeFactory");
             }
 
+		} else if (isRadical) 
+			drawSymbol = true;
+
+		if (drawSymbol == true) {
+			int alignment = GeometryToolsInternalCoordinates.getBestAlignmentForLabel(container, atom);
+			paintAtomSymbol(atom, graphics, alignment, isRadical);
 		}
-
-		if (drawSymbol != true)
-			return;
-		
+	}
+	public void paintAtomSymbol(IAtom atom, Graphics2D graphics, int alignment, boolean isRadical)
+	{
 		Color saveColor = graphics.getColor();
+		String symbol = "";
 
-		Font font;
+		if (atom.getSymbol() != null) {
+			symbol = atom.getSymbol();
+		}
+		//symbol = "L"; //to test if a certain symbol is spaced out right 
+		
+		
+		Font fontAtom;
 		//font = new Font("Serif", Font.PLAIN, 20);
 		if (rendererModel.getFont() != null) {
-			font = rendererModel.getFont();
-			System.out.println("the font is now: " + font);
+			fontAtom = rendererModel.getFont();
+			System.out.println("the font is now: " + fontAtom);
 		}
 		else 
-			font = new Font("Arial", Font.PLAIN, 20);
+			fontAtom = new Font("Arial", Font.PLAIN, 16);
 
 		//the graphics objects has a transform which is 'reversed' to go from world coordinates
-		//to screencoordinates, so transform the charaters to show them right.
+		//to screencoordinates, so transform the characters back to show them 'up-side-up'.
 		float fscale = 25; 
 		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
 		AffineTransform trans = new AffineTransform(transmatrix);
-		font = font.deriveFont(trans);
+		fontAtom = fontAtom.deriveFont(trans);
 		
-		float sizeSmall = (float)(font.getSize2D() * 0.4);
-		Font fontSmall = font.deriveFont(sizeSmall); //font for upper/lower text such as Massnumber, Charges, HydrogenCount etc..
+		//FIXME: add this 0.4 in the RendererModel
+		float sizeSmall = (float)(fontAtom.getSize2D() * 0.4);
+		Font fontSmall = fontAtom.deriveFont(sizeSmall); //font for upper/lower text such as Massnumber, Charges, HydrogenCount etc..
 
-		graphics.setFont(font);
+		graphics.setFont(fontAtom);
 
 		FontRenderContext frc = graphics.getFontRenderContext();
-		TextLayout layoutAtom = new TextLayout(symbol, font, frc);
-		Rectangle2D bounds = layoutAtom.getBounds();
+		TextLayout layoutAtom = new TextLayout(symbol, fontAtom, frc);
+		Rectangle2D boundsAtom = layoutAtom.getBounds();
 		
-		float margin = 0.03f; //size of clean area next to text
-		float marginSmall = (float)(margin * 0.6);
-		float marginLarge = (float)(margin * 2);//margin for MassNumber/FormalCharge etc.
+		float margin = 0.03f; //margin of 'box' around the text
+		float marginSmall = (float)(margin * 0.6);//margin between text
+		float marginLarge = (float)(margin * 2);//margin around MassNumber/FormalCharge etc.
 		//btest has to be substracted to get the text on the exact right position
-		//FIXME: get right value from graphics object? (width of line or so)
+		//FIXME: get right value from graphics object? (width of line? or so)
 		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
-		float screenAtomX = (float)(atom.getPoint2d().x - bounds.getWidth()/2 - btest); 
-		float screenAtomY = (float)(atom.getPoint2d().y - bounds.getHeight()/2);
-
-		bounds.setRect((float)(bounds.getX() + screenAtomX - margin),
-				(float)(bounds.getY() + screenAtomY - margin),
-				(float)(bounds.getWidth() + 2 * margin),
-				(float)(bounds.getHeight() + 2 * margin));
+		float atomSymbolX = (float)(atom.getPoint2d().x - boundsAtom.getWidth()/2 - btest); 
+		float atomSymbolY = (float)(atom.getPoint2d().y - boundsAtom.getHeight()/2);
+		float atomSymbolW = (float)boundsAtom.getWidth();
+		float atomSymbolH = (float)boundsAtom.getHeight();
 		
+		//bounds around Atom Symbol
+		boundsAtom.setRect(boundsAtom.getX() + atomSymbolX - margin,
+				(float)(boundsAtom.getY() + atomSymbolY - margin),
+				(float)(atomSymbolW + 2 * margin),
+				(float)(atomSymbolH + 2 * margin));
+		
+			
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
-		Color otherColor = Color.black;
-		Color bgColor = graphics.getBackground();
-		//bgColor = Color.BLUE;
+		Color otherColor = getRenderer2DModel().getForeColor();
+		Color bgColor = getRenderer2DModel().getBackColor();
+
 		graphics.setColor(bgColor);
-		graphics.fill(bounds);// draw atom background
+		graphics.fill(boundsAtom);// draw atom symbol background
 		
 	
+		double massnumberW = 0;
+		//double formalChargW = 0;
+		double hydroGenW = 0;
+		double hydroGenCountW = 0;
+		
 		if (atom.getMassNumber() != 0) {
 			graphics.setFont(fontSmall);
 			String textMass = Integer.toString(atom.getMassNumber());
@@ -302,34 +314,93 @@ public class Java2DRenderer implements IJava2DRenderer {
 			TextLayout layoutMass = new TextLayout(textMass, fontSmall, frcMass);
 			Rectangle2D boundsMass = layoutMass.getBounds();
 			
-	/*		System.out.println(" layoutMass.getAdvance()" + layoutMass.getAdvance() +
-					" layoutMass.getAscent()" + layoutMass.getAscent() +
-					" layoutMass.getBaseline()" + layoutMass.getBaseline() +
-					" layoutMass.getDescent()" + layoutMass.getDescent() +
-					" layoutMass.getLeading()" + layoutMass.getLeading() + 
-					" layoutMass.getVisibleAdvance()" + layoutMass.getVisibleAdvance() );
-			System.out.println("boundsMass.getWidth(): " + boundsMass.getWidth() + 
-					" boundsMass.getX() " + boundsMass.getX());*/
-					
 			float tempWA = (float)(layoutMass.getAdvance() - (float)boundsMass.getWidth());
 			System.out.println("tempWA " + tempWA);
 	
+			massnumberW = layoutMass.getAdvance();
+				
 			//terrible way of getting the MassNumber on the right X location for 'every?' number
 			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
-			float screenMassX = (float)(screenAtomX - layoutMass.getAdvance() + tempWA - (float)boundsMass.getX() - marginSmall);
-			float screenMassY = (float)(screenAtomY + bounds.getHeight() - margin - marginSmall - boundsMass.getHeight() / 2);
+			//float massNumberX = (float)(atomSymbolX - layoutMass.getAdvance() + tempWA - (float)boundsMass.getX() - marginSmall);
+			double massNumberX = atomSymbolX - massnumberW - marginSmall;
+			float massNumberY = (float)(atomSymbolY + boundsAtom.getHeight() - margin - marginSmall - boundsMass.getHeight() / 2);
 
-			boundsMass.setRect((float)((float)boundsMass.getX() + screenMassX - marginSmall),
-						(float)(boundsMass.getY() + screenMassY - marginLarge),
-						(float)(boundsMass.getWidth() + 2 * marginSmall),
-						(float)(boundsMass.getHeight() + 2 * marginLarge));
+			boundsMass.setRect(boundsMass.getX() + massNumberX - marginSmall,
+						boundsMass.getY() + massNumberY - marginLarge,
+						boundsMass.getWidth() + 2 * marginSmall,
+						boundsMass.getHeight() + 2 * marginLarge);
 		
-
+			bgColor = Color.green;
 			graphics.setColor(bgColor);
-			graphics.fill(boundsMass);// draw atom background
+			
+			graphics.fill(boundsMass);// draw Mass number background
 			graphics.setFont(fontSmall);
 			graphics.setColor(otherColor);
-			layoutMass.draw(graphics, screenMassX, screenMassY);// draw Mass Number
+			layoutMass.draw(graphics, (float)massNumberX, (float)massNumberY);// draw Mass Number
+			
+		}
+		
+		if (atom.getHydrogenCount() > 0) {
+			graphics.setFont(fontAtom);
+			String hChar = "H";
+			FontRenderContext frcMass = graphics.getFontRenderContext();
+			TextLayout layoutH = new TextLayout(hChar, fontAtom, frcMass);
+			Rectangle2D boundsHydro = layoutH.getBounds();
+			
+			double tempWA = layoutH.getAdvance() - boundsHydro.getWidth();
+			System.out.println("tempWA " + tempWA);
+	
+			hydroGenW = layoutH.getAdvance();
+				
+			
+			graphics.setFont(fontSmall);
+			String hCount = atom.getHydrogenCount().toString();
+			frcMass = graphics.getFontRenderContext();
+			TextLayout layoutHC = new TextLayout(hCount, fontSmall, frcMass);
+			Rectangle2D boundsHydroC = layoutHC.getBounds();
+			
+			double tempHC = layoutHC.getAdvance() - boundsHydroC.getWidth();
+			System.out.println("tempWA " + tempWA);
+	
+			hydroGenCountW = layoutHC.getAdvance();
+			
+			double hydroGenX = 0;
+			//TODO: add margins
+			if (alignment > 0) {
+				hydroGenX = atomSymbolX + atomSymbolW;		
+			}
+			else {
+				hydroGenX = atomSymbolX - hydroGenW - Math.max(hydroGenCountW, massnumberW);//Math.max(hydroGenCountW, massnumberW) ?
+			}
+			//terrible way of getting the MassNumber on the right X location for 'every?' number
+			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
+			double hydroGenY = atomSymbolY;//'H' at same height as atom Symbol
+
+			boundsHydro.setRect(boundsHydro.getX() + hydroGenX - marginSmall,
+					boundsHydro.getY() + hydroGenY - marginLarge,
+					boundsHydro.getWidth() + 2 * marginSmall,
+					boundsHydro.getHeight() + 2 * marginLarge);
+		
+			double hydroGenCX = hydroGenX + hydroGenW;
+			double hydroGenCY = hydroGenY - 0.5 * boundsHydroC.getHeight();//1,2,3,etc. 'subscript'
+
+			boundsHydroC.setRect(boundsHydroC.getX() + hydroGenCX - marginSmall,
+					boundsHydroC.getY() + hydroGenCY - marginLarge,
+					boundsHydroC.getWidth() + 2 * marginSmall,
+					boundsHydroC.getHeight() + 2 * marginLarge);
+			
+			graphics.setColor(bgColor);
+			
+			graphics.fill(boundsHydro);// draw 'H' background
+			graphics.fill(boundsHydroC);// draw '1/2/3' hydrogen Count background
+
+			graphics.setColor(otherColor);
+			
+			graphics.setFont(fontAtom);
+			layoutH.draw(graphics, (float)hydroGenX, (float)hydroGenY);// draw the 'H'
+			graphics.setFont(fontSmall);
+			layoutHC.draw(graphics, (float)hydroGenCX, (float)hydroGenCY);// draw the hydrogen Count
+			
 		}
 		if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) {
 
@@ -345,37 +416,40 @@ public class Java2DRenderer implements IJava2DRenderer {
 				marginRight = margin;
 			}
 			FontRenderContext frcFormal = graphics.getFontRenderContext();
-			float screenFormalX = (float)(screenAtomX + bounds.getWidth() + marginSmall);
+			
+			double formalChargeX = atomSymbolX + atomSymbolW + marginSmall;
+			if (alignment > 0)
+				formalChargeX += hydroGenW + hydroGenCountW;//should hydroGenCountW be included here?
+			
+			double formalChargeW = 0;
 			if (textFormal != "") { //draw amount and optional '+'-symbol
 				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
 				TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 		
 				 
-				float screenFormalY = (float)(screenAtomY + bounds.getHeight() + marginSmall - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
+				float screenFormalY = (float)(atomSymbolY + boundsAtom.getHeight() + marginSmall - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
 			
-				boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
-					(float)(boundsFormalC.getY() + screenFormalY - marginLarge),
-					(float)(boundsFormalC.getWidth() + 2 * marginSmall + marginRight),
-					(float)(boundsFormalC.getHeight() + 2 * marginLarge));
+				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - marginSmall,
+					boundsFormalC.getY() + screenFormalY - marginLarge,
+					boundsFormalC.getWidth() + 2 * marginSmall + marginRight,
+					boundsFormalC.getHeight() + 2 * marginLarge);
 		
 				graphics.setColor(bgColor);
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
-				screenFormalX += boundsFormalC.getWidth();
-			} else {
-				screenFormalX += marginSmall;
-			}
+				layoutFormal.draw(graphics, (float)formalChargeX, screenFormalY);// draw Formal Charge
+				formalChargeW = layoutFormal.getAdvance();
+			} 
 			if (atom.getFormalCharge() < 0) { //draw the 'minus' symbol
 				textFormal = "_";
 				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 		
-				float screenFormalY = (float)(screenAtomY + bounds.getHeight() + marginSmall - boundsFormalC.getHeight() / 2);//
+				float screenFormalY = (float)(atomSymbolY + boundsAtom.getHeight() + marginSmall - boundsFormalC.getHeight() / 2);//
 			
-				boundsFormalC.setRect((float)(boundsFormalC.getX() + screenFormalX - marginSmall),
+				boundsFormalC.setRect((float)(boundsFormalC.getX() + formalChargeX - marginSmall),
 					(float)(boundsFormalC.getY() + screenFormalY - 3 * marginLarge),
 					(float)(boundsFormalC.getWidth() + marginSmall + marginLarge),
 					(float)(boundsFormalC.getHeight() + 6 * marginLarge));
@@ -384,13 +458,13 @@ public class Java2DRenderer implements IJava2DRenderer {
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, screenFormalX, screenFormalY);// draw Formal Charge
-				screenFormalX += boundsFormalC.getWidth();
+				layoutFormal.draw(graphics, (float)formalChargeX, screenFormalY);// draw Formal Charge
 			}
 		}
-		graphics.setFont(font);
+		
+		graphics.setFont(fontAtom);
 		graphics.setColor(atomColor);
-		layoutAtom.draw(graphics, screenAtomX, screenAtomY);// draw atom symbol		
+		layoutAtom.draw(graphics, atomSymbolX, atomSymbolY);// draw atom symbol		
 		
 		graphics.setColor(saveColor);
 	}
@@ -1018,7 +1092,31 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double Bonddist = Math.sqrt(Math.pow(bondCenter.x - ptSrc.getX(), 2) + Math.pow(bondCenter.y - ptSrc.getY(), 2));
 		System.out.println("closest Bond distance: " + Bonddist + " Bond: " + bond);
 	}
-	
+	public Rectangle2D createRectangle2D(IAtomContainer atomCon) {
+		if (atomCon.getAtomCount() == 0)
+			return null;
+		float xmin, xmax = (float)atomCon.getAtom(0).getPoint2d().x;
+		xmin = xmax;
+		float ymin, ymax = (float)atomCon.getAtom(0).getPoint2d().y;
+		ymin = ymax;
+		float y,x;
+		for (int i = 1; i < atomCon.getAtomCount(); i++) {
+			y = (float)atomCon.getAtom(i).getPoint2d().y;
+			x = (float)atomCon.getAtom(i).getPoint2d().x;
+			if (x < xmin)
+				xmin = x;
+			else if (x > xmax)
+				xmax = x;
+			if (y < ymin)
+				ymin = y;
+			else if (y > ymax)
+				ymax = y;
+		}
+    	float margin = 1; //1 is ~enough margin to make symbols + text appear on screen	
+		Rectangle2D result = new Rectangle2D.Float();
+		result.setRect(xmin - margin, ymin - margin, (xmax - xmin) + 2 * margin, (ymax - ymin) + 2 * margin);
+		return result;
+	}
 	private Rectangle2D createRectangle2D(List shapes) {
 	    Iterator it = shapes.iterator();
 	    

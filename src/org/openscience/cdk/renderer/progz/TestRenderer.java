@@ -36,6 +36,10 @@ import org.openscience.cdk.interfaces.IMolecule;
 //import org.openscience.cdk.interfaces.ISetOfMolecules;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class TestRenderer extends JPanel {
 
 	JFrame frame;
@@ -47,15 +51,50 @@ public class TestRenderer extends JPanel {
     }
 	public class RendererListner implements MouseListener {
 		public void mouseClicked(MouseEvent e) {
-			//System.out.println(e); 
+			System.out.println(e); 
 			Point2D ptSrc = e.getPoint();
+			IMolecule molecule = painter.getMolecule();
 			
 			//painter.getGraphics2D(),
 			//Point2D ptDst = Java2DRenderer.getCoorFromScreen( ptSrc);
 			Point2D ptDst = painter.renderer.getCoorFromScreen( ptSrc);
 			System.out.println("Mouse click at " + ptSrc + " real world coordinates: " + ptDst);
-			Java2DRenderer.showClosestAtomOrBond(painter.getMolecule(), ptDst);
-			
+			Java2DRenderer.showClosestAtomOrBond(molecule, ptDst);
+			try {
+				int width = 400, height = 400;
+
+		      // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed
+		      // into integer pixels
+			  System.out.println("\tstarting..\n");
+			      BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		      System.out.println("bi created\n");
+
+		      Graphics2D ig2 = bi.createGraphics();
+		      System.out.println("ig2 created\n");
+
+		      
+		      ig2.setColor(getBackground());
+		      ig2.fillRect(0, 0, width, height);
+     
+		      Renderer2DModel model = painter.getModel();
+		      IJava2DRenderer renderer = painter.getRenderer();
+		      
+		      model.setZoomFactor(1);
+		      System.out.println("setZoomeFActor done\n");
+		      
+		      Rectangle2D rectangle = new Rectangle2D.Double();
+		      rectangle.setFrame(0, 0, width, height);
+		      renderer.paintMolecule(molecule, ig2, rectangle);
+		      System.out.println("renderer.paintMolecule done\n");
+
+		      ImageIO.write(bi, "PNG", new File("c:\\tmp\\yourImageName.PNG"));
+		      ImageIO.write(bi, "JPEG", new File("c:\\tmp\\yourImageName.JPG"));
+		      ImageIO.write(bi, "gif", new File("c:\\tmp\\yourImageName.GIF"));
+		      ImageIO.write(bi, "BMP", new File("c:\\tmp\\yourImageName.BMP"));
+		      
+		    } catch (IOException ie) {
+		      ie.printStackTrace();
+		    }
 		}
 		public void mouseEntered(MouseEvent e) { 	}
 		public void mouseExited(MouseEvent e) { 	}
@@ -133,6 +172,12 @@ System.out.println("molecule: " + mol);
 		public void setMolecule(IMolecule molecule) {
 			this.molecule = molecule;
 		}
+		public IJava2DRenderer getRenderer() {
+			return this.renderer;
+		}
+		public Renderer2DModel getModel() {
+			return this.model;
+		}
 		public IMolecule getMolecule() {
 			return this.molecule;
 		}
@@ -143,13 +188,15 @@ System.out.println("molecule: " + mol);
 		public void paint(Graphics g) {
 			//if (isOpaque()) { //paint background
 	        //    g.setColor(getBackground());
-				g.setColor(getBackground());
-				g.fillRect(0, 0, getWidth(), getHeight());
+			
 	       // }
 			super.paint(g);
 			//System.out.println("Painting molecule..!");
 			graphic = (Graphics2D)g;
 			model.setZoomFactor(1);
+			Color bg = model.getBackColor();
+			g.setColor(bg);
+			g.fillRect(0, 0, getWidth(), getHeight());
 			
 			if (!affinelast.equals(graphic.getTransform())) {
 				System.out.println("swing changed matrix to:" + graphic.getTransform());
@@ -201,7 +248,8 @@ mol.addBond(bondB1);
 		atomC1.setID("C1"); atomC1.setHydrogenCount(2);
 		
 		IAtom atomS = new Atom("S");
-		atomS.setID("S"); atomC1.setHydrogenCount(1);
+		atomS.setID("S"); 
+		//atomC1.setHydrogenCount(1);
 		atomC0.setMassNumber(10);
 		atomS.setMassNumber(4);
 		
