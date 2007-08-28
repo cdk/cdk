@@ -1305,21 +1305,20 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		IAtom atomInRange = r2dm.getHighlightedAtom();
 		if (atomInRange != null)
 		{
-			String[] funcGroupsKeys=new String[funcgroupsmap.keySet().size()/2+1];
+			String[] funcGroupsKeys=new String[funcgroupsmap.keySet().size()/+1];
 	        Iterator it=funcgroupsmap.keySet().iterator();
 	        int h=1;
 	        funcGroupsKeys[0]="";
 	        while(it.hasNext()){
 	        	funcGroupsKeys[h]=(String)it.next();
 	        	h++;
-	        	it.next();
 	        }
 			String x=EnterElementOrGroupDialog.showDialog(null,null, "Enter an element symbol or choose/enter a functional group abbrivation:", "Enter element", funcGroupsKeys, "","");
 			try{
-				IAtomContainer ac=(IAtomContainer)funcgroupsmap.get(x);
+				IAtomContainer ac=(IAtomContainer)funcgroupsmap.get(x.toLowerCase());
 				//this means a functional group was entered
 				//TODO undo-redo
-				if(ac!=null){
+				if(ac!=null && !x.equals("")){
 					ac=(IAtomContainer)((IAtomContainer)funcgroupsmap.get(x)).clone();
 					IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInRange);
 					IAtom lastplaced=null;
@@ -2429,6 +2428,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	    public void actionPerformed(ActionEvent e) {
 	        if ("Set".equals(e.getActionCommand())) {
 	            EnterElementOrGroupDialog.value = (String)(list.getSelectedItem());
+	        }
+	        if(e.getActionCommand().equals("Cancel")){
+	        	EnterElementOrGroupDialog.value="";
 	        }
 	        EnterElementOrGroupDialog.dialog.setVisible(false);
 	    }

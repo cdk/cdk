@@ -288,7 +288,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 						String key=(String)st.nextElement();
 						String value=(String)st.nextElement();
 						funcgroups.put(key, sp.parseSmiles(value));
-						funcgroups.put(key.toUpperCase(), sp.parseSmiles(value));
 						sb=new StringBuffer();
 					}
 				}else{
@@ -300,7 +299,6 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
 				String key=(String)st.nextElement();
 				String value=(String)st.nextElement();
 				funcgroups.put(key, sp.parseSmiles(value));
-				funcgroups.put(key.toUpperCase(), sp.parseSmiles(value));
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
