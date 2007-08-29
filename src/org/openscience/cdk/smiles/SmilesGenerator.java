@@ -440,8 +440,10 @@ public class SmilesGenerator
 		{
 			return false;
 		}
-		int lengthAtom = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
-		int lengthParent = container.getConnectedAtomsCount(parent) + parent.getHydrogenCount();
+		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
+		int lengthAtom = container.getConnectedAtomsCount(atom) + ((atom.getHydrogenCount() == CDKConstants.UNSET) ? 0 : atom.getHydrogenCount());
+		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
+		int lengthParent = container.getConnectedAtomsCount(parent) + ((parent.getHydrogenCount() == CDKConstants.UNSET) ? 0 : parent.getHydrogenCount());
 		if (container.getBond(atom, parent) != null)
 		{
 			if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N"))))
@@ -488,7 +490,8 @@ public class SmilesGenerator
 	 */
 	private boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration)
 	{
-		int lengthAtom = container.getConnectedAtomsCount(a) + a.getHydrogenCount();
+		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
+		int lengthAtom = container.getConnectedAtomsCount(a) + ((a.getHydrogenCount() == CDKConstants.UNSET) ? 0 : a.getHydrogenCount());
 		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))
 		{
 			return (false);
