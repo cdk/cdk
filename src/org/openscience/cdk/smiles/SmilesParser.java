@@ -345,7 +345,7 @@ public class SmilesParser {
 				} else if (mychar == '=')
 				{
 					position++;
-					if (status == 2 || smiles.length() == position + 1 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
+					if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
 					{
 						bondStatus = CDKConstants.BONDORDER_DOUBLE;
 					} else
@@ -355,7 +355,7 @@ public class SmilesParser {
 				} else if (mychar == '#')
 				{
 					position++;
-					if (status == 2 || smiles.length() == position + 1 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
+					if (status == 2 || !((smiles.charAt(position) >= '0' && smiles.charAt(position) <= '9') || smiles.charAt(position) == '%'))
 					{
 						bondStatus = CDKConstants.BONDORDER_TRIPLE;
 					} else

@@ -1139,6 +1139,24 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(2.0, mol2.getBond(18).getOrder());
 		Assert.assertEquals(1.0, mol2.getBond(19).getOrder());
 	}	
+
+	/**
+	 * Test case for bug #1783546 "Lost aromaticity in SmilesParser with Benzene".
+	 * SMILES like "C=1C=CC=CC=1" which end in "=1" were incorrectly parsed, the ring
+	 * closure double bond got lost.
+	 * @cdk.bug 1783546
+	 */
+	@org.junit.Test (timeout=1000)
+	public void testBug1783546() throws Exception {
+		String smiles = "C=1C=CC=CC=1";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1.0, mol.getBond(0).getOrder());
+		Assert.assertEquals(2.0, mol.getBond(1).getOrder());
+		Assert.assertEquals(1.0, mol.getBond(2).getOrder());
+		Assert.assertEquals(2.0, mol.getBond(3).getOrder());
+		Assert.assertEquals(1.0, mol.getBond(4).getOrder());
+		Assert.assertEquals(2.0, mol.getBond(5).getOrder());
+	}	
 		
 }
 
