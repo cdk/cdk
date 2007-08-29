@@ -32,11 +32,17 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.test.CDKTestCase;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * TestCase for the writer MDL mol files using one test file.
@@ -47,12 +53,18 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class MDLWriterTest extends CDKTestCase {
 
+    private IChemObjectBuilder builder;
+
     public MDLWriterTest(String name) {
         super(name);
     }
 
     public static Test suite() {
         return new TestSuite(MDLWriterTest.class);
+    }
+
+    protected void setUp() throws Exception {
+        builder = DefaultChemObjectBuilder.getInstance();
     }
 
     public void testAccepts() throws Exception {
@@ -93,5 +105,32 @@ public class MDLWriterTest extends CDKTestCase {
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
         assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
+    }
+    
+    /**
+     * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
+     * When a molecule contains an IPseudoAtom without specifying the atom label
+     * the MDLWriter generates invalid output as it prints the zero-length atom
+     * label.
+     * This was fixed with letting PseudoAtom have a default label of '*'.
+     *
+     * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * 
+     * @cdk.bug 1778479
+     */
+    public void testBug1778479() throws Exception {
+        StringWriter writer = new StringWriter();
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom1 = builder.newPseudoAtom();
+        IAtom atom2 = builder.newAtom("C");
+        IBond bond = builder.newBond(atom1, atom2);
+        molecule.addAtom(atom1);
+        molecule.addAtom(atom2);
+        molecule.addBond(bond);
+            
+        MDLWriter mdlWriter = new MDLWriter(writer);
+        mdlWriter.write(molecule);
+        String output = writer.toString();
+        assertEquals("Test for zero length pseudo atom label in MDL file", -1, output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
     }
 }

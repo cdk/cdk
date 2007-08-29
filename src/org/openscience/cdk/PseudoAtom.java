@@ -61,7 +61,7 @@ public class PseudoAtom extends Atom
      * Constructs an empty PseudoAtom.
      */
     public PseudoAtom() {
-        this("");
+        this("*");
     }
     
     /**

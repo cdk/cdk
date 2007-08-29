@@ -189,4 +189,18 @@ public class PseudoAtomTest extends CDKTestCase {
             assertTrue(description.charAt(i) != '\r');
         }
     }
+    
+    /**
+     * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
+     * We decided to let the pseudo atoms have a default label of '*'.
+     *
+     * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+     * 
+     * @cdk.bug 1778479
+     */
+    public void testBug1778479DefaultLabel() {
+        IPseudoAtom atom = builder.newPseudoAtom();
+        assertNotNull("Test for PseudoAtom's default label", atom.getLabel());
+        assertEquals("Test for PseudoAtom's default label", "*", atom.getLabel());
+    }
 }
