@@ -795,6 +795,8 @@ public class SmilesParser {
 	{
 		logger.debug("handleRing():");
 		double bondStat = bondStatusForRingClosure;
+		if (ringbonds[thisRing] > bondStat)
+			bondStat = ringbonds[thisRing];
 		IBond bond = null;
 		IAtom partner = null;
 		IAtom thisNode = rings[thisRing];
