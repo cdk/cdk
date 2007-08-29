@@ -115,8 +115,9 @@ public class TestRenderer extends JPanel {
 		IMolecule mol;
 		//mol = MoleculeFactory.makeAlphaPinene();
 		//mol = MoleculeFactory.makeThiazole();
-		//mol = MoleculeFactory.makeAlkane(3);
-		mol = makeMasstest();
+		//mol = MoleculeFactory.makeAlkane(5);
+		mol = makeAlkanetest(5);
+		//mol = makeMasstest();
 		
 		//mol = MoleculeFactory.makeBenzene();
 		//mol = makeBenzene();
@@ -205,6 +206,30 @@ System.out.println("molecule: " + mol);
 
 			renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
 		}
+	}
+	public static Molecule makeAlkanetest(int chainLength)
+	  {
+	    Molecule currentChain = new Molecule();
+
+	    //Add the initial atom
+	    IAtom atom = new Atom("C");
+	    atom.setHydrogenCount(3);
+	    currentChain.addAtom(atom);
+	    
+	    //Add further atoms and bonds as needed, a pair at a time.
+	    int atomCount = 1;
+	    for (; atomCount < chainLength - 1; atomCount++) {
+	    	atom = new Atom("C");
+	    	atom.setHydrogenCount(2);
+	        currentChain.addAtom(atom);
+	        currentChain.addBond(atomCount, atomCount - 1, 1);
+	    }  
+	    atom = new Atom("C");
+    	atom.setHydrogenCount(3);
+        currentChain.addAtom(atom);
+        currentChain.addBond(atomCount, atomCount - 1, 1);
+        
+	    return currentChain;
 	}
 	public IMolecule makeSWedgeTest() {
 		IMolecule mol = builder.newMolecule();

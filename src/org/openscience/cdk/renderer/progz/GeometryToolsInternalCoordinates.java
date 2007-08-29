@@ -1021,7 +1021,37 @@ public class GeometryToolsInternalCoordinates {
 			return -1;
 		}
 	}
-
+	/**
+	 *  Determines the best alignment for the label of an atom in 2D space. It
+	 *  returns 1 if left aligned, and -1 if right aligned.
+	 *  returns 2 if top aligned, and -2 if below aligned
+	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+	 *
+	 *@param  container  Description of the Parameter
+	 *@param  atom       Description of the Parameter
+	 *@return            The bestAlignmentForLabel value
+	 */
+	public static int getBestAlignmentForLabelXY(IAtomContainer container, IAtom atom) {
+		java.util.Iterator connectedAtoms = container.getConnectedAtomsList(atom).iterator();
+		double overallDiffX = 0;
+		double overallDiffY = 0;
+		while (connectedAtoms.hasNext()) {
+			IAtom connectedAtom = (IAtom)connectedAtoms.next();
+			overallDiffX += connectedAtom.getPoint2d().x - atom.getPoint2d().x;
+			overallDiffY += connectedAtom.getPoint2d().y - atom.getPoint2d().y;
+		}
+		if (overallDiffX <= 0) {
+			if (overallDiffX < overallDiffY)
+				return 1;
+			else
+				return 2;
+		} else {
+			if (overallDiffX > overallDiffY)
+				return -1;
+			else
+				return -2;
+		}
+	}
 
 	/**
 	 *  Returns the atoms which are closes to an atom in an AtomContainer by

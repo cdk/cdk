@@ -37,6 +37,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -57,7 +58,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	private AffineTransform affine;
 
 	protected LoggingTool logger;
-
+	IsotopeFactory isotopeFactory;
 
 	public Java2DRenderer(Renderer2DModel model) {
 		this.rendererModel = model;
@@ -235,7 +236,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 			drawSymbol = true;
 
 		if (drawSymbol == true) {
-			int alignment = GeometryToolsInternalCoordinates.getBestAlignmentForLabel(container, atom);
+			int alignment = GeometryToolsInternalCoordinates.getBestAlignmentForLabelXY(container, atom);
+			System.out.println("alignment: " + alignment);
 			paintAtomSymbol(atom, graphics, alignment, isRadical);
 		}
 	}
@@ -247,7 +249,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		if (atom.getSymbol() != null) {
 			symbol = atom.getSymbol();
 		}
-		//symbol = "L"; //to test if a certain symbol is spaced out right 
+		//symbol = "Mg"; //to test if a certain symbol is spaced out right 
 		
 		
 		Font fontAtom;
@@ -276,28 +278,35 @@ public class Java2DRenderer implements IJava2DRenderer {
 		TextLayout layoutAtom = new TextLayout(symbol, fontAtom, frc);
 		Rectangle2D boundsAtom = layoutAtom.getBounds();
 		
-		float margin = 0.03f; //margin of 'box' around the text
-		float marginSmall = (float)(margin * 0.6);//margin between text
-		float marginLarge = (float)(margin * 2);//margin around MassNumber/FormalCharge etc.
 		//btest has to be substracted to get the text on the exact right position
 		//FIXME: get right value from graphics object? (width of line? or so)
 		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
-		float atomSymbolX = (float)(atom.getPoint2d().x - boundsAtom.getWidth()/2 - btest); 
-		float atomSymbolY = (float)(atom.getPoint2d().y - boundsAtom.getHeight()/2);
-		float atomSymbolW = (float)boundsAtom.getWidth();
-		float atomSymbolH = (float)boundsAtom.getHeight();
+		double atomSymbolX = atom.getPoint2d().x - boundsAtom.getWidth()/2 - btest; 
+		double atomSymbolY = atom.getPoint2d().y - boundsAtom.getHeight() /2 - boundsAtom.getY();
+		double atomSymbolW = boundsAtom.getWidth();
+		double atomSymbolH = boundsAtom.getHeight() - boundsAtom.getY();
+		double atomSymbolDNext = layoutAtom.getAdvance();//distance from X,Y to 'next' character
+		double marginc = (atomSymbolDNext - atomSymbolW)/2;//margin used in calculations
+		double margind = marginc * 1.4;//slightly larger margin for drawing
+		double atomSymbolHOffset = boundsAtom.getY();
 		
+		
+		System.out.println("the marginc is now: " + marginc + " margind: " + margind);
+	//	float[] tarr = layoutAtom.getBaselineOffsets();
+	//	System.out.println("getBaseline: " + layoutAtom.getBaseline() + " getBaselineOffsets: " + tarr[0] + " - "  + tarr[1] + " - "  + tarr[2]);
+
 		//bounds around Atom Symbol
-		boundsAtom.setRect(boundsAtom.getX() + atomSymbolX - margin,
-				(float)(boundsAtom.getY() + atomSymbolY - margin),
-				(float)(atomSymbolW + 2 * margin),
-				(float)(atomSymbolH + 2 * margin));
+		boundsAtom.setRect(boundsAtom.getX() + atomSymbolX - margind,
+				boundsAtom.getY() + atomSymbolY - margind,
+				boundsAtom.getWidth() + 2 * margind,
+				boundsAtom.getHeight() + 2 * margind);
 		
 			
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
 		Color otherColor = getRenderer2DModel().getForeColor();
 		Color bgColor = getRenderer2DModel().getBackColor();
-
+		//bgColor = Color.green;
+		
 		graphics.setColor(bgColor);
 		graphics.fill(boundsAtom);// draw atom symbol background
 		
@@ -307,87 +316,91 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double hydroGenW = 0;
 		double hydroGenCountW = 0;
 		
-		if (atom.getMassNumber() != 0) {
-			graphics.setFont(fontSmall);
-			String textMass = Integer.toString(atom.getMassNumber());
-			FontRenderContext frcMass = graphics.getFontRenderContext();
-			TextLayout layoutMass = new TextLayout(textMass, fontSmall, frcMass);
-			Rectangle2D boundsMass = layoutMass.getBounds();
+		if (atom.getMassNumber() != 0 && isotopeFactory != null) {
+			IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+			if (majorIsotope != null && atom.getMassNumber() != majorIsotope.getMassNumber())
+			{
 			
-			float tempWA = (float)(layoutMass.getAdvance() - (float)boundsMass.getWidth());
-			System.out.println("tempWA " + tempWA);
-	
-			massnumberW = layoutMass.getAdvance();
-				
-			//terrible way of getting the MassNumber on the right X location for 'every?' number
-			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
-			//float massNumberX = (float)(atomSymbolX - layoutMass.getAdvance() + tempWA - (float)boundsMass.getX() - marginSmall);
-			double massNumberX = atomSymbolX - massnumberW - marginSmall;
-			float massNumberY = (float)(atomSymbolY + boundsAtom.getHeight() - margin - marginSmall - boundsMass.getHeight() / 2);
+				graphics.setFont(fontSmall);
+				String textMass = Integer.toString(atom.getMassNumber());
+				FontRenderContext frcMass = graphics.getFontRenderContext();
+				TextLayout layoutMass = new TextLayout(textMass, fontSmall, frcMass);
+				Rectangle2D boundsMass = layoutMass.getBounds();
 
-			boundsMass.setRect(boundsMass.getX() + massNumberX - marginSmall,
-						boundsMass.getY() + massNumberY - marginLarge,
-						boundsMass.getWidth() + 2 * marginSmall,
-						boundsMass.getHeight() + 2 * marginLarge);
-		
-			bgColor = Color.green;
-			graphics.setColor(bgColor);
-			
-			graphics.fill(boundsMass);// draw Mass number background
-			graphics.setFont(fontSmall);
-			graphics.setColor(otherColor);
-			layoutMass.draw(graphics, (float)massNumberX, (float)massNumberY);// draw Mass Number
-			
+				massnumberW = layoutMass.getAdvance();
+
+				//terrible way of getting the MassNumber on the right X location for 'every?' number
+				//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
+				//float massNumberX = (float)(atomSymbolX - layoutMass.getAdvance() + tempWA - (float)boundsMass.getX() - marginSmall);
+				double massNumberX = atomSymbolX - massnumberW;//-margin ?
+				double massNumberY = atomSymbolY + boundsAtom.getHeight() - boundsMass.getHeight() / 2;
+
+				boundsMass.setRect(boundsMass.getX() + massNumberX - margind,
+						boundsMass.getY() + massNumberY - margind,
+						boundsMass.getWidth() + 2 * margind,
+						boundsMass.getHeight() + 2 * margind);
+
+				bgColor = Color.green;
+				graphics.setColor(bgColor);
+
+				graphics.fill(boundsMass);// draw Mass number background
+				graphics.setFont(fontSmall);
+				graphics.setColor(otherColor);
+				layoutMass.draw(graphics, (float)massNumberX, (float)massNumberY);// draw Mass Number
+			}
 		}
 		
-		if (atom.getHydrogenCount() > 0) {
+		if (atom.getHydrogenCount() != null && atom.getHydrogenCount() > 0) {
 			graphics.setFont(fontAtom);
 			String hChar = "H";
 			FontRenderContext frcMass = graphics.getFontRenderContext();
 			TextLayout layoutH = new TextLayout(hChar, fontAtom, frcMass);
 			Rectangle2D boundsHydro = layoutH.getBounds();
 			
-			double tempWA = layoutH.getAdvance() - boundsHydro.getWidth();
-			System.out.println("tempWA " + tempWA);
-	
 			hydroGenW = layoutH.getAdvance();
-				
-			
+			double hydroGenH = boundsHydro.getHeight();	
 			graphics.setFont(fontSmall);
 			String hCount = atom.getHydrogenCount().toString();
 			frcMass = graphics.getFontRenderContext();
 			TextLayout layoutHC = new TextLayout(hCount, fontSmall, frcMass);
 			Rectangle2D boundsHydroC = layoutHC.getBounds();
 			
-			double tempHC = layoutHC.getAdvance() - boundsHydroC.getWidth();
-			System.out.println("tempWA " + tempWA);
-	
 			hydroGenCountW = layoutHC.getAdvance();
 			
-			double hydroGenX = 0;
+			double hydroGenX = atomSymbolX;
+			double hydroGenY = atomSymbolY;//'H' at same height as atom Symbol
 			//TODO: add margins
-			if (alignment > 0) {
-				hydroGenX = atomSymbolX + atomSymbolW;		
+			
+			System.out.println("test layoutAtom.getLeading(): " + layoutAtom.getLeading() + " layoutatom.getAscent(): " + layoutAtom.getAscent() + 
+					" layoutH.getAscent(): " + layoutH.getAscent() + " layoutH.getBaseline()" + layoutH.getBaseline() + " layoutAtom.getBaseline()" + layoutAtom.getBaseline());
+			
+			switch (alignment) {
+				case -2: //H below atomSymbol
+					hydroGenY = hydroGenY - hydroGenH + atomSymbolHOffset - 2 * marginc; break;
+				case -1: //left alignment 
+					hydroGenX -= (hydroGenW + Math.max(hydroGenCountW, massnumberW)); break;
+				case 2: //H above atomSymbol != correct
+					hydroGenY += atomSymbolH + marginc + atomSymbolHOffset + 0.5 * boundsHydroC.getHeight() - boundsHydroC.getX(); break;
+				default: //right alignment = correct		
+					hydroGenX += atomSymbolDNext; break;	
+
 			}
-			else {
-				hydroGenX = atomSymbolX - hydroGenW - Math.max(hydroGenCountW, massnumberW);//Math.max(hydroGenCountW, massnumberW) ?
-			}
+				
 			//terrible way of getting the MassNumber on the right X location for 'every?' number
 			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
-			double hydroGenY = atomSymbolY;//'H' at same height as atom Symbol
 
-			boundsHydro.setRect(boundsHydro.getX() + hydroGenX - marginSmall,
-					boundsHydro.getY() + hydroGenY - marginLarge,
-					boundsHydro.getWidth() + 2 * marginSmall,
-					boundsHydro.getHeight() + 2 * marginLarge);
+			boundsHydro.setRect(boundsHydro.getX() + hydroGenX - margind,
+					boundsHydro.getY() + hydroGenY - margind,
+					boundsHydro.getWidth() + 2 * margind,
+					boundsHydro.getHeight() + 2 * margind);
 		
 			double hydroGenCX = hydroGenX + hydroGenW;
 			double hydroGenCY = hydroGenY - 0.5 * boundsHydroC.getHeight();//1,2,3,etc. 'subscript'
 
-			boundsHydroC.setRect(boundsHydroC.getX() + hydroGenCX - marginSmall,
-					boundsHydroC.getY() + hydroGenCY - marginLarge,
-					boundsHydroC.getWidth() + 2 * marginSmall,
-					boundsHydroC.getHeight() + 2 * marginLarge);
+			boundsHydroC.setRect(boundsHydroC.getX() + hydroGenCX - margind,
+					boundsHydroC.getY() + hydroGenCY - margind,
+					boundsHydroC.getWidth() + 2 * margind,
+					boundsHydroC.getHeight() + 2 * margind);
 			
 			graphics.setColor(bgColor);
 			
@@ -402,44 +415,45 @@ public class Java2DRenderer implements IJava2DRenderer {
 			layoutHC.draw(graphics, (float)hydroGenCX, (float)hydroGenCY);// draw the hydrogen Count
 			
 		}
+			
 		if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) {
 
 			graphics.setFont(fontSmall);
-			String baseString = "+";
+			//String baseString = "+";
 			String textFormal = "";
-			float marginRight = 0;//margin on the right (=to hide part of bonds)
+			double marginRight = 0;//margin on the right (=to hide part of bonds)
 			if (atom.getFormalCharge() != 1 && atom.getFormalCharge() != -1)
 				textFormal += Integer.toString(Math.abs(atom.getFormalCharge()));
 			
 			if (atom.getFormalCharge() > 0) {
 				textFormal += "+";
-				marginRight = margin;
+				marginRight = margind;
 			}
 			FontRenderContext frcFormal = graphics.getFontRenderContext();
 			
-			double formalChargeX = atomSymbolX + atomSymbolW + marginSmall;
+			double formalChargeX = atomSymbolX + atomSymbolDNext;
 			if (alignment > 0)
 				formalChargeX += hydroGenW + hydroGenCountW;//should hydroGenCountW be included here?
 			
 			double formalChargeW = 0;
 			if (textFormal != "") { //draw amount and optional '+'-symbol
 				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
-				TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
+				//TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 		
 				 
-				float screenFormalY = (float)(atomSymbolY + boundsAtom.getHeight() + marginSmall - layoutBase.getAdvance() );//- boundsFormalC.getHeight() / 2
+				double formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;
 			
-				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - marginSmall,
-					boundsFormalC.getY() + screenFormalY - marginLarge,
-					boundsFormalC.getWidth() + 2 * marginSmall + marginRight,
-					boundsFormalC.getHeight() + 2 * marginLarge);
+				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - margind,
+					boundsFormalC.getY() + formalChargeY - margind,
+					boundsFormalC.getWidth() + 2 * margind + marginRight,
+					boundsFormalC.getHeight() + 2 * margind);
 		
 				graphics.setColor(bgColor);
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, (float)formalChargeX, screenFormalY);// draw Formal Charge
+				layoutFormal.draw(graphics, (float)formalChargeX, (float)formalChargeY);// draw Formal Charge
 				formalChargeW = layoutFormal.getAdvance();
 			} 
 			if (atom.getFormalCharge() < 0) { //draw the 'minus' symbol
@@ -447,24 +461,37 @@ public class Java2DRenderer implements IJava2DRenderer {
 				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 		
-				float screenFormalY = (float)(atomSymbolY + boundsAtom.getHeight() + marginSmall - boundsFormalC.getHeight() / 2);//
+				double formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;//
 			
-				boundsFormalC.setRect((float)(boundsFormalC.getX() + formalChargeX - marginSmall),
-					(float)(boundsFormalC.getY() + screenFormalY - 3 * marginLarge),
-					(float)(boundsFormalC.getWidth() + marginSmall + marginLarge),
-					(float)(boundsFormalC.getHeight() + 6 * marginLarge));
+				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - margind,
+					boundsFormalC.getY() + formalChargeY - 3 * margind,
+					boundsFormalC.getWidth() + margind + margind,
+					boundsFormalC.getHeight() + 6 * margind);
 
 				graphics.setColor(bgColor);
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, (float)formalChargeX, screenFormalY);// draw Formal Charge
+				layoutFormal.draw(graphics, (float)formalChargeX, (float)formalChargeY);// draw Formal Charge
 			}
 		}
+
 		
 		graphics.setFont(fontAtom);
 		graphics.setColor(atomColor);
-		layoutAtom.draw(graphics, atomSymbolX, atomSymbolY);// draw atom symbol		
+		layoutAtom.draw(graphics, (float)atomSymbolX, (float)atomSymbolY);// draw atom symbol		
+		
+	/*	String test = "MgH";
+		frc = graphics.getFontRenderContext();
+		TextLayout layoutTest = new TextLayout(test, fontAtom, frc);
+		double CHwidth = layoutTest.getAdvance();
+		double tempv = CHwidth - atomSymbolW - hydroGenW;
+		
+		layoutTest.draw(graphics, (float)atomSymbolX, (float)atomSymbolY);// draw CH test		
+		System.out.println("symbol width: " + atomSymbolW + " hydroGenW: " + hydroGenW +
+				" total: " + (atomSymbolW + hydroGenW) + " CHwidth: " + CHwidth);
+		System.out.println("difference: " + tempv + " dif2: " + (hydroGenW - atomSymbolW) + " dif3: " + ((hydroGenW - atomSymbolW) - tempv));
+		*/
 		
 		graphics.setColor(saveColor);
 	}
