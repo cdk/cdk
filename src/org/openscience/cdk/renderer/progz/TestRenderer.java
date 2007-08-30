@@ -116,8 +116,8 @@ public class TestRenderer extends JPanel {
 		//mol = MoleculeFactory.makeAlphaPinene();
 		//mol = MoleculeFactory.makeThiazole();
 		//mol = MoleculeFactory.makeAlkane(5);
-		mol = makeAlkanetest(5);
-		//mol = makeMasstest();
+		//mol = makeAlkanetest(5);
+		mol = makeMasstest();
 		
 		//mol = MoleculeFactory.makeBenzene();
 		//mol = makeBenzene();

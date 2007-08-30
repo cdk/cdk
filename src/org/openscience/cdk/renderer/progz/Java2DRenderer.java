@@ -340,7 +340,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 						boundsMass.getWidth() + 2 * margind,
 						boundsMass.getHeight() + 2 * margind);
 
-				bgColor = Color.green;
+				//bgColor = Color.green;
 				graphics.setColor(bgColor);
 
 				graphics.fill(boundsMass);// draw Mass number background
@@ -432,17 +432,22 @@ public class Java2DRenderer implements IJava2DRenderer {
 			FontRenderContext frcFormal = graphics.getFontRenderContext();
 			
 			double formalChargeX = atomSymbolX + atomSymbolDNext;
+			double formalChargeY = 0;
+			double formalChargeH = 0;
+			
 			if (alignment > 0)
 				formalChargeX += hydroGenW + hydroGenCountW;//should hydroGenCountW be included here?
 			
 			double formalChargeW = 0;
+			TextLayout layoutFormalC = layoutAtom;//have to initialize it so *something*
 			if (textFormal != "") { //draw amount and optional '+'-symbol
-				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
+				layoutFormalC = new TextLayout(textFormal, fontSmall, frcFormal);
 				//TextLayout layoutBase = new TextLayout(baseString, fontSmall, frcFormal);
-				Rectangle2D boundsFormalC = layoutFormal.getBounds();
+				Rectangle2D boundsFormalC = layoutFormalC.getBounds();
 		
+				formalChargeH = boundsFormalC.getHeight();
 				 
-				double formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;
+				formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;
 			
 				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - margind,
 					boundsFormalC.getY() + formalChargeY - margind,
@@ -453,26 +458,29 @@ public class Java2DRenderer implements IJava2DRenderer {
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, (float)formalChargeX, (float)formalChargeY);// draw Formal Charge
-				formalChargeW = layoutFormal.getAdvance();
+				formalChargeW = layoutFormalC.getAdvance();
 			} 
 			if (atom.getFormalCharge() < 0) { //draw the 'minus' symbol
-				textFormal = "_";
-				TextLayout layoutFormal = new TextLayout(textFormal, fontSmall, frcFormal);
+				double formalChargeX2 = formalChargeX + formalChargeW + marginc;
+				String textFormal2 = "_";
+				TextLayout layoutFormal = new TextLayout(textFormal2, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
-		
-				double formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;//
+				double posiY = Math.max(boundsFormalC.getHeight(), formalChargeH) + boundsFormalC.getY();
+				double formalChargeY2 = atomSymbolY + boundsAtom.getHeight() + posiY / 2;//
 			
-				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - margind,
-					boundsFormalC.getY() + formalChargeY - 3 * margind,
-					boundsFormalC.getWidth() + margind + margind,
-					boundsFormalC.getHeight() + 6 * margind);
+				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX2 - margind,
+					boundsFormalC.getY() + formalChargeY2 - 5 * margind,
+					boundsFormalC.getWidth() + 2 * margind,
+					boundsFormalC.getHeight() + 8 * margind);
 
 				graphics.setColor(bgColor);
 				graphics.fill(boundsFormalC);// draw Formal Charge background
 				graphics.setFont(fontSmall);
 				graphics.setColor(otherColor);
-				layoutFormal.draw(graphics, (float)formalChargeX, (float)formalChargeY);// draw Formal Charge
+				layoutFormal.draw(graphics, (float)formalChargeX2, (float)formalChargeY2);// draw Formal Charge
+			}
+			if (textFormal != "") {
+				layoutFormalC.draw(graphics, (float)formalChargeX, (float)formalChargeY);// draw Formal Charge
 			}
 		}
 
