@@ -978,16 +978,16 @@ if __name__ == '__main__':
             sys.exit(-1)
         
         # compile the distro
-        successDist = runAntJob('nice -n 19 ant clean dist-large', 'build.log', 'distro')
+        successDist = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar clean dist-large', 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
-            successTestDist = runAntJob('nice -19 ant dist-test-large', 'testdist.log', 'testdist')
-            successSrc = runAntJob('nice -19 ant sourcedist', 'srcdist.log', 'srcdist')
-            successTest = runAntJob('nice -n 19 ant -DrunSlowTests=false test-all', 'test.log', 'test') 
-            successJavadoc = runAntJob('export CLASSPATH && nice -n 19  ant -f javadoc.xml', 'javadoc.log', 'javadoc')
-            successKeyword = runAntJob('nice -n 19 ant -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
-            successDoccheck = runAntJob('nice -n 19 ant -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
-            successPMD = runAntJob('nice -n 19 ant -f pmd.xml pmd', 'pmd.log', 'pmd')
-            successPMDUnused = runAntJob('nice -n 19 ant -f pmd-unused.xml', 'pmdu.log', 'pmdu')            
+            successTestDist = runAntJob('nice -19 ant -lib develjar/junit-4.3.1.jar dist-test-large', 'testdist.log', 'testdist')
+            successSrc = runAntJob('nice -19 ant -lib develjar/junit-4.3.1.jar  sourcedist', 'srcdist.log', 'srcdist')
+            successTest = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -DrunSlowTests=false test-all', 'test.log', 'test') 
+            successJavadoc = runAntJob('export CLASSPATH && nice -n 19  ant -lib develjar/junit-4.3.1.jar  -f javadoc.xml', 'javadoc.log', 'javadoc')
+            successKeyword = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
+            successDoccheck = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
+            successPMD = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f pmd.xml pmd', 'pmd.log', 'pmd')
+            successPMDUnused = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f pmd-unused.xml', 'pmdu.log', 'pmdu')            
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             srcFile = os.path.join(nightly_dir, 'build.log')
