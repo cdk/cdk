@@ -87,7 +87,7 @@ public class ExportAction extends SaveAsAction {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             type = ((JCPExportFileFilter)currentFilter).getType();
             
-            File outFile = chooser.getSelectedFile();
+            File outFile = new File(chooser.getSelectedFile().getAbsolutePath()+"."+type);
 
             if (type.equals(JCPExportFileFilter.svg)) {
                 try {
