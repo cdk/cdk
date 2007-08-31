@@ -107,7 +107,6 @@ public class SMARTSParser {
     private int columncounter=0;
     private OperatorContainer OperMap = new OperatorContainer();
     private final static LoggingTool logger = new LoggingTool(SMARTSParser.class);
-    
     public static QueryAtomContainer parse(String stringToParse) throws CDKException {
         QueryAtomContainer container = null;
         
@@ -152,7 +151,8 @@ void AddEndBracket(){
 }
 JAVACODE
 void caseBraket(){
-SMARTSOperatorAtom atom;
+ try{
+    SMARTSOperatorAtom atom;
    while(!(container.getLastAtom() instanceof BracketAtom)){
       IQueryAtom tempatom = (IQueryAtom)container.getLastAtom();
       atomcontainer.addAtom(tempatom);
@@ -174,12 +174,16 @@ SMARTSOperatorAtom atom;
    bstart = false;
    OperMap = new OperatorContainer();
    atomcontainer = new QueryAtomContainer();
+  }
+ catch(ArrayIndexOutOfBoundsException Ex){
+  }
 }
 JAVACODE
 /** Detect a column start i.e. "("
    * and store it in a columncounter
    */
 void AddStartColumn(){
+ try{
    logger.debug("Column start is on: ");
    if(!cstart){
       cstart = true;
@@ -190,8 +194,10 @@ void AddStartColumn(){
      lastatomcontainer.addAtom((IQueryAtom)container.getLastAtom());
      columncounter++;
   }
-
-}
+ }
+ catch(ArrayIndexOutOfBoundsException ex){
+ }
+ }
 JAVACODE
 /** Detect a column end i.e. ")"
   * and store it in a columncounter
@@ -544,7 +550,10 @@ void SetCurrentBondToOrderQuery(double order) {
     currentBond = new OrderQueryBond();
     currentBond.setOrder(order);
 }
-
+JAVACODE
+void NotSupported(){
+   throw new ParseException("This Token is not yet supported "+getToken(-1));
+}
 JAVACODE
 /** Set Current bond to the order of default.
   **/
@@ -567,7 +576,7 @@ QueryAtomContainer Parse() :
         container = new QueryAtomContainer();
         previousAtom = null;
     }
-    ((SMARTS())+ |ConsumeToken()) <EOF>
+    ((SMARTS())+ ) <EOF>
     { return container; }
 }
 /**
@@ -601,7 +610,6 @@ void AtomExpression():
      "*" AddAnyAtom()        |
      "a" AddAromaticAtom()   |
      "A" AddAliphaticAtom()  |
-     Recursion()             |
      Element()               |
      StartBracket()          |
      EndBracket()            |
@@ -615,9 +623,11 @@ void AtomExpression():
      AtomicNumber()          |
      AromaticAtms()          |
      TotalConnectionAtom()   |
+     ValenyAtom()            |
      OperatorAtom()          |
      Operator()              |
      ChargeAtom()            |
+     ConsumeToken() |
      MassAtom()              
             
     )  
@@ -628,7 +638,7 @@ void AtomExpression():
 void ConsumeToken():
 {}
 {
-    <DOT> 
+    <DOT> |<SPACE>|<$> NotSupported()
 }
 /**
 *Parsing Method
@@ -644,7 +654,7 @@ void OperatorAtom():
 void MassAtom():
 {}
 {
-     <DIGIT> AddMassAtom()
+     (<DIGIT>|<DIGITS>) AddMassAtom()
 }
 /**
 *Parsing Method
@@ -693,7 +703,7 @@ void EndColumn():
 void AtomicNumber() :
 {}
 {
-    <HASH> (<DIGIT> | <DIGITS>)  AddNewNumberAtom()
+    <HASH> (<DIGIT>|<DIGITS>) AddNewNumberAtom()
 }
 /**
 *Parsing Method
@@ -753,7 +763,7 @@ void RingAtom() :
 {}
 {
         
-        <r> [<DIGIT>] AddNewRingAtom()
+        <r>|"R" [<DIGIT>] AddNewRingAtom()
 }
 /**
 *Parsing Method
@@ -812,6 +822,11 @@ void AromaticAtms():
 /**
 *Token Library
 **/
+TOKEN:
+{
+    <SPACE:(" ")+>
+}
+
 TOKEN:
 {
     < DIGIT: ["0"-"9"] >
