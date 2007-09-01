@@ -141,6 +141,8 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
     /**
      * Calculates the 3 MI's, 3 ration and the R_gyr value.
      *
+     * The molecule should have hydrogens
+     *
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 7 elements in the order described above
      * @throws CDKException if the supplied AtomContainer does not contain 3D coordinates
