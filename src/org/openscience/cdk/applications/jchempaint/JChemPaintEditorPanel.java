@@ -565,6 +565,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     		IAtomContainer ac = model.getBuilder().newAtomContainer();
     		Iterator containers = MoleculeSetManipulator.getAllAtomContainers(model.getMoleculeSet()).iterator();
     		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
+    		HashMap oldrenderingcoordinates=jchemPaintModel.getRendererModel().getRenderingCoordinates();
             Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             image = new BufferedImage((int)dim.getWidth()+20, (int)dim.getHeight()+20, BufferedImage.TYPE_INT_ARGB);
@@ -574,6 +575,7 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
             r2d.useScreenSize=false;
             r2d.paintMolecule(ac, (Graphics2D) snapGraphics,false,true);
             r2d.useScreenSize=true;
+            jchemPaintModel.getRendererModel().setRenderingCoordinates(oldrenderingcoordinates);
             logger.info("created...");
 
 
