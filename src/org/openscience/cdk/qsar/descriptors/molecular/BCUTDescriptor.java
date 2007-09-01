@@ -41,6 +41,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static java.lang.Boolean.valueOf;
+
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
  * Described by Pearlman et al. {@cdk.cite PEA99}.
@@ -146,9 +148,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         }
         // ok, all should be fine
 
-        this.nhigh = ((Integer) params[0]).intValue();
-        this.nlow = ((Integer) params[1]).intValue();
-        this.checkAromaticity = ((Boolean) params[2]).booleanValue();
+        this.nhigh = (Integer) params[0];
+        this.nlow = (Integer) params[1];
+        this.checkAromaticity = (Boolean) params[2];
 
         if (this.nhigh < 0 || this.nlow < 0) {
             throw new CDKException("Number of eigenvalues to return must be positive or 0");
@@ -164,9 +166,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      */
     public Object[] getParameters() {
         Object params[] = new Object[3];
-        params[0] = new Integer(this.nhigh);
-        params[1] = new Integer(this.nlow);
-        params[2] = Boolean.valueOf(this.checkAromaticity);
+        params[0] = this.nhigh;
+        params[1] = this.nlow;
+        params[2] = valueOf(this.checkAromaticity);
         return (params);
     }
 
@@ -192,9 +194,11 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      */
     public Object getParameterType(String name) {
         Object object = null;
-        if (name.equals("nhigh")) object = new Integer(1);
-        if (name.equals("nlow")) object = new Integer(1);
-        if (name.equals("checkAromaticity")) object = new Integer(1);
+        if (name.equals("nhigh")) object = 1;
+        if (name.equals("nlow")) {
+            object = 1;
+        }
+        if (name.equals("checkAromaticity")) object = 1;
         return (object);
     }
 
@@ -335,17 +339,17 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         if (nhigh == 0 || nlow == 0) {
             // return all calculated eigenvalues
-            for (int i = 0; i < eval1.length; i++) retval.add(eval1[i]);
-            for (int i = 0; i < eval2.length; i++) retval.add(eval2[i]);
-            for (int i = 0; i < eval3.length; i++) retval.add(eval3[i]);
+            for (double anEval1 : eval1) retval.add(anEval1);
+            for (double anEval2 : eval2) retval.add(anEval2);
+            for (double anEval3 : eval3) retval.add(anEval3);
 
             names = new String[retval.length()];
-            for (int j = 0; j < suffix.length; j++) {
+            for (String aSuffix : suffix) {
                 for (int i = 0; i < eval1.length; i++) {
-                    names[i] = "BCUT" + suffix[j] + "-" + (i + 1) + "l";
+                    names[i] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
                 }
                 for (int i = 0; i < eval1.length; i++) {
-                    names[i] = "BCUT" + suffix[j] + "-" + (i + 1) + "h";
+                    names[i] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
                 }
             }
         } else {
@@ -361,12 +365,12 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
             names = new String[ 3 * nhigh + 3 * nlow ];
             counter = 0;
-            for (int j = 0; j < suffix.length; j++) {
+            for (String aSuffix : suffix) {
                 for (int i = 0; i < nhigh; i++) {
-                    names[counter++] = "BCUT" + suffix[j] + "-" + (i + 1) + "l";
+                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
                 }
                 for (int i = 0; i < nlow; i++) {
-                    names[counter++] = "BCUT" + suffix[j] + "-" + (i + 1) + "h";
+                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
                 }
             }
         }
