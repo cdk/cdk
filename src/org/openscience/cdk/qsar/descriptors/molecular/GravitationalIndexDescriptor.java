@@ -229,10 +229,10 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         }
 
         // all pairs
-        Vector x = new Vector();
+        Vector<Integer> x = new Vector<Integer>();
         for (int i = 0; i < container.getAtomCount(); i++) {
             if (container.getAtom(i).getSymbol().equals("H")) continue;
-            else x.add(new Integer(i));
+            else x.add(i);
         }
         int npair = x.size() * (x.size() - 1) / 2;
         pair[] p = new pair[npair];
@@ -241,8 +241,8 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         for (int i = 0; i < x.size() - 1; i++) {
             for (int j = i + 1; j < x.size(); j++) {
                 int present = 0;
-                int a = ((Integer) x.get(i)).intValue();
-                int b = ((Integer) x.get(j)).intValue();
+                int a = x.get(i);
+                int b = x.get(j);
                 for (int k = 0; k < pcount; k++) {
                     if ((p[k].x == a && p[k].y == b) ||
                             (p[k].y == a && p[k].x == b)) present = 1;
@@ -254,9 +254,9 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             }
         }
         double allheavysum = 0;
-        for (int i = 0; i < p.length; i++) {
-            int atomNumber1 = p[i].x;
-            int atomNumber2 = p[i].y;
+        for (pair aP : p) {
+            int atomNumber1 = aP.x;
+            int atomNumber2 = aP.y;
 
             mass1 = factory.getMajorIsotope(container.getAtom(atomNumber1).getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(container.getAtom(atomNumber2).getSymbol()).getMassNumber();
