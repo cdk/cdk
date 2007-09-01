@@ -81,78 +81,91 @@ public class ExportAction extends SaveAsAction {
             chooser.setFileFilter(currentFilter);
         }
         chooser.setFileView(new JCPFileView());
-        int returnVal = chooser.showSaveDialog(jcpPanel);
-        String type = null;
-        currentFilter = chooser.getFileFilter();
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            type = ((JCPExportFileFilter)currentFilter).getType();
-            
-            File outFile = new File(chooser.getSelectedFile().getAbsolutePath()+"."+type);
-
-            if (type.equals(JCPExportFileFilter.svg)) {
-                try {
-                    JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
-                    ChemModel model = (ChemModel)jcpm.getChemModel();
-                    saveAsSVG(model, outFile);
-                } catch (Exception exc) {
-                    String error = "Error while writing file: " + exc.getMessage();
-                    logger.error(error);
-                    logger.debug(exc);
-                    JOptionPane.showMessageDialog(jcpPanel, error);
-                }
-            } else {
-                // A binary image
-                RenderedImage awtImage = jcpPanel.takeSnapshot();
-                String filename = outFile.toString();
-                logger.debug("Creating binary image: ", filename);
-                if (type.equals(JCPExportFileFilter.png)) {
-            		try {
-            			ImageWriter writer = ImageIO.getImageWriters(
-            				new ImageTypeSpecifier(awtImage), "png"
-            			).next();
-            			ImageTypeSpecifier specifier = new ImageTypeSpecifier(awtImage);
-            			IIOMetadata meta = writer.getDefaultImageMetadata( specifier, null );
-
-            			Node node = meta.getAsTree( "javax_imageio_png_1.0" );
-            			IIOMetadataNode tExtNode = new IIOMetadataNode("tEXt");
-            			IIOMetadataNode tExtEntryNode = new IIOMetadataNode("tEXtEntry");
-            			tExtEntryNode.setAttribute( "keyword", "molfile" );
-            			// create the MDL molfile
-            			StringWriter outputString = new StringWriter();
-            			MDLWriter mdlWriter = new MDLWriter(outputString);
-            			JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
-                        ChemModel model = (ChemModel)jcpm.getChemModel();
-                        mdlWriter.write(model);
-                        mdlWriter.close();
-            			tExtEntryNode.setAttribute( "value", outputString.toString());
-            			tExtNode.appendChild(tExtEntryNode);
-            			node.appendChild(tExtNode);
-            			meta.mergeTree("javax_imageio_png_1.0", node);
-            			
-            			ImageOutputStream ios = ImageIO.createImageOutputStream(new FileOutputStream(filename));
-            			writer.setOutput(ios);
-            			writer.write( meta, new IIOImage(awtImage, null, meta), null );
-					} catch (Exception e1) {
-						System.out.println("Error while writing PNG: " + e1.getMessage());
-						e1.printStackTrace();
-					}                	
-                } else {
-                	RenderedOp image = JAI.create("AWTImage", awtImage);
-                	if (type.equals(JCPExportFileFilter.bmp)) {
-                		JAI.create("filestore", image, filename, "BMP", null);
-                	} else if (type.equals(JCPExportFileFilter.tiff)) {
-                		JAI.create("filestore", image, filename, "TIFF", null);
-                	} else if (type.equals(JCPExportFileFilter.jpg)) {
-                		JAI.create("filestore", image, filename, "JPEG", new JPEGEncodeParam());
-                	} else { // default to a PNG binary image
-                		JAI.create("filestore", image, filename, "PNG", null);
-                	}
-                }
-                logger.debug("Binary image saved to: ", filename);
-            }
+        while(true){
+	        int returnVal = chooser.showSaveDialog(jcpPanel);
+	        String type = null;
+	        currentFilter = chooser.getFileFilter();
+	        if(returnVal == JFileChooser.APPROVE_OPTION) {
+	            type = ((JCPExportFileFilter)currentFilter).getType();
+	            
+	            File outFile = new File(chooser.getSelectedFile().getAbsolutePath()+"."+type);
+	        	boolean dowrite=true;
+	        	if(outFile.exists()){
+	        		int value=JOptionPane.showConfirmDialog(jcpPanel,"File already exists. Do you want to overwrite it?", "File already exists", JOptionPane.YES_NO_OPTION);
+	    			if(value==JOptionPane.NO_OPTION){
+	    				dowrite=false;
+	    			}
+	        	}
+	        	if(dowrite){
+		            if (type.equals(JCPExportFileFilter.svg)) {
+		                try {
+		                    JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
+		                    ChemModel model = (ChemModel)jcpm.getChemModel();
+		                    saveAsSVG(model, outFile);
+		                } catch (Exception exc) {
+		                    String error = "Error while writing file: " + exc.getMessage();
+		                    logger.error(error);
+		                    logger.debug(exc);
+		                    JOptionPane.showMessageDialog(jcpPanel, error);
+		                }
+		            } else {
+		                // A binary image
+		                RenderedImage awtImage = jcpPanel.takeSnapshot();
+		                String filename = outFile.toString();
+		                logger.debug("Creating binary image: ", filename);
+		                if (type.equals(JCPExportFileFilter.png)) {
+		            		try {
+		            			ImageWriter writer = ImageIO.getImageWriters(
+		            				new ImageTypeSpecifier(awtImage), "png"
+		            			).next();
+		            			ImageTypeSpecifier specifier = new ImageTypeSpecifier(awtImage);
+		            			IIOMetadata meta = writer.getDefaultImageMetadata( specifier, null );
+		
+		            			Node node = meta.getAsTree( "javax_imageio_png_1.0" );
+		            			IIOMetadataNode tExtNode = new IIOMetadataNode("tEXt");
+		            			IIOMetadataNode tExtEntryNode = new IIOMetadataNode("tEXtEntry");
+		            			tExtEntryNode.setAttribute( "keyword", "molfile" );
+		            			// create the MDL molfile
+		            			StringWriter outputString = new StringWriter();
+		            			MDLWriter mdlWriter = new MDLWriter(outputString);
+		            			JChemPaintModel jcpm = jcpPanel.getJChemPaintModel();
+		                        ChemModel model = (ChemModel)jcpm.getChemModel();
+		                        mdlWriter.write(model);
+		                        mdlWriter.close();
+		            			tExtEntryNode.setAttribute( "value", outputString.toString());
+		            			tExtNode.appendChild(tExtEntryNode);
+		            			node.appendChild(tExtNode);
+		            			meta.mergeTree("javax_imageio_png_1.0", node);
+		            			
+		            			ImageOutputStream ios = ImageIO.createImageOutputStream(new FileOutputStream(filename));
+		            			writer.setOutput(ios);
+		            			writer.write( meta, new IIOImage(awtImage, null, meta), null );
+							} catch (Exception e1) {
+								System.out.println("Error while writing PNG: " + e1.getMessage());
+								e1.printStackTrace();
+							}                	
+		                } else {
+		                	RenderedOp image = JAI.create("AWTImage", awtImage);
+		                	if (type.equals(JCPExportFileFilter.bmp)) {
+		                		JAI.create("filestore", image, filename, "BMP", null);
+		                	} else if (type.equals(JCPExportFileFilter.tiff)) {
+		                		JAI.create("filestore", image, filename, "TIFF", null);
+		                	} else if (type.equals(JCPExportFileFilter.jpg)) {
+		                		JAI.create("filestore", image, filename, "JPEG", new JPEGEncodeParam());
+		                	} else { // default to a PNG binary image
+		                		JAI.create("filestore", image, filename, "PNG", null);
+		                	}
+		                }
+		                logger.debug("Binary image saved to: ", filename);
+		            }
+		            break;
+	        	}
+	        }else{
+	        	break;
+	        }
+	
+        	jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());
         }
-
-        jcpPanel.setCurrentWorkDirectory(chooser.getCurrentDirectory());        
     }
     
 }
