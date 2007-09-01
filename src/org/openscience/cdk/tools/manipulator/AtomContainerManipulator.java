@@ -206,8 +206,8 @@ public class AtomContainerManipulator {
      */
     public static IAtomContainer removeHydrogens(IAtomContainer atomContainer)
     {
-        Map map = new HashMap();        // maps original atoms to clones.
-        List remove = new ArrayList();  // lists removed Hs.
+        Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
         IMolecule mol = atomContainer.getBuilder().newMolecule();
@@ -227,7 +227,9 @@ public class AtomContainerManipulator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                clonedAtom.setHydrogenCount(0);
+                if (clonedAtom != null) {
+                    clonedAtom.setHydrogenCount(0);
+                }
                 mol.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
             }
@@ -275,14 +277,10 @@ public class AtomContainerManipulator {
         }
 
         // Recompute hydrogen counts of neighbours of removed Hydrogens.
-        for (Iterator i = remove.iterator();
-                i.hasNext();)
-        {
+        for (IAtom aRemove : remove) {
             // Process neighbours.
-            for (Iterator n = atomContainer.getConnectedAtomsList((IAtom) i.next()).iterator();
-                    n.hasNext();)
-            {
-                final IAtom neighb = (IAtom) map.get(n.next());
+            for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
+                final IAtom neighb = map.get(iAtom);
                 neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
             }
         }
@@ -385,7 +383,7 @@ public class AtomContainerManipulator {
 	
 	/**
 	 * Constructs an array of Atom objects from a List of Atom objects.
-	 * @param  container The original List.
+	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
 	public static IAtom[] getAtomArray(java.util.List list) {
@@ -407,7 +405,7 @@ public class AtomContainerManipulator {
 	
 	/**
 	 * Constructs an array of Atom objects from a List of Atom objects.
-	 * @param  container The original List.
+	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
 	public static IBond[] getBondArray(java.util.List list) {
@@ -429,7 +427,7 @@ public class AtomContainerManipulator {
 	
 	/**
 	 * Constructs an array of Atom objects from a List of Atom objects.
-	 * @param  container The original List.
+	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
 	public static IElectronContainer[] getElectronContainerArray(java.util.List list) {
