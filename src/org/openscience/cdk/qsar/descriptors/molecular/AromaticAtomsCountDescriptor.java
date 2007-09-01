@@ -138,12 +138,20 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *  if false, means that the aromaticity has already been checked
      *
      *
-     *@param  ac  The {@link IAtomContainer} for which this descriptor is to be calculated
+     *@param  atomContainer  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the number of aromatic atoms of this AtomContainer
      *@throws CDKException if there is a problem in atomaticity detection
      *@see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac ;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
+
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
             IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
