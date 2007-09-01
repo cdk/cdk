@@ -467,8 +467,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 atom1 = java.lang.Integer.valueOf(line.substring(0,3).trim()).intValue();
                 atom2 = java.lang.Integer.valueOf(line.substring(3,6).trim()).intValue();
                 order = java.lang.Integer.valueOf(line.substring(6,9).trim()).intValue();
-                if (line.length() > 12) {
-                	stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                if (line.length() >= 12) {
+                	if (line.length() > 12) {
+                		stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                	} else {
+                		stereo = java.lang.Integer.valueOf(line.substring(9).trim()).intValue();
+                	}
                 } else {
                 	logger.warn("Missing expected stereo field at line: " + line);
                 }

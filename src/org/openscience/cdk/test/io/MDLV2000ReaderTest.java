@@ -120,6 +120,28 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
     }
 
+    public void testAlkane() throws Exception {
+        String filename = "data/mdl/shortest_path_test.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+        IAtomContainer container = (IAtomContainer)containersList.get(0); 
+        assertEquals(10, container.getAtomCount());
+        assertEquals(9, container.getBondCount());
+        Iterator<IAtom> atoms = container.atoms();
+        while (atoms.hasNext()) {
+        	assertEquals("C", atoms.next().getSymbol());
+        }
+        Iterator<IBond> bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	assertEquals(CDKConstants.BONDORDER_SINGLE, bonds.next().getOrder());
+        }
+    }
+
     public void testReadTitle() throws Exception {
         String filename = "data/mdl/a-pinene.mol";
         logger.info("Testing: " + filename);
