@@ -180,12 +180,19 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *  already been checked. It is necessary to use before the call of this mehtod the
      *  addExplicitHydrogensToSatisfyValency method (HydrogenAdder classe).
      *
-     *@param  ac                AtomContainer
-     *@return                   XLogP is a double
-     *@exception  CDKException  Possible Exceptions
+     *@param  atomContainer               AtomContainer
+     *@return XLogP is a double
+     *@exception CDKException  Possible Exceptions
      */
 
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
         IRingSet rs = (IRingSet) (new AllRingsFinder()).findAllRings(ac);
         IRingSet atomRingSet=null;
         if (checkAromaticity) {

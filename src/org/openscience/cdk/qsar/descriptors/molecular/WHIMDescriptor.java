@@ -260,7 +260,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      */
     public Object[] getParameters() {
         Object[] o = new Object[1];
-        o[0] = new String(this.type);
+        o[0] = this.type;
         return (o);
     }
 
@@ -297,7 +297,13 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         double sum = 0.0;
-        Molecule ac = new Molecule(container);
+        Molecule ac;
+
+        try {
+            ac = (Molecule) container.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
 
         // do aromaticity detecttion for calculating polarizability later on
         //HueckelAromaticityDetector had = new HueckelAromaticityDetector();
