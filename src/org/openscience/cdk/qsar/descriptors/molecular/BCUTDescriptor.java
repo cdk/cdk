@@ -39,6 +39,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import static java.lang.Boolean.valueOf;
@@ -104,6 +105,7 @@ import static java.lang.Boolean.valueOf;
  * @cdk.keyword descriptor
  */
 public class BCUTDescriptor implements IMolecularDescriptor {
+    private LoggingTool logger;
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor
@@ -112,6 +114,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = true;
 
     public BCUTDescriptor() {
+        logger = new LoggingTool(this);
+
         // set the default number of BCUT's
         this.nhigh = 1;
         this.nlow = 1;
@@ -256,14 +260,20 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         int counter;
-        Molecule molecule = new Molecule(container);
+        Molecule molecule;
+        try {
+            molecule = (Molecule) container.clone();
+        } catch (CloneNotSupportedException e) {
+            logger.debug("Error during clone");
+            throw new CDKException("Error occured during clone "+e);
+        }
 
         // add H's in case they're not present
         HydrogenAdder hydrogenAdder = new HydrogenAdder();
         try {
             hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
         } catch (Exception e) {
-            throw new CDKException("Could not add hydrogens: " + e.getMessage(),e);
+            throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
         }
 
         // do aromaticity detecttion for calculating polarizability later on
@@ -281,7 +291,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             throw new CDKException("Number of negative or positive eigenvalues cannot be more than number of heavy atoms");
         }
 
-        double[] diagvalue = new double[ nheavy ];
+        double[] diagvalue = new double[nheavy];
 
         // get atomic mass weighted BCUT
         counter = 0;
@@ -295,7 +305,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         } catch (Exception e) {
             throw new CDKException("Could not calculate weight: " + e.getMessage(), e);
         }
-        double[][]  burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
+        double[][] burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
         Matrix matrix = new Matrix(burdenMatrix);
         EigenvalueDecomposition eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval1 = eigenDecomposition.getRealEigenvalues();
@@ -363,7 +373,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             for (int i = 0; i < nlow; i++) retval.add(eval3[i]);
             for (int i = 0; i < nhigh; i++) retval.add(eval3[eval3.length - i - 1]);
 
-            names = new String[ 3 * nhigh + 3 * nlow ];
+            names = new String[3 * nhigh + 3 * nlow];
             counter = 0;
             for (String aSuffix : suffix) {
                 for (int i = 0; i < nhigh; i++) {
