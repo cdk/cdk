@@ -127,12 +127,19 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
+     *@param  atomContainer               AtomContainer
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-		int isProtonInAromaticSystem = 0;
+	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
+        int isProtonInAromaticSystem = 0;
 		IMolecule mol = new NNMolecule(ac);
 		if (checkAromaticity) {
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);

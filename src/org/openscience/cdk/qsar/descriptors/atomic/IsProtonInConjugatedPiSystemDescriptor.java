@@ -123,11 +123,18 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
+     *@param  atomContainer              AtomContainer
      *@return                   true if the proton is bonded to a conjugated system
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+        
         boolean isProtonInPiSystem = false;
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {

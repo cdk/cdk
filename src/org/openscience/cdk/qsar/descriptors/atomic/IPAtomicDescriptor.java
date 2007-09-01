@@ -113,8 +113,15 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 *@return                   The ionization potential. Not possible the ionization.
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException{
-		reactionSet = container.getBuilder().newReactionSet();
+	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException{
+        IAtomContainer container;
+        try {
+            container= (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+        
+        reactionSet = container.getBuilder().newReactionSet();
     	
 		double resultD = -1.0;
 		boolean isTarget = false;

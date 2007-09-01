@@ -133,7 +133,14 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
         return (calculate(atom, varAtomContainerSet, null));
     }
 
-    public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainer, IRingSet precalculatedringset) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) throws CDKException {
+        IAtomContainer varAtomContainer;
+        try {
+            varAtomContainer = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
         int atomPosition = varAtomContainer.getAtomNumber(atom);
 
         final int gsr_desc_length = 7;
