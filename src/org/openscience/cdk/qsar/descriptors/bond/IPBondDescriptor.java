@@ -108,12 +108,19 @@ public class IPBondDescriptor implements IBondDescriptor {
 	/**
 	 *  This method calculates the ionization potential of a bond.
 	 *
-	 *@param  container         Parameter is the IAtomContainer.
+	 *@param  atomContainer         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException{
-		String[] descriptorNames = {"DoubleResult"};
+	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) throws CDKException{
+        IAtomContainer container = null;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+        
+        String[] descriptorNames = {"DoubleResult"};
     	reactionSet = container.getBuilder().newReactionSet();
     	
     	double resultD = -1.0;

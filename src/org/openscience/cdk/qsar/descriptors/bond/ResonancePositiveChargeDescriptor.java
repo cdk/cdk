@@ -121,14 +121,20 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *  
      *
-     *@param  acI                AtomContainer
+     *@param  atomContainer               AtomContainer
      *@return                   Value of the Resonance stabilization of the two atoms
      *							which belong to the bond.
      *@exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IBond bond, IAtomContainer acI) throws CDKException {
-    	
-    	cleanFlagReactiveCenter((IMolecule) acI);
+    public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer acI;
+        try {
+            acI = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
+        cleanFlagReactiveCenter((IMolecule) acI);
 
     	DoubleArrayResult dar = new DoubleArrayResult(2);
     	IAtomContainer ac;
