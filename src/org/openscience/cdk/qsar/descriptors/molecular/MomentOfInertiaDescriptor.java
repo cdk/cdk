@@ -150,10 +150,12 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         IsotopeFactory factory = null;
         try {
             factory = IsotopeFactory.getInstance(container.getBuilder());
+            factory.configureAtoms(container);
         } catch (Exception e) {
             logger.debug(e);
+            throw new CDKException("Error getting an IsotopeFactory");
         }
-        factory.configureAtoms(container);
+
 
         DoubleArrayResult retval = new DoubleArrayResult(7);
 
