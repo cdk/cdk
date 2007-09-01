@@ -72,11 +72,7 @@ import java.util.ArrayList;
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
-public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
-
-    private ArrayList singlePaths = null;
-    private ArrayList doublePaths = null;
-    private ArrayList triplePaths = null;
+public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {   
 
     /**
      * Constructor for the KappaShapeIndicesDescriptor object
@@ -145,9 +141,9 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         double kier2;
         double kier3;
         double atomsCount = atomContainer.getAtomCount();
-        singlePaths = new ArrayList();
-        doublePaths = new ArrayList();
-        triplePaths = new ArrayList();
+        ArrayList<Double> singlePaths = new ArrayList<Double>();
+        ArrayList<String> doublePaths = new ArrayList<String>();
+        ArrayList<String> triplePaths = new ArrayList<String>();
         double[] sorterFirst = new double[2];
         double[] sorterSecond = new double[3];
         String tmpbond2;
@@ -159,14 +155,14 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
             for (int a2 = 0; a2 < firstAtomNeighboors.size(); a2 ++) {
                 bond1 = atomContainer.getBondNumber(atomContainer.getAtom(a1), (IAtom) firstAtomNeighboors.get(a2));
                 if (!singlePaths.contains(new Double(bond1))) {
-                    singlePaths.add(new Double(bond1));
+                    singlePaths.add(bond1);
                     java.util.Collections.sort(singlePaths);
                 }
                 secondAtomNeighboors = atomContainer.getConnectedAtomsList((IAtom) firstAtomNeighboors.get(a2));
                 for (int a3 = 0; a3 < secondAtomNeighboors.size(); a3 ++) {
                     bond2 = atomContainer.getBondNumber((IAtom) firstAtomNeighboors.get(a2), (IAtom) secondAtomNeighboors.get(a3));
                     if (!singlePaths.contains(new Double(bond2))) {
-                        singlePaths.add(new Double(bond2));
+                        singlePaths.add(bond2);
                     }
                     sorterFirst[0] = bond1;
                     sorterFirst[1] = bond2;
@@ -181,7 +177,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
                     for (int a4 = 0; a4 < thirdAtomNeighboors.size(); a4 ++) {
                         bond3 = atomContainer.getBondNumber((IAtom) secondAtomNeighboors.get(a3), (IAtom) thirdAtomNeighboors.get(a4));
                         if (!singlePaths.contains(new Double(bond3))) {
-                            singlePaths.add(new Double(bond3));
+                            singlePaths.add(bond3);
                         }
                         sorterSecond[0] = bond1;
                         sorterSecond[1] = bond2;
