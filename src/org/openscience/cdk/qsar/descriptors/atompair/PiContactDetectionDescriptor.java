@@ -126,11 +126,18 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
     /**
      * The method returns if two atoms have pi-contact.
      *
-     * @param  ac                AtomContainer
+     * @param  atomContainer                AtomContainer
      * @return                   true if the atoms have pi-contact
      * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtom first, IAtom second, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom first, IAtom second, IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
             HueckelAromaticityDetector.detectAromaticity(mol);
