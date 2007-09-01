@@ -26,7 +26,6 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -120,39 +119,10 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         double petitjeanNumber = 0; //weinerPath
-        double diameter = 0;
-        double partialDiameter = 0;
-        double radius = 0;
-        double rowMax = 0;
-        double[][] matr = ConnectionMatrix.getMatrix(atomContainer);
-        int[][] distances = PathTools.computeFloydAPSP(matr);
-        for (int i = 0; i < distances.length; i++) {
-            rowMax = 0;
-            for (int j = 0; j < distances.length; j++) {
-                partialDiameter = distances[i][j];
-                if (partialDiameter > diameter) {
-                    diameter = partialDiameter;
-                }
 
-                if (partialDiameter > rowMax) {
-                    rowMax = partialDiameter;
-                }
-            }
-            if(i == 0) {
-                radius = rowMax;
-            }
-            else {
-                if(rowMax < radius) {
-                    radius = rowMax;
-                }
-                /* XXX This does not make much sense
-                    else {
-                        radius = radius;
-                    }*/
-            }
-            // logger.debug("row " + i + ", radius: " +radius + ", diameter: " +diameter);
-        }
-        // logger.debug("diameter: " +diameter);
+        int diameter = PathTools.getMolecularGraphDiameter(atomContainer);
+        int radius = PathTools.getMolecularGraphRadius(atomContainer);
+
 
         petitjeanNumber = (diameter - radius)/diameter;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),
