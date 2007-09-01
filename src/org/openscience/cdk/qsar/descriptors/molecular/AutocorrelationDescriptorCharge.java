@@ -88,8 +88,8 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < chargeSum.length; i++) {
-                result.add(chargeSum[i]);
+            for (double aChargeSum : chargeSum) {
+                result.add(aChargeSum);
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     result, new String[]{"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"});

@@ -49,16 +49,15 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	 * @param element
 	 * @return
 	 * @throws java.io.IOException
-	 * @throws ClassNotFoundException
-	 */
-	private static double scaledAtomicMasses(IElement element)
-			throws java.io.IOException, ClassNotFoundException {
+     * @throws ClassNotFoundException
+     */
+    private static double scaledAtomicMasses(IElement element)
+            throws java.io.IOException, ClassNotFoundException {
 
-		double realmasses = MFAnalyser.getNaturalMass(element);
-		double scaled = (realmasses / CARBON_MASS);
+        double realmasses = MFAnalyser.getNaturalMass(element);
+        return (realmasses / CARBON_MASS);
 
-		return scaled;
-	}
+    }
 
 	
 	/**
@@ -104,8 +103,8 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < masSum.length; i++) {
-                result.add(masSum[i]);
+            for (double aMasSum : masSum) {
+                result.add(aMasSum);
             }
 
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

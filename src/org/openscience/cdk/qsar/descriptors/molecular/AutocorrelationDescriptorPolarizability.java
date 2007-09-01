@@ -85,8 +85,8 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
 
             }
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < PolarizabilitySum.length; i++) {
-                result.add(PolarizabilitySum[i]);
+            for (double aPolarizabilitySum : PolarizabilitySum) {
+                result.add(aPolarizabilitySum);
 
             }
 
