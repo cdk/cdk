@@ -112,9 +112,8 @@ public class AtomContainerManipulator {
     public static int getTotalFormalCharge(IAtomContainer atomContainer) {
         int chargeP = getTotalNegativeFormalCharge(atomContainer);
         int chargeN = getTotalPositiveFormalCharge(atomContainer);
-        int totalCharge = chargeP + chargeN;
-        
-        return totalCharge;
+
+        return chargeP + chargeN;
     }
     /**
      * @return The summed negative formal charges of all atoms in this AtomContainer. 
@@ -159,11 +158,10 @@ public class AtomContainerManipulator {
      */
     public static int countExplicitHydrogens(IAtomContainer atomContainer, IAtom atom) {
     	int hCount = 0;
-        Iterator connectedAtoms = atomContainer.getConnectedAtomsList(atom).iterator(); 
-        while (connectedAtoms.hasNext()) {
-        	IAtom connectedAtom = (IAtom)connectedAtoms.next();
-        	if (connectedAtom.getSymbol().equals("H"))
-        		hCount++;
+        for (IAtom iAtom : atomContainer.getConnectedAtomsList(atom)) {
+            IAtom connectedAtom = iAtom;
+            if (connectedAtom.getSymbol().equals("H"))
+                hCount++;
         }
         return hCount;
     }
@@ -177,7 +175,7 @@ public class AtomContainerManipulator {
 	}
 
     public static List getAllIDs(IAtomContainer mol) {
-    	List idList = new ArrayList();
+    	List<String> idList = new ArrayList<String>();
         if (mol != null) {
             if (mol.getID() != null) idList.add(mol.getID());
             java.util.Iterator atoms = mol.atoms();
@@ -386,9 +384,9 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IAtom[] getAtomArray(java.util.List list) {
+	public static IAtom[] getAtomArray(java.util.List<IAtom> list) {
 		IAtom[] ret = new IAtom[list.size()];
-		for (int i = 0; i < ret.length; ++i) ret[i] = (IAtom)list.get(i);
+		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
 	}
 	
@@ -408,9 +406,9 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IBond[] getBondArray(java.util.List list) {
+	public static IBond[] getBondArray(java.util.List<IBond> list) {
 		IBond[] ret = new IBond[list.size()];
-		for (int i = 0; i < ret.length; ++i) ret[i] = (IBond)list.get(i);
+		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
 	}
 	
@@ -430,9 +428,9 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IElectronContainer[] getElectronContainerArray(java.util.List list) {
+	public static IElectronContainer[] getElectronContainerArray(java.util.List<IElectronContainer> list) {
 		IElectronContainer[] ret = new IElectronContainer[list.size()];
-		for (int i = 0; i < ret.length; ++i) ret[i] = (IElectronContainer)list.get(i);
+		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
 	}
 	
