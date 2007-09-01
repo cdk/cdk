@@ -21,6 +21,7 @@ package org.openscience.cdk.atomtype;
 
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
@@ -175,6 +176,19 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				return factory.getAtomType("N.sp2");
     			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
     				return factory.getAtomType("N.sp1");
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_AROMATIC) {
+    				// deal with aromatic hydrogens
+    				if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
+    					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
+    						bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
+    						return factory.getAtomType("N.sp2");
+    					} else {
+    						return factory.getAtomType("N.sp3");
+    					}
+    				} else if (atomContainer.getConnectedBondsCount(atom) == 3) {
+    					return factory.getAtomType("N.sp3");
+    				} 
     			}
     		}
     	}
