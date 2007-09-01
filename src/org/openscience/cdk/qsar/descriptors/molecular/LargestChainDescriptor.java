@@ -126,8 +126,8 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             throw new CDKException("Both parameters must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
-        checkRingSystem = ((Boolean) params[1]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
+        checkRingSystem = (Boolean) params[1];
     }
 
 
@@ -140,8 +140,8 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[2];
-        params[0] = new Boolean(checkAromaticity);
-        params[1] = new Boolean(checkRingSystem);
+        params[0] = checkAromaticity;
+        params[1] = checkRingSystem;
         return params;
     }
 
@@ -189,7 +189,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
         int largestChainAtomsCount = 0;
         //IAtom[] atoms = container.getAtoms();
-        Vector startSphere = null;
+        Vector<IAtom> startSphere;
         Vector path = null;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -204,7 +204,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED))
             {
                 //logger.debug("...... -> containercepted");
-                startSphere = new Vector();
+                startSphere = new Vector<IAtom>();
                 path = new Vector();
                 startSphere.addElement(atomi);
                 breadthFirstSearch(container, startSphere, path);
@@ -249,10 +249,10 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, Vector sphere, Vector path) throws org.openscience.cdk.exception.CDKException {
-        IAtom atom = null;
-        IAtom nextAtom = null;
-        Vector newSphere = new Vector();
+    public void breadthFirstSearch(IAtomContainer container, Vector<IAtom> sphere, Vector<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+        IAtom atom;
+        IAtom nextAtom;
+        Vector<IAtom> newSphere = new Vector<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
         for (int i = 0; i < sphere.size(); i++) {
             atom = (IAtom) sphere.elementAt(i);
