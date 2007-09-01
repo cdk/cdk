@@ -178,14 +178,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
 
     public DescriptorValue calculate(IAtomContainer container) {
 
-        IAtomContainer local = null;
-        try {
-            local = (IAtomContainer) container.clone();
-            local = AtomContainerManipulator.removeHydrogens(local);
-        } catch (CloneNotSupportedException e) {
-            logger.debug("Could not clone input molecule");
-            return null;
-        }
+        IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
         DoubleArrayResult retval = new DoubleArrayResult(19);
         for (int i = 0; i < 19; i++) {
@@ -197,7 +190,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
                 "MDEC-22", "MDEC-23", "MDEC-24",
                 "MDEC-33", "MDEC-34",
                 "MDEC-44",
-                "MDEO-11", "MDEO-12", "MDEO-22" ,
+                "MDEO-11", "MDEO-12", "MDEO-22",
                 "MDEN-11", "MDEN-12", "MDEN-13",
                 "MDEN-22", "MDEN-23",
                 "MDEN-33"
@@ -339,17 +332,17 @@ public class MDEDescriptor implements IMolecularDescriptor {
         double lambda = 1;
         double n = 0;
 
-        Vector v1 = new Vector();
-        Vector v2 = new Vector();
+        Vector<Integer> v1 = new Vector<Integer>();
+        Vector<Integer> v2 = new Vector<Integer>();
         for (int i = 0; i < codemat.length; i++) {
-            if (codemat[i][0] == type1) v1.add(new Integer(codemat[i][1]));
-            if (codemat[i][0] == type2) v2.add(new Integer(codemat[i][1]));
+            if (codemat[i][0] == type1) v1.add(codemat[i][1]);
+            if (codemat[i][0] == type2) v2.add(codemat[i][1]);
         }
 
         for (int i = 0; i < v1.size(); i++) {
             for (int j = 0; j < v2.size(); j++) {
-                int a = ((Integer) v1.get(i)).intValue();
-                int b = ((Integer) v2.get(j)).intValue();
+                int a = (Integer) v1.get(i);
+                int b = (Integer) v2.get(j);
                 if (a == b) continue;
                 double distance = distmat[a][b];
                 lambda = lambda * distance;
