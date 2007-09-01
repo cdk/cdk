@@ -205,12 +205,18 @@ public class TPSADescriptor implements IMolecularDescriptor {
 	 *  using {@link org.openscience.cdk.tools.HydrogenAdder#addImplicitHydrogensToSatisfyValency} or
    * {@link org.openscience.cdk.tools.HydrogenAdder#addExplicitHydrogensToSatisfyValency}. 
          *
-	 * @param  ac                The AtomContainer whose TPSA is to be calculated
+	 * @param  atomContainer                The AtomContainer whose TPSA is to be calculated
 	 * @return                   A double containing the topological surface area
 	 * @exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
-		Vector profiles = new Vector();
+	public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+        Vector profiles = new Vector();
     
     // calculate the set of all rings
 		IRingSet rs = (new AllRingsFinder()).findAllRings(ac);

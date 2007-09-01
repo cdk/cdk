@@ -194,12 +194,21 @@ public class CPSADescriptor implements IMolecularDescriptor {
     /**
      * Evaluates the 29 CPSA descriptors using Gasteiger-Marsilli charges.
      *
-     * @param container Parameter is the atom container.
+     * @param atomContainer Parameter is the atom container.
      * @return An ArrayList containing 29 elements in the order described above
      * @throws CDKException if the charge calculation fails
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            logger.debug("Error during clone");
+            throw new CDKException("Error during clone");
+        }
+
         DoubleArrayResult retval = new DoubleArrayResult();
         String[] names = {
                 "PPSA-1", "PPSA-2", "PPSA-3",
@@ -220,7 +229,7 @@ public class CPSADescriptor implements IMolecularDescriptor {
 //            logger.debug(e);
 //        }
 
-        GasteigerMarsiliPartialCharges peoe = null;
+        GasteigerMarsiliPartialCharges peoe;
         try {
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
