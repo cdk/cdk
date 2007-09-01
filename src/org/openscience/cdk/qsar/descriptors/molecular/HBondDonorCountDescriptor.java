@@ -117,12 +117,19 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
     /**
      * Calculates the number of H bond donors.
      *
-     * @param  ac                AtomContainer
+     * @param  atomContainer               AtomContainer
      * @return                   number of H bond donors
      * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         int hBondDonors = 0;
+
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue

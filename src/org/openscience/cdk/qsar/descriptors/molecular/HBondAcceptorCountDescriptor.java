@@ -112,7 +112,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
             throw new CDKException("The parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
     /**
@@ -123,21 +123,28 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
     }
 
     /**
      *  Calculates the number of H bond acceptors.
      *
-     * @param  ac                AtomContainer
+     * @param  atomContainer             AtomContainer
      * @return                   number of H bond acceptors
      * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
         int hBondAcceptors = 0;
 
-    // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
+        IAtomContainer ac;
+        try {
+            ac = (IAtomContainer) atomContainer.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Error during clone");
+        }
+
+        // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
         if (checkAromaticity)
             HueckelAromaticityDetector.detectAromaticity(ac);
 
@@ -206,7 +213,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Boolean(false);
+        return false;
     }
 }
 
