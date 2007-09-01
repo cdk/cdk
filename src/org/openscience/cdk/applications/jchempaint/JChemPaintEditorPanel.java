@@ -55,6 +55,7 @@ import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
@@ -568,10 +569,11 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     		HashMap oldrenderingcoordinates=jchemPaintModel.getRendererModel().getRenderingCoordinates();
             Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
-            image = new BufferedImage((int)dim.getWidth()+20, (int)dim.getHeight()+20, BufferedImage.TYPE_INT_ARGB);
+            GeometryTools.translate2D(ac, new Vector2d(40,40),jchemPaintModel.getRendererModel().getRenderingCoordinates());
+            image = new BufferedImage((int)dim.getWidth()+80, (int)dim.getHeight()+80, BufferedImage.TYPE_INT_ARGB);
             Graphics2D snapGraphics = image.createGraphics();
             snapGraphics.setBackground(Color.WHITE);
-            snapGraphics.clearRect(0,0,(int)dim.getWidth()+20, (int)dim.getHeight()+20);
+            snapGraphics.clearRect(0,0,(int)dim.getWidth()+80, (int)dim.getHeight()+80);
             r2d.useScreenSize=false;
             r2d.paintMolecule(ac, (Graphics2D) snapGraphics,false,true);
             r2d.useScreenSize=true;
