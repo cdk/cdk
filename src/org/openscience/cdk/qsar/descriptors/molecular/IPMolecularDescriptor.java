@@ -20,15 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -37,6 +30,9 @@ import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. It is
@@ -140,7 +136,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
     	String[] descriptorNames = {"DoubleArrayResult"};
     	
     	reactionSet = atomContainer.getBuilder().newReactionSet();
-        ArrayList dar = new ArrayList();
+        ArrayList<Double> dar = new ArrayList<Double>();
         IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
         Iterator itA = atomContainer.atoms();
         while(itA.hasNext()){
@@ -161,7 +157,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
             }
 
             if(result != -1)
-            	dar.add(new Double(result));
+            	dar.add(result);
         }
 
         IPBondDescriptor descriptorB = new IPBondDescriptor();
@@ -186,11 +182,11 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
             	}
             }
 
-            dar.add(new Double(result));
+            dar.add(result);
         }
         
         if(dar.size() == 0)
-        	dar.add(new Double(-1.0));
+        	dar.add(-1.0);
         
         DoubleArrayResult results = arrangingEnergy(dar);
         
@@ -209,10 +205,10 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
     	int count = array.size();
     	
     	for(int i = 0; i < count; i++){
-	    	double min = ((Double)array.get(0)).doubleValue();
+	    	double min = (Double) array.get(0);
 	    	int pos = 0;
 			for(int j = 0; j < array.size(); j++){
-				double value = ((Double)array.get(j)).doubleValue();
+				double value = (Double) array.get(j);
 				if( value < min){
 					min = value;
 					pos = j;
@@ -245,6 +241,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
 	 * The energy is set as property
      *
      * @return The IReactionSet value
+     * @throws org.openscience.cdk.exception.CDKException
      */
     public IReactionSet getReactionSet() throws CDKException{
         return reactionSet;
