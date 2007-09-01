@@ -101,6 +101,24 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
 
+  <atomType id="S.onyl"> <!-- e.g. H2SO4 -->
+    <atom elementType="S" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">2</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+
+  <atomType id="S.inyl"> <!-- e.g. DMSO -->
+    <atom elementType="S" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+
   <atomType id="H">
     <atom elementType="H" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>

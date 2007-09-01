@@ -189,7 +189,51 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "S.3", matched);
     }
 
+    @Test public void testDMSO() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "S.inyl", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom4));
+    }
     
+    @Test public void testSulphuricAcid() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        IAtom atom5 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "S.onyl", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom4));
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom5));
+    }
+
     @Test public void testHydrogen() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

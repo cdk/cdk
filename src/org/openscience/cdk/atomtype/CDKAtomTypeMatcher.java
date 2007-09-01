@@ -198,9 +198,30 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom)
     	throws CDKException {
     	if ("S".equals(atom.getSymbol())) {
-    		int neighborcount = atomContainer.getConnectedBondsCount(atom);
+			List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
+    		int neighborcount = neighbors.size();
     		if (neighborcount == 2) {
     			return factory.getAtomType("S.3");
+    		} else {
+    			// count the number of double bonded oxygens
+    			int doubleBondedOxygens = 0;
+    			for (int i=neighborcount-1;i>=0;i--) {
+    				if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+    					IBond bond =  neighbors.get(i);
+    					if (bond.getAtomCount() == 2 && bond.contains(atom)) {
+    						// if one is the sulphur, then the other one must be an oxygen
+    						if (bond.getAtom(0).getSymbol().equals("O") ||
+    							bond.getAtom(1).getSymbol().equals("O")) {
+    							doubleBondedOxygens++;
+    						}
+    					}
+    				}
+    			}
+    			if (doubleBondedOxygens == 2 && neighborcount == 4){
+    				return factory.getAtomType("S.onyl");
+    			} else if (doubleBondedOxygens == 1 && neighborcount == 3){
+    				return factory.getAtomType("S.inyl");
+    			};
     		}
     	}
     	return null;
