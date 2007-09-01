@@ -114,18 +114,10 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 
-        // make a copy and remove hydrogens
-        IAtomContainer localAtomContainer = null;
-        try {
-            localAtomContainer = (IAtomContainer) container.clone();
-            localAtomContainer = AtomContainerManipulator.removeHydrogens(localAtomContainer);
-            HydrogenAdder hadder = new HydrogenAdder();
-            hadder.addImplicitHydrogensToSatisfyValency(localAtomContainer);
-
-        } catch (CloneNotSupportedException e) {
-            logger.debug("Error occured during clone");
-            throw new CDKException("Error occured during clone");
-        }
+        // we don't make a clone, since removeHydrogens returns a deep copy
+        IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
+        HydrogenAdder hadder = new HydrogenAdder();
+        hadder.addImplicitHydrogensToSatisfyValency(localAtomContainer);
 
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);

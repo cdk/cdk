@@ -111,18 +111,10 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 
-        // make a copy and remove hydrogens
-        IAtomContainer localAtomContainer = null;
-        try {
-            localAtomContainer = (IAtomContainer) container.clone();
-            localAtomContainer = AtomContainerManipulator.removeHydrogens(localAtomContainer);
-            HydrogenAdder hadder = new HydrogenAdder();
-            hadder.addImplicitHydrogensToSatisfyValency(localAtomContainer);
-
-        } catch (CloneNotSupportedException e) {
-            logger.debug("Error occured during clone");
-            throw new CDKException("Error occured during clone");
-        }
+        // removeHydrogens does a deep copy, so no need to clone
+        IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
+        HydrogenAdder hadder = new HydrogenAdder();
+        hadder.addImplicitHydrogensToSatisfyValency(localAtomContainer);
 
         List subgraph4 = order4(localAtomContainer);
         List subgraph5 = order5(localAtomContainer);
