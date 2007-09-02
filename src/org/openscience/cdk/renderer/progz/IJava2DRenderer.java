@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
+/* $Revision: 7636$ $Author: nielsout $ $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
  * 
  * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  * 
@@ -24,16 +24,16 @@
  */
 package org.openscience.cdk.renderer.progz;
 
-import java.awt.geom.Point2D;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.renderer.ISimpleRenderer2D;
 
 public interface IJava2DRenderer extends ISimpleRenderer2D {
+	
 	/**
-	 *  Returns model coordinates from screencoordinates provided by the graphics translation
+	 * Returns model coordinates from screencoordinates provided by the graphics translation.
 	 *   
-	 * @param ptSrc the point to convert
 	 * @return Point2D in real world coordinates
 	 */
-	public abstract Point2D getCoorFromScreen(Point2D ptSrc);
+	public abstract Point2d getCoorFromScreen(int screenX, int screenY);
 }

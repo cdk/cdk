@@ -30,7 +30,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -40,6 +39,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.vecmath.Point2d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
@@ -71,13 +71,12 @@ public class TestRenderer extends JPanel {
 	public class RendererListner implements MouseListener {
 		public void mouseClicked(MouseEvent e) {
 			System.out.println(e); 
-			Point2D ptSrc = e.getPoint();
 			IMolecule molecule = painter.getMolecule();
 			
 			//painter.getGraphics2D(),
-			//Point2D ptDst = Java2DRenderer.getCoorFromScreen( ptSrc);
-			Point2D ptDst = painter.renderer.getCoorFromScreen( ptSrc);
-			System.out.println("Mouse click at " + ptSrc + " real world coordinates: " + ptDst);
+			Point2d ptDst = painter.renderer.getCoorFromScreen(e.getX(), e.getY());
+			System.out.println("Mouse click at (" + e.getX() + ","
+				+ e.getY() + ") real world coordinates: " + ptDst);
 			Java2DRenderer.showClosestAtomOrBond(molecule, ptDst);
 			try {
 				int width = 400, height = 400;

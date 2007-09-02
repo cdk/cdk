@@ -1118,7 +1118,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 * @param ptSrc the point to convert
 	 * @return Point2D in real world coordinates
 	 */
-	public Point2D getCoorFromScreen(Point2D ptSrc) {
+	public Point2d getCoorFromScreen(int screenX, int screenY) {
+		Point2D ptSrc = new Point2D.Double(screenX, screenY);
 		Point2D ptDst = new Point2D.Double();
 		try {
 			affine.inverseTransform(ptSrc, ptDst);
@@ -1127,25 +1128,24 @@ public class Java2DRenderer implements IJava2DRenderer {
 			System.out.println("Unable to reverse affine transformation");
 			System.exit(0);
 		}
-		return ptDst;
+		return new Point2d(ptDst.getX(), ptDst.getY());
 	}
 	/**
 	 * 
 	 * @param container
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
 	 */
-	public static void showClosestAtomOrBond(IAtomContainer container, Point2D ptSrc) {
-		IAtom atom = GeometryToolsInternalCoordinates.getClosestAtom( ptSrc.getX(), ptSrc.getY(), container);
-		double Atomdist = Math.sqrt(Math.pow(atom.getPoint2d().x - ptSrc.getX(), 2) + Math.pow(atom.getPoint2d().y - ptSrc.getY(), 2));
-
+	public static void showClosestAtomOrBond(IAtomContainer container, Point2d ptSrc) {
+		IAtom atom = GeometryToolsInternalCoordinates.getClosestAtom( ptSrc.x, ptSrc.y, container);
+		double Atomdist = atom.getPoint2d().distance(ptSrc);
 		System.out.println("closest Atom distance: " + Atomdist + " Atom:" + atom);
 		
-		IBond bond = GeometryToolsInternalCoordinates.getClosestBond( ptSrc.getX(), ptSrc.getY(), container);
+		IBond bond = GeometryToolsInternalCoordinates.getClosestBond( ptSrc.x, ptSrc.y, container);
 		Point2d bondCenter = GeometryToolsInternalCoordinates.get2DCenter(bond.atoms());
-		
-		double Bonddist = Math.sqrt(Math.pow(bondCenter.x - ptSrc.getX(), 2) + Math.pow(bondCenter.y - ptSrc.getY(), 2));
+		double Bonddist = bondCenter.distance(ptSrc);
 		System.out.println("closest Bond distance: " + Bonddist + " Bond: " + bond);
 	}
+	
 	public Rectangle2D createRectangle2D(IAtomContainer atomCon) {
 		if (atomCon.getAtomCount() == 0)
 			return null;
