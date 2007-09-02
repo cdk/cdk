@@ -1,8 +1,6 @@
-/* $Author: nielsout $
- * $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
- * $Revision:  $
+/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
  * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net or nout@science.uva.nl
  * 
@@ -23,10 +21,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
- package org.openscience.cdk.controller;
+package org.openscience.cdk.controller;
 
-public class IMouseEventRelay {
+public interface IMouseEventRelay {
 
 }
