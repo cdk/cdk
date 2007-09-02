@@ -41,26 +41,26 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	
     private static final long serialVersionUID = 9007159812273128989L;
     
-    public final static int DRAWBOND = 0;
-    public final static int MOVE = 1;
-    public final static int SELECT = 2;
-    public final static int ERASER = 3;
-    public final static int ELEMENT = 4;
-    public final static int SYMBOL = 5;
-	public final static int RING = 6;
-    public final static int CLEANUP=7;
-    public final static int FLIP_H=8;
-    public final static int FLIP_V=9;
-    public final static int ROTATION=10;
-    public final static int UP_BOND=11;
-    public final static int DOWN_BOND=12;
-	public final static int NORMALIZE=13;
-	public final static int LASSO=14;
-	public final static int INCCHARGE=15;
-	public final static int DECCHARGE=16;
-	public final static int BENZENERING=17;
-	public final static int MAPATOMATOM=18;
-	public final static int ENTERELEMENT = 19;
+    public final static int DRAWMODE_DRAWBOND     = 0;
+    public final static int DRAWMODE_MOVE         = 1;
+    public final static int DRAWMODE_SELECT       = 2;
+    public final static int DRAWMODE_ERASER       = 3;
+    public final static int DRAWMODE_ELEMENT      = 4;
+    public final static int DRAWMODE_SYMBOL       = 5;
+	public final static int DRAWMODE_RING         = 6;
+    public final static int DRAWMODE_CLEANUP      =  7;
+    public final static int DRAWMODE_FLIP_H       =  8;
+    public final static int DRAWMODE_FLIP_V       =  9;
+    public final static int DRAWMODE_ROTATION     = 10;
+    public final static int DRAWMODE_UP_BOND      = 11;
+    public final static int DRAWMODE_DOWN_BOND    = 12;
+	public final static int DRAWMODE_NORMALIZE    = 13;
+	public final static int DRAWMODE_LASSO        = 14;
+	public final static int DRAWMODE_INCCHARGE    = 15;
+	public final static int DRAWMODE_DECCHARGE    = 16;
+	public final static int DRAWMODE_BENZENERING  = 17;
+	public final static int DRAWMODE_MAPATOMATOM  = 18;
+	public final static int DRAWMODE_ENTERELEMENT = 19;
 	
 	private int drawMode = 0;
 	private int ringSize = 6;
@@ -107,39 +107,39 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	 */
 	public String getDrawModeString() {
         switch (this.drawMode) {
-            case DRAWBOND:
+            case DRAWMODE_DRAWBOND:
                 return "Draw";
-            case MOVE:
+            case DRAWMODE_MOVE:
                 return "Move";
-            case SELECT:
+            case DRAWMODE_SELECT:
                 return "Select";
-            case ERASER:
+            case DRAWMODE_ERASER:
                 return "Delete";
-            case ELEMENT:
+            case DRAWMODE_ELEMENT:
                 return "Element";
-            case SYMBOL:
+            case DRAWMODE_SYMBOL:
                 return "Symbol";
-            case RING:
+            case DRAWMODE_RING:
                 return "Ring";
-            case CLEANUP:
+            case DRAWMODE_CLEANUP:
                 return "Clean";
-            case FLIP_H:
-            case FLIP_V:
-            case ROTATION:
+            case DRAWMODE_FLIP_H:
+            case DRAWMODE_FLIP_V:
+            case DRAWMODE_ROTATION:
                 break;
-            case UP_BOND:
+            case DRAWMODE_UP_BOND:
                 return "Wedge Up";
-            case DOWN_BOND:
+            case DRAWMODE_DOWN_BOND:
                 return "Wedge Down";
-            case NORMALIZE:
+            case DRAWMODE_NORMALIZE:
                 return "Normalize";
-            case LASSO:
+            case DRAWMODE_LASSO:
                 return "Select";
-            case INCCHARGE:
+            case DRAWMODE_INCCHARGE:
                 return "Increase Charge";
-            case DECCHARGE:
+            case DRAWMODE_DECCHARGE:
                 return "Decrease Charge";
-            case MAPATOMATOM:
+            case DRAWMODE_MAPATOMATOM:
                 return "Map Atom-Atom";
         }
 		return "";
