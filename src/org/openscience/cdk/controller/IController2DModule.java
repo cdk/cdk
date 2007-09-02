@@ -24,17 +24,55 @@
  */
 package org.openscience.cdk.controller;
 
+import javax.vecmath.Point2d;
+
 /**
  * Interface that Controller2D modules must implement. Each module is
  * associated with an editing mode (DRAWMODE_*), as given in
  * Controller2DModel.
  * 
- * <p>TODO: needs to be written.
- * 
  * @author egonw
  * 
  * @see    Controller2DModel
  */
-public interface IController2DModule extends IMouseEventRelay {
+public interface IController2DModule {
 
+	public abstract void setChemModelRelay(IChemModelRelay relay);
+	
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseClickedUp(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseClickedDown(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseClickedDouble(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseMove(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseEnter(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoord
+	 */
+	public abstract void mouseExit(Point2d worldCoord);
+
+	/**
+	 * @param Point2d worldCoordFrom
+	 * @param Point2d worldCoordTo
+	 */
+	public abstract void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo);
+	
 }
