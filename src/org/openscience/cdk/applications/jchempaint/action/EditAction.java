@@ -156,7 +156,7 @@ public class EditAction extends JCPAction {
 			((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
 			jcpPanel.lastAction.set(0,jcpPanel.getMoveButton());
 			jcpPanel.getMoveButton().setBackground(Color.GRAY);
-			jcpModel.getControllerModel().setDrawMode(Controller2DModel.MOVE);
+			jcpModel.getControllerModel().setDrawMode(Controller2DModel.DrawMode.MOVE);
 			jcpModel.fireChange();
 		} else if (type.equals("selectMolecule")) {
 			IChemObject object = getSource(event);

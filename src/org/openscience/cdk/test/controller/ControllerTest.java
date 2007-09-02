@@ -80,7 +80,7 @@ public class ControllerTest
         model.setMoleculeSet(moleculeSet);
 		Controller2DModel c2dm = new Controller2DModel();
 		inputAdapter = new PopupController2D(model, r2dm, c2dm);
-		c2dm.setDrawMode(Controller2DModel.DRAWBOND);
+		c2dm.setDrawMode(Controller2DModel.DrawMode.DRAWBOND);
 		mv.addMouseMotionListener(inputAdapter);
 		mv.addMouseListener(inputAdapter);
 		mv.addKeyListener(inputAdapter);

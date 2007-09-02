@@ -28,17 +28,19 @@
  */
 package org.openscience.cdk.applications.jchempaint.action;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.util.EventObject;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.PTDialog;
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.ICDKChangeListener;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.EventObject;
 
 
 /**
@@ -70,20 +72,20 @@ public class ChemAction extends JCPAction
 			c2dm = jcpm.getControllerModel();
 			if (type.equals("bond"))
 			{
-				c2dm.setDrawMode(Controller2DModel.DRAWBOND);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.DRAWBOND);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("select"))
 			{
-				c2dm.setDrawMode(Controller2DModel.SELECT);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.SELECT);
 			} else if (type.equals("move"))
 			{
-				c2dm.setDrawMode(Controller2DModel.MOVE);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.MOVE);
 			} else if (type.equals("select"))
 			{
-				c2dm.setDrawMode(Controller2DModel.SELECT);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.SELECT);
 			} else if (type.equals("eraser"))
 			{
-				c2dm.setDrawMode(Controller2DModel.ERASER);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.ERASER);
 			} else if (type.equals("element"))
 			{
 				if (dialog == null)
@@ -95,86 +97,86 @@ public class ChemAction extends JCPAction
 				}
 				dialog.pack();
 				dialog.setVisible(true);
-				c2dm.setDrawMode(Controller2DModel.ELEMENT);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.ELEMENT);
 			} else if (type.equals("symbol"))
 			{
-				c2dm.setDrawMode(Controller2DModel.SYMBOL);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.SYMBOL);
 			} else if (type.equals("triangle"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(3);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("square"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(4);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("pentagon"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(5);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("hexagon"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(6);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("heptagon"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(7);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("octagon"))
 			{
-				c2dm.setDrawMode(Controller2DModel.RING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.RING);
 				c2dm.setRingSize(8);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("benzene"))
 			{
-				c2dm.setDrawMode(Controller2DModel.BENZENERING);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.BENZENERING);
 				c2dm.setRingSize(6);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("cleanup"))
 			{
-				c2dm.setDrawMode(Controller2DModel.CLEANUP);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.CLEANUP);
 			} else if (type.equals("flip_H"))
 			{
 				// not implemented
-				c2dm.setDrawMode(Controller2DModel.FLIP_H);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.FLIP_H);
 			} else if (type.equals("flip_V"))
 			{
 				// not implemented
-				c2dm.setDrawMode(Controller2DModel.FLIP_V);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.FLIP_V);
 			} else if (type.equals("rotation"))
 			{
 				// not implemented
-				c2dm.setDrawMode(Controller2DModel.ROTATION);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.ROTATION);
 			} else if (type.equals("up_bond"))
 			{
-				c2dm.setDrawMode(Controller2DModel.UP_BOND);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.UP_BOND);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("down_bond"))
 			{
-				c2dm.setDrawMode(Controller2DModel.DOWN_BOND);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.DOWN_BOND);
 				c2dm.setDrawElement("C");
 			} else if (type.equals("normalize"))
 			{
-				c2dm.setDrawMode(Controller2DModel.NORMALIZE);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.NORMALIZE);
 			} else if (type.equals("plus"))
 			{
-				c2dm.setDrawMode(Controller2DModel.INCCHARGE);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.INCCHARGE);
 			} else if (type.equals("minus"))
 			{
-				c2dm.setDrawMode(Controller2DModel.DECCHARGE);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.DECCHARGE);
 			} else if (type.equals("lasso"))
 			{
-				c2dm.setDrawMode(Controller2DModel.LASSO);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.LASSO);
 			} else if (type.equals("map"))
 			{
-				c2dm.setDrawMode(Controller2DModel.MAPATOMATOM);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.MAPATOMATOM);
 			} else if (type.equals("enterelement"))
 			{
-				c2dm.setDrawMode(Controller2DModel.ENTERELEMENT);
+				c2dm.setDrawMode(Controller2DModel.DrawMode.ENTERELEMENT);
 			}
 		}
 		jcpPanel.stateChanged(new ChangeEvent(this));

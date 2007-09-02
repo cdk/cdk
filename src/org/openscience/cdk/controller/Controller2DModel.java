@@ -41,28 +41,42 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	
     private static final long serialVersionUID = 9007159812273128989L;
     
-    public final static int DRAWMODE_DRAWBOND     = 0;
-    public final static int DRAWMODE_MOVE         = 1;
-    public final static int DRAWMODE_SELECT       = 2;
-    public final static int DRAWMODE_ERASER       = 3;
-    public final static int DRAWMODE_ELEMENT      = 4;
-    public final static int DRAWMODE_SYMBOL       = 5;
-	public final static int DRAWMODE_RING         = 6;
-    public final static int DRAWMODE_CLEANUP      =  7;
-    public final static int DRAWMODE_FLIP_H       =  8;
-    public final static int DRAWMODE_FLIP_V       =  9;
-    public final static int DRAWMODE_ROTATION     = 10;
-    public final static int DRAWMODE_UP_BOND      = 11;
-    public final static int DRAWMODE_DOWN_BOND    = 12;
-	public final static int DRAWMODE_NORMALIZE    = 13;
-	public final static int DRAWMODE_LASSO        = 14;
-	public final static int DRAWMODE_INCCHARGE    = 15;
-	public final static int DRAWMODE_DECCHARGE    = 16;
-	public final static int DRAWMODE_BENZENERING  = 17;
-	public final static int DRAWMODE_MAPATOMATOM  = 18;
-	public final static int DRAWMODE_ENTERELEMENT = 19;
-	
-	private int drawMode = 0;
+    public enum DrawMode {
+    	DRAWBOND("Draw"), 
+    	MOVE("Move"), 
+    	SELECT("Select"), 
+    	ERASER("Delete"), 
+    	ELEMENT("Element"), 
+    	SYMBOL("Symbol"),
+    	RING("Ring"), 
+    	CLEANUP("Clean"), 
+    	FLIP_H, 
+    	FLIP_V, 
+    	ROTATION, 
+    	UP_BOND("Wedge Up"),
+    	DOWN_BOND("Wedge Down"), 
+    	NORMALIZE("Normalize"), 
+    	LASSO("Select"), 
+    	INCCHARGE("Increase Charge"), 
+    	DECCHARGE("Decrease Charge"),
+    	BENZENERING, 
+    	MAPATOMATOM("Map Atom-Atom"),
+    	ENTERELEMENT;
+    	
+    	private final String name;
+    	DrawMode() {
+    		this("");
+    	}
+    	DrawMode(String name) {
+    		this.name = name;
+    	}
+    	
+    	public String getName() {
+    		return this.name;
+    	}
+    }
+    
+	private DrawMode drawMode = DrawMode.DRAWBOND;
 	private int ringSize = 6;
 	
 	private boolean snapToGridAngle = true;
@@ -95,7 +109,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @return   The draw mode
 	 */
-	public int getDrawMode()
+	public DrawMode getDrawMode()
 	{
 		return this.drawMode;
 	}
@@ -106,43 +120,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	 * @return   A String
 	 */
 	public String getDrawModeString() {
-        switch (this.drawMode) {
-            case DRAWMODE_DRAWBOND:
-                return "Draw";
-            case DRAWMODE_MOVE:
-                return "Move";
-            case DRAWMODE_SELECT:
-                return "Select";
-            case DRAWMODE_ERASER:
-                return "Delete";
-            case DRAWMODE_ELEMENT:
-                return "Element";
-            case DRAWMODE_SYMBOL:
-                return "Symbol";
-            case DRAWMODE_RING:
-                return "Ring";
-            case DRAWMODE_CLEANUP:
-                return "Clean";
-            case DRAWMODE_FLIP_H:
-            case DRAWMODE_FLIP_V:
-            case DRAWMODE_ROTATION:
-                break;
-            case DRAWMODE_UP_BOND:
-                return "Wedge Up";
-            case DRAWMODE_DOWN_BOND:
-                return "Wedge Down";
-            case DRAWMODE_NORMALIZE:
-                return "Normalize";
-            case DRAWMODE_LASSO:
-                return "Select";
-            case DRAWMODE_INCCHARGE:
-                return "Increase Charge";
-            case DRAWMODE_DECCHARGE:
-                return "Decrease Charge";
-            case DRAWMODE_MAPATOMATOM:
-                return "Map Atom-Atom";
-        }
-		return "";
+		return this.drawMode.getName();
 	}
 
 	/**
@@ -150,7 +128,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   drawMode  
 	 */
-	public void setDrawMode(int drawMode)
+	public void setDrawMode(DrawMode drawMode)
 	{
 		this.drawMode = drawMode;
 	}

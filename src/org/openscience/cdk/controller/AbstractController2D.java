@@ -241,7 +241,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		int mouseY = mouseCoords[1];
 		highlightNearestChemObject(mouseX, mouseY);
 		//this is the rotate feature
-		if(c2dm.isMovingAllowed() && r2dm.getSelectedPart()!=null && r2dm.getHighlightedAtom()==null && r2dm.getHighlightedBond()==null && c2dm.getDrawMode() == Controller2DModel.DRAWMODE_LASSO){
+		if(c2dm.isMovingAllowed() && r2dm.getSelectedPart()!=null && 
+		   r2dm.getHighlightedAtom()==null && r2dm.getHighlightedBond()==null && 
+		   c2dm.getDrawMode() == Controller2DModel.DrawMode.LASSO){
 			double xmin=Double.MAX_VALUE;
 			double xmax=Double.MIN_VALUE;
 			double ymin=Double.MAX_VALUE;
@@ -424,11 +426,11 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			r2dm.setSelectedPart(atomInRange.getBuilder().newAtomContainer());
 		}
 		
-		if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_MOVE)
+		if (c2dm.getDrawMode() == Controller2DModel.DrawMode.MOVE)
 		{
 			selectNearestChemObjectIfNoneSelected(mouseX, mouseY);
 			dragMode = DRAG_MOVING_SELECTED;
-		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.DRAWMODE_UP_BOND)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DrawMode.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
 		{
 			if (bondInRange != null && atomInRange == null)
 			{
@@ -438,17 +440,17 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				dragMode = DRAG_DRAWING_PROPOSED_BOND;
 				lastAtomInRange = atomInRange;
 			}
-		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_MAPATOMATOM)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DrawMode.MAPATOMATOM)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_ATOMATOMMAP;
-		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_SELECT)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DrawMode.SELECT)
 		{
 			dragMode = DRAG_MAKING_SQUARE_SELECTION;
-		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_LASSO && r2dm.getRotateRadius()==0)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DrawMode.LASSO && r2dm.getRotateRadius()==0)
 		{
 			if(c2dm.isMovingAllowed() && r2dm.getSelectedPart()!=null && (r2dm.getSelectedPart().contains(r2dm.getHighlightedAtom()) || r2dm.getSelectedPart().contains(r2dm.getHighlightedBond()))){
 				if(r2dm.getSelectedPart().getAtomCount()>0)
-					c2dm.setDrawMode(Controller2DModel.DRAWMODE_MOVE);
+					c2dm.setDrawMode(Controller2DModel.DrawMode.MOVE);
 				if(lastAction!=null){
 					((JButton)lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
 					lastAction.set(0,moveButton);
@@ -459,8 +461,8 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			else{
 				dragMode = DRAG_MAKING_LASSO_SELECTION;
 			}
-		} else if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_RING ||
-				c2dm.getDrawMode() == Controller2DModel.DRAWMODE_BENZENERING)
+		} else if (c2dm.getDrawMode() == Controller2DModel.DrawMode.RING ||
+				c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 		{
 			dragMode = DRAG_DRAWING_PROPOSED_RING;
 		} else if(r2dm.getRotateRadius()!=0){
@@ -496,39 +498,39 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			int[] mouseCoords = getWorldCoordinates(screenCoords);
 			int mouseX = mouseCoords[0];
 			int mouseY = mouseCoords[1];
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_SYMBOL)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.SYMBOL)
 			{
 				changeSymbol();
 			}
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_ELEMENT)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.ELEMENT)
 			{
 				changeElement();
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_INCCHARGE)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.INCCHARGE)
 			{
 				increaseCharge();
 			}
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_ENTERELEMENT)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.ENTERELEMENT)
 			{
 				enterElement();
 			}
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DECCHARGE)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.DECCHARGE)
 			{
 				decreaseCharge();
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_MAPATOMATOM)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.MAPATOMATOM)
 			{
 				handleMapping(wasDragged, r2dm);
 			}
       
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.DRAWMODE_UP_BOND)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.DRAWBOND || c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND || c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
 			{
 				drawBond(mouseX, mouseY);
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_SELECT && wasDragged)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.SELECT && wasDragged)
 			{
 				logger.info("User asks to selected atoms");
 				IAtomContainer selectedPart = chemModel.getBuilder().newAtomContainer();
@@ -538,17 +540,17 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				logger.debug("selected stuff  ", selectedPart);
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_ERASER)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.ERASER)
 			{
 				eraseSelection();
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_RING || c2dm.getDrawMode() == Controller2DModel.DRAWMODE_BENZENERING)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.RING || c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
 				drawRing(mouseX, mouseY);
 			}
 
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_LASSO && r2dm.getRotateRadius()==0)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.LASSO && r2dm.getRotateRadius()==0)
 			{
 				// first deselect all atoms
 				r2dm.setSelectedPart(chemModel.getBuilder().newAtomContainer());
@@ -574,7 +576,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				dragAndDropSelection();
 			}
 			
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_MOVE)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.MOVE)
 			{
 				if (draggingSelected == false)
 				{					
@@ -771,7 +773,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		{
 			sharedAtoms = sharedAtoms.getBuilder().newAtomContainer();
 			newRing = sharedAtoms.getBuilder().newRing(ringSize, symbol);
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_BENZENERING)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
 				// make newRing a benzene ring
 				newRing.getBond(0).setOrder(2.0);
@@ -795,7 +797,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			spiroAtom = sharedAtoms.getAtom(0);
 			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
 			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_BENZENERING)
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
 				// make newRing a benzene ring
 				newRing.getBond(0).setOrder(2.0);
@@ -881,7 +883,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 
 				// construct a new Ring that contains the highlighted bond an its two atoms
 				newRing = createAttachRing(sharedAtoms, ringSize, symbol);
-				if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_BENZENERING)
+				if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 				{
 					// make newRing a benzene ring
 					IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
@@ -1052,7 +1054,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			updateAtoms(container, bondInRange.atoms());
 			HashMap changedBonds = new HashMap();
 			double formerBondOrder = bondInRange.getOrder();
-			if (c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DRAWBOND){
+			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.DRAWBOND){
 				if(bondInRange.getStereo()!=CDKConstants.STEREO_BOND_NONE){
 					bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
 				}else{
@@ -1067,7 +1069,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 						// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
 					}
 				}
-			}else if(c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DOWN_BOND){
+			}else if(c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND){
 	            // toggle bond stereo
 	            double stereo = bondInRange.getStereo();
 	            if (stereo == CDKConstants.STEREO_BOND_DOWN)
@@ -1176,9 +1178,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					if (newAtom1 != newAtom2)
 					{
 						newBond = atomCon.getBuilder().newBond(newAtom1, newAtom2, 1);
-						if(c2dm.getDrawMode() == Controller2DModel.DRAWMODE_UP_BOND)
+						if(c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
 							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-						if(c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DOWN_BOND)
+						if(c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND)
 							newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
 						logger.debug(newAtom1 + " - " + newAtom2);
 						atomCon.addBond(newBond);
@@ -1262,9 +1264,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				newBond= undoRedoContainer.getBuilder().newBond(atomInRange, newAtom2, 1.0);
 				atomCon.addBond(newBond);
 				undoRedoContainer.addBond(newBond);
-				if(c2dm.getDrawMode() == Controller2DModel.DRAWMODE_UP_BOND)
+				if(c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
 					newBond.setStereo(CDKConstants.STEREO_BOND_UP);
-				if(c2dm.getDrawMode() == Controller2DModel.DRAWMODE_DOWN_BOND)
+				if(c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND)
 					newBond.setStereo(CDKConstants.STEREO_BOND_DOWN);
 				// update atoms
 				updateAtom(atomCon, atomInRange);
