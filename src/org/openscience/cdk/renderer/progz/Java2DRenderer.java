@@ -128,7 +128,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		graphics.transform(transformMatrix);
 		System.out.println("transform matrix:" + graphics.getTransform());
 
-		// set basic shape form
+		// set basic shape form for bonds
 		graphics.setColor(Color.BLACK);
 		graphics.setStroke(new BasicStroke(
 			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
@@ -197,7 +197,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 				
 	
 
-		boolean drawSymbol = true; //paint all Atoms for the time being
+		boolean drawSymbol = false; //paint all Atoms for the time being
 		boolean isRadical = (container.getConnectedSingleElectronsCount(atom) > 0);
 		if (atom instanceof IPseudoAtom)
 		{
@@ -254,7 +254,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 
 		if (drawSymbol == true) {
 			int alignment = GeometryToolsInternalCoordinates.getBestAlignmentForLabelXY(container, atom);
-			System.out.println("alignment: " + alignment);
+			//System.out.println("alignment: " + alignment);
 			paintAtomSymbol(atom, graphics, alignment, isRadical);
 		}
 	}
@@ -298,7 +298,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		//btest has to be substracted to get the text on the exact right position
 		//FIXME: get right value from graphics object? (width of line? or so)
 		float btest = (float) (rendererModel.getBondWidth()/rendererModel.getBondLength());
-		double atomSymbolX = atom.getPoint2d().x - boundsAtom.getWidth()/2 - btest; 
+		double atomSymbolX = atom.getPoint2d().x - boundsAtom.getWidth()/2 - 0.5 * btest; 
 		double atomSymbolY = atom.getPoint2d().y - boundsAtom.getHeight() /2 - boundsAtom.getY();
 		double atomSymbolW = boundsAtom.getWidth();
 		double atomSymbolH = boundsAtom.getHeight() - boundsAtom.getY();
@@ -588,7 +588,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
 		System.out.println("  paintInnerBond (=working) now at " + center);
 		//next few lines draw a green and pink line just for debugging, to be removed later
-		graphics.setColor(Color.green);
+	/*	graphics.setColor(Color.green);
 		Line2D line = new Line2D.Double(
 				bond.getAtom(0).getPoint2d().x,				bond.getAtom(0).getPoint2d().y,
 				center.x,				center.y						);
@@ -596,7 +596,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		Line2D line2 = new Line2D.Double(
 				bond.getAtom(1).getPoint2d().x,				bond.getAtom(1).getPoint2d().y,
 				center.x,				center.y			);
-		graphics.draw(line2);
+		graphics.draw(line2);*/
 		Point2d a = bond.getAtom(0).getPoint2d();
 		Point2d b = bond.getAtom(1).getPoint2d();
 	
@@ -608,16 +608,17 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double px = a.x + u*(b.x - a.x);
 		double py = a.y + u*(b.y - a.y);
 		System.out.println("distancea and b: " + distance + " u: " + u + " px: " + px + " py " + py);
-		graphics.setColor(Color.pink);
+		
 		Point2d z = new Point2d(px, py);
+
+	/*	graphics.setColor(Color.pink);
 		Line2D linepink = new Line2D.Double(
 				z.x,
 				z.y,
 				center.x,
 				center.y
 			);
-		graphics.draw(linepink);
-		graphics.setColor(bondColor);
+		graphics.draw(linepink);*/
 
 		double ae = distance2points(a ,z) / distance2points(center, z) * distanceconstant;
 		double af = Math.sqrt(Math.pow(ae,2) + Math.pow(distanceconstant,2));
@@ -625,14 +626,13 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double pfx = a.x + af*(center.x - a.x);
 		double pfy = a.y + af*(center.y - a.y);
 		
-		
 		double bh = distance2points(b, z) / distance2points(center, z) * distanceconstant;
 		double bi = Math.sqrt(Math.pow(bh, 2) + Math.pow(distanceconstant,2));
 		
 		double pix = b.x + bi*(center.x - b.x);
 		double piy = b.y + bi*(center.y - b.y);
 
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(bondColor);
 		Line2D linegood = new Line2D.Double(
 				pfx,
 				pfy,
@@ -640,8 +640,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 				piy
 			);
 		graphics.draw(linegood);
-		graphics.setColor(bondColor);
-		
 	}
 
 	/**
@@ -681,7 +679,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 			ring = RingSetManipulator.getHeaviestRing(ringSet, currentBond);
 			if (ring != null)
 			{
-				System.out.println("found a ring, ringIsAromatic(ring) " + ringIsAromatic(ring) + " getShowAromaticity: "
+				System.out.println("found a ring, ringIsAromatic(ring) " + ringIsAromatic(ring) + " ,getShowAromaticity: "
 						+ rendererModel.getShowAromaticity());
 
 				logger.debug("Found ring to draw");
@@ -696,7 +694,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 					paintSingleBond(currentBond, bondColor, graphics);
 				} else
 				{
-					logger.debug("Ring is *not* aromatic");
+					logger.debug("draw Ring as *not* aromatic");
 					paintRingBond(currentBond, ring, bondColor, graphics);
 				}
 			} else
@@ -717,7 +715,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintRingBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
 		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
-		System.out.println(" painting paintRingBond now at " + center + " bond: " + bond);
+		System.out.println(" painting paintRingBond now at " + center + " getOrder: " + bond.getOrder() + " bond: " + bond);
 
 
 		if (bond.getOrder() == 1.0)
@@ -853,7 +851,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		double xl, xr, yl, yr;
 		Line2D.Double line = new Line2D.Double();
-		for (int i = 0; i < numberOfLines - 2; i++) {
+		for (int i = 0; i < numberOfLines - 3; i++) { //do not show last 3 lines because atom symbol will be drawn on that place
 			double t = (double)i / numberOfLines;
 			xl = x0 + t * (newxup - x0);
 			xr = x0 + t * (newxdown - x0);
@@ -948,7 +946,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 				paintAnyBond(bond, bondColor, graphics);
 			} else
 			{
-				System.out.println("       painting single bond because order > 3?");
+				
+				System.out.println("       painting single bond because order = " + bond.getOrder());
 				// paint all other bonds as single bonds
 				paintSingleBond(bond, bondColor, graphics);
 			}
@@ -962,6 +961,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		//TODO: rewrite this old code:
+		
 		/*if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
 		{
 			int[] screencoords=getScreenCoordinates(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()));
@@ -1025,7 +1025,23 @@ public class Java2DRenderer implements IJava2DRenderer {
 		System.out.println("painting paintTripleBond now at " + bond.getAtom(0).getPoint2d());
 
 		paintSingleBond(bond, bondColor, graphics);
+		double[] tempc = new double[] { bond.getAtom(0).getPoint2d().x, bond.getAtom(0).getPoint2d().y,
+				bond.getAtom(1).getPoint2d().x, bond.getAtom(1).getPoint2d().y};
+		
+		double[] coords = GeometryToolsInternalCoordinates.distanceCalculator(tempc, 0.2);
+
+		Line2D line = new Line2D.Double(
+				coords[0], coords[1], coords[6], coords[7]
+			);
+		paintOneBond(line, bondColor, graphics);
+
+		Line2D line2 = new Line2D.Double(
+				coords[2], coords[3], coords[4], coords[5]
+			);
+		paintOneBond(line2, bondColor, graphics);
+		
 		//TODO: rewrite this old code:
+
 	/*	int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond,r2dm.getRenderingCoordinates()), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
@@ -1096,20 +1112,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 	    
 		return affinet;
 	}
-	
-	
-	/*public static Point2D getCoorFromScreen(Graphics2D graphics, Point2D ptSrc) {
-		Point2D ptDst = new Point2D.Double();
-		AffineTransform affine = graphics.getTransform();
-		try {
-			affine.inverseTransform(ptSrc, ptDst);
-		}
-		catch (Exception exception) {
-			System.out.println("Unable to reverse affine transformation");
-			System.exit(0);
-		}
-		return ptDst;
-	}*/
 	/**
 	 *  Returns model coordinates from screencoordinates provided by the graphics translation
 	 *   
