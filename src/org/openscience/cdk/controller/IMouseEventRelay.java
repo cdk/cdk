@@ -25,5 +25,49 @@
 package org.openscience.cdk.controller;
 
 public interface IMouseEventRelay {
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseClickedUp(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseClickedDown(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseClickedDouble(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseMove(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseEnter(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordX
+	 * @param screenCoordY
+	 */
+	public abstract void mouseExit(int screenCoordX, int screenCoordY);
+	/**
+	 * 
+	 * @param screenCoordXFrom
+	 * @param screenCoordYFrom
+	 * @param screenCoordXTo
+	 * @param screenCoordYTo
+	 */
+	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
 
 }
