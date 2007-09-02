@@ -55,6 +55,7 @@ import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.Atom;
@@ -566,10 +567,20 @@ public class JChemPaintEditorPanel extends JChemPaintPanel
     		IAtomContainer ac = model.getBuilder().newAtomContainer();
     		Iterator containers = MoleculeSetManipulator.getAllAtomContainers(model.getMoleculeSet()).iterator();
     		while (containers.hasNext()) ac.add((IAtomContainer)containers.next());
-    		HashMap oldrenderingcoordinates=jchemPaintModel.getRendererModel().getRenderingCoordinates();
+            HashMap oldrenderingcoordinates=new HashMap();
+            Iterator it=jchemPaintModel.getRendererModel().getRenderingCoordinates().keySet().iterator();
+            while(it.hasNext()){
+            	Object key=it.next();
+            	oldrenderingcoordinates.put(key,new Point2d(((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinates().get(key)).x,((Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinates().get(key)).y));
+            }
             Dimension dim = GeometryTools.get2DDimension(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translateAllPositive(ac,jchemPaintModel.getRendererModel().getRenderingCoordinates());
             GeometryTools.translate2D(ac, new Vector2d(40,40),jchemPaintModel.getRendererModel().getRenderingCoordinates());
+            it=jchemPaintModel.getRendererModel().getRenderingCoordinates().keySet().iterator();
+            while(it.hasNext()){
+            	Point2d point =(Point2d)jchemPaintModel.getRendererModel().getRenderingCoordinates().get(it.next());
+            	point.y=(int)dim.getHeight()+80-point.y;
+            }
             image = new BufferedImage((int)dim.getWidth()+80, (int)dim.getHeight()+80, BufferedImage.TYPE_INT_ARGB);
             Graphics2D snapGraphics = image.createGraphics();
             snapGraphics.setBackground(Color.WHITE);
