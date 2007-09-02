@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.controller.Controller2DHub;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -58,6 +59,7 @@ public class TestEditor extends JPanel {
 	SwingPainter painter = new SwingPainter();
 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	protected IChemObjectBuilder builder;
+	Controller2DHub hub;
 
 	public void setUp() {
 		builder = DefaultChemObjectBuilder.getInstance();
@@ -67,6 +69,9 @@ public class TestEditor extends JPanel {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		hub = new Controller2DHub();
+//		frame.addMouseListener(new SwingMouseEventRelay(hub));
+		
 		painter = new SwingPainter();
 		//painter.addMouseMotionListener(new TestRendererMouseE());
 		//only react on mouse clicks for now
@@ -109,13 +114,12 @@ public class TestEditor extends JPanel {
 		private static final long serialVersionUID = 2;
 
 		Renderer2DModel model = new Renderer2DModel();
-
-		//IRenderer2D renderer = new Java2DRenderer(model);
 		IJava2DRenderer renderer = new Java2DRenderer(model);
 
 		private IMolecule molecule;
 
 		Graphics2D graphic;
+		
 
 		public void setMolecule(IMolecule molecule) {
 			this.molecule = molecule;
