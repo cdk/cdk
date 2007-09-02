@@ -1,47 +1,66 @@
-
+/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
+ * 
+ * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net or nout@science.uva.nl
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All I ask is that proper credit is given for my work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer.progz;
-
-import org.openscience.cdk.renderer.ISimpleRenderer2D;
-import org.openscience.cdk.renderer.Renderer2D;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.renderer.IRenderer2D;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.templates.MoleculeFactory;
-
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-//import org.openscience.cdk.interfaces.ISetOfMolecules;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
+/**
+ * Test class for testing the new Java2DRenderer.
+ * 
+ * @author nielsout
+ */
 public class TestRenderer extends JPanel {
 
+	private static final long serialVersionUID = -4728755515648290149L;
+	
 	JFrame frame;
 	SwingPainter painter = new SwingPainter();
 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();

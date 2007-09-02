@@ -1,39 +1,52 @@
-
+/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-09-02 11:46:10 +0100 (su, 02 sep 2007) $
+ * 
+ * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
+ * 
+ * Contact: cdk-devel@lists.sourceforge.net or nout@science.uva.nl
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All I ask is that proper credit is given for my work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer.progz;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.renderer.IRenderer2D;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.Polygon;
 import java.awt.geom.GeneralPath;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.font.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.renderer.progz.GeometryToolsInternalCoordinates;
-import org.openscience.cdk.ringsearch.SSSRFinder;
+import javax.vecmath.Point2d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -45,13 +58,17 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 import org.openscience.cdk.validate.ProblemMarker;
 
-
+/**
+ * A Java2D based 2D renderer for IChemObjects.
+ * 
+ * @author nielsout
+ */
 public class Java2DRenderer implements IJava2DRenderer {
 
 	private Renderer2DModel rendererModel;
