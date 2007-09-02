@@ -93,6 +93,10 @@ nightly_web = '/home/rguha/public_html/code/java/nightly/'
 #nightly_web = '/home/rajarshi/public_html/tmp/'
 
 
+# Jars that are required for Ant to run. In general
+# you should only need to point to the relevant JUnit
+# jar file, since we don't really use any esoteric Ant tasks
+ant_libs = '/home/rguha/src/java/cdk-nightly/cdk/develjar/junit-4.3.1.jar'
 
 # Optional
 # required to generate the dependency graph. Should
@@ -546,7 +550,9 @@ def updateSVN():
         os.chdir(olddir)
         return False
 
-def runAntJob(cmdLine, logFileName, jobName):
+def runAntJob(cmdLine, logFileName, jobName, verbose=False):
+    if verbose: print cmdLine
+
     olddir = os.getcwd()
     os.chdir(nightly_repo)
 
@@ -978,16 +984,16 @@ if __name__ == '__main__':
             sys.exit(-1)
         
         # compile the distro
-        successDist = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar clean dist-large', 'build.log', 'distro')
+        successDist = runAntJob('nice -n 19 ant -lib %s clean dist-large' % (ant_libs), 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
-            successTestDist = runAntJob('nice -19 ant -lib develjar/junit-4.3.1.jar dist-test-large', 'testdist.log', 'testdist')
-            successSrc = runAntJob('nice -19 ant -lib develjar/junit-4.3.1.jar  sourcedist', 'srcdist.log', 'srcdist')
-            successTest = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -DrunSlowTests=false test-all', 'test.log', 'test') 
-            successJavadoc = runAntJob('export CLASSPATH && nice -n 19  ant -lib develjar/junit-4.3.1.jar  -f javadoc.xml', 'javadoc.log', 'javadoc')
-            successKeyword = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f doc/javadoc/build.xml keyword.index', 'keyword.log', 'keywords')
-            successDoccheck = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f javadoc.xml doccheck', 'doccheck.log', 'doccheck')
-            successPMD = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f pmd.xml pmd', 'pmd.log', 'pmd')
-            successPMDUnused = runAntJob('nice -n 19 ant -lib develjar/junit-4.3.1.jar  -f pmd-unused.xml', 'pmdu.log', 'pmdu')            
+            successTestDist = runAntJob('nice -19 ant -lib %s dist-test-large' % (ant_libs), 'testdist.log', 'testdist')
+            successSrc = runAntJob('nice -19 ant -lib %s  sourcedist' % (ant_libs), 'srcdist.log', 'srcdist')
+            successTest = runAntJob('nice -n 19 ant -lib %s -DrunSlowTests=false test-all' % (ant_libs), 'test.log', 'test') 
+            successJavadoc = runAntJob('export CLASSPATH && nice -n 19  ant -lib %s -f javadoc.xml' % (ant_libs), 'javadoc.log', 'javadoc')
+            successKeyword = runAntJob('nice -n 19 ant -lib %s  -f doc/javadoc/build.xml keyword.index' % (ant_libs), 'keyword.log', 'keywords')
+            successDoccheck = runAntJob('nice -n 19 ant -lib %s  -f javadoc.xml doccheck' % (ant_libs), 'doccheck.log', 'doccheck')
+            successPMD = runAntJob('nice -n 19 ant -lib %s -f pmd.xml pmd' % (ant_libs), 'pmd.log', 'pmd')
+            successPMDUnused = runAntJob('nice -n 19 ant -lib %s  -f pmd-unused.xml' % (ant_libs), 'pmdu.log', 'pmdu')            
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             srcFile = os.path.join(nightly_dir, 'build.log')
