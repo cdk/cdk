@@ -70,11 +70,12 @@ public class TestEditor extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		hub = new Controller2DHub();
-//		frame.addMouseListener(new SwingMouseEventRelay(hub));
 		
 		painter = new SwingPainter();
-		//painter.addMouseMotionListener(new TestRendererMouseE());
-		//only react on mouse clicks for now
+		SwingMouseEventRelay relay = new SwingMouseEventRelay(hub); 
+		painter.addMouseListener(relay);
+		painter.addMouseMotionListener(relay);
+
 		setUp();
 
 		IMolecule mol;

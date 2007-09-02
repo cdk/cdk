@@ -32,10 +32,9 @@ package org.openscience.cdk.controller;
  * 
  * @author egonw
  */
-public class Controller2DHub {
+public class Controller2DHub implements IMouseEventRelay {
 	
 	private Controller2DModel controllerModel; 
-	private IMouseEventRelay mouseEventRelay; 
 	
 	/**
 	 * Sets the <code>Controller2DModel</code> associated with
@@ -57,8 +56,39 @@ public class Controller2DHub {
 		return this.controllerModel;
 	}
 
-	public void setMouseEventRelay(IMouseEventRelay relay) {
-		this.mouseEventRelay = relay;
+	public void mouseClickedDouble(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseClickedDown(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseClickedUp(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseEnter(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExit(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseMove(int screenCoordX, int screenCoordY) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
