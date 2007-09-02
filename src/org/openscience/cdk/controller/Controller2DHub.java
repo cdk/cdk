@@ -24,6 +24,21 @@
  */
 package org.openscience.cdk.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.vecmath.Point2d;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.renderer.progz.IJava2DRenderer;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
 /**
  * Class that will central interaction point between a mouse event throwing
  * widget (SWT or Swing) and the Controller2D modules.
@@ -32,30 +47,47 @@ package org.openscience.cdk.controller;
  * 
  * @author egonw
  */
-public class Controller2DHub implements IMouseEventRelay {
+public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
+	
+	private IChemModel chemModel;
 	
 	private Controller2DModel controllerModel; 
+	private IJava2DRenderer renderer;
+	
+	private List<IController2DModule> generalModules;
+	private Map<Controller2DModel.DrawMode,IController2DModule> drawModeModules;
+	
+	public Controller2DHub(Controller2DModel controllerModel,
+		                   IJava2DRenderer renderer,
+		                   IChemModel chemModel) {
+		this.controllerModel = controllerModel;
+		this.renderer = renderer;
+		this.chemModel = chemModel;
+		
+		drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
+		generalModules = new ArrayList<IController2DModule>();
+	}
 	
 	/**
-	 * Sets the <code>Controller2DModel</code> associated with
-	 * this hub.
+	 * Register a draw mode that you want to have active for this Controller2DHub.
 	 * 
-	 * @param model
+	 * @param drawMode
+	 * @param module
 	 */
-	public void setControllerModel(Controller2DModel model){
-		this.controllerModel = model;
+	public void registerDrawModeControllerModule(
+		Controller2DModel.DrawMode drawMode, IController2DModule module) {
+		module.setChemModelRelay(this);
+		drawModeModules.put(drawMode, module);
 	}
-
+	
 	/**
-	 * Returns the <code>Controller2DModel</code> associated with
-	 * this hub.
-	 * 
-	 * @param model
+	 * Adds a general IController2DModule which will catch all mouse events.
 	 */
-	public Controller2DModel getControllerModel() {
-		return this.controllerModel;
+	public void registerGeneralControllerModule(IController2DModule module) {
+		module.setChemModelRelay(this);
+		generalModules.add(module);
 	}
-
+	
 	public void mouseClickedDouble(int screenCoordX, int screenCoordY) {
 		// TODO Auto-generated method stub
 		
@@ -87,8 +119,47 @@ public class Controller2DHub implements IMouseEventRelay {
 	}
 
 	public void mouseMove(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
+		System.out.println("Mouse move detected: " + worldCoord);
 		
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseMove(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseMove(worldCoord);
+	}
+
+	private IController2DModule getActiveDrawModule() {
+		return drawModeModules.get(controllerModel.getDrawMode());
+	}
+
+	public IAtom getClosestAtom(Point2d worldCoord) {
+		IAtom closestAtom = null;
+		double closestDistance = Double.MAX_VALUE;
+		
+		Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (containers.hasNext()) {
+			Iterator<IAtom> atoms = containers.next().atoms();
+			while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				double distance = nextAtom.getPoint2d().distance(worldCoord);
+				if (distance <= renderer.getRenderer2DModel().getHighlightRadius() &&
+					distance < closestDistance) {
+					closestAtom = nextAtom;
+					closestDistance = distance;
+				}
+			}
+		}
+		
+		return closestAtom;
+	}
+
+	public IBond getClosestBond(Point2d worldCoord) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
