@@ -38,12 +38,14 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.controller.Controller2DHub;
+import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * Test class for testing the new Java2DRenderer and Controller2DHub.
@@ -55,42 +57,42 @@ public class TestEditor extends JPanel {
 
 	private static final long serialVersionUID = -4728755515648290149L;
 
-	JFrame frame;
-	SwingPainter painter = new SwingPainter();
-	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+	private JFrame frame;
+	private SwingPainter painter = new SwingPainter();
+	private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 	protected IChemObjectBuilder builder;
-	Controller2DHub hub;
-
-	public void setUp() {
-		builder = DefaultChemObjectBuilder.getInstance();
-	}
+	private Controller2DHub hub;
 
 	private TestEditor() {
+		builder = DefaultChemObjectBuilder.getInstance();
+		
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		hub = new Controller2DHub();
-		
-		painter = new SwingPainter();
-		SwingMouseEventRelay relay = new SwingMouseEventRelay(hub); 
-		painter.addMouseListener(relay);
-		painter.addMouseMotionListener(relay);
-
-		setUp();
-
-		IMolecule mol;
-		mol = makeMasstest();
-
-		System.out.println("molecule: " + mol);
-
-		sdg.setMolecule(mol);
+		sdg.setMolecule(makeMasstest());
 		try {
 			sdg.generateCoordinates();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		painter.setMolecule(sdg.getMolecule());
+		IMolecule mol = sdg.getMolecule();
+		System.out.println("molecule: " + mol);
+
+		painter = new SwingPainter();
+		painter.setMolecule(mol);
+
+		hub = new Controller2DHub(
+			new Controller2DModel(), painter.getRenderer(),
+			ChemModelManipulator.newChemModel(mol)
+		);
+		hub.registerGeneralControllerModule(
+			new DumpClosestObjectToSTDOUTModule()
+		);
+		SwingMouseEventRelay relay = new SwingMouseEventRelay(hub); 
+		painter.addMouseListener(relay);
+		painter.addMouseMotionListener(relay);
+
 		frame.add(painter);
 
 		painter.setBackground(Color.WHITE);
