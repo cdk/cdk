@@ -545,7 +545,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public IAtom getLastAtom()
 	{
-		return (Atom)atoms[getAtomCount() - 1];
+		return getAtomCount() > 0 ? (Atom)atoms[getAtomCount() - 1] : null;
 	}
 
 
