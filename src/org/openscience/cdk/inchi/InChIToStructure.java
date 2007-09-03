@@ -180,7 +180,7 @@ protected JniInchiInputInchi input;
             } else if (type == INCHI_BOND_TYPE.TRIPLE) {
                 cBo.setOrder(CDKConstants.BONDORDER_TRIPLE);
             } else if (type == INCHI_BOND_TYPE.ALTERN) {
-                cBo.setOrder(CDKConstants.BONDORDER_AROMATIC);
+                cBo.setFlag(CDKConstants.ISAROMATIC, true);
             } else {
                 throw new CDKException("Unknown bond type: " + type);
             }

@@ -494,7 +494,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 IAtom a2 = molecule.getAtom(atom2 - 1);
                 if (order == 4) {
                     // aromatic bond
-                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
+                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_SINGLE, stereo);
                     // mark both atoms and the bond as aromatic
                     bond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);

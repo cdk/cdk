@@ -1,9 +1,4 @@
-/* $
- *  
- *  $RCSfile: $
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007   Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -26,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk;
 
@@ -51,10 +45,6 @@ public class CDKConstants {
 
 	/** A bond of degree 1.0. */
 	public final static double BONDORDER_SINGLE = 1.0;
-
-	/** A bond of degree 1.5. To indicate aromaticity, the flag ISAROMATIC should be used instead.
-	 *  This constant is used for specific file formats only, and should generally not be used. */
-    public final static double BONDORDER_AROMATIC = 1.5;
 
     /** A bond of degree 2.0. */
     public final static double BONDORDER_DOUBLE = 2.0;

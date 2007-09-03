@@ -693,7 +693,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
                     boolean subtractOne=true;
                     for(int i=0;i<connectedBonds.size();i++){
                     	IBond conBond = (IBond)connectedBonds.get(i);
-                        if(conBond.getOrder()==2 || conBond.getOrder()==CDKConstants.BONDORDER_AROMATIC)
+                        if(conBond.getOrder()==2 || conBond.getFlag(CDKConstants.ISAROMATIC))
                             subtractOne=false;
                     }
                     if(subtractOne)

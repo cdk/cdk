@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -53,7 +52,6 @@ import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
@@ -483,7 +481,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 IAtom a2 = molecule.getAtom(atom2 - 1);
                 if (order == 4) {
                     // aromatic bond
-                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_AROMATIC, stereo);
+                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_SINGLE, stereo);
                     // mark both atoms and the bond as aromatic
                     bond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);

@@ -156,7 +156,7 @@ public class EventCMLHandler extends CMLHandler {
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
                 }
-                if (bond_order == CDKConstants.BONDORDER_AROMATIC) {
+                if (bond_order == 1.5) {
                     b.setFlag(CDKConstants.ISAROMATIC, true);
                 }
                 currentMolecule.addBond(b);

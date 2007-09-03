@@ -171,13 +171,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else { // OK, use bond order info
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    				return factory.getAtomType("N.sp3");
-    			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    				return factory.getAtomType("N.sp2");
-    			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
-    				return factory.getAtomType("N.sp1");
-    			} else if (maxBondOrder == CDKConstants.BONDORDER_AROMATIC) {
-    				// deal with aromatic hydrogens
     				if (atomContainer.getConnectedBondsCount(atom) == 2) {
     					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
     					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
@@ -189,6 +182,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				} else if (atomContainer.getConnectedBondsCount(atom) == 3) {
     					return factory.getAtomType("N.sp3");
     				} 
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    				return factory.getAtomType("N.sp2");
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
+    				return factory.getAtomType("N.sp1");
     			}
     		}
     	}

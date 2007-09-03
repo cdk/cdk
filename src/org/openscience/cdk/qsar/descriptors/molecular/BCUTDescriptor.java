@@ -221,10 +221,10 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                     for (int k = 0; k < local.getBondCount(); k++) {
                         org.openscience.cdk.interfaces.IBond bond = local.getBond(k);
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
-                            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;
+                        	if (bond.getFlag(CDKConstants.ISAROMATIC)) matrix[i][j] = 0.15;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) matrix[i][j] = 0.2;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_AROMATIC) matrix[i][j] = 0.15;
 
                             if (local.getConnectedBondsCount(i) == 1 || local.getConnectedBondsCount(j) == 1) {
                                 matrix[i][j] += 0.01;
