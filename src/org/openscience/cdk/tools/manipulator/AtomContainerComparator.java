@@ -1,5 +1,10 @@
-/* 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*
+ * $RCSfile$
+ * $Author$
+ * $Date$
+ * $Revision$
+ *
+ * Copyright (C) 2007  Andreas Schueller <archvile18@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
