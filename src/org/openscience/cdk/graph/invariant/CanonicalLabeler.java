@@ -53,7 +53,7 @@ public class CanonicalLabeler {
   }
 
   /**
-   * Canonicaly label the fragment.
+   * Canonicaly label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type Integer, indicating the canonical order.
    * This is an implementation of the algorithm published in
    * David Weininger et.al. {@cdk.cite WEI89}.
    * 
