@@ -87,6 +87,7 @@ import org.openscience.cdk.test.tools.FormatStringBufferTest;
 import org.openscience.cdk.test.tools.IDCreatorTest;
 import org.openscience.cdk.test.tools.MFAnalyserTest;
 import org.openscience.cdk.test.tools.manipulator.AminoAcidManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.AtomContainerComparatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomTypeManipulatorTest;
@@ -193,6 +194,7 @@ public class MstandardTests {
         suite.addTest(RandomNumbersToolTest.suite());
         suite.addTest(InvPairTest.suite());
         suite.addTest(EStateAtomTypeMatcherTest.suite());
+        suite.addTest(AtomContainerComparatorTest.suite());
 
         return suite;
     }

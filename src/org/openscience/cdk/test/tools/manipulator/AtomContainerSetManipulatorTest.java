@@ -28,6 +28,8 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
@@ -36,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
@@ -185,6 +188,37 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	{
 		List list = AtomContainerSetManipulator.getAllChemObjects(som);
 		assertEquals(3, list.size()); // only AtomContainerSets and AtomContainers at the moment (see source code comment)
+	}
+	
+	public void testSort_IAtomContainerSet()
+	{
+		// Create some IAtomContainers
+		DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newRing(5, "C");
+		IRing cycloHexane = builder.newRing(6, "C");
+		IAtomContainer hexaneNitrogen = builder.newRing(6, "N");
+		hexaneNitrogen.removeBond(0);
+		IRing cycloHexaneNitrogen = builder.newRing(6, "N");
+		IRing cycloHexeneNitrogen = builder.newRing(6, "N");
+		cycloHexeneNitrogen.getBond(0).setOrder(CDKConstants.BONDORDER_DOUBLE);
+		
+		// Add them to a IAtomContainerSet
+		IAtomContainerSet atomContainerSet = builder.newAtomContainerSet();
+		atomContainerSet.addAtomContainer(cycloHexane);
+		atomContainerSet.addAtomContainer(cycloHexeneNitrogen);
+		atomContainerSet.addAtomContainer(cycloPentane);
+		atomContainerSet.addAtomContainer(hexaneNitrogen);
+		atomContainerSet.addAtomContainer(cycloHexaneNitrogen);
+		
+		// Sort the IAtomContainerSet
+		AtomContainerSetManipulator.sort(atomContainerSet);
+		
+		// Assert the correct order
+		assertSame("first order: cycloPentane", cycloPentane, atomContainerSet.getAtomContainer(0));
+		assertSame("second order: cycloHexane", cycloHexane, atomContainerSet.getAtomContainer(1));
+		assertSame("third order: hexaneNitrogen", hexaneNitrogen, atomContainerSet.getAtomContainer(2));
+		assertSame("forth order: cycloHexaneNitrogen", cycloHexaneNitrogen, atomContainerSet.getAtomContainer(3));
+		assertSame("firth order: cycloHexeneNitrogen", cycloHexeneNitrogen, atomContainerSet.getAtomContainer(4));
 	}
 }
 
