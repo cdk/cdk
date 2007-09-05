@@ -24,13 +24,18 @@
  */
 package org.openscience.cdk.test.layout;
 
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -165,6 +170,27 @@ public class TemplateHandlerTest extends CDKTestCase
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
 		IMolecule mol = sp.parseSmiles(smiles);
 		MoleculeViewer2D.display(mol, true);
+	}
+	
+	/**
+	 * Loads a molecule with two adamantanes and one cubane
+	 * substructure and tests whether all are found.
+	 */
+	public void getMappedSubstructures_IAtomContainer() throws Exception {
+		// Set up molecule reader
+		String filename = "data/mdl/diadamantane-cubane.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		IChemObjectReader molReader = new MDLReader(ins);
+		
+		// Read molecule
+		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
+		
+		// Map templates
+		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
+		IAtomContainerSet mappedStructures = th.getMappedSubstructures(molecule);
+		
+		// Do the assertion
+		assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
 	}
 
 }
