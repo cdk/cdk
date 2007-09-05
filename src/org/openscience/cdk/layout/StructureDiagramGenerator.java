@@ -37,6 +37,7 @@ import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
@@ -73,25 +74,27 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.module  sdg
  * @cdk.bug     1610997
  * @cdk.bug     1536561
- * @cdk.bug     1677912
  */
 public class StructureDiagramGenerator
 {
 
-    private LoggingTool logger = new LoggingTool(StructureDiagramGenerator.class);
+	private LoggingTool logger = new LoggingTool(StructureDiagramGenerator.class);
 
-    private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = null;
+	private static TemplateHandler DEFAULT_TEMPLATE_HANDLER = null;
 
-	IMolecule molecule;
-	IRingSet sssr;
-	double bondLength = 1.5;
-	Vector2d firstBondVector;
-	RingPlacer ringPlacer = new RingPlacer();
-	AtomPlacer atomPlacer = new AtomPlacer();
-	List ringSystems = null;
-	final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
+	private IMolecule molecule;
+	private IRingSet sssr;
+	private double bondLength = 1.5;
+	private Vector2d firstBondVector;
+	private RingPlacer ringPlacer = new RingPlacer();
+	private AtomPlacer atomPlacer = new AtomPlacer();
+	private List ringSystems = null;
+	private final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
 	private TemplateHandler templateHandler = null;
-	boolean useTemplates = true;
+	private boolean useTemplates = true;
+				
+	/** Atoms of the molecule that mapped a template */
+	private IAtomContainerSet mappedSubstructures;
 
 
 	/**
@@ -106,7 +109,7 @@ public class StructureDiagramGenerator
 	 *  Creates an instance of this class while assigning a molecule to be layed
 	 *  out.
 	 *
-	 *@param  molecule  The molecule to be layed out.
+	 *  @param  molecule  The molecule to be layed out.
 	 */
 	public StructureDiagramGenerator(IMolecule molecule) {
 		this();
@@ -120,8 +123,8 @@ public class StructureDiagramGenerator
 	 *  Assings a molecule to be layed out. Call generateCoordinates() to do the
 	 *  actual layout.
 	 *
-	 *@param  mol    the molecule for which coordinates are to be generated.
-	 *@param  clone  Should the whole process be performed with a cloned copy?
+	 *  @param  mol    the molecule for which coordinates are to be generated.
+	 *  @param  clone  Should the whole process be performed with a cloned copy?
 	 */
 	public void setMolecule(IMolecule mol, boolean clone) {
 		templateHandler = new TemplateHandler(mol.getBuilder());
@@ -154,9 +157,11 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Sets the useTemplates attribute of the StructureDiagramGenerator object
+	 *  Sets whether to use templates or not. Some complicated ring systems
+	 *  like adamantane are only nicely layouted when using templates. This
+	 *  option is by default set true.
 	 *
-	 *@param  useTemplates  The new useTemplates value
+	 *@param  useTemplates  set true to use templates, false otherwise
 	 */
 	public void setUseTemplates(boolean useTemplates)
 	{
@@ -165,9 +170,9 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Gets the useTemplates attribute of the StructureDiagramGenerator object
+	 *  Returns whether the use of templates is enabled or disabled.
 	 *
-	 *@return    The useTemplates value
+	 *  @return    true, when the use of templates is enables, false otherwise
 	 */
 	public boolean getUseTemplates()
 	{
@@ -178,7 +183,7 @@ public class StructureDiagramGenerator
 	/**
 	 *  Sets the templateHandler attribute of the StructureDiagramGenerator object
 	 *
-	 *@param  templateHandler  The new templateHandler value
+	 *  @param  templateHandler  The new templateHandler value
 	 */
 	public void setTemplateHandler(TemplateHandler templateHandler)
 	{
@@ -189,18 +194,18 @@ public class StructureDiagramGenerator
 	/**
 	 *  Gets the templateHandler attribute of the StructureDiagramGenerator object
 	 *
-	 *@return    The templateHandler value
+	 *  @return    The templateHandler value
 	 */
 	public TemplateHandler getTemplateHandler()
 	{
-    if (templateHandler == null)
-    {
-      return DEFAULT_TEMPLATE_HANDLER;
-    }
-    else
-    {
-		  return templateHandler;
-    }  
+		if (templateHandler == null)
+		{
+			return DEFAULT_TEMPLATE_HANDLER;
+		}
+		else
+		{
+			return templateHandler;
+		}  
 	}
 
 
@@ -208,7 +213,7 @@ public class StructureDiagramGenerator
 	 *  Assings a molecule to be layed out. Call generateCoordinates() to do the
 	 *  actual layout.
 	 *
-	 *@param  molecule  the molecule for which coordinates are to be generated.
+	 *  @param  molecule  the molecule for which coordinates are to be generated.
 	 */
 	public void setMolecule(IMolecule molecule)
 	{
@@ -219,8 +224,8 @@ public class StructureDiagramGenerator
 	/**
 	 *  Returns the molecule, usually used after a call of generateCoordinates()
 	 *
-	 *@return    The molecule with new coordinates (if generateCoordinates() had
-	 *      been called)
+	 *  @return    The molecule with new coordinates (if generateCoordinates() had
+	 *             been called)
 	 */
 	public IMolecule getMolecule()
 	{
@@ -232,8 +237,8 @@ public class StructureDiagramGenerator
 	 *  This method uses generateCoordinates, but it removes the hydrogens first,
 	 *  lays out the structuren and then adds them again.
 	 *
-	 *@exception  java.lang.Exception  Description of the Exception
-	 *@see                             #generateCoordinates
+	 *  @throws  java.lang.Exception  if an error occurs
+	 *  @see     #generateCoordinates
 	 */
 	public void generateExperimentalCoordinates() throws java.lang.Exception
 	{
@@ -241,32 +246,35 @@ public class StructureDiagramGenerator
 	}
 
 
-    /**
-     * Generates 2D coordinates on the non-hydrogen skeleton, after which
-     * coordinates for the hydrogens are calculated.
-     */
-    public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
-        // first make a shallow copy: Atom/Bond references are kept
-        IMolecule original = molecule;
-        IMolecule shallowCopy = molecule.getBuilder().newMolecule(molecule);
-        // ok, delete H's from 
-        //IAtom[] atoms = shallowCopy.getAtoms();
-        for (int i = 0; i < shallowCopy.getAtomCount(); i++) {
-        	IAtom curAtom = shallowCopy.getAtom(i);
-            if (curAtom.getSymbol().equals("H")) {
-                shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
-                curAtom.setPoint2d(null);
-            }
-        }
-        // do layout on the shallow copy
-        molecule = shallowCopy;
-        generateCoordinates(firstBondVector);
-        double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(molecule);
-        // ok, now create the coordinates for the hydrogens
-        HydrogenPlacer hPlacer = new HydrogenPlacer();
-        molecule = original;
-        hPlacer.placeHydrogens2D(molecule, bondLength);
-    }
+	/**
+	 * Generates 2D coordinates on the non-hydrogen skeleton, after which
+	 * coordinates for the hydrogens are calculated.
+	 * 
+	 * @param firstBondVector the vector of the first bond to lay out
+	 * @throws java.lang.Exception if an error occurs
+	 */
+	public void generateExperimentalCoordinates(Vector2d firstBondVector) throws java.lang.Exception {
+		// first make a shallow copy: Atom/Bond references are kept
+		IMolecule original = molecule;
+		IMolecule shallowCopy = molecule.getBuilder().newMolecule(molecule);
+		// ok, delete H's from 
+		//IAtom[] atoms = shallowCopy.getAtoms();
+		for (int i = 0; i < shallowCopy.getAtomCount(); i++) {
+			IAtom curAtom = shallowCopy.getAtom(i);
+				if (curAtom.getSymbol().equals("H")) {
+						shallowCopy.removeAtomAndConnectedElectronContainers(curAtom);
+						curAtom.setPoint2d(null);
+				}
+		}
+		// do layout on the shallow copy
+		molecule = shallowCopy;
+		generateCoordinates(firstBondVector);
+		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(molecule);
+		// ok, now create the coordinates for the hydrogens
+		HydrogenPlacer hPlacer = new HydrogenPlacer();
+		molecule = original;
+		hPlacer.placeHydrogens2D(molecule, bondLength);
+	}
 
 
 	/**
@@ -274,8 +282,8 @@ public class StructureDiagramGenerator
 	 *  StructurDiagramGenerator, call the generateCoordinates() method and get
 	 *  your molecule back.
 	 *
-	 *@param  firstBondVector          Description of the Parameter
-	 *@exception  java.lang.Exception  Description of the Exception
+	 *  @param  firstBondVector          The vector of the first bond to lay out
+	 *  @throws  java.lang.Exception     if an error occurs
 	 */
 	public void generateCoordinates(Vector2d firstBondVector) throws java.lang.Exception
 	{
@@ -284,7 +292,7 @@ public class StructureDiagramGenerator
 		 *  if molecule contains only one Atom, don't fail, simply
 		 *  set coordinates to simplest: 0,0. See bug #780545
 		 */
-		logger.debug("Entry point of generatorCoordinates()");
+		logger.debug("Entry point of generateCoordinates()");
 		logger.debug("We have a molecules with " + molecule.getAtomCount() + " atoms.");
 		if (molecule.getAtomCount() == 1)
 		{
@@ -312,7 +320,7 @@ public class StructureDiagramGenerator
 		double angle;
 
 		/*
-		 *  First we check if we can map any templates with predifined coordinates
+		 *  First we check if we can map any templates with predefined coordinates
 		 *  Those are stored as MDL molfiles in data/templates
 		 */
 		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
@@ -320,10 +328,12 @@ public class StructureDiagramGenerator
 			logger.debug("Initializing TemplateHandler");
 			logger.debug("TemplateHander initialized");
 			logger.debug("Now starting Template Detection in Molecule...");
-			templateMapped = getTemplateHandler().mapTemplates(molecule);
+			mappedSubstructures = getTemplateHandler().getMappedSubstructures(molecule);
+			templateMapped = mappedSubstructures.getAtomContainerCount() > 0;
 			logger.debug("Template Detection finished");
-			logger.debug("Template found: " + templateMapped);
+			logger.debug("Number of found templates: " + mappedSubstructures.getAtomContainerCount());
 		}
+								
 		int expectedRingCount = nrOfEdges - molecule.getAtomCount() + 1;
 		if (expectedRingCount > 0)
 		{
@@ -331,18 +341,20 @@ public class StructureDiagramGenerator
 			/*
 			 *  Get the smallest set of smallest rings on this molecule
 			 */
-			SSSRFinder sssrf = new SSSRFinder(molecule);
+												SSSRFinder sssrf = new SSSRFinder(molecule);
 
 			sssr = sssrf.findSSSR();
 			if (sssr.getAtomContainerCount() < 1)
 			{
 				return;
 			}
+												
 			/*
 			 * Order the rings because SSSRFinder.findSSSR() returns rings in an
 			 * undeterministic order.
 			 */
 			AtomContainerSetManipulator.sort(sssr);
+												
 			/*
 			 *  Mark all the atoms from the ring system as "ISINRING"
 			 */
@@ -359,10 +371,11 @@ public class StructureDiagramGenerator
 			 *  via spiro connections.
 			 */
 			ringSystems = RingPartitioner.partitionRings(sssr);
-
+												
 			/*
 			 *  We got our ring systems now
 			 */
+												
 			/*
 			 *  Do the layout for the first connected ring system ...
 			 */
@@ -384,7 +397,7 @@ public class StructureDiagramGenerator
 			layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
 			logger.debug("First RingSet placed");
 			/*
-			 *  and to the placement of all the directly connected atoms of this ringsystem
+			 *  and do the placement of all the directly connected atoms of this ringsystem
 			 */
 			ringPlacer.placeRingSubstituents((IRingSet) ringSystems.get(largest), bondLength);
 
@@ -446,7 +459,7 @@ public class StructureDiagramGenerator
 	 *  StructurDiagramGenerator, call the generateCoordinates() method and get
 	 *  your molecule back.
 	 *
-	 *@exception  java.lang.Exception  Description of the Exception
+	 *  @throws java.lang.Exception if an error occurs
 	 */
 	public void generateCoordinates() throws java.lang.Exception
 	{
@@ -455,11 +468,14 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Does a layout of all the rings in a given connected RingSet
-	 *
-	 *@param  firstBondVector  A vector giving the placement for the first bond
-	 *@param  rs               The connected RingSet for which the layout is to be
-	 *      done
+	 *  Does a layout of all the rings in a given connected RingSet. Uses a TemplateHandler
+	 *  to treat templated mapped substructures differently if <code>useTemplates</code> is
+	 *  set true.
+	 * 
+	 * @param firstBondVector A vector giving the placement for the first bond
+	 * @param rs The connected RingSet for which the layout is to be
+	 *           done
+	 * @throws java.lang.Exception if an error occurs
 	 */
 	private void layoutRingSet(Vector2d firstBondVector, IRingSet rs) throws Exception
 	{
@@ -469,31 +485,51 @@ public class StructureDiagramGenerator
 		logger.debug("Start of layoutRingSet");
 
 		/*
-		 *  First we check if we can map any templates with predifined coordinates
-		 *  Those are stored as MDL molfiles in data/templates
+		 * First we check if we can map any templates with predifined coordinates.
+		 * All mapped substructures are saved in: this.mappedSubstructures 
 		 */
-		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
-		{
-			logger.debug("Testing if this ringset fits a template....");
-			List containers = AtomContainerSetManipulator.getAllAtomContainers(rs);
-			for (int counter=0; counter<containers.size(); counter++) {
-				IAtomContainer ac = (IAtomContainer)containers.get(counter);
-				boolean templateMapped = getTemplateHandler().mapTemplateExact(
-					ac.getBuilder().newMolecule(ac)
-				);
-				logger.debug("Template mapped in layoutRingSet: ", templateMapped);
-				if (templateMapped)
-				{
-					logger.debug("Our job is done for this RingSet ");
-					return; // FIXME: what about the rest??
+		if (useTemplates && mappedSubstructures.getAtomContainerCount() > 0 && System.getProperty("java.version").indexOf("1.3.") == -1) {
+			/*
+			 * Find mapped substructures
+			 */
+			for (Iterator substructureIterator = mappedSubstructures.atomContainers(); substructureIterator.hasNext(); ) {
+				IAtomContainer substructure = (IAtomContainer) substructureIterator.next();
+				boolean substructureMapped = false;
+				for (Iterator ringSetIterator = rs.atomContainers(); ringSetIterator.hasNext() && !substructureMapped; ) {
+					IRing ring = (IRing) ringSetIterator.next();
+					for (Iterator atomIterator = ring.atoms(); atomIterator.hasNext() && !substructureMapped; ) {
+						IAtom atom = (IAtom) atomIterator.next();
+							if (substructure.contains(atom))
+								substructureMapped = true;
+					}
+				}
+				/*
+				 * Layout a found mapped substructure
+				 */
+				if (substructureMapped) {
+					boolean mapped = getTemplateHandler().mapTemplateExact(substructure);
+					if (!mapped)
+						logger.warn("A supposedly matched substructure failed to match.");
+					else {
+						// Mark substructure atoms as CDKConstants.ISPLACED
+						for (Iterator iterator = substructure.atoms(); iterator.hasNext(); ) {
+							IAtom atom = (IAtom) iterator.next();
+							atom.setFlag(CDKConstants.ISPLACED, true);
+						}
+						// Mark rings of substrucure as CDKConstants.ISPLACED
+						ringPlacer.checkAndMarkPlaced(rs);
+					}
 				}
 			}
 		}
+		
+		/*
+		 * Now layout the rest of this ring system
+		 */
 
 		/*
 		 *  Get the most complex ring in this RingSet
 		 */
-
 		IRing ring = RingSetManipulator.getMostComplexRing(rs);
 		int i = 0;
 		
@@ -538,19 +574,21 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Does a layout of all aliphatic parts connected to the parts of the molecule
-	 *  that have already been laid out.
-	 *
-	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
-	 *      Exception
+	 * Does a layout of all aliphatic parts connected to the parts of the molecule
+	 * that have already been laid out. Starts at the first bond with unplaced
+	 * neighbours and stops when a ring is encountered.
+	 * 
+	 * @throws org.openscience.cdk.exception.CDKException if an error occurs
 	 */
 	private void handleAliphatics() throws org.openscience.cdk.exception.CDKException
 	{
+		logger.debug("Start of handleAliphatics");
+
 		int safetyCounter = 0;
-		IAtom atom = null;
 		IAtomContainer unplacedAtoms = null;
 		IAtomContainer placedAtoms = null;
 		IAtomContainer longestUnplacedChain = null;
+		IAtom atom = null;
 
 		Vector2d direction = null;
 		Vector2d startVector = null;
@@ -591,7 +629,7 @@ public class StructureDiagramGenerator
 						logger.debug("Done placing neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
 					} else
 					{
-						logger.debug("Less than one atoms placed already");
+						logger.debug("Less than or equal one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
 						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtom(0), GeometryToolsInternalCoordinates.get2DCenter(molecule),true);
 
@@ -612,100 +650,126 @@ public class StructureDiagramGenerator
 				done = true;
 			}
 		} while (!done && safetyCounter <= molecule.getAtomCount());
+
+		logger.debug("End of handleAliphatics");
 	}
 
 
 	/**
 	 *  Does the layout for the next RingSystem that is connected to those parts of
-	 *  the molecule that have already been laid out.
+	 *  the molecule that have already been laid out. Finds the next ring with an
+	 *  unplaced ring atom and lays out this ring. Then lays out the ring substituents
+	 *  of this ring. Then moves and rotates the laid out ring to match the position
+	 *  of its attachment bond to the rest of the molecule.
+	 *
+	 *  @throws java.lang.Exception if an error occurs
 	 */
 	private void layoutNextRingSystem() throws Exception
 	{
 		logger.debug("Start of layoutNextRingSystem()");
-		IAtom vectorAtom1 = null;
-		IAtom vectorAtom2 = null;
-		Point2d oldPoint1 = null;
-		Point2d newPoint1 = null;
-		Point2d oldPoint2 = null;
-		Point2d newPoint2 = null;
-		IRingSet nextRingSystem = null;
-		IAtomContainer ringSystem = null;
-		IBond nextRingAttachmentBond = null;
-		//double angle;
-		double angle1;
-		double angle2;
 
 		resetUnplacedRings();
 		IAtomContainer tempAc = atomPlacer.getPlacedAtoms(molecule);
 		logger.debug("Finding attachment bond to already placed part...");
-		nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
-		logger.debug("no bond found - we have a problem and should not be here");
+		IBond nextRingAttachmentBond = getNextBondWithUnplacedRingAtom();
 		if (nextRingAttachmentBond != null)
 		{
 			logger.debug("...bond found.");
-			vectorAtom2 = getRingAtom(nextRingAttachmentBond);
-			if (nextRingAttachmentBond.getAtom(0) == vectorAtom2)
-			{
-				vectorAtom1 = nextRingAttachmentBond.getAtom(1);
-			} else
-			{
-				vectorAtom1 = nextRingAttachmentBond.getAtom(0);
-			}
-			oldPoint2 = vectorAtom2.getPoint2d();
-			oldPoint1 = vectorAtom1.getPoint2d();
-			logger.debug("Computing rotation of new ringset to fit old attachment bond orientation...");
-			logger.debug("oldPoint1: " + oldPoint1);
-			logger.debug("oldPoint2: " + oldPoint2);
-			angle1 = GeometryToolsInternalCoordinates.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
-			nextRingSystem = getRingSystemOfAtom(ringSystems, vectorAtom2);
-			ringSystem = tempAc.getBuilder().newAtomContainer();
-			Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator();
-			while (containers.hasNext()) {
+												
+			/*
+			 * Get the chain and the ring atom that are connected to where we are comming from.
+			 * Both are connected by nextRingAttachmentBond.
+			 */
+			IAtom ringAttachmentAtom = getRingAtom(nextRingAttachmentBond);
+			IAtom chainAttachmentAtom = getOtherBondAtom(ringAttachmentAtom, nextRingAttachmentBond);
+			
+			/*
+			 * Get ring system which ringAttachmentAtom is part of
+			 */
+			IRingSet nextRingSystem = getRingSystemOfAtom(ringSystems, ringAttachmentAtom);
+
+			/*
+			 * Get all rings of nextRingSytem as one IAtomContainer
+			 */
+			IAtomContainer ringSystem = tempAc.getBuilder().newAtomContainer();
+			for (Iterator containers = RingSetManipulator.getAllAtomContainers(nextRingSystem).iterator(); containers.hasNext(); )
 				ringSystem.add((IAtomContainer) containers.next());
-			}
+												
+			/*
+			 * Save coordinates of ringAttachmentAtom and chainAttachmentAtom
+			 */
+			Point2d oldRingAttachmentAtomPoint = ringAttachmentAtom.getPoint2d();
+			Point2d oldChainAttachmentAtomPoint = chainAttachmentAtom.getPoint2d();
 			
 			/*
 			 *  Do the layout of the next ring system
 			 */
 			layoutRingSet(firstBondVector, nextRingSystem);
+												
 			/*
 			 *  Place all the substituents of next ring system
 			 */
 			atomPlacer.markNotPlaced(tempAc);
-			ringSystem.add(ringPlacer.placeRingSubstituents(nextRingSystem, bondLength));
+			IAtomContainer placedRingSubstituents = ringPlacer.placeRingSubstituents(nextRingSystem, bondLength);
+			ringSystem.add(placedRingSubstituents);
 			atomPlacer.markPlaced(tempAc);
+												
+			/*
+			 * Move and rotate the laid out ring system to match the geometry of the
+			 * attachment bond
+			 */
+			logger.debug("Computing translation/rotation of new ringset to fit old attachment bond orientation...");
 
-			newPoint2 = vectorAtom2.getPoint2d();
-			newPoint1 = vectorAtom1.getPoint2d();
+			// old placed ring atom coordinate
+			Point2d oldPoint2 = oldRingAttachmentAtomPoint;
+			// old placed substituent atom coordinate
+			Point2d oldPoint1 = oldChainAttachmentAtomPoint;
 
+			// new placed ring atom coordinate
+			Point2d newPoint2 = ringAttachmentAtom.getPoint2d();
+			// new placed substituent atom coordinate
+			Point2d newPoint1 = chainAttachmentAtom.getPoint2d();
+
+			logger.debug("oldPoint1: " + oldPoint1);
+			logger.debug("oldPoint2: " + oldPoint2);
 			logger.debug("newPoint1: " + newPoint1);
 			logger.debug("newPoint2: " + newPoint2);
 
-			angle2 = GeometryToolsInternalCoordinates.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);
-			Vector2d transVec = new Vector2d(oldPoint1);
-			transVec.sub(new Vector2d(newPoint1));
-			logger.debug("Finished computing rotation of new ringset to fit old attachment bond orientation...");
-			GeometryToolsInternalCoordinates.translate2D(ringSystem, transVec);
-			//logger.debug(ringSystem.getAtomCount());
-			logger.debug("oldPoint1 again: " + oldPoint1);
-			logger.debug("and the angles: " + angle1 + ", " + angle2 + "; diff = " + (angle1 - angle2));
-			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (angle1 - angle2));
-			//GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, (0.5 * Math.PI) + (angle1 - angle2));
-			//GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1,  (2.0 * Math.PI) +  angle1);
-			//vectorAtom2.setPoint2d(oldPoint2);
-			vectorAtom1.setPoint2d(oldPoint1);
+			double oldAngle = GeometryToolsInternalCoordinates.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
+			double newAngle = GeometryToolsInternalCoordinates.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);
+			double angleDiff = oldAngle - newAngle;
+
+			logger.debug("oldAngle: " + oldAngle + ", newAngle: " + newAngle + "; diff = " + angleDiff);
+
+			Vector2d translationVector = new Vector2d(oldPoint1);
+			translationVector.sub(new Vector2d(newPoint1));
+
+			/*
+			 * Move to fit old attachment bond orientation
+			 */
+			GeometryToolsInternalCoordinates.translate2D(ringSystem, translationVector);
+
+			/*
+			 * Rotate to fit old attachment bond orientation
+			 */
+			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, angleDiff);
+
+			logger.debug("...done translating/rotating new ringset to fit old attachment bond orientation.");
 		}
+		else
+			logger.debug("...no bond found");
+
 		logger.debug("End of layoutNextRingSystem()");
 	}
 
 
 	/**
-	 *  Returns an AtomContainer with all the unplaced atoms connected to a given
+	 *  Returns an AtomContainer with all unplaced atoms connected to a given
 	 *  atom
 	 *
-	 *@param  atom  The Atom whose unplaced bonding partners are to be returned
-	 *@return       an AtomContainer with all the unplaced atoms connected to a
-	 *      given atom
+	 *  @param  atom  The Atom whose unplaced bonding partners are to be returned
+	 *  @return       an AtomContainer with all unplaced atoms connected to a
+	 *                given atom
 	 */
 	private IAtomContainer getUnplacedAtoms(IAtom atom)
 	{
@@ -725,12 +789,12 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Returns an AtomContainer with all the placed atoms connected to a given
+	 *  Returns an AtomContainer with all placed atoms connected to a given
 	 *  atom
 	 *
-	 *@param  atom  The Atom whose placed bonding partners are to be returned
-	 *@return       an AtomContainer with all the placed atoms connected to a given
-	 *      atom
+	 *  @param  atom  The Atom whose placed bonding partners are to be returned
+	 *  @return       an AtomContainer with all placed atoms connected to a given
+	 *                atom
 	 */
 	private IAtomContainer getPlacedAtoms(IAtom atom)
 	{
@@ -752,7 +816,7 @@ public class StructureDiagramGenerator
 	/**
 	 *  Returns the next atom with unplaced aliphatic neighbors
 	 *
-	 *@return    the next atom with unplaced aliphatic neighbors
+	 *  @return    the next atom with unplaced aliphatic neighbors
 	 */
 	private IAtom getNextAtomWithAliphaticUnplacedNeigbors()
 	{
@@ -780,41 +844,40 @@ public class StructureDiagramGenerator
 	/**
 	 *  Returns the next bond with an unplaced ring atom
 	 *
-	 *@return    the next bond with an unplaced ring atom
+	 *  @return    the next bond with an unplaced ring atom
 	 */
-    private IBond getNextBondWithUnplacedRingAtom() {
-        Iterator bonds = molecule.bonds();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+	private IBond getNextBondWithUnplacedRingAtom() {
+		Iterator bonds = molecule.bonds();
+		while (bonds.hasNext()) {
+			IBond bond = (IBond) bonds.next();
 
-            if (bond.getAtom(0).getPoint2d() != null &&
-                    bond.getAtom(1).getPoint2d() != null) {
-                if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-                        !bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-                        bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
-                    return bond;
-                }
+			if (bond.getAtom(0).getPoint2d() != null &&
+					bond.getAtom(1).getPoint2d() != null) {
+				if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+						bond.getAtom(0).getFlag(CDKConstants.ISINRING)) {
+					return bond;
+				}
 
-                if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
-                        !bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
-                        bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
-                    return bond;
-
-                }
-            }
-        }
-        return null;
-    }
+				if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) &&
+						!bond.getAtom(1).getFlag(CDKConstants.ISPLACED) &&
+						bond.getAtom(1).getFlag(CDKConstants.ISINRING)) {
+					return bond;
+				}
+			}
+		}
+		return null;
+	}
 
 
 	/**
 	 *  Places the first bond of the first ring such that one atom is at (0,0) and
 	 *  the other one at the position given by bondVector
 	 *
-	 *@param  bondVector  A 2D vector to point to the position of the second bond
-	 *      atom
-	 *@param  bond        Description of the Parameter
-	 *@return             Description of the Return Value
+	 *  @param  bondVector  A 2D vector to point to the position of the second bond
+	 *                      atom
+	 *  @param  bond        the bond to lay out
+	 *  @return             an IAtomContainer with the atoms of the bond and the bond itself
 	 */
 	private IAtomContainer placeFirstBond(IBond bond, Vector2d bondVector)
 	{
@@ -871,11 +934,30 @@ public class StructureDiagramGenerator
 		}
 	}
 
+	/**
+	 *  This method will go as soon as the rest works. It just assignes Point2d's
+	 *  of position (0,0) so that the molecule can be drawn.
+	 *  @param molecule the molecule to fix
+	 *  @return the fixed molecule
+	 */
+	private IMolecule fixMol(IMolecule molecule)
+	{
+		IAtom atom = null;
+		for (int f = 0; f < molecule.getAtomCount(); f++)
+		{
+			atom = molecule.getAtom(f);
+			if (atom.getPoint2d() == null)
+			{
+				atom.setPoint2d(new Point2d(0, 0));
+			}
+		}
+								return molecule;
+	}        
 
 	/**
 	 *  Initializes all rings in RingSet rs as not placed
 	 *
-	 *@param  rs  The RingSet to be initialized
+	 *  @param  rs  The RingSet to be initialized
 	 */
 //	private void markNotPlaced(IRingSet rs)
 //	{
@@ -889,8 +971,8 @@ public class StructureDiagramGenerator
 	/**
 	 *  Are all rings in the Vector placed?
 	 *
-	 *@param  rings  The Vector to be checked
-	 *@return        Description of the Return Value
+	 *  @param  rings  The Vector to be checked
+	 *  @return        true if all rings are placed, false otherwise
 	 */
 	private boolean allPlaced(IRingSet rings)
 	{
@@ -909,7 +991,7 @@ public class StructureDiagramGenerator
 	/**
 	 *  Mark all atoms in the molecule as being part of a ring
 	 *
-	 *@param  rings  The Vector to be checked
+	 *  @param  rings  an IRingSet with the rings to process
 	 */
 	private void markRingAtoms(IRingSet rings)
 	{
@@ -928,8 +1010,8 @@ public class StructureDiagramGenerator
 	/**
 	 *  Get the unplaced ring atom in this bond
 	 *
-	 *@param  bond  the bond to be search for the unplaced ring atom
-	 *@return       the unplaced ring atom in this bond
+	 *  @param  bond  the bond to be search for the unplaced ring atom
+	 *  @return       the unplaced ring atom in this bond
 	 */
 	private IAtom getRingAtom(IBond bond)
 	{
@@ -950,9 +1032,9 @@ public class StructureDiagramGenerator
 	/**
 	 *  Get the ring system of which the given atom is part of
 	 *
-	 *@param  ringSystems  A Vector of ring systems to be searched
-	 *@param  ringAtom     The ring atom to be search in the ring system.
-	 *@return              the ring system of which the given atom is part of
+	 *  @param  ringSystems  a List of ring systems to be searched
+	 *  @param  ringAtom     the ring atom to be search in the ring system.
+	 *  @return              the ring system the given atom is part of
 	 */
 	private IRingSet getRingSystemOfAtom(List ringSystems, IAtom ringAtom)
 	{
@@ -998,13 +1080,32 @@ public class StructureDiagramGenerator
 
 
 	/**
-	 *  Set the bond length used for laying out the molecule
+	 *  Set the bond length used for laying out the molecule.
+	 *  The defaut value is 1.5.
 	 *
-	 *@param  bondLength  The new bondLength value
+	 *  @param  bondLength  The new bondLength value
 	 */
 	public void setBondLength(double bondLength)
 	{
 		this.bondLength = bondLength;
 	}
-}
+				
+	/**
+	 * Returns the other atom of the bond.
+	 * Expects bond to have only two atoms.
+	 * Returns null if the given atom is not part of the given bond.
+	 * 
+	 * @param atom the atom we already have
+	 * @param bond the bond
+	 * @return the other atom of the bond
+	 */
+	public IAtom getOtherBondAtom(IAtom atom, IBond bond) {
+		if (!bond.contains(atom))
+			return null;
+		if (bond.getAtom(0).equals(atom))
+			return bond.getAtom(1);
+		else
+			return bond.getAtom(0);
+	}
 
+}

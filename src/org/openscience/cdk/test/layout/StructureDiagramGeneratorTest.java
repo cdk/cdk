@@ -425,9 +425,10 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	
 	/**
 	 * Test for bug #1677912 "SDG JUnit test hangs"
+	 * The SMILES parsing takes hence a longer timeout.
 	 * @cdk.bug 1677912
 	 */
-	@Test (timeout=5000)
+	@Test (timeout=10000)
 	public void testBug1677912SDGHangs() throws Exception {
 		// Parse the SMILES
 		String smiles = "[NH](-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3)-C(=O)-C(=O)-[CH2]-c1:n:c(:c(:[cH]:c:1-C(=O)-O-[CH3])-C(=O)-O-[CH3])-[CH2]-C(=O)-C(=O)-[NH]-[CH]1-[CH]2-[CH2]-[CH]3-[CH2]-[CH]-1-[CH2]-[CH](-[CH2]-2)-[CH2]-3";
@@ -730,19 +731,10 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 				Mol2Reader r = new Mol2Reader(new StringReader(problematicMol2));
 				IChemModel model = (IChemModel)r.read(NoNotificationChemObjectBuilder
 														.getInstance().newChemModel());
-			final IMolecule mol = model.getMoleculeSet().getMolecule(0);
+				final IMolecule mol = model.getMoleculeSet().getMolecule(0);
 				final IMolecule clone = (IMolecule)mol.clone();
-				// modified from runner thread
-				final boolean[] failsArray = new boolean[1];
-				try{
-					new StructureDiagramGenerator(clone).generateCoordinates();
-					assertTrue(GeometryTools.has2DCoordinates(clone));
-				} catch(Exception exc) {
-					failsArray[0] = true;
-				}
-				if (failsArray[1]) {
-						fail("2D generation failed");
-				}
+				new StructureDiagramGenerator(clone).generateCoordinates();
+				assertTrue(GeometryTools.has2DCoordinates(clone));
 	}
 
 	Molecule makeTetraMethylCycloButane()
