@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<molecule id="cubane" dictRef="cdk:layoutTemplate"
+<molecule id="diamantane" dictRef="cdk:layoutTemplate"
   xmlns="http://www.xml-cml.org/schema/cml2/core"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../src/org/openscience/cdk/io/cml/data/cmlAll.xsd">
