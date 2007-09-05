@@ -339,6 +339,11 @@ public class StructureDiagramGenerator
 				return;
 			}
 			/*
+			 * Order the rings because SSSRFinder.findSSSR() returns rings in an
+			 * undeterministic order.
+			 */
+			AtomContainerSetManipulator.sort(sssr);
+			/*
 			 *  Mark all the atoms from the ring system as "ISINRING"
 			 */
 			markRingAtoms(sssr);
@@ -429,7 +434,7 @@ public class StructureDiagramGenerator
 			 *  connected to the parts which have already been laid out.
 			 */
 			layoutNextRingSystem();
-		} while (!atomPlacer.allPlaced(molecule) || safetyCounter > molecule.getAtomCount());
+		} while (!atomPlacer.allPlaced(molecule) && safetyCounter <= molecule.getAtomCount());
 
 		fixRest();
 		new OverlapResolver().resolveOverlap(molecule, sssr);
@@ -606,7 +611,7 @@ public class StructureDiagramGenerator
 			{
 				done = true;
 			}
-		} while (!done || safetyCounter > molecule.getAtomCount());
+		} while (!done && safetyCounter <= molecule.getAtomCount());
 	}
 
 

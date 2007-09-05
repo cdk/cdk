@@ -28,6 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -204,6 +205,27 @@ public class AtomContainerSetManipulator {
             list.add((IAtomContainer)acs.next());
         }
         return list;
+    }
+        
+    /**
+     * <p>Sorts the IAtomContainers in the given IAtomContainerSet by the following
+     * criteria with decreasing priority:</p>
+     * <ul>
+     *   <li>Compare atom count
+     *   <li>Compare molecular weight (heavy atoms only)
+     *   <li>Compare bond count
+     *   <li>Compare sum of bond orders (heavy atoms only)
+     * </ul>
+     * <p>If no difference can be found with the above criteria, the IAtomContainers are
+     * considered equal.</p>
+     */
+    public static void sort(IAtomContainerSet atomContainerSet) {
+      List atomContainerList = AtomContainerSetManipulator.getAllAtomContainers(atomContainerSet);
+      Collections.sort(atomContainerList, new AtomContainerComparator());
+      atomContainerSet.removeAllAtomContainers();
+      Iterator iterator = atomContainerList.iterator();
+      while (iterator.hasNext())
+        atomContainerSet.addAtomContainer((IAtomContainer) iterator.next());
     }
     
 }
