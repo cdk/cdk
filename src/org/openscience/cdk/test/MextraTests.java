@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
@@ -73,7 +74,7 @@ public class MextraTests {
         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
         // from cdk.test.layout
-        suite.addTest(StructureDiagramGeneratorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));
         suite.addTest(HydrogenPlacerTest.suite());
         suite.addTest(OverlapResolverTest.suite());
         suite.addTest(TemplateHandlerTest.suite());

@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -101,7 +102,7 @@ public class MosjvmtsTests {
         	// from cdk.test.index
         	suite.addTest(CASNumberTest.suite());
         	// from cdk.test.layout
-        	suite.addTest(StructureDiagramGeneratorTest.suite());
+        	suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));
         	suite.addTest(HydrogenPlacerTest.suite());
         	suite.addTest(OverlapResolverTest.suite());
         	suite.addTest(TemplateHandlerTest.suite());
