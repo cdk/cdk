@@ -27,6 +27,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.MassToFormulaTool;
+import org.openscience.cdk.tools.MassToFormulaTool.IElement_Nr;
 
 /**
  * @cdk.module test-standard
@@ -90,7 +91,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	public void testMassToFormulaTool2(){
 		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
-		ArrayList resultsMF = new MassToFormulaTool(44.0032).getMolecularFormula();
+		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032).getMolecularFormula();
 		for(int i = 0 ; i < resultsMF.size(); i++){
 			assertEquals(results[i],(String)resultsMF.get(i));
 		}
@@ -103,19 +104,50 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
 	public void testMassToFormulaTool3(){
 		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
-		ArrayList resultsMF = new MassToFormulaTool(44.0032).getMoleculesFormulaOrned();
+		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032).getMoleculesFormulaOrned();
 //		for(int i = 0 ; i < resultsMF.size(); i++){
 //			System.out.println((String)resultsMF.get(i));
 //		}
 	}
 	/**
-	 * A unit test suite for JUnit. Results contrasted with the page:
-	 * http://www.ch.ic.ac.uk/java/applets/f2m2f/
+	 * A unit test suite for JUnit. Restriction with the occurrences
 	 *
 	 * @return    The test suite
 	 */
 	public void testMassToFormulaTool4(){
+		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
+		IElement_Nr[] elem = new IElement_Nr[4];
+		MassToFormulaTool mToF = (new MassToFormulaTool());
+		elem[0] = mToF.new IElement_Nr("C",0,9);
+		elem[1] = mToF.new IElement_Nr("H",0,9);
+		elem[2] = mToF.new IElement_Nr("O",0,9);
+		elem[3] = mToF.new IElement_Nr("N",0,9);
 		
+		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032, 50, 0, 0.05, elem).getMolecularFormula();
+		
+		for(int i = 0 ; i < resultsMF.size(); i++){
+			assertEquals(results[i],(String)resultsMF.get(i));
+		}
+	}
+	/**
+	 * A unit test suite for JUnit. Restriction with the occurrences
+	 *
+	 * @return    The test suite
+	 */
+	public void testMassToFormulaTool5(){
+		String[] results = {"O1N1C1H2","O1C2H4","N1C2H6"};
+		IElement_Nr[] elem = new IElement_Nr[4];
+		MassToFormulaTool mToF = (new MassToFormulaTool());
+		elem[0] = mToF.new IElement_Nr("C",0,4);
+		elem[1] = mToF.new IElement_Nr("H",0,6);
+		elem[2] = mToF.new IElement_Nr("O",0,1);
+		elem[3] = mToF.new IElement_Nr("N",0,1);
+		
+		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032, 50, 0, 0.05, elem).getMolecularFormula();
+		
+		for(int i = 0 ; i < resultsMF.size(); i++){
+			assertEquals(results[i],(String)resultsMF.get(i));
+		}
 	}
 }
 

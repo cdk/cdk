@@ -62,6 +62,13 @@ public class MassToFormulaTool {
 
 	/** Mass Ratio to look for. As default 0.05*/
 	private static double ratio = 0.05;
+	
+
+	/**
+	 * Construct an instance of MassToFormulaTool.
+	 */
+	public MassToFormulaTool() {
+	}
 	/**
 	 * Construct an instance of MassToFormulaTool, initialized with a mass.
 	 * 
@@ -210,6 +217,14 @@ public class MassToFormulaTool {
 			
 			value_In[i] = occurence1;
 			for(int j = occurence1; j > 0; j--){
+				
+				int maxx = elemToCond_new[i].getOccurrenceMax();
+				int minn = elemToCond_new[i].getOccurrenceMin();
+				if(j < minn | maxx < j){
+					value_In[i]--;
+					continue;
+				}
+				
 				for(int k = i+1; k < elemToCond_new.length ; k++)
 					value_In[k] = 0;
 				
@@ -223,6 +238,14 @@ public class MassToFormulaTool {
 					}
 					
 					for(int s = occurence2; s > 0; s--){
+						
+						maxx = elemToCond_new[k].getOccurrenceMax();
+						minn = elemToCond_new[k].getOccurrenceMin();
+						if(s < minn | maxx < s){
+							value_In[k]--;
+							continue;
+						}
+						
 						value_In[k] = s;
 						double massTT = calculateMassT(elemToCond_new,value_In);
 						diff = Math.abs(mass - Math.abs(massTT));
@@ -249,6 +272,13 @@ public class MassToFormulaTool {
 								}
 								
 								for(int t = occurence3; t > 0; t--){
+									maxx = elemToCond_new[l].getOccurrenceMax();
+									minn = elemToCond_new[l].getOccurrenceMin();
+									if(t < minn | maxx < t){
+										value_In[l]--;
+										continue;
+									}
+									
 									value_In[l] = t;
 									double massTT3 = calculateMassT(elemToCond_new,value_In);
 									double diff4 = Math.abs(mass - Math.abs(massTT3));
@@ -380,7 +410,7 @@ public class MassToFormulaTool {
 	 * @author Miguel Rojas
 	 *
 	 */
-	class IElement_Nr{
+	public class IElement_Nr{
 		
 		IElement myElement;
 		int maxi = 0;
@@ -422,7 +452,7 @@ public class MassToFormulaTool {
 		 * 
 		 * @return The maximum value
 		 */
-		public int getMax(){
+		public int getOccurrenceMax(){
 			return maxi;
 		}
 		/**
@@ -430,10 +460,11 @@ public class MassToFormulaTool {
 		 * 
 		 * @return The minimum value
 		 */
-		public int getMin(){
-			return maxi;
+		public int getOccurrenceMin(){
+			return mini;
 		}
-		/**
+		/**IElement_Nr element = new IElement_Nr("C",0,9);
+		
 		 * Returns the most abundant (major) isotope whose Element
 		 * .
 		 * @return The IIsotope value
@@ -484,7 +515,6 @@ public class MassToFormulaTool {
 		}
 		return solutions_new;
 	}
-	
 	
 	
 // IMPORTANT: below was the original code, which needs to be ported. It actually
