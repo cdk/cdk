@@ -68,6 +68,9 @@ public class MassToFormulaTool {
 	private static double ratio = 0.05;
 	
 	AtomTypeFactory factory;
+
+	/** charge of the compound. As default is 0 meaning neutral compound.**/
+	private static int charge = 0;
 	/**
 	 * Construct an instance of MassToFormulaTool.
 	 */
@@ -165,7 +168,7 @@ public class MassToFormulaTool {
 	 * @param  ratio           Ratio between the mass of the molecular formula and the mass to apply
 	 * @return                 the filled molecular formula as ArrayList
 	 */
-	private ArrayList<String> analyseMF(double m, int max_Solut, int charge, double rat, IElement_Nr[] elemToCondione) {
+	private ArrayList<String> analyseMF(double m, int max_Solut, int charg, double rat, IElement_Nr[] elemToCondione) {
 
 		ArrayList<String> solutions_found = new ArrayList<String>();
 		
@@ -179,6 +182,7 @@ public class MassToFormulaTool {
 		
 		max_Solutions = max_Solut;
 		ratio = rat;
+		charge = charg;
 		
 		if(elemToCondione == null)
 			elemToCond = generateElemDefault();
@@ -258,6 +262,11 @@ public class MassToFormulaTool {
 						if(diff < ratio){
 							 if(isValiedMF(elemToCond_new,value_In)){ 
 								 String myString = getFormulaString(elemToCond_new,value_In);
+								 if(charge > 0)
+									 myString = "["+myString+"]+"+charge;
+								 else if(charge < 0)
+									 myString =  "["+myString+"]"+charge;
+								 
 								 solutions_found.add(myString);
 							 }
 						
@@ -291,6 +300,11 @@ public class MassToFormulaTool {
 									if(diff4 < ratio){
 										 if(isValiedMF(elemToCond_new,value_In)){ 
 											 String myString = getFormulaString(elemToCond_new,value_In);
+											 if(charge > 0)
+												 myString = "["+myString+"]+"+charge;
+											 else if(charge < 0)
+												 myString =  "["+myString+"]"+charge;
+											 
 											 solutions_found.add(myString);
 										 }
 									
@@ -324,8 +338,10 @@ public class MassToFormulaTool {
 	 * @return
 	 */
 	private boolean isValiedMF(IElement_Nr[] elemToCond_new, int[] value_In) {
+		
+		
 		/* first validation - an odd number */
-		double landaI = 0;
+		double landaI = charge;
 		try {
 			for(int i = 0 ; i < elemToCond_new.length ; i++)
 				if(value_In[i] != 0){
@@ -342,7 +358,7 @@ public class MassToFormulaTool {
 		/* second validation - calculation: epsilon >= n-1 */
 		double epsilon = landaI/2;
 		
-		int countE = 0;
+		int countE = charge;
 		for(int i = 0 ; i < elemToCond_new.length ; i++)
 			if(value_In[i] != 0)
 				countE += value_In[i];

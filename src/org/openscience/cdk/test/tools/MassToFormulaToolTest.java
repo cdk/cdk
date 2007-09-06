@@ -139,5 +139,26 @@ public class MassToFormulaToolTest extends CDKTestCase {
 			assertEquals(results[i],(String)resultsMF.get(i));
 		}
 	}
+	/**
+	 * A unit test suite for JUnit. Molecular formula with charge
+	 *
+	 * @return    The test suite
+	 */
+	public void testMassToFormulaTool6(){
+		String[] resultsFromPage = {"C2HO","CHN2","C2H3N","C3H5","H9O2","H11NO"};
+		String[] resultsFromMy = {"[O1C2H1]+1","[N2C1H1]+1","[C3H5]+1"};
+		IElement_Nr[] elem = new IElement_Nr[4];
+		MassToFormulaTool mToF = (new MassToFormulaTool());
+		elem[0] = mToF.new IElement_Nr("C",0,9);
+		elem[1] = mToF.new IElement_Nr("H",0,9);
+		elem[2] = mToF.new IElement_Nr("O",0,9);
+		elem[3] = mToF.new IElement_Nr("N",0,9);
+		
+		ArrayList<String> resultsMF = new MassToFormulaTool(41.0032, 50, 1, 0.05, elem).getMolecularFormula();
+		
+		for(int i = 0 ; i < resultsMF.size(); i++){
+			assertEquals(resultsFromMy[i],(String)resultsMF.get(i));
+		}
+	}
 }
 
