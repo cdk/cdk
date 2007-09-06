@@ -90,32 +90,22 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMassToFormulaTool2(){
-		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
+		String[] resultsFromPage = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
+		/*obtained only those possible molecular formula according graphical maps*/
+		String[] resultsFromMy = {"O2C1","O1N2","O1C2H4","N2C1H4"};
 		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032).getMolecularFormula();
 		for(int i = 0 ; i < resultsMF.size(); i++){
-			assertEquals(results[i],(String)resultsMF.get(i));
+			assertEquals(resultsFromMy[i],(String)resultsMF.get(i));
 		}
 	}
-	/**
-	 * A unit test suite for JUnit. Results contrasted with the page:
-	 * http://www.ch.ic.ac.uk/java/applets/f2m2f/
-	 *
-	 * @return    The test suite
-	 */
-	public void testMassToFormulaTool3(){
-		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
-		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032).getMoleculesFormulaOrned();
-//		for(int i = 0 ; i < resultsMF.size(); i++){
-//			System.out.println((String)resultsMF.get(i));
-//		}
-	}
+	
 	/**
 	 * A unit test suite for JUnit. Restriction with the occurrences
 	 *
 	 * @return    The test suite
 	 */
 	public void testMassToFormulaTool4(){
-		String[] results = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
+		String[] results = {"O2C1","O1N2","O1C2H4","N2C1H4"};
 		IElement_Nr[] elem = new IElement_Nr[4];
 		MassToFormulaTool mToF = (new MassToFormulaTool());
 		elem[0] = mToF.new IElement_Nr("C",0,9);
@@ -135,12 +125,12 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	public void testMassToFormulaTool5(){
-		String[] results = {"O1N1C1H2","O1C2H4","N1C2H6"};
+		String[] results = {"O1C2H4","N2C1H4"};
 		IElement_Nr[] elem = new IElement_Nr[4];
 		MassToFormulaTool mToF = (new MassToFormulaTool());
-		elem[0] = mToF.new IElement_Nr("C",0,4);
+		elem[0] = mToF.new IElement_Nr("C",1,4);
 		elem[1] = mToF.new IElement_Nr("H",0,6);
-		elem[2] = mToF.new IElement_Nr("O",0,1);
+		elem[2] = mToF.new IElement_Nr("O",0,0);
 		elem[3] = mToF.new IElement_Nr("N",0,1);
 		
 		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032, 50, 0, 0.05, elem).getMolecularFormula();
