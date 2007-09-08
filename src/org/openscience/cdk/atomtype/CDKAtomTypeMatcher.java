@@ -172,8 +172,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
-    			// FIXME: I don't perceive charged atoms yet
-    			return null;
+    			if (atom.getFormalCharge() == 1) {
+    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    					if (atomContainer.getConnectedBondsCount(atom) == 4) {
+    						return factory.getAtomType("N.plus");
+    					}
+    				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    					return factory.getAtomType("N.plus.sp2");
+    				}
+    			} 
     		} else if (atomContainer.getConnectedBondsCount(atom) > 3) {
     			// FIXME: I don't perceive carbons with more than 3 connections yet
     			return null;
