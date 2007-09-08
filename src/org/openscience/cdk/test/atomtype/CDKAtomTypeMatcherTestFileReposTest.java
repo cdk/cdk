@@ -150,18 +150,11 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"sdg_test.mol",
     		"shortest_path_test.mol",
     		"six-ring-4x4.mol",
-    		"squareplanar.mol",
     		"sulfurCompound.mol",
     		"superspiro.mol",
     		"testdoublebondconfig.mol",
     		"testisopropylacetate.mol",
-    		"tetrahedral_1_lazy.mol",
-    		"tetrahedral_1.mol",
-    		"tetrahedral_2_lazy.mol",
-    		"tetrahedral_with_four_wedges.mol",
     		"thiamin.mol",
-    		"triacylglycerols.mol",
-    		"trigonal_bipyramidal.mol",
     		"withcharges.mol"
     	};
     	int tested = 0;
