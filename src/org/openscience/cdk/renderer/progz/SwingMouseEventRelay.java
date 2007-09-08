@@ -43,17 +43,26 @@ public class SwingMouseEventRelay
 		relay.mouseMove(event.getX(), event.getY());
 	}
 
-	public void mouseDragged(MouseEvent e) {
+	public void mouseDragged(MouseEvent event) {
 		// TODO Auto-generated method stub
-		//check http://www.leepoint.net/notes-java/examples/mouse/20dragdemo.html for implementation
+		//check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
+		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
 	}
-
-	public void mouseClicked(MouseEvent event) {
+	/** Position of mouse press for dragging. */
+	private int dragFromX = 0;
+	private int dragFromY = 0;
+	 /** true means mouse was pressed in ball and still in panel.*/
+    private boolean _canDrag  = false;
+    
+    public void mouseClicked(MouseEvent event) {
 		//normal mouseClicked is the same as mousePressed and mouseReleased after that
 		
 		//Double click is a special case
 		if (event.getClickCount() > 1)
 			relay.mouseClickedDouble(event.getX(), event.getY());
+		System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY());
+
+		
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
@@ -69,6 +78,9 @@ public class SwingMouseEventRelay
 	public void mousePressed(MouseEvent event) {
 		// TODO Auto-generated method stub
 		relay.mouseClickedDown(event.getX(), event.getY());
+		System.out.println("mousePressed at: " + event.getX() + "/" + event.getY());
+		dragFromX = event.getX();
+		dragFromY = event.getY();
 	}
 
 	public void mouseReleased(MouseEvent event) {

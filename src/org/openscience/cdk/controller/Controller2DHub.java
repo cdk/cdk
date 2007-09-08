@@ -105,7 +105,18 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 
 	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo) {
 		// TODO Auto-generated method stub
+		Point2d worldCoordFrom = renderer.getCoorFromScreen(screenCoordXFrom, screenCoordYFrom);
+		Point2d worldCoordTo = renderer.getCoorFromScreen(screenCoordXTo, screenCoordYTo);
 		
+	
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseDrag(worldCoordFrom, worldCoordTo);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseDrag(worldCoordFrom, worldCoordTo);
 	}
 
 	public void mouseEnter(int screenCoordX, int screenCoordY) {
@@ -120,7 +131,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 
 	public void mouseMove(int screenCoordX, int screenCoordY) {
 		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
-		System.out.println("Mouse move detected: " + worldCoord);
+	//	System.out.println("Mouse move detected: " + worldCoord);
 		
 		// Relay the mouse event to the general handlers
 		for (IController2DModule module : generalModules) {
@@ -146,7 +157,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 			while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				double distance = nextAtom.getPoint2d().distance(worldCoord);
-				if (distance <= renderer.getRenderer2DModel().getHighlightRadius() &&
+				if (distance <= renderer.getRenderer2DModel().getHighlightRadiusModel() &&
 					distance < closestDistance) {
 					closestAtom = nextAtom;
 					closestDistance = distance;

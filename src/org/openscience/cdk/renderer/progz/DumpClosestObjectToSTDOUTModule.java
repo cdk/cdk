@@ -57,7 +57,24 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 
 	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
 		// TODO Auto-generated method stub
+		System.out.println("mousedrag at DumpClosestObject shizzle");
+		System.out.println("From: " + worldCoordFrom.x + "/" + worldCoordFrom.y + " to " +
+				worldCoordTo.x + "/" + worldCoordTo.y);
 		
+		if (chemObjectRelay != null) {
+			IAtom atom = chemObjectRelay.getClosestAtom(worldCoordFrom);
+			if (atom != null) {
+				System.out.println("Dragging atom: " + atom);
+				double offsetX = atom.getPoint2d().x - worldCoordFrom.x;
+				double offsetY = atom.getPoint2d().y - worldCoordFrom.y;
+				Point2d atomCoord = new Point2d(worldCoordTo.x - offsetX, worldCoordTo.y - offsetY);
+				
+				atom.setPoint2d(atomCoord);
+				//repaint();//repaint the object somehow ;)
+			}
+		} else {
+			System.out.println("chemObjectRelay is NULL!");
+		}
 	}
 
 	public void mouseEnter(Point2d worldCoord) {
@@ -74,7 +91,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 		if (chemObjectRelay != null) {
 			IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
 			if (atom != null) {
-				System.out.println("Found atom: " + atom);
+				//System.out.println("Found atom: " + atom);
 			}
 		} else {
 			System.out.println("chemObjectRelay is NULL!");

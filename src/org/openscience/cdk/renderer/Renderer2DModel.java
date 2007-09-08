@@ -75,8 +75,12 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private Color selectedPartColor = Color.lightGray;
 	private Color externalHighlightColor = Color.orange;	
 	
-	private double highlightRadius = 10.0;
-
+	/**
+	 * @deprecated old way of storing highlightRadius based on screensize, new one: {@link #highlightRadiusModel()}
+	 */
+	@Deprecated private double highlightRadius = 10.0;
+	private double highlightRadiusModel = 0.8;
+	
 	private boolean willDrawNumbers = false;
 	
 	private boolean showAtomTypeNames = false;
@@ -523,27 +527,49 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * Returns the radius around an atoms, for which the atom is 
 	 * marked highlighted if a pointer device is placed within this radius.
 	 * 
-	 * @return The highlight radius for all atoms   
+	 * @return The highlight radius for all atoms (in screensize)
+	 * @deprecated old way of getting highlightRadius, new one: {@link #getHighlightRadiusModel()}
 	 */
-	public double getHighlightRadius()
+	@Deprecated public double getHighlightRadius()
 	{
 		return this.highlightRadius;
 	}
-
+	
 
 	/**
 	 * Sets the radius around an atoms, for which the atom is 
 	 * marked highlighted if a pointer device is placed within this radius.
 	 *
-	 * @param   highlightRadius  the highlight radius of all atoms
+	 * @param   highlightRadius  the highlight radius of all atoms (in screensize)
+	  * @deprecated old way of getting highlightRadius, new one: {@link #setHighlightRadiusModel()}
 	 */
-	public void setHighlightRadius(double highlightRadius)
+	@Deprecated public void setHighlightRadius(double highlightRadius)
 	{
 		this.highlightRadius = highlightRadius;
         fireChange();
 	}
-
-    /**
+	/**
+	 * Returns the radius around an atoms, for which the atom is 
+	 * marked highlighted if a pointer device is placed within this radius.
+	 * 
+	 * @return The highlight radius for all atoms (in model based size)
+	 */
+	public double getHighlightRadiusModel()
+	{
+		return this.highlightRadiusModel;
+	}
+	/**
+	 * Sets the radius around an atoms, for which the atom is 
+	 * marked highlighted if a pointer device is placed within this radius.
+	 *
+	 * @param   highlightRadius  the highlight radius of all atoms (in model based size)
+	 */
+	public void setHighlightRadiusModel(double highlightRadius)
+	{
+		this.highlightRadiusModel = highlightRadius;
+        fireChange();
+	}
+	/**
      * Returns whether Atom-Atom mapping must be shown.
      */
      public boolean getShowAtomAtomMapping() {
