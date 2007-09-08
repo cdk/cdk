@@ -45,12 +45,15 @@ public class SwingMouseEventRelay
 
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		//check http://www.leepoint.net/notes-java/examples/mouse/20dragdemo.html for implementation
 	}
 
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseClicked(MouseEvent event) {
+		//normal mouseClicked is the same as mousePressed and mouseReleased after that
 		
+		//Double click is a special case
+		if (event.getClickCount() > 1)
+			relay.mouseClickedDouble(event.getX(), event.getY());
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
@@ -63,14 +66,14 @@ public class SwingMouseEventRelay
 		
 	}
 
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent event) {
 		// TODO Auto-generated method stub
-		
+		relay.mouseClickedDown(event.getX(), event.getY());
 	}
 
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent event) {
 		// TODO Auto-generated method stub
-		
+		relay.mouseClickedUp(event.getX(), event.getY());
 	}
 	
 	
