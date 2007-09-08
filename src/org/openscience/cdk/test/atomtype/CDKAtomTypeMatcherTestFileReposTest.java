@@ -160,11 +160,9 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"tetrahedral_2_lazy.mol",
     		"tetrahedral_with_four_wedges.mol",
     		"thiamin.mol",
-    		"too.many.rings.mol",
     		"triacylglycerols.mol",
     		"trigonal_bipyramidal.mol",
-    		"withcharges.mol",
-    		"zinctest.mol"
+    		"withcharges.mol"
     	};
     	int tested = 0;
     	int failed = 0;

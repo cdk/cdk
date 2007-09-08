@@ -243,6 +243,61 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "H", atm.findMatchingAtomType(mol, atom));
     }
     
+    @Test public void testHydroxyl() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom oxygen = new Atom("O");
+        oxygen.setFormalCharge(-1);
+        mol.addAtom(atom);
+        mol.addAtom(oxygen);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "H", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, oxygen));
+    }
+    
+    @Test public void testHydroxonium() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom atom1 = new Atom("H");
+        IAtom atom2 = new Atom("H");
+        IAtom oxygen = new Atom("O");
+        oxygen.setFormalCharge(+1);
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(oxygen);
+        mol.addBond(0,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.plus", atm.findMatchingAtomType(mol, oxygen));
+    }
+    
+    @Test public void testPositiveCarbonyl() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom atom1 = new Atom("H");
+        IAtom atom2 = new Atom("H");
+        IAtom oxygen = new Atom("O");
+        IAtom carbon = new Atom("C");
+        oxygen.setFormalCharge(+1);
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(oxygen);
+        mol.addAtom(carbon);
+        mol.addBond(0,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,4,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(3,4,CDKConstants.BONDORDER_DOUBLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.plus.sp2", atm.findMatchingAtomType(mol, oxygen));
+    }
+    
     @Test public void testProton() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

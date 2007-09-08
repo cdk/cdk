@@ -132,7 +132,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
-    			// FIXME: I don't perceive charged atoms yet
+    			if (atom.getFormalCharge() == -1) {
+    				return factory.getAtomType("O.minus");
+    			} else if (atom.getFormalCharge() == +1) {
+    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+        				return factory.getAtomType("O.plus.sp2");
+        			} else {
+        				return factory.getAtomType("O.plus");
+        			}
+    			}
     			return null;
     		} else if (atomContainer.getConnectedBondsCount(atom) > 2) {
     			// FIXME: I don't perceive carbons with more than 4 connections yet
@@ -181,7 +190,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					}
     				} else if (atomContainer.getConnectedBondsCount(atom) == 3) {
     					return factory.getAtomType("N.sp3");
-    				} 
+    				} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    					return factory.getAtomType("N.sp3");
+    				}
     			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     				return factory.getAtomType("N.sp2");
     			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
