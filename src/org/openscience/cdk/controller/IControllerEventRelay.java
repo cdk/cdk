@@ -26,7 +26,7 @@ package org.openscience.cdk.controller;
 
 import java.awt.event.MouseEvent;
 
-public interface IMouseEventRelay {
+public interface IControllerEventRelay {
 	/**
 	 * 
 	 * @param screenCoordX
@@ -71,5 +71,6 @@ public interface IMouseEventRelay {
 	 * @param screenCoordYTo
 	 */
 	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo, MouseEvent event);
-
+	
+	
 }

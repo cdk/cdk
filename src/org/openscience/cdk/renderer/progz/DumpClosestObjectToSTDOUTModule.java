@@ -24,10 +24,13 @@
  */
 package org.openscience.cdk.renderer.progz;
 
+import java.awt.event.MouseEvent;
+
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.controller.IChemModelRelay;
 import org.openscience.cdk.controller.IController2DModule;
+import org.openscience.cdk.controller.IViewEventRelay;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
@@ -39,6 +42,8 @@ import org.openscience.cdk.interfaces.IAtom;
 public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
+	private IViewEventRelay eventRelay;
+
 	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
@@ -55,7 +60,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 		
 	}
 
-	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
+	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo, MouseEvent event) {
 		// TODO Auto-generated method stub
 		System.out.println("mousedrag at DumpClosestObject shizzle");
 		System.out.println("From: " + worldCoordFrom.x + "/" + worldCoordFrom.y + " to " +
@@ -70,7 +75,8 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 				Point2d atomCoord = new Point2d(worldCoordTo.x - offsetX, worldCoordTo.y - offsetY);
 				
 				atom.setPoint2d(atomCoord);
-				//repaint();//repaint the object somehow ;)
+				eventRelay.updateView();
+				
 			}
 		} else {
 			System.out.println("chemObjectRelay is NULL!");
@@ -101,5 +107,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 	public void setChemModelRelay(IChemModelRelay relay) {
 		this.chemObjectRelay = relay;
 	}
-
+	public void setEventRelay(IViewEventRelay relay) {
+		this.eventRelay = relay;
+	}
 }

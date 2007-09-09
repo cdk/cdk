@@ -48,22 +48,25 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * @author egonw
  */
-public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
+public class Controller2DHub implements IControllerEventRelay, IChemModelRelay {
 	
 	private IChemModel chemModel;
 	
 	private Controller2DModel controllerModel; 
 	private IJava2DRenderer renderer;
+	private IViewEventRelay eventRelay;
 	
 	private List<IController2DModule> generalModules;
 	private Map<Controller2DModel.DrawMode,IController2DModule> drawModeModules;
 	
 	public Controller2DHub(Controller2DModel controllerModel,
 		                   IJava2DRenderer renderer,
-		                   IChemModel chemModel) {
+		                   IChemModel chemModel,
+		                   IViewEventRelay eventRelay) {
 		this.controllerModel = controllerModel;
 		this.renderer = renderer;
 		this.chemModel = chemModel;
+		this.eventRelay = eventRelay;
 		
 		drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
 		generalModules = new ArrayList<IController2DModule>();
@@ -96,6 +99,7 @@ generalModules = new ArrayList<IController2DModule>();
 	 */
 	public void registerGeneralControllerModule(IController2DModule module) {
 		module.setChemModelRelay(this);
+		module.setEventRelay(eventRelay);
 		generalModules.add(module);
 	}
 	
@@ -153,7 +157,19 @@ generalModules = new ArrayList<IController2DModule>();
 		IController2DModule activeModule = getActiveDrawModule();
 		if (activeModule != null) activeModule.mouseMove(worldCoord);
 	}
+	public void updateView() {
+		//call the eventRelay method here to update the view..
+		System.out.println("updateView now in Controller2DHub");	
 
+		// Relay the updateView event to the general handlers
+	/*	for (IController2DModule module : generalModules) {
+			module.updateView();
+		}
+
+		// Relay the updateView event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.updateView();*/
+	}
 	private IController2DModule getActiveDrawModule() {
 		return drawModeModules.get(controllerModel.getDrawMode());
 	}

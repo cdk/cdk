@@ -28,25 +28,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.openscience.cdk.controller.IMouseEventRelay;
+import org.openscience.cdk.controller.IControllerEventRelay;
 
 public class SwingMouseEventRelay 
  	implements MouseMotionListener, MouseListener {
 
-	private IMouseEventRelay relay;
+	private IControllerEventRelay relay;
 	
-	public SwingMouseEventRelay(IMouseEventRelay relay) {
+	public SwingMouseEventRelay(IControllerEventRelay relay) {
 		this.relay = relay;
 	}
 	
 	public void mouseMoved(MouseEvent event) {
 		relay.mouseMove(event.getX(), event.getY());
 	}
-
+	public void updateView() {
+		System.out.println("updating View now in SwingMouseEventRelay");	
+	}
 	public void mouseDragged(MouseEvent event) {
 		// TODO Auto-generated method stub
 		//check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
-		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
+		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY(), event);
+		dragFromX = event.getX();
+		dragFromY = event.getY();
 	}
 	/** Position of mouse press for dragging. */
 	private int dragFromX = 0;

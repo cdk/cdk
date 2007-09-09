@@ -39,6 +39,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.controller.Controller2DHub;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.controller.SwingEventRelay;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -68,7 +69,8 @@ public class TestEditor extends JPanel {
 		
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setName("'frame'");
+		
 		sdg.setMolecule(makeMasstest());
 		try {
 			sdg.generateCoordinates();
@@ -81,10 +83,15 @@ public class TestEditor extends JPanel {
 
 		painter = new SwingPainter();
 		painter.setMolecule(mol);
-
+		painter.setName("'painter'");
+		
+		
+		SwingEventRelay eventRelay = new SwingEventRelay(painter);
+		
 		hub = new Controller2DHub(
 			new Controller2DModel(), painter.getRenderer(),
-			ChemModelManipulator.newChemModel(mol)
+			ChemModelManipulator.newChemModel(mol),
+			eventRelay
 		);
 		hub.registerGeneralControllerModule(
 			new DumpClosestObjectToSTDOUTModule()
@@ -110,12 +117,13 @@ public class TestEditor extends JPanel {
 	 */
 	public static void main(String[] args) {
 		TestEditor prog = new TestEditor();
+		prog.setName("'the TestEditor'");
 		prog.run();
 	}
 
 	public class SwingPainter extends JComponent {
 		private static final long serialVersionUID = 2;
-
+		
 		Renderer2DModel model = new Renderer2DModel();
 		IJava2DRenderer renderer = new Java2DRenderer(model);
 
@@ -140,6 +148,14 @@ public class TestEditor extends JPanel {
 			return this.graphic;
 		}
 		AffineTransform affinelast = new AffineTransform();
+		public void update(Graphics g) {
+			System.out.println("!!! Repainting molecule!!!");
+			
+		}
+		public void update() {
+			System.out.println("!!! Repainting molecule!!!");
+			
+		}
 		public void paint(Graphics g) {
 			super.paint(g);
 			//System.out.println("Painting molecule..!");
@@ -156,6 +172,7 @@ public class TestEditor extends JPanel {
 
 			renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
 		}
+		
 	}
 	
 	public static Molecule makeAlkanetest(int chainLength)
