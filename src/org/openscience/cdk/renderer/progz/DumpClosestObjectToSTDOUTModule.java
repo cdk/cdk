@@ -72,8 +72,8 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 			IAtom atom = chemObjectRelay.getClosestAtom(worldCoordFrom);
 			if (atom != null) {
 				System.out.println("Dragging atom: " + atom);
-				double offsetX = atom.getPoint2d().x - worldCoordFrom.x;
-				double offsetY = atom.getPoint2d().y - worldCoordFrom.y;
+				double offsetX = worldCoordFrom.x - atom.getPoint2d().x;
+				double offsetY = worldCoordFrom.y - atom.getPoint2d().y;
 				Point2d atomCoord = new Point2d(worldCoordTo.x - offsetX, worldCoordTo.y - offsetY);
 				
 				atom.setPoint2d(atomCoord);
