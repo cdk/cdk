@@ -51,7 +51,8 @@ import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- * Saves molecules in a rudimentary PDB format.
+ * Saves small molecules in a rudimentary PDB format. It does not allow
+ * writing of PDBProtein data structures.
  *
  * @cdk.module io
  */
