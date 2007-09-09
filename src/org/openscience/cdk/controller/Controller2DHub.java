@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.controller;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -67,7 +68,17 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
 		generalModules = new ArrayList<IController2DModule>();
 	}
-	
+	//FIXME: make this attempt to repaint work
+	public Controller2DHub(Controller2DModel controllerModel,
+            IJava2DRenderer renderer,
+            IChemModel chemModel, String painter) {
+this.controllerModel = controllerModel;
+this.renderer = renderer;
+this.chemModel = chemModel;
+
+drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
+generalModules = new ArrayList<IController2DModule>();
+}
 	/**
 	 * Register a draw mode that you want to have active for this Controller2DHub.
 	 * 
@@ -103,7 +114,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 	}
 
-	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo) {
+	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo, MouseEvent event) {
 		// TODO Auto-generated method stub
 		Point2d worldCoordFrom = renderer.getCoorFromScreen(screenCoordXFrom, screenCoordYFrom);
 		Point2d worldCoordTo = renderer.getCoorFromScreen(screenCoordXTo, screenCoordYTo);
@@ -111,12 +122,12 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	
 		// Relay the mouse event to the general handlers
 		for (IController2DModule module : generalModules) {
-			module.mouseDrag(worldCoordFrom, worldCoordTo);
+			module.mouseDrag(worldCoordFrom, worldCoordTo, event);
 		}
 
 		// Relay the mouse event to the active 
 		IController2DModule activeModule = getActiveDrawModule();
-		if (activeModule != null) activeModule.mouseDrag(worldCoordFrom, worldCoordTo);
+		if (activeModule != null) activeModule.mouseDrag(worldCoordFrom, worldCoordTo, event);
 	}
 
 	public void mouseEnter(int screenCoordX, int screenCoordY) {
