@@ -35,4 +35,6 @@ public interface IChemModelRelay {
 
 	public abstract IBond getClosestBond(Point2d worldCoord);
 
+	public abstract void updateView();
+	
 }

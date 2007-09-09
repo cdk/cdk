@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * @author egonw
  */
-public class Controller2DHub implements IControllerEventRelay, IChemModelRelay {
+public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	
 	private IChemModel chemModel;
 	
@@ -99,7 +99,7 @@ generalModules = new ArrayList<IController2DModule>();
 	 */
 	public void registerGeneralControllerModule(IController2DModule module) {
 		module.setChemModelRelay(this);
-		module.setEventRelay(eventRelay);
+		//module.setEventRelay(eventRelay);
 		generalModules.add(module);
 	}
 	
@@ -160,7 +160,8 @@ generalModules = new ArrayList<IController2DModule>();
 	public void updateView() {
 		//call the eventRelay method here to update the view..
 		System.out.println("updateView now in Controller2DHub");	
-
+		eventRelay.updateView();
+		
 		// Relay the updateView event to the general handlers
 	/*	for (IController2DModule module : generalModules) {
 			module.updateView();

@@ -42,8 +42,10 @@ import org.openscience.cdk.interfaces.IAtom;
 public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
-	private IViewEventRelay eventRelay;
-
+	/*private IViewEventRelay eventRelay;
+	public void setEventRelay(IViewEventRelay relay) {
+		this.eventRelay = relay;
+	}*/
 	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
@@ -75,7 +77,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 				Point2d atomCoord = new Point2d(worldCoordTo.x - offsetX, worldCoordTo.y - offsetY);
 				
 				atom.setPoint2d(atomCoord);
-				eventRelay.updateView();
+				chemObjectRelay.updateView();
 				
 			}
 		} else {
@@ -107,7 +109,5 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 	public void setChemModelRelay(IChemModelRelay relay) {
 		this.chemObjectRelay = relay;
 	}
-	public void setEventRelay(IViewEventRelay relay) {
-		this.eventRelay = relay;
-	}
+	
 }

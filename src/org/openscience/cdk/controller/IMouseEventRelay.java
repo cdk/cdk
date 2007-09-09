@@ -26,7 +26,7 @@ package org.openscience.cdk.controller;
 
 import java.awt.event.MouseEvent;
 
-public interface IControllerEventRelay {
+public interface IMouseEventRelay {
 	/**
 	 * 
 	 * @param screenCoordX

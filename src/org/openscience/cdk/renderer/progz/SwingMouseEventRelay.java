@@ -28,14 +28,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.openscience.cdk.controller.IControllerEventRelay;
+import org.openscience.cdk.controller.IMouseEventRelay;
 
 public class SwingMouseEventRelay 
  	implements MouseMotionListener, MouseListener {
 
-	private IControllerEventRelay relay;
+	private IMouseEventRelay relay;
 	
-	public SwingMouseEventRelay(IControllerEventRelay relay) {
+	public SwingMouseEventRelay(IMouseEventRelay relay) {
 		this.relay = relay;
 	}
 	

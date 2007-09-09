@@ -40,7 +40,7 @@ import javax.vecmath.Point2d;
 public interface IController2DModule {
 
 	public abstract void setChemModelRelay(IChemModelRelay relay);
-	public abstract void setEventRelay(IViewEventRelay relay);
+	//public abstract void setEventRelay(IViewEventRelay relay);
 	/**
 	 * @param Point2d worldCoord
 	 */
