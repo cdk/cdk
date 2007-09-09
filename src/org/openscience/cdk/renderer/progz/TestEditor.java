@@ -156,11 +156,16 @@ public class TestEditor extends JPanel {
 			System.out.println("!!! Repainting molecule!!!");
 			
 		}
+		private double prevZoom;
+		private int windowH;
+		private int windowW;
+
 		public void paint(Graphics g) {
-			super.paint(g);
 			//System.out.println("Painting molecule..!");
-			graphic = (Graphics2D)g;
+			super.paint(g);
 			model.setZoomFactor(1);
+
+			graphic = (Graphics2D)g;
 			Color bg = model.getBackColor();
 			g.setColor(bg);
 			g.fillRect(0, 0, getWidth(), getHeight());
@@ -169,12 +174,20 @@ public class TestEditor extends JPanel {
 				System.out.println("swing changed matrix to:" + graphic.getTransform());
 				affinelast = graphic.getTransform();
 			}
-
-			renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
+						
+			if (prevZoom != model.getZoomFactor() || windowH != getSize().height || windowW != getSize().width )
+			{
+				//new window / size changed
+				renderer.paintMolecule(molecule, (Graphics2D)g, (Rectangle2D)getBounds());
+				windowH = getSize().height;
+				windowW = getSize().width;
+				prevZoom = model.getZoomFactor();
+			}
+			else {	//same window (repaint triggered)
+				renderer.paintMolecule(molecule, graphic);
+			}
 		}
-		
 	}
-	
 	public static Molecule makeAlkanetest(int chainLength)
 	{
 		Molecule currentChain = new Molecule();

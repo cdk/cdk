@@ -101,10 +101,33 @@ public class Java2DRenderer implements IJava2DRenderer {
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * Paint the given Molecule on the graphics object at location specified by bounds.
+	 * 
+	 *@param  atomCon The molecule to be drawn
+	 *@param  graphics Graphics2D to draw on
+	 *@param  bounds
+	 */
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics) {
-		// TODO Auto-generated method stub
-		
+		graphics.transform(affine);
+		System.out.println("transform matrix:" + graphics.getTransform());
+
+		// set basic shape form for bonds
+		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke(
+			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
+			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+		);
+
+		IRingSet ringSet = getRingSet(atomCon);
+	
+		// draw bonds
+		paintBonds(atomCon, ringSet, graphics);
+
+		// draw atom symbols
+		paintAtoms(atomCon, graphics);
+		System.out.println("transform matrix:" + graphics.getTransform());
+
 	}
 	/**
 	 * Paint the given Molecule on the graphics object at location specified by bounds.
@@ -125,24 +148,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 		}
 		AffineTransform transformMatrix = createScaleTransform(molBounds,bounds);
 		affine = transformMatrix;
-		graphics.transform(transformMatrix);
-		System.out.println("transform matrix:" + graphics.getTransform());
-
-		// set basic shape form for bonds
-		graphics.setColor(Color.BLACK);
-		graphics.setStroke(new BasicStroke(
-			(float) (rendererModel.getBondWidth()/rendererModel.getBondLength()),
-			BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
-		);
-
-		IRingSet ringSet = getRingSet(atomCon);
 		
-		// draw bonds
-		paintBonds(atomCon, ringSet, graphics);
-
-		// draw atom symbols
-		paintAtoms(atomCon, graphics);
-		
+		paintMolecule(atomCon, graphics);
 	}
 	protected IRingSet getRingSet(IAtomContainer atomContainer)
 	{
@@ -308,7 +315,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double atomSymbolHOffset = boundsAtom.getY();
 		
 		
-		System.out.println("the marginc is now: " + marginc + " margind: " + margind);
+	//	System.out.println("the marginc is now: " + marginc + " margind: " + margind);
 	//	float[] tarr = layoutAtom.getBaselineOffsets();
 	//	System.out.println("getBaseline: " + layoutAtom.getBaseline() + " getBaselineOffsets: " + tarr[0] + " - "  + tarr[1] + " - "  + tarr[2]);
 
