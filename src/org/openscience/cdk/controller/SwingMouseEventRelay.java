@@ -22,13 +22,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.progz;
+package org.openscience.cdk.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.openscience.cdk.controller.IMouseEventRelay;
 
 public class SwingMouseEventRelay 
  	implements MouseMotionListener, MouseListener {
@@ -48,7 +47,7 @@ public class SwingMouseEventRelay
 	public void mouseDragged(MouseEvent event) {
 		// TODO Auto-generated method stub
 		//check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
-		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY(), event);
+		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
 		dragFromX = event.getX();
 		dragFromY = event.getY();
 	}
@@ -64,8 +63,7 @@ public class SwingMouseEventRelay
 		//Double click is a special case
 		if (event.getClickCount() > 1)
 			relay.mouseClickedDouble(event.getX(), event.getY());
-		System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY());
-
+		System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY() + " event.getClickCount(): " + event.getClickCount());
 		
 	}
 

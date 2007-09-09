@@ -1,6 +1,6 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $
+/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $
  *
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,24 +22,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.progz;
+package org.openscience.cdk.controller;
 
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.controller.IChemModelRelay;
-import org.openscience.cdk.controller.IController2DModule;
-import org.openscience.cdk.controller.IViewEventRelay;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.renderer.progz.IJava2DRenderer;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 
 /**
  * Demo IController2DModule.
+ * -write picture to file on doubleclick
+ * -show atom name on hove-over
+ * -drags atoms around (click near atom and move mouse)
  * 
- * @author egonw
+ * @author Niels Out
  *
  */
-public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
+public class ExampleController2DModule implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
 	/*private IViewEventRelay eventRelay;
@@ -49,7 +60,37 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
-		
+		try {
+			//try to write the image to a file
+			int width = 400, height = 400;
+			
+		  System.out.println("\tstarting..\n");
+	      // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed into integer pixels
+		  BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	      System.out.println("bi created\n");
+
+	      Graphics2D ig2 = bi.createGraphics();
+	      System.out.println("ig2 created\n");
+	      
+	      IJava2DRenderer renderer = chemObjectRelay.getIJava2DRenderer();
+
+	      ig2.setColor(renderer.getRenderer2DModel().getBackColor());
+	      ig2.fillRect(0, 0, width, height);
+ 
+	      Rectangle2D rectangle = new Rectangle2D.Double();
+	      rectangle.setFrame(0, 0, width, height);
+	      IChemModel chemModel = chemObjectRelay.getIChemModel();
+	      //FIXME: render all AtomContainers in this MoleculeSet
+	      IAtomContainer atomC = chemModel.getMoleculeSet().getAtomContainer(0);
+	      renderer.paintMolecule(atomC, ig2, rectangle);
+	      System.out.println("renderer.paintMolecule done\n");
+
+	      ImageIO.write(bi, "PNG", new File("c:\\tmp\\yourImageName.PNG"));
+	      System.out.println("writing output file to 'c:\\tmp\\yourImageName.PNG' done\n");
+
+	    } catch (IOException ie) {
+	      ie.printStackTrace();
+	    }
 	}
 
 	public void mouseClickedDown(Point2d worldCoord) {
@@ -62,7 +103,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 		
 	}
 
-	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo, MouseEvent event) {
+	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
 		// TODO Auto-generated method stub
 		System.out.println("mousedrag at DumpClosestObject shizzle");
 		System.out.println("From: " + worldCoordFrom.x + "/" + worldCoordFrom.y + " to " +
@@ -99,7 +140,7 @@ public class DumpClosestObjectToSTDOUTModule implements IController2DModule {
 		if (chemObjectRelay != null) {
 			IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
 			if (atom != null) {
-				//System.out.println("Found atom: " + atom);
+				System.out.println("Found atom: " + atom);
 			}
 		} else {
 			System.out.println("chemObjectRelay is NULL!");

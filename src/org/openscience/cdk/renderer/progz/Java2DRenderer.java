@@ -2,7 +2,7 @@
  * 
  * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  * 
- * Contact: cdk-devel@lists.sourceforge.net or nout@science.uva.nl
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -142,8 +142,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		// calculate the molecule boundaries via the atomContainer
 		Rectangle2D molBounds = createRectangle2D(atomCon); 
-		if (molBounds == null) {
-			logger.debug("empty atomCon: no molBounds -> no drawing ");
+		if (molBounds == null || molBounds.isEmpty()) {
+			logger.debug("empty atomCon? -> no molBounds -> no drawing ");
+			System.out.println("empty atomCon? -> no molBounds -> no drawing ");
 			return;
 		}
 		AffineTransform transformMatrix = createScaleTransform(molBounds,bounds);
@@ -277,7 +278,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		
 		Font fontAtom;
-		//font = new Font("Serif", Font.PLAIN, 20);
 		if (rendererModel.getFont() != null) {
 			fontAtom = rendererModel.getFont();
 			System.out.println("the font is now: " + fontAtom);
@@ -316,8 +316,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		
 	//	System.out.println("the marginc is now: " + marginc + " margind: " + margind);
-	//	float[] tarr = layoutAtom.getBaselineOffsets();
-	//	System.out.println("getBaseline: " + layoutAtom.getBaseline() + " getBaselineOffsets: " + tarr[0] + " - "  + tarr[1] + " - "  + tarr[2]);
 
 		//bounds around Atom Symbol
 		boundsAtom.setRect(boundsAtom.getX() + atomSymbolX - margind,
@@ -404,15 +402,14 @@ public class Java2DRenderer implements IJava2DRenderer {
 				case -1: //left alignment 
 					hydroGenX -= (hydroGenW + Math.max(hydroGenCountW, massnumberW)); break;
 				case 2: //H above atomSymbol != correct
-					hydroGenY += atomSymbolH + marginc + atomSymbolHOffset + 0.5 * boundsHydroC.getHeight() - boundsHydroC.getX(); break;
+					hydroGenY += atomSymbolH + marginc + atomSymbolHOffset + 0.5 * boundsHydroC.getHeight() - boundsHydroC.getX(); 
+					//FIXME: add height of formalCharge to this
+					break;
 				default: //right alignment = correct		
 					hydroGenX += atomSymbolDNext; break;	
 
 			}
 				
-			//terrible way of getting the MassNumber on the right X location for 'every?' number
-			//I would expect this to be 'screenAtomX - boundsMass.getWidth()- margin - marginSmall' but that didn't work 100% correct
-
 			boundsHydro.setRect(boundsHydro.getX() + hydroGenX - margind,
 					boundsHydro.getY() + hydroGenY - margind,
 					boundsHydro.getWidth() + 2 * margind,
@@ -443,7 +440,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0) {
 
 			graphics.setFont(fontSmall);
-			//String baseString = "+";
 			String textFormal = "";
 			double marginRight = 0;//margin on the right (=to hide part of bonds)
 			if (atom.getFormalCharge() != 1 && atom.getFormalCharge() != -1)
@@ -459,7 +455,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 			double formalChargeY = 0;
 			double formalChargeH = 0;
 			
-			if (alignment > 0)
+			if (alignment > 0) //right alignment
 				formalChargeX += hydroGenW + hydroGenCountW;//should hydroGenCountW be included here?
 			
 			double formalChargeW = 0;
@@ -1154,8 +1150,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 	}
 	
 	public Rectangle2D createRectangle2D(IAtomContainer atomCon) {
-		if (atomCon.getAtomCount() == 0)
+		if (atomCon == null || atomCon.getAtomCount() == 0)
 			return null;
+		
 		float xmin, xmax = (float)atomCon.getAtom(0).getPoint2d().x;
 		xmin = xmax;
 		float ymin, ymax = (float)atomCon.getAtom(0).getPoint2d().y;

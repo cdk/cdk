@@ -75,6 +75,6 @@ public interface IController2DModule {
 	 * @param Point2d worldCoordFrom
 	 * @param Point2d worldCoordTo
 	 */
-	public abstract void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo, MouseEvent event);
+	public abstract void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo);
 
 }

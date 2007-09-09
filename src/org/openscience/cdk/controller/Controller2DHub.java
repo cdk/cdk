@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.controller;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,17 +70,15 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
 		generalModules = new ArrayList<IController2DModule>();
 	}
-	//FIXME: make this attempt to repaint work
-	public Controller2DHub(Controller2DModel controllerModel,
-            IJava2DRenderer renderer,
-            IChemModel chemModel, String painter) {
-this.controllerModel = controllerModel;
-this.renderer = renderer;
-this.chemModel = chemModel;
-
-drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
-generalModules = new ArrayList<IController2DModule>();
-}
+	public Controller2DModel getController2DModel() {
+		return controllerModel;
+	}
+	public IJava2DRenderer getIJava2DRenderer() {
+		return renderer;
+	}
+	public IChemModel getIChemModel() {
+		return chemModel;
+	}
 	/**
 	 * Register a draw mode that you want to have active for this Controller2DHub.
 	 * 
@@ -104,8 +101,16 @@ generalModules = new ArrayList<IController2DModule>();
 	}
 	
 	public void mouseClickedDouble(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
-		
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
+			
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseClickedDouble(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseClickedDouble(worldCoord);
 	}
 
 	public void mouseClickedDown(int screenCoordX, int screenCoordY) {
@@ -118,20 +123,18 @@ generalModules = new ArrayList<IController2DModule>();
 		
 	}
 
-	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo, MouseEvent event) {
-		// TODO Auto-generated method stub
+	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo) {
 		Point2d worldCoordFrom = renderer.getCoorFromScreen(screenCoordXFrom, screenCoordYFrom);
 		Point2d worldCoordTo = renderer.getCoorFromScreen(screenCoordXTo, screenCoordYTo);
-		
-	
+			
 		// Relay the mouse event to the general handlers
 		for (IController2DModule module : generalModules) {
-			module.mouseDrag(worldCoordFrom, worldCoordTo, event);
+			module.mouseDrag(worldCoordFrom, worldCoordTo);
 		}
 
 		// Relay the mouse event to the active 
 		IController2DModule activeModule = getActiveDrawModule();
-		if (activeModule != null) activeModule.mouseDrag(worldCoordFrom, worldCoordTo, event);
+		if (activeModule != null) activeModule.mouseDrag(worldCoordFrom, worldCoordTo);
 	}
 
 	public void mouseEnter(int screenCoordX, int screenCoordY) {
@@ -192,7 +195,6 @@ generalModules = new ArrayList<IController2DModule>();
 				}
 			}
 		}
-		
 		return closestAtom;
 	}
 
@@ -200,5 +202,5 @@ generalModules = new ArrayList<IController2DModule>();
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

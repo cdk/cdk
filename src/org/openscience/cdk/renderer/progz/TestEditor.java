@@ -39,7 +39,9 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.controller.Controller2DHub;
 import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.controller.ExampleController2DModule;
 import org.openscience.cdk.controller.SwingEventRelay;
+import org.openscience.cdk.controller.SwingMouseEventRelay;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -94,7 +96,7 @@ public class TestEditor extends JPanel {
 			eventRelay
 		);
 		hub.registerGeneralControllerModule(
-			new DumpClosestObjectToSTDOUTModule()
+			new ExampleController2DModule()
 		);
 		SwingMouseEventRelay relay = new SwingMouseEventRelay(hub); 
 		painter.addMouseListener(relay);

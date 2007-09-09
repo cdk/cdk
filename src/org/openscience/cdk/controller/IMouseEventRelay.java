@@ -70,7 +70,7 @@ public interface IMouseEventRelay {
 	 * @param screenCoordXTo
 	 * @param screenCoordYTo
 	 */
-	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo, MouseEvent event);
+	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
 	
 	
 }
