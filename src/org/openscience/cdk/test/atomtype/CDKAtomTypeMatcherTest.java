@@ -350,7 +350,68 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         assertAtomType(testedAtomTypes, "H.plus", atm.findMatchingAtomType(mol, atom));
     }
+
+    @Test public void testHalides() throws Exception {
+        IMolecule mol = new Molecule();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+        IAtom atom = new Atom("Cl");
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "Cl.minus", atm.findMatchingAtomType(mol, atom));
+
+    	mol = new Molecule();
+        atom = new Atom("F");
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "F.minus", atm.findMatchingAtomType(mol, atom));
+
+    	mol = new Molecule();
+        atom = new Atom("Br");
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "Br.minus", atm.findMatchingAtomType(mol, atom));
+
+    	mol = new Molecule();
+        atom = new Atom("I");
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "I.minus", atm.findMatchingAtomType(mol, atom));
+    }
     
+    @Test public void testHalogens() throws Exception {
+        IMolecule mol = new Molecule();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+        IAtom atom = new Atom("Cl");
+        IAtom hydrogen = new Atom("H");
+        mol.addAtom(atom);
+        mol.addAtom(hydrogen);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        assertAtomType(testedAtomTypes, "Cl", atm.findMatchingAtomType(mol, atom));
+
+        mol = new Molecule();
+        atom = new Atom("I");
+        mol.addAtom(atom);
+        mol.addAtom(hydrogen);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        assertAtomType(testedAtomTypes, "I", atm.findMatchingAtomType(mol, atom));
+
+        mol = new Molecule();
+        atom = new Atom("Br");
+        mol.addAtom(atom);
+        mol.addAtom(hydrogen);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        assertAtomType(testedAtomTypes, "Br", atm.findMatchingAtomType(mol, atom));
+
+        mol = new Molecule();
+        atom = new Atom("F");
+        mol.addAtom(atom);
+        mol.addAtom(hydrogen);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        assertAtomType(testedAtomTypes, "F", atm.findMatchingAtomType(mol, atom));
+    }
+
     @Test public void testHydride() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

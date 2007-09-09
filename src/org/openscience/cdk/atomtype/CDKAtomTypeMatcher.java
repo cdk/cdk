@@ -72,6 +72,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveNitrogens(atomContainer, atom);
         if (type == null) type = perceiveHydrogens(atomContainer, atom);
         if (type == null) type = perceiveSulphurs(atomContainer, atom);
+        if (type == null) type = perceiveHalogens(atomContainer, atom);
         return type;
     }
     
@@ -263,6 +264,40 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				return factory.getAtomType("H.minus");
     			}
     		}
+    	}
+    	return null;
+    }
+    
+    private IAtomType perceiveHalogens(IAtomContainer atomContainer, IAtom atom)
+        throws CDKException {
+    	if ("Cl".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == -1)) {
+    			return factory.getAtomType("Cl.minus");
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    			return factory.getAtomType("Cl");
+    		}
+    	} else if ("Br".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+        			atom.getFormalCharge() == -1)) {
+        			return factory.getAtomType("Br.minus");
+        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+        			return factory.getAtomType("Br");
+        		}
+    	} else if ("F".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+        			atom.getFormalCharge() == -1)) {
+        			return factory.getAtomType("F.minus");
+        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+        			return factory.getAtomType("F");
+        		}
+    	} else if ("I".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+        			atom.getFormalCharge() == -1)) {
+        			return factory.getAtomType("I.minus");
+        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+        			return factory.getAtomType("I");
+        		}
     	}
     	return null;
     }
