@@ -73,6 +73,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveHydrogens(atomContainer, atom);
         if (type == null) type = perceiveSulphurs(atomContainer, atom);
         if (type == null) type = perceiveHalogens(atomContainer, atom);
+        if (type == null) type = perceivePhosphors(atomContainer, atom);
         return type;
     }
     
@@ -244,6 +245,28 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
     
+    private IAtomType perceivePhosphors(IAtomContainer atomContainer, IAtom atom)
+    	throws CDKException {
+    	if ("P".equals(atom.getSymbol())) {
+    		List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
+    		int neighborcount = neighbors.size();
+    		if (neighborcount == 3) {
+    			return factory.getAtomType("P.ine");
+    		} else if (neighborcount == 4) {
+    			// count the number of double bonded oxygens
+    			int doubleBonds = 0;
+    			for (int i=neighborcount-1;i>=0;i--) {
+    				if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+    					doubleBonds++;
+    				}
+    			}
+    			if (doubleBonds == 1){
+    				return factory.getAtomType("P.ate");
+    			};
+    		}
+    	}
+    	return null;
+    }
     private IAtomType perceiveHydrogens(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
     	if ("H".equals(atom.getSymbol())) {
