@@ -42,14 +42,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 
 /**
- * Demo IController2DModule.
- * -write picture to file on doubleclick
- * -show atom name on hove-over
+ * deletes closest atom on click
  * 
  * @author Niels Out
  *
  */
-public class ExampleController2DModule implements IController2DModule {
+public class Controller2DModuleRemove implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
 	/*private IViewEventRelay eventRelay;
@@ -59,42 +57,18 @@ public class ExampleController2DModule implements IController2DModule {
 	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
-		try {
-			//try to write the image to a file
-			int width = 400, height = 400;
-			
-		  System.out.println("\tstarting..\n");
-	      // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed into integer pixels
-		  BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	      System.out.println("bi created\n");
-
-	      Graphics2D ig2 = bi.createGraphics();
-	      System.out.println("ig2 created\n");
-	      
-	      IJava2DRenderer renderer = chemObjectRelay.getIJava2DRenderer();
-
-	      ig2.setColor(renderer.getRenderer2DModel().getBackColor());
-	      ig2.fillRect(0, 0, width, height);
- 
-	      Rectangle2D rectangle = new Rectangle2D.Double();
-	      rectangle.setFrame(0, 0, width, height);
-	      IChemModel chemModel = chemObjectRelay.getIChemModel();
-	      //FIXME: render all AtomContainers in this MoleculeSet
-	      IAtomContainer atomC = chemModel.getMoleculeSet().getAtomContainer(0);
-	      renderer.paintMolecule(atomC, ig2, rectangle);
-	      System.out.println("renderer.paintMolecule done\n");
-
-	      ImageIO.write(bi, "PNG", new File("c:\\tmp\\yourImageName.PNG"));
-	      System.out.println("writing output file to 'c:\\tmp\\yourImageName.PNG' done\n");
-
-	    } catch (IOException ie) {
-	      ie.printStackTrace();
-	    }
+		
 	}
 
 	public void mouseClickedDown(Point2d worldCoord) {
 		// TODO Auto-generated method stub
-		
+		IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
+		System.out.println("trying to remove: " + atom);
+		if (atom != null) {
+			chemObjectRelay.removeAtom(atom);
+			chemObjectRelay.updateView();
+		}
+			
 	}
 
 	public void mouseClickedUp(Point2d worldCoord) {
@@ -103,8 +77,7 @@ public class ExampleController2DModule implements IController2DModule {
 	}
 
 	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
-			System.out.println("mouseDrag does nothing in this ExampleController2DModule..");
-		
+	
 	}
 
 	public void mouseEnter(Point2d worldCoord) {
@@ -118,14 +91,7 @@ public class ExampleController2DModule implements IController2DModule {
 	}
 
 	public void mouseMove(Point2d worldCoord) {
-		if (chemObjectRelay != null) {
-			IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
-			if (atom != null) {
-				//System.out.println("Found atom: " + atom);
-			}
-		} else {
-			System.out.println("chemObjectRelay is NULL!");
-		}
+		
 	}
 
 	public void setChemModelRelay(IChemModelRelay relay) {

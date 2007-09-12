@@ -45,11 +45,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Demo IController2DModule.
  * -write picture to file on doubleclick
  * -show atom name on hove-over
+ * -drags atoms around (click near atom and move mouse)
  * 
  * @author Niels Out
  *
  */
-public class ExampleController2DModule implements IController2DModule {
+public class Controller2DModuleMove implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
 	/*private IViewEventRelay eventRelay;
@@ -103,8 +104,26 @@ public class ExampleController2DModule implements IController2DModule {
 	}
 
 	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
-			System.out.println("mouseDrag does nothing in this ExampleController2DModule..");
+		// TODO Auto-generated method stub
+		System.out.println("mousedrag at DumpClosestObject shizzle");
+		System.out.println("From: " + worldCoordFrom.x + "/" + worldCoordFrom.y + " to " +
+				worldCoordTo.x + "/" + worldCoordTo.y);
 		
+		if (chemObjectRelay != null) {
+			IAtom atom = chemObjectRelay.getClosestAtom(worldCoordFrom);
+			if (atom != null) {
+				System.out.println("Dragging atom: " + atom);
+				double offsetX = worldCoordFrom.x - atom.getPoint2d().x;
+				double offsetY = worldCoordFrom.y - atom.getPoint2d().y;
+				Point2d atomCoord = new Point2d(worldCoordTo.x - offsetX, worldCoordTo.y - offsetY);
+				
+				atom.setPoint2d(atomCoord);
+				chemObjectRelay.updateView();
+				
+			}
+		} else {
+			System.out.println("chemObjectRelay is NULL!");
+		}
 	}
 
 	public void mouseEnter(Point2d worldCoord) {

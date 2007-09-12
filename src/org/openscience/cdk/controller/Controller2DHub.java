@@ -92,6 +92,14 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	}
 	
 	/**
+	 * Unregister all general IController2DModules.
+	 */
+	public void unRegisterAllControllerModule() {
+		//module.setEventRelay(eventRelay);
+		
+		generalModules.clear();
+	}
+	/**
 	 * Adds a general IController2DModule which will catch all mouse events.
 	 */
 	public void registerGeneralControllerModule(IController2DModule module) {
@@ -114,13 +122,29 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	}
 
 	public void mouseClickedDown(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
 		
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseClickedDown(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseClickedDown(worldCoord);
 	}
 
 	public void mouseClickedUp(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
 		
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseClickedUp(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseClickedUp(worldCoord);
 	}
 
 	public void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo) {
@@ -138,13 +162,29 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	}
 
 	public void mouseEnter(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
 		
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseEnter(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseEnter(worldCoord);
 	}
 
 	public void mouseExit(int screenCoordX, int screenCoordY) {
-		// TODO Auto-generated method stub
+		Point2d worldCoord = renderer.getCoorFromScreen(screenCoordX, screenCoordY);
 		
+		// Relay the mouse event to the general handlers
+		for (IController2DModule module : generalModules) {
+			module.mouseExit(worldCoord);
+		}
+
+		// Relay the mouse event to the active 
+		IController2DModule activeModule = getActiveDrawModule();
+		if (activeModule != null) activeModule.mouseExit(worldCoord);
 	}
 
 	public void mouseMove(int screenCoordX, int screenCoordY) {
@@ -196,6 +236,10 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 			}
 		}
 		return closestAtom;
+	}
+	public void removeAtom(IAtom atom) {
+		
+		ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);
 	}
 
 	public IBond getClosestBond(Point2d worldCoord) {

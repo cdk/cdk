@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.renderer.progz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -33,6 +34,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -49,6 +51,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.interfaces.IChemModel;
 
 /**
  * Test class for testing the new Java2DRenderer and Controller2DHub.
@@ -86,8 +89,7 @@ public class TestEditor extends JPanel {
 		painter = new SwingPainter();
 		painter.setMolecule(mol);
 		painter.setName("'painter'");
-		
-		
+				
 		SwingEventRelay eventRelay = new SwingEventRelay(painter);
 		
 		hub = new Controller2DHub(
@@ -102,6 +104,12 @@ public class TestEditor extends JPanel {
 		painter.addMouseListener(relay);
 		painter.addMouseMotionListener(relay);
 
+		JToolBar toolbar = SomeToolBar.getToolbar(hub, 1);
+	//	frame.add(toolbar);
+		
+		frame.add(toolbar, BorderLayout.NORTH);
+       // frame.revalidate();
+        
 		frame.add(painter);
 
 		painter.setBackground(Color.WHITE);
@@ -110,7 +118,7 @@ public class TestEditor extends JPanel {
 	}
 
 	private void run() {
-		frame.setSize(400, 400);
+		frame.setSize(800, 400);
 		frame.setVisible(true);		
 	}
 
@@ -167,6 +175,10 @@ public class TestEditor extends JPanel {
 			super.paint(g);
 			model.setZoomFactor(1);
 
+			//IChemModel imol = hub.getIChemModel();
+			//FIXME: make sure to draw all molecules if imol has more then one..
+			//molecule = imol.getMoleculeSet().getMolecule(0);
+			
 			graphic = (Graphics2D)g;
 			Color bg = model.getBackColor();
 			g.setColor(bg);

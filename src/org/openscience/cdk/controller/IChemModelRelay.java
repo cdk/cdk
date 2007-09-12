@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 public interface IChemModelRelay {
 
 	public abstract IAtom getClosestAtom(Point2d worldCoord);
+	
+	public abstract void removeAtom(IAtom atom);
 
 	public abstract IBond getClosestBond(Point2d worldCoord);
 

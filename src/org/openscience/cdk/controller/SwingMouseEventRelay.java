@@ -45,7 +45,6 @@ public class SwingMouseEventRelay
 		System.out.println("updating View now in SwingMouseEventRelay");	
 	}
 	public void mouseDragged(MouseEvent event) {
-		// TODO Auto-generated method stub
 		//check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
 		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
 		dragFromX = event.getX();
@@ -65,17 +64,16 @@ public class SwingMouseEventRelay
 			relay.mouseClickedDouble(event.getX(), event.getY());
 		System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY() + " event.getClickCount(): " + event.getClickCount());
 		
-	}
-
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseEntered(MouseEvent event) {
+		relay.mouseEnter(event.getX(), event.getY());
 	}
+
+	public void mouseExited(MouseEvent event) {
+		relay.mouseExit(event.getX(), event.getY());
+}
 
 	public void mousePressed(MouseEvent event) {
 		// TODO Auto-generated method stub
