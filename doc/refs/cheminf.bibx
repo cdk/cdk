@@ -206,6 +206,16 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Saller85">
+    <bibtex:phdthesis>
+      <bibtex:author>Saller, H.</bibtex:author>
+      <bibtex:title>Quantitative Emperische Modelle fur Elektronische Effekte in Pi-Systemen und fur die Chemische Reaktivitat</bibtex:title>
+      <bibtex:journal> Tetrahedron</bibtex:journal>
+      <bibtex:year>1985</bibtex:year>
+      <bibtex:adress>Thecn. Univ. Munchen</bibtex:year>
+    </bibtex:phdthesis>
+  </bibtex:entry>
+  
   <bibtex:entry id="HAN90">
     <bibtex:article>
       <bibtex:author>Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.</bibtex:author>

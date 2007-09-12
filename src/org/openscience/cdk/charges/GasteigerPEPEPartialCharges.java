@@ -39,7 +39,7 @@ import java.io.IOException;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
- * {@cdk.cite GM81}. This class doesn't implement the original method of the Marsili but the 
+ * {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the 
  * method based on H. Saller which is described from Petra manual version 2.6</p> 
  * <p>They are calculated by generating all valence bond(resonance) structures
  * for this system and then weighting them on the basis of pi-orbital electronegativies
