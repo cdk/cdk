@@ -56,9 +56,7 @@ import org.openscience.cdk.controller.Controller2DHub;
  *  This class makes the JCPToolBar
  *
  *@author        steinbeck
- *@cdk.created       16. Februar 2005
- *@cdk.module    jchempaint
- *@see           JChemPaintViewerOnlyPanel
+ *@author 		nielsout (changes for java2D version)
  */
 public class SomeToolBar
 {

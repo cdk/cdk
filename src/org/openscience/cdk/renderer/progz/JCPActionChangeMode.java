@@ -82,6 +82,12 @@ public class JCPActionChangeMode extends AbstractAction
 			module = new Controller2DModuleRemove();
 			System.out.println("Controller2DModuleRemove button started..!");
 		}
+		else if (key.equals("plus")) {
+			module = new Controller2DModuleChangeFormalC(1);
+		}
+		else if (key.equals("minus")) {
+			module = new Controller2DModuleChangeFormalC(-1);
+		}
 	}
 	 public void actionPerformed(ActionEvent e) {
 	       // logger.info("  module  ", module);

@@ -241,7 +241,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);
 	}
-
+	
 	public IBond getClosestBond(Point2d worldCoord) {
 		// TODO Auto-generated method stub
 		return null;
