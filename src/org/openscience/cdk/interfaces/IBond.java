@@ -42,6 +42,14 @@ import javax.vecmath.Point3d;
  */
 public interface IBond extends IElectronContainer {
 
+	public enum Order {
+		EMPTY,
+		SINGLE,
+		DOUBLE,
+		TRIPLE,
+		QUADRUPLE
+	}
+	
 	/**
 	 *  Returns the Iterator to atoms making up this bond.
 	 *
