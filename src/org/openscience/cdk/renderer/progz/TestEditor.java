@@ -58,6 +58,7 @@ import org.openscience.cdk.interfaces.IChemModel;
  * 
  * @author nielsout
  * @author egonw
+ * @cdk.module jchempaint
  */
 public class TestEditor extends JPanel {
 

@@ -57,6 +57,7 @@ import org.openscience.cdk.controller.Controller2DHub;
  *
  *@author        steinbeck
  *@author 		nielsout (changes for java2D version)
+ * @cdk.module   jchempaint
  */
 public class SomeToolBar
 {
