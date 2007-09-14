@@ -2,6 +2,9 @@
 
 package org.openscience.cdk.smiles.smarts.parser;
 
+/**
+ * @cdk.module smarts
+ */
 public interface SMARTSParserVisitor
 {
   public Object visit(SimpleNode node, Object data);
