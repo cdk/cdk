@@ -1,6 +1,6 @@
 options {
 	STATIC=false;
-	FORCE_LA_CHECK=true;
+	FORCE_LA_CHECK=false;
 	USER_CHAR_STREAM = false;
     UNICODE_INPUT = false;
     IGNORE_CASE = false;
@@ -253,7 +253,9 @@ PARSER_END(SMARTSParser)
     |
     <R_BRACKET : "]" >
     |
-    <DIGIT: ["0"-"9"] > // this needs to appear first!!!
+    <Q_MARK : "?" >
+    |
+    <DIGIT: ["0"-"9"] > 
 }
 
 /**
@@ -297,7 +299,7 @@ PARSER_END(SMARTSParser)
 
 ASTStart Start() #Start : {}
 {
-    ReactionExpression()
+    ReactionExpression() <EOF>
     {
         return jjtThis;
     }
@@ -354,14 +356,23 @@ ASTAtom	 AtomExpression() #Atom :
 {
 	Token firstToken;
 	Token rightBracket;
+	Node massNode = null;
 }
 {
 	( 
 	    ( 
 	    	<L_BRACKET> { firstToken = getToken(1); }
+	    	( AtomicMass() { massNode = jjtree.popNode(); }	)?
 	    	LowAndExpression() 
+	    	{ 
+				if (massNode != null) { // insert AtomicMass node into expression
+					ASTLowAndExpression topNode = (ASTLowAndExpression)jjtree.popNode();
+					topNode.insertLeafChild(massNode);
+					jjtree.pushNode(topNode);
+				}
+	    	}
 	    	<R_BRACKET> { rightBracket = token; }
-	    	{
+	    	{   
 	    		// If the LowAndExpression is "[H]", change it to an ExplicitAtom
 	    		if (firstToken.image.equals("H")) {
 		    		if ( (rightBracket.beginColumn - firstToken.endColumn) == 1) {
@@ -427,7 +438,7 @@ void SimpleBond() #SimpleBond : {}
         | 
         <ANY_BOND> 
         | 
-        <R_BOND> // TODO: Need API
+        <R_BOND>
     )
     {
         jjtThis.setBondType(token.kind);
@@ -625,6 +636,9 @@ void AtomicMass() #AtomicMass :
 { StringBuffer digits = new StringBuffer(); }
 {
     ( <DIGIT> { digits.append(token.image); } )+
+    {
+    	jjtThis.setMass( Integer.parseInt(digits.toString()) ); 
+    }
 }
 
 void RingIdentifier() #RingIdentifier: {}
@@ -632,10 +646,20 @@ void RingIdentifier() #RingIdentifier: {}
 	LowAndBond() <DIGIT>
 }
 
-void Chirality() #Chirality : {}
+void Chirality() #Chirality : 
+{ StringBuffer digits = new StringBuffer(); }
 {
     LOOKAHEAD(2)
-    "@" | "@@"
+    "@" { jjtThis.setClockwise(true); } | "@@" { jjtThis.setClockwise(false); }
+    ( 
+    	( <DIGIT> { digits.append(token.image); } )+
+    	{
+    		jjtThis.setDegree( Integer.parseInt(digits.toString()) );
+    	}
+    )? 
+    ( 
+    	<Q_MARK> { jjtThis.setUnspecified(true); }
+    )?
 }
 
 void NoHydrogenElement() #Element: {}

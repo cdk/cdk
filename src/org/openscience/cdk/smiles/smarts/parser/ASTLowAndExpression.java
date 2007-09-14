@@ -54,4 +54,16 @@ public class ASTLowAndExpression extends SimpleNode {
 	public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
+	
+	public void insertLeafChild(Node node) {
+		Node firstNode = this.jjtGetChild(0);
+		while ( !(firstNode instanceof ASTImplicitHighAndExpression) ) {
+			firstNode = firstNode.jjtGetChild(0);
+		}
+		ASTImplicitHighAndExpression insert = new ASTImplicitHighAndExpression(SMARTSParser.JJTIMPLICITHIGHANDEXPRESSION);
+		insert.jjtAddChild(node, 0);
+		insert.jjtAddChild(firstNode.jjtGetChild(0), 1);
+		firstNode.jjtRemoveChild(0);
+		firstNode.jjtAddChild(insert, 0);
+	}
 }

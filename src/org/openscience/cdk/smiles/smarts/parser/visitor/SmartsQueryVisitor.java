@@ -20,9 +20,11 @@
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -36,12 +38,16 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticSymbolAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.ChiralityAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingIdentifierAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RingMembershipAtom;
@@ -112,8 +118,14 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword SMARTS AST
  */
 public class SmartsQueryVisitor implements SMARTSParserVisitor {
+	// current atoms with a ring identifier 
 	private RingIdentifierAtom[] ringAtoms;
+	// query 
 	private IQueryAtomContainer query;
+	// Whether is parsing a recursive smarts
+	private boolean isParsingRS;
+	// Recursive smarts query
+	private IQueryAtomContainer rsQuery;
 	
 	public Object visit(ASTRingIdentifier node, Object data) {
 		IQueryAtom atom = (IQueryAtom)data;
@@ -131,12 +143,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 	public Object visit(ASTAtom node, Object data) {
 		IQueryAtom atom = (IQueryAtom)node.jjtGetChild(0).jjtAccept(this, data);
+		if (isParsingRS) return atom; // Don't parse ring identifiers if in recursive smarts
 		for (int i = 1; i < node.jjtGetNumChildren(); i++) { // if there are ring identifiers
 			ASTRingIdentifier ringIdentifier = (ASTRingIdentifier)node.jjtGetChild(i);
 			RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.jjtAccept(this, atom);
 			
-			// if there is alreay a RingIdentifierAtom, create a bond betwee them
-			// and add the bond to the query
+			// if there is already a RingIdentifierAtom, create a bond between 
+			// them and add the bond to the query
 			int ringId = ringIdentifier.getRingId();
 			
 			if (ringAtoms[ringId] == null) {
@@ -195,15 +208,15 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 	// TODO: No SmartsGroup API
 	public Object visit(ASTGroup node, Object data) {
-		ArrayList atomContainerList = new ArrayList();
+		List<IAtomContainer> atomContainers = new ArrayList<IAtomContainer>();
 		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
 			ringAtoms = new RingIdentifierAtom[10];
 			query = new QueryAtomContainer();
 			node.jjtGetChild(i).jjtAccept(this, null);
-			atomContainerList.add(query);
+			atomContainers.add(query);
 		}
 		logger.info("Only return the first smarts. Group not supported.");
-		return atomContainerList.get(0); 
+		return atomContainers.get(0); 
 	}
 	
 	public Object visit(ASTSmarts node, Object data) {
@@ -217,17 +230,20 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			if (bond == null) {
 				if (((SMARTSAtom)((Object[])data)[0]).getFlag(CDKConstants.ISAROMATIC) &&
 						atom.getFlag(CDKConstants.ISAROMATIC)) {
-					bond = new AromaticQueryBond(atom, (SMARTSAtom)((Object[])data)[0], 1.5d);
+					bond = new AromaticQueryBond();
+					bond.setAtoms(new IAtom[] {atom, (SMARTSAtom)((Object[])data)[0]});
 				} else {
 					bond = new OrderQueryBond(atom, (SMARTSAtom)((Object[])data)[0], 1.0d);
 				}
 			} else {
 				bond.setAtoms(new IAtom[] {(SMARTSAtom)((Object[])data)[0], atom});
 			}
-			query.addBond(bond);
+			if (isParsingRS) rsQuery.addBond(bond);
+			else query.addBond(bond);
 			bond = null;
 		}
-		query.addAtom(atom);
+		if (isParsingRS) rsQuery.addAtom(atom);
+		else query.addAtom(atom);
 		
 		for (int i = 1; i < node.jjtGetNumChildren(); i++) {
 			Node child = node.jjtGetChild(i);
@@ -245,8 +261,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				} else {
 					bond.setAtoms(new IAtom[] {atom, newAtom});
 				}
-				query.addBond(bond);
-				query.addAtom(newAtom);
+				if (isParsingRS) {
+					rsQuery.addBond(bond);
+					rsQuery.addAtom(newAtom);
+				} else {
+					query.addBond(bond);
+					query.addAtom(newAtom);
+				}
 				
 				atom = newAtom;
 				bond = null;
@@ -256,7 +277,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			}
 		}
 
-		return query;
+		return isParsingRS ? rsQuery: query;
 	}
 
 	public Object visit(ASTNotBond node, Object data) {
@@ -348,7 +369,6 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			bond = new AromaticQueryBond();
 			break;
 		case SMARTSParserConstants.R_BOND:
-			//TODO: Ring bond
 			bond = new RingBond();
 			break;
 		case SMARTSParserConstants.UP_S_BOND:
@@ -395,14 +415,14 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTRecursiveSmartsExpression node, Object data) {
-		logger.info("Recursive Smarts not supported");
-		// return an always true atom
-		return new SMARTSAtom() {
-			private static final long serialVersionUID = 157241524033283896L;
-			public boolean matches(IAtom atom) {
-				return true;
-			}
-		};
+		rsQuery = new QueryAtomContainer();
+		isParsingRS = true;
+		node.jjtGetChild(0).jjtAccept(this, null);
+		isParsingRS = false;
+		
+		RecursiveSmartsAtom atom = new RecursiveSmartsAtom(rsQuery);
+		
+		return atom;
 	}
 
 	public ASTStart getRoot(Node node) {
@@ -486,13 +506,16 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTAtomicMass node, Object data) {
-		logger.info("AtomicMass Query Atom not implemented");
-		return data;
+		MassAtom atom = new MassAtom(node.getMass());
+		return atom;
 	}
 
 	public Object visit(ASTChirality node, Object data) {
-		logger.info("Chirality Query Atom not implemented");
-		return data;
+		ChiralityAtom atom = new ChiralityAtom();
+		atom.setDegree(node.getDegree());
+		atom.setClockwise(node.isClockwise());
+		atom.setUnspecified(node.isUnspecified());
+		return atom;
 	}
 
 	public Object visit(ASTLowAndExpression node, Object data) {
@@ -574,6 +597,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		} else if ("o".equals(symbol) || "n".equals(symbol)
 				|| "c".equals(symbol) || "s".equals(symbol)) {
 			atom = new AromaticSymbolAtom();
+			atom.setSymbol(symbol.toUpperCase());
+		} else if ("H".equals(symbol)) {
+			atom = new HydrogenAtom();
 			atom.setSymbol(symbol.toUpperCase());
 		} else {
 			atom = new AliphaticSymbolAtom();

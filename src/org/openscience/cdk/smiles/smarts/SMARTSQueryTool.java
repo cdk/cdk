@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -29,7 +30,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -130,6 +135,9 @@ public class SMARTSQueryTool {
         // TODO: we should consider some sort of caching?
         this.atomContainer = atomContainer;
         initializeMolecule();
+        
+    	// First calculate the recursive smarts
+    	initializeRecursiveSmarts(this.atomContainer);        
 
         // lets see if we have a single atom query
         if (query.getAtomCount() == 1) {
@@ -364,6 +372,39 @@ public class SMARTSQueryTool {
         }
 
     }
+    
+    /**
+     * Initializes recursive smarts atoms in the query
+     * 
+     * @param atomContainer
+     * @throws CDKException
+     */
+    private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
+    	for (Iterator<IAtom> it = this.query.atoms(); it.hasNext(); ) {
+			IAtom atom = it.next();
+			initializeRecursiveSmartsAtom(atom, atomContainer);
+		}
+    }
+    
+    /**
+     * Recursively initializes recursive smarts atoms
+     * 
+     * @param atom
+     * @param atomContainer
+     * @throws CDKException
+     */
+    private void initializeRecursiveSmartsAtom(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+    	if (atom instanceof LogicalOperatorAtom) {
+    		initializeRecursiveSmartsAtom(((LogicalOperatorAtom)atom).getLeft(), atomContainer);
+    		if (((LogicalOperatorAtom)atom).getRight() != null) {
+    			initializeRecursiveSmartsAtom(((LogicalOperatorAtom)atom).getRight(), atomContainer);	
+    		}
+    	} else if (atom instanceof RecursiveSmartsAtom) {
+            ((RecursiveSmartsAtom)atom).setAtomContainer(atomContainer);
+    	} else if (atom instanceof HydrogenAtom) {
+    		((HydrogenAtom)atom).setAtomContainer(atomContainer);
+    	}
+    }    
 
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
@@ -383,6 +424,8 @@ public class SMARTSQueryTool {
             List list = (List) aBondMapping;
 
             List<Integer> tmp = new ArrayList<Integer>();
+            IAtom atom1 = null;
+            IAtom atom2 = null;
             // loop over this mapping
             for (Object aList : list) {
                 RMap map = (RMap) aList;
@@ -390,8 +433,8 @@ public class SMARTSQueryTool {
 
                 // get the atoms in this bond
                 IBond bond = atomContainer.getBond(bondID);
-                IAtom atom1 = bond.getAtom(0);
-                IAtom atom2 = bond.getAtom(1);
+                atom1 = bond.getAtom(0);
+                atom2 = bond.getAtom(1);
 
                 Integer idx1 = atomContainer.getAtomNumber(atom1);
                 Integer idx2 = atomContainer.getAtomNumber(atom2);
@@ -400,7 +443,17 @@ public class SMARTSQueryTool {
                 if (!tmp.contains(idx2)) tmp.add(idx2);
             }
             if (tmp.size() > 0) atomMapping.add(tmp);
+            
+            // If there is only one bond, check if it matches both ways.
+            if (list.size() == 1 && atom1.getAtomicNumber() == atom2.getAtomicNumber()) {
+            	List<Integer> tmp2 = new ArrayList<Integer>();
+            	tmp2.add(tmp.get(0));
+            	tmp2.add(tmp.get(1));
+            	atomMapping.add(tmp2);
+            }
         }
+        
+        
         return atomMapping;
     }
 }

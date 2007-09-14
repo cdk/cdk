@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import java.util.ArrayList;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -46,7 +44,6 @@ public class RingMembershipAtom extends SMARTSAtom {
 
 	public boolean matches(IAtom atom) {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
-			// TODO: ESSENTIAL_RINGS not calculated in IAtom
 			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);
 			return ringSet.getAtomContainerCount() == numSSSR;
 		}

@@ -21,6 +21,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,17 +48,15 @@ public class SmallestRingAtom extends SMARTSAtom {
 
 	public boolean matches(IAtom atom) {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
-			ArrayList rings = (ArrayList) atom
+			List<Integer> rings = (List<Integer>) atom
 					.getProperty(CDKConstants.RING_SIZES);
 			if (rings == null || rings.size() == 0) {
 				return false;
 			}
 			Collections.sort(rings);
-			if (((Integer) rings.get(0)).intValue() == smallestRingSize) {
+			if ((rings.get(0)).intValue() == smallestRingSize) {
 				return true;
 			}
-			
-			// TODO: use CDKConstants.SMALLEST_RINGS ??
 		}
 		return false;
 	}

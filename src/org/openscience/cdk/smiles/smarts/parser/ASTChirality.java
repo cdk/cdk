@@ -28,6 +28,9 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS
  */
 public class ASTChirality extends SimpleNode {
+	private boolean unspecified = false;
+	private boolean clockwise = true;
+	private int degree = -1;
 	/**
 	 * Creates a new instance
 	 *
@@ -53,4 +56,30 @@ public class ASTChirality extends SimpleNode {
 	public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
+
+	public boolean isUnspecified() {
+		return unspecified;
+	}
+
+	public void setUnspecified(boolean unspecified) {
+		this.unspecified = unspecified;
+	}
+
+	public boolean isClockwise() {
+		return clockwise;
+	}
+
+	public void setClockwise(boolean clockwise) {
+		this.clockwise = clockwise;
+	}
+
+	public int getDegree() {
+		return degree;
+	}
+
+	public void setDegree(int degree) {
+		this.degree = degree;
+	}
+	
+	
 }

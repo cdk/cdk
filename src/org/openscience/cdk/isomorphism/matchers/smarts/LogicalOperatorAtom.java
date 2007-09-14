@@ -72,40 +72,51 @@ public class LogicalOperatorAtom extends SMARTSAtom {
         this.right = right;
     }
     
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
+    	boolean val = false;
     	boolean matchesLeft = left.matches(atom);
     	if (right != null) {
-    		boolean matchesRight = right.matches(atom);
-    		if ("and".equals(operator)) {
-    			return matchesLeft && matchesRight;
+    		if ("and".equals(operator) && matchesLeft) {
+        		boolean matchesRight = right.matches(atom);
+    			val = matchesLeft && matchesRight;
     		} else if ("or".equals(operator)) {
-    			return matchesLeft || matchesRight;
-    		} else {
-    			return false;
+        		boolean matchesRight = right.matches(atom);
+    			val = matchesLeft || matchesRight;
     		}
     	} else {
     		if ("not".equals(operator)) {
-    			return (!matchesLeft);
+    			val = (!matchesLeft);
     		} else {
-    			return matchesLeft;
+    			val = matchesLeft;
     		}
     	}
+    	return val;
     }
-    
-    // TODO: This might not be true 
-    // is [a;A] aliphatic or aromatic?
-    // how about [aR]?
+
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.ChemObject#getFlag(int)
+     */
     public boolean getFlag(int flagType) {
+    	boolean val = false;
     	boolean leftFlag = left.getFlag(flagType);
     	if (right != null) {
-    		boolean rightFlag = right.getFlag(flagType);
-    		return leftFlag || rightFlag;
+    		if ("and".equals(operator) && leftFlag) {
+        		boolean rightFlag = right.getFlag(flagType);
+    			val = leftFlag && rightFlag;
+    		} else if ("or".equals(operator)) {
+        		boolean rightFlag = right.getFlag(flagType);
+    			val = leftFlag || rightFlag;
+    		}
     	} else {
     		if ("not".equals(operator)) {
-    			return (!leftFlag);
+    			val = (!leftFlag);
     		} else {
-    			return leftFlag;
+    			val = leftFlag;
     		}
     	}
+    	return val;
     }
 }
