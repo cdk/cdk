@@ -70,6 +70,7 @@ public class TestEditor extends JPanel {
 	protected IChemObjectBuilder builder;
 	private Controller2DHub hub;
 
+	
 	private TestEditor() {
 		builder = DefaultChemObjectBuilder.getInstance();
 		

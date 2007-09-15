@@ -1023,8 +1023,8 @@ public class GeometryToolsInternalCoordinates {
 	}
 	/**
 	 *  Determines the best alignment for the label of an atom in 2D space. It
-	 *  returns 1 if left aligned, and -1 if right aligned.
-	 *  returns 2 if top aligned, and -2 if below aligned
+	 *  returns 1 if right (=default) aligned, and -1 if left aligned.
+	 *  returns 2 if top aligned, and -2 if H is aligned below the atom
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  container  Description of the Parameter
@@ -1042,14 +1042,14 @@ public class GeometryToolsInternalCoordinates {
 		}
 		if (overallDiffX <= 0) {
 			if (overallDiffX < overallDiffY)
-				return 1;
+				return 1;//right aligned
 			else
-				return 2;
+				return 2;//top aligned.
 		} else {
 			if (overallDiffX > overallDiffY)
-				return -1;
+				return -1;//left aligned
 			else
-				return -2;
+				return -2;//H below aligned
 		}
 	}
 

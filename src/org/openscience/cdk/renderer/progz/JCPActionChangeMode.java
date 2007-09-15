@@ -102,11 +102,12 @@ public class JCPActionChangeMode extends AbstractAction
 			((JComponent) e.getSource()).setBackground(Color.GRAY);
 	  //      jcpPanel.lastAction.set(0,(JComponent) e.getSource());
 			
-			//FIXME: unregister 'all?' other controllers.
+			//FIXME: perhaps some 'default' controller should always stay
+			hub.unRegisterAllControllerModule();
+
 			if (module == null)
 				System.out.println("empty module selected!");
 			else {
-				hub.unRegisterAllControllerModule();
 				hub.registerGeneralControllerModule(module);
 				System.out.println("module " + module + " listening now..");
 			}

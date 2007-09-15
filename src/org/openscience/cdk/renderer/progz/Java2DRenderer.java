@@ -337,6 +337,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 		//double formalChargW = 0;
 		double hydroGenW = 0;
 		double hydroGenCountW = 0;
+		double hydroGenCountH = 0;
+		double hydroGenH = 0;;
 		
 		if (atom.getMassNumber() != 0 && isotopeFactory != null) {
 			IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
@@ -380,7 +382,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 			Rectangle2D boundsHydro = layoutH.getBounds();
 			
 			hydroGenW = layoutH.getAdvance();
-			double hydroGenH = boundsHydro.getHeight();	
+
+			hydroGenH = boundsHydro.getHeight();	
 			graphics.setFont(fontSmall);
 			String hCount = atom.getHydrogenCount().toString();
 			frcMass = graphics.getFontRenderContext();
@@ -388,7 +391,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 			Rectangle2D boundsHydroC = layoutHC.getBounds();
 			
 			hydroGenCountW = layoutHC.getAdvance();
-			
+			hydroGenCountH = boundsHydroC.getHeight();
+
 			double hydroGenX = atomSymbolX;
 			double hydroGenY = atomSymbolY;//'H' at same height as atom Symbol
 			//TODO: add margins
@@ -452,12 +456,18 @@ public class Java2DRenderer implements IJava2DRenderer {
 			FontRenderContext frcFormal = graphics.getFontRenderContext();
 			
 			double formalChargeX = atomSymbolX + atomSymbolDNext;
-			double formalChargeY = 0;
+			double formalChargeY = atomSymbolY;
 			double formalChargeH = 0;
 			
-			if (alignment > 0) //right alignment
+			//System.out.println("alignment: " + alignment);
+
+			if (alignment == 1) //right alignment
 				formalChargeX += hydroGenW + hydroGenCountW;//should hydroGenCountW be included here?
-			
+			else if (alignment == 2) { //top alignment
+				formalChargeY += hydroGenH + hydroGenCountH;
+			}
+			double formalChargeY2 = formalChargeY;
+
 			double formalChargeW = 0;
 			TextLayout layoutFormalC = layoutAtom;//have to initialize it so *something*
 			if (textFormal != "") { //draw amount and optional '+'-symbol
@@ -467,7 +477,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 				formalChargeH = boundsFormalC.getHeight();
 				 
-				formalChargeY = atomSymbolY + boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;
+				formalChargeY += boundsAtom.getHeight() - boundsFormalC.getHeight() / 2;
 			
 				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX - margind,
 					boundsFormalC.getY() + formalChargeY - margind,
@@ -486,7 +496,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 				TextLayout layoutFormal = new TextLayout(textFormal2, fontSmall, frcFormal);
 				Rectangle2D boundsFormalC = layoutFormal.getBounds();
 				double posiY = Math.max(boundsFormalC.getHeight(), formalChargeH) + boundsFormalC.getY();
-				double formalChargeY2 = atomSymbolY + boundsAtom.getHeight() + posiY / 2;//
+				formalChargeY2 += boundsAtom.getHeight() + posiY / 2;//
 			
 				boundsFormalC.setRect(boundsFormalC.getX() + formalChargeX2 - margind,
 					boundsFormalC.getY() + formalChargeY2 - 5 * margind,
