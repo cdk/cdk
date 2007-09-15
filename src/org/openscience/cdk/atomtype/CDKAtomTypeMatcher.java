@@ -89,7 +89,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
-    			// FIXME: I don't perceive charged atoms yet
+    			if (atom.getFormalCharge() == 1) {
+    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+        				return factory.getAtomType("C.plus.sp2");
+        			}
+    			}
     			return null;
     		} else if (atomContainer.getConnectedBondsCount(atom) > 4) {
     			// FIXME: I don't perceive carbons with more than 4 connections yet
@@ -181,9 +186,29 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     						return factory.getAtomType("N.plus");
     					}
     				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    					return factory.getAtomType("N.plus.sp2");
+    					int doubleBonds= countAttachedDoubleBonds(atomContainer, atom);
+    					if (doubleBonds == 1) {
+    						return factory.getAtomType("N.plus.sp2");
+    					} else if (doubleBonds == 2) {
+    						return factory.getAtomType("N.plus.sp1");
+    					}
+    				} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
+    					if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    						return factory.getAtomType("N.plus.sp1");
+    					}
     				}
-    			} 
+    			} else if (atom.getFormalCharge() == -1) {
+    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    					if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    						return factory.getAtomType("N.minus.sp3");
+    					}
+    				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    					if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    						return factory.getAtomType("N.minus.sp2");
+    					}
+    				}
+    			}
     		} else if (atomContainer.getConnectedBondsCount(atom) > 3) {
     			// FIXME: I don't perceive carbons with more than 3 connections yet
     			return null;
@@ -218,23 +243,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if ("S".equals(atom.getSymbol())) {
 			List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
     		int neighborcount = neighbors.size();
-    		if (neighborcount == 2) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() != 0) {
+    			if (atom.getFormalCharge() == -1 &&
+    				neighborcount == 1) {
+    				return factory.getAtomType("S.minus");
+    			}
+    		} else if (neighborcount == 2) {
     			return factory.getAtomType("S.3");
+    		} else if (neighborcount == 1) {
+    			if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+    				return factory.getAtomType("S.2");
+    			}
     		} else {
     			// count the number of double bonded oxygens
-    			int doubleBondedOxygens = 0;
-    			for (int i=neighborcount-1;i>=0;i--) {
-    				if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-    					IBond bond =  neighbors.get(i);
-    					if (bond.getAtomCount() == 2 && bond.contains(atom)) {
-    						// if one is the sulphur, then the other one must be an oxygen
-    						if (bond.getAtom(0).getSymbol().equals("O") ||
-    							bond.getAtom(1).getSymbol().equals("O")) {
-    							doubleBondedOxygens++;
-    						}
-    					}
-    				}
-    			}
+    			int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
     			if (doubleBondedOxygens == 2 && neighborcount == 4){
     				return factory.getAtomType("S.onyl");
     			} else if (doubleBondedOxygens == 1 && neighborcount == 3){
@@ -323,6 +346,40 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         		}
     	}
     	return null;
+    }
+
+    private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom) {
+    	return countAttachedDoubleBonds(container, atom, null);
+    }
+
+    /**
+     * Count the number of doubly bonded atoms.
+     * 
+     * @param symbol If not null, then it only counts the double bonded atoms which
+     *               match the given symbol.
+     * @return
+     */
+    private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom, String symbol) {
+		// count the number of double bonded oxygens
+    	List<IBond> neighbors = container.getConnectedBondsList(atom);
+    	int neighborcount = neighbors.size();
+		int doubleBondedAtoms = 0;
+		for (int i=neighborcount-1;i>=0;i--) {
+			if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+				IBond bond =  neighbors.get(i);
+				if (bond.getAtomCount() == 2 && bond.contains(atom)) {
+					if (symbol != null) {
+						if (bond.getAtom(0).getSymbol().equals(symbol) ||
+							bond.getAtom(1).getSymbol().equals(symbol)) {
+							doubleBondedAtoms++;
+						}
+					} else {
+						doubleBondedAtoms++;
+					}
+				}
+			}
+		}
+		return doubleBondedAtoms;
     }
     
 }
