@@ -31,6 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -72,6 +73,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "C.sp3", matched);
 
         Assert.assertEquals(thisHybridization, matched.getHybridization());
+    }
+
+    @Test public void testDummy() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new PseudoAtom("R");
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        IAtomType matched = atm.findMatchingAtomType(mol, atom);
+        assertAtomType(testedAtomTypes, "X", matched);
     }
 
     @Test public void testEthene() throws Exception {
@@ -379,6 +390,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "P.ine", atm.findMatchingAtomType(mol, atom2));
     }
 
+    @Test public void testPhosphorCompound() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("P");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "P.ine", atm.findMatchingAtomType(mol, atom2));
+    }
+
     @Test public void testCarbokation() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");
@@ -584,6 +610,34 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "N.minus.sp2", atm.findMatchingAtomType(mol, atom4));
     }
     
+    @Test public void testSalts() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        
+        IAtom atom = new Atom("Na");
+        atom.setFormalCharge(+1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "Na.plus", atm.findMatchingAtomType(mol, atom));
+        
+        mol = new Molecule();
+        atom = new Atom("K");
+        atom.setFormalCharge(+1);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "K.plus", atm.findMatchingAtomType(mol, atom));
+        
+        mol = new Molecule();
+        atom = new Atom("Ca");
+        atom.setFormalCharge(+2);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "Ca.2plus", atm.findMatchingAtomType(mol, atom));
+        
+        mol = new Molecule();
+        atom = new Atom("Mg");
+        atom.setFormalCharge(+2);
+        mol.addAtom(atom);
+        assertAtomType(testedAtomTypes, "Mg.2plus", atm.findMatchingAtomType(mol, atom));
+    }
+
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);

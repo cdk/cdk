@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -67,6 +68,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
         IAtomType type = null;
+        if (atom instanceof IPseudoAtom) {
+        	return factory.getAtomType("X");
+        }
         type = perceiveCarbons(atomContainer, atom);
         if (type == null) type = perceiveOxygens(atomContainer, atom);
         if (type == null) type = perceiveNitrogens(atomContainer, atom);
@@ -74,6 +78,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveSulphurs(atomContainer, atom);
         if (type == null) type = perceiveHalogens(atomContainer, atom);
         if (type == null) type = perceivePhosphors(atomContainer, atom);
+        if (type == null) type = perceiveCommonSalts(atomContainer, atom);
         return type;
     }
     
@@ -273,7 +278,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if ("P".equals(atom.getSymbol())) {
     		List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
     		int neighborcount = neighbors.size();
+    		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     		if (neighborcount == 3) {
+    			return factory.getAtomType("P.ine");
+    		} else if (neighborcount == 2 && maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     			return factory.getAtomType("P.ine");
     		} else if (neighborcount == 4) {
     			// count the number of double bonded oxygens
@@ -344,6 +352,31 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
         			return factory.getAtomType("I");
         		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    	if ("Na".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +1)) {
+    			return factory.getAtomType("Na.plus");
+    		}
+    	} else if ("Ca".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +2)) {
+    			return factory.getAtomType("Ca.2plus");
+    		}
+    	} else if ("Mg".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +2)) {
+    			return factory.getAtomType("Mg.2plus");
+    		}
+    	} else if ("K".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +1)) {
+    			return factory.getAtomType("K.plus");
+    		}
     	}
     	return null;
     }

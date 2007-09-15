@@ -17,6 +17,12 @@
     <metadata name="cvs:revision" content="$Revision: 8549 $"/>
   </metadataList>
   
+  <atomType id="X">
+    <!-- Only supposed to be used for things like R etc found in Markusk like things.
+         I must not be used for elements for which the atom type cannot be
+         determined. -->
+  </atomType>
+
   <atomType id="C.sp">
     <atom elementType="C" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
@@ -48,7 +54,7 @@
   </atomType>
 
   <atomType id="C.plus.sp2">
-    <atom elementType="C" formalCharge="+1">
+    <atom elementType="C" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
@@ -75,7 +81,7 @@
   </atomType>
 
   <atomType id="O.plus.sp2">
-    <atom elementType="O" formalCharge="+1">
+    <atom elementType="O" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
@@ -84,7 +90,7 @@
   </atomType>
 
   <atomType id="O.plus">
-    <atom elementType="O" formalCharge="+1">
+    <atom elementType="O" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
@@ -129,7 +135,7 @@
   </atomType>
 
   <atomType id="N.plus">
-    <atom elementType="N" formalCharge="+1">
+    <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
@@ -138,7 +144,7 @@
   </atomType>
 
   <atomType id="N.plus.sp2">
-    <atom elementType="N" formalCharge="+1">
+    <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
@@ -147,7 +153,7 @@
   </atomType>
 
   <atomType id="N.plus.sp1"> <!-- e.g. in R-N(-)-N(+)#N (azide) -->
-    <atom elementType="N" formalCharge="+1">
+    <atom elementType="N" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">2</scalar>
@@ -334,5 +340,31 @@
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
+
+  <atomType id="Na.plus">
+    <atom elementType="Na" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="K.plus">
+    <atom elementType="K" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ca.2plus">
+    <atom elementType="Ca" formalCharge="2">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Mg.2plus">
+    <atom elementType="Mg" formalCharge="2">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+    </atom>
+  </atomType>
+
+
 
 </atomTypeList>
