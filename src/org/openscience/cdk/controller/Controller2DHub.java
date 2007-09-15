@@ -32,10 +32,12 @@ import java.util.Map;
 
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -46,6 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * <p>FIXME: will replace the old Controller2D class.
  * 
  * @author egonw
+ * @auther Niels Out
  */
 public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	
@@ -241,10 +244,23 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);
 	}
-	
+	public void addAtom(String atomType, Point2d worldCoord) {
+		
+	/*	IAtom newAtom1 = chemModel.getBuilder().newAtom(atomType, worldCoord);
+		IAtomContainer atomCon = ChemModelManipulator.createNewMolecule(chemModel);
+		atomCon.addAtom(newAtom1);
+		//FIXME: update atoms for implicit H's or so
+		//updateAtom(atomCon, newAtom1);
+		chemModel.getMoleculeSet().addAtomContainer(atomCon);*/
+		IAtom newAtom = chemModel.getBuilder().newAtom(atomType, worldCoord);
+		chemModel.getMoleculeSet().getAtomContainer(0).addAtom(newAtom);
+		
+		System.out.println("atom added??");
+
+	}
 	public IBond getClosestBond(Point2d worldCoord) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

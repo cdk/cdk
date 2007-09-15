@@ -88,6 +88,10 @@ public class JCPActionChangeMode extends AbstractAction
 		else if (key.equals("minus")) {
 			module = new Controller2DModuleChangeFormalC(-1);
 		}
+		else if (key.length() == 1) {
+			//I assume something with length of 1 is an atom name (C/H/O/N/etc.)
+			module = new Controller2DModuleAddAtom(key);
+		}
 	}
 	 public void actionPerformed(ActionEvent e) {
 	       // logger.info("  module  ", module);

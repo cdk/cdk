@@ -39,45 +39,43 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.Atom;
 
 
 /**
- * Changes (Increases or Decreases) Formal Charge of an atom
+ * Adds an atom on the given location on mouseclick
  * 
  * @author Niels Out
  *
  */
-public class Controller2DModuleChangeFormalC implements IController2DModule {
+public class Controller2DModuleAddAtom implements IController2DModule {
 
+	private String atomType;
+	
 	private IChemModelRelay chemObjectRelay;
 	/*private IViewEventRelay eventRelay;
 	public void setEventRelay(IViewEventRelay relay) {
 		this.eventRelay = relay;
 	}*/
-	private int change = 0;
-	public Controller2DModuleChangeFormalC(int change) {
-		this.change = change;
+	//this should never be triggered.. just to be fail-safe ;)
+	public Controller2DModuleAddAtom() {
+		this.atomType = "C";
 	}
+	public Controller2DModuleAddAtom(String atomType) {
+		this.atomType = atomType;
+	}
+	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void mouseClickedDown(Point2d worldCoord) {
 		// TODO Auto-generated method stub
-		IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
-		System.out.println("trying change charge (atm: " + atom.getFormalCharge() + " of: " + atom);
-		
-		if (atom != null) {
-			Integer newCharge = new Integer(change);
-			if (atom.getFormalCharge() != null)
-				newCharge += atom.getFormalCharge();
-			
-			atom.setFormalCharge(newCharge);
-			System.out.println("change: " + change + " newCharge: " + newCharge + " atom:" + atom);
-			chemObjectRelay.updateView();
-		}
-			
+	//	IAtom atom = new Atom(atomType);
+	//	atom.setPoint2d(worldCoord);
+		System.out.println("Trying adding atom " + atomType);
+		chemObjectRelay.addAtom(atomType, worldCoord);
+		chemObjectRelay.updateView();
 	}
 
 	public void mouseClickedUp(Point2d worldCoord) {
@@ -86,7 +84,7 @@ public class Controller2DModuleChangeFormalC implements IController2DModule {
 	}
 
 	public void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo) {
-	
+		
 	}
 
 	public void mouseEnter(Point2d worldCoord) {

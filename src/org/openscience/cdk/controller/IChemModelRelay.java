@@ -45,5 +45,6 @@ public interface IChemModelRelay {
 
 	public abstract IJava2DRenderer getIJava2DRenderer();
 	public abstract IChemModel getIChemModel();
-
+	public abstract void addAtom(String atomType, Point2d worldcoord);
+	
 }
