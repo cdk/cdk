@@ -97,8 +97,15 @@ public class TotalHCountAtom extends SMARTSAtom {
 	}
 
 	private boolean nonDefaultCheck(IAtom atom) {
-		if (getHH(atom) != 0 && getHH(atom) == this.hCount)
-			return true;
+		if (getHH(atom) != 0) {
+			if (getHH(atom) == this.hCount) {
+				return true;
+			}
+		} else {
+			if (getHH(atom) == 0) {
+				return true;
+			}
+		}
 		return false;
 	}
 

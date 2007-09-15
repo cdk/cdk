@@ -114,50 +114,60 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 		bs = new BitSet(atomContainer.getAtomCount());
 		
 		for (List<RMap> bondMapping : bondMappings) {
-			if (bondMapping.size() > 1) { // more than one bond
-				Collections.sort(bondMapping, new Comparator<RMap>() {
-					public int compare(RMap r1, RMap r2) {
-						if (r1.getId2() > r2.getId2()) return 1;
-						else if (r1.getId2() == r2.getId2()) return 0;
-						else return -1;
+			Collections.sort(bondMapping, new Comparator<RMap>() {
+				public int compare(RMap r1, RMap r2) {
+					if (r1.getId2() > r2.getId2()) return 1;
+					else if (r1.getId2() == r2.getId2()) return 0;
+					else return -1;
+				}
+			});
+			RMap rmap0 = bondMapping.get(0);
+			IBond bond0 = atomContainer.getBond(rmap0.getId1());
+			IAtom atom0 = bond0.getAtom(0);
+			IAtom atom1 = bond0.getAtom(1);				
+			IBond qbond0 = recursiveQuery.getBond(rmap0.getId2());
+			IQueryAtom qatom0 = (IQueryAtom)qbond0.getAtom(0);
+			IQueryAtom qatom1 = (IQueryAtom)qbond0.getAtom(1);
+			
+			if ( (qatom0.matches(atom0) && qatom1.matches(atom1))
+					&& (qatom0.matches(atom1) && qatom1.matches(atom0)) ) { // they match each other no matter what order
+				if (bondMapping.size() > 1) { // look for the second bond
+					IBond bond1 = atomContainer.getBond(bondMapping.get(1).getId1());
+					IBond qbond1 = recursiveQuery.getBond(bondMapping.get(1).getId2());
+					if (qbond1.contains(qatom0)) {
+						if (bond1.contains(atom0)) {
+							bs.set(atomContainer.getAtomNumber(atom0), true);	
+						} else {
+							bs.set(atomContainer.getAtomNumber(atom1), true);
+						} 
+					} else {
+						if (bond1.contains(atom0)) {
+							bs.set(atomContainer.getAtomNumber(atom1), true);	
+						} else {
+							bs.set(atomContainer.getAtomNumber(atom0), true);
+						} 						
 					}
-				});
-				RMap rmap1 = bondMapping.get(0);
-				RMap rmap2 = bondMapping.get(1);
-				IBond bond1 = atomContainer.getBond(rmap1.getId1());
-				IAtom atom1 = bond1.getAtom(0);
-				IAtom atom2 = bond1.getAtom(1);				
-				IBond bond2 = atomContainer.getBond(rmap2.getId1());
-				if (bond2.contains(atom1)) {
-					bs.set(atomContainer.getAtomNumber(atom2), true);
 				} else {
+					// both matches
 					bs.set(atomContainer.getAtomNumber(atom1), true);
+					bs.set(atomContainer.getAtomNumber(atom0), true);
 				}
-			} else if (bondMapping.size() == 1) {
-				RMap rmap = bondMapping.get(0);
-				IBond bond = atomContainer.getBond(rmap.getId1());
-				IAtom atom1 = bond.getAtom(0);
-				IAtom atom2 = bond.getAtom(1);	
-				IBond qbond = recursiveQuery.getBond(rmap.getId2());
-				IQueryAtom qatom1 = (IQueryAtom)qbond.getAtom(0);
-				IQueryAtom qatom2 = (IQueryAtom)qbond.getAtom(1);
-				
-				if (recursiveQuery.getAtomNumber(qatom1) == 0) { // starts from qatom1
-					if (qatom1.matches(atom1) && qatom2.matches(atom2)) {
-						bs.set(atomContainer.getAtomNumber(atom1), true);
+			} else {
+				if (recursiveQuery.getAtomNumber(qatom0) == 0) { // starts from qatom1
+					if (qatom0.matches(atom0) && qatom1.matches(atom1)) {
+						bs.set(atomContainer.getAtomNumber(atom0), true);
 					} else {
-						bs.set(atomContainer.getAtomNumber(atom2), true);
+						bs.set(atomContainer.getAtomNumber(atom1), true);
 					}
-				} else {
-					if (qatom2.matches(atom1) && qatom1.matches(atom2)) {
-						bs.set(atomContainer.getAtomNumber(atom1), true);
+				} else { // qatom1 is the first atom
+					if (qatom0.matches(atom1) && qatom1.matches(atom0)) {
+						bs.set(atomContainer.getAtomNumber(atom0), true);
 					} else {
-						bs.set(atomContainer.getAtomNumber(atom2), true);
-					}					
+						bs.set(atomContainer.getAtomNumber(atom1), true);
+					}
 				}
-			} 
+			}
 		}    		
-    	
     }
 
 	public IQueryAtomContainer getRecursiveQuery() {

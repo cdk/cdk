@@ -168,6 +168,10 @@ public class RecursiveTest extends CDKTestCase {
         match("[$(C(=O)O),$(P(=O)),$(S(=O)O)]", "CC(=O)O");
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
+        
+        match("[C&$(C(=O)O),P&$(P(=O)),S&$(S(=O)O)]", "CC(=O)O");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);        
     }
 
     public void testRecursiveSmarts18() throws Exception {
@@ -175,6 +179,8 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
 
+        // This is failing because the number of H attached to N 
+        // in the AtomContainer is counted as 2, instead of 0
         match("[!$([#6,H0,-,-2,-3])]", "CCN(C)C");
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
@@ -182,10 +188,12 @@ public class RecursiveTest extends CDKTestCase {
 
 
     public void testRecursiveSmarts19() throws Exception {
+        // This is failing because the number of H attached to N 
+        // in the AtomContainer is counted as 2, instead of 0
         match("[!H0;#7,#8,#9]", "CCN(C)C");
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
-
+        
         match("[!H0;#7,#8,#9]", "CC(=O)O");
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
