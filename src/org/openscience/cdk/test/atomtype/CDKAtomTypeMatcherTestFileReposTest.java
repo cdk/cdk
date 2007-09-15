@@ -22,20 +22,30 @@ package org.openscience.cdk.test.atomtype;
 
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.PDBReader;
+import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -50,6 +60,58 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class);
     }
+    
+    @Test public void testPDBfiles() throws Exception {
+    	final String DIRNAME = "data/pdb/";
+    	String[] testFiles = {
+    		"114D.pdb",
+    		"1CRN.pdb",
+    		"1D66.pdb",
+    		"1IHA.pdb",
+    		"1PN8.pdb",
+    	};
+    	int tested = 0;
+    	int failed = 0;
+    	IChemObjectReader reader = new PDBReader();
+    	for (int i=0;i<testFiles.length; i++) {
+    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
+    		tested += results.tested;
+    		failed += results.failed;
+    	}
+    	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+    }    
+
+    @Test public void testMOL2files() throws Exception {
+    	final String DIRNAME = "data/mol2/";
+    	String[] testFiles = {
+    		"fromWebsite.mol2",
+    	};
+    	int tested = 0;
+    	int failed = 0;
+    	IChemObjectReader reader = new PDBReader();
+    	for (int i=0;i<testFiles.length; i++) {
+    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
+    		tested += results.tested;
+    		failed += results.failed;
+    	}
+    	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+    }    
+
+    @Test public void testASNfiles() throws Exception {
+    	final String DIRNAME = "data/asn/pubchem/";
+    	String[] testFiles = {
+    		"cid1.asn",
+    	};
+    	int tested = 0;
+    	int failed = 0;
+    	IChemObjectReader reader = new PDBReader();
+    	for (int i=0;i<testFiles.length; i++) {
+    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
+    		tested += results.tested;
+    		failed += results.failed;
+    	}
+    	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
+    }    
 
     @Test public void testMDLMolfiles() throws Exception {
     	final String DIRNAME = "data/mdl/";
@@ -71,7 +133,6 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"bug1208740_1.mol",
     		"bug1208740_2.mol",
     		"bug1328739.mol",
-    		"bug1587283.mol",
     		"bug_1750968.mol",
     		"bug1772609.mol",
     		"bug599540.mol",
@@ -159,19 +220,30 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	};
     	int tested = 0;
     	int failed = 0;
+    	IChemObjectReader reader = new MDLV2000Reader();
     	for (int i=0;i<testFiles.length; i++) {
-    		TestResults results = testFile(DIRNAME, testFiles[i]);
+    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
     		tested += results.tested;
     		failed += results.failed;
     	}
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }
     
-    private TestResults testFile(String dir, String filename) throws Exception {    	
+    private TestResults testFile(String dir, String filename, IChemObjectReader reader) throws Exception {    	
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
-        IChemObjectReader reader = new MDLV2000Reader(ins);
-        IMolecule mol = (IMolecule)reader.read(new NNMolecule());
+        reader.setReader(ins);
+        IMolecule mol = null;
+        if (reader.accepts(Molecule.class)) {
+        	mol = (IMolecule)reader.read(new NNMolecule());
+        } else if (reader.accepts(ChemFile.class)) {
+        	IChemFile cf = (IChemFile)reader.read(new NNChemFile());
+        	mol = new NNMolecule();
+        	List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cf);
+        	for (IAtomContainer container : containers) mol.add(container);
+        }
+        
+        Assert.assertNotNull("Could not read the file into a IMolecule: " + filename, mol);
         
         TestResults results = new TestResults();
         Iterator<IAtom> atoms = mol.atoms();
@@ -182,6 +254,50 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
         	if (matched == null) {
         		results.failed++;
         		System.out.println("Could not match atom: " + results.tested + " in file " + filename);
+        	} else
+        	// OK, the matcher did find something. Now, let's see of the
+        	// atom type properties are consistent with those of the atom
+        	if (!atom.getSymbol().equals(matched.getSymbol())) {
+        		// OK, OK, that's very basic indeed, but why not
+        		results.failed++;
+        		System.out.println("Symbol does not match: " + results.tested + " in file " + filename);
+        		System.out.println("Found: " + atom.getSymbol() + 
+        				           ", expected: " + matched.getSymbol());
+        	} else
+        	if (atom.getHybridization() != CDKConstants.UNSET &&
+        		atom.getHybridization() != matched.getHybridization()) {
+        		results.failed++;
+        		System.out.println("Hybridization does not match: " + results.tested + " in file " + filename);
+        		System.out.println("Found: " + atom.getHybridization() + 
+        				           ", expected: " + matched.getHybridization() + 
+        				           " (" + matched.getAtomTypeName() + ")");
+        	} else
+        	if (atom.getFormalCharge() != matched.getFormalCharge()) {
+        		results.failed++;
+        		System.out.println("Formal charge does not match: " + results.tested + " in file " + filename);
+        		System.out.println("Found: " + atom.getFormalCharge() + 
+        				           ", expected: " + matched.getFormalCharge() + 
+        				           " (" + matched.getAtomTypeName() + ")");
+        	} else {
+        		List<IBond> connections = mol.getConnectedBondsList(atom);
+        		int connectionCount = connections.size();
+//        		int piBondsFound = (int)mol.getBondOrderSum(atom) - connectionCount;
+        		// there might be missing hydrogens, so: found <= expected
+        		if (matched.getFormalNeighbourCount() != CDKConstants.UNSET &&
+        			connectionCount > matched.getFormalNeighbourCount()) {
+            		results.failed++;
+            		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
+            		System.out.println("Found: " + connectionCount + 
+            				           ", expected (max): " + matched.getFormalNeighbourCount() + 
+            				           " (" + matched.getAtomTypeName() + ")");
+        		}
+        		// there might be missing double bonds, so: found <= expected
+//        		if (piBondsFound > matched.getXXXX()) {
+//            		results.failed++;
+//            		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
+//            		System.out.println("Found: " + atom.getFormalNeighbourCount() + 
+//            				           ", expected (max): " + matched.getFormalNeighbourCount());
+//        		}
         	}
         }
         return results;
