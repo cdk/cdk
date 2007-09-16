@@ -147,6 +147,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			if (atom.getFormalCharge() == -1) {
     				return factory.getAtomType("O.minus");
     			} else if (atom.getFormalCharge() == +1) {
+    				if (atomContainer.getConnectedBondsCount(atom) == 0) {
+    					return factory.getAtomType("O.plus");
+    				}
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
         				return factory.getAtomType("O.plus.sp2");
@@ -186,10 +189,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == 1) {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    					if (atomContainer.getConnectedBondsCount(atom) == 4) {
-    						return factory.getAtomType("N.plus");
-    					}
+    				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE ||
+    					atomContainer.getConnectedBondsCount(atom) == 0) {
+    					return factory.getAtomType("N.plus");
     				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     					int doubleBonds= countAttachedDoubleBonds(atomContainer, atom);
     					if (doubleBonds == 1) {
@@ -217,6 +219,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atomContainer.getConnectedBondsCount(atom) > 3) {
     			// FIXME: I don't perceive carbons with more than 3 connections yet
     			return null;
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
+    			return factory.getAtomType("N.sp3");
     		} else { // OK, use bond order info
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
@@ -231,6 +235,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				} else if (atomContainer.getConnectedBondsCount(atom) == 3) {
     					return factory.getAtomType("N.sp3");
     				} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    					return factory.getAtomType("N.sp3");
+    				} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
     					return factory.getAtomType("N.sp3");
     				}
     			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
@@ -259,7 +265,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (neighborcount == 1) {
     			if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
     				return factory.getAtomType("S.2");
+    			} else {
+    				return factory.getAtomType("S.3");
     			}
+    		} else if (neighborcount == 0) {
+    			return factory.getAtomType("S.3");
     		} else {
     			// count the number of double bonded oxygens
     			int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
@@ -328,30 +338,34 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
     			atom.getFormalCharge() == -1)) {
     			return factory.getAtomType("Cl.minus");
-    		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
+      				   atomContainer.getConnectedBondsCount(atom) == 0) {
     			return factory.getAtomType("Cl");
     		}
     	} else if ("Br".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
         			atom.getFormalCharge() == -1)) {
-        			return factory.getAtomType("Br.minus");
-        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
-        			return factory.getAtomType("Br");
-        		}
+       			return factory.getAtomType("Br.minus");
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
+       				atomContainer.getConnectedBondsCount(atom) == 0) {
+    			return factory.getAtomType("Br");
+    		}
     	} else if ("F".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
         			atom.getFormalCharge() == -1)) {
-        			return factory.getAtomType("F.minus");
-        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
-        			return factory.getAtomType("F");
-        		}
+       			return factory.getAtomType("F.minus");
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
+    				atomContainer.getConnectedBondsCount(atom) == 0) {
+    			return factory.getAtomType("F");
+    		}
     	} else if ("I".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-        			atom.getFormalCharge() == -1)) {
-        			return factory.getAtomType("I.minus");
-        		} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
-        			return factory.getAtomType("I");
-        		}
+        		 atom.getFormalCharge() == -1)) {
+        		return factory.getAtomType("I.minus");
+        	} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
+       				   atomContainer.getConnectedBondsCount(atom) == 0) {
+        		return factory.getAtomType("I");
+        	}
     	}
     	return null;
     }
