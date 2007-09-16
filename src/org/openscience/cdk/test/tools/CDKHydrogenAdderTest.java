@@ -24,6 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -239,5 +240,160 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	assertEquals(1, proton.getHydrogenCount().intValue());
     }
 
+    public void testAmmonia() throws Exception {
+        Molecule mol = new Molecule();
+        Atom nitrogen = new Atom("N");
+        mol.addAtom(nitrogen);
+        IAtomType type = matcher.findMatchingAtomType(mol, nitrogen);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(nitrogen, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertNotNull(nitrogen.getHydrogenCount());
+        assertEquals(3, nitrogen.getHydrogenCount().intValue());
+    }
+
+    public void testAmmonium() throws Exception {
+        Molecule mol = new Molecule();
+        Atom nitrogen = new Atom("N");
+        nitrogen.setFormalCharge(+1);
+        mol.addAtom(nitrogen);
+        IAtomType type = matcher.findMatchingAtomType(mol, nitrogen);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(nitrogen, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertNotNull(nitrogen.getHydrogenCount());
+        assertEquals(4, nitrogen.getHydrogenCount().intValue());
+    }
+
+    public void testWater() throws Exception {
+        Molecule mol = new Molecule();
+        Atom oxygen = new Atom("O");
+        mol.addAtom(oxygen);
+        IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(oxygen, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertNotNull(oxygen.getHydrogenCount());
+        assertEquals(2, oxygen.getHydrogenCount().intValue());
+    }
+
+    public void testHydroxonium() throws Exception {
+        Molecule mol = new Molecule();
+        Atom oxygen = new Atom("O");
+        oxygen.setFormalCharge(+1);
+        mol.addAtom(oxygen);
+        IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(oxygen, type);
+
+        adder.addImplicitHydrogens(mol);
+        assertNotNull(oxygen.getHydrogenCount());
+        assertEquals(3, oxygen.getHydrogenCount().intValue());
+    }
+
+    public void testHydroxyl() throws Exception {
+        Molecule mol = new Molecule();
+        Atom oxygen = new Atom("O");
+        oxygen.setFormalCharge(-1);
+        mol.addAtom(oxygen);
+        IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(oxygen, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertNotNull(oxygen.getHydrogenCount());
+        assertEquals(1, oxygen.getHydrogenCount().intValue());
+    }    
+
+    public void testHalogens() throws Exception {
+        halogenTest("I");
+        halogenTest("F");
+        halogenTest("Cl");
+        halogenTest("Br");
+    }
+
+    public void testHalogenAnions() throws Exception {
+        negativeHalogenTest("I");
+        negativeHalogenTest("F");
+        negativeHalogenTest("Cl");
+        negativeHalogenTest("Br");
+    }
+    
+    private void halogenTest(String halogen) throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom(halogen);
+        mol.addAtom(atom);
+        IAtomType type = matcher.findMatchingAtomType(mol, atom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(atom, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertEquals(1, mol.getAtomCount());
+        assertNotNull(atom.getHydrogenCount());
+        assertEquals(1, atom.getHydrogenCount().intValue());
+    }
+
+    private void negativeHalogenTest(String halogen) throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom(halogen);
+        atom.setFormalCharge(-1);
+        mol.addAtom(atom);
+        IAtomType type = matcher.findMatchingAtomType(mol, atom);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(atom, type);
+        
+        adder.addImplicitHydrogens(mol);
+        assertEquals(1, mol.getAtomCount());
+        assertNotNull(atom.getHydrogenCount());
+        assertEquals(0, atom.getHydrogenCount().intValue());
+    }
+
+    public void testSulfite() throws Exception {
+        Molecule mol = new Molecule();
+        Atom s = new Atom("S");
+        Atom o1 = new Atom("O");
+        Atom o2 = new Atom("O");
+        Atom o3 = new Atom("O");
+        mol.addAtom(s);
+        mol.addAtom(o1);
+        mol.addAtom(o2);
+        mol.addAtom(o3);
+        Bond b1 = new Bond(s, o1, 1.0);
+        Bond b2 = new Bond(s, o2, 1.0);
+        Bond b3 = new Bond(s, o3, 2.0);
+        mol.addBond(b1);
+        mol.addBond(b2);
+        mol.addBond(b3);
+        IAtomType type = matcher.findMatchingAtomType(mol, s);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(s, type);
+        type = matcher.findMatchingAtomType(mol, o1);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(o1, type);
+        type = matcher.findMatchingAtomType(mol, o2);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(o2, type);
+        type = matcher.findMatchingAtomType(mol, o3);
+    	assertNotNull(type);
+    	AtomTypeManipulator.configure(o3, type);
+        
+        adder.addImplicitHydrogens(mol);
+
+        assertEquals(4, mol.getAtomCount());
+        assertEquals(3, mol.getBondCount());
+        assertNotNull(s.getHydrogenCount());
+        assertEquals(0, s.getHydrogenCount().intValue());
+        assertNotNull(o1.getHydrogenCount());
+        assertEquals(1, o1.getHydrogenCount().intValue());
+        assertNotNull(o2.getHydrogenCount());
+        assertEquals(1, o2.getHydrogenCount().intValue());
+        assertNotNull(o3.getHydrogenCount());
+        assertEquals(0, o3.getHydrogenCount().intValue());
+
+    }
+    
 }
 
