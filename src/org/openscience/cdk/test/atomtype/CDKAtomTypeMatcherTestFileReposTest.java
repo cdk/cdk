@@ -27,6 +27,7 @@ import java.util.List;
 import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -61,7 +62,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
         return new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class);
     }
     
-    @Test public void testPDBfiles() throws Exception {
+    @Ignore public void testPDBfiles() throws Exception {
     	final String DIRNAME = "data/pdb/";
     	String[] testFiles = {
     		"114D.pdb",
