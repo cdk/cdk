@@ -215,4 +215,48 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(2, nqmatch);
     }
 
+    public void testRecursiveSmarts22() throws Exception {
+        match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)(C)CC(C)(C)C");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);
+
+         match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)(C)C(C)(C)CC(C)C");
+        assertEquals(2, nmatch);
+        assertEquals(2, nqmatch);
+
+        match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)CC(C)(C)C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursiveSmarts23() throws Exception {
+        match("[C;D2;H2;$(C(C)(C))]", "C(C)CC(C)(C)C");
+        assertEquals(2, nmatch);
+        assertEquals(2, nqmatch);
+
+        match("[C;D2;H2;$(C(C)(C))]", "C(C)(C)C(C)C(C)(C)C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+         match("[C;D2;H2;$(C(C)(C))]", "C(C)(C)C(C)C(C)CCCC");
+        assertEquals(3, nmatch);
+        assertEquals(3, nqmatch);
+
+    }
+
+    public void testRecursiveSmarts24() throws Exception {
+        match("[S;D2;$(S(C)(C))]", "CCSCC");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);
+
+        match("[S;D2;$(S(C)(C))]", "CCS(=O)(=O)CC");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+        match("[S;D2;$(S(C)(C))]", "CCCCC");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+    }
+
 }
