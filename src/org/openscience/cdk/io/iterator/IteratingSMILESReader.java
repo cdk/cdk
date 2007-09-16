@@ -35,6 +35,7 @@ import java.io.Reader;
 import java.util.NoSuchElementException;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -105,10 +106,13 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
                 if (input.ready()) {
                     currentLine = input.readLine().trim();
                     logger.debug("Line: ", currentLine);
+
                     int indexSpace = currentLine.indexOf(" ");
+                    if (indexSpace == -1) indexSpace = currentLine.indexOf("\t");
+
                     String SMILES = currentLine;
                     String name = null;
-                
+
                     if (indexSpace != -1) {
                         logger.debug("Space found at index: ", indexSpace);
                         SMILES = currentLine.substring(0,indexSpace);
@@ -119,7 +123,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
                 
                     nextMolecule = sp.parseSmiles(SMILES);
                     if (name != null) {
-                        nextMolecule.setProperty("SMIdbNAME", name);
+                        nextMolecule.setProperty(CDKConstants.TITLE, name);
                     }
                     if (nextMolecule.getAtomCount() > 0) {
                         hasNext = true;
