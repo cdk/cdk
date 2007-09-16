@@ -23,18 +23,14 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
@@ -233,31 +229,6 @@ public class CDKUtilities {
 		}
 	}
 
-	public static void addHydrogens(IMolecule m) {
-		HydrogenAdder hydrogenAdder = null;
-		hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-
-		try {
-			hydrogenAdder.addExplicitHydrogensToSatisfyValency(m);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public static void removeHydrogens(IMolecule m) {
-		Iterator atoms = m.atoms();
-		
-		while (atoms.hasNext())
-		{
-			IAtom atom = (IAtom)atoms.next();
-			if (atom.getSymbol().equals("H"))
-			{
-				m.removeAtomAndConnectedElectronContainers(atom);
-			}
-		}
-	}
-	
 	public static void fixAromaticityForXLogP(IMolecule m) {
 		// need to find rings and aromaticity again since added H's
 		
