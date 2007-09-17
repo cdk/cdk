@@ -134,18 +134,26 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 				if (bondMapping.size() > 1) { // look for the second bond
 					IBond bond1 = atomContainer.getBond(bondMapping.get(1).getId1());
 					IBond qbond1 = recursiveQuery.getBond(bondMapping.get(1).getId2());
-					if (qbond1.contains(qatom0)) {
-						if (bond1.contains(atom0)) {
-							bs.set(atomContainer.getAtomNumber(atom0), true);	
-						} else {
-							bs.set(atomContainer.getAtomNumber(atom1), true);
-						} 
-					} else {
-						if (bond1.contains(atom0)) {
-							bs.set(atomContainer.getAtomNumber(atom1), true);	
-						} else {
+					if (recursiveQuery.getAtomNumber(qatom0) == 0) {
+						if (qbond1.contains(qatom0) && bond1.contains(atom0)) { // atom0 <-> qatom0
 							bs.set(atomContainer.getAtomNumber(atom0), true);
-						} 						
+						} else if (qbond1.contains(qatom0) && bond1.contains(atom1)) { // atom1 <-> qatom0
+							bs.set(atomContainer.getAtomNumber(atom1), true);
+						} else if (!qbond1.contains(qatom0) && bond1.contains(atom0)) { // ! (qatom0 <-> atom0)
+							bs.set(atomContainer.getAtomNumber(atom1), true);
+						} else { // (!qbond1.contains(qatom0) && bond1.contains(atom1) // ! (qatom0 <-> atom1 ) 
+							bs.set(atomContainer.getAtomNumber(atom0), true);							
+						}
+					} else {
+						if (qbond1.contains(qatom1) && bond1.contains(atom0)) { 
+							bs.set(atomContainer.getAtomNumber(atom0), true);
+						} else if (qbond1.contains(qatom1) && bond1.contains(atom1)) {
+							bs.set(atomContainer.getAtomNumber(atom1), true);
+						} else if (!qbond1.contains(qatom1) && bond1.contains(atom1)) {
+							bs.set(atomContainer.getAtomNumber(atom0), true);
+						} else {
+							bs.set(atomContainer.getAtomNumber(atom1), true);							
+						}						
 					}
 				} else {
 					// both matches
