@@ -55,6 +55,8 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int SCALAR_ISAROMATIC = 10;
     private final int SCALAR_FORMALCHARGE=11;
     private final int SCALAR_VANDERWAALSRADIUS=12;
+    private final int SCALAR_PIBONDCOUNT=13;
+    private final int SCALAR_LONEPAIRCOUNT=14;
     
     private LoggingTool logger;
     private String currentChars;
@@ -147,6 +149,10 @@ public class AtomTypeHandler extends DefaultHandler {
                     atomType.setFlag(CDKConstants.ISAROMATIC, true);
                 } else if (scalarType == SCALAR_VANDERWAALSRADIUS){
                     atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
+                } else if (scalarType == SCALAR_PIBONDCOUNT){
+                    atomType.setProperty(CDKConstants.PI_BOND_COUNT, new Integer(currentChars));
+                } else if (scalarType == SCALAR_LONEPAIRCOUNT){
+                    atomType.setProperty(CDKConstants.LONE_PAIR_COUNT, new Integer(currentChars));
                 }
                 
             } catch (Exception exception) {
@@ -224,6 +230,10 @@ public class AtomTypeHandler extends DefaultHandler {
                     	scalarType = SCALAR_ISAROMATIC;	
                     } else if ("emboss:vdwrad".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_VANDERWAALSRADIUS;
+                    } else if ("cdk:piBondCount".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_PIBONDCOUNT;
+                    } else if ("cdk:lonePairCount".equals(atts.getValue(i))) {
+                    	scalarType = SCALAR_LONEPAIRCOUNT;
                     }
                 }
             }

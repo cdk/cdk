@@ -307,6 +307,12 @@ public class CDKConstants {
     /** Used as property key for indicating the HOSE code for a certain atom type. */
     public static final String SPHERICAL_MATCHER = "HOSE code spherical matcher";
 
+    /** Used as property key for indicating the HOSE code for a certain atom type. */
+    public static final String PI_BOND_COUNT = "Pi Bond Count";
+
+    /** Used as property key for indicating the HOSE code for a certain atom type. */
+    public static final String LONE_PAIR_COUNT = "Lone Pair Count";
+
 }
 
 
