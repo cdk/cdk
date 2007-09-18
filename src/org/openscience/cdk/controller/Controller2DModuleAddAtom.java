@@ -34,9 +34,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.renderer.progz.IJava2DRenderer;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.Atom;
@@ -70,12 +72,35 @@ public class Controller2DModuleAddAtom implements IController2DModule {
 	}
 
 	public void mouseClickedDown(Point2d worldCoord) {
-		// TODO Auto-generated method stub
-	//	IAtom atom = new Atom(atomType);
-	//	atom.setPoint2d(worldCoord);
-		System.out.println("Trying adding atom " + atomType);
-		chemObjectRelay.addAtom(atomType, worldCoord);
+
+		IAtom closestAtom = chemObjectRelay.getClosestAtom(worldCoord);
+		if (closestAtom == null) {
+			//add atom
+			System.out.println("Trying adding atom " + atomType);
+			chemObjectRelay.addAtom(atomType, worldCoord);
+		}
+		else {
+			//replace existing atom with new one
+			String formerSymbol = closestAtom.getSymbol();
+
+			closestAtom.setSymbol(atomType);
+			// configure the atom, so that the atomic number matches the symbol
+			try
+			{
+				IsotopeFactory.getInstance(closestAtom.getBuilder()).configure(closestAtom);
+			} catch (Exception exception)
+			{
+			//	logger.error("Error while configuring atom");
+			//	logger.debug(exception);
+			}
+			// update atom
+		//	IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemObjectRelay.getIChemModel(), closestAtom);
+		//FIXME: make this update the hydrogen count?
+			//	updateAtom(container, closestAtom);
+
+		}
 		chemObjectRelay.updateView();
+
 	}
 
 	public void mouseClickedUp(Point2d worldCoord) {

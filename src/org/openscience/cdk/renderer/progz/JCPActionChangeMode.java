@@ -57,6 +57,7 @@ public class JCPActionChangeMode extends AbstractAction
 	protected IController2DModule module;
 	private String key;
 	private Controller2DHub hub;
+	private TestEditor editor;
 	
 	/**
 	 *  Description of the Field
@@ -69,9 +70,10 @@ public class JCPActionChangeMode extends AbstractAction
 	 */
 	private boolean isPopupAction;
 
-	public JCPActionChangeMode(Controller2DHub hub, String key)
+	public JCPActionChangeMode(TestEditor editor, String key)
 	{
-		this.hub = hub;
+		this.editor = editor;
+		this.hub = editor.get2DHub();
 		this.key = key;
 		System.out.println("the key: " + key);
 		if (key.equals("move")) {
@@ -102,9 +104,15 @@ public class JCPActionChangeMode extends AbstractAction
 	    //    Controller2DModel renderModel = jcpModel.getControllerModel();
 	    //    renderModel.setDrawElement(symbol);
 	    //    renderModel.setDrawMode(Controller2DModel.DrawMode.ELEMENT);
-	   //     ((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
+		 
+		 	if (editor.getActionButton() != null)
+		 		editor.getActionButton().setBackground(Color.LIGHT_GRAY);
+		 	
+	      //  ((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
+			editor.setActionButton((JComponent) e.getSource());
 			((JComponent) e.getSource()).setBackground(Color.GRAY);
-	  //      jcpPanel.lastAction.set(0,(JComponent) e.getSource());
+		
+	      //  jcpPanel.lastAction.set(0,(JComponent) e.getSource());
 			
 			//FIXME: perhaps some 'default' controller should always stay
 			hub.unRegisterAllControllerModule();

@@ -240,6 +240,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		}
 		return closestAtom;
 	}
+	
 	public void removeAtom(IAtom atom) {
 		
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);

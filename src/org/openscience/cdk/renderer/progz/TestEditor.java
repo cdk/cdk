@@ -70,7 +70,16 @@ public class TestEditor extends JPanel {
 	protected IChemObjectBuilder builder;
 	private Controller2DHub hub;
 
-	
+	public Controller2DHub get2DHub() {
+		return hub;
+	}
+	private JComponent lastActionButton;
+	public JComponent getActionButton() {
+		return lastActionButton;
+	}
+	public void setActionButton(JComponent actionButton) {
+		lastActionButton = actionButton;
+	}
 	private TestEditor() {
 		builder = DefaultChemObjectBuilder.getInstance();
 		
@@ -106,7 +115,7 @@ public class TestEditor extends JPanel {
 		painter.addMouseListener(relay);
 		painter.addMouseMotionListener(relay);
 
-		JToolBar toolbar = SomeToolBar.getToolbar(hub, 1);
+		JToolBar toolbar = SomeToolBar.getToolbar(this, 1);
 	//	frame.add(toolbar);
 		
 		frame.add(toolbar, BorderLayout.NORTH);

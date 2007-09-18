@@ -68,15 +68,16 @@ public class SomeToolBar
 	 *
 	 *@return    The toolbar value
 	 */
-	public static JToolBar getToolbar(Controller2DHub hub, int lines)
+	public static JToolBar getToolbar(TestEditor editor, int lines)
 	{
+		//Controller2DHub hub
 		if (logger == null)
 		{
 			logger = new LoggingTool(SomeToolBar.class);
 		}
 		
-		JToolBar maintoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", hub, lines, false);
-		JToolBar elementtoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "elementtoolbar", hub, lines*2, true);
+		JToolBar maintoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "toolbar", editor, lines, false);
+		JToolBar elementtoolbar=(JToolBar)createToolbar(SwingConstants.HORIZONTAL, "elementtoolbar", editor, lines*2, true);
 		maintoolbar.add(elementtoolbar);
 		return maintoolbar;
 	}
@@ -111,7 +112,7 @@ public class SomeToolBar
 	 *@return      JButton The JButton with already added ActionListener
 	 */
 
-	static JButton createToolbarButton(String key, Controller2DHub hub, boolean elementtype)
+	static JButton createToolbarButton(String key, TestEditor editor, boolean elementtype)
 	{
 		JCPPropertyHandler jcpph = JCPPropertyHandler.getInstance();
 		JButton b = null;
@@ -147,7 +148,7 @@ public class SomeToolBar
 				}
 				//FIXME: make it choose the correct controller?
 				System.out.println("astr: " + astr + " key: " + key);
-				JCPActionChangeMode a = new JCPActionChangeMode(hub, key);
+				JCPActionChangeMode a = new JCPActionChangeMode(editor, key);
 				if (a != null)
 				{
 					b.setActionCommand(astr);
@@ -175,7 +176,7 @@ public class SomeToolBar
 			//FIXME: make the correct actionlistener for the atom types? or whatever these are....
 
 			b=new JButton(key);
-			JCPActionChangeMode a = new JCPActionChangeMode(hub, key);
+			JCPActionChangeMode a = new JCPActionChangeMode(editor, key);
 			b.addActionListener(a);
 			b.setEnabled(a.isEnabled());
 			if(JCPLocalizationHandler.getInstance().getString("singleelementTooltip")!=null)
@@ -204,7 +205,7 @@ public class SomeToolBar
 	 *@param  elementtype  If true a special type of toolbar for element symbols will be created
 	 *@return              Component The created toolbar
 	 */
-	public static Component createToolbar(int orientation, String kind, Controller2DHub hub, int lines, boolean elementtype)
+	public static Component createToolbar(int orientation, String kind, TestEditor editor, int lines, boolean elementtype)
 	{
 		JToolBar toolbar2 = new JToolBar(orientation);
 		String[] toolKeys = StringHelper.tokenize(getToolbarResourceString(kind));
@@ -244,7 +245,7 @@ public class SomeToolBar
 						toolbar2.add(box);
 					box=new Box(BoxLayout.Y_AXIS);
 				}
-				button = (JButton) createToolbarButton(toolKeys[i], hub, elementtype);
+				button = (JButton) createToolbarButton(toolKeys[i], editor, elementtype);
 				/*if (toolKeys[i].equals("lasso"))
 				{
 					selectButton = button;
