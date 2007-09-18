@@ -76,8 +76,6 @@ public class MqsarMolecularTests {
         suite.addTest(RuleOfFiveDescriptorTest.suite());
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
         suite.addTest(TPSADescriptorTest.suite());
-        suite.addTest(ValenceCarbonConnectivityOrderZeroDescriptorTest.suite());
-        suite.addTest(ValenceCarbonConnectivityOrderOneDescriptorTest.suite());
         suite.addTest(WeightDescriptorTest.suite());
         suite.addTest(WeightedPathDescriptorTest.suite());
         suite.addTest(WHIMDescriptorTest.suite());
