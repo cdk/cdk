@@ -79,7 +79,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * @deprecated old way of storing highlightRadius based on screensize, new one: {@link #highlightRadiusModel()}
 	 */
 	@Deprecated private double highlightRadius = 10.0;
-	private double highlightRadiusModel = 0.8;
+	private double highlightRadiusModel = 0.7;
 	
 	private boolean willDrawNumbers = false;
 	

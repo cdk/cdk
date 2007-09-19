@@ -52,20 +52,19 @@ import org.openscience.cdk.Atom;
  */
 public class Controller2DModuleAddAtom implements IController2DModule {
 
-	private String atomType;
+	//private String atomType;
 	
 	private IChemModelRelay chemObjectRelay;
 	/*private IViewEventRelay eventRelay;
 	public void setEventRelay(IViewEventRelay relay) {
 		this.eventRelay = relay;
 	}*/
-	//this should never be triggered.. just to be fail-safe ;)
-	public Controller2DModuleAddAtom() {
+/*	public Controller2DModuleAddAtom() {
 		this.atomType = "C";
-	}
-	public Controller2DModuleAddAtom(String atomType) {
+	}*/
+/*	public Controller2DModuleAddAtom(String atomType) {
 		this.atomType = atomType;
-	}
+	}*/
 	
 	public void mouseClickedDouble(Point2d worldCoord) {
 		// TODO Auto-generated method stub
@@ -74,6 +73,7 @@ public class Controller2DModuleAddAtom implements IController2DModule {
 	public void mouseClickedDown(Point2d worldCoord) {
 
 		IAtom closestAtom = chemObjectRelay.getClosestAtom(worldCoord);
+		String atomType = chemObjectRelay.getController2DModel().getDrawElement();
 		if (closestAtom == null) {
 			//add atom
 			System.out.println("Trying adding atom " + atomType);

@@ -72,6 +72,20 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		drawModeModules = new HashMap<Controller2DModel.DrawMode,IController2DModule>();
 		generalModules = new ArrayList<IController2DModule>();
+		
+		//register all 'known' controllers
+		registerDrawModeControllerModule( 
+				Controller2DModel.DrawMode.MOVE, new Controller2DModuleMove());
+		registerDrawModeControllerModule( 
+				Controller2DModel.DrawMode.ERASER, new Controller2DModuleRemove());
+		registerDrawModeControllerModule( 
+				Controller2DModel.DrawMode.INCCHARGE, new Controller2DModuleChangeFormalC(1));
+		registerDrawModeControllerModule( 
+				Controller2DModel.DrawMode.DECCHARGE, new Controller2DModuleChangeFormalC(-1));
+		registerDrawModeControllerModule( 
+				Controller2DModel.DrawMode.ENTERELEMENT, new Controller2DModuleAddAtom());
+		
+		registerGeneralControllerModule( new Controller2DModuleHighlight());
 	}
 	public Controller2DModel getController2DModel() {
 		return controllerModel;
@@ -208,14 +222,6 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		System.out.println("updateView now in Controller2DHub");	
 		eventRelay.updateView();
 		
-		// Relay the updateView event to the general handlers
-	/*	for (IController2DModule module : generalModules) {
-			module.updateView();
-		}
-
-		// Relay the updateView event to the active 
-		IController2DModule activeModule = getActiveDrawModule();
-		if (activeModule != null) activeModule.updateView();*/
 	}
 	private IController2DModule getActiveDrawModule() {
 		return drawModeModules.get(controllerModel.getDrawMode());
@@ -240,7 +246,27 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		}
 		return closestAtom;
 	}
-	
+	public IBond getClosestBond(Point2d worldCoord) {
+		IBond closestBond = null;
+		double closestDistance = Double.MAX_VALUE;
+		
+		Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+		while (containers.hasNext()) {
+			Iterator<IBond> bonds = containers.next().bonds();
+			while (bonds.hasNext()) {
+				IBond nextBond = bonds.next();
+				double distance = nextBond.get2DCenter().distance(worldCoord);
+				if (distance <= renderer.getRenderer2DModel().getHighlightRadiusModel() &&
+					distance < closestDistance) {
+					closestBond = nextBond;
+					closestDistance = distance;
+				}
+			}
+			//GeometryToolsInternalCoordinates.getClosestBond( worldCoord.x, worldCoord.y, container);
+
+		}
+		return closestBond;
+	}
 	public void removeAtom(IAtom atom) {
 		
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(chemModel, atom);
@@ -259,9 +285,6 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		System.out.println("atom added??");
 
 	}
-	public IBond getClosestBond(Point2d worldCoord) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }

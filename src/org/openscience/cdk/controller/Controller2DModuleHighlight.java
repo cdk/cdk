@@ -24,75 +24,27 @@
  */
 package org.openscience.cdk.controller;
 
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.renderer.progz.GeometryToolsInternalCoordinates;
-import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 
 /**
- * Changes (Increases or Decreases) Formal Charge of an atom
+ * This should highlight the atom/bond when moving over with the mouse
  * 
  * @author Niels Out
  *
  */
-public class Controller2DModuleChangeFormalC implements IController2DModule {
+public class Controller2DModuleHighlight implements IController2DModule {
 
 	private IChemModelRelay chemObjectRelay;
-	/*private IViewEventRelay eventRelay;
-	public void setEventRelay(IViewEventRelay relay) {
-		this.eventRelay = relay;
-	}*/
-	private int change = 0;
-	public Controller2DModuleChangeFormalC(int change) {
-		this.change = change;
-	}
-	public void mouseClickedDouble(Point2d worldCoord) {
-		// TODO Auto-generated method stub
 		
+	public void mouseClickedDouble(Point2d worldCoord) {
 	}
 
 	public void mouseClickedDown(Point2d worldCoord) {
 		// TODO Auto-generated method stub
 		
-		IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
-		double Atomdist = atom.getPoint2d().distance(worldCoord);
-		//System.out.println("closest Atom distance: " + Atomdist + " Atom:" + atom);
-		
-		IBond bond = chemObjectRelay.getClosestBond(worldCoord);
-		
-		Point2d bondCenter = GeometryToolsInternalCoordinates.get2DCenter(bond.atoms());
-		double Bonddist = bondCenter.distance(worldCoord);
-		
-		if (atom != null) {
-			System.out.println("trying change charge (atm: " + atom.getFormalCharge() + " of: " + atom);
-
-			Integer newCharge = new Integer(change);
-			if (atom.getFormalCharge() != null)
-				newCharge += atom.getFormalCharge();
-			
-			atom.setFormalCharge(newCharge);
-			System.out.println("change: " + change + " newCharge: " + newCharge + " atom:" + atom);
-			chemObjectRelay.updateView();
-		}
-		else {
-			System.out.println("no atom close enough to change Formal Charge");
-		}
-			
-			
 	}
 
 	public void mouseClickedUp(Point2d worldCoord) {
@@ -113,11 +65,47 @@ public class Controller2DModuleChangeFormalC implements IController2DModule {
 		// TODO Auto-generated method stub
 		
 	}
-
+	private IAtom PrevHighlightAtom;
+	private IBond PrevHighlightBond;
+	
 	public void mouseMove(Point2d worldCoord) {
-		
-	}
+		IAtom atom = chemObjectRelay.getClosestAtom(worldCoord);
+		IBond bond = chemObjectRelay.getClosestBond(worldCoord);
+		if (atom != null && (bond == null || 
+				bond.get2DCenter().distance(worldCoord) >= atom.getPoint2d().distance(worldCoord))) {
+			if (PrevHighlightAtom != atom) {
+				System.out.println("Hovering over another atom now: " + atom);
 
+				chemObjectRelay.getIJava2DRenderer().getRenderer2DModel().setHighlightedAtom(atom);
+				PrevHighlightAtom = atom;
+				chemObjectRelay.updateView();
+			}
+		}
+		else if (PrevHighlightAtom != null) {
+			//'un'-highlight things here..
+			System.out.println("Time to 'un'-highlight PrevHighlightAtom now..: ");
+			chemObjectRelay.getIJava2DRenderer().getRenderer2DModel().setHighlightedAtom(null);
+			PrevHighlightAtom = null;
+			chemObjectRelay.updateView();
+		}
+		if (bond != null && (atom == null || 
+				bond.get2DCenter().distance(worldCoord) < atom.getPoint2d().distance(worldCoord))) {
+			if (PrevHighlightBond != bond) {
+				System.out.println("Hovering over another bond now: " + bond);
+
+				chemObjectRelay.getIJava2DRenderer().getRenderer2DModel().setHighlightedBond(bond);
+				PrevHighlightBond = bond;
+				chemObjectRelay.updateView();
+			}
+		}
+		else if (PrevHighlightBond != null) {
+			//'un'-highlight things here..
+			System.out.println("Time to 'un'-highlight PrevHighlightBond now..: ");
+			chemObjectRelay.getIJava2DRenderer().getRenderer2DModel().setHighlightedBond(null);
+			PrevHighlightBond = null;
+			chemObjectRelay.updateView();
+		}
+	}
 	public void setChemModelRelay(IChemModelRelay relay) {
 		this.chemObjectRelay = relay;
 	}

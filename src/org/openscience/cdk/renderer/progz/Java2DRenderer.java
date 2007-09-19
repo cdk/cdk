@@ -327,6 +327,11 @@ public class Java2DRenderer implements IJava2DRenderer {
 		Color atomColor = getRenderer2DModel().getAtomColor(atom, Color.BLACK);
 		Color otherColor = getRenderer2DModel().getForeColor();
 		Color bgColor = getRenderer2DModel().getBackColor();
+		if (atom == getRenderer2DModel().getHighlightedAtom())
+			bgColor = getRenderer2DModel().getHoverOverColor();
+		else {
+		
+		}
 		//bgColor = Color.green;
 		
 		graphics.setColor(bgColor);
@@ -546,7 +551,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double y = atom.getPoint2d().y;
 		System.out.println("painting paintColouredAtomBackground now at " + x + " / " + y);
 		//FIXME: right size for this AtomRadius (currently estimate)
-		double atomRadius = 0.8;
+		double atomRadius = rendererModel.getHighlightRadiusModel();
 		
 		graphics.setColor(color);
 	
