@@ -42,7 +42,6 @@ import org.openscience.cdk.controller.*;
  * JChemPaint menu actions
  *
  * @author     nielsout
- * @cdk.module jchempaint
  */
 public class JCPActionChangeMode extends AbstractAction
 {
@@ -59,7 +58,8 @@ public class JCPActionChangeMode extends AbstractAction
 	private String key;
 	private Controller2DHub hub;
 	private TestEditor editor;
-	
+	private Controller2DModel.DrawMode drawMode;
+	private String drawElement = "";
 	/**
 	 *  Description of the Field
 	 */
@@ -76,24 +76,28 @@ public class JCPActionChangeMode extends AbstractAction
 		this.editor = editor;
 		this.hub = editor.get2DHub();
 		this.key = key;
+		
 		System.out.println("the key: " + key);
 		if (key.equals("move")) {
-			module = new Controller2DModuleMove();
-			System.out.println("Controller2DModuleMove button started..!");
+			drawMode = Controller2DModel.DrawMode.MOVE;
 		}
 		else if (key.equals("eraser")) {
-			module = new Controller2DModuleRemove();
-			System.out.println("Controller2DModuleRemove button started..!");
+			drawMode = Controller2DModel.DrawMode.ERASER;
 		}
 		else if (key.equals("plus")) {
-			module = new Controller2DModuleChangeFormalC(1);
+			//module = new Controller2DModuleChangeFormalC(1);
+			drawMode = Controller2DModel.DrawMode.INCCHARGE;
 		}
 		else if (key.equals("minus")) {
-			module = new Controller2DModuleChangeFormalC(-1);
+			drawMode = Controller2DModel.DrawMode.DECCHARGE;
+			//module = new Controller2DModuleChangeFormalC(-1);
 		}
 		else if (key.length() == 1) {
 			//I assume something with length of 1 is an atom name (C/H/O/N/etc.)
-			module = new Controller2DModuleAddAtom(key);
+		//	module = new Controller2DModuleAddAtom(key);
+			//FIXME: is ENTERELEMENT the correct name? :]
+			drawMode = Controller2DModel.DrawMode.ENTERELEMENT;
+			drawElement = key;
 		}
 	}
 	 public void actionPerformed(ActionEvent e) {
@@ -101,32 +105,21 @@ public class JCPActionChangeMode extends AbstractAction
 	       // logger.debug("  source ", e.getSource());
 	    //    System.out.println("  type  " + module.toString());
 	        
-	    //    JChemPaintModel jcpModel = jcpPanel.getJChemPaintModel();
-	    //    Controller2DModel renderModel = jcpModel.getControllerModel();
-	    //    renderModel.setDrawElement(symbol);
-	    //    renderModel.setDrawMode(Controller2DModel.DrawMode.ELEMENT);
-		 
 		 	if (editor.getActionButton() != null)
 		 		editor.getActionButton().setBackground(Color.LIGHT_GRAY);
 		 	
-	      //  ((JButton)jcpPanel.lastAction.get(0)).setBackground(Color.LIGHT_GRAY);
 			editor.setActionButton((JComponent) e.getSource());
 			((JComponent) e.getSource()).setBackground(Color.GRAY);
 		
-	      //  jcpPanel.lastAction.set(0,(JComponent) e.getSource());
-			
-			//FIXME: perhaps some 'default' controller should always stay
-			hub.unRegisterAllControllerModule();
-
-			if (module == null)
-				System.out.println("empty module selected!");
-			else {
-				hub.registerGeneralControllerModule(module);
-				System.out.println("module " + module + " listening now..");
+			hub.getController2DModel().setDrawMode(drawMode);
+			if (drawMode != null) {
+				System.out.println("Drawmode activated: " + drawMode);
 			}
+			else {
+				System.out.println("This drawmode is unavailable atm :/ ");
+			}
+			if (drawElement != "")
+				hub.getController2DModel().setDrawElement(drawElement);
 	    }
-
-
-	
 }
 
