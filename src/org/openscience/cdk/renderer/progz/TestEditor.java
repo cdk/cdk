@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.controller.Controller2DHub;
@@ -52,6 +53,7 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.Molecule;
 
 /**
  * Test class for testing the new Java2DRenderer and Controller2DHub.
@@ -87,7 +89,10 @@ public class TestEditor extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setName("'frame'");
 		
-		sdg.setMolecule(makeMasstest());
+		
+	//	sdg.setMolecule(makeMasstest());
+		sdg.setMolecule(makeSWedgeTest());
+
 		try {
 			sdg.generateCoordinates();
 		} catch (Exception e) {
@@ -185,7 +190,8 @@ public class TestEditor extends JPanel {
 			//System.out.println("Painting molecule..!");
 			super.paint(g);
 			model.setZoomFactor(1);
-
+			model.setShowAromaticity(true);
+			
 			//IChemModel imol = hub.getIChemModel();
 			//FIXME: make sure to draw all molecules if imol has more then one..
 			//molecule = imol.getMoleculeSet().getMolecule(0);
@@ -268,5 +274,40 @@ public class TestEditor extends JPanel {
 		mol.addBond(bondB1); 
 
 		return mol;	
+	}
+	public IMolecule makeSWedgeTest() {
+		IMolecule mol = builder.newMolecule();
+		IAtom atomC0 = new Atom("C");
+	    atomC0.setID("C0"); atomC0.setHydrogenCount(0);
+		
+
+		IAtom atomO1 = new Atom("O");
+		atomO1.setID("O1"); atomO1.setHydrogenCount(0);
+		
+		IAtom atomH0 = new Atom("H");
+		atomH0.setID("H0"); atomH0.setHydrogenCount(0);
+		IAtom atomH1 = new Atom("H");
+		atomH1.setID("H1"); atomH1.setHydrogenCount(0);
+
+	    IBond bondB1 = builder.newBond(atomC0, atomO1);
+	    bondB1.setElectronCount(2);
+	    bondB1.setOrder(2);
+	    IBond bondB2 = builder.newBond(atomC0, atomH0);
+	    bondB2.setElectronCount(1);
+    bondB2.setStereo(CDKConstants.STEREO_BOND_DOWN);
+
+    IBond bondB3 = builder.newBond(atomC0, atomH1);
+    bondB3.setElectronCount(1);
+    bondB3.setStereo(CDKConstants.STEREO_BOND_UP);
+
+		mol.addAtom(atomC0); 
+		mol.addAtom(atomO1);
+		mol.addAtom(atomH0);
+		mol.addAtom(atomH1);
+mol.addBond(bondB1);
+ mol.addBond(bondB2);
+ mol.addBond(bondB3);
+
+	  return mol;	
 	}
 }

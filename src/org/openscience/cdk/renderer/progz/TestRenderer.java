@@ -135,13 +135,12 @@ public class TestRenderer extends JPanel {
 		//mol = MoleculeFactory.makeThiazole();
 		//mol = MoleculeFactory.makeAlkane(5);
 		//mol = makeAlkanetest(5);
-		mol = makeMasstest();
+		//mol = makeMasstest();
 		
 		//mol = MoleculeFactory.makeBenzene();
 		//mol = makeBenzene();
-		//mol = makeWedgeTest();
 		
-		//mol = makeSWedgeTest();
+		mol = makeSWedgeTest();
 System.out.println("molecule: " + mol);
 		
 		

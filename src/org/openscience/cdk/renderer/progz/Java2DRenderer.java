@@ -28,6 +28,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -109,9 +110,20 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 *@param  bounds
 	 */
 	public void paintMolecule(IAtomContainer atomCon, Graphics2D graphics) {
+		
+		
+		if (affine == null) {
+			System.out.println("paintMolecule should be called first time with the bounds of the graphical object..");
+			logger.warn("Cannot paintMolecule without transform Matrix");
+			return;			
+		}
 		graphics.transform(affine);
 		System.out.println("transform matrix:" + graphics.getTransform());
 
+		if (rendererModel.getUseAntiAliasing())
+		{
+			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 		// set basic shape form for bonds
 		graphics.setColor(Color.BLACK);
 		graphics.setStroke(new BasicStroke(
@@ -861,7 +873,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		float newydown = (float)(y1 - Math.cos(angle) * wedgeWidth);
 		
 		double bondLength = distance2points(bond.getAtom(0).getPoint2d(), bond.getAtom(1).getPoint2d());
-		int numberOfLines = (int) (bondLength / bondWidth / 2);
+		int numberOfLines = (int) (bondLength / bondWidth / 3);
 
 		System.out.println("lines: " + numberOfLines);
 		
@@ -869,7 +881,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		
 		double xl, xr, yl, yr;
 		Line2D.Double line = new Line2D.Double();
-		for (int i = 0; i < numberOfLines - 3; i++) { //do not show last 3 lines because atom symbol will be drawn on that place
+		for (int i = 0; i < numberOfLines - 2; i++) { //do not show last line because atom symbol will be drawn on that place
 			double t = (double)i / numberOfLines;
 			xl = x0 + t * (newxup - x0);
 			xr = x0 + t * (newxdown - x0);
