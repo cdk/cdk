@@ -56,7 +56,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 	}
 	
     public static TestSuite suite() {
-    	return new TestSuite(CDKValencyChecker.class);
+    	return new TestSuite(CDKValencyCheckerTest.class);
     }
 	
 	public void testIsSaturated_IAtomContainer() throws CDKException {
