@@ -223,7 +223,7 @@ public class Primes {
 
   /**
    * Returns the i-th prime number in the sequence of
-   * all prime numbers below 10000. The first in the sequence
+   * all prime numbers below 19700. The first in the sequence
    * (n=0) is the prime number 2.
    */
   public static int getPrimeAt(int index) {
