@@ -86,7 +86,6 @@ import org.openscience.cdk.test.tools.ElementComparatorTest;
 import org.openscience.cdk.test.tools.FormatStringBufferTest;
 import org.openscience.cdk.test.tools.IDCreatorTest;
 import org.openscience.cdk.test.tools.MFAnalyserTest;
-import org.openscience.cdk.test.tools.MassToFormulaToolTest;
 import org.openscience.cdk.test.tools.manipulator.AminoAcidManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerComparatorTest;
 import org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest;
