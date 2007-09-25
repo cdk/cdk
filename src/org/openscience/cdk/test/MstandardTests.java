@@ -143,7 +143,6 @@ public class MstandardTests {
         suite.addTest(FormatStringBufferTest.suite());
         suite.addTest(IDCreatorTest.suite());
         suite.addTest(MFAnalyserTest.suite());
-        suite.addTest(MassToFormulaToolTest.suite());
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());

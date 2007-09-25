@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.MassToFormulaTool;
 import org.openscience.cdk.tools.MassToFormulaTool.IElement_Nr;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-experimental
  */
 public class MassToFormulaToolTest extends CDKTestCase {
 
