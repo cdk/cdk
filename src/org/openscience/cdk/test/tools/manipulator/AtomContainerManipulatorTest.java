@@ -30,6 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -82,6 +83,67 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
         
+    public void testConvertImplicitToExplicitHydrogens_IAtomContainer() throws Exception {
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setHydrogenCount(2);
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(1).setHydrogenCount(2);
+        mol.addBond(0,1, CDKConstants.BONDORDER_DOUBLE);
+        assertEquals(2, mol.getAtomCount());
+        assertEquals(1, mol.getBondCount());
+        
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+    }
+        
+    public void testGetTotalHydrogenCount_IAtomContainer_zeroImplicit() throws IOException, ClassNotFoundException, CDKException {
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setHydrogenCount(0);
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(1).setHydrogenCount(0);
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0,1,2);
+        mol.addBond(0,2,1);
+        mol.addBond(0,3,1);
+        mol.addBond(1,4,1);
+        mol.addBond(1,5,1);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+    }
+
+    public void testGetTotalHydrogenCount_IAtomContainer_nullImplicit() throws IOException, ClassNotFoundException, CDKException {
+        Molecule mol = new Molecule(); // ethene
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setHydrogenCount(null);
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(1).setHydrogenCount(null);
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0,1,2);
+        mol.addBond(0,2,1);
+        mol.addBond(0,3,1);
+        mol.addBond(1,4,1);
+        mol.addBond(1,5,1);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+        assertEquals(6, mol.getAtomCount());
+        assertEquals(5, mol.getBondCount());
+    }
+
     public void testGetTotalHydrogenCount_ImplicitHydrogens() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon = new Atom("C");
