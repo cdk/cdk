@@ -315,9 +315,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      */
     public void testRemoveHydrogensBorane() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
-        IAtomContainer ac = AtomContainerManipulator.removeHydrogens((IAtomContainer)mol);
+    	IAtomContainer borane = new Molecule();
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(2,3,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(2,4,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(3,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);
 
         // Should be two disconnected Bs with H-count == 4
         assertEquals("incorrect atom count", 2, ac.getAtomCount());
@@ -335,7 +350,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     public void testGetTotalFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalFormalCharge((IAtomContainer)mol);
 
         assertEquals(1,totalCharge);
@@ -351,7 +366,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     public void testGetTotalPositiveFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalPositiveFormalCharge((IAtomContainer)mol);
 
         assertEquals(2,totalCharge);
@@ -367,7 +382,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     public void testGetTotalNegativeFormalCharge_IAtomContainer() throws IOException, ClassNotFoundException, CDKException
     {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("[C-]C[C+][C+]C");
+        IMolecule mol = parser.parseSmiles("[O-]C([N+])C([N+])C");
         int totalCharge = AtomContainerManipulator.getTotalNegativeFormalCharge((IAtomContainer)mol);
 
         assertEquals(-1,totalCharge);
