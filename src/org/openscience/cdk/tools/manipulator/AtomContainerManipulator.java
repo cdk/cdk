@@ -176,16 +176,19 @@ public class AtomContainerManipulator {
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (!atom.getSymbol().equals("H")) {            	
-            	int hCount = countExplicitHydrogens(atomContainer, atom);
-            	for (int i=0; i<hCount; i++) {
-            		IAtom hydrogen = atom.getBuilder().newAtom(Elements.HYDROGEN);
-            		atomContainer.addAtom(hydrogen);
-            		atomContainer.addBond(
-            			atom.getBuilder().newBond(
-            				atom, hydrogen, 
-            				CDKConstants.BONDORDER_SINGLE
-            			)
-            		);
+            	Integer hCount = atom.getHydrogenCount();
+            	if (hCount != null) {
+            		for (int i=0; i<hCount.intValue(); i++) {
+            			IAtom hydrogen = atom.getBuilder().newAtom(Elements.HYDROGEN);
+            			atomContainer.addAtom(hydrogen);
+            			atomContainer.addBond(
+            				atom.getBuilder().newBond(
+            					atom, hydrogen, 
+            					CDKConstants.BONDORDER_SINGLE
+            				)
+            			);
+            		}
+            		atom.setHydrogenCount(0);
             	}
             }
         }
