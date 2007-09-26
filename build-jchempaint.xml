@@ -1,9 +1,6 @@
 <project name="JCPCDK" default="dist-jcp" basedir=".">
     <import file="build.xml"/>
 
-    <property name="plugin.dir" value="pluginjar" />
-
-
     <target id="dist-jcp" name="dist-jcp" depends="dist-all, compile-jcp, unjar-libjars, unjar-cdkjars"
             description="Builds the JChemPaint application">
         <jar jarfile="${dist}/jar/jchempaint-${jcp.version}.jar">
@@ -110,11 +107,6 @@
 
     <target id="unjar-cdkjars" name="unjar-cdkjars">
 	 <unjar dest="${appjars.dir}">
-            <fileset dir="${plugin.dir}">
-                <include name="dirbrowser.jar"/>
-                <include name="dadmlbrowser.jar"/>
-                <include name="aminoacidtemplates.jar"/>
-            </fileset>
             <fileset dir="${dist}/jar">
                 <include name="cdk-applications.jar"/>
                 <include name="cdk-core.jar"/>
