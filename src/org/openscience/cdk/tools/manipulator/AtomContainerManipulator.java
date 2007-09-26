@@ -72,7 +72,7 @@ public class AtomContainerManipulator {
 	    return false;
         } else {
             container.setAtom(container.getAtomNumber(atom), newAtom);
-            Iterator eContainers = container.electronContainers();
+            Iterator<IElectronContainer> eContainers = container.electronContainers();
     		while (eContainers.hasNext()){
     			IElectronContainer eContainer = (IElectronContainer)eContainers.next();
                 if (eContainer instanceof IBond) {
@@ -204,15 +204,15 @@ public class AtomContainerManipulator {
     	List<String> idList = new ArrayList<String>();
         if (mol != null) {
             if (mol.getID() != null) idList.add(mol.getID());
-            java.util.Iterator atoms = mol.atoms();
+            Iterator<IAtom> atoms = mol.atoms();
             while (atoms.hasNext()) {
-                IAtom atom = (IAtom)atoms.next();
+                IAtom atom = atoms.next();
                 if (atom.getID() != null) idList.add(atom.getID());
             }
 
-            Iterator bonds = mol.bonds();
+            Iterator<IBond> bonds = mol.bonds();
             while (bonds.hasNext()) {
-                IBond bond = (IBond) bonds.next();                            
+                IBond bond = bonds.next();                            
                 if (bond.getID() != null) idList.add(bond.getID());
             }
         }
@@ -319,9 +319,9 @@ public class AtomContainerManipulator {
      */
     public static void setAtomProperties(IAtomContainer container, Object propKey, Object propVal) {
         if (container != null) {
-            java.util.Iterator atoms = container.atoms();
+            Iterator<IAtom> atoms = container.atoms();
             while (atoms.hasNext()) {
-                IAtom atom = (IAtom)atoms.next();
+                IAtom atom = atoms.next();
                 atom.setProperty(propKey, propVal);
             }
         }
