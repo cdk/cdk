@@ -26,6 +26,7 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Molecule;
@@ -178,9 +179,24 @@ public class MFAnalyserTest extends CDKTestCase {
      */
     public void testRemoveHydrogensPreserveMultiplyBonded() throws IOException, ClassNotFoundException, CDKException
     {
-        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IMolecule mol = parser.parseSmiles("B1([H])([H])[H]B([H])([H])[H]1");
-        IAtomContainer ac = new MFAnalyser(mol).removeHydrogensPreserveMultiplyBonded();
+    	IAtomContainer borane = new Molecule();
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(2,3,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(2,4,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(3,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
+        IAtomContainer ac = new MFAnalyser(borane).removeHydrogensPreserveMultiplyBonded();
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.
         assertEquals("incorrect atom count", 4, ac.getAtomCount());
