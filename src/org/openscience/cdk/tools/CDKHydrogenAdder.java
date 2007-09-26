@@ -38,7 +38,28 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Assumes CDK atom types to be detected and adds missing hydrogens based on the
- * atom typing.
+ * atom typing:
+ * <pre>
+ *   IMolecule methane = new Molecule();
+ *   IAtom carbon = new Atom("C");
+ *   methane.addAtom(carbon);
+ *   CDKHydrogenAdder adder = new CDKHydrogenAdder();
+ *   adder.addImplicitHydrogens(methane);
+ *   int atomCount = methane.getAtomCount(); // = 1
+ * </pre>
+ *
+ * <p>If you want to add the hydrogens to a specific atom only,
+ * use this example:
+ * <pre>
+ *   IMolecule ethane = new Molecule();
+ *   IAtom carbon1 = new Atom("C");
+ *   IAtom carbon2 = new Atom("C");
+ *   ethane.addAtom(carbon1);
+ *   ethane.addAtom(carbon2);
+ *   CDKHydrogenAdder adder = new CDKHydrogenAdder();
+ *   adder.addExplicitHydrogens(ethane, carbon1);
+ *   int atomCount = ethane.getAtomCount(); // = 5
+ * </pre>
  * 
  * @author     egonw
  * @cdk.module valencycheck
