@@ -29,23 +29,31 @@ import java.util.Map;
 import java.util.Hashtable;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
- * Assumes CDK atom types to be detected and adds missing hydrogens based on the
- * atom typing:
+ * Adds implicit hydrogens based on atom type definitions. The class assumes
+ * that CDK atom types are already detected. A full code example is:
  * <pre>
  *   IMolecule methane = new Molecule();
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
+ *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(methane.getBuilder());
+ *   Iterator<IAtom> atoms = methane.atoms();
+ *   while (atoms.hasNext()) {
+ *     IAtom atom = atoms.next();
+ *     IAtomType type = matcher.findMatchingAtomType(methane, atom);
+ *     AtomTypeManipulator.configure(atom, type);
+ *   }
  *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(methane.getBuilder());
  *   adder.addImplicitHydrogens(methane);
- *   int atomCount = methane.getAtomCount(); // = 1
  * </pre>
  *
  * <p>If you want to add the hydrogens to a specific atom only,
@@ -56,9 +64,11 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *   IAtom carbon2 = new Atom("C");
  *   ethane.addAtom(carbon1);
  *   ethane.addAtom(carbon2);
+ *   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(ethane.getBuilder());
+ *   IAtomType type = matcher.findMatchingAtomType(ethane, carbon1);
+ *   AtomTypeManipulator.configure(carbon1, type);
  *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(ethane.getBuilder());
- *   adder.addExplicitHydrogens(ethane, carbon1);
- *   int atomCount = ethane.getAtomCount(); // = 5
+ *   adder.addImplicitHydrogens(ethane, carbon1);
  * </pre>
  * 
  * @author     egonw
