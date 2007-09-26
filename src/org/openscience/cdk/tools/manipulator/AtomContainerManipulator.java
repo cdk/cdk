@@ -28,6 +28,7 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
@@ -165,6 +166,31 @@ public class AtomContainerManipulator {
         }
         return hCount;
     }
+
+    /**
+     * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
+     * equaling the number of set implicit hydrogens.
+     */
+    public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
+    	Iterator<IAtom> atoms = atomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (!atom.getSymbol().equals("H")) {            	
+            	int hCount = countExplicitHydrogens(atomContainer, atom);
+            	for (int i=0; i<hCount; i++) {
+            		IAtom hydrogen = atom.getBuilder().newAtom(Elements.HYDROGEN);
+            		atomContainer.addAtom(hydrogen);
+            		atomContainer.addBond(
+            			atom.getBuilder().newBond(
+            				atom, hydrogen, 
+            				CDKConstants.BONDORDER_SINGLE
+            			)
+            		);
+            	}
+            }
+        }
+    }
+
     /**
      * @return The summed implicit + explicit hydrogens of the given IAtom.
      */
