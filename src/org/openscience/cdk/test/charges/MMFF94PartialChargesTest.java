@@ -33,7 +33,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -71,10 +70,9 @@ public class MMFF94PartialChargesTest extends CDKTestCase {
 	 */
 	public void testMMFF94PartialCharges() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.99,0.314,0.66,-0.57,-0.65,0.36,0.36,0,0,0.5};
-		HydrogenAdder hAdder = new HydrogenAdder();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule ac = sp.parseSmiles("NCC(=O)O");
-		hAdder.addExplicitHydrogensToSatisfyValency(ac);
+		addExplicitHydrogens(ac);
 		MMFF94PartialCharges mmff = new MMFF94PartialCharges();
 		mmff.assignMMFF94PartialCharges(ac);
 		for (int i = 0; i < ac.getAtomCount(); i++) {

@@ -31,7 +31,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,7 +45,6 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -178,8 +176,7 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 	 */
 	private IMolecule getMolecule1()throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]=C-C");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        addImplicitHydrogens(molecule);
         IAtom atom =  molecule.getAtom(0);
         molecule.addSingleElectron(new SingleElectron(atom));
         atom.setHydrogenCount(2);
@@ -193,8 +190,7 @@ public class RearrangementRadical3ReactionTest extends CDKTestCase {
 	 */
 	private IMolecule getMolecule2()throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C-C-C");
-		HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        addImplicitHydrogens(molecule);
         IAtom atom1 =  molecule.getAtom(0);
         molecule.addLonePair(new LonePair(atom1));
         atom1.setHydrogenCount(2);

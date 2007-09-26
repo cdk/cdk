@@ -24,20 +24,30 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyHybridChecker;
-
-import java.util.Enumeration;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
@@ -78,7 +88,7 @@ import java.util.StringTokenizer;
 public class SmilesParser {
 
 	private LoggingTool logger;
-	private HydrogenAdder hAdder;
+	private CDKHydrogenAdder hAdder;
 //	private SmilesValencyChecker valencyChecker;
 	private ValencyHybridChecker valencyChecker;
 		
@@ -108,7 +118,7 @@ public class SmilesParser {
 		try
 		{
 			valencyChecker = new ValencyHybridChecker();
-			hAdder = new HydrogenAdder(valencyChecker);
+			hAdder = CDKHydrogenAdder.getInstance(builder);
 		} catch (Exception exception)
 		{
 			logger.error("Could not instantiate valencyChecker or hydrogenAdder: ",
@@ -199,6 +209,24 @@ public class SmilesParser {
 			logger.debug(exception);
 		}
 
+		// perceive atom types
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(m.getBuilder());
+		int i = 0;
+		Iterator<IAtom> atoms = m.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = atoms.next();
+			i++;
+			try {
+				IAtomType type = matcher.findMatchingAtomType(m, atom);
+				AtomTypeManipulator.configure(atom, type);
+			} catch (Exception e) {
+				throw new InvalidSmilesException(
+					"Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol(),
+					e
+				);
+			}
+		}
+		
 		// add implicit hydrogens
 		this.addImplicitHydrogens(m);
 
@@ -829,7 +857,7 @@ public class SmilesParser {
 	private void addImplicitHydrogens(IMolecule m) {
 		try {
 			logger.debug("before H-adding: ", m);
-			hAdder.addImplicitHydrogensToSatisfyValency(m);
+			hAdder.addImplicitHydrogens(m);
 			logger.debug("after H-adding: ", m);
 		} catch (Exception exception) {
 			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());

@@ -42,7 +42,6 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * Tests the HOSECode generator.
@@ -246,7 +245,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase
 		  IBond b27 = mol.getBuilder().newBond(a23, a8, 2.0);
 		  mol.addBond(b27);
 		  
-		  new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		  addImplicitHydrogens(mol);
 
 		//MoleculeViewer2D.display(molecule, true);
 		HueckelAromaticityDetector.detectAromaticity(mol);
@@ -470,7 +469,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase
 		  IBond b27 = mol.getBuilder().newBond(a23, a8, 2.0);
 		  mol.addBond(b27);
 		  
-		  new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		  addImplicitHydrogens(mol);
 		HueckelAromaticityDetector.detectAromaticity(mol);
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		String s = null;

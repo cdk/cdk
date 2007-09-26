@@ -33,7 +33,6 @@ import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.GenerateFragments;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -275,9 +274,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		String smile="Oc1cc2ccccn2c1C(=O)OCCN3CCCCC3";//MDDR 31 
                   
 		IMolecule mol = sp.parseSmiles(smile); 
-		HydrogenAdder ha= new HydrogenAdder();
-   
-		ha.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
     
 		gf.generateMurckoFragments(mol,false,false,4);
 		String[] smiles=gf.getMurckoFrameworksAsSmileArray();
@@ -293,9 +290,8 @@ public class GenerateFragmentsTest extends CDKTestCase{
 		String smile="C(c1ccc(cc1)c2ccccc2)n3cnc4cccnc34";//MDDR 52 
                   
 		IMolecule mol = sp.parseSmiles(smile); 
-		HydrogenAdder ha= new HydrogenAdder();
    
-		ha.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
     
 		gf.generateMurckoFragments(mol,false,false,4);
 		String[] smiles=gf.getMurckoFrameworksAsSmileArray();

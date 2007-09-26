@@ -23,12 +23,21 @@
  */
 package org.openscience.cdk.test;
 
+import java.util.Iterator;
+
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import junit.framework.TestCase;
 
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
@@ -121,5 +130,36 @@ public class CDKTestCase extends TestCase {
         assertEquals(p1.y, p2.y, error);
         assertEquals(p1.z, p2.z, error);
     }
-        
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds explicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     * 
+     * @param container to which explicit hydrogens are added.
+     */
+    protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
+    	addImplicitHydrogens(container);
+    	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+    }
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds implicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     * 
+     * @param container to which implicit hydrogens are added.
+     */
+    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+    	Iterator<IAtom> atoms = container.atoms();
+    	while (atoms.hasNext()) {
+    		IAtom atom = atoms.next();
+    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		AtomTypeManipulator.configure(atom, type);
+    	}
+    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+    	hAdder.addImplicitHydrogens(container);
+    }
+
 }

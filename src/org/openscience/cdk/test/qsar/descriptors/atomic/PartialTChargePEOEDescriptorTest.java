@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -69,8 +68,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
 	        descriptor.setParameters(params);
@@ -90,8 +88,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("F-C=C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -115,8 +112,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C(=O)O");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -140,8 +136,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("Fc1ccccc1");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -165,8 +160,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=C-O-C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -190,8 +184,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=C-C=C-O-C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);

@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescr
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * @cdk.module test-qsar
@@ -53,8 +52,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CF"); 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol.getAtom(0),mol).getValue();
 		for (int i = 0; i < testResult.length; ++i) {
 			assertEquals(testResult[i], retval.get(i), 0.00001);

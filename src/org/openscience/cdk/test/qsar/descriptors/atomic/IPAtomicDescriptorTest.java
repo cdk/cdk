@@ -31,7 +31,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -67,8 +66,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -85,8 +83,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-C-Br");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -103,8 +100,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-C-C-I");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -121,8 +117,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-C-O");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -138,8 +133,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 
     	IMolecule mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -156,8 +150,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 
     	IMolecule mol = sp.parseSmiles("C-N-C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -174,8 +167,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-C-N");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -192,8 +184,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 
     	IMolecule mol = sp.parseSmiles("C-C-P-C-C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -211,8 +202,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 
     	IMolecule mol = sp.parseSmiles("O=C(C)CC(C)C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -229,8 +219,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("O=C1C2CCC1CC2");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -248,8 +237,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("CCOCCCO");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -272,8 +260,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
         
     	IMolecule mol = sp.parseSmiles("C-C-N");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -299,8 +286,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCCCCC");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -323,8 +309,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O(C=CC=C)C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -349,8 +334,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("OC=CC");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -375,8 +359,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C1=C(C)CCS1");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -402,8 +385,7 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("OC(C#CC)(C)C");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);

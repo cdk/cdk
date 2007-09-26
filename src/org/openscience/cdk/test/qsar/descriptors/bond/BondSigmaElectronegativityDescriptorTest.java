@@ -27,7 +27,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IBondDescriptor;
@@ -35,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescr
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -63,8 +61,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("CF"); 
-        HydrogenAdder hAdder = new HydrogenAdder();
-        hAdder.addExplicitHydrogensToSatisfyValency(mol);
+        addExplicitHydrogens(mol);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
 		
@@ -83,8 +80,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCl");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.05);
@@ -98,8 +94,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCBr");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -114,8 +109,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
 		assertEquals(testResult,result,0.001);
@@ -128,8 +122,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCOCC");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -144,8 +137,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("NCCO");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 5 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -160,8 +152,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCS");
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();

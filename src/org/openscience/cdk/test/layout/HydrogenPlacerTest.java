@@ -42,7 +42,6 @@ import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -67,11 +66,14 @@ public class HydrogenPlacerTest extends CDKTestCase {
         return new TestSuite(HydrogenPlacerTest.class);
     }
     
-    public void testBug933572() throws IOException, ClassNotFoundException, CDKException{
+    /**
+     * @cdk.bug 933572
+     */
+    public void testBug933572() throws Exception{
         Molecule ac=new Molecule();
         ac.addAtom(new Atom("H"));
         ac.getAtom(0).setPoint2d(new Point2d(0,0));
-        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(ac);
+        addExplicitHydrogens(ac);
         HydrogenPlacer hPlacer = new HydrogenPlacer();
         hPlacer.placeHydrogens2D(ac, 36);
         for(int i=0;i<ac.getAtomCount();i++){
@@ -132,10 +134,9 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
 		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(mol);
-		HydrogenAdder ha = new HydrogenAdder();
 		logger.debug("Read Reserpine");
 		logger.debug("Starting addition of H's");
-		ha.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		logger.debug("ended addition of H's");
 		hydrogenPlacer.placeHydrogens2D(mol, bondLength);
 		if (standAlone) {

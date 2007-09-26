@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescr
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -56,8 +55,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends CDKTestCase {
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
 	}
 }

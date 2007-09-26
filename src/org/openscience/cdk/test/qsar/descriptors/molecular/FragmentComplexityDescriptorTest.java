@@ -7,7 +7,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
@@ -16,7 +15,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescript
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.GenerateFragments;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -38,13 +36,12 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	double Complexity=0;
-    	HydrogenAdder hAdder = new HydrogenAdder();
         	MDLReader reader = new MDLReader(ins);
         	Molecule mol = (Molecule)reader.read(new Molecule());
         	gf.generateMurckoFragments(mol,false,false,4);
         	List setOfFragments=gf.getMurckoFrameworks();
         	for (int i=0;i<setOfFragments.size();i++){
-        		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) setOfFragments.get(i));
+        		addExplicitHydrogens((IMolecule) setOfFragments.get(i));
         		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
         		//System.out.println("Complexity:"+Complexity);
         	}
@@ -58,13 +55,12 @@ public class FragmentComplexityDescriptorTest extends CDKTestCase{
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	GenerateFragments gf=new GenerateFragments();
     	double Complexity=0;
-    	HydrogenAdder hAdder = new HydrogenAdder();
     	MDLReader reader = new MDLReader(ins);
     	Molecule mol = (Molecule)reader.read(new Molecule());
     	gf.generateMurckoFragments(mol,false,false,4);
     	List setOfFragments=gf.getMurckoFrameworks();
     	for (int i=0;i<setOfFragments.size();i++){
-    		hAdder.addExplicitHydrogensToSatisfyValency((IMolecule) setOfFragments.get(i));
+    		addExplicitHydrogens((IMolecule) setOfFragments.get(i));
     		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
     		//System.out.println("Complexity:"+Complexity);
     	}

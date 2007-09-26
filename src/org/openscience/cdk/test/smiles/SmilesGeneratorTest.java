@@ -55,7 +55,6 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -165,7 +164,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 5
 		mol1.addBond(4, 6, 2);
 		// 6
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
@@ -233,7 +232,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		// 5
 		mol1.addBond(7, 2, 1);
 		// 6
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
@@ -308,7 +307,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol1.addBond(1, 6, 1);
 		// 6
 
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
@@ -368,7 +367,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertNotNull(smiles1);
 		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
 
-		new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		bool = new boolean[mol1.getBondCount()];
 		bool[2] = true;
@@ -604,13 +603,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLReader reader = new MDLReader(ins);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+		addExplicitHydrogens(mol1);
 		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/d-ala.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLReader(ins);
 		Molecule mol2 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+		addExplicitHydrogens(mol2);
 		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
@@ -717,7 +716,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLReader reader = new MDLReader(ins);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
-		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol1);
+		addImplicitHydrogens(mol1);
 		SmilesGenerator sg = new SmilesGenerator();
 		String molSmiles = sg.createSMILES(mol1);
 		StringWriter output=new StringWriter();
@@ -725,7 +724,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         cmlWriter.write(mol1);
         CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
         IAtomContainer mol2=((IChemFile)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol2);
+        addImplicitHydrogens(mol2);
         String cmlSmiles = sg.createSMILES(new Molecule(mol2));
         assertEquals(molSmiles,cmlSmiles);        
 	}
@@ -740,13 +739,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
 		MDLReader reader1 = new MDLReader(ins1);
         Molecule mol1 = (Molecule) reader1.read(new Molecule());
-        new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+        addExplicitHydrogens(mol1);
         StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol1);
         sdg.generateCoordinates();
 		
 		MDLReader reader2 = new MDLReader(ins2);		
 		Molecule mol2 = (Molecule) reader2.read(new Molecule());
-		new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+		addExplicitHydrogens(mol2);
         sdg=new StructureDiagramGenerator(mol2);
         sdg.generateCoordinates();
 		

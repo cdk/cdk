@@ -38,12 +38,10 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * @cdk.module test-structgen
@@ -69,7 +67,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
 		
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
-		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		addImplicitHydrogens(mol);
 		
 		IMolecule temp = null;
 		List structures = VicinitySampler.sample(mol);
@@ -90,7 +88,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 		IMolecule mol = parser.parseSmiles("C=CC=C");
 		
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
-		new HydrogenAdder().addImplicitHydrogensToSatisfyValency(mol);
+		addImplicitHydrogens(mol);
 		
 		IMolecule temp = null;
 		List structures = VicinitySampler.sample(mol);

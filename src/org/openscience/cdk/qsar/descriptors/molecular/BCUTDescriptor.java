@@ -23,26 +23,33 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import static java.lang.Boolean.valueOf;
+
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import static java.lang.Boolean.valueOf;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -269,9 +276,17 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         }
 
         // add H's in case they're not present
-        HydrogenAdder hydrogenAdder = new HydrogenAdder();
         try {
-            hydrogenAdder.addExplicitHydrogensToSatisfyValency(molecule);
+        	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        	Iterator<IAtom> atoms = container.atoms();
+        	while (atoms.hasNext()) {
+        		IAtom atom = atoms.next();
+        		IAtomType type = matcher.findMatchingAtomType(container, atom);
+        		AtomTypeManipulator.configure(atom, type);
+        	}
+        	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        	hAdder.addImplicitHydrogens(container);
+        	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         } catch (Exception e) {
             throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
         }

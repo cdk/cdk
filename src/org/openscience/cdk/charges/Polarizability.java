@@ -23,18 +23,23 @@
  */
 package org.openscience.cdk.charges;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.Vector;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
@@ -56,6 +61,22 @@ public class Polarizability {
         logger = new LoggingTool(this);
     }
 
+    private void addExplicitHydrogens(IAtomContainer container) {
+        try {
+        	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        	Iterator<IAtom> atoms = container.atoms();
+        	while (atoms.hasNext()) {
+        		IAtom atom = atoms.next();
+        		IAtomType type = matcher.findMatchingAtomType(container, atom);
+        		AtomTypeManipulator.configure(atom, type);
+        	}
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+            hAdder.addImplicitHydrogens(container);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+        } catch (Exception ex1) {
+            logger.debug("Error in hydrogen addition");
+        }
+    }
 
     /**
      *  Gets the polarizabilitiyFactorForAtom
@@ -67,12 +88,7 @@ public class Polarizability {
     public double getPolarizabilitiyFactorForAtom(IAtomContainer atomContainer,
                                                   org.openscience.cdk.interfaces.IAtom atom) {
         AtomContainer acH = new org.openscience.cdk.AtomContainer(atomContainer);
-        try {
-            HydrogenAdder hAdder = new HydrogenAdder();
-            hAdder.addExplicitHydrogensToSatisfyValency(acH);
-        } catch (Exception ex1) {
-            logger.debug("Error in hydrogen addition");
-        }
+        addExplicitHydrogens(acH);
         return getKJPolarizabilityFactor(acH, atom);
     }
 
@@ -86,12 +102,7 @@ public class Polarizability {
     public double calculateKJMeanMolecularPolarizability(IAtomContainer atomContainer) {
         double polarizabilitiy = 0;
         Molecule acH = new Molecule(atomContainer);
-        try {
-            HydrogenAdder hAdder = new HydrogenAdder();
-            hAdder.addExplicitHydrogensToSatisfyValency(acH);
-        } catch (Exception ex1) {
-            logger.debug("Error in hydrogen addition");
-        }
+        addExplicitHydrogens(acH);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
         }
@@ -115,12 +126,7 @@ public class Polarizability {
         Vector<IAtom> startAtom = new Vector<IAtom>(1);
         startAtom.add(0, atom);
         double bond;
-        try {
-            HydrogenAdder hAdder = new HydrogenAdder();
-            hAdder.addExplicitHydrogensToSatisfyValency(acH);
-        } catch (Exception ex1) {
-            logger.debug("Error in hydrogen addition");
-        }
+        addExplicitHydrogens(acH);
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (acH.getAtom(i) != atom) {
@@ -147,12 +153,7 @@ public class Polarizability {
     public double calculateBondPolarizability(IAtomContainer atomContainer, Bond bond) {
         double polarizabilitiy = 0;
         Molecule acH = new Molecule(atomContainer);
-        try {
-            HydrogenAdder hAdder = new HydrogenAdder();
-            hAdder.addExplicitHydrogensToSatisfyValency(acH);
-        } catch (Exception ex1) {
-            logger.debug("Error in hydrogen addition");
-        }
+        addExplicitHydrogens(acH);
         if (bond.getAtomCount() == 2) {
             polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(0));
             polarizabilitiy += getKJPolarizabilityFactor(acH, bond.getAtom(1));

@@ -28,7 +28,6 @@ import org.openscience.cdk.iupac.parser.ParseException;
 import org.openscience.cdk.iupac.parser.TokenMgrError;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * JUnit test routines for the core parser.
@@ -40,7 +39,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
  */
 public class ParserTest extends CDKTestCase
 {
-    HydrogenAdder adder = new HydrogenAdder();
     IsomorphismTester comparer = new IsomorphismTester();
     
     public ParserTest() {}

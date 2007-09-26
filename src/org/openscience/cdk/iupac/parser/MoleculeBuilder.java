@@ -32,9 +32,13 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Takes in parsed Tokens from NomParser and contains rules
@@ -538,8 +542,15 @@ public class MoleculeBuilder
         addHeads(attachedSubstituents);
         
         //Add the hydrogens to create a balanced molecule
-        HydrogenAdder adder = new HydrogenAdder();
-        adder.addImplicitHydrogensToSatisfyValency(currentMolecule);
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
+    	Iterator<IAtom> atoms = currentMolecule.atoms();
+    	while (atoms.hasNext()) {
+    		IAtom atom = atoms.next();
+    		IAtomType type = matcher.findMatchingAtomType(currentMolecule, atom);
+    		AtomTypeManipulator.configure(atom, type);
+    	}
+    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(currentMolecule.getBuilder());
+    	hAdder.addImplicitHydrogens(currentMolecule);
                 
         return currentMolecule;
     }

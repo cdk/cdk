@@ -44,7 +44,6 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -81,8 +80,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -124,8 +122,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -157,8 +154,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -191,8 +187,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C=N-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=N-C=C");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -220,8 +215,7 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*CC(=O)N*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)N");
-	    HydrogenAdder adder = new HydrogenAdder();
-        adder.addExplicitHydrogensToSatisfyValency(molecule);
+        addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(molecule);
 		setOfReactants.addMolecule(molecule);

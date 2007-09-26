@@ -49,9 +49,11 @@ import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
 import org.openscience.cdk.applications.jchempaint.JChemPaintModel;
 import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
 import org.openscience.cdk.applications.swing.JExternalFrame;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
@@ -62,7 +64,9 @@ import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -171,7 +175,6 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 			 theModel.getRendererModel().setShowImplicitHydrogens(true);
 			 theModel.getRendererModel().setShowEndCarbons(true);
 			 
-			 HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
 			 if(theModel.getChemModel()!=null && theModel.getChemModel().getMoleculeSet()!=null){
 	        	java.util.Iterator mols = theModel.getChemModel().getMoleculeSet().molecules();
 				while (mols.hasNext())
@@ -181,7 +184,15 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 						
 					{
 						try{
-								hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+					    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+					    	Iterator<IAtom> atoms = molecule.atoms();
+					    	while (atoms.hasNext()) {
+					    		IAtom atom = atoms.next();
+					    		IAtomType aType = matcher.findMatchingAtomType(molecule, atom);
+					    		AtomTypeManipulator.configure(atom, aType);
+					    	}
+					    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+					    	hAdder.addImplicitHydrogens(molecule);
 						}catch(Exception ex){
 							//do nothing
 						}
@@ -401,7 +412,16 @@ public abstract class JChemPaintAbstractApplet extends JApplet {
 		while (containers.hasNext()) {
 			IAtomContainer container = (IAtomContainer)containers.next();
 			IMolecule moleculewithh = model.getBuilder().newMolecule(container);
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+	    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(moleculewithh.getBuilder());
+	    	Iterator<IAtom> atoms = moleculewithh.atoms();
+	    	while (atoms.hasNext()) {
+	    		IAtom atom = atoms.next();
+	    		IAtomType aType = matcher.findMatchingAtomType(moleculewithh, atom);
+	    		AtomTypeManipulator.configure(atom, aType);
+	    	}
+	    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(moleculewithh.getBuilder());
+	    	hAdder.addImplicitHydrogens(moleculewithh);
+	    	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
 			double bondLength = GeometryTools.getBondLengthAverage(container,theJcpp.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
 			new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
 			boolean[] bool=new boolean[moleculewithh.getBondCount()];

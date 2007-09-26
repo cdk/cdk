@@ -46,7 +46,6 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -122,7 +121,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testEthylPropylPhenantren()
+	public void testEthylPropylPhenantren() throws Exception
 	{
 		Molecule mol1 = MoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator();
@@ -132,17 +131,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		{
 			display(mol1);
 		}
-		try
-		{
-			smiles1 = sg.createSMILES(mol1);
-		} catch (Exception exc)
-		{
-			System.out.println(exc);
-			if (!standAlone)
-			{
-				fail();
-			}
-		}
+		smiles1 = sg.createSMILES(mol1);
 		if (standAlone)
 		{
 			System.err.println("SMILES 1: " + smiles1);
@@ -191,7 +180,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 	 *  A unit test for JUnit
 	 *
 	 */
-	public void testAlanin()
+	public void testAlanin() throws Exception
 	{
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
         Molecule mol1 = new Molecule();
@@ -222,33 +211,17 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 5
 		mol1.addBond(4, 6, 2);
 		// 6
-		try
-		{
-			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
-			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
-			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
-			ifac.configureAtoms(mol1);
-		} catch (Exception ex)
-		{
-			fail();
-		}
+		addExplicitHydrogens(mol1);
+		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
+		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
+		ifac.configureAtoms(mol1);
 
 		String smiles1 = null;
 		if (standAlone)
 		{
 			display(mol1);
 		}
-		try
-		{
-			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
-		} catch (Exception exc)
-		{
-			System.out.println(exc);
-			if (!standAlone)
-			{
-				fail();
-			}
-		}
+		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		if (standAlone)
 		{
 			System.err.println("SMILES 1: " + smiles1);
@@ -257,17 +230,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]"));
 		mol1.getBond(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
 		mol1.getBond(2).setStereo(CDKConstants.STEREO_BOND_UP);
-		try
-		{
-			smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
-		} catch (Exception exc)
-		{
-			System.out.println(exc);
-			if (!standAlone)
-			{
-				fail();
-			}
-		}
+		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
 		if (standAlone)
 		{
 			System.err.println("SMILES 1: " + smiles1);
@@ -327,7 +290,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 6
 		try
 		{
-			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			addExplicitHydrogens(mol1);
 			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 			ifac.configureAtoms(mol1);
@@ -439,7 +402,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 6
 		try
 		{
-			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			addExplicitHydrogens(mol1);
 			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 			IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 			ifac.configureAtoms(mol1);
@@ -570,7 +533,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
 		try
 		{
-			new HydrogenAdder().addHydrogensToSatisfyValency(mol1);
+			addExplicitHydrogens(mol1);
 			hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		} catch (IOException ex)
 		{
@@ -877,13 +840,13 @@ public class SmilesGeneratorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+			addExplicitHydrogens(mol1);
 			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 			filename = "data/mdl/d-ala.mol";
 			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			reader = new MDLReader(ins);
 			Molecule mol2 = (Molecule) reader.read(new Molecule());
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+			addExplicitHydrogens(mol2);
 			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 			SmilesGenerator sg = new SmilesGenerator();
 			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);
@@ -907,13 +870,13 @@ public class SmilesGeneratorTest extends CDKTestCase
 			InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			MDLReader reader = new MDLReader(ins);
 			Molecule mol1 = (Molecule) reader.read(new Molecule());
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol1);
+			addExplicitHydrogens(mol1);
 			new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 			filename = "data/mdl/D+-glucose.mol";
 			ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 			reader = new MDLReader(ins);
 			Molecule mol2 = (Molecule) reader.read(new Molecule());
-			new HydrogenAdder().addExplicitHydrogensToSatisfyValency(mol2);
+			addExplicitHydrogens(mol2);
 			new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 			SmilesGenerator sg = new SmilesGenerator();
 			String smiles1 = sg.createChiralSMILES(mol1, new boolean[20]);

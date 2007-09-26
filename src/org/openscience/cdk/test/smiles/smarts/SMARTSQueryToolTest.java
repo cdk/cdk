@@ -20,8 +20,15 @@
  */
 package org.openscience.cdk.test.smiles.smarts;
 
+import static java.util.Collections.sort;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -29,12 +36,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import static java.util.Collections.sort;
-import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -124,7 +125,6 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
         HueckelAromaticityDetector.detectAromaticity(atomContainer);
-        HydrogenAdder hadder = new HydrogenAdder();        
         SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", true);
 
         boolean status = querytool.matches(atomContainer);
@@ -141,7 +141,6 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
         HueckelAromaticityDetector.detectAromaticity(atomContainer);
-        HydrogenAdder hadder = new HydrogenAdder();
         SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", true);
 
         boolean status = querytool.matches(atomContainer);

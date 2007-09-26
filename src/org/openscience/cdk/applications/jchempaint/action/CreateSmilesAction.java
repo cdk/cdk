@@ -36,11 +36,16 @@ import javax.swing.JFrame;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 
@@ -89,7 +94,16 @@ public class CreateSmilesAction extends JCPAction
             	IAtomContainer container = (IAtomContainer)containers.next();
             	Molecule molecule = new Molecule(container);
             	Molecule moleculewithh=(Molecule)molecule.clone();
-            	new HydrogenAdder().addExplicitHydrogensToSatisfyValency(moleculewithh);
+            	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+            	Iterator<IAtom> atoms = container.atoms();
+            	while (atoms.hasNext()) {
+            		IAtom atom = atoms.next();
+            		IAtomType type = matcher.findMatchingAtomType(container, atom);
+            		AtomTypeManipulator.configure(atom, type);
+            	}
+            	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+            	hAdder.addImplicitHydrogens(container);
+            	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
             	double bondLength = GeometryTools.getBondLengthAverage(container,jcpPanel.getJChemPaintModel().getRendererModel().getRenderingCoordinates());
             	new HydrogenPlacer().placeHydrogens2D(moleculewithh, bondLength);
             	smiles += generator.createSMILES(molecule);

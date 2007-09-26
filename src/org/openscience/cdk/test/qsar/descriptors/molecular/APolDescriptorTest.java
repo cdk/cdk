@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -55,8 +54,7 @@ public class APolDescriptorTest extends CDKTestCase {
         IMolecularDescriptor descriptor = new APolDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("O=C(O)CC");
-        HydrogenAdder hAdder = new HydrogenAdder();
-        hAdder.addExplicitHydrogensToSatisfyValency(mol);
+        addExplicitHydrogens(mol);
         assertEquals(10.88, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }

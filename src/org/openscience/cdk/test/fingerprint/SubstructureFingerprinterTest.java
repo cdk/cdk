@@ -36,13 +36,12 @@ import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinter;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.AminoAcids;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 /**
@@ -105,8 +104,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 		for (int i=0; i<aas.length; i++) {
 			AminoAcidManipulator.addAcidicOxygen(aas[i]);
 			IMolecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);
-			HydrogenAdder hAdder = new HydrogenAdder();
-			hAdder.addExplicitHydrogensToSatisfyValency(aminoAcid);
+			addExplicitHydrogens(aminoAcid);
 
 			assertNotNull(aminoAcid);
 			bitset = printer.getFingerprint(aminoAcid);

@@ -35,11 +35,15 @@ import net.sf.jniinchi.INCHI_RET;
 
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -96,8 +100,15 @@ public class CreateInChIAction extends JCPAction
                 IAtomContainer container = (IAtomContainer) molecules.get(i);
                 
                 try {
-                    HydrogenAdder hAdd = new HydrogenAdder();
-                    hAdd.addImplicitHydrogensToSatisfyValency(container);
+                	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+                	Iterator<IAtom> atoms = container.atoms();
+                	while (atoms.hasNext()) {
+                		IAtom atom = atoms.next();
+                		IAtomType type = matcher.findMatchingAtomType(container, atom);
+                		AtomTypeManipulator.configure(atom, type);
+                	}
+                	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+                	hAdder.addImplicitHydrogens(container);
                     
                     InChIGenerator inchiGen = factory.getInChIGenerator(container);
                     INCHI_RET ret = inchiGen.getReturnStatus();

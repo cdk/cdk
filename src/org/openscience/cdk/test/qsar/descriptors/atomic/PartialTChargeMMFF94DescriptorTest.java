@@ -31,16 +31,13 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -51,7 +48,6 @@ import org.openscience.cdk.tools.HydrogenAdder;
 public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 	
 	private final double METHOD_ERROR = 0.1;
-	private HydrogenAdder haad=new HydrogenAdder();
 	
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 	
@@ -83,7 +79,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		mol.addAtom(carbon); 
 		mol.addAtom(oxygen);
 		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -104,7 +100,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		mol.addAtom(carbon); 
 		mol.addAtom(nitrogen);
 		mol.addBond(builder.newBond(carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		for (int i = 0 ; i < 6 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -129,7 +125,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		mol.addAtom(carbon2); 
 		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
 		mol.addBond(builder.newBond(carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -150,7 +146,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		mol.addAtom(carbon); 
 		mol.addAtom(sulfur);
 		mol.addBond(builder.newBond(carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -172,7 +168,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		mol.addAtom(carbon); 
 		mol.addAtom(chlorine);
 		mol.addBond(builder.newBond(carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -212,7 +208,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		ringBond = builder.newBond(mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 12 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -230,7 +226,7 @@ public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
 		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
 		// making sure the order matches the test results
 		mol.addAtom(oxygen);
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();

@@ -72,6 +72,7 @@ import org.openscience.cdk.applications.undoredo.IUndoRedoHandler;
 import org.openscience.cdk.applications.undoredo.MergeMoleculesEdit;
 import org.openscience.cdk.applications.undoredo.MoveAtomEdit;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEdit;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.BondTools;
@@ -79,6 +80,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -92,9 +94,10 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.layout.RingPlacer;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -151,11 +154,6 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	
 	private HashMap funcgroupsmap=new HashMap();
 	
-
-	// Helper classes
-	HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-
-
 	AbstractController2D()
 	{
 		logger = new LoggingTool(this);
@@ -1670,14 +1668,14 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	 */
 	public void updateAtom(IAtomContainer container, IAtom atom)
 	{
-		if (c2dm.getAutoUpdateImplicitHydrogens())
-		{
-			atom.setHydrogenCount(0);
-			try
-			{
-				hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
-			} catch (Exception exception)
-			{
+		if (c2dm.getAutoUpdateImplicitHydrogens()) {
+			try {
+				CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(atom.getBuilder());
+				CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(atom.getBuilder());
+				IAtomType type = matcher.findMatchingAtomType(container, atom);
+				AtomTypeManipulator.configure(atom, type);
+				hAdder.addImplicitHydrogens(container, atom);
+			} catch (Exception exception) {
 				logger.error(exception.getMessage());
 				logger.debug(exception);
 			}

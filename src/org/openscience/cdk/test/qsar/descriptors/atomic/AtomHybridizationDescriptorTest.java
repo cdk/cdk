@@ -23,10 +23,13 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.atomic;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,10 +38,8 @@ import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
-
-import java.io.IOException;
-import java.util.Iterator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -59,8 +60,7 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
         IAtomicDescriptor descriptor = new AtomHybridizationDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC=C"); //
-        HydrogenAdder hAdder = new HydrogenAdder();
-        hAdder.addExplicitHydrogensToSatisfyValency((Molecule) mol);
+        addExplicitHydrogens(mol);
         assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
     }
 
@@ -84,11 +84,12 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol;
         Iterator atoms;
-        HydrogenAdder hAdder = new HydrogenAdder();
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
         for (int i = 0; i < smiles.length; i++) {
             mol = sp.parseSmiles(smiles[i]);
-            hAdder.addExplicitHydrogensToSatisfyValency(mol);
+            hAdder.addImplicitHydrogens(mol);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
             atoms = mol.atoms();
             while (atoms.hasNext()) {
                 IAtom atom = (IAtom) atoms.next();

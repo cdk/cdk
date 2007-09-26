@@ -4,19 +4,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 /**
@@ -26,18 +30,13 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
  * @cdk.module test-extra
  * 
  */
-public class AddHydrogenEditTest extends TestCase {
-
-	private HydrogenAdder hydrogenAdder;
+public class AddHydrogenEditTest extends CDKTestCase {
 
 	private HashMap hydrogenAtomMap;
 
 	private IAtomContainer changedAtomsAndBonds;
 
-	public AddHydrogenEditTest() {
-		hydrogenAdder = new HydrogenAdder(
-				"org.openscience.cdk.tools.ValencyChecker");
-	}
+	public AddHydrogenEditTest() {}
 
 	/**
 	 * @return
@@ -142,8 +141,7 @@ public class AddHydrogenEditTest extends TestCase {
 		StructureDiagramGenerator generator = new StructureDiagramGenerator(
 				explicitMolecule);
 		generator.generateCoordinates();
-		changedAtomsAndBonds = hydrogenAdder
-				.addExplicitHydrogensToSatisfyValency(explicitMolecule);
+		addExplicitHydrogens(explicitMolecule);
 		HydrogenPlacer hPlacer = new HydrogenPlacer();
 		hPlacer.placeHydrogens2D(explicitMolecule, 1.0);
 		return explicitMolecule;
@@ -155,8 +153,15 @@ public class AddHydrogenEditTest extends TestCase {
 	 */
 	private Molecule addImplicitHydrogens() throws CDKException {
 		Molecule implicitMolecule = MoleculeFactory.makeAlphaPinene();
-		hydrogenAtomMap = hydrogenAdder
-				.addImplicitHydrogensToSatisfyValency(implicitMolecule);
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(implicitMolecule.getBuilder());
+		Iterator<IAtom> atoms = implicitMolecule.atoms();
+		while (atoms.hasNext()) {
+		  IAtom atom = atoms.next();
+		  IAtomType type = matcher.findMatchingAtomType(implicitMolecule, atom);
+		  AtomTypeManipulator.configure(atom, type);
+		}
+		CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(implicitMolecule.getBuilder());
+		hAdder.addImplicitHydrogens(implicitMolecule);
 		return implicitMolecule;
 	}
 

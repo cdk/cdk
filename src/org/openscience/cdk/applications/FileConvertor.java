@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
@@ -45,11 +46,13 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -75,9 +78,11 @@ import org.openscience.cdk.io.listener.TextGUIListener;
 import org.openscience.cdk.io.program.GaussianInputWriter;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -192,10 +197,16 @@ public class FileConvertor {
                     }
                     if (applyHAdding) {
                         logger.info("Adding Hydrogens...");
-                        HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-                        adder.addExplicitHydrogensToSatisfyValency(
-                        	builder.newMolecule(container)
-                        );
+                    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+                    	Iterator<IAtom> iAtoms = container.atoms();
+                    	while (iAtoms.hasNext()) {
+                    		IAtom atom = iAtoms.next();
+                    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+                    		AtomTypeManipulator.configure(atom, type);
+                    	}
+                        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
+                    	adder.addImplicitHydrogens(container);
+                    	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
                     } else if (applyHRemoval) {
                         for (int atomi=0; atomi<container.getAtomCount(); atomi++) {
                             if (container.getAtom(atomi).getSymbol().equals("H")) {

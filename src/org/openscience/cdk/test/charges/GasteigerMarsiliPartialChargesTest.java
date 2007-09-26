@@ -31,7 +31,6 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  *  Description of the Class
@@ -66,10 +65,9 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 	public void testAssignGasteigerMarsiliPartialCharges() throws Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};
 		GasteigerMarsiliPartialCharges peoe=new GasteigerMarsiliPartialCharges();
-		HydrogenAdder hAdder = new HydrogenAdder();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CF");
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
 		for (int i=0;i<mol.getAtomCount();i++){
 			//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());

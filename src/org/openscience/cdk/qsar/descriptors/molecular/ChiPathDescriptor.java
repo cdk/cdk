@@ -25,11 +25,17 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -40,13 +46,10 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Evaluates chi path descriptors.
@@ -113,8 +116,15 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
-        HydrogenAdder hadder = new HydrogenAdder();
-        hadder.addImplicitHydrogensToSatisfyValency(localAtomContainer);
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+    	Iterator<IAtom> atoms = container.atoms();
+    	while (atoms.hasNext()) {
+    		IAtom atom = atoms.next();
+    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		AtomTypeManipulator.configure(atom, type);
+    	}
+    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+    	hAdder.addImplicitHydrogens(container);
 
         List subgraph0 = order0(localAtomContainer);
         List subgraph1 = order1(localAtomContainer);

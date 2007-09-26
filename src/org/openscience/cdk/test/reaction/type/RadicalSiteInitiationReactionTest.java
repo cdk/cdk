@@ -43,7 +43,6 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.RadicalSiteInitiationReaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -76,8 +75,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
         
 		/*[C*]-C-C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-C-C");
-	    HydrogenAdder adder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
-        adder.addImplicitHydrogensToSatisfyValency(molecule);
+        addImplicitHydrogens(molecule);
         IAtom atom =  molecule.getAtom(0);
         molecule.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);
@@ -96,7 +94,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 		
         /*C=C*/
         IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C");
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        addImplicitHydrogens(molecule2);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
@@ -104,7 +102,7 @@ public class RadicalSiteInitiationReactionTest extends CDKTestCase {
 		
         /*[C*]*/
 		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]");
-        adder.addImplicitHydrogensToSatisfyValency(molecule2);
+        addImplicitHydrogens(molecule2);
         atom =  molecule2.getAtom(0);
         molecule2.addSingleElectron(new SingleElectron(atom));
         atom.setFormalCharge(0);

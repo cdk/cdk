@@ -45,7 +45,6 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SmilesValencyChecker;
@@ -61,7 +60,6 @@ public class DeduceBondSystemTool {
 
 	private AllRingsFinder allRingsFinder;
     private LoggingTool logger;
-    private HydrogenAdder hAdder;
     private IValencyChecker valencyChecker;
 	
     private List listOfRings = null;
@@ -76,7 +74,6 @@ public class DeduceBondSystemTool {
     	allRingsFinder = new AllRingsFinder();
         logger = new LoggingTool(this);
         valencyChecker = new SmilesValencyChecker();
-        hAdder = new HydrogenAdder();
     }
 
     public boolean isOK(IMolecule m) throws CDKException {
@@ -572,14 +569,6 @@ public class DeduceBondSystemTool {
                 }
 //				logger.debug("");
                 counter++;
-
-                try {
-                    hAdder.addImplicitHydrogensToSatisfyValency(mnew);
-                } catch (Exception e) {
-                    logger.error("Failed to add hydrogens: ", e.getMessage());
-                    logger.debug(e);
-                }
-
 
                 if (isStructureOK(mnew)) {
 

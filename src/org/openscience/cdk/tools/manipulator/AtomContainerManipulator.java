@@ -27,12 +27,20 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.Elements;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -179,7 +187,7 @@ public class AtomContainerManipulator {
             	Integer hCount = atom.getHydrogenCount();
             	if (hCount != null) {
             		for (int i=0; i<hCount.intValue(); i++) {
-            			IAtom hydrogen = atom.getBuilder().newAtom(Elements.HYDROGEN);
+            			IAtom hydrogen = atom.getBuilder().newAtom("H");
             			atomContainer.addAtom(hydrogen);
             			atomContainer.addBond(
             				atom.getBuilder().newBond(

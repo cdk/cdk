@@ -35,6 +35,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -44,6 +45,9 @@ import javax.swing.filechooser.FileFilter;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileFilter;
 import org.openscience.cdk.applications.jchempaint.io.JCPFileView;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -51,7 +55,8 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.INChIReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Shows the open dialog
@@ -175,15 +180,21 @@ public class OpenAction extends JCPAction {
 												
 						jcpPanel.processChemFile(chemFile);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
-							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
 				        	java.util.Iterator mols = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().molecules();
-							while (mols.hasNext())
-							{
+							while (mols.hasNext()) {
 								org.openscience.cdk.interfaces.IMolecule molecule = (IMolecule)mols.next();
 							    if (molecule != null)
 								{
 									try{
-											hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+								    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+								    	Iterator<IAtom> atoms = molecule.atoms();
+								    	while (atoms.hasNext()) {
+								    		IAtom atom = atoms.next();
+								    		IAtomType aType = matcher.findMatchingAtomType(molecule, atom);
+								    		AtomTypeManipulator.configure(atom, aType);
+								    	}
+								    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+								    	hAdder.addImplicitHydrogens(molecule);
 									}catch(Exception ex){
 										//do nothing
 									}
@@ -220,7 +231,6 @@ public class OpenAction extends JCPAction {
 					if (chemModel != null) {
 						jcpPanel.processChemModel(chemModel);
 						if(jcpPanel.getJChemPaintModel().getControllerModel().getAutoUpdateImplicitHydrogens()){
-							HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
 				        	java.util.Iterator mols = chemModel.getMoleculeSet().molecules();
 							while (mols.hasNext())
 							{
@@ -228,7 +238,15 @@ public class OpenAction extends JCPAction {
 							    if (molecule != null)
 								{
 									try{
-											hydrogenAdder.addImplicitHydrogensToSatisfyValency(molecule);
+								    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+								    	Iterator<IAtom> atoms = molecule.atoms();
+								    	while (atoms.hasNext()) {
+								    		IAtom atom = atoms.next();
+								    		IAtomType aType = matcher.findMatchingAtomType(molecule, atom);
+								    		AtomTypeManipulator.configure(atom, aType);
+								    	}
+								    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+								    	hAdder.addImplicitHydrogens(molecule);
 									}catch(Exception ex){
 										//do nothing
 									}

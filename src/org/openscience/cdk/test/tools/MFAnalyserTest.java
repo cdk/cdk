@@ -37,7 +37,6 @@ import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.MFAnalyser;
 
 /**
@@ -258,8 +257,7 @@ public class MFAnalyserTest extends CDKTestCase {
 		String smile="CN(CC2=CC=CO2)C1=CC=CC=C1";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles(smile);
-		HydrogenAdder hAdder=new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		MFAnalyser mfa=new MFAnalyser(mol);
 		assertEquals((float)187.2382 , mfa.getNaturalMass() ,.001);
 		assertEquals("C12H13NO",mfa.getMolecularFormula());

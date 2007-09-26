@@ -44,7 +44,6 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.AtomTypeTools;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -59,7 +58,6 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 
 	private static LoggingTool logger;
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-	private static HydrogenAdder haad=new HydrogenAdder();
 	
 	private static IMolecule testMolecule = null;
 	
@@ -150,7 +148,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addAtom(oxygen);
 		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
 		
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
         
 		String [] testResult={"C","O","HC","HC","HC","HO"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -181,7 +179,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addAtom(nitrogen);
 		mol.addBond(builder.newBond(carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
 		
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		String [] testResult={"C","N","HC","HC","HC","HN","HN"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -214,7 +212,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addBond(builder.newBond(carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
 		mol.addBond(builder.newBond(carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
 		
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		String [] testResult={"C","O","C","HC","HC","HC","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -244,7 +242,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addAtom(sulfur);
 		mol.addBond(builder.newBond(carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
 		
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		String [] testResult={"C","S","HC","HC","HC","HP"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -274,7 +272,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addAtom(chlorine);
 		mol.addBond(builder.newBond(carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
 		
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		String [] testResult={"C","CL","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -322,7 +320,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
 			
-		haad.addExplicitHydrogensToSatisfyValency(mol);		
+		addExplicitHydrogens(mol);		
 		
 		String [] testResult={"Car","Car","Car","Car","Car","Car","HC","HC","HC","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
@@ -351,7 +349,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		IAtom oxygen = builder.newAtom(Elements.OXYGEN);
 		// making sure the order matches the test results
 		mol.addAtom(oxygen);
-		haad.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 
 		String [] testResult={"OH2","HO","HO"};
 		AtomTypeTools att=new AtomTypeTools();

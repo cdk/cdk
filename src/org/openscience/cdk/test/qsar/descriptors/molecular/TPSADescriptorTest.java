@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -65,8 +64,7 @@ public class TPSADescriptorTest extends CDKTestCase {
         //Molecule mol = sp.parseSmiles("C#N=CC(CNC)N1CC1"); // at 5,6,7
         //Molecule mol = sp.parseSmiles("c1ccncc1");//at:  19
         IMolecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
-        HydrogenAdder hAdder = new HydrogenAdder();
-        hAdder.addExplicitHydrogensToSatisfyValency(mol);
+        addExplicitHydrogens(mol);
         // each test id done for one or more atom types:
         // assertEquals(37.299999, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); at:  29, 31
         // assertEquals(39.394, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  1,2,3

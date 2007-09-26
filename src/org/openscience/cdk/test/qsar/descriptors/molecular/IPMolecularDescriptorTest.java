@@ -32,7 +32,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -72,8 +71,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -90,8 +88,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("COCCCC=O");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -110,8 +107,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
         
 		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -135,8 +131,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
     public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecule mol = sp.parseSmiles("C-Cl");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -160,8 +155,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
     public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecule mol = sp.parseSmiles("CCCC");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -182,8 +176,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
     public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecule mol = sp.parseSmiles("CCC#CCCO");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
@@ -204,8 +197,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
     public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
     	IMolecule mol = sp.parseSmiles("CCCCC=CO");
 
-		HydrogenAdder hAdder = new HydrogenAdder();
-		hAdder.addExplicitHydrogensToSatisfyValency(mol);
+		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);

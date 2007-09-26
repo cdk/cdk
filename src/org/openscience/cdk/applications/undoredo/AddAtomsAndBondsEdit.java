@@ -29,15 +29,18 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -53,8 +56,6 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	private IAtomContainer undoRedoContainer;
 
 	private String type;
-	
-	private HydrogenAdder hydrogenAdder = new HydrogenAdder("org.openscience.cdk.tools.ValencyChecker");
 	
 	private Controller2DModel c2dm=null;
 
@@ -158,14 +159,14 @@ public class AddAtomsAndBondsEdit extends AbstractUndoableEdit {
 	 */
 	public void updateAtom(IAtomContainer container, IAtom atom)
 	{
-		if (c2dm!=null && c2dm.getAutoUpdateImplicitHydrogens())
-		{
-			atom.setHydrogenCount(0);
-			try
-			{
-				hydrogenAdder.addImplicitHydrogensToSatisfyValency(container, atom);
-			} catch (Exception exception)
-			{
+		if (c2dm!=null && c2dm.getAutoUpdateImplicitHydrogens()) {
+			try {
+				CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(atom.getBuilder());
+				CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(atom.getBuilder());
+				IAtomType type = matcher.findMatchingAtomType(container, atom);
+				AtomTypeManipulator.configure(atom, type);
+				hAdder.addImplicitHydrogens(container, atom);
+			} catch (Exception exception) {
 				//we fail silently, when the handling of implicit Hs can't done
 			}
 		}
