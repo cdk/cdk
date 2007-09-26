@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *   IMolecule methane = new Molecule();
  *   IAtom carbon = new Atom("C");
  *   methane.addAtom(carbon);
- *   CDKHydrogenAdder adder = new CDKHydrogenAdder();
+ *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(methane.getBuilder());
  *   adder.addImplicitHydrogens(methane);
  *   int atomCount = methane.getAtomCount(); // = 1
  * </pre>
@@ -56,7 +56,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *   IAtom carbon2 = new Atom("C");
  *   ethane.addAtom(carbon1);
  *   ethane.addAtom(carbon2);
- *   CDKHydrogenAdder adder = new CDKHydrogenAdder();
+ *   CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(ethane.getBuilder());
  *   adder.addExplicitHydrogens(ethane, carbon1);
  *   int atomCount = ethane.getAtomCount(); // = 5
  * </pre>
