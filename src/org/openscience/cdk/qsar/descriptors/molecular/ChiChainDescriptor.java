@@ -25,9 +25,6 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -49,11 +46,14 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.util.Iterator;
+import java.util.List;
+
 
 /**
  * Evaluates chi chain descriptors.
  * <p/>
- * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
+ * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4, 5, 6 and 7.
  * It utilizes the graph isomorphism code of the CDK to find fragments matching
  * SMILES strings representing the fragments corresponding to each type of chain.
  * <p/>
@@ -63,12 +63,14 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * <li>SCH-4 - Simple chain, order 4
  * <li>SCH-5 - Simple chain, order 5
  * <li>SCH-6 - Simple chain, order 6
+ * <li>SCH-7 - Simple chain, order 7
  * <li>VCH-3 - Valence chain, order 3
  * <li>VCH-4 - Valence chain, order 4
  * <li>VCH-5 - Valence chain, order 5
  * <li>VCH-6 - Valence chain, order 6
+ * <li>VCH-7 - Valence chain, order 7
  * </ol>
- *
+ * <p/>
  * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
  * the various fragments. As a result calculations may be slow. In addition, recent
  * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
@@ -121,45 +123,50 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
 
         // we don't make a clone, since removeHydrogens returns a deep copy
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
-    		IAtomType type = matcher.findMatchingAtomType(container, atom);
-    		AtomTypeManipulator.configure(atom, type);
-    	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-    	hAdder.addImplicitHydrogens(container);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = container.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
 
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
         List subgraph5 = order5(localAtomContainer);
         List subgraph6 = order6(localAtomContainer);
+        List subgraph7 = order7(localAtomContainer);
 
         double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
         double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
         double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
         double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
+        double order7s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph7);
 
         double order3v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph3);
         double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
         double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
         double order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
+        double order7v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph7);
 
         DoubleArrayResult retval = new DoubleArrayResult();
         retval.add(order3s);
         retval.add(order4s);
         retval.add(order5s);
         retval.add(order6s);
+        retval.add(order7s);
 
         retval.add(order3v);
         retval.add(order4v);
         retval.add(order5v);
         retval.add(order6v);
+        retval.add(order7v);
 
         String[] names = {
-                "SCH-3", "SCH-4", "SCH-5", "SCH-6",
-                "VCH-3", "VCH-4", "VCH-5", "VCH-6"};
+                "SCH-3", "SCH-4", "SCH-5", "SCH-6", "SCH-7",
+                "VCH-3", "VCH-4", "VCH-5", "VCH-6", "VCH-7"};
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
     }
@@ -228,7 +235,30 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
-
     }
 
+    private List order7(IAtomContainer atomContainer) {
+        String[] smiles = {
+                "C1CCCCC1C",
+                // 5-ring cases
+                "C1CCCC1(C)(C)", "C1(C)C(C)CCC1", "C1(C)CC(C)CC1", "C1CCCC1(CC)",
+                // 4-ring cases
+                "C1(C)C(C)C(C)C1", "C1CC(C)C1(CC)", "C1C(C)CC1(CC)",
+                "C1CCC1(CCC)", "C1CCC1C(C)(C)", "C1CCC1(C)(CC)", "C1CC(C)C1(C)(C)", "C1C(C)CC1(C)(C)",
+                // 3-ring cases
+                "C1(C)C(C)C1(CC)", "C1C(C)(C)C1(C)(C)", "C1CC1CCCC",
+                "C1C(C)C1(CCC)", "C1C(CC)C1(CC)", "C1C(C)C1C(C)(C)",
+                "C1C(C)C1(C)(CC)", "C1CC1CC(C)(C)", "C1CC1C(C)CC",
+                "C1CC1C(C)(C)(C)"
+        };
+        QueryAtomContainer[] queries = new QueryAtomContainer[smiles.length];
+        try {
+            for (int i = 0; i < smiles.length; i++)
+                queries[i] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles(smiles[i]), false);
+        } catch (InvalidSmilesException e) {
+            e.printStackTrace();
+        }
+        return ChiIndexUtils.getFragments(atomContainer, queries);
+    }
 }
+

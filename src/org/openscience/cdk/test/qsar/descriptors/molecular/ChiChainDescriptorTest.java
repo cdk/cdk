@@ -59,10 +59,10 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         assertEquals(0.2887, ret.get(1), 0.0001);
         assertEquals(0.0000, ret.get(2), 0.0001);
         assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.1667, ret.get(4), 0.0001);
         assertEquals(0.1667, ret.get(5), 0.0001);
-        assertEquals(0.0000, ret.get(6), 0.0001);
+        assertEquals(0.1667, ret.get(6), 0.0001);
         assertEquals(0.0000, ret.get(7), 0.0001);
+        assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
     public void testDan80() throws CDKException {
@@ -100,10 +100,10 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         assertEquals(0.0000, ret.get(1), 0.0001);
         assertEquals(0.1768, ret.get(2), 0.0001);
         assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.0000, ret.get(4), 0.0001);
         assertEquals(0.0000, ret.get(5), 0.0001);
-        assertEquals(0.04536, ret.get(6), 0.00001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        assertEquals(0.0000, ret.get(6), 0.0001);
+        assertEquals(0.04536, ret.get(7), 0.00001);
+        assertEquals(0.0000, ret.get(8), 0.0001);
 
     }
 
@@ -143,10 +143,10 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         assertEquals(0.0000, ret.get(1), 0.0001);
         assertEquals(0.1768, ret.get(2), 0.0001);
         assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.0000, ret.get(4), 0.0001);
         assertEquals(0.0000, ret.get(5), 0.0001);
-        assertEquals(0.1361, ret.get(6), 0.0001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        assertEquals(0.0000, ret.get(6), 0.0001);
+        assertEquals(0.1361, ret.get(7), 0.0001);
+        assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
     public void testDan82() throws CDKException {
@@ -186,10 +186,10 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         assertEquals(0.0000, ret.get(1), 0.0001);
         assertEquals(0.1768, ret.get(2), 0.0001);
         assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.0000, ret.get(4), 0.0001);
         assertEquals(0.0000, ret.get(5), 0.0001);
-        assertEquals(0.06804, ret.get(6), 0.00001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        assertEquals(0.0000, ret.get(6), 0.0001);
+        assertEquals(0.06804, ret.get(7), 0.00001);
+        assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
     public void testDan154() throws CDKException {
@@ -244,10 +244,10 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         assertEquals(0.0000, ret.get(1), 0.0001);
         assertEquals(0.0000, ret.get(2), 0.0001);
         assertEquals(0.08333, ret.get(3), 0.00001);
-        assertEquals(0.0000, ret.get(4), 0.0001);
         assertEquals(0.0000, ret.get(5), 0.0001);
         assertEquals(0.0000, ret.get(6), 0.0001);
-        assertEquals(0.02778, ret.get(7), 0.00001);
+        assertEquals(0.0000, ret.get(7), 0.0001);
+        assertEquals(0.02778, ret.get(8), 0.00001);
     }
 
 //    public void testDan277() throws CDKException {
