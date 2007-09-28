@@ -25,10 +25,6 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -50,6 +46,10 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Evaluates chi path descriptors.
@@ -116,15 +116,15 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
-    		IAtomType type = matcher.findMatchingAtomType(container, atom);
-    		AtomTypeManipulator.configure(atom, type);
-    	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-    	hAdder.addImplicitHydrogens(container);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = container.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
 
         List subgraph0 = order0(localAtomContainer);
         List subgraph1 = order1(localAtomContainer);
@@ -175,7 +175,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         String[] names = new String[16];
         for (int i = 0; i < 8; i++) {
             names[i] = "SP-" + i;
-            names[i + 8] = "VP-" + (i + 8);
+            names[i + 8] = "VP-" + i;
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
 
