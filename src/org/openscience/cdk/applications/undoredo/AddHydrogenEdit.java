@@ -23,21 +23,21 @@
  */
 package org.openscience.cdk.applications.undoredo;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -55,7 +55,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 
 	private IChemModel model;
 
-	private HashMap hydrogenAtomMap = null;
+	private Map hydrogenAtomMap = null;
 
 	/**
 	 * Constructor for explicit hydrogen addition
@@ -79,7 +79,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 *            A HashMap containing the changed atoms as keys and an Array
 	 *            with the former and the new hydrogen count
 	 */
-	public AddHydrogenEdit(IChemModel model2, HashMap hydrogenAtomMap) {
+	public AddHydrogenEdit(IChemModel model2, Map hydrogenAtomMap) {
 		this.model = model2;
 		this.hydrogenAtomMap = hydrogenAtomMap;
 	}
