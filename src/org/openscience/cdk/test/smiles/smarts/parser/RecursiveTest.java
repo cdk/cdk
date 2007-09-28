@@ -95,13 +95,9 @@ public class RecursiveTest extends CDKTestCase {
     }
 
     public void testRecursiveSmarts6() throws Exception {
-        // This test fails. Not because the recursive smarts, but because the
-        // atomContainer created by parsing the smiles doesn't reflect the
-        // aromatic nature of the carbon atoms. Commented to pass tests
-
-        //match("[$([CX3]=[CX1]),$([CX3+]-[CX1-])]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12");
-        //assertEquals(0, nmatch);
-        //assertEquals(0, nqmatch);
+        match("[$([CX3]=[CX1]),$([CX3+]-[CX1-])]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
     }
 
     public void testRecursiveSmarts7() throws Exception {
@@ -168,10 +164,10 @@ public class RecursiveTest extends CDKTestCase {
         match("[$(C(=O)O),$(P(=O)),$(S(=O)O)]", "CC(=O)O");
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
-        
+
         match("[C&$(C(=O)O),P&$(P(=O)),S&$(S(=O)O)]", "CC(=O)O");
         assertEquals(1, nmatch);
-        assertEquals(1, nqmatch);        
+        assertEquals(1, nqmatch);
     }
 
     public void testRecursiveSmarts18() throws Exception {
@@ -179,8 +175,6 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
 
-        // This is failing because the number of H attached to N 
-        // in the AtomContainer is counted as 2, instead of 0
         match("[!$([#6,H0,-,-2,-3])]", "CCN(C)C");
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
@@ -188,12 +182,10 @@ public class RecursiveTest extends CDKTestCase {
 
 
     public void testRecursiveSmarts19() throws Exception {
-        // This is failing because the number of H attached to N 
-        // in the AtomContainer is counted as 2, instead of 0
         match("[!H0;#7,#8,#9]", "CCN(C)C");
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
-        
+
         match("[!H0;#7,#8,#9]", "CC(=O)O");
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
@@ -220,7 +212,7 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
 
-         match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)(C)C(C)(C)CC(C)C");
+        match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)(C)C(C)(C)CC(C)C");
         assertEquals(2, nmatch);
         assertEquals(2, nqmatch);
 
@@ -238,7 +230,7 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
 
-         match("[C;D2;H2;$(C(C)(C))]", "C(C)(C)C(C)C(C)CCCC");
+        match("[C;D2;H2;$(C(C)(C))]", "C(C)(C)C(C)C(C)CCCC");
         assertEquals(3, nmatch);
         assertEquals(3, nqmatch);
 
