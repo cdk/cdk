@@ -52,7 +52,7 @@ public class MqsarMolecularTests {
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BCUTDescriptorTest.suite());
         suite.addTest(BondCountDescriptorTest.suite());
-        suite.addTest(BPolDescriptorTest.suite());        
+        suite.addTest(BPolDescriptorTest.suite());
         suite.addTest(ChiChainDescriptorTest.suite());
         suite.addTest(ChiPathDescriptorTest.suite());
         suite.addTest(ChiClusterDescriptorTest.suite());
@@ -85,6 +85,7 @@ public class MqsarMolecularTests {
         suite.addTest(AutocorrelationDescriptorChargeTest.suite());
         suite.addTest(AutocorrelationDescriptorMassTest.suite());
         suite.addTest(AutocorrelationDescriptorPolarizabilityTest.suite());
+        suite.addTest(CarbonTypesDescriptorTest.suite());
 
         return suite;
     }
