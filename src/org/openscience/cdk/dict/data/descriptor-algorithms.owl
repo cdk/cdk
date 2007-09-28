@@ -58,7 +58,8 @@
     <owl:Class rdf:ID="DescriptorValue">
         <rdfs:label>Descriptor Value</rdfs:label>
         <rdfs:comment>One or more output values calculated by an Implementation
-            of a certain Algorithm for a certain molecule.</rdfs:comment>
+            of a certain Algorithm for a certain molecule.
+        </rdfs:comment>
     </owl:Class>
 
     <owl:ObjectProperty rdf:ID="isA">
@@ -2260,7 +2261,7 @@
     </Descriptor>
 
     <Descriptor rdf:ID="autoCorrelationPolarizability">
-        <rdfs:label>Moreau-Broto Autocorrelation  (polarizability) descriptors</rdfs:label>
+        <rdfs:label>Moreau-Broto Autocorrelation (polarizability) descriptors</rdfs:label>
         <dc:contributor rdf:resource="#rguha"/>
         <dc:contributor rdf:resource="#fm"/>
         <dc:date>2006-01-15</dc:date>
@@ -2397,16 +2398,32 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
+    <Descriptor rdf:ID="carbonTypes">
+        <rdfs:label>Carbon Types</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-09-26</dc:date>
+        <definition>
+            Characterizes the carbon connectivity in terms of hybridization
+        </definition>
+        <description>
+            This is a port of the ADAPT CTYPES routine and is a count of
+            carbon atom in different hybridization states and environments
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
     <Descriptor rdf:ID="ip">
         <rdfs:label>Ionization Potential</rdfs:label>
         <dc:contributor rdf:resource="#mr"/>
         <dc:date>2006-01-15</dc:date>
         <definition>
-		Descriptor that evaluates the ionization potential.
+            Descriptor that evaluates the ionization potential.
         </definition>
         <description>
-		It should be noted that the descriptor values are obtained using a predictive model
-		and are not calculated directly from the structure
+            It should be noted that the descriptor values are obtained using a predictive model
+            and are not calculated directly from the structure
         </description>
         <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
@@ -2420,7 +2437,8 @@
                 <bibtex:author>Bath, P.A. and Poirette, A.R. and Willet, P. and Allen, F.H.
                 </bibtex:author>
                 <bibtex:title>The Extent of the Relationship between the Graph-Theoretical and the Geometrical Shape
-                    Coefficients of Chemical Compounds</bibtex:title>
+                    Coefficients of Chemical Compounds
+                </bibtex:title>
                 <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
                 <bibtex:year>1995</bibtex:year>
                 <bibtex:volume>35</bibtex:volume>
@@ -2434,7 +2452,8 @@
             <bibtex:article>
                 <bibtex:author>Cherkasov, A.</bibtex:author>
                 <bibtex:title>Inductive Electronegativity Scale. Iterative Calculation of Inductive Partial
-                    Charges</bibtex:title>
+                    Charges
+                </bibtex:title>
                 <bibtex:journal>J. Chem. Inf. Comput. Sci.</bibtex:journal>
                 <bibtex:year>2003</bibtex:year>
                 <bibtex:volume>43</bibtex:volume>
@@ -2460,7 +2479,8 @@
                 <bibtex:author>Ertl, P. and Rohde, B. and Selzer, P.</bibtex:author>
                 <bibtex:title>Fast Calculation of Molecular Polar Surface Area as a Sum of
                     Fragment-Based Contributions and Its Application to the Prediction of
-                    Drug Transport Properties</bibtex:title>
+                    Drug Transport Properties
+                </bibtex:title>
                 <bibtex:journal>J. Med. Chem.</bibtex:journal>
                 <bibtex:year>2000</bibtex:year>
                 <bibtex:volume>43</bibtex:volume>
@@ -2491,7 +2511,8 @@
             <bibtex:article>
                 <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>
                 <bibtex:title>Correlation of Boiling Points With Molecular Structure. 1. A Training Set of 298 Diverse
-                    Organics and a Test Set of 9 Simple Inorganics</bibtex:title>
+                    Organics and a Test Set of 9 Simple Inorganics
+                </bibtex:title>
                 <bibtex:journal>J. Phys. Chem.</bibtex:journal>
                 <bibtex:year>1996</bibtex:year>
                 <bibtex:volume>100</bibtex:volume>
@@ -2507,7 +2528,8 @@
                 </bibtex:author>
                 <bibtex:title>Approach to Estimation and Prediction for Normal
                     Boiling Point (NBP) of Alkanes Based on a Novel Molecular
-                    Distance Edge (MDE) Vector, lambda</bibtex:title>
+                    Distance Edge (MDE) Vector, lambda
+                </bibtex:title>
                 <bibtex:journal>Journal of Chemical Information and Computer Sciences</bibtex:journal>
                 <bibtex:year>i1998</bibtex:year>
                 <bibtex:volume>38</bibtex:volume>
@@ -2553,7 +2575,8 @@
                 <bibtex:author>Petitjean, M.
                 </bibtex:author>
                 <bibtex:title>Applications of the radius-diameter diagram to the classification of topological and
-                    geometrical shapes of chemical compounds</bibtex:title>
+                    geometrical shapes of chemical compounds
+                </bibtex:title>
                 <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
                 <bibtex:year>1992</bibtex:year>
                 <bibtex:volume>32</bibtex:volume>
@@ -2625,7 +2648,8 @@
                 <bibtex:author>Wang, R., Fu, Y., and Lai, L.</bibtex:author>
                 <bibtex:title>A New Atom-Additive Method for Calculating Partition Coefficients</bibtex:title>
                 <bibtex:journal>Journal of Chemical Information and Computer
-                    Sciences</bibtex:journal>
+                    Sciences
+                </bibtex:journal>
                 <bibtex:year>1997</bibtex:year>
                 <bibtex:volume>37</bibtex:volume>
                 <bibtex:pages>615-621</bibtex:pages>
@@ -2639,9 +2663,11 @@
                 <bibtex:author>Wessel, M.D. and Jurs, P.C. and Tolan, J.W. and Muskal, S.M.
                 </bibtex:author>
                 <bibtex:title>Prediction of Human Intestinal Absorption of Drug Compounds
-                    From Molecular Structure</bibtex:title>
+                    From Molecular Structure
+                </bibtex:title>
                 <bibtex:journal>Journal of Chemical Information and Computer
-                    Sciences</bibtex:journal>
+                    Sciences
+                </bibtex:journal>
                 <bibtex:year>1998</bibtex:year>
                 <bibtex:volume>38</bibtex:volume>
                 <bibtex:pages>726-735</bibtex:pages>
