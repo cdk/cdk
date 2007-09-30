@@ -372,6 +372,27 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "N.plus", atm.findMatchingAtomType(mol, atom2));
     }
 
+    @Test public void testTMS() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("Si");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        IAtom atom5 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "Si.sp3", atm.findMatchingAtomType(mol, atom2));
+    }
+
     @Test public void testPhosphine() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

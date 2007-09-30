@@ -79,6 +79,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveHalogens(atomContainer, atom);
         if (type == null) type = perceivePhosphors(atomContainer, atom);
         if (type == null) type = perceiveCommonSalts(atomContainer, atom);
+        if (type == null) type = perceiveSilicon(atomContainer, atom);
         return type;
     }
     
@@ -390,6 +391,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() == +1)) {
     			return factory.getAtomType("K.plus");
+    		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveSilicon(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    	if ("Si".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == 0 &&
+    			atomContainer.getConnectedBondsCount(atom) <= 4)) {
+    			return factory.getAtomType("Si.sp3");
     		}
     	}
     	return null;
