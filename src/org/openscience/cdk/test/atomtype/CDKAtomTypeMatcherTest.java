@@ -36,6 +36,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -659,6 +660,38 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "Mg.2plus", atm.findMatchingAtomType(mol, atom));
     }
 
+    @Test public void testFerrocene() throws Exception {
+    	IAtomContainer ferrocene = new Molecule();
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C")); ferrocene.getAtom(4).setFormalCharge(-1);
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C"));
+    	ferrocene.addAtom(new Atom("C")); ferrocene.getAtom(9).setFormalCharge(-1);
+    	ferrocene.addAtom(new Atom("Fe")); ferrocene.getAtom(10).setFormalCharge(+2);
+    	ferrocene.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+    	ferrocene.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(2,3,CDKConstants.BONDORDER_DOUBLE);
+    	ferrocene.addBond(3,4,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(4,0,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(5,6,CDKConstants.BONDORDER_DOUBLE);
+    	ferrocene.addBond(6,7,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(7,8,CDKConstants.BONDORDER_DOUBLE);
+    	ferrocene.addBond(8,9,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(0,9,CDKConstants.BONDORDER_SINGLE);
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(ferrocene.getBuilder());
+        assertAtomType(testedAtomTypes, "Fe.2plus", atm.findMatchingAtomType(
+        	ferrocene, ferrocene.getAtom(10))
+        );
+        assertAtomType(testedAtomTypes, "C.minus.sp2", atm.findMatchingAtomType(
+           	ferrocene, ferrocene.getAtom(4))
+        );
+    }
+    
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);

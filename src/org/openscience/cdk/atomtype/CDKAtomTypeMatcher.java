@@ -100,6 +100,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
         				return factory.getAtomType("C.plus.sp2");
         			}
+    			} else if (atom.getFormalCharge() == -1) {
+    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE &&
+        				atomContainer.getConnectedBondsCount(atom) <= 3) {
+        				return factory.getAtomType("C.minus.sp2");
+        			}
     			}
     			return null;
     		} else if (atomContainer.getConnectedBondsCount(atom) > 4) {
@@ -386,6 +392,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() == +2)) {
     			return factory.getAtomType("Mg.2plus");
+    		}
+    	} else if ("Fe".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +2)) {
+    			return factory.getAtomType("Fe.2plus");
     		}
     	} else if ("K".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
