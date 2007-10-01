@@ -241,6 +241,15 @@
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
+  
+  <atomType id="S.octahedral"> <!-- e.g. SF6 -->
+    <atom elementType="S" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3d2</scalar>
+  </atomType>
 
   <atomType id="H">
     <atom elementType="H" formalCharge="0">

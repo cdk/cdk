@@ -271,6 +271,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				neighborcount == 1) {
     				return factory.getAtomType("S.minus");
     			}
+    		} else if (neighborcount == 6) {
+    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    				return factory.getAtomType("S.octahedral");
+    			}
     		} else if (neighborcount == 2) {
     			return factory.getAtomType("S.3");
     		} else if (neighborcount == 1) {
@@ -284,7 +289,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else {
     			// count the number of double bonded oxygens
     			int doubleBondedOxygens = countAttachedDoubleBonds(atomContainer, atom, "O");
-    			if (doubleBondedOxygens == 2 && neighborcount == 4){
+    			int doubleBondedNitrogens = countAttachedDoubleBonds(atomContainer, atom, "N");
+    			if (doubleBondedOxygens + doubleBondedNitrogens == 2 &&
+    				neighborcount == 4){
     				return factory.getAtomType("S.onyl");
     			} else if (doubleBondedOxygens == 1 && neighborcount == 3){
     				return factory.getAtomType("S.inyl");
