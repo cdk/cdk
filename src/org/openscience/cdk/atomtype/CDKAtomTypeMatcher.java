@@ -348,6 +348,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
       				   atomContainer.getConnectedBondsCount(atom) == 0) {
     			return factory.getAtomType("Cl");
+    		} else {
+    			int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
+    			if (atomContainer.getConnectedBondsCount(atom) == 3 &&
+    				doubleBonds == 2) {
+    				return factory.getAtomType("Cl.chlorate");
+    			} else if (atomContainer.getConnectedBondsCount(atom) == 4 &&
+        			doubleBonds == 3) {
+    				return factory.getAtomType("Cl.perchlorate");
+    			}
     		}
     	} else if ("Br".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&

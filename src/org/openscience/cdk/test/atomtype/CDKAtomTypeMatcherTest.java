@@ -692,6 +692,52 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         );
     }
     
+    @Test public void testPerchlorate() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("Cl");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        IAtom atom5 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_DOUBLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "Cl.perchlorate", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom4));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom5));
+    }
+
+    @Test public void testChlorate() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("Cl");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_DOUBLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "Cl.chlorate", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom4));
+    }
+
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
