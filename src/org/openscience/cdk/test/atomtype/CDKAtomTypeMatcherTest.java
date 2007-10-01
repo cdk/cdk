@@ -738,6 +738,15 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom4));
     }
 
+    @Test public void testOxide() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O"); atom.setFormalCharge(-2);
+        mol.addAtom(atom);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.minus2", atm.findMatchingAtomType(mol, atom));
+    }
+
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);

@@ -151,8 +151,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
-    			if (atom.getFormalCharge() == -1) {
+    			if (atom.getFormalCharge() == -1 &&
+    			 	atomContainer.getConnectedAtomsCount(atom) <= 1) {
     				return factory.getAtomType("O.minus");
+    			} else if (atom.getFormalCharge() == -2 &&
+        			       atomContainer.getConnectedAtomsCount(atom) == 0) {
+    				return factory.getAtomType("O.minus2");
     			} else if (atom.getFormalCharge() == +1) {
     				if (atomContainer.getConnectedBondsCount(atom) == 0) {
     					return factory.getAtomType("O.plus");

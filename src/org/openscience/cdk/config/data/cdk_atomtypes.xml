@@ -116,6 +116,15 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
 
+  <atomType id="O.minus2">
+    <atom elementType="O" formalCharge="-2">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+
   <atomType id="N.sp3">
     <atom elementType="N" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
