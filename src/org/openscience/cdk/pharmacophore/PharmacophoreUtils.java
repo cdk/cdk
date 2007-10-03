@@ -21,6 +21,8 @@ import java.util.List;
  * @cdk.module pcore
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
+ * @cdk.builddepends xom-1.1.jar
+ * @cdk.depends xom-1.1.jar
  */
 
 public class PharmacophoreUtils {
@@ -232,12 +234,4 @@ public class PharmacophoreUtils {
         return false;
     }
 
-    public static void writePharmacophoreDefinition(IQueryAtomContainer query, String filename) {
-
-    }
-
-    public static void writePharmacophoreDefinitions(List<IQueryAtomContainer> queries,
-                                                     String filename) {
-
-    }
 }
