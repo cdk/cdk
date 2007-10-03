@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+
+<pharmacophoreContainer version="1.0">
+
+    <!-- some gobal pharmacphore group definitions, usable by 
+    all pharmacophores defined in this file -->
+
+    <group id="Ha" description="H-bond acceptor">
+	[!$([#6,F,Cl,Br,I,o,s,nX3,#7v5,#15v5,#16v4,#16v6,*+1,*+2,*+3])]
+    </group>
+
+    <group id="Hd" description="H-bond donor">
+	[!$([#6,H0,-,-2,-3])]
+    </group>
+
+    <group id="Aromatic">[*;a]</group>
+
+    <group id="Acid" description="Acidic groups, defined as a proton donor">
+	[!H0;F,Cl,Br,I,N+,$([OH]-*=[!#6]),+]
+    </group>
+
+
+    <pharmacophore description="An imaginary pharmacophore definition">
+	<!-- in this case we only want to consider carboxylic acid groups
+	    so we provide a local definition
+	-->
+	<group id="CarbAcidx">[CX3](=O)[OX2H1]</group>
+
+	<!-- An exact distance constraint -->
+	<distanceConstraint lower="1.4" units="A">
+	    <groupRef id="Hd" />
+	    <groupRef id="CarbAcid" />
+	</distanceConstraint>
+
+	<!-- A distance range constraint -->
+	<distanceConstraint lower="3.5" upper="4.8" units="A">
+	    <groupRef id="Ha" />
+	    <groupRef id="Acid" />
+	</distanceConstraint>
+
+    </pharmacophore>
+
+    <pharmacophore description="A definition for the D1 receptor">
+	<group id="Hydroxyl">[OX2H]</group>
+	<group id="BasicAmine">[NX3;H2,H1;!$(NC=O)]</group>
+	<distanceConstraint lower="2.7" upper="2.9" units="A">
+	    <groupRef id="Aromatic" />
+	    <groupRef id="Hydroxyl" />
+	</distanceConstraint>
+	<distanceConstraint lower="4.2" upper="4.8" units="A">
+	    <groupRef id="Aromatic" />
+	    <groupRef id="BasicAmine" />
+	</distanceConstraint>
+	<distanceConstraint lower="6.8" upper="8.3" units="A">
+	    <groupRef id="Hydroxyl" />
+	    <groupRef id="BasicAmine" />
+	</distanceConstraint>
+    </pharmacophore>
+
+</pharmacophoreContainer>
