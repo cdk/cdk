@@ -1,6 +1,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
@@ -32,8 +33,8 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param upper The upper bound of the distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)
      */
-    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
-                                  PharmacophoreQueryAtom atom2,
+    public PharmacophoreQueryBond(IAtom atom1,
+                                  IAtom atom2,
                                   double lower, double upper) {
         super(atom1, atom2);
         this.upper = upper;
@@ -50,7 +51,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param atom1    The first pharmacophore group
      * @param atom2    The second pharmacophore group
      * @param distance The exact distance between the two groups
-     * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double,double)
+     * @see #PharmacophoreQueryBond(org.openscience.cdk.interfaces.IAtom,org.openscience.cdk.interfaces.IAtom,double,double)
      */
     public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
                                   PharmacophoreQueryAtom atom2,

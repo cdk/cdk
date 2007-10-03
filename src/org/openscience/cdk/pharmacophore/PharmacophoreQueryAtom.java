@@ -13,8 +13,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.keywords pharmacophore
- * @cdk.keywords 3D isomorphism
+ * @cdk.keyword pharmacophore
+ * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher

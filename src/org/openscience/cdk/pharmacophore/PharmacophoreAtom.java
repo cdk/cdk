@@ -17,8 +17,8 @@ import java.util.Arrays;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.keywords pharmacophore
- * @cdk.keywords 3D isomorphism
+ * @cdk.keyword pharmacophore
+ * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
  */
