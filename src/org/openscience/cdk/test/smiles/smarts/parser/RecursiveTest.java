@@ -23,6 +23,7 @@ package org.openscience.cdk.test.smiles.smarts.parser;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
@@ -54,6 +55,7 @@ public class RecursiveTest extends CDKTestCase {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
+        HueckelAromaticityDetector.detectAromaticity(atomContainer);
         boolean status = sqt.matches(atomContainer);
         if (status) {
             nmatch = sqt.countMatches();
@@ -252,6 +254,10 @@ public class RecursiveTest extends CDKTestCase {
     }
 
     public void testRecursiveSmarts25() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);
+
         match("[NX3;H2,H1;!$(NC=O)]", "CC1CCCC(C1)N1CCN(CC1)C1CCN(CC1)Cc1ccccc1");
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
@@ -264,9 +270,6 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(0, nmatch);
         assertEquals(0, nqmatch);
 
-        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
-        assertEquals(0, nmatch);
-        assertEquals(0, nqmatch);
 
         match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
         assertEquals(1, nmatch);
