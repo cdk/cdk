@@ -251,4 +251,27 @@ public class RecursiveTest extends CDKTestCase {
 
     }
 
+    public void testRecursiveSmarts25() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CC1CCCC(C1)N1CCN(CC1)C1CCN(CC1)Cc1ccccc1");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+        match("[NX3;H2,H1;!$(NC=O)]", "CCOc1cc2c(cc1/C=C/C(=O)c1ccc(cc1)S(=O)(=O)N1CCCC1)OC(C2)C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+        match("[NX3;H2,H1;!$(NC=O)]", "CN1CCc2cc3c(c(c2C1CC(=O)/C=C/c1ccco1)OC)OCO3");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);
+
+    }
+
 }
