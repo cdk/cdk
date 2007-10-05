@@ -1,5 +1,6 @@
 package org.openscience.cdk.pharmacophore;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -12,6 +13,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
 import java.util.*;
@@ -86,6 +88,7 @@ import java.util.*;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
  */
 public class PharmacophoreMatcher {
+    private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
     private IQueryAtomContainer pharmacophoreQuery = null;
     private List<List<PharmacophoreAtom>> matchingPAtoms = null;
 
@@ -125,7 +128,11 @@ public class PharmacophoreMatcher {
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
 
         IAtomContainer pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
-        if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) return false;
+        if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
+            String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
+            logger.debug("Target ["+title+"] did not match the query SMARTS. Skipping constraints");
+            return false;
+        }
 
         List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
