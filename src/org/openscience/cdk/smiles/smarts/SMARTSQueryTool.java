@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -30,7 +29,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
@@ -325,8 +323,7 @@ public class SMARTSQueryTool {
             List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
             int total = hCount + connectedAtoms.size();
             for (IAtom connectedAtom : connectedAtoms) {
-                if (connectedAtom.getSymbol().equals("H")) {
-                    total--;
+                if (connectedAtom.getSymbol().equals("H")) {                    
                     hCount++;
                 }
             }
