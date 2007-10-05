@@ -280,6 +280,10 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
 
+        match("[NX3;h2,h1;!$(NC=O)]", "NC1CCCC1C(CCNC)Cc1ccccc1N");
+        assertEquals(3, nmatch);
+        assertEquals(3, nqmatch);
+
     }
 
     public void testBasicAmineOnDrugs() throws CDKException, IOException {
