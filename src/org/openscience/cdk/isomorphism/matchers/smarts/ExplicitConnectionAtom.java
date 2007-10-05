@@ -60,13 +60,13 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
 	/* (non-Javadoc)
 	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
 	 */
-	public boolean matches(IAtom atom) {
-		int conn = ((Integer)atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue() -
-		atom.getHydrogenCount();
-		return numOfConnection == conn;
-	}
+    public boolean matches(IAtom atom) {
+        int ih = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
+        int conn = ((Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue() - ih;
+        return numOfConnection == conn;
+    }
 
-	/**
+    /**
 	 * Returns number of explicit connections
 	 * 
 	 * @return
