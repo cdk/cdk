@@ -291,17 +291,22 @@ public class PharmacophoreMatcher {
         // lets loop over each pcore query atom
         HashMap<String, String> map = new HashMap<String, String>();
 
+        logger.debug("Converting "+atomContainer.getProperty(CDKConstants.TITLE)+" to a pcore molecule");
+
         Iterator qatoms = pharmacophoreQuery.atoms();
         while (qatoms.hasNext()) {
             PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) qatoms.next();
             String smarts = qatom.getSmarts();
+
 
             // a pcore query might have multiple instances of a given pcore atom (say
             // 2 hydrophobic groups separated by X unit). In such a case we want to find
             // the atoms matching the pgroup SMARTS just once, rather than redoing the
             // matching for each instance of the pcore query atom.
             if (!map.containsKey(qatom.getSymbol())) map.put(qatom.getSymbol(), smarts);
-            else if (map.get(qatom.getSymbol()).equals(smarts)) continue;
+            else if (map.get(qatom.getSymbol()).equals(smarts)) {
+                continue;
+            }
 
             // see if the smarts for this pcore query atom gets any matches
             // in our query molecule. If so, then cllect each set of
@@ -309,9 +314,8 @@ public class PharmacophoreMatcher {
             // add it to the pcore atom container object
             sqt.setSmarts(smarts);
             if (sqt.matches(atomContainer)) {
-                int nmatch = sqt.countMatches();
-                List<List<Integer>> mappings = sqt.getMatchingAtoms();
-                for (int i = 0; i < nmatch; i++) {
+                List<List<Integer>> mappings = sqt.getUniqueMatchingAtoms();
+                for (int i = 0; i < mappings.size(); i++) {
                     List<Integer> atomIndices = mappings.get(i);
                     Point3d coords = getEffectiveCoordinates(atomContainer, atomIndices);
                     PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
@@ -321,7 +325,7 @@ public class PharmacophoreMatcher {
             }
 
         }
-
+               
         // now that we have added all the pcore atoms to the container
         // we need to join all atoms with pcore bonds
         int npatom = pharmacophoreMolecule.getAtomCount();
