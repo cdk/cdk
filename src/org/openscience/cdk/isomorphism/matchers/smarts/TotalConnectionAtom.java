@@ -30,8 +30,8 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * 
@@ -71,8 +71,7 @@ public class TotalConnectionAtom extends SMARTSAtom {
 
 	public int getXX(IAtom atom) {
 		if (atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) != null)
-			return ((Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS))
-					.intValue();
+			return (Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS);
 		else
 			return 0;
 	}
