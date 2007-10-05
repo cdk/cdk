@@ -899,12 +899,13 @@ public class SMARTSSearchTest extends CDKTestCase {
      * All these tests are commented for now.
      */
     
-    /*
+
     public void testAminoAcid1() throws Exception {
     	match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C)C(O)=O");
     	assertEquals(1, nmatch);
     	assertEquals(1, nqmatch);
     }
+
     public void testAminoAcid2() throws Exception {
     	match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCCNC(N)=N)C(O)=O");
     	assertEquals(1, nmatch);
@@ -915,6 +916,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     	assertEquals(1, nmatch);
     	assertEquals(1, nqmatch);
     }
+
     public void testAminoAcid4() throws Exception {
     	match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CC(O)=O)C(O)=O");
     	assertEquals(1, nmatch);
@@ -930,6 +932,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     	assertEquals(1, nmatch);
     	assertEquals(1, nqmatch);
     }
+
     public void testAminoAcid7() throws Exception {
     	match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(CCC(O)=O)C(O)=O");
     	assertEquals(1, nmatch);
@@ -1000,6 +1003,6 @@ public class SMARTSSearchTest extends CDKTestCase {
     	assertEquals(1, nmatch);
     	assertEquals(1, nqmatch);
     }        
-    */
+    
 }
 
