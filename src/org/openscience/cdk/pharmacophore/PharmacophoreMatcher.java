@@ -126,16 +126,18 @@ public class PharmacophoreMatcher {
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
+        String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
 
         IAtomContainer pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
         if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
-            String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
-            logger.debug("Target ["+title+"] did not match the query SMARTS. Skipping constraints");
+            logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
         }
 
         List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
+        logger.debug("[" + title+"] got "+matchingPAtoms.size()+" atom mappings");
+
         return matchingPAtoms.size() > 0;
     }
 
@@ -160,11 +162,15 @@ public class PharmacophoreMatcher {
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
 
+        String title = conformerContainer.getTitle();
         boolean[] ret = new boolean[conformerContainer.size()];
         for (int i = 0; i < conformerContainer.size(); i++) ret[i] = false;
 
         IAtomContainer pharmacophoreMolecule = getPharmacophoreMolecule(conformerContainer.get(0));
-        if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) return ret;
+        if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
+            logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
+            return ret;
+        }
 
         int i = 0;
         for (IAtomContainer conf : conformerContainer) {
