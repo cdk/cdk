@@ -96,6 +96,17 @@ public class SMARTSSearchTest extends CDKTestCase {
 
         assertEquals(3, nmatch);
         assertEquals(3, nqmatch);
+
+
+        sqt.setSmarts("[ND3]");
+        status = sqt.matches(atomContainer);
+        assertEquals(true, status);
+
+        nmatch = sqt.countMatches();
+        nqmatch = sqt.getUniqueMatchingAtoms().size();
+
+        assertEquals(3, nmatch);
+        assertEquals(3, nqmatch);
     }
 
     public void testRGraphBond() throws Exception {
