@@ -24,10 +24,15 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Test recursive smarts
@@ -275,6 +280,22 @@ public class RecursiveTest extends CDKTestCase {
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
 
+    }
+
+    public void testBasicAmineOnDrugs() throws CDKException, IOException {
+        String filename = "data/smiles/drugs.smi";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h2,h1;!$(NC=O)]", true);
+        int nmatch = 0;
+        while (reader.hasNext()) {
+            IAtomContainer container = (IAtomContainer) reader.next();
+            HueckelAromaticityDetector.detectAromaticity(container);
+            if (sqt.matches(container)) nmatch++;
+        }
+        reader.close();
+        assertEquals(364, nmatch);
     }
 
 }
