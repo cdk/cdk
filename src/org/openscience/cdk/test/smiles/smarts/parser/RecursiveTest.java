@@ -287,15 +287,20 @@ public class RecursiveTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h2,h1;!$(NC=O)]", true);
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", true);
         int nmatch = 0;
+        int nmol = 0;
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
             HueckelAromaticityDetector.detectAromaticity(container);
-            if (sqt.matches(container)) nmatch++;
+            if (sqt.matches(container)) {
+                nmatch++;
+            }
+            nmol++;
         }
         reader.close();
-        assertEquals(364, nmatch);
+        assertEquals(142, nmol);
+        assertEquals(0, nmatch);
     }
 
 }
