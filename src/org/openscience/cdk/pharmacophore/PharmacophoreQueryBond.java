@@ -10,8 +10,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.keywords pharmacophore
- * @cdk.keywords 3D isomorphism
+ * @cdk.keyword pharmacophore
+ * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
@@ -71,7 +71,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param bond The distance relationship in a target molecule
      * @return true if the target distance lies within the range of the query constraint
      */
-    public boolean matches(IBond bond) {
+    public boolean matches(IBond bond) {        
         PharmacophoreBond pbond = (PharmacophoreBond) bond;
         double bondLength = round(pbond.getBondLength(), 2);
         return bondLength >= lower && bondLength <= upper;
