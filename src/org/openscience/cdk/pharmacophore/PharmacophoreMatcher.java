@@ -198,10 +198,12 @@ public class PharmacophoreMatcher {
             List<List<PharmacophoreAtom>> tmp = getAtomMappings(bondMapping, pharmacophoreMolecule);
 
             ret[i++] = tmp.size() > 0;
-            if (matchingPAtoms == null && tmp.size() > 0)
+            if (matchingPAtoms == null && tmp.size() > 0) {
                 matchingPAtoms = new ArrayList<List<PharmacophoreAtom>>(tmp);
-
-            logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
+                logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
+            } else {
+                logger.debug("[" + title + "] had no atom mappings");
+            }
         }
 
         return ret;
