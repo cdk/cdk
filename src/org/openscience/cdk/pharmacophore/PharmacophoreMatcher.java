@@ -136,7 +136,7 @@ public class PharmacophoreMatcher {
 
         List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
-        logger.debug("[" + title+"] got "+matchingPAtoms.size()+" atom mappings");
+        logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
 
         return matchingPAtoms.size() > 0;
     }
@@ -200,6 +200,8 @@ public class PharmacophoreMatcher {
             ret[i++] = tmp.size() > 0;
             if (matchingPAtoms == null && tmp.size() > 0)
                 matchingPAtoms = new ArrayList<List<PharmacophoreAtom>>(tmp);
+
+            logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
         }
 
         return ret;
@@ -291,13 +293,12 @@ public class PharmacophoreMatcher {
         // lets loop over each pcore query atom
         HashMap<String, String> map = new HashMap<String, String>();
 
-        logger.debug("Converting "+atomContainer.getProperty(CDKConstants.TITLE)+" to a pcore molecule");
+        logger.debug("Converting [" + atomContainer.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
 
         Iterator qatoms = pharmacophoreQuery.atoms();
         while (qatoms.hasNext()) {
             PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) qatoms.next();
             String smarts = qatom.getSmarts();
-
 
             // a pcore query might have multiple instances of a given pcore atom (say
             // 2 hydrophobic groups separated by X unit). In such a case we want to find
@@ -323,9 +324,9 @@ public class PharmacophoreMatcher {
                     if (!pharmacophoreMolecule.contains(patom)) pharmacophoreMolecule.addAtom(patom);
                 }
             }
-
+            logger.debug("\tFound " + sqt.getUniqueMatchingAtoms().size() + " unique matches for " + smarts);
         }
-               
+
         // now that we have added all the pcore atoms to the container
         // we need to join all atoms with pcore bonds
         int npatom = pharmacophoreMolecule.getAtomCount();
