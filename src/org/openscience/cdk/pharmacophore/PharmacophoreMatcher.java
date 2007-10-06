@@ -136,6 +136,7 @@ public class PharmacophoreMatcher {
 
         List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
+        logger.debug("  Got " + matchingPAtoms.size() + " hits");
 
         return matchingPAtoms.size() > 0;
     }
@@ -195,11 +196,14 @@ public class PharmacophoreMatcher {
             // now do a match with these coordinates
             List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
             List<List<PharmacophoreAtom>> tmp = getAtomMappings(bondMapping, pharmacophoreMolecule);
-
             ret[i++] = tmp.size() > 0;
+
+            logger.debug("  Conformer got " + tmp.size() + " hits");
+
             if (matchingPAtoms == null && tmp.size() > 0) {
                 matchingPAtoms = new ArrayList<List<PharmacophoreAtom>>(tmp);
             }
+
         }
 
         return ret;
