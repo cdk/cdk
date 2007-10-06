@@ -136,7 +136,6 @@ public class PharmacophoreMatcher {
 
         List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
         matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
-        logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
 
         return matchingPAtoms.size() > 0;
     }
@@ -200,9 +199,6 @@ public class PharmacophoreMatcher {
             ret[i++] = tmp.size() > 0;
             if (matchingPAtoms == null && tmp.size() > 0) {
                 matchingPAtoms = new ArrayList<List<PharmacophoreAtom>>(tmp);
-                logger.debug("[" + title + "] got " + matchingPAtoms.size() + " atom mappings");
-            } else {
-                logger.debug("[" + title + "] had no atom mappings");
             }
         }
 
