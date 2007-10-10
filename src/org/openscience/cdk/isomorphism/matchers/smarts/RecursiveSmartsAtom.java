@@ -61,7 +61,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 	 * BitSet that records which atom in the target molecule matches the
 	 * recursive smarts
 	 */
-	private BitSet bs = null;
+	private BitSet bitSet = null;
 	
 	/**
 	 * Creates a new instance
@@ -88,7 +88,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
     	}
     	
     	// initialize bitsets
-    	if (bs == null) {
+    	if (bitSet == null) {
     		try {
     			initilizeBitSets();
     		} catch (CDKException cex) {
@@ -97,7 +97,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
     		}
     	}
     	int atomNumber = atomContainer.getAtomNumber(atom);
-        return bs.get(atomNumber);
+        return bitSet.get(atomNumber);
     }
     
     /**
@@ -111,7 +111,7 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 		List<List<RMap>> bondMappings = null;
 		bondMappings = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, recursiveQuery);
 
-		bs = new BitSet(atomContainer.getAtomCount());
+		bitSet = new BitSet(atomContainer.getAtomCount());
 		
 		for (List<RMap> bondMapping : bondMappings) {
 			Collections.sort(bondMapping, new Comparator<RMap>() {
@@ -136,42 +136,42 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 					IBond qbond1 = recursiveQuery.getBond(bondMapping.get(1).getId2());
 					if (recursiveQuery.getAtomNumber(qatom0) == 0) {
 						if (qbond1.contains(qatom0) && bond1.contains(atom0)) { // atom0 <-> qatom0
-							bs.set(atomContainer.getAtomNumber(atom0), true);
+							bitSet.set(atomContainer.getAtomNumber(atom0), true);
 						} else if (qbond1.contains(qatom0) && bond1.contains(atom1)) { // atom1 <-> qatom0
-							bs.set(atomContainer.getAtomNumber(atom1), true);
+							bitSet.set(atomContainer.getAtomNumber(atom1), true);
 						} else if (!qbond1.contains(qatom0) && bond1.contains(atom0)) { // ! (qatom0 <-> atom0)
-							bs.set(atomContainer.getAtomNumber(atom1), true);
+							bitSet.set(atomContainer.getAtomNumber(atom1), true);
 						} else { // (!qbond1.contains(qatom0) && bond1.contains(atom1) // ! (qatom0 <-> atom1 ) 
-							bs.set(atomContainer.getAtomNumber(atom0), true);							
+							bitSet.set(atomContainer.getAtomNumber(atom0), true);							
 						}
 					} else {
 						if (qbond1.contains(qatom1) && bond1.contains(atom0)) { 
-							bs.set(atomContainer.getAtomNumber(atom0), true);
+							bitSet.set(atomContainer.getAtomNumber(atom0), true);
 						} else if (qbond1.contains(qatom1) && bond1.contains(atom1)) {
-							bs.set(atomContainer.getAtomNumber(atom1), true);
+							bitSet.set(atomContainer.getAtomNumber(atom1), true);
 						} else if (!qbond1.contains(qatom1) && bond1.contains(atom1)) {
-							bs.set(atomContainer.getAtomNumber(atom0), true);
+							bitSet.set(atomContainer.getAtomNumber(atom0), true);
 						} else {
-							bs.set(atomContainer.getAtomNumber(atom1), true);							
+							bitSet.set(atomContainer.getAtomNumber(atom1), true);							
 						}						
 					}
 				} else {
 					// both matches
-					bs.set(atomContainer.getAtomNumber(atom1), true);
-					bs.set(atomContainer.getAtomNumber(atom0), true);
+					bitSet.set(atomContainer.getAtomNumber(atom1), true);
+					bitSet.set(atomContainer.getAtomNumber(atom0), true);
 				}
 			} else {
 				if (recursiveQuery.getAtomNumber(qatom0) == 0) { // starts from qatom1
 					if (qatom0.matches(atom0) && qatom1.matches(atom1)) {
-						bs.set(atomContainer.getAtomNumber(atom0), true);
+						bitSet.set(atomContainer.getAtomNumber(atom0), true);
 					} else {
-						bs.set(atomContainer.getAtomNumber(atom1), true);
+						bitSet.set(atomContainer.getAtomNumber(atom1), true);
 					}
 				} else { // qatom1 is the first atom
 					if (qatom0.matches(atom1) && qatom1.matches(atom0)) {
-						bs.set(atomContainer.getAtomNumber(atom0), true);
+						bitSet.set(atomContainer.getAtomNumber(atom0), true);
 					} else {
-						bs.set(atomContainer.getAtomNumber(atom1), true);
+						bitSet.set(atomContainer.getAtomNumber(atom1), true);
 					}
 				}
 			}
@@ -192,5 +192,6 @@ public class RecursiveSmartsAtom extends SMARTSAtom {
 
 	public void setAtomContainer(IAtomContainer atomContainer) {
 		this.atomContainer = atomContainer;
+		this.bitSet = null; // new atom container, reset matching bitset.
 	}
 }
