@@ -113,32 +113,33 @@ public class IPBondDescriptor implements IBondDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) throws CDKException{
-        IAtomContainer container = null;
+        IAtomContainer localClone = null;
         try {
-            container = (IAtomContainer) atomContainer.clone();
+            localClone = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IBond clonedBond = localClone.getBond(atomContainer.getBondNumber(bond));
         
         String[] descriptorNames = {"DoubleResult"};
-    	reactionSet = container.getBuilder().newReactionSet();
+    	reactionSet = localClone.getBuilder().newReactionSet();
     	
     	double resultD = -1.0;
 		boolean isTarget = false;
 		double[] resultsH = null;
 		
 		try{
-			HueckelAromaticityDetector.detectAromaticity(container,true);
+			HueckelAromaticityDetector.detectAromaticity(localClone,true);
 		} catch (Exception exc){
             exc.printStackTrace();
         }
         
-        if(bond.getOrder() > 1 && 
-        		(container.getConnectedLonePairsCount(bond.getAtom(0)) == 0) && /*not containing heteroatoms*/ 
-        		(container.getConnectedLonePairsCount(bond.getAtom(1)) == 0) && 
-        		!bond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) && !bond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)){ /*not belonging to aromatics*/
+        if(clonedBond.getOrder() > 1 && 
+        		(localClone.getConnectedLonePairsCount(clonedBond.getAtom(0)) == 0) && /*not containing heteroatoms*/ 
+        		(localClone.getConnectedLonePairsCount(clonedBond.getAtom(1)) == 0) && 
+        		!clonedBond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) && !clonedBond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)){ /*not belonging to aromatics*/
         		
-        		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
+        		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(localClone);
                 Iterator acI = conjugatedPi.atomContainers();
 
                 boolean isConjugatedPi = false;
@@ -146,14 +147,14 @@ public class IPBondDescriptor implements IBondDescriptor {
                 
         		while(acI.hasNext()){
         			IAtomContainer ac = (IAtomContainer) acI.next();
-        			if(ac.contains(bond)){
+        			if(ac.contains(clonedBond)){
         				isConjugatedPi = true;
             			
             			Iterator atoms = ac.atoms();
             			while(atoms.hasNext()){
             				IAtom atomsss = (IAtom) atoms.next();
             				
-            				if(container.getConnectedLonePairsCount(atomsss) > 0){
+            				if(localClone.getConnectedLonePairsCount(atomsss) > 0){
             					isConjugatedPi_withHeteroatom = true;
 //            					resultsH = calculateCojugatedPiSystWithHeteroDescriptor(bond, container, ac);
 //                    			resultD = getPySystWithHetero(resultsH);
@@ -164,7 +165,7 @@ public class IPBondDescriptor implements IBondDescriptor {
             			}
             			
             			if(!isConjugatedPi_withHeteroatom){
-	            			resultsH = calculateCojugatedPiSystDescriptor(bond, container, ac);
+	            			resultsH = calculateCojugatedPiSystDescriptor(clonedBond, localClone, ac);
 	            			resultD = getConjugatedPiSys(resultsH);
         					resultD += 0.05;
                 			isTarget = true;
@@ -174,7 +175,7 @@ public class IPBondDescriptor implements IBondDescriptor {
         		}
                 if(!isConjugatedPi){
 
-					resultsH = calculatePiSystDescriptor(bond, container);
+					resultsH = calculatePiSystDescriptor(clonedBond, localClone);
 					resultD = getAcetyl_EthylWithoutHetero(resultsH);
 					resultD += 0.05;
         			isTarget = true;
@@ -183,8 +184,8 @@ public class IPBondDescriptor implements IBondDescriptor {
 
 		if(isTarget){
     		/* iniziate reaction*/
-			IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
-			setOfReactants.addMolecule((IMolecule) container);
+			IMoleculeSet setOfReactants = localClone.getBuilder().newMoleculeSet();
+			setOfReactants.addMolecule((IMolecule) localClone);
 			IReactionProcess type  = new ElectronImpactPDBReaction();
 			bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
 	        Object[] params = {Boolean.TRUE};

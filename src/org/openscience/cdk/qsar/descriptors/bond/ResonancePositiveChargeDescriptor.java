@@ -127,22 +127,24 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) throws CDKException {
-        IAtomContainer acI;
+        IAtomContainer localClone;
         try {
-            acI = (IAtomContainer) atomContainer.clone();
+            localClone = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IBond clonedBond = localClone.getBond(atomContainer.getBondNumber(bond));
 
-        cleanFlagReactiveCenter((IMolecule) acI);
+        cleanFlagReactiveCenter((IMolecule) localClone);
 
     	DoubleArrayResult dar = new DoubleArrayResult(2);
-    	IAtomContainer ac;
+    	IAtomContainer secondClone;
 		try {
-			ac = (IMolecule) acI.clone();
+			secondClone = (IMolecule) localClone.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IAtomContainer!", e);
 		}
+		IBond secondClonedBond = secondClone.getBond(atomContainer.getBondNumber(bond));
 
 		ArrayList<DoubleResult> result1 = new ArrayList<DoubleResult>();
     	ArrayList<IntegerResult> distance1 = new ArrayList<IntegerResult>();
@@ -150,18 +152,18 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
     	ArrayList<IntegerResult> distance2 = new ArrayList<IntegerResult>();
     	
     	
-    	IAtom atom0 = bond.getAtom(0);
-    	int atomPos0 = acI.getAtomNumber(atom0);
-    	IAtom atom1 = bond.getAtom(1);
-    	int atomPos1 = acI.getAtomNumber(atom1);
+    	IAtom atom0 = secondClonedBond.getAtom(0);
+    	int atomPos0 = secondClone.getAtomNumber(atom0);
+    	IAtom atom1 = secondClonedBond.getAtom(1);
+    	int atomPos1 = secondClone.getAtomNumber(atom1);
     	
-    	ac.getAtom(atomPos0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    	ac.getAtom(atomPos1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-    	ac.getBond(acI.getBondNumber(bond)).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	secondClone.getAtom(atomPos0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	secondClone.getAtom(atomPos1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+    	secondClone.getBond(localClone.getBondNumber(clonedBond)).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
 
     	/*break bond*/
-    	if(ac.getConnectedSingleElectronsCount(atom0) > 0 || ac.getConnectedSingleElectronsCount(atom1) > 0){
+    	if(secondClone.getConnectedSingleElectronsCount(atom0) > 0 || secondClone.getConnectedSingleElectronsCount(atom1) > 0){
     		dar.add(0.0);
     		dar.add(0.0);
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
@@ -172,8 +174,8 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
         
-        IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();
-		setOfReactants.addMolecule((IMolecule) ac);
+        IMoleculeSet setOfReactants = secondClone.getBuilder().newMoleculeSet();
+		setOfReactants.addMolecule((IMolecule) secondClone);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
     	
         /*search resonance for each product obtained. Only 2*/
@@ -205,7 +207,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	        	
 	        	int maxNumbStruc = 50;
 	        	boolean isAromatic = false;
-	        	if(HueckelAromaticityDetector.detectAromaticity(acI)){
+	        	if(HueckelAromaticityDetector.detectAromaticity(localClone)){
 	        		 isAromatic = true;
 	        		 IRingSet ringSet = new SSSRFinder(product).findSSSR();
 	        		 if( ringSet.getAtomContainerCount() > 4)
@@ -223,7 +225,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	    			for(int j = 1 ; j < setOfResonance.getAtomContainerCount() ; j++){
 	    				IAtomContainer prod = setOfResonance.getAtomContainer(j);
 	    	        	QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(prod);
-	    				 if(!UniversalIsomorphismTester.isIsomorph(ac,qAC)){
+	    				 if(!UniversalIsomorphismTester.isIsomorph(secondClone,qAC)){
 	    			        	/*search positive charge*/
 	    					 pielectronegativity = new PiElectronegativityDescriptor();
 	    		    			for(int k = 0; k < prod.getAtomCount(); k++){
