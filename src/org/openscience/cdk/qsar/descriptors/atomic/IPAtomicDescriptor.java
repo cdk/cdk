@@ -114,14 +114,15 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException{
-        IAtomContainer container;
+        IAtomContainer localClone;
         try {
-            container= (IAtomContainer) atomContainer.clone();
+            localClone= (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IAtom clonedAtom = localClone.getAtom(atomContainer.getAtomNumber(atom));
         
-        reactionSet = container.getBuilder().newReactionSet();
+        reactionSet = localClone.getBuilder().newReactionSet();
     	
 		double resultD = -1.0;
 		boolean isTarget = false;
@@ -129,15 +130,15 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double[] resultsH;
 
 		/*control if it is into an aromatic or conjugated system*/
-		HueckelAromaticityDetector.detectAromaticity(container,true);
-		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(container);
+		HueckelAromaticityDetector.detectAromaticity(localClone,true);
+		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(localClone);
 		Iterator acI = conjugatedPi.atomContainers();
  		while(acI.hasNext()){
 			IAtomContainer ac = (IAtomContainer) acI.next();
-			if(ac.contains(atom)){
+			if(ac.contains(clonedAtom)){
 				isConjugated = true;
-				if(container.getMaximumBondOrder(atom) == 1 && container.getConnectedLonePairsCount(atom) > 0){
-					resultsH = calculateHeteroAtomConjugatedDescriptor(atom, container,ac);
+				if(localClone.getMaximumBondOrder(clonedAtom) == 1 && localClone.getConnectedLonePairsCount(clonedAtom) > 0){
+					resultsH = calculateHeteroAtomConjugatedDescriptor(clonedAtom, localClone,ac);
 					resultD = getTreeHeteroConjAtom(resultsH);
 					resultD += 0.05;
 					isTarget = true;
@@ -148,13 +149,15 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		if(atom.getFlag(CDKConstants.ISAROMATIC))
 			return null;
 		
-		if(container.getMaximumBondOrder(atom) > 1 && container.getConnectedLonePairsCount(atom) > 0){
-			resultsH = calculateCarbonylDescriptor(atom, container);
+		int count = localClone.getConnectedLonePairsCount(clonedAtom);
+		
+		if(localClone.getMaximumBondOrder(clonedAtom) > 1 && localClone.getConnectedLonePairsCount(clonedAtom) > 0){
+			resultsH = calculateCarbonylDescriptor(clonedAtom, localClone);
 			resultD = getTreeDoubleHetero(resultsH);
 			resultD += 0.05;
 			isTarget = true;
-		}else if(container.getConnectedLonePairsCount(atom) > 0 && !isConjugated){
-			resultsH = calculateHeteroAtomDescriptor(atom, container);
+		}else if(localClone.getConnectedLonePairsCount(clonedAtom) > 0 && !isConjugated){
+			resultsH = calculateHeteroAtomDescriptor(clonedAtom, localClone);
 			resultD = getTreeHeteroAtom(resultsH);
 			resultD += 0.05;
 			isTarget = true;
@@ -163,10 +166,10 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 			
 		if(isTarget){
 			/* inizate reaction*/
-			if(container.getConnectedLonePairsCount(atom) > 0){
+			if(localClone.getConnectedLonePairsCount(clonedAtom) > 0){
 				
-				IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
-				setOfReactants.addMolecule((IMolecule) container);
+				IMoleculeSet setOfReactants = localClone.getBuilder().newMoleculeSet();
+				setOfReactants.addMolecule((IMolecule) localClone);
 				IReactionProcess type  = new ElectronImpactNBEReaction();
 				atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
 		        Object[] params = {Boolean.TRUE};
