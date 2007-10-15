@@ -32,14 +32,14 @@ import java.util.List;
  */
 public class DoubleArrayResult implements IDescriptorResult {
 
-    private List array;
+    private List<Double> array;
 
     public DoubleArrayResult() {
-        this.array = new ArrayList();
+        this.array = new ArrayList<Double>();
     }
 
     public DoubleArrayResult(int size) {
-        this.array = new ArrayList(size);
+        this.array = new ArrayList<Double>(size);
     }
 
     public void add(double value) {
@@ -59,8 +59,8 @@ public class DoubleArrayResult implements IDescriptorResult {
 
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        for (Iterator iterator = array.iterator(); iterator.hasNext();) {
-            Double value = (Double) iterator.next();
+        for (Iterator<Double> iterator = array.iterator(); iterator.hasNext();) {
+            Double value = iterator.next();
             buf.append(value.doubleValue());
             if (iterator.hasNext()) buf.append(",");
         }

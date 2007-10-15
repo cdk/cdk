@@ -32,14 +32,14 @@ import java.util.List;
  */
 public class IntegerArrayResult implements IDescriptorResult {
 
-    private List array;
+    private List<Integer> array;
 
     public IntegerArrayResult() {
-        this.array = new ArrayList();
+        this.array = new ArrayList<Integer>();
     }
 
     public IntegerArrayResult(int size) {
-        this.array = new ArrayList(size);
+        this.array = new ArrayList<Integer>(size);
     }
 
     public void add(int value) {
@@ -59,8 +59,8 @@ public class IntegerArrayResult implements IDescriptorResult {
 
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        for (Iterator iterator = array.iterator(); iterator.hasNext();) {
-            Integer integer = (Integer) iterator.next();
+        for (Iterator<Integer> iterator = array.iterator(); iterator.hasNext();) {
+            Integer integer = iterator.next();
             buf.append(integer.intValue());
             if (iterator.hasNext()) buf.append(",");
         }
