@@ -369,7 +369,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testReadingOfTwoCharElements() throws Exception {
-		String smiles = "[Na]";
+		String smiles = "[Na+]";
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals("Na", mol.getAtom(0).getSymbol());
@@ -377,7 +377,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 
 	@org.junit.Test (timeout=1000)
 	public void testReadingOfOneCharElements() throws Exception {
-		String smiles = "[K]";
+		String smiles = "[K+]";
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals("K", mol.getAtom(0).getSymbol());
@@ -388,7 +388,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testOrganicSubsetUnderstanding() throws Exception {
-		String smiles = "[Ni]";
+		String smiles = "[Ni+2]";
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals("Ni", mol.getAtom(0).getSymbol());
