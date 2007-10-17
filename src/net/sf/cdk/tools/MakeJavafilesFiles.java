@@ -43,15 +43,15 @@ import java.util.Map;
  */
 public class MakeJavafilesFiles {
 
-    private Map cdkPackages;
-    private Map cdkSets;
+    private Map<String,List<String>> cdkPackages;
+    private Map<String,List<String>> cdkSets;
    
     private String sourceDir = null;
     private String outputDir = null;
 
     public MakeJavafilesFiles(String sourceDir, String outputDir) {
-        cdkPackages = new Hashtable();
-        cdkSets = new Hashtable();
+        cdkPackages = new Hashtable<String,List<String>>();
+        cdkSets = new Hashtable<String,List<String>>();
         this.sourceDir = sourceDir;
         this.outputDir = outputDir;
     }
@@ -59,7 +59,7 @@ public class MakeJavafilesFiles {
     public void outputResults() {
         // output information in .javafiles and .classes files
         try {
-			Iterator keys = cdkPackages.keySet().iterator();
+			Iterator<String> keys = cdkPackages.keySet().iterator();
 			while (keys.hasNext()) {
 			    String key = (String)keys.next();
 			    
@@ -70,10 +70,10 @@ public class MakeJavafilesFiles {
 			    PrintWriter outClass = new PrintWriter(
 			    	new FileWriter(outputDir + "/" + key + ".classes")
 			    );
-			    List packageClasses = (List)cdkPackages.get(key);
-			    Iterator classes = packageClasses.iterator();
+			    List<String> packageClasses = cdkPackages.get(key);
+			    Iterator<String> classes = packageClasses.iterator();
 			    while (classes.hasNext()) {
-			        String packageClass = (String)classes.next();
+			        String packageClass = classes.next();
 			        outJava.println(toAPIPath(packageClass) + ".java");
 			        outClass.println(toAPIPath(packageClass) + "*.class");
 			    }
@@ -89,8 +89,8 @@ public class MakeJavafilesFiles {
 	            PrintWriter outJava = new PrintWriter(
 	            	new FileWriter(outputDir + "/" + key + ".set")
 	            );
-	            List packageClasses = (List)cdkSets.get(key);
-	            Iterator classes = packageClasses.iterator();
+	            List<String> packageClasses = cdkSets.get(key);
+	            Iterator<String> classes = packageClasses.iterator();
 	            while (classes.hasNext()) {
 	                String packageClass = (String)classes.next();
 	                outJava.println(packageClass);
@@ -236,18 +236,18 @@ public class MakeJavafilesFiles {
     }
 
     private void addClassToCDKPackage(String packageClass, String cdkPackageName) {
-        List packageClasses = (ArrayList)cdkPackages.get(cdkPackageName);
+        List<String> packageClasses = cdkPackages.get(cdkPackageName);
         if (packageClasses == null) {
-            packageClasses = new ArrayList();
+            packageClasses = new ArrayList<String>();
             cdkPackages.put(cdkPackageName, packageClasses);
         }
         packageClasses.add(packageClass);
     }
 
     private void addClassToCDKSet(String packageClass, String cdkPackageName) {
-        List packageClasses = (ArrayList)cdkSets.get(cdkPackageName);
+        List<String> packageClasses = cdkSets.get(cdkPackageName);
         if (packageClasses == null) {
-            packageClasses = new ArrayList();
+            packageClasses = new ArrayList<String>();
             cdkSets.put(cdkPackageName, packageClasses);
         }
         packageClasses.add(packageClass);
