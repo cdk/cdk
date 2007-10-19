@@ -52,11 +52,17 @@ public class CDKHueckelAromaticityDetector {
 	static LoggingTool logger = new LoggingTool(CDKHueckelAromaticityDetector.class);
 
 	public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException {
-		IAtomContainer ringSystems = getRingSystemsOnly(atomContainer);
+		SpanningTree spanningTree = new SpanningTree(atomContainer);
+		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
 		if (ringSystems.getAtomCount() == 0) {
 			// If there are no rings, then there cannot be any aromaticity
 			return false;
 		}
+		// FIXME: should not really mark them here
+		Iterator<IAtom> atoms = ringSystems.atoms();
+		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISINRING, true);
+		Iterator<IBond> bonds = ringSystems.bonds();
+		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);		
 		
 		boolean foundSomeAromaticity = false;
 		Iterator<IAtomContainer> isolatedRingSystems = ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers();
@@ -116,35 +122,6 @@ public class CDKHueckelAromaticityDetector {
 			}
 		}
 		return false;
-	}
-	
-	/**
-	 * Returns a new IAtomContainer which contains only atoms and bonds that
-	 * participate in a ring system.
-	 */
-	private static IAtomContainer getRingSystemsOnly(IAtomContainer container) {
-		IAtomContainer ringSystem = container.getBuilder().newAtomContainer();
-		
-		new SpanningTree(container);
-		// atoms and bonds are now marked with the flag ISINRING
-		
-		// add all ring atoms and ring bonds to the ring system container
-		Iterator<IAtom> atoms = container.atoms();
-		while (atoms.hasNext()) {
-			IAtom atom = atoms.next();
-			if (atom.getFlag(CDKConstants.ISINRING)) {
-				ringSystem.addAtom(atom);
-			}
-		}
-		Iterator<IBond> bonds = container.bonds();
-		while (bonds.hasNext()) {
-			IBond bond = bonds.next();
-			if (bond.getFlag(CDKConstants.ISINRING)) {
-				ringSystem.addBond(bond);
-			}
-		}
-		
-		return ringSystem;
 	}
 	
 	private static int getLonePairCount(IAtom atom) {
