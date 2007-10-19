@@ -34,9 +34,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -469,6 +471,16 @@ public class AtomContainerManipulator {
 		IElectronContainer[] ret = new IElectronContainer[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
+	}
+
+	public static void percieveAtomTypesAndConfigerAtoms(IAtomContainer container) throws CDKException {
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = container.atoms();
+        while (atoms.hasNext()) {
+        	IAtom atom = atoms.next();
+        	IAtomType matched = matcher.findMatchingAtomType(container, atom);
+        	AtomTypeManipulator.configure(atom, matched);
+        }
 	}
 	
 }
