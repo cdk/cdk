@@ -23,6 +23,7 @@ package org.openscience.cdk.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.io.VASPReaderTest;
@@ -47,6 +48,7 @@ public class MexperimentalTests {
         // from cdk.test.atomtype
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
         suite.addTest(MM2AtomTypeMatcherTest.suite());
+        suite.addTest(CDKHueckelAromaticityDetectorTest.suite());
         
         return suite;
     }
