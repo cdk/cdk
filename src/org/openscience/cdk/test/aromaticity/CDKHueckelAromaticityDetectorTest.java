@@ -82,7 +82,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	{
 		IMolecule mol = makeAromaticMolecule();
 
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		assertTrue("Molecule is expected to be marked aromatic!", isAromatic);
 
 		int numberOfAromaticAtoms = 0;
 		for (int i = 0; i < mol.getAtomCount(); i++) {
@@ -120,7 +121,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 			if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
 				numberOfAromaticRings++;
 		}
-		assertEquals(numberOfAromaticRings, 1);
+		assertEquals(1, numberOfAromaticRings);
 	}
 	
 	
@@ -231,7 +232,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 			if (isAromatic) aromacount++;
 			i++;
 		}
-		assertEquals(aromacount, 1);
+		assertEquals(1, aromacount);
 	}
 
     /**
@@ -243,6 +244,9 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
     	IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+    	for (int f = 0; f < mol.getAtomCount(); f++) {
+    		assertEquals(CDKConstants.HYBRIDIZATION_SP2, mol.getAtom(f).getHybridization().intValue());
+    	}
     	assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     	assertEquals(7, mol.getAtomCount());
     	for (int f = 0; f < mol.getAtomCount(); f++) {
