@@ -180,7 +180,11 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+			assertEquals(
+				"Atom " + f + " is not correctly marked",
+				testResults[f], 
+				molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC)
+			);
 		}
 	}
 
@@ -200,7 +204,11 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+			assertEquals(
+				"Atom " + f + " is not correctly marked",
+				testResults[f], 
+				molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC)
+			);
 		}
 	}
 
@@ -215,7 +223,11 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+			assertEquals(
+				"Atom " + f + " is not correctly marked",
+				testResults[f], 
+				molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC)
+			);
 		}
 	}
 
