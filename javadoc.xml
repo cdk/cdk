@@ -75,6 +75,7 @@
             <taglet name="net.sf.cdk.tools.doclets.CDKModuleTaglet" path="jar/xom-1.1.jar:src" />
             <taglet name="net.sf.cdk.tools.doclets.CDKBugTaglet" path="jar/xom-1.1.jar:src" />
             <taglet name="net.sf.cdk.tools.doclets.CDKDictRefTaglet" path="jar/xom-1.1.jar:src" />
+            <taglet name="net.sf.cdk.tools.doclets.CDKInChIRefTaglet" path="jar/xom-1.1.jar:src" />
             <packageset dir="${src}" defaultexcludes="yes">
                 <include name="org/openscience/cdk/**" />
                 <exclude name="org/openscience/cdk/test/**"/>
