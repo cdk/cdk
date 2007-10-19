@@ -123,7 +123,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
-
+	/**
+	 * Returns cyclohexene without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
+	 */
 	public static Molecule makeCyclohexene()
 	{
 		Molecule mol = new Molecule();
@@ -143,6 +147,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Returns cyclohexane without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
+	 */
 	public static Molecule makeCyclohexane()
 	{
 		Molecule mol = new Molecule();
@@ -162,6 +171,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Returns cyclobutane without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
+	 */
 	public static Molecule makeCyclobutane()
 	{
 		Molecule mol = new Molecule();
@@ -196,7 +210,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 	
-	
+	/**
+	 * Returns biphenyl without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
+	 */
 	public static Molecule makeBiphenyl()
 	{
 		Molecule mol = new Molecule();
@@ -505,7 +523,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
-	
+	/**
+	 * Returns azulene without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
+	 */
 	public static Molecule makeAzulene()
 	{
 		Molecule mol = new Molecule();
@@ -535,6 +557,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Returns indole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
+	 */
 	public static Molecule makeIndole()
 	{
 		Molecule mol = new Molecule();
@@ -563,7 +590,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
-	
+	/**
+	 * Returns pyrrole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
+	 */
 	public static Molecule makePyrrole()
 	{
 		Molecule mol = new Molecule();
@@ -582,6 +613,11 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Returns thiazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
+	 */
 	public static Molecule makeThiazole()
 	{
 		Molecule mol = new Molecule();
