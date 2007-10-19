@@ -27,16 +27,12 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * @cdk.module standard
@@ -244,7 +240,7 @@ public class RingSetManipulator {
 	public static void markAromaticRings(IRingSet ringset) {
 		Iterator<IAtomContainer> rings = ringset.atomContainers();
 		while (rings.hasNext()) {
-			RingManipulator.markAromaticRings((IRing)rings.next());
+			RingSetManipulator.markAromaticRings((IRingSet)rings.next());
 		}
 	}
 }
