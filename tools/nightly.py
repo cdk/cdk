@@ -129,6 +129,12 @@ toName = 'cdk-devel@lists.sourceforge.net'
 smtpLogin = 'rajarshi.guha'
 smtpPassword = 'beeb1e'
 
+
+# A list of links that will be included on the final build
+# page. Each item of the list should be a tuple of the link
+# text and the actual URL. If empty there will be no links section
+links = [ ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/')]
+
 #################################################################
 #
 # NO NEED TO CHANGE ANYTHING BELOW HERE
@@ -1372,7 +1378,16 @@ if __name__ == '__main__':
         print ioe
     except RuntimeError, rte:
         print rte
-    
+
+    ## Add a links section
+    if links:
+        resultTable.addRow()
+        resultTable.addCell("Links");
+        s = ''
+        for text, link in links:
+            s = s + "<a href='%s'>%s<a><br>" % (link, text)
+        resultTable.addCell(s)
+        
     # copy this script to the nightly we dir. The script should be in nightly_dir
     # we also want to redact the smtp password/login lines
     f = open(os.path.join(nightly_dir,'nightly.py'), 'r')
@@ -1414,7 +1429,10 @@ if __name__ == '__main__':
 
     # lets get rid of the build.props file
     # so that the next build will get the latest from svn
-    os.unlink(os.path.join(nightly_repo, 'build.props'))
+    try:
+        os.unlink(os.path.join(nightly_repo, 'build.props'))
+    except OSError, e:
+        pass
     
     # go back to where we started
     os.chdir(start_dir)
