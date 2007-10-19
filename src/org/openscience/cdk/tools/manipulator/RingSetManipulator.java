@@ -234,4 +234,17 @@ public class RingSetManipulator {
           }
           return false;
       }
+
+    /**
+     * Iterates over the rings in the ring set, and marks the ring
+     * aromatic if all atoms and all bonds are aromatic.
+     * 
+     * @param ringset
+     */
+	public static void markAromaticRings(IRingSet ringset) {
+		Iterator<IAtomContainer> rings = ringset.atomContainers();
+		while (rings.hasNext()) {
+			RingManipulator.markAromaticRings((IRing)rings.next());
+		}
+	}
 }
