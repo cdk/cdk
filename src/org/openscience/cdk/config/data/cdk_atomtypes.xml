@@ -18,7 +18,7 @@
   </metadataList>
   
   <atomType id="X">
-    <!-- Only supposed to be used for things like R etc found in Markusk like things.
+    <!-- Only supposed to be used for things like R etc found in Markush like things.
          I must not be used for elements for which the atom type cannot be
          determined. -->
   </atomType>
@@ -315,7 +315,7 @@
   </atomType>
 
   <atomType id="Cl.perchlorate">
-    <atom elementType="Cl" formalCharge="O">
+    <atom elementType="Cl" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">3</scalar>
@@ -324,7 +324,7 @@
   </atomType>
 
   <atomType id="Cl.chlorate">
-    <atom elementType="Cl" formalCharge="O">
+    <atom elementType="Cl" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">2</scalar>
