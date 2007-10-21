@@ -31,6 +31,7 @@ import javax.vecmath.Point3d;
  * @author      egonw
  * @cdk.created 2005-08-24
  * @cdk.keyword atom
+ * @cdk.svnrev  $Revision$
  */
 public interface IAtom extends IAtomType {
     
