@@ -298,6 +298,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "N.amide", atm.findMatchingAtomType(mol, atom3));
     }
     
+    @Test public void testAdenine() throws Exception {
+    	IMolecule mol = MoleculeFactory.makeAdenine();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, mol.getAtom(1)));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, mol.getAtom(2)));
+        assertAtomType(testedAtomTypes, "N.sp2", atm.findMatchingAtomType(mol, mol.getAtom(3)));
+        assertAtomType(testedAtomTypes, "N.sp2", atm.findMatchingAtomType(mol, mol.getAtom(4)));
+        assertAtomType(testedAtomTypes, "N.planar3", atm.findMatchingAtomType(mol, mol.getAtom(5)));
+        assertAtomType(testedAtomTypes, "N.sp2", atm.findMatchingAtomType(mol, mol.getAtom(6)));
+        assertAtomType(testedAtomTypes, "N.sp3", atm.findMatchingAtomType(mol, mol.getAtom(7)));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, mol.getAtom(8)));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, mol.getAtom(9)));
+    }
+    
     @Test public void testAmide2() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -831,7 +846,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2",
 			"C.sp2",
-			"N.sp2"
+			"N.planar3"
 		};
 		Molecule molecule = MoleculeFactory.makeIndole();
 		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
@@ -843,7 +858,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test public void testPyrrole() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
-			"N.sp2",
+			"N.planar3",
 			"C.sp2",
 			"C.sp2",
 			"C.sp2"

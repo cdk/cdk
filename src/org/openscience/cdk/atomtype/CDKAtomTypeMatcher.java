@@ -262,7 +262,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             							}
             						}
             					}
-            					if (bothNeighborsSP2) return factory.getAtomType("N.sp2");
+            					if (bothNeighborsSP2) return factory.getAtomType("N.planar3");
             				}
     						return factory.getAtomType("N.sp3");
     					}
