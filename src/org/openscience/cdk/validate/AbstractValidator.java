@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * ValidatorInterface requires.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  *
  * @author   Egon Willighagen
  * @cdk.created  2004-03-27

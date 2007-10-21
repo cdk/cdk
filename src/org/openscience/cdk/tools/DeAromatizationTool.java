@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @author         seb
  * @cdk.created    13. April 2005
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword    aromatic ring, bond order adjustment
  */
 public class DeAromatizationTool {

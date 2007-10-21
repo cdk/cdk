@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.IValencyChecker;
  * ValencyChecker.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @author   Egon Willighagen
  * @cdk.created  2004-01-14

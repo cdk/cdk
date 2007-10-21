@@ -38,6 +38,7 @@ import org.openscience.cdk.exception.CDKException;
  * AminoAcid's.
  *
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-08-19

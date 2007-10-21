@@ -45,6 +45,7 @@ package org.openscience.cdk.tools;
  * 
  * @author     Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module core
+ * @cdk.svnrev  $Revision: 9162 $
  **/
 public class DataFeatures {
 

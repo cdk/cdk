@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
  * it participates too.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07

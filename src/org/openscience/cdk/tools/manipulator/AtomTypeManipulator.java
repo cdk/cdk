@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @author     mfe4
  * @author     egonw
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class AtomTypeManipulator {
 	

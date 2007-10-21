@@ -71,6 +71,7 @@ import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
  * @author       Miguel Rojas
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see DisplacementChargeFromAcceptorReaction
  * @see DisplacementChargeFromDonorReaction

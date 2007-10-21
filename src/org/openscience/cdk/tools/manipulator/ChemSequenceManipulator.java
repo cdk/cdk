@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class ChemSequenceManipulator {
 

@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * a problem, and a warning, to allow for different coloring by renderer's.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-08-11

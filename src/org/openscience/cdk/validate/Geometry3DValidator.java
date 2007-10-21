@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
  * Validates the 3D geometry of the model.
  *
  * @cdk.module  experimental
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @cdk.created 2006-05-11
  */ 

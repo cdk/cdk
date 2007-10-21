@@ -48,6 +48,7 @@ import org.w3c.dom.NodeList;
  * @author        shk3
  * @cdk.created   2004-03-04
  * @cdk.module    smiles
+ * @cdk.svnrev  $Revision$
  */
 public class Normalizer {
 

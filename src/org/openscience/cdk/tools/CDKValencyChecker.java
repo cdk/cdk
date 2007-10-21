@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * 
  * @author     egonw
  * @cdk.module valencycheck
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class CDKValencyChecker implements IValencyChecker {
 

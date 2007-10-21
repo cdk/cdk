@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @author     Miguel Rojas
  * 
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class MassToFormulaTool {
 

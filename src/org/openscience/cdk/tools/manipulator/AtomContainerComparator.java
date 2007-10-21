@@ -52,6 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author Andreas Schueller
  * @cdk.created  2007-09-05
  * @cdk.module   standard
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class AtomContainerComparator implements Comparator {
   

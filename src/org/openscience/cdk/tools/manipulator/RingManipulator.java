@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module standard
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class RingManipulator {
 

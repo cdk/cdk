@@ -35,6 +35,7 @@ import java.util.Comparator;
   * C, H, other elements in alphabetic order.
   *
   * @cdk.module standard
+ * @cdk.svnrev  $Revision$
   *
   * @cdk.keyword element, sorting
   */

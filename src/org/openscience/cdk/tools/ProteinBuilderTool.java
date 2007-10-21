@@ -47,6 +47,7 @@ import org.openscience.cdk.templates.AminoAcids;
  * written).
  * 
  * @cdk.module pdb
+ * @cdk.svnrev  $Revision$
  */
 public class ProteinBuilderTool {
 

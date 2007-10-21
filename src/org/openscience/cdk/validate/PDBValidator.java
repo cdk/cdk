@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Validates the existence of references to dictionaries.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-08-27

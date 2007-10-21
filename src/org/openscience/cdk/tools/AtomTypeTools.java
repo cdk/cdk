@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 * @author         cho
 * @cdk.created    2005-18-07
 * @cdk.module     experimental
+ * @cdk.svnrev  $Revision$
 */
 
 public class AtomTypeTools {

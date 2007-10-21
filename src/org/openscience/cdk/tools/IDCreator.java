@@ -55,6 +55,7 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  * IDs for all ChemObjects, you need to delete them first.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @author   Egon Willighagen
  * @cdk.created  2003-04-01

@@ -42,6 +42,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * 
  * @author     Todd Martin
  * @cdk.module extra
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see        org.openscience.cdk.tools.Normalizer
  */

@@ -52,6 +52,7 @@ import java.util.Iterator;
  * @cdk.keyword    atom, valency
  * 
  * @cdk.module     valencycheck
+ * @cdk.svnrev  $Revision$
  */
 public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
 

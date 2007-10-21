@@ -73,6 +73,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * 
  * @author     egonw
  * @cdk.module valencycheck
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class CDKHydrogenAdder {
 

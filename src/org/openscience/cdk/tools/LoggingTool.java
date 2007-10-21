@@ -87,6 +87,7 @@ import org.apache.log4j.Logger;
  * <p>The class uses log4j as a backend if available, and System.out otherwise.
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  * @cdk.builddepends log4j.jar
  */
 public class LoggingTool {

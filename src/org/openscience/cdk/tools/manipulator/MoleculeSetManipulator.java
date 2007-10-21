@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * @cdk.module standard
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @see ChemModelManipulator
  */

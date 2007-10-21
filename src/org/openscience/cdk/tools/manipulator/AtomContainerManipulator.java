@@ -54,6 +54,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  * it participates too.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07

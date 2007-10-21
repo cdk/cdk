@@ -57,6 +57,7 @@ import java.util.List;
  * @cdk.keyword    atom, valency
  * 
  * @cdk.module     valencycheck
+ * @cdk.svnrev  $Revision$
  */
 public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 

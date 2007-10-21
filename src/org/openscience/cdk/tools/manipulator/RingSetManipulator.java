@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class RingSetManipulator {
     

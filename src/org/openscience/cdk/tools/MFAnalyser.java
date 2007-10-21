@@ -49,6 +49,7 @@ import java.util.*;
  * @author         Egon Willighagen
  * @cdk.created    MFAnalyser
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword    molecule, molecular mass
  * @cdk.keyword    molecule, molecular formula
  * @cdk.keyword    molecule, double bond equivalents
