@@ -33,6 +33,7 @@ package org.openscience.cdk.exception;
  * but no such atom type was found.
  * 
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class NoSuchAtomTypeException extends CDKException {
 

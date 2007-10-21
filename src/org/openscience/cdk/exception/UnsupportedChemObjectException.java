@@ -30,6 +30,7 @@ package org.openscience.cdk.exception;
 
 /**
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class UnsupportedChemObjectException extends CDKException {
 

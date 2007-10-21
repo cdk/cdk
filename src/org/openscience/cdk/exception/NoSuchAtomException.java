@@ -33,6 +33,7 @@ package org.openscience.cdk.exception;
  * does not exist in the relevant environment.
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class NoSuchAtomException extends CDKException {
 

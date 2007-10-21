@@ -31,6 +31,7 @@ package org.openscience.cdk.exception;
  * Exception that is thrown by CDK classes when some problem has occured.
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class CDKException extends Exception {
 
