@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module  pdb
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword templates
  * @cdk.keyword amino acids, stuctures
  * @cdk.created 2005-02-08

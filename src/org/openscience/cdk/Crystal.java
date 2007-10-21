@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.ICrystal;
  * Though this is not enforced, it is assumed by all methods.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword crystal
  */

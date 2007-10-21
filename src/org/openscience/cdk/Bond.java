@@ -37,6 +37,7 @@ import java.util.Iterator;
  *  considered to be a number of electrons connecting a two of atoms.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @author     steinbeck
  * @cdk.created    2003-10-02

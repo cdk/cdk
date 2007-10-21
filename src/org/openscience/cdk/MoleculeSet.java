@@ -51,6 +51,7 @@ import java.util.Iterator;
  * </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @cdk.keyword reaction
  * @cdk.keyword molecule

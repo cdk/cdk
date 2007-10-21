@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @cdk.keyword reaction
  */

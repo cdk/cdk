@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * additional informations about the Polymer which are connected to BioPolymers.
  *
  * @cdk.module  data
+ * @cdk.svnrev  $Revision$
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund

@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @author      Edgar Luttmann <edgar@uni-paderborn.de>
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>

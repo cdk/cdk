@@ -28,6 +28,7 @@ import java.util.List;
 
 /**
  * @cdk.module structgen
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface IStructureGenerationListener{
 	

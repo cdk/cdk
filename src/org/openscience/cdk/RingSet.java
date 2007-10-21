@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * Maintains a set of Ring objects.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword     ring, set of
  */

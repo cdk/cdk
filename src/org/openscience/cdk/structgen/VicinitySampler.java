@@ -43,6 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword  structure generator
  * @cdk.module   structgen
+ * @cdk.svnrev  $Revision$
  * @cdk.bug      1632610
  */
 public class VicinitySampler {

@@ -41,6 +41,7 @@ import java.util.*;
  *  </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @author steinbeck
  * @cdk.created 2000-10-02

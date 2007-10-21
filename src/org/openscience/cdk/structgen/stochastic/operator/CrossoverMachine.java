@@ -36,6 +36,7 @@ import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
  * a certain fragments from both of its parents.
  * 
  * @cdk.module structgen
+ * @cdk.svnrev  $Revision$
  */
 public class CrossoverMachine  
 {

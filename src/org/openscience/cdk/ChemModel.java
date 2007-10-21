@@ -34,6 +34,7 @@ import java.io.Serializable;
  * fragments, etc.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  */
 public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable
 {

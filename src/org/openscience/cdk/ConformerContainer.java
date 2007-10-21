@@ -30,6 +30,7 @@ import java.util.*;
  * </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision: 9162 $
  * @author Rajarshi Guha
  * @see org.openscience.cdk.io.iterator.IteratingMDLConformerReader
  */

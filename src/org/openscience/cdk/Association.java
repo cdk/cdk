@@ -25,6 +25,7 @@ package org.openscience.cdk;
  * The ElectronContainer contains zero electrons by default.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword orbital
  * @cdk.keyword association

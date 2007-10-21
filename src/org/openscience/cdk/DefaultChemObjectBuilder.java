@@ -70,6 +70,7 @@ import org.openscience.cdk.protein.data.PDBStructure;
  *
  * @author        egonw
  * @cdk.module    data
+ * @cdk.svnrev  $Revision$
  */
 public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 

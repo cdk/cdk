@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * informations, like the N-terminus atom.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <e.willighagen@science.ru.nl>
  * @cdk.created 2005-08-11

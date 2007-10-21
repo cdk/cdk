@@ -58,6 +58,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @author     steinbeck
  * @cdk.created    2001-09-04
  * @cdk.module     structgen
+ * @cdk.svnrev  $Revision$
  */
 public class PartialFilledStructureMerger {
 	

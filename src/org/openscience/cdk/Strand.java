@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * informations for a group of Atoms.
  *
  * @cdk.module  data
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2004-12-20
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>

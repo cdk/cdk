@@ -35,6 +35,7 @@ import java.util.Iterator;
  * in a Reaction.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword reaction, atom mapping
  *

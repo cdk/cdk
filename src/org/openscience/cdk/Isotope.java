@@ -56,6 +56,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @author     steinbeck
  * @cdk.created    2001-08-21

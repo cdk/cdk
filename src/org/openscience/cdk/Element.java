@@ -40,6 +40,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword element
  *

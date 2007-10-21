@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @cdk.module data
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @author egonw
  */
