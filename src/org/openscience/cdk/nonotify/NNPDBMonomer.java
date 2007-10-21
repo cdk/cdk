@@ -33,6 +33,7 @@ import org.openscience.cdk.protein.data.PDBMonomer;
 
 /**
  * @cdk.module  nonotify
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class NNPDBMonomer extends PDBMonomer {
 

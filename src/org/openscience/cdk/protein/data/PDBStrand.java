@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * and other species.
  *
  * @cdk.module  pdb
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-04-19

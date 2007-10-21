@@ -10,6 +10,7 @@ import javax.vecmath.GVector;
  *
  * @author      vlabarta
  * @cdk.module  forcefield
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword steepest descent
  */

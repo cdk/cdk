@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module    nonotify
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class NNChemObject extends ChemObject {
 

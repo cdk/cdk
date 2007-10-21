@@ -35,6 +35,7 @@ import java.util.Random;
  * its static methods.
  * 
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  */
 public class RandomNumbersTool extends Random {
     

@@ -57,6 +57,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * 
  * @author     Christian Hoppe.
  * @cdk.module builder3dtools
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class TemplateExtractor {
 

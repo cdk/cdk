@@ -37,6 +37,7 @@ package org.openscience.cdk.math;
  * @author Dan Gezelter
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class FortranFormat {
     /**

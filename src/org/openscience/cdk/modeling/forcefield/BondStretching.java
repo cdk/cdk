@@ -18,6 +18,7 @@ import java.util.Vector;
  *@author     vlabarta
  *@cdk.created    January 27, 2005
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class BondStretching {
 

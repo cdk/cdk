@@ -48,6 +48,7 @@ import java.util.Vector;
  * @author      cho
  * @cdk.created 2005-09-30
  * @cdk.module     experimental
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword    protein
  * @cdk.keyword    pocket
  */

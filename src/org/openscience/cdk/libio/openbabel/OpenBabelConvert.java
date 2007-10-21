@@ -94,6 +94,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @author Miguel Rojas <miguelrojasch@uni-koeln.de>
  * @cdk.module libio-openbabel
+ * @cdk.svnrev  $Revision$
  */
 public class OpenBabelConvert {
 

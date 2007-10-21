@@ -19,6 +19,7 @@ import java.util.List;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @cdk.builddepends xom-1.1.jar

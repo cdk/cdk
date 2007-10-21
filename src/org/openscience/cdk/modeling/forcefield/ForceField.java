@@ -12,6 +12,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
  *  calculate the distance between two atoms.
  *@author     vlabarta
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  *
  */
 public class ForceField extends GeometricMinimizer{

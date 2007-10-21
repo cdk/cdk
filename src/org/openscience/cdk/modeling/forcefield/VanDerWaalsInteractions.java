@@ -19,6 +19,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@author     vlabarta
  *@cdk.created    February 17, 2005
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class VanDerWaalsInteractions {
 

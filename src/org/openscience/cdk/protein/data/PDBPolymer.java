@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * and other species.
  *
  * @cdk.module  data
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-04-19

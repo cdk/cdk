@@ -49,6 +49,7 @@ import java.util.Vector;
  * @cdk.created 2006-05-23
  * @cdk.license GPL
  * @cdk.module  qsar-weka
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword weka, machine learning
  * @cdk.depends weka.jar
  */

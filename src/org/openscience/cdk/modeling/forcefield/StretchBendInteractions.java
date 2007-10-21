@@ -23,6 +23,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@author         vlabarta
  *@cdk.created    2005-02-15
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class StretchBendInteractions {
 

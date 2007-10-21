@@ -27,6 +27,7 @@ package org.openscience.cdk.math;
  * Class providing convenience methods for simple mathematical operations.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class MathTools {
 	

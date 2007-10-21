@@ -21,6 +21,7 @@ import java.util.Vector;
  *@author     vlabarta
  *@cdk.created    March 2, 2005
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class Torsions {
 

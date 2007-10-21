@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author      steinbeck
  * @cdk.created 2004-09-21
  * @cdk.module  builder3d
+ * @cdk.svnrev  $Revision$
  */
 public class TemplateHandler3D {
 	

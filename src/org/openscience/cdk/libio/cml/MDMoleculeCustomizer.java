@@ -48,6 +48,7 @@ import org.xmlcml.cml.element.CMLScalar;
  * 
  * @author ola
  * @cdk.module libiomd
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class MDMoleculeCustomizer implements ICMLCustomizer {
 

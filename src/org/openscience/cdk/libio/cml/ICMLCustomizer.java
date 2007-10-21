@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @author        egonw
  * @cdk.created   2005-05-04
  * @cdk.module    standard
+ * @cdk.svnrev  $Revision$
  */
 public interface ICMLCustomizer {
 

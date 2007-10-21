@@ -18,6 +18,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@author     vlabarta
  *@cdk.created    May 13, 2005
  *@cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class ElectrostaticInteractions {
 

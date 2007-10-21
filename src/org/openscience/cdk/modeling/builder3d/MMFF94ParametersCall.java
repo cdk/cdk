@@ -10,6 +10,7 @@ import java.util.Vector;
  * @author         chhoppe
  * @cdk.created    2004-10-8
  * @cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class MMFF94ParametersCall {
 	

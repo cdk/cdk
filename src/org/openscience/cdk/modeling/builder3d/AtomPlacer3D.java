@@ -44,6 +44,7 @@ import java.util.Vector;
  * @cdk.keyword    AtomPlacer3D
  * @cdk.created    2004-10-8
  * @cdk.module     builder3d
+ * @cdk.svnrev  $Revision$
  */
 public class AtomPlacer3D {
 

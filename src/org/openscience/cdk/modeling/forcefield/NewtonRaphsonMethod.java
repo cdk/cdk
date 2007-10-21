@@ -37,6 +37,7 @@ import Jama.Matrix;
  * @author        vlabarta
  * @cdk.created   2005-06-01
  * @cdk.module    forcefield
+ * @cdk.svnrev  $Revision$
  * 
  * @cdk.keyword   Newton-Raphson
  */

@@ -70,6 +70,7 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @author        egonw
  * @cdk.module    nonotify
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 

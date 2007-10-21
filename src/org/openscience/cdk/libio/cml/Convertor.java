@@ -48,6 +48,7 @@ import java.util.*;
 
 /**
  * @cdk.module       libio-cml
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor
  * @cdk.builddepends jumbo52.jar

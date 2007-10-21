@@ -47,6 +47,7 @@ import java.util.Vector;
  *@author         Peter Murray-Rust,chhoppe,egonw
  *@cdk.created    2003-??-??
  * @cdk.module    builder3d
+ * @cdk.svnrev  $Revision$
  */
 public class AtomTetrahedralLigandPlacer3D {
 

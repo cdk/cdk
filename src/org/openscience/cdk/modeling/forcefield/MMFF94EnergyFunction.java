@@ -15,6 +15,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author     vlabarta
  * @cdk.created    March 14, 2005
  * @cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword MMFF94
  * @cdk.keyword force field

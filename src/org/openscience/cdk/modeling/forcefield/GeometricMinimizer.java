@@ -15,6 +15,7 @@ import java.util.Hashtable;
  *
  * @author      vlabarta
  * @cdk.module  forcefield
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword geometry
  * @cdk.keyword 3D-coordinates

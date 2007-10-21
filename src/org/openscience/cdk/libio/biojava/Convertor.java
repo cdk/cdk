@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * classes and visa versa.
  *
  * @cdk.module       libio-biojava
+ * @cdk.svnrev  $Revision$
  * @cdk.builddepends biojava-1.4.jar
  *
  * @cdk.keyword  BioJava

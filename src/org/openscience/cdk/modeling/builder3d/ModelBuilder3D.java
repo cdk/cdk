@@ -70,6 +70,7 @@ import java.util.*;
  * @author      steinbeck
  * @cdk.created 2004-09-07
  * @cdk.module  builder3d
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword 3D coordinates
  * @cdk.keyword coordinate generation, 3D
  * @cdk.bug     1241421

@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author ola
  * @cdk.module libiomd
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class Residue extends AtomContainer{
 

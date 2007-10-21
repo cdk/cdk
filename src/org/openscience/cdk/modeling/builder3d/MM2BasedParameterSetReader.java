@@ -48,6 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author         chhoppe
  * @cdk.created    2004-09-07
  * @cdk.module     forcefield
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword    atom type, MM2
  */
 public class MM2BasedParameterSetReader {

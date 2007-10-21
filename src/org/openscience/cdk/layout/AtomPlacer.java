@@ -59,6 +59,7 @@ import java.util.Vector;
  *@author      steinbeck
  *@cdk.created 2003-08-29
  *@cdk.module  sdg
+ * @cdk.svnrev  $Revision$
  */
 public class AtomPlacer
 {
