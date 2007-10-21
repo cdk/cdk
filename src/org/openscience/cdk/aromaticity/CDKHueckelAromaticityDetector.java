@@ -43,6 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author         egonw
  * @cdk.module     experimental
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.created    2007-10-05
  * 
  * @see org.openscience.cdk.CDKConstants

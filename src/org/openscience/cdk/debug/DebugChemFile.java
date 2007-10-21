@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugChemFile extends org.openscience.cdk.ChemFile
     implements IChemFile {

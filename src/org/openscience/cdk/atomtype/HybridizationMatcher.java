@@ -41,6 +41,7 @@ import java.util.List;
  * @author egonw
  * @cdk.created 2005-04-15
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class HybridizationMatcher implements IAtomTypeMatcher {
 

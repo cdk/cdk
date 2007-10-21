@@ -50,6 +50,7 @@ import java.util.List;
  * </pre>
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class IsotopeHandler extends DefaultHandler {
 

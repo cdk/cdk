@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugMonomer extends org.openscience.cdk.Monomer
     implements IMonomer {

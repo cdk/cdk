@@ -47,6 +47,7 @@ import java.util.List;
  * Xerces parser.
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  *
  * @author     Egon Willighagen
  */

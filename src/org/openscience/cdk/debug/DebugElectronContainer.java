@@ -33,6 +33,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugElectronContainer extends org.openscience.cdk.ElectronContainer 
     implements IElectronContainer{

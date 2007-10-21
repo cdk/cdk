@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IRing;
 
 /**
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @author     Oliver Horlacher <oliver.horlacher@therastrat.com>
  * @cdk.created    2002-03-14

@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
  * @author         cho
  * @cdk.created    2005-18-07
  * @cdk.module     experimental
+ * @cdk.svnrev  $Revision$
  */
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 

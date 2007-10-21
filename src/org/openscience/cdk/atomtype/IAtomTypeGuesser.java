@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author      egonw
  * @cdk.created 2006-09-22
  * @cdk.module  core
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see         IAtomTypeMatcher
  */

@@ -45,6 +45,7 @@ import java.util.List;
  * @see org.openscience.cdk.config.CDKBasedAtomTypeConfigurator
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class AtomTypeReader {
 

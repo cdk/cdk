@@ -39,6 +39,7 @@ import java.util.List;
  * @see AtomTypeReader
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class AtomTypeHandler extends DefaultHandler {
 

@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
  * @author         cho
  * @cdk.created    2005-18-07
  * @cdk.module     experimental
+ * @cdk.svnrev  $Revision$
  */
 public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 

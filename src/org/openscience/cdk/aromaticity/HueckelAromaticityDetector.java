@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author         steinbeck
  * @author         kaihartmann
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision$
  * @cdk.created    2001-09-04
  * 
  * @see org.openscience.cdk.CDKConstants

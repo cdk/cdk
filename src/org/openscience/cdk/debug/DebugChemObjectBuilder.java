@@ -63,6 +63,7 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @author        egonw
  * @cdk.module    datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 

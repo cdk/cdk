@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
     implements IAtomContainerSet {

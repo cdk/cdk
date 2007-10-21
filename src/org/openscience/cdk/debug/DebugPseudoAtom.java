@@ -32,6 +32,7 @@ import java.util.Hashtable;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom 
     implements IPseudoAtom {

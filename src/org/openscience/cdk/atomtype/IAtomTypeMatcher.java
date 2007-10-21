@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author      mfe4
  * @cdk.created 2004-12-02
  * @cdk.module  core
+ * @cdk.svnrev  $Revision$
  * 
  * @see         IAtomTypeGuesser
  */

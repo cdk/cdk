@@ -48,6 +48,7 @@ import java.io.IOException;
  * @author      Miguel Rojas
  * 
  * @cdk.module  charges
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.created 2006-05-14
  * @cdk.keyword partial atomic charges
  * @cdk.keyword charge distribution

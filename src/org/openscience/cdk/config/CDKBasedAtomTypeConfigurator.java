@@ -39,6 +39,7 @@ import java.util.List;
  * can be found in CVS in the src/org/openscience/cdk/config/data directory.
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  */
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 

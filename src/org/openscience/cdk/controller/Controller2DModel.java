@@ -35,6 +35,7 @@ import org.openscience.cdk.applications.undoredo.UndoAdapter;
 
 /**
  * @cdk.module     control
+ * @cdk.svnrev  $Revision$
  */
 public class Controller2DModel implements java.io.Serializable, Cloneable
 {

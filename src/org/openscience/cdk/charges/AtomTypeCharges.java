@@ -37,6 +37,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @author      chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module  charges
+ * @cdk.svnrev  $Revision$
  */
 public class AtomTypeCharges {
 	HOSECodeGenerator hcg = new HOSECodeGenerator();

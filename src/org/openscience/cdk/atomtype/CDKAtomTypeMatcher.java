@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  * @author         egonw
  * @cdk.created    2007-07-20
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 

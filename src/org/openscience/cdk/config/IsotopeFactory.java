@@ -53,6 +53,7 @@ import java.util.List;
  * </pre> 
  *
  * @cdk.module core
+ * @cdk.svnrev  $Revision$
  *
  * @author     steinbeck
  * @cdk.created    2001-08-29

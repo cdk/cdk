@@ -31,6 +31,7 @@ package org.openscience.cdk.config;
  * 
  * @author     egonw
  * @cdk.module standard 
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class Symbols {
 

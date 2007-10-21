@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author         egonw
  * @cdk.created    2006-09-22
  * @cdk.module     core
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class StructGenMatcher implements IAtomTypeMatcher {
 

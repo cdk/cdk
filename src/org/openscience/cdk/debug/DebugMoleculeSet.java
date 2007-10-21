@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
     implements IMoleculeSet {

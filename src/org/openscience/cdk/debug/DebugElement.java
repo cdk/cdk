@@ -33,6 +33,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugElement extends org.openscience.cdk.Element
     implements IElement {

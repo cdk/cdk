@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
  * 
  * @author     egonw
  * @cdk.module extra 
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class Elements {
 	

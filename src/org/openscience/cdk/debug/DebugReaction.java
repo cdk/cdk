@@ -35,6 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugReaction extends org.openscience.cdk.Reaction
     implements IReaction {

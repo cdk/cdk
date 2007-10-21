@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
     implements IBioPolymer {

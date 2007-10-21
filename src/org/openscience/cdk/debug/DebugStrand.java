@@ -43,6 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugStrand extends org.openscience.cdk.Strand
     implements IStrand {

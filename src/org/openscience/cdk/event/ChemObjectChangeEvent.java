@@ -32,6 +32,7 @@ package org.openscience.cdk.event;
  * in case something changes within them.
  *
  * @cdk.module data
+ * @cdk.svnrev  $Revision$
  */
 public class ChemObjectChangeEvent extends java.util.EventObject implements org.openscience.cdk.interfaces.IChemObjectChangeEvent
 {

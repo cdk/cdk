@@ -30,6 +30,7 @@ import java.util.Hashtable;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugAtomType extends org.openscience.cdk.AtomType
     implements IAtomType {

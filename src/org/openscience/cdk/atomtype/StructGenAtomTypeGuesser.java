@@ -41,6 +41,7 @@ import java.util.List;
  * @author         egonw
  * @cdk.created    2006-09-22
  * @cdk.module     core
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 

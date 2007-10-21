@@ -52,6 +52,7 @@ import java.util.Vector;
  * @author chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module  forcefield
+ * @cdk.svnrev  $Revision$
  */
 public class MMFF94PartialCharges {
 

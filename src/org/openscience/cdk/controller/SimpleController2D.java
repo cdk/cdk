@@ -45,6 +45,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  *@cdk.keyword    mouse events
  *@cdk.require    java1.4+
  * @cdk.module     control
+ * @cdk.svnrev  $Revision$
  */
 public class SimpleController2D extends AbstractController2D
 {

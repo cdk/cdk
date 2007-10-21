@@ -37,6 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     egonw
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision$
  */
 public class DebugChemModel extends org.openscience.cdk.ChemModel
     implements IChemModel {

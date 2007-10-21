@@ -32,6 +32,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     Miguel Rojas
  * @cdk.module datadebug
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class DebugPDBPolymer extends PDBPolymer  implements IBioPolymer {
 

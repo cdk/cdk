@@ -47,6 +47,7 @@ import java.util.Vector;
  * @author     	   Miguel Rojas
  * @cdk.created    May 8, 2005
  * @cdk.module     extra
+ * @cdk.svnrev  $Revision$
  */
 public class ElementPTReader {
 
