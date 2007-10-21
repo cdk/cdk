@@ -31,6 +31,7 @@ package org.openscience.cdk.interfaces;
  * atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword ring
  */

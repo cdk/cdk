@@ -51,6 +51,7 @@ import java.util.Iterator;
  * @author Rajarshi Guha
  * @cdk.created 2005-05-08  
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class NumericalSurface {
     private LoggingTool logger;

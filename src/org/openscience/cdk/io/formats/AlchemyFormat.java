@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @author Miguel Rojas
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class AlchemyFormat implements IChemFormat {

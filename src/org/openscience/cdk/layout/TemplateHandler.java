@@ -57,6 +57,7 @@ import java.util.Vector;
  * @cdk.keyword  2D-coordinates
  * @cdk.require  java1.4+
  * @cdk.module   sdg
+ * @cdk.svnrev  $Revision$
  */
 public class TemplateHandler
 {

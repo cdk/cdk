@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://pdbml.rcsb.org/">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class PDBMLFormat implements IChemFormat {

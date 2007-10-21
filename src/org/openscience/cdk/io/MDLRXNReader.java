@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author     Egon Willighagen
  * @cdk.created    2003-07-24

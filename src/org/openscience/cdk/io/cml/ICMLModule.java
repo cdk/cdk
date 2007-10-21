@@ -33,6 +33,7 @@ import org.xml.sax.Attributes;
  * into the CMLHandler. Most procedures reflect those in SAX2.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

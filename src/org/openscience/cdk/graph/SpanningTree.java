@@ -37,6 +37,7 @@ import java.util.Iterator;
  *
  * @author      Nina Jeliazkova
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree
  * @cdk.keyword ring finding

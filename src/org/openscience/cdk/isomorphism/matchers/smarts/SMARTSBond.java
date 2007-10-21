@@ -31,6 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * This is just a simple proof of concept, and far from a functional SMARTSAtom.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
     

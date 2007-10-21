@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * See {@cdk.cite DAL92}.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format, MDL RXN file
  */

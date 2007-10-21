@@ -52,6 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * molecular mechanics (*.mm1gp) files.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

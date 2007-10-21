@@ -69,6 +69,7 @@ import java.util.*;
  * See {@cdk.cite DAL92}.
  *
  * @cdk.module  io
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword file format, MDL molfile
  * @cdk.bug     1524466
  */

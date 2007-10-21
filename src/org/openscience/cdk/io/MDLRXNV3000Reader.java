@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * for it.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-05

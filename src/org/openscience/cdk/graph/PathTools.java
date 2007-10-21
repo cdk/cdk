@@ -43,6 +43,7 @@ import java.util.Vector;
  *
  * @author steinbeck
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-17
  */
 public class PathTools {

@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @author Miguel Rojas
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class Chem3D_Cartesian_2Format implements IChemFormat {

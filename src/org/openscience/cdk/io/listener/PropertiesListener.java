@@ -46,6 +46,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * </pre>
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

@@ -39,6 +39,7 @@ import java.util.Iterator;
  * be represented with a ChemSequence.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <elw38@cam.ac.uk>
  * @cdk.created 2003-02-13

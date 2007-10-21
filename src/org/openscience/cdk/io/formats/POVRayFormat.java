@@ -30,6 +30,7 @@ package org.openscience.cdk.io.formats;
  * @author Miguel Rojas
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class POVRayFormat implements IResourceFormat {

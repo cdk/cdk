@@ -59,6 +59,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * <a href="http://wwmm.ch.cam.ac.uk/">http://wwmm.ch.cam.ac.uk/</a>.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  *
  * @author Yong Zhang <yz237@cam.ac.uk>

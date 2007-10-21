@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
  * 
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtom extends IAtom {

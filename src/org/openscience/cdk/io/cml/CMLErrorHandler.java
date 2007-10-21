@@ -35,6 +35,7 @@ import org.xml.sax.SAXParseException;
  * Output is redirected to org.openscience.cdk.tools.LoggingTool.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

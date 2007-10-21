@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * </pre>
  *
  * @cdk.module  extra
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-01-10

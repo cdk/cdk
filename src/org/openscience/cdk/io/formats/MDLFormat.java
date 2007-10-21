@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class MDLFormat implements IChemFormatMatcher {

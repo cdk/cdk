@@ -49,6 +49,7 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * 
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar

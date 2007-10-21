@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matcher checks the number of implicit hydrogens of the Atom.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class ImplicitHCountAtom extends SMARTSAtom {
     

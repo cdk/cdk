@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

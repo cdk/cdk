@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * This recursive smarts. 
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class RecursiveSmartsAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 1L;

@@ -47,6 +47,7 @@ import java.util.Vector;
  * </pre> 
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword connectivity
  */ 

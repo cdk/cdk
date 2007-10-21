@@ -64,6 +64,7 @@ import org.xml.sax.Attributes;
  * a certain element or attribute value in a valid CML document.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

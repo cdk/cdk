@@ -53,6 +53,7 @@ import java.util.Iterator;
  * </pre>
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-01

@@ -50,6 +50,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.keyword layout
  * @cdk.keyword 2D-coordinates
  * @cdk.module  sdg
+ * @cdk.svnrev  $Revision$
  */
 public class OverlapResolver
 {

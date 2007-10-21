@@ -33,6 +33,7 @@ import javax.vecmath.Vector3d;
  * A set of static utility classes for dealing with Z matrices.
  *
  * @cdk.module  io
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword Z Matrix
  *
  * @cdk.created 2004-02-09

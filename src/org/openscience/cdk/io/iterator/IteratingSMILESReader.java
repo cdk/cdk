@@ -47,6 +47,7 @@ import java.util.NoSuchElementException;
  * <p>For parsing each SMILES it still uses the normal SMILESReader.
  *
  * @cdk.module smiles
+ * @cdk.svnrev  $Revision$
  *
  * @see org.openscience.cdk.io.SMILESReader
  * 

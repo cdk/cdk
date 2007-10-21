@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.schrodinger.com/">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class JaguarFormat implements IChemFormatMatcher {

@@ -19,6 +19,7 @@ import java.util.*;
  * are put in separtly. All other objects are made cml and put in.
  *
  * @cdk.module       libio-cml
+ * @cdk.svnrev  $Revision$
  * @cdk.builddepends xom-1.0.jar
  *
  * @author Stefan Kuhn

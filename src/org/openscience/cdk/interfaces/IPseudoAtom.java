@@ -35,6 +35,7 @@ package org.openscience.cdk.interfaces;
  * <p>This should be replaced by the mechanism explained in RFC #8.
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @see  IAtom
  */

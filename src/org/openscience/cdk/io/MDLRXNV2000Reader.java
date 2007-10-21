@@ -56,6 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  * This MDL RXN reader uses the MDLV2000 reader to read each mol file
  * @cdk.module io
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author     Egon Willighagen
  * @author 	   Thomas Kuhn

@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Both compilation and use of this class requires Java 1.4.
  *
  * @cdk.module  io
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format, Polymorph Predictor (tm)
  *

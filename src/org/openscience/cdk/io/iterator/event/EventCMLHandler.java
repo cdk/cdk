@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>The CDO only takes care about atoms, bonds and molecules.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
 */ 

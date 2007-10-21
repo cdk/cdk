@@ -31,6 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @author Miguel Rojas
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set    io-formats
  */
 public class CacaoInternalFormat implements IChemFormat {

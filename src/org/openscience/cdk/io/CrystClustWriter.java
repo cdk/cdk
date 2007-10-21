@@ -46,6 +46,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * @cdk.created 2004-01-01
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class CrystClustWriter extends DefaultChemObjectWriter {
 

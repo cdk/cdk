@@ -35,6 +35,7 @@ import org.xml.sax.InputSource;
  * CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/

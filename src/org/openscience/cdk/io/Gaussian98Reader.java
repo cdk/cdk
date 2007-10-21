@@ -70,6 +70,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @author Egon Willighagen
  * @author Christoph Steinbeck
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  */
 public class Gaussian98Reader extends DefaultChemObjectReader {
 

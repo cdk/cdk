@@ -33,6 +33,7 @@ import javax.vecmath.Point3d;
  * considered to be a number of electrons connecting two ore more atoms.
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @author      egonw
  * @cdk.created 2005-08-24

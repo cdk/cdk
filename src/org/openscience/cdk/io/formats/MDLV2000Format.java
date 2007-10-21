@@ -27,6 +27,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module io
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set    io-formats
  */
 public class MDLV2000Format implements IChemFormatMatcher {

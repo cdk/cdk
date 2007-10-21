@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * See {@cdk.cite TRI92}.
  *
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword adjacency matrix
  *
  * @author      steinbeck

@@ -39,6 +39,7 @@ import java.util.Iterator;
  * Writes the atoms and the bonds only at this moment.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author     Egon Willighagen
  */

@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * The output can be read with Platon.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen
  *

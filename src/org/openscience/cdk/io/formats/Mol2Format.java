@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class Mol2Format implements IChemFormatMatcher {

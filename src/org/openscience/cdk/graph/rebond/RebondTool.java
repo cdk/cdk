@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @author      Miguel Howard
  * @cdk.created 2003-05-23
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */

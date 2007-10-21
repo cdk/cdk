@@ -44,6 +44,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * which the ChemModel represents the molecule.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @see org.openscience.cdk.io.INChIReader
  *

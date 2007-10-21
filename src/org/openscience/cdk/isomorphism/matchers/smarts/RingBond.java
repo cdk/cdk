@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS AST
  */
 public class RingBond extends SMARTSBond {

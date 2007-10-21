@@ -46,6 +46,7 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
  * has, by using a dummy StringWriter, and a <code>null</code> Reader.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

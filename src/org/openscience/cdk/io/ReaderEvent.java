@@ -31,6 +31,7 @@ import java.util.EventObject;
  * may be passed to <code>ReaderListener</code>s.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Bradley A. Smith <bradley@baysmith.com>
  */

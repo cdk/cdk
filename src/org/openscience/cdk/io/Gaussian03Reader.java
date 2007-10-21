@@ -53,6 +53,7 @@ import java.io.*;
  * @author Bradley A. Smith <yeldar@home.com>
  * @author Egon Willighagen
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  */
 public class Gaussian03Reader extends DefaultChemObjectReader {
 

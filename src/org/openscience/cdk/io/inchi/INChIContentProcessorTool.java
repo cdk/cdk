@@ -35,6 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Tool to help process INChI 1.12beta content.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  */
 public class INChIContentProcessorTool {
 

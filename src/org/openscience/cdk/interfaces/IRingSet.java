@@ -29,6 +29,7 @@ import java.util.List;
  * Maintains a set of Ring objects.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword ring, set of
  */

@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.CDKException;
  * of possible settings.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

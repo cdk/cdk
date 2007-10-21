@@ -47,6 +47,7 @@ import org.openscience.cdk.exception.CDKException;
  * can be used to instantiate a ChemObjectReader.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @see DefaultChemObjectReader
  *

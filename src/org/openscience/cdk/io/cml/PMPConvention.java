@@ -40,6 +40,7 @@ import org.xml.sax.Attributes;
  *  of Cerius2 (tm).
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

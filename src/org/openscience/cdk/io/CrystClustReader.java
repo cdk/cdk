@@ -44,6 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class CrystClustReader extends DefaultChemObjectReader {
 

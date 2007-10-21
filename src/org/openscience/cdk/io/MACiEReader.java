@@ -77,6 +77,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * on 2003-07-14.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @author     Egon Willighagen
  * @cdk.created    2003-07-24

@@ -29,6 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @author Dazhi Jiao
  * @cdk.created 2007-05-10
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS
  */
 public class LogicalOperatorBond extends SMARTSBond {

@@ -41,6 +41,7 @@ import java.util.BitSet;
  * @author      Stephane Werner from IXELIS mail@ixelis.net
  * @cdk.created 2002-07-17
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  */
 public class RNode
 {

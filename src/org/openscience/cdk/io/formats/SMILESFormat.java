@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.daylight.com/smiles/f_smiles.html">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class SMILESFormat implements IChemFormat {

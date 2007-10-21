@@ -29,6 +29,7 @@ package org.openscience.cdk.interfaces;
  * fragments, etc.
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  */
 public interface IChemModel extends IChemObject {
 

@@ -49,6 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * blocks in CTX files.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class CTXReader extends DefaultChemObjectReader {
 

@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class QueryAtomContainer extends org.openscience.cdk.AtomContainer implements IQueryAtomContainer {
 

@@ -33,6 +33,7 @@ import org.xml.sax.Attributes;
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  */
 public class JMOLANIMATIONConvention extends CMLCoreModule {
 

@@ -29,6 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://dx.doi.org/10.1021/ci034207y">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set    io-formats
  */
 public class SybylDescriptorFormat implements IChemFormat {

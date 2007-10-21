@@ -27,6 +27,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class CIFFormat implements IChemFormatMatcher {

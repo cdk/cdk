@@ -34,6 +34,7 @@ package org.openscience.cdk.isomorphism.mcss;
  * @author      Stephane Werner, IXELIS <mail@ixelis.net>
  * @cdk.created 2002-07-24
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  */
 public class RMap {
   int id1 = 0;

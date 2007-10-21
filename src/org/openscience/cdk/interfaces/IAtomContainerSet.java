@@ -31,6 +31,7 @@ import java.util.Iterator;
  *
  * @author     egonw
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  */
 public interface IAtomContainerSet extends IChemObject {
 

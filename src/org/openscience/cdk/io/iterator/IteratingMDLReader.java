@@ -54,6 +54,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.MDLV3000Reader

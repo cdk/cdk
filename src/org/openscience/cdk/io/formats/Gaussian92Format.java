@@ -28,6 +28,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class Gaussian92Format implements IChemFormatMatcher {

@@ -75,6 +75,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision$
  */
 public class Fingerprinter implements IFingerprinter {
 	

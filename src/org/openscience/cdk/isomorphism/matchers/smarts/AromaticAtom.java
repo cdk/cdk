@@ -31,6 +31,7 @@ import org.openscience.cdk.CDKConstants;
  * has been perceived.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class AromaticAtom extends SMARTSAtom {
     

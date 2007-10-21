@@ -32,6 +32,7 @@ import java.util.Iterator;
  *
  * @author     egonw
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  */
 public interface IChemFile extends IChemObject {
 

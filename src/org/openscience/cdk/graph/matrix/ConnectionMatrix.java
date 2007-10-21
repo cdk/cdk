@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
  *
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword connection matrix
  * @cdk.dictref blue-obelisk:calculateConnectivityMatrix
  *

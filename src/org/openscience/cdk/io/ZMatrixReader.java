@@ -56,6 +56,7 @@ import org.openscience.cdk.io.formats.ZMatrixFormat;
  * is given later.
  *
  * @cdk.module experimental
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format, Z-matrix
  */

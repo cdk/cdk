@@ -28,6 +28,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @author Dazhi Jiao
  * @cdk.created 2007-05-10
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS 
  */
 public class LogicalOperatorAtom extends SMARTSAtom {

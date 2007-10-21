@@ -33,6 +33,7 @@ package org.openscience.cdk.interfaces;
  * are interested in.
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  */
 public interface IChemObjectListener
 {

@@ -31,6 +31,7 @@ import java.util.Iterator;
  * stored in one ChemModel.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword animation
  * @cdk.keyword reaction

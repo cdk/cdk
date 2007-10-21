@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author       Christop Steinbeck
  * @cdk.created  2003-08-06
  * @cdk.module   sdg
+ * @cdk.svnrev  $Revision$
  */
 public class HydrogenPlacer {
     

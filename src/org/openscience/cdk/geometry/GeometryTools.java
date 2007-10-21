@@ -53,6 +53,7 @@ import java.util.List;
  * @author        Christian Hoppe
  * 
  * @cdk.module    standard
+ * @cdk.svnrev  $Revision$
  */
 public class GeometryTools {
 

@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  * one for each type of field, e.g. IntReaderSetting.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

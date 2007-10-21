@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matcher any Atom.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class AnyAtom extends SMARTSAtom {
     

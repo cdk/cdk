@@ -49,6 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Rajarshi Guha <rajarshi@presidency.com>
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2004-01-27
  */
 public class HINWriter extends DefaultChemObjectWriter {

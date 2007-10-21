@@ -43,6 +43,7 @@ import java.util.List;
  * @author uli
  *
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2004-10-19
  */
 public final class BFSShortestPath {

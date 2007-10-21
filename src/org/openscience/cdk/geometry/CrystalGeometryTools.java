@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.ICrystal;
  * A set of static methods for working with crystal coordinates.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *

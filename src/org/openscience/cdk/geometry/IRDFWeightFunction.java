@@ -31,6 +31,7 @@ package org.openscience.cdk.geometry;
  * Weight function used in the <code>RDFCalculator</code>.
  *
  * @cdk.module  extra
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen
  * @cdk.created 2005-01-14

@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * expected.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @version  $Date$
  */

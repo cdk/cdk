@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * with other Atom's. This cannot be matched with a unpreprocessed Atom!
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class DegreeAtom extends SMARTSAtom {
     

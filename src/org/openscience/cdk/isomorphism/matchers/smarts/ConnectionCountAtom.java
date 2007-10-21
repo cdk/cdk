@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This cannot be matched with a unpreprocessed Atom!
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class ConnectionCountAtom extends SMARTSAtom {
     

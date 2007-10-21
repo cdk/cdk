@@ -69,6 +69,7 @@ import java.util.Enumeration;
  * @cdk.created 2003-05
  *
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword rebonding
  * @cdk.keyword Binary Space Partitioning Tree
  * @cdk.keyword join-the-dots

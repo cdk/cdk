@@ -95,6 +95,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.created 2002-07-17
  * @cdk.require java1.4+
  * @cdk.module  standard
+ * @cdk.svnrev  $Revision$
  */
 public class UniversalIsomorphismTester {
 

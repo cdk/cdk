@@ -27,6 +27,7 @@ package org.openscience.cdk.interfaces;
  * Implements the idea of an element in the periodic table.
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword element
  */
 public interface IElement extends IChemObject {

@@ -51,6 +51,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  * jobs. It was tested with Gaussian98.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  *

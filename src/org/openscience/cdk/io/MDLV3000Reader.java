@@ -55,6 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * element symbol and 2D or 3D coordinates from the ATOM block.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006

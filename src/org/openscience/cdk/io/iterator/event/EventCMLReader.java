@@ -52,6 +52,7 @@ import org.xml.sax.XMLReader;
  * applies the method described in {@cdk.cite WIL01}.
  *
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  *
  * @author       Egon L. Willighagen
  * @cdk.created  2001-02-01

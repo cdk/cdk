@@ -30,6 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://www.emsl.pnl.gov/docs/nwchem/">here</a>.
  * 
  * @cdk.module io
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class NWChemFormat implements IChemFormatMatcher {

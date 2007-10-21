@@ -70,6 +70,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</a>.
  *
  * @cdk.module  pdb
+ * @cdk.svnrev  $Revision$
  *
  * @author      Edgar Luttmann
  * @author      Bradley Smith <bradley@baysmith.com>

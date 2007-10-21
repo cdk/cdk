@@ -49,6 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Writes the SMILES strings to a plain text file.
  *
  * @cdk.module  smiles
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format
  */

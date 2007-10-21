@@ -56,6 +56,7 @@ import org.w3c.dom.Document;
  * See <a href="http://xml.apache.org/">xml.apache.org</a>.
  *
  * @cdk.module svg
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format
  * @cdk.keyword vector graphics, SVG

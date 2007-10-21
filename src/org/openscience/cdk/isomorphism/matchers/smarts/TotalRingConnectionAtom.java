@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * with other Atom's. This cannot be matched with a unpreprocessed Atom!
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision: 9162 $
  */
 
 public class TotalRingConnectionAtom extends SMARTSAtom {

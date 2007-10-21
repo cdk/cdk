@@ -35,6 +35,7 @@ import java.util.Collection;
  * additional informations about the BioPolymer which are connected to BioPolymers.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
  * @cdk.created 2006-11-20 

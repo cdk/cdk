@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * with a unpreprocessed Atom!
  * 
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class TotalHCountAtom extends SMARTSAtom {
 

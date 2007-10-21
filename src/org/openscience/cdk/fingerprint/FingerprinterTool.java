@@ -37,6 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2002-02-24
  * @cdk.keyword    fingerprint
  * @cdk.module     standard
+ * @cdk.svnrev  $Revision$
  */
 public class FingerprinterTool {
 	

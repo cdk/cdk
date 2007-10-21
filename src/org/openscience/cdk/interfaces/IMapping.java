@@ -29,6 +29,7 @@ import java.util.Iterator;
  * Represents a set of Molecules.
  * 
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  * @author      kaihartmann
  * @cdk.created 2006-02-15
  */

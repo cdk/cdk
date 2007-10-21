@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author     egonw
  * @cdk.module standard
+ * @cdk.svnrev  $Revision: 9162 $
  * @see        UniversalIsomorphismTester
  */
 public interface IQueryAtomContainer extends IAtomContainer {

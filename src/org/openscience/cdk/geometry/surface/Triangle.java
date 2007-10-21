@@ -30,6 +30,7 @@ import javax.vecmath.Point3d;
  *
  * @author Rajarshi Guha
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class Triangle {
     Point3d p1,p2,p3;

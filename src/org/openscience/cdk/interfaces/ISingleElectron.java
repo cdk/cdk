@@ -36,6 +36,7 @@ package org.openscience.cdk.interfaces;
  * </pre> 
  *
  * @cdk.module interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired

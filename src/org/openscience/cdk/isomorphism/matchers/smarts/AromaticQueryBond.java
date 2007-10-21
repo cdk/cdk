@@ -30,6 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  */
 public class AromaticQueryBond extends SMARTSBond {
 

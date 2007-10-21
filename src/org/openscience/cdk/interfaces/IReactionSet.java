@@ -30,6 +30,7 @@ import java.util.Iterator;
  * A set of reactions, for example those taking part in a reaction.
  *
  * @cdk.module  interfaces
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword reaction
  */
