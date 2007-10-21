@@ -32,6 +32,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -41,6 +42,8 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -774,6 +777,63 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "O.minus2", atm.findMatchingAtomType(mol, atom));
     }
 
+    @Test public void testAzulene() throws Exception {
+		Molecule molecule = MoleculeFactory.makeAzulene();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
+    @Test public void testIndole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"N.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeIndole();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
+    @Test public void testPyrrole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyrrole();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
+    @Test public void testThiazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"S.2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeThiazole();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         Assert.assertNotNull(matcher);
