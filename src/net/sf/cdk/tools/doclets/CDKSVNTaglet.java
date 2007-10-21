@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.sun.javadoc.SourcePosition;
 import com.sun.javadoc.Tag;
 import com.sun.tools.doclets.Taglet;
 
@@ -38,7 +39,8 @@ import com.sun.tools.doclets.Taglet;
 public class CDKSVNTaglet implements Taglet {
     
     private static final String NAME = "cdk.svnrev";
-    private final static Pattern svnrevPattern = Pattern.compile("$Revision:\\s*(\\d*)\\s*$");
+    private final static Pattern svnrevPattern = Pattern.compile("\\$Revision:\\s*(\\d*)\\s*\\$");
+    private final static Pattern pathPattern = Pattern.compile(".*/(src/.*\\.java)");
     
     public String getName() {
         return NAME;
@@ -73,7 +75,7 @@ public class CDKSVNTaglet implements Taglet {
     }
     
     public static void register(Map tagletMap) {
-       CDKInChITaglet tag = new CDKInChITaglet();
+       CDKSVNTaglet tag = new CDKSVNTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {
            tagletMap.remove(tag.getName());
@@ -82,7 +84,7 @@ public class CDKSVNTaglet implements Taglet {
     }
 
     public String toString(Tag tag) {
-        return "<DT><B>SVN: </B><DD>"
+        return "<DT><B>Source code: </B><DD>"
                + expand(tag) + "</DD>\n";
     }
     
@@ -95,15 +97,41 @@ public class CDKSVNTaglet implements Taglet {
     }
 
     private String expand(Tag tag) {
+    	// get the version number
     	String text = tag.text();
-//    	String file = tag.
     	Matcher matcher = svnrevPattern.matcher(text);
+    	String revision = "HEAD";
     	if (matcher.matches()) {
-    		String revision = matcher.group(1);
-    		return revision;
+    		revision = matcher.group(1);
     	} else {
     		System.out.println("Malformed @cdk.svnrev content: " + text);
+    		return "";
+    	}
+    	// create the URL
+    	SourcePosition file = tag.position();
+    	String path = correctSlashes(file.file().getAbsolutePath());
+    	matcher = pathPattern.matcher(path);
+    	if (matcher.matches()) {
+        	String url = "http://cdk.svn.sourceforge.net/viewvc/cdk/trunk/cdk/" +
+            			 matcher.group(1) + "?revision=" + 
+            			 revision + "&amp;view=markup";
+        	return "<a href=\"" + url + "\">revision " + revision + "</a>";
+    	} else {
+    		System.out.println("Could not resolve class name from: " + path);
     	}
     	return "";
     }
+
+	private String correctSlashes(String absolutePath) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i=0; i<absolutePath.length(); i++) {
+			char character = absolutePath.charAt(i); 
+			if (character == '\\') {
+				buffer.append('/');
+			} else {
+				buffer.append(character);
+			}
+		}
+		return buffer.toString();
+	}
 }
