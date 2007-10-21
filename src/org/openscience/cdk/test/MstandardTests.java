@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
+import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.test.config.SymbolsTest;
 import org.openscience.cdk.test.dict.DictRefTest;
@@ -195,6 +196,8 @@ public class MstandardTests {
         suite.addTest(InvPairTest.suite());
         suite.addTest(EStateAtomTypeMatcherTest.suite());
         suite.addTest(AtomContainerComparatorTest.suite());
+        
+        suite.addTest(CDKAtomTypeMatcherTest.suite());
 
         return suite;
     }
