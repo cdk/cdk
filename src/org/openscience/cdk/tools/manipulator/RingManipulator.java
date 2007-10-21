@@ -31,6 +31,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 
+/**
+ * @cdk.module standard
+ */
 public class RingManipulator {
 
     /**
