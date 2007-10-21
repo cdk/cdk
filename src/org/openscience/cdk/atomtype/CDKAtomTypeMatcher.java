@@ -235,7 +235,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else { // OK, use bond order info
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    				if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
+    				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
+    				if (connectedHeavyAtoms == 2) {
+        				if (isAmide(atom, atomContainer)) {
+        					return factory.getAtomType("N.amide");
+        				}
     					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
     					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
     						bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
@@ -243,11 +248,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					} else {
     						return factory.getAtomType("N.sp3");
     					}
-    				} else if (atomContainer.getConnectedBondsCount(atom) == 3) {
+    				} else if (connectedHeavyAtoms == 3) {
     					return factory.getAtomType("N.sp3");
-    				} else if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    				} else if (connectedHeavyAtoms == 1) {
+        				if (isAmide(atom, atomContainer)) {
+        					return factory.getAtomType("N.amide");
+        				}
     					return factory.getAtomType("N.sp3");
-    				} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
+    				} else if (connectedHeavyAtoms == 0) {
     					return factory.getAtomType("N.sp3");
     				}
     			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
@@ -260,7 +268,41 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom)
+    private boolean isAmide(IAtom atom, IAtomContainer atomContainer) {
+    	Iterator<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom).iterator();
+    	while (neighbors.hasNext()) {
+    		IAtom neighbor = neighbors.next(); 
+    		if (neighbor.getSymbol().equals("C")) {
+    			Iterator<IBond> neighborBonds = atomContainer.getConnectedBondsList(neighbor).iterator();
+    			while (neighborBonds.hasNext()) {
+    				IBond neighborBond = neighborBonds.next();
+    				if (neighborBond.getAtomCount() == 2 &&
+    					neighborBond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+    					if ((neighborBond.getAtom(0).equals(neighbor) &&
+    						 neighborBond.getAtom(1).getSymbol().equals("O")) ||
+    						(neighborBond.getAtom(1).equals(neighbor) &&
+    	    				 neighborBond.getAtom(0).getSymbol().equals("O"))) {
+    						return true;
+    					}
+    				}
+    			}
+    		}
+    	}
+		return false;
+	}
+
+	private int countExplicitHydrogens(IAtom atom, IAtomContainer atomContainer) {
+    	int count = 0;
+		Iterator<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom).iterator();
+		while (neighbors.hasNext()) {
+			if (neighbors.next().getSymbol().equals("H")) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	private IAtomType perceiveSulphurs(IAtomContainer atomContainer, IAtom atom)
     	throws CDKException {
     	if ("S".equals(atom.getSymbol())) {
 			List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);

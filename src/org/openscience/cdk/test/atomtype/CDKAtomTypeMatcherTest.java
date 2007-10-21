@@ -32,7 +32,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -43,7 +42,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -281,6 +279,44 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "S.inyl", atm.findMatchingAtomType(mol, atom2));
         assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom3));
         assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom4));
+    }
+    
+    @Test public void testAmide() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "N.amide", atm.findMatchingAtomType(mol, atom3));
+    }
+    
+    @Test public void testAmide2() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom1));
+        assertAtomType(testedAtomTypes, "N.amide", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom3));
     }
     
     @Test public void testThioAcetone() throws Exception {
