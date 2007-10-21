@@ -46,7 +46,7 @@ public class CDKInChITaglet implements Taglet {
     }
     
     public boolean inMethod() {
-        return false;
+        return true;
     }
     
     public boolean inOverview() {
